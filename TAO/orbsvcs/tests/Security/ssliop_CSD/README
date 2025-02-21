@@ -1,0 +1,19 @@
+
+
+$TAO_ROOT/orbsvcs/tests/Security/ssliop_CSD
+
+Test Run modes:
+
+% run_test.pl csd    // CSD without SSLIOP
+% run_test.pl ssliop // default: SSLIOP without CSD
+% run_test.pl ssliop-csd  // CSD with SSLIOP
+
+This test demonstrates CSD (Custom Servant Dispatch) incompatibility with
+ SSLIOP transport protocol. In CSD the first server-side PI (Portable-
+ Interception) point (Receive_Request_Service_Context) is called on
+ a different thread from the rest of the server code PI points. SSLIOP
+ is heavily dependent upon PICurrent. CSD doesn't copy over any TSS
+ data and therefore breaks SSLIOP.
+
+This test in ssliop-csd should run success once CSD-SSLIOP compatibility is
+ resolved.

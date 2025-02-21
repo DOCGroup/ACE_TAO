@@ -4,8 +4,6 @@
 /**
  * @file test.idl
  *
- * $Id$
- *
  * Simple IDL file to test PortableInterceptor/ORB::shutdown()
  * semantics.
  *

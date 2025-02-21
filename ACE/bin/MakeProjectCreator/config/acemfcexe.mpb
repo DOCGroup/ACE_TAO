@@ -1,0 +1,12 @@
+// -*- MPC -*-
+project: aceexe, ace_mfc {
+  specific(vc8, vc9, vc10) {
+    common_defines -= _CONSOLE
+  }
+  specific(vc8, vc9) {
+    SubSystem = 2
+  }
+  specific(vc10) {
+    SubSystem = Windows
+  }
+}

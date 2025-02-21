@@ -1,8 +1,6 @@
 /**
  * @file ORB_Shutdown.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 #include "ORB_Shutdown.h"
@@ -11,6 +9,3 @@
 #include "ORB_Shutdown.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           ORB_Shutdown, 
-           "$Id$")

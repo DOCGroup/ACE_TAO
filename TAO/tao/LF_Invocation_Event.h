@@ -4,8 +4,6 @@
 /**
  *  @file LF_Invocation_Event.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -15,11 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "LF_Event.h"
+#include "tao/LF_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LF_Invocation_Event
@@ -30,32 +30,21 @@
  * Concrete event types and manipulation class through which the
  * invocation data path would flow. Typically state changes of
  * interest include whether a message has arrived, or timedout waiting
- * for a message or if the cionnection is closed waiting for a
+ * for a message or if the connection is closed waiting for a
  * message. Details of the states are documented within the class.
- *
  */
 class TAO_Export TAO_LF_Invocation_Event: public TAO_LF_Event
 {
 public:
   /// Constructor
-  TAO_LF_Invocation_Event (void);
+  TAO_LF_Invocation_Event ();
 
   /// Destructor
-  virtual ~TAO_LF_Invocation_Event (void);
-
-  /// Return 1 if the condition was satisfied successfully, 0 if it
-  /// has not
-  int successful (void) const;
-
-  /// Return 1 if an error was detected while waiting for the
-  /// event
-  int error_detected (void) const;
-  //@}
+  virtual ~TAO_LF_Invocation_Event ();
 
 protected:
-
   /// Validate and perform the state change
-  /*
+  /**
    * This concrete class uses the following states declared in the
    * class TAO_LF_Event
    *
@@ -68,14 +57,23 @@ protected:
    * LFS_TIMEOUT - The event has timed out.
    * LFS_CONNECTION_CLOSED - The connection was closed when the state
    *                         was active.
-   *
    */
-  virtual void state_changed_i (int new_state);
+  virtual void state_changed_i (LFS_STATE new_state);
+
+  /// Return true if the condition was satisfied successfully, false if it
+  /// has not
+  virtual bool successful_i () const;
+
+  /// Return true if an error was detected while waiting for the
+  /// event
+  virtual bool error_detected_i () const;
 
 private:
   /// Check whether we have reached the final state..
-  int is_state_final (void);
+  bool is_state_final () const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #ifndef WORKER_THREAD_H
 #define WORKER_THREAD_H
 #include /**/ "ace/pre.h"
@@ -16,7 +13,7 @@ public:
   Worker_Thread (CORBA::ORB_ptr orb);
 
   // = The service method
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;

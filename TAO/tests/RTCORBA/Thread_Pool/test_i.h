@@ -2,8 +2,6 @@
 /**
  *  @file   test_i.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali
  */
 // ===================================================================
@@ -21,16 +19,13 @@ public:
 
   /// Test method.
   CORBA::Long method (CORBA::Long client_id,
-                      CORBA::Long iteration
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                      CORBA::Long iteration);
 
   /// Shutdown the server.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   /// ORB.

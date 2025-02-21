@@ -1,0 +1,44 @@
+project(*idl): taoidldefaults {
+  custom_only = 1
+}
+
+project(*monitor): notification_mc_ext {
+  after  += *idl
+  exename = test_monitor
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    MonitorTestInterfaceC.cpp
+    MonitorTestInterfaceS.cpp
+    test_monitor.cpp
+  }
+}
+
+project(*consumer): notifytest {
+  after  += *idl
+  exename = Structured_Consumer
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    MonitorTestInterfaceC.cpp
+    Notify_Structured_Push_Consumer.cpp
+    Structured_Consumer.cpp
+  }
+}
+
+project(*supplier): notifytest {
+  after  += *idl
+  exename = Structured_Supplier
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    MonitorTestInterfaceC.cpp
+    Structured_Supplier.cpp
+  }
+}

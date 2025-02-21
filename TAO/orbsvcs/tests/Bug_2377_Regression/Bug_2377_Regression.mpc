@@ -1,0 +1,9 @@
+// -*- MPC -*-
+project(*Test) : orbsvcsexe, portablegroup, portableserver {
+  exename = uipmc_test
+
+  Source_Files {
+    Hello_Impl.cpp
+    uipmc_test.cpp
+  }
+}

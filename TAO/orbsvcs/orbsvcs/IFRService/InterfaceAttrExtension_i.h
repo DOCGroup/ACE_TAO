@@ -1,27 +1,21 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    InterfaceAttrExtension_i.h
-//
-// = DESCRIPTION
-//    InterfaceAttrExtension_i servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    InterfaceAttrExtension_i.h
+ *
+ *  InterfaceAttrExtension_i servant class.
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_INTERFACEATTREXTENSION_I_H
 #define TAO_INTERFACEATTREXTENSION_I_H
 
-#include "IRObject_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/IRObject_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,6 +25,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_InterfaceAttrExtension_i
   : public virtual TAO_IRObject_i
@@ -42,24 +38,18 @@ class TAO_IFRService_Export TAO_InterfaceAttrExtension_i
   //    IDL3 attribute extension mixin class.
   //
 public:
+  /// Constructor
   TAO_InterfaceAttrExtension_i (TAO_Repository_i *repo);
-  // Constructor
 
-  virtual ~TAO_InterfaceAttrExtension_i (void);
-  // Destructor
+  /// Destructor
+  virtual ~TAO_InterfaceAttrExtension_i ();
 
   virtual
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
-  describe_ext_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  describe_ext_interface ();
 
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
-  describe_ext_interface_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  describe_ext_interface_i ();
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
       const char *id,
@@ -68,10 +58,7 @@ public:
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
-      const CORBA::ExceptionDefSeq &set_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CORBA::ExceptionDefSeq &set_exceptions);
 
   CORBA::ExtAttributeDef_ptr create_ext_attribute_i (
       const char *id,
@@ -80,15 +67,13 @@ public:
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
-      const CORBA::ExceptionDefSeq &set_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CORBA::ExceptionDefSeq &set_exceptions);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_INTERFACEATTREXTENSION_I_H */
-

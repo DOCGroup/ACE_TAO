@@ -1,0 +1,4 @@
+// -*- MPC -*-
+project: trading_serv, portableserver {
+  exename = Interpreter
+}

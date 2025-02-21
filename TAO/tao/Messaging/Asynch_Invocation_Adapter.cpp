@@ -1,7 +1,8 @@
-//$Id$
-#include "Asynch_Invocation_Adapter.h"
-#include "Asynch_Reply_Dispatcher.h"
-#include "Asynch_Invocation.h"
+// -*- C++ -*-
+#include "tao/Messaging/Asynch_Invocation_Adapter.h"
+#include "tao/Messaging/Asynch_Reply_Dispatcher.h"
+#include "tao/Messaging/Asynch_Invocation.h"
+#include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
 
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"
@@ -12,12 +13,9 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/GIOP_Utils.h"
 
-
-ACE_RCSID (Messaging,
-           Asynch_Invocation_Adapter,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -26,17 +24,19 @@ namespace TAO
     Argument **args,
     int arg_number,
     const char *operation,
-    int op_len,
-    Collocation_Proxy_Broker *p,
-    Invocation_Mode m)
+    size_t op_len,
+    int collocation_opportunity,
+    Invocation_Mode m,
+    bool has_in_args)
     : Invocation_Adapter (target,
                           args,
                           arg_number,
                           operation,
                           op_len,
-                          p,
+                          collocation_opportunity,
                           TAO_TWOWAY_INVOCATION,
-                          m)
+                          m,
+                          has_in_args)
     , safe_rd_ ()
   {
   }
@@ -44,16 +44,14 @@ namespace TAO
   void
   Asynch_Invocation_Adapter::invoke (
     Messaging::ReplyHandler_ptr reply_handler_ptr,
-    const TAO_Reply_Handler_Skeleton &reply_handler_skel
-    ACE_ENV_ARG_DECL)
+    const TAO_Reply_Handler_Stub &reply_handler_stub)
   {
     TAO_Stub * stub =
-      this->get_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      this->get_stub ();
 
     if (TAO_debug_level >= 4)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO_Messaging (%P|%t) - Asynch_Invocation_Adapter::"
                     "invoke\n"));
       }
@@ -66,7 +64,6 @@ namespace TAO
         // New reply dispatcher on the heap or allocator, because
         // we will go out of scope and hand over the reply dispatcher
         // to the ORB.
-
         TAO_Asynch_Reply_Dispatcher *rd = 0;
 
         // Get the allocator we could use.
@@ -80,7 +77,7 @@ namespace TAO
               rd,
               static_cast<TAO_Asynch_Reply_Dispatcher *> (
                 ami_allocator->malloc (sizeof (TAO_Asynch_Reply_Dispatcher))),
-              TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
+              TAO_Asynch_Reply_Dispatcher (reply_handler_stub,
                                            reply_handler_ptr,
                                            stub->orb_core (),
                                            ami_allocator));
@@ -88,7 +85,7 @@ namespace TAO
         else
           {
             ACE_NEW (rd,
-                     TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
+                     TAO_Asynch_Reply_Dispatcher (reply_handler_stub,
                                                   reply_handler_ptr,
                                                   stub->orb_core (),
                                                   0));
@@ -96,24 +93,57 @@ namespace TAO
 
         if (rd == 0)
           {
-            ACE_THROW (CORBA::NO_MEMORY ());
+            throw ::CORBA::NO_MEMORY ();
           }
 
         this->safe_rd_.reset (rd);
       }
 
-    Invocation_Adapter::invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    Invocation_Adapter::invoke (0, 0);
   }
 
   void
   Asynch_Invocation_Adapter::invoke (
-    TAO::Exception_Data *ex,
-    unsigned long ex_count
-    ACE_ENV_ARG_DECL)
+    const TAO::Exception_Data *ex,
+    unsigned long ex_count)
   {
-    Invocation_Adapter::invoke (ex, ex_count  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    Invocation_Adapter::invoke (ex, ex_count );
+  }
+
+  Invocation_Status
+  Asynch_Invocation_Adapter::invoke_collocated_i (
+    TAO_Stub *stub,
+    TAO_Operation_Details &details,
+    CORBA::Object_var &effective_target,
+    Collocation_Strategy strat)
+  {
+    if (stub->orb_core ()->orb_params ()->ami_collication ())
+      {
+        // When doing a collocation asynch invocation we shouldn't use the
+        // stub args but use the skel args
+        details.use_stub_args (false);
+
+        TAO_AMI_Arguments_Converter_Impl* ami_arguments_converter
+          = ACE_Dynamic_Service<TAO_AMI_Arguments_Converter_Impl>::instance (
+            "AMI_Arguments_Converter");
+        details.cac (ami_arguments_converter);
+
+        // Release the owner ship of the reply dispatcher
+        details.reply_dispatcher (this->safe_rd_.release ());
+
+        return Invocation_Adapter::invoke_collocated_i (stub,
+                                                        details,
+                                                        effective_target,
+                                                        strat);
+      }
+    else
+      {
+        ACE_Time_Value *max_wait_time = 0;
+        return Invocation_Adapter::invoke_remote_i (stub,
+                                                    details,
+                                                    effective_target,
+                                                    max_wait_time);
+      }
   }
 
   Invocation_Status
@@ -121,37 +151,31 @@ namespace TAO
     TAO_Operation_Details &op,
     CORBA::Object_var &effective_target,
     Profile_Transport_Resolver &r,
-    ACE_Time_Value *&max_wait_time
-    ACE_ENV_ARG_DECL)
+    ACE_Time_Value *&max_wait_time,
+    Invocation_Retry_State *retry_state)
   {
+    ACE_UNUSED_ARG (retry_state);
+
     // Simple sanity check
     if (this->mode_ != TAO_ASYNCHRONOUS_CALLBACK_INVOCATION
         || this->type_ != TAO_TWOWAY_INVOCATION)
       {
-        ACE_THROW_RETURN (CORBA::INTERNAL (
-            CORBA::SystemException::_tao_minor_code (
-                TAO::VMCID,
-                EINVAL),
-            CORBA::COMPLETED_NO),
-                          TAO_INVOKE_FAILURE);
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
       }
 
-    if (this->safe_rd_.get ())
+    if (this->safe_rd_.get () && r.transport ())
       {
-        // Cache the  transport in the reply dispatcher
         this->safe_rd_->transport (r.transport ());
-
         // AMI Timeout Handling Begin
         ACE_Time_Value tmp;
 
-        if (this->get_timeout (r.stub (),
-                               tmp))
+        if (this->get_timeout (r.stub (), tmp))
           {
-            this->safe_rd_->schedule_timer (
-                op.request_id (),
-                *max_wait_time
-                ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+            this->safe_rd_->schedule_timer (op.request_id (), *max_wait_time);
           }
       }
 
@@ -162,23 +186,26 @@ namespace TAO
        op,
        this->safe_rd_.release ());
 
-    Invocation_Status s =
-      asynch.remote_invocation (max_wait_time
-                                ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    // forward requested byte order
+    asynch._tao_byte_order (this->_tao_byte_order ());
+
+    Invocation_Status const s = asynch.remote_invocation (max_wait_time);
 
     if (s == TAO_INVOKE_RESTART &&
-        asynch.is_forwarded ())
+        (asynch.reply_status () == GIOP::LOCATION_FORWARD ||
+         asynch.reply_status () == GIOP::LOCATION_FORWARD_PERM))
       {
+        CORBA::Boolean const permanent_forward =
+          (asynch.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
         effective_target = asynch.steal_forwarded_reference ();
 
-        this->object_forwarded (effective_target,
-                                r.stub ()
-                                ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+        this->object_forwarded (effective_target, r.stub (), permanent_forward);
       }
 
     return s;
   }
 
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,11 @@
+This is a CA used for signing keys in the security tests.  The password for the CA key is DOCGroup
+
+The following steps were used to generate the cert used to test the checkhost and password features:
+
+openssl req -new -key pwTestPass_key.pem -out san.csr -subj "/C=US/ST=Missouri/L=St. Louis/O=Object Computing, Inc./CN=*.ociweb.com" -passin file:passwd
+
+openssl x509 -in san.csr -req -extfile x509v3conf.txt -days 9999 -extensions alts -out san.pem -signkey pwTestPass_key.pem -passin file:passwd
+
+The CA can be checked using the following commands
+
+openssl x509 -noout -text -in cacert.pem

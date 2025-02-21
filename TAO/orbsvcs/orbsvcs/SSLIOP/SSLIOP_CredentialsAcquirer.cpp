@@ -1,7 +1,6 @@
-// $Id$
-
-#include "SSLIOP_CredentialsAcquirer.h"
-#include "SSLIOP_OwnCredentials.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h"
+#include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
@@ -13,25 +12,24 @@
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_CredentialsAcquirer,
-           "$Id$")
-
-
 // -------------------------------------------------------
+
+#if (defined (TAO_HAS_VERSIONED_NAMESPACE) && TAO_HAS_VERSIONED_NAMESPACE == 1)
+# define TAO_SSLIOP_PASSWORD_CALLBACK_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_SSLIOP_password_callback)
+#else
+# define TAO_SSLIOP_PASSWORD_CALLBACK_NAME TAO_SSLIOP_password_callback
+#endif  /* TAO_HAS_VERSIONED_NAMESPACE == 1 */
 
 extern "C"
 int
-TAO_SSLIOP_password_callback (char *buf,
-                              int size,
-                              int /* rwflag */,
-                              void *userdata)
+TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
+                                   int size,
+                                   int /* rwflag */,
+                                   void *userdata)
 {
   // @@ I'm probably over complicating this implementation, but that's
   //    what you get when you try to be overly efficient.  :-)
   //        -Ossama
-
   const char * password = static_cast<char *> (userdata);
 
   int pwlen = -1;
@@ -66,6 +64,8 @@ TAO_SSLIOP_password_callback (char *buf,
 
 // -------------------------------------------------------
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::CredentialsAcquirer::CredentialsAcquirer (
    TAO::SL3::CredentialsCurator_ptr curator,
    const CORBA::Any & acquisition_arguments)
@@ -76,36 +76,30 @@ TAO::SSLIOP::CredentialsAcquirer::CredentialsAcquirer (
 {
 }
 
-TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer (void)
+TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer ()
 {
 }
 
 char *
-TAO::SSLIOP::CredentialsAcquirer::acquisition_method (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SSLIOP::CredentialsAcquirer::acquisition_method ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   return CORBA::string_dup ("SL3TLS");
 }
 
 SecurityLevel3::AcquisitionStatus
-TAO::SSLIOP::CredentialsAcquirer::current_status (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SSLIOP::CredentialsAcquirer::current_status ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (SecurityLevel3::AQST_Failed);
+  this->check_validity ();
 
   return SecurityLevel3::AQST_Succeeded;  // @@ Really?
 }
 
 CORBA::ULong
-TAO::SSLIOP::CredentialsAcquirer::nth_iteration (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SSLIOP::CredentialsAcquirer::nth_iteration ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   // SSL/TLS credentials is single-step process from the point-of-view
   // of the caller.
@@ -113,90 +107,72 @@ TAO::SSLIOP::CredentialsAcquirer::nth_iteration (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Any *
-TAO::SSLIOP::CredentialsAcquirer::get_continuation_data (
-    ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SSLIOP::CredentialsAcquirer::get_continuation_data ()
 {
   // SSL/TLS credentials acquisition does generate continuation data.
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+  throw CORBA::BAD_INV_ORDER ();
 }
 
 SecurityLevel3::AcquisitionStatus
 TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
-    const CORBA::Any & /* acquisition_arguments */
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    const CORBA::Any & /* acquisition_arguments */)
 {
   // SSL/TLS credentials acquisition does generate continuation data.
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
-                    SecurityLevel3::AQST_Failed);
+  throw CORBA::BAD_INV_ORDER ();
 }
 
 SecurityLevel3::OwnCredentials_ptr
-TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list
-                                                   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
+  this->check_validity ();
 
-  ::SSLIOP::AuthData *data;
+  const ::SSLIOP::AuthData *data {};
 
   if (!(this->acquisition_arguments_ >>= data))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      SecurityLevel3::OwnCredentials::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   TAO::SSLIOP::X509_var x509 = this->make_X509 (data->certificate);
 
   if (x509.in () == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      SecurityLevel3::OwnCredentials::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   TAO::SSLIOP::EVP_PKEY_var evp = this->make_EVP_PKEY (data->key);
 
   if (evp.in () == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      SecurityLevel3::OwnCredentials::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   // Verify that the private key is consistent with the certificate.
   if (::X509_check_private_key (x509.in (), evp.in ()) != 1)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_ERROR,
+        ORBSVCS_DEBUG ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) ERROR: Private key is not ")
                     ACE_TEXT ("consistent with X.509 certificate")));
 
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        SecurityLevel3::OwnCredentials::_nil ());
+      throw CORBA::BAD_PARAM ();
     }
 
-  TAO::SSLIOP::OwnCredentials * creds;
+  TAO::SSLIOP::OwnCredentials * creds = 0;
   ACE_NEW_THROW_EX (creds,
                     TAO::SSLIOP::OwnCredentials (x509.in (), evp.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
 
   SecurityLevel3::OwnCredentials_var credentials = creds;
 
   if (on_list)
     {
-      this->curator_->_tao_add_own_credentials (creds
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
+      this->curator_->_tao_add_own_credentials (creds);
     }
 
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
+  this->destroy ();
 
   return credentials._retn ();
 }
 
 void
-TAO::SSLIOP::CredentialsAcquirer::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SSLIOP::CredentialsAcquirer::destroy ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
@@ -212,14 +188,14 @@ TAO::SSLIOP::CredentialsAcquirer::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO::SSLIOP::CredentialsAcquirer::check_validity (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::check_validity ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
              this->lock_);
 
   if (this->destroyed_)
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    throw CORBA::BAD_INV_ORDER ();
 }
 
 ::X509 *
@@ -253,7 +229,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
       if (fp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
                         ACE_TEXT ("fopen")));
 
@@ -273,7 +249,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
       if (fp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
                         ACE_TEXT ("fopen")));
 
@@ -286,7 +262,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
       // it to OpenSSL's internal X.509 format.
       x = PEM_read_X509 (fp,
                          0,
-                         TAO_SSLIOP_password_callback,
+                         TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                          const_cast<char *> (password));
     }
 
@@ -329,7 +305,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
       if (fp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
                         ACE_TEXT ("- %p\n"),
                         ACE_TEXT ("fopen")));
@@ -350,7 +326,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
       if (fp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
                         ACE_TEXT ("- %p\n"),
                         ACE_TEXT ("fopen")));
@@ -364,7 +340,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
       // OpenSSL's internal private key format.
       evp = PEM_read_PrivateKey (fp,
                                  0,
-                                 TAO_SSLIOP_password_callback,
+                                 TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                                  const_cast<char *> (password));
     }
 
@@ -375,3 +351,5 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
 
   return evp;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,6 @@
 /**
  * @file Low_Priority_Setup.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -21,7 +19,7 @@ Low_Priority_Setup (int consumer_count,
                     CORBA::Long experiment_id,
                     CORBA::Long base_event_type,
                     int workload,
-                    ACE_UINT32 gsf,
+                    ACE_High_Res_Timer::global_scale_factor_type gsf,
                     int nthreads,
                     int thread_priority,
                     int thread_sched_class,
@@ -29,8 +27,7 @@ Low_Priority_Setup (int consumer_count,
                     PortableServer::POA_ptr supplier_poa,
                     PortableServer::POA_ptr consumer_poa,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
-                    ACE_Barrier *barrier
-                    ACE_ENV_ARG_DECL)
+                    ACE_Barrier *barrier)
   : consumer_count_ (consumer_count)
   , clients_ (consumer_count ? new Client_Type[consumer_count] : 0)
   , disconnect_ (consumer_count ? new Client_Auto_Disconnect[consumer_count] : 0)
@@ -57,9 +54,7 @@ Low_Priority_Setup (int consumer_count,
                               gsf,
                               supplier_poa,
                               consumer_poa);
-      this->clients_[i].connect (ec
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->clients_[i].connect (ec);
       // Automatically disconnect the group if the connection was
       // successful
       this->disconnect_[i] = &this->clients_[i];
@@ -80,16 +75,12 @@ Low_Priority_Setup (int consumer_count,
                             this->clients_[j].supplier (),
                             barrier);
       this->tasks_[j].thr_mgr (&this->thr_mgr_);
-      ACE_AUTO_PTR_RESET (this->stoppers_[j],
-                          new Send_Task_Stopper (thread_priority,
-                                                 thread_sched_class,
-                                                 &this->tasks_[j]),
-                          Send_Task_Stopper);
+      this->stoppers_[j].reset (new Send_Task_Stopper (thread_priority, thread_sched_class, &this->tasks_[j]));
     }
 }
 
 template<class Client_Type> void
-Low_Priority_Setup<Client_Type>::stop_all_threads (void)
+Low_Priority_Setup<Client_Type>::stop_all_threads ()
 {
   ACE_DEBUG ((LM_DEBUG, "Stopping:"));
   for (int i = 0; i != this->nthreads_; ++i)
@@ -100,7 +91,7 @@ Low_Priority_Setup<Client_Type>::stop_all_threads (void)
   ACE_DEBUG ((LM_DEBUG, "\n"));
   this->thr_mgr_.wait ();
 
-  /// Resetting the auto_ptr<> destroys all the objects.  The
+  /// Resetting the unique_ptr<> destroys all the objects.  The
   /// destructors automatically stop and wait for all the threads.
   /// Depending on your personal bias this is either "super neat" or
   /// "a horrible kludge", IMHO is just good use of the language :-)

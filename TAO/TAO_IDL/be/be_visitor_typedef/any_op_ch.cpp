@@ -1,39 +1,27 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Any operators of a Typedef node
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_ch.cpp
+ *
+ *  Visitor generating code for Any operators of a Typedef node
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_typedef, 
-           any_op_ch, 
-           "$Id$")
+#include "typedef.h"
 
 // ***************************************************************************
 // Typedef visitor for generating Any operator declarations in the client header
 // ***************************************************************************
 
 be_visitor_typedef_any_op_ch::be_visitor_typedef_any_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_typedef (ctx)
 {
 }
 
-be_visitor_typedef_any_op_ch::~be_visitor_typedef_any_op_ch (void)
+be_visitor_typedef_any_op_ch::~be_visitor_typedef_any_op_ch ()
 {
 }
 
@@ -72,7 +60,7 @@ be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt; // base type
+  be_type *bt = nullptr; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -91,7 +79,7 @@ be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_any_op_ch::"
                              "visit_typedef - "
-                             "bad primitive base type\n"),  
+                             "bad primitive base type\n"),
                             -1);
         }
 
@@ -101,10 +89,10 @@ be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_any_op_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"),  
+                             "failed to accept visitor\n"),
                             -1);
         }
-      this->ctx_->alias (0); // reset
+      this->ctx_->alias (nullptr); // reset
     }
   else
     {
@@ -120,7 +108,7 @@ be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_any_op_ch::"
                              "visit_typedef - "
-                             "bad base type\n"),  
+                             "bad base type\n"),
                             -1);
         }
 
@@ -130,21 +118,21 @@ be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_any_op_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"),  
+                             "failed to accept visitor\n"),
                             -1);
         }
 
-      this->ctx_->tdef (0); // reset
+      this->ctx_->tdef (nullptr); // reset
     }
 
-  node->cli_hdr_any_op_gen (1);
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }
 
 int
 be_visitor_typedef_any_op_ch::visit_array (be_array *node)
 {
-  be_type *bt;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -155,8 +143,8 @@ be_visitor_typedef_any_op_ch::visit_array (be_array *node)
       bt = node;
     }
 
-  if (!bt->imported () 
-      && bt->node_type () == AST_Decl::NT_array)
+  if (!bt->imported ()  &&
+       bt->node_type () == AST_Decl::NT_array)
     {
       // Let the base class visitor handle this case.
       if (this->be_visitor_typedef::visit_array (node) == -1)
@@ -164,7 +152,7 @@ be_visitor_typedef_any_op_ch::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_any_op_ch::"
                              "visit_array - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed\n"),
                             -1);
         }
     }
@@ -175,7 +163,7 @@ be_visitor_typedef_any_op_ch::visit_array (be_array *node)
 int
 be_visitor_typedef_any_op_ch::visit_enum (be_enum *node)
 {
-  be_type *bt;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -194,7 +182,7 @@ be_visitor_typedef_any_op_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_any_op_ch::"
                              "visit_enum - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed\n"),
                             -1);
         }
     }
@@ -205,7 +193,7 @@ be_visitor_typedef_any_op_ch::visit_enum (be_enum *node)
 int
 be_visitor_typedef_any_op_ch::visit_sequence (be_sequence *node)
 {
-  be_type *bt;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -224,7 +212,7 @@ be_visitor_typedef_any_op_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_any_op_ch::"
                              "visit_sequence - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed\n"),
                             -1);
         }
     }
@@ -235,7 +223,7 @@ be_visitor_typedef_any_op_ch::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_any_op_ch::visit_structure (be_structure *node)
 {
-  be_type *bt;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -254,7 +242,7 @@ be_visitor_typedef_any_op_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_any_op_ch::"
                              "visit_structure - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed\n"),
                             -1);
         }
     }
@@ -265,7 +253,7 @@ be_visitor_typedef_any_op_ch::visit_structure (be_structure *node)
 int
 be_visitor_typedef_any_op_ch::visit_union (be_union *node)
 {
-  be_type *bt;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -284,7 +272,7 @@ be_visitor_typedef_any_op_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_any_op_ch::"
                              "visit_union - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed\n"),
                             -1);
         }
     }

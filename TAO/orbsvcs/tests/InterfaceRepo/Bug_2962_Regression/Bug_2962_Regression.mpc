@@ -1,0 +1,9 @@
+// -*- MPC -*-
+project(*): taoclient, ifr_client {
+
+  Source_Files {
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

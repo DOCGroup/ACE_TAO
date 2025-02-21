@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef COUNTRYI_H_
 #define COUNTRYI_H_
 
@@ -15,27 +12,20 @@
 class Country_i : public virtual POA_Country
 {
 public:
-  //Constructor 
+  //Constructor
   Country_i (CORBA::ORB_ptr orb);
-  
-  //Destructor 
-  virtual ~Country_i (void);
-  
+
+  //Destructor
+  virtual ~Country_i ();
+
   virtual void update_population (const char * country,
-                                  CORBA::Long population
-                                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                  CORBA::Long population);
 
-  virtual CORBA::Object_ptr get_typed_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Object_ptr get_typed_consumer ();
 
-  virtual void push (const CORBA::Any & data
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosEventComm::Disconnected));
+  virtual void push (const CORBA::Any & data);
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer ();
 
 private:
   /// The ORB

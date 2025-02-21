@@ -1,0 +1,24 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(COIOP_Naming_Test): taoserver, strategies, naming, naming_serv {
+  exename = COIOP_Naming_Test
+  after += *idl
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    COIOP_Test.cpp
+    Client_Task.cpp
+    Server_Task.cpp
+    NamingTask.cpp
+    Hello.cpp
+  }
+  IDL_Files {
+  }
+}
+

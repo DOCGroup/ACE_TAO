@@ -1,0 +1,63 @@
+DevGuideExamples/NamingService/corbaname_Messenger/README
+
+The example in this directory extends the example in GettingStartedUNIX
+(or GettingStartedVC) to use the Naming_Service
+and calling string_to_object instead of calling resolve_initial_references
+to get the NameService object reference and look up the service in the Naming_Service.
+
+This example only differs from the NamingService/Messenger example by a few lines
+in the MessengerClient.cpp.  (All other source files should be the same.)
+
+How to Run:
+-----------
+To start the Naming_Service:
+----------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service &
+
+To start the server:
+------------------
+./MessengerServer
+
+To start the client:
+------------------
+./MessengerClient
+
+
+This MessengerClient will optionally take parameter that is a URL (corbaname:)
+that addresses the Naming_Service and the MessengerServer within it.
+
+The MessengerServer and MessengerClient may also take an -ORBInitRef option
+to help qualify the address of the Naming_Service.
+
+Here are some examples:
+
+REM start the name server
+cd/d %TAO_ROOT%\orbsvcs\Naming_Service
+title NS
+Naming_Service -ORBListenEndpoints iiop://localhost:2809 -m 0
+
+REM start the example server
+cd/d %EXAMPLES%\NamingService\corbaname_Messenger\Debug
+title server
+REM use -ORBInitRef with IIOP
+MessengerServer -ORBInitRef NameService=iiop://localhost:2809/NameService
+
+
+
+REM start the client
+cd/d %EXAMPLES%\NamingService\corbaname_Messenger\Debug
+title client
+
+REM use a corbaname that does not require -ORBDefaultInitRef
+MessengerClient corbaname:iiop:localhost:2809#example/Messenger
+
+REM defaults to iiop protocol
+MessengerClient corbaname::localhost:2809#example/Messenger
+
+REM default protocol (iiop) and default port (2809)
+MessengerClient corbaname::localhost#example/Messenger
+
+
+
+REM use RIR
+MessengerClient -ORBInitRef NameService=iiop://localhost:2809/NameService corbaname:rir:#example/Messenger

@@ -1,27 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    interface.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has 
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    interface.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
 
 
-
-// Used to be a problem in the get() and set() 
+// Used to be a problem in the get() and set()
 // generated code.
 
 interface Base
@@ -38,9 +31,9 @@ interface Derived : Base
 // foo's scope.
 module foo_mod
 {
-  struct date 
+  struct date
     {
-	    short month;
+      short month;
     };
 };
 
@@ -71,6 +64,10 @@ interface child : mother, father
 {
 };
 
+interface try
+{
+};
+
 // Definition below in file.
 interface later;
 
@@ -78,11 +75,10 @@ typedef boolean Bool;
 
 interface later_user
 {
-  later op (in later inarg, 
+  later op (in later inarg,
             inout later inoutarg,
             out later outarg);
 
-            
   // Not a clash with the C++ keyword because they are case sensitive,
   // but the Arg_Traits<> specialization parameter (ACE_InputCDR::to_boolean)
   // needs the unaliased type name to work.
@@ -102,7 +98,7 @@ interface later {};
 // somewhere other than the scope where the
 // lookup starts.
 
-interface Begin 
+interface Begin
 {
   typedef long Value;
 };
@@ -111,11 +107,11 @@ interface Middle : Begin
 {
 };
 
-interface End : Middle 
+interface End : Middle
 {
 };
 
-interface Client 
+interface Client
 {
   attribute End::Value v;
 };
@@ -124,8 +120,10 @@ interface Client
 // attributes.
 interface AttributeTester
 {
+  typedef string string_1[1];
+
   attribute string a_su;
-  attribute string<1> a_sb;
+  attribute string_1 a_sb;
 };
 
 // All of the 'recursion' below is legal.
@@ -137,31 +135,146 @@ module ParamMod
     {
       ParameterTester objref;
     };
-  
+
     typedef sequence<ParameterTester> object_seq_type;
-    
+
     typedef ParameterTester object_array_type[5];
 
-    struct object_struct_type 
+    struct object_struct_type
     {
       octet o1;
       ParameterTester p1;
-      long l1;        
+      long l1;
     };
-    
+
     union object_union_type switch (long)
     {
       case 0: string str;
       case 1: ParameterTester pt;
     };
-    
+
     object_seq_type parameter_tester_op (
         in object_struct_type inarg,
         inout object_array_type inoutarg,
         out object_union_type outarg
       )
-      raises (object_excep_type); 
+      raises (object_excep_type);
   };
 };
 
- 
+local interface testlocal
+{
+};
+
+interface A {
+  union U switch (Bool)
+  {
+    case TRUE: A aa;
+  };
+};
+
+module M
+{
+  interface A;
+};
+
+module M
+{
+  interface A;
+
+  interface A {};
+};
+
+module i1
+{
+  interface if1
+  {
+    string getStr();
+  };
+};
+
+module i2
+{
+  interface if2 : ::i1::if1
+    {
+      string getstr2();
+    };
+
+  interface if3 : ::i2::if2
+    {
+      string getstr3();
+    };
+};
+
+/// Tests acceptance of legal redefinitions (of
+/// constants, exceptions and types) in a derived
+/// interface.
+module redefs
+{
+  interface base
+  {
+    const long lconst = -5;
+
+    exception ex
+    {
+      string info;
+    };
+
+    struct foo
+    {
+      short index;
+    };
+  };
+
+  interface derived : base
+  {
+    const long lconst = 44;
+
+    exception ex
+    {
+      long serial;
+    };
+
+    struct foo
+    {
+      string str;
+    };
+  };
+};
+
+// Had to relocate the spot where the typedef is marked as
+// having its arg traits instantiation already generated.
+// Otherwise, when the scope of the base interface is visited
+// as part of this process, we had infinite recursion and a
+// stack overflow.
+module Rec_Arg_Traits
+{
+  interface base
+  {
+    typedef Rec_Arg_Traits::base plan_stub_type;
+  };
+
+  interface derived : Rec_Arg_Traits::base
+  {
+    void remove_task (in plan_stub_type listener);
+  };
+};
+
+// Test to validate that the generated code is compilable
+// when we have an argument `call`
+module call_test
+{
+  interface iTest
+  {
+    void do_op (in string call);
+  };
+};
+
+// Test that using an attribut call is working correctly
+module call_attribute
+{
+  interface iBar
+  {
+    attribute string call;
+  };
+};

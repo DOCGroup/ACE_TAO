@@ -4,10 +4,6 @@
 /**
  *  @file    UTF8_Latin1_Translator.h
  *
- *  $Id$
- *
- *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================
@@ -22,10 +18,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Codeset/codeset_export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/CDR_Stream.h"
-#include "codeset_export.h"
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class UTF8_Latin1_Translator
@@ -47,16 +46,18 @@ class TAO_Codeset_Export TAO_UTF8_Latin1_Translator
 {
 public:
   /// constructor
-  TAO_UTF8_Latin1_Translator ();
+  TAO_UTF8_Latin1_Translator () = default;
 
   /// Virtual destruction
-  virtual ~TAO_UTF8_Latin1_Translator (void);
+  virtual ~TAO_UTF8_Latin1_Translator () = default;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
                                       ACE_CDR::Char &);
   virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
                                         ACE_CDR::Char *&);
+  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
+                                        std::string &);
   virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
                                             ACE_CDR::Char *,
                                             ACE_CDR::ULong);
@@ -72,15 +73,12 @@ public:
   virtual ACE_CDR::ULong tcs () {return 0x05010001U;}
 
 private:
-  ACE_CDR::ULong read_char_i (ACE_InputCDR &,
-                                ACE_CDR::Char &);
+  ACE_CDR::ULong read_char_i (ACE_InputCDR &, ACE_CDR::Char &);
 
-  ACE_CDR::Boolean write_char_i (ACE_OutputCDR &,
-                                 ACE_CDR::Char);
-
-private:
-
+  ACE_CDR::Boolean write_char_i (ACE_OutputCDR &, ACE_CDR::Char);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* UTF8_LATIN1_TRANSLATOR_H */

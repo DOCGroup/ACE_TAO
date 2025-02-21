@@ -1,10 +1,4 @@
-//
-// $Id$
-//
-
 #include "Client_Task.h"
-
-ACE_RCSID(Bug_1XXX_Regression, Client_Task, "$Id$")
 
 Client_Task::Client_Task (Test::Hello_ptr receiver,
                           CORBA::ORB_ptr orb,
@@ -17,37 +11,58 @@ Client_Task::Client_Task (Test::Hello_ptr receiver,
 {
 }
 
-Client_Task::~Client_Task (void)
+Client_Task::~Client_Task ()
 {
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
+      CORBA::Object_var object =
+        this->orb_->resolve_initial_references ("PolicyCurrent");
+
+      CORBA::PolicyCurrent_var policy_current =
+        CORBA::PolicyCurrent::_narrow (object.in ());
+
+      TimeBase::TimeT timeout_period = 20 * 1000;
+
+      CORBA::Any timeout_as_any;
+      timeout_as_any <<= timeout_period;
+
+      CORBA::PolicyList policy_list (1);
+      policy_list.length (1);
+      policy_list[0] =
+        this->orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                                   timeout_as_any);
+
+      policy_current->set_policy_overrides (policy_list,
+                                            CORBA::ADD_OVERRIDE);
+
+      policy_list[0]->destroy();
+
       // Start 25 separate concurrent request streams
       for (CORBA::Short i = 0; i != 25; ++i)
       {
-        this->receiver_->sendc_short_sleep (this->handler_var_.in ()
-            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->receiver_->sendc_short_sleep (this->handler_var_.in ());
       }
 
       ACE_Time_Value tv(10, 0);
-      orb_->run(tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_->run(tv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::TIMEOUT&)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Client_Task - caught exception:");
+      ACE_DEBUG ((LM_DEBUG,
+                  "Client received an expected CORBA::TIMEOUT exception.\n"));
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("(%P|%t) Client_Task - caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

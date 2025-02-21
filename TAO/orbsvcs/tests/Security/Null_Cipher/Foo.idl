@@ -1,0 +1,18 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file Foo.idl
+ *
+ * IDL for the Null_Cipher test.
+ *
+ * @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
+interface Foo
+{
+    /// Shutdown the server.
+    void shutdown ();
+
+};

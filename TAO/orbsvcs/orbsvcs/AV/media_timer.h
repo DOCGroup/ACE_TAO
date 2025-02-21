@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
+
 /*
  * Copyright (c) 1995 Regents of the University of California.
  * All rights reserved.
@@ -39,8 +39,10 @@
 #define TAO_AV_MEDIA_TIMER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Basic_Types.h"
-//long random (void);
+#include "tao/orbconf.h"
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class MediaTimer
 {
@@ -48,14 +50,16 @@ class MediaTimer
   MediaTimer();
   virtual ~MediaTimer();
   static inline MediaTimer* instance() { return (instance_); }
-  virtual ACE_UINT32 media_ts();
-  virtual ACE_UINT32 ref_ts();
+  virtual time_t media_ts();
+  virtual time_t ref_ts();
   inline ACE_UINT32 offset() const { return (offset_); }
  private:
   static MediaTimer* instance_;
  protected:
   ACE_UINT32 offset_;   /* random offset */
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_MEDIA_TIMER_H */

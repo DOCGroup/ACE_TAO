@@ -1,0 +1,6 @@
+// -*- MPC -*-
+feature(negotiate_codesets) {
+  after += Codeset
+  libs   += TAO_Codeset
+  macros += TAO_EXPLICIT_NEGOTIATE_CODESETS
+}

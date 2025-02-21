@@ -1,0 +1,23 @@
+
+
+This test checks that the repository ID is correct for generated AMI reply handler servant classes when different pragma prefixes are used.
+
+It does this by checking that handlers for interfaces in an IDL inheritance relationship can be narrowed to their parents handler types.
+
+_Expected Success Output_
+
+E:\sm\worcvs\tao14\prism\tests\tao439_regression>run_test.pl
+Test Passed.
+
+_Expected Regression Output_
+
+E:\sm\worcvs\tao14\prism\tests\tao439_regression>run_test.pl
+Error: REGRESSION - Cannot narrow ChildModule::ChildInterface reply handler to i
+ts parent handler type.
+Error: REGRESSION - Cannot narrow ChildInterface reply handler to its parent han
+dler type.
+ERROR: client returned 1
+
+(or anything else with the word REGRESSION in)
+
+All other output is an unexpected problem.

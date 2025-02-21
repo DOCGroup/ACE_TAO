@@ -2,11 +2,7 @@
 /**
  *  @file RT_Application_Command.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_RT_APPLICATION_COMMAND_H
@@ -25,18 +21,17 @@
  * @class TAO_Notify_Tests_RT_Application_Command
  *
  * @brief
- *
  */
 class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_Application_Command : public TAO_Notify_Tests_Application_Command
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_RT_Application_Command (void);
+  /// Constructor
+  TAO_Notify_Tests_RT_Application_Command ();
 
   /// Destructor
   ~TAO_Notify_Tests_RT_Application_Command ();
 
-  virtual void handle_init (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void handle_init ();
 };
 
 #include /**/ "ace/post.h"

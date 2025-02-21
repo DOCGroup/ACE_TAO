@@ -1,11 +1,4 @@
-// $Id$
-
 #include "Periodic_Consumer_Command.h"
-
-ACE_RCSID (lib, 
-           TAO_Periodic_Consumer_Command, 
-           "$Id$")
-
 #include "LookupManager.h"
 #include "Name.h"
 #include "Periodic_Consumer.h"
@@ -15,7 +8,7 @@ ACE_RCSID (lib,
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
-TAO_Notify_Tests_Periodic_Consumer_Command::TAO_Notify_Tests_Periodic_Consumer_Command (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::TAO_Notify_Tests_Periodic_Consumer_Command ()
 {
 }
 
@@ -24,13 +17,13 @@ TAO_Notify_Tests_Periodic_Consumer_Command::~TAO_Notify_Tests_Periodic_Consumer_
 }
 
 const char*
-TAO_Notify_Tests_Periodic_Consumer_Command::get_name (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::get_name ()
 {
   return TAO_Notify_Tests_Periodic_Consumer_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_Periodic_Consumer_Command::name (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::name ()
 {
   return TAO_Notify_Tests_Name::periodic_consumer_command;
 }
@@ -41,29 +34,29 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
   if (arg_shifter.is_anything_left ())
     {
       /// -Create consumer_name admin_name -POA [POA_name] consumer_specific_options
-      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Create")) == 0)
         {
           this->command_ = CREATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
           int is_relay = 0;
           int is_direct = 0;
           ACE_CString relay_destination;
 
-          if (arg_shifter.cur_arg_strncasecmp ("-Relay") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Relay")) == 0)
             {
               is_relay = 1;
 
               arg_shifter.consume_arg ();
 
-              relay_destination = arg_shifter.get_current ();
+              relay_destination = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
-          else if (arg_shifter.cur_arg_strncasecmp ("-Direct") == 0)
+          else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Direct")) == 0)
             {
               is_direct = 1;
 
@@ -86,60 +79,57 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
          LOOKUP_MANAGER->resolve (act_mgr);
 
          {
-           ACE_DECLARE_NEW_CORBA_ENV;
-           act_mgr->_register (consumer, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
+           act_mgr->_register (consumer, this->name_.c_str ());
          }
 
          consumer->init_state (arg_shifter);
-
         } /* -Create */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Subscription") == 0) // -Subscription admin_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Subscription")) == 0) // -Subscription admin_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
         {
           this->command_ = SUBSCRIPTION;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
           TAO_Notify_Tests_Options_Parser options_parser;
           options_parser.execute (this->added_, this->removed_, arg_shifter);
         } /* Subscription */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Disconnect") == 0) //
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Disconnect")) == 0) //
         {
           this->command_ = DISCONNECT;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         } /* disconnect */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Deactivate") == 0) //
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Deactivate")) == 0) //
         {
           this->command_ = DEACTIVATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         } /* deactivate */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Status") == 0) //
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Status")) == 0) //
         {
           this->command_ = DUMP_STATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         } /* -Dump */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS ec_name [Qos Options]
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Set_QoS")) == 0) // -Set_QoS ec_name [Qos Options]
         {
           this->command_ = SET_QOS;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
 
@@ -150,7 +140,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 TAO_Notify_Tests_Periodic_Consumer*
-TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::consumer ()
 {
   TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
 
@@ -160,9 +150,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
   TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
 
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    act_mgr->resolve (consumer, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+    act_mgr->resolve (consumer, this->name_.c_str ());
   }
 
   if (consumer == 0)
@@ -172,96 +160,90 @@ TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_set_qos ()
 {
-  this->consumer ()->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer ()->set_qos (this->qos_);
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_create ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
   if (consumer == 0)
     return;
 
-  consumer->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->connect ();
 
   ACE_DEBUG ((LM_DEBUG, "Consumer %s is connected\n", this->name_.c_str ()));
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
   if (consumer == 0)
     return;
 
-  consumer->subscription_change (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->subscription_change (this->added_, this->removed_);
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
   if (consumer == 0)
     return;
 
-  consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->disconnect ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
   if (consumer == 0)
     return;
 
-  consumer->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->deactivate ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_status ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
   if (consumer == 0)
     return;
 
-  consumer->status (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->status ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::execute_i ()
 {
   if (this->command_ == CREATE)
     {
-      this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_create ();
     }
   else if (this->command_ == SUBSCRIPTION)
     {
-      this->handle_subscriptions (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_subscriptions ();
     }
   else if (this->command_ == DISCONNECT)
     {
-      this->handle_disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_disconnect ();
     }
   else if (this->command_ == DEACTIVATE)
     {
-      this->handle_deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_deactivate ();
     }
   else  if (this->command_ == DUMP_STATE)
     {
-      this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_status ();
     }
   else if (this->command_ == SET_QOS)
     {
-      this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_set_qos ();
     }
 }

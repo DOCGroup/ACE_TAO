@@ -1,7 +1,3 @@
-//
-// $Id$
-//
-
 #ifndef CLIENT_TASK_H
 #define CLIENT_TASK_H
 #include /**/ "ace/pre.h"
@@ -9,6 +5,7 @@
 #include "TestC.h"
 #include "ace/Task.h"
 #include "ace/Basic_Stats.h"
+#include "ace/High_Res_Timer.h"
 
 /// Implement the Test::Client_Task interface
 class Client_Task : public ACE_Task_Base
@@ -21,15 +18,15 @@ public:
   /// Add this thread results to the global numbers and print the
   /// per-thread results.
   void accumulate_and_dump (ACE_Basic_Stats &totals,
-                            const char *msg,
-                            ACE_UINT32 gsf);
+                            const ACE_TCHAR *msg,
+                            ACE_High_Res_Timer::global_scale_factor_type gsf);
 
   /// The service method
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Make sure that the current thread has a connection available.
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_connection ();
 
 private:
   /// The object reference used for this test

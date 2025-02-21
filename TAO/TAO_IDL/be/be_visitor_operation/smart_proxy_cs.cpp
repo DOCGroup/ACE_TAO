@@ -1,41 +1,23 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_smart_proxy_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the stubs file.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    smart_proxy_cs.cpp
+ *
+ *  Visitor generating code for Operation in the stubs file.
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           operation_smart_proxy_cs, 
-           "$Id$")
-
-// ************************************************************
-// Operation visitor for client stubs
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_smart_proxy_cs::be_visitor_operation_smart_proxy_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_smart_proxy_cs::~be_visitor_operation_smart_proxy_cs (
-    void
-  )
+be_visitor_operation_smart_proxy_cs::~be_visitor_operation_smart_proxy_cs ()
 {
 }
 
@@ -48,20 +30,33 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
       // We need the interface node in which this operation was defined. However,
       // if this operation node was an attribute node in disguise, we get this
       // information from the context.
-      be_interface *intf = this->ctx_->attribute ()
-        ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-        : be_interface::narrow_from_scope (node->defined_in ());
+      UTL_Scope *s =
+        this->ctx_->attribute ()
+          ? this->ctx_->attribute ()->defined_in ()
+          : node->defined_in ();
 
-      if (!intf)
+      be_interface *intf = dynamic_cast<be_interface*> (s);
+
+      if (intf == nullptr)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_smart_proxy_cs::"
-                             "visit_operation - "
-                             "bad interface scope\n"),
-                            -1);
+          be_porttype *pt = dynamic_cast<be_porttype*> (s);
+
+          if (pt == nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_operation_")
+                                 ACE_TEXT ("smart_proxy_cs::")
+                                 ACE_TEXT ("visit_operation - ")
+                                 ACE_TEXT ("bad scope\n")),
+                                -1);
+            }
+          else
+            {
+              intf = this->ctx_->interface ();
+            }
         }
 
-      be_type *bt = be_type::narrow_from_decl (node->return_type ());
+      be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
       if (!bt)
         {
@@ -90,7 +85,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
       // node (i.e the operation) is already in a scope lower than intf
       // (i.e. be_interface), so for deciding the exact scope use intf.
 
-      be_decl* scope = be_scope::narrow_from_scope (intf->defined_in ())->decl ();
+      be_decl* scope = dynamic_cast<be_scope*> (intf->defined_in ())->decl ();
 
       *os << " ";
       *os << scope->full_name ();
@@ -100,7 +95,8 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
         *os << "::";
 
       *os << "TAO_" << intf->flat_name () <<"_Smart_Proxy_Base::";
-      *os << node->local_name () << " ";
+      *os << this->ctx_->port_prefix ().c_str ()
+          << node->local_name () << " ";
 
       // STEP 4: generate the argument list with the appropriate mapping (same as
       // in the header file)

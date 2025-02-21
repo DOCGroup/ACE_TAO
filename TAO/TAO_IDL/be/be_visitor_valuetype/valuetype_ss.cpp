@@ -1,29 +1,16 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the server skeletons file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype_ss.cpp
+ *
+ *  Visitor generating code for Interfaces in the server skeletons file.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
+#include "valuetype.h"
 #include "nr_extern.h"
-
-ACE_RCSID (be_visitor_valuetype,
-           valuetype_ss,
-           "$Id$")
-
 
 // ************************************************************
 // Interface visitor for server skeletons.
@@ -34,7 +21,7 @@ be_visitor_valuetype_ss::be_visitor_valuetype_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_ss::~be_visitor_valuetype_ss (void)
+be_visitor_valuetype_ss::~be_visitor_valuetype_ss ()
 {
 }
 
@@ -46,11 +33,11 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
-  AST_Interface *concrete = node->supports_concrete ();
+  AST_Type *concrete = node->supports_concrete ();
 
   // We generate a skeleton class only if the valuetype supports a
   // non-abstract interface.
-  if (concrete == 0)
+  if (concrete == nullptr)
     {
       return 0;
     }
@@ -66,11 +53,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  ACE_CString flat_name_holder =
-    this->generate_flat_name (node);
-
-  *os << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
@@ -89,9 +72,9 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
-      << " (void)" << be_nl
-      << "{}" << be_nl << be_nl;
-      
+      << " ()" << be_nl
+      << "{}" << be_nl_2;
+
 // @@@ (JP) I'm commenting out the copy constructor for now. The
 // declaration in the skeleton header file has been made private. These
 // valuetypes (only if a concrete interface is supported) inherit
@@ -113,22 +96,22 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
     {
       AST_Decl *scope = ScopeAsDecl (concrete->defined_in ());
 
-      *os << "ACE_NESTED_CLASS (POA_" << scope->name () << ", "
-          << concrete->local_name () << ") (rhs)," << be_nl;
+      *os << "POA_" << scope->name () << "::"
+          << concrete->local_name () << " (rhs)," << be_nl;
     }
   else
     {
-      be_interface *bd = be_interface::narrow_from_decl (concrete);
+      be_interface *bd = dynamic_cast<be_interface*> (concrete);
       *os << bd->full_skel_name () << " (rhs)," << be_nl;
     }
 
   *os << "ValueBase (rhs)" << be_uidt << be_uidt_nl
-      << "{}" << be_nl << be_nl;
+      << "{}" << be_nl_2;
 */
 
   *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{}";
 
   return 0;
@@ -138,12 +121,6 @@ int
 be_visitor_valuetype_ss::visit_eventtype (be_eventtype *node)
 {
   return this->visit_valuetype (node);
-}
-
-ACE_CString
-be_visitor_valuetype_ss::generate_flat_name (be_valuetype *node)
-{
-  return ACE_CString (node->flat_name ());
 }
 
 ACE_CString

@@ -4,8 +4,6 @@
 /**
  *  @file   FtEventServiceInterceptor.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -19,10 +17,13 @@
 #include "tao/ORB.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "tao/PI_Server/PI_Server.h"
+#include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_Event_Channel_Impl;
 typedef FtRtecEventChannelAdmin::CachedResult CachedRequestInfo;
@@ -38,7 +39,7 @@ public:
     void get_state(FtRtecEventChannelAdmin::CachedOptionResults& state);
     void set_state(const FtRtecEventChannelAdmin::CachedOptionResults& state);
 private:
-   typedef ACE_Hash_Map_Manager<ACE_CString, CachedRequestInfo, ACE_SYNCH_MUTEX> TableImpl;
+   typedef ACE_Hash_Map_Manager<ACE_CString, CachedRequestInfo, TAO_SYNCH_MUTEX> TableImpl;
    TableImpl table_;
 };
 
@@ -51,47 +52,30 @@ public:
   ~FtEventServiceInterceptor();
 
   static FtEventServiceInterceptor* instance();
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+        PortableInterceptor::ServerRequestInfo_ptr);
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr
-                           ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
 
   void get_state(FtRtecEventChannelAdmin::CachedOptionResults& state);
   void set_state(const FtRtecEventChannelAdmin::CachedOptionResults& state);
 private:
-  PortableInterceptor::Current_var pic(PortableInterceptor::ServerRequestInfo_ptr ri
-                                       ACE_ENV_ARG_DECL);
+  PortableInterceptor::Current_var pic(PortableInterceptor::ServerRequestInfo_ptr ri);
 
   CORBA::ORB_var orb_;
   CachedRequestTable request_table_;
 };
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

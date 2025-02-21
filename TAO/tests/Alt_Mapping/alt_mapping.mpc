@@ -1,0 +1,67 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    idlflags -= -Sa -St
+    idlflags += -Gstl
+    alt_mapping.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, codeset, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after  += *idl
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    alt_mappingS.cpp
+    alt_mappingC.cpp
+    alt_mapping_i.cpp
+    server.cpp
+  }
+  
+  Header_Files {
+    alt_mappingS.h
+    alt_mappingC.h
+    alt_mapping_i.h
+  }
+  
+  Inline_Files {
+    alt_mappingC.inl
+  }
+}
+
+project(*Client): taoserver, codeset, avoids_minimum_corba, avoids_ace_for_tao {
+  exename = client
+  after  += *idl
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    alt_mappingC.cpp
+    client.cpp
+    driver.cpp
+    helper.cpp
+    options.cpp
+    results.cpp
+    ub_string.cpp
+    ub_struct_seq.cpp
+  }
+  
+  Header_Files {
+    alt_mappingC.h
+    driver.h
+    helper.h
+    options.h
+    results.h
+    ub_string.h
+    ub_struct_seq.h
+  }
+  
+  Inline_Files {
+    alt_mappingC.inl
+  }
+}
+

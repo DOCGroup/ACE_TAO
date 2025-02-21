@@ -1,0 +1,12 @@
+// -*- MPC -*-
+workspace {
+  // This doesn't work quite yet, because not all the projects
+  // can be created implicitly. To fix this, we can either create
+  // a separate directory for each separate project, or we can
+  // add mpc files for C++NPv1/2 and other problem directories.
+  // The nice thing about splitting up into separate directories is
+  // that it completely eliminates mpc maintenance.
+
+  implicit = example_base
+  cmdline += -include $PWD
+}

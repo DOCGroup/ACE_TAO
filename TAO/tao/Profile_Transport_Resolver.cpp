@@ -1,39 +1,40 @@
-// $Id$
+// -*- C++ -*-
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Profile.h"
+#include "tao/Stub.h"
+#include "tao/Transport.h"
+#include "tao/Invocation_Endpoint_Selectors.h"
+#include "tao/ORB_Core.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Transport_Cache_Manager.h"
+#include "tao/Transport_Descriptor_Interface.h"
+#include "tao/Endpoint_Selector_Factory.h"
+#include "tao/Codeset_Manager.h"
+#include "tao/Connector_Registry.h"
+#include "tao/Transport_Connector.h"
+#include "tao/Endpoint.h"
+#include "tao/SystemException.h"
+#include "tao/Client_Strategy_Factory.h"
 
-#include "Profile_Transport_Resolver.h"
-#include "Profile.h"
-#include "Transport.h"
-#include "Stub.h"
-#include "Invocation_Endpoint_Selectors.h"
-#include "ORB_Core.h"
-#include "Endpoint_Selector_Factory.h"
-#include "Codeset_Manager.h"
-#include "Connector_Registry.h"
-#include "Transport_Connector.h"
-#include "Endpoint.h"
-#include "SystemException.h"
-
-#include "ace/Countdown_Time.h"
+#include "tao/ORB_Time_Policy.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Profile_Transport_Resolver.inl"
+# include "tao/Profile_Transport_Resolver.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Profile_Transport_Resolver,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
-  Profile_Transport_Resolver::~Profile_Transport_Resolver (void)
+  Profile_Transport_Resolver::~Profile_Transport_Resolver ()
   {
     if (this->profile_)
       {
         this->profile_->_decr_refcnt ();
       }
 
-    if (this->transport_)
+    if (this->transport_.get ())
       {
         if (this->is_released_ == false)
           {
@@ -70,121 +71,145 @@ namespace TAO
 
 
   void
-  Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val
-                                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val)
   {
-    ACE_Countdown_Time countdown (max_time_val);
+    TAO::ORB_Countdown_Time countdown (max_time_val);
 
     TAO_Invocation_Endpoint_Selector *es =
-      this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector (
-          ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector ();
 
     // Select the endpoint
-    es->select_endpoint (this,
-                         max_time_val
-                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    es->select_endpoint (this, max_time_val);
 
-    if (this->transport_ == 0)
+    if (this->transport_.get () == nullptr)
       {
-        ACE_THROW (CORBA::INTERNAL ());
+        // No useable endpoint could be found. We will not
+        // be able to send the message. Wait to throw an exception until
+        // after the send_request interception point has been called.
+        return;
       }
 
-    const TAO_GIOP_Message_Version& version =
-      this->profile_->version ();
+    TAO_GIOP_Message_Version const & version = this->profile_->version ();
 
     // Initialize the messaging object
-    if (this->transport_->messaging_init (version.major, version.minor) == -1)
-      {
-        ACE_THROW (CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            0,
-                            EINVAL),
-                          CORBA::COMPLETED_NO));
-      }
+    this->transport_->messaging_init (version);
 
     if (!this->transport_->is_tcs_set ())
       {
-        TAO_Codeset_Manager *tcm =
+        TAO_Codeset_Manager * const tcm =
           this->stub_->orb_core ()->codeset_manager ();
         if (tcm)
           tcm->set_tcs (*this->profile_, *this->transport_);
       }
   }
 
-
   bool
   Profile_Transport_Resolver::try_connect (
       TAO_Transport_Descriptor_Interface *desc,
-       ACE_Time_Value *max_time_value
-       ACE_ENV_ARG_DECL
-     )
+      ACE_Time_Value *timeout)
+  {
+    return this->try_connect_i (desc, timeout, false);
+  }
+
+  bool
+  Profile_Transport_Resolver::try_parallel_connect (
+       TAO_Transport_Descriptor_Interface *desc,
+       ACE_Time_Value *timeout)
+  {
+    return this->try_connect_i (desc, timeout, true);
+  }
+
+
+  bool
+  Profile_Transport_Resolver::try_connect_i (
+       TAO_Transport_Descriptor_Interface *desc,
+       ACE_Time_Value *timeout,
+       bool parallel)
   {
     TAO_Connector_Registry *conn_reg =
-      this->stub_->orb_core ()->connector_registry (
-        ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (false);
+      this->stub_->orb_core ()->connector_registry ();
 
-    if (conn_reg == 0)
+    if (conn_reg == nullptr)
       {
-        ACE_THROW_RETURN (CORBA::INTERNAL (
-                            CORBA::SystemException::_tao_minor_code (
-                              0,
-                              EINVAL),
-                            CORBA::COMPLETED_NO),
-                          false);
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            0,
+            EINVAL),
+          CORBA::COMPLETED_NO);
       }
 
     ACE_Time_Value connection_timeout;
+    bool has_con_timeout = this->get_connection_timeout (connection_timeout);
 
-    const bool is_conn_timeout =
-      this->get_connection_timeout (connection_timeout);
-
-
-    ACE_Time_Value *max_wait_time = 0;
-
-    if (is_conn_timeout == true)
+    if (has_con_timeout && !this->blocked_)
       {
-        max_wait_time = &connection_timeout;
+        timeout = &connection_timeout;
+      }
+    else if (has_con_timeout)
+      {
+        if (timeout == nullptr || connection_timeout < *timeout)
+          timeout = &connection_timeout;
+        else
+          has_con_timeout = false;
+      }
+    else if (!this->blocked_)
+      {
+        timeout = nullptr;
+      }
+
+    TAO_Connector *con = conn_reg->get_connector (desc->endpoint ()->tag ());
+    ACE_ASSERT(con != nullptr);
+    if (parallel)
+      {
+        this->transport_.set (con->parallel_connect (this, desc, timeout));
       }
     else
       {
-        max_wait_time = max_time_value;
+        this->transport_.set (con->connect (this, desc, timeout));
       }
-
-
-    // Obtain a connection.
-    this->transport_ =
-      conn_reg->get_connector (desc->endpoint ()->tag ())->connect (
-        this,
-        desc,
-        max_wait_time
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (false);
-
     // A timeout error occurred.
     // If the user has set a roundtrip timeout policy, throw a timeout
     // exception.  Otherwise, just fall through and return false to
     // look at the next endpoint.
-    if (this->transport_ == 0
-        && is_conn_timeout == false
-        && errno == ETIME)
+    if (this->transport_.get () == nullptr &&
+        has_con_timeout == false &&
+        errno == ETIME)
       {
-        ACE_THROW_RETURN (CORBA::TIMEOUT (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO_TIMEOUT_CONNECT_MINOR_CODE,
-                              errno),
-                            CORBA::COMPLETED_NO),
-                          false);
+        throw ::CORBA::TIMEOUT (
+          CORBA::SystemException::_tao_minor_code (
+            TAO_TIMEOUT_CONNECT_MINOR_CODE,
+            errno),
+          CORBA::COMPLETED_NO);
       }
-    else if (this->transport_ == 0)
+    else if (this->transport_.get () == nullptr)
       {
         return false;
       }
+    else
+      {
+        // Determine the sync scope (if any)
+        Messaging::SyncScope sync_scope;
+        bool has_synchronization = false;
+        this->stub_->orb_core ()->call_sync_scope_hook (this->stub_,
+                                                        has_synchronization,
+                                                        sync_scope);
+      }
 
     return true;
+  }
+
+  bool
+  Profile_Transport_Resolver::use_parallel_connect () const
+  {
+    TAO_ORB_Core *oc = this->stub_->orb_core();
+    return (oc->orb_params()->use_parallel_connects()
+#if 0       // it was decided that even with blocked connects
+            // parallel connects could be useful, at least for cache
+            // processing.
+            oc->client_factory()->connect_strategy() !=
+            TAO_Client_Strategy_Factory::TAO_BLOCKED_CONNECT
+#endif /* 0 */
+            );
   }
 
   bool
@@ -203,9 +228,7 @@ namespace TAO
 
 
   void
-  Profile_Transport_Resolver::init_inconsistent_policies (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Profile_Transport_Resolver::init_inconsistent_policies ()
   {
     ACE_NEW_THROW_EX (this->inconsistent_policies_,
                       CORBA::PolicyList (0),
@@ -215,4 +238,27 @@ namespace TAO
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   }
+
+
+  int
+  Profile_Transport_Resolver::find_transport (TAO_Transport_Descriptor_Interface *desc)
+  {
+    TAO::Transport_Cache_Manager & cache =
+      this->profile_->orb_core()->lane_resources ().transport_cache();
+
+    // the cache increments the reference count on the transport if
+    // the find is successful. We want to return a "boolean" of 0 for
+    // failure, 1 for success.
+    size_t busy_count;
+    TAO_Transport* tmp = this->transport_.get ();
+    if (cache.find_transport(desc, tmp, busy_count) !=
+        Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
+      return 0;
+
+    this->transport_.set (tmp);
+    return 1;
+  }
+
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : orbsvcslib, naming_skel, iortable, messaging_optional, svc_utils {
+  after     += CosNaming_Serv
+  libs      += TAO_CosNaming_Serv
+}

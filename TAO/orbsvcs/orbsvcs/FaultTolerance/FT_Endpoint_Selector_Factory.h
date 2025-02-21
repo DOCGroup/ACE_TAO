@@ -1,13 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   FT_Endpoint_Selector_Factory.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
- *
  */
 //=============================================================================
 #ifndef TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
@@ -15,7 +12,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "FT_ClientORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,6 +23,8 @@
 #include "tao/orbconf.h"
 
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FT_Invocation_Endpoint_Selector;
 /**
@@ -42,20 +41,17 @@ class TAO_FT_ClientORB_Export TAO_FT_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
-
   /// Constructor.
-  TAO_FT_Endpoint_Selector_Factory (void);
+  TAO_FT_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~TAO_FT_Endpoint_Selector_Factory (void);
+  virtual ~TAO_FT_Endpoint_Selector_Factory ();
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (
-      ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
 
 private:
-
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
   TAO_FT_Invocation_Endpoint_Selector *ft_endpoint_selector_;
@@ -63,6 +59,8 @@ private:
   /// Mutex to prevent multiple initializations
   TAO_SYNCH_MUTEX mutex_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 //extern TAO_FT_ClientORB_Export ACE_Static_Svc_Descriptor ace_svc_desc_TAO_FT_Endpoint_Selector_Factory;
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FT_ClientORB, TAO_FT_Endpoint_Selector_Factory)

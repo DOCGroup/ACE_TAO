@@ -1,0 +1,17 @@
+
+
+This test checks that the client side ORB *doesn't* transparently reinvoke COMPLETED_MAYBE exceptions.
+
+The problem that existed was that TAO *was* doing this when further profiles existed other than the one that the exception was receieved upon. This would happen in the case of a multiprofile IOR or, as in this test case, when the current IOR in use was received as a result of a location forward.
+
+The server IOR is bound into the IOR table and a corbaloc for the IOR table binding is used. This results in a location forward. The server throws a TRANSIENT COMPLETED_MAYBE which the client will propogate to the client if all is well.
+
+Regression looks like:
+
+sm@beatrice:~/doccvs/ACE_wrappers/TAO/tests/Hello> ./run_test.pl
+(17131|3079513808) - string returned <You shouldn't ever see this message>
+Error - Regression - Test has failed. ORB has retried a COMPLETED_MAYBE
+ERROR: client returned 1
+ERROR: server timedout
+ERROR: server returned -1
+

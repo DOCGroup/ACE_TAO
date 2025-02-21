@@ -1,44 +1,38 @@
-#include "Dynamic_Implementation.h"
-
-ACE_RCSID (DynamicInterface,
-           Dynamic_Implementation,
-           "$Id$")
-
-
-#include "Server_Request.h"
+// -*- C++ -*-
+#include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include "tao/DynamicInterface/Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Collocated_Arguments_Converter.h"
+#include "tao/operation_details.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
-TAO_DynamicImplementation::_is_a (const char *logical_type_id
-                                  ACE_ENV_ARG_DECL)
+TAO_DynamicImplementation::_is_a (const char *logical_type_id)
 {
-  CORBA::RepositoryId_var id =
-    this->get_id_from_primary_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
 
   return ACE_OS::strcmp (logical_type_id, id.in ()) == 0;
 }
 
 CORBA::Object_ptr
-TAO_DynamicImplementation::_this (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynamicImplementation::_this ()
 {
   // The _this() function returns a CORBA::Object_ptr for the target
   // object. Unlike _this() for static skeletons, its return type is
   // not interface-specific because a DSI servant may very well
   // incarnate multiple CORBA objects of different types.
-  TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  TAO_Stub *stub = this->_create_stub ();
 
   // Create a object.
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
+  CORBA::Object_ptr retval = CORBA::Object_ptr ();
   ACE_NEW_RETURN (retval,
                   CORBA::Object (stub,
                                  1,
@@ -49,48 +43,40 @@ TAO_DynamicImplementation::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::InterfaceDef_ptr
-TAO_DynamicImplementation::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynamicImplementation::_get_interface ()
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
+        TAO_ORB_Core::ifr_client_adapter_name ());
 
   if (adapter == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        0);
+      throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::RepositoryId_var id =
-    this->get_id_from_primary_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
 
   // This doesn't take multiple ORBs into account, but it's being
   // used only to resolve the IFR, so we should be ok.
-  return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
-                                 id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  return adapter->get_interface (TAO_ORB_Core_instance ()->orb (), id.in ());
 }
 
 const char *
-TAO_DynamicImplementation::_interface_repository_id (void) const
+TAO_DynamicImplementation::_interface_repository_id () const
 {
   // This should never be called.
   return 0;
 }
 
 void *
-TAO_DynamicImplementation::_downcast (const char *repository_id)
+TAO_DynamicImplementation::_downcast (const char *)
 {
-  ACE_UNUSED_ARG (repository_id);
-
   // Don't know enough to do better.
   return this;
 }
 
 TAO_Stub *
-TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynamicImplementation::_create_stub ()
 {
   // If DynamicImplementation::_this() is invoked outside of the
   // context of a request invocation on a target object being served
@@ -98,13 +84,12 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
   // exception. See the CORBA C++ mapping, section 1.38.3.
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
   PortableServer::POA_var poa =
@@ -112,33 +97,26 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::PolicyList_var client_exposed_policies =
     poa_current_impl->poa ()->client_exposed_policies (
-        poa_current_impl->priority ()
-        ACE_ENV_ARG_PARAMETER
-      );
-  ACE_CHECK_RETURN (0);
+        poa_current_impl->priority ());
 
   CORBA::RepositoryId_var pinterface =
-    this->_primary_interface (poa_current_impl->object_id (),
-                              poa.in ()
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->_primary_interface (poa_current_impl->object_id (), poa.in ());
 
   return
     poa_current_impl->poa ()->key_to_stub (poa_current_impl->object_key (),
                                            pinterface.in (),
-                                           poa_current_impl->priority ()
-                                           ACE_ENV_ARG_PARAMETER);
+                                           poa_current_impl->priority ());
 }
 
 void
-TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
-                                      void * /* context */
-                                      ACE_ENV_ARG_DECL)
+TAO_DynamicImplementation::_dispatch (
+  TAO_ServerRequest &request,
+  TAO::Portable_Server::Servant_Upcall * /* context */)
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())
     {
-      if (!CORBA::is_nil (request.forward_location ()))
+      if (request.is_forwarded ())
         {
           request.init_reply ();
           request.tao_send_reply ();
@@ -161,37 +139,41 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
   ACE_NEW (dsi_request,
            CORBA::ServerRequest (request));
 
-  ACE_TRY
+  try
     {
       // Delegate to user.
-      this->invoke (dsi_request
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->invoke (dsi_request);
 
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
         {
-          dsi_request->dsi_marshal (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          dsi_request->dsi_marshal ();
         }
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (::CORBA::Exception& ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
         {
-          request.tao_send_reply_exception (ex);
+          if (request.collocated ()
+               && request.operation_details ()->cac () != 0)
+            {
+              // If we have a cac it will handle the exception and no
+              // need to do any further processing
+              request.operation_details ()->cac ()->handle_corba_exception (
+                request, &ex);
+              return;
+            }
+          else
+            request.tao_send_reply_exception (ex);
         }
     }
-  ACE_ENDTRY;
 
-  CORBA::release (dsi_request);
+  ::CORBA::release (dsi_request);
 }
 
 CORBA::RepositoryId
-TAO_DynamicImplementation::get_id_from_primary_interface (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
+TAO_DynamicImplementation::get_id_from_primary_interface ()
 {
   // If this method is called outside of the
   // context of a request invocation on a target object being served
@@ -199,19 +181,17 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
   // exception. See the CORBA C++ mapping, section 1.38.3.
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
-  PortableServer::POA_var poa =
-    poa_current_impl->get_POA ();
+  PortableServer::POA_var poa = poa_current_impl->get_POA ();
 
-  return this->_primary_interface (poa_current_impl->object_id (),
-                                   poa.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+  return this->_primary_interface (poa_current_impl->object_id (), poa.in ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

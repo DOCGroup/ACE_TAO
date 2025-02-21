@@ -1,0 +1,31 @@
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+
+  custom_only = 1
+}
+
+project(*server): taoserver, iortable, imr_client, avoids_minimum_corba, avoids_corba_e_micro {
+  after += *idl
+  exename = server
+  IDL_Files {
+  }
+  Source_Files {
+    Test_i.cpp
+    server.cpp
+    TestC.cpp
+    TestS.cpp
+  }
+}
+
+project(*client): taoclient, anytypecode, avoids_minimum_corba {
+  after += *idl
+  exename = client
+  IDL_Files {
+  }
+  Source_Files {
+    client.cpp
+    TestC.cpp
+  }
+}

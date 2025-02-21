@@ -3,21 +3,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 # -*- perl -*-
-# $Id$
 
-use lib '../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
+
+my $target = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
 
 print STDERR "\n\n==== Running Codec test\n";
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("client");
-}
-else {
-    $T = new PerlACE::Process ("client");
-}
+$T = $target->CreateProcess ("client");
 
-$test = $T->SpawnWaitKill (15);
+$test = $T->SpawnWaitKill ($target->ProcessStartWaitInterval());
+
+$target->GetStderrLog();
 
 if ($test != 0) {
     print STDERR "ERROR: Codec test returned $test\n";

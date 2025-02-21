@@ -1,37 +1,111 @@
-#include "SSLIOP_Factory.h"
-#include "SSLIOP_Acceptor.h"
-#include "SSLIOP_Connector.h"
-#include "SSLIOP_ORBInitializer.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Factory.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
+#include "orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Read_Buffer.h"
+#include "ace/Malloc_Base.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#if defined (ACE_WIN32)
+# include <conio.h>
+#elif defined (ACE_HAS_TERMIOS)
+# include "ace/os_include/os_termios.h"
+#endif /* ACE_WIN32 */
 
 #include "orbsvcs/Security/Security_ORBInitializer.h"  /// @todo should go away
 
 #include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "tao/PI/DLL_Resident_ORB_Initializer.h"
 
 #include "ace/SSL/sslconf.h"
 #include "ace/SSL/SSL_Context.h"
 
-ACE_RCSID (SSLIOP,
-           SSLIOP_Factory,
-           "$Id$")
-
-
 // An SSL session id seed value. Needs not be too unique, just somewhat
 // different. See the OpenSSL manual
 static const unsigned char session_id_context_[] =
-  "$Id$";
+  "";
 
 // Protocol name prefix
-static const char *prefix_[] = {"iiop", "ssliop"};
+static const char * const the_prefix[] = {"iiop", "ssliop"};
 
 // An OS-dependent path separator character
-static const char *TAO_PATH_SEPARATOR_STRING =
+static ACE_TCHAR const TAO_PATH_SEPARATOR_STRING[] =
 #if defined(ACE_WIN32)
   ACE_TEXT (";");
 #else
   ACE_TEXT (":");
 #endif
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+namespace
+{
+  size_t
+  secret_input (char *buf, size_t max)
+  {
+    size_t len = 0;
+    char c = '\0';
+#if defined (ACE_WIN32)
+    if (!ACE_OS::isatty (ACE_STDIN))
+      {
+        len = ACE_OS::fread (buf, 1, max, stdin);
+        buf[len] = 0;
+        return len;
+      }
+#elif defined (ACE_HAS_TERMIOS)
+    struct termios old_tio, new_tio;
+
+    if (ACE_OS::isatty (ACE_STDIN))
+      {
+        ::tcgetattr (ACE_STDIN, &old_tio);
+        new_tio = old_tio;
+        new_tio.c_lflag &= (~ICANON & ~ECHO);
+        ::tcsetattr (ACE_STDIN, TCSANOW, &new_tio);
+      }
+#endif /* ACE_WIN32 */
+
+    for (len = 0; len < max; )
+      {
+#if defined (ACE_WIN32)
+        c = ::_getch ();
+#else
+        int ci = ::getchar ();
+        if (ci == EOF)
+          {
+            break;
+          }
+        c = (char)ci;
+#endif /* ACE_WIN32 */
+        if (c >= ' ' && c <= '~')
+          {
+            buf[len++] = c;
+            ACE_OS::printf ("%c", '*');
+          }
+        else if (len > 0 && (c == 8 || c == 127))
+          {
+            buf[--len] = 0;
+            ACE_OS::printf ("\b \b");
+          }
+        else if (c == '\n' || c == '\r' || c == '\0')
+          {
+            break;
+          }
+      }
+    buf[len] = 0;
+
+#if !defined (ACE_WIN32) && defined (ACE_HAS_TERMIOS)
+    if (ACE_OS::isatty (ACE_STDIN))
+      {
+        /* restore the former settings */
+        ::tcsetattr (ACE_STDIN, TCSANOW, &old_tio);
+      }
+#endif /* !ACE_WIN32 */
+    return len;
+  }
+}
 
 namespace TAO
 {
@@ -42,14 +116,129 @@ namespace TAO
   }
 }
 
-TAO::SSLIOP::Protocol_Factory::Protocol_Factory (void)
+ACE_CString TAO::SSLIOP::Protocol_Factory::pem_passwd_;
+const ACE_CString key_prompt("prompt:");
+const ACE_CString key_file("file:");
+const ACE_CString key_env("env:");
+
+int
+TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *the_passwd)
+{
+  const char *passwd_str = reinterpret_cast<const char *>(the_passwd);
+  int len = 0;
+  if (the_passwd != 0)
+    {
+      len = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (passwd_str));
+    }
+  else
+    {
+      if (pem_passwd_.length() == 0)
+        {
+          return 0;
+        }
+      if (pem_passwd_.find (key_prompt) == 0)
+        {
+          size_t ofs = key_prompt.length();
+          // do prompt
+          const char *prompt = pem_passwd_.length() == ofs ?
+            "Enter password" : pem_passwd_.c_str() + ofs;
+          ACE_OS::printf ("%s: ",prompt);
+          pem_passwd_.resize (size);
+          pem_passwd_.clear ();
+          len = secret_input (buf, size);
+          ACE_OS::printf ("\n");
+          pem_passwd_ = buf;
+          return len;
+       }
+      else if (pem_passwd_.find (key_file) == 0)
+        {
+          size_t ofs = key_file.length();
+          const char *fname = pem_passwd_.c_str() + ofs;
+          // do file
+          FILE* file = ACE_OS::fopen (fname,ACE_TEXT("r"));
+
+          if (file == 0)
+            {
+              if (TAO_debug_level > 0)
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb ")
+                                ACE_TEXT ("cannot open file: %C\n"),
+                                fname));
+              pem_passwd_ = "";
+            }
+          else
+            {
+              ACE_Read_Buffer reader (file, true);
+              char* string = reader.read ();
+              if (string != 0)
+                {
+                  pem_passwd_ = string;
+                  reader.alloc ()->free (string);
+                }
+              else
+                {
+                  if (TAO_debug_level > 0)
+                    ORBSVCS_DEBUG ((LM_DEBUG,
+                                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb ")
+                                    ACE_TEXT ("cannot read file: %C\n"),
+                                    fname));
+                  pem_passwd_ = "";
+                }
+              ACE_OS::fclose (file);
+            }
+        }
+      else if (pem_passwd_.find (key_env) == 0)
+        {
+          size_t ofs = key_env.length();
+          // do env
+          const char *env = pem_passwd_.length() == ofs ?
+            "TAO_PEM_PASSWORD" : pem_passwd_.c_str() + ofs;
+          char *pwd = ACE_OS::getenv (env);
+          if (pwd != 0)
+            {
+              pem_passwd_ = pwd;
+            }
+          else
+            {
+              if (TAO_debug_level > 0)
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb ")
+                                ACE_TEXT ("invalid env: %C\n"),
+                                env));
+              pem_passwd_ = "";
+            }
+        }
+
+      len = ACE_Utils::truncate_cast<size_t> (pem_passwd_.length());
+      if (len >= size)
+        {
+          if (TAO_debug_level > 0)
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory::pem_passwd_cb truncating ")
+                            ACE_TEXT ("supplied password from len %d to %d\n"),
+                            len, size - 1));
+          len = size - 1;
+          pem_passwd_ = pem_passwd_.substr(0,len);
+        }
+      passwd_str = pem_passwd_.c_str ();
+      ::SSL_CTX_set_default_passwd_cb_userdata (ACE_SSL_Context::instance ()->context(),
+                                                (void *) passwd_str);
+    }
+
+  ACE_OS::strncpy (buf, pem_passwd_.c_str(), len);
+  buf[len] = 0;
+  return len;
+}
+
+TAO::SSLIOP::Protocol_Factory::Protocol_Factory ()
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      qop_ (::Security::SecQOPIntegrityAndConfidentiality),
-     timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT)
+     timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT),
+     check_host_ (false)
 {
 }
 
-TAO::SSLIOP::Protocol_Factory::~Protocol_Factory (void)
+TAO::SSLIOP::Protocol_Factory::~Protocol_Factory ()
 {
 }
 
@@ -57,34 +246,35 @@ int
 TAO::SSLIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_[0]) == 0)
-     || (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_[1]) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix[0]) == 0)
+     || (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix[1]) == 0);
 }
 
 const char *
-TAO::SSLIOP::Protocol_Factory::prefix (void) const
+TAO::SSLIOP::Protocol_Factory::prefix () const
 {
    // Note: This method doesn't seem to be used anywhere. Moreover,
    // keeping it may make things more confusing - a Factory can
    // well be handling multiple protocol prefixes, not just one!
    // Shouldn't it be deprecated?
-  return ::prefix_[0];
+  return ::the_prefix[0];
 }
 
 char
-TAO::SSLIOP::Protocol_Factory::options_delimiter (void) const
+TAO::SSLIOP::Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
+TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
 
   ACE_NEW_RETURN (acceptor,
                   TAO::SSLIOP::Acceptor (this->qop_,
-                                         this->timeout_),
+                                         this->timeout_,
+                                         this->check_host_),
                   0);
 
   return acceptor;
@@ -94,15 +284,11 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 // Parses a X509 path. Beware: This function modifies
 // the buffer pointed to by arg!
 int
-TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg,
-                                                   char **path)
+TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char *&path)
 {
-  ACE_ASSERT (arg!= 0);
-  ACE_ASSERT (path!= 0);
-
   char *lst = 0;
   const char *type_name = ACE_OS::strtok_r (arg, ":", &lst);
-  *path = ACE_OS::strtok_r (0, "", &lst);
+  path = CORBA::string_dup (ACE_OS::strtok_r (0, "", &lst));
 
   if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
       return SSL_FILETYPE_ASN1;
@@ -113,28 +299,22 @@ TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg,
   return -1;
 }
 
-
 int
-TAO::SSLIOP::Protocol_Factory::init (int argc,
-                                     char* argv[])
+TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 {
-  char *certificate_path = 0;
-  char *private_key_path = 0;
-  char *dhparams_path = 0;
-  char *ca_file = 0;
-  char *ca_dir = 0;
-  char *rand_path = 0;
+  CORBA::String_var certificate_path;
+  CORBA::String_var private_key_path;
+  CORBA::String_var dhparams_path;
+  CORBA::String_var ec_name;
+  CORBA::String_var ca_file;
+  CORBA::String_var ca_dir;
+  ACE_TCHAR *rand_path = 0;
 
   int certificate_type = -1;
   int private_key_type = -1;
   int dhparams_type = -1;
 
   int prevdebug = -1;
-
-  CSIIOP::AssociationOptions csiv2_target_supports =
-    CSIIOP::Integrity | CSIIOP::Confidentiality;
-  CSIIOP::AssociationOptions csiv2_target_requires =
-    CSIIOP::Integrity | CSIIOP::Confidentiality;
 
   // Force the Singleton instance to be initialized/instantiated.
   // Some SSLIOP option combinations below will result in the
@@ -143,25 +323,29 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
   // underlying SSL library (e.g. OpenSSL), which occurs when an
   // ACE_SSL_Context is instantiated.
 
+  // This directive processing initializes ACE_SSL_Context as well
+  // as registers ACE_SSL for correct cleanup.
+  ACE_Service_Config::process_directive (
+    ACE_STATIC_SERVICE_DIRECTIVE ("ACE_SSL_Initializer", ""));
+
   // The code is cleaner this way anyway.
   ACE_SSL_Context * ssl_ctx = ACE_SSL_Context::instance ();
-  ACE_ASSERT (ssl_ctx != 0);
 
   size_t session_id_len =
     (sizeof session_id_context_ >= SSL_MAX_SSL_SESSION_ID_LENGTH)
       ? SSL_MAX_SSL_SESSION_ID_LENGTH
       : sizeof session_id_context_;
 
-  // Note that this function returns 1, if the operation succeded.
+  // Note that this function returns 1, if the operation succeeded.
   // See SSL_CTX_set_session_id_context(3)
   if( 1 != ::SSL_CTX_set_session_id_context (ssl_ctx->context(),
                                              session_id_context_,
                                              session_id_len))
   {
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) Unable to set the session id ")
-                  ACE_TEXT ("context to \'%s\'\n"), session_id_context_));
+      ORBSVCS_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - Unable to set the session id ")
+                  ACE_TEXT ("context to \'%C\'\n"), session_id_context_));
 
     return -1;
   }
@@ -169,9 +353,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
   for (int curarg = 0; curarg != argc; ++curarg)
     {
       if ((ACE_OS::strcasecmp (argv[curarg],
-                               "-verbose") == 0)
+                               ACE_TEXT("-verbose")) == 0)
           || (ACE_OS::strcasecmp (argv[curarg],
-                                  "-v") == 0))
+                                  ACE_TEXT("-v")) == 0))
         {
           if (TAO_debug_level == 0)
             {
@@ -181,19 +365,18 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLNoProtection") == 0)
+                                   ACE_TEXT("-SSLNoProtection")) == 0)
         {
           // Enable the eNULL cipher.  Note that enabling the "eNULL"
           // cipher only disables encryption.  However, certificate
           // exchanges will still occur.
           if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
-                                         "DEFAULT:eNULL") == 0)
+                                         "ALL:eNULL") == 0)
             {
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) Unable to set eNULL ")
-                            ACE_TEXT ("SSL cipher in SSLIOP ")
-                            ACE_TEXT ("factory.\n")));
+              ORBSVCS_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - Unable to set eNULL ")
+                          ACE_TEXT ("SSL cipher in SSLIOP ")
+                          ACE_TEXT ("factory.\n")));
 
               return -1;
             }
@@ -204,65 +387,50 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
           // overridden by a SecurityLevel2::QOPPolicy in the object
           // reference.
           this->qop_ = ::Security::SecQOPNoProtection;
-
-          ACE_SET_BITS (csiv2_target_supports,
-                        CSIIOP::NoProtection);
-
-          ACE_CLR_BITS (csiv2_target_requires,
-                        CSIIOP::Confidentiality);
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLCertificate") == 0)
+                                   ACE_TEXT("-SSLCertificate")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
-              certificate_type = parse_x509_file (argv[curarg], &certificate_path);
+              certificate_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+                                                  certificate_path.out());
             }
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLPrivateKey") == 0)
+                                   ACE_TEXT("-SSLPrivateKey")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
-              private_key_type = parse_x509_file (argv[curarg], &private_key_path);
+              private_key_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+                                                  private_key_path.out ());
             }
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLAuthenticate") == 0)
+                                   ACE_TEXT("-SSLAuthenticate")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
               int mode = SSL_VERIFY_NONE;
-              if (ACE_OS::strcasecmp (argv[curarg], "NONE") == 0)
+              if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("NONE")) == 0)
                 {
                   mode = SSL_VERIFY_NONE;
                 }
-              else if (ACE_OS::strcasecmp (argv[curarg], "SERVER") == 0)
+              else if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("SERVER")) == 0)
                 {
                   mode = SSL_VERIFY_PEER;
-
-                  ACE_SET_BITS (csiv2_target_supports,
-                                CSIIOP::EstablishTrustInTarget
-                                | CSIIOP::EstablishTrustInClient);
                 }
-              else if (ACE_OS::strcasecmp (argv[curarg], "CLIENT") == 0
+              else if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("CLIENT")) == 0
                        || ACE_OS::strcasecmp (argv[curarg],
-                                              "SERVER_AND_CLIENT") == 0)
+                                              ACE_TEXT("SERVER_AND_CLIENT")) == 0)
                 {
                   mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
-
-                  ACE_SET_BITS (csiv2_target_supports,
-                                CSIIOP::EstablishTrustInTarget
-                                | CSIIOP::EstablishTrustInClient);
-
-                  ACE_SET_BITS (csiv2_target_requires,
-                                CSIIOP::EstablishTrustInClient);
                 }
 
               ssl_ctx->default_verify_mode (mode);
@@ -270,16 +438,16 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLAcceptTimeout") == 0)
+                                   ACE_TEXT("-SSLAcceptTimeout")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
               float timeout = 0;
 
-              if (sscanf (argv[curarg], "%f", &timeout) != 1
+              if (sscanf (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), "%f", &timeout) != 1
                   || timeout < 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
+                ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    "ERROR: Invalid -SSLAcceptTimeout "
                                    "value: %s.\n",
                                    argv[curarg]),
@@ -290,37 +458,38 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLDHparams") == 0)
+                                   ACE_TEXT("-SSLDHparams")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
-              dhparams_type = parse_x509_file (argv[curarg], &dhparams_path);
+              dhparams_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+                                               dhparams_path.out());
             }
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLCAfile") == 0)
+                                   ACE_TEXT("-SSLCAfile")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
-              (void) parse_x509_file (argv[curarg], &ca_file);
+              (void) parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), ca_file.out());
             }
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLCApath") == 0)
+                                   ACE_TEXT("-SSLCApath")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
-              ca_dir = argv[curarg];
+              ca_dir = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
             }
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLrand") == 0)
+                                   ACE_TEXT("-SSLrand")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -328,6 +497,71 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
               rand_path = argv[curarg];
             }
         }
+
+#if !defined (__Lynx__)
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLServerCipherOrder")) == 0)
+        {
+          ::SSL_CTX_set_options (ssl_ctx->context (),
+                                 SSL_OP_CIPHER_SERVER_PREFERENCE);
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLCipherList")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
+                                             ACE_TEXT_ALWAYS_CHAR(argv[curarg])) == 0)
+                {
+                  ORBSVCS_DEBUG ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) - Unable to set cipher ")
+                              ACE_TEXT ("list in SSLIOP ")
+                              ACE_TEXT ("factory.\n")));
+
+                  return -1;
+                }
+            }
+        }
+#endif
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLVersionList")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              ssl_ctx->filter_versions (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
+            }
+        }
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLPassword")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              pem_passwd_ = ACE_TEXT_ALWAYS_CHAR(argv[curarg]);
+            }
+        }
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLCheckHost")) == 0)
+        {
+          this->check_host_ = true;
+        }
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT ("-SSLEcName")) == 0)
+        {
+          ++curarg;
+          if (curarg < argc)
+            {
+              ec_name = static_cast<const char *>(ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
+            }
+        }
+    }
+
+  if (pem_passwd_.length() > 0)
+    {
+      ::SSL_CTX_set_default_passwd_cb (ssl_ctx->context(), pem_passwd_cb);
     }
 
   // Load some (more) entropy from the user specified sources
@@ -335,27 +569,25 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
   if (rand_path != 0)
   {
     short errors = 0;
-    char *file_name = 0;
-    const char *path = ACE_OS::strtok_r (rand_path,
-                                         TAO_PATH_SEPARATOR_STRING,
-                                         &file_name);
+    ACE_TCHAR *file_name = 0;
+    const ACE_TCHAR *path = ACE_OS::strtok_r (rand_path,
+                                              TAO_PATH_SEPARATOR_STRING,
+                                              &file_name);
     while ( path != 0)
     {
-      if( -1 == ssl_ctx->seed_file (path, -1))
+      if( -1 == ssl_ctx->seed_file (ACE_TEXT_ALWAYS_CHAR(path), -1))
       {
-        errors++;
-
-        if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Failed to load ")
-                      ACE_TEXT ("more entropy from <%s>: %m\n"), path));
+        ++errors;
+        ORBSVCS_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - Failed to load ")
+                    ACE_TEXT ("more entropy from <%s>: %m\n"), path));
       }
       else
       {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) Loaded ")
-                        ACE_TEXT ("more entropy from <%s>\n"), path));
+        if (TAO_debug_level > 0)
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - Loaded ")
+                      ACE_TEXT ("more entropy from <%s>\n"), path));
       }
 
       path = ACE_OS::strtok_r (0, TAO_PATH_SEPARATOR_STRING, &file_name);
@@ -367,37 +599,38 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
 
   // Load any trusted certificates explicitely rather than relying on
   // previously set SSL_CERT_FILE and/or SSL_CERT_PATH environment variable
-  if (ca_file != 0 || ca_dir != 0)
+  if (ca_file.in () != 0 || ca_dir.in () != 0)
     {
-      if (ssl_ctx->load_trusted_ca (ca_file, ca_dir) != 0)
+      if (ssl_ctx->load_trusted_ca (ca_file.in (), ca_dir.in ()) != 0)
         {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) Unable to load ")
-                        ACE_TEXT ("CA certs from %s%s%s\n"),
-                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ")
-                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV)
-                                                    ACE_TEXT (" env var (if any)")),
-                        ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ")
-                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV)
-                                                  ACE_TEXT (" env var (if any)"))));
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - Unable to load ")
+                          ACE_TEXT ("CA certs from %C%C%C\n"),
+                          ((ca_file.in () != 0) ? ca_file.in () : "a file pointed to by "
+                           ACE_SSL_CERT_FILE_ENV
+                           " env var (if any)"),
+                          ACE_TEXT (" and "),
+                          ((ca_dir.in () != 0) ?
+                           ca_dir.in () : "a directory pointed to by "
+                           ACE_SSL_CERT_DIR_ENV
+                           " env var (if any)")));
 
           return -1;
         }
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_INFO,
-                        ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
-                        ACE_TEXT ("Trusted Certificates from %s%s%s\n"),
-                        ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ")
-                                                    ACE_TEXT (ACE_SSL_CERT_FILE_ENV)
-                                                    ACE_TEXT (" env var (if any)")),
-                        ACE_TEXT (" and "),
-                        ((ca_dir != 0) ? ca_dir : ACE_TEXT ("a directory pointed to by ")
-                                                  ACE_TEXT (ACE_SSL_CERT_DIR_ENV)
-                                                  ACE_TEXT (" env var (if any)"))));
+            ORBSVCS_DEBUG ((LM_INFO,
+                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
+                            ACE_TEXT ("Trusted Certificates from %C%C%C\n"),
+                            ((ca_file.in () != 0) ? ca_file.in () : "a file pointed to by "
+                             ACE_SSL_CERT_FILE_ENV
+                             " env var (if any)"),
+                            ACE_TEXT (" and "),
+                            ((ca_dir.in () != 0) ?
+                             ca_dir.in () : "a directory pointed to by "
+                             ACE_SSL_CERT_DIR_ENV
+                             " env var (if any)")));
         }
     }
 
@@ -405,7 +638,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
   // then we do that here, otherwise we load them in from the cert file.
   // Note that we only do this on the server side, I think so we might
   // need to defer this 'til later in the acceptor or something...
-  if (dhparams_path == 0)
+  if (dhparams_path.in() == 0)
     {
       // If the user didn't explicitly specify a DH parameters file, we
       // also might find it concatenated in the certificate file.
@@ -414,44 +647,43 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
       dhparams_type = certificate_type;
     }
 
-  if (dhparams_path != 0)
+  if (dhparams_path.in() != 0)
     {
-      if (ssl_ctx->dh_params (dhparams_path,
+      if (ssl_ctx->dh_params (dhparams_path.in(),
                               dhparams_type) != 0)
         {
-          if (dhparams_path != certificate_path)
+          if (ACE_OS::strcmp (dhparams_path.in(), certificate_path.in()))
             {
               // We only want to fail catastrophically if the user specified
               // a dh parameter file and we were unable to actually find it
               // and load from it.
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
-                            ACE_TEXT ("unable to set ")
-                            ACE_TEXT ("DH parameters <%s>\n"),
-                            dhparams_path));
+              ORBSVCS_ERROR ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory: ")
+                              ACE_TEXT ("unable to set ")
+                              ACE_TEXT ("DH parameters <%C>\n"),
+                              dhparams_path.in () ));
               return -1;
             }
           else
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_INFO,
-                            ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
-                            ACE_TEXT ("No DH parameters found in ")
-                            ACE_TEXT ("certificate <%s>; either none ")
-                            ACE_TEXT ("are needed (RSA) or problems ")
-                            ACE_TEXT ("will ensue later.\n"),
-                            dhparams_path));
+                ORBSVCS_DEBUG ((LM_INFO,
+                                ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory: ")
+                                ACE_TEXT ("No DH parameters found in ")
+                                ACE_TEXT ("certificate <%C>; either none ")
+                                ACE_TEXT ("are needed (RSA) or problems ")
+                                ACE_TEXT ("will ensue later.\n"),
+                                dhparams_path.in ()));
             }
         }
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_INFO,
-                        ACE_TEXT ("(%P|%t) SSLIOP loaded ")
-                        ACE_TEXT ("Diffie-Hellman params ")
-                        ACE_TEXT ("from %s\n"),
-                        dhparams_path));
+            ORBSVCS_DEBUG ((LM_INFO,
+                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
+                            ACE_TEXT ("Diffie-Hellman params ")
+                            ACE_TEXT ("from %C\n"),
+                            dhparams_path.in ()));
         }
     }
 
@@ -459,60 +691,101 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
   // ACE_SSL_Context attempts to check the private key for
   // consistency.  That check requires the certificate to be available
   // in the underlying SSL_CTX.
-  if (certificate_path != 0)
+  if (certificate_path.in() != 0)
     {
-      if (ssl_ctx->certificate (certificate_path,
-                                certificate_type) != 0)
+      if (ssl_ctx->certificate (certificate_path.in(), certificate_type) != 0)
         {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                        ACE_TEXT ("SSL certificate <%s> ")
-                        ACE_TEXT ("in SSLIOP factory.\n"),
-                        certificate_path));
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - Unable to set ")
+                          ACE_TEXT ("SSL certificate <%C> ")
+                          ACE_TEXT ("in SSLIOP factory.\n"),
+                          certificate_path.in()));
 
           return -1;
         }
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_INFO,
-                        ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
-                        ACE_TEXT ("SSL certificate ")
-                        ACE_TEXT ("from %s\n"),
-                        certificate_path));
+            ORBSVCS_DEBUG ((LM_INFO,
+                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
+                            ACE_TEXT ("SSL certificate ")
+                            ACE_TEXT ("from %C\n"),
+                            certificate_path.in()));
         }
     }
 
-  if (private_key_path != 0)
+  if (private_key_path.in() != 0)
     {
-      if (ssl_ctx->private_key (private_key_path,
-                                private_key_type) != 0)
+      if (ssl_ctx->private_key (private_key_path.in(), private_key_type) != 0)
         {
-          if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) Unable to set ")
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - Unable to set ")
                           ACE_TEXT ("SSL private key ")
-                          ACE_TEXT ("<%s> in SSLIOP factory.\n"),
-                          private_key_path));
-            }
+                          ACE_TEXT ("<%C> in SSLIOP factory.\n"),
+                          private_key_path.in ()));
 
           return -1;
         }
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_INFO,
-                        ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
-                        ACE_TEXT ("Private Key ")
-                        ACE_TEXT ("from %s\n"),
-                        private_key_path));
+            ORBSVCS_DEBUG ((LM_INFO,
+                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
+                            ACE_TEXT ("Private Key ")
+                            ACE_TEXT ("from <%C>\n"),
+                            private_key_path.in ()));
         }
     }
 
-  if (this->register_orb_initializer (csiv2_target_supports,
-                                      csiv2_target_requires) != 0)
+  if (ec_name.in ())
+    {
+#ifdef OPENSSL_NO_EC
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - Unable to apply -SSLEcName ")
+                      ACE_TEXT ("due to lack of EC support in OpenSSL\n")));
+      return -1;
+#else
+      int const ec_nid = OBJ_sn2nid (ec_name.in ());
+
+      if (ec_nid == NID_undef)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - Unable to obtain ")
+                          ACE_TEXT ("EC NID for <%C> in SSLIOP factory.\n"),
+                          ec_name.in ()));
+          return -1;
+        }
+
+      EC_KEY *const ecdh = EC_KEY_new_by_curve_name (ec_nid);
+      if (!ecdh)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - Unable to set Curve Name ")
+                          ACE_TEXT ("<%C> in SSLIOP factory.\n"),
+                          ec_name.in ()));
+          return -1;
+        }
+
+      if (1 != ::SSL_CTX_set_tmp_ecdh (ssl_ctx->context (), ecdh))
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - Unable to set temp ECDH ")
+                          ACE_TEXT ("<%C> in SSLIOP factory.\n"),
+                          ec_name.in ()));
+          return -1;
+        }
+
+      if (TAO_debug_level)
+        {
+          ORBSVCS_DEBUG ((LM_INFO,
+                          ACE_TEXT ("TAO (%P|%t) - SSLIOP set EC Curve Name ")
+                          ACE_TEXT ("to <%C>\n"),
+                          ec_name.in ()));
+        }
+#endif
+    }
+
+  if (this->register_orb_initializer () != 0)
     return -1;
 
   if (prevdebug != -1)
@@ -522,12 +795,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
 }
 
 int
-TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
-  CSIIOP::AssociationOptions csiv2_target_supports,
-  CSIIOP::AssociationOptions csiv2_target_requires)
+TAO::SSLIOP::Protocol_Factory::register_orb_initializer ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // @todo: This hard-coding should be fixed once SECIOP is
       // supported.
@@ -535,70 +805,69 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
       PortableInterceptor::ORBInitializer_ptr tmp;
       ACE_NEW_THROW_EX (tmp,
                         TAO::Security::ORBInitializer,
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
-
+                        CORBA::NO_MEMORY
+                        (CORBA::SystemException::_tao_minor_code
+                         (TAO::VMCID, ENOMEM), CORBA::COMPLETED_NO));
       PortableInterceptor::ORBInitializer_var initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::ORBInitializer_ptr tmp_dll =
+        PortableInterceptor::ORBInitializer::_nil ();
+      ACE_NEW_THROW_EX (tmp_dll,
+                        PortableInterceptor::DLL_Resident_ORB_Initializer
+                        (initializer.in (), ACE_TEXT ("TAO_Security")),
+                        CORBA::NO_MEMORY
+                        (CORBA::SystemException::_tao_minor_code
+                         (TAO::VMCID, ENOMEM), CORBA::COMPLETED_NO));
 
+      PortableInterceptor::ORBInitializer_var dll_initializer = tmp_dll;
+      PortableInterceptor::register_orb_initializer (dll_initializer.in ());
       // Register the SSLIOP ORB initializer.
-      // PortableInterceptor::ORBInitializer_ptr tmp;
       ACE_NEW_THROW_EX (tmp,
-                        TAO::SSLIOP::ORBInitializer (this->qop_,
-                                                     csiv2_target_supports,
-                                                     csiv2_target_requires),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
+                        TAO::SSLIOP::ORBInitializer (this->qop_),
+                        CORBA::NO_MEMORY
+                        (CORBA::SystemException::_tao_minor_code
+                         (TAO::VMCID, ENOMEM), CORBA::COMPLETED_NO));
 
-      //PortableInterceptor::ORBInitializer_var initializer = tmp;
       initializer = tmp;
-
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      tmp_dll = PortableInterceptor::ORBInitializer::_nil ();
+      ACE_NEW_THROW_EX (tmp_dll,
+                        PortableInterceptor::DLL_Resident_ORB_Initializer
+                        (initializer.in (), ACE_TEXT ("TAO_SSLIOP")),
+                        CORBA::NO_MEMORY
+                        (CORBA::SystemException::_tao_minor_code
+                         (TAO::VMCID, ENOMEM), CORBA::COMPLETED_NO));
+      dll_initializer = tmp_dll;
+      PortableInterceptor::register_orb_initializer (dll_initializer.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to register SSLIOP ORB "
-                           "initializer.");
+      ex._tao_print_exception (
+        "Unable to register SSLIOP ORB initializer.");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 
 TAO_Connector *
-TAO::SSLIOP::Protocol_Factory::make_connector (void)
+TAO::SSLIOP::Protocol_Factory::make_connector ()
 {
-  TAO_Connector *connector = 0;
+  TAO::SSLIOP::Connector *connector = 0;
 
   ACE_NEW_RETURN (connector,
-                  TAO::SSLIOP::Connector (this->qop_),
+                  TAO::SSLIOP::Connector (this->qop_, this->check_host_),
                   0);
   return connector;
 }
 
 int
-TAO::SSLIOP::Protocol_Factory::requires_explicit_endpoint (void) const
+TAO::SSLIOP::Protocol_Factory::requires_explicit_endpoint () const
 {
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_SSLIOP_Protocol_Factory,
                        ACE_TEXT ("SSLIOP_Factory"),

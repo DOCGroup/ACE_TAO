@@ -1,49 +1,36 @@
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/tests/Simple/chat
-//
-// = FILENAME
-//    Receiver_i.cpp
-//
-// = DESCRIPTION
-//    Implements the Receiver_i class, which is used by the chat client.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Receiver_i.cpp
+ *
+ *  Implements the Receiver_i class, which is used by the chat client.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Receiver_i.h"
 
-Receiver_i::Receiver_i (void)
+Receiver_i::Receiver_i ()
   : orb_ (0)
 {
 }
 
-Receiver_i::~Receiver_i (void)
+Receiver_i::~Receiver_i ()
 {
 }
 
 void
-Receiver_i::message (const char *msg
-                     ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+Receiver_i::message (const char *msg)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ": %s\n",
+              ACE_TEXT (": %C\n"),
               msg));
 }
 
 void
-Receiver_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
- ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+Receiver_i::shutdown ()
 {
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();

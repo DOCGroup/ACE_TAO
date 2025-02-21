@@ -1,0 +1,20 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  interface Hello
+  {
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+
+    /// Lets make sure things are working
+    void ping ();
+
+    /// Calling this method returns true if a FT request
+    /// service context was received in the server
+    boolean has_ft_request_service_context ();
+  };
+};

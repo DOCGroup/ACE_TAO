@@ -4,14 +4,11 @@
 /**
  *  @file    Fixed_Size_SArgument_T.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  *  @author Ossama Othman
  */
 //=============================================================================
-
 
 #ifndef TAO_FIXED_SIZE_SARGUMENT_T_H
 #define TAO_FIXED_SIZE_SARGUMENT_T_H
@@ -24,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -35,11 +34,10 @@ namespace TAO
    * Skeleton class template for operation "IN" arguments of fixed
    * size IDL types.
    */
-  template<typename S>
-  class In_Fixed_Size_SArgument_T : public Argument
+  template<typename S, template <typename> class Insert_Policy>
+  class In_Fixed_Size_SArgument_T : public InArgument
   {
   public:
-
     /**
      * @name @c TAO::Argument Method Overrides
      *
@@ -52,18 +50,16 @@ namespace TAO
     virtual CORBA::Boolean demarshal (TAO_InputCDR & cdr);
 
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter & p);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
     /// Retrieve underlying argument.
-    S const & arg (void) const;
+    S const & arg () const;
 
   private:
-
     /// Reference to the "IN" argument.
     S x_;
-
   };
 
   // ------------------------------------------------------------
@@ -74,13 +70,12 @@ namespace TAO
    * @brief Template class for INOUT skeleton arg of fixed size IDL types.
    *
    */
-  template<typename S>
-  class Inout_Fixed_Size_SArgument_T : public Argument
+  template<typename S, template <typename> class Insert_Policy>
+  class Inout_Fixed_Size_SArgument_T : public InoutArgument
   {
   public:
-
     /// Constructor.
-    Inout_Fixed_Size_SArgument_T (void);
+    Inout_Fixed_Size_SArgument_T ();
 
     /**
      * @name @c TAO::Argument Method Overrides
@@ -91,17 +86,16 @@ namespace TAO
      * @see @c TAO::Argument.
      */
     //@{
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
-    S & arg (void);
+    S & arg ();
 
   private:
-
     S x_;
   };
 
@@ -113,13 +107,12 @@ namespace TAO
    * @brief Template class for OUT skeleton argument of fixed size IDL types.
    *
    */
-  template<typename S>
-  class Out_Fixed_Size_SArgument_T : public Argument
+  template<typename S, template <typename> class Insert_Policy>
+  class Out_Fixed_Size_SArgument_T : public OutArgument
   {
   public:
-
     /// Constructor.
-    Out_Fixed_Size_SArgument_T (void);
+    Out_Fixed_Size_SArgument_T ();
 
     /**
      * @name @c TAO::Argument Method Overrides
@@ -130,18 +123,16 @@ namespace TAO
      * @see @c TAO::Argument.
      */
     //@{
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
-    S & arg (void);
+    S & arg ();
 
   private:
-
     S x_;
-
   };
 
   // ------------------------------------------------------------
@@ -152,13 +143,12 @@ namespace TAO
    * @brief Template class for return skeleton value of fixed size IDL types.
    *
    */
-  template<typename S>
-  class Ret_Fixed_Size_SArgument_T : public Argument
+  template<typename S, template <typename> class Insert_Policy>
+  class Ret_Fixed_Size_SArgument_T : public RetArgument
   {
   public:
-
     /// Constructor.
-    Ret_Fixed_Size_SArgument_T (void);
+    Ret_Fixed_Size_SArgument_T ();
 
     /**
      * @name @c TAO::Argument Method Overrides
@@ -169,18 +159,16 @@ namespace TAO
      * @see @c TAO::Argument.
      */
     //@{
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
-    S & arg (void);
+    S & arg ();
 
   private:
-
     S x_;
-
   };
 
   // ------------------------------------------------------------
@@ -191,42 +179,36 @@ namespace TAO
    * @brief Template class for argument traits of fixed size IDL types.
    *
    */
-  template<typename T>
+  template<typename T,
+           template <typename> class Insert_Policy>
   struct Fixed_Size_SArg_Traits_T
   {
-    typedef T                                 ret_type;
-    typedef T const &                         in_type;
-    typedef T &                               inout_type;
-    typedef T &                               out_type;
+    typedef T                                               ret_type;
+    typedef T const &                                       in_type;
+    typedef T &                                             inout_type;
+    typedef T &                                             out_type;
 
-    typedef In_Fixed_Size_SArgument_T<T>      in_arg_val;
-    typedef Inout_Fixed_Size_SArgument_T<T>   inout_arg_val;
-    typedef Out_Fixed_Size_SArgument_T<T>     out_arg_val;
-    typedef Ret_Fixed_Size_SArgument_T<T>     ret_val;
+    typedef In_Fixed_Size_SArgument_T<T,Insert_Policy>      in_arg_val;
+    typedef Inout_Fixed_Size_SArgument_T<T,Insert_Policy>   inout_arg_val;
+    typedef Out_Fixed_Size_SArgument_T<T,Insert_Policy>     out_arg_val;
+    typedef Ret_Fixed_Size_SArgument_T<T,Insert_Policy>     ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef in_type                           in_arg_type;
-    typedef inout_type                        inout_arg_type;
-    typedef out_type                          out_arg_type;
-    typedef out_type                          ret_arg_type;
-
+    typedef in_type                                         in_arg_type;
+    typedef inout_type                                      inout_arg_type;
+    typedef out_type                                        out_arg_type;
+    typedef out_type                                        ret_arg_type;
   };
-
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/Fixed_Size_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/PortableServer/Fixed_Size_SArgument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Fixed_Size_SArgument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

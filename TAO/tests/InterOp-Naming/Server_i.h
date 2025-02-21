@@ -1,20 +1,14 @@
-//$Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/InterOp-Naming
-//
-// = FILENAME
-//   Server_i.h
-//
-// = DESCRIPTION
-//    The class is the driver for the INS test server.
-//
-// = AUTHOR
-//   Vishal Kachroo <vishal@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Server_i.h
+ *
+ *  The class is the driver for the INS test server.
+ *
+ *  @author Vishal Kachroo <vishal@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef SERVER_I_H
 #define SERVER_I_H
@@ -26,50 +20,45 @@
 
 class Server_i
 {
-
 public:
-  // = Initialization and termination methods.
+  /// Constructor.
+  Server_i ();
 
-  Server_i (void);
-  // Constructor.
+  /// Destructor.
+  ~Server_i ();
 
-  ~Server_i (void);
-  // Destructor.
-
+  /// Initialize the Server state - parsing arguments and waiting.
   int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
-  // Initialize the Server state - parsing arguments and waiting.
+            ACE_TCHAR *argv[]);
 
+  /// Add an IOR to the ORB-IOR table.
   int add_IOR_to_table (CORBA::String_var ior);
-  // Add an IOR to the ORB-IOR table.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the orb.
+  /// Run the orb.
+  int run ();
 
 protected:
-
+  /// Servant class
   INS_i servant_;
-  // Servant class
 
-  int parse_args (void);
-  // Parses the commandline arguments.
+  /// Parses the commandline arguments.
+  int parse_args ();
 
+  /// The ORB manager - a helper class for accessing the POA and
+  /// registering objects.
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager - a helper class for accessing the POA and
-  // registering objects.
 
+  /// File where the IOR of the server object is stored.
   FILE *ior_output_file_;
-  // File where the IOR of the server object is stored.
 
+  /// Used test the INS.
   char * ins_;
-  // Used test the INS.
 
+  /// Number of command line arguments.
   int argc_;
-  // Number of command line arguments.
 
-  char **argv_;
-  // The command line arguments.
+  /// The command line arguments.
+  ACE_TCHAR **argv_;
 };
 
 #endif /* SERVER_I_H */

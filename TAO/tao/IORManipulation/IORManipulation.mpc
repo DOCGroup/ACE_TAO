@@ -1,0 +1,41 @@
+project(*idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GX \
+                -Wb,export_macro=TAO_IORManip_Export \
+                -Wb,export_include=tao/IORManipulation/ior_manip_export.h \
+                -Wb,stub_export_file=ior_manip_export.h \
+                -Wb,include_guard=TAO_IORMANIP_SAFE_INCLUDE \
+                -Wb,safe_include=tao/IORManipulation/IORManip_Loader.h \
+                -iC tao/IORManipulation -Gxhst
+    idlflags -= -Sa -St
+    IOR.pidl
+  }
+
+  specific {
+    install_dir = tao/IORManipulation
+  }
+}
+
+project(IORManipulation) : taolib, tao_output, install, anytypecode, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_IORManip
+  dynamicflags += TAO_IORManip_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    IORC.cpp
+  }
+
+  Header_Files {
+    *.h
+    ior_manip_export.h
+    IORC.h
+    IORS.h
+    IORA.h
+  }
+
+  specific {
+    install_dir = tao/IORManipulation
+  }
+}

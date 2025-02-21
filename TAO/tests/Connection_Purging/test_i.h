@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef TEST_I_H
 #define TEST_I_H
@@ -13,9 +10,7 @@ class test_i
 {
 public:
   // = The skeleton methods
-  virtual void send_stuff (const char* string
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_stuff (const char* string);
 
 private:
 };

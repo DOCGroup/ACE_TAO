@@ -1,0 +1,9 @@
+#include "tao/CharSeq.pidl"
+
+interface ctest {
+        typedef CORBA::CharSeq UCSeq;
+
+        long ctestfn(in long size, out UCSeq data);
+
+        oneway void shutdown ();
+};

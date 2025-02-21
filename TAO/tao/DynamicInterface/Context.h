@@ -1,11 +1,8 @@
 // -*- C++ -*-
-// $Id$
 
 //=============================================================================
 /**
  *  @file    Context.h
- *
- *  $Id$
  *
  *  Header file for CORBA Context class.
  *
@@ -18,13 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "dynamicinterface_export.h"
+#include "tao/DynamicInterface/dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DII_CORBA_methods.h"
+#include "tao/DynamicInterface/DII_CORBA_methods.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/orbconf.h"
@@ -33,14 +31,9 @@
 #include "tao/default_environment.h"
 
 #include "ace/Unbounded_Queue.h"
-#include "ace/Atomic_Op.h"
-#include "ace/CORBA_macros.h"
-#include "ace/Synch_Traits.h"
+#include <atomic>
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -49,13 +42,17 @@ namespace CORBA
   class NVList;
   typedef NVList *NVList_ptr;
 
-  class Environment;
+  class Context;
+  typedef Context * Context_ptr;
+
+  class ContextList;
+  typedef ContextList * ContextList_ptr;
 
   typedef TAO_Pseudo_Var_T<Context> Context_var;
-  typedef TAO_Pseudo_Out_T<Context, Context_var> Context_out;
+  typedef TAO_Pseudo_Out_T<Context> Context_out;
 
   typedef TAO_Pseudo_Var_T<ContextList> ContextList_var;
-  typedef TAO_Pseudo_Out_T<ContextList, ContextList_var> ContextList_out;
+  typedef TAO_Pseudo_Out_T<ContextList> ContextList_out;
 
   /**
    * @class Context
@@ -72,53 +69,46 @@ namespace CORBA
   class TAO_DynamicInterface_Export Context
   {
   public:
-
-    Context (void);
-
-    ~Context (void);
+    Context () = default;
+    ~Context () = default;
 
     // = Pseudo-object methods
     static Context *_duplicate (Context*);
-    static Context *_nil (void);
+    static Context *_nil ();
 
     // = Reference counting.
-    CORBA::ULong _incr_refcnt (void);
-    CORBA::ULong _decr_refcnt (void);
+    CORBA::ULong _incr_refcount ();
+    CORBA::ULong _decr_refcount ();
 
     // = All the spec-required functions below will just throw a
     //   CORBA::NO_IMPLEMENT exception and do nothing else.
 
-    const char *context_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+    const char *context_name () const;
 
-    CORBA::Context_ptr parent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+    CORBA::Context_ptr parent () const;
 
     void create_child (const char *child_ctx_name,
-                       CORBA::Context_out child_ctx
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       CORBA::Context_out child_ctx);
 
-    void set_one_value (const char *propname,
-                        const CORBA::Any &propvalue
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void set_one_value (const char *propname, const CORBA::Any &propvalue);
 
-    void set_values (CORBA::NVList_ptr values
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void set_values (CORBA::NVList_ptr values);
 
-    void delete_values (const char *propname
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void delete_values (const char *propname);
 
     void get_values (const char *start_scope,
                      CORBA::Flags op_flags,
                      const char *pattern,
-                     CORBA::NVList_ptr &values
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     CORBA::NVList_ptr &values);
 
     // Useful for template programming.
     typedef CORBA::Context_ptr _ptr_type;
     typedef CORBA::Context_var _var_type;
+    typedef CORBA::Context_out _out_type;
 
   private:
     /// Reference counter.
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
   };
 
   /**
@@ -132,27 +122,26 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    ContextList (void);
+    ContextList () = default;
 
     /// Constructor - initialize given a length and an array of
     /// strings.
-    ContextList (CORBA::ULong len,
-                       char **ctx_list);
+    ContextList (CORBA::ULong len, char **ctx_list);
 
     /// Destructor.
-    ~ContextList (void);
+    ~ContextList ();
 
     /// Return the number of elements.
-    CORBA::ULong count (void);
+    CORBA::ULong count ();
 
     /// Increment the reference count.
-    ContextList_ptr _duplicate (void);
+    ContextList_ptr _duplicate ();
 
     /// Increment the reference count.
     static ContextList_ptr _duplicate (ContextList *);
 
     /// Decrement the reference count and delete if it is 0.
-    void _destroy (void);
+    void _destroy ();
 
     /// Return null pointer of this type.
     static ContextList_ptr _nil ();
@@ -164,36 +153,36 @@ namespace CORBA
     void add_consume (char *ctx);
 
     /// Return the typecode at slot i. Raises the "Bounds" exception.
-    char *item (CORBA::ULong slot
-                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    char *item (CORBA::ULong slot);
 
     /// Remove the typecode at slot i. Raises the "Bounds" exception.
-    void remove (CORBA::ULong slot
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void remove (CORBA::ULong slot);
 
     /// Increment and decrement ref counts.
-    void _incr_refcnt (void);
-    void  _decr_refcnt (void);
+    void _incr_refcount ();
+    void  _decr_refcount ();
 
     // Useful for template programming.
     typedef CORBA::ContextList_ptr _ptr_type;
     typedef CORBA::ContextList_var _var_type;
+    typedef CORBA::ContextList_out _out_type;
 
   private:
-    // Not allowed.
-    ContextList (const ContextList &);
-    ContextList &operator= (const ContextList &);
+    ContextList (const ContextList &) = delete;
+    ContextList &operator= (const ContextList &) = delete;
 
     /// Reference counter.
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> ref_count_;
+    std::atomic<uint32_t> refcount_;
 
     /// Internal list of typecodes.
     ACE_Unbounded_Queue<char *> ctx_list_;
   };
 } // End CORBA namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Context.inl"
+# include "tao/DynamicInterface/Context.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

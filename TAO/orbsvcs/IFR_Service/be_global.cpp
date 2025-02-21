@@ -1,63 +1,53 @@
-// $Id$
 
-// ============================================================================
-//
-//
-// = LIBRARY
-//    TAO_IFR_BE_DLL
-//
-// = FILENAME
-//    be_global.cpp
-//
-// = DESCRIPTION
-//    Stores global data specific to the compiler back end.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_global.cpp
+ *
+ *  Stores global data specific to the compiler back end.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
 
+
+#include "orbsvcs/Log_Macros.h"
 #include "be_global.h"
 #include "ast_generator.h"
 #include "global_extern.h"
 #include "idl_defines.h"
 
-ACE_RCSID (IFR_Service,
-           be_global,
-           "$Id$")
-
 TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
 
-BE_GlobalData::BE_GlobalData (void)
-  : removing_ (I_FALSE),
-    holding_scope_name_ (CORBA::string_dup ("TAO_IFR_holding_scope_module")),
+BE_GlobalData::BE_GlobalData ()
+  : removing_ (false),
     filename_ (0),
-    enable_locking_ (I_FALSE),
-    do_included_files_ (I_TRUE)
+    enable_locking_ (false),
+    do_included_files_ (true),
+    allow_duplicate_typedefs_ (false)
 {
   // At this point, the FE has been initialized.  We can
   // now instruct it that we want to preserve c++ keywords.
-  idl_global->preserve_cpp_keywords (I_TRUE);
+  idl_global->preserve_cpp_keywords (true);
 }
 
-BE_GlobalData::~BE_GlobalData (void)
+BE_GlobalData::~BE_GlobalData ()
 {
 }
 
-idl_bool
-BE_GlobalData::removing (void) const
+bool
+BE_GlobalData::removing () const
 {
   return this->removing_;
 }
 
 void
-BE_GlobalData::removing (idl_bool value)
+BE_GlobalData::removing (bool value)
 {
   this->removing_ = value;
 }
 
 CORBA::ORB_ptr
-BE_GlobalData::orb (void) const
+BE_GlobalData::orb () const
 {
   return this->orb_.in ();
 }
@@ -69,7 +59,7 @@ BE_GlobalData::orb (CORBA::ORB_ptr orb)
 }
 
 CORBA::Repository_ptr
-BE_GlobalData::repository (void) const
+BE_GlobalData::repository () const
 {
   return this->repository_.in ();
 }
@@ -80,37 +70,19 @@ BE_GlobalData::repository (CORBA::Repository_ptr repo)
   this->repository_ = repo;
 }
 
-CORBA::ModuleDef_ptr
-BE_GlobalData::holding_scope (void) const
-{
-  return this->holding_scope_.in ();
-}
-
-void
-BE_GlobalData::holding_scope (CORBA::ModuleDef_ptr scope)
-{
-  this->holding_scope_ = scope;
-}
-
-const char *
-BE_GlobalData::holding_scope_name (void) const
-{
-  return this->holding_scope_name_.in ();
-}
-
 ACE_Unbounded_Stack<CORBA::Container_ptr> &
-BE_GlobalData::ifr_scopes (void)
+BE_GlobalData::ifr_scopes ()
 {
   return this->ifr_scopes_;
 }
 
 void
-BE_GlobalData::destroy (void)
+BE_GlobalData::destroy ()
 {
 }
 
 const char *
-BE_GlobalData::filename (void) const
+BE_GlobalData::filename () const
 {
   return this->filename_;
 }
@@ -121,32 +93,44 @@ BE_GlobalData::filename (char *fname)
   this->filename_ = fname;
 }
 
-idl_bool
-BE_GlobalData::enable_locking (void) const
+bool
+BE_GlobalData::enable_locking () const
 {
   return this->enable_locking_;
 }
 
 void
-BE_GlobalData::enable_locking (idl_bool value)
+BE_GlobalData::enable_locking (bool value)
 {
   this->enable_locking_ = value;
 }
 
-idl_bool
-BE_GlobalData::do_included_files (void) const
+bool
+BE_GlobalData::do_included_files () const
 {
   return this->do_included_files_;
 }
 
 void
-BE_GlobalData::do_included_files (idl_bool val)
+BE_GlobalData::do_included_files (bool val)
 {
   this->do_included_files_ = val;
 }
 
+bool
+BE_GlobalData::allow_duplicate_typedefs () const
+{
+  return this->allow_duplicate_typedefs_;
+}
+
+void
+BE_GlobalData::allow_duplicate_typedefs (bool val)
+{
+  this->allow_duplicate_typedefs_ = val;
+}
+
 ACE_CString
-BE_GlobalData::orb_args (void) const
+BE_GlobalData::orb_args () const
 {
   return this->orb_args_;
 }
@@ -158,10 +142,17 @@ BE_GlobalData::orb_args (const ACE_CString& args)
 }
 
 ACE_CString
-BE_GlobalData::spawn_options (void)
+BE_GlobalData::spawn_options ()
 {
   return this->orb_args_ + idl_global->idl_flags ();
 }
+
+#define UNKNOWN_OPTION \
+  ORBSVCS_ERROR (( \
+      LM_ERROR, \
+      ACE_TEXT ("IDL: I don't understand the '%s' option\n"), \
+      av[i])); \
+  idl_global->parse_args_exit (1);
 
 void
 BE_GlobalData::parse_args (long &i, char **av)
@@ -169,89 +160,53 @@ BE_GlobalData::parse_args (long &i, char **av)
   switch (av[i][1])
     {
       case 'L':
-        be_global->enable_locking (I_TRUE);
+        if (av[i][2] == '\0')
+          {
+            be_global->enable_locking (true);
+          }
+        else
+          {
+            UNKNOWN_OPTION;
+          }
         break;
+
       case 'r':
-        be_global->removing (I_TRUE);
+        if (av[i][2] == '\0')
+          {
+            be_global->removing (true);
+          }
+        else
+          {
+            UNKNOWN_OPTION;
+          }
         break;
+
       case 'S':
         // Suppress ...
-        if (av[i][2] == 'i')
+        if (av[i][2] == 'i' && av[i][3] == '\0')
           {
             // ... processing of included IDL files.
             be_global->do_included_files (0);
           }
         else
           {
-            ACE_ERROR ((
-                LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-                av[i]
-              ));
-
-            ACE_OS::exit (99);
+            UNKNOWN_OPTION;
           }
         break;
-      default:
-        ACE_ERROR ((
-            LM_ERROR,
-            ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-            av[i]
-          ));
 
-        idl_global->set_compile_flags (idl_global->compile_flags ()
-                                       | IDL_CF_ONLY_USAGE);
+      case 'T':
+        if (av[i][2] == '\0')
+          {
+            be_global->allow_duplicate_typedefs (true);
+          }
+        else
+          {
+            UNKNOWN_OPTION;
+          }
         break;
+
+      default:
+        UNKNOWN_OPTION;
     }
 }
 
-// Does nothing in this backend.
-void
-BE_GlobalData::prep_be_arg (char *)
-{
-}
-
-// Does nothing in this backend.
-void
-BE_GlobalData::arg_post_proc (void)
-{
-}
-
-void
-BE_GlobalData::usage (void) const
-{
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -L\t\t\tEnable locking at the IDL file level\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -r\t\t\tRemove contents of IDL file(s) from repository\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Si\t\t\tSuppress processing of included IDL files\n")
-    ));
-}
-
-AST_Generator *
-BE_GlobalData::generator_init (void)
-{
-  AST_Generator *gen = 0;
-  ACE_NEW_RETURN (gen,
-                  AST_Generator,
-                  0);             
-  return gen;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Stack<CORBA::Container_ptr>;
-template class ACE_Node<CORBA::Container_ptr>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Stack<CORBA::Container_ptr>
-#pragma instantiate ACE_Node<CORBA::Container_ptr>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

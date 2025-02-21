@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -71,30 +69,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum_val.h"
 #include "ast_visitor.h"
 
-ACE_RCSID (ast, 
-           ast_enum_val, 
-           "$Id$")
+AST_Decl::NodeType const
+AST_EnumVal::NT = AST_Decl::NT_enum_val;
 
-AST_EnumVal::AST_EnumVal (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Constant ()
-{
-}
-
-AST_EnumVal::AST_EnumVal (unsigned long v,
+AST_EnumVal::AST_EnumVal (ACE_CDR::ULong v,
                           UTL_ScopedName *n)
   : COMMON_Base (),
-    AST_Decl (AST_Decl::NT_enum_val,
-              n),
-    AST_Constant  (AST_Expression::EV_ulong,
-		               AST_Decl::NT_enum_val,
-			             new AST_Expression (v),
-                   n)
+    AST_Decl (AST_Decl::NT_enum_val, n),
+    AST_Constant (AST_Expression::EV_ulong,
+                  AST_Decl::NT_enum_val,
+                  new AST_Expression (v),
+                  n),
+    enum_parent_ (nullptr)
 {
 }
 
-AST_EnumVal::~AST_EnumVal (void)
+AST_EnumVal::~AST_EnumVal ()
 {
 }
 
@@ -113,6 +103,14 @@ AST_EnumVal::ast_accept (ast_visitor *visitor)
   return visitor->visit_enum_val (this);
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_EnumVal, AST_Constant)
-IMPL_NARROW_FROM_DECL(AST_EnumVal)
+AST_Enum *
+AST_EnumVal::enum_parent ()
+{
+  return enum_parent_;
+}
+
+void
+AST_EnumVal::enum_parent (AST_Enum *node)
+{
+  enum_parent_ = node;
+}

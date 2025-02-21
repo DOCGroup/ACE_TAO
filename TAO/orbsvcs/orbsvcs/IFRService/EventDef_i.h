@@ -1,27 +1,22 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    EventDef_i.h
-//
-// = DESCRIPTION
-//    EventDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    EventDef_i.h
+ *
+ *  EventDef servant class.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_EVENTDEF_I_H
 #define TAO_EVENTDEF_I_H
 
-#include "ExtValueDef_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/ExtValueDef_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,69 +27,48 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class TAO_EventDef_i
+ *
+ * @brief TAO_EventDef_i
+ *
+ * Represents an event definition. It refers to a ValueDef
+ * object that contains information about the event.
+ */
 class TAO_IFRService_Export TAO_EventDef_i : public virtual TAO_ExtValueDef_i
 {
-  // = TITLE
-  //    TAO_EventDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an event definition. It refers to a ValueDef
-  //    object that contains information about the event.
-  //
 public:
+  /// Constructor
     TAO_EventDef_i (TAO_Repository_i *repo);
-  // Constructor
 
-  virtual ~TAO_EventDef_i (void);
-  // Destructor
+  /// Destructor
+  virtual ~TAO_EventDef_i ();
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Return our definition kind.
+  /// Return our definition kind.
+  virtual CORBA::DefinitionKind def_kind ();
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Remove the repository entry.
+  /// Remove the repository entry.
+  virtual void destroy ();
 
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy_i ();
 
-  virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From Contained_i's pure virtual function.
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe ();
 
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From Contained_i's pure virtual function.
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe_i ();
 
-  virtual CORBA::Boolean is_a (
-      const char *event_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean is_a (const char *event_id);
 
-  CORBA::Boolean is_a_i (
-      const char *event_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Boolean is_a_i (const char *event_id);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_EVENTDEF_I_H */
-
-
-

@@ -1,33 +1,32 @@
-#include "MCAST_Parser.h"
-#include "default_ports.h"
-#include "ORB_Core.h"
-#include "ORB.h"
-#include "Environment.h"
-#include "debug.h"
+#include "tao/MCAST_Parser.h"
+
+#if (TAO_HAS_MCAST_PARSER == 1)
+
+#include "tao/default_ports.h"
+#include "tao/ORB_Core.h"
+#include "tao/ORB.h"
+#include "tao/debug.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
-#include "MCAST_Parser.i"
+#include "tao/MCAST_Parser.inl"
 #endif /* __ACE_INLINE__ */
-
-
-ACE_RCSID (tao,
-           MCAST_Parser,
-           "$Id$")
-
 
 static const char mcast_prefix[] = "mcast:";
 
-TAO_MCAST_Parser::~TAO_MCAST_Parser (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_MCAST_Parser::~TAO_MCAST_Parser ()
 {
 }
 
-
-int
+bool
 TAO_MCAST_Parser::match_prefix (const char *ior_string) const
 {
   return (ACE_OS::strncmp (ior_string,
@@ -36,80 +35,64 @@ TAO_MCAST_Parser::match_prefix (const char *ior_string) const
 }
 
 CORBA::Object_ptr
-TAO_MCAST_Parser::parse_string (const char *ior,
-                                CORBA::ORB_ptr orb
-                                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_MCAST_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 {
-  const char *mcast_name =
+  char const * const mcast_name =
     ior + sizeof (::mcast_prefix) + 1;
 
-  assign_to_variables (mcast_name);
+  this->assign_to_variables (mcast_name);
 
   /*
    * Now that we got the global variables.
    * we can invoke multicast_to_service and multicast_query
    */
-  CORBA::Object_ptr object = CORBA::Object::_nil ();
-
-  CORBA::UShort port = (CORBA::UShort) ACE_OS::atoi (this->mcast_port_.in
-                                                     ());
-
   ACE_Time_Value *timeout = orb->get_timeout ();
 
-  object = multicast_to_service (service_name_.in (),
-                                 port,
-                                 this->mcast_address_.in (),
-                                 this->mcast_ttl_.in (),
-                                 this->mcast_nic_.in (),
-                                 orb,
-                                 timeout
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  return object;
+  return
+    this->multicast_to_service (service_name_.in (),
+                                this->mcast_port_,
+                                this->mcast_address_.in (),
+                                this->mcast_ttl_,
+                                this->mcast_nic_.in (),
+                                orb,
+                                timeout);
 }
 
 CORBA::Object_ptr
 TAO_MCAST_Parser::multicast_to_service (const char *service_name,
-                                        u_short port,
+                                        unsigned short port,
                                         const char *mcast_address,
-                                        const char *mcast_ttl,
+                                        int mcast_ttl,
                                         const char *mcast_nic,
                                         CORBA::ORB_ptr orb,
-                                        ACE_Time_Value *timeout
-                                        ACE_ENV_ARG_DECL)
+                                        ACE_Time_Value *timeout)
 {
-  char buf[2048];
-  char *ior = buf;
-
-  CORBA::String_var cleaner;
-
-  CORBA::Object_var return_value =
-    CORBA::Object::_nil ();
+  char buf[TAO_DEFAULT_IOR_SIZE];
+  char * ior = buf;
 
   // Use UDP multicast to locate the  service.
-  int result = this->multicast_query (ior,
-                                      service_name,
-                                      port,
-                                      mcast_address,
-                                      mcast_ttl,
-                                      mcast_nic,
-                                      timeout,
-                                      orb);
+  int const result = this->multicast_query (ior,
+                                            service_name,
+                                            port,
+                                            mcast_address,
+                                            mcast_ttl,
+                                            mcast_nic,
+                                            timeout,
+                                            orb);
 
-  // If the IOR didn't fit into <buf>, memory for it was dynamically
-  // allocated - make sure it gets deallocated.
-  if (ior != buf)
-    cleaner = ior;
+  CORBA::Object_var return_value;
 
   if (result == 0)
     {
+      CORBA::String_var cleaner;
+      // If the IOR didn't fit into <buf>, memory for it was dynamically
+      // allocated - make sure it gets deallocated.
+      if (ior != buf)
+        cleaner = ior;
+
       // Convert IOR to an object reference.
       return_value =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+        orb->string_to_object (ior);
     }
 
   // Return object reference.
@@ -117,11 +100,11 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
 }
 
 int
-TAO_MCAST_Parser::multicast_query (char *&buf,
+TAO_MCAST_Parser::multicast_query (char* & buf,
                                    const char *service_name,
-                                   u_short port,
+                                   unsigned short port,
                                    const char *mcast_address,
-                                   const char *mcast_ttl,
+                                   int mcast_ttl,
                                    const char *mcast_nic,
                                    ACE_Time_Value *timeout,
                                    CORBA::ORB_ptr orb)
@@ -134,16 +117,29 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
   ssize_t result = 0;
 
   // Bind listener to any port and then find out what the port was.
+#if defined (ACE_HAS_IPV6)
+  if (acceptor.open (ACE_Addr::sap_any, 0, AF_INET6) == -1
+#else /* ACE_HAS_IPV6 */
   if (acceptor.open (ACE_Addr::sap_any) == -1
+#endif /* !ACE_HAS_IPV6 */
       || acceptor.get_local_addr (my_addr) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("acceptor.open () || ")
                   ACE_TEXT ("acceptor.get_local_addr () failed\n")));
       result = -1;
     }
   else
     {
+      if (TAO_debug_level > 0)
+        {
+          ACE_TCHAR addr[64];
+          my_addr.addr_to_string (addr, sizeof(addr));
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("TAO (%P|%t) - MCAST_Parser: acceptor local address %s.\n"),
+                      addr));
+        }
+
       ACE_INET_Addr multicast_addr (port,
                                     mcast_address);
 
@@ -157,7 +153,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
           && mde.length () != 0)
         if (multicast_addr.set (mde.c_str()) == -1)
           {
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT("ORB.cpp: Multicast address setting failed\n")));
             stream.close ();
             dgram.close ();
@@ -166,27 +162,34 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
           }
 
       // Open the datagram.
-      if (dgram.open (ACE_Addr::sap_any) == -1)
+      if (dgram.open (ACE_Addr::sap_any, multicast_addr.get_type ()) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to open the Datagram!\n")));
           result = -1;
         }
       else
         {
           // Set NIC
-          dgram.set_nic (mcast_nic);
+          dgram.set_nic (ACE_TEXT_CHAR_TO_TCHAR (mcast_nic),
+                         multicast_addr.get_type ());
 
           // Set TTL
-#if defined (ACE_WIN32)
-          // MS Windows expects an int.
-          int mcast_ttl_optval = ACE_OS::atoi (mcast_ttl);
-#else
-          // Apparently all other platforms expect an unsigned char
-          // (0-255).
-          unsigned char mcast_ttl_optval = ACE_OS::atoi (mcast_ttl);
-#endif  /* ACE_WIN32 */
-          if (dgram.ACE_SOCK::set_option (
+          int mcast_ttl_optval = mcast_ttl;
+
+#if defined (ACE_HAS_IPV6)
+          if (multicast_addr.get_type () == AF_INET6)
+            {
+              if (dgram.set_option (
+                    IPPROTO_IPV6,
+                    IPV6_MULTICAST_HOPS,
+                    &mcast_ttl_optval,
+                    sizeof (mcast_ttl_optval)) != 0)
+                return -1;
+            }
+          else
+#endif  /* ACE_HAS_IPV6 */
+          if (dgram.set_option (
                 IPPROTO_IP,
                 IP_MULTICAST_TTL,
                 &mcast_ttl_optval,
@@ -199,7 +202,9 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
 
           // Length of service name we will send.
           CORBA::Short data_len =
-            (CORBA::Short) ACE_HTONS (ACE_OS::strlen (service_name) + 1);
+            (CORBA::Short) ACE_HTONS (
+                ACE_Utils::truncate_cast<ACE_UINT16> (
+                    std::strlen (service_name) + 1));
 
           // Vector we will send.  It contains: 1) length of service
           // name string, 2)port on which we are listening for
@@ -218,7 +223,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
           // The service name string.
           iovp[2].iov_base = (char *) service_name;
           iovp[2].iov_len  =
-            static_cast<u_long> (ACE_OS::strlen (service_name) + 1);
+            static_cast<u_long> (std::strlen (service_name) + 1);
 
           // Send the multicast.
           result = dgram.send (iovp,
@@ -226,35 +231,38 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
                                multicast_addr);
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\nsent multicast request.")));
 
           // Check for errors.
           if (result == -1)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("error sending IIOP multicast")));
           else
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
+                TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("\n%N; Sent multicast.")
                             ACE_TEXT ("# of bytes sent is %d.\n"),
                             result));
               // Wait for response until timeout.
               ACE_Time_Value tv (
-                timeout == 0
+                timeout == nullptr
                 ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
                 : *timeout);
 
               // Accept reply connection from server.
               if (acceptor.accept (stream,
-                                   0,
+                                   nullptr,
                                    &tv) == -1)
                 {
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("%p\n"),
-                              ACE_TEXT ("multicast_query: unable to accept")));
+                  if (TAO_debug_level > 0)
+                    {
+                      TAOLIB_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("%p\n"),
+                                  ACE_TEXT ("multicast_query: unable to accept")));
+                    }
                   result = -1;
                 }
               else
@@ -267,12 +275,15 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
                                           sizeof ior_len,
                                           0,
                                           &tv);
-                  if (result != sizeof (ior_len))
+                  if (result != (ssize_t)sizeof (ior_len))
                     {
-                      ACE_ERROR ((LM_ERROR,
-                                  ACE_TEXT ("%p\n"),
-                                  ACE_TEXT ("multicast_query: unable to receive ")
-                                  ACE_TEXT ("ior length")));
+                      if (TAO_debug_level > 0)
+                        {
+                          TAOLIB_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("%p\n"),
+                                      ACE_TEXT ("multicast_query: unable to receive ")
+                                      ACE_TEXT ("ior length")));
+                        }
                       result = -1;
                     }
                   else
@@ -280,15 +291,18 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
                       // Allocate more space for the ior if we don't
                       // have enough.
                       ior_len = (CORBA::Short) ACE_NTOHS (ior_len);
-                      if (ior_len > TAO_DEFAULT_IOR_SIZE)
+                      if (ior_len >= TAO_DEFAULT_IOR_SIZE)
                         {
                           buf = CORBA::string_alloc (ior_len);
-                          if (buf == 0)
+                          if (buf == nullptr)
                             {
-                              ACE_ERROR ((LM_ERROR,
-                                          ACE_TEXT ("%p\n"),
-                                          ACE_TEXT ("multicast_query: unable to ")
-                                          ACE_TEXT ("allocate memory")));
+                              if (TAO_debug_level > 0)
+                                {
+                                  TAOLIB_ERROR ((LM_ERROR,
+                                              ACE_TEXT ("%p\n"),
+                                              ACE_TEXT ("multicast_query: unable to ")
+                                              ACE_TEXT ("allocate memory")));
+                                }
                               result = -1;
                             }
                         }
@@ -301,13 +315,13 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
                                                   0,
                                                   &tv);
                           if (result == -1)
-                            ACE_ERROR ((LM_ERROR,
+                            TAOLIB_ERROR ((LM_ERROR,
                                         ACE_TEXT ( "%p\n"),
                                         ACE_TEXT ("error reading ior")));
                           else if (TAO_debug_level > 0)
-                            ACE_DEBUG ((LM_DEBUG,
-                                        ACE_TEXT ("%N: service resolved to IOR <%s>\n"),
-                                        ACE_TEXT_CHAR_TO_TCHAR (buf)));
+                            TAOLIB_DEBUG ((LM_DEBUG,
+                                        ACE_TEXT ("%N: service resolved to IOR <%C>\n"),
+                                        buf));
                         }
                     }
                 }
@@ -315,14 +329,14 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
         }
         if (result == -1)
           {
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT("\nmulticast discovery of %s failed.\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (service_name)));
+            TAOLIB_ERROR ((LM_ERROR,
+                        ACE_TEXT("\nmulticast discovery of %C failed.\n"),
+                        service_name));
 
             if (ACE_OS::strcasecmp (service_name,
                                     "NameService") == 0)
              {
-               ACE_ERROR ((LM_ERROR,
+               TAOLIB_ERROR ((LM_ERROR,
                            ACE_TEXT("Specify -m 1 when starting Naming_Service,\n")
                            ACE_TEXT("or see http://www.theaceorb.com/faq/#115\n")
                            ACE_TEXT("for using NameService without multicast.\n\n")));
@@ -339,22 +353,67 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
 }
 
 void
-TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
+TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
 {
   /*
    * The format now is "multicast_address:port:nicaddress:ttl/object_key"
    */
   ACE_CString mcast_name_cstring (mcast_name);
 
-  int pos_colon1 = mcast_name_cstring.find (':', 0);
+  ACE_CString::size_type pos_colon1 = mcast_name_cstring.find (':', 0);
+
+#if defined (ACE_HAS_IPV6)
+  // IPv6 numeric address in host string?
+  bool ipv6_in_host = false;
+
+  // Check if this is an mcast address containing a
+  // decimal IPv6 address representation.
+  if (mcast_name_cstring[0] == '[')
+    {
+      // In this case we have to find the end of the numeric address and
+      // start looking for the port separator from there.
+      ACE_CString::size_type const cp_pos = mcast_name_cstring.find (']', 0);
+      if (cp_pos == 0)
+        {
+          // No valid IPv6 address specified.
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                          ACE_TEXT ("\nTAO (%P|%t) MCAST_Parser: ")
+                          ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
+            }
+
+          return;
+        }
+      else
+        {
+          if (mcast_name_cstring[cp_pos + 1] == ':')    // Look for a port
+            pos_colon1 = cp_pos + 1;
+          else
+            pos_colon1 = cp_pos;
+          ipv6_in_host = true; // host string contains full IPv6 numeric address
+        }
+    }
+#endif  /* ACE_HAS_IPV6 */
 
   if (pos_colon1 == 0)
     {
-      const char *default_addr = ACE_DEFAULT_MULTICAST_ADDR;
+#if defined (ACE_HAS_IPV6)
+      const char default_addr[] = ACE_DEFAULT_MULTICASTV6_ADDR;
+#else /* ACE_HAS_IPV6 */
+      const char default_addr[] = ACE_DEFAULT_MULTICAST_ADDR;
+#endif  /* !ACE_HAS_IPV6 */
       this->mcast_address_ = default_addr;
     }
   else
     {
+#if defined (ACE_HAS_IPV6)
+      if (ipv6_in_host)
+        this->mcast_address_ =
+          mcast_name_cstring.substring (1,
+                                        pos_colon1 - 2).c_str ();
+      else
+#endif  /* ACE_HAS_IPV6 */
       this->mcast_address_ =
         mcast_name_cstring.substring (0,
                                       pos_colon1).c_str ();
@@ -364,45 +423,32 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
                                   mcast_name_cstring.length() -
                                   pos_colon1);
 
-  int pos_colon2 = mcast_name_cstring.find (':', 0);
+  ACE_CString::size_type const pos_colon2 = mcast_name_cstring.find (':', 0);
 
   if (pos_colon2 == 0)
     {
-      /*
-       * If the port is not specified, use the default.
-       * The default multicast port is the same as the default port
-       * no. for Naming_Service, for now. But for other services,
-       * check and modify the default values as needed.
-       */
-      char default_port[33];
-
-      int trial_port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
-
-      if (mcast_name_cstring.find ("InterfaceRepository") !=
-          ACE_CString::npos)
+      if (mcast_name_cstring.find ("InterfaceRepository") != ACE_CString::npos)
         {
-          trial_port = TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT;
+          this->mcast_port_ =
+            TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT;
         }
-      else if (mcast_name_cstring.find ("ImplRepoService") !=
-               ACE_CString::npos)
+      else if (mcast_name_cstring.find ("ImplRepoService") != ACE_CString::npos)
         {
-           trial_port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
+          this->mcast_port_ =
+            TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
         }
-      else if (mcast_name_cstring.find ("TradingService") !=
-               ACE_CString::npos)
+      else if (mcast_name_cstring.find ("TradingService") != ACE_CString::npos)
         {
-           trial_port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
+          this->mcast_port_ = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
         }
-
-
-      ACE_OS::itoa (trial_port, default_port, 10);
-
-      this->mcast_port_ = (const char *) default_port;
     }
   else
     {
-      this->mcast_port_ = mcast_name_cstring.substring (0,
-                                                        pos_colon2).c_str ();
+      int const the_port =
+        ACE_OS::atoi (mcast_name_cstring.substring (0, pos_colon2).c_str ());
+
+      if (the_port >= 0 && the_port <= ACE_MAX_DEFAULT_PORT)
+        this->mcast_port_ = the_port;
     }
 
   mcast_name_cstring =
@@ -410,38 +456,32 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
                                   mcast_name_cstring.length() - pos_colon2);
 
 
-  int pos_colon3 = mcast_name_cstring.find (':', 0);
+  ACE_CString::size_type const pos_colon3 = mcast_name_cstring.find (':', 0);
 
-  this->mcast_nic_ =
-    mcast_name_cstring.substring (0,
-                                  pos_colon3).c_str ();
+  this->mcast_nic_ = mcast_name_cstring.substring (0, pos_colon3).c_str ();
 
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon3 + 1,
                                   mcast_name_cstring.length() - pos_colon3);
 
-  int pos_colon4 = mcast_name_cstring.find ('/', 0);
+  ACE_CString::size_type const pos_colon4 = mcast_name_cstring.find ('/', 0);
 
-  if (pos_colon4 == 0)
+  if (pos_colon4 != 0)
     {
-      // And, the default TTL to be 1
-      const char *default_ttl = "1";
-      this->mcast_ttl_ = default_ttl;
+      // Change TTL to non-default value.
+      int const the_ttl =
+        ACE_OS::atoi (mcast_name_cstring.substring (0, pos_colon4).c_str ());
+
+      if (the_ttl > 0 && the_ttl <= 255)  // Valid TTLs: (0, 255]
+        this->mcast_ttl_ = the_ttl;
     }
-  else
-    {
-      this->mcast_ttl_ =
-        mcast_name_cstring.substring (0,
-                                      pos_colon4).c_str ();
-    }
+
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon4,
                                   mcast_name_cstring.length() - pos_colon4);
 
   this->service_name_ =
-    mcast_name_cstring.substring (1,
-                                  mcast_name_cstring.length()
-                                  -1).c_str ();
+    mcast_name_cstring.substring (1, mcast_name_cstring.length() - 1).c_str ();
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
@@ -454,8 +494,7 @@ ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
 
 ACE_FACTORY_DEFINE (TAO, TAO_MCAST_Parser)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* TAO_HAS_MCAST_PARSER == 1 */

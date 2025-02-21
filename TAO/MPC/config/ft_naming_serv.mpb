@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project: orbsvcslib, naming_skel, portablegroup, ftnaming, ftnaming_replication, naming_serv, loadbalancing, iortable, messaging_optional, svc_utils {
+  after     += FT_Naming_Serv
+  libs      += TAO_FT_Naming_Serv
+}

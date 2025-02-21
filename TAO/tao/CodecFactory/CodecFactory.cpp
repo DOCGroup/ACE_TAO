@@ -1,35 +1,23 @@
-/* -*- C++ -*- */
-
 // =================================================================
 /**
  * @file CodecFactory.cpp
  *
- * $Id$
- *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
- *
  */
 // =================================================================
 
-#include "CodecFactory.h"
-#include "CodecFactory_impl.h"
+#include "tao/CodecFactory/CodecFactory.h"
+#include "tao/CodecFactory/CodecFactory_impl.h"
 
 #include "tao/ORB.h"
 #include "tao/debug.h"
 
-ACE_RCSID (CodecFactory,
-           CodecFactory,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr
-TAO_CodecFactory_Loader::create_object (
-  CORBA::ORB_ptr orb,
-  int,
-  ACE_TCHAR *[]
-  ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_CodecFactory_Loader::create_object (CORBA::ORB_ptr orb,  int, ACE_TCHAR *[])
 {
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
+  CORBA::Object_ptr obj = CORBA::Object_ptr ();
   ACE_NEW_RETURN (obj,
                   TAO_CodecFactory (orb->orb_core ()),
                   CORBA::Object::_nil ());
@@ -37,7 +25,7 @@ TAO_CodecFactory_Loader::create_object (
 }
 
 int
-TAO_CodecFactory_Loader::Initializer (void)
+TAO_CodecFactory_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_CodecFactory_Loader);
 }
@@ -48,4 +36,7 @@ ACE_STATIC_SVC_DEFINE (TAO_CodecFactory_Loader,
                        &ACE_SVC_NAME (TAO_CodecFactory_Loader),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_CodecFactory, TAO_CodecFactory_Loader)
+ACE_FACTORY_DEFINE (TAO_CODECFACTORY, TAO_CodecFactory_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

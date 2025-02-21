@@ -1,10 +1,9 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/ORB_Core.h"
+#include "tao/Policy_ManagerC.h"
 #include "../check_supported_priorities.cpp"
 #include "../common_args.cpp"
 
@@ -12,15 +11,15 @@ static int iterations = 5;
 static int shutdown_server = 0;
 static int debug = 1;
 
-static const char *ior = "file://ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://ior");
 
-static const char *invocation_priorities_file = "invocation_priorities";
-static const char *bands_file = "empty_file";
+static const ACE_TCHAR *invocation_priorities_file = ACE_TEXT ("invocation_priorities");
+static const ACE_TCHAR *bands_file = ACE_TEXT ("empty_file");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:d:p:k:i:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:d:p:k:i:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -31,11 +30,11 @@ parse_args (int argc, char **argv)
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        debug = ::atoi (get_opts.opt_arg ());
+        debug = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
@@ -76,9 +75,9 @@ public:
                  RTCORBA::Current_ptr current,
                  CORBA::Short priority);
 
-  int svc (void);
+  int svc ();
 
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_connection ();
 
 private:
   test_var test_;
@@ -98,7 +97,7 @@ Worker_Thread::Worker_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 void
-Worker_Thread::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Worker_Thread::validate_connection ()
 {
   // Try to validate the connection several times, ignoring transient
   // exceptions.  If the connection can still not be setup, return
@@ -108,71 +107,59 @@ Worker_Thread::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
   int current_attempt = 0;
   for (;;)
     {
-      ACE_TRY
+      try
         {
           ++current_attempt;
-          this->test_->_validate_connection (inconsistent_policies.out ()
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->test_->_validate_connection (inconsistent_policies.out ());
 
           // If successful, we are done.
           return;
         }
-      ACE_CATCH (CORBA::TRANSIENT, exception)
+      catch (const CORBA::TRANSIENT& )
         {
           // If we have reach our maximum number of tries, throw exception.
           if (current_attempt == max_attempts)
-            ACE_RE_THROW;
+            throw;
           // Otherwise, ignore...
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           // Rethrow any other exceptions.
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
 int
-Worker_Thread::svc (void)
+Worker_Thread::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->current_->the_priority (this->priority_
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->the_priority (this->priority_);
 
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       for (int i = 0; i < iterations; i++)
         {
-          this->test_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->test_->method ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Worker Thread exception:");
+      ex._tao_print_exception ("Worker Thread exception:");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -183,53 +170,35 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTORB"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::RTORB::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RTCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::Current::_narrow (object.in ());
 
-      current->the_priority (0
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      current->the_priority (0);
 
       object =
-        this->orb_->resolve_initial_references ("ORBPolicyManager"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyManager::_narrow (object.in ());
 
       object =
-        this->orb_->string_to_object (ior
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (ior);
 
       test_var test =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object.in ());
 
       ULong_Array priorities;
       int result =
@@ -248,16 +217,12 @@ Task::svc (void)
                             bands_file,
                             rt_orb.in (),
                             policies,
-                            debug
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            debug);
       if (result != 0)
         return result;
 
       policy_manager->set_policy_overrides (policies,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            CORBA::SET_OVERRIDE);
 
       u_long i = 0;
 
@@ -305,31 +270,25 @@ Task::svc (void)
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception!");
+      ex._tao_print_exception ("Unexpected exception!");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
@@ -362,7 +321,7 @@ main (int argc, char **argv)
           if (errno == EPERM)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot create thread with scheduling policy %s\n"
+                                 "Cannot create thread with scheduling policy %C\n"
                                  "because the user does not have the appropriate privileges, terminating program....\n"
                                  "Check svc.conf options and/or run as root\n",
                                  sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
@@ -378,12 +337,11 @@ main (int argc, char **argv)
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception!");
+      ex._tao_print_exception ("Unexpected exception!");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

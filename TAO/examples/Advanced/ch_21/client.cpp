@@ -1,26 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Advanced/ch_12
-//
-// = FILENAME
-//    client.cpp
-//
-// = AUTHORS
-//   Source code used in TAO has been modified and adapted from the code
-//   provided in the book, "Advanced CORBA Programming with C++" by Michi
-//   Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading,
-//   MA.
-//
-//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  @author Source code used in TAO has been modified and adapted from the code provided in the book
+ *  @author "Advanced CORBA Programming with C++" by MichiHenning and Steve Vinoski. Copyright 1999. Addison-Wesley
+ *  @author Reading
+ *  @author MA.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+ */
+//=============================================================================
 
-#include    "CCSC.h"        // ORB-specific
-#include    <iostream>
-// #include    <fstream.h>
+#include "CCSC.h"        // ORB-specific
+#include <ace/streams.h>
 
 using namespace std;
 
@@ -29,7 +20,10 @@ using namespace std;
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
-#if 0   // This inserter is not needed for TAO.
+// This inserter may or may not be needed for your ORB.
+#if !defined (GEN_OSTREAM_OPS)
+
+#if 0
 
 static ostream &
 operator<<(ostream & os, const CORBA::Exception & e)
@@ -60,7 +54,7 @@ operator<<(std::ostream &os, CCS::Thermometer_ptr t)
         os << "Cannot show state for nil reference." << std::endl;
         return os;
     }
-    
+
     // Try to narrow and print what kind of device it is.
     CCS::Thermostat_var tmstat = CCS::Thermostat::_narrow(t);
     os << (CORBA::is_nil(tmstat.in()) ? "Thermometer:" : "Thermostat:")
@@ -111,6 +105,8 @@ operator<<(std::ostream &os, const CCS::Controller::EChange &ec)
     return os;
 }
 
+#endif
+
 //----------------------------------------------------------------
 
 // Change the temperature of a thermostat.
@@ -139,7 +135,7 @@ set_temp(CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 //----------------------------------------------------------------
 
 int
-main(int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
     CORBA::ULong i = 0;
     try {
@@ -166,7 +162,7 @@ main(int argc, char * argv[])
             ctrl = CCS::Controller::_narrow(obj.in());
         } catch (const CORBA::SystemException &se) {
             std::cerr << "Cannot narrow controller reference: "
-                      //<< se 
+                      << se
                       << std::endl;
             throw 0;
         }
@@ -199,9 +195,12 @@ main(int argc, char * argv[])
         list = ctrl->list();
         // Show details for each device.
         for ( i = 0; i < list->length(); i++)
-            std::cout << list[i];
+          {
+            CCS::Thermometer_ptr ti = list[i];
+            std::cout << ti;
+          }
         std::cout << std::endl;
-        
+
         // Change the location of first device in the list
         CCS::AssetType anum = list[0U]->asset_num();
         std::cout << "Changing location of device "
@@ -210,7 +209,8 @@ main(int argc, char * argv[])
         // Check that the location was updated
         std::cout << "New details for device "
              << anum << " are:" << std::endl;
-        std::cout << list[0U] << std::endl;
+        CCS::Thermometer_ptr tx = list[0u];
+        std::cout << tx << std::endl;
 
         // Find first thermostat in list.
         CCS::Thermostat_var tmstat;
@@ -248,7 +248,7 @@ main(int argc, char * argv[])
         for ( i = 0; i < ss.length(); i++)
             std::cout << ss[i].device.in();          // Overloaded <<
         std::cout << std::endl;
-        
+
         // Increase the temperature of all thermostats
         // by 40 degrees. First, make a new list (tss)
         // containing only thermostats.
@@ -270,8 +270,8 @@ main(int argc, char * argv[])
             std::cerr << ec;                     // Overloaded <<
         }
     } catch (const CORBA::Exception & e) {
-        std::cerr << "Uncaught CORBA exception: " 
-                  //<< e 
+        std::cerr << "Uncaught CORBA exception: "
+                  << e
                   << std::endl;
         return 1;
     } catch (...) {

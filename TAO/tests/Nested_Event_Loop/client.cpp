@@ -1,15 +1,11 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "test_i.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Nested_Event_Loop, client, "$Id$")
-
 // Name of file contains ior.
-static const char *IOR = "file://ior";
+static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 
 // Default event_loop_depth.
 static CORBA::ULong event_loop_depth = 6;
@@ -22,9 +18,9 @@ static CORBA::ULong event_loop_iterations = 6;
 static int shutdown_server = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:d:i:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:d:i:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -35,11 +31,11 @@ parse_args (int argc, char **argv)
         break;
 
       case 'i':
-        event_loop_iterations = ::atoi (get_opts.opt_arg ());
+        event_loop_iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        event_loop_depth = ::atoi (get_opts.opt_arg ());
+        event_loop_depth = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
@@ -68,19 +64,13 @@ parse_args (int argc, char **argv)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -88,60 +78,45 @@ main (int argc, char **argv)
         return parse_args_result;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Get an object reference from the argument string.
-      object = orb->string_to_object (IOR
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      object = orb->string_to_object (IOR);
 
       // Try to narrow the object reference to a <server> reference.
-      server_var server_object = server::_narrow (object.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_var server_object = server::_narrow (object.in ());
 
-      client_i servant (server_object.in ());
+      client_i * servant = 0;
+      ACE_NEW_RETURN (servant,
+                      client_i(server_object.in ()),
+                      1);
+      PortableServer::ServantBase_var client_transfer(servant);
 
-      servant.loop (event_loop_depth,
-                    event_loop_iterations
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      servant->loop (event_loop_depth,
+                     event_loop_iterations);
 
       // Shutdown server.
       if (shutdown_server)
         {
-          server_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server_object->shutdown ();
         }
 
-      root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

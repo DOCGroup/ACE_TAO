@@ -1,14 +1,10 @@
-// $Id$
-
 #include "PP_Test_Client.h"
 #include "tao/Timeprobe.h"
-
-ACE_RCSID(IDL_Cubit, client, "$Id$")
 
 // This function runs the client test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   PP_Test_Client pp_test_client;
 

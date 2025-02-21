@@ -3,8 +3,6 @@
 /**
  *  @file   INS_Locator.h
  *
- *  $Id$
- *
  *  @brief  This class implements the ImR's INS Locator class
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -15,16 +13,31 @@
 #define IMR_INS_LOCATOR_H
 #include /**/ "ace/pre.h"
 
-#include "tao/IORTable/IORTable.h"
+#include "tao/IORTable/Async_IORTable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-
+#include "ImR_ResponseHandler.h"
+#include "tao/IORTable/Locate_ResponseHandler.h"
 
 class ImR_Locator_i;
+
+class INS_Loc_ResponseHandler : public ImR_ResponseHandler
+{
+public:
+  INS_Loc_ResponseHandler (const char *key, ::IORTable::Locate_ResponseHandler rh);
+
+  // dummy implementations used for internal operations
+  virtual void send_ior (const char *pior);
+  virtual void send_exception (CORBA::Exception *ex);
+
+private:
+  CORBA::String_var key_str_;
+  TAO_AMH_Locate_ResponseHandler_var rh_;
+};
 
 /**
  * @class INS_Locator
@@ -35,15 +48,16 @@ class ImR_Locator_i;
  * to dynamically receive a IOR to forward in response to an INS request.
  */
 class INS_Locator
-  : public virtual IORTable::Locator,
-    public virtual CORBA::LocalObject
+  : public virtual IORTable::AsyncLocator,
+    public virtual ::CORBA::LocalObject
 {
 public:
   INS_Locator (ImR_Locator_i& loc);
 
   /// Locate the appropriate IOR.
-  char* locate (const char *object_key ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
+  char* locate (const char *object_key);
+  void async_locate (::IORTable::Locate_ResponseHandler handler,
+                     const char *object_key);
 
 private:
   ImR_Locator_i& imr_locator_;

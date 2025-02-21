@@ -1,0 +1,28 @@
+// -*- MPC -*-
+project(Job): portableserver {
+  idlflags += -St \
+              -Wb,export_macro=JOB_Export \
+              -Wb,export_include=job_export.h
+  after += RTSchedSynch
+  libs += RTSchedSynch
+  dynamicflags += JOB_BUILD_DLL
+
+  IDL_Files {
+    Job.idl
+  }
+
+  Source_Files {
+    JobC.cpp
+    JobS.cpp
+  }
+
+  Header_Files {
+    JobC.h
+    JobS.h
+    job_export.h
+  }
+
+  Inline_Files {
+    JobC.inl
+  }
+}

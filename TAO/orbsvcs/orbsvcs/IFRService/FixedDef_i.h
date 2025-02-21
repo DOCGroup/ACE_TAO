@@ -1,27 +1,22 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    FixedDef_i.h
-//
-// = DESCRIPTION
-//    FixedDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    FixedDef_i.h
+ *
+ *  FixedDef servant class.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_FIXEDDEF_I_H
 #define TAO_FIXEDDEF_I_H
 
-#include "IDLType_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,98 +27,59 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class TAO_FixedDef_i
+ *
+ * @brief TAO_FixedDef_i
+ *
+ * Represents an IDL fixed type.
+ */
 class TAO_IFRService_Export TAO_FixedDef_i : public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_FixedDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an IDL fixed type.
-  //
 public:
+  /// Constructor
   TAO_FixedDef_i (TAO_Repository_i *repo);
-  // Constructor
 
-  virtual ~TAO_FixedDef_i (void);
-  // Destructor
+  /// Destructor
+  virtual ~TAO_FixedDef_i ();
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Return our definition kind.
+  /// Return our definition kind.
+  virtual CORBA::DefinitionKind def_kind ();
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Remove the repository entry.
+  /// Remove the repository entry.
+  virtual void destroy ();
 
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy_i ();
 
-  virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From IDLType_i's pure virtual function.
+  /// From IDLType_i's pure virtual function.
+  virtual CORBA::TypeCode_ptr type ();
 
-  virtual CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From IDLType_i's pure virtual function.
+  /// From IDLType_i's pure virtual function.
+  virtual CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::UShort digits (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::UShort digits ();
 
-  CORBA::UShort digits_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::UShort digits_i ();
 
-  virtual void digits (
-      CORBA::UShort digits
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void digits (CORBA::UShort digits);
 
-  void digits_i (
-      CORBA::UShort digits
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void digits_i (CORBA::UShort digits);
 
-  virtual CORBA::Short scale (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Short scale ();
 
-  CORBA::Short scale_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Short scale_i ();
 
-  virtual void scale (
-      CORBA::Short scale
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void scale (CORBA::Short scale);
 
-  void scale_i (
-      CORBA::Short scale
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void scale_i (CORBA::Short scale);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_FIXEDDEF_I_H */
-

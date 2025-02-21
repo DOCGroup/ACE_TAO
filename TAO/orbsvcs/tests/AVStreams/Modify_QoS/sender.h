@@ -4,8 +4,6 @@
 /**
  *  @file sender.h
  *
- *  $Id$
- *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
 //=============================================================================
@@ -30,11 +28,7 @@ class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
   /// chosen.
 
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                             const AVStreams::flowSpec &flow_spec
-                             ACE_ENV_ARG_DECL)
-                            ACE_THROW_SPEC((CORBA::SystemException,
-                                            AVStreams::noSuchFlow,
-                                            AVStreams::QoSRequestFailed ));
+                             const AVStreams::flowSpec &flow_spec);
 
   /// The over-ridden modify_qos method to change the qos of the
   /// flows specified in the flow spec to that in the new_qos.
@@ -55,30 +49,28 @@ SENDER_ENDPOINT_STRATEGY;
  *
  * @brief Class is responsible for streaming (and pacing) data to a
  * receiver.
- *
  */
 class Sender
 {
 public:
-  Sender (void);
+  Sender ();
   /// Constructor
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            ACE_TCHAR *argv[]);
   /// Method to initialize the various data components.
 
-  int pace_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int pace_data ();
   /// Method to pace and send data from a file.
 
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
   /// Set the protocol object corresponding to the transport protocol chosen.
 
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   /// Method to parse the command line arguments.
 
-  int bind_to_receiver (ACE_ENV_SINGLE_ARG_DECL);
+  int bind_to_receiver ();
   /// Method that binds the sender to the receiver.
 
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
@@ -117,9 +109,3 @@ private:
   TAO_AV_Protocol_Object *protocol_object_;
   /// Protocol object corresponding to the transport protocol selected.
 };
-
-
-
-
-
-

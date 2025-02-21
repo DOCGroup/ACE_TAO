@@ -1,0 +1,23 @@
+
+This test intents to show the usage and the expected behavior of the
+Transport Current framework. The topology is the same as in the basic
+Hello test: a client invokes a method on the server and then shuts it
+down and exits. The special features of the test is that it attempts
+to obtain Transport Traits information, using the Transport Current.
+
+There are four basic contexts in which a Transport information can be
+requested, by definition:
+
+  * on the client side, outside client-side interceptor;
+  * client side, inside an interceptor;
+  * server side, inside an up-call;
+  * server side, inside an interceptor;
+
+The test implements the client and the server side interceptors that
+simply call a test method when invoked. A simple interception count
+serves to validate the expected behavior.
+
+By default, the client and server will each have only one thread. Use
+"-t N" parameter to override that. The "-n N" client-side parameter
+determines how many times a particular client thread will call the
+server. The default is 1.

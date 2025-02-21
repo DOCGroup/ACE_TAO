@@ -1,17 +1,13 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "testC.h"
 
-ACE_RCSID (UNKNOWN_Exception, client, "$Id$")
-
-static const char *ior = "file://ior";
+static const ACE_TCHAR *ior = ACE_TEXT("file://ior");
 static int shutdown_server = 1;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:x:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -42,17 +38,15 @@ parse_args (int argc, char **argv)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
+
       if (result != 0)
         return result;
 
@@ -73,7 +67,7 @@ main (int argc, char **argv)
         {
           test->unknown_exception_in_method ();
         }
-      catch (CORBA::UNKNOWN)
+      catch (const CORBA::UNKNOWN&)
         {
           unknown_exception_raised = 1;
 
@@ -82,13 +76,21 @@ main (int argc, char **argv)
                       "\tThis is expected behavior\n\n"));
         }
 
-      ACE_ASSERT (unknown_exception_raised == 1);
+      if  (unknown_exception_raised != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Failure: unknown excep not raised\n"),
+                            -1);
+        }
+
       unknown_exception_raised = 0;
 
       test->unknown_exception_during_deactivation ();
 
       if (shutdown_server)
         test_factory->shutdown ();
+
+      orb->destroy ();
     }
   catch (...)
     {

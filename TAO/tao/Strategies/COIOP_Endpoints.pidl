@@ -1,0 +1,26 @@
+/**
+ * This file contains idl definition for data structures used to
+ * encapsulate data in TAO_TAG_ENDPOINTS tagged component.  This
+ * TAO-specific component is used for transmission of multiple
+ * endpoints per single profile.  Data structures defined here are
+ * used for transmission of COIOP endpoints.  See COIOP_Profile.*
+ * for more details.
+ */
+
+#ifndef _TAO_COIOP_ENDPOINTS_IDL_
+#define _TAO_COIOP_ENDPOINTS_IDL_
+
+module TAO
+{
+  /// Stores information for a single COIOP endpoint.
+  struct COIOP_Endpoint_Info
+  {
+    string uuid;
+    short priority;
+  };
+
+  /// Stores information for a collection of COIOP endpoints.
+  typedef sequence <COIOP_Endpoint_Info> COIOPEndpointSequence;
+};
+
+#endif /* _TAO_IIOP_ENDPOINTS_IDL_ */

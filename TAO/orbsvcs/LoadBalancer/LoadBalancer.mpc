@@ -1,10 +1,7 @@
 // -*- MPC -*-
-//
-// $Id$
 
-
-project(LoadManager): namingexe, portableserver, core, iortable, iormanip, loadbalancing {
-  exename  = LoadManager
+project(LoadManager): namingexe, portableserver, install, iortable, iormanip, loadbalancing, svc_utils {
+  exename  = tao_loadmanager
   requires += ami interceptors
   Source_Files {
     LoadManager.cpp
@@ -12,9 +9,9 @@ project(LoadManager): namingexe, portableserver, core, iortable, iormanip, loadb
   }
 }
 
-project(LoadMonitor): namingexe, portableserver, core, loadbalancing {
+project(LoadMonitor): namingexe, portableserver, install, loadbalancing, svc_utils {
   requires += ami interceptors
-  exename  = LoadMonitor
+  exename  = tao_loadmonitor
   Source_Files {
     LoadMonitor.cpp
     Push_Handler.cpp

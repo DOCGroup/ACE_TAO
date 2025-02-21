@@ -1,0 +1,16 @@
+//
+// This base project changes all projects to generate DLLs regardless of
+// whether it's an exe or a dll project. The DLLs still go in the place the
+// exe would have been generated, just as a DLL, not an EXE.
+// This is needed when generating projects to build LabVIEW RT "programs"
+// that must be loaded as DLLs.
+
+project {
+  macros += ACE_BUILD_LABVIEW_EXE_AS_DLL
+  specific(vc71) {
+    configuration_type = 2
+    exe_ext = .dll
+    common_defines -= _CONSOLE
+    common_defines += _WINDOWS
+  }
+}

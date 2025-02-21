@@ -1,4 +1,3 @@
-// $Id$
 #include "Notify_Push_Consumer.h"
 #include "Notify_Test_Client.h"
 #include "tao/debug.h"
@@ -30,39 +29,31 @@ Notify_Push_Consumer::Notify_Push_Consumer (const char* name,
 
 void
 Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                                CosNotifyChannelAdmin::EventChannel_ptr notify_channel ACE_ENV_ARG_DECL)
-                                ACE_THROW_SPEC ((CORBA::SystemException))
+                                CosNotifyChannelAdmin::EventChannel_ptr)
 {
-  ACE_UNUSED_ARG(notify_channel);
   CosNotifyComm::StructuredPushConsumer_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
     CosNotifyChannelAdmin::STRUCTURED_EVENT,
-    proxy_id_
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    proxy_id_);
 
   this->proxy_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
-    proxysupplier.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    proxysupplier.in ());
 
-  this->proxy_->connect_structured_push_consumer (objref.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_->connect_structured_push_consumer (objref.in ());
 
   // give ownership to POA
-  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->_remove_ref ();
 }
 
 static void validate_expression(bool expr, const char* msg)
 {
   if (! expr)
   {
-    ACE_ERROR((LM_ERROR, "Error: %s\n", msg));
+    ACE_ERROR((LM_ERROR, ACE_TEXT("Error: %C\n"), msg));
   }
 }
 
@@ -70,12 +61,10 @@ static void validate_expression(bool expr, const char* msg)
 
 void
 Notify_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent& event
-  ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  const CosNotification::StructuredEvent& event)
 {
   ACE_DEBUG((LM_DEBUG, "-"));
-  received_++;
+  ++received_;
 
   CORBA::ULong id = 0;
   CORBA::ULong group = 0;

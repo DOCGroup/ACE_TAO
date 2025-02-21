@@ -2,11 +2,7 @@
 /**
  *  @file Activation_Manager.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_ACTIVATION_MANAGER_H
@@ -19,6 +15,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "Task_Callback.h"
@@ -26,13 +23,14 @@
 #include "Periodic_Consumer.h"
 #include "Activation_ManagerS.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_Activation_Manager
  *
  * @brief Class to handle Suppliers and Consumers.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_Notify_Tests_Task_Callback
                                                        , public POA_Notify_Test::Activation_Manager
@@ -45,40 +43,37 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_No
   typedef ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*> TAO_Notify_Tests_PeriodicConsumer_Entry;
 
 public:
-  /// Constuctor
-  TAO_Notify_Tests_Activation_Manager (void);
+  /// Constructor
+  TAO_Notify_Tests_Activation_Manager ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Activation_Manager ();
 
   /// Interface impl.
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void start ();
 
   /// Register Supplier
-  void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name ACE_ENV_ARG_DECL);
+  void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name);
   /// Register Consumer
-  void _register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name ACE_ENV_ARG_DECL);
+  void _register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name);
 
   /// Resolve Supplier
-  void resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name ACE_ENV_ARG_DECL);
+  void resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name);
 
   /// Resolve Consumer
-  void resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name ACE_ENV_ARG_DECL);
+  void resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name);
 
   // Activate the tasks for each supplier.
-  int activate_suppliers (void);
+  int activate_suppliers ();
 
   // Supplier Count
-  int supplier_count (void);
+  int supplier_count ();
 
   // Consumer Count
-  int consumer_count (void);
+  int consumer_count ();
 
   /// Wait till active suppliers and consumers are done.
-  void wait_for_completion (void);
+  void wait_for_completion ();
 
   /// TAO_Notify_Tests_Task_Callback methods
   virtual void done (TAO_Notify_Tests_Periodic_Supplier* supplier);
@@ -93,9 +88,9 @@ public:
   // Returns 1 if the file could be opened for read.
   int ior_input_file (const ACE_TCHAR *file_name);
 
-  void write_ior (ACE_ENV_SINGLE_ARG_DECL);
-  void wait_for_start_signal (ACE_ENV_SINGLE_ARG_DECL);
-  void signal_peer (ACE_ENV_SINGLE_ARG_DECL);
+  void write_ior ();
+  void wait_for_start_signal ();
+  void signal_peer ();
 
 protected:
   /// Lock to serialize internal state.
@@ -123,7 +118,7 @@ protected:
   FILE *ior_output_file_;
 
   /// The file for input
-  ACE_CString ior_input_file_;
+  ACE_TString ior_input_file_;
 
   /// Set when the start method is called.
   CORBA::Boolean started_;

@@ -1,11 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  * @file ECG_Simple_Mcast_EH.h
  *
- * $Id$
- *
  * @author Marina Spivak <marina@atdesk.com>
- *
  */
 #ifndef TAO_ECG_SIMPLE_MCAST_EH_H
 #define TAO_ECG_SIMPLE_MCAST_EH_H
@@ -17,9 +15,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_serv_export.h"
-#include "ECG_Adapters.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include "orbsvcs/Event/ECG_Adapters.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_Simple_Mcast_EH
@@ -37,7 +38,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Simple_Mcast_EH
   , public TAO_ECG_Handler_Shutdown
 {
 public:
-
   /// Initialization and termination methods.
   //@{
   /// Constructor.
@@ -49,7 +49,7 @@ public:
   TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
-  virtual ~TAO_ECG_Simple_Mcast_EH (void);
+  virtual ~TAO_ECG_Simple_Mcast_EH ();
 
   /// Join the specified multicast group and register itself with the
   /// reactor.
@@ -61,7 +61,7 @@ public:
 
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
-  virtual int shutdown (void);
+  virtual int shutdown ();
   //@}
 
   /// Main method - reactor callback.  Notify <receiver_> that
@@ -69,7 +69,6 @@ public:
   virtual int handle_input (ACE_HANDLE fd);
 
 private:
-
   // Socket on which we listen for messages.
   ACE_SOCK_Dgram_Mcast dgram_;
 
@@ -85,6 +84,8 @@ private:
    */
   TAO_ECG_Dgram_Handler* receiver_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_SIMPLE_Mcast_EH_H */

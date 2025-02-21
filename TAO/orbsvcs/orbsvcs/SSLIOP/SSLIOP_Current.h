@@ -4,8 +4,6 @@
 /**
  *  @file   SSLIOP_Current.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 // ===================================================================
@@ -15,16 +13,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Current_Impl.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.h"
 
 #include "orbsvcs/SSLIOPC.h"
 #include "tao/ORB_Core.h"
+#include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -33,6 +32,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -41,6 +41,7 @@ namespace TAO
     class Current;
     typedef Current * Current_ptr;
     typedef TAO_Pseudo_Var_T<Current> Current_var;
+    typedef TAO_Pseudo_Out_T<Current> Current_out;
 
     /**
      * @class Current
@@ -52,21 +53,21 @@ namespace TAO
      * SSL peer certificate chains for the current request can be
      * obtained from this object.
      */
-    class TAO_SSLIOP_Export Current
+    class Current
       : public ::SSLIOP::Current,
-        public TAO_Local_RefCounted_Object
+        public ::CORBA::LocalObject
     {
     public:
+      typedef Current_ptr _ptr_type;
+      typedef Current_var _var_type;
+      typedef Current_out _out_type;
 
       /// Constructor.
       Current (TAO_ORB_Core *orb_core);
 
       /// Return the peer certificate associated with the current
       /// request.
-      virtual ::SSLIOP::ASN_1_Cert * get_peer_certificate (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         ::SSLIOP::Current::NoContext));
+      virtual ::SSLIOP::ASN_1_Cert * get_peer_certificate ();
 
       /**
        * Return the certificate chain associated with the current
@@ -76,10 +77,7 @@ namespace TAO
        * certficate.  However, the certificate chain on the server
        * side does NOT contain the peer (client) certificate.
        */
-      virtual ::SSLIOP::SSL_Cert * get_peer_certificate_chain (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         ::SSLIOP::Current::NoContext));
+      virtual ::SSLIOP::SSL_Cert * get_peer_certificate_chain ();
 
       /**
        * This method is mostly useful as an inexpensive means of
@@ -88,8 +86,7 @@ namespace TAO
        * @return @c true if the current execution context is not
        *         within a SSL session.
        */
-      virtual CORBA::Boolean no_context (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Boolean no_context ();
 
       /// Set the TSS slot ID assigned to this object.
       void tss_slot (size_t slot);
@@ -100,8 +97,7 @@ namespace TAO
                   bool &setup_done);
 
       /// Teardown the Current for this request.
-      void teardown (Current_Impl *prev_impl,
-                     bool &setup_done);
+      void teardown (Current_Impl *prev_impl, bool &setup_done);
 
       /**
        * @name Downcast and Reference Counting Methods
@@ -113,53 +109,45 @@ namespace TAO
       // The static operations.
       static Current_ptr _duplicate (Current_ptr obj);
 
-      static Current_ptr _narrow (CORBA::Object_ptr obj
-                                  ACE_ENV_ARG_DECL);
+      static Current_ptr _narrow (CORBA::Object_ptr obj);
 
-      static Current_ptr _nil (void)
+      static Current_ptr _nil ()
       {
         return (Current_ptr)0;
       }
 
-      virtual const char* _interface_repository_id (void) const;
+      virtual const char* _interface_repository_id () const;
       //@}
 
     protected:
-
       /// Destructor
-      ~Current (void);
+      ~Current ();
 
       /// Set the TSS SSLIOP::Current implementation.
       int implementation (Current_Impl *impl);
 
       /// Return the TSS SSLIOP::Current implementation.
-      Current_Impl *implementation (void);
+      Current_Impl *implementation ();
 
     private:
+      Current (const Current &) = delete;
+      void operator= (const Current &) = delete;
 
-      /// Prevent copying through the copy constructor and the assignment
-      /// operator.
-      //@{
-      ACE_UNIMPLEMENTED_FUNC (Current (const Current &))
-      ACE_UNIMPLEMENTED_FUNC (void operator= (const Current &))
-      //@}
-
-        private:
-
+    private:
       /// TSS slot assigned to this object.
       size_t tss_slot_;
 
       /// Pointer to the ORB Core corresponding to the ORB with which this
       /// object is registered.
-      TAO_ORB_Core *orb_core_;
-
+      TAO_ORB_Core * const orb_core_;
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "SSLIOP_Current.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

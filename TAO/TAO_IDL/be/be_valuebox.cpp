@@ -1,52 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_valuebox.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Valuebox that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Gary Maxey
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_valuebox.cpp
+ *
+ *  Extension of class AST_Valuebox that provides additional means for C++
+ *  mapping.
+ *
+ *  @author Gary Maxey
+ */
+//=============================================================================
 
 #include "be_valuebox.h"
 #include "be_type.h"
 #include "be_visitor.h"
 #include "global_extern.h"
-
-ACE_RCSID (be,
-           be_valuebox,
-           "be_valuebox.cpp Exp")
-
-// Default constructor.
-be_valuebox::be_valuebox (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    AST_ValueBox (),
-    be_decl (),
-    be_type ()
-{
-  // Always the case (according to C++ mapping specification).
-  this->size_type (AST_Type::VARIABLE);
-
-  // Set the flag  that says we have a valuetype in this IDL file.
-  // This allows the correct #include to be generated (see be_codegen.cpp).
-  idl_global->valuebase_seen_ = true;
-
-  // Set the flag that says we have a valuetype in this IDL file.
-  // This allows the correct #include to be generated (see be_codegen.cpp).
-  idl_global->valuetype_seen_ = true;
-}
 
 be_valuebox::be_valuebox (AST_Type *boxed_type,
                           UTL_ScopedName *n)
@@ -67,13 +34,18 @@ be_valuebox::be_valuebox (AST_Type *boxed_type,
   // Always the case (according to C++ mapping specification).
   this->size_type (AST_Type::VARIABLE);
 
-  // Set the flag  that says we have a valuetype in this IDL file.
-  // This allows the correct #include to be generated (see be_codegen.cpp).
-  idl_global->valuebase_seen_ = true;
+  if (!this->imported ())
+    {
+      // Set the flag  that says we have a valuetype in this IDL file.
+      // This allows the correct #include to be generated (see be_codegen.cpp).
+      idl_global->valuebase_seen_ = true;
 
-  // Set the flag that says we have a valuetype in this IDL file.
-  // This allows the correct #include to be generated (see be_codegen.cpp).
-  idl_global->valuetype_seen_ = true;
+      // Set the flag that says we have a valuetype in this IDL file.
+      // This allows the correct #include to be generated (see be_codegen.cpp).
+      idl_global->valuetype_seen_ = true;
+
+      idl_global->var_size_decl_seen_ = true;
+    }
 }
 
 // Accept a visitor.
@@ -85,12 +57,9 @@ be_valuebox::accept (be_visitor *visitor)
 
 
 void
-be_valuebox::destroy (void)
+be_valuebox::destroy ()
 {
   // Call the destroy methods of our base classes.
-  this->AST_Type::destroy ();
+  this->AST_ValueBox::destroy ();
+  this->be_type::destroy ();
 }
-
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_valuebox, AST_ValueBox, be_type)
-IMPL_NARROW_FROM_DECL (be_valuebox)

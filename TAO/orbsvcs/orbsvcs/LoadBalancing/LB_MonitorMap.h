@@ -4,8 +4,6 @@
 /**
  * @file   LB_MonitorMap.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

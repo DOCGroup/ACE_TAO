@@ -1,0 +1,27 @@
+
+//=============================================================================
+/**
+ *  @file    invalid_scoping1.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ */
+//=============================================================================
+
+
+module A {
+  typedef long mylong;
+  module B {
+    module A { // This is supposed to HIDE outer scope A
+      typedef short myshort;
+    };
+    typedef A::myshort CORRECT;
+    typedef A::mylong  INVALID; // Required to use ::A::mylong
+    // Recursive search is not allowable above as the module A
+    // being referenced is NOT the same as the local module A
+    // that is hiding the outer scoped name, they just happen
+    // to share the same short name.
+  };
+};

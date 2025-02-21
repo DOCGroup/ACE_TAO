@@ -4,8 +4,6 @@
 /**
  *  @file     Object_Ref_Table.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -15,7 +13,8 @@
 #define TAO_OBJECT_REF_TABLE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,15 +22,11 @@
 
 #include "tao/CORBA_String.h"
 #include "tao/Object.h"
-#include "tao/TAO_Export.h"
-#include "tao/orbconf.h"
+#include /**/ "tao/TAO_Export.h"
 
 #include "ace/Array_Map.h"
 
-namespace CORBA
-{
-  class Environment;
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Object_Ref_Table
@@ -54,7 +49,6 @@ namespace CORBA
 class TAO_Export TAO_Object_Ref_Table
 {
 public:
-
   typedef ACE_Array_Map<CORBA::String_var,
                         CORBA::Object_var,
                         TAO::String_Var_Equal_To> Table;
@@ -62,62 +56,66 @@ public:
   typedef Table::iterator iterator;
 
   /// Constructor
-  TAO_Object_Ref_Table (void);
+  TAO_Object_Ref_Table ();
 
   /**
    * Register an object reference with the table, and map the given
    * ID to it.
    * @retval 0 Success
-   * @retval -1 Duplicate id
+   * @retval -1 Duplicate id if @c rebind is false
    */
   int register_initial_reference (const char * id,
-                                  CORBA::Object_ptr obj);
+                                  CORBA::Object_ptr obj,
+                                  bool rebind = false);
+
+  /**
+   * Unregister an object reference with the table
+   */
+  CORBA::Object_ptr unregister_initial_reference (const char * id);
 
   /// Return the object reference associated with the given ID.
   /// A duplicate is returned.
   CORBA::Object_ptr resolve_initial_reference (const char * id);
 
   /// Explicitly destroy the contents of the object reference table.
-  void destroy (void);
+  void destroy ();
 
   /**
    * @name Forward Iterators
    */
   //@{
-  iterator begin (void);
-  iterator end (void);
+  iterator begin ();
+  iterator end ();
   //@}
 
   /// Return the current size of the underlying table.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
 private:
-
   /**
    * @name The canonical ACE_Map methods
    */
   //@{
-  int bind (const char *orb_id, CORBA::Object_ptr obj);
-  CORBA::Object_ptr find (const char *orb_id); // Returns a duplicate.
-  int unbind (const char *orb_id);
+  int bind_i (const char *orb_id, CORBA::Object_ptr obj);
+  CORBA::Object_ptr find_i (const char *orb_id); // Returns a duplicate.
+  int unbind_i (const char *orb_id);
   //@}
 
 private:
-
-  /// Prevent copying
-  ACE_UNIMPLEMENTED_FUNC (TAO_Object_Ref_Table (const TAO_Object_Ref_Table &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Object_Ref_Table &))
+  TAO_Object_Ref_Table (const TAO_Object_Ref_Table &) = delete;
+  void operator= (const TAO_Object_Ref_Table &) = delete;
+  TAO_Object_Ref_Table (TAO_Object_Ref_Table &&) = delete;
+  void operator= (TAO_Object_Ref_Table &&) = delete;
 
 private:
-
   /// The implementation.
   Table table_;
 
   /// Table synchronization lock.
   TAO_SYNCH_MUTEX lock_;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "tao/Object_Ref_Table.inl"

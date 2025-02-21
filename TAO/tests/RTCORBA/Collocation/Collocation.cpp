@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Array_Base.h"
 #include "ace/Task.h"
@@ -8,8 +6,6 @@
 #include "testS.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
-
-ACE_RCSID(Collocations, Collocations, "$Id$")
 
 RTCORBA::Priority default_thread_priority;
 
@@ -26,42 +22,38 @@ typedef ACE_Array_Base<Test_Object_And_Servant> Tests;
 void
 setup_test_parameters (Test_Object_And_Servant *test,
                        RTCORBA::Current_ptr current,
-                       CORBA::ORB_ptr orb
-                       ACE_ENV_ARG_DECL);
+                       CORBA::ORB_ptr orb);
 class test_i :
   public POA_test
 {
 public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa,
-          Tests &tests
-          ACE_ENV_ARG_DECL);
+          Tests &tests);
 
-  void start (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void start ();
 
-  void method (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method ();
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA ();
 
-  int client_propagated (void);
+  int client_propagated ();
 
   void client_propagated (int);
 
-  int server_declared (void);
+  int server_declared ();
 
   void server_declared (int);
 
-  RTCORBA::Priority server_priority (void);
+  RTCORBA::Priority server_priority ();
 
   void server_priority (RTCORBA::Priority);
 
-  int in_lane (void);
+  int in_lane ();
 
   void in_lane (int);
 
-  int serviced_by_rt_tp (void);
+  int serviced_by_rt_tp ();
 
   void serviced_by_rt_tp (int);
 
@@ -74,12 +66,11 @@ public:
 
   void invocation_lane (CORBA::ULong lane);
 
-  RTCORBA::Priority invocation_priority (void);
+  RTCORBA::Priority invocation_priority ();
 
   void invocation_priority (RTCORBA::Priority);
 
 private:
-
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
   Tests &tests_;
@@ -99,8 +90,7 @@ private:
 
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
-                Tests &tests
-                ACE_ENV_ARG_DECL)
+                Tests &tests)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     tests_ (tests),
@@ -111,18 +101,14 @@ test_i::test_i (CORBA::ORB_ptr orb,
     invocation_priority_ (0)
 {
   CORBA::Object_var object =
-    this->orb_->resolve_initial_references ("RTCurrent"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("RTCurrent");
 
   this->current_ =
-    RTCORBA::Current::_narrow (object.in ()
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    RTCORBA::Current::_narrow (object.in ());
 }
 
 int
-test_i::client_propagated (void)
+test_i::client_propagated ()
 {
   return this->client_propagated_;
 }
@@ -134,7 +120,7 @@ test_i::client_propagated (int client_propagated)
 }
 
 int
-test_i::server_declared (void)
+test_i::server_declared ()
 {
   return this->server_declared_;
 }
@@ -146,7 +132,7 @@ test_i::server_declared (int server_declared)
 }
 
 RTCORBA::Priority
-test_i::server_priority (void)
+test_i::server_priority ()
 {
   return this->server_priority_;
 }
@@ -158,7 +144,7 @@ test_i::server_priority (RTCORBA::Priority server_priority)
 }
 
 int
-test_i::in_lane (void)
+test_i::in_lane ()
 {
   return this->in_lane_;
 }
@@ -170,7 +156,7 @@ test_i::in_lane (int in_lane)
 }
 
 int
-test_i::serviced_by_rt_tp (void)
+test_i::serviced_by_rt_tp ()
 {
   return this->serviced_by_rt_tp_;
 }
@@ -202,7 +188,7 @@ test_i::invocation_lane (CORBA::ULong lane)
 }
 
 RTCORBA::Priority
-test_i::invocation_priority (void)
+test_i::invocation_priority ()
 {
   return this->invocation_priority_;
 }
@@ -214,8 +200,7 @@ test_i::invocation_priority (RTCORBA::Priority invocation_priority)
 }
 
 void
-test_i::start (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::start ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n"));
@@ -233,30 +218,20 @@ test_i::start (ACE_ENV_SINGLE_ARG_DECL)
 
       setup_test_parameters (test,
                              this->current_.in (),
-                             this->orb_.in ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                             this->orb_.in ());
 
-      test->object_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      test->object_->method ();
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (test->object_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->orb_->object_to_string (test->object_.in ());
 
       CORBA::Object_var object =
-        this->orb_->string_to_object (ior.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->orb_->string_to_object (ior.in ());
 
       test_var test_from_string =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        test::_narrow (object.in ());
 
-      test_from_string->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      test_from_string->method ();
 
       iterator.advance ();
     }
@@ -304,14 +279,13 @@ test_i::thread_info (const char *method_name)
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::method ()
 {
   this->thread_info ("test_i::method");
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -319,12 +293,34 @@ test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 setup_test_parameters (Test_Object_And_Servant *test,
                        RTCORBA::Current_ptr current,
-                       CORBA::ORB_ptr orb
-                       ACE_ENV_ARG_DECL)
+                       CORBA::ORB_ptr orb)
 {
-  CORBA::Short current_thread_priority =
-    current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Short current_thread_priority;
+
+  try
+    {
+      current_thread_priority =
+        current->the_priority ();
+    }
+  catch (const CORBA::INITIALIZE&)
+    {
+      try
+        {
+          current_thread_priority = get_implicit_thread_CORBA_priority (orb);
+        }
+      catch (const CORBA::Exception &ex)
+        {
+          ex._tao_print_exception ("Exception in ::setup_test_parameters calling ::get_implicit_thread_CORBA_priority: ");
+          throw;
+        }
+    }
+  catch (const CORBA::Exception& dc)
+    {
+      dc._tao_print_exception ("Exception in ::setup_test_parameters calling current->the_priority(): ");
+      throw;
+    }
+
+   current->the_priority (current_thread_priority);
 
   if (!test->servant_->serviced_by_rt_tp () ||
       test->servant_->client_propagated ())
@@ -374,20 +370,20 @@ setup_test_parameters (Test_Object_And_Servant *test,
 class Server
 {
 public:
-  Server (CORBA::ORB_ptr orb
-          ACE_ENV_ARG_DECL);
+  Server (CORBA::ORB_ptr orb);
 
-  void create_servant_in_root_poa (ACE_ENV_SINGLE_ARG_DECL);
+  void create_servant_in_root_poa ();
   void create_poa_and_servant_with_tp_policy (const char *poa_name,
                                               int set_priority_model,
-                                              RTCORBA::PriorityModel priority_model
-                                              ACE_ENV_ARG_DECL);
+                                              RTCORBA::PriorityModel priority_model);
   void create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
-                                                         RTCORBA::PriorityModel priority_model
-                                                         ACE_ENV_ARG_DECL);
-  void test (ACE_ENV_SINGLE_ARG_DECL);
-  void start_testing (ACE_ENV_SINGLE_ARG_DECL);
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+                                                         RTCORBA::PriorityModel priority_model);
+  void test ();
+  void start_testing ();
+
+  //FUZZ: disable check_for_lack_ACE_OS
+  void shutdown ();
+  //FUZZ: enable check_for_lack_ACE_OS
 
   CORBA::ORB_var orb_;
   RTCORBA::RTORB_var rt_orb_;
@@ -406,8 +402,7 @@ public:
   CORBA::ULong max_request_buffer_size_;
 };
 
-Server::Server (CORBA::ORB_ptr orb
-                ACE_ENV_ARG_DECL)
+Server::Server (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     stacksize_ (0),
     static_threads_ (1),
@@ -418,58 +413,41 @@ Server::Server (CORBA::ORB_ptr orb
     max_request_buffer_size_ (0)
 {
   CORBA::Object_var object =
-    this->orb_->resolve_initial_references ("RTORB"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("RTORB");
 
   this->rt_orb_ =
-    RTCORBA::RTORB::_narrow (object.in ()
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    RTCORBA::RTORB::_narrow (object.in ());
 
   object =
-    this->orb_->resolve_initial_references ("RTCurrent"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("RTCurrent");
 
   this->current_ =
-    RTCORBA::Current::_narrow (object.in ()
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    RTCORBA::Current::_narrow (object.in ());
 
   default_thread_priority =
-    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    get_implicit_thread_CORBA_priority (this->orb_.in ());
 
   object =
-    this->orb_->resolve_initial_references ("RootPOA"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("RootPOA");
 
   this->root_poa_ =
-    PortableServer::POA::_narrow (object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    PortableServer::POA::_narrow (object.in ());
 
   this->poa_manager_ =
-    this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->root_poa_->the_POAManager ();
 
-  this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->poa_manager_->activate ();
 }
 
 void
-Server::create_servant_in_root_poa (ACE_ENV_SINGLE_ARG_DECL)
+Server::create_servant_in_root_poa ()
 {
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
                     test_i (this->orb_.in (),
                             this->root_poa_.in (),
-                            this->tests_
-                            ACE_ENV_ARG_PARAMETER),
+                            this->tests_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   servant->invocation_pool_and_lane (0, 0);
   servant->in_lane (0);
@@ -481,15 +459,13 @@ Server::create_servant_in_root_poa (ACE_ENV_SINGLE_ARG_DECL)
   this->tests_[this->tests_.size () - 1].servant_ =
     servant;
   this->tests_[this->tests_.size () - 1].object_ =
-    servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    servant->_this ();
 }
 
 void
 Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
                                                int set_priority_model,
-                                               RTCORBA::PriorityModel priority_model
-                                               ACE_ENV_ARG_DECL)
+                                               RTCORBA::PriorityModel priority_model)
 {
   RTCORBA::ThreadpoolId threadpool_id =
     this->rt_orb_->create_threadpool (this->stacksize_,
@@ -498,20 +474,14 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
                                       default_thread_priority,
                                       this->allow_request_buffering_,
                                       this->max_buffered_requests_,
-                                      this->max_request_buffer_size_
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                      this->max_request_buffer_size_);
 
   CORBA::Policy_var threadpool_policy =
-    this->rt_orb_->create_threadpool_policy (threadpool_id
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->rt_orb_->create_threadpool_policy (threadpool_id);
 
   CORBA::Policy_var priority_model_policy =
     this->rt_orb_->create_priority_model_policy (priority_model,
-                                                 default_thread_priority
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                 default_thread_priority);
 
   CORBA::PolicyList policies;
 
@@ -529,23 +499,17 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
   PortableServer::POA_var poa =
     this->root_poa_->create_POA (poa_name,
                                  this->poa_manager_.in (),
-                                 policies
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 policies);
 
   RTPortableServer::POA_var rt_poa =
-    RTPortableServer::POA::_narrow (poa.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    RTPortableServer::POA::_narrow (poa.in ());
 
   test_i *servant1 = 0;
   ACE_NEW_THROW_EX (servant1,
                     test_i (this->orb_.in (),
                             poa.in (),
-                            this->tests_
-                            ACE_ENV_ARG_PARAMETER),
+                            this->tests_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   servant1->in_lane (0);
 
@@ -559,9 +523,7 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
           servant1->client_propagated (1);
 
           id1 =
-            rt_poa->activate_object (servant1
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+            rt_poa->activate_object (servant1);
         }
       else
         {
@@ -570,10 +532,8 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
           ACE_NEW_THROW_EX (servant2,
                             test_i (this->orb_.in (),
                                     poa.in (),
-                                    this->tests_
-                                    ACE_ENV_ARG_PARAMETER),
+                                    this->tests_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
 
           servant2->in_lane (0);
 
@@ -590,28 +550,20 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
 
           id1 =
             rt_poa->activate_object_with_priority (servant1,
-                                                   default_thread_priority + 1
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                                   default_thread_priority + 1);
 
           id2 =
             rt_poa->activate_object_with_priority (servant2,
-                                                   default_thread_priority
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                                   default_thread_priority);
 
           CORBA::Object_var object2 =
-            poa->id_to_reference (id2.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+            poa->id_to_reference (id2.in ());
 
           this->tests_.size (this->tests_.size () + 1);
           this->tests_[this->tests_.size () - 1].object_ =
-            test::_narrow (object2.in ()
-                           ACE_ENV_ARG_PARAMETER);
+            test::_narrow (object2.in ());
           this->tests_[this->tests_.size () - 1].servant_ =
             servant2;
-          ACE_CHECK;
         }
     }
   else
@@ -619,31 +571,24 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
       servant1->invocation_pool_and_lane (3, 0);
 
       id1 =
-        rt_poa->activate_object (servant1
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        rt_poa->activate_object (servant1);
     }
 
   PortableServer::ServantBase_var safe_servant (servant1);
 
   CORBA::Object_var object1 =
-    poa->id_to_reference (id1.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->id_to_reference (id1.in ());
 
   this->tests_.size (this->tests_.size () + 1);
   this->tests_[this->tests_.size () - 1].object_ =
-    test::_narrow (object1.in ()
-                   ACE_ENV_ARG_PARAMETER);
+    test::_narrow (object1.in ());
   this->tests_[this->tests_.size () - 1].servant_ =
     servant1;
-  ACE_CHECK;
 }
 
 void
 Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
-                                                          RTCORBA::PriorityModel priority_model
-                                                          ACE_ENV_ARG_DECL)
+                                                          RTCORBA::PriorityModel priority_model)
 {
   RTCORBA::ThreadpoolLanes lanes (2);
   lanes.length (2);
@@ -662,20 +607,14 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
                                                  this->allow_borrowing_,
                                                  this->allow_request_buffering_,
                                                  this->max_buffered_requests_,
-                                                 this->max_request_buffer_size_
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                 this->max_request_buffer_size_);
 
   CORBA::Policy_var threadpool_policy =
-    this->rt_orb_->create_threadpool_policy (threadpool_id
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->rt_orb_->create_threadpool_policy (threadpool_id);
 
   CORBA::Policy_var priority_model_policy =
     this->rt_orb_->create_priority_model_policy (priority_model,
-                                                 default_thread_priority
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                 default_thread_priority);
 
   CORBA::PolicyList policies;
 
@@ -690,23 +629,17 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
   PortableServer::POA_var poa =
     this->root_poa_->create_POA (poa_name,
                                  this->poa_manager_.in (),
-                                 policies
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 policies);
 
   RTPortableServer::POA_var rt_poa =
-    RTPortableServer::POA::_narrow (poa.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    RTPortableServer::POA::_narrow (poa.in ());
 
   test_i *servant1 = 0;
   ACE_NEW_THROW_EX (servant1,
                     test_i (this->orb_.in (),
                             poa.in (),
-                            this->tests_
-                            ACE_ENV_ARG_PARAMETER),
+                            this->tests_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   servant1->in_lane (1);
 
@@ -720,9 +653,7 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
       servant1->client_propagated (1);
 
       id1 =
-        rt_poa->activate_object (servant1
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        rt_poa->activate_object (servant1);
     }
   else
     {
@@ -731,10 +662,8 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
       ACE_NEW_THROW_EX (servant2,
                         test_i (this->orb_.in (),
                                 poa.in (),
-                                this->tests_
-                                ACE_ENV_ARG_PARAMETER),
+                                this->tests_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       servant2->in_lane (1);
 
@@ -751,46 +680,34 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
 
       id1 =
         rt_poa->activate_object_with_priority (servant1,
-                                               default_thread_priority + 1
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                               default_thread_priority + 1);
 
       id2 =
         rt_poa->activate_object_with_priority (servant2,
-                                               default_thread_priority
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                               default_thread_priority);
 
       CORBA::Object_var object2 =
-        poa->id_to_reference (id2.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        poa->id_to_reference (id2.in ());
 
       this->tests_.size (this->tests_.size () + 1);
       this->tests_[this->tests_.size () - 1].object_ =
-        test::_narrow (object2.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        test::_narrow (object2.in ());
       this->tests_[this->tests_.size () - 1].servant_ =
         servant2;
-      ACE_CHECK;
     }
 
   CORBA::Object_var object1 =
-    poa->id_to_reference (id1.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->id_to_reference (id1.in ());
 
   this->tests_.size (this->tests_.size () + 1);
   this->tests_[this->tests_.size () - 1].object_ =
-    test::_narrow (object1.in ()
-                   ACE_ENV_ARG_PARAMETER);
+    test::_narrow (object1.in ());
   this->tests_[this->tests_.size () - 1].servant_ =
     servant1;
-  ACE_CHECK;
 }
 
 void
-Server::start_testing (ACE_ENV_SINGLE_ARG_DECL)
+Server::start_testing ()
 {
   Tests::ITERATOR iterator (this->tests_);
   while (!iterator.done ())
@@ -800,55 +717,44 @@ Server::start_testing (ACE_ENV_SINGLE_ARG_DECL)
 
       setup_test_parameters (test,
                              this->current_.in (),
-                             this->orb_.in ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                             this->orb_.in ());
 
-      test->object_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      test->object_->start ();
 
       iterator.advance ();
     }
 }
 
 void
-Server::test (ACE_ENV_SINGLE_ARG_DECL)
+Server::test ()
 {
-  this->start_testing (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->start_testing ();
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\n*** Changing priority to be higher ***\n\n"));
 
-  this->current_->the_priority (default_thread_priority + 1
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->current_->the_priority (default_thread_priority + 1);
 
-  this->start_testing (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->start_testing ();
 }
 
 void
-Server::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Server::shutdown ()
 {
-  this->orb_->shutdown (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (true);
 
-  this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->destroy ();
 }
 
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -859,73 +765,53 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      Server server (this->orb_.in ()
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Server server (this->orb_.in ());
 
-      server.create_servant_in_root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.create_servant_in_root_poa ();
 
       server.create_poa_and_servant_with_tp_policy ("tp_client_propagated_poa",
                                                     1,
-                                                    RTCORBA::CLIENT_PROPAGATED
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    RTCORBA::CLIENT_PROPAGATED);
 
       server.create_poa_and_servant_with_tp_policy ("tp_server_declared_poa",
                                                     1,
-                                                    RTCORBA::SERVER_DECLARED
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    RTCORBA::SERVER_DECLARED);
 
       server.create_poa_and_servant_with_tp_policy ("tp_no_priority_model_poa",
                                                     0,
-                                                    RTCORBA::CLIENT_PROPAGATED
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    RTCORBA::CLIENT_PROPAGATED);
 
       server.create_poa_and_servant_with_tp_with_lanes_policy ("tp_with_lanes_client_propagated_poa",
-                                                               RTCORBA::CLIENT_PROPAGATED
-                                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                               RTCORBA::CLIENT_PROPAGATED);
 
       server.create_poa_and_servant_with_tp_with_lanes_policy ("tp_with_lanes_server_declared_poa",
-                                                               RTCORBA::SERVER_DECLARED
-                                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                               RTCORBA::SERVER_DECLARED);
 
-      server.test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.test ();
 
-      server.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server.shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         argv);
 
       // Make sure we can support multiple priorities that are
       // required for this test.
@@ -969,22 +855,11 @@ main (int argc, char *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<Test_Object_And_Servant>;
-template class ACE_Array_Iterator<Test_Object_And_Servant>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<Test_Object_And_Servant>
-#pragma instantiate ACE_Array_Iterator<Test_Object_And_Servant>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

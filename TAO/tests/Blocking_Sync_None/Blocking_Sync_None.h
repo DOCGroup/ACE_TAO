@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef BLOCKING_SYNC_NONE_H
 #define BLOCKING_SYNC_NONE_H
@@ -18,12 +15,9 @@ public:
 
   // = The skeleton methods
   virtual void slow_operation (const Test::Payload &the_payload,
-                               CORBA::ULong sleep_microseconds
-                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                               CORBA::ULong sleep_microseconds);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to shutdown the application.

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FT_TestReplicaC.h"
 #include <ace/Vector_T.h>
 #include <ace/SString.h>
@@ -12,7 +10,7 @@
 class FTClientMain
 {
   typedef ACE_Vector<ACE_CString> StringVec;
- public:
+public:
   ///////////////////////////
   // construction/destruction
   FTClientMain ();
@@ -21,11 +19,11 @@ class FTClientMain
 
   /////////////////
   // initialization
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   ////////////
   // execution
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run ();
 
   /////////////////
   // implementation
@@ -36,11 +34,9 @@ private:
     long & counter,         // inout
     int & more,             // out
     ACE_CString & command,  // inout
-    int retry               // in
-    ACE_ENV_ARG_DECL);
+    int retry);             // in
 
-
-  int next_replica (ACE_ENV_SINGLE_ARG_DECL);
+  int next_replica ();
 
   ////////////////////
   // forbidden methods
@@ -51,12 +47,11 @@ private:
   ////////////////
   // Data members
  private:
-
   CORBA::ORB_var orb_;
 
   int argc_;
-  char ** argv_;
-  const char * inFileName_;
+  ACE_TCHAR ** argv_;
+  const ACE_TCHAR * inFileName_;
   FILE *inFile_;
   FILE *commandIn_;
 
@@ -90,7 +85,7 @@ FTClientMain::~FTClientMain ()
   if (this->inFile_)
   {
     ACE_OS::fclose (this->inFile_);
-	this->inFile_ = 0;
+    this->inFile_ = 0;
   }
 }
 
@@ -108,7 +103,7 @@ void FTClientMain::commandUsage(FILE* out)
     "  Access as attribute:\n"
     "    >N    set attribute to N\n"
     "    <     get attribite\n"
-    "  Try methods to be used by fault tolerant infrastructure: \n"
+    "  Try methods to be used by fault tolerant infrastructure:\n"
     "    !     is_alive\n"
     "    s     get_state\n"
     "    S     set_state\n"
@@ -122,7 +117,7 @@ void FTClientMain::commandUsage(FILE* out)
     "      (FT_TestReplica interface)\n"
     "        d%d before state change\n"
     "        d%d after state change, before replication\n"
-    "        d%d after replication, before reply \n"
+    "        d%d after replication, before reply\n"
     "      (Monitorable interface)\n"
     "        d%d during is alive\n"
     "        d%d is_alive returns false\n"
@@ -146,24 +141,24 @@ void FTClientMain::commandUsage(FILE* out)
     "   q    quit (end the client, not the replica(s).)\n"
     "   q1   quit (end the client, and shutdown the currently active replica.)\n"
     "   ?    help (this message)\n",
-	FT_TEST::TestReplica::NOT_YET,
-	FT_TEST::TestReplica::RIGHT_NOW,
-	FT_TEST::TestReplica::WHILE_IDLE,
-	FT_TEST::TestReplica::BEFORE_STATE_CHANGE,
-	FT_TEST::TestReplica::BEFORE_REPLICATION,
-	FT_TEST::TestReplica::BEFORE_REPLY,
-	FT_TEST::TestReplica::DURING_IS_ALIVE,
-	FT_TEST::TestReplica::DENY_IS_ALIVE,
-	FT_TEST::TestReplica::DURING_GET_UPDATE,
-	FT_TEST::TestReplica::BEFORE_SET_UPDATE,
-	FT_TEST::TestReplica::AFTER_SET_UPDATE,
-	FT_TEST::TestReplica::DURING_GET_STATE,
-	FT_TEST::TestReplica::BEFORE_SET_STATE,
-	FT_TEST::TestReplica::AFTER_SET_STATE);
+    FT_TEST::TestReplica::NOT_YET,
+    FT_TEST::TestReplica::RIGHT_NOW,
+    FT_TEST::TestReplica::WHILE_IDLE,
+    FT_TEST::TestReplica::BEFORE_STATE_CHANGE,
+    FT_TEST::TestReplica::BEFORE_REPLICATION,
+    FT_TEST::TestReplica::BEFORE_REPLY,
+    FT_TEST::TestReplica::DURING_IS_ALIVE,
+    FT_TEST::TestReplica::DENY_IS_ALIVE,
+    FT_TEST::TestReplica::DURING_GET_UPDATE,
+    FT_TEST::TestReplica::BEFORE_SET_UPDATE,
+    FT_TEST::TestReplica::AFTER_SET_UPDATE,
+    FT_TEST::TestReplica::DURING_GET_STATE,
+    FT_TEST::TestReplica::BEFORE_SET_STATE,
+    FT_TEST::TestReplica::AFTER_SET_STATE);
 }
 
 int
-FTClientMain::parse_args (int argc, char *argv[])
+FTClientMain::parse_args (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -171,7 +166,7 @@ FTClientMain::parse_args (int argc, char *argv[])
 
   // note: dfnkx are simple_util options
   // include them here so we can detect bad args
-  ACE_Get_Opt get_opts (argc, argv, "c:f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:f:"));
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -184,19 +179,21 @@ FTClientMain::parse_args (int argc, char *argv[])
         this->inFile_ = ACE_OS::fopen (this->inFileName_, "r");
         if(this->inFile_ && !ferror (this->inFile_))
         {
-          ACE_OS::fprintf (stdout, "FT Client: Reading commands from %s\n", this->inFileName_);
+          ACE_OS::fprintf (stdout, "FT Client: Reading commands from %s\n",
+                           ACE_TEXT_ALWAYS_CHAR (this->inFileName_));
           this->commandIn_ = this->inFile_;
         }
         else
         {
-          ACE_OS::fprintf (stderr, "FT Client: Can't open input file: %s\n", this->inFileName_);
+          ACE_OS::fprintf (stderr, "FT Client: Can't open input file: %s\n",
+                           ACE_TEXT_ALWAYS_CHAR (this->inFileName_));
           result = -1;
         }
         break;
       }
       case 'f':
       {
-        replica_iors_.push_back(get_opts.opt_arg ());
+        replica_iors_.push_back(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
 
@@ -212,16 +209,15 @@ FTClientMain::parse_args (int argc, char *argv[])
 void FTClientMain::usage(FILE* out)const
 {
   ACE_OS::fprintf (out, "usage"
-      				    " -c <command file>"
-      				    " [-f <ior file>]...\n");
+                   " -c <command file>"
+                   " [-f <ior file>]...\n");
 }
 
 int FTClientMain::pass (
   long & counter,
   int & more,
   ACE_CString & command,
-  int retry
-  ACE_ENV_ARG_DECL)
+  int retry)
 {
   int result = 0;
 
@@ -236,12 +232,12 @@ int FTClientMain::pass (
     {
       char buffer[1000];
       char *str_ = ACE_OS::fgets (buffer, sizeof(buffer)-1, this->commandIn_);
-	  if ( str_ )
-	  {
-		str_ = ACE_OS::strrchr (str_, '\n');
-		if ( str_ )
-			*str_ = '\0';
-	  }
+      if ( str_ )
+      {
+        str_ = ACE_OS::strrchr (str_, '\n');
+        if ( str_ )
+          *str_ = '\0';
+      }
       command = buffer;
     }
     retry = 0;
@@ -251,7 +247,7 @@ int FTClientMain::pass (
       char op = command[0];
       ACE_CString cdr = command.substr(1);
       char * junque;
-      long operand = strtol(cdr.c_str(),&junque, 10);
+      long operand = ACE_OS::strtol(cdr.c_str(),&junque, 10);
 
       if (this->verbose_ >= NOISY)
       {
@@ -275,8 +271,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->set(%ld);\n", operand);
           }
-          this->replica_->set(operand ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          this->replica_->set(operand);
           counter = operand;
           break;
         }
@@ -286,8 +281,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->get();\n");
           }
-          long value = this->replica_->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          long value = this->replica_->counter();
           if (value == operand)
           {
             ACE_OS::fprintf (stdout, "FT Client: Good: Read %ld expecting %ld\n", value, operand);
@@ -299,7 +293,6 @@ int FTClientMain::pass (
           }
           echo = 0;
           break;
-
         }
         case '>':
         {
@@ -307,8 +300,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->counter(%ld);\n", operand);
           }
-          this->replica_->counter(operand ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          this->replica_->counter(operand);
           counter = operand;
           break;
         }
@@ -318,8 +310,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->increment(%ld);\n", operand);
           }
-          this->replica_->increment(operand ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          this->replica_->increment(operand);
           counter += operand;
           break;
         }
@@ -329,8 +320,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->increment(%ld);\n", -operand);
           }
-          this->replica_->increment(-operand ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          this->replica_->increment(-operand);
           counter -= operand;
           break;
         }
@@ -340,8 +330,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->counter();\n");
           }
-          long attribute = this->replica_->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          long attribute = this->replica_->counter();
           ACE_OS::fprintf (stdout, "FT Client: Attribute: %ld\n", attribute);
           echo = 0;
           break;
@@ -352,8 +341,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->is_alive();\n");
           }
-          int alive = this->replica_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          int alive = this->replica_->is_alive();
           ACE_OS::fprintf (stdout, "FT Client: Is alive?  %d\n", alive);
           break;
         }
@@ -363,8 +351,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->die(%ld);\n", operand);
           }
-          this->replica_->die(static_cast<FT_TEST::TestReplica::Bane> (operand) ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          this->replica_->die(static_cast<FT_TEST::TestReplica::Bane> (operand));
           echo = 0;
           break;
         }
@@ -374,22 +361,19 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->get_state();\n");
           }
-          state = this->replica_->get_state(ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          state = this->replica_->get_state();
           stateValue = counter;
           break;
         }
         case 'S':
         {
-          if (state.in () != 0)
+          if (state->length () > 0)
           {
             if (this->verbose_ >= LOUD)
             {
               ACE_OS::fprintf (stdout, "FT Client: ->set_state(saved_state);\n");
             }
-            this->replica_->set_state (state.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK_RETURN (-1);
+            this->replica_->set_state (state.in ());
             counter = stateValue;
           }
           else
@@ -404,21 +388,19 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->get_update();\n");
           }
-          update = this->replica_->get_update(ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          update = this->replica_->get_update();
           updateValue = counter;
           break;
         }
         case 'U':
         {
-          if (update.in () != 0)
+          if (update->length () > 0)
           {
             if (this->verbose_ >= LOUD)
             {
               ACE_OS::fprintf (stdout, "FT Client: ->set_update(saved_update);\n");
             }
-            this->replica_->set_update(update.in () ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK_RETURN (-1);
+            this->replica_->set_update(update.in ());
             counter = updateValue;
           }
           else
@@ -446,26 +428,23 @@ int FTClientMain::pass (
         {
           if (operand != 0)
           {
-            ACE_TRY_NEW_ENV
+            try
             {
               if (this->verbose_ >= LOUD)
               {
                 ACE_OS::fprintf (stdout, "FT Client: ->shutdown();\n");
               }
-              this->replica_->shutdown( ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+              this->replica_->shutdown();
               // @@ Note: this is here because the corba event loop seems to go to sleep
               // if there's nothing for it to do.
               // not quite sure why, yet.  Dale
-              this->replica_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+              this->replica_->is_alive();
             }
-            ACE_CATCHANY
+            catch (const CORBA::Exception&)
             {
               ACE_OS::fprintf (stdout, "FT Client: Ignoring expected exception during shutdown.\n");
               ; // ignore exception during shutdown
             }
-            ACE_ENDTRY;
           }
           echo = 0;
           more = 0;
@@ -488,8 +467,7 @@ int FTClientMain::pass (
           ACE_OS::fprintf (stdout, "FT Client: ->get();\n");
         }
 
-        long value = this->replica_->get(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (-1);
+        long value = this->replica_->get();
         if (value == counter)
         {
           if (this->verbose_ >= NORMAL)
@@ -508,15 +486,14 @@ int FTClientMain::pass (
   return result;
 }
 
-int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
+int FTClientMain::next_replica ()
 {
   int result = 0;
   if (this->replica_pos_ < this->replica_iors_.size())
   {
     this->replica_name_ = this->replica_iors_[this->replica_pos_].c_str();
     this->replica_pos_ += 1;
-    CORBA::Object_var rep_obj = this->orb_->string_to_object (this->replica_name_ ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+    CORBA::Object_var rep_obj = this->orb_->string_to_object (this->replica_name_);
     this->replica_ = FT_TEST::TestReplica::_narrow (rep_obj.in ());
     if (! CORBA::is_nil (replica_.in ()))
     {
@@ -529,35 +506,35 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
   }
   else
   {
-    ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** "
-                             ACE_SIZE_T_FORMAT_SPECIFIER
-                             "\n", this->replica_pos_);
+    ACE_OS::fprintf (stderr,
+                     "***OUT_OF_REPLICAS*** "
+                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII
+                     "\n",
+                     this->replica_pos_);
   }
   return result;
 }
 
 
-int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
+int FTClientMain::run ()
 {
   int result = 0;
 
   this->orb_ = CORBA::ORB_init(this->argc_, this->argv_);
 
-  int ok = next_replica (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int ok = next_replica ();
   if (ok)
   {
     // retry information
     ACE_CString command;
     int retry = 0;
-    long counter = this->replica_->get(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    long counter = this->replica_->get();
 
     if (this->verbose_ >= NORMAL)
     {
       ACE_OS::fprintf (stdout, "FT Client: Initial counter %ld\n", counter);
     }
-    if (ACE_OS::isatty(fileno(stdin)))
+    if (ACE_OS::isatty(ACE_OS::fileno(stdin)))
     {
       ACE_OS::fprintf (stdout, "FT Client: Commands(? for help):\n");
     }
@@ -565,21 +542,19 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
     int more = 1;
     while (more && result == 0 &&  !feof (this->commandIn_))
     {
-      ACE_TRY_NEW_ENV
+      try
       {
-        result = pass (counter, more, command, retry ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        result = pass (counter, more, command, retry);
       }
-      ACE_CATCH (CORBA::SystemException, sysex)
+      catch (const CORBA::SystemException& sysex)
       {
-        ACE_OS::fprintf (stdout, "FT Client: Caught system exception: \n");
-        ACE_PRINT_EXCEPTION (sysex, "FT Client");
+        ACE_OS::fprintf (stdout, "FT Client: Caught system exception:\n");
+        sysex._tao_print_exception ("FT Client");
 
         retry = 0;
         int handled = 0;
 
-        handled = next_replica(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+        handled = next_replica();
         if (handled)
         {
           ACE_OS::fprintf (stdout, "FT Client: Recovering from fault.\n");
@@ -609,10 +584,9 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
         if (! handled)
         {
           ACE_OS::fprintf (stdout, "FT Client: Exception not handled.  Rethrow. ");
-          ACE_RE_THROW;
+          throw;
         }
       }
-      ACE_ENDTRY;
     }
   }
   else
@@ -624,30 +598,21 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   FTClientMain app;
   int result = app.parse_args(argc, argv);
   if (result == 0)
   {
-    ACE_TRY_NEW_ENV
+    try
     {
-      result = app.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = app.run ();
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "FT_Client::main\t\n");
+      ex._tao_print_exception ("FT_Client::main\t\n");
       result = -1;
     }
-    ACE_ENDTRY;
   }
   return result;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Vector<ACE_CString>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma ACE_Vector<ACE_CString>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

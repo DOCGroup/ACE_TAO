@@ -4,8 +4,6 @@
 /**
  *  @file   FTEC_ProxyConsumer.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -15,11 +13,13 @@
 #include "orbsvcs/Event/EC_Default_ProxyConsumer.h"
 #include "ace/SString.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_ProxyPushConsumer : public TAO_EC_Default_ProxyPushConsumer
 {
@@ -32,32 +32,26 @@ public:
   TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   virtual void activate (
-     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
-     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy);
 
     // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos
-                ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       RtecEventChannelAdmin::AlreadyConnected));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                const RtecEventChannelAdmin::SupplierQOS& qos);
+  virtual void disconnect_push_consumer ();
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
   void get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);
-  void set_state(const FtRtecEventChannelAdmin::ProxyPushConsumerStat& state
-                 ACE_ENV_ARG_DECL);
+  void set_state(const FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);
 
   typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-    (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);
+    (const FtRtecEventChannelAdmin::ObjectId&);
 
   static const RollbackOperation rollback_obtain;
 private:
   FtRtecEventChannelAdmin::ObjectId_var object_id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

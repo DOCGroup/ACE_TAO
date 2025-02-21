@@ -4,8 +4,6 @@
 /**
  *  @file LF_Event.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -15,13 +13,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_LF_Follower;
+class TAO_Leader_Follower;
 
 /**
  * @class TAO_LF_Event
@@ -40,19 +43,17 @@ class TAO_LF_Follower;
  * class to signal the events, that would allow us to remove the
  * Leader/Followers logic from the ORB.  However, that requires other
  * major changes and it somewhat complicates the design.
- *
  */
 class TAO_Export TAO_LF_Event
 {
 public:
-
   friend class TAO_Leader_Follower;
 
   /// Constructor
-  TAO_LF_Event (void);
+  TAO_LF_Event ();
 
   /// Destructor
-  virtual ~TAO_LF_Event (void);
+  virtual ~TAO_LF_Event ();
 
   /// Bind a follower
   /**
@@ -60,12 +61,15 @@ public:
    * method is used to bind the waiting thread to the event, in order
    * to let the event signal any important state changes.
    *
+   * This is virtual to allow the LF_Multi_Event derived type share
+   * the follower with all the subordinate LF_CH_Events.
+   *
    * @return -1 if the LF_Event is already bound, 0 otherwise
    */
-  int bind (TAO_LF_Follower *follower);
+  virtual int bind (TAO_LF_Follower *follower);
 
   /// Unbind the follower
-  int unbind (void);
+  virtual int unbind (TAO_LF_Follower *follower);
 
   //@{
   /** @name State management
@@ -77,7 +81,7 @@ public:
    * FSM. The possible sequence of states through which the FSM
    * migrates is defined in the concrete classes.
    */
-  enum {
+  enum LFS_STATE {
     /// The event is created, and is in initial state
     LFS_IDLE = 0,
     /// The event is active
@@ -94,51 +98,61 @@ public:
     LFS_CONNECTION_CLOSED
   };
 
-  /**
-   * Virtual methods for this class hierarchy..
-   */
-  /// Accessor to change the state. The state isnt changed unless
+  /// Accessor to change the state. The state isn't changed unless
   /// certain conditions are satisfied.
-  void state_changed (int new_state);
+  void state_changed (LFS_STATE new_state, TAO_Leader_Follower &lf);
 
-  /// Return 1 if the condition was satisfied successfully, 0 if it
+  /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  virtual int successful (void) const = 0 ;
+  bool successful (TAO_Leader_Follower &lf) const;
 
-  /// Return 1 if an error was detected while waiting for the
+  /// Return true if an error was detected while waiting for the
   /// event
-  virtual int error_detected (void) const = 0;
+  bool error_detected (TAO_Leader_Follower &lf) const;
 
   /// Check if we should keep waiting.
-  int keep_waiting (void);
+  bool keep_waiting (TAO_Leader_Follower &lf) const;
   //@}
 
   /// Reset the state, irrespective of the previous states
-  void reset_state (int new_state);
+  void reset_state (LFS_STATE new_state);
+
+  static const char *state_name (LFS_STATE st);
 
 protected:
-
   /// Validate the state change
-  virtual void state_changed_i (int new_state) = 0;
+  virtual void state_changed_i (LFS_STATE new_state) = 0;
+
+  /// Check if we should keep waiting.
+  bool keep_waiting_i () const;
+
+  /// Return true if the condition was satisfied successfully, false if it
+  /// has not
+  virtual bool successful_i () const = 0 ;
+
+  /// Return true if an error was detected while waiting for the
+  /// event
+  virtual bool error_detected_i () const = 0;
 
   /// Check whether we have reached the final state..
-  virtual int is_state_final (void) = 0;
+  virtual bool is_state_final () const = 0;
 
 private:
-
   /// Set the state irrespective of anything.
-  virtual void set_state (int new_state);
+  virtual void set_state (LFS_STATE new_state);
 
 protected:
   /// The current state
-  int state_;
+  LFS_STATE state_;
 
   /// The bounded follower
   TAO_LF_Follower *follower_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "LF_Event.inl"
+# include "tao/LF_Event.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

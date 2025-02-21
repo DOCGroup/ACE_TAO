@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Random_File.h
- *
- *  $Id$
  *
  *  This class implements a a random-access file containing
  *  fixed-size blocks.
@@ -22,20 +20,22 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/FILE.h"
 #include "ace/streams.h"
-#include "ace/Synch_T.h"
+
+#include "tao/orbconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 /**
  * \brief A random file class.
  *
  * Derived from ACE_FILE, this class provides access to a
  * file of fixed-size blocks.
- *
  */
 class TAO_Notify_Serv_Export Random_File : public ACE_FILE
 {
@@ -55,7 +55,7 @@ public:
   size_t block_size() const;
 
   /// Return the current file size, in number of blocks.
-  size_t size() const;
+  ACE_OFF_T size() const;
 
   /// Write a block to our file, potentially as an "atomic" write.
   /// If the atomic argument is true, then the operating system's
@@ -80,10 +80,11 @@ private:
 
 private:
   size_t block_size_;
-  ACE_SYNCH_MUTEX lock_;
+  mutable TAO_SYNCH_MUTEX lock_;
 };
-
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* RANDOM_FILE_H */

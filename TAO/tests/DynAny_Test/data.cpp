@@ -2,10 +2,7 @@
 /**
  *  @file    data.cpp
  *
- *  $Id$
- *
  *  Implementation file for the class containing test constants.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
@@ -13,9 +10,9 @@
 
 
 #include "data.h"
-#include "ace/Log_Msg.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "ace/Log_Msg.h"
 
 Data::Data (CORBA::ORB_var orb)
   : m_bool1 (1),                                m_bool2 (0),
@@ -36,10 +33,16 @@ Data::Data (CORBA::ORB_var orb)
     m_wchar1 (666),                             m_wchar2 (0),
     orb_ (orb)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_CDR_LONG_DOUBLE_ASSIGNMENT (m_longdouble1, 88888888888.8888);
+    ACE_CDR_LONG_DOUBLE_ASSIGNMENT (m_longdouble2, 99999999999.9999);
 
-  ACE_TRY
+  try
     {
+      m_shortseq1.length (3UL);
+      m_shortseq1[0UL] = 0;
+      m_shortseq1[1UL] = 1;
+      m_shortseq1[2UL] = 2;
+
       labels[0] = "type boolean";
       labels[1] = "type octet";
       labels[2] = "type char";
@@ -56,13 +59,16 @@ Data::Data (CORBA::ORB_var orb)
       labels[13] = "type wchar";
       labels[14] = "type any";
       labels[15] = "type objref";
+      labels[16] = "type short sequence";
+      labels[17] = "type longdouble";
+      labels[18] = "type enum";
+      labels[19] = "typedef'd enum in struct";
+
 
       // Getting the RootPOA so we can generate object references.
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RootPOA");
 
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -72,41 +78,27 @@ Data::Data (CORBA::ORB_var orb)
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
-      ACE_TRY_CHECK;
 
       // Generate values for the member variables.
      this->m_objref1 =
-        root_poa->create_reference ("foo"
-                                    ACE_ENV_ARG_PARAMETER);
+        root_poa->create_reference ("foo");
 
-      ACE_TRY_CHECK;
 
       this->m_objref2 =
-        root_poa->create_reference ("foo"
-                                    ACE_ENV_ARG_PARAMETER);
-
-      ACE_TRY_CHECK;
+        root_poa->create_reference ("foo");
 
       // Clean up after the POA
-      root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in ORB/POA init\n");
+      ex._tao_print_exception ("Exception in ORB/POA init\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
-Data::~Data (void)
+Data::~Data ()
 {
   CORBA::string_free (m_string1);
   CORBA::string_free (m_string2);

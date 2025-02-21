@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #ifndef FOO_I_H
 #define FOO_I_H
 #include /**/ "ace/pre.h"

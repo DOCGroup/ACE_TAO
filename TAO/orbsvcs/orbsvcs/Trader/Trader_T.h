@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  * @file Trader_T.h
- *
- * $Id$
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Seth Widoff <sbw1@cs.wustl.edu>
@@ -17,8 +15,8 @@
 #define TAO_TRADER_H
 #include /**/ "ace/pre.h"
 
-#include "Trader.h"
-#include "Offer_Database.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Offer_Database.h"
 #include "ace/Containers.h"
 #include "ace/Lock_Adapter_T.h"
 
@@ -30,6 +28,8 @@
 #pragma warning(push)
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_DynSequence_i;
 
@@ -55,7 +55,6 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Trader : public TAO_Trader_Base
 {
 public:
-
   // The desired combination of interfaces to be passed to the
   // TAO_Trader constructor.
 
@@ -71,16 +70,15 @@ public:
   TAO_Trader (Trader_Components components = LOOKUP);
 
   /// Destructor.
-  virtual ~TAO_Trader (void);
+  virtual ~TAO_Trader ();
 
   /// Accessor for the structure with all the service offers.
-  Offer_Database& offer_database (void);
+  Offer_Database& offer_database ();
 
   /// Returns the trader
-  ACE_Lock &lock (void);
+  ACE_Lock &lock ();
 
 protected:
-
   typedef TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> TRADER_SELF;
 
   Offer_Database offer_database_;
@@ -93,9 +91,8 @@ protected:
   PortableServer::ServantBase* ifs_[5];
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> &) = delete;
 };
 
   // *************************************************************
@@ -107,37 +104,30 @@ class TAO_Trader_Components :
   public virtual IF
 {
 public:
-
   TAO_Trader_Components (const TAO_Trading_Components_i& comps);
 
   // = CosTrading::TraderComponents methods.
   /// Returns an object reference to the Lookup interface of the trader.
   /// Returns nil if the trader does not support Lookup interface.
-  virtual CosTrading::Lookup_ptr lookup_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTrading::Lookup_ptr lookup_if ();
 
   /// Returns object reference for the Register interface of the trader.
   /// Returns nil if the trader does not support Register interface.
-  virtual CosTrading::Register_ptr register_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTrading::Register_ptr register_if ();
 
   /// Returns object reference for the Link interface of the trader.
   /// Returns nil if the trader does not support Link interface.
-  virtual CosTrading::Link_ptr link_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTrading::Link_ptr link_if ();
 
   /// Returns object reference to the Proxy interface of the trader.
   /// Returns nil if the trader does not support Proxy interface.
-  virtual CosTrading::Proxy_ptr proxy_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTrading::Proxy_ptr proxy_if ();
 
   /// Returns object reference for the Admin interface of the trader.
   /// Returns nil if the trader does not support Admin interface.
-  virtual CosTrading::Admin_ptr admin_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTrading::Admin_ptr admin_if ();
 
 private:
-
   const TAO_Trading_Components_i& comps_;
 };
 
@@ -145,25 +135,19 @@ template <class IF>
 class TAO_Support_Attributes : public virtual IF
 {
 public:
-
   TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs);
 
   // = CosTrading::SupportAttributes methods.
 
-  virtual CORBA::Boolean supports_modifiable_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean supports_modifiable_properties ();
 
-  virtual CORBA::Boolean supports_dynamic_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean supports_dynamic_properties ();
 
-  virtual CORBA::Boolean supports_proxy_offers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean supports_proxy_offers ();
 
-  virtual CosTrading::TypeRepository_ptr type_repos (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTrading::TypeRepository_ptr type_repos ();
 
 private:
-
   const TAO_Support_Attributes_i& attrs_;
 };
 
@@ -171,57 +155,43 @@ template <class IF>
 class TAO_Import_Attributes : public virtual IF
 {
 public:
-
   TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs);
 
   // = CosTrading::ImportAttributes methods.
 
-  virtual CORBA::ULong def_search_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong def_search_card ();
 
-  virtual CORBA::ULong max_search_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong max_search_card ();
 
   // Search cardinality determines the maximum number of offers searched
   // before not considering other offers.
 
-  virtual CORBA::ULong def_match_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong def_match_card ();
 
-  virtual CORBA::ULong max_match_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong max_match_card ();
 
   // Match cardinality determines the maximum number of offers
   // matched to the constraints before not considering other offers..
 
-  virtual CORBA::ULong def_return_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong def_return_card ();
 
-  virtual CORBA::ULong max_return_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong max_return_card ();
 
   // Return cardinality determines the maximum number of offers marked
   // to return before not considering other offers.
 
 
-  virtual CORBA::ULong max_list (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong max_list ();
 
-  virtual CORBA::ULong def_hop_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong def_hop_count ();
 
-  virtual CORBA::ULong max_hop_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong max_hop_count ();
 
-  virtual CosTrading::FollowOption def_follow_policy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTrading::FollowOption def_follow_policy ();
 
-  virtual CosTrading::FollowOption max_follow_policy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  virtual CosTrading::FollowOption max_follow_policy ();
 
 private:
-
   const TAO_Import_Attributes_i& attrs_;
 };
 
@@ -229,15 +199,12 @@ template <class IF>
 class TAO_Link_Attributes : public virtual IF
 {
 public:
-
   TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs);
 
   // = CosTrading::LinkAttributes methods
-  virtual CosTrading::FollowOption max_link_follow_policy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTrading::FollowOption max_link_follow_policy ();
 
 private:
-
   const TAO_Link_Attributes_i& attrs_;
 };
 
@@ -262,9 +229,9 @@ public:
                    const ELEMENT_TYPE& element);
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Trader_T.cpp"
-#endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "orbsvcs/Trader/Trader_T.cpp"
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

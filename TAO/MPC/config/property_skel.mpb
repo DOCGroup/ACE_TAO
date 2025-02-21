@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : orbsvcslib, property, portableserver {
+  after     += CosProperty_Skel
+  libs      += TAO_CosProperty_Skel
+}

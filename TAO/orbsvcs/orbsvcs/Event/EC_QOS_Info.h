@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_QOS_Info.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -19,11 +18,13 @@
 
 #include "orbsvcs/RtecBaseC.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_QOS_Info
@@ -39,7 +40,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_QOS_Info
 {
 public:
   /// Constructor
-  TAO_EC_QOS_Info (void);
+  TAO_EC_QOS_Info ();
 
   /// Copy constructor, it does the obvious thing, but if it is not
   /// here the HP/aCC compiler breaks.
@@ -56,8 +57,10 @@ public:
   long timer_id_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_QOS_Info.i"
+#include "orbsvcs/Event/EC_QOS_Info.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

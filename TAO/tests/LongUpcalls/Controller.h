@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef LONGUPCALLS_CONTROLLER_H
 #define LONGUPCALLS_CONTROLLER_H
 
@@ -9,17 +7,15 @@ class Controller
   : public virtual POA_Test::Controller
 {
 public:
-  Controller (void);
+  Controller ();
   // Constructor
 
-  void dump_results (void);
+  void dump_results ();
   // Print out the results and any errors
 
   // = The skeleton methods
-  virtual void worker_started (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void worker_started ();
+  virtual void worker_finished ();
 
 private:
   TAO_SYNCH_MUTEX mutex_;

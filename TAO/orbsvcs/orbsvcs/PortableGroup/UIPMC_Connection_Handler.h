@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================
@@ -15,26 +13,28 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Reactor.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
-
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 
-#include "UIPMC_Transport.h"
-#include "portablegroup_export.h"
-
-#include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/Acceptor.h"
+#include "ace/Reactor.h"
 #include "ace/SOCK_Dgram.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward Decls
-class TAO_Pluggable_Messaging;
+// This connection handler.
+typedef ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>
+        TAO_UIPMC_SVC_HANDLER;
+
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class TAO_PortableGroup_Export ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 // ****************************************************************
 
@@ -43,36 +43,29 @@ class TAO_Pluggable_Messaging;
  *
  * @brief  Handles requests on a single connection.
  *
- * The Connection handler which is common for the Acceptor and
- * the Connector
+ * Since MIOP is asymmetric then this Connection handler
+ * is for only use in the Connector.
  */
-
-
 class TAO_PortableGroup_Export TAO_UIPMC_Connection_Handler :
   public TAO_UIPMC_SVC_HANDLER,
   public TAO_Connection_Handler
 {
-
 public:
-
   TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. <arg> parameter is used by the Acceptor to pass the
+  /// Constructor. arg parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
   TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core);
 
 
   /// Destructor.
-  ~TAO_UIPMC_Connection_Handler (void);
+  ~TAO_UIPMC_Connection_Handler ();
 
   //@{
   /** @name Connection Handler overloads
    */
   virtual int open_handler (void *v);
   //@}
-
-  // @@ Frank: Similar to open, but called on server
-  virtual int open_server (void);
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
@@ -81,8 +74,8 @@ public:
   //@{
   /** @name Event Handler overloads
    */
-  virtual int resume_handler (void);
-  virtual int close_connection (void);
+  virtual int resume_handler ();
+  virtual int close_connection ();
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -92,40 +85,26 @@ public:
   //@}
 
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_transport_to_cache ();
+
+  /// Set Diff-Serv codepoint on outgoing packets.
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   // UIPMC Additions - Begin
-  ACE_HANDLE get_handle (void) const;
-
-  const ACE_INET_Addr &addr (void);
+  const ACE_INET_Addr &addr () const;
 
   void addr (const ACE_INET_Addr &addr);
 
-  const ACE_INET_Addr &local_addr (void);
+  const ACE_INET_Addr &local_addr () const;
 
   void local_addr (const ACE_INET_Addr &addr);
 
-  const ACE_INET_Addr &server_addr (void);
-
-  void server_addr (const ACE_INET_Addr &addr);
-
-  const ACE_SOCK_Dgram &dgram (void);
-
-  const ACE_SOCK_Dgram_Mcast &mcast_dgram (void);
+  u_long send_hi_water_mark () const;
   // UIPMC Additions - End
 
 protected:
-
   // UIPMC Additions - Begin
-
-  /// Client side UDP socket (send only).
-  ACE_SOCK_Dgram udp_socket_;
-
-  /// Server side Mcast UDP socket (receive only).
-  ACE_SOCK_Dgram_Mcast mcast_socket_;
-
-  /// Flag that specifies whether multicast is in use or not.
-  CORBA::Boolean using_mcast_;
 
   // This is always the remote address
   ACE_INET_Addr addr_;
@@ -139,10 +118,24 @@ protected:
   /**
    * @name TAO_Connection Handler overloads
    */
-  virtual int release_os_resources (void);
+  virtual int release_os_resources ();
+  virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
 
+  // helper function used by the set_dscp_codepoint () methods to
+  // set the TOS field in the IP packets.
+  int set_tos (int tos);
+
+private:
+  /// Stores the type of service value.
+  int dscp_codepoint_;
+
+  /// How much data can be sent without delays. It defaults to the size
+  /// of the socket buffer.
+  u_long send_hi_water_mark_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_UIPMC_CONNECTION_HANDLER_H */

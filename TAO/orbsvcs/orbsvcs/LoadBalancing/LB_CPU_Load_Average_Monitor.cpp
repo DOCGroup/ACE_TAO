@@ -1,22 +1,18 @@
-#include "LB_CPU_Load_Average_Monitor.h"
+#include "orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/sys/os_pstat.h"
-#include "ace/os_include/sys/os_loadavg.h"
 #if defined(__NetBSD__) || defined (__APPLE__)
 #include <sys/sysctl.h>
 #endif
 
-ACE_RCSID (LoadBalancing,
-           LB_CPU_Load_Average_Monitor,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (const char * location_id,
-                                                                  const char * location_kind)
+TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
+  const ACE_TCHAR * location_id,
+  const ACE_TCHAR * location_kind)
   : location_ (1)
 {
   this->location_.length (1);
@@ -46,20 +42,19 @@ TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (const char * l
     }
   else
     {
-      this->location_[0].id = CORBA::string_dup (location_id);
+      this->location_[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(location_id));
 
       if (location_kind != 0)
-        this->location_[0].kind = CORBA::string_dup (location_kind);
+        this->location_[0].kind = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(location_kind));
     }
 }
 
-TAO_LB_CPU_Load_Average_Monitor::~TAO_LB_CPU_Load_Average_Monitor (void)
+TAO_LB_CPU_Load_Average_Monitor::~TAO_LB_CPU_Load_Average_Monitor ()
 {
 }
 
 CosLoadBalancing::Location *
-TAO_LB_CPU_Load_Average_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_LB_CPU_Load_Average_Monitor::the_location ()
 {
   CosLoadBalancing::Location * location;
   ACE_NEW_THROW_EX (location,
@@ -69,14 +64,12 @@ TAO_LB_CPU_Load_Average_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return location;
 }
 
 CosLoadBalancing::LoadList *
-TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_LB_CPU_Load_Average_Monitor::loads ()
 {
   CORBA::Float load = 0;
 
@@ -89,16 +82,30 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   //    the number of processors and assume that any processor failure
   //    is a catastrophic one.
 
-#if 0
+#if 0 // defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0501)
 
   SYSTEM_INFO sys_info;
-  ::GetSystemInfo (&sys_info);
+  ::GetNativeSystemInfo (&sys_info);
 
-  ACE_ASSERT (sys_info.dwNumberOfProcessors > 0);
+  if (sys_info.dwNumberOfProcessors > 0)
+    {
+      // Retrieve systimes from windows
+      FILETIME idle;
+      FILETIME kernel;
+      FILETIME user;
+      ::GetSystemTimes (&idle, &kernel, &user);
 
-  load = ::GetLoadAvg () / sys_info.dwNumberOfProcessors;
+      // Convert all times to ULONGLONG so that we can calculate with them
+      ULONGLONG idle_ll = (((ULONGLONG) idle.dwHighDateTime) << 32) + idle.dwLowDateTime;
+      ULONGLONG kernel_ll = (((ULONGLONG) kernel.dwHighDateTime) << 32) + kernel.dwLowDateTime;
+      ULONGLONG user_ll = (((ULONGLONG) user.dwHighDateTime) << 32) + user.dwLowDateTime;
+      ULONGLONG system_ll = kernel_ll + user_ll;
 
-#elif defined (linux) || defined (sun)
+      // Calculate the load
+      load = ((system_ll - idle_ll) * 100 / system_ll)  / sys_info.dwNumberOfProcessors;
+    }
+
+#elif defined (ACE_LINUX)
 
   // Only bother getting the load average over the last minute.
   //
@@ -106,7 +113,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   //       last 5 and 15 minutes can be used instead.
   double loadavg[1];
 
-# if defined (linux) \
+# if defined (ACE_LINUX) \
      && ((defined (__GLIBC__) && defined (__GLIBC_MINOR__) \
           && __GLIBC__ == 2 && __GLIBC_MINOR__ < 2) \
          || (!defined (_BSD_SOURCE) && !defined (_GNU_SOURCE)))
@@ -116,19 +123,18 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   // defined.
 
   // Obtain the load average directly from the `/proc' filesystem.
-  FILE * s = ::fopen ("/proc/loadavg", "r");
+  FILE * s = ACE_OS::fopen ("/proc/loadavg", "r");
 
   if (s == 0)
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO::VMCID,
-                          errno),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw CORBA::NO_IMPLEMENT (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        errno),
+      CORBA::COMPLETED_NO);
 
   fscanf (s, "%f", &loadavg[0]);
 
-  (void) fclose (s);
+  (void) ACE_OS::fclose (s);
 
   const int samples = 1;
 
@@ -150,17 +156,17 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
   if (samples == 1)
     {
-      const long num_processors = ::sysconf (_SC_NPROCESSORS_ONLN);
+      const long num_processors = ACE_OS::sysconf (_SC_NPROCESSORS_ONLN);
 
       ACE_ASSERT (num_processors > 0);
 
       if (num_processors > 0)
         load = loadavg[0] / num_processors;
       else
-        ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+        throw CORBA::TRANSIENT ();  // Correct exception?
     }
   else
-    ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+    throw CORBA::TRANSIENT ();  // Correct exception?
 
 #elif defined (__NetBSD__) || defined (__APPLE__)
 
@@ -177,41 +183,21 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
       mib[1] = HW_NCPU;
       len = sizeof(num_processors);
 
-      sysctl(mib, 2, &num_processors, &len, NULL, 0);
+      sysctl(mib, 2, &num_processors, &len, 0, 0);
 
       ACE_ASSERT (num_processors > 0);
 
       if (num_processors > 0)
         load = loadavg[0] / num_processors;
       else
-        ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+        throw CORBA::TRANSIENT ();  // Correct exception?
     }
   else
-    ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
-
-#elif defined (__hpux)
-
-  struct pst_dynamic psd;
-
-  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
-    {
-      const long & num_processors = psd.psd_proc_cnt;
-
-      ACE_ASSERT (num_processors > 0);
-
-      if (num_processors > 0)
-        load = psd.psd_avg_1_min / num_processors;
-      else
-        ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
-    }
-  else
-    ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
-
+    throw CORBA::TRANSIENT ();  // Correct exception?
 #endif
 
-#if defined (linux) || defined (sun) || defined (__hpux) || defined(__NetBSD__) || defined (__APPLE__)
-
-  CosLoadBalancing::LoadList * tmp;
+#if defined (ACE_LINUX) || defined(__NetBSD__) || defined (__APPLE__)
+  CosLoadBalancing::LoadList * tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (
@@ -219,7 +205,6 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   CosLoadBalancing::LoadList_var load_list = tmp;
 
@@ -233,8 +218,10 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 #else
 
   ACE_UNUSED_ARG (load);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 
-#endif  /* linux || sun || __hpux  || __NetBSD__ || __APPLE__ */
+#endif  /* linux || __NetBSD__ || __APPLE__ */
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

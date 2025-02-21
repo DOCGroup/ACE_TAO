@@ -1,0 +1,14 @@
+// -*- MPC -*-
+project(*Collocated): taoserver, pi, pi_server, interceptors, avoids_corba_e_micro {
+  exename = PI_ProcMode_Collocated_Test
+  Source_Files {
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    interceptors.cpp
+    Echo_Collocated_ORBInitializer.cpp
+    Collocated_Test.cpp
+    Client_Task.cpp
+    Server_Task.cpp
+  }
+}

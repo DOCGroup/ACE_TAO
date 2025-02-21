@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 //
 // ============================================================================
 //
@@ -31,11 +30,10 @@ class ECT_Supplier_Driver : public ECT_Driver
   // = DESCRIPTION
   //
 public:
-  ECT_Supplier_Driver (void);
-  virtual ~ECT_Supplier_Driver (void);
+  ECT_Supplier_Driver ();
+  virtual ~ECT_Supplier_Driver ();
 
-  virtual void shutdown_consumer (void* consumer_cookie
-                                  ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void shutdown_consumer (void* consumer_cookie);
   // Not used....
 
   enum {
@@ -43,23 +41,22 @@ public:
     // Maximum number of suppliers.
   };
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Execute the test.
 
 private:
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
-                          RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
-  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec);
+  void disconnect_suppliers ();
   // Connect the suppliers.
 
-  void activate_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_suppliers ();
   // Activate the suppliers, i.e. they start generating events.
 
-  void dump_results (void);
+  void dump_results ();
   // Dump the results for each supplier.
 
 private:
@@ -85,7 +82,7 @@ private:
   int type_count_;
   // We send two types of events, with different contents.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 };
 

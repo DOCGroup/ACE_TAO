@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Worker.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -18,6 +17,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class Object;
 
@@ -38,23 +41,18 @@ template<class Object>
 class TAO_ESF_Worker
 {
 public:
-  virtual ~TAO_ESF_Worker (void);
+  virtual ~TAO_ESF_Worker ();
 
   /// Used by the collection to inform the worker
   /// the number of proxies in the collection.
   virtual void set_size(size_t size);
 
   /// Callback interface.
-  virtual void work (Object *object
-                     ACE_ENV_ARG_DECL) = 0;
+  virtual void work (Object *object) = 0;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Worker.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Worker.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Worker.cpp"
 
 #endif /* TAO_ESF_WORKER_H */

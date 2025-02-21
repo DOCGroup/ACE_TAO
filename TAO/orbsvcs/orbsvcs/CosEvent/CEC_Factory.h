@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Factory.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
@@ -14,17 +13,27 @@
 #define TAO_CEC_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Objref_VarOut_T.h"
+#include "ace/Service_Object.h"
 
-#include "event_serv_export.h"
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
+#include "tao/Policy_ForwardC.h"
+#include "tao/Versioned_Namespace.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 
@@ -64,7 +73,7 @@ typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullSupplier> TAO_CEC_ProxyPullSup
  * initialization time through several strategies and
  * components. This class defines the interface of an Abstract
  * Factory that creates all such components.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * The objects it creates are owned by this class, the client must
  * invoke the corresponding destroy() method to release them.
  * Some implementations may require a different instance for the
@@ -74,7 +83,7 @@ class TAO_Event_Serv_Export TAO_CEC_Factory : public ACE_Service_Object
 {
 public:
   /// destructor...
-  virtual ~TAO_CEC_Factory (void);
+  virtual ~TAO_CEC_Factory ();
 
   /// Create and destroy the dispatching module.
   virtual TAO_CEC_Dispatching*
@@ -190,9 +199,9 @@ public:
 
   /// Create and destroy the locking strategies for both
   /// ProxyPushConsumers and ProxyPushSuppliers
-  virtual ACE_Lock* create_consumer_lock (void) = 0;
+  virtual ACE_Lock* create_consumer_lock () = 0;
   virtual void destroy_consumer_lock (ACE_Lock*) = 0;
-  virtual ACE_Lock* create_supplier_lock (void) = 0;
+  virtual ACE_Lock* create_supplier_lock () = 0;
   virtual void destroy_supplier_lock (ACE_Lock*) = 0;
 
   /// The ConsumerControl and SupplierControl strategies are used to
@@ -213,7 +222,12 @@ public:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
   virtual void
       destroy_supplier_control (TAO_CEC_SupplierControl*) = 0;
+
+  virtual CORBA::Policy_ptr
+  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CEC_FACTORY_H */

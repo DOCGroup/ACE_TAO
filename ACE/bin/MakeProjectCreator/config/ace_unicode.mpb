@@ -1,0 +1,4 @@
+// -*- MPC -*-
+feature (uses_wchar) : unicode {
+  macros += ACE_USES_WCHAR
+}

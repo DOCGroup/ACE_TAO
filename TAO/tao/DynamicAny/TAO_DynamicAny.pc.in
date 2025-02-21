@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_DynamicAny
 Description: TAO Dynamic Any Library
-Requires: TAO
+Requires: TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_DynamicAny
 Cflags: -I${includedir}

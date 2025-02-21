@@ -1,0 +1,9 @@
+module DynAnyTest {
+
+    enum EventKind {ALARM_EVENT, LOG_EVENT};
+
+    union EventData switch (EventKind) {
+        case ALARM_EVENT:        any        ev_data;
+        case LOG_EVENT:          string     ev_desc;
+    };
+};

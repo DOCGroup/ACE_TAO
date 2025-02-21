@@ -4,8 +4,6 @@
 /**
  *  @file    Upcall_Command.h
  *
- *  $Id$
- *
  *  @author Ossama Othman
  */
 //=============================================================================
@@ -16,21 +14,17 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/portableserver_export.h"
-#include "ace/CORBA_macros.h"
 
-#ifndef ACE_LACKS_PRAGMA_ONCE
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* !ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
 
-namespace CORBA
-{
-  class Environment;
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class Upcall_Command
    *
@@ -46,17 +40,15 @@ namespace TAO
   class TAO_PortableServer_Export Upcall_Command
   {
   public:
-
     /// Destructor.
-    virtual ~Upcall_Command (void);
+    virtual ~Upcall_Command ();
 
     /// Execute the upcall.
-    virtual void execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
-
+    virtual void execute () = 0;
   };
-
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,9 +1,7 @@
-// $Id$
+#include "orbsvcs/Notify/Method_Request_Shutdown.h"
+#include "orbsvcs/Notify/ThreadPool_Task.h"
 
-#include "Method_Request_Shutdown.h"
-#include "ThreadPool_Task.h"
-
-ACE_RCSID(Notify, TAO_Notify_Method_Request_Shutdown, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Shutdown::TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task)
   : task_ (task)
@@ -15,13 +13,13 @@ TAO_Notify_Method_Request_Shutdown::~TAO_Notify_Method_Request_Shutdown ()
 }
 
 TAO_Notify_Method_Request_Queueable*
-TAO_Notify_Method_Request_Shutdown::copy (void)
+TAO_Notify_Method_Request_Shutdown::copy ()
 {
   return new TAO_Notify_Method_Request_Shutdown (this->task_);
 }
 
 int
-TAO_Notify_Method_Request_Shutdown::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Method_Request_Shutdown::execute ()
 {
   // Shut down the scheduler by deactivating the activation queue's
   // underlying message queue - should pop all worker threads off their
@@ -29,3 +27,5 @@ TAO_Notify_Method_Request_Shutdown::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->task_->msg_queue ()->deactivate ();
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

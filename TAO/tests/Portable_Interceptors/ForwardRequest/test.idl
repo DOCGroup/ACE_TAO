@@ -4,8 +4,6 @@
 /**
  * @file test.idl
  *
- * $Id$
- *
  * Simple IDL file to test PortableInterceptor::ForwardRequest
  * support.
  *
@@ -13,7 +11,7 @@
  */
 //=============================================================================
 
-#include "tao/PI_Server/ServerRequestInterceptor.pidl"
+#include "tao/PI_Server/PI_Server_include.pidl"
 
 module ForwardRequestTest
 {

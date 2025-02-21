@@ -4,8 +4,6 @@
 /**
  * @file SL3_SecurityCurrent.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -22,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SL3_SecurityCurrent_Impl.h"
+#include "orbsvcs/Security/SL3_SecurityCurrent_Impl.h"
 
 #include "orbsvcs/SecurityLevel3C.h"
 
@@ -33,6 +31,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
@@ -54,10 +53,9 @@ namespace TAO
      */
     class TAO_Security_Export SecurityCurrent
       : public virtual SecurityLevel3::SecurityCurrent,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       SecurityCurrent (size_t tss_slot, TAO_ORB_Core * oc);
 
@@ -68,12 +66,9 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::ClientCredentials_ptr client_credentials (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ();
 
-      virtual CORBA::Boolean request_is_local (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Boolean request_is_local ();
       //@}
 
       /// Return the TSS slot ID assigned to the "SecurityCurrent"
@@ -82,19 +77,17 @@ namespace TAO
        * The concrete thread-specific storage SecurityCurrent
        * implementations will each use this slot ID.
        */
-      size_t tss_slot (void) const;
+      size_t tss_slot () const;
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~SecurityCurrent (void);
+      ~SecurityCurrent ();
 
     private:
-
       /// Set the thread-specific storage
       /// SecurityLevel3::SecurityCurrent implementation.
       /**
@@ -107,10 +100,9 @@ namespace TAO
        * There is no function that places the implementation pointer
        * in TSS.  The underlying security mechanism does that.
        */
-      SecurityCurrent_Impl * implementation (void);
+      SecurityCurrent_Impl * implementation ();
 
     private:
-
       /**
        * @name Retricted Copying and Assignment
        *
@@ -123,22 +115,20 @@ namespace TAO
       //@}
 
     private:
-
       /// Thread-specific storage slot assigned to this object.
       const size_t tss_slot_;
 
       /// Pointer to the ORB Core corresponding to the ORB with which
       /// this object is registered.
-      TAO_ORB_Core *orb_core_;
-
+      TAO_ORB_Core * const orb_core_;
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "SL3_SecurityCurrent.inl"
+# include "orbsvcs/Security/SL3_SecurityCurrent.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

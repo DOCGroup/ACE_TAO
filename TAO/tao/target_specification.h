@@ -4,8 +4,6 @@
 /**
  *  @file    target_specification.h
  *
- *  $Id$
- *
  *  A class that encapsulates the target identification details.
  *
  *  @author  Balachandran  Natarajan <bala@cs.wustl.edu>
@@ -17,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,12 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace IOP
 {
@@ -51,14 +44,12 @@ namespace TAO
  * @class TAO_Target_Specification
  *
  * @brief A class to encapsulate all the ways of specifying targets.
- *
  */
 class TAO_Export TAO_Target_Specification
 {
 public:
-
   /// Ctor
-  TAO_Target_Specification (void);
+  TAO_Target_Specification ();
   enum TAO_Target_Address
   {
     // Note that this could be extended for other protocols
@@ -67,12 +58,11 @@ public:
     Reference_Addr
   };
 
-  // Note: Please do not pass in a identifiers that is allocated on
-  // stack. These methods does not make a copy but holds the pointer
-  // passed in.
   /// Set the target specification by giving the object key.
+  /// @note Please do not pass in a identifiers that is allocated on
+  /// stack. These methods does not make a copy but holds the pointer
+  /// passed in.
   void target_specifier (const TAO::ObjectKey &key);
-
 
   /// Set the target specification by passing in an IOP::TaggedProfile.
   void target_specifier (IOP::TaggedProfile &profile);
@@ -82,23 +72,21 @@ public:
    * index. Please see the header file IOPC.h on why a profile index
    * is required.
    */
-  void target_specifier (IOP::IOR &ior,
-                         CORBA::ULong prof_index);
-
+  void target_specifier (IOP::IOR &ior, CORBA::ULong prof_index);
 
   /**
    * Returns the object key after a check of the stored specifier. If
    * the stored specifier is not of the right type then this would
    * return a NULL
    */
-  const TAO::ObjectKey* object_key (void);
+  const TAO::ObjectKey* object_key ();
 
   /**
    * Returns the IOP::TaggedProfile after a check of the stored specifier. If
    * the stored specifier is not of the right type then this would
    * return a NULL
    */
-  const IOP::TaggedProfile *profile (void);
+  const IOP::TaggedProfile *profile ();
 
   /**
    * Returns a  pointer to IOP::IOR through the parameters and the
@@ -109,7 +97,7 @@ public:
   CORBA::ULong iop_ior (IOP::IOR *&ior);
 
   /// Access the TArget_Address specifier
-  TAO_Target_Address specifier (void);
+  TAO_Target_Address specifier ();
 
 private:
   /// The union of all the possibilities
@@ -127,8 +115,10 @@ private:
   CORBA::ULong profile_index_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "target_specification.i"
+#include "tao/target_specification.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

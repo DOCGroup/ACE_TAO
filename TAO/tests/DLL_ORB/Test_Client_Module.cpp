@@ -1,22 +1,17 @@
 // -*- C++ -*-
-
 #include "Test_Client_Module.h"
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/StringSeqC.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
-ACE_RCSID (DLL_ORB,
-           Test_Client_Module,
-           "$Id$")
-
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -33,10 +28,9 @@ parse_args (int argc, char *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
-
 
 int
 Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
@@ -65,8 +59,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
   // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO client-side ORB initialization code.
   // -----------------------------------------------------------------
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Prepend a "dummy" program name argument to the Service
       // Configurator argument vector.
@@ -84,28 +77,26 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
       for (int i = new_argc - argc, j = 0;
            j < argc;
            ++i, ++j)
-        new_argv[i] = CORBA::string_dup (argv[j]);
+        new_argv[i] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[j]));
 
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.get_buffer (),
-                                    ""
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    "CLIENT");
 
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
 
-      if (::parse_args (new_argc, new_argv.get_buffer ()) != 0)
+      ACE_Argv_Type_Converter converter (new_argc, new_argv.get_buffer ());
+
+      if (::parse_args (new_argc, converter.get_TCHAR_argv ()) != 0)
         return 1;
 
       CORBA::Object_var obj =
-        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (ior);
 
       this->test_ =
-        Test::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->test_.in ()))
         {
@@ -115,15 +106,12 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
                             1);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Client_Module::init"));
+      ex._tao_print_exception (ACE_TEXT ("Test_Client_Module::init"));
 
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
 #if defined (ACE_HAS_THREADS)
 
@@ -139,35 +127,10 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Test_Client_Module::fini (void)
+Test_Client_Module::fini ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Make sure the ORB is destroyed.
-      if (!CORBA::is_nil (this->orb_.in ()))
-        {
-          this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Client_Module::fini"));
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
-  // This is a bit of a hack.  The ORB Core's lifetime is tied to the
-  // lifetime of an object reference.  We need to wipe out all object
-  // references before we call fini() on the TAO_Singleton_Manager.
-  //
-  // Note that this is only necessary if the default resource factory
-  // is used, i.e. one isn't explicitly loaded prior to initializing
-  // the ORB.
-  (void) this->test_.out ();
+  ACE_DEBUG ((LM_INFO,
+              "Client is being finalized.\n"));
 
   // ------------------------------------------------------------
   // Pre-Test_Client_Module termination steps.
@@ -184,27 +147,44 @@ Test_Client_Module::fini (void)
 }
 
 int
-Test_Client_Module::svc (void)
+Test_Client_Module::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Invoke an operation on the Test object.
-      this->test_->invoke_me (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_->invoke_me ();
 
       /// Shutdown the remote ORB.
-      this->test_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_->shutdown ();
+
+      // Make sure the ORB is destroyed here - before the thread
+      // exits, because it may be holding global resources, owned by
+      // the Object Manager (thru its core, which is in turn owned by
+      // the ORB table; which is owned by the Object Manager).
+      // Otherwise the Object Manager will have clobbered them by the
+      // time it gets to destroy the ORB Table, which calls our
+      // fini(). Had we destroyed the ORB in our fini(), its core
+      // fininalization would have required access to those already
+      // deleted resources.
+      if (!CORBA::is_nil (this->orb_.in ()))
+        {
+          this->orb_->destroy ();
+        }
+
+      // This is a bit of a hack.  The ORB Core's lifetime is tied to the
+      // lifetime of an object reference.  We need to wipe out all object
+      // references before we call fini() on the TAO_Singleton_Manager.
+      //
+      // Note that this is only necessary if the default resource factory
+      // is used, i.e. one isn't explicitly loaded prior to initializing
+      // the ORB.
+      (void) this->test_.out ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Client_Module::svc"));
+      ex._tao_print_exception (ACE_TEXT ("Test_Client_Module::svc"));
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

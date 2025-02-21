@@ -3,17 +3,18 @@
 /**
  *  @file    Fault_Detector_i.cpp
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  This file implements the Fault_Detector_i class as declared in Fault_Detector_i.h.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
+#include "orbsvcs/Log_Macros.h"
 #include "Fault_Detector_i.h"
 #include "FT_FaultDetectorFactory_i.h"
 #include "tao/debug.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ///////////////////////////////
 // Fault_Detector_i static data
@@ -53,7 +54,7 @@ TAO::Fault_Detector_i::Fault_Detector_i (
 {
   this->notifier_ = FT::FaultNotifier::_duplicate(notifier);
   this->monitorable_ = FT::PullMonitorable::_duplicate(monitorable);
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
     "Object type %s\n", object_type
     ));
 }
@@ -85,18 +86,17 @@ void TAO::Fault_Detector_i::run()
 {
   while ( ! this->quit_requested_ )
   {
-    ACE_TRY_NEW_ENV
+    try
     {
-      if (this->monitorable_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER))
+      if (this->monitorable_->is_alive())
       {
-        ACE_TRY_CHECK;
         // use this rather than ACE_OS::sleep
         // to allow the nap to be interruped see request_quit
         this->sleep_.wait (&sleep_time_, 0);
       }
       else
       {
-        ACE_ERROR ((LM_INFO,
+        ORBSVCS_ERROR ((LM_INFO,
           "FaultDetector%d FAULT: not alive.\n",
           id_
           ));
@@ -104,15 +104,14 @@ void TAO::Fault_Detector_i::run()
         this->quit_requested_ = 1;
       }
     }
-    ACE_CATCHANY  // todo refine this
+    catch (const CORBA::Exception&)// todo refine this
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         "FaultDetector FAULT: exception.\n"
         ));
       notify();
       this->quit_requested_ = 1;
     }
-    ACE_ENDTRY;
   }
   // warning:  The following call will delete
   // this object.  Be careful not to reference
@@ -124,7 +123,7 @@ void TAO::Fault_Detector_i::run()
 
 void TAO::Fault_Detector_i::notify()
 {
-  CosNotification::StructuredEvent_var  vEvent;
+  CosNotification::StructuredEvent_var vEvent;
   ACE_NEW_NORETURN(vEvent, CosNotification::StructuredEvent );
   if (vEvent.ptr() != 0)
   {
@@ -155,35 +154,30 @@ void TAO::Fault_Detector_i::notify()
         vEvent->filterable_data[3].value <<= this->group_id_;
       }
     }
-    ACE_TRY_NEW_ENV
+    try
     {
       if (TAO_debug_level > 5)
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
         "call Fault Detector push Structured Event.\n"
         ));
       }
-      this->notifier_->push_structured_fault(vEvent.in()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->notifier_->push_structured_fault(vEvent.in());
       if (TAO_debug_level > 5)
       {
-
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
         "return from Fault Detector push Structured Event.\n"
         ));
       }
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "Fault Detector cannot send notification.");
+      ex._tao_print_exception ("Fault Detector cannot send notification.");
     }
-    ACE_ENDTRY;
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "Fault Detector cannot create Structured Event.\n"
       ));
   }
@@ -201,3 +195,4 @@ ACE_THR_FUNC_RETURN TAO::Fault_Detector_i::thr_func (void * arg)
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

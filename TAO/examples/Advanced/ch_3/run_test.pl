@@ -2,10 +2,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib "../../../../bin";
+use lib "$ENV{ACE_ROOT}/bin";
 
 require ACEutils;
 require Process;
@@ -22,7 +21,7 @@ $server = Process::Create ("exec ".$EXEPREFIX."server".$EXE_EXT.">$iorfile",
 # Proper call
 #$server = Process::Create ($EXEPREFIX."server".$EXE_EXT, ">$iorfile");
 
-if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (ACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: timedout waiting for file <$iorfile>\n";
   $server->Kill (); $server->TimedWait (1);
   exit 1;
@@ -42,7 +41,7 @@ if ($client->TimedWait (60) == -1) {
 
 
 
-$server->Terminate (); 
+$server->Terminate ();
 if ($server->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate the server\n";
   $server->Kill (); $server->TimedWait (1);

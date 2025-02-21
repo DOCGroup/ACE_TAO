@@ -1,103 +1,55 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    upcall_command_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor that generates operation-specific TAO::Upcall_Command
-//    objects in skeletons.
-//
-// = AUTHOR
-//    Ossama Othman
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    upcall_command_ss.cpp
+ *
+ *  Visitor that generates operation-specific TAO::Upcall_Command
+ *  objects in skeletons.
+ *
+ *  @author Ossama Othman
+ */
+//=============================================================================
 
+#include "operation.h"
 
-ACE_RCSID (be_visitor_operation,
-           upcall_command_ss,
-           "$Id$")
-
-be_visitor_operation_upcall_command_ss
-::be_visitor_operation_upcall_command_ss (
-    be_visitor_context *ctx)
+be_visitor_operation_upcall_command_ss::be_visitor_operation_upcall_command_ss (
+      be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_upcall_command_ss
-::~be_visitor_operation_upcall_command_ss (void)
+be_visitor_operation_upcall_command_ss::~be_visitor_operation_upcall_command_ss (
+  )
 {
 }
 
-// The following needs to be done to deal until the MSVC compiler's broken
-// handling of namespaces is fixed (hopefully forthcoming in version 7).
 int
-be_visitor_operation_upcall_command_ss
-::gen_nested_namespace_begin (be_module *node)
+be_visitor_operation_upcall_command_ss::visit (
+  be_operation * node,
+  char const * full_skel_name,
+  char const * upcall_command_name)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  char *item_name = 0;
-  bool first_level = true;
-
-  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
+  if (node->is_sendc_ami ())
     {
-      item_name = i.item ()->get_string ();
-
-      if (ACE_OS::strcmp (item_name, "") != 0)
-        {
-          // Leave the outermost root scope.
-          *os << "namespace ";
-
-          if (first_level)
-            {
-              // We are outermost module.
-              *os << "POA_";
-              first_level = false;
-            }
-
-          *os << item_name << be_nl
-              << "{" << be_idt_nl;
-        }
+      return 0;
     }
 
-  return 0;
-}
-
-// The following needs to be done to deal until the MSVC compiler's broken
-// handling of namespaces is fixed (hopefully forthcoming in version 7).
-int
-be_visitor_operation_upcall_command_ss
-::gen_nested_namespace_end (be_module *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
-    {
-      if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
-        {
-          // Leave the outermost root scope.
-          *os << be_uidt_nl << "}" << be_nl;
-        }
-    }
-
-  return 0;
-}
-
-int
-be_visitor_operation_upcall_command_ss::visit (be_operation * node,
-                                               char const * full_skel_name,
-                                               char const * upcall_command_name)
-{
   be_interface * const intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+    ? dynamic_cast<be_interface*> (this->ctx_->attribute ()->defined_in ())
+    : dynamic_cast<be_interface*> (node->defined_in ());
 
-  be_module *module = 0;
+  if (!intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_upcall_command_ss::")
+                         ACE_TEXT ("visit - ")
+                         ACE_TEXT ("bad interface scope\n")),
+                        -1);
+    }
+
+  be_module *module = nullptr;
+
+  TAO_OutStream & os = *this->ctx_->stream ();
 
   // Is our enclosing scope a module? We need this check because for
   // platforms that support namespaces, the typecode must be declared
@@ -105,15 +57,18 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
   if (intf->is_nested () &&
       intf->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      module = be_module::narrow_from_scope (intf->defined_in ());
+      module = dynamic_cast<be_module*> (intf->defined_in ());
 
-      if (!module || (this->gen_nested_namespace_begin (module) == -1))
+      if (module == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_operation_upcall_command_ss::visit - "
-                             "Error parsing nested name\n"),
+                             ACE_TEXT ("be_visitor_operation_")
+                             ACE_TEXT ("upcall_command_ss::visit - ")
+                             ACE_TEXT ("Error parsing nested name\n")),
                             -1);
         }
+
+      be_util::gen_nested_namespace_begin (&os, module, true);
     }
 
   be_visitor_context ctx (*this->ctx_);
@@ -121,21 +76,10 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
   // save the node.
   this->ctx_->node (node);
 
-  TAO_OutStream & os = *this->ctx_->stream ();
+  TAO_INSERT_COMMENT (&os);
 
-  os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  // Generate the operation-specific TAO::Upcall_Command concrete class.
-
-  if (!intf)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_upcall_command_ss::"
-                         "visit - "
-                         "bad interface scope\n"),
-                        -1);
-    }
+  // Generate the operation-specific TAO::Upcall_Command concrete
+  // class.
 
   // Generate an operation-specific concrete TAO::Upcall_Command
   // class, an instance of which will be invoked by the
@@ -173,21 +117,23 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
   // initializer for the class argument array member/attribute.
   if (!node->void_return_type () || node->argument_count () > 0)
     {
-      os << be_nl;
+      os << be_idt_nl;
 
       if (be_global->gen_thru_poa_collocation ())
-        os << ", operation_details_ (operation_details)" << be_nl;
+        {
+          os << ", operation_details_ (operation_details)" << be_nl;
+        }
 
-      os << ", args_ (args)";
+      os << ", args_ (args)" << be_uidt;
     }
 
   os << be_uidt_nl;
 
   os << "{" << be_nl
-     << "}" << be_nl << be_nl;
+     << "}" << be_nl_2;
 
   // Generate execute() method.
-  os << "virtual void execute (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
+  os << "void execute () override" << be_nl
      << "{" << be_idt_nl;
 
   if (!node->void_return_type ())
@@ -208,22 +154,6 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
           this->gen_arg_template_param_name (node,
                                              node->return_type (),
                                              &os);
-
-          // ------
-          // Because of MSVC++ 6's lack of template typedef support,
-          // explicitly specify the return value type for the argument
-          // selection function template.
-          /**
-           * @todo Remove this code once we drop support for MSVC++ 6,
-           *       and update tao/PortableServer/get_arg.h"
-           *       accordingly.
-           */
-          os << ", TAO::SArg_Traits< ";
-          this->gen_arg_template_param_name (node,
-                                             node->return_type (),
-                                             &os);
-          os << ">::ret_arg_type";
-          // ------
 
           os << "> (" << be_idt_nl
              << "this->operation_details_," << be_nl
@@ -248,13 +178,7 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
       return -1;
     }
 
-  if (!node->void_return_type ())
-    {
-      os << be_uidt;
-    }
-
-  os << be_uidt_nl
-     << "}" << be_uidt_nl << be_nl;
+  os << "}" << be_uidt_nl << be_nl;
 
   // Generate class attributes.
   os << "private:" << be_idt_nl
@@ -273,24 +197,19 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
     }
 
   os << be_uidt_nl
-     << "};" << be_nl;
+     << "};";
 
-  if (module != 0)
+  if (module != nullptr)
     {
-      if (this->gen_nested_namespace_end (module) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_operation_upcall_command_ss::visit - "
-                             "Error parsing nested name\n"),
-                            -1);
-        }
+      be_util::gen_nested_namespace_end (&os, module);
     }
 
   return 0;
 }
 
 int
-be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
+be_visitor_operation_upcall_command_ss::gen_upcall (
+  be_operation *node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -298,11 +217,38 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
                               UTL_Scope::IK_decls);
 
   unsigned int index = 1;
+  const char *op_name = node->flat_name ();
+  static const char *excep_suffix = "_excep";
+  static const size_t excep_suffix_len = ACE_OS::strlen (excep_suffix);
+  const char *substr = ACE_OS::strstr (op_name, excep_suffix);
+  bool excep_method = substr && substr + excep_suffix_len == op_name + ACE_OS::strlen (op_name);
 
   for (; !si.is_done (); si.next (), ++index)
     {
       AST_Argument * const arg =
-        AST_Argument::narrow_from_decl (si.item ());
+        dynamic_cast<AST_Argument*> (si.item ());
+
+      // Finish the check for the _excep method
+      if (excep_method)
+        {
+          excep_method = false;
+          be_argument *argument =
+            dynamic_cast<be_argument*> (si.item ());
+          be_valuetype *value_type =
+            dynamic_cast<be_valuetype*> (argument->field_type ());
+
+          if (value_type != nullptr)
+            {
+              static const char *excepholder = "ExceptionHolder";
+              static const size_t excepholder_len =
+                                         ACE_OS::strlen (excepholder);
+              const char *param_name = value_type->full_name ();
+              excep_method =
+                 ((ACE_OS::strstr (param_name, excepholder) +
+                   excepholder_len) ==
+                  (param_name + ACE_OS::strlen (param_name)));
+            }
+        }
 
       os << "TAO::SArg_Traits< ";
 
@@ -352,38 +298,6 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
                                              arg->field_type (),
                                              &os);
 
-          // ------
-          // Because of MSVC++ 6's lack of template typedef support,
-          // explicitly specify the return value type for the argument
-          // selection function template.
-          /**
-           * @todo Remove this code once we drop support for MSVC++ 6,
-           *       and update tao/PortableServer/get_arg.h"
-           *       accordingly.
-           */
-          os << ", TAO::SArg_Traits< ";
-          this->gen_arg_template_param_name (arg,
-                                             arg->field_type (),
-                                             &os);
-          os << ">::";
-
-          switch (arg->direction ())
-            {
-            case AST_Argument::dir_IN:
-              os << "in";
-              break;
-            case AST_Argument::dir_INOUT:
-              os << "inout";
-              break;
-            case AST_Argument::dir_OUT:
-              os << "out";
-            default:
-              break;
-            }
-
-          os << "_arg_type";
-          // ------
-
           os << "> (" << be_idt_nl
              << "this->operation_details_," << be_nl
              << "this->args_," << be_nl
@@ -418,27 +332,62 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
         }
 
       os << be_uidt_nl;
+    }
 
+  --index;
+
+  // We have determined that this is an "_excep" method, there is exactly
+  // one argument.  Now, if the node has exceptions, we're in business.
+  if (excep_method && index == 1 && node->exceptions())
+    {
+      be_visitor_operation_exceptlist_cs exceplist (this->ctx ());
+      exceplist.visit_operation (node);
+
+      unsigned int exceptions_count = 0;
+
+      for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
+           !ei.is_done (); ei.next ())
+        {
+          ++exceptions_count;
+        }
+
+      os << be_nl
+         << "TAO::ExceptionHolder *tao_excepholder = "
+         << "dynamic_cast<TAO::ExceptionHolder *> (arg_" << index
+         << ");" << be_nl
+         << "if (tao_excepholder)" << be_idt_nl
+         << "{" << be_idt_nl
+         << "tao_excepholder->set_exception_data "
+            "(_tao_" << op_name << "_exceptiondata, " << exceptions_count << ");" << be_uidt_nl
+         << "}" << be_uidt_nl
+         << be_nl;
     }
 
   if (!node->void_return_type ())
     {
-      os << be_nl
-         << "retval =" << be_idt_nl;
+      os << "retval =" << be_idt_nl;
     }
 
   os << "this->servant_->" << node->local_name () << " ("
-     << be_idt_nl;
+     << be_idt;
 
   size_t const count = node->argument_count ();
 
   for (unsigned int i = 0; i < count; ++i)
-    os << (i == 0 ? "" : ", ") << "arg_" << i + 1 << be_nl;
+    {
+      os << be_nl
+         << (i == 0 ? "" : ", ") << "arg_" << i + 1;
+    }
 
-  if (count > 0)
-    os << "ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
-  else
-    os << "ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl;
+  os << ");";
+
+  if (!node->void_return_type ())
+    {
+      os << be_uidt;
+    }
+
+  os << be_uidt
+     << be_uidt_nl;
 
   return 0;
 }

@@ -1,24 +1,25 @@
-// $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/CosEvent/CEC_MT_Dispatching.h"
 
-#include "CEC_MT_Dispatching.h"
-
-ACE_RCSID(CosEvent, CEC_MT_Dispatching, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_MT_Dispatching::TAO_CEC_MT_Dispatching (int nthreads,
                                                 int thread_creation_flags,
                                                 int thread_priority,
-                                                int force_activate)
+                                                int force_activate,
+                                                bool shutdown_completion)
   :  nthreads_ (nthreads),
      thread_creation_flags_ (thread_creation_flags),
      thread_priority_ (thread_priority),
      force_activate_ (force_activate),
      task_ (&this->thread_manager_),
-     active_ (0)
+     active_ (0),
+     wait_for_shutdown_thread_completion_(shutdown_completion)
 {
 }
 
 void
-TAO_CEC_MT_Dispatching::activate (void)
+TAO_CEC_MT_Dispatching::activate ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -35,67 +36,73 @@ TAO_CEC_MT_Dispatching::activate (void)
       if (this->force_activate_ != 0)
         {
           if (this->task_.activate (THR_BOUND, this->nthreads_) == -1)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "EC (%P|%t) cannot activate dispatching queue"));
         }
     }
 }
 
 void
-TAO_CEC_MT_Dispatching::shutdown (void)
+TAO_CEC_MT_Dispatching::shutdown ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->active_ == 0)
     return;
 
-  for (int i = 0; i < this->nthreads_; ++i)
+  if (wait_for_shutdown_thread_completion_)
     {
-      this->task_.putq (new TAO_CEC_Shutdown_Task_Command);
+      for (int i = 0; i < this->nthreads_; ++i)
+        {
+          this->task_.putq (new TAO_CEC_Shutdown_Task_Command);
+        }
     }
+  else
+    {
+      this->task_.flush(ACE_Task_Flags::ACE_FLUSHALL);
+    }
+
   this->thread_manager_.wait ();
 }
 
 void
 TAO_CEC_MT_Dispatching::push (TAO_CEC_ProxyPushSupplier* proxy,
-                              const CORBA::Any& event
-                              ACE_ENV_ARG_DECL)
+                              const CORBA::Any& event)
 {
   CORBA::Any event_copy = event;
-  this->push_nocopy (proxy, event_copy ACE_ENV_ARG_PARAMETER);
+  this->push_nocopy (proxy, event_copy);
 }
 
 void
 TAO_CEC_MT_Dispatching::push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                                     CORBA::Any& event
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::Any& event)
 {
   // Double checked locking....
   if (this->active_ == 0)
     this->activate ();
 
-  this->task_.push (proxy, event ACE_ENV_ARG_PARAMETER);
+  this->task_.push (proxy, event);
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 void
 TAO_CEC_MT_Dispatching::invoke (TAO_CEC_ProxyPushSupplier* proxy,
-                                const TAO_CEC_TypedEvent& typed_event
-                                ACE_ENV_ARG_DECL)
+                                const TAO_CEC_TypedEvent& typed_event)
 {
   TAO_CEC_TypedEvent typed_event_copy = typed_event;
-  this->invoke_nocopy (proxy, typed_event_copy ACE_ENV_ARG_PARAMETER);
+  this->invoke_nocopy (proxy, typed_event_copy);
 }
 
 void
 TAO_CEC_MT_Dispatching::invoke_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                                       TAO_CEC_TypedEvent& typed_event
-                                       ACE_ENV_ARG_DECL)
+                                       TAO_CEC_TypedEvent& typed_event)
 {
   // Double checked locking....
   if (this->active_ == 0)
     this->activate ();
 
-  this->task_.invoke (proxy, typed_event ACE_ENV_ARG_PARAMETER);
+  this->task_.invoke (proxy, typed_event);
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

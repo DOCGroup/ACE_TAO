@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Command_Builder.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
@@ -7,10 +5,10 @@
 #include "Command_Factory.h"
 #include "Name.h"
 
-ACE_RCSID(lib, TAO_Command_Builder, "$Id$")
 
-TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder (void)
-  :start_command_ (0)
+TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder ()
+  : start_command_ (0),
+    last_command_ (0)
 {
 }
 
@@ -19,7 +17,7 @@ TAO_Notify_Tests_Command_Builder::~TAO_Notify_Tests_Command_Builder ()
 }
 
 int
-TAO_Notify_Tests_Command_Builder::init (int argc, char *argv[])
+TAO_Notify_Tests_Command_Builder::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -28,7 +26,7 @@ TAO_Notify_Tests_Command_Builder::init (int argc, char *argv[])
 
   if (arg_shifter.is_anything_left ())
     {
-      current_arg = arg_shifter.get_current ();
+      current_arg = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
       arg_shifter.consume_arg ();
 
@@ -59,7 +57,7 @@ TAO_Notify_Tests_Command_Builder::init (int argc, char *argv[])
 }
 
 int
-TAO_Notify_Tests_Command_Builder::fini (void)
+TAO_Notify_Tests_Command_Builder::fini ()
 {
         return 0;
 }
@@ -74,10 +72,10 @@ TAO_Notify_Tests_Command_Builder::_register (ACE_CString command_factory_name, T
 }
 
 void
-TAO_Notify_Tests_Command_Builder::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Command_Builder::execute ()
 {
   if (this->start_command_)
-    this->start_command_->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->start_command_->execute ();
 }
 
 ACE_STATIC_SVC_DEFINE(TAO_Notify_Tests_Command_Builder,
@@ -90,19 +88,3 @@ ACE_STATIC_SVC_DEFINE(TAO_Notify_Tests_Command_Builder,
 ACE_FACTORY_DEFINE (TAO_NOTIFY_TEST, TAO_Notify_Tests_Command_Builder)
 
 ACE_STATIC_SVC_REQUIRE (TAO_Notify_Tests_Command_Builder)
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Manager <ACE_CString, TAO_Notify_Tests_Command_Factory*, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Command_Factory *>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Manager <ACE_CString, TAO_Notify_Tests_Command_Factory*, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Command_Factory *>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

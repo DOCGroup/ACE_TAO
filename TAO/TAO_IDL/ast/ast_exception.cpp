@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -73,28 +71,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
+
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 
-ACE_RCSID (ast, 
-           ast_exception, 
-           "$Id$")
-
-AST_Exception::AST_Exception (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    AST_Structure ()
-{
-}
+AST_Decl::NodeType const
+AST_Exception::NT = AST_Decl::NT_except;
 
 AST_Exception::AST_Exception (UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_except,
@@ -111,27 +100,46 @@ AST_Exception::AST_Exception (UTL_ScopedName *n,
 {
 }
 
-AST_Exception::~AST_Exception (void)
+AST_Exception::~AST_Exception ()
 {
 }
 
 // Public operations.
 
 // Are we or the parameter node involved in any recursion?
-idl_bool
+bool
 AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
+  bool self_test = (list.size () == 0);
+
+  // We should calculate this only once. If it has already been
+  // done, just return it.
+  if (self_test && this->in_recursion_ != -1)
+    {
+      return (this->in_recursion_ == 1);
+    }
+
+  if (list.size () > 1)
+  {
+    if (match_names (this, list))
+      {
+        // this happens when we are not recursed ourselves but instead
+        // are part of another recursive type
+        return false;
+      }
+  }
+
+  list.enqueue_tail(this);
+
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
-      list.enqueue_tail (this);
-        
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
         {
-          AST_Field *field = AST_Field::narrow_from_decl (i.item ());
+          AST_Field *field = dynamic_cast<AST_Field*> (i.item ());
 
-          if (field == 0)
+          if (field == nullptr)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
@@ -142,11 +150,11 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
               type = td->primitive_base_type ();
             }
 
-          if (type == 0)
+          if (type == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Exception::")
@@ -157,263 +165,18 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->in_recursion (list))
             {
-              this->in_recursion_ = 1;
+              if (self_test)
+                this->in_recursion_ = 1;
               idl_global->recursive_type_seen_ = true;
-              return this->in_recursion_;
+              return true;
             }
         }
     }
 
   // Not in recursion.
-  this->in_recursion_ = 0;
-  return this->in_recursion_;
-}
-
-// Private operations.
-
-// Add this AST_Field node to the current scope.
-AST_Field *
-AST_Exception::fe_add_field (AST_Field *t)
-{
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF,
-                                       t,
-                                       this,
-                                       d);
-          return 0;
-        }
-
-      if (referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE,
-                                       t,
-                                       this,
-                                       d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  AST_Type *ft = t->field_type ();
-  UTL_ScopedName *mru = ft->last_referenced_as ();
-
-  if (mru != 0)
-    {
-      this->add_to_referenced (ft,
-                               I_FALSE,
-                               mru->first_component ());
-    }
-
-  this->fields_.enqueue_tail (t);
-
-  return t;
-}
-
-// Add this AST_Union (manifest type declaration) to the current scope.
-AST_Union *
-AST_Exception::fe_add_union (AST_Union *t)
-{
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF,
-                                       t,
-                                       this,
-                                       d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE,
-                                       t,
-                                       this,
-                                       d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
-}
-
-// Add this AST_Structure (manifest type declaration) to the current
-// scope.
-AST_Structure *
-AST_Exception::fe_add_structure (AST_Structure *t)
-{
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error2  (UTL_Error::EIDL_REDEF,
-                                       t,
-                                       this);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE,
-                                       t,
-                                       this,
-                                       d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
-}
-
-// Add this AST_Enum (manifest type declaration) to the current scope.
-AST_Enum *
-AST_Exception::fe_add_enum (AST_Enum *t)
-{
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF,
-                                       t,
-                                       this,
-                                       d);
-          return 0;
-        }
-
-      if (referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
-}
-
-// Add this AST_EnumVal (enumerator declaration) to the current scope.
-// This is done to conform to the C++ scoping rules which declare
-// enumerators in the enclosing scope (in addition to declaring them
-// in the enum itself).
-AST_EnumVal *
-AST_Exception::fe_add_enum_val (AST_EnumVal *t)
-{
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF,
-                                       t,
-                                       this,
-                                       d);
-          return 0;
-        }
-
-      if (referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE,
-                                       t,
-                                       this,
-                                       d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
+  if (self_test)
+    this->in_recursion_ = 0;
+  return false; //this->in_recursion_;
 }
 
 // Dump this AST_Exception node to the ostream o.
@@ -434,7 +197,8 @@ AST_Exception::ast_accept (ast_visitor *visitor)
   return visitor->visit_exception (this);
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Exception, AST_Structure)
-IMPL_NARROW_FROM_DECL(AST_Exception)
-IMPL_NARROW_FROM_SCOPE(AST_Exception)
+void
+AST_Exception::destroy ()
+{
+  this->AST_Structure::destroy ();
+}

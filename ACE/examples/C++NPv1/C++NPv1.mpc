@@ -1,0 +1,68 @@
+// -*- MPC -*-
+project(*Iterative_Logging_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = iterative_logging_server
+  Source_Files {
+    Iterative_Logging_Server.cpp
+    Logging_Server.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*Logging_Client) : aceexe {
+  avoids += uses_wchar
+  exename = logging_client
+  Source_Files {
+    Logging_Client.cpp
+  }
+}
+
+project(*PPC_Logging_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = ppc_logging_server
+  Source_Files {
+    Process_Per_Connection_Logging_Server.cpp
+    Logging_Server.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*Reactive_Logging_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = reactive_logging_server
+  Source_Files {
+    Reactive_Logging_Server.cpp
+    Logging_Server.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*Reactive_Logging_Server_Ex) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = reactive_logging_server_ex
+  Source_Files {
+    Reactive_Logging_Server_Ex.cpp
+    Logging_Server.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*RTTPC_Logging_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = RTTPC_logging_server
+  Source_Files {
+    RT_Thread_Per_Connection_Logging_Server.cpp
+    Logging_Server.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*TPC_Logging_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = tpc_logging_server
+  Source_Files {
+    Thread_Per_Connection_Logging_Server.cpp
+    Logging_Server.cpp
+    Logging_Handler.cpp
+  }
+}

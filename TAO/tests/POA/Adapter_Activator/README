@@ -1,0 +1,49 @@
+
+
+This example is very similar to the Explicit_Activation example except
+that the POAs are deleted once the object references have been
+created. After this, an adapter activator is install in the RootPOA to
+reactivate the POAs on demand.
+
+The server program is available here. Use the Generic_Servant/client
+program to test this.
+
+________________________________________
+
+To test this example, type run_test.pl
+________________________________________
+
+Or
+________________________________________
+
+Run the server as follows:
+
+% ./server -f output
+
+This will produce three output files: output_1, output_2, and output_3
+
+Run the client as follows:
+
+% cd $TAO_ROOT/examples/POA/Generic_Servant
+% ./client -f ../Adapter_Activator/output_1
+% ./client -f ../Adapter_Activator/output_2
+% ./client -f ../Adapter_Activator/output_3
+________________________________________
+
+Or
+________________________________________
+
+Run the server as follows:
+
+% ./server -ORBobjrefstyle URL &
+
+Run the client as follows:
+
+% cd $TAO_ROOT/examples/POA/Generic_Servant
+% ./client -k <IOR>
+
+Comments :
+=========
+ - As soon as, the server prints out the IOR, cut it and use it for
+running the client.
+________________________________________

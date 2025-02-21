@@ -1,0 +1,196 @@
+commit b7c88666f27c6582c506647911c4506c08b77ef3
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Dec 6 11:09:50 2017 -0600
+
+    NEWS for PR546
+
+commit 023a87ef783547246ee4c596c52dc8ea10dba6b8
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Dec 1 13:30:52 2017 -0600
+
+    Bug 1220 fix applied to SSLIOP (fixed for IIOP long ago).
+
+commit 4cfd0f592e8a2bce85c306d5592b6a842d200eae
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Dec 1 13:30:07 2017 -0600
+
+    For BiDir GIOP over SSL, need to handle IPv4-mapped IPv6 addresses.
+
+commit ca4cc89f788025e0405fbd649035753c42d930ef
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 1 15:33:24 2017 +0100
+
+    Put back protected copy/assignment
+    
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+        * TAO/tao/PortableServer/Servant_Base.h:
+
+commit d79eac1fee4f07bc60fa0c61d37bbff8c3f637cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 1 15:22:51 2017 +0100
+
+    Documentation update
+    
+        * TAO/tao/PortableServer/Servant_Base.h:
+
+commit 086572d4d184bf23d916b35b006e1092b16c25fe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 1 15:21:59 2017 +0100
+
+    Make copy/assignment operators private and don't implement them, they are not used. Extended constructor so that operation table pointer can be passed directly with the constructor
+    
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+        * TAO/tao/PortableServer/Servant_Base.h:
+
+commit 9540f4901e1da99a2fda48dcb583498e10f44791
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 10 13:41:49 2017 +0100
+
+    Catch exceptions by reference
+    
+        * TAO/orbsvcs/tests/Bug_3216_Regression/client.cpp:
+
+commit 80e33c4654681aea26372512ab0befd6e9b90572
+Merge: 7fdc541a146 5a5edb88418
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 10 08:16:31 2017 +0100
+
+    Merge pull request #538 from jwillemsen/jwi-unboundeconst
+    
+    Kill running processes when the consumer fails
+
+commit 5a5edb88418617cd9b1c5cc51e6fc59ef15e599c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 10 08:15:53 2017 +0100
+
+    Kill runnin processes when the consumer fails
+    
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+
+commit 7fdc541a1468f652290fefe85701051f3fb6888b
+Merge: 2ec54b4c9f0 6f189099786
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 6 19:01:16 2017 +0100
+
+    Merge pull request #537 from jwillemsen/jwi-unboundeconst
+    
+    Const fix to resolve C++ core guideline warning
+
+commit 6f189099786a012cefe5e9884b6ea41e53302a84
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 6 16:43:59 2017 +0100
+
+    Const fix to resolve C++ core guideline warning
+    
+        * TAO/tao/Unbounded_Octet_Sequence_T.h:
+
+commit 2ec54b4c9f081954031b2fa8d3156487e1369f4e
+Merge: aa8114dd866 76450354d78
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 3 14:06:51 2017 +0100
+
+    Merge pull request #536 from jwillemsen/master
+    
+    Documentation typo fixes
+
+commit 76450354d787c693f49f8379273daf6686abedf4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 3 12:42:28 2017 +0100
+
+    Documentation typo fixes
+    
+        * TAO/tao/PortableServer/Operation_Table_Binary_Search.h:
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.h:
+
+commit aa8114dd866153bd3bb20a2ff4ba212a5e6d04d2
+Merge: e781670ab24 d690b993e0e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 3 10:12:28 2017 +0100
+
+    Merge pull request #534 from jwillemsen/jwi-remotecoseventbasicrandom
+    
+    Removed RND_Timer, it is not used
+
+commit 50e0a0dfa1826dc0383be27bc84644220b303f2b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 3 09:38:35 2017 +0100
+
+    Fixed compile errors
+    
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+commit d690b993e0e3cfdeb62b5d9422771b2e7d034b70
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 3 09:23:12 2017 +0100
+
+    Removed RND_Timer, it is not used
+    
+        * TAO/orbsvcs/tests/CosEvent/Basic/Random.h:
+
+commit 0ffe7d97a791975beb6e89948cfbb124e3fb253e
+Merge: 7751cfd7c6e 9bde53fd6ea
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 2 11:06:54 2017 +0100
+
+    Merge pull request #533 from jwillemsen/jwi-ft-errorprint
+    
+    Replace some prints of exceptions with an ACE_DEBUG, this are really …
+
+commit 9bde53fd6ea194cd284318c3861cfd723054fa30
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 2 09:50:43 2017 +0100
+
+    Replace some prints of exceptions with an ACE_DEBUG, this are really informational messages which shouldn't pollute the scoreboard
+    
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+commit 7b9f53187376a92bf12f4f7ba61f9ab6a5adc4b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 25 19:18:45 2017 +0200
+
+    Minor cleanup to documentation and removed commented out code
+    
+        * TAO/orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Any/PushSupplier.h:
+
+commit 5e6d85273a5f092ddc0d53f972515e94ac4e748e
+Merge: ece7b4b5898 5349f67c59c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 24 14:04:21 2017 +0200
+
+    Merge pull request #528 from jwillemsen/jwi-notify-layoutchanges
+    
+    Layout changes
+
+commit 5349f67c59c3e8ef38323f161d533104c7795913
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 24 08:51:16 2017 +0200
+
+    Layout changes
+    
+        * TAO/orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+        * TAO/orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+
+commit 83b52d9570d2226de51b14d60bfe078ce92a47f8
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Oct 13 17:21:39 2017 -0500
+
+    VxWorks 7 (SR0510) support
+
+commit 320c854b6270c62517cd612b2c93e96dcff1d3f4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 7 09:47:05 2017 +0200
+
+    Make x.4.5 public available and prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/debian/debian.control:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

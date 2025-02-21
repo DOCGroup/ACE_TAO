@@ -1,0 +1,26 @@
+// -*- MPC -*-
+project(*Gadget) : aceexe {
+  exename = gadget
+  Source_Files {
+    Gadget.cpp
+    Gadget_Factory.cpp
+    Gadget_Impl.cpp
+    Gadget_Part.cpp
+    Gadget_Part_Factory.cpp
+    Gadget_Part_Impl.cpp
+    gadget_test.cpp
+  }
+}
+
+project(*Widget) : aceexe {
+  exename = Widget
+  Source_Files {
+    Widget.cpp
+    Widget_Factory.cpp
+    Widget_Impl.cpp
+    Widget_Part.cpp
+    Widget_Part_Factory.cpp
+    Widget_Part_Impl.cpp
+    widget_test.cpp
+  }
+}

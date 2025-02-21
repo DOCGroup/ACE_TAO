@@ -1,25 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    DualEC_Sup.cpp
-//
-// = DESCRIPTION
-//   Event Supplier for visualizing scheduling behavior, using arrival
-//   and dispatch data logged by an event channel dispatch command object
-//
-// = AUTHOR
-//    Chris Gill (cdgill@cs.wustl.edu)
-//
-//    Adapted from the DOVE simulation event supplier
-//    originally
-//    David Levine (levine@cs.wustl.edu) and
-//    Tim Harrison (harrison@cs.wustl.edu)
-//    modified
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DualEC_Sup.cpp
+ *
+ * Event Supplier for visualizing scheduling behavior, using arrival
+ * and dispatch data logged by an event channel dispatch command object
+ *
+ *  @author Chris Gill (cdgill@cs.wustl.edu) Adapted from the DOVE simulation event supplier originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "DualEC_Sup.h"
 #include "NavWeapC.h"
@@ -37,11 +27,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (Event_Supplier,
-           DualEC_Sup,
-           "$Id$")
-
+//FUZZ: disable check_for_lack_ACE_OS
 static const char usage [] =
 "[[-?]\n"
 "                 -f <name of input data file>\n"
@@ -55,8 +43,9 @@ static const char usage [] =
 "                 [-s to suppress data updates by EC]\n"
 "                 [-r to use runtime schedulers]\n"
 "                 [-p to suppress prioritization of operations]\n";
+//FUZZ: enable check_for_lack_ACE_OS
 
-DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
+DualEC_Supplier::DualEC_Supplier (int argc, ACE_TCHAR** argv)
 : nav_pause_ (0, 100000),
   weap_pause_ (0, 100000),
   channel_hi_name_ (1),
@@ -76,39 +65,33 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
   dump_schedule_headers_ (0),
   use_runtime_schedulers_ (0),
   suppress_priority_ (0),
-  hi_schedule_file_name_ ("DualEC_Runtime_Hi.h"),
-  lo_schedule_file_name_ ("DualEC_Runtime_Lo.h"),
+  hi_schedule_file_name_ (ACE_TEXT("DualEC_Runtime_Hi.h")),
+  lo_schedule_file_name_ (ACE_TEXT("DualEC_Runtime_Lo.h")),
   nav_roll_ (0),
   nav_pitch_ (0)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->sched_hi_name_.length (1);
       this->sched_hi_name_[0].id = CORBA::string_dup ("DUAL_SCHED_HI");
-      ACE_TRY_CHECK;
 
       this->sched_lo_name_.length (1);
       this->sched_lo_name_[0].id = CORBA::string_dup ("DUAL_SCHED_LO");
-      ACE_TRY_CHECK;
 
       this->channel_hi_name_.length (1);
       this->channel_hi_name_[0].id = CORBA::string_dup ("DUAL_EC_HI");
-      ACE_TRY_CHECK;
 
       this->channel_lo_name_.length (1);
       this->channel_lo_name_[0].id = CORBA::string_dup ("DUAL_EC_LO");
-      ACE_TRY_CHECK;
 
-      this->terminator_ = terminator_impl_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->terminator_ = terminator_impl_._this ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DualEC_Supplier::DualEC_Supplier : could "
-                           "not resolve reference to terminator");
+      ex._tao_print_exception (
+        "DualEC_Supplier::DualEC_Supplier : could "
+        "not resolve reference to terminator");
   }
-  ACE_ENDTRY;
 
   // Initialize the high priority RT_Info data
   rt_info_nav_hi_.entry_point = "DUALEC_NAV_HI";
@@ -145,29 +128,23 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
 
 DualEC_Supplier::~DualEC_Supplier ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->navigation_Supplier_.disconnect ();
       this->weapons_Supplier_.disconnect ();
 
       // Unbind the schedulers from the NS.
-      this->naming_context_->unbind (this->sched_hi_name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      this->naming_context_->unbind (this->sched_lo_name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->naming_context_->unbind (this->sched_hi_name_);
+      this->naming_context_->unbind (this->sched_lo_name_);
 
       // Unbind the ECs from the NS.
-      this->naming_context_->unbind (this->channel_hi_name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      this->naming_context_->unbind (this->channel_lo_name_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->naming_context_->unbind (this->channel_hi_name_);
+      this->naming_context_->unbind (this->channel_lo_name_);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DualEC_Supplier::~DualEC_Supplier");
+      ex._tao_print_exception ("DualEC_Supplier::~DualEC_Supplier");
     }
-  ACE_ENDTRY;
 
   // @@TBD - destroy the ECs
   // @@TBD - destroy the schedulers
@@ -178,12 +155,11 @@ DualEC_Supplier::init ()
 {
   this->get_options (argc_, argv_);
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Connect to the RootPOA.
     CORBA::Object_var poaObject_var =
-      TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA");
 
     if (CORBA::is_nil (poaObject_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -191,22 +167,17 @@ DualEC_Supplier::init ()
                         1);
 
     this->root_POA_var_ =
-      PortableServer::POA::_narrow (poaObject_var.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      PortableServer::POA::_narrow (poaObject_var.in ());
 
     this->poa_manager_ =
-       root_POA_var_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+       root_POA_var_->the_POAManager ();
 
-    poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    poa_manager_->activate ();
 
     // Get the Naming Service object reference.
     CORBA::Object_var namingObj_var =
       TAO_ORB_Core_instance()->orb()->resolve_initial_references (
-          "NameService"
-          ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+          "NameService");
 
     if (CORBA::is_nil (namingObj_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -214,18 +185,13 @@ DualEC_Supplier::init ()
                         -1);
 
     this->naming_context_ =
-      CosNaming::NamingContext::_narrow (namingObj_var.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
+      CosNaming::NamingContext::_narrow (namingObj_var.in ());
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "DualEC_Supplier::init");
+    ex._tao_print_exception ("DualEC_Supplier::init");
     return -1;
   }
-  ACE_ENDTRY;
 
   // Create two scheduling service instances.
   if (this->create_schedulers () == -1)
@@ -299,8 +265,7 @@ DualEC_Supplier::init ()
 // Private class that implements a termination servant.
 
 void
-DualEC_Supplier::Terminator::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+DualEC_Supplier::Terminator::shutdown ()
 {
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
@@ -324,7 +289,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
   DualEC_Supplier * sup =
     static_cast<DualEC_Supplier *> (arg);
 
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_Unbounded_Queue_Iterator<Navigation *>
         nav_iter (sup->navigation_data_);
@@ -364,7 +329,6 @@ DualEC_Supplier::run_nav_thread (void *arg)
               }
 
             sup->navigation_Supplier_.notify (any);
-            ACE_TRY_CHECK;
           }
         else
           {
@@ -384,15 +348,12 @@ DualEC_Supplier::run_nav_thread (void *arg)
 
         if (nav_iter.done ())
           nav_iter.first ();
-
       }
       while (++total_sent < sup->total_messages_);
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -406,7 +367,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
   DualEC_Supplier * sup =
     static_cast<DualEC_Supplier *> (arg);
 
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_Unbounded_Queue_Iterator<Weapons *>
         weap_iter (sup->weapons_data_);
@@ -435,7 +396,6 @@ DualEC_Supplier::run_weap_thread (void *arg)
             ACE_OS::sleep (sup->weap_pause_);
 
             sup->weapons_Supplier_.notify (any);
-            ACE_TRY_CHECK;
           }
         else
           {
@@ -455,32 +415,28 @@ DualEC_Supplier::run_weap_thread (void *arg)
 
         if (weap_iter.done ())
           weap_iter.first ();
-
       }
       while (++total_sent < sup->total_messages_);
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }
-
 
 
 // Create two scheduling service instances, register
 // them with the Naming Service.
 
 int
-DualEC_Supplier::create_schedulers (void)
+DualEC_Supplier::create_schedulers ()
 {
   // @@TBD - look at a command line modified setting,
   // create either a runtime or a config scheduler for
   // each instance
 
-  ACE_TRY_NEW_ENV
+  try
     {
       if (use_runtime_schedulers_)
         {
@@ -497,35 +453,29 @@ DualEC_Supplier::create_schedulers (void)
                           ACE_Config_Scheduler,
                           -1);
 
-          this->sched_hi_ = sched_hi_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->sched_hi_ = sched_hi_impl_->_this ();
 
           ACE_NEW_RETURN (this->sched_lo_impl_,
                           ACE_Config_Scheduler,
                           -1);
 
-          this->sched_lo_ = sched_lo_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->sched_lo_ = sched_lo_impl_->_this ();
 
           // Register Scheduling Service Implementations with Naming Service
 
           this->naming_context_->bind (this ->sched_hi_name_,
-                                       this->sched_hi_.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                       this->sched_hi_.in ());
 
           naming_context_->bind (this->sched_lo_name_,
-                                 this->sched_lo_.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                 this->sched_lo_.in ());
 
           // Register high and low priority rt_infos with the
           // schedulers to force priority differentiation.
 
           this->sched_hi_rt_info_hi_ =
             this->sched_hi_->
-              create (this->rt_info_dummy_hi_.entry_point
-                      ACE_ENV_ARG_PARAMETER);
+              create (this->rt_info_dummy_hi_.entry_point);
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_->
             set (this->sched_hi_rt_info_hi_,
@@ -537,17 +487,13 @@ DualEC_Supplier::create_schedulers (void)
                  static_cast<RtecScheduler::Importance_t> (this->rt_info_dummy_hi_.importance),
                  this->rt_info_dummy_hi_.quantum,
                  this->rt_info_dummy_hi_.threads,
-                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type)
-                 ACE_ENV_ARG_PARAMETER);
+                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type));
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_rt_info_lo_ =
             this->sched_hi_->
-              create (this->rt_info_dummy_lo_.entry_point
-                      ACE_ENV_ARG_PARAMETER);
+              create (this->rt_info_dummy_lo_.entry_point);
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_->
             set (this->sched_hi_rt_info_lo_,
@@ -559,17 +505,13 @@ DualEC_Supplier::create_schedulers (void)
                  static_cast<RtecScheduler::Importance_t> (this->rt_info_dummy_lo_.importance),
                  this->rt_info_dummy_lo_.quantum,
                  this->rt_info_dummy_lo_.threads,
-                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type)
-                 ACE_ENV_ARG_PARAMETER);
+                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type));
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_rt_info_hi_ =
             this->sched_lo_->
-              create (this->rt_info_dummy_hi_.entry_point
-                      ACE_ENV_ARG_PARAMETER);
+              create (this->rt_info_dummy_hi_.entry_point);
 
-          ACE_TRY_CHECK;
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_hi_,
@@ -581,17 +523,13 @@ DualEC_Supplier::create_schedulers (void)
                  static_cast<RtecScheduler::Importance_t> (this->rt_info_dummy_hi_.importance),
                  this->rt_info_dummy_hi_.quantum,
                  this->rt_info_dummy_hi_.threads,
-                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type)
-                 ACE_ENV_ARG_PARAMETER);
+                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type));
 
-          ACE_TRY_CHECK;
 
           this->sched_hi_rt_info_lo_ =
             this->sched_lo_->
-              create (this->rt_info_dummy_lo_.entry_point
-                      ACE_ENV_ARG_PARAMETER);
+              create (this->rt_info_dummy_lo_.entry_point);
 
-          ACE_TRY_CHECK;
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_lo_,
@@ -603,20 +541,14 @@ DualEC_Supplier::create_schedulers (void)
                  static_cast<RtecScheduler::Importance_t> (this->rt_info_dummy_lo_.importance),
                  this->rt_info_dummy_lo_.quantum,
                  this->rt_info_dummy_lo_.threads,
-                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type)
-                 ACE_ENV_ARG_PARAMETER);
-
-          ACE_TRY_CHECK;
-
+                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DualEC_Supplier::create_schedulers");
+      ex._tao_print_exception ("DualEC_Supplier::create_schedulers");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -626,9 +558,9 @@ DualEC_Supplier::create_schedulers (void)
 // them with the Naming Service.
 
 int
-DualEC_Supplier::create_event_channels (void)
+DualEC_Supplier::create_event_channels ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Create Event Service Implementations, passing in the respective
       // Scheduling Service Implementations (which must already be created).
@@ -641,8 +573,7 @@ DualEC_Supplier::create_event_channels (void)
                       TAO_EC_Event_Channel (attr_high),
                       -1);
 
-      this->ec_hi_ = ec_hi_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->ec_hi_ = ec_hi_impl_->_this ();
 
       TAO_EC_Event_Channel_Attributes attr_low (root_POA_var_.in (),
                                                 root_POA_var_.in ());
@@ -653,35 +584,29 @@ DualEC_Supplier::create_event_channels (void)
                       TAO_EC_Event_Channel (attr_low),
                       -1);
 
-      this->ec_lo_ = ec_lo_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->ec_lo_ = ec_lo_impl_->_this ();
 
       // Register Event Service Implementations with Naming Service
 
       naming_context_->bind (this->channel_hi_name_,
-                             this->ec_hi_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             this->ec_hi_.in ());
 
       naming_context_->bind (this->channel_lo_name_,
-                                     this->ec_lo_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+                                     this->ec_lo_.in ());
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "DualEC_Supplier::create_event_channels");
+    ex._tao_print_exception ("DualEC_Supplier::create_event_channels");
     return -1;
   }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 void
-DualEC_Supplier::compute_schedules (void)
+DualEC_Supplier::compute_schedules ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       sched_hi_->compute_scheduling
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
@@ -691,8 +616,7 @@ DualEC_Supplier::compute_schedules (void)
          this->infos_hi_.out (),
          this->deps_hi_.out (),
          this->configs_hi_.out (),
-         this->anomalies_hi_.out () ACE_ENV_ARG_PARAMETER);
-       ACE_TRY_CHECK;
+         this->anomalies_hi_.out ());
 
       sched_lo_->compute_scheduling
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
@@ -702,8 +626,7 @@ DualEC_Supplier::compute_schedules (void)
          this->infos_lo_.out (),
          this->deps_hi_.out (),
          this->configs_lo_.out (),
-         this->anomalies_lo_.out () ACE_ENV_ARG_PARAMETER);
-       ACE_TRY_CHECK;
+         this->anomalies_lo_.out ());
 
       if (dump_schedule_headers_ && (this->hi_schedule_file_name_ != 0))
         {
@@ -712,7 +635,6 @@ DualEC_Supplier::compute_schedules (void)
                                                 configs_hi_.in (),
                                                 anomalies_hi_.in (),
                                                 this->hi_schedule_file_name_);
-          ACE_TRY_CHECK;
         }
 
       if (dump_schedule_headers_ && (this->lo_schedule_file_name_ != 0))
@@ -722,20 +644,18 @@ DualEC_Supplier::compute_schedules (void)
                                                 configs_lo_.in (),
                                                 anomalies_lo_.in (),
                                                 this->lo_schedule_file_name_);
-          ACE_TRY_CHECK;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+    ex._tao_print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
 }
 
 void
-DualEC_Supplier::start_generating_events (void)
+DualEC_Supplier::start_generating_events ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Spawn a thread that runs the orb event loop
       ACE_Thread_Manager orb_thread_manager;
@@ -770,7 +690,6 @@ DualEC_Supplier::start_generating_events (void)
 
       // Shut down the ORB via the termination servant
       this->terminator_->shutdown ();
-      ACE_TRY_CHECK;
 
       // Wait for the thread that runs the orb event loop.
       orb_thread_manager.wait ();
@@ -795,11 +714,10 @@ DualEC_Supplier::start_generating_events (void)
         if (weap_iter.next (weap_temp) && weap_temp)
           delete (*weap_temp);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      ex._tao_print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
 
 }
 
@@ -834,7 +752,7 @@ DualEC_Supplier::load_schedule_data ()
             {
               // Run through leading whitespace.
               char *temp = input_buf;
-              while (*temp && isspace (*temp))
+              while (*temp && ACE_OS::ace_isspace (*temp))
                 ++temp;
 
               // If there is anything besides whitespace in the line
@@ -859,8 +777,8 @@ DualEC_Supplier::load_schedule_data ()
                     }
 
 
-                  if ((strcmp(data.operation_name, "high_20") == 0) ||
-                      (strcmp(data.operation_name, "low_20") == 0))
+                  if ((ACE_OS::strcmp(data.operation_name, "high_20") == 0) ||
+                      (ACE_OS::strcmp(data.operation_name, "low_20") == 0))
                     {
                       ACE_NEW (weap, Weapons);
                       if (weap == 0)
@@ -875,19 +793,19 @@ DualEC_Supplier::load_schedule_data ()
                       weap->deadline_time = TWENTY_HZ_PERIOD;
                       weap->number_of_weapons = 2;
                       weap->weapon1_identifier = CORBA::string_alloc (30);
-                      strcpy (weap->weapon1_identifier.inout (),"Photon Torpedoes");
+                      ACE_OS::strcpy (weap->weapon1_identifier.inout (),"Photon Torpedoes");
                       weap->weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
                       weap->weapon2_identifier = CORBA::string_alloc (30);
-                      strcpy (weap->weapon2_identifier.inout (),"Quantum Torpedoes");
+                      ACE_OS::strcpy (weap->weapon2_identifier.inout (),"Quantum Torpedoes");
                       weap->weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
                       weap->weapon3_identifier = CORBA::string_alloc (1);
-                      strcpy (weap->weapon3_identifier.inout (), "");
+                      ACE_OS::strcpy (weap->weapon3_identifier.inout (), "");
                       weap->weapon3_status = 0;
                       weap->weapon4_identifier = CORBA::string_alloc (1);
-                      strcpy (weap->weapon4_identifier.inout (), "");
+                      ACE_OS::strcpy (weap->weapon4_identifier.inout (), "");
                       weap->weapon4_status = 0;
                       weap->weapon5_identifier = CORBA::string_alloc (1);
-                      strcpy (weap->weapon5_identifier.inout (), "");
+                      ACE_OS::strcpy (weap->weapon5_identifier.inout (), "");
                       weap->weapon5_status = 0;
                       weap->utilization =       0.0;
                       weap->overhead =          0.0;
@@ -950,9 +868,9 @@ DualEC_Supplier::load_schedule_data ()
 // Get command line options.
 
 unsigned int
-DualEC_Supplier::get_options (int argc, char *argv [])
+DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:b:n:w:dsrp");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:m:b:n:w:dsrp"));
   int opt;
   int temp;
 
@@ -1084,9 +1002,9 @@ DualEC_Supplier::get_options (int argc, char *argv [])
 // function main
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   int min_priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
@@ -1105,16 +1023,13 @@ main (int argc, char *argv [])
     }
 
 
-
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize ORB.
       TAO_ORB_Manager orb_Manager;
 
       orb_Manager.init (argc,
-                        argv
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                        argv);
 
 
       // Create the demo supplier.
@@ -1126,36 +1041,19 @@ main (int argc, char *argv [])
 
       // Initialize everthing
       if (event_Supplier_ptr->init () == -1)
-        exit (1);
+        ACE_OS::exit (1);
 
       // now we can go ahead
       event_Supplier_ptr->start_generating_events ();
 
       // when done, we clean up
       delete event_Supplier_ptr;
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      ex._tao_print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<Navigation *>;
-template class ACE_Unbounded_Queue<Navigation *>;
-template class ACE_Unbounded_Queue_Iterator<Navigation *>;
-template class ACE_Node<Weapons *>;
-template class ACE_Unbounded_Queue<Weapons *>;
-template class ACE_Unbounded_Queue_Iterator<Weapons *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<Navigation *>
-#pragma instantiate ACE_Unbounded_Queue<Navigation *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Navigation *>
-#pragma instantiate ACE_Node<Weapons *>
-#pragma instantiate ACE_Unbounded_Queue<Weapons *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Weapons *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

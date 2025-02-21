@@ -1,16 +1,16 @@
 // file      : RolyPoly/ReplicaController.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
+#include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/PI/PI.h"
+
+#include "orbsvcs/FT_CORBA_ORBC.h"
 
 #include "ace/UUID.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TMCast/Group.hpp"
-
-#include "tao/PortableServer/Servant_Base.h"
-#include "tao/Any_Impl.h"
-#include "tao/DynamicC.h"
-
-#include "orbsvcs/FT_CORBA_ORBC.h"
 
 #include "CrashPoint.h"
 #include "StateUpdate.h"
@@ -18,7 +18,6 @@
 
 
 // State slot.
-//
 //
 
 namespace
@@ -52,33 +51,26 @@ get_state ()
 void Checkpointable::
 associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     CORBA::Object_var pic_obj =
-      orb->resolve_initial_references ("PICurrent" ACE_ENV_ARG_PARAMETER);
+      orb->resolve_initial_references ("PICurrent");
 
-    ACE_TRY_CHECK;
 
     PortableInterceptor::Current_var pic =
       PortableInterceptor::Current::_narrow (
-        pic_obj.in () ACE_ENV_ARG_PARAMETER);
+        pic_obj.in ());
 
-    ACE_TRY_CHECK;
 
-    pic->set_slot (state_slot_id (), state ACE_ENV_ARG_PARAMETER);
-
-    ACE_TRY_CHECK;
+    pic->set_slot (state_slot_id (), state);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
+    ex._tao_print_exception ("Caught exception:");
   }
-  ACE_ENDTRY;
 }
 
 // ReplyLogger
-//
 //
 
 ReplicaController::
@@ -90,42 +82,38 @@ ReplicaController::
 ReplicaController (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     CORBA::Object_var poa_object =
-      orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      orb_->resolve_initial_references ("RootPOA");
 
     root_poa_ = PortableServer::POA::_narrow (
-      poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      poa_object.in ());
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
+    ex._tao_print_exception ("Caught exception:");
     ACE_OS::abort ();
   }
-  ACE_ENDTRY;
 
   // Generate member id
   ACE_Utils::UUID uuid;
   ACE_Utils::UUID_GENERATOR::instance ()->init ();
-  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+  ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
 
   ACE_INET_Addr address (10000, "239.255.0.1");
 
   ACE_DEBUG ((LM_DEBUG, "Becoming a member with id %s\n",
               uuid.to_string ()->c_str ()));
 
-  ACE_AUTO_PTR_RESET (group_, new ACE_TMCast::Group (address, uuid.to_string ()->c_str ()), ACE_TMCast::Group);
+  group_.reset (new ACE_TMCast::Group (address, uuid.to_string ()->c_str ()));
 
   int r = ACE_Thread_Manager::instance ()->spawn (
     &ReplicaController::listener_thunk, this);
 
   if (r < 0)
   {
-    orb_->shutdown (0);
+    orb_->shutdown (false);
   }
 }
 
@@ -200,7 +188,7 @@ listener ()
     ACE_DEBUG ((LM_DEBUG, "Group::InsufficienSpace\n"));
   }
 
-  orb_->shutdown (0);
+  orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr ReplicaController::
@@ -223,24 +211,20 @@ namespace
 {
   FT::FTRequestServiceContext*
   extract_context (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException));
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 void
 ReplicaController::tao_ft_interception_point (
   PortableInterceptor::ServerRequestInfo_ptr ri,
-  CORBA::OctetSeq_out ocs
-  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+  CORBA::OctetSeq_out ocs)
 {
   FT::FTRequestServiceContext_var ftr (
-    extract_context (ri ACE_ENV_ARG_PARAMETER));
+    extract_context (ri));
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Received request from %s with rid %i\n",
+              "(%P|%t) Received request from %C with rid %i\n",
               ftr->client_id.in (),
               ftr->retention_id));
 
@@ -251,7 +235,7 @@ ReplicaController::tao_ft_interception_point (
   if (log_.contains (rid))
   {
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Replaying reply for %s with rid %i\n",
+                "(%P|%t) Replaying reply for %C with rid %i\n",
                 ftr->client_id.in (),
                 ftr->retention_id));
 
@@ -267,12 +251,10 @@ ReplicaController::tao_ft_interception_point (
 
 void
 ReplicaController::send_reply (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   FT::FTRequestServiceContext_var ftr (
-    extract_context (ri ACE_ENV_ARG_PARAMETER));
+    extract_context (ri));
 
 
   ACE_DEBUG ((LM_DEBUG,
@@ -284,15 +266,13 @@ ReplicaController::send_reply (
   // Prepare reply for logging.
 
   CORBA::Any_var result =
-    ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->result ();
 
   TAO_OutputCDR cdr;
   result->impl ()->marshal_value (cdr);
 
   Dynamic::ParameterList_var pl =
-    ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->arguments ();
 
   CORBA::ULong len = pl->length ();
 
@@ -307,7 +287,7 @@ ReplicaController::send_reply (
 
   CORBA::OctetSeq_var reply;
 
-  ACE_NEW (reply, CORBA::OctetSeq (cdr.total_length ()));
+  ACE_NEW (reply.out (), CORBA::OctetSeq (cdr.total_length ()));
 
   reply->length (cdr.total_length ());
 
@@ -371,7 +351,7 @@ ReplicaController::send_reply (
 
     CORBA::OctetSeq_var msg;
 
-    ACE_NEW (msg, CORBA::OctetSeq (size));
+    ACE_NEW (msg.out (), CORBA::OctetSeq (size));
 
     msg->length (size);
 
@@ -391,7 +371,7 @@ ReplicaController::send_reply (
 
     // Crash point 1.
     //
-    if (crash_point == 1 && ftr->retention_id > 2) exit (1);
+    if (crash_point == 1 && ftr->retention_id > 2) ACE_OS::exit (1);
 
     try
     {
@@ -428,21 +408,17 @@ ReplicaController::send_reply (
 
   // Crash point 2.
   //
-  if (crash_point == 2 && ftr->retention_id > 2) exit (1);
+  if (crash_point == 2 && ftr->retention_id > 2) ACE_OS::exit (1);
 }
 
 
 namespace
 {
   FT::FTRequestServiceContext*
-  extract_context (PortableInterceptor::ServerRequestInfo_ptr ri
-                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  extract_context (PortableInterceptor::ServerRequestInfo_ptr ri)
   {
     IOP::ServiceContext_var svc =
-      ri->get_request_service_context (IOP::FT_REQUEST
-                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->get_request_service_context (IOP::FT_REQUEST);
 
     TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
                       svc->context_data.length ());
@@ -452,7 +428,7 @@ namespace
     if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     {
       //@@ what to throw?
-      ACE_THROW (CORBA::BAD_CONTEXT ());
+      throw CORBA::BAD_CONTEXT ();
     }
 
     cdr.reset_byte_order (static_cast<int> (byte_order));
@@ -480,7 +456,7 @@ namespace
     if (!cdr.good_bit ())
     {
       //@@ what to throw?
-      ACE_THROW (CORBA::UNKNOWN ());
+      throw CORBA::UNKNOWN ();
     }
 
     return req._retn ();
@@ -489,51 +465,36 @@ namespace
 
 
 char*
-ReplicaController::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+ReplicaController::name ()
 {
   return CORBA::string_dup ("ReplicaController");
 }
 
 void
 ReplicaController::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
 void
 ReplicaController::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
 void
-ReplicaController::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+ReplicaController::destroy ()
 {
 }
 
 void
 ReplicaController::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
-
 }
 
 void
 ReplicaController::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
 }

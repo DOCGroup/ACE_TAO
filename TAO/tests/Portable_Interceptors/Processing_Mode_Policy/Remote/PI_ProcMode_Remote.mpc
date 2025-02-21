@@ -1,0 +1,43 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults, avoids_corba_e_micro {
+  idlflags -= -St
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*RemoteServer): taoserver, pi_server, interceptors, avoids_corba_e_micro {
+  exename = PI_ProcMode_Remote_TestServer
+  after += *idl
+  Source_Files {
+    test_i.cpp
+    server_interceptor.cpp
+    Echo_Server_ORBInitializer.cpp
+    server_main.cpp
+    Server_Task.cpp
+  }
+  Source_Files {
+    testC.cpp
+    testS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*RemoteClient): taoclient, portableserver, pi, interceptors, avoids_corba_e_micro {
+  exename = PI_ProcMode_Remote_TestClient
+  after += *idl
+  after += *RemoteServer
+  Source_Files {
+    client_interceptor.cpp
+    Echo_Client_ORBInitializer.cpp
+    client_main.cpp
+    Client_Task.cpp
+  }
+  Source_Files {
+    testC.cpp
+  }
+  IDL_Files {
+  }
+}

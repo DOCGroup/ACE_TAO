@@ -1,34 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_wstr_seq.cpp
-//
-// = DESCRIPTION
-//    tests unbounded wide string sequences
-//
-// = AUTHORS
-//      Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_wstr_seq.cpp
+ *
+ *  tests unbounded wide string sequences
+ *
+ *  @author   Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_wstr_seq.h"
 #include "ace/OS_NS_wchar.h"
 
-ACE_RCSID (Param_Test,
-           ub_wstr_seq, 
-           "$Id$")
-
 // ************************************************************************
 //               Test_WString_Sequence
 // ************************************************************************
 
-Test_WString_Sequence::Test_WString_Sequence (void)
+Test_WString_Sequence::Test_WString_Sequence ()
   : opname_ (CORBA::string_dup ("test_wstrseq")),
     in_ (new CORBA::WStringSeq),
     inout_ (new CORBA::WStringSeq),
@@ -37,21 +27,20 @@ Test_WString_Sequence::Test_WString_Sequence (void)
 {
 }
 
-Test_WString_Sequence::~Test_WString_Sequence (void)
+Test_WString_Sequence::~Test_WString_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_WString_Sequence::opname (void) const
+Test_WString_Sequence::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_WString_Sequence::dii_req_invoke (CORBA::Request *req
-                                       ACE_ENV_ARG_DECL)
+Test_WString_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -59,29 +48,25 @@ Test_WString_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_WStringSeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  CORBA::WStringSeq *tmp;
+  const CORBA::WStringSeq *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::WStringSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new CORBA::WStringSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new CORBA::WStringSeq (*tmp);
 }
 
 int
-Test_WString_Sequence::init_parameters (Param_Test_ptr
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+Test_WString_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -102,7 +87,7 @@ Test_WString_Sequence::init_parameters (Param_Test_ptr
 }
 
 int
-Test_WString_Sequence::reset_parameters (void)
+Test_WString_Sequence::reset_parameters ()
 {
   this->inout_ = new CORBA::WStringSeq; // delete the previous ones
   this->out_ = new CORBA::WStringSeq;
@@ -111,33 +96,27 @@ Test_WString_Sequence::reset_parameters (void)
 }
 
 int
-Test_WString_Sequence::run_sii_test (Param_Test_ptr objref
-                                     ACE_ENV_ARG_DECL)
+Test_WString_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       CORBA::WStringSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_wstrseq (this->in_.in (),
                                          this->inout_.inout (),
-                                         out
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                         out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_WString_Sequence::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_WString_Sequence::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_WString_Sequence::check_validity (void)
+Test_WString_Sequence::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_->length () == this->inout_->length ()) &&
@@ -165,6 +144,6 @@ Test_WString_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_WString_Sequence::print_values (void)
+Test_WString_Sequence::print_values ()
 {
 }

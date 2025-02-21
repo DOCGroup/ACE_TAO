@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef ONEWAYS_INVOKING_TWOWAYS_CLIENT_TASK_H
 #define ONEWAYS_INVOKING_TWOWAYS_CLIENT_TASK_H
@@ -24,10 +21,9 @@ public:
                int number_of_oneways);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
-
   /// Reference to the test interface
   Test::Sender_var sender_;
 

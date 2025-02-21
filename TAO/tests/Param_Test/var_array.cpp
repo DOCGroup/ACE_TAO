@@ -1,54 +1,43 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    var_array.cpp
-//
-// = DESCRIPTION
-//    tests fixed size arrays
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    var_array.cpp
+ *
+ *  tests fixed size arrays
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "var_array.h"
-
-ACE_RCSID (Param_Test,
-           var_array, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Var_Array
 // ************************************************************************
 
-Test_Var_Array::Test_Var_Array (void)
+Test_Var_Array::Test_Var_Array ()
   : opname_ (CORBA::string_dup ("test_var_array")),
     out_ (new Param_Test::Var_Array),
     ret_ (new Param_Test::Var_Array)
 {
 }
 
-Test_Var_Array::~Test_Var_Array (void)
+Test_Var_Array::~Test_Var_Array ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Var_Array::opname (void) const
+Test_Var_Array::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Var_Array::dii_req_invoke (CORBA::Request *req
-                                ACE_ENV_ARG_DECL)
+Test_Var_Array::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= Param_Test::Var_Array_forany (this->in_);
   req->add_inout_arg ("s2") <<= Param_Test::Var_Array_forany (this->inout_);
@@ -56,8 +45,7 @@ Test_Var_Array::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Var_Array);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Var_Array_forany forany;
 
@@ -65,21 +53,18 @@ Test_Var_Array::dii_req_invoke (CORBA::Request *req
   this->ret_ = Param_Test::Var_Array_dup (forany.in ());
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= forany;
   Param_Test::Var_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= forany;
   this->out_ = Param_Test::Var_Array_dup (forany.in ());
 }
 
 int
-Test_Var_Array::init_parameters (Param_Test_ptr
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+Test_Var_Array::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -94,7 +79,7 @@ Test_Var_Array::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Var_Array::reset_parameters (void)
+Test_Var_Array::reset_parameters ()
 {
   // free the out, and return value arrays
   Param_Test::Var_Array_free (this->out_._retn ());
@@ -105,32 +90,26 @@ Test_Var_Array::reset_parameters (void)
 }
 
 int
-Test_Var_Array::run_sii_test (Param_Test_ptr objref
-                              ACE_ENV_ARG_DECL)
+Test_Var_Array::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Var_Array_out out_arr (this->out_.out ());
       this->ret_ = objref->test_var_array (this->in_,
                                            this->inout_,
-                                           out_arr
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                           out_arr);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Var_Array::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Var_Array::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Var_Array::check_validity (void)
+Test_Var_Array::check_validity ()
 {
   if (this->compare (this->in_, this->inout_) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -152,14 +131,14 @@ Test_Var_Array::compare (const Param_Test::Var_Array_slice *a1,
 {
   for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
     {
-      if (strcmp (a1[i].in (), a2[i].in ()))
+      if (ACE_OS::strcmp (a1[i].in (), a2[i].in ()))
         return 0;
     }
   return 1; // success
 }
 
 void
-Test_Var_Array::print_values (void)
+Test_Var_Array::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG, "IN array\n"));
   this->print (this->in_);
@@ -176,6 +155,6 @@ Test_Var_Array::print (const Param_Test::Var_Array_slice *a)
 {
   for (CORBA::ULong i = 0; i < Param_Test::DIM2; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %s\n",i, a[i].in ()));
+      ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %C\n",i, a[i].in ()));
     }
 }

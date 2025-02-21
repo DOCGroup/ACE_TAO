@@ -4,10 +4,7 @@
 /**
  *  @file   Unknown_User_Exception.h
  *
- *  $Id$
- *
  *  Defines the way an exception is reported by a DII request.
- *
  *
  *  @author  Portions Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Portions Copyright 1997-2003 by Washington University
@@ -20,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "dynamicinterface_export.h"
+#include "tao/DynamicInterface/dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
@@ -28,17 +25,7 @@
 
 #include "tao/UserException.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
-
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_DynamicInterface_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -57,9 +44,8 @@ namespace CORBA
     : public CORBA::UserException
   {
   public:
-
     /// Constructor.
-    UnknownUserException (void);
+    UnknownUserException ();
 
     /// Constructor.
     UnknownUserException (CORBA::Any& exception);
@@ -68,32 +54,29 @@ namespace CORBA
     UnknownUserException (const UnknownUserException& e);
 
     /// Destructor.
-    virtual ~UnknownUserException (void);
+    virtual ~UnknownUserException ();
 
     /// Return the any containing the user exception.
-    CORBA::Any& exception (void);
+    CORBA::Any& exception ();
 
     /// To throw an UnknownUserException of this type.
-    virtual void _raise (void) const;
+    virtual void _raise () const;
 
-    virtual CORBA::Exception *_tao_duplicate (void) const;
-    virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ACE_ENV_ARG_DECL) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr
-                              ACE_ENV_ARG_DECL);
+    virtual CORBA::Exception *_tao_duplicate () const;
+    virtual void _tao_encode (TAO_OutputCDR &cdr) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr);
 
     /// Narrow to an UnknowUserException.
     static UnknownUserException * _downcast (CORBA::Exception *ex);
-    static UnknownUserException const * _downcast (
-      CORBA::Exception const * ex);
+    static UnknownUserException const * _downcast (CORBA::Exception const * ex);
+
+    /// Return the repository ID of the Exception.
+    virtual const char * _rep_id () const;
 
     // = TAO specific extension.
 
-    /// Helper method to implement _downcast.
-    virtual int _is_a (const char *type_id) const;
-
     /// This class has a specific typecode.
-    virtual CORBA::TypeCode_ptr _tao_type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type () const;
 
   private:
     /// Holder for the actual exception.
@@ -101,11 +84,10 @@ namespace CORBA
   };
 
   // The CORBA::UnknownUserException TypeCode.
-  extern TAO_DynamicInterface_Export TypeCode_ptr const
-    _tc_UnknownUserException;
-
+  extern TAO_DynamicInterface_Export TypeCode_ptr const _tc_UnknownUserException;
 } // End CORBA namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

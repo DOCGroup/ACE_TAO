@@ -1,8 +1,6 @@
 /**
  * @file RT_Class.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -20,33 +18,32 @@
  * @class RT_Class
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export RT_Class
 {
 public:
   /// Constructor
-  RT_Class (void);
+  RT_Class ();
 
   /** @name Return the test scheduling parameters
    */
   //@{
   /// Return the process scheduling class selected for the test
-  int prc_sched_class (void) const;
+  int prc_sched_class () const;
 
   /// Return the thread scheduling class selected for the test
-  int thr_sched_class (void) const;
+  int thr_sched_class () const;
 
   /// Return the process priority selected for the test
-  int priority_process (void) const;
+  int priority_process () const;
 
   /// Return the (thread, native) priority for the high priority
   /// task(s) in the test
-  int priority_high (void) const;
+  int priority_high () const;
 
   /// Return the (thread, native) priority for the low priority
   /// task(s) in the test
-  int priority_low (void) const;
+  int priority_low () const;
 
   //@}
 

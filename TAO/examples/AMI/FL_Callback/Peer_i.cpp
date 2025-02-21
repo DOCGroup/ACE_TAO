@@ -1,9 +1,5 @@
-// $Id$
-
 #include "Peer_i.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(FL_Callback, Peer_i, "$Id$")
 
 Peer_Handler_i::Peer_Handler_i (Peer_i *peer)
   : peer_ (peer)
@@ -11,82 +7,65 @@ Peer_Handler_i::Peer_Handler_i (Peer_i *peer)
 }
 
 void
-Peer_Handler_i::request (CORBA::Long retval
-                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Peer_Handler_i::request (CORBA::Long retval)
 {
   static int i = 0;
   i++;
   if (i % 100 == 0)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) %d replies received\n", i));
-  this->peer_->reply (retval ACE_ENV_ARG_PARAMETER);
+  this->peer_->reply (retval);
 }
 
 
 void
 Peer_Handler_i::request_excep (
-    AMI_PeerExceptionHolder * excep_holder
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_UNUSED_ARG (excep_holder);
-  ACE_ENV_ARG_NOT_USED;
-}
-
-
-void
-Peer_Handler_i::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+    ::Messaging::ExceptionHolder *)
 {
 }
 
 void
-Peer_Handler_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Peer_Handler_i::start ()
+{
+}
+
+void
+Peer_Handler_i::shutdown ()
 
 {
 }
 
-Peer_i::Peer_i (void)
+Peer_i::Peer_i ()
   :  reply_handler_ (this)
 {
 }
 
-Peer_i::~Peer_i (void)
+Peer_i::~Peer_i ()
 {
 }
 
 void
 Peer_i::init (CORBA::ORB_ptr orb,
               Progress_ptr progress,
-              const ACE_Time_Value &delay
-              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+              const ACE_Time_Value &delay)
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->progress_ = Progress::_duplicate (progress);
   this->delay_ = delay;
 
-  Peer_var peer = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  Peer_var peer = this->_this ();
 
   ACE_DEBUG ((LM_DEBUG, "Peer (%P|%t) - binding\n"));
-  this->id_ = this->progress_->bind (peer.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->id_ = this->progress_->bind (peer.in ());
 }
 
 void
-Peer_i::reply (CORBA::Long result
-               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Peer_i::reply (CORBA::Long result)
 {
-  this->progress_->recv_reply (result ACE_ENV_ARG_PARAMETER);
+  this->progress_->recv_reply (result);
 }
 
 CORBA::Long
-Peer_i::request (CORBA::Long id
-                 ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Peer_i::request (CORBA::Long id)
 {
   ACE_Time_Value tv  = this->delay_;
   ACE_OS::sleep (tv);
@@ -96,13 +75,10 @@ Peer_i::request (CORBA::Long id
 
 void
 Peer_i::start (const PeerSet &the_peers,
-               CORBA::Long iterations
-               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+               CORBA::Long iterations)
 {
   AMI_PeerHandler_var handler =
-    this->reply_handler_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->reply_handler_._this ();
 
   // @@ Report errors as exceptions...
   Peer_Task *task;
@@ -115,10 +91,9 @@ Peer_i::start (const PeerSet &the_peers,
 }
 
 void
-Peer_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Peer_i::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************
@@ -137,29 +112,24 @@ Peer_Task::Peer_Task (const PeerSet& the_peers,
 }
 
 int
-Peer_Task::svc (void)
+Peer_Task::svc ()
 {
   for (int i = 0; i != this->iterations_; ++i)
     {
       CORBA::ULong l = this->the_peers_.length ();
       for (CORBA::ULong j = 0; j != l; ++j)
         {
-          ACE_TRY_NEW_ENV
+          try
             {
               this->the_peers_[j]->sendc_request (this->handler_.in (),
-                                                  this->id_
-                                                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                  this->id_);
 
-              this->progress_->sent_request (this->id_
-                                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              this->progress_->sent_request (this->id_);
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception&)
             {
               // Ignore exceptions;
             }
-          ACE_ENDTRY;
         }
       if (i % 100 == 0)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) %d requests sent\n", i));

@@ -1,4 +1,3 @@
-// $Id$
 //---------------------------------------------------------------------------
 // To be able to handle CORBA requests an application usually calls orb->run().
 // To integrate this into VCL applications we will run the orb in a separate
@@ -29,9 +28,9 @@ __fastcall TORBThread::~TORBThread ()
 {
   try
     {
-      orb_->shutdown (0);
+      orb_->shutdown (false);
     }
-  catch (CORBA::Exception&)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -44,7 +43,7 @@ void __fastcall TORBThread::Execute ()
     {
       orb_->run ();
     }
-  catch (CORBA::Exception& e)
+  catch (const CORBA::Exception& e)
     {
       ShowMessage (e._rep_id ());
       Application->Terminate ();

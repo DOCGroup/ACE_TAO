@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : taoidldefaults, messaging {
+  requires += ami
+  idlflags += -GC
+}

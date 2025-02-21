@@ -1,7 +1,8 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Resource_Factory.h
- *  $Id$
  *
  *  @author Yamuna Krishnamurthy
  */
@@ -9,7 +10,7 @@
 
 
 #ifndef TAO_AV_DEFAULT_RESOURCE_FACTORY_H
-#define TAO_AV_DEFAULT_RESOURCE_FCATORY_H
+#define TAO_AV_DEFAULT_RESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -20,6 +21,8 @@
 
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_AV_Resource_Factory
  *
@@ -27,23 +30,20 @@
  *        The AV Streams resource factory loads the
  *        pluggable transport and flow protocol factories
  *        in the corresponding factory sets.
- *  
- *
  */
-
 class TAO_AV_Export TAO_AV_Resource_Factory
-: public ACE_Service_Object 
+: public ACE_Service_Object
 {
 public:
-
   /**
    * @name Service Configurator Hooks
    */
   //@{
   /// Dynamic linking hook
-  virtual int init (int argc, char *argv[]) = 0;
-  
+  virtual int init (int argc, ACE_TCHAR *argv[]) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_DEFAULT_RESOURCE_FACTORY_H */

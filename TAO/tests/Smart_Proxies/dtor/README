@@ -1,0 +1,16 @@
+
+
+This test is to test if the destruction process
+and the _non_existent() function in the smart proxy
+is working properly.
+
+For execution of the test:
+
+1) ./server -o test.ior
+
+2) ./client
+
+or simply use:
+
+run_test.pl
+

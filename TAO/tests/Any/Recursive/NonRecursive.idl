@@ -1,0 +1,21 @@
+//
+// Non-recursive types for compile-time testing.
+
+module Foo
+{
+  struct Nested
+  {
+    boolean z;
+  };
+};
+
+module Bar
+{
+  typedef Foo::Nested Nested;
+
+  struct Baz
+  {
+    Nested one;
+    Nested two;
+  };
+};

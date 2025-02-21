@@ -1,0 +1,4 @@
+// -*- MPC -*-
+project: taoidldefaults, messaging {
+  idlflags += -GH
+}

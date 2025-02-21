@@ -1,0 +1,22 @@
+
+
+File: DevGuideExamples/Multithreading/README
+
+This directory contains subdirectories containing CORBA examples
+illustrating TAO's various concurrency models:
+
+Reactive
+
+  Contains an example of a single-threaded server that uses the
+  reactive concurrency model.
+
+ThreadPerConnection
+
+  Contains an example of a multithreaded server that uses the
+  thread-per-connection concurrency model.
+
+ThreadPool
+
+  Contains an example of a multithreaded server that provides a pool
+  of threads for concurrent processing of client requests.
+

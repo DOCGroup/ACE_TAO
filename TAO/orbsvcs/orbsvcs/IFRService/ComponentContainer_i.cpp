@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-
-#include "ComponentContainer_i.h"
-#include "Repository_i.h"
-#include "InterfaceDef_i.h"
-#include "ComponentDef_i.h"
-#include "ValueDef_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/ComponentContainer_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/InterfaceDef_i.h"
+#include "orbsvcs/IFRService/ComponentDef_i.h"
+#include "orbsvcs/IFRService/ValueDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "ace/SString.h"
 
-ACE_RCSID (IFRService, 
-           ComponentContainer_i, 
-           "$Id$")
-           
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 const char *TAO_ComponentContainer_i::tmp_name_holder_ = 0;
 
 TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
@@ -21,48 +17,42 @@ TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ComponentContainer_i::~TAO_ComponentContainer_i (void)
+TAO_ComponentContainer_i::~TAO_ComponentContainer_i ()
 {
 }
 
-CORBA::ComponentIR::ComponentDef_ptr 
+CORBA::ComponentIR::ComponentDef_ptr
 TAO_ComponentContainer_i::create_component (
     const char *id,
     const char *name,
     const char *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
     const CORBA::InterfaceDefSeq &supports_interfaces
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
+  this->update_key ();
 
   return this->create_component_i (id,
                                    name,
                                    version,
                                    base_component,
-                                   supports_interfaces
-                                   ACE_ENV_ARG_PARAMETER);
+                                   supports_interfaces);
 }
 
-CORBA::ComponentIR::ComponentDef_ptr 
+CORBA::ComponentIR::ComponentDef_ptr
 TAO_ComponentContainer_i::create_component_i (
     const char *id,
     const char *name,
     const char *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
     const CORBA::InterfaceDefSeq &supports_interfaces
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (
         this->def_kind (),
         CORBA::dk_Component,
@@ -74,15 +64,13 @@ TAO_ComponentContainer_i::create_component_i (
         &TAO_ComponentContainer_i::same_as_tmp_name,
         version,
         "defns"
-        ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
   if (! CORBA::is_nil (base_component))
     {
-      const char *base_path = 
+      const char *base_path =
         TAO_IFR_Service_Utils::reference_to_path (base_component);
-          
+
       // Get the servant's key into the temporary key holder, because
       // the name clash checker for base valuetypes is static, and has
       // no other way to know about a specific key.
@@ -95,18 +83,16 @@ TAO_ComponentContainer_i::create_component_i (
       TAO_IFR_Service_Utils::name_exists (&TAO_ComponentDef_i::name_clash,
                                           new_key,
                                           this->repo_,
-                                          CORBA::dk_Component
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
-          
+                                          CORBA::dk_Component);
+
       // Store the id for this - that's what ComponentDescription takes.
-      ACE_TString base_id;
-      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
-                                                "id",
-                                                base_id);
+//      ACE_TString base_id;
+//      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
+//                                                "id",
+//                                                base_id);
       this->repo_->config ()->set_string_value (new_key,
-                                                "base_component",
-                                                base_id);
+                                                ACE_TEXT("base_component"),
+                                                base_path);
     }
 
   CORBA::ULong count = supports_interfaces.length ();
@@ -130,9 +116,9 @@ TAO_ComponentContainer_i::create_component_i (
       for (i = 0; i < count; ++i)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
-          supported_path = 
+          supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                supports_interfaces[i].in ()
+                supports_interfaces[i]
               );
           this->repo_->config ()->set_string_value (supports_key,
                                                     stringified,
@@ -144,15 +130,12 @@ TAO_ComponentContainer_i::create_component_i (
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Component,
                                           path.c_str (),
-                                          this->repo_
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
+                                          this->repo_);
 
-  return CORBA::ComponentIR::ComponentDef::_narrow (obj.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
+  return CORBA::ComponentIR::ComponentDef::_narrow (obj.in ());
 }
 
-CORBA::ComponentIR::HomeDef_ptr 
+CORBA::ComponentIR::HomeDef_ptr
 TAO_ComponentContainer_i::create_home (
     const char *id,
     const char *name,
@@ -161,14 +144,11 @@ TAO_ComponentContainer_i::create_home (
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
     const CORBA::InterfaceDefSeq &supports_interfaces,
     CORBA::ValueDef_ptr primary_key
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
+  this->update_key ();
 
   return this->create_home_i (id,
                               name,
@@ -176,11 +156,10 @@ TAO_ComponentContainer_i::create_home (
                               base_home,
                               managed_component,
                               supports_interfaces,
-                              primary_key
-                              ACE_ENV_ARG_PARAMETER);
+                              primary_key);
 }
 
-CORBA::ComponentIR::HomeDef_ptr 
+CORBA::ComponentIR::HomeDef_ptr
 TAO_ComponentContainer_i::create_home_i (
     const char *id,
     const char *name,
@@ -189,13 +168,11 @@ TAO_ComponentContainer_i::create_home_i (
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
     const CORBA::InterfaceDefSeq &supports_interfaces,
     CORBA::ValueDef_ptr primary_key
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (
         this->def_kind (),
         CORBA::dk_Home,
@@ -207,9 +184,7 @@ TAO_ComponentContainer_i::create_home_i (
         &TAO_ComponentContainer_i::same_as_tmp_name,
         version,
         "defns"
-        ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
   char *base_path = 0;
 
@@ -223,7 +198,7 @@ TAO_ComponentContainer_i::create_home_i (
 
   if (! CORBA::is_nil (managed_component))
     {
-      base_path = 
+      base_path =
         TAO_IFR_Service_Utils::reference_to_path (managed_component);
       this->repo_->config ()->set_string_value (new_key,
                                                 "managed",
@@ -249,9 +224,9 @@ TAO_ComponentContainer_i::create_home_i (
 
       for (i = 0; i < length; ++i)
         {
-          supported_path = 
+          supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                supports_interfaces[i].in ()
+                supports_interfaces[i]
               );
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (supports_key,
@@ -262,7 +237,7 @@ TAO_ComponentContainer_i::create_home_i (
 
   if (! CORBA::is_nil (primary_key))
     {
-      char *primary_key_path = 
+      char *primary_key_path =
         TAO_IFR_Service_Utils::reference_to_path (primary_key);
         this->repo_->config ()->set_string_value (new_key,
                                                   "primary_key",
@@ -273,15 +248,12 @@ TAO_ComponentContainer_i::create_home_i (
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Home,
                                           path.c_str (),
-                                          this->repo_
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
+                                          this->repo_);
 
-  return CORBA::ComponentIR::HomeDef::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+  return CORBA::ComponentIR::HomeDef::_narrow (obj.in ());
 }
 
-CORBA::ComponentIR::EventDef_ptr 
+CORBA::ComponentIR::EventDef_ptr
 TAO_ComponentContainer_i::create_event (
     const char *id,
     const char *name,
@@ -293,14 +265,11 @@ TAO_ComponentContainer_i::create_event (
     const CORBA::ValueDefSeq &abstract_base_values,
     const CORBA::InterfaceDefSeq &supported_interfaces,
     const CORBA::ExtInitializerSeq &initializers
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
+  this->update_key ();
 
   return this->create_event_i (id,
                                name,
@@ -311,11 +280,10 @@ TAO_ComponentContainer_i::create_event (
                                is_truncatable,
                                abstract_base_values,
                                supported_interfaces,
-                               initializers
-                               ACE_ENV_ARG_PARAMETER);
+                               initializers);
 }
 
-CORBA::ComponentIR::EventDef_ptr 
+CORBA::ComponentIR::EventDef_ptr
 TAO_ComponentContainer_i::create_event_i (
     const char *id,
     const char *name,
@@ -327,13 +295,11 @@ TAO_ComponentContainer_i::create_event_i (
     const CORBA::ValueDefSeq &abstract_base_values,
     const CORBA::InterfaceDefSeq &supported_interfaces,
     const CORBA::ExtInitializerSeq &initializers
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (
         this->def_kind (),
         CORBA::dk_Event,
@@ -345,9 +311,7 @@ TAO_ComponentContainer_i::create_event_i (
         &TAO_ComponentContainer_i::same_as_tmp_name,
         version,
         "defns"
-        ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
   this->repo_->config ()->set_integer_value (new_key,
                                              "is_custom",
@@ -363,9 +327,9 @@ TAO_ComponentContainer_i::create_event_i (
 
   if (!CORBA::is_nil (base_value))
     {
-      const char *base_path = 
+      const char *base_path =
         TAO_IFR_Service_Utils::reference_to_path (base_value);
-          
+
       // Get the servant's key into the temporary key holder, because
       // the name clash checker for base valuetypes is static, and has
       // no other way to know about a specific key.
@@ -378,18 +342,11 @@ TAO_ComponentContainer_i::create_event_i (
       TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
                                           new_key,
                                           this->repo_,
-                                          CORBA::dk_Value
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
-          
-      ACE_TString base_value_id;
-      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
-                                                "id",
-                                                base_value_id);
+                                          CORBA::dk_Value);
 
       this->repo_->config ()->set_string_value (new_key,
                                                 "base_value",
-                                                base_value_id);
+                                                base_path);
     }
 
   CORBA::ULong length = abstract_base_values.length ();
@@ -407,9 +364,9 @@ TAO_ComponentContainer_i::create_event_i (
 
       for (i = 0; i < length; ++i)
         {
-          base_path = 
+          base_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                abstract_base_values[i].in ()
+                abstract_base_values[i]
               );
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (bases_key,
@@ -435,9 +392,9 @@ TAO_ComponentContainer_i::create_event_i (
 
       for (i = 0; i < length; ++i)
         {
-          supported_path = 
+          supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                supported_interfaces[i].in ()
+                supported_interfaces[i]
               );
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (supported_key,
@@ -504,7 +461,7 @@ TAO_ComponentContainer_i::create_event_i (
                       initializers[i].members[j].name.in ()
                     );
 
-                  path = 
+                  path =
                     TAO_IFR_Service_Utils::reference_to_path (
                               initializers[i].members[j].type_def.in ()
                             );
@@ -549,17 +506,16 @@ TAO_ComponentContainer_i::create_event_i (
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Event,
                                           path.c_str (),
-                                          this->repo_
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
+                                          this->repo_);
 
-  return CORBA::ComponentIR::EventDef::_narrow (obj.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+  return CORBA::ComponentIR::EventDef::_narrow (obj.in ());
 }
 
 int
 TAO_ComponentContainer_i::same_as_tmp_name (const char *name)
 {
-  return 
+  return
     ACE_OS::strcmp (TAO_ComponentContainer_i::tmp_name_holder_, name) == 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

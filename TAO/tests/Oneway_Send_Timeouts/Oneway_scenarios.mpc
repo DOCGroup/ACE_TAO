@@ -1,0 +1,24 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project (*Oneway_Test) : taoexe, messaging, iortable {
+  exename = oneway_test
+  after += *idl
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    main.cpp
+    Server.cpp
+    Client.cpp
+    TestC.cpp
+    TestS.cpp
+    Test_i.cpp
+  }
+}

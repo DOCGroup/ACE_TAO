@@ -1,21 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs
-//
-// = FILENAME
-//     CosEvent_Utilities.h
-//
-// = DESCRIPTION
-//    A few utility classes to make it easier to write EC applications.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     CosEvent_Utilities.h
+ *
+ *  A few utility classes to make it easier to write EC applications.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_COSEVENT_UTILITIES_H
 #define TAO_COSEVENT_UTILITIES_H
@@ -39,118 +33,117 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   //   create and manage a CosEC servant.
   //   Clients can derive from this class and create servants.
  public:
-  // = Initialization method.
-  CosEC_ServantBase (void);
-  // Constructor.
+  /// Constructor.
+  CosEC_ServantBase ();
 
-  virtual ~CosEC_ServantBase (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~CosEC_ServantBase () = default;
 
+  /**
+   * This method creates a local scheduler, rtec and cosec.
+   * The POA <poa> specified here is used when <activate> is called to
+   * activate the contained servants.
+   * The POA <thispoa> is used to activate this.
+   */
   virtual void init (PortableServer::POA_ptr thispoa,
                      PortableServer::POA_ptr poa,
-                     char *eventTypeIds,
-                     char *eventSourceIds,
-                     char *source_type_pairs
-                     ACE_ENV_ARG_DECL);
-  // This method creates a local scheduler, rtec and cosec.
-  // The POA <poa> specified here is used when <activate> is called to
-  // activate the contained servants.
-  // The POA <thispoa> is used to activate this.
+                     ACE_TCHAR *eventTypeIds,
+                     ACE_TCHAR *eventSourceIds,
+                     ACE_TCHAR *source_type_pairs);
 
-  int activate (ACE_ENV_SINGLE_ARG_DECL);
-  // Activates the CosEC with <thispoa_> and friends with the <poa_>
+  /// Activates the CosEC with <thispoa_> and friends with the <poa_>
+  int activate ();
 
-  int activate (const char* servant_id ACE_ENV_ARG_DECL);
-  // If the servant_id is not nil then it is used to supply the object id
-  // for <this> servant.
+  /// If the servant_id is not nil then it is used to supply the object id
+  /// for <this> servant.
+  int activate (const char* servant_id);
 
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
-  // Deactivates the CosEC and friends with the POA.
+  /// Deactivates the CosEC and friends with the POA.
+  void deactivate ();
 
   // =  POA_CosEventChannelAdmin::EventChannel methods.
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  // Destroys this Event Channel object.
+  /// Destroys this Event Channel object.
+  virtual void destroy ();
 
  protected:
   // = RtEC creation, activation and deactivation methods.
+  /// Create a local rtec.
   virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec (ACE_ENV_SINGLE_ARG_DECL);
-  // Create a local rtec.
+  create_rtec ();
 
-  virtual void activate_rtec (ACE_ENV_SINGLE_ARG_DECL);
-  // Activates the rtec.
+  /// Activates the rtec.
+  virtual void activate_rtec ();
 
-  virtual void deactivate_rtec (ACE_ENV_SINGLE_ARG_DECL);
-  // Deactivates the rtec.
+  /// Deactivates the rtec.
+  virtual void deactivate_rtec ();
 
   // = CosEC creation, activation and deactivation methods.
+  /// Create a local cosec.
   TAO_CosEC_EventChannel_i*
-  create_cosec (ACE_ENV_SINGLE_ARG_DECL);
-  // Create a local cosec.
+  create_cosec ();
 
-  int activate_cosec (ACE_ENV_SINGLE_ARG_DECL);
-  // Activates the cosec.
+  /// Activates the cosec.
+  int activate_cosec ();
 
-  void deactivate_cosec (ACE_ENV_SINGLE_ARG_DECL);
-  // Deactivates the cosec.
+  /// Deactivates the cosec.
+  void deactivate_cosec ();
 
+  /// Initialize the SupplierQOS Factory.
   void init_SupplierQOS (RtecBase::handle_t supp_handle,
                          ACE_SupplierQOS_Factory &supplier_qos,
-                         char *source_type_pairs);
-  // Initialize the SupplierQOS Factory.
+                         ACE_TCHAR *source_type_pairs);
 
 
+  /// Initialize the ConsumerQOS Factory.
   void init_ConsumerQOS (RtecBase::handle_t cons_handle,
                          ACE_ConsumerQOS_Factory &consumer_qos,
-                         char *eventTypeIds,
-                         char *eventSourceIds);
-  // Initialize the ConsumerQOS Factory.
+                         ACE_TCHAR *eventTypeIds,
+                         ACE_TCHAR *eventSourceIds);
 
   // = Protected Data members.
 
+  /// The poa that we use to activate ourselves.
   PortableServer::POA_var thispoa_;
-  // The poa that we use to activate ourselves.
 
+  /// The poa that we use to activate others
   PortableServer::POA_var poa_;
-  // The poa that we use to activate others
 
+  /// The Event Channel servant.
   POA_RtecEventChannelAdmin::EventChannel_ptr rtec_servant_;
-  // The Event Channel servant.
 
+  /// The servant object of the COS Event Channel.
   TAO_CosEC_EventChannel_i *cosec_servant_;
-  // The servant object of the COS Event Channel.
 
+  /// Ref to the Rtec.
   RtecEventChannelAdmin::EventChannel_var rtec_;
-  // Ref to the Rtec.
 
+  /// Ref to the cosec.
   CosEventChannelAdmin::EventChannel_var cosec_;
-  // Ref to the cosec.
 
+  /// The Consumer QOS.
   ACE_ConsumerQOS_Factory consumer_qos_;
-  // The Consumer QOS.
 
+  /// The Supplier QOS.
   ACE_SupplierQOS_Factory supplier_qos_;
-  // The Supplier QOS.
 
-  char *eventTypeIds_;
-  // The list of EventTypeIDs (for ConsumerQOS) seperated by spaces.
-  // e.g. "1 2 3 4"
+  /// The list of EventTypeIDs (for ConsumerQOS) separated by spaces.
+  /// e.g. "1 2 3 4"
+  ACE_TCHAR *eventTypeIds_;
 
-  char *eventSourceIds_;
-  // The list of EventSourceIDs (for ConsumerQOS) seperated by spaces.
-  // e.g. "1 2 3 4"
+  /// The list of EventSourceIDs (for ConsumerQOS) separated by spaces.
+  /// e.g. "1 2 3 4"
+  ACE_TCHAR *eventSourceIds_;
 
-  char *source_type_pairs_;
-  // The pairs of Source and EventType Ids (for the SupplierQOS).
-  // e.g "1 4 2 5 3 6" where (1,4) (2,5) and (3,6) from source id,
-  // event id pairs.
+  /**
+   * The pairs of Source and EventType Ids (for the SupplierQOS).
+   * e.g "1 4 2 5 3 6" where (1,4) (2,5) and (3,6) from source id,
+   * event id pairs.
+   */
+  ACE_TCHAR *source_type_pairs_;
 };
 
 #include /**/ "ace/post.h"

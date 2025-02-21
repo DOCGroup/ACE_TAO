@@ -1,0 +1,4 @@
+// -*- MPC -*-
+feature (corba_e_compact) {
+  macros += CORBA_E_COMPACT
+}

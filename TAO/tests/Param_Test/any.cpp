@@ -1,28 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    any.cpp
-//
-// = DESCRIPTION
-//    tests Anys
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any.cpp
+ *
+ *  tests Anys
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "any.h"
 #include "tao/debug.h"
-
-ACE_RCSID (Param_Test, 
-           any, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Any
@@ -30,27 +20,27 @@ ACE_RCSID (Param_Test,
 
 size_t Test_Any::counter = 0;
 
-Test_Any::Test_Any (void)
+Test_Any::Test_Any ()
   : opname_ (CORBA::string_dup ("test_any")),
     out_ (new CORBA::Any),
     ret_ (new CORBA::Any)
 {
 }
 
-Test_Any::~Test_Any (void)
+Test_Any::~Test_Any ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Any::opname (void) const
+Test_Any::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Any::dii_req_invoke (CORBA::Request *req ACE_ENV_ARG_DECL)
+Test_Any::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("o1") <<= this->in_;
   req->add_inout_arg ("o2") <<= this->inout_;
@@ -58,22 +48,19 @@ Test_Any::dii_req_invoke (CORBA::Request *req ACE_ENV_ARG_DECL)
 
   req->set_return_type (CORBA::_tc_any);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   const CORBA::Any *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::Any (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = CORBA::Any (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new CORBA::Any (*tmp);
 }
@@ -94,28 +81,25 @@ static const CORBA::TypeCode_ptr any_table [] =
 #endif /* any_table isn't currently used */
 
 int
-Test_Any::init_parameters (Param_Test_ptr objref
-                           ACE_ENV_ARG_DECL)
+Test_Any::init_parameters (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       // get access to a Coffee Object
-      this->cobj_ = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->cobj_ = objref->make_coffee ();
 
       this->reset_parameters ();
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception doing make_coffee");
+      sysex._tao_print_exception ("System Exception doing make_coffee");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 int
-Test_Any::reset_parameters (void)
+Test_Any::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
   CORBA::ULong index = (counter++ % Test_Any::ANY_LAST_TEST_ITEM);
@@ -146,7 +130,7 @@ Test_Any::reset_parameters (void)
         char *str = gen->gen_string ();
 
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
+          ACE_DEBUG ((LM_DEBUG, "setting string = %C\n", str));
         this->in_ <<= str;
         this->inout_ <<= str;
         CORBA::string_free (str);
@@ -231,7 +215,8 @@ Test_Any::reset_parameters (void)
 
         if (TAO_debug_level > 0)
           {
-            Param_Test::Big_Union *bu_in, *bu_inout;
+            const Param_Test::Big_Union *bu_in = 0;
+            const Param_Test::Big_Union *bu_inout = 0;
             this->in_ >>= bu_in;
             this->inout_ >>= bu_inout;
             ACE_DEBUG ((LM_DEBUG,
@@ -254,7 +239,8 @@ Test_Any::reset_parameters (void)
 
         if (TAO_debug_level > 0)
           {
-            Param_Test::Small_Union *bu_in, *bu_inout;
+            const Param_Test::Small_Union *bu_in = 0;
+            const Param_Test::Small_Union *bu_inout = 0;
             this->in_ >>= bu_in;
             this->inout_ >>= bu_inout;
             ACE_DEBUG ((LM_DEBUG,
@@ -271,27 +257,23 @@ Test_Any::reset_parameters (void)
 }
 
 int
-Test_Any::run_sii_test (Param_Test_ptr objref
-                        ACE_ENV_ARG_DECL)
+Test_Any::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_any (this->in_,
                                      this->inout_,
-                                     this->out_.out ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     this->out_.out ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 CORBA::Boolean
-Test_Any::check_validity (void)
+Test_Any::check_validity ()
 {
   CORBA::Short short_in, short_inout, short_out, short_ret;
   const char *str_in;
@@ -300,11 +282,11 @@ Test_Any::check_validity (void)
   const char *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
   Param_Test::Fixed_Array_forany array_in, array_inout, array_out, array_ret;
-  Param_Test::Bounded_Short_Seq *bdss_in, *bdss_inout, *bdss_out, *bdss_ret;
-  CORBA::ShortSeq *ubss_in, *ubss_inout, *ubss_out, *ubss_ret;
-  Param_Test::Fixed_Struct *fs_in, *fs_inout, *fs_out, *fs_ret;
-  Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
-  Param_Test::Small_Union *su_in, *su_inout, *su_out, *su_ret;
+  const Param_Test::Bounded_Short_Seq *bdss_in, *bdss_inout, *bdss_out, *bdss_ret;
+  const CORBA::ShortSeq *ubss_in, *ubss_inout, *ubss_out, *ubss_ret;
+  const Param_Test::Fixed_Struct *fs_in, *fs_inout, *fs_out, *fs_ret;
+  const Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
+  const Param_Test::Small_Union *su_in, *su_inout, *su_out, *su_ret;
 
   if ((this->in_ >>= short_in) &&
       (this->inout_ >>= short_inout) &&
@@ -353,10 +335,10 @@ Test_Any::check_validity (void)
            (this->out_.in () >>= array_out) &&
            (this->ret_.in () >>= array_ret))
     {
-      for (size_t i = 0; i < Param_Test::DIM1; i ++)
+      for (CORBA::ULong i = 0; i < Param_Test::DIM1; i ++)
         {
-          ssize_t ii = i;
-          ssize_t square = i * i;
+          CORBA::Long ii = i;
+          CORBA::Long square = i * i;
           if (array_in[i] != ii ||
               array_out[i] != ii ||
               array_inout[i] != square ||
@@ -480,6 +462,6 @@ Test_Any::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Any::print_values (void)
+Test_Any::print_values ()
 {
 }

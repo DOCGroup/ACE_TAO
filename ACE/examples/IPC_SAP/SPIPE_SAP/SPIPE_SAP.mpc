@@ -1,0 +1,56 @@
+// -*- MPC -*-
+project(*client) : aceexe {
+  exename = client
+  Source_Files {
+    client.cpp 
+  }
+}
+
+project(*consumer_msg) : aceexe {
+  exename = consumer_msg
+  Source_Files {
+    consumer_msg.cpp 
+  }
+}
+
+project(*consumer_read) : aceexe {
+  exename = consumer_read
+  Source_Files {
+    consumer_read.cpp 
+  }
+}
+
+project(*NPClient) : aceexe {
+  exename = NPClient
+  Source_Files {
+    NPClient.cpp 
+  }
+}
+
+project(*NPServer) : aceexe {
+  exename = NPServer
+  Source_Files {
+    NPServer.cpp 
+  }
+}
+
+project(*producer_msg) : aceexe {
+  exename = producer_msg
+  Source_Files {
+    producer_msg.cpp 
+  }
+}
+
+project(*producer_read) : aceexe {
+  exename = producer_read
+  Source_Files {
+    producer_read.cpp 
+  }
+}
+
+project(*server) : aceexe {
+  exename = server
+  Source_Files {
+    server.cpp 
+  }
+}

@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -66,6 +64,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_string.h"
 #include "global_extern.h"
+#include "fe_extern.h"
 #include "utl_err.h"
 
 // FUZZ: disable check_for_streams_include
@@ -73,187 +72,187 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (util,
-           utl_string,
-           "$Id$")
+//////////////////////////////////////////////////////////////////////
+//// Static functions may be used by non-UTL_String i.e. const char *
+//////////////////////////////////////////////////////////////////////
 
-UTL_String::UTL_String (void)
-  : p_str (0),
-    c_str (0),
-    len (0)
+bool
+UTL_String::strcmp_caseless (
+  const char *lhs,
+  const char *rhs,
+  bool &mixed_case)
 {
-}
+  int difference;
 
-UTL_String::UTL_String (const char *str)
-{
-  if (str == 0)
+  // Advance until (difference between the strings is found) or (End of String)
+  while (!(difference= static_cast<int> (*lhs) - static_cast<int> (*rhs)) && *lhs)
     {
-      this->len = 0;
-      this->p_str = 0;
-      this->c_str = 0;
+      ++lhs;
+      ++rhs;
     }
-  else
-    {
-      this->len = ACE_OS::strlen (str);
-      this->p_str = ACE_OS::strdup (str);
-      this->c_str = (char *) ACE_OS::malloc (this->len + 1);
-      this->canonicalize ();
-    }
-}
 
-UTL_String::UTL_String (UTL_String *s)
-{
-  if (s == 0)
+  // If not (End of Strings, therefore difference found above) check if a
+  // caseless match would work instead.
+  mixed_case=
+    (*lhs &&
+     *rhs &&
+     !(static_cast<int> (ACE_OS::ace_toupper (*lhs)) -
+       static_cast<int> (ACE_OS::ace_toupper (*rhs))
+    ) );
+  if (mixed_case)
     {
-     this->p_str = 0;
-     this->c_str = 0;
-     this->len = 0;
-    }
-  else
-    {
-      char *b = s->get_string ();
+      ++lhs;
+      ++rhs;
 
-      if (b == 0)
+      // Continue caseless compare until (difference between strings) or (End of String)
+      while (!(difference= static_cast<int> (ACE_OS::ace_toupper (*lhs)) -
+                           static_cast<int> (ACE_OS::ace_toupper (*rhs))) && *lhs)
         {
-          this->p_str = 0;
-          this->c_str = 0;
-          this->len = 0;
-        }
-      else
-        {
-          this->len = ACE_OS::strlen (b);
-          this->p_str = ACE_OS::strdup (b);
-          this->c_str = (char *) ACE_OS::malloc (this->len + 1);
-          this->canonicalize ();
+          ++lhs;
+          ++rhs;
         }
     }
+
+  // true is match (no difference found), false is difference found.
+  return !difference;
 }
 
-UTL_String::~UTL_String (void)
+// Compare two const char *.
+bool
+UTL_String::compare (const char *lhs, const char *rhs)
 {
+  bool result= false;
+  bool mixed=  false;
+
+  if (lhs && rhs && strcmp_caseless (lhs, rhs, mixed))
+    {
+      result= !mixed;
+      if (mixed) // Strings match (differing case)
+        {
+          if (idl_global->case_diff_error ())
+            {
+              idl_global->err ()->name_case_error (
+                  const_cast<char *> (lhs),
+                  const_cast<char *> (rhs));
+
+              // If we try to continue from here, we risk a crash.
+              throw Bailout ();
+            }
+          else
+            {
+              idl_global->err ()->name_case_warning (
+                const_cast<char *> (lhs),
+                const_cast<char *> (rhs));
+            }
+        }
+    }
+
+  return result;
 }
 
-// Compute a canonical form for this string. This is (implemented as)
-// a corresponding string with all upper case characters where the
-// original has lower case characters, identical characters otherwise.
+// Like the above but without error or warning message output.
+bool
+UTL_String::compare_quiet (const char *lhs, const char *rhs)
+{
+  bool result= false;
+  bool mixed=  false;
+
+  if (lhs && rhs && strcmp_caseless (lhs, rhs, mixed))
+    {
+      result= mixed;
+    }
+
+  return result;
+}
+
+// Get canonical representation. This is (implemented as) the all upper
+// case corresponding string.
 void
-UTL_String::canonicalize (void)
+UTL_String::get_canonical_rep (const char *src, char *dest)
 {
-  for (size_t i = 0; i < this->len; ++i)
-    {
-      if (ACE_OS::ace_isalpha (this->p_str[i]))
-        {
-          this->c_str[i] = (char) ACE_OS::ace_toupper (this->p_str[i]);
-        }
-      else
-        {
-          this->c_str[i] = this->p_str[i];
-        }
-    }
+  while (!!(*dest++= static_cast<char> (ACE_OS::ace_toupper (*src++))))
+    {}
+}
 
-  c_str[this->len] = '\0';
+// Get canonical representation. This is (implemented as) the all upper
+// case corresponding string.
+void
+UTL_String::get_canonical_rep (ACE_CString &cstr)
+{
+  get_canonical_rep (&cstr [0], &cstr [0]);
+}
+
+//////////////////////////////////////////////////////////////////////
+
+UTL_String::UTL_String ()
+  : copy_taken (false),
+    p_str      (nullptr),
+    c_str      (nullptr)
+{
+}
+
+UTL_String::UTL_String (const char *str, bool take_copy)
+  : copy_taken (str ? take_copy : false),
+    p_str      (this->copy_taken ? ACE::strnew (str)
+                                 : const_cast<char *>(str)),
+    c_str      (nullptr)
+{
+}
+
+UTL_String::UTL_String (UTL_String *s, bool force_copy)
+  : copy_taken (force_copy ? true : s->copy_taken),
+    p_str      (this->copy_taken ? ACE::strnew (s->p_str)
+                                 : const_cast<char *> (s->p_str)),
+    c_str      (nullptr)
+{
+}
+
+UTL_String::~UTL_String ()
+{
+  delete [] this->c_str;
+  if (copy_taken)
+    {
+      ACE::strdelete (this->p_str);
+    }
+}
+
+void
+UTL_String::destroy ()
+{
+  delete [] this->c_str;
+  this->c_str = nullptr;
+  if (this->copy_taken)
+    {
+       ACE::strdelete (this->p_str);
+       this->copy_taken = false;
+    }
+  this->p_str = nullptr;
 }
 
 // Compare two UTL_String *.
-idl_bool
+bool
 UTL_String::compare (UTL_String *s)
 {
-  char *s_c_str;
-  long result;
-
-  if (this->c_str == 0
-      || s == 0
-      || (s_c_str = s->get_canonical_rep ()) == 0)
-    {
-      result = I_FALSE;
-    }
-  else
-    {
-      result =
-        (ACE_OS::strcmp (this->c_str, s_c_str) == 0) ? I_TRUE : I_FALSE;
-    }
-
-  // Check that the names are typed consistently.
-  if (result == I_TRUE
-      && ACE_OS::strcmp (this->p_str, s->get_string ()) != 0)
-    {
-      // Prevents redundant error reporting if we're in this branch.
-      result = I_FALSE;
-
-      if (idl_global->case_diff_error ())
-        {
-          idl_global->err ()->name_case_error (this->p_str,
-                                               s->get_string ());
-        }
-      else
-        {
-          idl_global->err ()->name_case_warning (this->p_str,
-                                                 s->get_string ());
-        }
-    }
-
-  return result;
+  return (this->p_str && s && s->get_string () &&
+          compare (this->p_str, s->get_string ()));
 }
 
-long
+bool
 UTL_String::compare_quiet (UTL_String *s)
 {
-  char  *s_c_str;
-  long  result;
-
-  if (this->c_str == 0
-      || s == 0
-      || (s_c_str = s->get_canonical_rep ()) == 0)
-    {
-      result = I_FALSE;
-    }
-  else if (ACE_OS::strcmp (this->c_str, s_c_str) != 0)
-    {
-      result = I_FALSE;
-    }
-  else if (ACE_OS::strcmp (this->p_str, s->get_string ()) != 0)
-    {
-      result = I_TRUE;
-    }
-  else
-    {
-      result = I_FALSE;
-    }
-
-  return result;
-}
-
-void
-UTL_String::destroy (void)
-{
-  if (this->p_str != 0)
-    {
-      ACE_OS::free (this->p_str);
-      this->p_str = 0;
-    }
-
-  if (this->c_str != 0)
-    {
-      ACE_OS::free (this->c_str);
-      this->c_str = 0;
-    }
-}
-
-// Get the char * from a String.
-char *
-UTL_String::get_string (void)
-{
-  return this->p_str;
+  return (this->p_str && s && s->get_string () &&
+          compare_quiet (this->p_str, s->get_string ()));
 }
 
 // Get the canonical representation from a String.
 char *
-UTL_String::get_canonical_rep (void)
+UTL_String::get_canonical_rep ()
 {
-  if (this->c_str == 0)
+  if (!this->c_str && this->p_str)
     {
-      this->c_str = (char *) ACE_OS::malloc (this->len + 1);
-      this->canonicalize ();
+      get_canonical_rep (
+        this->p_str,
+        this->c_str = new char [ACE_OS::strlen (this->p_str)+1]);
     }
 
   return this->c_str;

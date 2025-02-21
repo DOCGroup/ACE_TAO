@@ -1,17 +1,15 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 // ============================================================================
 /**
  *  @file   EventLog_i.h
- *
- *  $Id$
  *
  *  Implementation of the DsLogAdmin::EventLog interface.
  *  File also conatins TAO_Event_LogConsumer which is used
  *  to write events to the Log.
  *
  *  @author Rob Ruff <rruff@scires.com>
- *  @D A Hanvey <d.hanvey@qub.ac.uk>
+ *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
 // ============================================================================
 
@@ -32,12 +30,14 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/Log/EventLogConsumer.h"
 
-#include "eventlog_serv_export.h"
+#include "orbsvcs/Log/eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_EventLog_i;
@@ -56,51 +56,37 @@ class TAO_EventLog_i :
   public POA_DsEventLogAdmin::EventLog
 {
 public:
-
-  // = Initialization and Termination.
-
   /// Constructor.
   TAO_EventLog_i (CORBA::ORB_ptr orb,
-		  PortableServer::POA_ptr poa,
+                  PortableServer::POA_ptr poa,
+                  PortableServer::POA_ptr log_poa,
                   TAO_LogMgr_i &logmgr_i,
                   DsLogAdmin::LogMgr_ptr factory,
                   TAO_LogNotification *log_notifier,
                   DsLogAdmin::LogId id);
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id
-                                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id
-                                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
 
   /// Destroy the log object and all contained records.
   void
-  destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  destroy ();
 
   /// Activate the EventLog.
   void
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  activate ();
 
   // = The CosEventChannelAdmin::EventChannel interface methods.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((
-                CORBA::SystemException
-        ));
+  for_consumers ();
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((
-                CORBA::SystemException
-        ));
+  for_suppliers ();
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
@@ -108,13 +94,7 @@ protected:
    */
   ~TAO_EventLog_i ();
 
-protected:
-
-  /// Used to access the hash map that holds all the Logs created.
-  TAO_LogMgr_i &logmgr_i_;
-
 private:
-
   /// The Event Channel that the log uses.
   TAO_CEC_EventChannel *event_channel_;
 
@@ -122,8 +102,12 @@ private:
   /// in the log.
   TAO_Event_LogConsumer *my_log_consumer_;
 
-  PortableServer::POA_var	poa_;
+  PortableServer::POA_var poa_;
+
+  PortableServer::POA_var log_poa_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,14 +1,11 @@
-// $Id$
-
 #include "Client_i.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Time, client, "$Id$")
 
 // This function runs the Time Service client test.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Client_i client;
 

@@ -2,8 +2,6 @@
  * @file Server_Task.cpp
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id$
- *
  * Implements the Server_Task class which acts as the process colocated
  * corba server for Bug_1495_Regression test.
  */
@@ -15,7 +13,7 @@
 #include "ace/Manual_Event.h"
 
 
-Server_Task::Server_Task (const char *output,
+Server_Task::Server_Task (const ACE_TCHAR *output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
@@ -28,32 +26,27 @@ Server_Task::Server_Task (const char *output,
 
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var poa_object =
-        sorb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        sorb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      " (%P|%t) Unable to initialize the POA \n"));
+                      " (%P|%t) Unable to initialize the POA\n"));
           return 1;
         }
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Bug1495_i *server_impl = 0;
       ACE_NEW_RETURN (server_impl,
@@ -61,12 +54,15 @@ Server_Task::svc (void)
                       0);
       PortableServer::ServantBase_var owner_transfer (server_impl);
 
-      Bug1495_Regression::
-        Bug1495_var bug1495 = server_impl->_this();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (server_impl);
 
-      CORBA::String_var ior = sorb_->object_to_string (bug1495.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+      Bug1495_Regression::Bug1495_var bug1495 =
+        Bug1495_Regression::Bug1495::_narrow (object.in ());
+
+      CORBA::String_var ior = sorb_->object_to_string (bug1495.in ());
 
       if (output_ != 0)
         {
@@ -93,23 +89,20 @@ Server_Task::svc (void)
 
       // The ORB will run for 15 seconds and shut down.
       ACE_Time_Value tv (15, 0);
-      sorb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sorb_->run (tv);
 
       ACE_DEBUG ((LM_DEBUG,
                    "Event loop finished for the thread server.\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
+
+      sorb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught an exception in server task: ");
+      ex._tao_print_exception ("Caught an exception in server task: ");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   return 0;
 }

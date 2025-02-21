@@ -1,0 +1,4 @@
+// -*- MPC -*-
+project: taoserver, bidir_giop, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = POA_BiDir
+}

@@ -1,0 +1,7 @@
+
+
+The Export example is just an example that both shows off and tests
+the macros created by generate_export_file.pl (or the earlier
+GenExportH.bat).  These macros are used to properly export functions
+and classes from a Win32 DLL.  On other platforms these macros expand
+to nothing (since shared objects just export everything).

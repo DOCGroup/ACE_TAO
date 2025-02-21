@@ -4,8 +4,6 @@
 /**
  *  @file    ClientRequestInterceptor_Adapter_Impl.h
  *
- *  $Id$
- *
  *   This file an adapter class to simplify the support of
  *   interceptors.
  *
@@ -21,24 +19,27 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ClientRequestInterceptorC.h"
+#include "tao/PI/Interceptor_List_T.h"
+#include "tao/PI/PI_includeC.h"
+#include "tao/PI/ClientRequestDetails.h"
+#include "tao/PI/RequestInterceptor_Adapter_Impl.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 
-#include "Interceptor_List_T.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor>
+  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor,
+                            ClientRequestDetails>
     ClientRequestInterceptor_List;
 }
 
@@ -58,12 +59,12 @@ namespace TAO
    * point, and enforces flow rules dictated by the Portable Interceptor
    * specification/chapter.
    */
-  class TAO_PI_Export ClientRequestInterceptor_Adapter_Impl :
-    public ClientRequestInterceptor_Adapter
+  class ClientRequestInterceptor_Adapter_Impl
+    : public ClientRequestInterceptor_Adapter
+    , public TAO_RequestInterceptor_Adapter_Impl
   {
   public:
-
-    ClientRequestInterceptor_Adapter_Impl (void);
+    ClientRequestInterceptor_Adapter_Impl ();
 
     /**
      * @name PortableInterceptor Client Side Interception Points
@@ -76,53 +77,57 @@ namespace TAO
     //@{
     /// This method implements one of the "starting" client side
     /// interception points.
-    virtual void send_request (Invocation_Base &invocation
-                               ACE_ENV_ARG_DECL);
+    virtual void send_request (Invocation_Base &invocation);
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_reply (Invocation_Base &invocation
-                                ACE_ENV_ARG_DECL);
+    virtual void receive_reply (Invocation_Base &invocation);
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_exception (Invocation_Base &invocation
-                                    ACE_ENV_ARG_DECL);
+    virtual void receive_exception (Invocation_Base &invocation);
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_other (Invocation_Base &invocation
-                                ACE_ENV_ARG_DECL);
+    virtual void receive_other (Invocation_Base &invocation);
     //@}
 
     /// Register an interceptor.
     virtual void add_interceptor (
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL);
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
 
-    virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
+    /// Register an interceptor with policies.
+    virtual void add_interceptor (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies);
 
-    virtual PortableInterceptor::ReplyStatus reply_status (
+    virtual void destroy_interceptors ();
+
+    virtual PortableInterceptor::ReplyStatus pi_reply_status (
       TAO::Invocation_Base const &invocation_base);
 
-  protected:
+    void popTSC (TAO_ORB_Core *orb_core)
+      {TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);}
+    void pushTSC (TAO_ORB_Core *orb_core)
+      {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
 
+  protected:
     /// Process the given PortableInterceptor::ForwardRequest exception,
     /// i.e. invoke the receive_other() interception point, in addition
     /// to notifying the Invocation object of the LOCATION_FORWARD.
     void process_forward_request (Invocation_Base &invocation,
-                                  PortableInterceptor::ForwardRequest &exc
-                                  ACE_ENV_ARG_DECL);
+                                  const PortableInterceptor::ForwardRequest &exc);
 
   private:
-
     /// List of registered interceptors.
     ClientRequestInterceptor_List interceptor_list_;
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ClientRequestInterceptor_Adapter_Impl.inl"
+#include "tao/PI/ClientRequestInterceptor_Adapter_Impl.inl"
 #endif  /* __ACE_INLINE__ */
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

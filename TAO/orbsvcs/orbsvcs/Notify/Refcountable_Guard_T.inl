@@ -1,6 +1,7 @@
-// $Id$
-
+// -*- C++ -*-
 #include "ace/Log_Msg.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE
 TAO_Notify_Refcountable_Guard_T<T>::TAO_Notify_Refcountable_Guard_T (T *t)
@@ -24,14 +25,14 @@ TAO_Notify_Refcountable_Guard_T<T>::~TAO_Notify_Refcountable_Guard_T ()
 
 template <class T> ACE_INLINE
 T*
-TAO_Notify_Refcountable_Guard_T<T>::get (void) const
+TAO_Notify_Refcountable_Guard_T<T>::get () const
 {
   return this->t_;
 }
 
 template <class T> ACE_INLINE
 bool
-TAO_Notify_Refcountable_Guard_T<T>::isSet (void) const
+TAO_Notify_Refcountable_Guard_T<T>::isSet () const
 {
   return ( this->t_ != static_cast< T* >( 0 ) );
 }
@@ -39,7 +40,7 @@ TAO_Notify_Refcountable_Guard_T<T>::isSet (void) const
 
 template <class T> ACE_INLINE
 T*
-TAO_Notify_Refcountable_Guard_T<T>::operator-> (void) const
+TAO_Notify_Refcountable_Guard_T<T>::operator-> () const
 {
   ACE_ASSERT ( this->t_ != static_cast< T* >( 0 ) );
   return this->t_;
@@ -47,7 +48,7 @@ TAO_Notify_Refcountable_Guard_T<T>::operator-> (void) const
 
 template <class T> ACE_INLINE
 T&
-TAO_Notify_Refcountable_Guard_T<T>::operator* (void) const
+TAO_Notify_Refcountable_Guard_T<T>::operator* () const
 {
   ACE_ASSERT ( this->t_ != static_cast< T* >( 0 ) );
   return *this->t_;
@@ -83,3 +84,5 @@ TAO_Notify_Refcountable_Guard_T<T>::swap(
   this->t_ = rhs.t_;
   rhs.t_ = temp;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

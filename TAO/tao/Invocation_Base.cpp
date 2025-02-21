@@ -1,29 +1,28 @@
-#include "Invocation_Base.h"
-#include "Stub.h"
-#include "operation_details.h"
-#include "ORB_Core.h"
-#include "TypeCode.h"
-#include "DynamicC.h"
-#include "SystemException.h"
-#include "PortableInterceptor.h"  /* Must always be visible. */
+#include "tao/Invocation_Base.h"
+#include "tao/Stub.h"
+#include "tao/operation_details.h"
+#include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
+#include "tao/PortableInterceptor.h"  /* Must always be visible. */
 
 #include "ace/Dynamic_Service.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PortableInterceptorC.h"
-# include "RequestInfo_Util.h"
-# include "ClientRequestInterceptor_Adapter_Factory.h"
-#endif /* TAO_HAS_INTERCEPTORS == 1*/
+# include "tao/PortableInterceptorC.h"
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (__ACE_INLINE__)
-# include "Invocation_Base.inl"
+# include "tao/Invocation_Base.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (tao,
-           Invocation_Base,
-           "$Id$")
-
+namespace
+{
+  // Exception used to represent non-CORBA exceptions.  A global
+  // instance is used since it will never be modified.
+  CORBA::UNKNOWN /* const */ unknown_exception;
+}
 
 namespace TAO
 {
@@ -31,154 +30,74 @@ namespace TAO
                                     CORBA::Object_ptr t,
                                     TAO_Stub *stub,
                                     TAO_Operation_Details &details,
-                                    bool response_expected)
+                                    bool response_expected,
+                                    bool TAO_INTERCEPTOR (request_is_remote))
     : details_ (details)
-    , forwarded_to_ (0)
+    , forwarded_to_ (nullptr)
     , response_expected_ (response_expected)
+    , reply_status_ (GIOP::NO_EXCEPTION)
     , otarget_ (ot)
     , target_ (t)
-    , orb_core_ (stub->orb_core ())
     , stub_ (stub)
 #if TAO_HAS_INTERCEPTORS == 1
-    , adapter_ (orb_core_->clientrequestinterceptor_adapter ())
+    , cri_adapter_ (stub_->orb_core ()->clientrequestinterceptor_adapter ())
+    , sri_adapter_ (stub_->orb_core ()->serverrequestinterceptor_adapter ())
     , stack_size_ (0)
     , invoke_status_ (TAO_INVOKE_START)
-    , caught_exception_ (0)
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
+    , caught_exception_ (nullptr)
+    , is_remote_request_ (request_is_remote)
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
   {
   }
 
-  Invocation_Base::~Invocation_Base (void)
+  Invocation_Base::~Invocation_Base ()
   {
-#if TAO_HAS_INTERCEPTORS == 1
-    adapter_ = 0;
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
-  }
-
-  void
-  Invocation_Base::reply_received (Invocation_Status TAO_INTERCEPTOR (s))
-  {
-    TAO_INTERCEPTOR (invoke_status_ = s);
+    TAO_INTERCEPTOR (cri_adapter_= nullptr);
+    TAO_INTERCEPTOR (sri_adapter_= nullptr);
   }
 
   TAO_Service_Context &
-  Invocation_Base::request_service_context (void)
+  Invocation_Base::request_service_context ()
   {
     return this->details_.request_service_context ();
   }
 
   TAO_Service_Context &
-  Invocation_Base::reply_service_context (void)
+  Invocation_Base::reply_service_context ()
   {
     return this->details_.reply_service_context ();
   }
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-  char *
-  Invocation_Base::operation_name (void)
-  {
-    return const_cast<char *> (this->details_.opname ());
-  }
-
-  Dynamic::ParameterList *
-  Invocation_Base::arguments (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Generate the argument list on demand.
-    Dynamic::ParameterList *parameter_list =
-      TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-
-    if (this->details_.parameter_list (*parameter_list) == false)
-      ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        0);
-
-    return safe_parameter_list._retn ();
-  }
-
-  Dynamic::ExceptionList *
-  Invocation_Base::exceptions (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Generate the argument list on demand.
-    Dynamic::ExceptionList *exception_list =
-      TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    Dynamic::ExceptionList_var safe_exception_list = exception_list;
-
-    if (this->details_.exception_list (*exception_list) == false)
-      ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        0);
-
-    return safe_exception_list._retn ();
-  }
-
-  CORBA::Any *
-  Invocation_Base::result (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Generate the result on demand.
-    static const CORBA::Boolean tk_void_any = 0;
-    CORBA::Any *result_any =
-      TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    CORBA::Any_var safe_result_any = result_any;
-
-    if (this->details_.result (result_any) == false)
-      ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        0);
-
-    return safe_result_any._retn ();
-  }
-
-  CORBA::Octet
-  Invocation_Base::sync_scope (void) const
-  {
-    return this->details_.response_flags ();
-  }
-
   Invocation_Status
-  Invocation_Base::send_request_interception (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Invocation_Base::send_request_interception ()
   {
-    if (adapter_ != 0)
+    if (cri_adapter_)
       {
-        ACE_TRY
+        try
           {
-            this->adapter_->send_request (*this
-                                          ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-          }
-        ACE_CATCHANY
-          {
-            (void) this->handle_any_exception (&ACE_ANY_EXCEPTION
-                                               ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
             // This is a begin interception point
-            ACE_RE_THROW;
+            this->cri_adapter_->send_request (*this);
           }
-    # if defined (ACE_HAS_EXCEPTIONS) \
-         && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
-        ACE_CATCHALL
+        catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            // This is a begin interception point
-            ACE_RE_THROW;
+            (void) this->handle_any_exception (&ex);
+            throw;
           }
-    # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-        ACE_ENDTRY;
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+        catch (...)
+          {
+            (void) this->handle_all_exception ();
+            throw;
+          }
 
-        if (this->forwarded_to_.in ())
+        if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           return TAO_INVOKE_RESTART;
+
+        this->cri_adapter_->pushTSC (this->stub_->orb_core ());
+      }
+    else if (sri_adapter_)
+      {
+        this->sri_adapter_->pushTSC (this->stub_->orb_core ());
       }
 
     // What are the other cases??
@@ -186,129 +105,117 @@ namespace TAO
   }
 
   Invocation_Status
-  Invocation_Base::receive_reply_interception (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Invocation_Base::receive_reply_interception ()
   {
-    if (adapter_ != 0)
+    if (cri_adapter_)
       {
-        ACE_TRY
+        try
           {
-            this->adapter_->receive_reply (*this
-                                           ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->cri_adapter_->popTSC (this->stub_->orb_core ());
+            this->cri_adapter_->receive_reply (*this);
           }
-        ACE_CATCHANY
+        catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ACE_ANY_EXCEPTION
-                                               ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            ACE_RE_THROW;
+            (void) this->handle_any_exception (&ex);
+            throw;
           }
-    # if defined (ACE_HAS_EXCEPTIONS) \
-         && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
-        ACE_CATCHALL
+        catch (...)
           {
-            (void) this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            ACE_RE_THROW;
+            (void) this->handle_all_exception ();
+            throw;
           }
-    # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-        ACE_ENDTRY;
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-        const PortableInterceptor::ReplyStatus status =
-          this->adapter_->reply_status (*this);
-
-        if (status == PortableInterceptor::LOCATION_FORWARD ||
-            status == PortableInterceptor::TRANSPORT_RETRY)
+        if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           return TAO_INVOKE_RESTART;
+      }
+    else if (sri_adapter_)
+      {
+        this->sri_adapter_->popTSC (this->stub_->orb_core ());
       }
 
     return TAO_INVOKE_SUCCESS;
   }
 
-
   Invocation_Status
-  Invocation_Base::receive_other_interception (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  Invocation_Base::receive_other_interception ()
   {
-    if (adapter_ != 0)
+    if (cri_adapter_)
       {
-        ACE_TRY
+        try
           {
-            this->adapter_->receive_other (*this
-                                           ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->cri_adapter_->popTSC (this->stub_->orb_core ());
+            this->cri_adapter_->receive_other (*this);
           }
-        ACE_CATCHANY
+        catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ACE_ANY_EXCEPTION
-                                               ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            ACE_RE_THROW;
+            (void) this->handle_any_exception (&ex);
+            throw;
           }
-    # if defined (ACE_HAS_EXCEPTIONS) \
-         && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
-        ACE_CATCHALL
+        catch (...)
           {
-            (void) this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            ACE_RE_THROW;
+            (void) this->handle_all_exception ();
+            throw;
           }
-    # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-        ACE_ENDTRY;
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-        if (this->forwarded_to_.in ())
+        if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           return TAO_INVOKE_RESTART;
+      }
+    else if (sri_adapter_)
+      {
+        this->sri_adapter_->popTSC (this->stub_->orb_core ());
       }
 
     return TAO_INVOKE_SUCCESS;
   }
 
   PortableInterceptor::ReplyStatus
-  Invocation_Base::handle_any_exception (CORBA::Exception *ex
-                                         ACE_ENV_ARG_DECL)
+  Invocation_Base::handle_any_exception (CORBA::Exception *ex)
   {
-    caught_exception_ = ex;
+    this->exception (ex);
 
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;
 
-    if (adapter_ != 0)
+    if (cri_adapter_)
       {
-        this->adapter_->receive_exception (*this
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (PortableInterceptor::UNKNOWN);
+        this->cri_adapter_->popTSC (this->stub_->orb_core ());
+        this->cri_adapter_->receive_exception (*this);
 
-        status =
-          this->adapter_->reply_status (*this);
+        if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+          {
+            status = PortableInterceptor::LOCATION_FORWARD;
+          }
+        else
+          {
+            status = this->cri_adapter_->pi_reply_status (*this);
+          }
+      }
+    else if (sri_adapter_)
+      {
+        this->sri_adapter_->popTSC (this->stub_->orb_core ());
       }
 
     return status;
   }
 
   PortableInterceptor::ReplyStatus
-  Invocation_Base::handle_all_exception (ACE_ENV_SINGLE_ARG_DECL)
+  Invocation_Base::handle_all_exception ()
   {
+    this->exception (&unknown_exception);
+
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;
 
-    if (adapter_ != 0)
+    if (cri_adapter_)
       {
-        CORBA::UNKNOWN ex;
-        this->caught_exception_ = &ex;
+        this->cri_adapter_->popTSC (this->stub_->orb_core ());
+        this->cri_adapter_->receive_exception (*this);
 
-        this->adapter_->receive_exception (*this
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (PortableInterceptor::UNKNOWN);
-
-        status =
-          this->adapter_->reply_status (*this);
+        status = this->cri_adapter_->pi_reply_status (*this);
+      }
+    else if (sri_adapter_)
+      {
+        this->sri_adapter_->popTSC (this->stub_->orb_core ());
       }
 
     return status;
@@ -317,20 +224,29 @@ namespace TAO
   void
   Invocation_Base::exception (CORBA::Exception *exception)
   {
+    if (CORBA::SystemException::_downcast (exception) != nullptr)
+      this->invoke_status_ = TAO::TAO_INVOKE_SYSTEM_EXCEPTION;
+    else if (CORBA::UserException::_downcast (exception) != nullptr)
+      this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
+
+    this->forwarded_to_ = CORBA::Object::_nil ();
+    this->reply_status_ = GIOP::NO_EXCEPTION;
     this->caught_exception_ = exception;
   }
 
   PortableInterceptor::ReplyStatus
-  Invocation_Base::reply_status (void) const
+  Invocation_Base::pi_reply_status () const
   {
-    if (adapter_ != 0)
+    if (cri_adapter_)
       {
-        return this->adapter_->reply_status (*this);
+        return this->cri_adapter_->pi_reply_status (*this);
       }
     else
       {
         return -1;
       }
   }
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

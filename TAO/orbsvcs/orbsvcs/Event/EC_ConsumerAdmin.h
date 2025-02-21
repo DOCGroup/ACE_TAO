@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_ConsumerAdmin.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,11 +24,12 @@
 
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
-
 
 /**
  * @class TAO_EC_ConsumerAdmin
@@ -57,20 +57,21 @@ public:
   TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// Destructor...
-  virtual ~TAO_EC_ConsumerAdmin (void);
+  virtual ~TAO_EC_ConsumerAdmin ();
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-          ACE_THROW_SPEC ((CORBA::SystemException));
+      obtain_push_supplier ();
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 private:
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

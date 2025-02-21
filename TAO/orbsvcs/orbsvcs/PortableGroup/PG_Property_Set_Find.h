@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Property_Set_Find.h
- *
- *  $Id$
  *
  *  This is a companion function for the properties docoder
  *  to work around compilers that don't support templated methods.
@@ -20,9 +19,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set.h"
 
 #include "ace/Hash_Map_Manager.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -35,8 +37,8 @@ namespace TAO
   int find (const PG_Property_Set & decoder, const ACE_CString & key, TYPE & value)
   {
     int result = 0;
-    PortableGroup::Value const * any;
-    if ( decoder.find (key, any))
+    const PortableGroup::Value * any {};
+    if (decoder.find (key, any))
     {
       result = ((*any) >>= value);
     }
@@ -44,6 +46,8 @@ namespace TAO
   }
 
 } //namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Callback_i.h"
 
 #if !defined(__ACE_INLINE__)
@@ -8,10 +6,8 @@
 
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(Callback, Callback_i, "$Id$")
-
 int
-Callback_i::done (void)
+Callback_i::done ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->remaining_samples_ == 0;
@@ -19,9 +15,7 @@ Callback_i::done (void)
 
 void
 Callback_i::response (Test::TimeStamp time_stamp,
-                      const Test::Payload &
-                      ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                      const Test::Payload &)
 {
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -29,5 +23,5 @@ Callback_i::response (Test::TimeStamp time_stamp,
     return;
 
   this->remaining_samples_--;
-  this->history_.sample (now - time_stamp);
+  this->history_.sample (ACE_HRTIME_TO_U64(now) - time_stamp);
 }

@@ -1,23 +1,15 @@
-#include "UIOP_Endpoint.h"
-#include "UIOP_Connection_Handler.h"
-
+#include "tao/Strategies/UIOP_Endpoint.h"
+#include "tao/Strategies/UIOP_Connection_Handler.h"
 #include "tao/ORB_Constants.h"
-
 #include "ace/OS_NS_string.h"
-
 
 #if TAO_HAS_UIOP == 1
 
-
-ACE_RCSID (Strategies,
-           UIOP_Endpoint,
-           "$Id$")
-
-
 #if !defined (__ACE_INLINE__)
-# include "UIOP_Endpoint.i"
+# include "tao/Strategies/UIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
                                       CORBA::Short priority)
@@ -27,14 +19,10 @@ TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
 {
 }
 
-TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (void)
+TAO_UIOP_Endpoint::TAO_UIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_UIOP_PROFILE)
     , object_addr_ ()
     , next_ (0)
-{
-}
-
-TAO_UIOP_Endpoint::~TAO_UIOP_Endpoint (void)
 {
 }
 
@@ -50,13 +38,13 @@ TAO_UIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 }
 
 TAO_Endpoint *
-TAO_UIOP_Endpoint::next (void)
+TAO_UIOP_Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO_UIOP_Endpoint::duplicate (void)
+TAO_UIOP_Endpoint::duplicate ()
 {
   TAO_UIOP_Endpoint *endpoint = 0;
   ACE_NEW_RETURN (endpoint,
@@ -82,7 +70,7 @@ TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_UIOP_Endpoint::hash (void)
+TAO_UIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;
@@ -102,4 +90,7 @@ TAO_UIOP_Endpoint::hash (void)
 
   return this->hash_val_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif  /* TAO_HAS_UIOP == 1 */

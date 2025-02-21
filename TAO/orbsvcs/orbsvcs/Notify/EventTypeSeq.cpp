@@ -1,7 +1,6 @@
-// $Id$
-
-#include "EventTypeSeq.h"
-#include "Topology_Saver.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/EventTypeSeq.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
 
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
@@ -9,9 +8,9 @@
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
-ACE_RCSID(Notify, TAO_Notify_EventTypeSeq, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (void)
+TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq ()
 {
 }
 
@@ -29,7 +28,7 @@ TAO_Notify_EventTypeSeq::operator = (const TAO_Notify_EventTypeSeq & rhs)
 
 TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs)
   : TAO_Notify_Object ()
-  , ACE_NESTED_CLASS (TAO_Notify,Topology_Savable ())
+  , TAO_Notify::Topology_Savable ()
   , ACE_Unbounded_Set <TAO_Notify_EventType> (rhs)
   , TAO_Notify::Topology_Object ()
 {
@@ -42,7 +41,7 @@ TAO_Notify_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq
 
   inherited::CONST_ITERATOR iter (*this);
 
-  TAO_Notify_EventType* event_type;
+  TAO_Notify_EventType* event_type = 0;
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)
@@ -64,7 +63,7 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
 
   inherited::CONST_ITERATOR iter (*this);
 
-  TAO_Notify_EventType* event_type;
+  TAO_Notify_EventType* event_type = 0;
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)
@@ -244,7 +243,7 @@ TAO_Notify_EventTypeSeq::intersection (const TAO_Notify_EventTypeSeq& rhs, const
 }
 
 void
-TAO_Notify_EventTypeSeq::dump (void) const
+TAO_Notify_EventTypeSeq::dump () const
 {
   TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (*this);
 
@@ -253,13 +252,13 @@ TAO_Notify_EventTypeSeq::dump (void) const
   for (iter.first (); iter.next (event_type); iter.advance ())
     {
       event_type->dump ();
-      ACE_DEBUG ((LM_DEBUG, ", "));
+      ORBSVCS_DEBUG ((LM_DEBUG, ", "));
     }
 }
 
   // TAO_Notify::Topology_Object
 void
-TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   bool changed = this->self_changed_;
   this->self_changed_ = false;
@@ -271,26 +270,23 @@ TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver ACE_
 
   if (this->size() != 0)
   {
-    saver.begin_object(0, "subscriptions", attrs, changed ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    saver.begin_object(0, "subscriptions", attrs, changed);
     for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      event_type->save_persistent(saver ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      event_type->save_persistent(saver);
     }
 // todo:
 //    for all deleted children
 //    {
 //      saver.delete_child(child_type, child_id);
 //    }
-    saver.end_object(0, "subscriptions" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    saver.end_object(0, "subscriptions");
   }
 }
 
 TAO_Notify::Topology_Object*
 TAO_Notify_EventTypeSeq::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL_NOT_USED)
+  const TAO_Notify::NVPList& attrs)
 {
   ACE_UNUSED_ARG (id);
   TAO_Notify::Topology_Object *result = this;
@@ -298,7 +294,7 @@ TAO_Notify_EventTypeSeq::load_child (const ACE_CString &type, CORBA::Long id,
 
   if ((type == "subscription") && et.init(attrs))
   {
-    if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
+    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Event_Type reload subscription\n")
       ));
     inherited::insert(et);
@@ -307,7 +303,9 @@ TAO_Notify_EventTypeSeq::load_child (const ACE_CString &type, CORBA::Long id,
 }
 
 void
-TAO_Notify_EventTypeSeq::release (void)
+TAO_Notify_EventTypeSeq::release ()
 {
   delete this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

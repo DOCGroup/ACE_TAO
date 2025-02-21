@@ -1,0 +1,35 @@
+project(*idl): taoidldefaults {
+  idlflags += -GC
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Client): taoclient, messaging, iortable {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    testC.cpp
+    testS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Server): taoserver, messaging, iortable {
+  after += *idl
+  Source_Files {
+    server.cpp
+    test_i.cpp
+  }
+  Source_Files {
+    testC.cpp
+    testS.cpp
+  }
+  IDL_Files {
+  }
+}
+

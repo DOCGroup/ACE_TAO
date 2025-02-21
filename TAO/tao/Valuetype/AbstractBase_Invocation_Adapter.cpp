@@ -1,10 +1,8 @@
-//$Id$
-#include "AbstractBase_Invocation_Adapter.h"
-#include "AbstractBase.h"
+// -*- C++ -*-
+#include "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
+#include "tao/Valuetype/AbstractBase.h"
 
-ACE_RCSID (Valuetype,
-           AbstractBase_Invocation_Adapter,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -13,18 +11,22 @@ namespace TAO
       Argument **args,
       int arg_number,
       const char *operation,
-      int op_len,
-      Collocation_Proxy_Broker *p,
+      size_t op_len,
+      int collocation_opportunity,
       Invocation_Type type,
-      Invocation_Mode mode)
+      Invocation_Mode mode,
+      bool has_in_args)
     : Invocation_Adapter (target->equivalent_objref (),
                           args,
                           arg_number,
                           operation,
                           op_len,
-                          p,
+                          collocation_opportunity,
                           type,
-                          mode)
+                          mode,
+                          has_in_args)
   {
   }
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

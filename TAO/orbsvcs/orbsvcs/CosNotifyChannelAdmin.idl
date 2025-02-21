@@ -3,12 +3,10 @@
  *
  * @brief Define the CosNotifyChannel module
  *
- * $Id$
- *
  * This module is taken from the standard CORBA Notification Service
  * 1.0, as described in:
  *
- * http://www.omg.org/technology/documents/formal/notification_service.htm
+ * https://www.omg.org/spec/NOT
  *
  * In particular the following two documents were used:
  * formal/2000-06-20

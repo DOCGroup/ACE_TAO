@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# $Id$
 
 # Script to run the IDL_Cubit octet sequence test with different
 # sequence sizes, using TAO's UIOP pluggable protocol.

@@ -5,8 +5,6 @@
 /**
  *  @file    Codeset_Manager_Factory.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -17,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "codeset_export.h"
+#include "tao/Codeset/codeset_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,6 +26,8 @@
 
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Codeset_Manager_Factory
@@ -40,15 +40,15 @@ class TAO_Codeset_Export TAO_Codeset_Manager_Factory :
 {
 public:
   virtual ~TAO_Codeset_Manager_Factory ();
-  virtual TAO_Codeset_Manager *create(void);
-  virtual int is_default(void) const;
-
+  virtual TAO_Codeset_Manager *create();
+  virtual bool is_default() const;
 };
 
 
 ACE_STATIC_SVC_DECLARE (TAO_Codeset_Manager_Factory)
 ACE_FACTORY_DECLARE (TAO_Codeset, TAO_Codeset_Manager_Factory)
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #include /**/ "ace/post.h"

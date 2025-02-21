@@ -1,4 +1,5 @@
-#include "FT_IOGR_Property.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
@@ -7,25 +8,18 @@
 #include "tao/Tagged_Components.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "tao/debug.h"
 
-
-ACE_RCSID (FaultTolerance,
-           TAO_FT_IOGR_Property,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
-# include "FT_IOGR_Property.inl"
+# include "orbsvcs/FaultTolerance/FT_IOGR_Property.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
-    CORBA::Object_ptr &ior
-    ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_IOP::Invalid_IOR))
+    CORBA::Object_ptr &ior)
 {
   // We need to apply the property for every profile in the IOR
 
@@ -70,17 +64,12 @@ TAO_FT_IOGR_Property::set_property (
 
   // Success
   return 1;
-
 }
 
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::is_primary_set (
-    CORBA::Object_ptr ior
-    ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
+    CORBA::Object_ptr ior)
 {
   if (this->get_primary_profile (ior) != 0)
     return 1;
@@ -91,20 +80,13 @@ TAO_FT_IOGR_Property::is_primary_set (
 
 CORBA::Object_ptr
 TAO_FT_IOGR_Property::get_primary (
-    CORBA::Object_ptr ior
-    ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::NotFound
-      ))
+    CORBA::Object_ptr ior)
 {
-
   TAO_Profile *pfile =
     this->get_primary_profile (ior);
 
   if (pfile == 0)
-    ACE_THROW_RETURN (TAO_IOP::NotFound (),
-                      CORBA::Object::_nil ());
+    throw TAO_IOP::NotFound ();
 
   // Search for the IOP::TAG_FT_PRIMARY in the tagged component of
   // the profile
@@ -143,13 +125,11 @@ TAO_FT_IOGR_Property::get_primary (
 
   CORBA::Object_var new_obj = temp_obj;
 
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
     {
-      ACE_THROW_RETURN (TAO_IOP::NotFound (),  // ** Changed from Invalid_IOR () **
-                        CORBA::Object::_nil ());
+      throw TAO_IOP::NotFound ();
     }
 
   // Release ownership of the pointers protected by the auto_ptrs since they
@@ -157,20 +137,13 @@ TAO_FT_IOGR_Property::get_primary (
   stub = safe_stub.release ();
 
   return new_obj._retn ();
-
 }
 
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_primary (
     CORBA::Object_ptr &ior1,
-    CORBA::Object_ptr ior2
-    ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::NotFound,
-        TAO_IOP::Duplicate
-      ))
+    CORBA::Object_ptr ior2)
 {
   // Check for primary in <ior2>
   IOP::TaggedComponent tagged_components;
@@ -187,8 +160,7 @@ TAO_FT_IOGR_Property::set_primary (
         mprofile.get_profile (i)->tagged_components ();
 
       if (tag_comp.get_component (tagged_components) == 1)
-        ACE_THROW_RETURN (TAO_IOP::Duplicate (),
-                          0);
+        throw TAO_IOP::Duplicate ();
     }
 
   // Check whether ior1 exists in ior2
@@ -221,8 +193,7 @@ TAO_FT_IOGR_Property::set_primary (
   // At the end of the loop check whether we have seen <ior1> in
   // <ior2>
   if (index == -1)
-    ACE_THROW_RETURN (TAO_IOP::NotFound (),
-                      0);
+    throw TAO_IOP::NotFound ();
 
   CORBA::Boolean val = 1;
 
@@ -265,9 +236,9 @@ TAO_FT_IOGR_Property::encode_properties (
   if (this->ft_group_tagged_component_ == 0)
     {
       if (TAO_debug_level > 2)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO-FT (%P|%t) - The group tagged component ",
-                           "is null \n"),
+                           "is null\n"),
                           0);
     }
 
@@ -301,7 +272,6 @@ TAO_FT_IOGR_Property::encode_properties (
        i != 0;
        i = i->cont ())
     {
-
       ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
@@ -345,9 +315,7 @@ TAO_FT_IOGR_Property::get_primary_profile (
 CORBA::Boolean
 TAO_FT_IOGR_Property::get_tagged_component (
     const CORBA::Object_ptr iogr,
-    FT::TagFTGroupTaggedComponent &fgtc
-    ACE_ENV_ARG_DECL) const
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    FT::TagFTGroupTaggedComponent &fgtc) const
 {
   TAO_Stub *stub =
     iogr->_stubobj ();
@@ -367,7 +335,6 @@ TAO_FT_IOGR_Property::get_tagged_component (
        i < mprofile.profile_count ();
        i++)
     {
-
       // Get the Tagged Components
       const TAO_Tagged_Components &pfile_tagged =
         mprofile.get_profile (i)->tagged_components ();
@@ -380,16 +347,14 @@ TAO_FT_IOGR_Property::get_tagged_component (
           CORBA::Boolean byte_order;
 
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-            ACE_THROW_RETURN (CORBA::MARSHAL (),
-                              0);
+            throw CORBA::MARSHAL ();
 
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
           if ((cdr >> fgtc) == 1)
             return 1;
           else
-            ACE_THROW_RETURN (CORBA::MARSHAL (),
-                              0);
+            throw CORBA::MARSHAL ();
         }
     }
 
@@ -398,9 +363,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::remove_primary_tag (
-    CORBA::Object_ptr &iogr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    CORBA::Object_ptr &iogr)
 {
   // Get the MProfile
   TAO_MProfile &mprofile =
@@ -423,3 +386,5 @@ TAO_FT_IOGR_Property::remove_primary_tag (
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

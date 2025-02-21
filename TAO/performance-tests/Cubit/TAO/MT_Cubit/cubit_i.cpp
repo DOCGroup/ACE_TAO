@@ -1,10 +1,6 @@
-// $Id$
-
 #include "tao/ORB_Constants.h"
 #include "cubit_i.h"
 #include "Task_Client.h"
-
-ACE_RCSID(MT_Cubit, cubit_i, "$Id$")
 
 Cubit_i::Cubit_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa)
@@ -13,38 +9,30 @@ Cubit_i::Cubit_i (CORBA::ORB_ptr orb,
 {
 }
 
-Cubit_i::~Cubit_i (void)
+Cubit_i::~Cubit_i ()
 {
 }
 
 CORBA::Octet
-Cubit_i::cube_octet (CORBA::Octet o
-                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Cubit_i::cube_octet (CORBA::Octet o)
 {
   return (CORBA::Octet) (o * o * o);
 }
 
 CORBA::Short
-Cubit_i::cube_short (CORBA::Short s
-                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Cubit_i::cube_short (CORBA::Short s)
 {
   return (CORBA::Short) (s * s * s);
 }
 
 CORBA::Long
-Cubit_i::cube_long (CORBA::Long l
-                    ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Cubit_i::cube_long (CORBA::Long l)
 {
   return (CORBA::Long) (l * l * l);
 }
 
 Cubit::Many
-Cubit_i::cube_struct (const Cubit::Many &values
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Cubit_i::cube_struct (const Cubit::Many &values)
 {
   Cubit::Many out_values;
 
@@ -56,14 +44,12 @@ Cubit_i::cube_struct (const Cubit::Many &values
 }
 
 void
-Cubit_i::noop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Cubit_i::noop ()
 {
   // does nothing.
 }
 
-void Cubit_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+void Cubit_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Calling orb ()->shutdown ()\n"));
@@ -71,7 +57,7 @@ void Cubit_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 PortableServer::POA_ptr
-Cubit_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Cubit_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

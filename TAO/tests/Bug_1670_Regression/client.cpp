@@ -1,23 +1,18 @@
 /**
  * @file client.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "TestC.h"
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Bug_1670_Regression, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -36,29 +31,26 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Baz::C_var cobject =
-        Baz::C::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Baz::C::_narrow (object.in ());
 
       if (CORBA::is_nil (cobject.in ()))
         {
@@ -69,25 +61,40 @@ main (int argc, char *argv[])
         }
 
       CORBA::Long result;
-      result = cobject->op1 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_ASSERT(result == 1);
+      result = cobject->op1 ();
+      if (result != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 1\n"),
+                            1);
+        }
 
-      result = cobject->op2 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_ASSERT(result == 2);
+      result = cobject->op2 ();
+      if (result != 2)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 2\n"),
+                            1);
+        }
 
-      result = cobject->op3 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_ASSERT(result == 3);
+      result = cobject->op3 ();
+      if (result != 3)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 3\n"),
+                            1);
+        }
 
-      result = cobject->op4 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_ASSERT(result == 4);
+      result = cobject->op4 ();
+      if (result != 4)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 4\n"),
+                            1);
+        }
 
       Foo::Bar::B_var bobject =
-        Foo::Bar::B::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Foo::Bar::B::_narrow (object.in ());
 
       if (CORBA::is_nil (bobject.in ()))
         {
@@ -97,13 +104,16 @@ main (int argc, char *argv[])
                             1);
         }
 
-      result = bobject->op3 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_ASSERT(result == 3);
+      result = bobject->op3 ();
+      if (result != 3)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 3\n"),
+                            1);
+        }
 
       Foo::Bar::A_var aobject =
-        Foo::Bar::A::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Foo::Bar::A::_narrow (object.in ());
 
       if (CORBA::is_nil (aobject.in ()))
         {
@@ -113,21 +123,31 @@ main (int argc, char *argv[])
                             1);
         }
 
-      result = aobject->op1 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_ASSERT(result == 1);
+      result = aobject->op1 ();
+      if (result != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 1\n"),
+                            1);
+        }
 
-      result = aobject->op2 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_ASSERT(result == 2);
+      result = aobject->op2 ();
+      if (result != 2)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 2\n"),
+                            1);
+        }
 
+      cobject->shutdown ();
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
+      ex._tao_print_exception ("");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

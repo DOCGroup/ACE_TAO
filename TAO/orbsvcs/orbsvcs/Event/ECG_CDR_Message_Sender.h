@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file ECG_CDR_Message_Sender.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Marina Spivak (marina@atdesk.com)
@@ -13,18 +12,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "tao/SystemException.h"
-#include "tao/Environment.h"
 
 #include "ace/INET_Addr.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_CDR_Message_Sender
@@ -73,7 +73,6 @@
 class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Sender
 {
 public:
-
   enum {
     ECG_HEADER_SIZE = 32,
     ECG_MIN_MTU = 32 + 8,
@@ -91,12 +90,10 @@ public:
    * sender is no longer needed.  If shutdown () is not called by the
    * user, cleanup activities will be performed by the destructor.
    */
-  void init (TAO_ECG_Refcounted_Endpoint endpoint_rptr
-             ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+  void init (TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
   // Shutdown this component.  Frees up the endpoint.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown ();
   //@}
 
   /// Setters/getters.
@@ -111,7 +108,7 @@ public:
    * header + 8 bytes must fit).
    */
   int mtu (CORBA::ULong mtu);
-  CORBA::ULong mtu (void) const;
+  CORBA::ULong mtu () const;
   //@}
 
   /// The main method - send a CDR message.
@@ -129,13 +126,11 @@ public:
    * to send later via the reactor.
    */
   void send_message (const TAO_OutputCDR &cdr,
-                     const ACE_INET_Addr &addr
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                     const ACE_INET_Addr &addr);
 
 private:
   /// Return the datagram...
-  ACE_SOCK_Dgram& dgram (void);
+  ACE_SOCK_Dgram& dgram ();
 
   /**
    * Send one fragment, the first entry in the iovec is used to send
@@ -150,14 +145,13 @@ private:
                       CORBA::ULong fragment_id,
                       CORBA::ULong fragment_count,
                       iovec iov[],
-                      int iovcnt
-                      ACE_ENV_ARG_DECL);
+                      int iovcnt);
 
   /**
    * Count the number of fragments that will be required to send the
    * message blocks in the range [begin,end)
    * The maximum fragment payload (i.e. the size without the header is
-   * also required); <total_length> returns the total message size.
+   * also required); @a total_length returns the total message size.
    */
   CORBA::ULong compute_fragment_count (const ACE_Message_Block* begin,
                                        const ACE_Message_Block* end,
@@ -172,12 +166,14 @@ private:
   /// The MTU for this sender...
   CORBA::ULong mtu_;
 
-  /// Should crc checksum be caluclated and sent?
+  /// Should crc checksum be calculated and sent?
   CORBA::Boolean checksum_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "ECG_CDR_Message_Sender.i"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

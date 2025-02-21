@@ -1,11 +1,7 @@
-// $Id$
-
 #include "Event_Comm_i.h"
 #include "Notifier_Handler.h"
 #include "Supplier_Input_Handler.h"
 #include "tao/ORB_Core.h"
-
-ACE_RCSID(Supplier, Supplier_Input_Handler, "$Id$")
 
 Supplier_Input_Handler::Supplier_Input_Handler ()
   : notifier_ (0)
@@ -13,14 +9,14 @@ Supplier_Input_Handler::Supplier_Input_Handler ()
   // No-Op.
 }
 
-Supplier_Input_Handler::~Supplier_Input_Handler (void)
+Supplier_Input_Handler::~Supplier_Input_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Supplier_Input_Handler::~Supplier_Input_Handler\n"));
 }
 
 int
-Supplier_Input_Handler::close (void)
+Supplier_Input_Handler::close ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Supplier::Supplier_Input_Handler\n"));
@@ -88,7 +84,6 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
     }
 
 
-
   if (ACE_OS::strncmp (buf, "quit", 4) == 0)
     // Tell the main event loop to shutdown.
     this->notifier_->shutdown ();
@@ -98,7 +93,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
       ACE_ASSERT (notifier != 0);
 
       // Use the notifier to notify Consumers.
-      ACE_TRY_NEW_ENV
+      try
         {
           Event_Comm::Event event;
 
@@ -109,14 +104,12 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
           // reference...  event.value_ = ...
 
           // Forward <Event> to all <Consumers>.
-          notifier->push (event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          notifier->push (event);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected Error\n");
+          ex._tao_print_exception ("Unexpected Error\n");
         }
-      ACE_ENDTRY;
     }
   return 0;
 }

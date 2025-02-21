@@ -1,0 +1,14 @@
+project(*server): taoserver {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project: portableserver {
+  sharedname = Bug_2677_Regression
+  dynamicflags += BUG_2677_REGRESSION_BUILD_DLL
+
+  Source_Files {
+    DllORB.cpp
+  }
+}

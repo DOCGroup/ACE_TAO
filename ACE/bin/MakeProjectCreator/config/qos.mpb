@@ -1,0 +1,6 @@
+// -*- MPC -*-
+feature(qos) {
+  after  += QoS
+  libs   += ACE_QoS
+  macros += ACE_HAS_QOS
+}

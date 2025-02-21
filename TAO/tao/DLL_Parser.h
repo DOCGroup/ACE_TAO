@@ -1,14 +1,12 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   DLL_Parser.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #ifndef TAO_DLL_PARSER_H
 #define TAO_DLL_PARSER_H
@@ -22,6 +20,10 @@
 
 #include "tao/IOR_Parser.h"
 
+#if (TAO_HAS_DDL_PARSER == 1)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_DLL_Parser
  *
@@ -33,11 +35,13 @@
  * DLL:Service_Name
  *
  * the string_to_object() function will use ACE's Service Configurator
- * to dynamically load the service named 'Service_Name'.  The ORB
- * assumes that this service implements the TAO_Object_Loader
- * interface, and uses that interface to create a new object
- * implementation locally. The object reference for this local object
- * is returned to the application.
+ * framework to dynamically load the service named 'Service_Name'
+ * using all the normal platform-independent naming conventions and
+ * environment variable lookup rules that are normally used by @c
+ * ACE_DLL::open().  The ORB assumes that this service implements the
+ * TAO_Object_Loader interface, and uses that interface to create a
+ * new object implementation locally. The object reference for this
+ * local object is returned to the application.
  *
  * This can be used in applications that sometimes require local
  * object while other times they may use a remote implementation.
@@ -69,32 +73,26 @@
  *
  * In this case the Event_Service implementation will be dynamically
  * loaded without any modifications to the application code.
- *
  */
-class TAO_Export TAO_DLL_Parser : public TAO_IOR_Parser
+class TAO_DLL_Parser : public TAO_IOR_Parser
 {
 public:
-  /// Constructor
-  TAO_DLL_Parser (void);
-
-  /// The destructor
-  virtual ~TAO_DLL_Parser (void);
+  TAO_DLL_Parser () = default;
+  ~TAO_DLL_Parser () override = default;
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h
-  virtual int match_prefix (const char *ior_string) const;
-  virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb
-                                          ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  bool match_prefix (const char *ior_string) const override;
+  CORBA::Object_ptr parse_string (const char *ior,
+                                  CORBA::ORB_ptr orb) override;
 };
-
-#if defined (__ACE_INLINE__)
-# include "DLL_Parser.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_Parser)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_DDL_PARSER == 1 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DLL_PARSER_H */

@@ -1,13 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Asynch_Timeout_Handler.h
  *
- *  $Id$
- *
  *  Timeout Handler for AMI timeouts
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
@@ -19,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
@@ -30,7 +27,8 @@
 
 #include "ace/Event_Handler.h"
 
-class TAO_Asynch_Reply_Dispatcher_Base;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Transport_Mux_Strategy;
 
 /**
@@ -38,14 +36,13 @@ class TAO_Transport_Mux_Strategy;
  *
  * @brief Handler registered with the reactor in case of AMI timeouts.
  */
-class TAO_Messaging_Export TAO_Asynch_Timeout_Handler
+class TAO_Asynch_Timeout_Handler
   : public ACE_Event_Handler
 {
 public:
-  TAO_Asynch_Timeout_Handler (TAO_Asynch_Reply_Dispatcher_Base *rd,
-                              ACE_Reactor *reactor);
+  TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
 
-  ~TAO_Asynch_Timeout_Handler ();
+  ~TAO_Asynch_Timeout_Handler () = default;
 
   /// Schedule a timer
   long schedule_timer (TAO_Transport_Mux_Strategy *tms,
@@ -60,9 +57,6 @@ public:
   virtual void cancel ();
 
 public:
-  /// The reply dispatcher expecting the reply
-  TAO_Asynch_Reply_Dispatcher_Base *rd_;
-
   /// The transport mux strategy dispatching the reply
   TAO_Transport_Mux_Strategy *tms_;
 
@@ -72,6 +66,8 @@ public:
   /// Our reactor
   ACE_Reactor *reactor_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

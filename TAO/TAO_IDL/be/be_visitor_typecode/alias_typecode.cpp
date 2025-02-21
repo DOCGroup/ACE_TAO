@@ -4,14 +4,13 @@
 /**
  *  @file  alias_typecode.cpp
  *
- *  $Id$
- *
  *  Alias (typedef) TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
+#include "typecode.h"
 
 TAO::be_visitor_alias_typecode::be_visitor_alias_typecode (
   be_visitor_context * ctx)
@@ -22,18 +21,17 @@ TAO::be_visitor_alias_typecode::be_visitor_alias_typecode (
 int
 TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
 
   return this->common (node, base, "tk_alias");
-
 }
 
 
 int
 TAO::be_visitor_alias_typecode::visit_valuebox (be_valuebox * node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->boxed_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->boxed_type ());
 
   return this->common (node, base, "tk_value_box");
 }
@@ -45,9 +43,7 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (&os);
 
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
@@ -67,11 +63,11 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
   // Generate the alias TypeCode instantiation.
   os
     << "static TAO::TypeCode::Alias<char const *," << be_nl
-    << "                            CORBA::TypeCode_ptr const *," << be_nl
+    << "                            ::CORBA::TypeCode_ptr const *," << be_nl
     << "                            TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
-    << "CORBA::" << tctype << "," << be_nl
+    << "::CORBA::" << tctype << "," << be_nl
     << "\"" << node->repoID () << "\"," << be_nl
     << "\"" << node->original_local_name () << "\"," << be_nl
     << "&";
@@ -87,5 +83,8 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
   os << ");" << be_uidt_nl
      << be_uidt_nl;
 
-  return this->gen_typecode_ptr (node);
+  if (this->gen_typecode_ptr (node) != 0)
+    return -1;
+
+  return 0;
 }

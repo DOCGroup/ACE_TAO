@@ -1,4 +1,7 @@
-//$Id$
+// -*- C++ -*-
+//
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_FT_Request_Duration_Policy::TAO_FT_Request_Duration_Policy (
     const TimeBase::TimeT &duration
@@ -11,11 +14,10 @@ ACE_INLINE
 TAO_FT_Request_Duration_Policy::TAO_FT_Request_Duration_Policy (
     const TAO_FT_Request_Duration_Policy &rhs
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (),
-    ACE_NESTED_CLASS (CORBA, Policy) (),
-    ACE_NESTED_CLASS (CORBA, LocalObject) (),
+  : CORBA::Object (),
+    CORBA::Policy (),
     FT::RequestDurationPolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     request_duration_ (rhs.request_duration_)
 {
 }
@@ -36,15 +38,14 @@ ACE_INLINE
 TAO_FT_Heart_Beat_Policy::TAO_FT_Heart_Beat_Policy (
     const TAO_FT_Heart_Beat_Policy &rhs
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (),
-    ACE_NESTED_CLASS (CORBA, Policy) (),
-    ACE_NESTED_CLASS (CORBA, LocalObject) (),
+  : CORBA::Object (),
+    CORBA::Policy (),
     FT::HeartbeatPolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     heartbeat_ (rhs.heartbeat_),
     heartbeat_interval_ (rhs.heartbeat_interval_),
     heartbeat_timeout_ (rhs.heartbeat_timeout_)
 {
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

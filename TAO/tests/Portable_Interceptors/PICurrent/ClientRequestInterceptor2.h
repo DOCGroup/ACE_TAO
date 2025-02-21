@@ -4,8 +4,6 @@
 /**
  * @file ClientRequestInterceptor2.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -39,10 +37,9 @@
  */
 class ClientRequestInterceptor2
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   ClientRequestInterceptor2 (PortableInterceptor::SlotId slot_id);
 
@@ -56,47 +53,30 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestInterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
   //@}
 
 private:
-
   /// The PICurrent slot ID allocated to this application during ORB
   /// initialization.
   PortableInterceptor::SlotId slot_id_;
-
 };
 
 #if defined(_MSC_VER)

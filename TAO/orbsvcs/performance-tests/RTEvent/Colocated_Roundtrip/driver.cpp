@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_Class.h"
 #include "ORB_Holder.h"
 #include "Servant_var.h"
@@ -24,15 +22,13 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
 #include "ace/Barrier.h"
 
-ACE_RCSID(TAO_PERF_RTEC_Colocated_Roundtrip, driver, "$Id$")
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const CORBA::Long experiment_id = 1;
 
@@ -41,11 +37,9 @@ int main (int argc, char *argv[])
   /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      ORB_Holder orb (argc, argv, ""
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ORB_Holder orb (argc, argv, "");
 
       Client_Options options (argc, argv);
       if (argc != 1)
@@ -70,21 +64,16 @@ int main (int argc, char *argv[])
                                      orb,
                                      rt_class,
                                      1 // options.nthreads
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     );
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
-                                                  "RootPOA"
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                  "RootPOA");
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       PortableServer::POA_var ec_poa (rtserver_setup.poa ());
 
@@ -102,27 +91,18 @@ int main (int argc, char *argv[])
       Servant_var<TAO_EC_Event_Channel> ec_impl (
               RTEC_Initializer::create (ec_poa.in (),
                                         ec_poa.in (),
-                                        rtserver_setup.rtcorba_setup ()
-                                        ACE_ENV_ARG_PARAMETER)
+                                        rtserver_setup.rtcorba_setup ())
               );
-      ACE_TRY_CHECK;
 
-      ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl->activate ();
 
       PortableServer::ObjectId_var ec_id =
-        ec_poa->activate_object (ec_impl.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_poa->activate_object (ec_impl.in ());
       CORBA::Object_var ec_object =
-        ec_poa->id_to_reference (ec_id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_poa->id_to_reference (ec_id.in ());
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ());
 
       EC_Destroyer ec_destroyer (ec.in ());
 
@@ -130,12 +110,13 @@ int main (int argc, char *argv[])
 
       int thread_count = 1 + options.nthreads;
 
-      ACE_Barrier barrier (thread_count);
+      ACE_Barrier the_barrier (thread_count);
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
 
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
       CORBA::Long event_range = 1;
@@ -161,9 +142,7 @@ int main (int argc, char *argv[])
 
       if (!options.high_priority_is_last)
         {
-          high_priority_group.connect (ec.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          high_priority_group.connect (ec.in ());
           high_priority_disconnect = &high_priority_group;
         }
 
@@ -186,14 +165,11 @@ int main (int argc, char *argv[])
           ec_poa.in (),
           ec_poa.in (),
           ec.in (),
-          &barrier
-          ACE_ENV_ARG_PARAMETER);
+          &the_barrier);
 
       if (options.high_priority_is_last)
         {
-          high_priority_group.connect (ec.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          high_priority_group.connect (ec.in ());
           high_priority_disconnect = &high_priority_group;
         }
       Send_Task high_priority_task;
@@ -203,7 +179,7 @@ int main (int argc, char *argv[])
                                ACE_ES_EVENT_UNDEFINED,
                                experiment_id,
                                high_priority_group.supplier (),
-                               &barrier);
+                               &the_barrier);
       high_priority_task.thr_mgr (&my_thread_manager);
       {
         // Artificial scope to wait for the high priority task...
@@ -223,30 +199,24 @@ int main (int argc, char *argv[])
         high_priority_group.consumer ()->sample_history ();
       if (options.dump_history)
         {
-          history.dump_samples ("HISTORY", gsf);
+          history.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
 
       ACE_Basic_Stats high_priority_stats;
       history.collect_basic_stats (high_priority_stats);
-      high_priority_stats.dump_results ("High Priority", gsf);
+      high_priority_stats.dump_results (ACE_TEXT("High Priority"), gsf);
 
       ACE_Basic_Stats low_priority_stats;
       low_priority_setup.collect_basic_stats (low_priority_stats);
-      low_priority_stats.dump_results ("Low Priority", gsf);
+      low_priority_stats.dump_results (ACE_TEXT("Low Priority"), gsf);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

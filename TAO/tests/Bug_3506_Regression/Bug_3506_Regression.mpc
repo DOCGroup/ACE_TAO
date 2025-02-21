@@ -1,0 +1,37 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults, anytypecode {
+  IDL_Files {
+    IF_EXE_M_R_Enums.idl
+    IF_EXE_M_R_Structs.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, anytypecode {
+  after += *idl
+  Source_Files {
+    server.cpp
+  }
+  Source_Files {
+    IF_EXE_M_R_EnumsS.cpp
+    IF_EXE_M_R_StructsS.cpp
+    IF_EXE_M_R_EnumsC.cpp
+    IF_EXE_M_R_StructsC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, anytypecode {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    IF_EXE_M_R_EnumsC.cpp
+    IF_EXE_M_R_StructsC.cpp
+  }
+  IDL_Files {
+  }
+}
+

@@ -1,19 +1,12 @@
-
-// $Id$
-
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "Linear_Network_Priority_Mapping.h"
+#include "tao/RTCORBA/Linear_Network_Priority_Mapping.h"
 #include "tao/debug.h"
 
 #include "ace/Sched_Params.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (RTCORBA,
-           Linear_Network_Priority_Mapping,
-           "$Id$")
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 #define IPDSFIELD_DSCP_CS1      0x08
@@ -39,7 +32,7 @@ ACE_RCSID (RTCORBA,
 #define IPDSFIELD_CE_MASK       0x01
 #define IPDSFIELD_DSCP_EF       0x2E
 
-static int dscp [] =
+static int const dscp[] =
 {
   IPDSFIELD_DSCP_DEFAULT ,
   IPDSFIELD_DSCP_CS1     ,
@@ -65,7 +58,7 @@ static int dscp [] =
 };
 
 /*
-static const char *dscp_char[]=
+static const char * const dscp_char[]=
 {
   "Normal",
   "CS1",
@@ -91,6 +84,8 @@ static const char *dscp_char[]=
 };
 */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Linear_Network_Priority_Mapping::TAO_Linear_Network_Priority_Mapping (long)
 {
 }
@@ -101,11 +96,11 @@ TAO_Linear_Network_Priority_Mapping::to_network (
   RTCORBA::NetworkPriority &network_priority)
 {
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO_Linear_Network_Priority_Mapping::to_network corba_priority %d\n",
                 corba_priority));
 
-  const int total_slots = sizeof (dscp) / sizeof (int);
+  int const total_slots = sizeof (dscp) / sizeof (int);
 
   int array_slot =
     static_cast<int> (((corba_priority - RTCORBA::minPriority) / double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots);
@@ -116,7 +111,7 @@ TAO_Linear_Network_Priority_Mapping::to_network (
   network_priority = dscp[array_slot];
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO_Linear_Network_Priority_Mapping::to_network = %x\n",
                 network_priority));
 
@@ -128,11 +123,13 @@ TAO_Linear_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority network_
                                                RTCORBA::Priority &/*corba_priority*/)
 {
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO_Linear_Network_Priority_Mapping::to_CORBA network_priority %d\n",
                 network_priority));
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

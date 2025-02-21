@@ -1,38 +1,16 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_native.cpp
-//
-// = DESCRIPTION
-//    The native IDL type
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_native.cpp
+ *
+ *  The native IDL type
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
 #include "be_native.h"
 #include "be_visitor.h"
-
-ACE_RCSID (be, 
-           be_native, 
-           "$Id$")
-
-
-be_native::be_native (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_Native (),
-    be_decl (),
-    be_type ()
-{
-}
 
 be_native::be_native (UTL_ScopedName *n)
   : COMMON_Base (),
@@ -40,24 +18,47 @@ be_native::be_native (UTL_ScopedName *n)
               n),
     AST_Type (AST_Decl::NT_native,
               n),
+    AST_ConcreteType (AST_Decl::NT_native,
+                      n),
+    UTL_Scope (AST_Decl::NT_native),
+    AST_Structure (AST_Decl::NT_native,
+                   n,
+                   true,
+                   false),
+    AST_Exception (n,
+                   true,
+                   false),
     AST_Native (n),
     be_decl (AST_Decl::NT_native,
              n),
     be_type (AST_Decl::NT_native,
-             n)
+             n),
+    be_structure (n,
+                  true,
+                  false),
+    be_exception (n,
+                  true,
+                  false)
 {
 }
 
 int
-be_native::gen_typecode (void)
+be_native::gen_typecode ()
 {
   return 0;
 }
 
 long
-be_native::tc_size (void)
+be_native::tc_size ()
 {
   return 0;
+}
+
+void
+be_native::destroy ()
+{
+  this->be_exception::destroy ();
+  this->AST_Native::destroy ();
 }
 
 int
@@ -65,7 +66,3 @@ be_native::accept (be_visitor *visitor)
 {
   return visitor->visit_native (this);
 }
-
-// Narrowing
-IMPL_NARROW_METHODS2(be_native, AST_Native, be_type)
-IMPL_NARROW_FROM_DECL(be_native)

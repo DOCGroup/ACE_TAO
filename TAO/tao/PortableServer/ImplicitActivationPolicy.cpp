@@ -1,11 +1,10 @@
-#include "ImplicitActivationPolicy.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/ImplicitActivationPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "ace/CORBA_macros.h"
 
-ACE_RCSID (PortableServer,
-           ImplicitActivationPolicy,
-           "$Id$")
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -18,50 +17,47 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    ImplicitActivationPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    ImplicitActivationPolicy::copy ()
     {
-      ImplicitActivationPolicy *copy = 0;
+      ImplicitActivationPolicy *copy {};
       ACE_NEW_THROW_EX (copy,
                         ImplicitActivationPolicy (this->value_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return copy;
     }
 
     void
-    ImplicitActivationPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    ImplicitActivationPolicy::destroy ()
     {
     }
 
     ::PortableServer::ImplicitActivationPolicyValue
-    ImplicitActivationPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    ImplicitActivationPolicy::value ()
     {
       return value_;
     }
 
     CORBA::PolicyType
-    ImplicitActivationPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    ImplicitActivationPolicy::policy_type ()
     {
       return ::PortableServer::IMPLICIT_ACTIVATION_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    ImplicitActivationPolicy::_tao_cached_type (void) const
+    ImplicitActivationPolicy::_tao_cached_type () const
     {
       return TAO_CACHED_POLICY_IMPLICIT_ACTIVATION;
     }
 
     TAO_Policy_Scope
-    ImplicitActivationPolicy::_tao_scope (void) const
+    ImplicitActivationPolicy::_tao_scope () const
     {
       return TAO_POLICY_POA_SCOPE;
     }
   }
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !CORBA_E_COMPACT && !CORBA_E_MICRO */

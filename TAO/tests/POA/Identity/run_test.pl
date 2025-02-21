@@ -2,20 +2,16 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("Identity", "-ORBobjrefstyle url");
-}
-else {
-    $T = new PerlACE::Process ("Identity", "-ORBobjrefstyle url");
-}
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$test = $T->SpawnWaitKill (60);
+$SV = $server->CreateProcess ("Identity", "-ORBobjrefstyle url");
+
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";
@@ -23,4 +19,3 @@ if ($test != 0) {
 }
 
 exit 0;
-

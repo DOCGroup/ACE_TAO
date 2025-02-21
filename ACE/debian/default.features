@@ -1,0 +1,23 @@
+// Misc
+acexml          = 1
+ace_svcconf     = 1
+ace_token       = 1
+ssl             = 1
+ipv6            = 1
+exceptions      = 1
+ace_xml_utils   = 1
+
+// GUI reactors
+xt              = 1
+ace_xtreactor   = 1
+
+tk              = 1
+ace_tkreactor   = 1
+
+fl              = 1
+ace_flreactor   = 1
+
+fox             = 1
+ace_foxreactor  = 1
+
+xerces3         = 1

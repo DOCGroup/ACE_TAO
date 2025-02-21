@@ -4,8 +4,6 @@
 /**
  *  @file    SystemException.h
  *
- *  $Id$
- *
  *  CORBA::SystemException class header.
  *
  *  @author DOC Group at Vanderbilt U, Wash U, and UCI
@@ -28,13 +26,14 @@
 
 #include "tao/Exception.h"
 
+#ifdef THREAD_CANCELLED
+# undef THREAD_CANCELLED
+#endif /* THREAD_CANCELLED */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
-
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
-#undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
 
 // This is already done in orbconf.h. But this file is totally
 // decoupled from its contents that we have to do this here. Including
@@ -45,14 +44,16 @@ class TAO_InputCDR;
 
 namespace CORBA
 {
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  class SystemException;
+}
 
-  class Environment;
+namespace TAO
+{
+  typedef CORBA::SystemException* (*excp_factory)();
+}
 
-  class Any;
-  typedef Any *Any_ptr;
-
+namespace CORBA
+{
   /**
    * @enum CompletionStatus
    *
@@ -79,21 +80,28 @@ namespace CORBA
   class TAO_Export SystemException : public Exception
   {
   public:
-
     /// Copy constructor.
+    /**
+     * @note This constructor should be protected, but VC7.1 at
+     *       warning level 4 complains about the inaccessible copy
+     *       constructor preventing it from being caught.  However,
+     *       that probably isn't true for most cases since CORBA
+     *       exceptions are typically caught by reference, not by
+     *       copy.
+     */
     SystemException (const SystemException & src);
 
     /// Destructor.
-    ~SystemException (void);
+    virtual ~SystemException () = default;
 
     /// Get the minor status.
-    ULong minor (void) const;
+    ULong minor () const;
 
     /// Set the minor status.
     void minor (ULong m);
 
     /// Get the completion status.
-    CORBA::CompletionStatus completed (void) const;
+    CORBA::CompletionStatus completed () const;
 
     /// Set the operation completion status.
     void completed (CORBA::CompletionStatus c);
@@ -101,55 +109,44 @@ namespace CORBA
     /// Narrow to a SystemException.
     static SystemException *_downcast (CORBA::Exception *exception);
 
-        /// The const version of narrow operation to a SystemException
+    /// The const version of narrow operation to a SystemException
     static const SystemException *_downcast(const CORBA::Exception *exception);
 
-    virtual void _raise (void) const = 0;
+    virtual void _raise () const = 0;
 
     // = TAO-specific extension.
-
-    /// Helper for the _downcast operation.
-    virtual int _is_a (const char *type_id) const;
 
     /// Print the system exception @c ex to output determined by @c f.
     /// This function is not CORBA compliant.
     void _tao_print_system_exception (FILE *f = stdout) const;
 
-    /// Create an exception from the available exception
-    /// virtual CORBA::Exception *_tao_duplicate (void) const;
-
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
-    virtual ACE_CString _info (void) const;
+    virtual ACE_CString _info () const;
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED);
+    virtual void _tao_encode (TAO_OutputCDR &cdr) const;
+
+    virtual void _tao_decode (TAO_InputCDR &cdr);
 
     /// Helper to create a minor status value.
-    static CORBA::ULong _tao_minor_code (u_int location,
-                                         int errno_value);
+    static CORBA::ULong _tao_minor_code (u_int location, int errno_value);
 
     /// Helper to translate a platform-specific errno to a TAO errno
     /// value.
     static CORBA::ULong _tao_errno (int errno_value);
 
-    /// Overridden base class method to help compilers that use
-    /// explicit template instantiations get going.
-    virtual CORBA::Exception *_tao_duplicate (void) const;
+    /// Deep copy
+    virtual CORBA::Exception *_tao_duplicate () const;
 
   protected:
-
     /// Default constructor.
-    SystemException (void);
+    SystemException ();
 
     /// Assignment operator.
     SystemException & operator= (const SystemException &src);
 
     /// Constructor using a repository id.
-    SystemException (CORBA::ULong code,
-                     CORBA::CompletionStatus completed);
+    SystemException (CORBA::ULong code, CORBA::CompletionStatus completed);
 
     /// Constructor using a repository id.
     SystemException (const char *repository_id,
@@ -160,8 +157,7 @@ namespace CORBA
     /// Return the exception description associated with the given OMG
     /// minor code.
     static const char *_tao_get_omg_exception_description (
-      const CORBA::SystemException &exc,
-      CORBA::ULong minor_code);
+      const CORBA::SystemException &exc, CORBA::ULong minor_code);
 
   private:
     /// Minor code.
@@ -169,7 +165,6 @@ namespace CORBA
 
     /// Completion status.
     CORBA::CompletionStatus completed_;
-
   };
 
   // Declarations for all of the CORBA standard exceptions.
@@ -181,68 +176,64 @@ namespace CORBA
     class TAO_Export name : public SystemException \
     { \
     public: \
-      name (void); \
+      name (); \
       name (CORBA::ULong code, \
             CORBA::CompletionStatus completed); \
       static name * _downcast (CORBA::Exception* exception); \
       static name const * _downcast (CORBA::Exception const * exception); \
-      virtual void _raise (void) const; \
-      virtual CORBA::TypeCode_ptr _tao_type (void) const; \
+      virtual void _raise () const; \
+      virtual CORBA::TypeCode_ptr _tao_type () const; \
       static void _tao_any_destructor (void*); \
-      virtual CORBA::Exception *_tao_duplicate (void) const; \
-      static CORBA::SystemException *_tao_create (void); \
+      virtual CORBA::Exception *_tao_duplicate () const; \
+      static CORBA::SystemException *_tao_create (); \
     }; \
-  TAO_Export void operator<<= (CORBA::Any &, const CORBA::name &); \
-  TAO_Export void operator<<= (CORBA::Any &, CORBA::name *); \
-  TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, \
-                                         const CORBA::name *&); \
-  extern TAO_Export TypeCode_ptr const _tc_ ## name
 
-  TAO_SYSTEM_EXCEPTION(UNKNOWN);          // the unknown exception
-  TAO_SYSTEM_EXCEPTION(BAD_PARAM);        // an invalid parameter was passed
-  TAO_SYSTEM_EXCEPTION(NO_MEMORY);        // memory allocation failure
-  TAO_SYSTEM_EXCEPTION(IMP_LIMIT);        // violated implementation limit
-  TAO_SYSTEM_EXCEPTION(COMM_FAILURE);     // communication failure
-  TAO_SYSTEM_EXCEPTION(INV_OBJREF);       // invalid object reference
-  TAO_SYSTEM_EXCEPTION(OBJECT_NOT_EXIST); // no such object
-  TAO_SYSTEM_EXCEPTION(NO_PERMISSION);    // no permission for operation
-  TAO_SYSTEM_EXCEPTION(INTERNAL);         // ORB internal error
-  TAO_SYSTEM_EXCEPTION(MARSHAL);          // error marshaling param/result
-  TAO_SYSTEM_EXCEPTION(INITIALIZE);       // ORB initialization failure
-  TAO_SYSTEM_EXCEPTION(NO_IMPLEMENT);     // implementation unavailable
-  TAO_SYSTEM_EXCEPTION(BAD_TYPECODE);     // bad typecode
-  TAO_SYSTEM_EXCEPTION(BAD_OPERATION);    // invalid operation
-  TAO_SYSTEM_EXCEPTION(NO_RESOURCES);     // out of resources for request
-  TAO_SYSTEM_EXCEPTION(NO_RESPONSE);      // response not yet available
-  TAO_SYSTEM_EXCEPTION(PERSIST_STORE);    // persistent storage failure
-  TAO_SYSTEM_EXCEPTION(BAD_INV_ORDER);    // routine invocations out of order
-  TAO_SYSTEM_EXCEPTION(TRANSIENT);        // transient error, try again later
-  TAO_SYSTEM_EXCEPTION(FREE_MEM);         // cannot free memory
-  TAO_SYSTEM_EXCEPTION(INV_IDENT);        // invalid identifier syntax
-  TAO_SYSTEM_EXCEPTION(INV_FLAG);         // invalid flag was specified
-  TAO_SYSTEM_EXCEPTION(INTF_REPOS);       // interface repository unavailable
-  TAO_SYSTEM_EXCEPTION(BAD_CONTEXT);      // error processing context object
-  TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);      // object adapter failure
-  TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);  // data conversion error
-  TAO_SYSTEM_EXCEPTION(INV_POLICY);       // invalid policies present
-  TAO_SYSTEM_EXCEPTION(REBIND);           // rebind needed
-  TAO_SYSTEM_EXCEPTION(TIMEOUT);          // operation timed out
-  TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE); // no transaction
-  TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);        // invalid transaction mode
-  TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED);    // operation needs transaction
-  TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK);  // operation was a no-op
-  TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);     // invalid TP context passed
-  TAO_SYSTEM_EXCEPTION(CODESET_INCOMPATIBLE);    // incompatible code set
-  TAO_SYSTEM_EXCEPTION(BAD_QOS);          // bad quality of service
-  TAO_SYSTEM_EXCEPTION(INVALID_ACTIVITY);
-  TAO_SYSTEM_EXCEPTION(ACTIVITY_COMPLETED);
-  TAO_SYSTEM_EXCEPTION(ACTIVITY_REQUIRED);
-  TAO_SYSTEM_EXCEPTION(THREAD_CANCELLED);
+  TAO_SYSTEM_EXCEPTION(UNKNOWN)          // the unknown exception
+  TAO_SYSTEM_EXCEPTION(BAD_PARAM)        // an invalid parameter was passed
+  TAO_SYSTEM_EXCEPTION(NO_MEMORY)        // memory allocation failure
+  TAO_SYSTEM_EXCEPTION(IMP_LIMIT)        // violated implementation limit
+  TAO_SYSTEM_EXCEPTION(COMM_FAILURE)     // communication failure
+  TAO_SYSTEM_EXCEPTION(INV_OBJREF)       // invalid object reference
+  TAO_SYSTEM_EXCEPTION(OBJECT_NOT_EXIST) // no such object
+  TAO_SYSTEM_EXCEPTION(NO_PERMISSION)    // no permission for operation
+  TAO_SYSTEM_EXCEPTION(INTERNAL)         // ORB internal error
+  TAO_SYSTEM_EXCEPTION(MARSHAL)          // error marshaling param/result
+  TAO_SYSTEM_EXCEPTION(INITIALIZE)       // ORB initialization failure
+  TAO_SYSTEM_EXCEPTION(NO_IMPLEMENT)     // implementation unavailable
+  TAO_SYSTEM_EXCEPTION(BAD_TYPECODE)     // bad typecode
+  TAO_SYSTEM_EXCEPTION(BAD_OPERATION)    // invalid operation
+  TAO_SYSTEM_EXCEPTION(NO_RESOURCES)     // out of resources for request
+  TAO_SYSTEM_EXCEPTION(NO_RESPONSE)      // response not yet available
+  TAO_SYSTEM_EXCEPTION(PERSIST_STORE)    // persistent storage failure
+  TAO_SYSTEM_EXCEPTION(BAD_INV_ORDER)    // routine invocations out of order
+  TAO_SYSTEM_EXCEPTION(TRANSIENT)        // transient error, try again later
+  TAO_SYSTEM_EXCEPTION(FREE_MEM)         // cannot free memory
+  TAO_SYSTEM_EXCEPTION(INV_IDENT)        // invalid identifier syntax
+  TAO_SYSTEM_EXCEPTION(INV_FLAG)         // invalid flag was specified
+  TAO_SYSTEM_EXCEPTION(INTF_REPOS)       // interface repository unavailable
+  TAO_SYSTEM_EXCEPTION(BAD_CONTEXT)      // error processing context object
+  TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER)      // object adapter failure
+  TAO_SYSTEM_EXCEPTION(DATA_CONVERSION)  // data conversion error
+  TAO_SYSTEM_EXCEPTION(INV_POLICY)       // invalid policies present
+  TAO_SYSTEM_EXCEPTION(REBIND)           // rebind needed
+  TAO_SYSTEM_EXCEPTION(TIMEOUT)          // operation timed out
+  TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE) // no transaction
+  TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE)        // invalid transaction mode
+  TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED)    // operation needs transaction
+  TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK)  // operation was a no-op
+  TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION)     // invalid TP context passed
+  TAO_SYSTEM_EXCEPTION(CODESET_INCOMPATIBLE)    // incompatible code set
+  TAO_SYSTEM_EXCEPTION(BAD_QOS)          // bad quality of service
+  TAO_SYSTEM_EXCEPTION(INVALID_ACTIVITY)
+  TAO_SYSTEM_EXCEPTION(ACTIVITY_COMPLETED)
+  TAO_SYSTEM_EXCEPTION(ACTIVITY_REQUIRED)
+  TAO_SYSTEM_EXCEPTION(THREAD_CANCELLED)
 
 #undef TAO_SYSTEM_EXCEPTION
 
 } // End CORBA namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/SystemException.inl"

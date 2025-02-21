@@ -4,8 +4,6 @@
 /**
  * @file Event_Service.h
  *
- * $Id$
- *
  * The TAO event service implementation.
  */
 #ifndef EC_EVENT_SERVICE_H
@@ -33,34 +31,21 @@
 class Event_Service : public POA_RtecEventChannelAdmin::EventChannel
 {
 public:
-  Event_Service (void);
-  virtual ~Event_Service (void);
+  Event_Service ();
+  virtual ~Event_Service ();
 
   /// Run the event service.
   int run (int argc, ACE_TCHAR* argv[]);
 
   // = The RtecEventChannelAdmin::Event_Channel methods
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    for_consumers ();
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    for_suppliers ();
+  virtual void destroy ();
   virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer
-                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle
-                                ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer);
+  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
 private:
   /// Parse the command line args
@@ -79,13 +64,13 @@ private:
   ACE_CString service_name_;
 
   /// The name of the file were we output the Event_Service IOR.
-  ACE_CString ior_file_name_;
+  ACE_TString ior_file_name_;
 
   /// The name of a file where the process stores its pid
-  ACE_CString pid_file_name_;
+  ACE_TString pid_file_name_;
 
   /// The name of the servant we use when we use persistent IORs
-  ACE_CString servant_name_;
+  ACE_CString object_id_;
 
   /// Should we use a global scheduler or a local one or none?
   Sched_type_t scheduler_type_;
@@ -94,7 +79,10 @@ private:
   CORBA::ORB_var orb_;
 
   /// Use BiDirectional GIOP
-  int use_bidir_giop_;
+  bool use_bidir_giop_;
+
+  /// Should we bind to the naming service
+  bool bind_to_naming_service_;
 };
 
 #include /**/ "ace/post.h"

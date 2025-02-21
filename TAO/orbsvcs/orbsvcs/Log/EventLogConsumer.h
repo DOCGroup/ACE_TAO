@@ -4,8 +4,6 @@
 /**
  *  @file   EventLogConsumer.h
  *
- *  $Id$
- *
  *  The EventLogConsumer connects to the EventLog and logs the events
  *  that are pushed to the EventLog.
  *
@@ -30,12 +28,14 @@
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
-#include "eventlog_serv_export.h"
+#include "orbsvcs/Log/eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_EventLog_i;
@@ -53,34 +53,22 @@ class TAO_EventLogFactory_i;
 class TAO_Event_LogConsumer : public virtual POA_CosEventComm::PushConsumer
 {
 public:
-
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_Event_LogConsumer (TAO_EventLog_i *log);
 
   /// Destructor.
-  ~TAO_Event_LogConsumer (void);
+  ~TAO_Event_LogConsumer ();
 
   /// Connect to EventLog.
-  void
-    connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 private:
-
   /// Disconnect from EventLog.
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-            CORBA::SystemException
-    ));
+  void disconnect_push_consumer ();
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.
-  void push (const CORBA::Any& data ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-            CORBA::SystemException,
-            CosEventComm::Disconnected
-    ));
+  void push (const CORBA::Any& data);
 
   /// ProxyPushSupplier used to connect to EventLog.
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
@@ -89,6 +77,8 @@ private:
   /// and whose events are to be logged.
   TAO_EventLog_i *log_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

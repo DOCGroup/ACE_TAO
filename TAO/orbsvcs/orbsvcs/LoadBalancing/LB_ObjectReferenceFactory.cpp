@@ -1,16 +1,12 @@
-#include "LB_ObjectReferenceFactory.h"
-
-ACE_RCSID (LoadBalancing,
-           LB_ObjectReferenceFactory,
-           "$Id$")
-
-
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
 #include "tao/debug.h"
-
 #include "ace/SString.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The number of different object groups to support.
 #ifndef TAO_LB_ORF_GROUP_TABLE_SIZE
@@ -40,7 +36,7 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
   this->location_.length (1);
   this->location_[0].id = CORBA::string_dup (location);
 
-  const CORBA::ULong len = repository_ids.length ();
+  CORBA::ULong const len = repository_ids.length ();
   ACE_NEW (this->registered_members_,
            CORBA::Boolean[len]);
 
@@ -50,30 +46,32 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
                   len * sizeof (CORBA::Boolean));
 }
 
-TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory (void)
+::CORBA::ValueBase *
+TAO_LB_ObjectReferenceFactory::_copy_value ()
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implemented
+  return ret_val;
+}
+
+TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
 {
   // No need to call CORBA::remove_ref() on this->old_orf_.  It is a
   // "_var" object, meaning that will be done automatically.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
   if (!CORBA::is_nil (this->lm_.in ()))
     {
       const CORBA::ULong len = this->fcids_.size ();
       for (CORBA::ULong i = 0; i < len; ++i)
         {
-          ACE_TRY
+          try
             {
               // Clean up all object groups we created.
-              this->lm_->delete_object (this->fcids_[i].in ()
-                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              this->lm_->delete_object (this->fcids_[i].in ());
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception&)
             {
               // Ignore all exceptions.
             }
-          ACE_ENDTRY;
         }
     }
 
@@ -86,29 +84,23 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory (void)
 CORBA::Object_ptr
 TAO_LB_ObjectReferenceFactory::make_object (
     const char * repository_id,
-    const PortableInterceptor::ObjectId & id
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    const PortableInterceptor::ObjectId & id)
 {
   if (repository_id == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   CORBA::Object_var obj =
     this->old_orf_->make_object (repository_id,
-                                 id
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                 id);
 
   PortableGroup::ObjectGroup_var object_group;
 
   CORBA::ULong index = 0;
 
-  const CORBA::Boolean found_group =
+  CORBA::Boolean const found_group =
     this->find_object_group (repository_id,
                              index,
-                             object_group.out ()
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                             object_group.out ());
 
   if (found_group)
     {
@@ -116,48 +108,37 @@ TAO_LB_ObjectReferenceFactory::make_object (
       // subsequent object reference creation calls.
       if (!this->registered_members_[index])
         {
-          ACE_TRY
+          try
             {
               object_group =
                 this->lm_->add_member (object_group.in (),
                                        this->location_,
-                                       obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                       obj.in ());
             }
-          ACE_CATCH (PortableGroup::ObjectGroupNotFound, ex)
+          catch (const PortableGroup::ObjectGroupNotFound& ex)
             {
               if (TAO_debug_level > 0)
-                ACE_PRINT_EXCEPTION (ex,
-                                     "TAO_LB_ObjectReferenceFactory::"
-                                     "make_object");
+                ex._tao_print_exception (
+                  "TAO_LB_ObjectReferenceFactory::""make_object");
 
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                                CORBA::Object::_nil ());
+              throw CORBA::BAD_PARAM ();
             }
-          ACE_CATCH (PortableGroup::MemberAlreadyPresent, ex)
+          catch (const PortableGroup::MemberAlreadyPresent& ex)
             {
               if (TAO_debug_level > 0)
-                ACE_PRINT_EXCEPTION (ex,
-                                     "TAO_LB_ObjectReferenceFactory::"
-                                     "make_object");
+                ex._tao_print_exception (
+                  "TAO_LB_ObjectReferenceFactory::""make_object");
 
-              ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
-                                CORBA::Object::_nil ());
-
+              throw CORBA::BAD_INV_ORDER ();
             }
-          ACE_CATCH (PortableGroup::ObjectNotAdded, ex)
+          catch (const PortableGroup::ObjectNotAdded& ex)
             {
               if (TAO_debug_level > 0)
-                ACE_PRINT_EXCEPTION (ex,
-                                     "TAO_LB_ObjectReferenceFactory::"
-                                     "make_object");
+                ex._tao_print_exception (
+                  "TAO_LB_ObjectReferenceFactory::""make_object");
 
-              ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                                CORBA::Object::_nil ());
+              throw CORBA::UNKNOWN ();
             }
-          ACE_ENDTRY;
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
           this->registered_members_[index] = 1;
         }
@@ -175,16 +156,15 @@ CORBA::Boolean
 TAO_LB_ObjectReferenceFactory::find_object_group (
   const char * repository_id,
   CORBA::ULong & index,
-  PortableGroup::ObjectGroup_out object_group
-  ACE_ENV_ARG_DECL)
+  PortableGroup::ObjectGroup_out object_group)
 {
   if (!this->load_managed_object (repository_id, index))
-    return 0;
+    return false;
 
   PortableGroup::ObjectGroup_var group;
   if (this->table_.find (repository_id, group) != 0)
     {
-      if (ACE_OS::strcasecmp (this->object_groups_[index].in (),
+      if (ACE_OS::strcasecmp (this->object_groups_[index],
                               "CREATE") == 0)
         {
           PortableGroup::Criteria criteria (1);
@@ -206,31 +186,27 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
           group =
             this->lm_->create_object (repository_id,
                                       criteria,
-                                      fcid.out ()
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                      fcid.out ());
 
-          const CORBA::ULong len = this->fcids_.size ();
+          CORBA::ULong const len = this->fcids_.size ();
           this->fcids_.size (len + 1); // Incremental growth.  Yuck!
           this->fcids_[len] = fcid;
         }
       else
         {
           group =
-            this->orb_->string_to_object (this->object_groups_[index].in ()
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+            this->orb_->string_to_object (this->object_groups_[index]);
         }
 
       if (this->table_.bind (repository_id, group) != 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "TAO_LB_ObjectReferenceFactory::"
                         "find_object_group - "
                         "Couldn't bind object group reference.\n"));
 
-          ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+          throw CORBA::INTERNAL ();
         }
 
       object_group = group._retn ();
@@ -245,33 +221,12 @@ TAO_LB_ObjectReferenceFactory::load_managed_object (const char * repository_id,
 {
   // @todo Make this more efficient.
 
-  const CORBA::ULong len = this->repository_ids_.length ();
+  CORBA::ULong const len = this->repository_ids_.length ();
   for (i = 0; i < len; ++i)
-    if (ACE_OS::strcmp (this->repository_ids_[i].in (), repository_id) == 0)
-      return 1;
+    if (ACE_OS::strcmp (this->repository_ids_[i], repository_id) == 0)
+      return true;
 
-  return 0;
+  return false;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<ACE_CString, PortableGroup::ObjectGroup_var>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, PortableGroup::ObjectGroup_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, PortableGroup::ObjectGroup_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, PortableGroup::ObjectGroup_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, PortableGroup::ObjectGroup_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-
-template class ACE_Array_Base<PortableGroup::GenericFactory::FactoryCreationId_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, PortableGroup::ObjectGroup_var>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, PortableGroup::ObjectGroup_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, PortableGroup::ObjectGroup_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, PortableGroup::ObjectGroup_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, PortableGroup::ObjectGroup_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Array_Base<PortableGroup::GenericFactory::FactoryCreationId_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,11 +1,8 @@
-// $Id$
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Smart_Proxies.h
- *
- *  $Id$
  *
  * This file contains a base class for the generated smart proxy classes
  * It's purpose is to hold the pointer to the real proxy
@@ -18,13 +15,16 @@
 #define TAO_SMARTPROXIES_H
 #include /**/ "ace/pre.h"
 
-#include "smartproxies_export.h"
+#include "tao/SmartProxies/smartproxies_export.h"
 #include "tao/Object.h"
 #include "tao/TAO_Singleton.h"
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Smart_Proxy_Base
@@ -34,15 +34,15 @@
  * Contains the _var pointer to the real proxy.
  */
 class TAO_SmartProxies_Export TAO_Smart_Proxy_Base
+  : public ::CORBA::LocalObject
 {
-
 public:
   /// Destructor
-  virtual ~TAO_Smart_Proxy_Base (void);
+  virtual ~TAO_Smart_Proxy_Base ();
 
 protected:
   /// Constructor.
-  TAO_Smart_Proxy_Base (void);
+  TAO_Smart_Proxy_Base ();
 
   /// Constructor.
   TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy);
@@ -51,8 +51,10 @@ protected:
   CORBA::Object_var base_proxy_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Smart_Proxies.inl"
+#include "tao/SmartProxies/Smart_Proxies.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

@@ -1,52 +1,86 @@
 //
 // This initializes an ORB, a POA, an Object within that POA, and
 // obtains and prints an IOR for that Object.
-//
-// $Id$
-
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "ace/Get_Opt.h"
 
 #include "bogus_i.h"
 
-ACE_RCSID (IOR_Endpoint_Hostnames, generate_ior, "$Id$")
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 
 int
-main (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-o <iorfile>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates successful parsing of the command line
+  return 0;
+}
+
+int
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+{
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var rp =
-        PortableServer::POA::_narrow(poa_object.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow(poa_object.in());
       if  (CORBA::is_nil (rp.in()))
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) panic: nil root poa\n"), 1);
 
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
       bogus* bogus_impl = new bogus();
       PortableServer::ServantBase_var owner_transfer(bogus_impl);
-      Test::bogus_var b = bogus_impl->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CORBA::String_var ior =
-        orb->object_to_string (b.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var id =
+        rp->activate_object (bogus_impl);
 
-      printf ("%s\n", ior.in());
-  
+      CORBA::Object_var object = rp->id_to_reference (id.in ());
+
+      Test::bogus_var b = Test::bogus::_narrow (object.in ());
+      CORBA::String_var ior =
+        orb->object_to_string (b.in());
+
+      // Output the IOR to the <ior_output_file>
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s\n",
+                           ior_output_file),
+                           1);
+      ACE_OS::fprintf (output_file, "%s", ior.in ());
+      ACE_OS::fclose (output_file);
+
       orb->shutdown();
       orb->destroy();
     }
-  ACE_CATCH (CORBA::Exception, e)
+  catch (const CORBA::Exception& e)
     {
-      ACE_PRINT_EXCEPTION (e, "Caught exception:");
+      e._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

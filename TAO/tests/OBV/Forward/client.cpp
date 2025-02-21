@@ -1,20 +1,15 @@
-// $Id$
-
-
 #include "TreeBaseC.h"
 #include "TreeControllerC.h"
 #include "TreeNodeC.h"
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Forward, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -33,7 +28,7 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -49,14 +44,14 @@ dump_node (BaseNode *bn, int indent)
   StringNode *sn = StringNode::_downcast (bn);
   if (sn != 0)
   {
-    ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",
+    ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
                bn,
                sn->name ()));
   }
   else
   {
     ACE_DEBUG ((LM_DEBUG,
-                "%x <BaseNode> \n",
+                "%x <BaseNode>\n",
                 bn));
   }
 
@@ -80,13 +75,12 @@ dump_tree (TreeController *tc)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -101,9 +95,7 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   bn_factory);
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
@@ -113,9 +105,7 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   tc_factory);
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
@@ -125,20 +115,16 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   sn_factory);
       sn_factory->_remove_ref (); // release ownership
 
       //Well, done with factories.
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
-      Test_var test = Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Test_var test = Test::_narrow(tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
       {
@@ -151,14 +137,14 @@ main (int argc, char *argv[])
       // Now build simple graph (tree in our case).
 
       TreeController_var tc;
-      ACE_NEW_RETURN (tc,
+      ACE_NEW_RETURN (tc.inout (),
                       OBV_TreeController,
                       1);
 
       // Create the root node.
       {
         StringNode_var sn;
-        ACE_NEW_RETURN (sn,
+        ACE_NEW_RETURN (sn.inout (),
                         OBV_StringNode,
                         1);
         sn->name ((const char*)("RootNode"));
@@ -167,7 +153,7 @@ main (int argc, char *argv[])
         // Create the left leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("LeftNode"));
@@ -177,7 +163,7 @@ main (int argc, char *argv[])
         // Create the right leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("RightNode"));
@@ -191,28 +177,22 @@ main (int argc, char *argv[])
       dump_tree (tc.in ());
 
       TreeController_var result_tc =
-        test->reflect (tc.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test->reflect (tc.in ());
 
       // Dump the resulting tree.
       dump_tree (result_tc.in ());
 
-      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -1,0 +1,19 @@
+// -*- IDL -*-
+
+/**
+ *  @file   Visibility.pidl
+ */
+
+#ifndef TAO_VISIBILITY_PIDL
+#define TAO_VISIBILITY_PIDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef short Visibility;
+  const Visibility PRIVATE_MEMBER = 0;
+  const Visibility PUBLIC_MEMBER = 1;
+};
+
+#endif /* TAO_VISIBILITY_PIDL */

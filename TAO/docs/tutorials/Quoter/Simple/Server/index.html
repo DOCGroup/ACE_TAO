@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Introduction - A very simple server</title>
-    <!-- $Id$ -->
+    <!--  -->
   </head>
 
   <BODY text = "#000000"
@@ -40,13 +40,13 @@ private:
 };
 </PRE>
     <P>In a server, CORBA objects and functions are implemented and
-      represented by programming language data and functions. These 
-      programming entities that implement and represent CORBA objects 
-      are called <I>servants</I>. <I>Object Adapters</I> link the world of 
-      CORBA objects to the world of programming language servants. They 
-      provide services for creation of CORBA objects and their object 
+      represented by programming language data and functions. These
+      programming entities that implement and represent CORBA objects
+      are called <I>servants</I>. <I>Object Adapters</I> link the world of
+      CORBA objects to the world of programming language servants. They
+      provide services for creation of CORBA objects and their object
       references and for dispatching requests to the appropriate
-      servants. 
+      servants.
     </P>
     <P>Notice the name of the base class.  TAO implements the CORBA 2.2
       specification, which includes the Portable Object Adapter (hence
@@ -63,7 +63,7 @@ private:
       file names can be controlled through IDL compiler options in
       most cases.
     </P>
-    <P>A server application may contain multiple POA instances, but all 
+    <P>A server application may contain multiple POA instances, but all
       server applications have at least one POA called the <I>RootPOA</I>.
     <P>We have to implement the operations and attributes:
     </P>
@@ -71,31 +71,20 @@ private:
 class Quoter_Stock_i : public POA_Quoter::Stock {
 public:
   // some details omitted
-  char *symbol () throw (CORBA::SystemException);
-  char *full_name () throw (CORBA::SystemException);
-  CORBA::Double price () throw (CORBA::SystemException);
+  char *symbol ();
+  char *full_name ();
+  CORBA::Double price ();
 };
 
 // In the .cpp file:
 char *
-Quoter_Stock_i::symbol () throw (CORBA::SystemException)
+Quoter_Stock_i::symbol ()
 {
   return CORBA::string_dup (this->symbol_.c_str ());
 }
 </PRE>
     <P>The other attributes and methods are similar, so we don't
       reproduce them here.
-    </P>
-    <P>The first question is what are those <CODE>throw()</CODE>
-      specifications doing there?  Any CORBA operation or attribute
-      can raise a <CODE>CORBA::SystemException</CODE>.  The IDL compiler
-      must generate a throw specification that includes the CORBA
-      system exceptions and any user exceptions listed in the
-      <CODE>raise</CODE> clause.  In turn, the C++ specification requires
-      that any derived classes cannot add exceptions to a throw
-      specification, so you must have a throw specification in your
-      methods, either including <CODE>CORBA::SystemException</CODE> or
-      empty.
     </P>
 
     <H4>Memory management rules for arguments</H4>
@@ -137,7 +126,7 @@ Quoter_Stock_i::symbol () throw (CORBA::SystemException)
       can generate empty implementations that you can modify.  Simply
       use the <KBD>-GI</KBD> option:
 <PRE>
-$ $ACE_ROOT/TAO/TAO_IDL/tao_idl -GI Quoter.idl
+$ $TAO_ROOT/TAO_IDL/tao_idl -GI Quoter.idl
 </PRE>
       The empty implementations are generated in the
       <CODE>QuoterI.h</CODE> and <CODE>QuoterI.cpp</CODE> files.
@@ -157,8 +146,7 @@ class Quoter_Stock_Factory_i : public POA_Quoter::Stock_Factory
 public:
   Quoter_Stock_Factory ();
 
-  Quoter::Stock_ptr get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol);
+  Quoter::Stock_ptr get_stock (const char *symbol);
 
 private:
   Quoter_Stock_i rhat_;
@@ -173,7 +161,6 @@ private:
 <PRE>
 Quoter::Stock_ptr
 Quoter_Stock_Factory_i::get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol)
 {
   if (strcmp (symbol, "RHAT") == 0) {
     return this->rhat_._this();
@@ -188,8 +175,8 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
       the client-side stubs and server-side skeletons are not related
       through inheritance.  You must either explicitly activate the
       servant (your implementation object) or use <CODE>_this()</CODE> to
-      activate it with its default POA.  <CODE>_this()</CODE> creates and 
-      registers a CORBA object under the RootPOA, and returns the created 
+      activate it with its default POA.  <CODE>_this()</CODE> creates and
+      registers a CORBA object under the RootPOA, and returns the created
       object reference for the new object. We will discuss more about
       explicit and implicit activation later, but at this point it is
       important to remove any thoughts about converting pointers to
@@ -272,10 +259,10 @@ int main (int argc, char* argv[])
     // The application code goes here!
 
     // Destroy the POA, waiting until the destruction terminates
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (const CORBA::Exception &ex) {
     std::cerr << "CORBA exception raised!" << std::endl;
   }
   return 0;
@@ -324,7 +311,7 @@ int main (int argc, char* argv[])
       <A HREF="Stock_Factory_i.cpp">Stock_Factory_i.cpp</A>,
       <A HREF="../Quoter.idl">Quoter.idl</A>
       and the always useful
-      <A HREF="GNUmakefile.Quoter_Simple_Server">Makefile</A>
+      <A HREF="Quoter_Simple_Server.mpc">MPC file</A>
     </P>
 
     <H4>Solution</H4>

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_Class.h"
 #include "Client_Options.h"
 
@@ -13,41 +11,38 @@
 #include "ace/Task.h"
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
+#include "tao/orbconf.h"
 
-ACE_RCSID (TAO_RTEC_PERF_TCP_Baseline,
-           client,
-           "$Id$")
-
-char const * hi_endpoint = "localhost:12345";
-char const * lo_endpoint = "localhost:23456";
+ACE_TCHAR const *hi_endpoint = ACE_TEXT ("localhost:12345");
+ACE_TCHAR const *lo_endpoint = ACE_TEXT ("localhost:23456");
 
 int
-parse_args (int argc, char *argv[]);
+parse_args (int argc, ACE_TCHAR *argv[]);
 
 class Scavenger_Task : public ACE_Task_Base
 {
 public:
-  Scavenger_Task (char const * endpoint,
-                  ACE_Barrier * barrier,
+  Scavenger_Task (ACE_TCHAR const * endpoint,
+                  ACE_Barrier * the_barrier,
                   int period_in_usecs);
 
-  void stop(void);
+  void stop();
 
   virtual int svc ();
 
 private:
-  char const * endpoint_;
-  ACE_Barrier * barrier_;
+  ACE_TCHAR const * endpoint_;
+  ACE_Barrier * the_barrier_;
   int period_in_usecs_;
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
   int stopped_;
 };
 
 class Measuring_Task : public ACE_Task_Base
 {
 public:
-  Measuring_Task (char const * endpoint,
-                  ACE_Barrier *barrier,
+  Measuring_Task (ACE_TCHAR const * endpoint,
+                  ACE_Barrier *the_barrier,
                   int iterations,
                   int period_in_usecs);
 
@@ -56,13 +51,13 @@ public:
   ACE_Sample_History sample_history;
 
 private:
-  char const * endpoint_;
-  ACE_Barrier * barrier_;
+  ACE_TCHAR const * endpoint_;
+  ACE_Barrier * the_barrier_;
   int iterations_;
   int period_in_usecs_;
 };
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   RT_Class rt_class;
 
@@ -74,23 +69,24 @@ int main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
   ACE_High_Res_Timer::calibrate ();
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
   int thread_count = 1 + options.nthreads;
-  ACE_Barrier barrier (thread_count);
+  ACE_Barrier the_barrier (thread_count);
 
   int per_thread_period = options.low_priority_period;
   if (options.global_low_priority_rate)
     per_thread_period = options.low_priority_period * options.nthreads;
 
-  Scavenger_Task lo_task (lo_endpoint, &barrier,
+  Scavenger_Task lo_task (lo_endpoint, &the_barrier,
                           per_thread_period);
   lo_task.activate (rt_class.thr_sched_class () | THR_NEW_LWP | THR_JOINABLE,
                     options.nthreads, 1,
                     rt_class.priority_low ());
 
-  Measuring_Task hi_task (hi_endpoint, &barrier,
+  Measuring_Task hi_task (hi_endpoint, &the_barrier,
                           options.iterations,
                           options.high_priority_period);
   hi_task.activate (rt_class.thr_sched_class () | THR_NEW_LWP | THR_JOINABLE,
@@ -105,12 +101,12 @@ int main (int argc, char *argv[])
   ACE_Sample_History &history = hi_task.sample_history;
   if (options.dump_history)
     {
-      history.dump_samples ("HISTORY", gsf);
+      history.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats high_priority_stats;
   history.collect_basic_stats (high_priority_stats);
-  high_priority_stats.dump_results ("High Priority", gsf);
+  high_priority_stats.dump_results (ACE_TEXT("High Priority"), gsf);
 
   lo_task.wait ();
 
@@ -121,11 +117,11 @@ int main (int argc, char *argv[])
 
 // ****************************************************************
 
-Scavenger_Task::Scavenger_Task(char const * endpoint,
-                               ACE_Barrier * barrier,
+Scavenger_Task::Scavenger_Task(ACE_TCHAR const * endpoint,
+                               ACE_Barrier * the_barrier,
                                int period_in_usecs)
   : endpoint_ (endpoint)
-  , barrier_ (barrier)
+  , the_barrier_ (the_barrier)
   , period_in_usecs_ (period_in_usecs)
   , mutex_ ()
   , stopped_ (0)
@@ -133,16 +129,16 @@ Scavenger_Task::Scavenger_Task(char const * endpoint,
 }
 
 void
-Scavenger_Task::stop(void)
+Scavenger_Task::stop()
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->stopped_ = 1;
 }
 
 int
-Scavenger_Task::svc(void)
+Scavenger_Task::svc()
 {
-  this->barrier_->wait ();
+  this->the_barrier_->wait ();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting scavenger thread\n"));
 
   ACE_SOCK_Stream stream;
@@ -163,7 +159,7 @@ Scavenger_Task::svc(void)
       ACE_OS::sleep (period);
 
       {
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
         if (this->stopped_)
           break;
       }
@@ -193,14 +189,14 @@ Scavenger_Task::svc(void)
 
 // ****************************************************************
 
-Measuring_Task::Measuring_Task (char const * endpoint,
-                                ACE_Barrier * barrier,
+Measuring_Task::Measuring_Task (ACE_TCHAR const * endpoint,
+                                ACE_Barrier * the_barrier,
                                 int iterations,
                                 int period_in_usecs)
   : sample_history (iterations)
-  , endpoint_(endpoint)
-  , barrier_(barrier)
-  , iterations_ (iterations)
+  , endpoint_ (endpoint)
+  , the_barrier_ (the_barrier)
+  , iterations_  (iterations)
   , period_in_usecs_ (period_in_usecs)
 {
 }
@@ -208,7 +204,7 @@ Measuring_Task::Measuring_Task (char const * endpoint,
 int
 Measuring_Task::svc ()
 {
-  this->barrier_->wait ();
+  this->the_barrier_->wait ();
 
   ACE_SOCK_Stream stream;
   {
@@ -232,12 +228,12 @@ Measuring_Task::svc ()
       if (n == 0) {
         ACE_ERROR((LM_ERROR,
                    "Connection closed while writing data to server <%s>\n",
-                   endpoint_, ""));
+                   endpoint_));
         break;
       } else if (n == -1) {
         ACE_ERROR((LM_ERROR,
                    "Error writing data to server <%s> %p\n",
-                   endpoint_, ""));
+                   endpoint_));
         break;
       }
       if (n == 0 || n == -1)
@@ -252,12 +248,12 @@ Measuring_Task::svc ()
       if (n == 0) {
         ACE_ERROR((LM_ERROR,
                    "Connection closed while reading data from server <%s>\n",
-                   endpoint_, ""));
+                   endpoint_));
         break;
       } else if (n == -1) {
         ACE_ERROR((LM_ERROR,
                    "Error reading data from server <%s> %p\n",
-                   endpoint_, ""));
+                   endpoint_));
         break;
       }
 
@@ -278,9 +274,9 @@ Measuring_Task::svc ()
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "H:L:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("H:L:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -313,12 +309,6 @@ parse_args (int argc, char *argv[])
                          argv [0]),
                         1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

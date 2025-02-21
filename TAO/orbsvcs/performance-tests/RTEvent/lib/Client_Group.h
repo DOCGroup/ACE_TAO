@@ -1,8 +1,6 @@
 /**
  * @file Client_Group.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -32,7 +30,7 @@ public:
    * We need a default constructor because this class is often used in
    * arrays.
    */
-  Client_Group (void);
+  Client_Group ();
 
   /// Initialize the consumer/supplier pair(s)
   /**
@@ -52,7 +50,7 @@ public:
              CORBA::Long base_event_type,
              CORBA::ULong iterations,
              CORBA::Long workload_in_usecs,
-             ACE_UINT32 gsf,
+             ACE_High_Res_Timer::global_scale_factor_type gsf,
              PortableServer::POA_ptr supplier_poa,
              PortableServer::POA_ptr consumer_poa);
 
@@ -66,27 +64,26 @@ public:
              CORBA::Long base_event_type_range,
              CORBA::ULong iterations,
              CORBA::Long workload_in_usecs,
-             ACE_UINT32 gsf,
+             ACE_High_Res_Timer::global_scale_factor_type gsf,
              PortableServer::POA_ptr supplier_poa,
              PortableServer::POA_ptr consumer_poa);
 
   /// Connect to the event channel
-  void connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
 
   //@{
   /** @name Accessors
    */
-  Supplier *supplier (void) const;
+  Supplier *supplier () const;
 
-  Consumer *consumer (void) const;
+  Consumer *consumer () const;
 
-  Loopback_Supplier *loopback_supplier (void) const;
+  Loopback_Supplier *loopback_supplier () const;
 
-  Loopback_Consumer *loopback_consumer (void) const;
+  Loopback_Consumer *loopback_consumer () const;
   //@}
 
 private:

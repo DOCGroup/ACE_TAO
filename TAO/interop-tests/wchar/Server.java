@@ -12,7 +12,7 @@ import interop.*;
  * Java implemention of the interoperability tests for wchars.
  *
  * @author Phil Mesnier
- * @version $Id$
+ * @version
  */
 
 public class Server

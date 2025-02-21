@@ -4,8 +4,6 @@
 /**
  *  @file   Policy_Manager.h
  *
- *  $Id$
- *
  * An implementation for the CORBA::PolicyManager interface.
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
@@ -27,45 +25,39 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/PolicyC.h"
+#include "tao/Policy_ManagerC.h"
 #include "tao/LocalObject.h"
 #include "tao/Policy_Set.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-class TAO_Export TAO_Policy_Manager :
-  public CORBA::PolicyManager,
-  public TAO_Local_RefCounted_Object
+class TAO_Policy_Manager
+  : public CORBA::PolicyManager
+  , public ::CORBA::LocalObject
 {
 public:
   /// constructor
-  TAO_Policy_Manager (void);
+  TAO_Policy_Manager ();
 
   /// Obtain a single policy.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   // = The CORBA::PolicyManager operations
 
   virtual CORBA::PolicyList * get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+        const CORBA::PolicyTypeSeq & ts);
 
   virtual void set_policy_overrides (const CORBA::PolicyList & policies,
-                                     CORBA::SetOverrideType set_add
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::InvalidPolicies));
+                                     CORBA::SetOverrideType set_add);
+
+private:
+  TAO_Policy_Manager (TAO_Policy_Manager const &) = delete;
+  TAO_Policy_Manager & operator= (TAO_Policy_Manager const &) = delete;
+  TAO_Policy_Manager (TAO_Policy_Manager &&) = delete;
+  TAO_Policy_Manager & operator= (TAO_Policy_Manager &&) = delete;
 
 private:
   /// Protect access
@@ -75,12 +67,10 @@ private:
   TAO_Policy_Set impl_;
 };
 
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Policy_Manager.i"
+# include "tao/Policy_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

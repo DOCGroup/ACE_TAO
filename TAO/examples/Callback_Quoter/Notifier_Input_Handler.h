@@ -1,20 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    Notifier_Input_Handler.h
-//
-// = DESCRIPTION
-//    Definition of the Callback_Quoter Notifier_Input_Handler class.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Notifier_Input_Handler.h
+ *
+ *  Definition of the Callback_Quoter Notifier_Input_Handler class.
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef SUPPLIER_INPUT_HANDLER_H
 #define SUPPLIER_INPUT_HANDLER_H
@@ -26,67 +20,65 @@
 #include "orbsvcs/CosNamingS.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 
+/**
+ * @class Notifier_Input_Handler
+ *
+ * @brief The class defines the callback quoter Notifier initialization
+ * and run methods.
+ *
+ * This class handles initialization tasks, as well, such as
+ * setting up the Orb manager and registers the Notifier servant
+ * object.
+ */
 class Notifier_Input_Handler : public ACE_Event_Handler
 {
-  // = TITLE
-  //   The class defines the callback quoter Notifier initialization
-  //   and run methods.
-  //
-  // = DESCRIPTION
-  //   This class handles initialization tasks, as well, such as
-  //   setting up the Orb manager and registers the Notifier servant
-  //   object.
 public:
-  // = Initialization and termination methods.
-  Notifier_Input_Handler (void);
-  // Constructor.
+  /// Constructor.
+  Notifier_Input_Handler ();
 
-  ~Notifier_Input_Handler (void);
-  // Destructor.
+  /// Destructor.
+  ~Notifier_Input_Handler ();
 
-  int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
-  // Initialize the Notifier who plays the role of the server here.
+  /// Initialize the Notifier who plays the role of the server here.
+  int init (int argc, ACE_TCHAR *argv[]);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the ORB.
+  /// Run the ORB.
+  int run ();
 
-   virtual int handle_input (ACE_HANDLE);
-  // Handle the user input.
+  /// Handle the user input.
+  int handle_input (ACE_HANDLE) override;
 
 private:
-
+  /// The TAO orb manager object.
   TAO_ORB_Manager orb_manager_;
-  // The tao orb manager object.
 
-  int parse_args (void);
-  // Parses the command line arguments.
+  /// Parses the command line arguments.
+  int parse_args ();
 
-  int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
-  // Initialises the name server and registers the Notifier object
-  // name with the name server.
+  /// Initialises the name server and registers the Notifier object
+  /// name with the name server.
+  int init_naming_service ();
 
+  /// File where the IOR of the Notifier object is stored.
   FILE *ior_output_file_;
-  // File where the IOR of the Notifier object is stored.
 
+  /// Number of command line arguments.
   int argc_;
-  // Number of command line arguments.
 
-  char **argv_;
-  // The command line arguments.
+  /// The command line arguments.
+  ACE_TCHAR **argv_;
 
+  /// Naming context for the naming service.
   CosNaming::NamingContext_var naming_context_;
-  // Naming context for the naming service.
 
+  /// helper class for getting access to Naming Service.
   TAO_Naming_Client naming_server_;
-  // helper class for getting access to Naming Service.
 
+  /// The servant object registered with the orb.
   Notifier_i notifier_i_;
-  // The servant object registered with the orb.
 
+  /// This specifies whether the naming service is to be used.
   int using_naming_service_;
-  // This specifies whether the naming service is to be used.
 };
 
 #endif /* NOTIFIER_INPUT_HANDLER_H */

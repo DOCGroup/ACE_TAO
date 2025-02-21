@@ -1,0 +1,41 @@
+// -*- MPC -*-
+project(*IDL): taoidldefaults {
+  idlflags += -Sp -Sd
+
+  IDL_Files {
+    UDP.idl
+  }
+
+  custom_only = 1
+}
+
+project(*server): taoserver, strategies, avoids_corba_e_micro {
+  exename = server
+  after += *IDL
+
+  Source_Files {
+    server.cpp
+    UDP_Client_i.cpp
+    UDP_i.cpp
+    UDPS.cpp
+    UDPC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*client): taoserver, strategies {
+  exename = client
+  after += *IDL
+
+  Source_Files {
+    client.cpp
+    UDP_Client_i.cpp
+    UDP_i.cpp
+    UDPS.cpp
+    UDPC.cpp
+  }
+  IDL_Files {
+  }
+}
+

@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * @file Threaded_Client.cpp
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
@@ -11,10 +9,8 @@
  *         a get_thread_id request that is forwarded by a remote server to
  *         the server in thread (1).
  *
- *
  * The test passes if the thread id of the thread that services the get_thread_id
  * request is the same as the thread that makes the request.
- *
  */
 
 #include "Server_Task.h"
@@ -23,13 +19,13 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Manual_Event.h"
 
-const char *ior_input_file = "file://test.ior";
-const char *ior_output_file = "thr_server.ior";
+const ACE_TCHAR *ior_input_file = ACE_TEXT("test.ior");
+const ACE_TCHAR *ior_output_file = ACE_TEXT("thr_server.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,25 +52,21 @@ parse_args (int argc, char *argv[])
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  // Parse command line
-  if (parse_args (argc, argv) == -1)
-    {
-      return -1;
-    }
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_Argv_Type_Converter main_args_s (argc, argv);
 
       CORBA::ORB_var sorb =
         CORBA::ORB_init (main_args_s.get_argc (),
                          main_args_s.get_TCHAR_argv (),
-                         "Server_ORB"
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "Server_ORB");
+    // Parse command line
+      if (parse_args (argc, argv) == -1)
+      {
+          return -1;
+      }
 
       ACE_Manual_Event me;
 
@@ -97,9 +89,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var corb =
         CORBA::ORB_init (main_args_c.get_argc (),
                          main_args_c.get_TCHAR_argv (),
-                         "Client_ORB"
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "Client_ORB");
 
       {
         Client_Task client_task (ior_input_file,
@@ -115,14 +105,12 @@ main (int argc, char *argv[])
         ACE_Thread_Manager::instance ()->wait ();
       }
 
-      corb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      corb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // ignore exceptions
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Threaded client ready.\n"));
 

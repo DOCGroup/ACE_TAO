@@ -1,9 +1,0 @@
-// $Id$
-project(*Server): taoserver, minimum_corba {
-   Source_Files {
-    server.cpp
-    Servant_Activator.cpp
-    Servant_Locator.cpp
-    Server_Manager.cpp
-  }
-}

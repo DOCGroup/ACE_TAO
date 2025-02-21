@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -70,42 +68,73 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
-#include	"utl_exceptlist.h"
+#include "utl_exceptlist.h"
 
-ACE_RCSID (util, 
-           utl_exceptlist, 
-           "$Id$")
+#include "ace/OS_Memory.h"
 
-UTL_ExceptList::UTL_ExceptList (AST_Exception *s, 
+UTL_ExceptList::UTL_ExceptList (AST_Type *s,
                                 UTL_ExceptList *cdr)
   : UTL_List (cdr),
-	  pd_car_data (s)
+    pd_car_data (s)
 {
 }
 
 // Get list item.
-AST_Exception *
-UTL_ExceptList::head (void)
+AST_Type *
+UTL_ExceptList::head ()
 {
   return this->pd_car_data;
 }
 
+// The two methods below make direct calls on the
+// cdr list (we have been made a friend of the base
+// class UTL_List's private member). This is so we
+// can avoid copying the contained quantity, an
+// AST_Exception.
+void
+UTL_ExceptList::destroy ()
+{
+  if (this->tail () != nullptr)
+    {
+      this->tail ()->destroy ();
+    }
+
+  delete this;
+}
+
+UTL_ExceptList *
+UTL_ExceptList::copy ()
+{
+  UTL_ExceptList *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  UTL_ExceptList (this->pd_car_data,
+                                  nullptr),
+                  nullptr);
+
+  if (this->tail () != nullptr)
+    {
+      retval->nconc ((UTL_ExceptList *) this->tail ()->copy ());
+    }
+
+  return retval;
+}
+
 UTL_ExceptlistActiveIterator::UTL_ExceptlistActiveIterator (UTL_ExceptList *s)
-	: UTL_ListActiveIterator(s)
+  : UTL_ListActiveIterator(s)
 {
 }
 
 // Get current item.
-AST_Exception *
-UTL_ExceptlistActiveIterator::item (void)
+AST_Type *
+UTL_ExceptlistActiveIterator::item ()
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_ExceptList *) source)->head ();

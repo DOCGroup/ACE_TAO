@@ -1,17 +1,12 @@
-//
-// $Id$
-//
 #include "Peer.h"
 #include "Session.h"
-
-ACE_RCSID(Big_Oneways, Peer, "$Id$")
 
 Peer::Peer (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-Peer::~Peer (void)
+Peer::~Peer ()
 {
 }
 
@@ -20,11 +15,9 @@ Peer::create_session (Test::Session_Control_ptr control,
                       CORBA::ULong payload_size,
                       CORBA::ULong thread_count,
                       CORBA::ULong message_count,
-                      CORBA::ULong peer_count
-                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                      CORBA::ULong peer_count)
 {
-  Session *session_impl;
+  Session *session_impl = 0;
   ACE_NEW_THROW_EX (session_impl,
                     Session (control,
                              payload_size,
@@ -32,20 +25,28 @@ Peer::create_session (Test::Session_Control_ptr control,
                              message_count,
                              peer_count),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Test::Session::_nil ());
   PortableServer::ServantBase_var transfer_ownership (session_impl);
+  Test::Session_var session;
 
-  return session_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+#if defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
+  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::ObjectId_var id = poa->activate_object (transfer_ownership.in ());
+  CORBA::Object_var object = poa->id_to_reference (id.in ());
+  session = Test::Session::_unchecked_narrow (object.in());
+#else
+  session = session_impl->_this ();
+#endif /* CORBA_E_COMPACT || CORBA_E_MICRO */
+
+  return session._retn ();
 }
 
 void
-Peer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Peer::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, waiting for threads\n"));
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, shutting down ORB\n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

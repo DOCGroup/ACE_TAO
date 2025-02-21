@@ -4,7 +4,7 @@
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
    <meta name="GENERATOR" content="Mozilla/4.77 [en] (Windows NT 5.0; U) [Netscape]">
    <title>TAO Real-Time CORBA Features Documentation</title>
-<!-- $Id$ -->
+<!--  -->
 </head>
 <body>
 
@@ -206,6 +206,14 @@ See <a href="#mappings">Priority Mappings</a> section for more details.</td>
 <li>
 ThreadPools are now fully supported. Endpoint priorities are no longer
 supported.</li>
+<li>
+By default dynamic RTCorba threads live forever after they are created.
+When using the <code>RTORBDynamicThreadIdleTimeout</code> from the
+<code>RT_ORB_Loader</code> it
+can be specified that the dynamic threads should end after a given
+idle time. Timeout must be specified in microseconds, 0 means the threads
+will stay alive forever. With <code>RTORBDynamicThreadRunTime</code> you
+specify the amount of time after a dynamic thread ends itself.
 </ul>
 
 <h3>
@@ -765,7 +773,7 @@ these TAO supported mappings through the Service Configurator (svc.conf)
 files with the following entry:</dd>
 
 <p>static RT_ORB_Loader "-ORBSchedPolicy SCHED_FIFO -ORBScopePolicy PROCESS
--ORBPriorityMapping direct <i>-ORBNetworkPriorityMapping Linear</i>"
+-ORBPriorityMapping direct <i>-RTORBNetworkPriorityMapping Linear</i>"
 <br>&nbsp;
 <li>
 <b>Network Priority Mapping Manager</b></li>
@@ -830,7 +838,7 @@ priority</tt>
 map the RTCORBA priority to the network priority.
 </ul>
 <br>
-<i>Last Modified: $Date$</i></dl>
+</dl>
 
 </body>
 </html>

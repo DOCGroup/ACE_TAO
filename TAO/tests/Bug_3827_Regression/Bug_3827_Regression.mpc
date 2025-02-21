@@ -1,0 +1,17 @@
+// -*- MPC -*-
+project(*IDL): taoidldefaults, anytypecode {
+  IDL_Files {
+    Message.idl
+  }
+  custom_only = 1
+}
+
+project (*test) : taoexe, valuetype {
+  after     += *IDL
+  exename    = test
+
+  Source_Files {
+    MessageC.cpp
+    test.cpp
+  }
+}

@@ -1,13 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    HTIOP_Acceptor.h
  *
- *  $Id$
- *
  *  HTIOP specific acceptor processing
- *
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
@@ -18,8 +15,9 @@
 #define HTIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
 
-#include "HTIOP_Completion_Handler.h"
-#include "HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,6 +32,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
   namespace HTBP
@@ -41,12 +40,14 @@ namespace ACE
     class Environment;
   }
 }
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace HTIOP
   {
-
     // TAO HTIOP_Acceptor concrete call definition
 
     /**
@@ -65,19 +66,19 @@ namespace TAO
                 int is_inside);
 
       /// Destructor.
-      ~Acceptor (void);
+      ~Acceptor ();
 
       /// @@ Helper method for the implementation repository, should go
       ///    away
-      const ACE::HTBP::Addr& address (void) const;
+      const ACE::HTBP::Addr& address () const;
 
       /// Returns the array of endpoints in this acceptor
-      const ACE::HTBP::Addr *endpoints (void);
+      const ACE::HTBP::Addr *endpoints ();
 
-      typedef ACE_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
-      typedef TAO_Creation_Strategy<Completion_Handler> CREATION_STRATEGY;
-      typedef ACE_Concurrency_Strategy<Completion_Handler> CONCURRENCY_STRATEGY;
-      typedef TAO_Accept_Strategy<Completion_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+      typedef TAO_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
+      typedef Creation_Strategy<Completion_Handler> CREATION_STRATEGY;
+      typedef Concurrency_Strategy<Completion_Handler> CONCURRENCY_STRATEGY;
+      typedef Accept_Strategy<Completion_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
 
       /**
        * The TAO::Acceptor methods, check the documentation in
@@ -96,7 +97,7 @@ namespace TAO
                                 int version_minor,
                                 const char *options = 0);
 
-      virtual int close (void);
+      virtual int close ();
 
       virtual int create_profile (const TAO::ObjectKey &object_key,
                                   TAO_MProfile &mprofile,
@@ -104,7 +105,7 @@ namespace TAO
 
       virtual int is_collocated (const TAO_Endpoint *endpoint);
 
-      virtual CORBA::ULong endpoint_count (void);
+      virtual CORBA::ULong endpoint_count ();
 
       virtual int object_key (IOP::TaggedProfile &profile,
                               TAO::ObjectKey &key);
@@ -129,7 +130,6 @@ namespace TAO
                                   char *&host);
 
     protected:
-
       /**
        * Implement the common part of the open*() methods.  This method is
        * virtual to allow a derived class implementation to be invoked
@@ -170,7 +170,6 @@ namespace TAO
 
 
     protected:
-
       /// Array of ACE::HTBP::Addr instances, each one corresponding to a
       /// given network interface.
       ACE::HTBP::Addr *addrs_;
@@ -204,7 +203,6 @@ namespace TAO
       TAO_ORB_Core *orb_core_;
 
     private:
-
       /// the concrete acceptor, as a pointer to it's base class.
       BASE_ACCEPTOR base_acceptor_;
 
@@ -225,8 +223,10 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "HTIOP_Acceptor.i"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

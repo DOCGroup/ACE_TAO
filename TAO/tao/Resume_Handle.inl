@@ -1,5 +1,6 @@
 // -*- C++ -*-
-//$Id$
+//
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Resume_Handle::TAO_Resume_Handle (TAO_ORB_Core *orb_core,
@@ -11,13 +12,10 @@ TAO_Resume_Handle::TAO_Resume_Handle (TAO_ORB_Core *orb_core,
 }
 
 ACE_INLINE
-TAO_Resume_Handle::~TAO_Resume_Handle (void)
+TAO_Resume_Handle::~TAO_Resume_Handle ()
 {
   if (this->flag_ == TAO_HANDLE_RESUMABLE)
     this->resume_handle ();
-
-  this->orb_core_ = 0;
-  this->handle_ = ACE_INVALID_HANDLE;
 }
 
 
@@ -30,9 +28,14 @@ TAO_Resume_Handle::set_flag (TAO_Handle_Resume_Flag fl)
 ACE_INLINE TAO_Resume_Handle &
 TAO_Resume_Handle::operator= (const TAO_Resume_Handle &rhs)
 {
-  this->orb_core_ = rhs.orb_core_;
-  this->handle_ = rhs.handle_;
-  this->flag_ = rhs.flag_;
+  if (this != &rhs)
+    {
+      this->orb_core_ = rhs.orb_core_;
+      this->handle_ = rhs.handle_;
+      this->flag_ = rhs.flag_;
+    }
 
   return *this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

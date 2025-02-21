@@ -1,6 +1,7 @@
-#include "SSLIOP_Connection_Handler.h"
-#include "SSLIOP_Endpoint.h"
-#include "SSLIOP_Util.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Util.h"
 
 #include "tao/debug.h"
 #include "tao/Base_Transport_Property.h"
@@ -13,16 +14,13 @@
 #include "tao/Protocols_Hooks.h"
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/SSL/SSL_Context.h"
 
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Connection_Handler.i"
+# include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (SSLIOP,
-           SSLIOP_Connection_Handler,
-           "$Id$")
-
-// ****************************************************************
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Connection_Handler::Connection_Handler (
     ACE_Thread_Manager *t)
@@ -38,27 +36,34 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
   ACE_ASSERT (0);
 }
 
-TAO::SSLIOP::Connection_Handler::Connection_Handler (
-    TAO_ORB_Core *orb_core,
-    CORBA::Boolean /* flag */) // SSLIOP does *not* support GIOPlite
+TAO::SSLIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
   : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     current_ ()
 {
-  this->current_ =
-    TAO::SSLIOP::Util::current (orb_core);
+  this->current_ = TAO::SSLIOP::Util::current (orb_core);
 
   TAO::SSLIOP::Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
-          TAO::SSLIOP::Transport (this, orb_core, 0));
+          TAO::SSLIOP::Transport (this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 }
 
-TAO::SSLIOP::Connection_Handler::~Connection_Handler (void)
+TAO::SSLIOP::Connection_Handler::~Connection_Handler ()
 {
   delete this->transport ();
+  int const result =
+    this->release_os_resources ();
+
+  if (result == -1 && TAO_debug_level)
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - SSLIOP_Connection_Handler::")
+                  ACE_TEXT("~SSLIOP_Connection_Handler, ")
+                  ACE_TEXT("release_os_resources() failed %m\n")));
+    }
 }
 
 int
@@ -70,6 +75,9 @@ TAO::SSLIOP::Connection_Handler::open_handler (void *v)
 int
 TAO::SSLIOP::Connection_Handler::open (void *)
 {
+  if (this->shared_open() == -1)
+    return -1;
+
   TAO_IIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.
@@ -79,38 +87,29 @@ TAO::SSLIOP::Connection_Handler::open (void *)
     this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
   protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
+  protocol_properties.keep_alive_ =
+    this->orb_core ()->orb_params ()->sock_keepalive ();
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  int client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  if (tph != 0)
     {
-      if (client)
+      try
         {
-          tph->client_protocol_properties_at_orb_level (
-            protocol_properties
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE)
+            {
+              tph->client_protocol_properties_at_orb_level (protocol_properties);
+            }
+          else
+            {
+              tph->server_protocol_properties_at_orb_level (protocol_properties);
+            }
         }
-      else
+      catch (const CORBA::Exception&)
         {
-          tph->server_protocol_properties_at_orb_level (
-            protocol_properties
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          return -1;
         }
     }
-  ACE_CATCHANY
-    {
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
@@ -124,6 +123,20 @@ TAO::SSLIOP::Connection_Handler::open (void *)
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
+
+  //support ORBKeepalive in SSL mode
+  if (protocol_properties.keep_alive_)
+    {
+      if (this->peer ().
+          set_option (SOL_SOCKET,
+                      SO_KEEPALIVE,
+                      (void *) &protocol_properties.keep_alive_,
+                      sizeof (protocol_properties.keep_alive_)) == -1
+          && errno != ENOTSUP)
+        {
+          return -1;
+        }
+    }
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
@@ -142,7 +155,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
       // occur.  For most protocol implementations this is fine.
       // OpenSSL, on the other hand, requires that the same arguments
       // be passed to SSL_write() if an SSL_ERROR_WANT_WRITE error
-      // occured on a previous SSL_write() attempt, which cannot be
+      // occurred on a previous SSL_write() attempt, which cannot be
       // guaranteed by TAO's current message queuing/construction
       // code, often resulting in a "bad write retry" OpenSSL error.
       // To work around this issue, we enable partial SSL_write()s in
@@ -166,27 +179,21 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   if (this->peer ().get_local_addr (local_addr) == -1)
     return -1;
 
-  int use_dotted_decimal_addresses = 
-    this->orb_core ()->orb_params ()->use_dotted_decimal_addresses ();
-  
-  if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
-      && local_addr.get_port_number () == remote_addr.get_port_number ())
+  if (local_addr == remote_addr)
     {
       if (TAO_debug_level > 0)
         {
-          char remote_as_string[MAXHOSTNAMELEN + 16];
-          char local_as_string[MAXHOSTNAMELEN + 16];
+          ACE_TCHAR remote_as_string[MAXHOSTNAMELEN + 16];
+          ACE_TCHAR local_as_string[MAXHOSTNAMELEN + 16];
 
           (void) remote_addr.addr_to_string (remote_as_string,
-                                             sizeof (remote_as_string),
-                                             use_dotted_decimal_addresses);
+                                             sizeof (remote_as_string) / sizeof (ACE_TCHAR));
           (void) local_addr.addr_to_string (local_as_string,
-                                            sizeof (local_as_string),
-                                             use_dotted_decimal_addresses);
-          ACE_ERROR ((LM_ERROR,
-                      "TAO(%P|%t) - TAO::SSLIOP::Connection_Handler::open, "
-                      "Holy Cow! The remote addr and "
-                      "local addr are identical (%s == %s)\n",
+                                            sizeof (local_as_string) / sizeof (ACE_TCHAR));
+          ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT("TAO(%P|%t) - TAO::SSLIOP::Connection_Handler::open, ")
+                      ACE_TEXT("Holy Cow! The remote addr and ")
+                      ACE_TEXT("local addr are identical (%s == %s)\n"),
                       remote_as_string, local_as_string));
         }
 
@@ -195,31 +202,29 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
   if (TAO_debug_level > 0)
     {
-      char client[MAXHOSTNAMELEN + 16];
+      ACE_TCHAR client[MAXHOSTNAMELEN + 16];
 
       // Verify that we can resolve the peer hostname.
-      if (remote_addr.addr_to_string (client, 
-                                      sizeof (client),
-                                      use_dotted_decimal_addresses) == -1)
+      if (remote_addr.addr_to_string (client,
+                                      sizeof (client) / sizeof (ACE_TCHAR)) == -1)
       {
-        ACE_OS::strcpy (client, "*unable to obtain*");
+        ACE_OS::strcpy (client, ACE_TEXT("*unable to obtain*"));
       }
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection from ")
                   ACE_TEXT ("client <%s> on [%d]\n"),
                   client,
                   this->peer ().get_handle ()));
-      
+
       // Verify that we can resolve our hostname.
-      if (local_addr.addr_to_string (client, 
-                                      sizeof (client),
-                                      use_dotted_decimal_addresses) == -1)
+      if (local_addr.addr_to_string (client,
+                                      sizeof (client) / sizeof (ACE_TCHAR)) == -1)
       {
-        ACE_OS::strcpy (client, "*unable to obtain*");
+        ACE_OS::strcpy (client, ACE_TEXT("*unable to obtain*"));
       }
-      
-      ACE_DEBUG ((LM_DEBUG,
+
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection accepted from ")
                   ACE_TEXT ("server <%s> on [%d]\n"),
                   client,
@@ -233,19 +238,20 @@ TAO::SSLIOP::Connection_Handler::open (void *)
     return -1;
 
   // @@ Not needed
-  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+           this->orb_core ()->leader_follower ());
 
   return 0;
 }
 
 int
-TAO::SSLIOP::Connection_Handler::resume_handler (void)
+TAO::SSLIOP::Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO::SSLIOP::Connection_Handler::close_connection (void)
+TAO::SSLIOP::Connection_Handler::close_connection ()
 {
   return this->close_connection_eh (this);
 }
@@ -259,8 +265,7 @@ TAO::SSLIOP::Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO::SSLIOP::Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  const int result =
-    this->handle_output_eh (handle, this);
+  int const result = this->handle_output_eh (handle, this);
 
   if (result == -1)
     {
@@ -273,30 +278,42 @@ TAO::SSLIOP::Connection_Handler::handle_output (ACE_HANDLE handle)
 
 int
 TAO::SSLIOP::Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                               const void *)
+                                                 const void *)
 {
+  // Using this to ensure this instance will be deleted (if necessary)
+  // only after reset_state(). Without this, when this refcount==1 -
+  // the call to close() will cause a call to remove_reference() which
+  // will delete this. At that point this->reset_state() is in no
+  // man's territory and that causes SEGV on some platforms (Windows!)
+
+  TAO_Auto_Reference<TAO::SSLIOP::Connection_Handler> safeguard (*this);
+
+  // NOTE: Perhaps not the best solution, as it feels like the upper
+  // layers should be responsible for this?
+
   // We don't use this upcall for I/O.  This is only used by the
   // Connector to indicate that the connection timedout.  Therefore,
   // we should call close().
-  return this->close ();
+  int const ret = this->close ();
+  this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
+  return ret;
 }
 
 int
-TAO::SSLIOP::Connection_Handler::handle_close (ACE_HANDLE,
-                                             ACE_Reactor_Mask)
+TAO::SSLIOP::Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_ASSERT (0);
   return 0;
 }
 
 int
-TAO::SSLIOP::Connection_Handler::close (u_long)
+TAO::SSLIOP::Connection_Handler::close (u_long flags)
 {
-  return this->close_handler ();
+  return this->close_handler (flags);
 }
 
 int
-TAO::SSLIOP::Connection_Handler::release_os_resources (void)
+TAO::SSLIOP::Connection_Handler::release_os_resources ()
 {
   return this->peer().close ();
 }
@@ -309,7 +326,7 @@ TAO::SSLIOP::Connection_Handler::pos_io_hook (int & return_value)
 }
 
 int
-TAO::SSLIOP::Connection_Handler::add_transport_to_cache (void)
+TAO::SSLIOP::Connection_Handler::add_transport_to_cache ()
 {
   ACE_INET_Addr addr;
 
@@ -335,8 +352,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache (void)
       addr.get_port_number ()   // port
     };
 
-  TAO_SSLIOP_Endpoint endpoint (&ssl,
-                                &tmpoint);
+  TAO_SSLIOP_Endpoint endpoint (&ssl, &tmpoint);
 
   // Construct a property object
   TAO_Base_Transport_Property prop (&endpoint);
@@ -345,8 +361,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Add the handler to Cache
-  return cache.cache_idle_transport (&prop,
-                                     this->transport ());
+  return cache.cache_transport (&prop, this->transport ());
 }
 
 int
@@ -354,7 +369,7 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
   IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
-  const CORBA::ULong len = listen_list.length ();
+  CORBA::ULong const len = listen_list.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -365,8 +380,8 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Listening port [%d] on [%s]\n",
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Listening port [%d] on [%C]\n",
                       listen_point.port,
                       listen_point.host.in ()));
         }
@@ -401,9 +416,8 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      const int retval = this->transport ()->recache_transport (&prop);
-      if (retval == -1)
-        return retval;
+      if (this->transport ()->recache_transport (&prop) == -1)
+        return -1;
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();
@@ -435,18 +449,23 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
   TAO::SSLIOP::Current_Impl *previous_current_impl,
   bool &setup_done)
 {
-  this->current_->teardown (previous_current_impl,
-                            setup_done);
+  this->current_->teardown (previous_current_impl, setup_done);
 }
 
-// ****************************************************************
+int
+TAO::SSLIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+{
+  return ACE::handle_write_ready (this->peer ().get_handle (), t);
+}
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+bool
+TAO::SSLIOP::Connection_Handler::check_host ()
+{
+  ACE_SSL_Context *ssl_ctx = ACE_SSL_Context::instance ();
+  ACE_INET_Addr remote_addr;
+  return (this->peer ().get_remote_addr (remote_addr) == -1) ?
+    false :
+    ssl_ctx->check_host (remote_addr, this->peer ().ssl ());
+}
 
-template class ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

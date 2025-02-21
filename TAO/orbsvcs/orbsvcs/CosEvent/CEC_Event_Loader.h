@@ -1,7 +1,7 @@
+// -*- C++ -*-
+
 /**
  * @file CEC_Event_Loader.h
- *
- * $Id$
  *
  * Define a class to dynamically load the COS Event Service.
  *
@@ -17,15 +17,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 #include "orbsvcs/CosNamingC.h"
 
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_Event_Loader
@@ -36,17 +38,17 @@ class TAO_Event_Serv_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
 {
 public:
   /// Constructor
-  TAO_CEC_Event_Loader (void);
+  TAO_CEC_Event_Loader ();
 
   /// Destructor
-  ~TAO_CEC_Event_Loader (void);
+  ~TAO_CEC_Event_Loader () = default;
 
   //@{
   /**
    * @name Derived from ACE_Service_Object
    */
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
   //@}
 
   //@{
@@ -55,9 +57,7 @@ public:
    */
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv[]
-                                           ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException));
+                                           ACE_TCHAR *argv[]);
   //@}
 
 protected:
@@ -94,9 +94,13 @@ protected:
   CosNaming::Name channel_name_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &))
+  TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &) = delete;
+  TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &) = delete;
+  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader &&) = delete;
+  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader &&) = delete;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_Event_Serv, TAO_CEC_Event_Loader)
 

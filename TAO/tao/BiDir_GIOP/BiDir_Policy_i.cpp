@@ -1,40 +1,34 @@
-// $Id$
-
-#include "BiDir_Policy_i.h"
+#include "tao/BiDir_GIOP/BiDir_Policy_i.h"
 
 #include "tao/Stub.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (TAO,
-           BiDir_Policy_i,
-           "$Id$")
+#include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
     const BiDirPolicy::BidirectionalPolicyValue  val)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (BiDirPolicy, BidirectionalPolicy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
-  , TAO_Local_RefCounted_Object ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::BiDirPolicy::BidirectionalPolicy ()
+  , ::CORBA::LocalObject ()
   , value_ (val)
 {
 }
 
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (BiDirPolicy, BidirectionalPolicy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
-  , TAO_Local_RefCounted_Object ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::BiDirPolicy::BidirectionalPolicy ()
+  , ::CORBA::LocalObject ()
   , value_ (rhs.value_)
 {
 }
 
-
 CORBA::PolicyType
-TAO_BidirectionalPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_BidirectionalPolicy::policy_type ()
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -43,50 +37,44 @@ TAO_BidirectionalPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 TAO_BidirectionalPolicy *
-TAO_BidirectionalPolicy::clone (void) const
+TAO_BidirectionalPolicy::clone () const
 {
-  TAO_BidirectionalPolicy *copy = 0;
+  TAO_BidirectionalPolicy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_BidirectionalPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
 CORBA::Policy_ptr
-TAO_BidirectionalPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_BidirectionalPolicy::copy ()
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
-
-  TAO_BidirectionalPolicy* tmp;
+  TAO_BidirectionalPolicy* tmp = nullptr;
   ACE_NEW_THROW_EX (tmp, TAO_BidirectionalPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return tmp;
 }
 
 void
-TAO_BidirectionalPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_BidirectionalPolicy::destroy ()
 {
 }
 
-
 BiDirPolicy::BidirectionalPolicyValue
-TAO_BidirectionalPolicy::value (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException))
+TAO_BidirectionalPolicy::value ()
 {
   return this->value_;
 }
 
 
 TAO_Cached_Policy_Type
-TAO_BidirectionalPolicy::_tao_cached_type (void) const
+TAO_BidirectionalPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

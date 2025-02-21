@@ -1,8 +1,6 @@
 /**
  * @file Send_Task_Stopper.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -20,7 +18,6 @@
  * @class Send_Task_Stopper
  *
  * @brief Implement a helper class to activate and stop Send_Tasks.
- *
  */
 class TAO_RTEC_Perf_Export Send_Task_Stopper : public Task_Activator<Send_Task>
 {
@@ -31,7 +28,7 @@ public:
                      Send_Task *task);
 
   /// Destructor, stop the task and wait for it
-  ~Send_Task_Stopper (void);
+  ~Send_Task_Stopper ();
 };
 
 #if defined(__ACE_INLINE__)

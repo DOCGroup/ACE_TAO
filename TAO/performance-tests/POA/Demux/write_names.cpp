@@ -1,10 +1,8 @@
-//$Id$
-#include <stdio.h>
+#include <ace/OS_NS_stdio.h>
 
 int
-main(int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   for(int i=0; i<1000; i++)
-    printf ("%09d\n",i);
+    ACE_OS::printf ("%09d\n",i);
 }

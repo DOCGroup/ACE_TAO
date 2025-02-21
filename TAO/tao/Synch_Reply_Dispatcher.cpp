@@ -1,14 +1,9 @@
-// $Id$
+#include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/ORB_Core.h"
+#include "tao/Pluggable_Messaging_Utils.h"
+#include "tao/debug.h"
 
-#include "Synch_Reply_Dispatcher.h"
-#include "ORB_Core.h"
-#include "Pluggable_Messaging_Utils.h"
-#include "debug.h"
-
-
-ACE_RCSID (tao,
-           Synch_Reply_Dispatcher,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
@@ -36,69 +31,95 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
 }
 
 // Destructor.
-TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher (void)
+TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher ()
 {
 }
 
 TAO_InputCDR &
-TAO_Synch_Reply_Dispatcher::reply_cdr (void)
+TAO_Synch_Reply_Dispatcher::reply_cdr ()
 {
   return this->reply_cdr_;
+}
+
+void
+TAO_Synch_Reply_Dispatcher::reply_timed_out ()
+{
+  // noop
 }
 
 int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params)
 {
-  if (params.input_cdr_ == 0)
+  if (params.input_cdr_ == nullptr)
     return -1;
 
-  this->reply_status_ = params.reply_status_;
+  this->reply_status_ = params.reply_status ();
+  this->locate_reply_status_ = params.locate_reply_status ();
 
-  // Steal the buffer, that way we don't do any unnecesary copies of
+  // Steal the buffer, that way we don't do any unnecessary copies of
   // this data.
-  CORBA::ULong max = params.svc_ctx_.maximum ();
-  CORBA::ULong len = params.svc_ctx_.length ();
-  IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (1);
-  this->reply_service_info_.replace (max, len, context_list, 1);
+  CORBA::ULong const max = params.svc_ctx_.maximum ();
+  CORBA::ULong const len = params.svc_ctx_.length ();
+  IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (true);
+  this->reply_service_info_.replace (max, len, context_list, true);
+
+  if (this->reply_service_info_.length() > 0)
+    {
+      orb_core_->service_context_registry ().
+        process_service_contexts (this->reply_service_info_, *(params.transport_), nullptr);
+    }
 
   // Must reset the message state, it is possible that the same reply
   // dispatcher is used because the request must be re-sent.
-  //this->message_state_.reset (0);
+  // this->message_state_.reset (0);
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (*params.input_cdr_);
-
-  if (db == 0)
-    {
-      if (TAO_debug_level > 2)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - Synch_Reply_Dispatcher::dispatch_reply "
-                      "clone_from failed \n"));
-        }
-      return -1;
-    }
-
-  // See whether we need to delete the data block by checking the
-  // flags. We cannot be happy that we initally allocated the
-  // datablocks of the stack. If this method is called twice, as is in
-  // some cases where the same invocation object is used to make two
-  // invocations like forwarding, the release becomes essential.
-  if (ACE_BIT_DISABLED (db->flags (),
+  if (ACE_BIT_DISABLED ((*params.input_cdr_).start()->data_block()->flags(),
                         ACE_Message_Block::DONT_DELETE))
-    {
-      db->release ();
-    }
+  {
+    // Data block is on the heap, so just duplicate it.
+    this->reply_cdr_ = *params.input_cdr_;
+    this->reply_cdr_.clr_mb_flags (ACE_Message_Block::DONT_DELETE);
+  }
+  else
+  {
+    ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
-  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+    if (db == nullptr)
+      {
+        if (TAO_debug_level > 2)
+          {
+            TAOLIB_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) - Synch_Reply_Dispatcher::dispatch_reply "
+                        "clone_from failed\n"));
+          }
+        return -1;
+      }
+
+    // See whether we need to delete the data block by checking the
+    // flags. We cannot be happy that we initally allocated the
+    // datablocks of the stack. If this method is called twice, as is in
+    // some cases where the same invocation object is used to make two
+    // invocations like forwarding, the release becomes essential.
+    if (ACE_BIT_DISABLED (db->flags (),
+                          ACE_Message_Block::DONT_DELETE))
+      {
+        db->release ();
+      }
+  }
+
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+                       this->orb_core_->leader_follower ());
 
   return 1;
 }
 
 void
-TAO_Synch_Reply_Dispatcher::connection_closed (void)
+TAO_Synch_Reply_Dispatcher::connection_closed ()
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
+                       this->orb_core_->leader_follower ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

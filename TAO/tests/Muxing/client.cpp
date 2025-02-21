@@ -1,16 +1,13 @@
-// $Id$
-
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Muxing, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+bool shutdown_srv = false;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -19,38 +16,39 @@ parse_args (int argc, char *argv[])
       case 'k':
         ior = get_opts.opt_arg ();
         break;
+      case 'x':
+        shutdown_srv = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-k <ior>"
+                           "-k <ior> "
+                           "[-x]"
                            "\n",
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Test::Receiver_var receiver =
-        Test::Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Receiver::_narrow(tmp.in ());
 
       if (CORBA::is_nil (receiver.in ()))
         {
@@ -60,34 +58,35 @@ main (int argc, char *argv[])
                             1);
         }
 
-
-      Client_Task client_task (receiver.in (),
-                               1000,
-                               32768,
-                               ACE_Thread_Manager::instance ());
-
-      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
+      if (shutdown_srv)
         {
-          ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+          receiver->shutdown ();
         }
-      ACE_Thread_Manager::instance ()->wait ();
+      else
+        {
+          Client_Task client_task (receiver.in (),
+                                  1000,
+                                  32768,
+                                  ACE_Thread_Manager::instance ());
 
-      CORBA::Long count = receiver->get_event_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
+              {
+              ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+              }
+          ACE_Thread_Manager::instance ()->wait ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
-                  count));
+          CORBA::Long count = receiver->get_event_count ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
+                      count));
+        }
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

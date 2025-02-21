@@ -1,0 +1,47 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Callback.idl
+    Foo.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): csd_threadpool, taoserver, pi, avoids_corba_e_micro {
+  exename = server_main
+  after += *idl
+
+  Source_Files {
+    server_main.cpp
+    Foo_i.cpp
+    FooC.cpp
+    FooS.cpp
+    Callback_i.cpp
+    CallbackC.cpp
+    CallbackS.cpp
+    ServerApp.cpp
+    ClientTask.cpp
+    FooServantList.cpp
+    OrbTask.cpp
+    OrbShutdownTask.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): csd_threadpool, taoserver, pi, avoids_corba_e_micro {
+  exename = client_main
+  after += *idl
+
+  Source_Files {
+    client_main.cpp
+    Callback_i.cpp
+    CallbackC.cpp
+    CallbackS.cpp
+    FooC.cpp
+    ClientTask.cpp
+    ClientApp.cpp
+  }
+  IDL_Files {
+  }
+}

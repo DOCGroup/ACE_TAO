@@ -1,0 +1,32 @@
+project(*Dev_Bank_idl): taoidldefaults, valuetype {
+  idlflags += -Wb,pch_include=_pch.h
+  IDL_Files {
+    bank.idl
+  }
+  custom_only = 1
+}
+
+project(*_Dev_Server): taoserver, valuetype, avoids_minimum_corba {
+  after += *Dev_Bank_idl
+  Source_Files {
+    server.cpp
+  }
+  Source_Files {
+    bankC.cpp
+    bankS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*_Dev_Client): taoclient, valuetype, avoids_minimum_corba {
+  after += *Dev_Bank_idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    bankC.cpp
+  }
+  IDL_Files {
+  }
+}

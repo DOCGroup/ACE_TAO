@@ -1,21 +1,12 @@
-// $Id$
-
 #include "test_i.h"
 
 #if !defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Send_File, 
-           test_i, 
-           "$Id$")
-
 void
-Simple_Server_i::send_line (const char *
-                            ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Simple_Server_i::send_line (const char *)
 {
-
   /*
   static unsigned long count = 0;
 
@@ -33,8 +24,7 @@ Simple_Server_i::send_line (const char *
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

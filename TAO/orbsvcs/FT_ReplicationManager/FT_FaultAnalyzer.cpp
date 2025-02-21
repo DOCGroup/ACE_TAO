@@ -3,8 +3,6 @@
 /**
  *  @file    FT_FaultAnalyzer.cpp
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *
  *  @author Steve Totten <totten_s@ociweb.com>
@@ -13,9 +11,7 @@
 
 #include "FT_FaultAnalyzer.h"
 
-ACE_RCSID (FT_FaultAnalyzer,
-           FT_FaultAnalyzer,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Default constructor.
 TAO::FT_FaultAnalyzer::FT_FaultAnalyzer ()
@@ -27,3 +23,4 @@ TAO::FT_FaultAnalyzer::~FT_FaultAnalyzer ()
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

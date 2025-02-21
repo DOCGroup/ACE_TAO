@@ -1,62 +1,45 @@
-#include "RT_PolicyFactory.h"
+#include "tao/RTCORBA/RT_PolicyFactory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-ACE_RCSID (RTCORBA,
-           RT_PolicyFactory,
-           "$Id$")
-
-#include "RT_Policy_i.h"
-
+#include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/PolicyC.h"
 #include "tao/ORB_Constants.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO_RT_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
+    const CORBA::Any &value)
 {
-  if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-    return TAO_PriorityModelPolicy::create (value
-                                            ACE_ENV_ARG_PARAMETER);
+  switch (type)
+  {
+    case RTCORBA::PRIORITY_MODEL_POLICY_TYPE :
+      return TAO_PriorityModelPolicy::create (value);
+    case RTCORBA::THREADPOOL_POLICY_TYPE :
+      return TAO_ThreadpoolPolicy::create (value);
+    case RTCORBA::SERVER_PROTOCOL_POLICY_TYPE :
+      return TAO_ServerProtocolPolicy::create (value);
+    case RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE :
+      return TAO_ClientProtocolPolicy::create (value);
+    case RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE :
+      return TAO_PrivateConnectionPolicy::create (value);
+    case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE :
+      return TAO_PriorityBandedConnectionPolicy::create (value);
+  }
 
-  if (type == RTCORBA::THREADPOOL_POLICY_TYPE)
-    return TAO_ThreadpoolPolicy::create (value
-                                         ACE_ENV_ARG_PARAMETER);
-
-  if (type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
-    return TAO_ServerProtocolPolicy::create (value
-                                             ACE_ENV_ARG_PARAMETER);
-
-  if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
-    return TAO_ClientProtocolPolicy::create (value
-                                             ACE_ENV_ARG_PARAMETER);
-
-  if (type == RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE)
-    return TAO_PrivateConnectionPolicy::create (value
-                                                ACE_ENV_ARG_PARAMETER);
-
-  if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
-    return TAO_PriorityBandedConnectionPolicy::create (value
-                                                       ACE_ENV_ARG_PARAMETER);
-
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 CORBA::Policy_ptr
-TAO_RT_PolicyFactory::_create_policy (
-    CORBA::PolicyType type
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
+TAO_RT_PolicyFactory::_create_policy (CORBA::PolicyType type)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
 
-  if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+  switch (type)
+  {
+    case RTCORBA::PRIORITY_MODEL_POLICY_TYPE :
     {
       ACE_NEW_THROW_EX (policy,
                         TAO_PriorityModelPolicy,
@@ -65,12 +48,11 @@ TAO_RT_PolicyFactory::_create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
     }
-
-  if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
+    break;
+    case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE :
     {
       ACE_NEW_THROW_EX (policy,
                         TAO_PriorityBandedConnectionPolicy,
@@ -79,12 +61,11 @@ TAO_RT_PolicyFactory::_create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
     }
-
-  if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
+    break;
+    case RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE :
     {
       ACE_NEW_THROW_EX (policy,
                         TAO_ClientProtocolPolicy,
@@ -93,13 +74,15 @@ TAO_RT_PolicyFactory::_create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
     }
+    break;
+  }
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -1,0 +1,4 @@
+interface Test
+{
+  void contact ();
+};

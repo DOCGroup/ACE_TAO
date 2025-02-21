@@ -1,34 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    bd_wstr_seq.cpp
-//
-// = DESCRIPTION
-//    tests bounded wide string sequences
-//
-// = AUTHORS
-//      Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    bd_wstr_seq.cpp
+ *
+ *  tests bounded wide string sequences
+ *
+ *  @author   Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "bd_wstr_seq.h"
 #include "ace/OS_NS_wchar.h"
 
-ACE_RCSID (Param_Test, 
-           bd_wstr_seq, 
-           "$Id$")
-
 // ************************************************************************
 //               Test_Bounded_WString_Sequence
 // ************************************************************************
 
-Test_Bounded_WString_Sequence::Test_Bounded_WString_Sequence (void)
+Test_Bounded_WString_Sequence::Test_Bounded_WString_Sequence ()
   : opname_ (CORBA::string_dup ("test_bounded_wstrseq")),
     in_ (new Param_Test::Bounded_WStrSeq),
     inout_ (new Param_Test::Bounded_WStrSeq),
@@ -37,21 +27,20 @@ Test_Bounded_WString_Sequence::Test_Bounded_WString_Sequence (void)
 {
 }
 
-Test_Bounded_WString_Sequence::~Test_Bounded_WString_Sequence (void)
+Test_Bounded_WString_Sequence::~Test_Bounded_WString_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Bounded_WString_Sequence::opname (void) const
+Test_Bounded_WString_Sequence::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Bounded_WString_Sequence::dii_req_invoke (CORBA::Request *req
-                                               ACE_ENV_ARG_DECL)
+Test_Bounded_WString_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -59,29 +48,25 @@ Test_Bounded_WString_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Bounded_WStrSeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   const Param_Test::Bounded_WStrSeq *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_WStrSeq (*tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Bounded_WStrSeq (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Bounded_WStrSeq (*tmp);
 }
 
 int
-Test_Bounded_WString_Sequence::init_parameters (Param_Test_ptr
-                                                ACE_ENV_ARG_DECL_NOT_USED)
+Test_Bounded_WString_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -104,7 +89,7 @@ Test_Bounded_WString_Sequence::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Bounded_WString_Sequence::reset_parameters (void)
+Test_Bounded_WString_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::Bounded_WStrSeq; // delete the previous ones
   this->out_ = new Param_Test::Bounded_WStrSeq;
@@ -113,33 +98,27 @@ Test_Bounded_WString_Sequence::reset_parameters (void)
 }
 
 int
-Test_Bounded_WString_Sequence::run_sii_test (Param_Test_ptr objref
-                                             ACE_ENV_ARG_DECL)
+Test_Bounded_WString_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Bounded_WStrSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_bounded_wstrseq (this->in_.in (),
                                                  this->inout_.inout (),
-                                                 out
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                 out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Bounded_WString_Sequence::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Bounded_WString_Sequence::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Bounded_WString_Sequence::check_validity (void)
+Test_Bounded_WString_Sequence::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_->length () == this->inout_->length ()) &&
@@ -167,6 +146,6 @@ Test_Bounded_WString_Sequence::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_Bounded_WString_Sequence::print_values (void)
+Test_Bounded_WString_Sequence::print_values ()
 {
 }

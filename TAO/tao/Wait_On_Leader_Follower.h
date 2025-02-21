@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Wait_On_Leader_Follower.h
- *
- *  $Id$
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
@@ -21,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Wait_On_Leader_Follower
  *
@@ -35,25 +35,32 @@
  * is Muxed and hence there are multiple threads running in the
  * same Transport context.
  */
-class TAO_Export TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
+class TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
 {
-
 public:
   /// Constructor.
-  TAO_Wait_On_Leader_Follower (TAO_Transport *transport);
+  explicit TAO_Wait_On_Leader_Follower (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_On_Leader_Follower (void);
+  ~TAO_Wait_On_Leader_Follower () override = default;
 
-  // = Documented in TAO_Wait_Strategy.
-  virtual int sending_request (TAO_ORB_Core *orb_core,
-                               int two_way);
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    TAO_Synch_Reply_Dispatcher &rd);
-  virtual int register_handler (void);
-  virtual bool non_blocking (void) const;
-  virtual bool can_process_upcalls (void) const;
+   /*! @copydoc TAO_Wait_Strategy::sending_request() */
+  int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics) override;
+
+   /*! @copydoc TAO_Wait_Strategy::wait() */
+  int wait (ACE_Time_Value *max_wait_time, TAO_Synch_Reply_Dispatcher &rd) override;
+
+   /*! @copydoc TAO_Wait_Strategy::register_handler() */
+  int register_handler () override;
+
+   /*! @copydoc TAO_Wait_Strategy::non_blocking() */
+  bool non_blocking () const override;
+
+   /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
+  bool can_process_upcalls () const override;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

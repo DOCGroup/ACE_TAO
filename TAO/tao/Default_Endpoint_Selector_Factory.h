@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Default_Endpoint_Selector_Factory.h
- *
- *  $Id$
  *
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
@@ -26,6 +24,8 @@
 
 #include "tao/Endpoint_Selector_Factory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward references
 class TAO_Default_Endpoint_Selector;
 
@@ -37,7 +37,7 @@ class TAO_Default_Endpoint_Selector;
  * @brief Factory for initializing <Endpoint_Selection_State> and
  * obtaining appropriate <Invocation_Endpoint_Selector>.
  *
- * Used by Invocation classes to intialize its endpoint selection
+ * Used by Invocation classes to initialize its endpoint selection
  * strategy and state based on the effective policies.
  * Endpoint selection strategies are stateless objects - all the
  * state they need is contained by Invocation in
@@ -52,24 +52,30 @@ class TAO_Export TAO_Default_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  TAO_Default_Endpoint_Selector_Factory (void);
+  TAO_Default_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Endpoint_Selector_Factory (void);
+  virtual ~TAO_Default_Endpoint_Selector_Factory ();
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (
-                             ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
+
+private:
+  // Prevent copying/assignment.
+  TAO_Default_Endpoint_Selector_Factory (TAO_Default_Endpoint_Selector_Factory const &);
+  void operator= (TAO_Default_Endpoint_Selector_Factory const &);
 
 protected:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
-  TAO_Default_Endpoint_Selector *default_endpoint_selector_;
+  TAO_Default_Endpoint_Selector * const default_endpoint_selector_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Endpoint_Selector_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_DEFAULT_ENDPOINT_SELECTOR_FACTORY_H */

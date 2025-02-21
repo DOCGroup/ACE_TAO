@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 
 #ifndef TAO_TWO_OBJECTS_WORKER_H
 #define TAO_TWO_OBJECTS_WORKER_H
@@ -13,19 +10,16 @@
 class Worker : public ACE_Task_Base
 {
 public:
-
   // Ctor
-  Worker (CORBA::ORB_ptr orb, int time);
+  Worker (CORBA::ORB_ptr orb);
 
   // The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 
 private:
   // The orb
   CORBA::ORB_var orb_;
-
-  int timeout_;
 };
 
 #endif  /* TAO_TWO_OBJECTS_WORKER_H */

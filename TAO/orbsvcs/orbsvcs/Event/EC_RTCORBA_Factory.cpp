@@ -1,11 +1,10 @@
-// $Id$
-
-#include "EC_RTCORBA_Factory.h"
-#include "EC_RTCORBA_Dispatching.h"
+#include "orbsvcs/Event/EC_RTCORBA_Dispatching.h"
+#include "orbsvcs/Event/EC_RTCORBA_Factory.h"
 
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
-ACE_RCSID(Event, EC_RTCORBA_Factory, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_RTCORBA_Factory::
     TAO_EC_RTCORBA_Factory (TAO_EC_Factory *body,
@@ -15,19 +14,19 @@ TAO_EC_RTCORBA_Factory::
 {
 }
 
-TAO_EC_RTCORBA_Factory::~TAO_EC_RTCORBA_Factory (void)
+TAO_EC_RTCORBA_Factory::~TAO_EC_RTCORBA_Factory ()
 {
 }
 
 
 int
-TAO_EC_RTCORBA_Factory::init (int argc, char* argv[])
+TAO_EC_RTCORBA_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   return this->body_->init (argc, argv);
 }
 
 int
-TAO_EC_RTCORBA_Factory::fini (void)
+TAO_EC_RTCORBA_Factory::fini ()
 {
   return this->body_->fini ();
 }
@@ -38,36 +37,27 @@ TAO_EC_Dispatching*
 TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
   TAO_EC_Dispatching *dispatching = 0;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      // @@ The ORBId could be important!!!
       int argc = 0;
+      ACE_TCHAR **argv = 0;
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, 0, ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("PriorityMappingManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("PriorityMappingManager");
 
       RTCORBA::PriorityMappingManager_var priority_mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (obj.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::PriorityMappingManager::_narrow (obj.in ());
 
       RTCORBA::PriorityMapping *priority_mapping =
         priority_mapping_manager->mapping ();
 
       obj =
-        orb->resolve_initial_references ("RTCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RTCurrent");
+
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::Current::_narrow (obj.in ());
 
       ACE_NEW_RETURN (dispatching,
                       TAO_EC_RTCORBA_Dispatching (this->lanes_,
@@ -75,10 +65,9 @@ TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
                                                   current.in ()),
                       0);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return dispatching;
 }
@@ -222,7 +211,7 @@ TAO_EC_RTCORBA_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPush
 }
 
 ACE_Lock*
-TAO_EC_RTCORBA_Factory::create_consumer_lock (void)
+TAO_EC_RTCORBA_Factory::create_consumer_lock ()
 {
   return this->body_->create_consumer_lock ();
 }
@@ -234,7 +223,7 @@ TAO_EC_RTCORBA_Factory::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_Lock*
-TAO_EC_RTCORBA_Factory::create_supplier_lock (void)
+TAO_EC_RTCORBA_Factory::create_supplier_lock ()
 {
   return this->body_->create_supplier_lock ();
 }
@@ -269,3 +258,4 @@ TAO_EC_RTCORBA_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
   this->body_->destroy_supplier_control (x);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

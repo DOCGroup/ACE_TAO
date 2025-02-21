@@ -1,5 +1,5 @@
 %{
-/*  $Id$
+/*
 
 COPYRIGHT
 
@@ -64,10 +64,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 /*
- * idl.ll - Lexical scanner for IDL 1.1
+ * idl.ll - Lexical scanner for IDL
  */
 
-#include "idl_uns_long.h"
+#include "global_extern.h"
+#include "nr_extern.h"
 #include "utl_strlist.h"
 #include "utl_exprlist.h"
 #include "utl_labellist.h"
@@ -81,24 +82,37 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_operation.h"
 #include "ast_root.h"
 #include "fe_interface_header.h"
-#include "global_extern.h"
+#include "fe_obv_header.h"
+#include "fe_component_header.h"
+#include "fe_home_header.h"
 #include "fe_private.h"
-#include "nr_extern.h"
-#include "y.tab.h"
+#include "fe_extern.h"
+#include "ast_annotation_appl.h"
+#include "idl.tab.hpp"
 
-static char *           idl_wstring_escape_reader (char *);
-static ACE_CDR::WChar   idl_wchar_escape_reader (char *);
-static char             idl_escape_reader (char *);
-static double           idl_atof (char *);
-static long             idl_atoi (char *, long);
-static idl_uns_long     idl_atoui (char *, long);
-static void             idl_parse_line_and_file (char *);
-static void             idl_store_pragma (char *);
-static char *           idl_get_pragma_string (char *);
-static idl_bool         idl_valid_version (char *);
-static AST_Decl *       idl_find_node (char *);
+static char *               idl_wstring_escape_reader (char *);
+static ACE_CDR::WChar       idl_wchar_escape_reader (char *);
+static ACE_CDR::Char        idl_escape_reader (char *);
+static ACE_CDR::Double      idl_atof (char *);
+static ACE_CDR::LongLong    idl_atoi (char *, long);
+static ACE_CDR::ULongLong   idl_atoui (char *, long);
+static void                 idl_parse_line_and_file (char *);
+static void                 idl_store_pragma (char *);
+static char *               idl_get_pragma_string (char *);
+static bool                 idl_valid_version (char *);
+static AST_Decl *           idl_find_node (const char *);
 
 #define ace_yytext yytext
+
+#ifdef USE_MCPP_BUFFER_LEXING
+#include "mcpp_yyinput.h"
+#endif /*USE_MCPP_BUFFER_LEXING*/
+
+#if defined __ANDROID__ && defined ECHO
+#undef ECHO
+#endif
+
+#define IDL4_KEYWORD(TOKEN_NAME) if (idl_global->idl_version_ >= IDL_VERSION_4) return TOKEN_NAME;
 
 %}
 
@@ -144,6 +158,7 @@ void            return IDL_VOID;
 native          return IDL_NATIVE;
 local           return IDL_LOCAL;
 abstract        return IDL_ABSTRACT;
+
 custom          return IDL_CUSTOM;
 factory         return IDL_FACTORY;
 private         return IDL_PRIVATE;
@@ -151,6 +166,7 @@ public          return IDL_PUBLIC;
 supports        return IDL_SUPPORTS;
 truncatable     return IDL_TRUNCATABLE;
 valuetype       return IDL_VALUETYPE;
+
 component       return IDL_COMPONENT;
 consumes        return IDL_CONSUMES;
 emits           return IDL_EMITS;
@@ -169,6 +185,13 @@ typeprefix      return IDL_TYPEPREFIX;
 uses            return IDL_USES;
 manages         return IDL_MANAGES;
 
+typename        return IDL_TYPENAME;
+port            return IDL_PORT;
+mirrorport      return IDL_MIRRORPORT;
+porttype        return IDL_PORTTYPE;
+connector       return IDL_CONNECTOR;
+alias           return IDL_ALIAS;
+
 TRUE            return IDL_TRUETOK;
 FALSE           return IDL_FALSETOK;
 
@@ -180,9 +203,26 @@ oneway          return IDL_ONEWAY;
 \<\<            return IDL_LEFT_SHIFT;
 \>\>            return IDL_RIGHT_SHIFT;
 \:\:            {
-                  yylval.strval = (char *) "::";
+                  tao_yylval.strval = ACE::strnew ("::");
                   return IDL_SCOPE_DELIMITOR;
                 }
+
+@annotation[^A-Za-z0-9_] return IDL_ANNOTATION_DECL; // Allow annotation names that start with "annotation"
+@ return IDL_ANNOTATION_SYMBOL;
+
+int8 IDL4_KEYWORD(IDL_INT8); REJECT;
+uint8 IDL4_KEYWORD(IDL_UINT8); REJECT;
+int16 IDL4_KEYWORD(IDL_INT16); REJECT;
+uint16 IDL4_KEYWORD(IDL_UINT16); REJECT;
+int32 IDL4_KEYWORD(IDL_INT32); REJECT;
+uint32 IDL4_KEYWORD(IDL_UINT32); REJECT;
+int64 IDL4_KEYWORD(IDL_INT64); REJECT;
+uint64 IDL4_KEYWORD(IDL_UINT64); REJECT;
+
+bitfield IDL4_KEYWORD(IDL_BITFIELD); REJECT;
+bitmask IDL4_KEYWORD(IDL_BITMASK); REJECT;
+bitset IDL4_KEYWORD(IDL_BITSET); REJECT;
+map IDL4_KEYWORD(IDL_MAP); REJECT;
 
 [a-ij-rs-zA-IJ-RS-Z_][a-ij-rs-zA-IJ-RS-Z0-9_]* {
   // Make sure that this identifier is not a C++ keyword. If it is,
@@ -207,158 +247,207 @@ oneway          return IDL_ONEWAY;
 
   if (entry)
     {
-      yylval.strval = ACE_OS::strdup (entry->mapping_);
+      tao_yylval.strval = ACE::strnew (entry->mapping_);
     }
   else
     {
-      yylval.strval = ACE_OS::strdup (ace_yytext);
+      tao_yylval.strval = ACE::strnew (ace_yytext);
     }
 
   return IDENTIFIER;
 }
 
 "-"?(([0-9]+"."[0-9]*)|("."[0-9]+))([eE][+-]?[0-9]+)?[lLfF]?      {
-                  yylval.dval = idl_atof(ace_yytext);
+                  tao_yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 "-"?[0-9]+[eE][+-]?[0-9]+[lLfF]?  {
-                  yylval.dval = idl_atof(ace_yytext);
+                  tao_yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 
+"-"?(([0-9]+"."[0-9]*)|("."?[0-9]+))[dD] {
+                  tao_yylval.fixval = ACE_CDR::Fixed::from_string (ace_yytext);
+                  return IDL_FIXED_PT_LITERAL;
+                }
+
 "-"[1-9][0-9]*  {
-                  yylval.ival = idl_atoi(ace_yytext, 10);
+                  tao_yylval.ival = idl_atoi (ace_yytext, 10);
                   return IDL_INTEGER_LITERAL;
                 }
 [1-9][0-9]*     {
-                  yylval.uival = idl_atoui(ace_yytext, 10);
+                  tao_yylval.uival = idl_atoui (ace_yytext, 10);
                   return IDL_UINTEGER_LITERAL;
                 }
 "-"0[xX][a-fA-F0-9]+ {
-                  yylval.ival = idl_atoi(ace_yytext, 16);
+                  tao_yylval.ival = idl_atoi (ace_yytext, 16);
                   return IDL_INTEGER_LITERAL;
                 }
-0[xX][a-fA-F0-9]+    {
-                  yylval.uival = idl_atoui(ace_yytext, 16);
+0[xX][a-fA-F0-9]+ {
+                  tao_yylval.uival = idl_atoui (ace_yytext, 16);
                   return IDL_UINTEGER_LITERAL;
                 }
 "-"0[0-7]*      {
-                  yylval.ival = idl_atoi(ace_yytext, 8);
+                  tao_yylval.ival = idl_atoi (ace_yytext, 8);
                   return IDL_INTEGER_LITERAL;
                 }
 0[0-7]*         {
-                  yylval.uival = idl_atoui(ace_yytext, 8);
+                  tao_yylval.uival = idl_atoui (ace_yytext, 8);
                   return IDL_UINTEGER_LITERAL;
                 }
 
 (\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3})*\"[ \t]*)+ {
                   /* Skip the quotes */
-                  char *tmp = ace_yytext;
-                  for(int i = strlen(tmp) - 1; i >= 0; --i) {
-                    if (isspace(tmp[i])) {
-                      tmp[i] = '\0';
+                  char * const tmp = ace_yytext;
+                  for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
+                    {
+                      if (isspace (tmp[i]))
+                        {
+                          tmp[i] = '\0';
+                        }
+                      else
+                        {
+                          break;
+                        }
                     }
-                    else {
-                      break;
-                    }
-                  }
-                  tmp[strlen (tmp) - 1] = '\0';
-                  ACE_NEW_RETURN (yylval.sval,
-                                  UTL_String (tmp + 1),
+                  tmp[ACE_OS::strlen (tmp) - 1] = '\0';
+                  ACE_NEW_RETURN (tao_yylval.sval,
+                                  UTL_String (tmp + 1, true),
                                   IDL_STRING_LITERAL);
                   return IDL_STRING_LITERAL;
                 }
 (L\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3}|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
                   /* Skip the bookends */
-                  char *tmp = ACE_OS::strdup (ace_yytext);
-                  tmp[strlen (tmp) - 1] = '\0';
-                  yylval.wsval = idl_wstring_escape_reader(tmp + 2);
+                  char * const tmp = ACE_OS::strdup (ace_yytext);
+                  for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
+                    {
+                      if (isspace (tmp[i]))
+                        {
+                          tmp[i] = '\0';
+                        }
+                      else
+                        {
+                          break;
+                        }
+                    }
+                  tmp[ACE_OS::strlen (tmp) - 1] = '\0';
+                  tao_yylval.wsval = ACE_OS::strdup (idl_wstring_escape_reader (tmp + 2));
+                  ACE_OS::free (tmp);
                   return IDL_WSTRING_LITERAL;
                 }
 "'"."'"         {
-                  yylval.cval = ace_yytext [1];
+                  tao_yylval.cval = ace_yytext[1];
                   return IDL_CHARACTER_LITERAL;
                 }
 "'"\\([0-7]{1,3})"'" {
                   // octal character constant
-                  yylval.cval = idl_escape_reader(ace_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
 "'"\\[xX]([0-9a-fA-F]{1,2})"'" {
                   // hexadecimal character constant
-                  yylval.cval = idl_escape_reader(ace_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
 "'"\\."'"       {
-                  yylval.cval = idl_escape_reader(ace_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
 L"'"."'"        {
                   // wide character constant
-                  yylval.wcval = ace_yytext [2];
+                  tao_yylval.wcval = ace_yytext[2];
                   return IDL_WCHAR_LITERAL;
                 }
 L"'"\\u([0-9a-fA-F]{1,4})"'" {
                   // hexadecimal wide character constant
-                  yylval.wcval = idl_wchar_escape_reader(ace_yytext + 2);
+                  tao_yylval.wcval = idl_wchar_escape_reader (ace_yytext + 2);
                   return IDL_WCHAR_LITERAL;
                 }
 ^[ \t]*#[ \t]*pragma[ \t].*{NL} |
 ^\?\?=[ \t]*pragma[ \t].*{NL} {/* remember pragma */
-                  idl_global->set_lineno(idl_global->lineno() + 1);
-                  idl_store_pragma(ace_yytext);
+                  idl_global->set_lineno (idl_global->lineno () + 1);
+                  idl_store_pragma (ace_yytext);
+                  break;
                 }
 ^[ \t]*#file[ \t].*{NL} |
 ^\?\?=[ \t]*file[ \t].*{NL} {/* ignore file */
-                  idl_global->set_lineno(idl_global->lineno() + 1);
+                  idl_global->set_lineno(idl_global->lineno () + 1);
+                  break;
                 }
-^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL} |
+^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)*{NL} |
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL} {
-                  idl_parse_line_and_file(ace_yytext);
+                  idl_parse_line_and_file (ace_yytext);
+                  break;
                 }
 ^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} |
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} {
-                  idl_parse_line_and_file(ace_yytext);
+                  idl_parse_line_and_file (ace_yytext);
+                  break;
                 }
-^[ \t]*#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\"")?{NL} |
+^[ \t]*#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\""([ \t]*[0-9]*([ \t]*[0-9]*)?)?)?{NL} |
 ^\?\?=line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} {
-                  idl_parse_line_and_file(ace_yytext);
+                  idl_parse_line_and_file (ace_yytext);
+                  break;
                 }
 ^[ \t]*#[ \t]*[0-9]*{NL} |
 ^\?\?=[ \t]*[0-9]*{NL} {
-                  idl_parse_line_and_file(ace_yytext);
+                  idl_parse_line_and_file (ace_yytext);
+                  break;
                 }
 ^[ \t]*#[ \t]*ident[ \t].*{NL} |
 ^\?\?=[ \t]*ident[ \t].*{NL} {
                   /* ignore cpp ident */
-                  idl_global->set_lineno(idl_global->lineno() + 1);
+                  idl_global->set_lineno (idl_global->lineno () + 1);
+                  break;
                 }
 \/\/.*{NL}      {
                   /* ignore comments */
-                  idl_global->set_lineno(idl_global->lineno() + 1);
+                  idl_global->set_lineno(idl_global->lineno () + 1);
+                  break;
                 }
 "/*"            {
-                  for(;;) {
-                    char c = yyinput();
-                    if (c == '*') {
-                      char next = yyinput();
-                      if (next == '/')
-                        break;
-                      else
-                        yyunput(c, NULL);
-                      if (c == '\n')
-                        idl_global->set_lineno(idl_global->lineno() + 1);
+                  for (;;)
+                    {
+                      char const c = yyinput ();
+                      if (c == '*')
+                        {
+                          char const next = yyinput ();
+                          if (next == '/')
+                            break;
+                          else
+                            yyunput (c, 0);
+                        }
+                      else if (c == '\n')
+                        {
+                          idl_global->set_lineno (idl_global->lineno () + 1);
+                        }
                     }
-                  }
+                  break;
                 }
-[ \t]*          ;
+[ \t]*          break;
 {NL}            {
-                  idl_global->set_lineno(idl_global->lineno() + 1);
+                  idl_global->set_lineno (idl_global->lineno () + 1);
+                  break;
                 }
-.               return ace_yytext [0];
+.               return ace_yytext[0];
 
 %%
         /* subroutines */
+
+static bool
+same_file (char *path1, char *path2)
+{
+  char fullpath1 [MAXPATHLEN + 1] = {0};
+  char fullpath2 [MAXPATHLEN + 1] = {0};
+
+  char *fp1 = ACE_OS::realpath (path1, fullpath1);
+  char *fp2 = ACE_OS::realpath (path2, fullpath2);
+
+  return
+    (fp1 == 0 || fp2 == 0)
+      ? false
+      : FE_Utils::path_cmp (fullpath1,fullpath2) == 0;
+}
 
 // Parse a #line statement generated by the C preprocessor
 static void
@@ -375,7 +464,7 @@ idl_parse_line_and_file (char *buf)
     }
   else
     {
-      r++;
+      ++r;
     }
 
   // Check to see if we're running under the screwy Microsoft scheme
@@ -389,12 +478,12 @@ idl_parse_line_and_file (char *buf)
   // Find line number.
   while (isspace (*r))
     {
-      r++;
+      ++r;
     }
 
   h = r;
 
-  for (; isdigit (*r); r++)
+  for (; isdigit (*r); ++r)
     {
       continue;
     }
@@ -403,7 +492,7 @@ idl_parse_line_and_file (char *buf)
   idl_global->set_lineno ((long) idl_atoui (h, 10));
 
   // Find file name, if present.
-  for (; *r != '"'; r++)
+  for (; *r != '"'; ++r)
     {
       if (*r == '\n' || *r == '\0')
         {
@@ -413,7 +502,7 @@ idl_parse_line_and_file (char *buf)
 
   h = ++r;
 
-  for (; *r != '"'; r++)
+  for (; *r != '"'; ++r)
     {
       continue;
     }
@@ -426,7 +515,7 @@ idl_parse_line_and_file (char *buf)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("IDL: No input files\n")));
 
-      ACE_OS::exit (99);
+      throw Bailout ();
     }
   else
     {
@@ -446,24 +535,32 @@ idl_parse_line_and_file (char *buf)
 
       h[i] = '\0';
       ACE_NEW (tmp,
-               UTL_String (h));
+               UTL_String (h, true));
       idl_global->update_prefix (tmp->get_string ());
       idl_global->set_filename (tmp);
     }
 
   UTL_String *fname = idl_global->filename ();
-  idl_bool in_main_file = I_FALSE;
-  idl_bool is_real_filename = fname->compare (idl_global->real_filename ());
-  idl_bool is_main_filename = I_FALSE;
+  bool in_main_file = false;
+
+  bool is_real_filename =
+    fname->compare (idl_global->real_filename ())
+    || same_file (fname->get_string(),
+                  idl_global->real_filename ()->get_string ());
+
+  bool is_main_filename = false;
 
   if (!is_real_filename)
     {
-      is_main_filename = fname->compare (idl_global->main_filename ());
+      is_main_filename =
+        fname->compare (idl_global->main_filename ())
+        || same_file (fname->get_string (),
+                      idl_global->main_filename ()->get_string ());
     }
 
   if (is_real_filename || is_main_filename)
     {
-      in_main_file = I_TRUE;
+      in_main_file = true;
     }
 
   idl_global->set_in_main_file (in_main_file);
@@ -472,12 +569,10 @@ idl_parse_line_and_file (char *buf)
   // by the preprocessor.
   if (!(idl_global->in_main_file ()) && idl_global->import ())
     {
-      ACE_NEW (
-          nm,
-          UTL_String (
-              idl_global->stripped_preproc_include (fname->get_string ())
-            )
-        );
+      ACE_NEW (nm,
+               UTL_String (
+                 FE_Utils::stripped_preproc_include (
+                   fname->get_string ()), true));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
@@ -535,13 +630,13 @@ idl_store_pragma (char *buf)
 
   if (ACE_OS::strstr (buf + 8, "import") != 0)
     {
-      idl_global->set_import (I_TRUE);
+      idl_global->set_import (true);
       return;
     }
 
   if (ACE_OS::strstr (buf + 8, "include") != 0)
     {
-      idl_global->set_import (I_FALSE);
+      idl_global->set_import (false);
       return;
     }
 
@@ -553,39 +648,58 @@ idl_store_pragma (char *buf)
         {
           unsigned long depth = idl_global->scopes ().depth ();
 
-          // At global scope, we always replace the prefix. For all
-          // other scopes, we replace only if there is a prefix already
-          // associated with that scope, otherwise we add the prefix.
-          if (depth == 1 || idl_global->scopes ().top ()->has_prefix ())
+          // We replace the prefix only if there is a prefix already
+          // associated with this file, otherwise we add the prefix.
+          char *ext_id = idl_global->filename ()->get_string ();
+          ACE_Hash_Map_Entry<char *, char *> *entry = 0;
+          int const status =
+            idl_global->file_prefixes ().find (ext_id, entry);
+
+          if (status == 0)
             {
-              char *trash = 0;
-              idl_global->pragma_prefixes ().pop (trash);
-              delete [] trash;
+              if (ACE_OS::strcmp (entry->int_id_, "") != 0)
+                {
+                  char *trash = 0;
+                  idl_global->pragma_prefixes ().pop (trash);
+                  delete [] trash;
+                }
+              else if (depth == 1)
+                {
+                  // Remove the default "" and bind the new prefix.
+                  ACE::strdelete (entry->ext_id_);
+                  ACE::strdelete (entry->int_id_);
+                  (void) idl_global->file_prefixes ().unbind (entry);
+                  (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+                                                            ACE::strnew (new_prefix));
+                }
             }
 
           UTL_Scope *top_scope = idl_global->scopes ().top ();
 
           if (depth > 1)
             {
-              top_scope->has_prefix (I_TRUE);
+              top_scope->has_prefix (true);
               ScopeAsDecl (top_scope)->prefix_scope (top_scope);
             }
 
           idl_global->pragma_prefixes ().push (new_prefix);
 
-          if (idl_global->in_main_file ())
+          if (depth == 1)
             {
               idl_global->root ()->prefix (new_prefix);
-              idl_global->root ()->set_imported (I_FALSE);
-              top_scope->has_prefix (I_TRUE);
             }
 
-          ACE_CString ext_id;
-          ext_id.set (idl_global->filename ()->get_string (),
-                      0);
-          char *int_id = ACE::strnew (new_prefix);
-          (void) idl_global->file_prefixes ().rebind (ext_id,
-                                                      int_id);
+          if (idl_global->in_main_file ())
+            {
+              idl_global->root ()->set_imported (false);
+              top_scope->has_prefix (true);
+            }
+
+          if (status != 0)
+            {
+              (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+                                                        ACE::strnew (new_prefix));
+            }
         }
     }
   else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
@@ -604,6 +718,18 @@ idl_store_pragma (char *buf)
           number = ACE_OS::strchr (tmp, '\t');
         }
 
+      // Used later to trim the type string.
+      ptrdiff_t cutoff = number - tmp;
+
+      // Most likely this means there is only a version number
+      // without an identifier to apply it to.
+      if (number == 0)
+        {
+          const char *msg = "no identifier or scoped name";
+          idl_global->err ()->version_syntax_error (msg);
+          return;
+        }
+
       while (*number == ' ' || *number == '\t')
         {
           ++number;
@@ -618,6 +744,9 @@ idl_store_pragma (char *buf)
           number[len - 1] = '\0';
           len = ACE_OS::strlen (number);
         }
+
+      // Trim the type string after trimming the number string.
+      tmp[cutoff] = '\0';
 
       // This call adds a proper null terminator to tmp, so no need to
       // do it here.
@@ -649,7 +778,10 @@ idl_store_pragma (char *buf)
           ++tmp;
         }
 
-      AST_Decl *d = idl_find_node (tmp);
+      ACE_CString work (tmp);
+      work = work.substr (0, work.find (' '));
+
+      AST_Decl *d = idl_find_node (work.c_str ());
 
       if (d == 0)
         {
@@ -668,49 +800,179 @@ idl_store_pragma (char *buf)
             }
 
           d->repoID (new_id);
-          d->typeid_set (I_TRUE);
+          d->typeid_set (true);
         }
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_TYPE", 14) == 0)
     {
-      char *foo_type = idl_get_pragma_string (buf);
-      idl_global->add_dcps_data_type(foo_type);
+      char *sample_type = idl_get_pragma_string (buf);
+      idl_global->add_dcps_data_type (sample_type);
+
+      // Delete sample_type since add_dcps_data_type() doesn't take its ownership.
+      delete [] sample_type;
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
 
-      // split up data type and key strings
-      char *foo_type = tmp;
-      while (*tmp && !isspace(*tmp))
-        tmp++;
-      while (isspace(*tmp)) 
+      // Split up data type and key strings
+      char *sample_type = tmp;
+
+      while (*tmp && !isspace (*tmp))
+        {
+          ++tmp;
+        }
+
+      while (isspace (*tmp))
         {
           *tmp = '\0';
           tmp++;
         }
+
       char *key = tmp;
 
-      if (!idl_global->add_dcps_data_key(foo_type, key)) 
+      if (!idl_global->add_dcps_data_key (sample_type, key))
         {
-          ACE_ERROR((LM_ERROR, "DCPS_DATA_TYPE \"%s\" not found for key \"%s\"\n",
-            foo_type, key));
+          ACE_ERROR((LM_ERROR, "DCPS_DATA_TYPE \"%C\" not found for key \"%C\"\n",
+            sample_type, key));
         }
+
+      // Delete sample_type since add_dcps_data_key() doesn't take its ownership.
+      delete [] sample_type;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_SEQUENCE_TYPE", 23) == 0)
+    {
+      char *seq_type = idl_get_pragma_string (buf);
+      idl_global->set_dcps_sequence_type (seq_type);
+
+      delete [] seq_type;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "DCPS_SUPPORT_ZERO_COPY_READ", 27) == 0)
+    {
+      idl_global->dcps_support_zero_copy_read (true);
+    }
+  else if (ACE_OS::strncmp (buf + 8, "DCPS_GEN_ZERO_COPY_READ", 23) == 0)
+    {
+      idl_global->dcps_gen_zero_copy_read (true);
+    }
+  else if (ACE_OS::strncmp (buf + 8, "ciao lem", 8) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_lem_file_names (tmp);
+
+      // Delete tmp since add_ciao_lem_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 16) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_rti_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "coredx typesupport", 18) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_coredx_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_coredx_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 19) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_oci_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_oci_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "splice typesupport", 18) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_spl_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm interface", 22) == 0) ||
+           (ACE_OS::strncmp (buf + 8, "ami4ccm interface", 17) == 0))
+    {
+      if (idl_global->in_main_file ())
+        {
+          char *tmp = idl_get_pragma_string (buf);
+          idl_global->add_ciao_ami_iface_names (tmp);
+
+          // Delete tmp since add_ciao_ami_iface_names() doesn't take its ownership.
+          delete [] tmp;
+        }
+    }
+  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0) ||
+           (ACE_OS::strncmp (buf + 8, "ami4ccm receptacle", 18) == 0))
+    {
+      char *tmp = idl_get_pragma_string (buf);
+
+      if (idl_global->in_main_file ())
+        {
+          idl_global->add_ciao_ami_recep_names (tmp);
+        }
+      else
+        {
+          /// This is intended for the executor IDL file,
+          /// when a pragma is seen in the main file, but
+          /// it will do no harm in other cases.
+          idl_global->add_included_ami_recep_names (tmp);
+        }
+
+      // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm idl", 16) == 0) ||
+           (ACE_OS::strncmp (buf + 8, "ami4ccm idl", 11) == 0))
+    {
+      char *tmp = idl_get_pragma_string (buf);
+
+      /// These pragmas are found in the file where the interface
+      /// that has a AMI4CCM_* counterpart in the *A.idl file
+      /// is declared. We add the filename to the list in all
+      /// IDL files *except* the one where it is found, to
+      /// eliminate a circular include of xxxC.h and xxxAC.h.
+      if (!idl_global->in_main_file ())
+        {
+          idl_global->add_ciao_ami_idl_fnames (tmp);
+        }
+
+      // Delete tmp since add_ciao_ami_idl_fnames() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "dds4ccm impl", 12) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+
+      idl_global->add_dds4ccm_impl_fnames (tmp);
+
+      // Delete tmp since add_dds4ccm_impl_fnames() doesn't take its ownership.
+      delete [] tmp;
     }
 }
 
 /*
  * idl_atoi - Convert a string of digits into a negative integer according to base b
  */
-static long
-idl_atoi(char *s, long b)
+static ACE_CDR::LongLong
+idl_atoi (char *s, long b)
 {
-  long    r = 0;
-  s++;
+  ACE_CDR::LongLong r = 0;
+
+  // Skip over the dash and possibly spaces after the dash
+  while (*s == '-' || *s == ' ' || *s == '\t')
+    {
+      ++s;
+    }
 
   if (b == 8 && *s == '0')
     {
-      s++;
+      ++s;
     }
   else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
     {
@@ -743,14 +1005,14 @@ idl_atoi(char *s, long b)
 /*
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
-static idl_uns_long
-idl_atoui(char *s, long b)
+static ACE_CDR::ULongLong
+idl_atoui (char *s, long b)
 {
-  idl_uns_long  r = 0;
+  ACE_CDR::ULongLong r = 0;
 
   if (b == 8 && *s == '0')
     {
-      s++;
+      ++s;
     }
   else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
     {
@@ -783,7 +1045,7 @@ idl_atoui(char *s, long b)
 /*
  * Convert a string to a float; atof doesn't seem to work, always.
  */
-static double
+static ACE_CDR::Double
 idl_atof (char *s)
 {
   double d = 0.0;
@@ -793,31 +1055,36 @@ idl_atof (char *s)
   if (*s == '-')
     {
       neg = 1;
-      s++;
+
+      // Skip over the dash and possibly spaces after the dash
+      while (*s == '-' || *s == ' ' || *s == '\t')
+        {
+          ++s;
+        }
     }
 
   while (*s >= '0' && *s <= '9')
     {
       d = (d * 10) + *s - '0';
-      s++;
+      ++s;
     }
 
   if (*s == '.')
     {
-      s++;
+      ++s;
       e = 10;
 
       while (*s >= '0' && *s <= '9')
         {
           d += (*s - '0') / (e * 1.0);
           e *= 10;
-          s++;
+          ++s;
         }
     }
 
   if (*s == 'e' || *s == 'E')
     {
-      s++;
+      ++s;
 
       if (*s == '-')
         {
@@ -826,7 +1093,7 @@ idl_atof (char *s)
         }
       else if (*s == '+')
         {
-          s++;
+          ++s;
         }
 
       e = 0;
@@ -834,12 +1101,12 @@ idl_atof (char *s)
       while (*s >= '0' && *s <= '9')
         {
           e = (e * 10) + *s - '0';
-          s++;
+          ++s;
         }
 
       if (e > 0)
         {
-          for (k = 1; e > 0; k *= 10, e--);
+          for (k = 1; e > 0; k *= 10, e--) ;
 
           if (negexp)
             {
@@ -864,13 +1131,11 @@ idl_atof (char *s)
  * Convert (some) escaped characters into their ascii values
  */
 static char
-idl_escape_reader(
-    char *str
-  )
+idl_escape_reader (char *str)
 {
   if (str[0] != '\\')
     {
-            return str[0];
+      return str[0];
     }
 
   switch (str[1])
@@ -975,24 +1240,31 @@ static char *
 idl_get_pragma_string (char *pragma)
 {
   // Get pointers to each end of the substring between the quotes.
-  const char *start = ACE_OS::strchr (pragma, '"') + 1;
-  const char *end = ACE_OS::strchr (start, '"');
+  const char *firstquote = ACE_OS::strchr (pragma, '"');
 
-  if (end == 0)
+  if (!firstquote)
     {
-      idl_global->err ()->syntax_error (
-          IDL_GlobalData::PS_PragmaPrefixSyntax
-        );
+      idl_global->err ()->syntax_error (IDL_GlobalData::PS_PragmaPrefixSyntax);
 
-      return 0;
+      return nullptr;
     }
 
-  int len = end - start;
-  char *retval = 0;
+  const char *start = firstquote + 1;
+  const char *end = ACE_OS::strchr (start, '"');
+
+  if (!end)
+    {
+      idl_global->err ()->syntax_error (IDL_GlobalData::PS_PragmaPrefixSyntax);
+
+      return nullptr;
+    }
+
+  size_t const len = end - start;
+  char *retval {};
 
   ACE_NEW_RETURN (retval,
                   char[len + 1],
-                  0);
+                  nullptr);
 
   ACE_OS::strncpy (retval,
                    start,
@@ -1002,7 +1274,7 @@ idl_get_pragma_string (char *pragma)
   return retval;
 }
 
-static idl_bool
+static bool
 idl_valid_version (char *s)
 {
   // Nothing preceding decimal point.
@@ -1036,7 +1308,7 @@ idl_valid_version (char *s)
         }
     }
 
-  int len = minor - s;
+  ptrdiff_t const len = minor - s;
 
   for (i = 0; i < len; ++i)
     {
@@ -1057,23 +1329,22 @@ idl_valid_version (char *s)
 }
 
 static AST_Decl *
-idl_find_node (char *s)
+idl_find_node (const char *s)
 {
-  UTL_ScopedName *node = idl_global->string_to_scoped_name (s);
-  AST_Decl *d = 0;
+  UTL_ScopedName * node = FE_Utils::string_to_scoped_name (s);
+  AST_Decl * d = 0;
 
   if (node != 0)
     {
-      d = idl_global->scopes ().top_non_null ()->lookup_by_name (node,
-                                                                 I_TRUE);
-    }
+      d = idl_global->scopes ().top_non_null ()->lookup_by_name (node);
 
-  if (d == 0)
-    {
-      idl_global->err ()->lookup_error (node);
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (node);
+        }
+
       node->destroy ();
       delete node;
-      node = 0;
     }
 
   return d;

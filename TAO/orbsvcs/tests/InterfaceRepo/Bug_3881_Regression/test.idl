@@ -1,0 +1,7 @@
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef sequence<long> LSeq;
+};
+

@@ -1,0 +1,7 @@
+usr/share/ace/bin/m[p,w]c.pl          usr/lib/ace/bin
+usr/share/ace/bin/MakeProjectCreator  usr/lib/ace/bin
+../../MPC/config              usr/lib/ace/MPC
+../../MPC/modules             usr/lib/ace/MPC
+../../MPC/templates           usr/lib/ace/MPC
+../../MPC/*.pl                usr/lib/ace/MPC
+../../bin/PerlACE/*.pm        usr/lib/ace/bin/PerlACE

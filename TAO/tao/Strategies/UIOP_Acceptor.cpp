@@ -1,8 +1,8 @@
-#include "UIOP_Acceptor.h"
+#include "tao/Strategies/UIOP_Acceptor.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "UIOP_Profile.h"
+#include "tao/Strategies/UIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -15,52 +15,21 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (Strategies,
-           UIOP_Acceptor,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_UIOP_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_UIOP_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO_UIOP_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
-TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
+TAO_UIOP_Acceptor::TAO_UIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
-    base_acceptor_ (),
+    base_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    unlink_on_close_ (true),
-    lite_flag_ (flag)
+    unlink_on_close_ (true)
 {
 }
 
-TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
+TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -86,7 +55,6 @@ TAO_UIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
     return this->create_shared_profile (object_key,
                                         mprofile,
                                         priority);
-
 }
 
 int
@@ -200,7 +168,7 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_UIOP_Acceptor::close (void)
+TAO_UIOP_Acceptor::close ()
 {
   if (this->unlink_on_close_)
     {
@@ -270,8 +238,7 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
                            ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_UIOP_CREATION_STRATEGY (this->orb_core_,
-                                              this->lite_flag_),
+                  TAO_UIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
@@ -309,10 +276,18 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
   //    rendezvous point here
 
   if (TAO_debug_level > 5)
-    ACE_DEBUG ((LM_DEBUG,
-                "\nTAO (%P|%t) UIOP_Acceptor::open_i - "
-                "listening on: <%s>\n",
+    TAOLIB_DEBUG ((LM_DEBUG,
+                "\nTAO (%P|%t) - UIOP_Acceptor::open_i - "
+                "listening on: <%C>\n",
                 addr.get_path_name ()));
+
+  // In the event that an accept() fails, we can examine the reason.  If
+  // the reason warrants it, we can try accepting again at a later time.
+  // The amount of time we wait to accept again is governed by this orb
+  // parameter.
+  this->set_error_retry_delay (
+    this->orb_core_->orb_params ()->accept_error_delay());
+
   return 0;
 }
 
@@ -351,15 +326,15 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
   // most UNIX domain socket rendezvous points can only be less than
   // 108 characters long.
   if (length < ACE_OS::strlen (rendezvous))
-    ACE_DEBUG ((LM_WARNING,
-                "TAO (%P|%t) UIOP rendezvous point was truncated to <%s>\n"
+    TAOLIB_DEBUG ((LM_WARNING,
+                "TAO (%P|%t) - UIOP rendezvous point was truncated to <%s>\n"
                 "since it was longer than %d characters long.\n",
                 addr.get_path_name (),
                 length));
 }
 
 CORBA::ULong
-TAO_UIOP_Acceptor::endpoint_count (void)
+TAO_UIOP_Acceptor::endpoint_count ()
 {
   return 1;
 }
@@ -376,7 +351,8 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major, minor;
+  CORBA::Octet major = 0;
+  CORBA::Octet minor = 0;
 
   // Read the version. We just read it here. We don't *do any*
   // processing.
@@ -384,8 +360,8 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - UIOP_Profile::decode - v%d.%d\n"),
                       major,
                       minor));
         }
@@ -398,7 +374,7 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   // Get rendezvous_point
   if (cdr.read_string (rendezvous) == 0)
     {
-      ACE_ERROR ((LM_ERROR, "error decoding UIOP rendezvous_point"));
+      TAOLIB_ERROR ((LM_ERROR, "error decoding UIOP rendezvous_point"));
 
       return -1;
     }
@@ -448,33 +424,31 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  int begin = 0;
-  int end = -1;
+  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type end = 0;
 
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
-      begin += end + 1;
-
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = len - begin;  // Handle last endpoint differently
+        end = len;
 
       if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                            "TAO (%P|%t) Zero length UIOP option.\n"),
                           -1);
       else if (end != ACE_CString::npos)
         {
           ACE_CString opt =
-            options.substring (begin, end);
+            options.substring (begin, end - begin);
 
-          const int slot = opt.find ("=");
+          ACE_CString::size_type const slot = opt.find ("=");
 
-          if (slot == static_cast<int> (len - 1)
+          if (slot == len - 1
               || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) UIOP option <%s> is "
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
+                               "TAO (%P|%t) - UIOP option <%C> is "
                                "missing a value.\n",
                                opt.c_str ()),
                               -1);
@@ -482,27 +456,33 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
           const ACE_CString name (opt.substring (0, slot));
           ACE_CString value = opt.substring (slot + 1);
 
+          begin = end + 1;
+
           if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) Zero length UIOP "
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
+                               "TAO (%P|%t) - Zero length UIOP "
                                "option name.\n"),
                               -1);
 
           if (name == "priority")
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n")),
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) - Invalid UIOP endpoint format: ")
+                                 ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) Invalid UIOP option: <%s>\n",
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
+                               "TAO (%P|%t) - Invalid UIOP option: <%C>\n",
                                name.c_str ()),
                               -1);
         }
+      else
+        break;  // No other options.
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_UIOP == 1 */

@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Basic_Factory.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,11 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Factory.h"
+#include "orbsvcs/Event/EC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Basic_Factory
@@ -34,16 +35,15 @@
  * prioritized and all the filtering is done at the consumer level.
  * A fixed POA is used for servant activation.
  * This object creates a single instance of the Supplier
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
 {
 public:
   /// Constructor
-  TAO_EC_Basic_Factory (void);
+  TAO_EC_Basic_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Basic_Factory (void);
+  virtual ~TAO_EC_Basic_Factory ();
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
@@ -95,9 +95,9 @@ public:
   virtual void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
 
-  virtual ACE_Lock* create_consumer_lock (void);
+  virtual ACE_Lock* create_consumer_lock ();
   virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock (void);
+  virtual ACE_Lock* create_supplier_lock ();
   virtual void destroy_supplier_lock (ACE_Lock*);
 
   virtual TAO_EC_ConsumerControl*
@@ -109,6 +109,8 @@ public:
   virtual void
       destroy_supplier_control (TAO_EC_SupplierControl*);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

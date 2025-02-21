@@ -1,12 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file RT_Transport_Descriptor.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_RT_TRANSPORT_DESCRIPTOR_H
@@ -14,15 +11,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "RT_Transport_Descriptor_Property.h"
+#include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
 
 #include "tao/Transport_Descriptor_Interface.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RT_Transport_Descriptor
@@ -31,15 +30,14 @@
  *
  * The TAO_RT_Transport_Descriptor contains Descriptor Properties.
  * It uses the "Chain of Command" pattern in the implementation of the <_is_equivalent> method.
- *
  */
 class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor
   : public TAO_Transport_Descriptor_Interface
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
-                               CORBA::Boolean flag = 0);
+                               CORBA::Boolean flag = false);
 
   /// Destructor
   ~TAO_RT_Transport_Descriptor ();
@@ -51,14 +49,14 @@ public:
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-  virtual TAO_Transport_Descriptor_Interface *duplicate (void);
+  virtual TAO_Transport_Descriptor_Interface *duplicate ();
 
   /// Try to determine if this object is same as the <other_prop>.
   virtual CORBA::Boolean is_equivalent (
       const TAO_Transport_Descriptor_Interface *other_prop);
 
   /// Generate hash value for our class
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
 private:
   /// Stack of properties.
@@ -68,8 +66,10 @@ private:
   int delete_properties_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "RT_Transport_Descriptor.inl"
+#include "tao/RTCORBA/RT_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

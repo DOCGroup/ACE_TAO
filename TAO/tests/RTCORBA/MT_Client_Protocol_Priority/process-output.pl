@@ -1,4 +1,3 @@
-# $Id$
 # -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
@@ -129,20 +128,20 @@ elsif ($iiop_requests != $shmiop_requests)
 {
     print "ERROR: Number of iiop requests differs from shmiop differs from "
         ."number of iterations\n";
-    print "IIOP Request: "; 
+    print "IIOP Request: ";
     print $iiop_requests;
     print "\n";
 
-    print "IIOP Request: "; 
+    print "IIOP Request: ";
     print $iiop_requests;
     print "\n";
     ++$errors;
 }
-elsif (($priority1 != $priority2 
+elsif (($priority1 != $priority2
         and ($priority1_requests != $priority2_requests
              or $priority1_requests != $iterations))
-       or ($priority1 == $priority2 
-           and ($priority2_requests != 0 
+       or ($priority1 == $priority2
+           and ($priority2_requests != 0
                 or $priority1_requests != 2*$iterations)))
 {
     print "ERROR: Nonmatching number of requests of each priority\n";

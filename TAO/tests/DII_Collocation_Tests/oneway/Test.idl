@@ -1,0 +1,75 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  const unsigned long FIX_ARRAY_SIZE = 10;
+  const unsigned long VAR_ARRAY_SIZE = 3;
+  const unsigned long BOUNDED_STRING_SIZE = 10;
+  const unsigned long BOUNDED_VAR_SIZE = 10;
+
+  typedef sequence<char, BOUNDED_VAR_SIZE> Bounded_Var_Size_Arg;
+  typedef sequence<char> Unbounded_Var_Size_Arg;
+  typedef long Fixed_Array[FIX_ARRAY_SIZE];
+  typedef string Var_Array [VAR_ARRAY_SIZE];
+  typedef string<BOUNDED_STRING_SIZE> Bounded_String;
+
+
+  struct TimeOfDay {
+    short   hour;       // 0 - 23
+    short   minute;     // 0 - 59
+    short   second;     // 0 - 59
+  };
+
+  interface Simple_Test
+  {
+    void test_method(inout unsigned long error_count);
+  };
+
+  /// A very simple interface
+  interface Hello
+  {
+    oneway void test_basic_arg(in long value);
+
+    oneway void test_unbounded_string_arg(in string message);
+
+    oneway void test_bounded_string_arg(in Bounded_String message);
+
+    oneway void test_fixed_array_arg(in Fixed_Array message);
+
+    oneway void test_var_array_arg(in Var_Array messages);
+
+    oneway void test_bounded_var_size_arg(in Bounded_Var_Size_Arg message);
+
+    oneway void test_unbounded_var_size_arg(in Unbounded_Var_Size_Arg message);
+
+    oneway void test_fixed_size_arg (in TimeOfDay t);
+
+    oneway void test_special_basic_arg(in char value);
+
+    oneway void test_objref_arg (in Simple_Test test);
+
+    oneway void test_object_arg (in Object o);
+
+    oneway void test_args_1 (in Object arg1,
+                             in char arg2,
+                             in Simple_Test arg3);
+
+    oneway void test_args_2 (in string arg1,
+                             in Fixed_Array arg2,
+                             in TimeOfDay arg3);
+
+    oneway void test_args_3 (in Bounded_String arg1,
+                             in Bounded_Var_Size_Arg arg2,
+                             in Unbounded_Var_Size_Arg arg3,
+                             in Var_Array arg4);
+
+    /// Return a simple string
+    string get_string ();
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};

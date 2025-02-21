@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   ESF_Delayed_Changes.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -12,24 +10,26 @@
 #ifndef TAO_ESF_DELAYED_CHANGES_H
 #define TAO_ESF_DELAYED_CHANGES_H
 
-#include "ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ESF_Busy_Lock.h"
-
+#include "orbsvcs/ESF/ESF_Busy_Lock.h"
+#include "tao/Basic_Types.h"
 #include "ace/Containers.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Command_Base;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Target,class Object> class TAO_ESF_Connected_Command;
 template<class Target,class Object> class TAO_ESF_Disconnected_Command;
 template<class Target,class Object> class TAO_ESF_Reconnected_Command;
 template<class Target> class TAO_ESF_Shutdown_Command;
-
-class ACE_Command_Base;
 
 /**
  * @class TAO_ESF_Delayed_Changes
@@ -86,20 +86,17 @@ template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 class TAO_ESF_Delayed_Changes : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
-  TAO_ESF_Delayed_Changes (void);
+  TAO_ESF_Delayed_Changes ();
   TAO_ESF_Delayed_Changes (const COLLECTION &collection);
 
-  int busy (void);
-  int idle (void);
-  int execute_delayed_operations (void);
+  int busy ();
+  int idle ();
+  int execute_delayed_operations ();
 
-  void connected_i (PROXY *proxy
-                    ACE_ENV_ARG_DECL);
-  void reconnected_i (PROXY *proxy
-                    ACE_ENV_ARG_DECL);
-  void disconnected_i (PROXY *proxy
-                     ACE_ENV_ARG_DECL);
-  void shutdown_i (ACE_ENV_SINGLE_ARG_DECL);
+  void connected_i (PROXY *proxy);
+  void reconnected_i (PROXY *proxy);
+  void disconnected_i (PROXY *proxy);
+  void shutdown_i ();
 
   typedef TAO_ESF_Connected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Connected_Command;
   typedef TAO_ESF_Reconnected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Reconnected_Command;
@@ -107,15 +104,11 @@ public:
   typedef TAO_ESF_Shutdown_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE> > Shutdown_Command;
 
   // = The TAO_ESF_Proxy methods
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker
-                         ACE_ENV_ARG_DECL);
-  virtual void connected (PROXY *proxy
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (PROXY *proxy
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (PROXY *proxy
-                             ACE_ENV_ARG_DECL);
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void for_each (TAO_ESF_Worker<PROXY> *worker);
+  virtual void connected (PROXY *proxy);
+  virtual void reconnected (PROXY *proxy);
+  virtual void disconnected (PROXY *proxy);
+  virtual void shutdown ();
 
 private:
   COLLECTION collection_;
@@ -139,18 +132,12 @@ private:
   ACE_Unbounded_Queue<ACE_Command_Base*> command_queue_;
 };
 
-// ****************************************************************
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ESF_Delayed_Changes.i"
+#include "orbsvcs/ESF/ESF_Delayed_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Delayed_Changes.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Delayed_Changes.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Delayed_Changes.cpp"
 
 #endif /* TAO_ESF_DELAYED_CHANGES_H */

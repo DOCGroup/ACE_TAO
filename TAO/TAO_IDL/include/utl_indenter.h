@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -80,17 +78,17 @@ class UTL_Indenter
   // =DESCRIPTION
   //  useful in generating indented output
 public:
-  UTL_Indenter (void);
+  UTL_Indenter ();
 
-  ~UTL_Indenter (void) {}
+  ~UTL_Indenter () {}
 
-  void reset (void);
+  void reset ();
   // Reset indentation level to 0.
 
-  void increase (void);
+  void increase ();
   // Increase indentation level.
 
-  void decrease (void);
+  void decrease ();
   // Decrease indentation level.
 
   void skip_to (ACE_OSTREAM_TYPE &o);

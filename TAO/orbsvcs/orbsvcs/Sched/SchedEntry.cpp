@@ -1,32 +1,26 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    sched
-//
-// = FILENAME
-//    SchedEntry.cpp
-//
-// = CREATION DATE
-//    7 February 1998
-//
-// = AUTHOR
-//    Chris Gill
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SchedEntry.cpp
+ *
+ *  @author Chris Gill
+ */
+//=============================================================================
 
-#include "SchedEntry.h"
+
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Sched/SchedEntry.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "SchedEntry.i"
+#include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Sched, SchedEntry, "$Id$")
 
-Task_Entry::Task_Entry (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+Task_Entry::Task_Entry ()
   : rt_info_ (0),
     effective_period_(0),
     dfs_status_ (NOT_VISITED),
@@ -40,7 +34,7 @@ Task_Entry::Task_Entry (void)
 {
 }
 
-Task_Entry::~Task_Entry (void)
+Task_Entry::~Task_Entry ()
 {
   // Zero out the task entry ACT in the corresponding rt_info
   rt_info_->volatile_token = 0;
@@ -204,7 +198,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
               this->has_unresolved_remote_dependencies (1);
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
                           (const char*) this->rt_info ()->entry_point));
@@ -216,7 +210,6 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
                                (const char*) this->rt_info ()->entry_point);
               unresolved_remotes +=
                 ACE_CString (string_buffer);
-
             }
 
           // Check for and warn about unresolved local dependencies in
@@ -228,7 +221,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
               this->has_unresolved_local_dependencies (1);
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
                           (const char*) this->rt_info ()->entry_point));
@@ -302,7 +295,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
               this->has_unresolved_remote_dependencies (1);
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
                           (const char*) this->rt_info ()->entry_point));
@@ -325,7 +318,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
               this->has_unresolved_local_dependencies (1);
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
                           (const char*) this->rt_info ()->entry_point));
@@ -763,7 +756,7 @@ Dispatch_Proxy_Iterator::first (u_int sub_frame)
 // and -1 if an error occurred.
 
 int
-Dispatch_Proxy_Iterator::last (void)
+Dispatch_Proxy_Iterator::last ()
 {
   // use the last call
   current_call_ = number_of_calls_ - 1;
@@ -780,7 +773,7 @@ Dispatch_Proxy_Iterator::last (void)
 // and -1 if an error occurred.
 
 int
-Dispatch_Proxy_Iterator::advance (void)
+Dispatch_Proxy_Iterator::advance ()
 {
   int result = 1;
 
@@ -819,7 +812,7 @@ Dispatch_Proxy_Iterator::advance (void)
 // and -1 if an error occurred.
 
 int
-Dispatch_Proxy_Iterator::retreat (void)
+Dispatch_Proxy_Iterator::retreat ()
 {
   int result = 1;
 
@@ -856,7 +849,7 @@ Dispatch_Proxy_Iterator::retreat (void)
 // returns the adjusted arrival time of the virtual entry
 
 RtecScheduler::Time
-Dispatch_Proxy_Iterator::arrival (void) const
+Dispatch_Proxy_Iterator::arrival () const
 {
   Dispatch_Entry_Link *link;
   if (iter_.done ()
@@ -873,7 +866,7 @@ Dispatch_Proxy_Iterator::arrival (void) const
 // returns the adjusted deadline time of the virtual entry
 
 RtecScheduler::Time
-Dispatch_Proxy_Iterator::deadline (void) const
+Dispatch_Proxy_Iterator::deadline () const
 {
   Dispatch_Entry_Link *link;
   if (iter_.done ()
@@ -890,7 +883,7 @@ Dispatch_Proxy_Iterator::deadline (void) const
 // returns the scheduler priority of the virtual entry
 
 Dispatch_Proxy_Iterator::Preemption_Priority
-Dispatch_Proxy_Iterator::priority (void) const
+Dispatch_Proxy_Iterator::priority () const
 {
   Dispatch_Entry_Link *link;
 
@@ -905,7 +898,7 @@ Dispatch_Proxy_Iterator::priority (void) const
 // returns the OS priority of the virtual entry
 
 Dispatch_Proxy_Iterator::OS_Priority
-Dispatch_Proxy_Iterator::OS_priority (void) const
+Dispatch_Proxy_Iterator::OS_priority () const
 {
   Dispatch_Entry_Link *link;
   if (iter_.done ()
@@ -932,3 +925,5 @@ TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
     prev_ (prev)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,28 +1,14 @@
-#include "Persistent_Naming_Context.h"
-#include "Persistent_Context_Index.h"
-#include "Bindings_Iterator_T.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Context_Index.h"
+#include "orbsvcs/Naming/Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"
 
-// The following #pragma is needed to disable a warning that occurs
-// in MSVC 6 due to the overly long debugging symbols generated for
-// the ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_...> > template
-// instance used by some of the methods in this file.
-#ifdef _MSC_VER
-#  pragma warning(disable: 4786)  /* identifier was truncated to '255'
-                                     characters in the browser
-                                     information */
-#endif  /* _MSC_VER */
+#include <memory>
 
-#include "ace/Auto_Ptr.h"
-
-ACE_RCSID (Naming,
-           Persistent_Naming_Context,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Persistent_Bindings_Map::unbind (const char *id,
-                                     const char *kind)
+TAO_Persistent_Bindings_Map::unbind (const char *id, const char *kind)
 {
   TAO_Persistent_ExtId name (id, kind);
   TAO_Persistent_IntId entry;
@@ -66,15 +52,11 @@ TAO_Persistent_Bindings_Map::find (const char *id,
   TAO_Persistent_ExtId name (id, kind);
   TAO_Persistent_IntId entry;
 
-  if (this->map_->find (name,
-                        entry,
-                        this->allocator_) != 0)
+  if (this->map_->find (name, entry, this->allocator_) != 0)
     return -1;
   else
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      obj = orb_->string_to_object (entry.ref_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      obj = orb_->string_to_object (entry.ref_);
       type = entry.type_;
 
       return 0;
@@ -88,38 +70,37 @@ TAO_Persistent_Bindings_Map::TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb)
 {
 }
 
-TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map (void)
+TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map ()
 {
 }
 
 void
-TAO_Persistent_Bindings_Map::destroy (void)
+TAO_Persistent_Bindings_Map::destroy ()
 {
   this->map_->ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>::~ACE_Hash_Map_With_Allocator ();
   this->allocator_->free (map_);
 }
 
 TAO_Persistent_Bindings_Map::HASH_MAP *
-TAO_Persistent_Bindings_Map::map (void)
+TAO_Persistent_Bindings_Map::map ()
 {
   return this->map_;
 }
 
 size_t
-TAO_Persistent_Bindings_Map::total_size (void)
+TAO_Persistent_Bindings_Map::total_size ()
 {
   return this->map_->total_size ();
 }
 
 size_t
-TAO_Persistent_Bindings_Map::current_size (void)
+TAO_Persistent_Bindings_Map::current_size ()
 {
   return map_->current_size ();
 }
 
 int
-TAO_Persistent_Bindings_Map::open (size_t hash_table_size,
-                                   ACE_Allocator *alloc)
+TAO_Persistent_Bindings_Map::open (size_t hash_table_size, ACE_Allocator *alloc)
 {
   allocator_ = alloc;
 
@@ -148,8 +129,7 @@ TAO_Persistent_Bindings_Map::open_helper (size_t hash_table_size,
 }
 
 void
-TAO_Persistent_Bindings_Map::set (HASH_MAP *map,
-                                  ACE_Allocator *alloc)
+TAO_Persistent_Bindings_Map::set (HASH_MAP *map, ACE_Allocator *alloc)
 {
   allocator_ = alloc;
   map_ = map;
@@ -163,9 +143,7 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
                                           int rebind)
 {
   // Obtain a stringified ior of <obj> (i.e., the representation we can store).
-  ACE_DECLARE_NEW_CORBA_ENV;
-  CORBA::String_var ref = orb_->object_to_string (obj ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::String_var ref = orb_->object_to_string (obj);
 
   // Calculate and allocate the memory we need to store this name to
   // object binding.
@@ -255,23 +233,6 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
 
 TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
                                                               const char *poa_id,
-                                                              TAO_Persistent_Context_Index *context_index)
-
-  : TAO_Hash_Naming_Context (poa,
-                             poa_id),
-    counter_ (0),
-    persistent_context_ (0),
-    index_ (context_index)
-{
-  ACE_NEW (this->persistent_context_,
-           TAO_Persistent_Bindings_Map (context_index->orb ()));
-
-  // Set the superclass pointer.
-  context_ = persistent_context_;
-}
-
-TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
-                                                              const char *poa_id,
                                                               TAO_Persistent_Context_Index *context_index,
                                                               HASH_MAP *map,
                                                               ACE_UINT32 *counter)
@@ -287,7 +248,10 @@ TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::PO
   // Set the superclass pointer.
   context_ = persistent_context_;
 
-  persistent_context_->set (map, index_->allocator ());
+  // If a map was provided (i.e., not defaulted) then set it in the
+  // persistent_context_
+  if (map != 0)
+    persistent_context_->set (map, index_->allocator ());
 }
 
 int
@@ -296,7 +260,7 @@ TAO_Persistent_Naming_Context::init (size_t hash_table_size)
   return persistent_context_->open (hash_table_size, index_->allocator ());
 }
 
-TAO_Persistent_Naming_Context::~TAO_Persistent_Naming_Context (void)
+TAO_Persistent_Naming_Context::~TAO_Persistent_Naming_Context ()
 {
   // Perform appropriate cleanup based on the destruction level specified.
 
@@ -322,28 +286,27 @@ CosNaming::NamingContext_ptr
 TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                                                  const char *poa_id,
                                                  size_t context_size,
-                                                 TAO_Persistent_Context_Index * ind
-                                                 ACE_ENV_ARG_DECL)
+                                                 TAO_Persistent_Context_Index * ind)
 {
   // Store the stub we will return here.
   CosNaming::NamingContext_var result;
 
   // Put together a servant for the new Naming Context.
 
-  TAO_Persistent_Naming_Context *context_impl = 0;
-  ACE_NEW_THROW_EX (context_impl,
-                    TAO_Persistent_Naming_Context (poa,
-                                                   poa_id,
-                                                   ind),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (result._retn ());
+  TAO_Persistent_Naming_Context *context_impl = ind->create_naming_context_impl(
+    poa,
+    poa_id);
 
-  // Put <context_impl> into the auto pointer temporarily, in case next
+  // Verify that a context implementation was created. If not, throw an exception
+  if (context_impl == 0)
+    throw CORBA::NO_MEMORY ();
+
+  // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context> temp (context_impl);
+  std::unique_ptr<TAO_Persistent_Naming_Context> temp (context_impl);
 
   if (context_impl->init (context_size) == -1)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (), result._retn ());
+    throw CORBA::NO_MEMORY ();
 
   // Insure appropriate cleanup in case of exception conditions ahead.
   context_impl->set_cleanup_level (1);
@@ -352,7 +315,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   if (ind->bind (context_impl->poa_id_.c_str (),
                  context_impl->counter_,
                  context_impl->persistent_context_->map ()) == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), result._retn ());
+    throw CORBA::INTERNAL ();
 
   // Insure appropriate cleanup in case of exception conditions ahead.
   context_impl->set_cleanup_level (2);
@@ -361,12 +324,11 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (result._retn ());
 
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release auto pointer, and start using reference counting to
+  // Release unique pointer, and start using reference counting to
   // control our servant.
   temp.release ();
   PortableServer::ServantBase_var s = context;
@@ -376,12 +338,9 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
     PortableServer::string_to_ObjectId (poa_id);
 
   poa->activate_object_with_id (id.in (),
-                                context
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (result._retn ());
+                                context);
 
-  result = context->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+  result = context->_this ();
 
   // Everything went smoothly, without errors - we don't need any cleanup.
   context_impl->set_cleanup_level (0);
@@ -390,19 +349,12 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 }
 
 CosNaming::NamingContext_ptr
-TAO_Persistent_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Persistent_Naming_Context::new_context ()
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      CosNaming::NamingContext::_nil ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // Generate a POA id for the new context.
   char poa_id[BUFSIZ];
@@ -412,12 +364,10 @@ TAO_Persistent_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
                    (*this->counter_)++);
 
   CosNaming::NamingContext_var result =
-    make_new_context (this->poa_.in (),
-                      poa_id,
-                      this->persistent_context_->total_size (),
-                      this->index_
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+    this->make_new_context (this->poa_.in (),
+                            poa_id,
+                            this->persistent_context_->total_size (),
+                            this->index_);
 
   return result._retn ();
 }
@@ -425,8 +375,7 @@ TAO_Persistent_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
                                      CosNaming::BindingList_out &bl,
-                                     CosNaming::BindingIterator_out &bi
-                                     ACE_ENV_ARG_DECL)
+                                     CosNaming::BindingIterator_out &bi)
 {
   // Allocate nil out parameters in case we won't be able to complete
   // the operation.
@@ -434,19 +383,11 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   ACE_NEW_THROW_EX (bl,
                     CosNaming::BindingList (0),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  // Obtain a lock before we proceed with the operation.
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // Dynamically allocate hash map iterator.
   HASH_MAP::ITERATOR *hash_iter = 0;
@@ -454,11 +395,10 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
                     HASH_MAP::ITERATOR
                     (*persistent_context_->map ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
-  // Store <hash_iter temporarily in auto pointer, in case we'll have
+  // Store hash_iter temporarily in unique pointer, in case we'll have
   // some failures and throw an exception.
-  ACE_Auto_Basic_Ptr<HASH_MAP::ITERATOR> temp (hash_iter);
+  std::unique_ptr<HASH_MAP::ITERATOR> temp (hash_iter);
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
@@ -484,16 +424,22 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   bl->length (n);
 
   ENTRY_DEF *hash_entry = 0;
+  {
+    // Obtain a lock before we proceed with the operation.
+    ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX,
+                             ace_mon,
+                             this->lock_,
+                             CORBA::INTERNAL ());
 
-  for (CORBA::ULong i = 0; i < n; i++)
-    {
-      hash_iter->next (hash_entry);
-      hash_iter->advance ();
+    for (CORBA::ULong i = 0; i < n; i++)
+      {
+        hash_iter->next (hash_entry);
+        hash_iter->advance ();
 
-      if (ITER_SERVANT::populate_binding (hash_entry, bl[i]) == 0)
-          ACE_THROW (CORBA::NO_MEMORY());
-    }
-
+        if (ITER_SERVANT::populate_binding (hash_entry, bl[i]) == 0)
+          throw CORBA::NO_MEMORY();
+      }
+  }
   // Now we are done with the BindingsList, and we can follow up on
   // the iterator business.
 
@@ -504,19 +450,17 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
     {
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
-                        ITER_SERVANT (this, hash_iter, this->poa_.in (), this->lock_),
+                        ITER_SERVANT (this, hash_iter, this->poa_.in ()),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
-      // Release <hash_iter> from auto pointer, and start using the
+      // Release <hash_iter> from unique pointer, and start using the
       // reference counting to control our servant.
       temp.release ();
       PortableServer::ServantBase_var iter = bind_iter;
 
       // Increment reference count on this Naming Context, so it doesn't get
       // deleted before the BindingIterator servant gets deleted.
-      interface_->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      interface_->_add_ref ();
 
       // Register with the POA.
       char poa_id[BUFSIZ];
@@ -528,49 +472,10 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
         PortableServer::string_to_ObjectId (poa_id);
 
       this->poa_->activate_object_with_id (id.in (),
-                                           bind_iter
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                           bind_iter);
 
-      bi = bind_iter->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      bi = bind_iter->_this ();
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
-    defined (ACE_HAS_GNU_REPO)
-
-template class ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
-template class ACE_Hash_Map_Manager<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
-template class ACE_Hash<TAO_Persistent_ExtId>;
-template class ACE_Equal_To<TAO_Persistent_ExtId>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>;
-template class ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context>;
-template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex > >;
-template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId> >;
-template class ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId> > >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId>
-#pragma instantiate ACE_Hash<TAO_Persistent_ExtId>
-#pragma instantiate ACE_Equal_To<TAO_Persistent_ExtId>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex> >
-#pragma instantiate TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId> >
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId> > >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

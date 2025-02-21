@@ -1,20 +1,16 @@
-// $Id$
-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "tao/Object_T.h"
 #include "orbsvcs/PortableGroup/MIOP.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 #define MAX_MIOP_OCTET_SEQUENCE  (ACE_MAX_DGRAM_SIZE - 272 /* MIOP_MAX_HEADER_SIZE */)
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -38,30 +34,25 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+        orb->string_to_object(ior);
 
       /* Do an unchecked narrow since there's no way to do an is_a on
        * a multicast reference (yet...).
        */
       Test::McastHello_var hello =
         TAO::Narrow_Utils<Test::McastHello>::unchecked_narrow (
-            tmp.in (),
-            Test__TAO_McastHello_Proxy_Broker_Factory_function_pointer
-          );
+            tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -71,8 +62,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      hello->send_forty_two (42 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->send_forty_two (42);
 
       Test::Octets payload (MAX_MIOP_OCTET_SEQUENCE);
       payload.length (MAX_MIOP_OCTET_SEQUENCE);
@@ -82,22 +72,17 @@ main (int argc, char *argv[])
           payload[j] = j % 256;
         }
 
-      hello->send_large_octet_array (payload ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->send_large_octet_array (payload);
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

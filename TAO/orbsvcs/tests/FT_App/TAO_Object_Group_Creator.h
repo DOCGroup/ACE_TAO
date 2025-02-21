@@ -3,8 +3,6 @@
 /**
  *  @file    TAO_Object_Group_Creator.h
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  Utility to Create Object Group
  *
@@ -25,6 +23,7 @@
 #include <ace/SString.h>
 #include <ace/Vector_T.h>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   class Object_Group_Creator
@@ -43,24 +42,20 @@ namespace TAO
 
     /////////////////
     // initialization
-    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb);
 
     /////////////////
     // functionality
     CORBA::Object_ptr create_group(
         const char * role,
-        int write_iors
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        int write_iors);
 
     /////////////////
     // functionality
     CORBA::Object_ptr create_infrastructure_managed_group(
-        const char * type_id
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        const char * type_id);
 
-    int unregister_role(const char * role ACE_ENV_ARG_DECL);
+    int unregister_role(const char * role);
 
     ////////////
     // shut down
@@ -76,8 +71,7 @@ namespace TAO
     const char * role,
     const char * type_id,
     PortableGroup::ObjectGroupId group_id,
-    const PortableGroup::Location & location
-    ACE_ENV_ARG_DECL);
+    const PortableGroup::Location & location);
 
     ////////////////////
     // forbidden methods
@@ -102,7 +96,7 @@ namespace TAO
      */
     int have_replication_manager_;
   };
-
 } // namespace TAO
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // TAO_OBJECT_GROUP_CREATOR_H

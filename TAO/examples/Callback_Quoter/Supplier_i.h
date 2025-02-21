@@ -1,21 +1,15 @@
 // -*- C++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    MarketFeed.h
-//
-// = DESCRIPTION
-//    This class implements a simple CORBA server that keeps
-//     on sending stock values to the Notifier.
-//
-// = AUTHORS
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Supplier_i.h
+ *
+ *  This class implements a simple CORBA server that keeps
+ *   on sending stock values to the Notifier.
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 #ifndef SUPPLIER_I_H
 #define SUPPLIER_I_H
 
@@ -30,85 +24,86 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Supplier
+ *
+ * @brief Market feed  daemon implementation.
+ *
+ * This class feeds stock information to the Callback Quoter
+ * notifier.
+ */
 class Supplier_Timer_Handler;
 class Supplier
 {
-  // = TITLE
-  //     Market feed  daemon implementation.
-  //
-  // = DESCRIPTION
-  //    This class feeds stock information to the Callback Quoter
-  //    notifier.
 public:
-  // = Initialization and termination methods.
-  Supplier (void);
-  // Constructor.
+  /// Constructor.
+  Supplier ();
 
-  ~Supplier (void);
-  // Destructor.
+  /// Destructor.
+  ~Supplier ();
 
-  int run (void);
-  // Execute  the daemon.
+  /// Execute  the daemon.
+  int run ();
 
-  int init (int argc, char *argv[]);
-  // Initialize the client communication endpoint with Notifier.
+  /// Initialize the client communication endpoint with Notifier.
+  int init (int argc, ACE_TCHAR *argv[]);
 
+  /// Sends the stock name and its value.
   int send_market_status (const char *stock_name,
                           long value);
-  // Sends the stock name and its value.
-
-  Supplier_Timer_Handler *supplier_timer_handler_;
-  // The timer handler used to send the market status to the notifier
-  // periodically.
 
 private:
+  /// The timer handler used to send the market status to the notifier
+  /// periodically.
+  Supplier_Timer_Handler *supplier_timer_handler_ {};
+
+  /// Remember our orb.
   CORBA::ORB_var orb_;
-  // Remember our orb.
 
-  int read_ior (char *filename);
-  // Function to read the Notifier IOR from a file.
+  /// Function to read the Notifier IOR from a file.
+  int read_ior (ACE_TCHAR *filename);
 
-  int parse_args (void);
-  // Parses the arguments passed on the command line.
+  /// Parses the arguments passed on the command line.
+  int parse_args ();
 
-  int via_naming_service(void);
-  // This method initialises the naming service and registers the
-  // object with the POA.
+  /// This method initialises the naming service and registers the
+  /// object with the POA.
+  int via_naming_service();
 
-   ACE_Reactor *reactor_used (void) const;
-  // returns the TAO instance of the singleton Reactor.
+  /// returns the TAO instance of the singleton Reactor.
+   ACE_Reactor *reactor_used () const;
 
-  int read_file (char *filename);
-  // This method used for getting stock information from a file.
+  /// This method used for getting stock information from a file.
+  int read_file (ACE_TCHAR *filename);
 
+  /// # of arguments on the command line.
   int argc_;
-  // # of arguments on the command line.
 
-  char **argv_;
-  // arguments from command line.
+  /// arguments from command line.
+  ACE_TCHAR **argv_;
 
-  char *ior_;
-  // IOR of the obj ref of the Notifier.
+  /// IOR of the obj ref of the Notifier.
+  ACE_TCHAR *ior_;
 
+  /// An instance of the name client used for resolving the factory
+  /// objects.
   TAO_Naming_Client naming_services_client_;
-  // An instance of the name client used for resolving the factory
-  // objects.
 
+  /// This variable denotes whether the naming service
+  /// is used or not.
   int use_naming_service_;
-  // This variable denotes whether the naming service
-  // is used or not.
 
+  /// Notifier object reference.
   Notifier_var notifier_;
-  // Notifier object reference.
 
+  /// The pointer for accessing the input stream.
   FILE  *f_ptr_;
-  // The pointer for accessing the input stream.
 
+  /// Iteration count.
   int loop_count_;
-  // Iteration count.
 
+  /// Time period between two succesive market feeds to the Notifier.
   long  period_value_;
-  // Time period between two succesive market feeds to the Notifier.
 };
 
 #endif /*SUPPLIER_I_H */

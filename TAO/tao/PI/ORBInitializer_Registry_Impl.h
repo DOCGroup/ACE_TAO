@@ -4,8 +4,6 @@
 /**
  *  @file   ORBInitializer_Registry_Impl.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
@@ -15,20 +13,23 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Array_Base.h"
-#include "ace/Service_Config.h"
+#include "tao/PI/PI.h"
+
 #include "tao/CORBA_methods.h"
 #include "tao/Objref_VarOut_T.h"
-#include "ace/Recursive_Thread_Mutex.h"
 #include "tao/ORBInitializer_Registry_Adapter.h"
 
-#include "PI.h"
+#include "ace/Array_Base.h"
+#include "ace/Service_Config.h"
+#include "ace/Recursive_Thread_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -38,45 +39,50 @@ namespace TAO
    * @brief Global list that contains all portable interceptor ORB
    *        initializers.
    */
-  class TAO_PI_Export ORBInitializer_Registry
+  class ORBInitializer_Registry
     : public ORBInitializer_Registry_Adapter
   {
-    public:
-      ORBInitializer_Registry (void);
+  public:
+    ORBInitializer_Registry ();
 
-      /// Service config fini method, release all ORBInitializers at this
-      /// moment
-      virtual int fini (void);
+    /// Added to provide registration for the several static service
+    /// objects, brought in with this ORBInitializer_Registry
+    /// implementation. Note that this is more reliable than using
+    /// static initializers, since multiple copies of the dynamic
+    /// service object will require their own (multiple) copies of the
+    /// dependent static service objects. That is just impossible
+    /// without registering those static services in the same repo, the
+    /// dynamic SO is registered with.
+    virtual int init (int, ACE_TCHAR *[]);
 
-      /// Register an ORBInitializer with the underlying ORBInitializer
-      /// array.
-      virtual void register_orb_initializer (
-        PortableInterceptor::ORBInitializer_ptr init
-        ACE_ENV_ARG_DECL);
+    /// Service config fini method, release all ORBInitializers at this
+    /// moment
+    virtual int fini ();
 
-      /// Begin initialization of all registered ORBInitializers before
-      /// the ORB itself is initialized.
-      virtual size_t pre_init (
-        TAO_ORB_Core *orb_core,
-        int argc,
-        char *argv[],
-        PortableInterceptor::SlotId &slotid
-        ACE_ENV_ARG_DECL);
+    /// Register an ORBInitializer with the underlying ORBInitializer
+    /// array.
+    virtual void register_orb_initializer (
+                   PortableInterceptor::ORBInitializer_ptr init);
 
-      /// Complete initialization of all registered ORBInitializers after
-      /// the ORB has been initialized.
-      virtual void post_init (
-        size_t pre_init_count,
-        TAO_ORB_Core *orb_core,
-        int argc,
-        char *argv[],
-        PortableInterceptor::SlotId &slotid
-        ACE_ENV_ARG_DECL);
+    /// Begin initialization of all registered ORBInitializers before
+    /// the ORB itself is initialized.
+    virtual size_t pre_init (TAO_ORB_Core *orb_core,
+                             int argc,
+                             char *argv[],
+                             PortableInterceptor::SlotId &slotid);
+
+    /// Complete initialization of all registered ORBInitializers after
+    /// the ORB has been initialized.
+    virtual void post_init (size_t pre_init_count,
+                            TAO_ORB_Core *orb_core,
+                            int argc,
+                            char *argv[],
+                            PortableInterceptor::SlotId slotid);
 
   private:
     // Prevent copying
-    ORBInitializer_Registry (const ORBInitializer_Registry &);
-    void operator= (const ORBInitializer_Registry &);
+    ORBInitializer_Registry (const ORBInitializer_Registry &) = delete;
+    void operator= (const ORBInitializer_Registry &) = delete;
 
   private:
     TAO_SYNCH_RECURSIVE_MUTEX lock_;
@@ -86,8 +92,11 @@ namespace TAO
   };
 }
 
+
 ACE_STATIC_SVC_DECLARE (ORBInitializer_Registry)
 ACE_FACTORY_DECLARE (TAO_PI, ORBInitializer_Registry)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

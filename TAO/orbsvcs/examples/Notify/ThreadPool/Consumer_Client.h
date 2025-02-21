@@ -2,11 +2,7 @@
 /**
  *  @file Consumer_Client.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_CONSUMER_CLIENT_H
@@ -15,8 +11,6 @@
 #include /**/ "ace/pre.h"
 #include "ace/Task.h"
 #include "ace/SString.h"
-
-/// @@Pradeep, pragma please...
 
 #include "ORB_Objects.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -27,35 +21,34 @@ class TAO_Notify_ThreadPool_Consumer;
  * @class TAO_Notify_ThreadPool_Consumer_Client
  *
  * @brief
- *
  */
 class TAO_Notify_ThreadPool_Consumer_Client  : public ACE_Task_Base
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Destructor
   ~TAO_Notify_ThreadPool_Consumer_Client ();
 
   /// Init
-  void _init (ACE_ENV_SINGLE_ARG_DECL);
+  void _init ();
 
   /// Run
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run ();
 
   /// Parse Args
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Dump stats.
-  void dump_stats (void);
+  void dump_stats ();
 
 protected:
   /// Create an RT POA with a single threadpool.
-  PortableServer::POA_ptr create_rt_poa (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr create_rt_poa ();
 
   /// ORB Objects.
   TAO_Notify_ORB_Objects orb_objects_;

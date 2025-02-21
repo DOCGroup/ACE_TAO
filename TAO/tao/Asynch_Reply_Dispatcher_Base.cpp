@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
@@ -7,19 +5,17 @@
 #include "tao/Transport.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Asynch_Reply_Dispatcher_Base.i"
+#include "tao/Asynch_Reply_Dispatcher_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Asynch_Reply_Dispatcher_Base,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
     TAO_ORB_Core *orb_core,
-    ACE_Allocator *allocator
-  )
-  : db_ (sizeof buf_,
+    ACE_Allocator *allocator)
+  : TAO_Reply_Dispatcher (allocator)
+  , db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
          this->buf_,
          orb_core->input_cdr_buffer_allocator (),
@@ -32,22 +28,20 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,
                 orb_core)
-  , transport_ (0)
-  , lock_ (0)
-  , refcount_ (1)
+  , transport_ (nullptr)
+  , lock_ (nullptr)
   , is_reply_dispatched_ (false)
-  , allocator_ (allocator)
 {
-  // @@ NOTE: Need a seperate option for this..
+  // @@ NOTE: Need a separate option for this..
   this->lock_ =
     orb_core->resource_factory ()->create_cached_connection_lock ();
 }
 
 // Destructor.
-TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
+TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base ()
 {
   // Release the transport that we own
-  if (this->transport_ != 0)
+  if (this->transport_ != nullptr)
     this->transport_->remove_reference ();
 
   if (this->lock_)
@@ -57,7 +51,7 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
 void
 TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
 {
-  if (this->transport_ != 0)
+  if (this->transport_ != nullptr)
     this->transport_->remove_reference ();
 
   this->transport_ = t;
@@ -65,70 +59,14 @@ TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
   this->transport_->add_reference ();
 }
 
-// Must override pure virtual method in TAO_Reply_Dispatcher.
-int
-TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
-    TAO_Pluggable_Reply_Params & /*params*/
-  )
-{
-  return 0;
-}
-
-void
-TAO_Asynch_Reply_Dispatcher_Base::connection_closed (void)
-{
-}
-
-void
-TAO_Asynch_Reply_Dispatcher_Base::reply_timed_out (void)
-{
-}
-
-long
-TAO_Asynch_Reply_Dispatcher_Base::incr_refcount (void)
-{
-  ACE_GUARD_RETURN (ACE_Lock,
-                    mutex,
-                    *this->lock_,
-                    -1);
-  return ++this->refcount_;
-}
-
-long
-TAO_Asynch_Reply_Dispatcher_Base::decr_refcount (void)
-{
-  {
-    ACE_GUARD_RETURN (ACE_Lock,
-                      mutex,
-                      *this->lock_,
-                      -1);
-    --this->refcount_;
-
-    if (this->refcount_ > 0)
-      return this->refcount_;
-  }
-
-  if (this->allocator_)
-    {
-      ACE_DES_FREE (this,
-                    this->allocator_->free,
-                    TAO_Asynch_Reply_Dispatcher_Base);
-    }
-  else
-    {
-      delete this;
-    }
-
-  return 0;
-}
-
 bool
-TAO_Asynch_Reply_Dispatcher_Base::try_dispatch_reply (void)
+TAO_Asynch_Reply_Dispatcher_Base::try_dispatch_reply ()
 {
   if (this->is_reply_dispatched_)
-    return false;
-
-  if (!this->is_reply_dispatched_)
+    {
+      return false;
+    }
+  else
     {
       ACE_GUARD_RETURN (ACE_Lock,
                         mutex,
@@ -144,3 +82,5 @@ TAO_Asynch_Reply_Dispatcher_Base::try_dispatch_reply (void)
 
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

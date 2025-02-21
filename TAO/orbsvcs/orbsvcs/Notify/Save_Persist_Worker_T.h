@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
 *  \file    Save_Persist_Worker_T.h
-*
-*  $Id$
 *
 *  \author Jonathan Pollack <pollack_j@ociweb.com>
 */
@@ -20,8 +18,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
+  class Topology_Saver;
+
   /**
    * \brief Iterate through children saving persistent topology information.
    */
@@ -37,7 +40,7 @@ namespace TAO_Notify
     Save_Persist_Worker(Topology_Saver& saver, bool want_all_children);
 
     // override virtual ESF_Worker method
-    virtual void work (TOPOOBJ* o ACE_ENV_ARG_DECL);
+    virtual void work (TOPOOBJ* o);
 
   private:
     Topology_Saver& saver_;
@@ -45,13 +48,9 @@ namespace TAO_Notify
   };
 } // namespace TAO_Notify
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Save_Persist_Worker_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Save_Persist_Worker_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/Notify/Save_Persist_Worker_T.cpp"
 
 #include /**/ "ace/post.h"
 

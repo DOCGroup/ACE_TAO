@@ -1,0 +1,6 @@
+#include "tao/StringSeq.pidl"
+
+module MEMEATER
+{
+  typedef CORBA::StringSeq StringSeq;
+};

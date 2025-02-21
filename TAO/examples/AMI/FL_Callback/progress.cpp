@@ -1,25 +1,19 @@
-// $Id$
-
 #include "Progress_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-#include "tao/FlResource_Loader.h"
+#include "tao/FlResource/FlResource_Loader.h"
 
-ACE_RCSID (FL_Callback,
-           progress,
-           "$Id$")
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
 
-#include <FL/Fl.h>
-#include <FL/Fl_Window.h>
-
-const char *ior_output_file = "progress.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("progress.ior");
 int n_iterations = 1000;
 int n_peers = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:p:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -48,20 +42,18 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   TAO::FlResource_Loader fl_loader;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -79,14 +71,13 @@ main (int argc, char *argv[])
 
       window.end ();
 
-      char* targv[] = { argv[0] };
+      char* targv[] = { ACE_TEXT_ALWAYS_CHAR (argv[0]) };
       window.show (1, targv);
 
       sw.show ();
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -94,27 +85,22 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Progress_i server_impl (&sw);
 
       Progress_var server =
-        server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server_impl._this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -133,12 +119,10 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Fl::run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

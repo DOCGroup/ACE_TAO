@@ -3,8 +3,6 @@
 /**
  * @file IORInterceptor.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the IOR Interceptor
  * components in the ORB.
  *
@@ -15,21 +13,6 @@
  * directly or indirectly from CORBA::ValueBase. This separate file
  * has been created to remove the dependency from the rest of module
  * PortableInterceptor.
- *
- * This file was used to generate the code in IORInterceptorC.*
- * The command used to generate code is:
- *
- *  tao_idl
- *     -o orig -Gp -Gd -Ge 1 -Sa -Sc -St -Sci
- *          -I$(TAO_ROOT)
- *          -Wb,export_macro=TAO_IORInterceptor_Export
- *          -Wb,export_include="iorinterceptor_export.h"
- *          -Wb,pre_include="ace/pre.h"
- *          -Wb,post_include="ace/post.h"
- *          IORInterceptor.pidl
- *
- * Please apply the patch in IORInterceptor.diff to the generated stubs and
- * skeletons.
  */
 
 // File: IORInterceptor.idl
@@ -47,7 +30,10 @@ module PortableInterceptor
   local interface IORInterceptor : Interceptor
   {
     void establish_components (in IORInfo info);
+  };
 
+  local interface IORInterceptor_3_0 : IORInterceptor
+  {
     void components_established (in IORInfo info);
 
     void adapter_manager_state_changed (

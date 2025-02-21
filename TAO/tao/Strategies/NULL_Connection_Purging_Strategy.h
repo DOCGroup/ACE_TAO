@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 // ================================================================
 /**
  *  @file   NULL_Connection_Purging_Strategy.h
- *
- *  $Id$
  *
  *  @author Chad Elliott (elliott_c@ociweb.com)
  */
@@ -12,7 +12,7 @@
 #define TAO_NULL_PURGING_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,6 +20,8 @@
 
 #include "tao/Connection_Purging_Strategy.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_NULL_Connection_Purging_Strategy
@@ -35,15 +37,14 @@ public:
   /// The constructor
   TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
 
-  /// The destructor
-  virtual ~TAO_NULL_Connection_Purging_Strategy (void);
-
   /// Does nothing.
-  virtual void update_item (TAO_Transport* transport);
+  virtual void update_item (TAO_Transport& transport);
 
   /// Returns -1 to signify no maximum
-  virtual int cache_maximum (void) const;
+  virtual int cache_maximum () const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NULL_PURGING_STRATEGY_H */

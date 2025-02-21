@@ -1,28 +1,20 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    TAO/tests/POA/Persistent_ID
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    In this example of using Persistent IDs.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  In this example of using Persistent IDs.
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 #include "testS.h"
 #include "ace/OS_NS_stdio.h"
-#include "tao/PI_Server/PI_Server.h"
-
-ACE_RCSID(Explicit_Activation, server, "$Id$")
+#include "tao/PortableServer/PortableServer.h"
 
 class test_i :
   public virtual POA_test
@@ -31,19 +23,17 @@ public:
   test_i (CORBA::ORB_ptr orb_ptr,
           PortableServer::POA_ptr poa);
 
-  void method (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method ();
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
+  void shutdown ();
 
-  test_ptr create_POA (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  test_ptr create_POA ();
 
-  void destroy_POA (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy_POA ();
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA ();
 
 protected:
   CORBA::ORB_var orb_;
@@ -60,75 +50,67 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::method ()
 {
   CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("POACurrent"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("POACurrent");
 
   PortableServer::Current_var current =
-    PortableServer::Current::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    PortableServer::Current::_narrow (obj.in ());
 
   PortableServer::POA_var poa =
-    current->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    current->get_POA ();
 
   CORBA::String_var poa_name =
-    poa->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->the_name ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Method invoked on servant in POA = %s\n",
+              "Method invoked on servant in POA = %C\n",
               poa_name.in ()));
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 test_ptr
-test_i::create_POA (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::create_POA ()
 {
   CORBA::PolicyList policies (2);
   policies.length (2);
 
   policies[0] =
-    this->poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (test::_nil ());
+    this->poa_->create_id_assignment_policy
+    (this->oid_.ptr () == 0 ? PortableServer::SYSTEM_ID :
+     PortableServer::USER_ID);
 
   policies[1] =
-    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (test::_nil ());
+    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (test::_nil ());
+    this->poa_->the_POAManager ();
 
-  ACE_CString name = "POA";
+  ACE_CString name = "childPOA";
   this->child_poa_ =
     this->poa_->create_POA (name.c_str (),
                             poa_manager.in (),
-                            policies
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (test::_nil ());
+                            policies);
+
+  // Destroy the policies
+  for (CORBA::ULong i = 0;
+       i < policies.length ();
+       ++i)
+    {
+      policies[i]->destroy ();
+    }
 
   test_i *servant =
     new test_i (this->orb_.in (),
@@ -139,40 +121,33 @@ test_i::create_POA (ACE_ENV_SINGLE_ARG_DECL)
   if (this->oid_.ptr () == 0)
     {
       this->oid_ =
-        this->child_poa_->activate_object (servant
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (test::_nil ());
+        this->child_poa_->activate_object (servant);
     }
   else
     {
       this->child_poa_->activate_object_with_id (this->oid_.in (),
-                                                 servant
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (test::_nil ());
+                                                 servant);
     }
 
-  test_var test =
-    servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (test::_nil ());
+  CORBA::Object_var object = this->child_poa_->id_to_reference (this->oid_.in ());
+
+  test_var test = test::_narrow (object.in ());
 
   return test._retn ();
 }
 
 void
-test_i::destroy_POA (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::destroy_POA ()
 {
-  this->child_poa_->destroy (1, 0
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->child_poa_->destroy (1, 0);
 }
 
-const char *ior_file = "ior";
+const ACE_TCHAR *ior_file = ACE_TEXT ("ior");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -213,7 +188,7 @@ write_ior_to_file (const char *ior)
                             ior);
   if (result != ACE_OS::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
+                       "ACE_OS::fprintf failed while writing %C to %s\n",
                        ior,
                        ior_file),
                       -1);
@@ -224,66 +199,56 @@ write_ior_to_file (const char *ior)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       int result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       test_i servant (orb.in (),
                       root_poa.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       test_var test =
-        servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (test.in ());
 
       int write_result =
         write_ior_to_file (ior.in ());
       if (write_result != 0)
         return write_result;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

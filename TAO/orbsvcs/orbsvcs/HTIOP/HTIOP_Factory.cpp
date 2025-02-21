@@ -1,29 +1,25 @@
-// $Id$
-
-#include "HTIOP_Factory.h"
-#include "HTIOP_Acceptor.h"
-#include "HTIOP_Connector.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/HTIOP_Factory.h"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
+#include "orbsvcs/HTIOP/HTIOP_Connector.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
 #include "ace/HTBP/HTBP_Environment.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_sys_stat.h"
 #include "tao/IOPC.h"
 
-ACE_RCSID (HTIOP,
-           TAOHTIOP_Factory,
-           "$Id$")
+static const char the_prefix[] = "htiop";
 
-  static const char prefix_[] = "htiop";
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::HTIOP::Protocol_Factory::Protocol_Factory (void)
+TAO::HTIOP::Protocol_Factory::Protocol_Factory ()
   :  TAO_Protocol_Factory (OCI_TAG_HTIOP_PROFILE),
-     major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR),
      ht_env_ (0),
      inside_ (-1)
 {
 }
 
-TAO::HTIOP::Protocol_Factory::~Protocol_Factory (void)
+TAO::HTIOP::Protocol_Factory::~Protocol_Factory ()
 {
   delete this->ht_env_;
 }
@@ -32,17 +28,17 @@ int
 TAO::HTIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);
 }
 
 const char *
-TAO::HTIOP::Protocol_Factory::prefix (void) const
+TAO::HTIOP::Protocol_Factory::prefix () const
 {
-  return ::prefix_;
+  return ::the_prefix;
 }
 
 char
-TAO::HTIOP::Protocol_Factory::options_delimiter (void) const
+TAO::HTIOP::Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
@@ -53,6 +49,8 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
 {
   const ACE_TCHAR * config_file = 0;
   const ACE_TCHAR * persist_file = 0;
+  unsigned proxy_port = 0;
+  const ACE_TCHAR * proxy_host = 0;
 
   ACE_stat statbuf;
   int use_registry = 0;
@@ -78,7 +76,19 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-inside")) == 0)
         {
           if (++i < argc)
-            this->inside_ = ::atoi (ACE_TEXT_ALWAYS_CHAR(argv[i]));
+            this->inside_ = ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR(argv[i]));
+        }
+      else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-proxy_port")) == 0)
+        {
+          if (++i < argc)
+            proxy_port = static_cast<unsigned>
+              (ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR(argv[i])));
+        }
+      else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-proxy_host")) == 0)
+        {
+          if (++i < argc)
+            if (ACE_OS::stat (argv[i],&statbuf) != -1)
+              proxy_host = argv[i];
         }
     }
 
@@ -90,12 +100,18 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
 
   if (config_file != 0)
     this->ht_env_->import_config (config_file);
-
+  else
+    {
+      if (proxy_port != 0)
+        this->ht_env_->set_proxy_port (proxy_port);
+      if (proxy_host != 0)
+        this->ht_env_->set_proxy_host (proxy_host);
+    }
   return 0;
 }
 
 TAO_Acceptor *
-TAO::HTIOP::Protocol_Factory::make_acceptor (void)
+TAO::HTIOP::Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
 
@@ -107,7 +123,7 @@ TAO::HTIOP::Protocol_Factory::make_acceptor (void)
 }
 
 TAO_Connector *
-TAO::HTIOP::Protocol_Factory::make_connector (void)
+TAO::HTIOP::Protocol_Factory::make_connector ()
 {
   TAO_Connector *connector = 0;
   ACE_NEW_RETURN (connector,
@@ -117,11 +133,13 @@ TAO::HTIOP::Protocol_Factory::make_connector (void)
 }
 
 int
-TAO::HTIOP::Protocol_Factory::requires_explicit_endpoint (void) const
+TAO::HTIOP::Protocol_Factory::requires_explicit_endpoint () const
 {
   return 0;
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_HTIOP_Protocol_Factory,
                        ACE_TEXT ("HTIOP_Factory"),

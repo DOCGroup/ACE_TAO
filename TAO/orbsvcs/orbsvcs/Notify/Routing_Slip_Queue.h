@@ -1,15 +1,16 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
 #ifndef TAO_NOTIFY_ROUTING_SLIP_QUEUE_H
 #define TAO_NOTIFY_ROUTING_SLIP_QUEUE_H
 #include /**/ "ace/pre.h"
 
-#include "Routing_Slip.h"
+#include "orbsvcs/Notify/Routing_Slip.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -40,7 +41,9 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Routing_Slip_Queue
   {
     typedef ACE_Unbounded_Queue <Routing_Slip_Ptr> Queue;
+// FUZZ: disable check_for_ACE_Guard
     typedef ACE_Guard< TAO_SYNCH_MUTEX > Guard;
+// FUZZ: enable check_for_ACE_Guard
   public:
     /**
      * \brief Construct setting "allowed".
@@ -48,6 +51,7 @@ namespace TAO_Notify
      *  simultaneously by the persistent store.
      */
     Routing_Slip_Queue (size_t allowed = 1);
+
     /// Destructor.
     ~Routing_Slip_Queue ();
 
@@ -80,9 +84,10 @@ namespace TAO_Notify
     TAO_SYNCH_MUTEX internals_;
     size_t active_;
     Queue queue_;
-
   };
 } // namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_ROUTING_SLIP_QUEUE_H */

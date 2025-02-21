@@ -1,17 +1,12 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Cubit
-//
-// = FILENAME
-//    Cubit_Client.h
-//
-// = AUTHOR
-//    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cubit_i.h
+ *
+ *  @author Andy Gokhale
+ *  @author Sumedh Mungee and Sergio Flores-Gaitan
+ */
+//=============================================================================
 
 #ifndef _CUBIT_I_H
 #define _CUBIT_I_H
@@ -21,129 +16,106 @@
 // Forward declarations.
 class Cubit_i;
 
+/**
+ * @class Cubit_i
+ *
+ * @brief Illustrates how to integrate a servant with the generated
+ * skeleton.
+ *
+ * Implementation of the cubit example at the servant side.
+ * Cubes an octet, short, long, struct and union.
+ */
 class Cubit_i : public POA_Cubit
 {
-  // = TITLE
-  //    Illustrates how to integrate a servant with the generated
-  //    skeleton.
-  //
-  // = DESCRIPTION
-  //    Implementation of the cubit example at the servant side.
-  //    Cubes an octet, short, long, struct and union.
 public:
+  /// Constructor
   Cubit_i (CORBA::ORB_ptr orb);
-  // Constructor
 
-  ~Cubit_i (void);
-  // Destructor
+  /// Destructor
+  ~Cubit_i ();
 
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // Returns the default POA for this servant.
+  /// Returns the default POA for this servant.
+  virtual PortableServer::POA_ptr _default_POA ();
 
-  virtual void cube_oneway (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Test a oneway call.
+  /// Test a oneway call.
+  virtual void cube_oneway ();
 
-  virtual void cube_void (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Test a twoway call.
+  /// Test a twoway call.
+  virtual void cube_void ();
 
-  virtual CORBA::Octet cube_octet (CORBA::Octet o
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube an octet
+  /// Cube an octet
+  virtual CORBA::Octet cube_octet (CORBA::Octet o);
 
-  virtual CORBA::Short cube_short (CORBA::Short s
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube a short
+  /// Cube a short
+  virtual CORBA::Short cube_short (CORBA::Short s);
 
-  virtual CORBA::Long cube_long (CORBA::Long l
-                                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube a long
+  /// Cube a long
+  virtual CORBA::Long cube_long (CORBA::Long l);
 
-  virtual Cubit::Many cube_struct (const Cubit::Many &values
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube a struct.
+  /// Cube a struct.
+  virtual Cubit::Many cube_struct (const Cubit::Many &values);
 
-  virtual Cubit::oneof cube_union (const Cubit::oneof &values
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube a union.
+  /// Cube a union.
+  virtual Cubit::oneof cube_union (const Cubit::oneof &values);
 
+  /// Cube a sequence.
   virtual void cube_long_sequence (const Cubit::long_seq &input,
-                                   Cubit::long_seq_out output
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube a sequence.
+                                   Cubit::long_seq_out output);
 
+  /// Cube an octet sequence.
   virtual void cube_octet_sequence (const Cubit::octet_seq &input,
-                                    Cubit::octet_seq_out output
-                                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube an octet sequence.
+                                    Cubit::octet_seq_out output);
 
+  /// Cube an Many sequence.
   virtual void cube_many_sequence (const Cubit::many_seq & input,
-                                   Cubit::many_seq_out output
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube an Many sequence.
+                                   Cubit::many_seq_out output);
 
+  /// Cube a sequence.
   virtual void cube_rti_data (const Cubit::RtiPacket &input,
-                              Cubit::RtiPacket_out output
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube a sequence.
+                              Cubit::RtiPacket_out output);
 
-  virtual CORBA::Any * cube_any (const CORBA::Any & any
-                                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube a long in an any
+  /// Cube a long in an any
+  virtual CORBA::Any * cube_any (const CORBA::Any & any);
 
-  virtual CORBA::Any * cube_any_struct (const CORBA::Any & any
-                                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Cube a struct in an any
+  /// Cube a struct in an any
+  virtual CORBA::Any * cube_any_struct (const CORBA::Any & any);
 
   /// Shutdown routine.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 
   /// A ping. Please see the idl file for details.
-  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void ping ();
 
 
+  /// Set default poa.
   void set_default_poa (PortableServer::POA_ptr poa);
-  // Set default poa.
 
 protected:
   PortableServer::POA_var poa_;
 
+  /// Keep a pointer to the ORB so we can shut it down.
   CORBA::ORB_var orb_;
-  // Keep a pointer to the ORB so we can shut it down.
 };
 
+/**
+ * @class Cubit_Factory_i:
+ *
+ * @brief Cubit_Factory_i
+ *
+ * Factory object returning the cubit objrefs
+ */
 class Cubit_Factory_i: public POA_Cubit_Factory
 {
-  // = TITLE
-  //   Cubit_Factory_i
-  //
-  // = DESCRIPTION
-  //   Factory object returning the cubit objrefs
 public:
+  /// Constructor.
   Cubit_Factory_i (CORBA::ORB_ptr orb);
-  // Constructor.
 
-  ~Cubit_Factory_i (void);
-  // Destructor.
+  /// Destructor.
+  ~Cubit_Factory_i ();
 
-  virtual Cubit_ptr make_cubit (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Make a cubit object.
+  /// Make a cubit object.
+  virtual Cubit_ptr make_cubit ();
 
   void set_default_poa (PortableServer::POA_ptr poa);
 

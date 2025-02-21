@@ -4,11 +4,8 @@
 /**
  *  @file   RTEventLogConsumer.h
  *
- *  $Id$
- *
  *  The RTEventLogConsumer connects to the RTEventLog and logs the events
  *  that are pushed to the RTEventLog.
- *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
@@ -31,12 +28,15 @@
 #include "orbsvcs/Event/EC_Factory.h"
 #include "orbsvcs/Event/EC_Defaults.h"
 
-#include "rteventlog_export.h"
+#include "orbsvcs/Log/rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_RTEventLog_i;
@@ -51,29 +51,25 @@ class TAO_RTEventLogFactory_i;
  * Log when events are 'pushed' to the RTEventLog which is an
  * EventChannel.
  */
-class TAO_RTEventLog_Export TAO_Rtec_LogConsumer :public virtual POA_RtecEventComm::PushConsumer
+class TAO_RTEventLog_Serv_Export TAO_Rtec_LogConsumer :public virtual POA_RtecEventComm::PushConsumer
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_Rtec_LogConsumer (TAO_RTEventLog_i *log);
 
   /// Destructor.
-  ~TAO_Rtec_LogConsumer (void);
+  ~TAO_Rtec_LogConsumer ();
 
   /// Connect to RTEventLog.
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 private:
   /// Disconnect from EventLog.
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void disconnect_push_consumer ();
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.
-  void push (const RtecEventComm::EventSet& events ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push (const RtecEventComm::EventSet& events);
 
   /// ProxyPushSupplier used to connect to RTEventLog.
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
@@ -83,6 +79,7 @@ private:
   TAO_RTEventLog_i *log_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

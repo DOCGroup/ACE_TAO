@@ -1,27 +1,31 @@
-// $Id$
-
 #include "orbsvcs/Event_Utilities.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Event_Utilities.i"
+#include "orbsvcs/Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (orbsvcs, 
-           Event_Utilities, 
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ConsumerQOS_Factory::
-    ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer)
+    ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer,
+                             CORBA::ULong qos_max_len)
   : designator_set_ (0),
     event_initializer_ (initializer)
 {
   qos_.is_gateway = 0;
+
+  // Allocate the space requested by the application....
+  qos_.dependencies.length (qos_max_len);
+
+  // ... now reset the length, we do not want to use any elements in
+  // the sequence that have not been initialized....
+  qos_.dependencies.length (0);
 }
 
-ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory (void)
+ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory ()
 {
 }
 
@@ -68,7 +72,7 @@ ACE_ConsumerQOS_Factory::start_logical_and_group (int nchildren)
 }
 
 int
-ACE_ConsumerQOS_Factory::start_negation (void)
+ACE_ConsumerQOS_Factory::start_negation ()
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
@@ -128,7 +132,7 @@ void event_debug (const char* p,
                   const RtecEventComm::Event& event)
 {
   size_t l = ACE_OS::strlen (p);
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "%*.*s - event.source: %d (0x%x)\n"
               "%*.*s   event.type: %d (0x%x)\n",
               l, l, p, event.header.source, event.header.source,
@@ -138,24 +142,24 @@ void event_debug (const char* p,
 void
 ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
 {
-  ACE_DEBUG ((LM_DEBUG, "ConsumerQOS { \n"));
-  ACE_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
+  ORBSVCS_DEBUG ((LM_DEBUG, "ConsumerQOS {\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
   for (u_int i = 0; i < qos.dependencies.length (); ++i)
     {
       char buf[128];
       ACE_OS::sprintf (buf, " dep[%d]", i);
       event_debug (buf, qos.dependencies[i].event);
-      ACE_DEBUG ((LM_DEBUG, "%s  rt_info: %d\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "%s  rt_info: %d\n",
                   buf, qos.dependencies[i].rt_info));
     }
-  ACE_DEBUG ((LM_DEBUG, "}\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "}\n"));
 }
 
 // ************************************************************
 ACE_SupplierQOS_Factory::
     ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer,
-                             int qos_max_len)
+                             CORBA::ULong qos_max_len)
   : event_initializer_ (initializer)
 {
   qos_.is_gateway = 0;
@@ -175,16 +179,14 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
                                  u_int ncalls)
 {
   CORBA::ULong l = this->qos_.publications.length ();
-  if (l >= this->qos_.publications.maximum ())
-    {
-      // There is not enough space for the next element, grow the
-      // buffer.
-      this->qos_.publications.length (l + 1);
 
-      // @@ TODO We may want to consider more efficient growing
-      // strategies here, for example, duplicating the size of the
-      // buffer, or growing in fixed sized chunks...
-    }
+  // @@ TODO We may want to consider more efficient growing
+  // strategies here, for example, duplicating the size of the
+  // buffer, or growing in fixed sized chunks...
+
+  // This needs to accurately reflect the used length, and should always be
+  // set
+  this->qos_.publications.length (l + 1);
 
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.publications[l].event);
@@ -198,20 +200,21 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
 
 void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& qos)
 {
-  ACE_DEBUG ((LM_DEBUG, "SupplierQOS { \n"));
-  ACE_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
+  ORBSVCS_DEBUG ((LM_DEBUG, "SupplierQOS {\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
   for (u_int i = 0; i < qos.publications.length (); ++i)
     {
-      char buf[128];
+      char buf[128] = { 0 };
       ACE_OS::sprintf (buf, " publications[%d]", i);
       event_debug (buf, qos.publications[i].event);
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "%s   dependency_info.rt_info: %d\n"
                   "%s   dependency_info.number_of_calls: %d\n",
                   buf, qos.publications[i].dependency_info.rt_info,
                   buf, qos.publications[i].dependency_info.number_of_calls));
         }
-  ACE_DEBUG ((LM_DEBUG, "}\n"));
-
+  ORBSVCS_DEBUG ((LM_DEBUG, "}\n"));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : ace_etcl {
+  after += ACE_ETCL_Parser
+  libs += ACE_ETCL_Parser
+}

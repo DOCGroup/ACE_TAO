@@ -4,10 +4,7 @@
 /**
  *  @file POA_Policy_Set.h
  *
- *  $Id$
- *
- *   POA
- *
+ *  POA
  *
  *  @author  Irfan Pyarali
  */
@@ -17,7 +14,7 @@
 #define TAO_POA_POLICY_SET_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,55 +22,52 @@
 
 #include "tao/Policy_Set.h"
 
-class TAO_Policy_Validator;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_Policy_Validator;
+//
 class TAO_PortableServer_Export TAO_POA_Policy_Set
 {
 public:
-
   TAO_POA_Policy_Set ();
 
   TAO_POA_Policy_Set (const TAO_POA_Policy_Set &rhs);
 
-  ~TAO_POA_Policy_Set (void);
+  ~TAO_POA_Policy_Set () = default;
 
   /// Returns the policy at the specified index.
   /// CORBA::Policy::_nil () is returned if the policy doesn't exist
   CORBA::Policy *get_policy_by_index (CORBA::ULong index);
 
   /// Get the number of policies
-  CORBA::ULong num_policies (void) const;
+  CORBA::ULong num_policies () const;
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
-  void merge_policies (const CORBA::PolicyList &policies
-                       ACE_ENV_ARG_DECL);
+  void merge_policies (const CORBA::PolicyList &policies);
 
-  void merge_policy (const CORBA::Policy_ptr policy
-                     ACE_ENV_ARG_DECL);
+  void merge_policy (const CORBA::Policy_ptr policy);
 
   void validate_policies (TAO_Policy_Validator &validator,
-                          TAO_ORB_Core &orb_core
-                          ACE_ENV_ARG_DECL);
+                          TAO_ORB_Core &orb_core);
 
   /// Add all of the client exposed policies to the specified list.
-  void add_client_exposed_fixed_policies (CORBA::PolicyList *client_exposed_policies
-                                          ACE_ENV_ARG_DECL);
+  void add_client_exposed_fixed_policies (CORBA::PolicyList *client_exposed_policies);
 
-  TAO_Policy_Set &policies (void);
+  TAO_Policy_Set &policies ();
 
   /// Obtain a single policy.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
 
 protected:
   TAO_Policy_Set impl_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "POA_Policy_Set.i"
+# include "tao/PortableServer/POA_Policy_Set.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

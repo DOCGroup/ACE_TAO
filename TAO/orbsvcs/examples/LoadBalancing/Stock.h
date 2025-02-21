@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef STOCK_H
 #define STOCK_H
@@ -16,18 +13,13 @@ public:
          const char *full_name,
          CORBA::Double price);
 
-  char *symbol () throw (CORBA::SystemException);
-  char *full_name () throw (CORBA::SystemException);
-  CORBA::Double price () throw (CORBA::SystemException);
+  char *symbol ();
+  char *full_name ();
+  CORBA::Double price ();
 
 private:
-#if defined (HPUX) && (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
-  string symbol_;
-  string full_name_;
-#else
   std::string symbol_;
   std::string full_name_;
-#endif /* HPUX */
   CORBA::Double price_;
 };
 

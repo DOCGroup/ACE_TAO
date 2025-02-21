@@ -1,33 +1,29 @@
-// $Id$
-
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
-// ORB:		Principal identifier pseudo-objref
+// ORB: Principal identifier pseudo-objref
 
-#include "Principal.h"
-#include "CDR.h"
+#include "tao/Principal.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Principal.i"
+#include "tao/Principal.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Principal,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Principal::Principal (void)
+CORBA::Principal::Principal ()
   : refcount_ (1)
 {
 }
 
-CORBA::Principal::~Principal (void)
+CORBA::Principal::~Principal ()
 {
 }
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr, CORBA::Principal * x)
 {
-  if (x != 0)
+  if (x != nullptr)
     {
       CORBA::ULong length  = x->id.length ();
       cdr.write_long (length);
@@ -38,7 +34,7 @@ operator<< (TAO_OutputCDR & cdr, CORBA::Principal * x)
       cdr.write_ulong (0);
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -49,7 +45,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::Principal *& x)
 
   if (length == 0 || !cdr.good_bit ())
     {
-      x = 0;
+      x = nullptr;
     }
   else
     {
@@ -58,6 +54,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::Principal *& x)
       cdr.read_octet_array (x->id.get_buffer (), length);
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

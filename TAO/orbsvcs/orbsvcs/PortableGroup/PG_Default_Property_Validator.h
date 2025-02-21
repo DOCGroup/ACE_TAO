@@ -4,8 +4,6 @@
 /**
  * @file PG_Default_Property_Validator.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -15,13 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PG_Default_Property_Validator
@@ -35,33 +34,23 @@
 class TAO_PortableGroup_Export TAO_PG_Default_Property_Validator
 {
 public:
-
   /// Constructor.
-  TAO_PG_Default_Property_Validator (void);
+  TAO_PG_Default_Property_Validator ();
 
   /// Destructor
-  virtual ~TAO_PG_Default_Property_Validator (void);
+  virtual ~TAO_PG_Default_Property_Validator () = default;
 
   /// Validate the given properties.  Throw an exception when the
   /// first invalid property is encountered.  The remaining properties
   /// will not be validated.
-  virtual void validate_property (const PortableGroup::Properties & props
-                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+  virtual void validate_property (const PortableGroup::Properties & props);
 
   /// Validate the given properties/criteria.  All criteria
   /// will be validated regardless of whether or not an invalid
   /// property was encountered.
-  virtual void validate_criteria (const PortableGroup::Properties & criteria
-                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidCriteria,
-                     PortableGroup::CannotMeetCriteria));
+  virtual void validate_criteria (const PortableGroup::Properties & criteria);
 
 private:
-
   /**
    * @name Pre-initialize property Names.
    *
@@ -75,8 +64,9 @@ private:
   PortableGroup::Name membership_;
   PortableGroup::Name factories_;
   //@}
-
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

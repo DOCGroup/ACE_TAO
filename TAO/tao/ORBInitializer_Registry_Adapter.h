@@ -4,8 +4,6 @@
 /**
  *  @file   ORBInitializer_Registry_Adapter.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================
@@ -15,16 +13,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
 #include "tao/Basic_Types.h"
-#include "tao/SystemException.h"
+#include "ace/Service_Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
@@ -48,13 +46,12 @@ namespace TAO
     : public ACE_Service_Object
   {
     public:
-      virtual ~ORBInitializer_Registry_Adapter (void);
+      virtual ~ORBInitializer_Registry_Adapter ();
 
       /// Register an ORBInitializer with the underlying ORBInitializer
       /// array.
       virtual void register_orb_initializer (
-        PortableInterceptor::ORBInitializer_ptr init
-        ACE_ENV_ARG_DECL) = 0;
+        PortableInterceptor::ORBInitializer_ptr init) = 0;
 
       /**
        * Begin initialization of all registered ORBInitializers before
@@ -68,8 +65,7 @@ namespace TAO
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],
-        PortableInterceptor::SlotId &slotid
-        ACE_ENV_ARG_DECL) = 0;
+        PortableInterceptor::SlotId &slotid) = 0;
 
       /**
        * Complete initialization of all registered ORBInitializers after
@@ -88,10 +84,11 @@ namespace TAO
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],
-        PortableInterceptor::SlotId &slotid
-        ACE_ENV_ARG_DECL) = 0;
+        PortableInterceptor::SlotId slotid) = 0;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

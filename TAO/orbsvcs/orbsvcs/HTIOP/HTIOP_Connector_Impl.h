@@ -1,10 +1,8 @@
-
 // -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   HTIOP_Connector_Impl.h
- *
- *  $Id$
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
@@ -14,7 +12,7 @@
 #define HTIOP_CONNECTOR_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "HTIOP_Export.h"
+#include "orbsvcs/HTIOP/HTIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,14 +21,18 @@
 #include "tao/corbafwd.h"
 #include "ace/Strategies_T.h"
 
-class TAO_ORB_Core;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Thread_Manager;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_ORB_Core;
 
 namespace TAO
 {
   namespace HTIOP
   {
-
     /**
      * @class HTIOP_Connect_Creation_Strategy
      *
@@ -43,13 +45,11 @@ namespace TAO
      * creation time.
      *
      */
-
     template <class SVC_HANDLER>
     class Connect_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
     {
     public:
-
-      /// Constructor. <arg> parameter is used to pass any special
+      /// Constructor. @a arg parameter is used to pass any special
       /// state/info to the service handler upon creation.  Currently used
       /// by HTIOP to pass protocol configuration properties.
       Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
@@ -62,18 +62,12 @@ namespace TAO
 
 
     private:
-
       /// Pointer to the ORB_Core on which we are activated
       TAO_ORB_Core* orb_core_;
 
       /// Some info/state to be passed to the service handler we create.
       void *arg_;
-
-      /// Are we using GIOP lite?
-      CORBA::Boolean lite_flag_;
     };
-
-
 
     /**
      * @class HTIOP_Connect_Concurrency_Strategy
@@ -90,10 +84,8 @@ namespace TAO
       public ACE_Concurrency_Strategy<SVC_HANDLER>
     {
     public:
-
       /// Constructor.
       Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
-
 
       /// Activates the Svc_Handler, and if the right wait strategy is in
       /// use, registers the handle with the reactor.
@@ -101,21 +93,15 @@ namespace TAO
                                 void *arg);
 
     private:
-
       /// Pointer to the ORB Core.
       TAO_ORB_Core *orb_core_;
-
     };
   }
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "HTIOP_Connector_Impl.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("HTIOP_Connector_Impl.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/HTIOP/HTIOP_Connector_Impl.cpp"
 
 #include /**/ "ace/post.h"
 #endif /*HTIOP_CONNECTOR_IMPL_H*/

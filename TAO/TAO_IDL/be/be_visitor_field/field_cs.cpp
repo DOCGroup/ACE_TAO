@@ -1,33 +1,20 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    field_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Field in the client stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    field_cs.cpp
+ *
+ *  Visitor generating code for Field in the client stubs file.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
+#include "field.h"
 #include "be_visitor_array/array_cs.h"
 #include "be_visitor_enum/enum_cs.h"
 #include "be_visitor_sequence/sequence_cs.h"
 #include "be_visitor_structure/structure_cs.h"
 #include "be_visitor_union/union_cs.h"
-
-ACE_RCSID (be_visitor_field, 
-           field_cs, 
-           "$Id$")
-
 
 // **********************************************
 //  Visitor for field in the client stubs file.
@@ -38,21 +25,21 @@ be_visitor_field_cs::be_visitor_field_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_cs::~be_visitor_field_cs (void)
+be_visitor_field_cs::~be_visitor_field_cs ()
 {
 }
 
 int
 be_visitor_field_cs::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cs::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -63,7 +50,7 @@ be_visitor_field_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cs::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -74,7 +61,7 @@ int
 be_visitor_field_cs::visit_array (be_array *node)
 {
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -85,7 +72,7 @@ be_visitor_field_cs::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -97,7 +84,7 @@ int
 be_visitor_field_cs::visit_enum (be_enum *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -108,7 +95,7 @@ be_visitor_field_cs::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -120,7 +107,7 @@ int
 be_visitor_field_cs::visit_sequence (be_sequence *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -131,7 +118,7 @@ be_visitor_field_cs::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_sequence - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -140,10 +127,16 @@ be_visitor_field_cs::visit_sequence (be_sequence *node)
 }
 
 int
+be_visitor_field_cs::visit_map (be_map *)
+{
+  return 0;
+}
+
+int
 be_visitor_field_cs::visit_structure (be_structure *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -154,12 +147,22 @@ be_visitor_field_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_struct - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
 
   return 0;
+}
+
+int
+be_visitor_field_cs::visit_structure_fwd (
+  be_structure_fwd *node)
+{
+  be_structure *s =
+    dynamic_cast<be_structure*> (node->full_definition ());
+
+  return this->visit_structure (s);
 }
 
 int
@@ -173,11 +176,11 @@ be_visitor_field_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -185,7 +188,7 @@ int
 be_visitor_field_cs::visit_union (be_union *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -196,10 +199,20 @@ be_visitor_field_cs::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cs::"
                              "visit_union - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
 
   return 0;
 }
+
+int
+be_visitor_field_cs::visit_union_fwd (be_union_fwd *node)
+{
+  be_union *u =
+    dynamic_cast<be_union*> (node->full_definition ());
+
+  return this->visit_union (u);
+}
+

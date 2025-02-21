@@ -1,27 +1,22 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    Repository_i.h
-//
-// = DESCRIPTION
-//    Repository servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    Repository_i.h
+ *
+ *  Repository servant class.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef REPOSITORY_I_H
 #define REPOSITORY_I_H
 
-#include "Container_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Container_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,10 +27,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "IFR_macro.h"
+#include "orbsvcs/IFRService/IFR_macro.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/CORBA_String.h"
-#include "tao/PI_Server/PI_Server.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class IFR_Servant_Factory;
 
@@ -64,261 +60,199 @@ class TAO_ExtValueDef_i;
 class TAO_ValueMemberDef_i;
 class TAO_WstringDef_i;
 
+/**
+ * @class TAO_Repository_i
+ *
+ * @brief TAO_Repository_i
+ *
+ * Provides global access to the Interface Repository, but
+ * does not support access to information related to
+ * CORBA Components.
+ */
 class TAO_IFRService_Export TAO_Repository_i : public virtual TAO_Container_i
 {
-  // = TITLE
-  //    TAO_Repository_i
-  //
-  // = DESCRIPTION
-  //    Provides global access to the Interface Repository, but
-  //    does not support access to information related to
-  //    CORBA Components.
-  //
 public:
   TAO_Repository_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
                     ACE_Configuration *config);
 
-  virtual ~TAO_Repository_i (void);
+  virtual ~TAO_Repository_i ();
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Accessor for the readonly attribute.
+  /// Accessor for the readonly attribute.
+  virtual CORBA::DefinitionKind def_kind ();
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // May not be called on a repository - raises BAD_INV_ORDER.
+  /// May not be called on a repository - raises BAD_INV_ORDER.
+  virtual void destroy ();
 
-  virtual CORBA::Contained_ptr lookup_id (
-      const char *search_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Contained_ptr lookup_id (const char *search_id);
 
-  CORBA::Contained_ptr lookup_id_i (
-      const char *search_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Contained_ptr lookup_id_i (const char *search_id);
 
-  virtual CORBA::TypeCode_ptr get_canonical_typecode (
-      CORBA::TypeCode_ptr tc
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::TypeCode_ptr get_canonical_typecode (CORBA::TypeCode_ptr tc);
 
-  CORBA::TypeCode_ptr get_canonical_typecode_i (
-      CORBA::TypeCode_ptr tc
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::TypeCode_ptr get_canonical_typecode_i (CORBA::TypeCode_ptr tc);
 
-  virtual CORBA::PrimitiveDef_ptr get_primitive (
-      CORBA::PrimitiveKind kind
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // No locking necessary because the database is not
-  // accessed.
+  /// No locking necessary because the database is not
+  /// accessed.
+  virtual CORBA::PrimitiveDef_ptr get_primitive (CORBA::PrimitiveKind kind);
 
-  virtual CORBA::StringDef_ptr create_string (
-      CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::StringDef_ptr create_string (CORBA::ULong bound);
 
-  CORBA::StringDef_ptr create_string_i (
-      CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  CORBA::StringDef_ptr create_string_i (CORBA::ULong bound);
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::WstringDef_ptr create_wstring (CORBA::ULong bound);
 
-  virtual CORBA::WstringDef_ptr create_wstring (
-      CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::WstringDef_ptr create_wstring_i (
-      CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::WstringDef_ptr create_wstring_i (CORBA::ULong bound);
 
   virtual CORBA::SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
-      CORBA::IDLType_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC (( CORBA::SystemException));
+      CORBA::IDLType_ptr element_type);
 
   CORBA::SequenceDef_ptr create_sequence_i (
       CORBA::ULong bound,
-      CORBA::IDLType_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC (( CORBA::SystemException));
+      CORBA::IDLType_ptr element_type);
 
   virtual CORBA::ArrayDef_ptr create_array (
       CORBA::ULong length,
-      CORBA::IDLType_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::IDLType_ptr element_type);
 
   CORBA::ArrayDef_ptr create_array_i (
       CORBA::ULong length,
-      CORBA::IDLType_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::IDLType_ptr element_type);
 
   virtual CORBA::FixedDef_ptr create_fixed (
       CORBA::UShort digits,
-      CORBA::Short scale
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::Short scale);
 
   CORBA::FixedDef_ptr create_fixed_i (
       CORBA::UShort digits,
-      CORBA::Short scale
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::Short scale);
 
+  /// Called at startup to get everything initialized.
   int repo_init (CORBA::Repository_ptr repo_ref,
-                 PortableServer::POA_ptr repo_poa
-                 ACE_ENV_ARG_DECL);
-  // Called at startup to get everything initialized.
+                 PortableServer::POA_ptr repo_poa);
 
-  virtual int create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL);
-  // We create a default servant servant for each IR Object
-  // type and its corresponding POA.
+  /// We create a default servant servant for each IR Object
+  /// type and its corresponding POA.
+  virtual int create_servants_and_poas ();
 
-  int create_sections (void);
-  // Create the top-level ACE_Configuration sections.
+  /// Create the top-level ACE_Configuration sections.
+  int create_sections ();
 
+  /// Return one of our servants for internal use.
   virtual TAO_IDLType_i *select_idltype (
-      CORBA::DefinitionKind def_kind
-    ) const;
+      CORBA::DefinitionKind def_kind) const;
   virtual TAO_Container_i *select_container (
-      CORBA::DefinitionKind def_kind
-    ) const;
+      CORBA::DefinitionKind def_kind) const;
   virtual TAO_Contained_i *select_contained (
-      CORBA::DefinitionKind def_kind
-    ) const;
-  // Return one of our servants for internal use.
+      CORBA::DefinitionKind def_kind) const;
 
+  /// Select the right POA for object creation.
   virtual PortableServer::POA_ptr select_poa (
-      CORBA::DefinitionKind def_kind
-    ) const;
-  // Select the right POA for object creation.
+      CORBA::DefinitionKind def_kind) const;
 
-  PortableServer::Current_ptr poa_current (void) const;
-  // Accessor for the POA that is dispatching the current call.
+  /// Accessor for the POA that is dispatching the current call.
+  PortableServer::Current_ptr poa_current () const;
 
-  ACE_Configuration *config (void) const;
-  // Accessor for the ACE_Configuration database.
+  /// Accessor for the ACE_Configuration database.
+  ACE_Configuration *config () const;
 
-  CORBA::TypeCodeFactory_ptr tc_factory (void) const;
-  // Accessor for the Typecode factory.
+  /// Accessor for the Typecode factory.
+  CORBA::TypeCodeFactory_ptr tc_factory () const;
 
-  CORBA::Repository_ptr repo_objref (void) const;
+  /// Accessor/mutator for our object reference.
+  CORBA::Repository_ptr repo_objref () const;
   void repo_objref (CORBA::Repository_ptr objref);
-  // Accessor/mutator for our object reference.
 
-  ACE_Configuration_Section_Key root_key (void) const;
-  // Accessor for the root key for all IR objects.
+  /// Accessor for the root key for all IR objects.
+  ACE_Configuration_Section_Key root_key () const;
 
-  ACE_Configuration_Section_Key repo_ids_key (void) const;
-  // Accessor for the repository ids root key.
+  /// Accessor for the repository ids root key.
+  ACE_Configuration_Section_Key repo_ids_key () const;
 
-  ACE_Configuration_Section_Key pkinds_key (void) const;
-  // Accessor for the primitive kinds section.
+  /// Accessor for the primitive kinds section.
+  ACE_Configuration_Section_Key pkinds_key () const;
 
-  ACE_Configuration_Section_Key strings_key (void) const;
-  // Accessor for the bounded strings section.
+  /// Accessor for the bounded strings section.
+  ACE_Configuration_Section_Key strings_key () const;
 
-  ACE_Configuration_Section_Key wstrings_key (void) const;
-  // Accessor for the bounded wstrings section.
+  /// Accessor for the bounded wstrings section.
+  ACE_Configuration_Section_Key wstrings_key () const;
 
-  ACE_Configuration_Section_Key fixeds_key (void) const;
-  // Accessor for the fixed types section.
+  /// Accessor for the fixed types section.
+  ACE_Configuration_Section_Key fixeds_key () const;
 
-  ACE_Configuration_Section_Key arrays_key (void) const;
-  // Accessor for the anonymous arrays section.
+  /// Accessor for the anonymous arrays section.
+  ACE_Configuration_Section_Key arrays_key () const;
 
-  ACE_Configuration_Section_Key sequences_key (void) const;
-  // Accessor for the anonymous sequences section.
+  /// Accessor for the anonymous sequences section.
+  ACE_Configuration_Section_Key sequences_key () const;
 
-  const char *extension (void) const;
-  // Accessor for the name extension string.
+  /// Accessor for the name extension string.
+  const char *extension () const;
 
-  ACE_Lock &lock (void) const;
-  // Repo lock.
+  /// Repo lock.
+  ACE_Lock &lock () const;
 
-  void shutdown (void);
-  // Used ONLY with Purify, for memory leak checking.
-  // A call to this can be temporariily appended to the
-  // destroy() method of the last thing to be destroyed
-  // by the test code.
+  /**
+   * Used ONLY with Purify, for memory leak checking.
+   * A call to this can be temporariily appended to the
+   * destroy() method of the last thing to be destroyed
+   * by the test code.
+   */
+  void shutdown ();
 
 protected:
+  /// Reference to our ORB.
   CORBA::ORB_ptr orb_;
-  // Reference to our ORB.
 
+  /// Reference to the root POA.
   PortableServer::POA_var root_poa_;
-  // Reference to the root POA.
 
+  /// Reference to the POA handling calls to this servant.
   PortableServer::POA_var repo_poa_;
-  // Reference to the POA handling calls to this servant.
 
+  /// Reference to the PortableServer::Current object
   PortableServer::Current_var poa_current_;
-  // Reference to the PortableServer::Current object
 
+  /// Our ACE_Configuration database.
   ACE_Configuration *config_;
-  // Our ACE_Configuration database.
 
+  /// Our Typecode factory.
   CORBA::TypeCodeFactory_var tc_factory_;
-  // Our Typecode factory.
 
+  /// The object reference of this servant.
   CORBA::Repository_var repo_objref_;
-  // The object reference of this servant.
 
+  /// Root of all IR objects.
   ACE_Configuration_Section_Key root_key_;
-  // Root of all IR objects.
 
+  /// Flat section of Interface Repository ids.
   ACE_Configuration_Section_Key repo_ids_key_;
-  // Flat section of Interface Repository ids.
 
+  /// Section holding the primitive kinds.
   ACE_Configuration_Section_Key pkinds_key_;
-  // Section holding the primitive kinds.
 
+  /// Section holding the bounded strings.
   ACE_Configuration_Section_Key strings_key_;
-  // Section holding the bounded strings.
 
+  /// Section holding the bounded wstrings.
   ACE_Configuration_Section_Key wstrings_key_;
-  // Section holding the bounded wstrings.
 
+  /// Section holding the fixed types.
   ACE_Configuration_Section_Key fixeds_key_;
-  // Section holding the fixed types.
 
+  /// Section holding the anonymous arrays.
   ACE_Configuration_Section_Key arrays_key_;
-  // Section holding the anonymous arrays.
 
+  /// Section holding the anonymous sequences.
   ACE_Configuration_Section_Key sequences_key_;
-  // Section holding the anonymous sequences.
 
+  /// Added to names temporarily to avoid name clashes.
   CORBA::String_var extension_;
-  // Added to names temporarily to avoid name clashes.
 
+  /// Lock.
   ACE_Lock *lock_;
-  // Lock.
 
   // Define a POA for each IR Object type, and a corresponding
   // default servant.
@@ -363,17 +297,18 @@ protected:
 #undef GEN_IR_OBJECT
 
 private:
-  static const char *TAO_IFR_primitive_kinds[];
-  // Set of strings corresponding to the CORBA::PrimitiveKind
-  // enum values.
+  /// Set of strings corresponding to the CORBA::PrimitiveKind
+  /// enum values.
+  static const char * TAO_IFR_primitive_kinds[];
 
+  /// Convert the enum value to the equivalent string.
   const char *pkind_to_string (CORBA::PrimitiveKind pkind) const;
-  // Convert the enum value to the equivalent string.
 
-  u_int num_pkinds (void) const;
-  // Return the number of entries in the CORBA::PrimitiveKind enum.
-
+  /// Return the number of entries in the CORBA::PrimitiveKind enum.
+  u_int num_pkinds () const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

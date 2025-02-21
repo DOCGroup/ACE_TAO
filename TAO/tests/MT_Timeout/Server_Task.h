@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef SERVER_TASK_H
 #define SERVER_TASK_H
@@ -23,7 +20,7 @@ public:
                const ACE_Time_Value &running_time);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Reference to the ORB

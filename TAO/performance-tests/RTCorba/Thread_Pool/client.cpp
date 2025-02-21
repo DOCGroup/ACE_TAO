@@ -1,8 +1,7 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Array_Base.h"
@@ -17,20 +16,18 @@
 #include "tests/RTCORBA/check_supported_priorities.cpp"
 #include "ace/Event.h"
 
-ACE_RCSID(Thread_Pool, client, "$Id$")
-
 enum Priority_Setting
 {
   AT_THREAD_CREATION = 0,
   AFTER_THREAD_CREATION = 1
 };
 
-static const char *ior = "file://ior";
-static const char *rates_file = "rates";
-static const char *invocation_priorities_file = "empty-file";
+static const ACE_TCHAR *ior = ACE_TEXT("file://ior");
+static const ACE_TCHAR *rates_file = ACE_TEXT("rates");
+static const ACE_TCHAR *invocation_priorities_file = ACE_TEXT("empty-file");
 static int shutdown_server = 0;
 static int do_dump_history = 0;
-static ACE_UINT32 gsf = 0;
+static ACE_High_Res_Timer::global_scale_factor_type gsf = 0;
 static CORBA::ULong continuous_workers = 0;
 static int done = 0;
 static CORBA::ULong time_for_test = 10;
@@ -47,7 +44,7 @@ static int count_missed_end_deadlines = 0;
 
 struct Synchronizers
 {
-  Synchronizers (void)
+  Synchronizers ()
     : worker_lock_ (),
       workers_ (1),
       workers_ready_ (0),
@@ -55,14 +52,14 @@ struct Synchronizers
   {
   }
 
-  ACE_SYNCH_MUTEX worker_lock_;
+  TAO_SYNCH_MUTEX worker_lock_;
   ACE_Event workers_;
   CORBA::ULong workers_ready_;
   CORBA::ULong number_of_workers_;
 };
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
                         "c:e:g:hi:k:m:p:q:r:t:u:v:w:x:y:z:" //client options
@@ -210,14 +207,10 @@ parse_args (int argc, char *argv[])
 
 double
 to_seconds (ACE_UINT64 hrtime,
-            ACE_UINT32 sf)
+            ACE_High_Res_Timer::global_scale_factor_type sf)
 {
   double seconds =
-#if defined ACE_LACKS_LONGLONG_T
-    hrtime / sf;
-#else  /* ! ACE_LACKS_LONGLONG_T */
-  static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (hrtime / sf));
-#endif /* ! ACE_LACKS_LONGLONG_T */
+    static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (hrtime / sf));
   seconds /= ACE_HR_SCALE_CONVERSION;
 
   return seconds;
@@ -225,7 +218,7 @@ to_seconds (ACE_UINT64 hrtime,
 
 ACE_UINT64
 to_hrtime (double seconds,
-           ACE_UINT32 sf)
+           ACE_High_Res_Timer::global_scale_factor_type sf)
 {
   return ACE_UINT64 (seconds * sf * ACE_HR_SCALE_CONVERSION);
 }
@@ -235,28 +228,24 @@ start_synchronization (test_ptr test,
                        Synchronizers &synchronizers)
 {
   CORBA::ULong synchronization_iterations = 1;
-  ACE_TRY_NEW_ENV
+  try
     {
       for (CORBA::ULong i = 0;
            i < synchronization_iterations;
            ++i)
         {
           test->method (work,
-                        prime_number
-                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                        prime_number);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       mon,
                       synchronizers.worker_lock_,
                       -1);
@@ -300,7 +289,7 @@ int
 end_synchronization (Synchronizers &synchronizers)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       mon,
                       synchronizers.worker_lock_,
                       -1);
@@ -349,11 +338,10 @@ max_throughput (test_ptr test,
   CORBA::Short CORBA_priority = 0;
   CORBA::Short native_priority = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       CORBA::Boolean result =
         priority_mapping.to_native (CORBA_priority,
@@ -380,20 +368,16 @@ max_throughput (test_ptr test,
             break;
 
           test->method (work,
-                        prime_number
-                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                        prime_number);
 
           ++calls_made;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   max_rate =
     calls_made / max_throughput_timeout;
@@ -422,11 +406,11 @@ public:
                 RTCORBA::PriorityMapping &priority_mapping,
                 Synchronizers &synchronizers);
 
-  int svc (void);
+  int svc ();
   ACE_hrtime_t deadline_for_current_call (CORBA::ULong i);
-  void reset_priority (ACE_ENV_SINGLE_ARG_DECL);
+  void reset_priority ();
   void print_stats (ACE_hrtime_t test_end);
-  int setup (ACE_ENV_SINGLE_ARG_DECL);
+  int setup ();
   void missed_start_deadline (CORBA::ULong invocation);
   void missed_end_deadline (CORBA::ULong invocation);
 
@@ -477,19 +461,15 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
 }
 
 void
-Paced_Worker::reset_priority (ACE_ENV_SINGLE_ARG_DECL)
+Paced_Worker::reset_priority ()
 {
   if (set_priority)
     {
-      this->current_->the_priority (this->priority_
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->current_->the_priority (this->priority_);
     }
   else
     {
-      this->current_->the_priority (continuous_worker_priority
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->current_->the_priority (continuous_worker_priority);
     }
 }
 
@@ -509,7 +489,7 @@ Paced_Worker::deadline_for_current_call (CORBA::ULong i)
 void
 Paced_Worker::print_stats (ACE_hrtime_t test_end)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_GUARD (TAO_SYNCH_MUTEX,
              mon,
              this->synchronizers_.worker_lock_);
 
@@ -549,14 +529,14 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
 
   if (do_dump_history)
     {
-      this->history_.dump_samples ("HISTORY", gsf);
+      this->history_.dump_samples (ACE_TEXT("HISTORY"), gsf);
     }
 
   ACE_Basic_Stats stats;
   this->history_.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (ACE_TEXT("Total"), gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
 
@@ -594,17 +574,15 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
 }
 
 int
-Paced_Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
+Paced_Worker::setup ()
 {
   if (priority_setting == AFTER_THREAD_CREATION)
     {
-      this->reset_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->reset_priority ();
     }
 
   this->CORBA_priority_ =
-    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->current_->the_priority ();
 
   CORBA::Boolean result =
     this->priority_mapping_.to_native (this->CORBA_priority_,
@@ -636,13 +614,12 @@ Paced_Worker::missed_end_deadline (CORBA::ULong invocation)
 }
 
 int
-Paced_Worker::svc (void)
+Paced_Worker::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       int result =
-        this->setup (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->setup ();
 
       if (result != 0)
         return result;
@@ -664,9 +641,7 @@ Paced_Worker::svc (void)
             }
 
           this->test_->method (work,
-                               prime_number
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                               prime_number);
 
           ACE_hrtime_t time_after_call =
             ACE_OS::gethrtime ();
@@ -694,13 +669,11 @@ Paced_Worker::svc (void)
 
       this->print_stats (test_end);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -716,11 +689,11 @@ public:
                      RTCORBA::PriorityMapping &priority_mapping,
                      Synchronizers &synchronizers);
 
-  int svc (void);
+  int svc ();
   void print_stats (ACE_Sample_History &history,
                     ACE_hrtime_t test_end);
-  int setup (ACE_ENV_SINGLE_ARG_DECL);
-  void print_collective_stats (void);
+  int setup ();
+  void print_collective_stats ();
 
   test_var test_;
   CORBA::ULong iterations_;
@@ -756,7 +729,7 @@ void
 Continuous_Worker::print_stats (ACE_Sample_History &history,
                                 ACE_hrtime_t test_end)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_GUARD (TAO_SYNCH_MUTEX,
              mon,
              this->synchronizers_.worker_lock_);
 
@@ -771,14 +744,14 @@ Continuous_Worker::print_stats (ACE_Sample_History &history,
 
       if (do_dump_history)
         {
-          history.dump_samples ("HISTORY", gsf);
+          history.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
+      stats.dump_results (ACE_TEXT("Total"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              test_end - test_start,
                                              stats.samples_count ());
     }
@@ -791,7 +764,7 @@ Continuous_Worker::print_stats (ACE_Sample_History &history,
 }
 
 void
-Continuous_Worker::print_collective_stats (void)
+Continuous_Worker::print_collective_stats ()
 {
   if (continuous_workers > 0)
     {
@@ -807,32 +780,29 @@ Continuous_Worker::print_collective_stats (void)
                   this->collective_stats_.samples_count () /
                   continuous_workers));
 
-      this->collective_stats_.dump_results ("Collective", gsf);
+      this->collective_stats_.dump_results (ACE_TEXT("Collective"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Individual", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Individual"), gsf,
                                              this->time_for_test_,
                                              this->collective_stats_.samples_count () /
                                              continuous_workers);
 
-      ACE_Throughput_Stats::dump_throughput ("Collective", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Collective"), gsf,
                                              this->time_for_test_,
                                              this->collective_stats_.samples_count ());
     }
 }
 
 int
-Continuous_Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
+Continuous_Worker::setup ()
 {
   if (priority_setting == AFTER_THREAD_CREATION)
     {
-      this->current_->the_priority (continuous_worker_priority
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->current_->the_priority (continuous_worker_priority);
     }
 
   this->CORBA_priority_ =
-    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->current_->the_priority ();
 
   CORBA::Boolean result =
     this->priority_mapping_.to_native (this->CORBA_priority_,
@@ -849,15 +819,14 @@ Continuous_Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Continuous_Worker::svc (void)
+Continuous_Worker::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_Sample_History history (this->iterations_);
 
       int result =
-        this->setup (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->setup ();
 
       if (result != 0)
         return result;
@@ -869,9 +838,7 @@ Continuous_Worker::svc (void)
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           this->test_->method (work,
-                               prime_number
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                               prime_number);
 
           ACE_hrtime_t end = ACE_OS::gethrtime ();
           history.sample (end - start);
@@ -884,13 +851,11 @@ Continuous_Worker::svc (void)
       this->print_stats (history,
                          test_end);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -898,14 +863,12 @@ Continuous_Worker::svc (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -916,41 +879,31 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   Synchronizers synchronizers;
 
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (ior);
 
       test_var test =
-        test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RTCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::Current::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("PriorityMappingManager"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("PriorityMappingManager");
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
       RTCORBA::PriorityMapping &priority_mapping =
         *mapping_manager->mapping ();
@@ -1145,29 +1098,25 @@ Task::svc (void)
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
@@ -1202,19 +1151,11 @@ main (int argc, char *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<CORBA::ULong>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<CORBA::ULong>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

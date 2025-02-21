@@ -1,5 +1,3 @@
-$Id$
-
 The OCI TAO Developer's Guide contains source code for many examples.
 These examples were developed independently by OCI and are tightly
 integrated with the discussion of various topics in the TAO

@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Reactive_Dispatching.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,13 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Dispatching.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Reactive_Dispatching
@@ -38,22 +39,22 @@ class TAO_RTEvent_Serv_Export TAO_EC_Reactive_Dispatching : public TAO_EC_Dispat
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_EC_Reactive_Dispatching (void);
+  TAO_EC_Reactive_Dispatching ();
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet &event,
-                     TAO_EC_QOS_Info &qos_info
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     TAO_EC_QOS_Info &qos_info);
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet &event,
-                            TAO_EC_QOS_Info &qos_info
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                            TAO_EC_QOS_Info &qos_info);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

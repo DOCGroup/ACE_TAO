@@ -4,8 +4,6 @@
 /**
  * @file SL3_CredentialsCurator.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -34,6 +32,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SL3
@@ -43,7 +44,7 @@ namespace TAO
     class CredentialsCurator;
     typedef CredentialsCurator* CredentialsCurator_ptr;
     typedef TAO_Pseudo_Var_T<CredentialsCurator> CredentialsCurator_var;
-    typedef TAO_Pseudo_Out_T<CredentialsCurator, CredentialsCurator_var> CredentialsCurator_out;
+    typedef TAO_Pseudo_Out_T<CredentialsCurator> CredentialsCurator_out;
 
     /**
      * @class CredentialsCurator
@@ -56,9 +57,12 @@ namespace TAO
      */
     class TAO_Security_Export CredentialsCurator
       : public virtual SecurityLevel3::CredentialsCurator,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
+      typedef CredentialsCurator_ptr _ptr_type;
+      typedef CredentialsCurator_var _var_type;
+      typedef CredentialsCurator_out _out_type;
 
       /**
        * The type of table that maps acquisition method to acquirer
@@ -77,12 +81,11 @@ namespace TAO
       typedef Credentials_Table::iterator Credentials_Iterator;
 
       /// Constructor
-      CredentialsCurator (void);
+      CredentialsCurator ();
 
       static CredentialsCurator_ptr _duplicate (CredentialsCurator_ptr obj);
-      static CredentialsCurator_ptr _nil (void);
-      static CredentialsCurator_ptr _narrow (CORBA::Object_ptr obj
-                                             ACE_ENV_ARG_DECL);
+      static CredentialsCurator_ptr _nil ();
+      static CredentialsCurator_ptr _narrow (CORBA::Object_ptr obj);
 
       /**
        * @name SecurityLevel3::CredentialsCurator Methods
@@ -91,32 +94,20 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::AcquisitionMethodList * supported_methods (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::AcquisitionMethodList * supported_methods ();
 
       virtual SecurityLevel3::CredentialsAcquirer_ptr acquire_credentials (
           const char * acquisition_method,
-          const CORBA::Any & acquisition_arguments
-          ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          const CORBA::Any & acquisition_arguments);
 
-      virtual SecurityLevel3::OwnCredentialsList * default_creds_list (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::OwnCredentialsList * default_creds_list ();
 
-      virtual SecurityLevel3::CredentialsIdList * default_creds_ids (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredentialsIdList * default_creds_ids ();
 
       virtual SecurityLevel3::OwnCredentials_ptr get_own_credentials (
-          const char * credentials_id
-          ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          const char * credentials_id);
 
-      virtual void release_own_credentials (const char * credentials_id
-                                            ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void release_own_credentials (const char * credentials_id);
       //@}
 
       /// Register CredentialsAcquirer factory.
@@ -126,26 +117,22 @@ namespace TAO
        */
       void register_acquirer_factory (
         const char * acquisition_method,
-        TAO::SL3::CredentialsAcquirerFactory * factory
-        ACE_ENV_ARG_DECL);
+        TAO::SL3::CredentialsAcquirerFactory * factory);
 
       /// TAO-specific means of adding credentials to this
       /// CredentialsCurator's "own credentials" list.
       void _tao_add_own_credentials (
-        SecurityLevel3::OwnCredentials_ptr credentials
-        ACE_ENV_ARG_DECL);
+        SecurityLevel3::OwnCredentials_ptr credentials);
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~CredentialsCurator (void);
+      ~CredentialsCurator ();
 
     private:
-
       /// Lock used to synchronize access to underlying tables.
       TAO_SYNCH_MUTEX lock_;
 
@@ -155,10 +142,11 @@ namespace TAO
       /// Table of OwnCredentials.
       Credentials_Table credentials_table_;
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -3,8 +3,6 @@
 /**
  *  @file    Fault_Detector_i.h
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  This file declares the Fault_Detector_i class.
  *  The class implements the FaultDetectors as defined
@@ -28,18 +26,13 @@
 
 #include <ace/Manual_Event.h>
 
-//////////////////////////////////
-// Classes declared in this header
-namespace TAO
-{
-  class  Fault_Detector_i;
-}
-
 
 #include "orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_ReplicaC.h"
 #include "ace/Time_Value.h"
 
+// Classes declared in this header
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -75,8 +68,7 @@ namespace TAO
       FT::FTDomainId domain_id,
       const PortableGroup::Location & object_location,
       PortableGroup::TypeId object_type,
-      PortableGroup::ObjectGroupId group_id
-      );
+      PortableGroup::ObjectGroupId group_id);
     /**
      * destructor.
      * Non-virtual because this class does not take part in
@@ -181,5 +173,8 @@ namespace TAO
     int quit_requested_;
   };
 }   // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ <ace/post.h>
 #endif // FAULT_DETECTOR_I_H_

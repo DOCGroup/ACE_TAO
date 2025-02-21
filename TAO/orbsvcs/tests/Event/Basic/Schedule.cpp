@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Schedule.h"
 #include "Consumer.h"
 #include "Supplier.h"
@@ -11,10 +9,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID(EC_Tests_Basic, Schedule, "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   EC_Schedule driver;
   return driver.run (argc, argv);
@@ -22,13 +19,13 @@ main (int argc, char *argv [])
 
 // ****************************************************************
 
-EC_Schedule::EC_Schedule (void)
+EC_Schedule::EC_Schedule ()
   :  scheduler_impl_ (0)
 {
 }
 
 int
-EC_Schedule::parse_args (int& argc, char* argv[])
+EC_Schedule::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;
@@ -37,25 +34,24 @@ EC_Schedule::parse_args (int& argc, char* argv[])
 }
 
 void
-EC_Schedule::print_args (void) const
+EC_Schedule::print_args () const
 {
   this->EC_Driver::print_args ();
 }
 
 void
-EC_Schedule::print_usage (void)
+EC_Schedule::print_usage ()
 {
   this->EC_Driver::print_usage ();
 }
 
 void
-EC_Schedule::initialize_ec_impl (ACE_ENV_SINGLE_ARG_DECL)
+EC_Schedule::initialize_ec_impl ()
 {
   this->scheduler_impl_ = new ACE_Config_Scheduler;
-  this->scheduler_ = this->scheduler_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->scheduler_ = this->scheduler_impl_->_this ();
 
-  this->EC_Driver::initialize_ec_impl (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->EC_Driver::initialize_ec_impl ();
 }
 
 void
@@ -65,14 +61,14 @@ EC_Schedule::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
 }
 
 void
-EC_Schedule::cleanup_ec (void)
+EC_Schedule::cleanup_ec ()
 {
   this->EC_Driver::cleanup_ec ();
   delete this->scheduler_impl_;
 }
 
 void
-EC_Schedule::execute_test (ACE_ENV_SINGLE_ARG_DECL)
+EC_Schedule::execute_test ()
 {
   CORBA::Long min_priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -92,9 +88,7 @@ EC_Schedule::execute_test (ACE_ENV_SINGLE_ARG_DECL)
                                         infos.out (),
                                         deps.out (),
                                         configs.out (),
-                                        anomalies.out ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                        anomalies.out ());
 
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG,
@@ -108,22 +102,19 @@ EC_Schedule::execute_test (ACE_ENV_SINGLE_ARG_DECL)
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG,
                 "EC_Schedule (%P|%t) schedule dumped\n"));
-
 }
 
 void
 EC_Schedule::build_consumer_qos (
   int i,
   RtecEventChannelAdmin::ConsumerQOS& qos,
-  int& shutdown_event_type
-  ACE_ENV_ARG_DECL)
+  int& shutdown_event_type)
 {
   char name[128];
   ACE_OS::sprintf (name, "EC_Schedule::Consumer::%04x", i);
 
   RtecScheduler::handle_t rt_info =
-    this->scheduler_->create (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->scheduler_->create (name);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -137,9 +128,7 @@ EC_Schedule::build_consumer_qos (
                          RtecScheduler::VERY_LOW_IMPORTANCE,
                          time,
                          0,
-                         RtecScheduler::OPERATION
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                         RtecScheduler::OPERATION);
 
   int type_start =
     this->consumer_type_start_
@@ -161,15 +150,13 @@ void
 EC_Schedule::build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type
-      ACE_ENV_ARG_DECL)
+      int& shutdown_event_type)
 {
   char name[128];
   ACE_OS::sprintf (name, "EC_Schedule::Supplier::%04x", i);
 
   RtecScheduler::handle_t rt_info =
-    this->scheduler_->create (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->scheduler_->create (name);
 
   ACE_Time_Value tv (0, this->burst_pause_);
   RtecScheduler::Period_t rate = tv.usec () * 10;
@@ -188,9 +175,7 @@ EC_Schedule::build_supplier_qos (
                          RtecScheduler::VERY_LOW_IMPORTANCE,
                          time,
                          1,
-                         RtecScheduler::OPERATION
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                         RtecScheduler::OPERATION);
 
   int type_start = this->supplier_type_start_ + i*this->supplier_type_shift_;
   int supplier_id = i + 1;
@@ -210,12 +195,6 @@ EC_Schedule::build_supplier_qos (
 }
 
 void
-EC_Schedule::dump_results (void)
+EC_Schedule::dump_results ()
 {
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

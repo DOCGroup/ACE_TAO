@@ -1,81 +1,67 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    fixed_struct.cpp
-//
-// = DESCRIPTION
-//    tests fixed sized structs
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    fixed_struct.cpp
+ *
+ *  tests fixed sized structs
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "fixed_struct.h"
-
-ACE_RCSID (Param_Test, 
-           fixed_struct, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Fixed_Struct
 // ************************************************************************
 
-Test_Fixed_Struct::Test_Fixed_Struct (void)
+Test_Fixed_Struct::Test_Fixed_Struct ()
   : opname_ (CORBA::string_dup ("test_fixed_struct"))
 {
 }
 
-Test_Fixed_Struct::~Test_Fixed_Struct (void)
+Test_Fixed_Struct::~Test_Fixed_Struct ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Fixed_Struct::opname (void) const
+Test_Fixed_Struct::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Fixed_Struct::dii_req_invoke (CORBA::Request *req
-                                   ACE_ENV_ARG_DECL)
+Test_Fixed_Struct::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
   req->add_out_arg ("s3") <<= this->out_;
   req->set_return_type (Param_Test::_tc_Fixed_Struct);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  Param_Test::Fixed_Struct *tmp;
+  const Param_Test::Fixed_Struct *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = *tmp;
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *arg2->value () >>= tmp;
   this->inout_ = *tmp;
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *arg3->value () >>= tmp;
   this->out_ = *tmp;
 }
 
 int
 Test_Fixed_Struct::init_parameters (Param_Test_ptr /*objref*/
-                                    ACE_ENV_ARG_DECL_NOT_USED/*env*/)
+/*env*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -89,7 +75,7 @@ Test_Fixed_Struct::init_parameters (Param_Test_ptr /*objref*/
 }
 
 int
-Test_Fixed_Struct::reset_parameters (void)
+Test_Fixed_Struct::reset_parameters ()
 {
   ACE_OS::memset (&this->inout_,
                   0,
@@ -107,53 +93,47 @@ Test_Fixed_Struct::reset_parameters (void)
 }
 
 int
-Test_Fixed_Struct::run_sii_test (Param_Test_ptr objref
-                                 ACE_ENV_ARG_DECL)
+Test_Fixed_Struct::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_fixed_struct (this->in_,
                                               this->inout_,
-                                              this->out_
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                              this->out_);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Fixed_Struct::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Fixed_Struct::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Fixed_Struct::check_validity (void)
+Test_Fixed_Struct::check_validity ()
 {
   if (this->in_.l == this->inout_.l &&
       this->in_.c == this->inout_.c &&
       this->in_.s == this->inout_.s &&
       this->in_.o == this->inout_.o &&
-      this->in_.f == this->inout_.f &&
+      ACE::is_equal (this->in_.f, this->inout_.f) &&
       this->in_.b == this->inout_.b &&
-      this->in_.d == this->inout_.d &&
+      ACE::is_equal (this->in_.d, this->inout_.d) &&
       this->in_.l == this->out_.l &&
       this->in_.c == this->out_.c &&
       this->in_.s == this->out_.s &&
       this->in_.o == this->out_.o &&
-      this->in_.f == this->out_.f &&
+      ACE::is_equal (this->in_.f, this->out_.f) &&
       this->in_.b == this->out_.b &&
-      this->in_.d == this->out_.d &&
+      ACE::is_equal (this->in_.d, this->out_.d) &&
       this->in_.l == this->ret_.l &&
       this->in_.c == this->ret_.c &&
       this->in_.s == this->ret_.s &&
       this->in_.o == this->ret_.o &&
-      this->in_.f == this->ret_.f &&
+      ACE::is_equal (this->in_.f, this->ret_.f) &&
       this->in_.b == this->ret_.b &&
-      this->in_.d == this->ret_.d)
+      ACE::is_equal (this->in_.d, this->ret_.d))
     return 1;
   else
     return 0;
@@ -167,7 +147,7 @@ Test_Fixed_Struct::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Fixed_Struct::print_values (void)
+Test_Fixed_Struct::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"

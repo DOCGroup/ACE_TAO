@@ -1,5 +1,3 @@
-// $Id$
-
 // If this server is compiled and run with the JDK ORB, it will
 // fragment the GIOP Messages sent when get_big_reply() is called.
 
@@ -59,4 +57,4 @@ public class server
       e.printStackTrace (System.out);
     }
   }
-} 
+}

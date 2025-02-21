@@ -1,0 +1,403 @@
+Release 1.0 - January 2003
+
+***********************************
+*    Performance Test Overview    *
+***********************************
+
+This directory contains performance tests for measuring round-trip
+latency statistics of ACE synchronous messaging using unmarshalled
+ACE_CDR::Octet.
+
+In terms of protocol and service type, three different tests are
+available:
+
+ * TCP over SOCK_STREAM
+ * SCTP over SOCK_STREAM
+ * SCTP over SOCK_SEQPACK
+
+All three of these tests share the same architecture, which is
+described in the following section.
+
+***************************
+*    Test Architecture    *
+***************************
+
+As mentioned above, the performance tests measure round-trip latency
+statistics.  We are talking about the round trip between two service
+endpoints, a client and a server.  The client sends the server an
+arbitrary message with a specific length---up to 2^16 bytes---and the
+server responds with a 2-byte reply.  The client measures and records
+the time it takes to complete this exchange.  The whole test is then
+repeated through many iterations, and finally the client outputs the
+resulting statistics.
+
+In detail,
+
+1.  The server program is started first.  It creates a passive-mode
+    socket and runs an infinite loop waiting for clients to connect.
+
+2.  The client program is started next.  It may be configured with
+    numerous parameters, which include:
+
+      * the hostname and port where the server's passive-mode socket
+        is listening,
+      * the desired message length, which may be any power of two
+        between 2^0 and 2^16,
+      * the desired number of iterations (by default 1 million)
+
+3.  The client connects to the server's passive-mode socket.  If all
+    goes well, the client and server will each obtain a data-mode
+    socket that serves as a communication endpoint.
+
+4.  The client sends an initial header message containing the intended
+    number of iterations and the message length (which will be
+    the same for each iteration).  Armed with this information, the
+    server spawns a separate thread to handle these iterations.
+
+5.  The client creates an in-memory data structure that serves as a
+    histogram.  The histogram is configured with a range of possible
+    round-trip latencies, and this range is divided into a number of
+    "bins".  The latency measured for each test entry will either
+    fall into one of these "bins", or it will fall outside the entire
+    range and will be logged as an outlier.
+
+6.  The client and server repeat the following interaction for each
+    test iteration.
+
+    a.  The client starts a stopwatch.
+
+    b.  The client sends the server an arbitrary message of the
+        established length.
+
+    c.  After receiving this entire message from the client, the
+        server sends the client a 2-byte reply.
+
+    d.  After receiving the 2-byte reply from the server, the client
+        stops the stopwatch.
+
+    e.  The round-trip latency, as measureed by the stopwatch, is
+        logged to the in-memory histogram.
+
+7.  After all these iterations are complete, the client disconnects
+    from the server.  The client then takes the in-memory histogram
+    and dumps its text representation to STDOUT.
+
+8.  The client exits.  The server thread dedicated to this client
+    exits.  The main thread of the server continues to run an infinite
+    loop waiting for more clients to connect to the passive-mode
+    socket.
+
+**************************
+*    Test Executables    *
+**************************
+
+You must use a different pair of client and server executables
+depending on whether you desire to use the SOCK_STREAM service or the
+SOCK_SEQPACK service.
+
+The SOCK_STREAM client and server are called SOCK_STREAM_clt and
+SOCK_STREAM_srv, respectively.  The SOCK_SEQPACK client and server are
+called SOCK_SEQPACK_clt and SOCK_SEQPACK_srv, respectively.
+
+Each of these executables uses SCTP as its default protocol.  As an
+extra feature, SOCK_STREAM_clt and SOCK_STREAM_srv offer TCP as an
+alternate protocol.  The choice between TCP and SCTP is exposed via
+the '-t' option.  (Individual instances of SOCK_STREAM_clt and
+SOCK_STREAM_srv must use the same protocol in order to connect and
+function.)
+
+Any of the four executables will show usage information if you run it
+with the '-h' option.  For instance, here is the usage message
+produced by SOCK_STREAM_clt:
+
+./SOCK_STREAM_clt - Measures round trip latency statistics of ACE synchronous
+                    messaging (SOCK_Stream) using unmarshalled ACE_CDR::Octet.
+USAGE: ./SOCK_STREAM_clt [ -<flag> [<val>] | --<name> [<val>] ]...
+
+  Flag  Args           Option-Name                 Default
+   -c   int            test-iterations             1000000
+   -n   none           test-enable-nagle           NO NAGLING
+   -t   str (sctp|tcp) test-transport-protocol     sctp
+
+   -m   dbl            histogram-min-bin           0
+   -M   dbl            histogram-max-bin           10000
+   -x   int            histogram-num-outliers      100
+   -b   int            histogram-bin-count         1000
+
+   -C   int            client-port                 assigned by kernel
+   -i   str            client-connect-addr         INADDR_ANY
+
+   -p   int            server-port                 45453
+   -H   str            server-host                 localhost
+
+   -s   int (0-16)     payload-size-power-of-2     <MUST SET VALUE>
+
+   -h   none           help
+
+For each option, the long "Option-Name" may be prefixed by two dashes
+and used on the command line in place of the shorter "Flag".  Hence
+
+   ./SOCK_STREAM_clt -s 5
+
+is equivalent to
+
+   ./SOCK_STREAM_clt --payload-size-power-of-2 5
+
+The options shown above for SOCK_STREAM_clt (and the similar options
+available for SOCK_SEQPACK_clt) are discussed in the next section.
+
+*****************************
+*    Client-Side Options    *
+*****************************
+
+The following options are available for both SOCK_STREAM_clt and
+SOCK_SEQPACK_clt.
+
+    test-iterations  [ -c int ]
+
+        the number of times to repeat the round-trip-latency test
+        loop.  The default is 1000000.
+
+    test-enable-nagle  [ -n ]
+
+        Enable Nagle's algorithm (which is disabled by default).
+
+    histogram-min-bin  [ -m double ]
+
+        the lower boundary on the range of the histogram.
+        The default is 0.  The unit of measurement is the millisecond.
+
+    histogram-max-bin  [ -M double ]
+
+        the upper boundary on the range of the histogram.
+        The default is 10000.  The unit of measurement is the
+        millisecond.
+
+    histogram-num-outliers  [ -x int ]
+
+        the maximum number of outliers to maintain in the histogram.
+        The default is 100.
+
+    histogram-bin-count  [ -b int ]
+
+        the number of histogram bins.  The default is 1000.  The width
+        of each bin will be
+
+          (histogram-max-bin - histogram-min-bin) / histogram-bin-count
+
+    client-port          [ -C int ]
+    client-connect-addr  [ -i string ]
+
+        the port and network address where the client's data-mode
+        socket is to be bound.  By default, the port number is
+        assigned by the kernel, and the socket is bound to all network
+        interfaces.
+
+    server-port  [ -p int ]
+    server-host  [ -H string ]
+
+        the port and hostname where the server's passive-mode socket
+        is bound.  The default port is 45453 and the default host is
+        localhost.
+
+    payload-size-power-of-2  [ -s int ]
+
+        an integer X.  The size of the payload will be 2^X bytes.
+
+    help  [ -h ]
+
+        Show usage message.
+
+The following option is available only for SOCK_STREAM_clt:
+
+    test-transport-protocol  [ -t (sctp|tcp) ]
+
+        the protocol for the test.  The default is sctp.
+
+In contrast, SOCK_SEQPACK_clt always uses SCTP as its protocol.
+
+*****************************
+*    Server-Side Options    *
+*****************************
+
+The following options are available for both SOCK_STREAM_srv and
+SOCK_SEQPACK_srv:
+
+    test-enable-nagle  [ -n ]
+
+        Enable Nagle's algorithm (which is disabled by default).
+
+    server-port  [ -p int ]
+
+        the port where the server's passive-mode socket will be
+        bound.  The default is 45453.
+
+    help  [ -h ]
+
+        Show usage message.
+
+The following option is available for both SOCK_STREAM_srv and
+SOCK_SEQPACK_srv, but the latter offers additional functionality:
+
+    server-accept-addr  [ -a w.x.y.z ]              (for SOCK_STREAM_srv)
+                        [ -a w.x.y.z,a.b.c.d,... ]  (for SOCK_SEQPACK_srv)
+
+        the network address (or addresses) to which the server's
+        passive-mode socket will be bound.
+
+        The default value of INADDR_ANY should be sufficient for
+        machines that have only one network interface.
+
+        If your machine has two interfaces, and you wish to bind the
+        socket only to one of these, then you may explicitly specify
+        the desired interface with an expression such as
+        "-a 192.168.221.104" or "-a 192.168.1.43".
+
+        If your machine has three or more interfaces, and you wish to
+        bind the socket only to a subset of two or more, AND you are
+        using SOCK_SEQPACK_srv, THEN you may explicitly specify the
+        desired interface with an expression such as
+        "-a 192.168.221.104,192.168.1.43".  The argument here is a
+        comma-delimited list of dotted-decimal IPv4 addresses with no
+        whitespace interspersed.  This level of control is not
+        possible with SOCK_STREAM_srv.
+
+The following option is available only for SOCK_STREAM_srv:
+
+    test-transport-protocol  [ -t (sctp|tcp) ]
+
+        the protocol for the test.  The default is sctp.
+
+In contrast, SOCK_SEQPACK_srv always uses SCTP as its protocol.
+
+***************************
+*    Test Walk-Through    *
+***************************
+
+This section shows a walk-through of a typical scenario using
+SOCK_STREAM_clt and SOCK_STREAM_srv to run an SCTP performance test.
+
+You can run the equivalent TCP performance test by adding "-t tcp" to
+the command line of both programs.  Alternately, you can run a
+SOCK_SEQPACK-based SCTP performance test by substituting
+SOCK_SEQPACK_clt and SOCK_SEQPACK_srv for SOCK_STREAM_clt and
+SOCK_STREAM_srv, respectively.
+
+In this scenario, both client and server run on the same machine.  We
+use a message size of 2^7 bytes and a relatively small number of
+iterations, 1000, in order to make the test go quickly.  The server's
+passive-mode socket binds to the default port, 45453, which is also
+the default port expected by the client.  We invoke no other special
+or unusual options.
+
+For clarity, we envision starting the client and server in two
+separate shells.
+
+The steps of the walk-through are as follows:
+
+1.  Start the server.
+
+    $ ./SOCK_STREAM_srv
+    (12761|1024) Accepting connections on port 45453
+                 on interface INADDR_ANY using IPPROTO_SCTP
+    (12761|1024) starting server at port 45453
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    ...
+
+    The server will continue to print, periodically, the message
+    "select timed out" as it waits for clients to connect.
+
+2.  Start the client.
+
+    $ ./SOCK_STREAM_clt -s 7 -c 1000
+
+3.  Observing the debugging output from the server, you should see
+    evidence that the client has connected.
+
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    (12761|1024) spawning server
+    (12761|1024) client utica-b connected from 32768
+    (12761|1024) Test for 1100 iterations
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+
+    Note that the server expects 1100 iterations, even though we
+    configured the client for only 1000 iterations.  The reason for
+    this discrepencany is that the client always runs 100 primer
+    iterations before the requested test iterations.
+
+4.  When the 1100 iterations are complete, observing the output from
+    the client, you should see the histogram:
+
+
+                                Histogram ACE Unmarshalled Msg Synchronous Latency Test
+                                        (Message Size 128, Message Type octet)
+    version: 1.1
+    minimum: 41
+    maximum: 60182
+    mean: 106.858
+    variance: 3.62659e+06
+    num_points: 1000
+    num_bins: 1000 0 10000
+
+              Low     -          High     Count  Fraction  Cumulative
+             below    -         0.000  :      0    0.000    0.000
+               0.000  -        10.000  :      0    0.000    0.000
+              10.000  -        20.000  :      0    0.000    0.000
+              20.000  -        30.000  :      0    0.000    0.000
+              30.000  -        40.000  :      0    0.000    0.000
+              40.000  -        50.000  :    988    0.988    0.988
+              50.000  -        60.000  :      5    0.005    0.993
+              60.000  -        70.000  :      2    0.002    0.995
+              70.000  -        80.000  :      0    0.000    0.995
+              80.000  -        90.000  :      1    0.001    0.996
+              90.000  -       100.000  :      0    0.000    0.996
+             100.000  -       110.000  :      0    0.000    0.996
+    ...
+            9960.000  -      9970.000  :      0    0.000    0.999
+            9970.000  -      9980.000  :      0    0.000    0.999
+            9980.000  -      9990.000  :      0    0.000    0.999
+            9990.000  -     10000.000  :      0    0.000    0.999
+           10000.000  -       above    :      1    0.001    1.000
+
+    outliers:
+           60182.000
+
+******************************************
+*    Running a Complete Test Spectrum    *
+******************************************
+
+People who are interested in round-trip latency often want to see a
+"spectrum" of statistics for a range of payload sizes.  This directory
+includes a script, run_spectrum.pl, that automates running
+SOCK_STREAM_clt or SOCK_SEQPACK_clt multiple times in order to
+generate a spectrum.  (The appropriate server program must be started
+manually.)
+
+The run_spectrum.pl script offers embedded documentation.  To see the
+full documentation, please run
+
+   ./run_spectrum.pl --manual
+
+************************
+*    Sample Results    *
+************************
+
+The file sample-spectrum.png plots the spectrum data for a test run at
+LM ATL facilities on the following systems:  two Linux 2.4.18, 1600 MHz
+Pentium 4 machines on an isolated 100Mbps Ethernet network.
+
+The test conditions include several critical parameters that were set
+as follows:
+
+   sctp_rto_initial = 20
+   sctp_rto_min     = 20
+   sctp_rto_max     = 20
+
+Testing has shown that these parameters affect maximum round-trip
+latency.

@@ -1,28 +1,17 @@
-// file      : Gate.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #include "Gate.h"
-
-/*
-#include <iostream>
-
-using std::cerr;
-using std::endl;
-*/
+#include "ace/Truncate.h"
 
 using namespace CORBA;
 using namespace CosNotifyComm;
 using namespace CosNotification;
 using namespace CosNotifyChannelAdmin;
 
-Gate::
-~Gate ()
+Gate::~Gate ()
 {
   // Stop tracker thread.
-  //
   {
-    Lock l (mutex_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     stop_ = true;
   }
 
@@ -57,11 +46,12 @@ init (ConsumerAdmin_ptr consumer_admin,
   //
   ACE_Utils::UUID uuid;
   ACE_Utils::UUID_GENERATOR::instance ()->init ();
-  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+  ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
 
-  id_ = string_alloc (uuid.to_string ()->length () + 2);
-  strcpy (id_.inout (), "_");
-  strcpy (id_.inout () + 1, uuid.to_string ()->rep ());
+  id_ = string_alloc (ACE_Utils::truncate_cast<CORBA::ULong> (
+                        uuid.to_string ()->length () + 2));
+  ACE_OS::strcpy (id_.inout (), "_");
+  ACE_OS::strcpy (id_.inout () + 1, uuid.to_string ()->rep ());
 
   // ACE_DEBUG ((LM_DEBUG, "ID: %s\n", id_.in ()));
 
@@ -123,7 +113,7 @@ tracker ()
       // Check for cancellation request.
       //
       {
-        Lock l (mutex_);
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
         if (stop_)
           return;
@@ -132,14 +122,15 @@ tracker ()
       if (n == -1)
       {
         if (errno != ETIME)
-          abort ();
+          ACE_OS::abort ();
       }
       else
         break;
     }
 
-    OctetSeq seq (n);
-    seq.length (n);
+    CORBA::ULong seqn = ACE_Utils::truncate_cast<CORBA::ULong> (n);
+    OctetSeq seq (seqn);
+    seq.length (seqn);
 
     char* buffer = reinterpret_cast<char*> (seq.get_buffer ());
 
@@ -162,7 +153,7 @@ tracker ()
 
     for (; i < e.header.variable_header.length (); ++i)
     {
-      if (strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
+      if (ACE_OS::strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
         break;
     }
 
@@ -191,13 +182,11 @@ tracker ()
 }
 
 void Gate::
-push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosEventComm::Disconnected))
+push_structured_event (StructuredEvent const& e)
 {
   for (ULong i (0); i < e.header.variable_header.length (); ++i)
   {
-    if (strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
+    if (ACE_OS::strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
     {
       ULong ttl;
 
@@ -225,7 +214,7 @@ push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL_NOT_USED)
 
   cdr << e;
 
-  size_t size (cdr.total_length ());
+  CORBA::ULong size (ACE_Utils::truncate_cast<CORBA::ULong> (cdr.total_length ()));
 
   OctetSeq seq (size);
   seq.length (size);
@@ -248,19 +237,14 @@ push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 
-void Gate::
-disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void
+Gate::disconnect_structured_push_consumer ()
 {
   // We don't care.
 }
 
-void Gate::
-offer_change (EventTypeSeq const&,
-              EventTypeSeq const&
-              ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType))
+void
+Gate::offer_change (EventTypeSeq const&, EventTypeSeq const&)
 {
   // We don't care.
 }

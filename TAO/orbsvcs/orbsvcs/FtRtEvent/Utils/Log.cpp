@@ -1,12 +1,15 @@
-//$Id$
-#include "Log.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/FtRtEvent/Utils/Log.h"
 
 #if !defined(__ACE_INLINE__)
-#include "Log.inl"
+#include "orbsvcs/FtRtEvent/Utils/Log.inl"
 #endif /* __ACE_INLINE__ */
 
-namespace TAO_FTRTEC {
+#include "ace/OS_NS_stdio.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO_FTRTEC {
 unsigned int Log::log_level_;
 
 #ifndef NDEBUG
@@ -15,11 +18,13 @@ unsigned int Log::log_level_;
     if (log_level_ >= log_level) {
       va_list p;
       va_start(p, format);
-      char str[1024];
+      ACE_TCHAR str[1024];
       ACE_OS::vsprintf(str, format, p);
-      ACE_DEBUG((LM_DEBUG, str));
+      ORBSVCS_DEBUG((LM_DEBUG, str));
       va_end(p);
     }
   }
 #endif
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

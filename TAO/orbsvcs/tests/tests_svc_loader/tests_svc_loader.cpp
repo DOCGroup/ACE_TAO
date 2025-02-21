@@ -1,26 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs/tests/tests_svc_loader
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//   This directory contains a client that checks if a given object
-//   reference points to an existing object or not and prints a debug
-//   statement to reflect the same. This client is to be used in
-//   conjunction with testing the dynamically loadable services. If
-//   the service is loaded successfully, the object reference from the
-//   server would be a valid one and the corresponding debug statement
-//   is printed out. Or viceversa.
-//
-// = AUTHOR
-//     Priyanka Gontla <pgontla@ece.uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    tests_svc_loader.cpp
+ *
+ * This directory contains a client that checks if a given object
+ * reference points to an existing object or not and prints a debug
+ * statement to reflect the same. This client is to be used in
+ * conjunction with testing the dynamically loadable services. If
+ * the service is loaded successfully, the object reference from the
+ * server would be a valid one and the corresponding debug statement
+ * is printed out. Or viceversa.
+ *
+ *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #include "tao/ORB.h"
 #include "tao/Object.h"
@@ -30,22 +24,13 @@
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
 
-
-ACE_RCSID (tests_svc_loader,
-           tests_svc_loader,
-           "$Id$")
-
-
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       // There must be at least one argument, the file that has to be
       // retrieved
@@ -60,13 +45,11 @@ int main (int argc, char *argv [])
 
       // Use the first argument to create the object reference.
       CORBA::Object_var object =
-        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (argv[1]);
 
       // Check if this object reference is a valid one..
       CORBA::Boolean not_exists =
-        object->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        object->_non_existent ();
 
       if (not_exists)
         {
@@ -82,13 +65,11 @@ int main (int argc, char *argv [])
         }
 
     }
-  ACE_CATCH (CORBA::SystemException ,e)
+  catch (const CORBA::SystemException&)
     {
       ACE_DEBUG ((LM_ERROR,
                   "CORBA System Exception Raised!\n"));
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

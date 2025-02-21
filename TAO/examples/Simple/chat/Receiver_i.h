@@ -1,63 +1,53 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/tests/Simple/chat
-//
-// = FILENAME
-//    Receiver_i.h
-//
-// = DESCRIPTION
-//    Defines the implementation header for the Receiver interface.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Receiver_i.h
+ *
+ *  Defines the implementation header for the Receiver interface.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef RECEIVER_I_H
 #define RECEIVER_I_H
 
 #include "ReceiverS.h"
 
+/**
+ * @class Receiver_i
+ *
+ * @brief Receiver object implementation
+ *
+ * This class has methods that are called by the chat server.
+ */
 class Receiver_i : public POA_Receiver
 {
-  // = TITLE
-  //    Receiver object implementation
-  //
-  // = DESCRIPTION
-  //    This class has methods that are called by the chat server.
 public:
-  // = Initialization and termination methods.
-  Receiver_i (void);
-  // Constructor.
+  /// Constructor.
+  Receiver_i ();
 
-  ~Receiver_i (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~Receiver_i ();
 
-  virtual void message (const char *msg
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-  // Receives a message string.
+  /// Receives a message string.
+  virtual void message (const char *msg);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-  // Called when the chat server is going away.  The client
-  // implementation should shutdown the chat client in response to
-  // this.
+  /**
+   * Called when the chat server is going away.  The client
+   * implementation should shutdown the chat client in response to
+   * this.
+   */
+  virtual void shutdown ();
 
+  /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
 
 private:
+  /// ORB pointer.
   CORBA::ORB_var orb_;
-  // ORB pointer.
 };
 
 #endif /* RECEIVER_I_H  */

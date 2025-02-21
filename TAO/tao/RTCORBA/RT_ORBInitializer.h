@@ -4,8 +4,6 @@
 /**
  *  @file RT_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -20,7 +18,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,10 +34,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// RTCORBA ORB initializer.
-class TAO_RTCORBA_Export TAO_RT_ORBInitializer :
-  public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+class TAO_RT_ORBInitializer
+  : public virtual PortableInterceptor::ORBInitializer
+  , public virtual ::CORBA::LocalObject
 {
 public:
   /// Priority mapping types
@@ -55,26 +55,37 @@ public:
       TAO_NETWORK_PRIORITY_MAPPING_LINEAR
     };
 
+  /**
+   * Lifespan of the dynamic threads
+   * TAO_RTCORBA_DT_INFINITIVE When the Dynamic Thread is created it will run
+   * forever
+   * TAO_RTCORBA_DT_IDLE When the Dynamic Thread is created it will run until
+   * it has been idle for the specified amount of time
+   * TAO_RTCORBA_DT_FIXED When the Dynamic Thread is created it will run for
+   * the specified fix amount of time
+   */
+  enum TAO_RTCORBA_DT_LifeSpan
+  {
+    TAO_RTCORBA_DT_INFINITIVE,
+    TAO_RTCORBA_DT_IDLE,
+    TAO_RTCORBA_DT_FIXED
+  };
+
   TAO_RT_ORBInitializer (int priority_mapping_type,
                          int network_priority_mapping_type,
                          int ace_sched_policy,
                          long sched_policy,
-                         long scope_policy);
+                         long scope_policy,
+                         TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                         ACE_Time_Value const &dynamic_thread_time);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
-
   /// Register RTCORBA policy factories.
-  void register_policy_factories (
-                                  PortableInterceptor::ORBInitInfo_ptr info
-                                  ACE_ENV_ARG_DECL);
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
   /// Instance of the RTCorba policy factory.
@@ -85,10 +96,10 @@ private:
   PortableInterceptor::PolicyFactory_var policy_factory_;
 
   /// Priority mapping type.
-  int priority_mapping_type_;
+  int const priority_mapping_type_;
 
   /// Network Priority mapping type.
-  int network_priority_mapping_type_;
+  int const network_priority_mapping_type_;
 
   /// Scheduling policy.
   /**
@@ -98,7 +109,7 @@ private:
    * ACE_Sched_Params::priority_min(). Legal values are ACE_SCHED_RR,
    * ACE_SCHED_FIFO, and ACE_SCHED_OTHER.
    */
-  int ace_sched_policy_;
+  int const ace_sched_policy_;
 
   /// Scheduling policy flag.
   /**
@@ -107,7 +118,7 @@ private:
    * thread creation functions. Legal values are THR_SCHED_RR,
    * THR_SCHED_FIFO, and THR_SCHED_DEFAULT.
    */
-  long sched_policy_;
+  long const sched_policy_;
 
   /// Scheduling scope flag.
   /**
@@ -116,9 +127,21 @@ private:
    * thread creation functions. Legal values are THR_SCOPE_SYSTEM and
    * THR_SCOPE_PROCESS.
    */
-  long scope_policy_;
+  long const scope_policy_;
 
+  /// Dynamic thread lifespan policy
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan_;
+
+  /// Dynamic thread time
+  /**
+   * When using thread pool a certain number of dynamic threads can be created.
+   * By default these threads are created when needed but never end. Optionally
+   * a time can be specified
+   */
+  ACE_Time_Value const dynamic_thread_time_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

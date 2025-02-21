@@ -4,8 +4,6 @@
 /**
  *  @file LB_RoundRobin.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -25,6 +23,10 @@
 #include "orbsvcs/LoadBalancing/LB_Location_Index_Map.h"
 
 #include "orbsvcs/CosLoadBalancingS.h"
+#include "ace/Vector_T.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LB_RoundRobin_Strategy
@@ -38,7 +40,6 @@ class TAO_LB_RoundRobin
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-
   /// Constructor.
   TAO_LB_RoundRobin (PortableServer::POA_ptr poa);
 
@@ -48,53 +49,39 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual CosLoadBalancing::Properties * get_properties (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosLoadBalancing::Properties * get_properties ();
 
   virtual void push_loads (
       const PortableGroup::Location & the_location,
-      const CosLoadBalancing::LoadList & loads
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::StrategyNotAdaptive));
+      const CosLoadBalancing::LoadList & loads);
 
   virtual CosLoadBalancing::LoadList * get_loads (
       CosLoadBalancing::LoadManager_ptr load_manager,
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::LocationNotFound));
+      const PortableGroup::Location & the_location);
 
   virtual CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberNotFound));
+      CosLoadBalancing::LoadManager_ptr load_manager);
 
   virtual void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CosLoadBalancing::LoadManager_ptr load_manager);
   //@}
 
   /// Returns the default POA for this servant.
   virtual PortableServer::POA_ptr _default_POA (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
 protected:
-
   /// Destructor
-  ~TAO_LB_RoundRobin (void);
+  ~TAO_LB_RoundRobin ();
 
 private:
+  /// Keep a copy of location list for verify if the list is changed
+  /// in next next_member() call.
+  void copy_locations (PortableGroup::Locations_var& locations);
 
   /// This servant's default POA.
   PortableServer::POA_var poa_;
@@ -115,7 +102,11 @@ private:
    */
   TAO_LB_Location_Index_Map location_index_map_;
 
+  /// Locations list retrieved in last next_member() call.
+  ACE_Vector <PortableGroup::Location> last_locations_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -4,8 +4,6 @@
 /**
  *  @file    FtRtecEventChannelAdmin.idl
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang
  */
 //=============================================================================
@@ -28,12 +26,19 @@ module FtRtecEventChannelAdmin
     RtecEventChannelAdmin::SupplierQOS qos;
   };
 
-  union ProxyPushConsumerConnectionParamter switch (boolean)
+  union ProxyPushConsumerConnectionParamter switch (short)
   {
-  case FALSE:
-  case TRUE:
+  case 0:
+  default:
     ProxyPushConsumerConnectionInfo info;
   };
+
+  /*
+  struct ProxyPushConsumerConnectionParamter
+  {
+    ProxyPushConsumerConnectionInfo info;
+  };
+  */
 
   struct ProxyPushConsumerStat
   {
@@ -48,12 +53,19 @@ module FtRtecEventChannelAdmin
     RtecEventChannelAdmin::ConsumerQOS qos;
   };
 
-  union ProxyPushSupplierConnectionParamter switch (boolean)
+  union ProxyPushSupplierConnectionParamter switch (short)
   {
-  case FALSE:
-  case TRUE:
+  case 0:
+  default:
     ProxyPushSupplierConnectionInfo info;
   };
+
+  /*
+  struct ProxyPushSupplierConnectionParamter
+  {
+    ProxyPushSupplierConnectionInfo info;
+  };
+  */
 
   struct ProxyPushSupplierStat
   {

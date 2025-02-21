@@ -1,10 +1,7 @@
 /**
  * @file Server_Timer.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 
 #ifndef Server_Timer__h_
@@ -24,7 +21,7 @@ public:
   /// Constructor
   Server_Timer (Test::Echo_ptr echo, ACE_Reactor * reactor);
 
-  void activate (void);
+  void activate ();
 
   /// Thread entry point
   int handle_timeout(ACE_Time_Value const & tv, void const *);

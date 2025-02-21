@@ -1,0 +1,292 @@
+// -*- MPC -*-
+project(TAO_IDL_BE) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+  requires    += build_tao_idl_be
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    be
+    conditional(!prop:static) {
+      be/be_visitor_argument
+      be/be_visitor_array
+      be/be_visitor_attribute
+      be/be_visitor_component
+      be/be_visitor_component_fwd
+      be/be_visitor_connector
+      be/be_visitor_constant
+      be/be_visitor_enum
+      be/be_visitor_exception
+      be/be_visitor_field
+      be/be_visitor_home
+      be/be_visitor_interface
+      be/be_visitor_interface_fwd
+      be/be_visitor_module
+      be/be_visitor_native
+      be/be_visitor_operation
+      be/be_visitor_root
+      be/be_visitor_sequence
+      be/be_visitor_map
+      be/be_visitor_structure
+      be/be_visitor_structure_fwd
+      be/be_visitor_typecode
+      be/be_visitor_typedef
+      be/be_visitor_union
+      be/be_visitor_union_branch
+      be/be_visitor_union_fwd
+      be/be_visitor_valuebox
+      be/be_visitor_valuetype
+      be/be_visitor_valuetype_fwd
+    }
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+project(TAO_IDL_BE_VIS_A) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE_VIS_A
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  after       += TAO_IDL_BE
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+  requires    += build_tao_idl_be
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    conditional(prop:static) {
+      be/be_visitor_argument
+      be/be_visitor_array
+      be/be_visitor_attribute
+    }
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+project(TAO_IDL_BE_VIS_C) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE_VIS_C
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  after       += TAO_IDL_BE_VIS_A
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+  requires    += build_tao_idl_be
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    conditional(prop:static) {
+      be/be_visitor_component
+      be/be_visitor_component_fwd
+      be/be_visitor_connector
+      be/be_visitor_constant
+    }
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+project(TAO_IDL_BE_VIS_E) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE_VIS_E
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  after       += TAO_IDL_BE_VIS_C
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+  requires    += build_tao_idl_be
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    conditional(prop:static) {
+      be/be_visitor_enum
+      be/be_visitor_exception
+      be/be_visitor_field
+      be/be_visitor_home
+    }
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+project(TAO_IDL_BE_VIS_I) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE_VIS_I
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  after       += TAO_IDL_BE_VIS_E
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+  requires    += build_tao_idl_be
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    conditional(prop:static) {
+      be/be_visitor_interface
+      be/be_visitor_interface_fwd
+      be/be_visitor_module
+      be/be_visitor_native
+    }
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+project(TAO_IDL_BE_VIS_O) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE_VIS_O
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  after       += TAO_IDL_BE_VIS_I
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+  requires    += build_tao_idl_be
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    conditional(prop:static) {
+      be/be_visitor_operation
+      be/be_visitor_root
+    }
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+project(TAO_IDL_BE_VIS_S) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE_VIS_S
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  after       += TAO_IDL_BE_VIS_O
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+  requires    += build_tao_idl_be
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    conditional(prop:static) {
+      be/be_visitor_sequence
+      be/be_visitor_map
+      be/be_visitor_structure
+      be/be_visitor_structure_fwd
+      be/be_visitor_typecode
+      be/be_visitor_typedef
+    }
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+project(TAO_IDL_BE_VIS_U) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE_VIS_U
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  after       += TAO_IDL_BE_VIS_S
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+  requires    += build_tao_idl_be
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    conditional(prop:static) {
+      be/be_visitor_union
+      be/be_visitor_union_branch
+      be/be_visitor_union_fwd
+    }
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+project(TAO_IDL_BE_VIS_V) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE_VIS_V
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  after       += TAO_IDL_BE_VIS_U
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+  requires    += build_tao_idl_be
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    conditional(prop:static) {
+      be/be_visitor_valuebox
+      be/be_visitor_valuetype
+      be/be_visitor_valuetype_fwd
+    }
+  }
+
+  Header_Files {
+    be_include
+  }
+}

@@ -1,27 +1,24 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
-#include "HTIOP_Profile.h"
-#include "htiop_endpointsC.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/htiop_endpointsC.h"
 
 #include "ace/os_include/os_netdb.h"
 
 #include "tao/CDR.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-ACE_RCSID(HTIOP,
-          TAO_HTIOP_Profile,
-          "$Id$")
+static const char the_prefix[] = "htiop";
 
-static const char prefix_[] = "htiop";
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char TAO::HTIOP::Profile::object_key_delimiter_ = '/';
 
 char
-TAO::HTIOP::Profile::object_key_delimiter (void) const
+TAO::HTIOP::Profile::object_key_delimiter () const
 {
   return TAO::HTIOP::Profile::object_key_delimiter_;
 }
@@ -65,7 +62,7 @@ TAO::HTIOP::Profile::Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO::HTIOP::Profile::~Profile (void)
+TAO::HTIOP::Profile::~Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -88,14 +85,13 @@ TAO::HTIOP::Profile::~Profile (void)
 int
 TAO::HTIOP::Profile::decode_profile (TAO_InputCDR& cdr)
 {
-
   // Decode host and port into the <endpoint_>.
   if (cdr.read_string (this->endpoint_.host_.out ()) == 0
       || cdr.read_ushort (this->endpoint_.port_) == 0
       || cdr.read_string (this->endpoint_.htid_.out()) == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) TAO::HTIOP::Profile::decode - ")
                     ACE_TEXT ("error while decoding host/port")));
       return -1;
@@ -112,8 +108,7 @@ TAO::HTIOP::Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO::HTIOP::Profile::parse_string_i (const char *ior
-                                   ACE_ENV_ARG_DECL)
+TAO::HTIOP::Profile::parse_string_i (const char *ior)
 {
   // Pull off the "hostname:port#token/" part of the objref
   // Copy the string because we are going to modify it...
@@ -123,11 +118,11 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
   if (okd == 0 || okd == ior)
     {
       // No object key delimiter or no hostname specified.
-      ACE_THROW (CORBA::INV_OBJREF
-                 (CORBA::SystemException::_tao_minor_code
-                  (TAO::VMCID,
-                   EINVAL),
-                  CORBA::COMPLETED_NO));
+      throw CORBA::INV_OBJREF(
+        CORBA::SystemException::_tao_minor_code(
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   // Length of host string.
@@ -138,11 +133,11 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
   if (cp_pos == ior)
     {
       // No hostname specified!  It is required by the spec.
-      ACE_THROW (CORBA::INV_OBJREF
-                 (CORBA::SystemException::_tao_minor_code
-                  (TAO::VMCID,
-                   EINVAL),
-                  CORBA::COMPLETED_NO));
+      throw CORBA::INV_OBJREF(
+        CORBA::SystemException::_tao_minor_code(
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
   else if (cp_pos != 0)
     {
@@ -185,18 +180,18 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("TAO::HTIOP::Profile::parse_string ")
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
 
           // @@ What's the right exception to throw here?
-          ACE_THROW (CORBA::INV_OBJREF
-                     (CORBA::SystemException::_tao_minor_code
-                      (TAO::VMCID,
-                       EINVAL),
-                      CORBA::COMPLETED_NO));
+          throw CORBA::INV_OBJREF(
+            CORBA::SystemException::_tao_minor_code(
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
       else
         this->endpoint_.host_ = CORBA::string_dup (tmp_host);
@@ -234,8 +229,7 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO::HTIOP::Profile::hash (CORBA::ULong max
-                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO::HTIOP::Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
@@ -262,13 +256,13 @@ TAO::HTIOP::Profile::hash (CORBA::ULong max
 }
 
 TAO_Endpoint*
-TAO::HTIOP::Profile::endpoint (void)
+TAO::HTIOP::Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO::HTIOP::Profile::endpoint_count (void) const
+TAO::HTIOP::Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -283,7 +277,7 @@ TAO::HTIOP::Profile::add_endpoint (TAO::HTIOP::Endpoint *endp)
 }
 
 char *
-TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::HTIOP::Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
@@ -291,7 +285,7 @@ TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::prefix_) +
+                   ACE_OS::strlen (::the_prefix) +
                    1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
@@ -309,7 +303,7 @@ TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   ACE_OS::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
-                   ::prefix_,
+                   ::the_prefix,
                    digits [this->version_.major],
                    digits [this->version_.minor],
                    this->endpoint_.host (),
@@ -321,11 +315,10 @@ TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 
-
 const char *
-TAO::HTIOP::Profile::prefix (void)
+TAO::HTIOP::Profile::prefix ()
 {
-  return ::prefix_;
+  return ::the_prefix;
 }
 
 void
@@ -351,9 +344,9 @@ TAO::HTIOP::Profile::create_profile_body (TAO_OutputCDR &encap) const
     encap << this->ref_object_key_->object_key ();
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "(%P|%t) TAO - IIOP_Profile::create_profile_body "
-                  "no object key marshalled \n"));
+                  "no object key marshalled\n"));
     }
 
   if (this->version_.major > 1
@@ -388,8 +381,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
 
   // Encode the data structure.
   TAO_OutputCDR out_cdr;
-  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-       == 0)
+  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
     return -1;
   size_t length = out_cdr.total_length ();
@@ -418,7 +410,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
 }
 
 int
-TAO::HTIOP::Profile::decode_endpoints (void)
+TAO::HTIOP::Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -434,7 +426,7 @@ TAO::HTIOP::Profile::decode_endpoints (void)
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"boolean byte_order extraction failed\n"),
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,"boolean byte_order extraction failed\n"),
                           -1);
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
@@ -442,7 +434,7 @@ TAO::HTIOP::Profile::decode_endpoints (void)
       HTIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"endpoint sequence extraction failed\n"),
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,"endpoint sequence extraction failed\n"),
                           -1);
 
       // Use information extracted from the tagged component to
@@ -467,3 +459,5 @@ TAO::HTIOP::Profile::decode_endpoints (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

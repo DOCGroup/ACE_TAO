@@ -1,0 +1,4 @@
+// Test Bug 3243
+
+const long long NptNow = 0x80000000;
+

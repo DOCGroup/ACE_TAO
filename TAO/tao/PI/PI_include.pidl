@@ -1,0 +1,23 @@
+// -*- IDL -*-
+
+/**
+ * @file PI_include.pidl
+ *
+ * @brief Include file for use in applications that need PI.pidl.
+ */
+
+#ifndef _PI_INCLUDE_IDL_
+#define _PI_INCLUDE_IDL_
+
+#pragma prefix ""
+
+///FUZZ: disable check_for_include/
+#include "tao/PI/ORBInitInfo.pidl"
+#include "tao/PI/PolicyFactory.pidl"
+#include "tao/PI/ORBInitializer.pidl"
+#include "tao/PI/Interceptor.pidl"
+#include "tao/PI/ClientRequestInfo.pidl"
+#include "tao/PI/ClientRequestInterceptor.pidl"
+#include "tao/PI/PICurrent.pidl"
+
+#endif /* _PI_INCLUDE_IDL_ */

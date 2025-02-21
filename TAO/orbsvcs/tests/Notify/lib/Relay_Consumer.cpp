@@ -1,8 +1,5 @@
-// $Id$
-
 #include "Relay_Consumer.h"
 
-ACE_RCSID(Notify, TAO_Notify_Tests_Relay_Consumer, "$Id$")
 
 #include "LookupManager.h"
 
@@ -16,29 +13,23 @@ TAO_Notify_Tests_Relay_Consumer::~TAO_Notify_Tests_Relay_Consumer ()
 }
 
 void
-TAO_Notify_Tests_Relay_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Relay_Consumer::connect ()
 {
-  TAO_Notify_Tests_Direct_Consumer::connect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  TAO_Notify_Tests_Direct_Consumer::connect ();
 
   // Resolve the destination object.
-  LOOKUP_MANAGER->resolve (this->destination_object_, this->destination_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (this->destination_object_, this->destination_.c_str ());
 }
 
 void
-TAO_Notify_Tests_Relay_Consumer::push_structured_event (const CosNotification::StructuredEvent &notification
-                                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosEventComm::Disconnected))
+TAO_Notify_Tests_Relay_Consumer::push_structured_event (const CosNotification::StructuredEvent &notification)
 {
   // The Periodic Consumer will record the run statistics.
-  //TAO_Notify_Tests_Periodic_Consumer::push_structured_event (notification ACE_ENV_ARG_PARAMETER);
-  //ACE_CHECK;
+  //TAO_Notify_Tests_Periodic_Consumer::push_structured_event (notification);
 
   // Forward the event.
   if (CORBA::is_nil (this->destination_object_.in ()))
     ACE_DEBUG ((LM_DEBUG, "(%P,%t) Cannot Relay - Destination object %s is nil", this->destination_.c_str ()));
   else
-    this->destination_object_->push_structured_event (notification ACE_ENV_ARG_PARAMETER);
+    this->destination_object_->push_structured_event (notification);
 }

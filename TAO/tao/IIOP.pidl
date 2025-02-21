@@ -1,23 +1,4 @@
 // -*- IDL -*-
-//
-// $Id$
-
-//
-//   This file was used to generate the code in
-//   IIOP*.* The command used to generate code
-//   is:
-//
-//     tao_idl \
-//        -o orig -Gp -Gd -Ge 1 -GA -Sc -Sci
-//          -Wb,export_macro=TAO_Export \
-//          -Wb,export_include="tao/TAO_Export.h" \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
-//          IIOP.pidl
-//
-//   Remember to patch the generated files using diff/IIOP.diff
-//   This is from the GIOP 1.2 spec for Bi Dir IIOP.
-
 #ifndef TAO_IIOP_PIDL
 #define TAO_IIOP_PIDL
 
@@ -25,13 +6,14 @@
 // complicated we may want to have them here.
 #pragma prefix "omg.org"
 
+#if !defined (TAO_LACKS_IIOP)
 
 module IIOP
 {
   struct ListenPoint
   {
     string host;
-    unsigned short port;
+    unsigned short _port;
   };
 
   typedef sequence<ListenPoint> ListenPointList;
@@ -41,5 +23,7 @@ module IIOP
     ListenPointList listen_points;
   };
 };
+
+#endif /* TAO_LACKS_IIOP */
 
 #endif  /* TAO_IIOP_PIDL */

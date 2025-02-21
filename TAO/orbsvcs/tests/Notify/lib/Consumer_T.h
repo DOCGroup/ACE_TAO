@@ -2,11 +2,7 @@
 /**
  *  @file Consumer_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_CONSUMER_T_H
@@ -39,60 +35,46 @@ class TAO_Notify_Tests_ConsumerAdmin_Ext_Traits
  * @class TAO_Notify_Tests_Consumer_T
  *
  * @brief Base template to implement Consumers.
- *
  */
 template <class Consumer_Traits>
 class TAO_Notify_Tests_Consumer_T : public TAO_Notify_Tests_Peer_T <Consumer_Traits>
 {
-  typedef ACE_TYPENAME Consumer_Traits::Admin_Traits Admin_Traits;
-  typedef ACE_TYPENAME Consumer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
-  typedef ACE_TYPENAME Consumer_Traits::Proxy_Traits Proxy_Traits;
+  typedef typename Consumer_Traits::Admin_Traits Admin_Traits;
+  typedef typename Consumer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
+  typedef typename Consumer_Traits::Proxy_Traits Proxy_Traits;
 
-  typedef ACE_TYPENAME Proxy_Traits::INTERFACE Proxy_Traits_INTERFACE;
-  typedef ACE_TYPENAME Proxy_Traits::PTR Proxy_Traits_PTR;
-  typedef ACE_TYPENAME Admin_Traits::PTR Admin_Traits_PTR;
-  typedef ACE_TYPENAME Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
+  typedef typename Proxy_Traits::INTERFACE Proxy_Traits_INTERFACE;
+  typedef typename Proxy_Traits::PTR Proxy_Traits_PTR;
+  typedef typename Admin_Traits::PTR Admin_Traits_PTR;
+  typedef typename Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
 
 public:
-  /// Constuctor
-  TAO_Notify_Tests_Consumer_T (void);
+  /// Constructor
+  TAO_Notify_Tests_Consumer_T ();
 
   /// Destructor
   ~TAO_Notify_Tests_Consumer_T ();
 
   /// For backward compatibility. use <get_proxy> instead.
-  Proxy_Traits_PTR get_proxy_supplier (void);
+  Proxy_Traits_PTR get_proxy_supplier ();
 
   /// Send subscription_change
-  virtual void subscription_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed ACE_ENV_ARG_DECL);
+  virtual void subscription_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed);
 
 protected:
   /// Obtain Proxy.
-  virtual Proxy_Traits_PTR obtain_proxy (Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL);
+  virtual Proxy_Traits_PTR obtain_proxy (Admin_Traits_PTR admin_ptr);
 
   /// Obtain Proxy with QoS.
   virtual Proxy_Traits_PTR obtain_proxy (Admin_Ext_Traits_PTR admin_ptr
-                                         , CosNotification::QoSProperties& qos
-                                          ACE_ENV_ARG_DECL);
+                                         , CosNotification::QoSProperties& qos);
 
   // = NotifyPublish method
   virtual void offer_change (const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+        const CosNotification::EventTypeSeq & removed);
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Consumer_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Consumer_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_CONSUMER_T_H */

@@ -1,27 +1,23 @@
-// $Id$
 
-//===========================================================================
-//
-// = FILENAME
-//     server.cpp
-//
-// = DESCRIPTION
-//     In this example,
-//        - Example showing the working of implementation repository.
-//
-// = AUTHOR
-//     Priyanka Gontla
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file     server.cpp
+ *
+ *   In this example,
+ *      - Example showing the working of implementation repository.
+ *
+ *  @author  Priyanka Gontla
+ */
+//=============================================================================
+
 
 #include "Stock_Factory_i.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/streams.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try {
-
     // Initialze the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
@@ -68,7 +64,7 @@ int main (int argc, char* argv[])
 
     // Activate the Stock_Factory object.
     child_poa->activate_object_with_id (oid.in (),
-					&stock_factory_i);
+                                        &stock_factory_i);
 
     // Get the object reference.
     CORBA::Object_var stock_factory =
@@ -97,10 +93,10 @@ int main (int argc, char* argv[])
     orb->run ();
 
     // Destroy POA, waiting until the destruction terminates.
-    root_poa->destroy (1, 1);
+    root_poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (CORBA::Exception &) {
+  catch (const CORBA::Exception &) {
     cerr << "CORBA exception raised !" << endl;
   }
   return 0;

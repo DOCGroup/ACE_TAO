@@ -1,37 +1,32 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//    Naming_Service_Container.cpp
-//
-// = AUTHOR
-//    Bruce Trask <trask_b@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Naming_Service_Container.cpp
+ *
+ *  @author Bruce Trask <trask_b@ociweb.com>
+ */
+//=============================================================================
 
+#ifndef NS_CONTAINER_CPP
+#define NS_CONTAINER_CPP
 
-#ifndef NS_CONTAINER_C
-#define NS_CONTAINER_C
-
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Naming_Service_Container.h"
+#include "orbsvcs/Naming/Naming_Service_Container.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_NS_Node)
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
 template <class T>
-ACE_NS_Node<T>::~ACE_NS_Node (void)
+ACE_NS_Node<T>::~ACE_NS_Node ()
 {
 }
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 template <class T>
 ACE_NS_Node<T>::ACE_NS_Node (const T &i, ACE_NS_Node<T> *n)
@@ -60,7 +55,7 @@ ACE_NS_Node<T>::ACE_NS_Node (const ACE_NS_Node<T> &s)
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_List)
 
   template <class T> size_t
-ACE_Unbounded_List<T>::size (void) const
+ACE_Unbounded_List<T>::size () const
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::size");
   return this->cur_size_;
@@ -90,7 +85,7 @@ ACE_Unbounded_List<T>::insert_tail (const T &item)
 }
 
 template <class T> void
-ACE_Unbounded_List<T>::reset (void)
+ACE_Unbounded_List<T>::reset ()
 {
   ACE_TRACE ("reset");
 
@@ -98,14 +93,14 @@ ACE_Unbounded_List<T>::reset (void)
 }
 
 template <class T> void
-ACE_Unbounded_List<T>::dump (void) const
+ACE_Unbounded_List<T>::dump () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
+  ORBSVCS_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
+  ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
   T *item = 0;
 #if !defined (ACE_NLOGGING)
@@ -115,9 +110,9 @@ ACE_Unbounded_List<T>::dump (void) const
   for (ACE_Unbounded_List_Iterator<T> iter (*(ACE_Unbounded_List<T> *) this);
        iter.next (item) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %d\n"), count++));
+    ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %d\n"), count++));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ORBSVCS_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 template <class T> void
@@ -130,7 +125,7 @@ ACE_Unbounded_List<T>::copy_nodes (const ACE_Unbounded_List<T> &us)
 }
 
 template <class T> void
-ACE_Unbounded_List<T>::delete_nodes (void)
+ACE_Unbounded_List<T>::delete_nodes ()
 {
   ACE_NS_Node<T> *curr = this->head_->next_;
 
@@ -152,7 +147,7 @@ ACE_Unbounded_List<T>::delete_nodes (void)
 }
 
 template <class T>
-ACE_Unbounded_List<T>::~ACE_Unbounded_List (void)
+ACE_Unbounded_List<T>::~ACE_Unbounded_List ()
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::~ACE_Unbounded_List");
 
@@ -251,14 +246,14 @@ ACE_Unbounded_List<T>::remove (const T &item)
 }
 
 template <class T> ACE_Unbounded_List_Iterator<T>
-ACE_Unbounded_List<T>::begin (void)
+ACE_Unbounded_List<T>::begin ()
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::begin");
   return ACE_Unbounded_List_Iterator<T> (*this);
 }
 
 template <class T> ACE_Unbounded_List_Iterator<T>
-ACE_Unbounded_List<T>::end (void)
+ACE_Unbounded_List<T>::end ()
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::end");
   return ACE_Unbounded_List_Iterator<T> (*this, 1);
@@ -268,7 +263,7 @@ ACE_Unbounded_List<T>::end (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_List_Iterator)
 
   template <class T> void
-ACE_Unbounded_List_Iterator<T>::dump (void) const
+ACE_Unbounded_List_Iterator<T>::dump () const
 {
   // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::dump");
 }
@@ -282,7 +277,7 @@ ACE_Unbounded_List_Iterator<T>::ACE_Unbounded_List_Iterator (ACE_Unbounded_List<
 }
 
 template <class T> int
-ACE_Unbounded_List_Iterator<T>::advance (void)
+ACE_Unbounded_List_Iterator<T>::advance ()
 {
   // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::advance");
   this->current_ = this->current_->next_;
@@ -290,7 +285,7 @@ ACE_Unbounded_List_Iterator<T>::advance (void)
 }
 
 template <class T> int
-ACE_Unbounded_List_Iterator<T>::first (void)
+ACE_Unbounded_List_Iterator<T>::first ()
 {
   // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::first");
   this->current_ = this->set_->head_->next_;
@@ -298,7 +293,7 @@ ACE_Unbounded_List_Iterator<T>::first (void)
 }
 
 template <class T> int
-ACE_Unbounded_List_Iterator<T>::done (void) const
+ACE_Unbounded_List_Iterator<T>::done () const
 {
   ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::done");
 
@@ -331,9 +326,9 @@ ACE_Unbounded_List_Iterator<T>::operator++ (int)
 }
 
 template <class T> ACE_Unbounded_List_Iterator<T>&
-ACE_Unbounded_List_Iterator<T>::operator++ (void)
+ACE_Unbounded_List_Iterator<T>::operator++ ()
 {
-  // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator++ (void)");
+  // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator++ ()");
 
   // prefix operator
 
@@ -342,7 +337,7 @@ ACE_Unbounded_List_Iterator<T>::operator++ (void)
 }
 
 template <class T> T&
-ACE_Unbounded_List_Iterator<T>::operator* (void)
+ACE_Unbounded_List_Iterator<T>::operator* ()
 {
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator*");
   T *retv = 0;
@@ -367,23 +362,24 @@ ACE_Unbounded_List_Iterator<T>::operator!= (const ACE_Unbounded_List_Iterator<T>
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator!=");
   return (this->set_ != rhs.set_ || this->current_ != rhs.current_);
 }
-/* -*- C++ -*- */
 
 // ---
 
 template <class T> int
-ACE_Unbounded_List<T>::is_empty (void) const
+ACE_Unbounded_List<T>::is_empty () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_empty");
   return this->head_ == this->head_->next_;
 }
 
 template <class T>  int
-ACE_Unbounded_List<T>::is_full (void) const
+ACE_Unbounded_List<T>::is_full () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_full");
   return 0; // We should implement a "node of last resort for this..."
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* NS_CONTAINERS_T_C */
+
+#endif /* NS_CONTAINERS_T_CPP */

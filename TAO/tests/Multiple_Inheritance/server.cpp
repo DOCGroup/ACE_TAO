@@ -1,16 +1,12 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "Multiple_Inheritance_i.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Multiple_Inheritance, server, "$Id$")
+static ACE_TCHAR *ior_output_file = 0;
 
-static char *ior_output_file = 0;
-
-Multiple_Inheritance_i::Multiple_Inheritance_i (void)
+Multiple_Inheritance_i::Multiple_Inheritance_i ()
 {
   // Sun/CC 5.0 crashes if there is no explicit default
   // constructor
@@ -18,9 +14,9 @@ Multiple_Inheritance_i::Multiple_Inheritance_i (void)
 }
 
 int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -38,37 +34,32 @@ parse_args (int argc, char **argv)
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Multiple_Inheritance_i servant;
   TAO_ORB_Manager orb_manager;
 
   ACE_DEBUG ((LM_DEBUG, "\n\tMultiple Inheritance Server\n\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       orb_manager.init_child_poa (argc,
                                   argv,
-                                  "child_poa"
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                  "child_poa");
 
       if (parse_args (argc, argv) != 0)
         return -1;
 
       CORBA::String_var ior =
         orb_manager.activate_under_child_poa ("my_object",
-                                              &servant
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                              &servant);
 
-      ACE_DEBUG ((LM_DEBUG, "%s\n",
+      ACE_DEBUG ((LM_DEBUG, "%C\n",
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
@@ -84,15 +75,13 @@ main (int argc, char **argv)
           ACE_OS::fclose (output_file);
         }
 
-      orb_manager.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_manager.run ();
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

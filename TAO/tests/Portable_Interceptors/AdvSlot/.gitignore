@@ -1,0 +1,7 @@
+/client
+/server
+/StateTransferC.cpp
+/StateTransferC.h
+/StateTransferC.inl
+/StateTransferS.cpp
+/StateTransferS.h

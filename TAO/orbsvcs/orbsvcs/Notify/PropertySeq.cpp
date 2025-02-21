@@ -1,14 +1,12 @@
-// $Id$
-
-#include "PropertySeq.h"
+#include "orbsvcs/Notify/PropertySeq.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "PropertySeq.inl"
+#include "orbsvcs/Notify/PropertySeq.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_PropertySeq, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_PropertySeq::TAO_Notify_PropertySeq (void)
+TAO_Notify_PropertySeq::TAO_Notify_PropertySeq ()
 {
 }
 
@@ -59,3 +57,5 @@ TAO_Notify_PropertySeq::add(const ACE_CString& name, const CORBA::Any& val)
   ACE_ASSERT(ret >= 0);
   ACE_UNUSED_ARG (ret); // because the assert disappears in release builds
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

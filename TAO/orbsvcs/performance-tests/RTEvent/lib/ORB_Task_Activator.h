@@ -1,8 +1,6 @@
 /**
  * @file ORB_Task_Activator.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -20,7 +18,6 @@
  * @class ORB_Task_Activator
  *
  * @brief Implement a helper class to activate and stop Send_Tasks.
- *
  */
 class TAO_RTEC_Perf_Export ORB_Task_Activator : public Task_Activator<ORB_Task>
 {
@@ -32,7 +29,7 @@ public:
                       ORB_Task *task);
 
   /// Destructor, stop the task and wait for it
-  ~ORB_Task_Activator (void);
+  ~ORB_Task_Activator ();
 };
 
 #if defined(__ACE_INLINE__)

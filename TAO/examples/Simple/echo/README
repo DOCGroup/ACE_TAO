@@ -1,4 +1,4 @@
-$Id$
+
 
 This is a simple CORBA example that has an object (Echo) with only two
 methods, one that returns the message to be displayed and another that

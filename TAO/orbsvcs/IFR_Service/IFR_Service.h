@@ -1,23 +1,18 @@
-// $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    orbsvcs/IFR_Service
-//
-// = FILENAME
-//    IFR_Service.h
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// =======================================================================
+//=============================================================================
+/**
+ *  @file    IFR_Service.h
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef IFR_SERVICE_H
 #define IFR_SERVICE_H
 
-#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,31 +28,28 @@
 class IFR_Service
 {
 public:
-
   /// Default constructor.
-  IFR_Service (void);
+  IFR_Service ();
 
   /// Destructor
-  ~IFR_Service (void);
+  ~IFR_Service ();
 
   /// Initialize the IFR service.
   int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+            ACE_TCHAR *argv[]);
 
   /// Shut down the IFR Service.
-  int fini (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int fini ();
 
   /// Run the IFR service.
-  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run ();
+
+  /// Shutdown the Service.
+  void shutdown ();
 
 protected:
-
   /// Reference to our ORB.
   CORBA::ORB_var orb_;
-
-  /// Root POA reference.
-  PortableServer::POA_var root_poa_;
 
   /// IFR Server instance.
   TAO_IFR_Server my_ifr_server_;

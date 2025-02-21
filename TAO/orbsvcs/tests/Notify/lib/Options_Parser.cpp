@@ -1,16 +1,9 @@
-// $Id$
-
 #include "Options_Parser.h"
-
-ACE_RCSID (lib,
-           TAO_Options_Parser,
-           "$Id$")
-
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser (void)
+TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser ()
 {
 }
 
@@ -35,7 +28,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, 
           added.length (seq_ln + 1);
 
           added[seq_ln].domain_name = CORBA::string_dup ("*");
-          added[seq_ln].type_name = CORBA::string_dup (++current_arg); // Skip the '+' sign.
+          added[seq_ln].type_name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++current_arg)); // Skip the '+' sign.
         }
       else if (current_arg[0] == '-')
         {
@@ -44,7 +37,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, 
           removed.length (seq_ln + 1);
 
           removed[seq_ln].domain_name = CORBA::string_dup ("*");
-          removed[seq_ln].type_name = CORBA::string_dup (++current_arg); // Skip the '-' sign.
+          removed[seq_ln].type_name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++current_arg)); // Skip the '-' sign.
         }
     }
 }
@@ -53,32 +46,44 @@ void
 TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter)
 {
   const ACE_TCHAR *current_arg = 0;
-  int default_priority = ACE_DEFAULT_THREAD_PRIORITY;
+  NotifyExt::Priority default_priority = NotifyExt::minPriority;
 
-  if (arg_shifter.cur_arg_strncasecmp ("-ThreadPool") == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]
+  if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadPool")) == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]
     {
       arg_shifter.consume_arg ();
 
-      int static_threads = 1;
+      CORBA::ULong static_threads = 1u;
 
-      if (arg_shifter.cur_arg_strncasecmp ("-Threads") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Threads")) == 0)
         {
           arg_shifter.consume_arg ();
 
           current_arg = arg_shifter.get_current ();
 
-          static_threads = ACE_OS::atoi (current_arg);
+          static_threads = static_cast<CORBA::ULong> (ACE_OS::atoi (current_arg));
 
           arg_shifter.consume_arg ();
         }
 
-      if (arg_shifter.cur_arg_strncasecmp ("-Priority") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Priority")) == 0)
         {
           arg_shifter.consume_arg ();
-
           current_arg = arg_shifter.get_current ();
-
-          default_priority = ACE_OS::atoi (current_arg);
+          const int priority= ACE_OS::atoi (current_arg);
+          if (priority < NotifyExt::minPriority)
+            {
+              NotifyExt::Priority default_priority = NotifyExt::minPriority;
+              ACE_DEBUG ((LM_DEBUG, "-Priority %d is too small (min priority %d used)\n",
+                          priority, static_cast<int> (default_priority)));
+            }
+          else if (NotifyExt::maxPriority < priority)
+            {
+              NotifyExt::Priority default_priority = NotifyExt::maxPriority;
+              ACE_DEBUG ((LM_DEBUG, "-Priority %d is too large (max priority %d used)\n",
+                          priority, static_cast<int> (default_priority)));
+            }
+          else
+            default_priority = static_cast<NotifyExt::Priority> (priority);
 
           arg_shifter.consume_arg ();
         }
@@ -90,9 +95,8 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       qos.length (1);
       qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
       qos[0].value <<= tp_params;
-
     } /* ThreadPool */
-  else if (arg_shifter.cur_arg_strncasecmp ("-Lanes") == 0) // -Lanes lane_count -Lane prio static_thr dy_thr
+  else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Lanes")) == 0) // -Lanes lane_count -Lane prio static_thr dy_thr
     {
       arg_shifter.consume_arg ();
 
@@ -116,7 +120,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       //parse lane values ...
       while (arg_shifter.is_anything_left ())
         {
-          if (arg_shifter.cur_arg_strncasecmp ("-Lane") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Lane")) == 0)
             {
               arg_shifter.consume_arg ();
 
@@ -144,6 +148,5 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       qos.length (1);
       qos[0].name = CORBA::string_dup (NotifyExt::ThreadPoolLanes);
       qos[0].value <<= tpl_params;
-
     } /* ThreadPoolLane */
 }

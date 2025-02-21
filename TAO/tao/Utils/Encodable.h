@@ -1,9 +1,8 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Encodable.h
- *
- *  $Id$
  *
  *   Defines the interface for classes that wish to be
  *   encodable/decodable into/from a CDR representation.
@@ -23,7 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "utils_export.h"
+#include "tao/Utils/utils_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
@@ -40,8 +41,7 @@ class TAO_InputCDR;
 class TAO_UTILS_Export TAO_Encodable
 {
 public:
-
-  virtual ~TAO_Encodable (void);
+  virtual ~TAO_Encodable ();
 
   ///  Encodes the object implementing this method into a CDR stream.
   ///  Returns true on success and false on failure.
@@ -51,6 +51,8 @@ public:
   ///  Returns true on success and false on failure.
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

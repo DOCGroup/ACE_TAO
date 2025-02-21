@@ -1,0 +1,15 @@
+// -*- MPC -*-
+project(*starter) : aceexe, avoids_ace_for_tao {
+  exename = starter
+
+  Source_Files {
+    starter.cpp
+  }
+}
+project(*worker) : aceexe, avoids_ace_for_tao {
+  exename = worker
+
+  Source_Files {
+    worker.cpp
+  }
+}

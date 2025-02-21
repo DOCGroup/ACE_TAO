@@ -4,10 +4,6 @@
 /**
  *  @file  UTF16_BOM_Translator.h
  *
- *  $Id$
- *
- *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================
@@ -22,10 +18,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Codeset/codeset_export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/CDR_Stream.h"
-#include "codeset_export.h"
-
-// ****************************************************************
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_UTF16_BOM_Translator
@@ -40,18 +36,22 @@ class TAO_Codeset_Export TAO_UTF16_BOM_Translator
   : public ACE_WChar_Codeset_Translator
 {
 public:
-  /// constructor
+  /// Constructor
   /// @param forceBE: true forces all wchar, warray, and wstrings to big-endian byte order
   TAO_UTF16_BOM_Translator (bool forceBE);
 
   /// Virtual destruction
-  virtual ~TAO_UTF16_BOM_Translator (void);
+  virtual ~TAO_UTF16_BOM_Translator () = default;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
                                       ACE_CDR::WChar &);
   virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR &,
                                         ACE_CDR::WChar *&);
+#if !defined(ACE_LACKS_STD_WSTRING)
+  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR&,
+                                         std::wstring &);
+#endif
   virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR &,
                                             ACE_CDR::WChar *,
                                             ACE_CDR::ULong);
@@ -88,8 +88,9 @@ private:
 private:
   /// if this flag is true, force wchar's to big endian order
   bool forceBE_;
-
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* UTF16_BOM_TRANSLATOR_H */

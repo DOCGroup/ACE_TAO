@@ -1,0 +1,5 @@
+//  -*- MPC -*-
+project: kokyu {
+  avoids += ace_for_tao
+  exename = MIF
+}

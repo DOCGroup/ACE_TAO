@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Copy_On_Read.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -12,11 +11,13 @@
 #ifndef TAO_ESF_COPY_ON_READ_H
 #define TAO_ESF_COPY_ON_READ_H
 
-#include "ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Target> class TAO_ESF_Worker;
 
@@ -27,7 +28,6 @@ template<class Target> class TAO_ESF_Worker;
  *
  * @brief Implement the Copy_On_Read protocol
  *
- *
  * The class is parametric on the kind of collection and locking
  * mechanism used.
  */
@@ -36,19 +36,15 @@ class TAO_ESF_Copy_On_Read : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
   /// Constructors
-  TAO_ESF_Copy_On_Read (void);
+  TAO_ESF_Copy_On_Read ();
   TAO_ESF_Copy_On_Read (const COLLECTION &collection);
 
   // = The TAO_ESF_Proxy_Collection methods
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker
-                         ACE_ENV_ARG_DECL);
-  virtual void connected (PROXY *proxy
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (PROXY *proxy
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (PROXY *proxy
-                             ACE_ENV_ARG_DECL);
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void for_each (TAO_ESF_Worker<PROXY> *worker);
+  virtual void connected (PROXY *proxy);
+  virtual void reconnected (PROXY *proxy);
+  virtual void disconnected (PROXY *proxy);
+  virtual void shutdown ();
 
 private:
   COLLECTION collection_;
@@ -56,14 +52,8 @@ private:
   ACE_LOCK lock_;
 };
 
-// ****************************************************************
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Copy_On_Read.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Copy_On_Read.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Copy_On_Read.cpp"
 
 #endif /* TAO_ESF_COPY_ON_READ_H */

@@ -1,0 +1,9 @@
+local interface foo
+{
+};
+
+interface bar
+{
+  void bar_op (out foo bad_arg);
+};
+

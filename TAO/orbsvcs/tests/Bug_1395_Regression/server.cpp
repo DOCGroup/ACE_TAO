@@ -1,15 +1,33 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "Test_i.h"
 #include "ace/OS_NS_stdio.h"
+#include "orbsvcs/Shutdown_Utilities.h"
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
+
+class Service_Shutdown_Functor : public Shutdown_Functor
+{
+public:
+  Service_Shutdown_Functor (CORBA::ORB_ptr orb)
+    : orb_(CORBA::ORB::_duplicate (orb))
+  {
+  }
+
+  void operator() (int which_signal)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "shutting down on signal %d\n", which_signal));
+    (void) this->orb_->shutdown ();
+  }
+
+private:
+  CORBA::ORB_var orb_;
+};
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -27,24 +45,23 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
+
+      Service_Shutdown_Functor killer (orb.in ());
+      Service_Shutdown kill_contractor (killer);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -52,29 +69,24 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       Test_i server_impl (orb.in ());
 
-      root_poa->activate_object (&server_impl
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var tmp =
+        root_poa->activate_object (&server_impl);
 
 
       CORBA::Object_var server = server_impl._this();
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -101,20 +113,16 @@ main (int argc, char *argv[])
         }
 
       poa_manager->activate();
-      
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
+
+      root_poa->destroy (true, true);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "SERVER (%P): Caught exception:");
+      ex._tao_print_exception ("SERVER (%P): Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -4,8 +4,6 @@
 /**
  * @file PolicyFactory.h
  *
- * $Id$
- *
  * Implementation header for the test policy factory.
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
@@ -39,10 +37,9 @@
  */
 class PolicyFactory
   : public virtual PortableInterceptor::PolicyFactory,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the PolicyFactory Interface
    *
@@ -51,16 +48,11 @@ public:
    * methods required for all PolicyFactory sub-classes.
    */
   //@{
-
   /// Construct a Test::Policy object as a test.
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any & value
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::PolicyError));
+                                           const CORBA::Any & value);
 
   //@}
-
 };
 
 #if defined(_MSC_VER)

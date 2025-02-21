@@ -1,22 +1,15 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/MT_Client_Test
-//
-// = FILENAME
-//    server_A.h
-//
-// = DESCRIPTION
-//      This class implements a simple server for the
-//      Nested Upcalls - MT Client test
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.h
+ *
+ *    This class implements a simple server for the
+ *    Nested Upcalls - MT Client test
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #ifndef MT_CLIENT_TEST_MT_OBJECT_SERVER_H
 #define MT_CLIENT_TEST_MT_OBJECT_SERVER_H
@@ -31,48 +24,47 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "MT_Object_i.h"
 
+/**
+ * @class MT_Object_Server
+ *
+ * @brief This is the server for the object A in the test.
+ *
+ * See the README file for more information.
+ */
 class MT_Object_Server
 {
-  // = TITLE
-  //   This is the server for the object A in the test.
-  //
-  // = DESCRIPTION
-  //   See the README file for more information.
-
 public:
+  /// Default constructor
+  MT_Object_Server ();
 
-  MT_Object_Server (void);
-  // Default constructor
+  /// Destructor
+  ~MT_Object_Server ();
 
-  ~MT_Object_Server (void);
-  // Destructor
-
+  /// Initialize the NestedUpCalls_Server state - parsing arguments and ...
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL);
-  // Initialize the NestedUpCalls_Server state - parsing arguments and ...
+            ACE_TCHAR **argv);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the orb
+  /// Run the orb
+  int run ();
 
 private:
-  int parse_args (void);
-  // Parses the commandline arguments.
+  /// Parses the commandline arguments.
+  int parse_args ();
 
+  /// File to output the IOR of the object A.
   FILE* ior_output_file_;
-  // File to output the IOR of the object A.
 
+  /// The ORB manager
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager
 
+  /// Implementation object MT_OBject
   MT_Object_i mT_Object_i_;
-  // Implementation object MT_OBject
 
+  /// Number of commandline arguments.
   int argc_;
-  // Number of commandline arguments.
 
-  char **argv_;
-  // commandline arguments.
+  /// commandline arguments.
+  ACE_TCHAR **argv_;
 
   u_char use_mt_object_;
 };

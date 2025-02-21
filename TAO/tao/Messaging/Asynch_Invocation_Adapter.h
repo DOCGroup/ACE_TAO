@@ -4,9 +4,6 @@
 /**
  *  @file    Asynch_Invocation_Adapter.h
  *
- *  $Id$
- *
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -25,21 +22,23 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 #include "tao/Invocation_Adapter.h"
-#include "ace/CORBA_macros.h"
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Operation_Details;
 class TAO_Stub;
-class ACE_Time_Value;
 class TAO_Asynch_Reply_Dispatcher;
 class TAO_Asynch_Reply_Dispatcher_Base;
 
 namespace  CORBA
 {
   class Object;
-  class Environment;
-  class SystemException;
 }
 
 namespace TAO
@@ -64,25 +63,29 @@ namespace TAO
         Argument **args,
         int arg_number,
         const char *operation,
-        int op_len,
-        Collocation_Proxy_Broker *b,
-        TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION);
+        size_t op_len,
+        int collocation_opportunity,
+        TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION,
+        bool has_in_args = true);
 
     void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,
-                 const TAO_Reply_Handler_Skeleton &reply_handler_skel
-                 ACE_ENV_ARG_DECL);
+                 const TAO_Reply_Handler_Stub &reply_handler_stub);
 
-    virtual void invoke (TAO::Exception_Data *ex,
-                         unsigned long ex_count
-                         ACE_ENV_ARG_DECL);
+    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
+
   protected:
-
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+        ACE_Time_Value *&max_wait_time,
+        Invocation_Retry_State *retry_state = 0);
+
+    virtual Invocation_Status invoke_collocated_i (
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
+        CORBA::Object_var &effective_target,
+        Collocation_Strategy strat);
 
   private:
     /// Autofunctor to manage the reply dispatcher
@@ -90,15 +93,14 @@ namespace TAO
                             ARDB_Refcount_Functor> safe_rd_;
 
   private:
-    /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (Asynch_Invocation_Adapter (void))
-
-    ACE_UNIMPLEMENTED_FUNC (Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &))
-
+    Asynch_Invocation_Adapter () = delete;
+    Asynch_Invocation_Adapter (const Asynch_Invocation_Adapter &) = delete;
+    Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &) = delete;
   };
 } // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif /*TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H*/
+#endif /* TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H */

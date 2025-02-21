@@ -2,11 +2,7 @@
 /**
  *  @file Driver.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_DRIVER_H
@@ -33,27 +29,20 @@ class TAO_Notify_Tests_Activation_Manager;
  * @class TAO_Notify_Tests_Worker
  *
  * @brief A Task to execute commands asynchronously.
- *
  */
 class TAO_Notify_Tests_Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
-  TAO_Notify_Tests_Worker (void);
+  TAO_Notify_Tests_Worker ();
   // ctor
 
   /// Set the command builder.
   void command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The command builder
@@ -61,17 +50,15 @@ private:
 };
 
 
-
+/**
+ * Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class TAO_Notify_Tests_ORB_Run_Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
-  TAO_Notify_Tests_ORB_Run_Worker (void);
+  TAO_Notify_Tests_ORB_Run_Worker ();
   // ctor
 
   void orb (CORBA::ORB_ptr orb);
@@ -79,7 +66,7 @@ public:
   /// Srt the run period.
   void run_period (ACE_Time_Value run_period);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
@@ -95,29 +82,28 @@ private:
  * @class TAO_Notify_Tests_Driver
  *
  * @brief A default Application Starter.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Driver : public TAO_Notify_Tests_Driver_Base
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_Driver (void);
+  /// Constructor
+  TAO_Notify_Tests_Driver ();
 
   /// Destructor
   ~TAO_Notify_Tests_Driver ();
 
   /// Init
-  int init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL);
+  int init (int argc, ACE_TCHAR *argv[]);
 
   /// Execute the commands.
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run ();
 
   /// Shutdown
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 protected:
   /// Parse command line parameters.
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The command builder
   TAO_Notify_Tests_Command_Builder* cmd_builder_;

@@ -1,0 +1,38 @@
+
+
+Portable Interceptors
+
+
+File: DevGuideExamples/PortableInterceptor/SimpleCodec/README
+
+
+This directory contains an example illustrating marshaling of data in
+client and server Request Interceptors.
+
+This example extends the authentication example in ../Auth. It is based on
+the Messenger example in GettingStarted directory.  A message is
+sent by MessengerClient and displayed by MessengerServer.  A client-side
+portable interceptor adds an encoded (marshaled) GID to each request
+sent to the server. A server-side interceptor verifies that the supplied
+GID is valid.
+
+How to Run
+----------
+
+To start the server:
+------------------
+./MessengerServer
+
+
+To start the client:
+------------------
+./MessengerClient
+
+
+Execution via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl

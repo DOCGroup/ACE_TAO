@@ -1,0 +1,84 @@
+// -*- MPC -*-
+project(DLList) : aceexe, avoids_ace_for_tao {
+  exename = DLList
+  Source_Files {
+    DLList.cpp
+  }
+}
+
+project(Stacks) : aceexe {
+  exename = Stacks
+  Source_Files {
+    Stacks.cpp
+  }
+}
+
+project(Queues) : aceexe {
+  exename = Queues
+  Source_Files {
+    Queues.cpp
+  }
+}
+
+project(Array) : aceexe {
+  exename = Array
+  Source_Files {
+    Array.cpp
+  }
+}
+
+project(Sets) : aceexe {
+  exename = Sets
+  Source_Files {
+    Sets.cpp
+  }
+}
+
+project(*Map Manager) : aceexe {
+  exename = Map_Manager
+  Source_Files {
+    Map_Manager.cpp
+  }
+}
+
+project(Map Manager Specialization) : aceexe {
+  exename = Map_Manager_Specialization
+  Source_Files {
+    Map_Manager_Specialization.cpp
+  }
+}
+
+project(*Hash Map) : aceexe {
+  exename = Hash_Map
+  Source_Files {
+    Hash_Map.cpp
+  }
+}
+
+project(Hash Map Hash) : aceexe {
+  exename = Hash_Map_Hash
+  Source_Files {
+    Hash_Map_Hash.cpp
+  }
+}
+
+project(RB Tree) : aceexe {
+  exename = RB_Tree
+  Source_Files {
+    RB_Tree.cpp
+  }
+}
+
+project(RB Tree Functors) : aceexe {
+  exename = RB_Tree_Functors
+  Source_Files {
+    RB_Tree_Functors.cpp
+  }
+}
+
+project(Allocator) : aceexe {
+  exename = Allocator
+  Source_Files {
+    Allocator.cpp
+  }
+}

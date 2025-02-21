@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Sched_Filter.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -16,15 +14,17 @@
 #define TAO_EC_SCHED_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter.h"
+#include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "sched_event_export.h"
+#include "orbsvcs/Event/sched_event_export.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Sched_Filter
@@ -56,46 +56,37 @@ public:
                        RtecScheduler::Info_Type_t info_type);
 
   /// Destructor
-  virtual ~TAO_EC_Sched_Filter (void);
+  virtual ~TAO_EC_Sched_Filter ();
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
-  virtual ChildrenIterator begin (void) const;
-  virtual ChildrenIterator end (void) const;
-  virtual int size (void) const;
+  virtual ChildrenIterator begin () const;
+  virtual ChildrenIterator end () const;
+  virtual int size () const;
   virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info
-                      ACE_ENV_ARG_DECL);
+                      TAO_EC_QOS_Info& qos_info);
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info
-                             ACE_ENV_ARG_DECL);
+                             TAO_EC_QOS_Info& qos_info);
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info
-                     ACE_ENV_ARG_DECL);
+                     TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info
-                            ACE_ENV_ARG_DECL);
-  virtual void clear (void);
-  virtual CORBA::ULong max_event_size (void) const;
+                            TAO_EC_QOS_Info& qos_info);
+  virtual void clear ();
+  virtual CORBA::ULong max_event_size () const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info
-                                ACE_ENV_ARG_DECL);
-  virtual void get_qos_info (TAO_EC_QOS_Info& qos_info
-                             ACE_ENV_ARG_DECL);
+                                const TAO_EC_QOS_Info &qos_info);
+  virtual void get_qos_info (TAO_EC_QOS_Info& qos_info);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Sched_Filter
-                              (const TAO_EC_Sched_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Sched_Filter& operator=
-                              (const TAO_EC_Sched_Filter&))
+  TAO_EC_Sched_Filter (const TAO_EC_Sched_Filter&);
+  TAO_EC_Sched_Filter& operator= (const TAO_EC_Sched_Filter&);
 
   /// Initialize our RT_Info handle and dependencies
-  void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);
+  void init_rt_info ();
 
   /// Compute a new qos_info to push up.
-  void compute_qos_info (TAO_EC_QOS_Info& qos_info
-                         ACE_ENV_ARG_DECL);
+  void compute_qos_info (TAO_EC_QOS_Info& qos_info);
 
 private:
   /// The RT_Info handle for this object
@@ -122,6 +113,8 @@ private:
   /// Required for the scheduling service
   RtecScheduler::Info_Type_t info_type_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_SCHED_FILTER_H */

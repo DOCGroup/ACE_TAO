@@ -1,22 +1,17 @@
-// $Id$
+//=============================================================================
+/**
+ *  @file    Persistent_Entries.cpp
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
 
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//    Persistent_Entries.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
-
-#include "Persistent_Entries.h"
+#include "orbsvcs/Naming/Persistent_Entries.h"
 #include "ace/SString.h"
 
-TAO_Persistent_IntId::TAO_Persistent_IntId (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Persistent_IntId::TAO_Persistent_IntId ()
   : ref_ (0),
     type_ (CosNaming::nobject)
 {
@@ -35,7 +30,7 @@ TAO_Persistent_IntId::TAO_Persistent_IntId (const TAO_Persistent_IntId &rhs)
   type_ = rhs.type_;
 }
 
-TAO_Persistent_IntId::~TAO_Persistent_IntId (void)
+TAO_Persistent_IntId::~TAO_Persistent_IntId ()
 {
 }
 
@@ -50,7 +45,7 @@ TAO_Persistent_IntId::operator= (const TAO_Persistent_IntId &rhs)
   ref_ = rhs.ref_;
 }
 
-TAO_Persistent_ExtId::TAO_Persistent_ExtId (void)
+TAO_Persistent_ExtId::TAO_Persistent_ExtId ()
   : id_ (0),
     kind_ (0)
 {
@@ -70,7 +65,7 @@ TAO_Persistent_ExtId::TAO_Persistent_ExtId (const TAO_Persistent_ExtId &rhs)
   kind_ = rhs.kind_;
 }
 
-TAO_Persistent_ExtId::~TAO_Persistent_ExtId (void)
+TAO_Persistent_ExtId::~TAO_Persistent_ExtId ()
 {
 }
 
@@ -100,7 +95,7 @@ TAO_Persistent_ExtId::operator!= (const TAO_Persistent_ExtId &rhs) const
 }
 
 u_long
-TAO_Persistent_ExtId::hash (void) const
+TAO_Persistent_ExtId::hash () const
 {
   ACE_CString temp (id_);
   temp += kind_;
@@ -109,18 +104,18 @@ TAO_Persistent_ExtId::hash (void) const
 }
 
 const char *
-TAO_Persistent_ExtId::id (void)
+TAO_Persistent_ExtId::id ()
 {
   return id_;
 }
 
 const char *
-TAO_Persistent_ExtId::kind (void)
+TAO_Persistent_ExtId::kind ()
 {
   return kind_;
 }
 
-TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId (void)
+TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId ()
   : counter_ (0),
     hash_map_ (0)
 {
@@ -140,7 +135,7 @@ TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId (const TAO_Persistent_Ind
   hash_map_ = rhs.hash_map_;
 }
 
-TAO_Persistent_Index_IntId::~TAO_Persistent_Index_IntId (void)
+TAO_Persistent_Index_IntId::~TAO_Persistent_Index_IntId ()
 {
 }
 
@@ -155,7 +150,7 @@ TAO_Persistent_Index_IntId::operator= (const TAO_Persistent_Index_IntId &rhs)
   hash_map_ = rhs.hash_map_;
 }
 
-TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId (void)
+TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId ()
   : poa_id_ (0)
 {
 }
@@ -170,7 +165,7 @@ TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId (const TAO_Persistent_Ind
   poa_id_ = rhs.poa_id_;
 }
 
-TAO_Persistent_Index_ExtId::~TAO_Persistent_Index_ExtId (void)
+TAO_Persistent_Index_ExtId::~TAO_Persistent_Index_ExtId ()
 {
 }
 
@@ -197,8 +192,10 @@ TAO_Persistent_Index_ExtId::operator!= (const TAO_Persistent_Index_ExtId &rhs) c
 }
 
 u_long
-TAO_Persistent_Index_ExtId::hash (void) const
+TAO_Persistent_Index_ExtId::hash () const
 {
   ACE_CString temp (poa_id_);
   return temp.hash ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

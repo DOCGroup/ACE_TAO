@@ -1,30 +1,20 @@
-// $Id$
-
-#include "DIOP_Factory.h"
+#include "tao/Strategies/DIOP_Factory.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "DIOP_Acceptor.h"
-#include "DIOP_Connector.h"
+#include "tao/Strategies/DIOP_Acceptor.h"
+#include "tao/Strategies/DIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (Strategies,
-           DIOP_Factory,
-           "$Id$")
+static const char the_prefix[] = "diop";
 
-static const char prefix_[] = "diop";
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DIOP_Protocol_Factory::TAO_DIOP_Protocol_Factory (void)
-  :  TAO_Protocol_Factory (TAO_TAG_DIOP_PROFILE),
-     major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR)
-{
-}
-
-TAO_DIOP_Protocol_Factory::~TAO_DIOP_Protocol_Factory (void)
+TAO_DIOP_Protocol_Factory::TAO_DIOP_Protocol_Factory ()
+  :  TAO_Protocol_Factory (TAO_TAG_DIOP_PROFILE)
 {
 }
 
@@ -32,23 +22,23 @@ int
 TAO_DIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);
 }
 
 const char *
-TAO_DIOP_Protocol_Factory::prefix (void) const
+TAO_DIOP_Protocol_Factory::prefix () const
 {
-  return ::prefix_;
+  return ::the_prefix;
 }
 
 char
-TAO_DIOP_Protocol_Factory::options_delimiter (void) const
+TAO_DIOP_Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO_DIOP_Protocol_Factory::make_acceptor (void)
+TAO_DIOP_Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
 
@@ -60,14 +50,13 @@ TAO_DIOP_Protocol_Factory::make_acceptor (void)
 }
 
 int
-TAO_DIOP_Protocol_Factory::init (int /* argc */,
-                                 ACE_TCHAR* /* argv */ [])
+TAO_DIOP_Protocol_Factory::init (int /* argc */, ACE_TCHAR* /* argv */ [])
 {
   return 0;
 }
 
 TAO_Connector *
-TAO_DIOP_Protocol_Factory::make_connector (void)
+TAO_DIOP_Protocol_Factory::make_connector ()
 {
   TAO_Connector *connector = 0;
 
@@ -78,7 +67,7 @@ TAO_DIOP_Protocol_Factory::make_connector (void)
 }
 
 int
-TAO_DIOP_Protocol_Factory::requires_explicit_endpoint (void) const
+TAO_DIOP_Protocol_Factory::requires_explicit_endpoint () const
 {
   // This switch is actually meant to distinguish between pluggable
   // protocols which are able to clean up their endpoints and such
@@ -92,6 +81,7 @@ TAO_DIOP_Protocol_Factory::requires_explicit_endpoint (void) const
   return 1;
 }
 
+
 ACE_STATIC_SVC_DEFINE (TAO_DIOP_Protocol_Factory,
                        ACE_TEXT ("DIOP_Factory"),
                        ACE_SVC_OBJ_T,
@@ -101,5 +91,7 @@ ACE_STATIC_SVC_DEFINE (TAO_DIOP_Protocol_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO_Strategies, TAO_DIOP_Protocol_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

@@ -1,40 +1,30 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    results.cpp
-//
-// = DESCRIPTION
-//    Printing the results
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    results.cpp
+ *
+ *  Printing the results
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "results.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Param_Test,
-           results, 
-           "results.cpp,v 1.8 1999/06/23 14:50:14 parsons Exp")
-
-Results::Results (void)
+Results::Results ()
 {
 }
 
-Results::~Results (void)
+Results::~Results ()
 {
   delete [] this->elapsed_time_;
 }
 
 void
-Results::print_stats (void)
+Results::print_stats ()
 {
   double
     avg_real_time = 0,
@@ -46,9 +36,12 @@ Results::print_stats (void)
 
   if (TAO_debug_level > 0 && this->error_count_ == 0)
     {
+      //FUZZ: disable check_for_lack_ACE_OS
       ACE_DEBUG ((LM_DEBUG,
                   "Iteration\tReal time (msec)\tUser time (msec)"
                   "\tSystem time (msec)\n\n"));
+      //FUZZ: enable check_for_lack_ACE_OS
+
       for (i = 0; i < this->call_count_; i++)
         {
           this->elapsed_time_[i].real_time *= ACE_ONE_SECOND_IN_MSECS;
@@ -77,8 +70,8 @@ Results::print_stats (void)
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*= Average *=*=*=*=*=*=\n"
-                  "\treal_time\t= %0.06f ms, \n"
-                  "\tuser_time\t= %0.06f ms, \n"
+                  "\treal_time\t= %0.06f ms,\n"
+                  "\tuser_time\t= %0.06f ms,\n"
                   "\tsystem_time\t= %0.06f ms\n"
                   "\t%0.00f calls/second\n"
                   "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=\n",
@@ -104,27 +97,26 @@ Results::print_stats (void)
 }
 
 void
-Results::print_exception (const char * /* call_name */
-                          ACE_ENV_ARG_DECL_NOT_USED)
+Results::print_exception (const char * /* call_name */)
 {
   //ACE_PRINT_EXCEPTION (call_name);
 }
 
 void
-Results::start_timer (void)
+Results::start_timer ()
 {
   this->timer_.start ();
 }
 
 void
-Results::stop_timer (void)
+Results::stop_timer ()
 {
   this->timer_.stop ();
   this->timer_.elapsed_time (this->elapsed_time_[this->call_count_-1]);
 }
 
 CORBA::ULong
-Results::call_count (void)
+Results::call_count ()
 {
   return this->call_count_;
 }
@@ -136,7 +128,7 @@ Results::call_count (CORBA::ULong c)
 }
 
 CORBA::ULong
-Results::error_count (void)
+Results::error_count ()
 {
   return this->error_count_;
 }

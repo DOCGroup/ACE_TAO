@@ -1,0 +1,6 @@
+interface foo
+{
+  oneway void destroy ();
+
+  oneway void shutdown ();
+};

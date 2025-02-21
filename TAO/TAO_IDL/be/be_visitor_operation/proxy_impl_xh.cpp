@@ -1,27 +1,28 @@
-// $Id$
-
-ACE_RCSID (be_visitor_operation,
-           proxy_impl_xh,
-           "$Id$")
+#include "operation.h"
 
 be_visitor_operation_proxy_impl_xh::be_visitor_operation_proxy_impl_xh (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_proxy_impl_xh::~be_visitor_operation_proxy_impl_xh (void)
+be_visitor_operation_proxy_impl_xh::~be_visitor_operation_proxy_impl_xh ()
 {
 }
 
 int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
 {
+  /// These implied IDL operations are not to be processed on
+  /// the skeleton side.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "static void" << be_nl;
 
@@ -39,26 +40,11 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
         }
     }
 
-  *os << node->local_name () << " (" << be_idt << be_idt_nl
-      << "TAO_Abstract_ServantBase *servant," << be_nl
-      << "TAO::Argument ** args," << be_nl
-      << "int num_args" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")";
-
-  if (this->gen_throw_spec (node) != 0)
-    {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          "(%N:%l) be_visitor_operation_proxy_impl_xh::"
-          "visit_operation - "
-          "throw spec generation failed\n"
-        ),
-        -1
-      );
-    }
-
-  *os << ";";
+  *os << this->ctx_->port_prefix ().c_str ()
+      << node->local_name () << " (" << be_idt_nl
+      << "TAO_Abstract_ServantBase *servant, "
+      << "TAO::Argument **args);"
+      << be_uidt_nl;
 
   return 0;
 }

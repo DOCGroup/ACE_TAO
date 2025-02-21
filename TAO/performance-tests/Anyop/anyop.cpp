@@ -1,40 +1,30 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/performance-tests/Anyop
-//
-// = FILENAME
-//   anyop.cpp
-//
-// = DESCRIPTION
-//   Modified from anyop.cpp in Param_Test to benchmark Any insertion and
-//   extraction operators for various IDL types.
-//
-// = AUTHORS
-//   Carlos O'Ryan
-//   Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   anyop.cpp
+ *
+ * Modified from anyop.cpp in Param_Test to benchmark Any insertion and
+ * extraction operators for various IDL types.
+ *
+ *  @author Carlos O'Ryan Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "testC.h"
 #include "tao/debug.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/Stub.h"
 #include "tao/Object_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID (Anyop,
-           anyop,
-           "$Id$")
-
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -47,15 +37,11 @@ main (int argc, char *argv[])
   int n = 50000;
   int insertion = 1;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      ACE_Get_Opt get_opt (argc, argv, "dien:");
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dien:"));
       int opt;
 
       while ((opt = get_opt ()) != EOF)
@@ -91,14 +77,10 @@ main (int argc, char *argv[])
 
       {
         CORBA::Object_var obj =
-          orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar"
-                                 ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar");
 
         Param_Test_var param_test =
-          TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in (),
-                                                           0);
-        ACE_TRY_CHECK;
+          TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in ());
         TAO_Stub *stub = param_test->_stubobj ();
         stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
 
@@ -152,15 +134,16 @@ main (int argc, char *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -219,15 +202,16 @@ main (int argc, char *argv[])
           }
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -287,15 +271,16 @@ main (int argc, char *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -355,15 +340,16 @@ main (int argc, char *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -397,7 +383,7 @@ main (int argc, char *argv[])
                 ACE_hrtime_t now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                Param_Test::Fixed_Struct *o;
+                const Param_Test::Fixed_Struct *o = 0;
 
                 result = any >>= o;
               }
@@ -405,7 +391,7 @@ main (int argc, char *argv[])
               {
                 any <<= i;
 
-                Param_Test::Fixed_Struct *o;
+                const Param_Test::Fixed_Struct *o = 0;
 
                 ACE_hrtime_t start = ACE_OS::gethrtime ();
 
@@ -431,15 +417,16 @@ main (int argc, char *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -474,7 +461,7 @@ main (int argc, char *argv[])
                 ACE_hrtime_t now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                Param_Test::Fixed_Struct *o;
+                const Param_Test::Fixed_Struct *o = 0;
 
                 result = any >>= o;
               }
@@ -482,7 +469,7 @@ main (int argc, char *argv[])
               {
                 any <<= i;
 
-                Param_Test::Fixed_Struct *o;
+                const Param_Test::Fixed_Struct *o = 0;
 
                 ACE_hrtime_t start = ACE_OS::gethrtime ();
 
@@ -508,15 +495,16 @@ main (int argc, char *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -550,7 +538,7 @@ main (int argc, char *argv[])
                 ACE_hrtime_t now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                Param_Test::Long_Seq *o;
+                const Param_Test::Long_Seq *o = 0;
 
                 result = any >>= o;
               }
@@ -558,7 +546,7 @@ main (int argc, char *argv[])
               {
                 any <<= i;
 
-                Param_Test::Long_Seq *o;
+                const Param_Test::Long_Seq *o = 0;
 
                 ACE_hrtime_t start = ACE_OS::gethrtime ();
 
@@ -584,15 +572,16 @@ main (int argc, char *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -627,7 +616,7 @@ main (int argc, char *argv[])
                 ACE_hrtime_t now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                Param_Test::Long_Seq *o;
+                const Param_Test::Long_Seq *o = 0;
 
                 result = any >>= o;
               }
@@ -635,7 +624,7 @@ main (int argc, char *argv[])
               {
                 any <<= i;
 
-                Param_Test::Long_Seq *o;
+                const Param_Test::Long_Seq *o = 0;
 
                 ACE_hrtime_t start = ACE_OS::gethrtime ();
 
@@ -661,15 +650,16 @@ main (int argc, char *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -735,15 +725,16 @@ main (int argc, char *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -812,15 +803,16 @@ main (int argc, char *argv[])
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -878,19 +870,20 @@ main (int argc, char *argv[])
                         "String extraction test finished\n"));
           }
 
-        ACE_ASSERT (result);
+        ACE_TEST_ASSERT (result);
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
@@ -923,26 +916,26 @@ main (int argc, char *argv[])
                     "Copy test finished\n"));
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
-        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor ();
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
-        stats.dump_results ("Total", gsf);
+        stats.dump_results (ACE_TEXT("Total"), gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total",
+        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"),
                                                gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Any performance test");
+      ex._tao_print_exception ("Any performance test");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

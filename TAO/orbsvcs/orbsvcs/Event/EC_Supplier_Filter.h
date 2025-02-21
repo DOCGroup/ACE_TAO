@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Supplier_Filter.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -20,11 +19,13 @@
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ProxyPushConsumer;
@@ -66,7 +67,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Supplier_Filter
 {
 public:
   /// Destructor
-  virtual ~TAO_EC_Supplier_Filter (void);
+  virtual ~TAO_EC_Supplier_Filter ();
 
   /**
    * Whenever a ProxyPushConsumer is initialized it calls this method
@@ -90,32 +91,27 @@ public:
 
   /// Concrete implementations can use this methods to keep track of
   /// the consumers interested in this events.
-  virtual void connected (TAO_EC_ProxyPushSupplier *supplier
-                          ACE_ENV_ARG_DECL) = 0;
-  virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier
-                          ACE_ENV_ARG_DECL) = 0;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier
-                             ACE_ENV_ARG_DECL) = 0;
+  virtual void connected (TAO_EC_ProxyPushSupplier *supplier) = 0;
+  virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier) = 0;
+  virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier) = 0;
 
   /// The event channel is shutting down.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void shutdown () = 0;
 
   /// The ProxyPushConsumer delegates on this class to actually send
   /// the event.
   virtual void push (const RtecEventComm::EventSet &event,
-                     TAO_EC_ProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL) = 0;
+                     TAO_EC_ProxyPushConsumer *consumer) = 0;
 
   /// Events are first scheduled by the TAO_EC_Scheduling_Strategy,
   /// and then pushed through this class again.
   virtual void push_scheduled_event (RtecEventComm::EventSet &event,
-                                     const TAO_EC_QOS_Info &event_info
-                                     ACE_ENV_ARG_DECL) = 0;
+                                     const TAO_EC_QOS_Info &event_info) = 0;
 
   /// Increment and decrement the reference count, locking must be
   /// provided by the user.
-  virtual CORBA::ULong _incr_refcnt (void) = 0;
-  virtual CORBA::ULong _decr_refcnt (void) = 0;
+  virtual CORBA::ULong _incr_refcnt () = 0;
+  virtual CORBA::ULong _decr_refcnt () = 0;
 };
 
 // ****************************************************************
@@ -126,8 +122,7 @@ public:
   TAO_EC_Filter_Worker (RtecEventComm::EventSet &event,
                         const TAO_EC_QOS_Info &event_info);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_EC_ProxyPushSupplier *supplier);
 
 private:
   /// The event we push on each case, use a reference to avoid copies.
@@ -137,8 +132,10 @@ private:
   const TAO_EC_QOS_Info &event_info_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Supplier_Filter.i"
+#include "orbsvcs/Event/EC_Supplier_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

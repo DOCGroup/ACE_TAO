@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -75,108 +73,104 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //
 // This is useful wherever any IDL type defining construct can appear
 // such as the base type for a typedef or array.
-
 class TAO_IDL_FE_Export AST_Type : public virtual AST_Decl
 {
 public:
+  /// Indicates if we are fixed size or variable. Most useful for structs,
+  /// unions, and arrays.
   enum SIZE_TYPE
   {
     SIZE_UNKNOWN,
     FIXED,
     VARIABLE
   };
-  // Indicates if we are fixed size or variable. Most useful for structs,
-  // unions, and arrays.
-
-  // Operations.
-
-  AST_Type (void);
 
   AST_Type (AST_Decl::NodeType nt,
             UTL_ScopedName *n);
 
-  virtual ~AST_Type (void);
+  virtual ~AST_Type ();
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Determine if we are involved in some kind of limited recursion.
   // Most types cannot be involved except structs and unions.
-  // If the parameter is 0, we are trying to determine this for ourselves.
+  // The head element of the list the possibly recursed type we are checking for.
+  // If the list is empty, we are trying to determine this for ourselves.
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
 
-  // To be overridden by the subclasses interface, struct, union, and
-  // the corresponding forward declaration classes.
-  virtual idl_bool is_defined (void);
-
-  virtual void size_type (SIZE_TYPE);
   // Set the size type.
+  virtual void size_type (SIZE_TYPE);
 
-  virtual SIZE_TYPE size_type (void);
   // Return our size type.
+  virtual SIZE_TYPE size_type ();
 
   // Accessors/mutators for the private members.
 
-  idl_bool has_constructor (void);
   // Accessor for protected member.
+  bool has_constructor ();
 
-  void has_constructor (idl_bool value);
   // Mutator for protected member.
+  void has_constructor (bool value);
 
-  idl_bool ifr_added (void);
-  void ifr_added (idl_bool val);
+  bool ifr_added ();
+  void ifr_added (bool val);
 
-  idl_bool ifr_fwd_added (void);
-  void ifr_fwd_added (idl_bool val);
+  bool ifr_fwd_added ();
+  void ifr_fwd_added (bool val);
 
+  // Type name of a node used when generating declarations.
   const char *nested_type_name (AST_Decl *d,
                                 const char *suffix = 0,
                                 const char *prefix = 0);
-  // Type name of a node used when generating declarations.
-  
-  AST_Type *unaliased_type (void);
-  // Utility function to make sure we are using the unaliased type.
 
-  // Narrowing.
-  DEF_NARROW_METHODS1(AST_Type, AST_Decl);
-  DEF_NARROW_FROM_DECL(AST_Type);
+  // Utility function to make sure we are using the unaliased type.
+  AST_Type *unaliased_type ();
+
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
+  virtual bool legal_for_primary_key () const;
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 protected:
-  virtual int compute_size_type (void);
   // Determine our size type and set it if it is unknown.
+  virtual int compute_size_type ();
 
+  // Type name of a node used when generating declarations.
   const char *nested_name (const char *local_name,
                            const char *full_name,
                            AST_Decl *use_scope,
                            const char *suffix,
                            const char *prefix);
-  // Type name of a node used when generating declarations.
-  
-  idl_bool match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list);
-  
+
+  bool match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list);
+
 protected:
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
-  idl_bool ifr_added_;
+  bool ifr_added_;
 
   // Has this node been forward declared in this IDL file?
-  idl_bool ifr_fwd_added_;
+  bool ifr_fwd_added_;
 
-  SIZE_TYPE size_type_;
   // Whether we are fixed or variable size (by default fixed).
+  SIZE_TYPE size_type_;
 
-  idl_bool has_constructor_;
   // Attribute that helps a union determine whether a member
   // should be included by value or by reference.
+  bool has_constructor_;
 
-  char *nested_type_name_;
   // For the corresponding method.
-  
-  long in_recursion_;
+  char *nested_type_name_;
+
   // Storage once the value has been computed.
+  long in_recursion_;
+
+  // Node-specific flag to abort recursion in legal_for_primary_key().
+  mutable bool recursing_in_legal_pk_;
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

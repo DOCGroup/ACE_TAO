@@ -1,23 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_union_branch.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_UnionBranch that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_union_branch.cpp
+ *
+ *  Extension of class AST_UnionBranch that provides additional means for C++
+ *  mapping.
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
 
 #include "be_union_branch.h"
 #include "be_union.h"
@@ -27,19 +19,6 @@
 #include "be_helper.h"
 #include "ast_union_label.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (be, 
-           be_union_branch, 
-           "$Id$")
-
-be_union_branch::be_union_branch (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Field (),
-    AST_UnionBranch (),
-    be_decl ()
-{
-}
 
 be_union_branch::be_union_branch (UTL_LabelList *ll,
                                   AST_Type *ft,
@@ -55,7 +34,9 @@ be_union_branch::be_union_branch (UTL_LabelList *ll,
                      ft,
                      n),
     be_decl (AST_Decl::NT_union_branch,
-             n)
+             n),
+    be_field (ft,
+              n)
 {
 }
 
@@ -73,17 +54,17 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
 
   // If the enum is not in the global scope we have to prefix it.
   be_union *u =
-    be_union::narrow_from_scope (this->defined_in ());
+    dynamic_cast<be_union*> (this->defined_in ());
 
-  if (u == 0)
+  if (u == nullptr)
     {
       return -1;
     }
 
   be_type* dt =
-    be_type::narrow_from_decl (u->disc_type ());
+    dynamic_cast<be_type*> (u->disc_type ());
 
-  if (dt == 0)
+  if (dt == nullptr)
     {
       return -1;
     }
@@ -102,9 +83,9 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   // Find where was the enum defined, if it was defined in the globa
   // scope, then it is easy to generate the enum values....
   be_scope* scope =
-    be_scope::narrow_from_scope (dt->defined_in ());
+    dynamic_cast<be_scope*> (dt->defined_in ());
 
-  if (scope == 0)
+  if (scope == nullptr)
     {
       *os << e->n ();
       return 0;
@@ -140,6 +121,7 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
         *os << dv.u.short_val;
         break;
       case AST_Expression::EV_ushort:
+      case AST_Expression::EV_wchar:
         *os << dv.u.ushort_val;
         break;
       case AST_Expression::EV_long:
@@ -148,8 +130,11 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
       case AST_Expression::EV_ulong:
         *os << dv.u.ulong_val;
         break;
+      case AST_Expression::EV_octet:
       case AST_Expression::EV_char:
-        os->print ("%d", dv.u.char_val);
+      case AST_Expression::EV_int8:
+      case AST_Expression::EV_uint8:
+        os->print ("'\\%o'", dv.u.char_val);
         break;
       case AST_Expression::EV_bool:
         *os << (dv.u.bool_val == 0 ? "false" : "true");
@@ -160,16 +145,29 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
         // discriminant, so we must generate the string name.
         {
           AST_ConcreteType *act = bu->disc_type ();
-          be_enum *be = be_enum::narrow_from_decl (act);
+          be_enum *be = dynamic_cast<be_enum*> (act);
 
-          // The function value_to_name() takes care of adding
-          // any necessary scoping to the output.
-          *os << be->value_to_name (dv.u.enum_val);
+          UTL_ScopedName *sn = be->value_to_name (dv.u.enum_val);
+          if (sn)
+            {
+              // The function value_to_name() takes care of adding
+              // any necessary scoping to the output.
+              *os << be->value_to_name (dv.u.enum_val);
+            }
+          else
+            {
+              // Since CORBA defines enums to be 32bits, use -1 as the
+              // out-of-bounds value for the _default() function.
+              *os << "(" << be->name () << ") -1";
+            }
           break;
         }
       case AST_Expression::EV_longlong:
+        *os << dv.u.longlong_val;
+        break;
       case AST_Expression::EV_ulonglong:
-        // Unimplemented.
+        *os << dv.u.ulonglong_val;
+        break;
       default:
         // Error caught earlier.
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -188,6 +186,9 @@ be_union_branch::accept (be_visitor *visitor)
   return visitor->visit_union_branch (this);
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl)
-IMPL_NARROW_FROM_DECL (be_union_branch)
+void
+be_union_branch::destroy ()
+{
+  this->be_decl::destroy ();
+  this->AST_UnionBranch::destroy ();
+}

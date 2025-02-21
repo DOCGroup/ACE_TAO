@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file      CC_LockSet.h
- *
- *  $Id$
  *
  *    This class implements the lock set interface from the
  *    concurrency service.
@@ -22,7 +20,6 @@
  *      non-transactional clients.
  *    - Use these classes from the classes that inherits the
  *      servant properties, i.e. the way CC_LockSet does now.
- *
  *
  *  @author   Torben Worm <tworm@cs.wustl.edu>
  */
@@ -45,7 +42,7 @@
 #include "ace/Unbounded_Queue.h"
 
 #include "orbsvcs/CosConcurrencyControlS.h"
-#include "concurrency_export.h"
+#include "orbsvcs/Concurrency/concurrency_serv_export.h"
 
 #if defined (lock_held)
 #undef lock_held
@@ -55,6 +52,8 @@
 /// way to set this constant dynamically because the nuber of lock
 /// modes are not stated as part of the IDL.
 #define NUMBER_OF_LOCK_MODES 5
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Enummeration representing the lock modes. The incoming request is
 /// always converted to this representation. There are two reasons for
@@ -73,49 +72,37 @@ typedef enum {CC_EM=-1, CC_IR=0, CC_R, CC_U, CC_IW, CC_W} CC_LockModeEnum;
  * detailed descriptions apart from the comments in this file At
  * present the lock set is not really a set, but only one lock.
  */
-class TAO_Concurrency_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
+class TAO_Concurrency_Serv_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
 {
 public:
-
-  // = Initialization and termination methods.
   /// Default constructor
-  CC_LockSet (void);
+  CC_LockSet ();
 
   /// Constructor used if create_related is used to create the lock
   /// set.
   CC_LockSet (CosConcurrencyControl::LockSet_ptr related);
 
   /// Destructor.
-  ~CC_LockSet (void);
+  ~CC_LockSet ();
 
   // = CosConcurrencyControl methods
   /// Acquires this lock. Blocks until lock is obtained
-  virtual void lock (CosConcurrencyControl::lock_mode mode
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void lock (CosConcurrencyControl::lock_mode mode);
 
   /// Tries to acquire this lock. If it is not possible to acquire the
   /// lock, false is returned
-  virtual CORBA::Boolean try_lock (CosConcurrencyControl::lock_mode mode
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean try_lock (CosConcurrencyControl::lock_mode mode);
 
   /// Releases this lock.
-  virtual void unlock (CosConcurrencyControl::lock_mode mode
-                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosConcurrencyControl::LockNotHeld));
+  virtual void unlock (CosConcurrencyControl::lock_mode mode);
 
   /// Changes the mode of this lock.
   virtual void change_mode (CosConcurrencyControl::lock_mode held_mode,
-                            CosConcurrencyControl::lock_mode new_mode
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosConcurrencyControl::LockNotHeld));
+                            CosConcurrencyControl::lock_mode new_mode);
 
   // = Debugging methods
   /// Dump the state of the object to stdout
-  void dump (void);
+  void dump ();
 
 private:
   /// Converts the CORBA specification's lock mode to the internal
@@ -124,7 +111,7 @@ private:
 
   /// Initiatlizes the lock set array and acquires the initial
   /// semaphore.
-  void Init (ACE_ENV_SINGLE_ARG_DECL);
+  void Init ();
 
   /// Returns true if the held lock and the requested lock are compatible
   CORBA::Boolean compatible (CC_LockModeEnum mr);
@@ -177,11 +164,11 @@ private:
    * <LockSetCoordinator> is not implemented (it has the
    * responsibilities of dropping the locks).
    */
-  CosConcurrencyControl::LockSet_ptr related_lockset_;
+  // CosConcurrencyControl::LockSet_ptr related_lockset_;
 
   /// Mapping between requested and held lock modes. Used by compatible
   /// (...).  Uses the internal enumeration as indices.
-  static CORBA::Boolean compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
+  static CORBA::Boolean const compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
 
   /// Lock to ensure that race conditions does not occur.
   TAO_SYNCH_MUTEX mlock_;
@@ -189,6 +176,8 @@ private:
   /// Queue to hold the requested locks not yet granted.
   ACE_Unbounded_Queue <CC_LockModeEnum> lock_queue_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

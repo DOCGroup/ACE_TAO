@@ -1,8 +1,6 @@
 /**
  * @file ORB_Holder.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -20,26 +18,24 @@
  * @class ORB_Holder
  *
  * @brief Implement a helper class to initialize and destroy an ORB.
- *
  */
 class TAO_RTEC_Perf_Export ORB_Holder
 {
 public:
   /// Constructor
-  ORB_Holder (int &argc, char *argv[],
-              const char *orb_id = 0
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  ORB_Holder (int &argc, ACE_TCHAR *argv[],
+              const char *orb_id = 0);
 
   /// Destructor
   /**
    * @todo This method could benefit from the error logging described
    * in Servant_var.cpp
    */
-  ~ORB_Holder (void);
+  ~ORB_Holder ();
 
   /// Access the underlying ORB, using the canonical CORBA memory
   /// management model
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   /// Implicit conversion to CORBA::ORB_ptr
   /**

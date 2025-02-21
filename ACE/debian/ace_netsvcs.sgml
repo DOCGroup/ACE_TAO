@@ -1,0 +1,158 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+  <!ENTITY applname "ace_netsvcs">
+  <!ENTITY seealso "/usr/share/ace-netsvcs/svc.conf, /usr/share/doc/ace-netsvcs/ACE-netsvcs.html">
+]>
+<!-- This file was written by Marek Brudka <mbrudka@aster.pl>   -->
+<!-- on September 2010 for the Debian GNU/Linux operating system.             -->
+<!-- It is mainly a plain text to DocBook conversion of the USAGE file. -->
+
+<refentry>
+  <refmeta>
+    <refentrytitle>ACE_NETSVCS</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+  <refnamediv>
+    <refname>&applname;</refname>
+    <refpurpose>ACE network services driver.</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>SYNOPSIS</title>
+    <cmdsynopsis>
+      <command>&applname;</command>
+      <arg rep="repeat"><replaceable>OPTION</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+  <refsect1>
+    <title>DESCRIPTION</title>
+    <para>
+      &applname; is a driver to start ACE network services. Currently, 
+      libnetsvcs provides: Naming Service, Time Service, Token Service,  
+      Server Logging Service, Client Logging Service, Logging Strategy Service.
+    </para>
+  </refsect1>
+  <refsect1>
+    <title>OPTIONS</title>
+      <variablelist>
+      <varlistentry>
+	<term><parameter>-f</parameter> <replaceable>svc.conf</replaceable> </term>
+	<listitem>
+	  <para>
+	    Specifies a <replaceable>svc.conf</replaceable> configuration file name other 
+	    than the default one. Can be specified multiple times to use multiple files.
+	  </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>-d</parameter></term>
+	<listitem>
+	  <para>
+	    Turn on debugging mode.
+	  </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>-n</parameter></term>
+	<listitem>
+	  <para>
+	    Explicitly disables the use of static services. This flag overrides the @a ignore_static_svcs parameter value.
+	  </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>-p</parameter> <replaceable>pathname</replaceable></term>
+	<listitem>
+	  <para>
+	    Specifies a <replaceable>pathname</replaceable> which is used to store the process id.
+	  </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>-s</parameter> <replaceable>signal</replaceable></term>
+	<listitem>
+	  <para>
+	    Specifies a <replaceable>signal</replaceable> number other than SIGHUP to trigger 
+	    reprocessing of the configuration file(s). Ignored for platforms that do not have 
+	    POSIX signals, such as Windows.	  
+	  </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>-y</parameter></term>
+	<listitem>
+	  <para>
+	    Explicitly enables the use of static services. This flag
+	    overrides the @a ignore_static_svcs parameter value.
+	  </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>-S</parameter> <replaceable>directive</replaceable></term>
+	<listitem>
+	  <para>
+	    Specifies a service <replaceable>directive</replaceable> string. 
+	    Enclose the string in quotes
+	    and escape any embedded quotes with a backslash. This option
+	    specifies service directives without the need for a configuration
+	    file.	  
+	  </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>-b</parameter></term>
+	<listitem>
+	  <para>
+	    Option to indicate that we should be a daemon. Note that when
+	    this option is used, the process will be daemonized before the
+	    service configuration file(s) are read. During daemonization,
+	    (on POSIX systems) the current directory will be changed to "/"
+	    so the caller should either fully specify the file names, or
+	    execute a @c chroot() to the appropriate directory.
+	    @sa ACE::daemonize().	  
+	  </para>
+	</listitem>
+	</varlistentry>      
+	<varlistentry>
+	<term><parameter>-k</parameter> <replaceable>point</replaceable></term>
+	<listitem>
+	  <para>
+	    Specifies the rendezvous <replaceable>point</replaceable> to use for the ACE distributed
+	    logger.
+	  </para>
+	</listitem>
+	</varlistentry>      
+       </variablelist>
+  </refsect1>
+  <refsect1>
+    <title>EXAMPLES</title>
+      <variablelist>
+      <varlistentry>
+	<term><code>&applname; -f /usr/share/ace-netsvcs/svc.conf</code></term>
+	<listitem>
+	  <para>
+	    Starts ACE network services using example configuration.
+	  </para>
+	</listitem>
+	</varlistentry>
+      <varlistentry>
+	<term><code>&applname; -S &#39;dynamic Name_Server Service_Object * netsvcs:_make_ACE_Name_Acceptor() ""-p 20006""&#39; </code></term>
+	<listitem>
+	  <para>
+	    Starts ACE Naming service using command line configuration.
+	  </para>
+	</listitem>
+	</varlistentry>
+
+
+      </variablelist>
+  </refsect1>
+  <refsect1>
+    <title>SEE ALSO</title>
+    <para>&seealso;</para>
+  </refsect1>
+  <refsect1>
+    <title>AUTHOR</title>
+    <para>Douglas C. Schmidt<email>&lt;schmidt@cs.wustl.edu&gt;</email> </para>
+  </refsect1>
+</refentry>
+
+

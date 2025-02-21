@@ -1,4 +1,5 @@
-// $Id$
+// -*- C++ -*-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_LF_Follower_Auto_Adder::
@@ -9,3 +10,5 @@ TAO_LF_Follower_Auto_Adder::
 {
   (void) this->leader_follower_.add_follower (this->follower_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

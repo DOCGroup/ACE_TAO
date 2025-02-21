@@ -1,0 +1,333 @@
+commit 3fe850a1d0e6966e4330b3629f56d35b48aee64d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 29 11:08:32 2019 +0200
+
+    List changes
+    
+        * ACE/NEWS:
+
+commit 4c7dc6db16e3f899e52a7a26f304155d8a5dfd4e
+Author: ehillis <eric@hillis.us>
+Date:   Fri Jul 12 20:18:32 2019 -0700
+
+    Update the file according to comment
+    
+    removed generic comment.
+
+commit b6c96e8c56c91eb6f7d34db227bde72ebd781ca4
+Author: Eric W. Hillis (CTR) 1286605326@mil <eric.hillis.ctr@navy.mil>
+Date:   Wed Jul 3 18:52:17 2019 -0700
+
+    Updated config for latest Cygwin
+
+commit b2cae554d7e5222aa7a14a7792219499344853b5
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Jun 26 10:41:52 2019 -0500
+
+    Increase the ACE_LOG_MSG_GET_THREAD_ID_BUFFER_SIZE from 8 to 12 as an int is used in the implementation of ACE_OS::thr_gettid and could require 11 bytes of text, including a sign, and a byte to null terminate the string.
+
+commit 9a0cce755eeabf8bc71b749de9ff53dcc4e0d34a
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Tue Jun 25 07:33:04 2019 -0500
+
+    Provide two values in the struct linger initializer even though it absolutely is not required by the standard
+
+commit ea0205bef9691755788871bffaeae8a4fff49a5d
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Mon Jun 24 12:25:36 2019 -0500
+
+    Redundantly set the l_linger member to appease gcc
+
+commit de6952566c18e2fb7bc049dfac5814f6e53cf72f
+Merge: b1dee1f113c 2f7a952cc6f
+Author: ocielliottc <elliottc@objectcomputing.com>
+Date:   Mon Jun 24 07:52:53 2019 -0500
+
+    Merge pull request #917 from ocielliottc/master
+    
+    Adding support for the MQX RTOS.
+
+commit b1dee1f113c794e8df239a4b164458db63ab8507
+Merge: 4a76c5d4c66 d2eb67e3525
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 21 12:25:01 2019 -0500
+
+    Merge pull request #887 from iguessthislldo/igtd/gettid
+    
+    Linux: Refactor config-linux.h and use gettid() for %t for Log_Msg
+
+commit 1e330d96360323f0543b5862b0c96b4209ba4ea3
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 13 10:58:54 2019 -0500
+
+    gnuace: custom-only project's postbuild needs to run after other steps
+
+commit 2f7a952cc6fc23b73d3bcba0c50f5ae7c6400488
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Mon Jun 10 06:19:15 2019 -0500
+
+    Added static cast where pid_t is assumed to be an int.
+    Replaced NULL usage.
+    Removed trailing whitespace.
+    Used ACE_NOTSUP_RETURN in ace_fileno_helper().
+    Removed $Id$ from platform_mqx_icc.GNU.
+
+commit d2eb67e35258d1a67a74bf8a4da5258fc568f9d2
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Jun 6 17:01:39 2019 -0500
+
+    config-android.h: gettid missing in some older combinations
+
+commit 64919009377b0dac2e7fec2a10fd61b0bad06e78
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Jun 6 14:13:02 2019 -0500
+
+    config-android.h: Fix Typo
+
+commit 7e26436a71da7329c7bba56abb50f62572d81aa1
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Jun 6 14:01:06 2019 -0500
+
+    Conditional Include of OS_NS_sys_resource.h
+
+commit 126e1006a8e3f85d936301381f1234fc83458673
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Jun 6 13:56:58 2019 -0500
+
+    Restrict Dev_Poll_Reactor to API>=21
+
+commit 3df43cda6f1f12c5bfd3a681e7a7b3d10caffaff
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Jun 6 11:10:36 2019 -0500
+
+    config-android.h: Add check for strbuf
+
+commit 4c69b74225cf6d9479caa7a31ab38fa6d70ad669
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Jun 6 09:15:02 2019 -0500
+
+    - Use ACE_OS::send and ACE_OS::recv on MQX, instead of write and read.
+    - Added static casts where pid_t is assumed to be an int.
+    - Use configurable macro for the "use_select" parameter.
+    - MQX does not follow conventional standards when it comes to HTONS and NTOHS and must be configured accordingly.
+    - Modified ACE_Handle_Set so that the use of fd_array is not conditional upon ACE_WIN32.  It is now enabled through ACE_HANDLE_SET_USES_FD_ARRAY.
+    - Implement UNIX File IO Functions for MQX in MQX_Filesystem.*
+    - Use the existing implementation to simulate condition variables.
+    - Use emulation for diropen on MQX as is done for Windows.
+    - Convert from MQX error to standard error number.
+    - Use _mqx_exit in ACE_OS::_exit for MQX.
+    - Added a nop in ACE_OS::ioctl for MQX.
+    - Added a definition of ACE_TMAIN for MQX so that MQX is initialized and RTCS and the MQX Filesystem code is initialized before calling ace_main_i().
+    - Fixed a compile error in SOCK_Dgram.cpp introduced months ago.
+    - Use struct initialization to avoid using the l_linger member directly.
+    - Modified ACE_Select_Reactor_Base to use a hash map for handle storage based on ACE_SELECT_REACTOR_BASE_USES_HASH_MAP instead of ACE_WIN32.
+    - Added the IAR compiler to define ACE_NOTREACHED(a) as empty.
+    - Made ACE_IPPROTO_TCP conditionally defined.
+    - Added error values required for ACE.
+    - Skip the wide-character strtok test if ACE_LACKS_WCSTOK is defined in ACE/tests/OS_Test.cpp.
+    - Added the ability to compile tests so that they output to stderr instead of a file.
+
+commit 8fda2e288376fe735a316e396763daa40afb1167
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed Jun 5 23:28:56 2019 -0500
+
+    Move A Check Back to config-linux.h
+
+commit 9b2936e208d7392baf4a0301bafe1a2b74b55274
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed Jun 5 22:21:39 2019 -0500
+
+    Remove gettid check
+
+commit 03a24c6a8eac8bf211dd421fb98ffe96ed91a535
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed Jun 5 22:06:08 2019 -0500
+
+    Created a config-linux-common.h
+    
+    From the common parts of config-linux.h and config-android.h. Where
+    parts where differ slightly but changes didn't impact Android, parts
+    from Linux were used.
+    
+    Moved gettid check into config-linux-common.h
+
+commit 1b1d17629d3a1a46887606147470b1015e8b1eff
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed Jun 5 18:07:28 2019 -0500
+
+    reduce gettid %t wchar buffer size
+
+commit d6f49f1a9d96991f2b7eaf2f578f29288cd3c7cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 4 08:21:45 2019 +0200
+
+    Removed empty lines
+    
+        * ACE/ace/Log_Category.cpp:
+        * ACE/ace/Log_Category.h:
+        * ACE/ace/Log_Msg.cpp:
+        * ACE/ace/Log_Msg.h:
+        * ACE/ace/Log_Record.h:
+
+commit d4dc5874ea9c94d2248b16ebe8535bfc654c0376
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 23 08:07:35 2019 +0200
+
+    Layout changes
+    
+        * ACE/tests/Log_Msg_Backend_Test.cpp:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+
+commit 2eabbbe957e6bbd4b2dfe2ef7eccb966d9ed00a2
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu May 2 13:59:10 2019 -0500
+
+    gettid: Use ACE_NOTSUP_RETURN and other fixes
+
+commit 7c946c2ae4d161a352503b7170a1c71120cd4d9b
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed May 1 17:52:36 2019 -0500
+
+    Use reinterpret_cast instead
+
+commit 3db1e97d0c5da32ca173ca4d6f1d3c9e9e904ce5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 1 11:39:43 2019 +0200
+
+    Removed user defined copy constructor and declare copy/move constructor/assignment as default with C++11
+    
+        * ACE/ace/Signal.h:
+        * ACE/ace/Signal.inl:
+        * ACE/ace/Time_Policy.h:
+        * ACE/ace/Time_Policy.inl:
+
+commit 3c8f6b20d4278c244df52246bf3c0a98db16f060
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 30 18:35:35 2019 +0200
+
+    Fixed error
+    
+        * ACE/ace/Time_Value.h:
+
+commit 275546cff7d1dbc4097c0a5df6f4472651cd351a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 30 18:34:27 2019 +0200
+
+    Removed our version of ACE_Time_Value::operator=, the compiler generated one will be enough. When we have C++11 we declare copy constructor and assignment operators as default, fixes warnings with gcc9
+    
+        * ACE/ace/Time_Value.h:
+        * ACE/ace/Time_Value.inl:
+
+commit a454209ec647e6e627ed1102a6cd06ea4b7e9bd0
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Apr 18 11:09:37 2019 -0500
+
+    Account for "opaque_pthread_t"
+
+commit 756b05669ff1178967c840734ac42e2e7d2b8db2
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed Apr 17 22:48:47 2019 -0500
+
+    Respond to PR comments
+
+commit 6587242537bb62b4e54d110a0262c269525966d1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 17 12:22:55 2019 +0200
+
+    Layout changes
+    
+        * ACE/tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * ACE/tests/Process_Manager_Test.cpp:
+        * ACE/tests/Reactor_Exceptions_Test.cpp:
+        * ACE/tests/Timer_Cancellation_Test.cpp:
+        * ACE/tests/WFMO_Reactor_Test.cpp:
+
+commit c1bb9e940b47d8be511c8d62f3f2251971b93743
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 17 11:21:52 2019 +0200
+
+    Layout and const changes
+    
+        * ACE/ace/Event_Handler.cpp:
+        * ACE/ace/Process_Manager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * TAO/orbsvcs/tests/ImplRepo/ping_interrupt/run_test.pl:
+
+commit 14531f70716a70092d65052e3d3334f52f05c519
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Apr 11 23:43:38 2019 -0500
+
+    Log_Msg: Shorten %t Output for non-Windows systems
+    
+    On Linux systems that supports it, use gettid() to get a much smaller
+    number for the thread id. This is guaranteed to be unique system-wide
+    thread id where the previous thread id, at least for pthreads, is not.
+    On everywhere else except Windows, since might to be an address like it
+    was on Linux, so use hex output just to make it shorter.
+
+commit e06e966e10b4edb27f9813ddffc34529abd4bb91
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Apr 11 23:43:06 2019 -0500
+
+    Add ACE_OS::thr_gettid()
+
+commit ca9128e16ecd0f79f9e29180230487538fe04ab0
+Merge: c23522062fb 9ff801e1873
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 9 19:09:01 2019 +0200
+
+    Merge pull request #885 from jwillemsen/master
+    
+    Fixed typo
+
+commit 9ff801e18739ffcdec2e096c8fdda251809b2d46
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 9 19:08:29 2019 +0200
+
+    Fixed typo
+
+commit c23522062fb89fce1d048b9c94ea7d9d2a9d6d7b
+Merge: 315d8041572 77d6f32b4e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 9 12:00:24 2019 +0200
+
+    Merge pull request #884 from jwillemsen/master
+    
+    Latest release also contains Visual Studio 2019 project files
+
+commit 77d6f32b4e4abc703cf3387646aba3e748ffcc3c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 9 08:55:47 2019 +0200
+
+    Latest release also contains Visual Studio 2019 project files
+    
+        * ACE/docs/Download.html:
+
+commit 09620e9edae416d847f313ad916a07186f78b591
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 8 09:42:52 2019 +0200
+
+    ACEXML and gperf don't have a separate changelog anymore
+
+commit 9d52edb307296ad4d3a2fc4d1ad570f76f4c4a41
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 8 09:22:51 2019 +0200
+
+    New CIAO/DAnCE micro releases
+    
+        * ACE/docs/Download.html:
+
+commit 93fac19be21a518e53730592f7a2f9ad92fb0521
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 8 09:06:16 2019 +0200
+
+    Make x.5.5 public available and prepar for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

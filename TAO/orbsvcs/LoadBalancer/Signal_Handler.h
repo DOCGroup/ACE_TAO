@@ -4,8 +4,6 @@
 /**
  * @file   Signal_Handler.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -44,13 +42,12 @@
 class TAO_LB_Signal_Handler : public ACE_Task_Base
 {
 public:
-
   /// Constructor.
   TAO_LB_Signal_Handler (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa);
 
   /// Run by a daemon thread to handle signals synchronously.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Active object activation method.
   /**
@@ -66,19 +63,18 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t thread_ids[] = 0);
+                        ACE_thread_t thread_ids[] = 0,
+                        const char* thr_name[] = 0);
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
 protected:
-
   /// Template method that initiates the cleanup process.
   virtual int perform_cleanup (int signum);
 
 private:
-
 #ifdef ACE_HAS_THREADS
   /// Block all signals before spawning the threads.  Then, unblock
   /// these signals when this handler is destroyed.
@@ -94,7 +90,6 @@ private:
   /// Reference to the POA within which the LoadManager servant is
   /// registered.
   PortableServer::POA_var poa_;
-
 };
 
 #endif  /* TAO_LB_SIGNAL_HANDLER_H */

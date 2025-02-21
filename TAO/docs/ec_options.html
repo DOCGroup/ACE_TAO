@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Real-Time Event Channel Configuration</title>
-    <!-- $Id$-->
+    <!-- -->
   </head>
 
   <body>
@@ -63,16 +63,33 @@ struct RtecEventData
       can also parse options in the Service Configurator script file.
     </P>
 
-    <P>There are currently four implementations of the factory.  The
-      table below describes all of the options (and values) supported by
-      these factories.  The <em>default</em> factory supports all of
+    <P>There are currently several implementations of the factory.
+      <ul>
+<li>The <em>default</em> factory supports all of
       the options below and most of the potential values, except as
       specifically indicated.
+<li>
       The <em>sched</em> factory defines new option values as indicated
       below that allow the RTES to integrate with the Real-Time
       Scheduling Service.  Use of the <em>sched</em> factory requires
       that you link in the TAO_RTSchedEvent library.
-      The <em>basic</em> and <em>null</em> factories are hard-coded
+<li>
+        The <em>tpc</em> (thread per consumer) factory defines new
+        options values as indicated below.  This
+          strategy is similar to the MT dispatching strategy in that it
+          separates the thread that receives the push() from a supplier
+          from the thread that does the eventual push() to the
+          consumer(s), but it differs from MT in that MT has a pool of
+          threads pulling from a single queue and ultimately potentially
+          servicing every consumer, whereas TPC has a queue for <em>each</em>
+          consumer and, thus, a single thread dedicated to pushing to that
+          consumer.  This insures that a badly-behaved consumer <b>CANNOT</b>
+          have an adverse effect on the channel or supplier.<br>
+        To use this new strategy you will have to replace the call in your code
+          for <code>TAO_EC_Default_Factory::init_svcs()</code> with
+          <code>TAO_EC_TPC_Factory::init_svcs()</code>.
+
+<li>      The <em>basic</em> and <em>null</em> factories are hard-coded
       factories that do not support any configuration options.
       They both define simple configurations that may enable some
       applications to use the RTES in a smaller footprint.
@@ -80,7 +97,49 @@ struct RtecEventData
       <code>$TAO_ROOT/orbsvcs/orbsvcs/Event/EC_Null_Factory.h</code>
       and <code>$TAO_ROOT/orbsvcs/orbsvcs/Event/EC_Basic_Factory.h</code>
       for details.
+    </ul>
     </P>
+
+<h3>Special Topic: Queue Configuration</h3>
+    <p>
+      In certain configurations such as <em>mt</em> and <em>tpc</em>,
+      the RTES implementation uses something called
+      <code>TAO_EC_Queue</code>, which is an in-memory queue that
+      separates threads that receive <code>push()</code> invocations
+      from suppliers from the threads that dispatch
+      <code>push()</code> invocations to consumers.  A user of the
+      RTES can configure some behaviors of this queue as well as
+      behaviors when the queue reaches certain trigger points.  The
+      configuration of these behaviors is a combination of
+      compile-time and run-time specification.
+    </p>
+    <p>
+      The queue itself has two trigger points for the number of
+      invocations in the queue:
+      <ul>
+      <li><em>low-water mark (LWM)</em>, a lower threshold below which the
+      queue allows more invocations to be placed into the queue;
+      <li><em>high-water mark (HWM)</em>, an upper threshold above which the
+      queue prevents more invocations from being added to the queue
+      </ul>
+    The values for these can be set at compile time via
+    <code>TAO_EC_QUEUE_LWM</code> and <code>TAO_EC_QUEUE_HWM</code>
+    for the low-water mark and high-water mark, respectively.
+    <p>
+      In addition, an application can specify what the RTES should do if a
+      queue reaches the HWM, i.e., fills up.  This behavior is encapsulated in a
+      derivation of an <code>ACE_Service_Object</code>, called
+      <code>TAO_EC_Queue_Full_Service_Object</code>.  The RTES looks
+      for a service object of a particular name (the default for this
+      name is in macro TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME,
+      which is "EC_QueueFullSimpleActions") and invokes
+      <code>queue_full_action()</code> on the instance.  See class
+      <code>TAO_EC_Simple_Queue_Full_Action</code> in file
+      <code>$TAO_ROOT/orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h</code>
+      for an example.  This particular example can be configured to
+      either <em>wait</em> or <em>discard</em> new invocations on
+      reaching the HWM.
+    </p>
 
     <H3>The configuration file</H3>
 
@@ -97,8 +156,17 @@ struct RtecEventData
 # Comments go here...
 # More comments if you want to...
 static EC_Factory "-ECFiltering basic ....."
+# ...and optionally...
+static EC_QueueFullSimpleActions "[wait | discard]"
+# ...or you can define your own TAO_EC_Queue_Full_Service_Object,
+#    give it whatever name you want and use -ECQueueFullServiceObject
+#    (see below) to specify that object's service configurator tag.
 </PRE>
 
+    <p>
+    The
+      table below describes all of the options (and values) supported by
+      these factories.
     <P>All the event service factory options start with
       <CODE>-EC</CODE></P>
 
@@ -119,13 +187,14 @@ static EC_Factory "-ECFiltering basic ....."
           <TD>Select the dispatching strategy used by the real-time
             event service. The <EM>reactive</EM> strategy uses the
             same thread that received the event from the supplier to
-            push the event to all the consumers.
+            push the event to all the consumers.<br>
             The <EM>priority</EM> strategy (sched factory only) uses
             a prioritized pool
             of threads and queries the scheduling service to select
-            the thread that dispatches each event.
+            the thread that dispatches each event.<br>
             The <EM>mt</EM> strategy also uses a pool of threads,
-            but the thread to dispatch is randomly selected.
+            but the thread to dispatch is randomly selected.<br>
+            <b>Does not apply to the <em>tpc</em> factory.</b>
           </TD>
         </TR>
 
@@ -135,10 +204,45 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>number_of_threads</EM>
           </TD>
           <TD>Select the number of threads used by the <EM>mt</EM>
-            dispatching strategy.
+            dispatching strategy.<br>
+            <b>Does not apply to the <em>tpc</em> factory.</b>
           </TD>
         </TR>
+        <!-- <TR NAME="ECDispatchingThreadFlags"> -->
+        <TR>
+          <td><code>-ECDispatchingThreadFlags</code>
+            <em>thread_flags</em><b>:</b><em>thread_priority</em>
+            </td>
+          <td>
+            Provide flags and priority used for creation of
+            dispatching threads.<br>
+            <em>thread_flags</em> is a set of
+            <code>THR_</code> flags separated by the vertical bar
+            ('|'), e.g.,
+            <code>THR_BOUND|THR_NEW_LWP|THR_SCOPE_SYSTEM</code>.
+            <br>
+            <em>thread_priority</em> is a numeric value indicating the
+            desired priority at which the thread should be created.
+            No range checking is performed on the value prior to
+            passing to the thread creation function.  Also note that
+            priorities are platform-specific, so a valid value for a
+            given set of flags on one platform may not work with the
+            same flags on another platform.
+          </tr>
 
+        <!-- <TR  NAME="ECQueueFullServiceObject"> -->
+        <tr>
+          <td><code>-ECQueueFullServiceObject</code>
+            <em>service_object_name</em>
+            </td>
+          <td>
+            Used to specify the name/tag in the service configurator
+            through which the RTEC should look for a "queue full
+            service object".<br>
+            <b>Will only have an effect on dispatch strategies that
+            use <code>TAO_EC_Queue</code>.</b>
+          </td>
+        </tr>
         <!-- <TR NAME="ECFiltering"> -->
         <TR>
           <TD><CODE>-ECFiltering</CODE>
@@ -219,7 +323,7 @@ static EC_Factory "-ECFiltering basic ....."
             The user can disable this feature by selecting the
             <EM>null</EM> strategy;
             whereas the <EM>basic</EM> strategy provides a simple, yet
-            efficient implementation. <EM>reactive</EM> provides a 
+            efficient implementation. <EM>reactive</EM> provides a
             strategy in which an observer that is unreachable is removed
             from the observer list.
             <BR><B>NOTE:<B> The default is to have the feature disabled.
@@ -300,8 +404,8 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-            consumer control policy (set <EM>ECConsumerControl</EM> to 
-            <EM>reactive</EM>) to poll the state of the consumers. 
+            consumer control policy (set <EM>ECConsumerControl</EM> to
+            <EM>reactive</EM>) to poll the state of the consumers.
             When set to 0 there is no polling but the
             reactive strategy is in place.
           </TD>
@@ -313,7 +417,7 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-            supplier control policy (set <EM>ECSupplierControl</EM> to 
+            supplier control policy (set <EM>ECSupplierControl</EM> to
             <EM>reactive</EM>) to poll the state of the suppliers.
             When set to 0 there is no polling but the
             reactive strategy is in place.
@@ -326,7 +430,7 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive
-            consumer control policy (set <EM>ECConsumerControl</EM> to 
+            consumer control policy (set <EM>ECConsumerControl</EM> to
             <EM>reactive</EM>) to detect a timeout when polling the state
             of the consumers.
           </TD>
@@ -338,13 +442,13 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive
-            supplier control policy (set <EM>ECSupplierControl</EM> to 
-            <EM>reactive</EM>) to detect a timeout when polling the state 
+            supplier control policy (set <EM>ECSupplierControl</EM> to
+            <EM>reactive</EM>) to detect a timeout when polling the state
             of the suppliers.
           </TD>
         </TR>
 
-				<!-- <TR NAME="ECProxyPushConsumerCollection"> -->
+        <!-- <TR NAME="ECProxyPushConsumerCollection"> -->
         <TR>
           <TD><CODE>-ECProxyPushConsumerCollection</CODE>
             <EM>flag[:flags]</EM>
@@ -442,47 +546,22 @@ static EC_Factory "-ECFiltering basic ....."
           </TD>
         </TR>
 
-        <!-- <TR NAME="ECPushSupplierSet"> -->
-        <TR>
-          <TD><CODE>-ECPushSupplierSet</CODE>
-          </TD>
-          <TD><P>Obsolete option, ignored.
-            </P>
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECConsumerAdminLock"> -->
-        <TR>
-          <TD><CODE>-ECConsumerAdminLock</CODE>
-          </TD>
-          <TD>Obsolete option, ignored in the current version.
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECSupplierAdminLock"> -->
-        <TR>
-          <TD><CODE>-ECSupplierAdminLock</CODE>
-          </TD>
-          <TD>Obsolete option, ignored in the current version.
-          </TD>
-        </TR>
-
         <!-- <TR NAME="ECConsumerValidateConnection"> -->
         <TR>
           <TD><CODE>-ECConsumerValidateConnection</CODE>
             <EM>validate_connection: 0 | 1</EM>
           </TD>
-          <TD>When this option is set the connection from the Event Channel 
-            to the consumer will be created during the connect of the 
+          <TD>When this option is set the connection from the Event Channel
+            to the consumer will be created during the connect of the
             consumer, just before the consumer is added to the consumer
-            list. By default 
+            list. By default
             the Event Channel will create the connection to the consumer at
-            the moment the first event is pushed to the consumer. 
-            When the network is heavily loaded during this connect and a new event 
-            is pushed before the connection is establed, a new create connection 
-            request is done. When having very high connection establishment  
+            the moment the first event is pushed to the consumer.
+            When the network is heavily loaded during this connect and a new event
+            is pushed before the connection is established, a new create connection
+            request is done. When having very high connection establishment
             time (for example running on a WAN) and an interval that is much
-            smaller than the connection establishment time it is wise to 
+            smaller than the connection establishment time it is wise to
             set this option. Else you get dozens of new connection request
             that can result in a stack overflow. Another option is to use BiDIR
             GIOP so that there is only one connection between Rtec and consumer
@@ -574,7 +653,7 @@ static EC_Factory "-ECFiltering basic ....."
             not require an scheduler.
             If any of the strategies that require an scheduling
             service is selected then this attribute should be set
-            appropiately.
+            appropriately.
           </TD>
         </TR>
 
@@ -606,9 +685,9 @@ static EC_Factory "-ECFiltering basic ....."
 
     <H3>Configuring the IIOP Gateway</H3>
 
-    <P>The <CODE>TAO_EC_Gateway_IIOP_Factory</CODE> is the factory for 
-      the <CODE>TAO_EC_Gateway_IIOP</CODE> class. This factory can be 
-      used to configure the settings of the IIOP Gateway using the 
+    <P>The <CODE>TAO_EC_Gateway_IIOP_Factory</CODE> is the factory for
+      the <CODE>TAO_EC_Gateway_IIOP</CODE> class. This factory can be
+      used to configure the settings of the IIOP Gateway using the
       svc.conf file. The contents looks like this:
     </P>
 
@@ -621,7 +700,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
     <P>All the IIOP Gateway factory options start with
       <CODE>-ECGIIOP</CODE></P>
 
-	    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
         <TR>
           <TH>Option</TH>
           <TH>Description</TH>
@@ -633,7 +712,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             <EM>policy</EM>
           </TD>
           <TD>Select the consumer ec control policy (<EM>null</EM> or
-            <EM>reactive</EM> or <EM>reconnect</EM>) to detect and handle 
+            <EM>reactive</EM> or <EM>reconnect</EM>) to detect and handle
              broken consumer ec's.
           </TD>
         </TR>
@@ -643,7 +722,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive and reconnect
-            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to 
+            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to
             <EM>reactive</EM> or <EM>reconnect</EM>) to poll the state of the consumer ec.
             When set to 0 there is no polling but the
             reactive strategy is in place.
@@ -656,7 +735,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive and reconnect
-            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to 
+            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to
             <EM>reactive</EM> or <EM>reconnect</EM>) to detect a timeout when polling the state
             of the consumer ec.
           </TD>
@@ -678,11 +757,11 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
           <TD><CODE>-ECGIIOPUseTTL</CODE>
             <EM>use_ttl: 0 | 1</EM>
           </TD>
-          <TD>Set whether the IIOP Gateway uses the TTL or not. 
-            This is 1 by default. When set to 0 make sure that 
-            no recursive structure is build between ec's, else an 
+          <TD>Set whether the IIOP Gateway uses the TTL or not.
+            This is 1 by default. When set to 0 make sure that
+            no recursive structure is build between ec's, else an
             event can keep looping for ever. Useful when there are no
-            recursive structures and we want the gateway to 
+            recursive structures and we want the gateway to
             transfer all events independent of their TTL because suppliers
             can be unaware about the maximum number of hops. In case
             this option is 0, the TTL in the event isn't decremented
@@ -695,12 +774,12 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
           <TD><CODE>-ECGIIOPUseConsumerProxyMap</CODE>
             <EM>use_consumer_proxy_map: 0 | 1</EM>
           </TD>
-          <TD>Set whether the IIOP Gateway uses a map with a proxy 
+          <TD>Set whether the IIOP Gateway uses a map with a proxy
             push consumer for each unique source id or not. This is 1
-            by default meaning that a map is used. When set to 0 the 
+            by default meaning that a map is used. When set to 0 the
             gateway will just use one proxy push consumer to push
-            events to the consumer ec. This options is useful when 
-            a lot of different source id's are used but there is no 
+            events to the consumer ec. This options is useful when
+            a lot of different source id's are used but there is no
             need for a different proxy push consumer for each source id.
             Setting this option to 0 then improves the performance.
           </TD>
@@ -708,6 +787,85 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
       </TABLE>
     </P>
 
+    <H3>The commandline arguments</H3>
+
+    The Event_Service executable has several commandline arguments you can use.
+    The following arguments are available.
+
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
+        <TR>
+          <TH>Option</TH>
+          <TH>Description</TH>
+        </TR>
+
+        <!-- <TR NAME="-d"> -->
+        <TR>
+          <TD><CODE>-n</CODE>
+            <EM>service_name</EM>
+          </TD>
+          <TD>The name with which the Event Service registers itself in the
+    Naming Service.
+          </TD>
+        </TR>
+        <!-- <TR NAME="-o"> -->
+        <TR>
+          <TD><CODE>-o</CODE>
+            <EM>ior_file_name</EM>
+          </TD>
+          <TD>The file to which the IOR of the Event Service will be written.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-p"> -->
+        <TR>
+          <TD><CODE>-p</CODE>
+            <EM>pid_file_name</EM>
+          </TD>
+          <TD>The process id of the Event Service will be written to this
+          file
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-q"> -->
+        <TR>
+          <TD><CODE>-q</CODE>
+            <EM>ec_object_id</EM>
+          </TD>
+          <TD>The object ID for the Event Channel that will be used
+          when a Persistent IOR is generated
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-b"> -->
+        <TR>
+          <TD><CODE>-b</CODE>
+            <EM></EM>
+          </TD>
+          <TD>Use BiDIR GIOP
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-x"> -->
+        <TR>
+          <TD><CODE>-x</CODE>
+            <EM></EM>
+          </TD>
+          <TD>Don't register the Event Service to the Naming Service
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-s"> -->
+        <TR>
+          <TD><CODE>-s</CODE>
+            <EM>global|local|none</EM>
+          </TD>
+          <TD>Which scheduler should be used. The default is <CODE>none</CODE>.
+          With <CODE>local</CODE> an in process scheduler is created. With
+          <CODE>global</CODE> a scheduler is retrieved from the Naming Service
+          </TD>
+        </TR>
+      </TABLE>
+    </P>
 
     <P><HR><P>
 
@@ -715,10 +873,10 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
 
       <!--#include virtual="/~schmidt/cgi-sig.html" -->
 
-    <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
+<!--    <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>-->
 <!-- Created: Thu Jul  1 21:44:28 CDT 1999 -->
 <!-- hhmts start -->
-Last modified: Fri Aug 08 08:39:42 CDT 2003
+Last modified: Tue Oct 18 13:13:54 CDT 2005
 <!-- hhmts end -->
   </body>
 </html>

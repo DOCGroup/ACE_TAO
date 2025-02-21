@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
 #ifndef STUBFAULTCONSUMER_H
 #define STUBFAULTCONSUMER_H
 #include /**/ <ace/pre.h>
@@ -40,19 +38,18 @@ public:
   virtual ~StubFaultConsumer ();
 
 
-  ::PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  ::PortableServer::POA_ptr _default_POA ();
   ::PortableServer::ObjectId objectId()const;
 
   /**
    * Parse command line arguments.
    */
-  int parse_args (int argc, char * argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
 
   /**
    * Publish this objects IOR.
    */
-  int init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier
-    ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -69,30 +66,22 @@ public:
   /**
    * Clean house for process shut down.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini ();
 
 
   size_t notifications() const;
 
 public:
-
     ////////////////
     // CORBA methods
     virtual void push_structured_event(
-      const CosNotification::StructuredEvent &notification
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
+      const CosNotification::StructuredEvent &notification);
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType));
+        const CosNotification::EventTypeSeq & removed);
 
-   virtual void disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+   virtual void disconnect_structured_push_consumer();
 
   ////////////////////
   // Forbidden methods
@@ -103,7 +92,6 @@ private:
   /////////////////////////
   // Implementation methods
 private:
-
   ///////////////
   // Data Members
 private:
@@ -144,7 +132,6 @@ private:
   ::FT::FaultNotifier::ConsumerId consumer_id_;
 
   size_t notifications_;
-
 };
 
 #include /**/ <ace/post.h>

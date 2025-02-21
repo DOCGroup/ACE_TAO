@@ -1,14 +1,15 @@
-// $Id$
+// -*- C++ -*-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_RT_Transport_Descriptor_Property::TAO_RT_Transport_Descriptor_Property (void)
+TAO_RT_Transport_Descriptor_Property::TAO_RT_Transport_Descriptor_Property ()
   : next_ (0)
 {
 }
 
 /*************************************************************************************************/
 ACE_INLINE
-TAO_RT_Transport_Descriptor_Private_Connection_Property::TAO_RT_Transport_Descriptor_Private_Connection_Property (void)
+TAO_RT_Transport_Descriptor_Private_Connection_Property::TAO_RT_Transport_Descriptor_Private_Connection_Property ()
   : object_id_ (-1)
 {
 }
@@ -28,7 +29,7 @@ TAO_RT_Transport_Descriptor_Private_Connection_Property::init (long object_id)
 /*************************************************************************************************/
 
 ACE_INLINE
-TAO_RT_Transport_Descriptor_Banded_Connection_Property::TAO_RT_Transport_Descriptor_Banded_Connection_Property (void)
+TAO_RT_Transport_Descriptor_Banded_Connection_Property::TAO_RT_Transport_Descriptor_Banded_Connection_Property ()
   : low_priority_ (-1)
   , high_priority_ (-1)
 {
@@ -49,3 +50,5 @@ TAO_RT_Transport_Descriptor_Banded_Connection_Property::init (CORBA::Short low_p
   this->low_priority_ = low_priority;
   this->high_priority_ = high_priority;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

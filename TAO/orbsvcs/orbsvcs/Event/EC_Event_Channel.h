@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Event_Channel.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Marina Spivak (marina@atdesk.com)
@@ -19,11 +18,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Event_Channel
@@ -48,9 +49,11 @@ public:
    * the Factory, if not found it uses TAO_EC_Default_Factory
    */
   TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attributes,
-                        TAO_EC_Factory* factory = 0,
+                        TAO_EC_Factory* factory = nullptr,
                         int own_factory = 0);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

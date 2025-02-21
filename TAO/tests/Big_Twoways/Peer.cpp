@@ -1,17 +1,12 @@
-//
-// $Id$
-//
 #include "Peer.h"
 #include "Session.h"
-
-ACE_RCSID(Big_Oneways, Peer, "$Id$")
 
 Peer::Peer (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-Peer::~Peer (void)
+Peer::~Peer ()
 {
 }
 
@@ -20,9 +15,7 @@ Peer::create_session (Test::Session_Control_ptr control,
                       CORBA::ULong payload_size,
                       CORBA::ULong thread_count,
                       CORBA::ULong message_count,
-                      CORBA::ULong peer_count
-                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                      CORBA::ULong peer_count)
 {
   Session *session_impl = 0;
   ACE_NEW_THROW_EX (session_impl,
@@ -32,20 +25,18 @@ Peer::create_session (Test::Session_Control_ptr control,
                              message_count,
                              peer_count),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Test::Session::_nil ());
   PortableServer::ServantBase_var transfer_ownership (session_impl);
 
-  return session_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return session_impl->_this ();
 }
 
 void
-Peer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Peer::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, waiting for threads\n"));
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, shutting down ORB\n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

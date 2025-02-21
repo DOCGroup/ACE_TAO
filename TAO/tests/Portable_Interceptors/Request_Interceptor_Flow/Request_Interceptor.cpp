@@ -1,10 +1,5 @@
 // -*- C++ -*-
-
 #include "Request_Interceptor.h"
-
-ACE_RCSID (Request_Interceptor_Flow,
-           Request_Interceptor,
-           "$Id$")
 
 Request_Interceptor::Request_Interceptor (const char *name)
   : name_ (name),
@@ -14,18 +9,14 @@ Request_Interceptor::Request_Interceptor (const char *name)
 }
 
 char *
-Request_Interceptor::name (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
-Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Request_Interceptor::destroy ()
 {
-
   CORBA::ULong s_count =
     this->starting_interception_point_count_.value ();
 
@@ -35,46 +26,38 @@ Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL)
   if (s_count == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P) ERROR: Interceptor %d \"%s\"\n"
+                  "(%P) ERROR: Interceptor %d \"%C\"\n"
                   "(%P) The number of starting interception point calls "
                   "is zero\n", s_count,
                   this->name_.in ()));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   if (e_count == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P) ERROR: Interceptor %d \"%s\"\n"
+                  "(%P) ERROR: Interceptor %d \"%C\"\n"
                   "(%P) The number of ending interception point calls"
                   "is zero\n",
                   e_count, this->name_.in ()));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   if (s_count != e_count)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P) ERROR: Interceptor \"%s\"\n"
+                  "(%P) ERROR: Interceptor \"%C\"\n"
                   "(%P) The number of starting interception point "
                   "calls (%u)\n"
                   "(%P) did not equal the number of ending "
-                  "interception \n"
+                  "interception\n"
                   "(%P) point calls (%u).\n\n",
                   this->name_.in (),
                   s_count,
                   e_count));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>;
-template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
-#pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

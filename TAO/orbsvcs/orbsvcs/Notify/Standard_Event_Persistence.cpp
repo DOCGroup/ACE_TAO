@@ -1,14 +1,15 @@
-// $Id$
-
-#include "Standard_Event_Persistence.h"
-#include "Persistent_File_Allocator.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/Standard_Event_Persistence.h"
+#include "orbsvcs/Notify/Persistent_File_Allocator.h"
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Truncate.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 Standard_Event_Persistence::Standard_Event_Persistence ()
   : filename_ (ACE_TEXT ("__PERSISTENT_EVENT__.DB"))
   , block_size_ (512)
@@ -29,8 +30,8 @@ Standard_Event_Persistence::get_factory ()
   {
     ACE_NEW_NORETURN (
       this->factory_,
-      Standard_Event_Persistence_Factory ()
-      );
+      Standard_Event_Persistence_Factory ());
+
     if (this->factory_ != 0)
     {
       if (!this->factory_->open (this->filename_.c_str ()))
@@ -61,7 +62,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
     if (ACE_OS::strcasecmp (av, ACE_TEXT ("-v")) == 0)
     {
       verbose = true;
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Standard_Event_Persistence: -verbose\n")
         ));
     }
@@ -70,7 +71,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
       this->filename_ = argv[narg + 1];
       if (TAO_debug_level > 0 || verbose)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Standard_Event_Persistence: Setting -file_path: %s\n"),
           this->filename_.c_str ()
         ));
@@ -82,7 +83,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
       this->block_size_ = ACE_OS::atoi(argv[narg + 1]);
       if (TAO_debug_level > 0 || verbose)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Standard_Event_Persistence: Setting -block_size: %d\n"),
           this->block_size_
         ));
@@ -91,7 +92,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Unknown parameter to Standard Event Persistence: %s\n"),
         argv[narg]
         ));
@@ -141,7 +142,7 @@ Standard_Event_Persistence_Factory::~Standard_Event_Persistence_Factory()
 {
   if (TAO_debug_level > 0)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Standard_Event_Persistence_Factory::~Standard_Event_Persistence_Factory\n")
     ));
   }
@@ -208,7 +209,7 @@ Standard_Event_Persistence_Factory::get_preallocated_pointer(
   this->psb_ = this->allocator_.allocate();
 
   next_serial_number = this->serial_number_;
-  next_block_number = this->psb_->block_number();
+  next_block_number = ACE_Utils::truncate_cast<ACE_UINT32> (this->psb_->block_number());
 }
 
 Persistent_File_Allocator*
@@ -223,9 +224,10 @@ Standard_Event_Persistence_Factory::root()
   return this->root_;
 }
 
-ACE_FACTORY_DEFINE (TAO_Notify_Serv, Standard_Event_Persistence)
-}
+} // End TAO_Notify_Namespace
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_NAMESPACE_DEFINE (TAO_Notify_Serv,
+                              TAO_Notify_Standard_Event_Persistence,
+                              TAO_Notify::Standard_Event_Persistence)

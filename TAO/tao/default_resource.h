@@ -4,8 +4,6 @@
 /**
  *  @file   default_resource.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland
  *  @author Carlos O'Ryan
  */
@@ -24,11 +22,66 @@
 
 #include "tao/Resource_Factory.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Reactor_Impl;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#include "ace/Timer_Queuefwd.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Object_Adapter;
 class TAO_IOR_Parser;
 class TAO_LF_Strategy;
 class TAO_Codeset_Descriptor_Base;
-class ACE_Reactor_Impl;
+class TAO_Time_Policy_Manager;
+class TAO_RSF_Timer_Queue_Ptr;
+
+/**
+ * @class TAO_Codeset_Parameters
+ *
+ * @brief A simple storage class for the native codeset and any
+ * translators that must be configured when creating an instance of
+ * codeset manager.
+ *
+ * The Resource Factory uses two instances of this class during its
+ * initialization, to capture any native codeset or translators
+ * settings. The RF later uses these parameters when creating
+ * instances of the codeset manager.
+ *
+ * Perhaps, the best would be to place the responsibility for codeset
+ * manager's configuration with the the codeset manager factory?
+ */
+class TAO_Export TAO_Codeset_Parameters
+{
+public:
+  TAO_Codeset_Parameters ();
+  ~TAO_Codeset_Parameters ();
+
+  /// The native codeset (getter)
+  const ACE_TCHAR* native ();
+
+  /// The native codeset (setter)
+  void native (const ACE_TCHAR* n);
+
+  /// Add a new codeset
+  void add_translator (const ACE_TCHAR* name);
+
+  typedef ACE_Unbounded_Queue_Iterator<ACE_TCHAR*> iterator;
+
+  /// Iterate through the registered translators
+  iterator translators ();
+
+  /// Apply the parameters to the said descriptor
+  void apply_to (TAO_Codeset_Descriptor_Base *csd);
+
+private:
+  TAO_Codeset_Parameters (const TAO_Codeset_Parameters &) = delete;
+  TAO_Codeset_Parameters &operator= (const TAO_Codeset_Parameters &) = delete;
+
+  ACE_Unbounded_Queue<ACE_TCHAR*> translators_;
+  ACE_TCHAR* native_;
+};
 
 /**
  * @class TAO_Default_Resource_Factory
@@ -64,12 +117,11 @@ class TAO_Export TAO_Default_Resource_Factory
   : public TAO_Resource_Factory
 {
 public:
-
   /// Constructor.
-  TAO_Default_Resource_Factory (void);
+  TAO_Default_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Resource_Factory (void);
+  virtual ~TAO_Default_Resource_Factory ();
 
   /**
    * @name Service Configurator Hooks
@@ -86,7 +138,6 @@ public:
    * @name Member Accessors
    */
   //@{
-
   int get_parser_names (char **&names,
                         int &number_of_names);
   enum
@@ -95,49 +146,59 @@ public:
   };
 
   /// Modify and get the source for the CDR allocators
-  int cdr_allocator_source (void);
+  int cdr_allocator_source ();
 
   // = Resource Retrieval
-  virtual int use_locked_data_blocks (void) const;
-  virtual ACE_Reactor *get_reactor (void);
+  virtual int use_locked_data_blocks () const;
+  virtual ACE_Reactor *get_reactor ();
   virtual void reclaim_reactor (ACE_Reactor *);
-  virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
-  virtual TAO_Connector_Registry *get_connector_registry (void);
-  virtual ACE_Allocator* input_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* input_cdr_buffer_allocator (void);
-  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
-  virtual int input_cdr_allocator_type_locked (void);
-  virtual ACE_Allocator* output_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* output_cdr_buffer_allocator (void);
-  virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
-  virtual ACE_Allocator* amh_response_handler_allocator (void);
-  virtual ACE_Allocator* ami_response_handler_allocator (void);
-  virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
+  virtual TAO_Acceptor_Registry  *get_acceptor_registry ();
+  virtual TAO_Connector_Registry *get_connector_registry ();
+  virtual void use_local_memory_pool (bool);
+  virtual ACE_Allocator* input_cdr_dblock_allocator ();
+  virtual ACE_Allocator* input_cdr_buffer_allocator ();
+  virtual ACE_Allocator* input_cdr_msgblock_allocator ();
+  virtual int input_cdr_allocator_type_locked ();
+  virtual ACE_Allocator* output_cdr_dblock_allocator ();
+  virtual ACE_Allocator* output_cdr_buffer_allocator ();
+  virtual ACE_Allocator* output_cdr_msgblock_allocator ();
+  virtual ACE_Allocator* amh_response_handler_allocator ();
+  virtual ACE_Allocator* ami_response_handler_allocator ();
+  virtual TAO_ProtocolFactorySet *get_protocol_factories ();
 
-  virtual int init_protocol_factories (void);
+  virtual int init_protocol_factories ();
 
-  virtual TAO_Codeset_Manager * codeset_manager (void);
+  virtual TAO_Codeset_Manager * codeset_manager ();
 
-  virtual int cache_maximum (void) const;
-  virtual int purge_percentage (void) const;
-  virtual int max_muxed_connections (void) const;
-  virtual ACE_Lock *create_cached_connection_lock (void);
-  virtual ACE_Lock *create_object_key_table_lock (void);
-  virtual ACE_Lock *create_corba_object_lock (void);
-  virtual int locked_transport_cache (void);
-  virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
-  virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
-  TAO_Resource_Factory::Resource_Usage resource_usage_strategy (void) const;
-  virtual TAO_LF_Strategy *create_lf_strategy (void);
-
-  virtual void disable_factory (void);
-  virtual bool drop_replies_during_shutdown (void) const;
-  //@}
+  virtual int cache_maximum () const;
+  virtual int purge_percentage () const;
+  virtual int max_muxed_connections () const;
+  virtual ACE_Lock *create_cached_connection_lock ();
+  virtual int locked_transport_cache ();
+  virtual TAO_Flushing_Strategy *create_flushing_strategy ();
+  virtual TAO_Connection_Purging_Strategy *create_purging_strategy ();
+  TAO_Resource_Factory::Resource_Usage resource_usage_strategy () const;
+  virtual TAO_LF_Strategy *create_lf_strategy ();
+  virtual TAO_GIOP_Fragmentation_Strategy*
+    create_fragmentation_strategy (TAO_Transport * transport,
+                                   CORBA::ULong max_message_size) const;
+  virtual void disable_factory ();
+  virtual bool drop_replies_during_shutdown () const;
+ //@}
 
 protected:
+  friend class TAO_RSF_Timer_Queue_Ptr;
+
+#if (TAO_HAS_TIME_POLICY == 1)
+  TAO_Time_Policy_Manager* time_policy_manager () const;
+#endif
+
+  ACE_Timer_Queue * create_timer_queue () const;
+
+  void destroy_timer_queue (ACE_Timer_Queue *tmq) const;
 
   /// Obtain the reactor implementation
-  virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
+  virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
 
   /// Add a Parser name to the list of Parser names.
   int add_to_ior_parser_names (const char *);
@@ -146,7 +207,6 @@ protected:
                                   const ACE_TCHAR* option_value);
 
 protected:
-
   /// The type of data blocks that the ORB should use
   int use_locked_data_blocks_;
 
@@ -179,13 +239,13 @@ protected:
   /// limit
   int max_muxed_connections_;
 
-  /// If <0> then we create reactors with signal handling disabled.
+  /// If 0 then we create reactors with signal handling disabled.
   int reactor_mask_signals_;
 
   /**
-   * Flag that is set to 1 if the reactor obtained from the
+   * Flag that is set to true if the reactor obtained from the
    * get_reactor() method is dynamically allocated.  If this flag is
-   * set to 1, then the reclaim_reactor() method with call the delete
+   * set to true, then the reclaim_reactor() method with call the delete
    * operator on the given reactor.  This flag is necessary to make
    * sure that a reactor not allocated by the default resource factory
    * is not reclaimed by the default resource factory.  Such a
@@ -193,9 +253,9 @@ protected:
    * default one overrides the get_reactor() method but does not
    * override the reclaim_reactor() method.
    */
-  int dynamically_allocated_reactor_;
+  bool dynamically_allocated_reactor_;
 
-  virtual int load_default_protocols (void);
+  virtual int load_default_protocols ();
 
   /// This flag is used to determine whether options have been
   /// processed via the init() function.  It is necessary to
@@ -207,9 +267,23 @@ protected:
   /// were processed before (or later).
   int factory_disabled_;
 
-private:
-  void init_codeset_descriptors (void);
+  enum Output_CDR_Allocator_Type
+    {
+      LOCAL_MEMORY_POOL,
+#if TAO_HAS_SENDFILE == 1
+      MMAP_ALLOCATOR,
+#endif  /* TAO_HAS_SENDFILE == 1*/
+      DEFAULT
+    };
 
+  /// Type of allocator to use for output CDR buffers.
+  Output_CDR_Allocator_Type output_cdr_allocator_type_;
+
+  /// This flag is used to determine whether the CDR allocators
+  /// should use the local memory pool or not.
+  bool use_local_memory_pool_;
+
+private:
   enum Lock_Type
   {
     TAO_NULL_LOCK,
@@ -218,12 +292,6 @@ private:
 
   /// Type of lock used by the cached connector.
   Lock_Type cached_connection_lock_type_;
-
-  /// Type of lock used by the corba object.
-  Lock_Type object_key_table_lock_type_;
-
-  /// Type of lock used by the corba object.
-  Lock_Type corba_object_lock_type_;
 
   enum Flushing_Strategy_Type
   {
@@ -235,9 +303,10 @@ private:
   /// Type of flushing strategy configured
   Flushing_Strategy_Type flushing_strategy_type_;
 
-  TAO_Codeset_Manager *codeset_manager_;
-  TAO_Codeset_Descriptor_Base *char_codeset_descriptor_;
-  TAO_Codeset_Descriptor_Base * wchar_codeset_descriptor_;
+  /// Initialization options. To be used later when creating a codeset
+  /// manager instance (s)
+  TAO_Codeset_Parameters char_codeset_parameters_;
+  TAO_Codeset_Parameters wchar_codeset_parameters_;
 
   /// Resource usage strategy
   Resource_Usage resource_usage_strategy_;
@@ -250,5 +319,32 @@ private:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Resource_Factory)
 
+/**
+ * @class TAO_RSF_Timer_Queue_Ptr
+ *
+ * @brief A simple auto_ptr like class to manage timer queues dynamically
+ *        allocated by a time policy.
+ */
+class TAO_Export TAO_RSF_Timer_Queue_Ptr
+{
+public:
+  TAO_RSF_Timer_Queue_Ptr (TAO_Default_Resource_Factory const &, ACE_Timer_Queue*);
+  ~TAO_RSF_Timer_Queue_Ptr ();
+
+  ACE_Timer_Queue* get ();
+  void release ();
+
+private:
+  TAO_Default_Resource_Factory const & resource_factory_;
+  ACE_Timer_Queue * timer_queue_;
+};
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "tao/default_resource.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_DEFAULT_CLIENT_H */

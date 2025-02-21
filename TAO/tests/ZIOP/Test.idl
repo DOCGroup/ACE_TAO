@@ -1,0 +1,26 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// for big files
+  typedef sequence<octet> Octet_Seq;
+
+  /// A very simple interface
+  interface Hello
+  {
+    /// Return a simple string
+    string get_string (in string mystring);
+
+    /// Return binary info
+    Octet_Seq get_big_reply (in unsigned long size);
+
+    ///recieve a large number of bytes
+    void big_request (in Octet_Seq octet_in);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};

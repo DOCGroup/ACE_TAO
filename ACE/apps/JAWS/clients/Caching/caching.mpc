@@ -1,0 +1,11 @@
+// -*- MPC -*-
+project(http_client) : aceexe {
+  avoids   += ace_for_tao
+  requires += ace_filecache
+
+  exename = http_client
+  Source_Files {
+    http_handler.cpp
+    http_client.cpp
+  }
+}

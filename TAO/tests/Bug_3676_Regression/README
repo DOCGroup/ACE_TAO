@@ -1,0 +1,22 @@
+
+
+Codeset information is sent only in the first request in the service_context
+field of GIOP request message. However, CORBA::Object::_validate_connection()
+uses LocateRequest message and this kind of message doesn't have
+service_context field. If validate_connection is the first remote call in the
+application the transport is marked as the one that already sent the first
+request and thus no codeset negotiation happens in subsequent call. So, the
+solution for this problem is to restore TAO_Transport::first_request_ flag to
+it's state before LocateRequest message was sent. We check the later in this
+test.
+
+_Expected successful result_:
+
+$ ./run_test.pl
+(9909|140389579343600) server - event loop finished
+
+_Expected regression result_:
+
+$ ./run_test.pl
+Test FAILED after LocateRequest (bug#3676 is not fixed)!!
+(9931|67366400) server - event loop finished

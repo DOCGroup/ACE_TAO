@@ -1,5 +1,3 @@
-// $Id$
-
 #include "goC.h"
 #include "Notify_Push_Consumer.h"
 #include "Notify_Test_Client.h"
@@ -14,7 +12,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_strings.h"
 
-static const char* ior = "file://supplier.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://messenger.ior");
 static NS_FilterType consumerFilter = None;
 static NS_FilterType supplierFilter = None;
 static int numEvents = 90; // Must be multiple of 9
@@ -25,31 +23,35 @@ static const char* GRAMMAR = "TCL";
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:s:e:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:f:s:e:"));
   int x;
 
   while ((x = get_opts ()) != -1)
     switch (x)
   {
+    case 'k':
+      ior = get_opts.opt_arg ();
+      break;
+
     case 'e':
-      numEvents = atoi (get_opts.optarg);
+      numEvents = ACE_OS::atoi (get_opts.optarg);
       break;
 
     case 'f':
-      if (ACE_OS::strcasecmp ("OR", get_opts.optarg) == 0)
+      if (ACE_OS::strcasecmp (ACE_TEXT ("OR"), get_opts.optarg) == 0)
         consumerFilter = OrOp;
       else
         consumerFilter = AndOp;
       break;
 
     case 's':
-      if (ACE_OS::strcasecmp ("OR", get_opts.optarg) == 0)
+      if (ACE_OS::strcasecmp (ACE_TEXT ("OR"), get_opts.optarg) == 0)
         supplierFilter = OrOp;
       else
         supplierFilter = AndOp;
@@ -58,6 +60,7 @@ Consumer_Client::parse_args (int argc, char *argv[])
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
         "usage:  %s "
+        "-k <ior>"
         "[-s <AND | OR>] -n <num events> "
         "[-f <AND | OR>]"
         "\n",
@@ -71,29 +74,25 @@ Consumer_Client::parse_args (int argc, char *argv[])
 static void
 create_consumer (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                  CosNotifyChannelAdmin::EventChannel_ptr ec,
-                 Notify_Test_Client* client
-                 ACE_ENV_ARG_DECL)
+                 Notify_Test_Client* client)
 {
   ACE_NEW_THROW_EX (consumer,
     Notify_Push_Consumer ("Consumer", numEvents, consumerFilter,
       supplierFilter, *client),
     CORBA::NO_MEMORY ());
 
-  consumer->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->init (client->root_poa ());
 
-  consumer->_connect (admin, ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->_connect (admin, ec);
 }
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     Consumer_Client client;
 
-    int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    int status = client.init (argc, argv);
     if (status != 0)
     {
       ACE_ERROR((LM_ERROR, "Error: Unable to init consumer.\n"));
@@ -101,26 +100,23 @@ int main (int argc, char * argv[])
     }
 
     CosNotifyChannelAdmin::EventChannel_var ec =
-      client.create_event_channel ("Struct_Multi_Filter", 1 ACE_ENV_ARG_PARAMETER);
+      client.create_event_channel ("Struct_Multi_Filter", 1);
 
     CosNotifyChannelAdmin::AdminID adminid = 0;
     CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
       ec->new_for_consumers ((consumerFilter == OrOp
       ? CosNotifyChannelAdmin::OR_OP : CosNotifyChannelAdmin::AND_OP),
-      adminid ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      adminid);
 
     ACE_ASSERT(! CORBA::is_nil (consumer_admin.in ()));
 
     if (consumerFilter != None)
     {
       CosNotifyFilter::FilterFactory_var ffact =
-        ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec->default_filter_factory ();
 
       CosNotifyFilter::Filter_var filter =
-        ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ffact->create_filter (GRAMMAR);
 
       if (CORBA::is_nil (filter.in ()))
       {
@@ -135,8 +131,7 @@ int main (int argc, char * argv[])
       constraint_list[0].event_types.length (0);
       constraint_list[0].constraint_expr = CORBA::string_dup ("type != 1");
 
-      filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
       consumer_admin->add_filter (filter.in ());
     }
@@ -144,37 +139,30 @@ int main (int argc, char * argv[])
     CORBA::ORB_ptr orb = client.orb ();
 
     CORBA::Object_var object =
-      orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      orb->string_to_object (ior);
 
-    sig_var sig = sig::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    sig_var sig = sig::_narrow (object.in ());
 
     ACE_ASSERT(! CORBA::is_nil (sig.in ()));
 
-    create_consumer (consumer_admin.in (), ec.in (), &client ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    create_consumer (consumer_admin.in (), ec.in (), &client);
 
     ACE_DEBUG((LM_DEBUG, "\nConsumer waiting for events...\n"));
 
-    sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    sig->go ();
 
-    client.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
+    client.ORB_run();
 
     ACE_DEBUG((LM_DEBUG, "\nConsumer done.\n"));
 
-    sig->done(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    sig->done();
 
     return 0;
   }
-  ACE_CATCH (CORBA::Exception, e)
+  catch (const CORBA::Exception& e)
   {
-    ACE_PRINT_EXCEPTION (e, "\nError: Consumer:");
+    e._tao_print_exception ("\nError: Consumer:");
   }
-  ACE_ENDTRY;
 
   return 1;
 }

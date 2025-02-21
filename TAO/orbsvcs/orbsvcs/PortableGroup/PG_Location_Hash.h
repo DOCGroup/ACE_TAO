@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Location_Hash.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -22,9 +20,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "ace/ACE.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PG_Location_Hash
@@ -33,16 +33,15 @@
  */
 class TAO_PortableGroup_Export TAO_PG_Location_Hash
 {
-
 public:
-
   /// Creates a hash based on all of elements of the given Location
   CORBA::ULong operator() (const PortableGroup::Location &) const;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "PG_Location_Hash.inl"
+#include "orbsvcs/PortableGroup/PG_Location_Hash.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

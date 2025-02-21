@@ -1,0 +1,16 @@
+
+
+Test cases for the HTTP Tunneling Bidirectional Protocol. For more
+information on the protocol itself, refer to protocols/ace/HTBP/README.
+These tests are adaptations of essential ACE SOCK tests, with the minimal
+changes to support using HTBP rather than SOCK.
+
+Contained in this directory:
+
+HTBP_Config.conf   A sample configuration file. This file is site
+                   specific, and must be editted before use.
+ping               This test is shows the most basic connection
+                   establishment with one request and reply.
+Reactor_Tests      A test to show use through the reactor.
+Send_Large_Msg     A test for sending large messages
+Send_Recv_Tests    A test for a variety of message sending methods.

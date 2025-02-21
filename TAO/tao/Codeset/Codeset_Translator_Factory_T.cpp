@@ -1,33 +1,23 @@
-// -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tao
-//
-// = FILENAME
-//    Codeset_Translator_Factory_T.cpp
-//
-// = DESCRIPTION
-//    The template for creating a particular instance of a codeset translator
-//
-// = AUTHORS
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Codeset_Translator_Factory_T.cpp
+ *
+ *  The template for creating a particular instance of a codeset translator
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_T_CPP
 #define TAO_CODESET_TRANSLATOR_FACTORY_T_CPP
 
-#include "Codeset_Translator_Factory_T.h"
+#include "tao/Codeset/Codeset_Translator_Factory_T.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
+#include "ace/Log_Msg.h"
 
-template<class NCS_TO_TCS>
-TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::TAO_Codeset_Translator_Factory_T () :
-  translator_(0)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class NCS_TO_TCS>
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::~TAO_Codeset_Translator_Factory_T ()
@@ -42,7 +32,7 @@ TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init (int argc, ACE_TCHAR* argv[])
   this->TAO_Codeset_Translator_Factory::init (argc,argv);
   ACE_NEW_RETURN (translator_,NCS_TO_TCS,-1);
   if( TAO_debug_level > 0 )
-    ACE_DEBUG((LM_DEBUG, "TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init() entered\n"));
+    TAOLIB_DEBUG((LM_DEBUG, "TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init() entered\n"));
   return 0;
 }
 
@@ -85,5 +75,7 @@ TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::assign (TAO_OutputCDR *cdr) const
       this->assign_i(cdr,this->translator_);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_CODESET_TRANSLATOR_FACTORY_T_CPP */

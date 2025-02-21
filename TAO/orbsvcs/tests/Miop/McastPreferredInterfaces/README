@@ -1,0 +1,31 @@
+
+
+Note that this test is originates from Prismtech's Scarab ID TAO#876 (but entered as tao859_regression);
+a bit of a mix up on the original commits.
+
+This test tries to verify that the -ORBPreferredInterface option functions correctly for UIPMC.
+There's an obvious elephant in the room in that we can't rely on any build/test machine having
+more than one (or any?) interfaces so the test, such as it is, is relying on side effects.
+Theres had to be versions of this test: IPv4 and IPv6 and they're pretty different. Additionally
+the IPv6 behaviour isn't even consistent across platforms and the build machines can't be relied
+upon to have and 'proper' (non-zero conf link local) IPv6 configuration. Basically, if you
+want some confidence this is working I'd advise running it on a machine with multiple interfaces with
+the debug level turned up and some tweaking. Possibly with wireshark too.
+
+The IPv4 test specifies an -ORBPreferredInterface 225.*=127.0.0.1. It seems that on both Linux & Windows
+the UIPMCAcceptor doesn't receive anything from that interface so this prevents delivery and this failure
+is effectivel what's tested for. If the server receives no notice to shutdown it stays running and it's 'worked',
+Then the same test runs over without the prefrerred interface, the communication succeeds & the server
+shutsdown. We deduce the feature as effective.
+
+With IPv6 windows seems to listen to all interfaces so no significant effects can be detected at all easily without
+wireshark & more than one real interface. On linux with only Link local addresses it was found that the null
+'default' interface doesn't work so the test checks that -ORBPreferredInterface honours a value of "eth0"
+(communication succeeds) vs "lo" (communication fails). Obviously this will go horribly wrong if your interfaces
+are called something else. With the windows test these unrecognised interface names are not being grokked but
+things succeed regardless. It's been confirmed manually that when an interface name (Loopback Pseudo-Interface)
+or index # (e.g. 1) is specified it redirects the traffic.
+The new property -ORBListenOnAll is also specified to override the UIPMC server
+specifying a nil listen interface also. This was found to be preventing the Acceptor from opening at all with
+zero conf only link local addresses & the most recent Linux distrib available to test. Older ones don't seem
+to need this.

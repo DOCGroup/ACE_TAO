@@ -3,8 +3,6 @@
 /**
  *  @file   Forwarder.h
  *
- *  $Id$
- *
  *  @brief  This class implements ImR's forwarding ServantLocator
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -17,53 +15,95 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantLocatorC.h"
-
-#include "tao/PI_Server/PI_Server.h"
+#include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
+#include "tao/Messaging/Messaging.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-
+#include "ImR_ResponseHandler.h"
+#include "locator_export.h"
 
 class ImR_Locator_i;
 
+//----------------------------------------------------------------------------
 /**
- * @class ImR_Forwarder:
+ * @class ImR_DSI_ReplyHandler
  *
- * @brief Implementation Repository Forwarder
+ * @brief specialized reply handler for forward requests that need to send an
+ * ior
  *
- * This class provides a ServantLocator implementation that
- * is used to handle arbitrary calls and forward them to the
- * correct place.
+ * Used to send either a Location_Forward exception, or some other error
+ * exception.
  */
-class ImR_Forwarder
-  : public PortableServer::ServantLocator,
-    public CORBA::LocalObject
+
+// forward declare the types used to manage AMH/DSI coupling
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+class TAO_AMH_DSI_Response_Handler;
+typedef TAO_AMH_DSI_Response_Handler * TAO_AMH_DSI_Response_Handler_ptr;
+class TAO_AMH_DSI_Response_Handler_var;
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+class ImR_DSI_ResponseHandler : public ImR_ResponseHandler
 {
 public:
-  ImR_Forwarder (ImR_Locator_i& imr_impl);
+  ImR_DSI_ResponseHandler (const char *key,
+                        const char *server_name,
+                        CORBA::ORB_ptr orb,
+                        TAO_AMH_DSI_Response_Handler_ptr resp);
 
-  /// Called before the invocation begins.
-  virtual PortableServer::Servant preinvoke (
-    const PortableServer::ObjectId &oid,
-    PortableServer::POA_ptr poa,
-    const char * operation,
-    PortableServer::ServantLocator::Cookie &cookie
-    ACE_ENV_ARG_DECL
-  ) ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest));
+  virtual ~ImR_DSI_ResponseHandler ();
 
-  virtual void postinvoke (
-    const PortableServer::ObjectId & oid,
-    PortableServer::POA_ptr adapter,
-    const char * operation,
-    PortableServer::ServantLocator::Cookie the_cookie,
-    PortableServer::Servant the_servant
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    ) ACE_THROW_SPEC ((CORBA::SystemException));
+  void send_ior (const char *pior);
+  void send_exception (CORBA::Exception *ex);
 
-  void init(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+private:
+  void invoke_excep_i (CORBA::Exception *ex);
+
+  CORBA::String_var key_str_;
+  CORBA::String_var server_name_;
+  CORBA::ORB_var orb_;
+  TAO_AMH_DSI_Response_Handler_var resp_;
+};
+
+
+//---------------------------------------------------------------------------
+/**
+ * @class ImR_Forwarder
+ *
+ * @brief Implementation Repository Forwarder for AMH
+ *
+ * This class provides a Default servant implementation that is used to handle
+ * arbitrary calls and forward them to the correct place. Combinds DSI with
+ * AMH to ensure the handling thread is never blocked waiting for an upcall
+ * if one is necessary
+ */
+class Locator_Export ImR_DSI_Forwarder : public virtual TAO_DynamicImplementation
+{
+public:
+  ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
+  virtual ~ImR_DSI_Forwarder ();
+
+  virtual void _dispatch (TAO_ServerRequest& request,
+                          TAO::Portable_Server::Servant_Upcall *context);
+
+  void invoke (CORBA::ServerRequest_ptr request);
+
+  char * _primary_interface(const PortableServer::ObjectId&,
+                            PortableServer::POA_ptr);
+
+  void invoke (CORBA::ServerRequest_ptr request,
+               TAO_AMH_DSI_Response_Handler_ptr rh);
+
+  void invoke_get_interface(CORBA::ServerRequest_ptr request);
+
+  void invoke_primary_interface(CORBA::ServerRequest_ptr request);
+
+
+  void init(CORBA::ORB_ptr orb);
 
 private:
   /// Where we find out where to forward to.
@@ -75,5 +115,6 @@ private:
   /// Variable to save the ORB reference passed to the constr.
   CORBA::ORB_ptr orb_;
 };
+
 
 #endif /* IMR_FORWARDER_H */

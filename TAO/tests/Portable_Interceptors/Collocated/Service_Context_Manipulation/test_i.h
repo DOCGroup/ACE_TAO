@@ -2,8 +2,6 @@
 /**
  *  @file   test_i.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang
  */
 //=============================================================================
@@ -21,33 +19,22 @@
  */
 class Visual_i : public virtual POA_Test_Interceptors::Visual
 {
-
 public:
-
   Visual_i (CORBA::ORB_ptr orb);
 
-  void normal (CORBA::Long arg
-               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void normal (CORBA::Long arg);
 
-  void nothing (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void nothing ();
 
-  void user (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Test_Interceptors::Silly));
+  void user ();
 
-  void system (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void system ();
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
 private:
-
   /// The ORB pseudo-reference (for shutdown).
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* SERVICE_CONTEXT_MANIPULATION_COLLOCATED_TEST_I_H */

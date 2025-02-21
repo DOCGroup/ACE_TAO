@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 
 #ifdef _SECURITY_ADMIN_IDL_
 #define _SECURITY_ADMIN_IDL_

@@ -4,8 +4,6 @@
 /**
  *  @file   Portable_Group_Map.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================
@@ -14,18 +12,21 @@
 #define TAO_PORTABLE_GROUP_MAP_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Null_Mutex.h"
+
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager_T.h"
-
-#include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 
 #include "tao/Object_KeyC.h"
+
+#include "ace/Null_Mutex.h"
+#include "ace/Hash_Map_Manager_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ServerRequest;
 
@@ -39,7 +40,6 @@ class TAO_ServerRequest;
 class TAO_PortableGroup_Export TAO_GroupId_Hash
 {
 public:
-
   /// Returns hash value.
   u_long operator () (const PortableGroup::TagGroupTaggedComponent *id) const;
 };
@@ -54,7 +54,6 @@ public:
 class TAO_PortableGroup_Export TAO_GroupId_Equal_To
 {
 public:
-
   /// Returns 1 if equal.
   int operator () (const PortableGroup::TagGroupTaggedComponent *lhs,
                    const PortableGroup::TagGroupTaggedComponent *rhs) const;
@@ -68,7 +67,6 @@ public:
 class TAO_PortableGroup_Export TAO_Portable_Group_Map
 {
 public:
-
   /**
    * @struct Map_Entry
    *
@@ -84,30 +82,27 @@ public:
   };
 
   /// Constructor.
-  TAO_Portable_Group_Map ();
+  TAO_Portable_Group_Map () = default;
 
   /// Destructor.
-  ~TAO_Portable_Group_Map (void);
+  ~TAO_Portable_Group_Map ();
 
   /// Add a GroupId->ObjectKey mapping to the map.
   /// This function takes ownership of the memory pointed to be group_id
   void add_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent *group_id,
-                                   const TAO::ObjectKey &key
-                                   ACE_ENV_ARG_DECL);
+                                   const TAO::ObjectKey &key);
 
 
   /// Remove a GroupId->ObjectKey mapping from the map.
   void remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* group_id,
-                                      const TAO::ObjectKey &key
-                                      ACE_ENV_ARG_DECL);
+                                      const TAO::ObjectKey &key);
 
   /// Dispatch a request to all of the ObjectIds that belong to
   /// the specified group.
   void dispatch (PortableGroup::TagGroupTaggedComponent* group_id,
                                     TAO_ORB_Core *orb_core,
                                     TAO_ServerRequest &request,
-                                    CORBA::Object_out forward_to
-                                    ACE_ENV_ARG_DECL);
+                                    CORBA::Object_out forward_to);
 
   /// Id hash map.
   typedef ACE_Hash_Map_Manager_Ex<
@@ -120,11 +115,13 @@ public:
 
 protected:
   /// Lock used to synchronize access to map_.
-  TAO_SYNCH_MUTEX lock_;
+  TAO_SYNCH_RW_MUTEX lock_;
 
   /// Id map.
   GroupId_Table map_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 //#if defined (__ACE_INLINE__)
 //# include "Portable_Group_Map.i"

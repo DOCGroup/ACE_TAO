@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Reactive_Pulling_Strategy.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
@@ -15,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_Pulling_Strategy.h"
+#include "orbsvcs/CosEvent/CEC_Pulling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,6 +26,9 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_ProxyPullConsumer;
 class TAO_CEC_EventChannel;
@@ -83,8 +85,8 @@ public:
                        const void* arg);
 
   // = The CEC_Pulling_Strategy methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
 
 private:
   /// The Adapter for the reactor events
@@ -123,21 +125,19 @@ class TAO_CEC_Pull_Event : public TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer>
 {
 public:
   TAO_CEC_Pull_Event (TAO_CEC_ConsumerAdmin *consumer_admin,
-                      TAO_CEC_SupplierControl *control);
+                      TAO_CEC_SupplierControl *);
 
-  virtual void work (TAO_CEC_ProxyPullConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_ProxyPullConsumer *consumer);
 
 private:
   /// Used to propagate the events.
   TAO_CEC_ConsumerAdmin *consumer_admin_;
-
-  /// To report failed or dead suppliers
-  TAO_CEC_SupplierControl *supplier_control_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_Reactive_Pulling_Strategy.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

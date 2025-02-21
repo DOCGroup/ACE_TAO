@@ -3,8 +3,6 @@
 /**
  *  @file    CORBA_methods.h
  *
- *  $Id$
- *
  *  Declarations of common methods in the CORBA namespace.
  *
  *  @author Jeff Parsons
@@ -16,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,75 +23,44 @@
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_Export
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
   class ORB;
   typedef ORB *ORB_ptr;
 
-  class Environment;
-  typedef Environment *Environment_ptr;
-
-  class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
-
-  class NVList;
-  typedef NVList *NVList_ptr;
-
-  class Object;
-  typedef Object *Object_ptr;
-
-  class Principal;
-  typedef Principal *Principal_ptr;
-
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
-
-  class OperationDef;
-  typedef OperationDef *OperationDef_ptr;
-
   /**
-   * @name ORB Initialization
-   *
-   * These could be combined into a single version using an environment macro.
-   *
+   * ORB Initialization
    */
-  //@{
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       char * argv[],
                                       const char * orb_name = 0);
+#if defined (ACE_USES_WCHAR)
+  extern TAO_Export ORB_ptr ORB_init (int & argc,
+                                      wchar_t * argv[],
+                                      const char * orb_name = 0);
 
   extern TAO_Export ORB_ptr ORB_init (int & argc,
-                                      char * argv[],
-                                      const char * orb_name,
-                                      Environment & ACE_TRY_ENV);
-  //@}
+                                      wchar_t * argv[],
+                                      const wchar_t * orb_name);
+#endif
 
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
+  template<typename T> inline Boolean is_nil (T x)
+  {
+    return x == 0;
+  }
 
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Object_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Object_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
+  template<typename T> inline void release (T x)
+  {
+    if (x)
+      {
+        x->_decr_refcount ();
+      }
+  }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,0 +1,10 @@
+#include "orb.idl"
+
+interface Messenger
+{
+  void send_message(in CORBA::OctetSeq user_name);
+  //OctetSeq is defined in $TAO_ROOT/tao/orb.idl inside the module CORBA
+  //like this: typedef sequence<octet> OctetSeq;
+
+  oneway void shutdown ();
+};

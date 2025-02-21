@@ -3,8 +3,6 @@
 /**
  *  @file   Supplier.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -23,6 +21,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
+#include "ace/High_Res_Timer.h"
 
 /**
  * @class EC_Supplier
@@ -52,43 +51,40 @@ public:
 
   /// The types of the event is chosen by the driver, based on the
   /// cookie and the <event_number>
-  void send_event (int event_number
-                   ACE_ENV_ARG_DECL);
+  void send_event (int event_number);
 
   /// Send <event> to the EC.
-  void send_event (const RtecEventComm::EventSet& event
-                   ACE_ENV_ARG_DECL);
+  void send_event (const RtecEventComm::EventSet& event);
 
   /// Set the event type and source in <event>
   void send_event (int event_number,
                    const RtecEventComm::Event& event);
 
   /// Send a shutdown event.
-  void send_shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void send_shutdown ();
 
   /// Connect using a <supplier_admin> and publications (<qos>)
   /// computed by the user
   virtual void connect (
         RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
         const RtecEventChannelAdmin::SupplierQOS& qos,
-        int shutdown_event_type
-        ACE_ENV_ARG_DECL);
+        int shutdown_event_type);
 
   /// Connect using the current consumer_proxy (useful for reconnect test)
   virtual void connect (
         const RtecEventChannelAdmin::SupplierQOS& qos,
-        int shutdown_event_type
-        ACE_ENV_ARG_DECL);
+        int shutdown_event_type);
 
   /// Disconnect from the EC, also deactivates the object
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
 
   /// Disconnect from the EC, also deactivates the object
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown ();
 
   /// Dump the results...
-  virtual void dump_results (const char* name,
-                             ACE_UINT32 global_scale_factor);
+  virtual void dump_results (
+    const ACE_TCHAR* name,
+    ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
   /// Add our statistics to <stats>
   void accumulate (ACE_Throughput_Stats& stats) const;
@@ -98,8 +94,7 @@ public:
                    RtecEventComm::Event& event);
 
   // = The PushSupplier methods
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
 
 private:
   /// Class we forward to.
@@ -161,7 +156,7 @@ public:
                     ACE_Thread_Manager* thr_mgr = 0);
 
   /// The svc call
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The supplier

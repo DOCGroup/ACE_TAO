@@ -1,0 +1,28 @@
+
+
+DIOP - UDP Based Pluggable Protocol - Example
+=============================================
+
+This example tests the UDP Pluggable Protocol (DIOP) implementation by
+sending oneway requests to a server.  The server in turn replies to
+the client with the request ID, he got on the invocation. The client
+therefore implements the same object to handle replies.
+
+To start the test do the following:
+
+  server -o ior_file -ORBEndpoint diop://:1306
+
+  client -k file://ior_file -ORBEndpoint diop://:1305
+
+or just run the Perl Script
+
+  run_test.pl
+
+To test proper dispatching functionality of requests from several
+clients just start several clients in the same way, but with different
+ports
+
+The CORBA object implemenation checks the request ID for sequential
+ordering. If a request arrives out of order, it will note it - on
+client as well as on server side.
+

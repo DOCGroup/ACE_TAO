@@ -1,22 +1,12 @@
-/* -*- C++ -*- */
-// $Id$
-
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    Consumer_Handler.h
-//
-// = DESCRIPTION
-//    Definition of the Callback_Qouter Consumer Client class, Consumer_Handler.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Consumer_Handler.h
+ *
+ *  Definition of the Callback_Qouter Consumer Client class, Consumer_Handler.
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef CONSUMER_HANDLER_H
 #define CONSUMER_HANDLER_H
@@ -39,100 +29,99 @@
 class Consumer_Input_Handler;
 class Consumer_Signal_Handler;
 
+/**
+ * @class Consumer_Handler
+ *
+ * @brief Callback Quoter Consumer Client class.
+ *
+ * Connects to the Callback Quoter server and
+ * registers the Consumer object with the it
+ * and receives the stock status from the Notifier.
+ */
 class Consumer_Handler
 {
-  // = TITLE
-  //    Callback Quoter Consumer Client class.
-  //
-  // = DESCRIPTION
-  //    Connects to the Callback Quoter server and
-  //    registers the Consumer object with the it
-  //    and receives the stock status from the Notifier.
-
 public:
-  // = Initialization and termination methods.
-  Consumer_Handler (void);
-  // Constructor.
+  /// Constructor.
+  Consumer_Handler ();
 
-  ~Consumer_Handler (void);
-  // Destructor.
+  /// Destructor.
+  ~Consumer_Handler ();
 
-  int init (int argc, char *argv[]);
-  // Initialize the client communication with the server.
+  /// Initialize the client communication with the server.
+  int init (int argc, ACE_TCHAR *argv[]);
 
-  int run (void);
-  // Start the ORB object.
+  /// Start the ORB object.
+  int run ();
 
-  const char *stock_name_;
-  // the name of the stock the consumer is interested in.
+  /// the name of the stock the consumer is interested in.
+  ACE_CString stock_name_;
 
+  /// the desired price of the stock.
   int threshold_value_;
-  // the desired price of the stock.
 
+  /// Server object ptr.
   Notifier_var server_;
-  // Server object ptr.
 
-  Consumer_i *consumer_servant_;
-  // The consumer object.
+  /// The consumer object.
+  Consumer_i *consumer_servant_ {};
 
+  /// Pointer to the consumer object registered with the ORB.
   Callback_Quoter::Consumer_var consumer_var_;
-  // Pointer to the consumer object registered with the ORB.
 
-  ACE_Reactor* reactor_used (void) const;
-  // This method gives the reactor pointer.
+  /// This method gives the reactor pointer.
+  ACE_Reactor* reactor_used () const;
 
+  /// Flag which notes whether the consumer has got registered with the
+  /// Notifier-server.
   int registered_;
-  // Flag which notes whether the consumer has got registered with the
-  // Notifier-server.
 
+  /// Flag which notes whether the consumer has got unregistered from
+  /// the Notifier-server.
   int unregistered_;
-  // Flag which notes whether the consumer has got unregistered from
-  // the Notifier-server.
 
 private:
-
+  /// Our orb.
   CORBA::ORB_var orb_;
-  // Our orb.
 
-  int read_ior (char *filename);
-  // Function to read the server IOR from a file.
+  /// Function to read the server IOR from a file.
+  int read_ior (ACE_TCHAR *filename);
 
-  int parse_args (void);
-  // Parse the command line arguments.  Returns 0 on success, -1 on
-  // error.
+  /// Parse the command line arguments.  Returns 0 on success, -1 on
+  /// error.
+  int parse_args ();
 
-  int via_naming_service (void);
-  // This method initialises the naming service and registers the
-  // object with the POA.
+  /// This method initializes the naming service and registers the
+  /// object with the POA.
+  int via_naming_service ();
 
+  /// # of arguments on the command line.
   int argc_;
-  // # of arguments on the command line.
 
-  char **argv_;
-  // arguments from command line.
+  /// arguments from command line.
+  ACE_TCHAR **argv_;
 
-  char *ior_;
-  // IOR of the obj ref of the server.
+  /// IOR of the obj ref of the server.
+  ACE_TCHAR *ior_;
 
+  /// Flag for server shutdown.
   int shutdown_;
-  // Flag for server shutdown.
 
+  /// An instance of the name client used for resolving the factory
+  /// objects.
   TAO_Naming_Client naming_services_client_;
-  // An instance of the name client used for resolving the factory
-  // objects.
 
+  /// This variable denotes whether the naming service
+  /// is used or not.
   int use_naming_service_;
-  // This variable denotes whether the naming service
-  // is used or not.
 
- Consumer_Input_Handler *consumer_input_handler_;
-  // Reference to the input_event_handler.
+  /// Reference to the input_event_handler.
+  Consumer_Input_Handler *consumer_input_handler_;
 
- Consumer_Signal_Handler *consumer_signal_handler_;
-  // Reference to the signal_event_handler.
+  /// Reference to the signal_event_handler.
+  Consumer_Signal_Handler *consumer_signal_handler_;
 
+  /// Is the example interactive?
   int interactive_;
-  // Is the example interactive?
 };
 
 #endif /* CONSUMER_HANDLER_H */

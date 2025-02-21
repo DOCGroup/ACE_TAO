@@ -4,8 +4,6 @@
 /**
  *  @file   Profile.h
  *
- *  $Id$
- *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
@@ -24,8 +22,14 @@
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Refcounted_ObjectKey.h"
 #include "tao/Service_Callbacks.h"
+#include <atomic>
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_MProfile;
 class TAO_Stub;
 class TAO_Endpoint;
@@ -35,9 +39,6 @@ namespace CORBA
 {
   /// Forward declaration of PolicyList
   class PolicyList;
-
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
 }
 
 /**
@@ -51,7 +52,6 @@ namespace CORBA
 class TAO_Export TAO_Profile
 {
 public:
-
   /// Constructor
   TAO_Profile (CORBA::ULong tag,
                TAO_ORB_Core *orb_core,
@@ -60,52 +60,50 @@ public:
   /**
    * @name Non virtual methods for the profile classes.
   */
-
   //@{
   /// The tag, each concrete class will have a specific tag value.
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// Return a pointer to this profile's version.  This object
   /// maintains ownership.
-  const TAO_GIOP_Message_Version &version (void) const;
+  const TAO_GIOP_Message_Version &version () const;
 
   /// Get a pointer to the TAO_ORB_Core.
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   /// Increase the reference count by one on this object.
-  CORBA::ULong _incr_refcnt (void);
+  unsigned long _incr_refcnt ();
 
   /// Decrement the object's reference count.  When this count goes to
   /// 0 this object will be deleted.
-  CORBA::ULong _decr_refcnt (void);
+  unsigned long _decr_refcnt ();
 
   /// Keep a pointer to the forwarded profile
   void forward_to (TAO_MProfile *mprofiles);
 
   /// MProfile accessor
-  TAO_MProfile* forward_to (void);
+  TAO_MProfile* forward_to ();
 
   /// Access the tagged components, notice that they they could be
   /// empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
-  const TAO_Tagged_Components& tagged_components (void) const;
-  TAO_Tagged_Components& tagged_components (void);
+  const TAO_Tagged_Components& tagged_components () const;
+  TAO_Tagged_Components& tagged_components ();
 
   /// Add the given tagged component to the profile.
-  void add_tagged_component (const IOP::TaggedComponent &component
-                             ACE_ENV_ARG_DECL);
+  void add_tagged_component (const IOP::TaggedComponent &component);
 
   /**
    * Return the current addressing mode for this profile.
    * In almost all cases, this is TAO_Target_Specification::Key_Addr.
    */
-  CORBA::Short addressing_mode (void) const;
+  CORBA::Short addressing_mode () const;
 
   /// @deprecated Return a reference to the Object Key.
-  const TAO::ObjectKey &object_key (void) const;
+  const TAO::ObjectKey &object_key () const;
 
   /// Obtain the object key, return 0 if the profile cannot be parsed.
   /// The memory is owned by the caller!
-  TAO::ObjectKey *_key (void) const;
+  TAO::ObjectKey *_key () const;
   //@}
 
   /**
@@ -128,23 +126,20 @@ public:
    * return the reference to that. This method is necessary for GIOP
    * 1.2.
    */
-  IOP::TaggedProfile *create_tagged_profile (void);
+  IOP::TaggedProfile *create_tagged_profile ();
 
   /// This method sets the client exposed policies, i.e., the ones
   /// propagated in the IOR, for this profile.
-  virtual void policies (CORBA::PolicyList *policy_list
-                         ACE_ENV_ARG_DECL);
+  virtual void policies (CORBA::PolicyList *policy_list);
 
   /// Accessor for the client exposed policies of this profile.
-  //virtual CORBA::PolicyList&  policies (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void  get_policies (CORBA::PolicyList &policy_list
-                              ACE_ENV_ARG_DECL);
+  virtual void  get_policies (CORBA::PolicyList &policy_list);
 
   /// Returns true if this profile can specify multicast endpoints.
-  virtual int supports_multicast (void) const;
+  virtual int supports_multicast () const;
 
   /// Returns true if this profile supports non blocking oneways
-  virtual bool supports_non_blocking_oneways (void) const;
+  virtual bool supports_non_blocking_oneways () const;
 
   /**
    * Set the addressing mode if a remote servant replies with
@@ -173,28 +168,26 @@ public:
    * addressing mode.  Given that the addressing mode is checked in
    * the critical path, this decision seems like a good thing.
    */
-  virtual void addressing_mode (CORBA::Short addr_mode
-                                ACE_ENV_ARG_DECL);
+  virtual void addressing_mode (CORBA::Short addr_mode);
 
   /// The object key delimiter.
-  virtual char object_key_delimiter (void) const = 0;
+  virtual char object_key_delimiter () const = 0;
 
   /// Initialize this object using the given input string.
   /// Supports URL style of object references
-  virtual void parse_string (const char *string
-                             ACE_ENV_ARG_DECL);
+  virtual void parse_string (const char *string);
 
   /// Return a string representation for this profile.  Client must
   /// deallocate memory. Only one endpoint is included into the
   /// string.
-  virtual char* to_string (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual char* to_string () const = 0;
 
   /**
    * Encodes this profile's endpoints into a tagged component.
    * This is done only if RTCORBA is enabled, since currently this is
    * the only case when we have more than one endpoint per profile.
    */
-  virtual int encode_endpoints (void) = 0;
+  virtual int encode_endpoints () = 0;
 
   /**
    * Encodes this profile's endpoints into protocol specific tagged
@@ -202,17 +195,57 @@ public:
    * endpoints on profiles. The only known implementation is IIOP, using
    * TAG_ALTERNATE_IIOP_ADDRESS components.
    */
-  virtual int encode_alternate_endpoints (void);
+  virtual int encode_alternate_endpoints ();
 
   /**
-   * Return pointer to this profile's endpoint.  If the profile
+   * Return a pointer to this profile's endpoint.  If the profile
    * contains more than one endpoint, i.e., a list, the method returns
    * the head of the list.
    */
-  virtual TAO_Endpoint *endpoint (void) = 0;
+  virtual TAO_Endpoint *endpoint () = 0;
+
+
+  /**
+   * Return a pointer to this profile's endpoint.  If the most derived
+   * profile type uses an endpoint that is a type that does not derive
+   * from the endpoint type of the base profile, then this method returns
+   * the base type's endpoint. For example, SSLIOP_Profile derives from
+   * IIOP_Profile, but SSLIOP_Endpoint does not derive from IIOP_Endpoint.
+   * Because SSLIOP is tagged the same as IIOP, this method is required
+   * to facilitate the Endpoint Policy's filtering function.
+   * The default implementation of base_endpoint simply returns endpoint.
+   */
+  virtual TAO_Endpoint *base_endpoint ();
 
   /// Return how many endpoints this profile contains.
-  virtual CORBA::ULong endpoint_count (void) const = 0;
+  virtual CORBA::ULong endpoint_count () const = 0;
+
+  /**
+   * Return the first endpoint in the list that matches some filtering
+   * constraint, such as IPv6 compatibility for IIOP endpoints. This
+   * method is implemented in terms of TAO_Endpoint::next_filtered().
+   */
+  TAO_Endpoint *first_filtered_endpoint ();
+
+  /// Return the next filtered endpoint in the list after the one
+  /// passed in. This method is implemented in terms of
+  /// TAO_Endpoint;:next_filtered(). If the supplied source endpoint
+  /// is null, this returns the first filtered endpoint.
+  TAO_Endpoint *next_filtered_endpoint (TAO_Endpoint *source);
+
+  /**
+   * Remove the provided endpoint from the profile. Some
+   * subclasses of TAO_Profile already have a protocol-specific
+   * version of remove_endpoint, but this generic interface is
+   * required. The default implementation is a no-op. Protocol
+   * maintainers wishing to add support for the EndpointPolicy must
+   * implement remove_generic_endpoint to call their protocol-specific
+   * version of remove_endpoint
+   */
+  virtual void remove_generic_endpoint (TAO_Endpoint *ep);
+
+  /// Add a protocol-agnostic endpoint
+  virtual void add_generic_endpoint (TAO_Endpoint *ep);
 
   /// Verify profile equivalance.
   /**
@@ -226,14 +259,19 @@ public:
    */
   CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
 
+  /**
+   * Compare the object key for this profile with that of
+   * another. This is weaker than is_equivalent
+   */
+  CORBA::Boolean compare_key (const TAO_Profile *other) const;
+
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL) = 0;
+  virtual CORBA::ULong hash (CORBA::ULong max) = 0;
   //@}
 
 protected:
   /// If you have a virtual method you need a virtual dtor.
-  virtual ~TAO_Profile (void);
+  virtual ~TAO_Profile ();
 
   /**
    * @name Protected template methods.
@@ -246,17 +284,16 @@ protected:
   virtual void create_profile_body (TAO_OutputCDR &cdr) const = 0;
 
   /**
-   * Helper for <decode>.  Decodes endpoints from a tagged component.
+   * Helper for decode().  Decodes endpoints from a tagged component.
    * Decode only if RTCORBA is enabled.  Furthermore, we may not find
    * TAO_TAG_ENDPOINTS component, e.g., if we are talking to nonRT
    * version of TAO or some other ORB.  This is not an error, and we
    * must proceed.  Return 0 on success and -1 on failure.
    */
-  virtual int decode_endpoints (void) = 0;
+  virtual int decode_endpoints () = 0;
 
   /// Protocol specific implementation of parse_string ()
-  virtual void parse_string_i (const char *string
-                               ACE_ENV_ARG_DECL) = 0;
+  virtual void parse_string_i (const char *string) = 0;
   //@}
 
   /// To be used by inherited classes
@@ -288,24 +325,22 @@ protected:
   CORBA::ULong hash_service_i (CORBA::ULong m);
 
 private:
-
   /// This object keeps ownership of this object
-  TAO_MProfile *forward_to_i (void);
+  TAO_MProfile *forward_to_i ();
 
   /// Verify that the current ORB's configuration supports tagged
   /// components in IORs.
-  void verify_orb_configuration (ACE_ENV_SINGLE_ARG_DECL);
+  void verify_orb_configuration ();
 
   /// Verify that the given profile supports tagged components,
   /// i.e. is not a GIOP 1.0 profile.
-  void verify_profile_version (ACE_ENV_SINGLE_ARG_DECL);
+  void verify_profile_version ();
 
-  // Profiles should not be copied!
-  ACE_UNIMPLEMENTED_FUNC (TAO_Profile (const TAO_Profile&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Profile&))
+  // Profiles should not be copied or assigned!
+  TAO_Profile (const TAO_Profile&);
+  void operator= (const TAO_Profile&);
 
 protected:
-
   /// IIOP version number.
   TAO_GIOP_Message_Version version_;
 
@@ -324,31 +359,34 @@ protected:
   /// Our tagged profile
   IOP::TaggedProfile *tagged_profile_;
 
-  /// object_key associated with this profile.
+  /// Object_key associated with this profile.
   TAO::Refcounted_ObjectKey *ref_object_key_;
 
 private:
   /// IOP protocol tag.
-  CORBA::ULong tag_;
+  CORBA::ULong const tag_;
 
   /// Pointer to the ORB core
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// The TAO_MProfile which contains the profiles for the forwarded
   /// object.
   TAO_MProfile* forward_to_;
 
-  /// Mutex to protect reference count.
-  ACE_Lock *refcount_lock_;
-
   /// Number of outstanding references to this object.
-  CORBA::ULong refcount_;
+  std::atomic<uint32_t> refcount_;
+
+  /// A lock that protects creation of the tagged profile
+  TAO_SYNCH_MUTEX tagged_profile_lock_;
+
+  /// Having (tagged_profile_ != 0) doesn't mean yet that
+  /// tagged_profile_ building is finished.
+  bool tagged_profile_created_;
 };
 
 // A helper class to handle the various kinds of octet sequences used
 // inside the ORB.
-
-typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
+typedef TAO::unbounded_value_sequence<CORBA::Octet> TAO_opaque;
 
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const TAO_opaque&);
@@ -377,25 +415,22 @@ public:
                        TAO_ORB_Core *orb_core);
 
   // = The TAO_Profile methods look above
-  virtual void parse_string (const char *string
-                             ACE_ENV_ARG_DECL);
-  virtual char object_key_delimiter (void) const;
-  virtual char* to_string (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void parse_string (const char *string);
+  virtual char object_key_delimiter () const;
+  virtual char* to_string () const;
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
-  virtual int encode_endpoints (void);
-  virtual const TAO::ObjectKey &object_key (void) const;
-  virtual TAO::ObjectKey *_key (void) const;
-  virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL);
+  virtual int encode_endpoints ();
+
+  virtual TAO::ObjectKey *_key () const;
+  virtual TAO_Endpoint *endpoint ();
+  virtual CORBA::ULong endpoint_count () const;
+  virtual CORBA::ULong hash (CORBA::ULong max);
 
   virtual int decode_profile (TAO_InputCDR &cdr);
-  virtual int decode_endpoints (void);
+  virtual int decode_endpoints ();
 
 protected:
-
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile* other_profile);
   virtual TAO_Service_Callbacks::Profile_Equivalence is_equivalent_hook (
                                            const TAO_Profile* other_profile);
@@ -403,14 +438,15 @@ protected:
 private:
   virtual void create_profile_body (TAO_OutputCDR &encap) const;
 
-  virtual void parse_string_i (const char *string
-                               ACE_ENV_ARG_DECL);
+  virtual void parse_string_i (const char *string);
 private:
   TAO_opaque body_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Profile.i"
+# include "tao/Profile.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

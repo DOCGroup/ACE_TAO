@@ -3,8 +3,6 @@
 /**
  *  @file    FT_FaultAnalyzer.h
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *
  *  @author Steve Totten <totten_s@ociweb.com>
@@ -25,6 +23,8 @@
 #include "FT_ReplicationManagerLib_export.h"
 #include "orbsvcs/CosNotifyCommC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -33,7 +33,6 @@ namespace TAO
   */
   class TAO_ReplicationManagerLib_Export FT_FaultAnalyzer
   {
-
   public:
     /**
     * Default constructor.
@@ -46,7 +45,6 @@ namespace TAO
     virtual ~FT_FaultAnalyzer ();
 
   public:
-
     /**
     * Validate event type to make sure it is one we can handle.
     * @param event The structured fault event, as from the Fault Notifier.
@@ -74,10 +72,10 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
   };
-
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

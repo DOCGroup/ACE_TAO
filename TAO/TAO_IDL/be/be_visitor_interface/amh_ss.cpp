@@ -2,26 +2,21 @@
 /**
 *  @file   amh_ss.cpp
 *
-*  $Id$
-*
 *  Specialized interface visitor for AMH.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface,
-           amh_ss,
-           "$Id$")
+#include "interface.h"
 
 be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface_ss (ctx)
 {
 }
 
-be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss (void)
+be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss ()
 {
 }
 
@@ -43,7 +38,7 @@ int
 be_visitor_amh_interface_ss::visit_interface (be_interface *node)
 {
   // Do not generate AMH classes for any sort of implied IDL.
-  if (node->original_interface () != 0)
+  if (node->original_interface () != nullptr)
     {
       return 0;
     }
@@ -66,51 +61,37 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << non_amh_name.c_str () << "*" << be_nl
       << full_skel_name
-      << "::_this (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
+      << "::_this ()" << be_nl
       << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);"
-      << be_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
+      << "TAO_Stub_Auto_Ptr stub (this->_create_stub ());" << be_nl;
 
-  *os << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl
-      << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
-      << be_nl
-      << "CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
+  *os << "::CORBA::Boolean _tao_opt_colloc = "
       << "stub->servant_orb_var ()->orb_core ()->"
-      << "optimize_collocation_objects ();" << be_uidt_nl << be_nl
-      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-      << "tmp," << be_nl
-      << "CORBA::Object (stub, _tao_opt_colloc, this)," << be_nl
-      << "0" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << "optimize_collocation_objects ();" << be_nl
+      << "::CORBA::Object_var obj = "
+      << "new (std::nothrow) ::CORBA::Object (stub.get (), _tao_opt_colloc, this);" << be_nl
+      << "if (obj.ptr ())" << be_idt_nl
+      << "{" << be_idt_nl;
 
-  *os << "CORBA::Object_var obj = tmp;" << be_nl
-      << "(void) safe_stub.release ();" << be_nl << be_nl;
-
-  *os << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
-      << "return" << be_idt_nl;
+  *os << "(void) stub.release ();" << be_nl;
 
   if (!node->is_abstract ())
     {
-      *os << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
+      *os << "return TAO::Narrow_Utils<::" << node->name () << ">::unchecked_narrow (";
     }
   else
     {
-      *os << "TAO::AbstractBase_Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
+      *os << "return TAO::AbstractBase_Narrow_Utils<::" << node->name () << ">::unchecked_narrow (";
     }
-  *os << be_idt << be_idt_nl
-      << "obj.in ()," << be_nl
-      << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}";
+  *os << "obj.in ());" << be_nl;
 
+  *os << be_uidt_nl
+      << "}"
+      << be_uidt_nl << "return {};" << be_uidt_nl << "}";
 }
 
 void
@@ -122,32 +103,21 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest & req," << be_nl
-      << "void * context" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "TAO_ServerRequest &req," << be_nl
+      << "TAO::Portable_Server::Servant_Upcall *context)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl
-      << "this->asynchronous_upcall_dispatch (" << be_idt << be_idt_nl
-      << "req," << be_nl
-      << "context," << be_nl
-      << "this" << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+      << "this->asynchronous_upcall_dispatch ("
+      << "req,"
+      << "context,"
+      << "this"
+      << ");" << be_uidt_nl
       << "}";
 }
-
-void
-be_visitor_amh_interface_ss::generate_send_reply (TAO_OutStream * os)
-{
-  *os << be_nl << be_nl
-      << "server_request.tao_send_reply ();";
-}
-
 
 int
 be_visitor_amh_interface_ss::generate_amh_classes (be_interface *)
@@ -177,7 +147,7 @@ public:
 };
 
 TAO_IDL_Downcast_Implementation_Worker::
-TAO_IDL_Downcast_Implementation_Worker (void)
+TAO_IDL_Downcast_Implementation_Worker ()
 {
 }
 
@@ -193,7 +163,7 @@ emit (be_interface * /* derived */,
   ACE_CString amh_name ("POA_");
 
   // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
+  char *buf = nullptr;
   base->compute_full_name ("AMH_", "", buf);
   amh_name += buf;
   // buf was allocated using ACE_OS::strdup, so we must use free instead
@@ -214,25 +184,23 @@ class TAO_IDL_Copy_Ctor_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  TAO_IDL_Copy_Ctor_Worker (void);
+  TAO_IDL_Copy_Ctor_Worker ();
 
   virtual int emit (be_interface *base,
                     TAO_OutStream *os,
                     be_interface *derived);
 };
 
-TAO_IDL_Copy_Ctor_Worker::
-TAO_IDL_Copy_Ctor_Worker (void)
+TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker ()
 {
 }
 
 int
-TAO_IDL_Copy_Ctor_Worker::
-emit (be_interface *derived,
+TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
       TAO_OutStream *os,
       be_interface *base)
 {
-  if (derived == base)
+  if (derived == base || derived->nmembers () > 0)
     {
       return 0;
     }
@@ -241,11 +209,11 @@ emit (be_interface *derived,
 
   if (base->is_nested ())
     {
-      be_decl *scope;
-      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
+      be_decl *scope = nullptr;
+      scope = dynamic_cast<be_scope*> (base->defined_in ())->decl ();
 
-      *os << "ACE_NESTED_CLASS (POA_" << scope->name () << ", AMH_"
-          << base->local_name () << ") (rhs)";
+      *os << "POA_" << scope->name () << "::AMH_"
+          << base->local_name () << " (rhs)";
     }
   else
     {
@@ -255,7 +223,7 @@ emit (be_interface *derived,
       ACE_CString amh_name ("POA_");
 
       // @@ The following code is *NOT* exception-safe.
-      char *buf = 0;
+      char *buf = nullptr;
       base->compute_full_name ("AMH_", "", buf);
       amh_name += buf;
       // buf was allocated by ACE_OS::strdup, so we need to use free
@@ -278,12 +246,11 @@ be_visitor_amh_interface_ss::generate_copy_ctor (be_interface *node,
   node->get_insert_queue ().reset ();
   node->get_del_queue ().reset ();
 
-
   // Insert ourselves in the queue.
   if (node->get_insert_queue ().enqueue_tail (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interface::traverse_inheritance_graph - "
+                         "(%N:%l) be_interface::generate_copy_ctor - "
                          "error generating entries\n"),
                         -1);
     }
@@ -298,7 +265,7 @@ ACE_CString
 be_visitor_amh_interface_ss::generate_flat_name (be_interface *node)
 {
   // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
+  char *buf = nullptr;
   node->compute_flat_name ("AMH_", "", buf);
 
   // @@ This whole thing would be more efficient if we could pass the
@@ -329,7 +296,7 @@ be_visitor_amh_interface_ss::generate_full_skel_name (be_interface *node)
   ACE_CString result ("POA_");
 
   // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
+  char *buf = nullptr;
   node->compute_full_name ("AMH_", "", buf);
   result += buf;
   // buf was allocated using ACE_OS::strdup, so we must use free instead

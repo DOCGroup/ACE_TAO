@@ -4,8 +4,6 @@
 /**
  *  @file   Fault_Detector_T.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -13,11 +11,13 @@
 #ifndef FAULT_DETECTOR_T_H
 #define FAULT_DETECTOR_T_H
 
-#include "Fault_Detector.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
 class Fault_Detector_T : public Fault_Detector
@@ -33,12 +33,8 @@ private:
   virtual int init_acceptor();
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Fault_Detector_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Fault_Detector_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp"
 
 #endif

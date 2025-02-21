@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Second_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -7,26 +5,18 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "ace/Auto_Event.h"
 
-
-ACE_RCSID (Two_Objects,
-           Second_i,
-           "$Id$")
-
-
 Second_i::Second_i (CORBA::ORB_ptr orb,
                     CORBA::ULong len, ACE_Auto_Event &two_way_done)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     length_(len),
     two_way_done_(two_way_done)
 {
-
 }
 
 Two_Objects_Test::Octet_Seq *
-Second_i::twoway_method (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Second_i::twoway_method ()
 {
-  Two_Objects_Test::Octet_Seq  *preply_mesg;
+  Two_Objects_Test::Octet_Seq  *preply_mesg = 0;
 
   ACE_NEW_THROW_EX (preply_mesg,
                     Two_Objects_Test::Octet_Seq (this->length_),
@@ -34,7 +24,7 @@ Second_i::twoway_method (ACE_ENV_SINGLE_ARG_DECL)
 
   Two_Objects_Test::Octet_Seq_var reply_var =
     preply_mesg;
-  reply_var->length ( this->length_);
+  reply_var->length (this->length_);
 
   ACE_DEBUG ((LM_DEBUG,
               "Twoway servant : (%P|%t) two way method called.\n"));
@@ -55,9 +45,8 @@ Second_i::twoway_method (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Second_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Second_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) about to shutdown the orb\n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

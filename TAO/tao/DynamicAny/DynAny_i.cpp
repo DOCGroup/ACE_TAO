@@ -1,34 +1,35 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
-#include "DynAny_i.h"
-#include "DynAnyFactory.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/DynamicAny/DynAny_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
+
+#include "tao/DynamicAny/DynAnyUtils_T.h"
+
 #include "tao/CDR.h"
+
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (DynamicAny,
-           DynAny_i,
-           "$Id$")
-
-
-TAO_DynAny_i::TAO_DynAny_i (void)
+TAO_DynAny_i::TAO_DynAny_i (CORBA::Boolean allow_truncation)
+  : TAO_DynCommon (allow_truncation)
 {
 }
 
-TAO_DynAny_i::~TAO_DynAny_i (void)
+TAO_DynAny_i::~TAO_DynAny_i ()
 {
 }
 
 void
-TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc
-                              ACE_ENV_ARG_DECL)
+TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
 {
   // Check to see if it's a simple type.
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc);
+
   switch (tk)
   {
     case CORBA::tk_null:
@@ -50,18 +51,37 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc
     case CORBA::tk_objref:
     case CORBA::tk_string:
     case CORBA::tk_wstring:
+    case CORBA::tk_longdouble:
       break;
+    case CORBA::tk_sequence:
+      if (tc->equivalent (CORBA::_tc_BooleanSeq)
+        || tc->equivalent (CORBA::_tc_OctetSeq)
+        || tc->equivalent (CORBA::_tc_CharSeq)
+        || tc->equivalent (CORBA::_tc_WCharSeq)
+        || tc->equivalent (CORBA::_tc_ShortSeq)
+        || tc->equivalent (CORBA::_tc_UShortSeq)
+        || tc->equivalent (CORBA::_tc_LongSeq)
+        || tc->equivalent (CORBA::_tc_ULongSeq)
+        || tc->equivalent (CORBA::_tc_LongLongSeq)
+        || tc->equivalent (CORBA::_tc_ULongLongSeq)
+        || tc->equivalent (CORBA::_tc_FloatSeq)
+        || tc->equivalent (CORBA::_tc_DoubleSeq)
+        || tc->equivalent (CORBA::_tc_LongDoubleSeq))
+        {
+          // Otherwise fall through.
+          break;
+        }
+      ACE_FALLTHROUGH;
     default:
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
   }
 }
 
 void
-TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
-                                    ACE_ENV_ARG_DECL)
+TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc);
+
   switch (tk)
   {
     case CORBA::tk_null:
@@ -81,14 +101,12 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
     case CORBA::tk_ulong:
       this->any_ <<= static_cast<CORBA::ULong> (0);
       break;
-#if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_longlong:
       this->any_ <<= static_cast<CORBA::LongLong> (0);
       break;
     case CORBA::tk_ulonglong:
       this->any_ <<= static_cast<CORBA::ULongLong> (0);
       break;
-#endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_boolean:
       this->any_ <<= CORBA::Any::from_boolean (0);
       break;
@@ -107,6 +125,12 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
     case CORBA::tk_double:
       this->any_ <<= static_cast<CORBA::Double> (0);
       break;
+    case CORBA::tk_longdouble:
+      {
+        CORBA::LongDouble temp = ACE_CDR_LONG_DOUBLE_INITIALIZER;
+        this->any_ <<= temp;
+        break;
+      }
     case CORBA::tk_any:
       this->any_._tao_set_typecode (CORBA::_tc_null);
       break;
@@ -141,27 +165,22 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
 }
 
 void
-TAO_DynAny_i::init_common (void)
+TAO_DynAny_i::init_common ()
 {
-  this->ref_to_component_ = 0;
-  this->container_is_destroying_ = 0;
-  this->has_components_ = 0;
-  this->destroyed_ = 0;
+  this->ref_to_component_ = false;
+  this->container_is_destroying_ = false;
+  this->has_components_ = false;
+  this->destroyed_ = false;
   this->current_position_ = -1;
   this->component_count_ = 0;
 }
 
 void
-TAO_DynAny_i::init (CORBA::TypeCode_ptr tc
-                    ACE_ENV_ARG_DECL)
+TAO_DynAny_i::init (CORBA::TypeCode_ptr tc)
 {
-  this->check_typecode (tc
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_typecode (tc);
 
-  this->set_to_default_value (tc
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->set_to_default_value (tc);
 
   this->init_common ();
 
@@ -169,13 +188,10 @@ TAO_DynAny_i::init (CORBA::TypeCode_ptr tc
 }
 
 void
-TAO_DynAny_i::init (const CORBA::Any& any
-                    ACE_ENV_ARG_DECL)
+TAO_DynAny_i::init (const CORBA::Any& any)
 {
   this->type_ = any.type ();
-  this->check_typecode (this->type_.in ()
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_typecode (this->type_.in ());
 
   this->init_common ();
 
@@ -185,8 +201,7 @@ TAO_DynAny_i::init (const CORBA::Any& any
 // ****************************************************************
 
 TAO_DynAny_i *
-TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref
-                       ACE_ENV_ARG_DECL_NOT_USED)
+TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
@@ -199,29 +214,18 @@ TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref
 // ****************************************************************
 
 void
-TAO_DynAny_i::from_any (const CORBA::Any &any
-                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
+TAO_DynAny_i::from_any (const CORBA::Any &any)
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::TypeCode_var any_tc = any.type ();
 
-  CORBA::Boolean equiv =
-    this->type_->equivalent (any_tc.in ()
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (!equiv)
+  if (!this->type_->equivalent (any_tc.in ()))
     {
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 
 // @@@ (JP) Spec also says we should check for illegal Any
@@ -232,15 +236,11 @@ TAO_DynAny_i::from_any (const CORBA::Any &any
 }
 
 CORBA::Any_ptr
-TAO_DynAny_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynAny_i::to_any ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::Any_ptr retval;
@@ -248,51 +248,37 @@ TAO_DynAny_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any (this->any_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return retval;
 }
 
 CORBA::Boolean
-TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
-                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs);
 
   if (rhs_n == 0)
     {
-      return 0;
+      return false;
     }
 
-  CORBA::Boolean equiv = this->type_->equivalent (rhs_n->type_.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (!equiv)
+  if (!this->type_->equivalent (rhs_n->type_.in ()))
     {
-      return 0;
+      return false;
     }
 
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (this->type_.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (this->type_.in ());
 
   switch (tk)
     {
     case CORBA::tk_null:
     case CORBA::tk_void:
-      return 1;
+      return true;
     case CORBA::tk_short:
       {
         CORBA::Short rhs_v;
@@ -331,7 +317,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         rhs_n->any_ >>= rhs_v;
         CORBA::Float lhs_v;
         this->any_ >>= lhs_v;
-        return (lhs_v == rhs_v);
+        return ACE::is_equal (lhs_v, rhs_v);
       }
     case CORBA::tk_double:
       {
@@ -339,7 +325,15 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         rhs_n->any_ >>= rhs_v;
         CORBA::Double lhs_v;
         this->any_ >>= lhs_v;
-        return (lhs_v == rhs_v);
+        return ACE::is_equal (lhs_v, rhs_v);
+      }
+    case CORBA::tk_longdouble:
+      {
+        CORBA::LongDouble rhs_v;
+        rhs_n->any_ >>= rhs_v;
+        CORBA::LongDouble lhs_v;
+        this->any_ >>= lhs_v;
+        return ACE::is_equal (lhs_v, rhs_v);
       }
     case CORBA::tk_longlong:
       {
@@ -397,24 +391,22 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         this->any_ >>= lhs_v;
 
         DynamicAny::DynAny_var rhs_dyn =
-          TAO_DynAnyFactory::make_dyn_any (*rhs_v
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+            rhs_v->_tao_get_typecode (),
+            *rhs_v,
+            this->allow_truncation_ );
 
         DynamicAny::DynAny_var lhs_dyn =
-          TAO_DynAnyFactory::make_dyn_any (*lhs_v
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+            lhs_v->_tao_get_typecode (),
+            *lhs_v,
+            this->allow_truncation_ );
 
-        CORBA::Boolean b = rhs_dyn->equal (lhs_dyn.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+        CORBA::Boolean const b = rhs_dyn->equal (lhs_dyn.in ());
 
-        rhs_dyn->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+        rhs_dyn->destroy ();
 
-        lhs_dyn->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+        lhs_dyn->destroy ();
 
         return b;
       }
@@ -425,8 +417,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         CORBA::TypeCode_ptr lhs_v;
         this->any_ >>= lhs_v;
         // See CORBA 2.4.2 - must use equal() here.
-        return lhs_v->equal (lhs_v
-                             ACE_ENV_ARG_PARAMETER);
+        return lhs_v->equal (lhs_v);
       }
     case CORBA::tk_objref:
       {
@@ -434,19 +425,15 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         rhs_n->any_ >>= CORBA::Any::to_object (rhs_v);
         CORBA::Object_ptr lhs_v;
         this->any_ >>= CORBA::Any::to_object (lhs_v);
-        return lhs_v->_is_equivalent (lhs_v
-                                      ACE_ENV_ARG_PARAMETER);
+        return lhs_v->_is_equivalent (lhs_v);
       }
     case CORBA::tk_string:
       {
         CORBA::TypeCode_var unaliased_tc =
-          TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
         CORBA::ULong bound =
-          unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          unaliased_tc->length ();
 
         const char *rhs_v, *lhs_v;
         CORBA::Boolean rstatus, lstatus;
@@ -463,10 +450,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
           }
         else
           {
-            rstatus = rhs_n->any_ >>= CORBA::Any::to_string (rhs_v,
-                                                             bound);
-            lstatus = this->any_ >>= CORBA::Any::to_string (lhs_v,
-                                                            bound);
+            rstatus = rhs_n->any_ >>= CORBA::Any::to_string (rhs_v, bound);
+            lstatus = this->any_ >>= CORBA::Any::to_string (lhs_v, bound);
 
             if ((rstatus && lstatus) == 0)
               {
@@ -479,13 +464,10 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
     case CORBA::tk_wstring:
       {
         CORBA::TypeCode_var unaliased_tc =
-          TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
         CORBA::ULong bound =
-          unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          unaliased_tc->length ();
 
         const CORBA::WChar *rhs_v, *lhs_v;
         CORBA::Boolean rstatus, lstatus;
@@ -515,6 +497,295 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
 
         return ACE_OS::wscmp (rhs_v, lhs_v) == 0;
       }
+    case CORBA::tk_sequence:
+      {
+        // The only way we can get here is if we have a basic sequence (see check_typecode)
+        CORBA::TypeCode_var unaliased_tc =
+          TAO_DynAnyFactory::strip_alias (this->type_.in ());
+
+        CORBA::TCKind tk_content = TAO_DynAnyFactory::unalias (unaliased_tc->content_type());
+
+        switch (tk_content)
+          {
+            case CORBA::tk_short:
+              {
+                CORBA::ShortSeq_var lvalues(this->get_short_seq());
+                CORBA::ShortSeq_var rvalues(rhs_n->get_short_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      return 0;
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_long:
+              {
+                CORBA::LongSeq_var lvalues(this->get_long_seq());
+                CORBA::LongSeq_var rvalues(rhs_n->get_long_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_ushort:
+              {
+                CORBA::UShortSeq_var lvalues(this->get_ushort_seq());
+                CORBA::UShortSeq_var rvalues(rhs_n->get_ushort_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_ulong:
+              {
+                CORBA::ULongSeq_var lvalues(this->get_ulong_seq());
+                CORBA::ULongSeq_var rvalues(rhs_n->get_ulong_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_float:
+              {
+                CORBA::FloatSeq_var lvalues(this->get_float_seq());
+                CORBA::FloatSeq_var rvalues(rhs_n->get_float_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (ACE::is_inequal (lvalues[i], rvalues[i]))
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_double:
+              {
+                CORBA::DoubleSeq_var lvalues(this->get_double_seq());
+                CORBA::DoubleSeq_var rvalues(rhs_n->get_double_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (ACE::is_inequal (lvalues[i], rvalues[i]))
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_longlong:
+              {
+                CORBA::LongLongSeq_var lvalues(this->get_longlong_seq());
+                CORBA::LongLongSeq_var rvalues(rhs_n->get_longlong_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_ulonglong:
+              {
+                CORBA::ULongLongSeq_var lvalues(this->get_ulonglong_seq());
+                CORBA::ULongLongSeq_var rvalues(rhs_n->get_ulonglong_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_boolean:
+              {
+                CORBA::BooleanSeq_var lvalues(this->get_boolean_seq());
+                CORBA::BooleanSeq_var rvalues(rhs_n->get_boolean_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_char:
+              {
+                CORBA::CharSeq_var lvalues(this->get_char_seq());
+                CORBA::CharSeq_var rvalues(rhs_n->get_char_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_wchar:
+              {
+                CORBA::WCharSeq_var lvalues(this->get_wchar_seq());
+                CORBA::WCharSeq_var rvalues(rhs_n->get_wchar_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            case CORBA::tk_octet:
+              {
+                CORBA::OctetSeq_var lvalues(this->get_octet_seq());
+                CORBA::OctetSeq_var rvalues(rhs_n->get_octet_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+
+            case CORBA::tk_longdouble:
+              {
+                CORBA::LongDoubleSeq_var lvalues(this->get_longdouble_seq());
+                CORBA::LongDoubleSeq_var rvalues(rhs_n->get_longdouble_seq());
+
+                if (lvalues->length() != rvalues->length())
+                  {
+                    return 0;
+                  }
+
+                for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
+                  {
+                    if (lvalues[i] != rvalues[i])
+                      {
+                        return 0;
+                      }
+                  }
+                return 1; // If we get to here, all was equal
+              }
+              break;
+
+            default:
+            // Should never get here
+            break;
+          }
+      }
+
+      break;
     default:
       break; // Cannot happen...
     }
@@ -523,14 +794,11 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
 }
 
 void
-TAO_DynAny_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynAny_i::destroy ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (!this->ref_to_component_ || this->container_is_destroying_)
@@ -541,18 +809,14 @@ TAO_DynAny_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
 
 DynamicAny::DynAny_ptr
-TAO_DynAny_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
+TAO_DynAny_i::current_component ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                    DynamicAny::DynAny::_nil ());
+  throw DynamicAny::DynAny::TypeMismatch ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,40 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  idlflags += -Sp
+  IDL_Files {
+    Stock_Quoter_Types.idl
+    Stock_Quoter.idl
+    UDPTest.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, iortable, strategies {
+  after += *idl
+  Source_Files {
+    Stock_Quoter_i.cpp
+    UDPTest_i.cpp
+    Stock_Quoter_Server.cpp
+  }
+  Source_Files {
+    Stock_QuoterC.cpp
+    Stock_QuoterS.cpp
+    UDPTestC.cpp
+    UDPTestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, strategies {
+  after += *idl
+  Source_Files {
+    Stock_Quoter_Client.cpp
+  }
+  Source_Files {
+    Stock_QuoterC.cpp
+    UDPTestC.cpp
+  }
+  IDL_Files {
+  }
+}

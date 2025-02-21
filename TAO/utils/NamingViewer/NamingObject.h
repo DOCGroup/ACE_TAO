@@ -1,4 +1,3 @@
-// $Id$
 // NamingObject.h: interface for the CNamingObject class.
 
 //////////////////////////////////////////////////////////////////////
@@ -18,19 +17,19 @@ public:
   CNamingObject (CosNaming::Name& Name,
                  CORBA::Object_ptr pObject,
                  bool Context);
-  ~CNamingObject (void);
+  ~CNamingObject ();
 
-  CosNaming::NamingContext_ptr NamingContext (void);
+  CosNaming::NamingContext_ptr NamingContext ();
 
   // Returns a duplicated naming context ptr if this is a context or
   // nil if its not.
-  CORBA::Object_ptr Object (void);
+  CORBA::Object_ptr Object ();
 
   // returns a non duplicated object reference
-  CosNaming::Name& Name (void);
+  CosNaming::Name& Name ();
   // returns the name of the object
 
-  bool IsContext (void) { return m_Context; }
+  bool IsContext () { return m_Context; }
 
   // Returns true if this is a context
 private:

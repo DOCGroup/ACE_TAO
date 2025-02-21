@@ -1,0 +1,207 @@
+#ifndef __IF_EXE_M_R_STRUCTS_DEFINED
+#define __IF_EXE_M_R_STRUCTS_DEFINED
+
+#include "IF_EXE_M_R_Enums.idl"
+
+module IF_EXE_M_R {
+  struct CORBA_LatLongFOOB {
+      double latitude;
+      double longitude;
+      double FOOB;
+    };
+    struct CORBA_PositionXYZ {
+      double x;
+      double y;
+      double z;
+  };
+
+  struct CORBA_FOOGIMCMS {
+    FOOBMode_E FOOBReference;
+    string FOOIID;
+    FOOAMode_E FOOAReference;
+    string FOOINotice;
+    ENUM_FOOD FOOD;
+    string startPosRemark;
+    double manFOOA;
+    ENUM_FOOF manStartCoverage;
+    string endPosRemark;
+    ENUM_FOOF manEndCoverage;
+    unsigned long datasetVersion;
+    double maximum2EconomyAngle;
+    CORBA_LatLongFOOB startPosition;
+    CORBA_LatLongFOOB endPosition;
+  };
+
+
+  struct CORBA_FOOMControl {
+    string ecName;
+    ENUM_FOOMMode ecMode;
+    double ecParameter;
+    string ecCommand1;
+    string ecCommand2;
+  };
+
+  typedef sequence <CORBA_FOOMControl> CORBA_FOOMList;
+
+  struct CORBA_BaseArc {
+    ENUM_FOOD FOOD;
+    string FOOIID;
+    CORBA_LatLongFOOB startPosition;
+    unsigned long maxHorizontalFOOU;
+    CORBA_LatLongFOOB endPosition;
+    unsigned long maxVerticalFOOU;
+    CORBA_LatLongFOOB arcMiddlePosition;
+    double averageFOOHFOOB;
+    FOOBMode_E FOOBReference;
+    unsigned long datasetVersion;
+    double startFOOA;
+    double endFOOA;
+    double FOOTDistance;
+    double FOOTDuration;
+    FOOAMode_E FOOAReference;
+    double FOOTEnergyConsum;
+    ENUM_ControlMode FOOAControlMode;
+    ENUM_FOONDirection arcDirection;
+    ENUM_Selection economyMode;
+    ENUM_TransitionStatus transitionStatus;
+    ENUM_CL_FOOSMode cl_FOOSMode;
+    CORBA_FOOMList activeComponents;
+    ENUM_FOOKType FOOKTypeStart;
+    ENUM_FOOKType FOOKTypeEnd;
+  };
+
+
+  struct CORBA_BaseCircle {
+    ENUM_FOOD FOOD;
+    string FOOIID;
+    unsigned long maxHorizontalFOOU;
+    CORBA_LatLongFOOB startPosition;
+    unsigned long maxVerticalFOOU;
+    CORBA_LatLongFOOB endPosition;
+    double averageFOOHFOOB;
+    CORBA_LatLongFOOB circleMiddlePosition;
+    unsigned long datasetVersion;
+    FOOBMode_E FOOBReference;
+    double FOONFOOA;
+    double FOOTDistance;
+    double FOOTDuration;
+    FOOAMode_E FOOAReference;
+    double FOOTEnergyConsum;
+    ENUM_FOONDirection circleDirection;
+    ENUM_Selection economyMode;
+    ENUM_TransitionStatus transitionStatus;
+    CORBA_FOOMList activeComponents;
+    ENUM_CL_FOOSMode cl_FOOSMode;
+    ENUM_FOOKType FOOKTypeStart;
+    ENUM_FOOKType FOOKTypeEnd;
+  };
+
+
+  struct CORBA_BaseCross {
+    string FOOIID;
+    ENUM_FOOD FOOD;
+    unsigned long maxHorizontalFOOU;
+    CORBA_LatLongFOOB startPosition;
+    unsigned long maxVerticalFOOU;
+    CORBA_LatLongFOOB endPosition;
+    double crossFOOA;
+    CORBA_LatLongFOOB FOOG1EndPosition;
+    CORBA_LatLongFOOB circle1CentrePosition;
+    double averageFOOHFOOB;
+    double crossPitchAngle;
+    CORBA_LatLongFOOB FOOG2StartPosition;
+    unsigned long datasetVersion;
+    CORBA_LatLongFOOB FOOG2EndPosition;
+    double FOOTDistance;
+    CORBA_LatLongFOOB circle2CentrePosition;
+    double FOOTDuration;
+    CORBA_LatLongFOOB FOOG3StartPosition;
+    double FOOTEnergyConsum;
+    FOOBMode_E FOOBReferenceStartPosition;
+    FOOAMode_E FOOAReference;
+    ENUM_Selection economyMode;
+    ENUM_TransitionStatus transitionStatus;
+    CORBA_FOOMList activeComponents;
+    ENUM_Selection crossReachEndPosition;
+    FOOBMode_E FOOBReferenceEndPosition;
+    ENUM_CL_FOOSMode cl_FOOSMode;
+    ENUM_FOOKType FOOKTypeStart;
+    ENUM_FOOKType FOOKTypeEnd;
+  };
+
+  struct CORBA_BaseFOOG {
+    ENUM_FOOD FOOD;
+    string FOOIID;
+    CORBA_LatLongFOOB startPosition;
+    CORBA_LatLongFOOB endPosition;
+    FOOBMode_E FOOBReferenceStartPosition;
+    double averageFOOHFOOB;
+    ENUM_ControlMode FOOBControlMode;
+    unsigned long datasetVersion;
+    unsigned long maxHorizontalFOOU;
+    unsigned long maxVerticalFOOU;
+    double FOOTDistance;
+    double startFOOA;
+    double FOOTDuration;
+    double endFOOA;
+    double FOOTEnergyConsum;
+    FOOAMode_E FOOAReference;
+    ENUM_ControlMode FOOAControlMode;
+    FOOBMode_E FOOBReferenceEndPosition;
+    ENUM_Selection economyMode;
+    ENUM_CL_FOOSMode cl_FOOSMode;
+    ENUM_TransitionStatus transitionStatus;
+    ENUM_FOOKType FOOKTypeStart;
+    CORBA_FOOMList activeComponents;
+    ENUM_FOOKType FOOKTypeEnd;
+  };
+
+  union CORBA_FOOIData switch(ENUM_FOOD) {
+    case IMCMS_FOOG: CORBA_FOOGIMCMS manFOOGIMCMS;
+    case BASE_ARC: CORBA_BaseArc FOOVArc;
+    case BASE_CIRCLE: CORBA_BaseCircle FOOVCircle;
+    case BASE_CROSS: CORBA_BaseCross FOOVCross;
+    case BASE_FOOG: CORBA_BaseFOOG FOOVFOOG;
+  };
+
+  struct CORBA_FOOIInPlan {
+    ENUM_FOOD type;
+    CORBA_FOOIData data;
+  };
+
+  typedef sequence <CORBA_FOOIInPlan> CORBA_FOOIList;
+
+  struct CORBA_FOOJPosition {
+    double FOOB;
+    double longitude;
+    double latitude;
+    string remark;
+    FOOBMode_E FOOBReference;
+  };
+
+  typedef sequence <CORBA_FOOJPosition> CORBA_FOOJPosList;
+  typedef sequence <long> long_sequence;
+  struct CORBA_FOOHPlanHeader {
+    long FOOHOffset;
+    double FOOHFOOA;
+    FOOAMode_E FOOAReference;
+    long_sequence FOOGSpacing;
+    unsigned long datasetVersion;
+    ENUM_FOOF FOOF;
+    CORBA_FOOJPosList centreLine;
+    ENUM_FOOJType FOOGingProcedure;
+    double maximum2EconomyAngle;
+  };
+
+  struct Test_Struct {
+    long l;
+    any whatEver;
+  };
+
+  interface IF_ExeCtrlData {
+    void foo( in Test_Struct ts);
+    oneway void shutdown ();
+  };
+};
+
+#endif

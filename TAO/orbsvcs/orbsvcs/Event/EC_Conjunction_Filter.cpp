@@ -1,8 +1,6 @@
-// $Id$
+#include "orbsvcs/Event/EC_Conjunction_Filter.h"
 
-#include "EC_Conjunction_Filter.h"
-
-ACE_RCSID(Event, EC_Conjunction_Filter, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const int bits_per_word = sizeof(TAO_EC_Conjunction_Filter::Word) * CHAR_BIT;
 
@@ -26,7 +24,7 @@ TAO_EC_Conjunction_Filter::
   this->clear ();
 }
 
-TAO_EC_Conjunction_Filter::~TAO_EC_Conjunction_Filter (void)
+TAO_EC_Conjunction_Filter::~TAO_EC_Conjunction_Filter ()
 {
   TAO_EC_Filter** end = this->children_ + this->n_;
   for (TAO_EC_Filter** i = this->children_;
@@ -34,18 +32,18 @@ TAO_EC_Conjunction_Filter::~TAO_EC_Conjunction_Filter (void)
        ++i)
     {
       delete *i;
-      *i = 0;
+      *i = nullptr;
     }
   delete[] this->children_;
-  this->children_ = 0;
+  this->children_ = nullptr;
   this->n_ = 0;
 
   delete[] this->bitvec_;
-  this->bitvec_ = 0;
+  this->bitvec_ = nullptr;
 }
 
 int
-TAO_EC_Conjunction_Filter::all_received (void) const
+TAO_EC_Conjunction_Filter::all_received () const
 {
   Word* i = this->bitvec_;
   for (;
@@ -59,35 +57,33 @@ TAO_EC_Conjunction_Filter::all_received (void) const
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Conjunction_Filter::begin (void) const
+TAO_EC_Conjunction_Filter::begin () const
 {
   return this->children_;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Conjunction_Filter::end (void) const
+TAO_EC_Conjunction_Filter::end () const
 {
   return this->children_ + this->n_;
 }
 
 int
-TAO_EC_Conjunction_Filter::size (void) const
+TAO_EC_Conjunction_Filter::size () const
 {
   return static_cast<int> (this->n_);
 }
 
 int
 TAO_EC_Conjunction_Filter::filter (const RtecEventComm::EventSet& event,
-                                   TAO_EC_QOS_Info& qos_info
-                                   ACE_ENV_ARG_DECL)
+                                   TAO_EC_QOS_Info& qos_info)
 {
   ChildrenIterator end = this->end ();
   for (this->current_child_ = this->begin ();
        this->current_child_ != end;
        ++this->current_child_)
     {
-      int n = (*this->current_child_)->filter (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      int n = (*this->current_child_)->filter (event, qos_info);
       if (n != 0)
         return n;
     }
@@ -96,16 +92,14 @@ TAO_EC_Conjunction_Filter::filter (const RtecEventComm::EventSet& event,
 
 int
 TAO_EC_Conjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
-                                          TAO_EC_QOS_Info& qos_info
-                                          ACE_ENV_ARG_DECL)
+                                          TAO_EC_QOS_Info& qos_info)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
        ++i)
     {
-      int n = (*i)->filter_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      int n = (*i)->filter_nocopy (event, qos_info);
       if (n != 0)
         return n;
     }
@@ -114,8 +108,7 @@ TAO_EC_Conjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 
 void
 TAO_EC_Conjunction_Filter::push (const RtecEventComm::EventSet& event,
-                                 TAO_EC_QOS_Info& qos_info
-                                 ACE_ENV_ARG_DECL)
+                                 TAO_EC_QOS_Info& qos_info)
 {
   CORBA::Long pos = this->current_child_ - this->begin ();
   int w = pos / bits_per_word;
@@ -130,20 +123,19 @@ TAO_EC_Conjunction_Filter::push (const RtecEventComm::EventSet& event,
     {
       this->event_[l + i] = event[i];
     }
-  if (this->all_received () && this->parent () != 0)
-    this->parent ()->push_nocopy (this->event_, qos_info ACE_ENV_ARG_PARAMETER);
+  if (this->all_received () && this->parent () != nullptr)
+    this->parent ()->push_nocopy (this->event_, qos_info);
 }
 
 void
 TAO_EC_Conjunction_Filter::push_nocopy (RtecEventComm::EventSet& event,
-                                        TAO_EC_QOS_Info& qos_info
-                                        ACE_ENV_ARG_DECL)
+                                        TAO_EC_QOS_Info& qos_info)
 {
-  this->push (event, qos_info ACE_ENV_ARG_PARAMETER);
+  this->push (event, qos_info);
 }
 
 void
-TAO_EC_Conjunction_Filter::clear (void)
+TAO_EC_Conjunction_Filter::clear ()
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
@@ -167,7 +159,7 @@ TAO_EC_Conjunction_Filter::clear (void)
 }
 
 CORBA::ULong
-TAO_EC_Conjunction_Filter::max_event_size (void) const
+TAO_EC_Conjunction_Filter::max_event_size () const
 {
   CORBA::ULong n = 0;
   ChildrenIterator end = this->end ();
@@ -198,8 +190,9 @@ TAO_EC_Conjunction_Filter::can_match (
 int
 TAO_EC_Conjunction_Filter::add_dependencies (
       const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info&
-      ACE_ENV_ARG_DECL_NOT_USED)
+      const TAO_EC_QOS_Info&)
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

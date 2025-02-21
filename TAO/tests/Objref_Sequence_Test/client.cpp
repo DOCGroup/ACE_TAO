@@ -1,13 +1,12 @@
-//$Id$
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -26,39 +25,28 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-
-
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb  =
         CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         argv);
 
       if (parse_args (argc, argv) == -1)
         return -1;
 
       // Connect to the server
       CORBA::Object_var tmp =
-        orb->string_to_object(ior
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
-      Server_var server = Server::_narrow (tmp.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Server_var server = Server::_narrow (tmp.in ());
 
       // Create object instances
       // This portion of the test was given by Petr Tuma and am just
@@ -82,9 +70,7 @@ main (int argc, char *argv [])
           iAddSize = iSize - iOldSize;
 
           server->CreateExtra (iAddSize,
-                               vAddition.out ()
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                               vAddition.out ());
 
 
           vServers->length (iSize);
@@ -110,24 +96,18 @@ main (int argc, char *argv [])
       //------------- End of donated untouched section
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Call delete on the server \n"));
+                  "(%P|%t) Call delete on the server\n"));
 
-      server->DeleteExtra (vServers.in ()
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->DeleteExtra (vServers.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Calling shutdown \n"));
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+                  "(%P|%t) Calling shutdown\n"));
+      server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
-      ACE_CHECK_RETURN (-1);
+      ex._tao_print_exception ("");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

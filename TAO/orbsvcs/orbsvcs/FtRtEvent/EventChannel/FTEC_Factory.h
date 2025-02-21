@@ -4,8 +4,6 @@
 /**
  *  @file   FTEC_Factory.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -18,11 +16,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_FTEC_Basic_Factory : public TAO_EC_Default_Factory
 {
 public:
     /// Constructor
-  TAO_FTEC_Basic_Factory (void);
+  TAO_FTEC_Basic_Factory ();
   virtual TAO_EC_ConsumerAdmin*
       create_consumer_admin (TAO_EC_Event_Channel_Base*);
   virtual TAO_EC_SupplierAdmin*
@@ -39,6 +40,8 @@ public:
   virtual void
       destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
 

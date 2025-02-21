@@ -1,0 +1,24 @@
+// -*- IDL -*-
+
+/**
+ *  @file   Dynamic_Parameter.pidl
+ */
+
+// Piece of module Dynamic generated separately for use by
+// template argument helper classes.
+
+#ifndef _DYNAMIC_PARAMETER_IDL_
+#define _DYNAMIC_PARAMETER_IDL_
+
+#include "tao/ParameterMode.pidl"
+
+module Dynamic
+{
+  struct Parameter
+  {
+    any argument;
+    CORBA::ParameterMode mode;
+  };
+};
+
+#endif // _DYNAMIC_PARAMETER_IDL_

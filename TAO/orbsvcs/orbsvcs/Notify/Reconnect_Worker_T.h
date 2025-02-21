@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
 *  @file    Reconnect_Worker_T.h
-*
-*  $Id$
 *
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
@@ -20,6 +18,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
   /**
@@ -32,18 +32,14 @@ namespace TAO_Notify
     /// Constructor
     Reconnect_Worker();
 
-    // override virtual ESF_Worker method
-    virtual void work (TOPOOBJ* o ACE_ENV_ARG_DECL);
+    /// Override virtual ESF_Worker method
+    virtual void work (TOPOOBJ* o);
   };
 } // namespace TAO_Notify
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Reconnect_Worker_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Reconnect_Worker_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/Notify/Reconnect_Worker_T.cpp"
 
 #include /**/ "ace/post.h"
 

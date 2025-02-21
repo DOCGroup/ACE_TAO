@@ -5,7 +5,7 @@
 content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
 <title>TAO Implementation Repository</title>
-<!-- $Id$ -->
+<!--  -->
 </head>
 
 <body bgcolor="#FFFFFF" text="#000000" link="#0000FF"
@@ -118,11 +118,8 @@ vlink="#CC0000">
 <p>This document describes the proposed design of the TAO
 Implementation Repository, which was originally known as the
 reactivator/activation service. If you have any questions or
-comments on our design, please post them to the <a
-href="http://www.cs.wustl.edu/~schmidt/ACE-mail.html">ACE</a>
-mailing list &lt;<a href="mailto:ace-useres@cs.wustl.edu">ace-users@cs.wustl.edu</a>&gt;
-or send email to Darrell Brunsch &lt;<a
-href="mailto:brunsch@cs.wustl.edu">brunsch@cs.wustl.edu</a>&gt;.</p>
+comments on our design, please open an issue or discussion at <a
+href="https://github.com/DOCGroup/ACE_TAO">github</a>.</p>
 
 <h3><a name="PersistentandTransientIORs">Persistent and Transient
 IORs</a></h3>
@@ -368,7 +365,7 @@ Repository.&nbsp; </p>
 
 <p>For servers that move around or need to be restarted often,
 the IOR will contain a reference to the Implementation Repository
-with the object key of the server and the server name imbedded.
+with the object key of the server and the server name embedded.
 &nbsp; Once the client contacts the Implementation Repository, it
 will be forwarded to the correct object. This IOR will look like
 the following:</p>
@@ -504,20 +501,20 @@ Implementation Repository: </p>
   };
 
   exception Not_Found {};
-  // Object not found in the Implementation Repository  
-  
+  // Object not found in the Implementation Repository
+
   struct Environment_Variable
   {
     string name_;
     string value_;
   };
   // One environment variable
-  
+
   struct INET_Addr
   {
     unsigned short port_;
     unsigned long host_;
-  };      
+  };
   // The location of a server
 
   typedef sequence&lt;Environment_Variable&gt; Environment;
@@ -531,13 +528,13 @@ Implementation Repository: </p>
     string executable_name_;
     // Executable name
 
-    Command_Line_Options command_line_options_; 
+    Command_Line_Options command_line_options_;
     // Command line options
 
-    Environment environment_; 
+    Environment environment_;
     // Environment
 
-    string working_directory_;  
+    string working_directory_;
     // Working directory
 
     unsigned long creation_flags_;
@@ -548,7 +545,7 @@ Implementation Repository: </p>
   {
     oneway void ping ();
     // Used for checking for liveness of a server.  When the server receives
-    // this, it should send back a response indicating it is sill alive.  
+    // this, it should send back a response indicating it is sill alive.
     // Depending on the policy specified, a timeout can be reached where the
     // Implementation Repository will restart the server.
   };
@@ -570,7 +567,7 @@ Implementation Repository: </p>
       raises (Not_Found,
               Cannot_Activate);
       // Restart server that is named &lt;server&gt; and return the host/port
-      // 
+      //
       //
       // The &lt;Not_Found&gt; exception is raised when &lt;server&gt; is not found
       // in the Implementation Repository.  The &lt;Cannot_Activate&gt; exception
@@ -584,7 +581,7 @@ Implementation Repository: </p>
       //
       // The &lt;Already_Registered&gt; exception is raised when &lt;server&gt; has
       // already been registered with the Implementation Repository.
-      // 
+      //
       // The &lt;Object_Not_Persistent&gt; exception is raised when &lt;server&gt; is
       // not a Persistent Object Reference.
 
@@ -595,7 +592,7 @@ Implementation Repository: </p>
       //
       // The &lt;Already_Registered&gt; exception is raised when &lt;server&gt; has
       // already been registered with the Implementation Repository.
-      // 
+      //
       // The &lt;Object_Not_Persistent&gt; exception is raised when &lt;server&gt; is
       // not a Persistent Object Reference.
 
@@ -607,7 +604,7 @@ Implementation Repository: </p>
       // in the Implementation Repository.
 
     Profile server_is_running (in string server,
-                               in INET_Addr addr, 
+                               in INET_Addr addr,
                                in Ping_Object ping);
       // Used to notify the Implementation Repository that &lt;server&gt; is alive and
       // well at &lt;addr&gt;.
@@ -769,7 +766,7 @@ Persistent IOR</a></h3>
         profile will be tried.</li>
     <li>If the first profile is the Implementation Repository, or
         if the server profile failed, then it will be
-        contacted.&nbsp; The Implemenation Repository will then
+        contacted.&nbsp; The Implementation Repository will then
         return NOT_FOUND or will start up the server and return a
         Location Forward message.</li>
 </ul>
@@ -811,9 +808,7 @@ Repository.</p>
 
 <hr>
 
-<p>Last update to this document: $Date$</p>
-
-<p>Back to <a href="../releasenotes/">TAO Release Notes</a></p>
+<p>Back to <a href="../releasenotes/index.html">TAO Release Notes</a></p>
 
 <p>Back to <a href="index.html">Implementation Repository</a></p>
 </body>

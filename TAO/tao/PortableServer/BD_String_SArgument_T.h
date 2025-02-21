@@ -4,8 +4,6 @@
 /**
  *  @file    BD_String_SArgument_T.h
  *
- *  $Id$
- *
  *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
 //=============================================================================
@@ -23,6 +21,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Argument.h"
+#include "tao/Any_Insert_Policy_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -32,21 +33,19 @@ namespace TAO
    * @brief Template class for IN skeleton bd (w)string argument.
    *
    */
-  template<typename S,
-           typename S_var,
-           typename to_S,
-           typename from_S,
-           size_t BOUND>
-  class In_BD_String_SArgument_T : public Argument
+  template<typename S_var,
+           size_t BOUND,
+           template <typename> class Insert_Policy>
+  class In_BD_String_SArgument_T : public InArgument
   {
   public:
-    In_BD_String_SArgument_T (void);
+    In_BD_String_SArgument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const S * arg (void) const;
+    const typename S_var::s_traits::char_type * arg () const;
 
   private:
     S_var x_;
@@ -58,22 +57,20 @@ namespace TAO
    * @brief Template class for INOUT skeleton bd (w)string argument.
    *
    */
-  template<typename S,
-           typename S_var,
-           typename to_S,
-           typename from_S,
-           size_t BOUND>
-  class Inout_BD_String_SArgument_T : public Argument
+  template<typename S_var,
+           size_t BOUND,
+           template <typename> class Insert_Policy>
+  class Inout_BD_String_SArgument_T : public InoutArgument
   {
   public:
-    Inout_BD_String_SArgument_T (void);
+    Inout_BD_String_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    typename S_var::s_traits::char_type *& arg ();
 
   private:
     S_var x_;
@@ -85,22 +82,19 @@ namespace TAO
    * @brief Template class for INOUT skeleton bd (w)string argument.
    *
    */
-  template<typename S,
-           typename S_var,
-           typename S_out,
-           typename to_S,
-           typename from_S,
-           size_t BOUND>
-  class Out_BD_String_SArgument_T : public Argument
+  template<typename S_var,
+           size_t BOUND,
+           template <typename> class Insert_Policy>
+  class Out_BD_String_SArgument_T : public OutArgument
   {
   public:
-    Out_BD_String_SArgument_T (void);
+    Out_BD_String_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    typename S_var::s_traits::char_type *& arg ();
 
   private:
     S_var x_;
@@ -112,21 +106,19 @@ namespace TAO
    * @brief Template class for return skeleton value of bd (w)string.
    *
    */
-  template<typename S,
-           typename S_var,
-           typename to_S,
-           typename from_S,
-           size_t BOUND>
-  class Ret_BD_String_SArgument_T : public Argument
+  template<typename S_var,
+           size_t BOUND,
+           template <typename> class Insert_Policy>
+  class Ret_BD_String_SArgument_T : public RetArgument
   {
   public:
-    Ret_BD_String_SArgument_T (void);
+    Ret_BD_String_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    typename S_var::s_traits::char_type *& arg ();
 
   private:
     S_var x_;
@@ -138,90 +130,45 @@ namespace TAO
    * @brief Template class for skeleton argument traits of bounded (w)strings.
    *
    */
-  template<typename T,
-           typename T_var,
-           typename T_out,
-           typename to_T,
-           typename from_T,
-           size_t BOUND>
+  template<typename T_var,
+           size_t BOUND,
+           template <typename> class Insert_Policy>
   struct BD_String_SArg_Traits_T
   {
-    typedef T *                                   ret_type;
-    typedef const T *                             in_type;
-    typedef T *&                                  inout_type;
-    typedef T_out                                 out_type;
+    typedef typename T_var::s_traits::char_type *       ret_type;
+    typedef const typename T_var::s_traits::char_type * in_type;
+    typedef typename T_var::s_traits::char_type *&      inout_type;
+    typedef typename T_var::s_traits::string_out        out_type;
 
-    typedef In_BD_String_SArgument_T<T,
-                                     T_var,
-                                     to_T,
-                                     from_T,
-                                     BOUND>       in_arg_val;
-    typedef Inout_BD_String_SArgument_T<T,
-                                        T_var,
-                                        to_T,
-                                        from_T,
-                                        BOUND>    inout_arg_val;
-    typedef Out_BD_String_SArgument_T<T,
-                                      T_var,
-                                      T_out,
-                                      to_T,
-                                      from_T,
-                                      BOUND>      out_arg_val;
-    typedef Ret_BD_String_SArgument_T<T,
-                                      T_var,
-                                      to_T,
-                                      from_T,
-                                      BOUND>      ret_val;
+    typedef In_BD_String_SArgument_T<T_var,
+                                     BOUND,
+                                     Insert_Policy>     in_arg_val;
+    typedef Inout_BD_String_SArgument_T<T_var,
+                                        BOUND,
+                                        Insert_Policy>  inout_arg_val;
+    typedef Out_BD_String_SArgument_T<T_var,
+                                      BOUND,
+                                      Insert_Policy>    out_arg_val;
+    typedef Ret_BD_String_SArgument_T<T_var,
+                                      BOUND,
+                                      Insert_Policy>    ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef in_type                               in_arg_type;
-    typedef inout_type                            inout_arg_type;
-    typedef inout_type                            out_arg_type;
-    typedef inout_type                            ret_arg_type;
-
-  };
-
-  /**
-   *
-   * @brief Specializations for bounded (w)strings
-   *
-   */
-
-  template<size_t BOUND>
-  class BD_String_SArg_Traits
-    : public BD_String_SArg_Traits_T<CORBA::Char,
-                                     CORBA::String_var,
-                                     CORBA::String_out,
-                                     ACE_InputCDR::to_string,
-                                     ACE_OutputCDR::from_string,
-                                     BOUND>
-  {
-  };
-
-  template<size_t BOUND>
-  class BD_WString_SArg_Traits
-    : public BD_String_SArg_Traits_T<CORBA::WChar,
-                                     CORBA::WString_var,
-                                     CORBA::WString_out,
-                                     ACE_InputCDR::to_wstring,
-                                     ACE_OutputCDR::from_wstring,
-                                     BOUND>
-  {
+    typedef in_type                                     in_arg_type;
+    typedef inout_type                                  inout_arg_type;
+    typedef inout_type                                  out_arg_type;
+    typedef inout_type                                  ret_arg_type;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/BD_String_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/PortableServer/BD_String_SArgument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("BD_String_SArgument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

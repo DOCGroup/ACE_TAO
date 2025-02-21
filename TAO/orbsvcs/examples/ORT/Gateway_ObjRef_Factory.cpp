@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Gateway_ObjRef_Factory.h"
 
 Gateway_ObjRef_Factory::
@@ -12,24 +10,34 @@ Gateway_ObjRef_Factory (
   CORBA::add_ref (old_factory);
 }
 
+::CORBA::ValueBase *
+Gateway_ObjRef_Factory::_copy_value ()
+{
+  Gateway_ObjRef_Factory *ret_val= 0;
+  ACE_NEW_THROW_EX (
+    ret_val,
+    Gateway_ObjRef_Factory (
+      gateway_object_factory_.in (),
+      old_factory_
+    ),
+    ::CORBA::NO_MEMORY ()
+  );
+
+  return ret_val;
+}
+
 CORBA::Object_ptr
 Gateway_ObjRef_Factory::
 make_object (const char *interface_repository_id,
-             const PortableInterceptor::ObjectId & id
-             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+             const PortableInterceptor::ObjectId & id)
 {
   CORBA::Object_var object =
     this->old_factory_->make_object (interface_repository_id,
-                                     id
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                     id);
 
   CORBA::Object_ptr object_ptr =
     this->gateway_object_factory_->create_object (interface_repository_id,
-                                                  object.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                                  object.in ());
 
   return object_ptr;
 }

@@ -1,0 +1,8 @@
+// -*- MPC -*-
+project : csd_threadpool, taolib_with_idl {
+  after += csd_pt_testinf
+  includes += ../../CSD_Strategy
+  libs += CSD_PT_TestInf
+  libpaths += ../../CSD_Strategy/TestInf
+  idlflags += -I../../CSD_Strategy
+}

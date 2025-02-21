@@ -1,4 +1,3 @@
-// $Id$
 #include "Server_Worker.h"
 
 Server_Worker::Server_Worker (CORBA::ORB_ptr orb)
@@ -7,17 +6,14 @@ Server_Worker::Server_Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Server_Worker::svc (void)
+Server_Worker::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return 0;
 }

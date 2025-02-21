@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef ROUNDTRIP_H
 #define ROUNDTRIP_H
@@ -23,16 +20,12 @@ class Roundtrip
 
     // = The skeleton methods
     void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                      Test::Timestamp send_time
-                      ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+                      Test::Timestamp send_time);
 
-    void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                   ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
 
  private:
-    /// Use an ORB reference to conver strings to objects and shutdown
+    /// Use an ORB reference to convert strings to objects and shutdown
     /// the application.
     CORBA::ORB_var orb_;
 };

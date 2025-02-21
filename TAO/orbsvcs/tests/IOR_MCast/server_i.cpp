@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MCastC.h"
 #include "MCastS.h"
 #include "server_i.h"
@@ -12,7 +10,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-Server_i::Server_i (void)
+Server_i::Server_i ()
   : argc_ (0),
     argv_ (0),
     orb_ (),
@@ -22,47 +20,38 @@ Server_i::Server_i (void)
 {
 }
 
-Server_i::~Server_i (void)
+Server_i::~Server_i ()
 {
   delete this->ior_multicast_;
 }
 
 int
 Server_i::init (int &argc,
-                char **&argv
-                ACE_ENV_ARG_DECL)
+                ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY
+  try
     {
       // First initialize the ORB, that will remove some arguments...
       this->orb_ =
-        CORBA::ORB_init (this->argc_,
-                         this->argv_,
-                         "" /* the ORB name, it can be anything! */
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (this->argc_, this->argv_);
 
       // Get a reference to the RootPOA.
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
 
       // Narrow down to the correct reference.
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       // Set a POA Manager.
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
       // Activate the POA Manager.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::String_var ior;
 
@@ -74,12 +63,10 @@ Server_i::init (int &argc,
         server_i._this ();
 
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        IORTable::Table::_narrow (table_object.in ());
 
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -88,11 +75,8 @@ Server_i::init (int &argc,
       else
         {
           ior =
-            this->orb_->object_to_string (mcast_server.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          adapter->bind ("MCASTServer", ior.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->orb_->object_to_string (mcast_server.in ());
+          adapter->bind ("MCASTServer", ior.in ());
         }
 
       // Enable such that the server can listen for multicast requests
@@ -103,23 +87,21 @@ Server_i::init (int &argc,
                       "ERROR: Unable to enable multicast "
                       "on specified address.\n"));
 
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       // Run the ORB
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
       //Destroy the POA, waiting until the destruction terminates.
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
       this->orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -159,16 +141,16 @@ Server_i::enable_multicast (const char *ior)
 }
 
 int
-Server_i::parse_args (int argc, char *argv [])
+Server_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'a':
-        this->mcast_address_ = get_opts.opt_arg ();
+        this->mcast_address_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -180,6 +162,6 @@ Server_i::parse_args (int argc, char *argv [])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }

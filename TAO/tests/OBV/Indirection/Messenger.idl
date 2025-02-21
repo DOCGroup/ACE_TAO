@@ -1,0 +1,58 @@
+// Messenger.idl
+
+module demo {
+
+   module value {
+
+      module idl {
+
+        valuetype ConfigValue
+        {
+          public string name;
+          public any value;
+        };
+
+        typedef sequence<ConfigValue> ConfigValues;
+
+        valuetype BaseValue
+        {
+          public unsigned long basic_data;
+        };
+
+        //
+        // Valuetype with one-level truncatable inheritence.
+        //
+        valuetype TValue : truncatable BaseValue
+        {
+          public unsigned long data;
+        };
+
+        valuetype boxedLong   long;
+        valuetype boxedString string;
+
+        valuetype boxedValue
+        {
+          public boxedLong b1;
+          public boxedLong b2;
+        };
+
+        valuetype Node {
+          public long id;
+          public Node next;
+        };
+
+        interface ValueServer {
+          string receive_boxedvalue (in boxedValue b);
+          string receive_long   (in boxedLong p1, in boxedLong p2);
+          string receive_string (in boxedString s1, in boxedString s2);
+
+          string receive_list   (in Node _node);
+          string receive_truncatable (inout TValue v);
+          string receive_sequence (in ConfigValues v);
+        };
+
+      };
+
+   };
+
+};

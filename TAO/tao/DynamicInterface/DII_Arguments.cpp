@@ -1,50 +1,40 @@
-// $Id$
-
-#include "DII_Arguments.h"
-
-#include "tao/NVList.h"
-#include "tao/Any_Impl.h"
+#include "tao/DynamicInterface/DII_Arguments.h"
+#include "tao/AnyTypeCode/NVList.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/Exception.h"
 #include "tao/CDR.h"
-#include "tao/DynamicC.h"
-
-ACE_RCSID (DynamicInterface,
-           DII_Arguments,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "DII_Arguments.inl"
+# include "tao/DynamicInterface/DII_Arguments.inl"
 #endif /* ! __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   CORBA::Boolean
   NamedValue_Argument::demarshal (TAO_InputCDR &cdr)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
         if (this->x_ !=0 && this->x_->value ()->impl ())
           {
-            this->x_->value ()->impl ()->_tao_decode (cdr
-                                                      ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->x_->value ()->impl ()->_tao_decode (cdr);
           }
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
-        return 0;
+        return false;
       }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (false);
 
     this->byte_order_ = cdr.byte_order ();
 
-    return 1;
+    return true;
   }
 
   void
-  NamedValue_Argument::interceptor_result (CORBA::Any *any)
+  NamedValue_Argument::interceptor_value (CORBA::Any *any) const
   {
     (*any) <<= *this->x_->value ();
   }
@@ -54,30 +44,22 @@ namespace TAO
   CORBA::Boolean
   NVList_Argument::marshal (TAO_OutputCDR &cdr)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
-        this->x_->_tao_encode (cdr,
-                               CORBA::ARG_IN | CORBA::ARG_INOUT
-                               ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->x_->_tao_encode (cdr, CORBA::ARG_IN | CORBA::ARG_INOUT);
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
-        return 0;
+        return false;
       }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (false);
 
-    return 1;
+    return true;
   }
 
   CORBA::Boolean
   NVList_Argument::demarshal (TAO_InputCDR &cdr)
   {
-
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
         // Now, get all the "return", "out", and "inout" parameters
         // from the response message body ... return parameter is
@@ -88,24 +70,20 @@ namespace TAO
         this->x_->_tao_incoming_cdr (
             cdr,
             CORBA::ARG_OUT | CORBA::ARG_INOUT,
-            this->lazy_evaluation_
-            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+            this->lazy_evaluation_);
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
-        return 0;
+        return false;
       }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (false);
 
-    return 1;
+    return true;
   }
 
   void
   NVList_Argument::interceptor_paramlist (Dynamic::ParameterList *lst)
   {
-    const CORBA::ULong len = this->x_->count ();
+    CORBA::ULong const len = this->x_->count ();
     lst->length (len);
 
     for (CORBA::ULong i = 0; i < len; ++i)
@@ -113,8 +91,7 @@ namespace TAO
         if (!this->x_->item (i)->value ())
           return;
 
-        (*lst)[i].argument.replace (
-          this->x_->item (i)->value ()->impl ());
+        (*lst)[i].argument.replace (this->x_->item (i)->value ()->impl ());
 
         switch (this->x_->item (i)->flags ())
           {
@@ -139,3 +116,5 @@ namespace TAO
       }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

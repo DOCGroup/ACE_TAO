@@ -4,8 +4,6 @@
 /**
  *  @file    IORInterceptor_Adapter.h
  *
- *  $Id$
- *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
@@ -16,14 +14,21 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Array_Base.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
 #include "tao/PI_ForwardC.h"
+#include "tao/Policy_ForwardC.h"
+#include "tao/TAO_Export.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+template <class T> class ACE_Array_Base;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
@@ -54,16 +59,16 @@ class TAO_Root_POA;
 class TAO_Export TAO_IORInterceptor_Adapter
 {
 public:
-  virtual ~TAO_IORInterceptor_Adapter (void);
+  virtual ~TAO_IORInterceptor_Adapter ();
 
   virtual void add_interceptor (
-      PortableInterceptor::IORInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL
-    ) = 0;
+      PortableInterceptor::IORInterceptor_ptr interceptor) = 0;
 
-  virtual void destroy_interceptors (
-      ACE_ENV_SINGLE_ARG_DECL
-      ) = 0;
+  virtual void add_interceptor (
+      PortableInterceptor::IORInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies) = 0;
+
+  virtual void destroy_interceptors () = 0;
 
   /// Call the IORInterceptor::establish_components() method on all
   /// registered IORInterceptors.
@@ -73,27 +78,22 @@ public:
    * IORInterceptor::components_established() once the former is
    * completed.
    */
-  virtual void establish_components (TAO_Root_POA *poa ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  virtual void establish_components (TAO_Root_POA *poa) = 0;
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
-  virtual void components_established (PortableInterceptor::IORInfo_ptr info
-                                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  virtual void components_established (PortableInterceptor::IORInfo_ptr info) = 0;
 
   virtual void adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      PortableInterceptor::AdapterState state) = 0;
 
   virtual void adapter_manager_state_changed (
-      PortableInterceptor::AdapterManagerId id,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      const char * id,
+      PortableInterceptor::AdapterState state) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IORINTERCEPTOR_ADAPTER_H */

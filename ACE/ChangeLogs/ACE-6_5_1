@@ -1,0 +1,149 @@
+commit ae3cee721637d0481cdec3c52e1b379eb65a55c0
+Merge: 2103902aeee 1cc8fd38cd7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 6 13:13:43 2018 +0200
+
+    Merge pull request #660 from jwillemsen/master
+    
+    Changed deprecated_declarations to no_deprecated so that we have the …
+
+commit 1cc8fd38cd74c92035478504088aaf6e9fff533f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 6 11:25:13 2018 +0200
+
+    Changed deprecated_declarations to no_deprecated so that we have the same setting with clang and gcc
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit 2103902aeee31d66e515ee7d885acb445e0161ad
+Merge: 2864135a422 0a3568b650e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 6 09:59:20 2018 +0200
+
+    Merge pull request #659 from jwillemsen/master
+    
+    List important changes for the upcoming release
+
+commit 0a3568b650ee1d8cdbd66f5e521b5f4bd0b96680
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 6 09:58:51 2018 +0200
+
+    Updated changes
+    
+        * ACE/NEWS:
+
+commit d6b268e7eee10aabaa775065f72e283e2ce053f0
+Merge: 15c371e5493 c7571f5ff80
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 6 09:42:41 2018 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 15c371e5493f0d727cd0bd395fe218b064bc4f16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 6 09:41:29 2018 +0200
+
+    List important changes for the upcoming release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit d4de87431e6ac1856460ea9dd829378a36037ff0
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Aug 6 07:40:43 2018 +0200
+
+    added explicit include of <string> to fix older MSVC compile errors
+    
+        * ACE/ace/CDR_Stream.h:
+
+commit 4a09b0b10cbea1fdcb16161583ee22f7d151784b
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Fri Aug 3 14:15:38 2018 +0200
+
+    add full support for streaming std::(w)string
+    
+    (optimized for C++11 and onwards)
+    added tests for optimized std::(w)string support
+    extend character translators with std::(w)string support also
+
+commit 8a9912c18c61fcb3141d661a6536370091a6fc67
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jul 9 10:08:30 2018 -0500
+
+    Removed duplicated project files (MPC issue 50)
+
+commit b54eb818519dfd0d592ffc21580704b6347510da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 29 09:16:18 2018 +0200
+
+    Removed not used member
+    
+        * ACE/ace/Timer_Wheel_T.cpp:
+
+commit d3bb3163e9380bc55a4a8b7877949fdca5326571
+Author: Steve Huston <shuston@riverace.com>
+Date:   Tue Jun 26 18:01:38 2018 -0400
+
+    Fix memory leak in schedule; replace broken next-count logic in generate_timer_id
+
+commit 515ec9ad5cb7d0361b499a31c13a7cb6c83f435a
+Author: Steve Huston <shuston@riverace.com>
+Date:   Tue Jun 26 18:00:48 2018 -0400
+
+    Remove unused member variable max_per_spoke_
+
+commit ded09ee554a5fb49fb246f9177c697fbea8c2719
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 22 13:45:53 2018 +0200
+
+    When we have C++11 we are using std::unique_ptr instead of std::auto_ptr
+    
+        * ACE/ace/Auto_Ptr.cpp:
+        * ACE/ace/WFMO_Reactor.cpp:
+
+commit 720ab6a2f37514830b7fce2aba179a1cf67016e9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 22 13:31:29 2018 +0200
+
+    When using Visual Studio 2017 we can enable C++14 and C++17 compliance, with C++17 we don't have auto_ptr so shouldn't do a using
+    
+        * ACE/ace/Auto_Ptr.h:
+        * ACE/ace/config-win32-msvc-141.h:
+
+commit cfa4831d01916c0835db5c52cb3a99bf1c4ad067
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 15 08:59:00 2018 +0200
+
+    Document API change
+    
+        * ACE/NEWS:
+
+commit 1cc3c03e2d52b02c9270238d9297acadc00dad69
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 14 20:32:01 2018 +0200
+
+    When we have C++11 ACE_Strong_Bound_Ptr doesn't provide std::auto_ptr support, that is deprecated
+    
+        * ACE/ace/Bound_Ptr.h:
+        * ACE/ace/Bound_Ptr.inl:
+        * ACE/tests/Bound_Ptr_Test.cpp:
+
+commit 3a2f66fd31d78518857fd95790e02c46b0c099fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 12 10:05:28 2018 +0200
+
+    When making a new minor also update micro/beta tags
+    
+        * ACE/bin/make_release.py:
+
+commit 9f9cbdf71f7ef7c30c4b288de7f7b48f2a8c046e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 12 10:04:59 2018 +0200
+
+    Make x.5.0 public
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

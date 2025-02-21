@@ -1,9 +1,8 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_FactoryRegistry.h
- *
- *  $Id$
  *
  *  This file declares the implementation of PortableGroup::FactoryRegistry.
  *  Eventually this should be folded into the Fault Tolerance ReplicationManager
@@ -21,20 +20,24 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+/////////////////////////////////
+// Includes needed by this header
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "orbsvcs/PortableGroupS.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/SString.h"
+#include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //////////////////////////////////
 // Classes declared in this header
 namespace TAO
 {
   class PG_FactoryRegistry;
 }
-
-/////////////////////////////////
-// Includes needed by this header
-#include "portablegroup_export.h"
-#include "orbsvcs/PortableGroupS.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/SString.h"
-#include "ace/Null_Mutex.h"
 
 /////////////////////
 // Forward references
@@ -46,7 +49,8 @@ namespace TAO
    * Note FactoryRegistry is not part of the OMG standard.  It was added
    * as part of the TAO implementation of Fault Tolerant CORBA
    */
-  class TAO_PortableGroup_Export PG_FactoryRegistry : public virtual POA_PortableGroup::FactoryRegistry
+  class TAO_PortableGroup_Export PG_FactoryRegistry
+    : public virtual POA_PortableGroup::FactoryRegistry
   {
     struct RoleInfo
     {
@@ -67,7 +71,7 @@ namespace TAO
     PG_FactoryRegistry (const char * name = "FactoryRegistry");
 
     /// virtual Destructor
-    virtual ~PG_FactoryRegistry (void);
+    virtual ~PG_FactoryRegistry ();
 
     /**
      * Parse command line arguments.
@@ -75,32 +79,32 @@ namespace TAO
      * @param argv traditional C argv
      * @return zero for success; nonzero is process return code for failure.
      */
-    int parse_args (int argc, char * argv[]);
+    int parse_args (int argc, ACE_TCHAR * argv[]);
 
     /**
      * Initialize this object.
-     * @param orbManager our ORB -- we keep var to it.
+     * @param orb our ORB -- we keep var to it.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int init (CORBA::ORB_ptr orb  ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb);
 
     /**
      * alternative init using designated poa
      */
-    void init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
+    void init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
     /**
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini ();
 
     /**
      * Processing to happen when the ORB's event loop is idle.
      * @param result is a place to return status to be returned by the process
      * @returns 0 to continue.  1 to quit.
      */
-    int idle(int & result ACE_ENV_ARG_DECL);
+    int idle(int & result);
 
     /**
      * Identify this object.
@@ -116,7 +120,7 @@ namespace TAO
 
     ////////////////////////////////
     // override servant base methods
-    virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void _remove_ref ();
 
     //////////////////
     // CORBA interface
@@ -125,46 +129,24 @@ namespace TAO
     virtual void register_factory (
         const char * role,
         const char * type_id,
-        const PortableGroup::FactoryInfo & factory_info
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::MemberAlreadyPresent
-        , PortableGroup::TypeConflict));
+        const PortableGroup::FactoryInfo & factory_info);
 
     virtual void unregister_factory (
         const char * role,
-        const PortableGroup::Location & location
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException, PortableGroup::MemberNotFound));
+        const PortableGroup::Location & location);
 
-    virtual void unregister_factory_by_role (
-        const char * role
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void unregister_factory_by_role (const char * role);
 
 
     virtual void unregister_factory_by_location (
-      const PortableGroup::Location & location
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const PortableGroup::Location & location);
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_role (
         const char * role,
-        CORBA::String_out type_id
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        CORBA::String_out type_id);
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_location (
-      const PortableGroup::Location & location
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const PortableGroup::Location & location);
 
     /////////////////////////
     // Implementation methods
@@ -172,27 +154,15 @@ namespace TAO
     /**
      * Write this factory's IOR to a file
      */
-    int write_ior_file (const char * outputFile, const char * ior);
+    int write_ior_file (const ACE_TCHAR * outputFile, const char * ior);
 
     ///////////////
     // Data Members
   private:
-
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */
     ACE_CString identity_;
-
-    /**
-     * Protect internal state.
-     * Mutex should be locked by corba methods, or by
-     * external (public) methods before calling implementation
-     * methods.
-     * Implementation methods should assume the mutex is
-     * locked if necessary.
-     */
-    TAO_SYNCH_MUTEX internals_;
-    typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
 
     /**
      * The orb
@@ -222,12 +192,12 @@ namespace TAO
     /**
      * A file to which the factory's IOR should be written.
      */
-    const char * ior_output_file_;
+    const ACE_TCHAR * ior_output_file_;
 
     /**
      * A name to be used to register the factory with the name service.
      */
-    const char * ns_name_;
+    ACE_CString ns_name_;
 
     CosNaming::NamingContext_var naming_context_;
 
@@ -246,9 +216,10 @@ namespace TAO
     int linger_;
 
     RegistryType registry_;
-
   };
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

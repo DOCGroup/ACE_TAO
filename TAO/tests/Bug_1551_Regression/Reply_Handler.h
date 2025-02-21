@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef REPLY_HANDLER_H
 #define REPLY_HANDLER_H
@@ -17,15 +14,12 @@ public:
       Test::Hello_ptr hello,
       CORBA::ORB_ptr orb);
 
-  void short_sleep (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void short_sleep ();
 
-  void short_sleep_excep (Test::AMI_HelloExceptionHolder * excep_holder
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void short_sleep_excep (::Messaging::ExceptionHolder * excep_holder);
 
 private:
-  void check_counter(ACE_ENV_SINGLE_ARG_DECL);
+  void check_counter();
 
 private:
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> counter_;

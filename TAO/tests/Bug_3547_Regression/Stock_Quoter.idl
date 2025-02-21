@@ -1,0 +1,18 @@
+#ifndef Stock_Quoter_idl
+#define Stock_Quoter_idl
+
+#include "Stock_Quoter_Types.idl"
+
+exception Bad_Ticker_Symbol
+{
+  string symbol;
+};
+
+interface Stock_Quoter
+{
+  float get_quote (in Stock_Quoter_Types::Stock_ID stock_id)
+     raises (Bad_Ticker_Symbol);
+  oneway void shutdown ();
+};
+
+#endif /* Stock_Quoter_idl */

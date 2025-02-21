@@ -1,0 +1,10 @@
+
+
+This is the Orbix companion for the CDR OUT Arg test. In order to build, you must
+have Orbix 6.3 installed on your system. Local editing of the supplied makefiles
+may be required. The DOC group cannot support this code as it does not havve the
+licenses to do so.
+
+After building, run the server with no arguments, the IOR will be written to the
+file ./test.ior. Provide that to the TAO client. A successful test will exit with
+no error, a failure will yield a MARSHAL exception.

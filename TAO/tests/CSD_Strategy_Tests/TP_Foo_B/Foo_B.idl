@@ -1,0 +1,70 @@
+#ifndef FOO_B_IDL
+#define FOO_B_IDL
+
+#include "FooException.idl"
+#include "Callback.idl"
+
+
+typedef sequence<char, 32> Bounded_Var_Size;
+typedef sequence<char> Unbounded_Var_Size;
+typedef long Fixed_Array[20];
+typedef string Var_Array [3];
+typedef string<20> string_20;
+
+struct TimeOfDay {
+    short   hour;       // 0 - 23
+    short   minute;     // 0 - 59
+    short   second;     // 0 - 59
+};
+interface Foo_B
+{
+  /// void return-type, no arguments
+  void op1();
+
+  /// void return-type, 1 "in" argument
+  void op2(in long value);
+
+  /// long return-type, 1 "in" argument
+  long op3(in long value);
+
+  /// one-way version of op2
+  oneway void op4(in long value);
+
+  /// Operation that always raises an exception.
+  void op5() raises (FooException);
+
+  /// Test fixed size "in" argument and the "inout" parameter.
+  boolean op6(in TimeOfDay t,
+              inout string message);
+
+  /// Callback test.
+
+  /// Pass the callback object and the server invoke operation on
+  /// the callback object reference.
+  void op7 (in Callback cb) raises (FooException);
+
+  oneway void test_unbounded_string_arg(in string message);
+
+  oneway void test_bounded_string_arg(in string_20 message);
+
+  oneway void test_fixed_array_arg(in Fixed_Array message);
+
+  oneway void test_var_array_arg(in Var_Array messages);
+
+  oneway void test_bounded_var_size_arg(in Bounded_Var_Size message);
+
+  oneway void test_unbounded_var_size_arg(in Unbounded_Var_Size message);
+
+  oneway void test_fixed_size_arg (in TimeOfDay t);
+
+  oneway void test_special_basic_arg(in boolean value, in long client_id);
+
+  oneway void test_objref_arg (in Callback cb);
+
+  /// Client calls this last.  The last client to claim that it is
+  /// done will cause the server to shutdown.
+  void done();
+};
+
+
+#endif

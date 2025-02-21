@@ -2,11 +2,7 @@
 /**
  *  @file PushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_PUSHSUPPLIER_H
@@ -36,7 +32,7 @@ public:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_PushSupplier_Traits
 {
 public:
-  TAO_Notify_Tests_PushSupplier_Traits (void);
+  TAO_Notify_Tests_PushSupplier_Traits ();
 
   typedef CosNotifyComm::PushSupplier INTERFACE;
   typedef CosNotifyComm::PushSupplier_ptr PTR;
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_PushSupplier_Traits> TAO_No
  * @class TAO_Notify_Tests_PushSupplier
  *
  * @brief PushSupplier Implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_PushSupplier : public TAO_Notify_Tests_PushSupplier_Base
 {
@@ -66,27 +61,24 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_PushSupplier : public TAO_Notify_T
   typedef Peer_Traits::Proxy_Traits Proxy_Traits;
 
 public:
-  /// Constuctor
-  TAO_Notify_Tests_PushSupplier (void);
+  /// Constructor
+  TAO_Notify_Tests_PushSupplier ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_PushSupplier ();
 
   /// Send one event.
-  virtual void send_event (const CORBA::Any & data ACE_ENV_ARG_DECL);
+  virtual void send_event (const CORBA::Any & data);
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL);
+  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_from_proxy ();
 
   // = PushSupplier method
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void disconnect_push_supplier ();
 };
 
 #if defined (__ACE_INLINE__)

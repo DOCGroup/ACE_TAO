@@ -4,8 +4,8 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: TAO_CosLifeCycle
-Description: TAO CosLifeCycle Library
-Requires: TAO_CosNaming, TAO_PortableServer, TAO
+Description: TAO CosLifeCycle Stub Library
+Requires: TAO_CosNaming, TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_CosLifeCycle
 Cflags: -I${includedir}

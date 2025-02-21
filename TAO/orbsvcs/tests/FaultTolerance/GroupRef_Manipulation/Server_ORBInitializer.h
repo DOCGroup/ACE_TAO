@@ -4,8 +4,6 @@
 /**
  * @file Server_ORBInitializer.h
  *
- * $Id$
- *
  * Implementation header for the PortableInterceptor::ForwardRequest
  * exception test server side ORB initializer.
  *
@@ -41,27 +39,21 @@ class Server_Request_Interceptor;
 /// Server side ORB initializer.
 class Server_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  Server_ORBInitializer (void);
+  Server_ORBInitializer ();
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   /// Return the created server request interceptor.  Only valid after
   /// post_init(), i.e. ORB_init(), has been called.
-  PortableInterceptor::ServerRequestInterceptor_ptr server_interceptor (void);
+  PortableInterceptor::ServerRequestInterceptor_ptr server_interceptor ();
 
 private:
-
   /// Pointer to the server request interceptor.  ORB is responsible
   /// for storage.
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;

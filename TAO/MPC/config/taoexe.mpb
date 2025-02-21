@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : aceexe, taodefaults, taoidldefaults, core_minimum_corba, corba_e_compact, corba_e_micro, link_codecfactory {
+  after += TAO Codeset
+  libs  += TAO
+}

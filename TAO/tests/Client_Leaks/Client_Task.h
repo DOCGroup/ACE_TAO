@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CLIENT_LEAKS_CLIENT_TASK_H
 #define CLIENT_LEAKS_CLIENT_TASK_H
@@ -21,18 +18,18 @@ public:
   Client_Task (Test::Process_Factory_ptr process_Factory,
                int iterations);
 
-  /// Return the total number of sucessful calls
-  int successful_calls (void) const;
+  /// Return the total number of successful calls
+  int successful_calls () const;
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Run one iteration of the test
-  int one_iteration (ACE_ENV_SINGLE_ARG_DECL);
+  int one_iteration ();
 
   /// Make sure that the thread has a connection available
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_connection ();
 
 private:
   /// Reference to the test interface

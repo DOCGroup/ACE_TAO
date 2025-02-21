@@ -1,14 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file     IIOP_Profile.h
  *
- *  $Id$
- *
- *   IIOP profile specific processing
- *
+ *  IIOP profile specific processing.
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
@@ -20,13 +16,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Profile.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
+#include "tao/Profile.h"
 #include "tao/IIOP_Endpoint.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO IIOP_Profile concrete Profile definitions
 /**
@@ -41,12 +42,10 @@
 class TAO_Export TAO_IIOP_Profile : public TAO_Profile
 {
 public:
-  /// The object key delimiter that IIOP uses or expects.
   static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
 
   /// Return the char string prefix.
-  static const char *prefix (void);
+  static const char *prefix ();
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.
@@ -67,30 +66,52 @@ public:
   /// Profile constructor, default.
   TAO_IIOP_Profile (TAO_ORB_Core *orb_core);
 
-  /// Template methods. Please see Profile.h for documentation.
-  virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Encode endpoints for RT profiles, using a single TAO_TAG_ENDPOINT
-  /// component.
-  virtual int encode_endpoints (void);
-
-  /// Encode alternate endpoints for non-RT profiles, using multiple
-  /// TAG_ALTERNATE_IIOP_ADDRESS components, one endpoint per component
-  virtual int encode_alternate_endpoints (void);
-  virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL);
   /**
    * Add @a endp to this profile's list of endpoints (it is inserted
-   * next to the head of the list).  This profiles takes ownership of
+   * at the end of the list).  This profiles takes ownership of
    * @a endp.
    */
   void add_endpoint (TAO_IIOP_Endpoint *endp);
 
+  /**
+   * Remove @a endp from this profile's list of endpoints and free the
+   * @a endp memory.
+   * This method assumes @a endp is in this profile's endpoint list.
+   */
+  void remove_endpoint (TAO_IIOP_Endpoint *endp);
+
+  virtual void remove_generic_endpoint (TAO_Endpoint *ep);
+
+  /// Add an endpoint when the specific endpoint type is unknown
+  virtual void add_generic_endpoint (TAO_Endpoint *ep);
+
+  /// The object key delimiter that IIOP uses or expects.
+  virtual char object_key_delimiter () const;
+
+  /// Template methods. Please see Profile.h for documentation.
+  virtual char * to_string () const;
+
+  /// Encode endpoints for RT profiles, using a single TAO_TAG_ENDPOINT
+  /// component.
+  virtual int encode_endpoints ();
+
+  /// Encode alternate endpoints for non-RT profiles, using multiple
+  /// TAG_ALTERNATE_IIOP_ADDRESS components, one endpoint per component
+  virtual int encode_alternate_endpoints ();
+  virtual TAO_Endpoint *endpoint ();
+
+  /// Since SSLIOP_Profile derives from IIOP_Profile, but SSLIOP_Endpoint
+  /// does not derive from IIOP_Endpoint, it is necessary to have a way
+  /// of always getting the IIOP_Endpoint using a generic interface
+  /// regardless of the final type of the profile.
+  virtual TAO_Endpoint *base_endpoint ();
+
+  virtual CORBA::ULong endpoint_count () const;
+  virtual CORBA::ULong hash (CORBA::ULong max);
+
 protected:
   /// Destructor is to be called only through <_decr_refcnt>.
-  ~TAO_IIOP_Profile (void);
+  ~TAO_IIOP_Profile ();
 
   /**
    * Helper method for encode_endpoints to deal with RT requests.
@@ -105,18 +126,16 @@ protected:
    * encapsulation of a sequence of structs, each representing a
    * single endpoint.  Data format is specified in iiop_endpoins.pidl.
    */
-  int encode_endpoints_for_rt (void);
+  int encode_endpoints_for_rt ();
 
   /// Template methods. Please see Profile.h for the documentation.
   virtual int decode_profile (TAO_InputCDR &cdr);
-  virtual int decode_endpoints (void);
-  virtual void parse_string_i (const char *string
-                               ACE_ENV_ARG_DECL);
+  virtual int decode_endpoints ();
+  virtual void parse_string_i (const char *string);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 protected:
-
   /**
    * Head of this profile's list of endpoints.  This endpoint is not
    * dynamically allocated because a profile always contains at least
@@ -149,9 +168,17 @@ protected:
    */
   TAO_IIOP_Endpoint endpoint_;
 
+  /// For efficient insertion at the end of the list
+  TAO_IIOP_Endpoint *last_endpoint_;
+
   /// Number of endpoints in the list headed by <endpoint_>.
   CORBA::ULong count_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
+
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_IIOP_PROFILE_H */

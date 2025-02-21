@@ -1,0 +1,11 @@
+// -*- MPC -*-
+project(blobby) : aceexe {
+  exename = blobby
+  Source_Files {
+    blobby.cpp
+    Blob.cpp
+    Blob_Handler.cpp
+    Options.cpp
+  }
+}
+

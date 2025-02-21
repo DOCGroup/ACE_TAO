@@ -1,20 +1,12 @@
-// $Id$
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    Supplier_i.cpp
-//
-// = DESCRIPTION
-//    Implementation of the Supplier class.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Supplier_i.cpp
+ *
+ *  Implementation of the Supplier class.
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
 
 #include "Supplier_i.h"
 #include "tao/debug.h"
@@ -27,8 +19,7 @@
 #include "ace/OS_NS_fcntl.h"
 
 // Constructor.
-
-Supplier::Supplier (void)
+Supplier::Supplier ()
   : ior_ (0),
     use_naming_service_ (1),
     notifier_ (),
@@ -36,10 +27,9 @@ Supplier::Supplier (void)
     loop_count_ (10),
     period_value_ (1)
 {
-  // No-op.
 }
 
-Supplier::~Supplier (void)
+Supplier::~Supplier ()
 {
   // Release the memory allocated for ior_.
   ACE_OS::free (this->ior_);
@@ -52,9 +42,8 @@ Supplier::~Supplier (void)
 }
 
 // Reads the Server factory IOR from a file.
-
 int
-Supplier::read_ior (char *filename)
+Supplier::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -73,7 +62,7 @@ Supplier::read_ior (char *filename)
                        "Unable to read ior\n"),
                       -1);
 
-  this->ior_ = ACE_OS::strdup (data);
+  this->ior_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
   ior_buffer.alloc ()->free (data);
 
   ACE_OS::close (f_handle);
@@ -82,11 +71,10 @@ Supplier::read_ior (char *filename)
 }
 
 // Parses the command line arguments and returns an error status.
-
 int
-Supplier::parse_args (void)
+Supplier::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:i:xk:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:f:i:xk:xs"));
 
   int c;
   int result;
@@ -107,8 +95,7 @@ Supplier::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read stock information from %s : %p\n",
-                             get_opts.opt_arg (),
-                             "get_args"),
+                             get_opts.opt_arg ()),
                             -1);
         break;
 
@@ -121,8 +108,7 @@ Supplier::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg (),
-                             "get_args"),
+                             get_opts.opt_arg ()),
                             -1);
         break;
 
@@ -151,46 +137,38 @@ Supplier::parse_args (void)
 }
 
 // Give the stock status information to the Notifier.
-
 int
-Supplier::send_market_status (const char *stock_name,
-                              long value)
+Supplier::send_market_status (const char *stock_name, long value)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
-
       // Make the RMI.
       this->notifier_->market_status (stock_name,
-                                      value
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      value);
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception : Supplier::send_market_status");
+      sysex._tao_print_exception (
+        "System Exception : Supplier::send_market_status");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception : Supplier::send_market_status");
+      userex._tao_print_exception (
+        "User Exception : Supplier::send_market_status");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 // Execute client example code.
-
 int
-Supplier::run (void)
+Supplier::run ()
 {
-
   long timer_id = 0;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Market Status Supplier Daemon is running...\n "));
+              "Market Status Supplier Daemon is running...\n"));
 
   // This sets the period for the stock-feed.
   ACE_Time_Value period (period_value_);
@@ -210,69 +188,56 @@ Supplier::run (void)
   return this->reactor_used ()->run_reactor_event_loop ();
 }
 
-
 int
-Supplier::via_naming_service (void)
+Supplier::via_naming_service ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
       CosNaming::Name notifier_ref_name (1);
       notifier_ref_name.length (1);
       notifier_ref_name[0].id = CORBA::string_dup ("Notifier");
 
       CORBA::Object_var notifier_obj =
-        this->naming_services_client_->resolve (notifier_ref_name
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->naming_services_client_->resolve (notifier_ref_name);
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
-        Notifier::_narrow (notifier_obj.in ()
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Notifier::_narrow (notifier_obj.in ());
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception : Supplier::via_naming_service\n");
+      sysex._tao_print_exception (
+        "System Exception : Supplier::via_naming_service\n");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception : Supplier::via_naming_service\n");
+      userex._tao_print_exception (
+        "User Exception : Supplier::via_naming_service\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 // Init function.
-
 int
-Supplier::init (int argc, char **argv)
+Supplier::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -294,9 +259,7 @@ Supplier::init (int argc, char **argv)
                            this->argv_[0]),
                           -1);
       CORBA::Object_var notifier_object =
-        this->orb_->string_to_object (this->ior_
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (this->ior_);
 
       if (CORBA::is_nil (notifier_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -305,40 +268,37 @@ Supplier::init (int argc, char **argv)
                           -1);
       // The downcasting from CORBA::Object_var to Notifier_var is
       // done using the <_narrow> method.
-      this->notifier_ = Notifier::_narrow (notifier_object.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->notifier_ = Notifier::_narrow (notifier_object.in ());
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception : Supplier::init");
+      sysex._tao_print_exception ("System Exception : Supplier::init");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception : Supplier::init");
+      userex._tao_print_exception ("User Exception : Supplier::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 ACE_Reactor*
-Supplier::reactor_used (void) const
+Supplier::reactor_used () const
 {
   return ACE_Reactor::instance ();
 }
 
 // The stock market information is read from a file.
-
 int
-Supplier::read_file (char *filename)
+Supplier::read_file (ACE_TCHAR *filename)
 {
   f_ptr_ = ACE_OS::fopen (filename, "r");
 
   ACE_DEBUG ((LM_DEBUG,
-              "filename = %s\n",filename));
+              "filename = %s\n",
+              filename));
 
   // the stock values are to be read from a file.
   if (f_ptr_ == 0)

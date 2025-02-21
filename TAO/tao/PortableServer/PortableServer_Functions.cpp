@@ -1,23 +1,29 @@
-#include "PortableServer_Functions.h"
-
-ACE_RCSID (PortableServer,
-           PortableServer_Functions,
-           "$Id$")
-
+// -*- C++ -*-
+#include "tao/PortableServer/PortableServer_Functions.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
   PortableServer::ObjectId *
   string_to_ObjectId (const char *string)
   {
+    // Passing in a nil pointer is illegal so throw an exception to
+    // indicate that
+    if (string == nullptr)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+
     // Size of string
     //
     // We DO NOT include the zero terminator, as this is simply an
     // artifact of the way strings are stored in C.
     //
     CORBA::ULong buffer_size = static_cast <CORBA::ULong>
-                                           (ACE_OS::strlen (string));
+                                           (std::strlen (string));
 
     // Create the buffer for the Id
     CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
@@ -26,13 +32,13 @@ namespace PortableServer
     ACE_OS::memcpy (buffer, string, buffer_size);
 
     // Create and return a new ID
-    PortableServer::ObjectId *id = 0;
+    PortableServer::ObjectId *id {};
     ACE_NEW_RETURN (id,
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,
                                               buffer,
                                               1),
-                    0);
+                    nullptr);
 
     return id;
   }
@@ -54,3 +60,5 @@ namespace PortableServer
   }
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

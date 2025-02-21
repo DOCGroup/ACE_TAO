@@ -4,8 +4,6 @@
 /**
  *  @file PortableServer_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
 //=============================================================================
@@ -15,22 +13,22 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_server_export.h"
+#include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// PortableServer ORB initializer.
-class TAO_PI_Server_Export TAO_PortableServer_ORBInitializer
+class TAO_PortableServer_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name PortableInterceptor::ORBInitializer methods
    *
@@ -38,27 +36,17 @@ public:
    * PortableInterceptor::ORBInitializer interface.
    */
   //@{
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info);
   //@}
 
 private:
-
   /// Register PortableServer policy factories.
-  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info
-                                  ACE_ENV_ARG_DECL);
-
-  /// Register POA Current.
-  void register_poa_current (PortableInterceptor::ORBInitInfo_ptr info
-                             ACE_ENV_ARG_DECL);
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,21 +1,16 @@
-#include "ExceptionList.h"
-
-ACE_RCSID (DynamicInterface,
-           ExceptionList,
-           "$Id$")
-
-#include "tao/TypeCode.h"
-#include "tao/Environment.h"
+#include "tao/DynamicInterface/ExceptionList.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ExceptionList.inl"
+# include "tao/DynamicInterface/ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
                                      CORBA::TypeCode_ptr *tc_list)
-  : ref_count_ (1)
+  : refcount_ (1)
 {
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -23,7 +18,7 @@ CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
     }
 }
 
-CORBA::ExceptionList::~ExceptionList (void)
+CORBA::ExceptionList::~ExceptionList ()
 {
   for (CORBA::ULong i = 0; i < this->count (); ++i)
     {
@@ -34,7 +29,7 @@ CORBA::ExceptionList::~ExceptionList (void)
           return;
         }
 
-      CORBA::release (*tc);
+      ::CORBA::release (*tc);
     }
 }
 
@@ -51,15 +46,13 @@ CORBA::ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
 }
 
 CORBA::TypeCode_ptr
-CORBA::ExceptionList::item (CORBA::ULong slot
-                            ACE_ENV_ARG_DECL)
+CORBA::ExceptionList::item (CORBA::ULong slot)
 {
   CORBA::TypeCode_ptr *tc = 0;
 
   if (this->tc_list_.get (tc, slot) == -1)
     {
-      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::TypeCode::Bounds ();
     }
   else
     {
@@ -68,52 +61,39 @@ CORBA::ExceptionList::item (CORBA::ULong slot
 }
 
 void
-CORBA::ExceptionList::remove (CORBA::ULong
-                              ACE_ENV_ARG_DECL)
+CORBA::ExceptionList::remove (CORBA::ULong)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::ExceptionList_ptr
-CORBA::ExceptionList::_duplicate (void)
+CORBA::ExceptionList::_duplicate ()
 {
-  this->_incr_refcnt ();
+  this->_incr_refcount ();
   return this;
 }
 
 void
-CORBA::ExceptionList::_destroy (void)
+CORBA::ExceptionList::_destroy ()
 {
-  this->_decr_refcnt ();
+  this->_decr_refcount ();
 }
 
 void
-CORBA::ExceptionList::_incr_refcnt (void)
+CORBA::ExceptionList::_incr_refcount ()
 {
-  this->ref_count_++;
+  ++this->refcount_;
 }
 
 void
-CORBA::ExceptionList::_decr_refcnt (void)
+CORBA::ExceptionList::_decr_refcount ()
 {
-  this->ref_count_--;
+  CORBA::ULong const refcount = --this->refcount_;
 
-  if (this->ref_count_ == 0)
+  if (refcount == 0)
     {
       delete this;
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>;
-template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>;
-template class ACE_Node<CORBA::TypeCode_ptr>;
-template class ACE_Unbounded_Queue<CORBA::TypeCode_ptr>;
-template class ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
-#pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>
-#pragma instantiate ACE_Node<CORBA::TypeCode_ptr>
-#pragma instantiate ACE_Unbounded_Queue<CORBA::TypeCode_ptr>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

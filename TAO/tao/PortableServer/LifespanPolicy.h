@@ -4,8 +4,6 @@
 /**
  *  @file LifespanPolicy.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -14,13 +12,13 @@
 #define TAO_POA_LIFESPANPOLICY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "LifespanPolicyC.h"
+#include "tao/PortableServer/LifespanPolicyC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -30,40 +28,44 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if !defined (CORBA_E_MICRO)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
   {
     class TAO_PortableServer_Export LifespanPolicy
       : public virtual ::PortableServer::LifespanPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
       LifespanPolicy (::PortableServer::LifespanPolicyValue value);
 
-      CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::Policy_ptr copy ();
 
-      void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      void destroy ();
 
-      ::PortableServer::LifespanPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      ::PortableServer::LifespanPolicyValue value ();
 
-      CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::PolicyType policy_type ();
 
       /// Return the cached policy type for this policy.
-      virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+      virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
       /// Returns the scope at which this policy can be applied. See orbconf.h.
-      virtual TAO_Policy_Scope _tao_scope (void) const;
+      virtual TAO_Policy_Scope _tao_scope () const;
 
     private:
       ::PortableServer::LifespanPolicyValue value_;
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

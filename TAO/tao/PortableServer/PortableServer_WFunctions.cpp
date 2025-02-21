@@ -1,10 +1,8 @@
-#include "PortableServer_WFunctions.h"
-
-ACE_RCSID (PortableServer,
-           PortableServer_WFunctions,
-           "$Id$")
+#include "tao/PortableServer/PortableServer_WFunctions.h"
 
 #include "ace/OS_NS_string.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -16,7 +14,7 @@ namespace PortableServer
     // We DO NOT include the zero terminator, as this is simply an
     // artifact of the way strings are stored in C.
     //
-    CORBA::ULong string_length = ACE_OS::wslen (string);
+    u_int string_length = ACE_OS::wslen (string);
 
     CORBA::ULong buffer_size = string_length * sizeof (CORBA::WChar);
 
@@ -27,13 +25,13 @@ namespace PortableServer
     ACE_OS::memcpy (buffer, string, buffer_size);
 
     // Create a new ID
-    PortableServer::ObjectId *id = 0;
+    PortableServer::ObjectId *id {};
     ACE_NEW_RETURN (id,
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,
                                               buffer,
                                               1),
-                    0);
+                    nullptr);
 
     return id;
   }
@@ -66,3 +64,4 @@ namespace PortableServer
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

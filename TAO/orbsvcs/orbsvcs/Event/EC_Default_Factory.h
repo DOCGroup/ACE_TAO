@@ -2,8 +2,6 @@
 /**
  *  @file   EC_Default_Factory.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
@@ -17,17 +15,21 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Factory.h"
+#include "orbsvcs/Event/EC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_Defaults.h"
+#include "orbsvcs/Event/EC_Defaults.h"
 
 #include "ace/Service_Config.h"
 #include "ace/SString.h"
 #include "ace/Time_Value.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_EC_Queue_Full_Service_Object;
 
 /**
  * @class TAO_EC_Default_Factory
@@ -44,18 +46,18 @@ class TAO_RTEvent_Serv_Export TAO_EC_Default_Factory : public TAO_EC_Factory
 {
 public:
   /// Constructor
-  TAO_EC_Default_Factory (void);
+  TAO_EC_Default_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Default_Factory (void);
+  virtual ~TAO_EC_Default_Factory ();
 
   /// Helper function to register the default factory into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
@@ -107,9 +109,9 @@ public:
   virtual void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
 
-  virtual ACE_Lock* create_consumer_lock (void);
+  virtual ACE_Lock* create_consumer_lock ();
   virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock (void);
+  virtual ACE_Lock* create_supplier_lock ();
   virtual void destroy_supplier_lock (ACE_Lock*);
 
   virtual TAO_EC_ConsumerControl*
@@ -122,22 +124,22 @@ public:
       destroy_supplier_control (TAO_EC_SupplierControl*);
 
   /// Accessors to consumer collection flags
-  int consumer_collection (void) const;
+  int consumer_collection () const;
 
   /// Accessors to supplier collection flags
-  int supplier_collection (void) const;
+  int supplier_collection () const;
 
   /// Accessors to supplier filtering flags
-  int supplier_filtering (void) const;
+  int supplier_filtering () const;
 
   /// Accessor to ORBid
-  const ACE_CString& orb_id (void) const;
-protected:
+  const ACE_CString& orb_id () const;
 
+protected:
   /// Helper for agrument parsing.  Prints out an error message about
   /// unsupported option value.
-  void unsupported_option_value (const char * option_name,
-                                 const char * option_value);
+  void unsupported_option_value (const ACE_TCHAR * option_name,
+                                 const ACE_TCHAR * option_value);
 
 protected:
   /// Several flags to control the kind of object created.
@@ -152,12 +154,14 @@ protected:
   int consumer_lock_;
   int supplier_lock_;
 
-  /// The MT dispatching priority has several arguments that could be
-  /// controlled here...
-  int dispatching_threads_;
-  int dispatching_threads_flags_;
-  int dispatching_threads_priority_;
-  int dispatching_threads_force_active_;
+  /// Flags used by thread-based dispatching strategies.
+  int dispatching_threads_;     //! number of threads; may be ignored depending on strategy; default: TAO_EC_DEFAULT_DISPATCHING_THREADS
+  int dispatching_threads_flags_; //! flags for thread creation; default: TAO_EC_DEFAULT_DISPATCHING_THREADS_FLAGS
+  int dispatching_threads_priority_; //! dispatching thread priority; default: TAO_EC_DEFAULT_DISPATCHING_THREADS_PRIORITY
+  int dispatching_threads_force_active_; //! create threads with innocuous default values if creation with requested values fails
+  ACE_TString queue_full_service_object_name_; //! name of ACE_Service_Object which should be invoked when output queue becomes full
+  TAO_EC_Queue_Full_Service_Object* find_service_object (const ACE_TCHAR* wanted,
+                                                         const ACE_TCHAR* fallback);
 
   /// Use this ORB to locate global resources.
   ACE_CString orbid_;
@@ -180,8 +184,10 @@ protected:
   int consumer_validate_connection_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Default_Factory.i"
+#include "orbsvcs/Event/EC_Default_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Default_Factory)

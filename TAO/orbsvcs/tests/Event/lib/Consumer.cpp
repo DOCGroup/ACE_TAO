@@ -1,14 +1,8 @@
-// $Id$
-
 #include "Consumer.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
-
-ACE_RCSID (EC_Tests, 
-           EC_Consumer, 
-           "$Id$")
 
 EC_Consumer::EC_Consumer (EC_Driver *driver,
                           void *cookie)
@@ -24,21 +18,18 @@ void
 EC_Consumer::connect (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     const RtecEventChannelAdmin::ConsumerQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
 
-  this->connect (qos, shutdown_event_type ACE_ENV_ARG_PARAMETER);
+  this->connect (qos, shutdown_event_type);
 }
 
 void
 EC_Consumer::connect (
     const RtecEventChannelAdmin::ConsumerQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return; // @@ Throw?
@@ -47,58 +38,51 @@ EC_Consumer::connect (
 
   if (CORBA::is_nil (this->myself_.in ()))
     {
-      this->myself_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->myself_ = this->_this ();
     }
   this->is_active_ = 1;
 
   this->supplier_proxy_->connect_push_consumer (this->myself_.in (),
-                                                qos
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                qos);
 }
 
 int
-EC_Consumer::connected (void) const
+EC_Consumer::connected () const
 {
   return !CORBA::is_nil (this->supplier_proxy_.in ());
 }
 
 void
-EC_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+EC_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_proxy_->disconnect_push_supplier ();
 
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void
-EC_Consumer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+EC_Consumer::shutdown ()
 {
   if (!this->is_active_)
     return;
 
   // Deactivate the servant
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
+  poa->deactivate_object (id.in ());
   this->myself_ = RtecEventComm::PushConsumer::_nil ();
   this->is_active_ = 0;
 }
 
 void
-EC_Consumer::dump_results (const char* name,
-                           ACE_UINT32 gsf)
+EC_Consumer::dump_results (const ACE_TCHAR* name,
+                           ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (name, gsf);
 }
@@ -110,12 +94,9 @@ EC_Consumer::accumulate (ACE_Throughput_Stats& throughput) const
 }
 
 void
-EC_Consumer::push (const RtecEventComm::EventSet& events
-                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+EC_Consumer::push (const RtecEventComm::EventSet& events)
 {
-  this->driver_->consumer_push (this->cookie_, events ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->driver_->consumer_push (this->cookie_, events);
 
   if (events.length () == 0)
     {
@@ -151,23 +132,14 @@ EC_Consumer::push (const RtecEventComm::EventSet& events
                                 now - creation);
 
       if (e.header.type == this->shutdown_event_type_)
-        this->driver_->consumer_shutdown (this->cookie_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->driver_->consumer_shutdown (this->cookie_);
     }
 }
 
 void
-EC_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+EC_Consumer::disconnect_push_consumer ()
 {
-  this->driver_->consumer_disconnect (this->cookie_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->driver_->consumer_disconnect (this->cookie_);
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

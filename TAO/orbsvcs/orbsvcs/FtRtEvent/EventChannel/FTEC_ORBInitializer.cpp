@@ -1,46 +1,33 @@
-// $Id$
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 
-
-#include "FTEC_ORBInitializer.h"
-#include "Set_Update_Interceptor.h"
-#include "ForwardCtrlServerInterceptor.h"
-#include "FtEventServiceInterceptor.h"
-#include "Request_Context_Repository.h"
-
-ACE_RCSID (EventChannel,
-           FTEC_ORBInitializer,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 FTEC_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
 FTEC_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
-
-  Request_Context_Repository().allocate_slots(info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  Request_Context_Repository().allocate_slots(info);
 
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor;
   PortableInterceptor::ClientRequestInterceptor_ptr ctmp;
 
   ACE_NEW_THROW_EX(ctmp,
-                TAO_Set_Update_Interceptor,
-                CORBA::NO_MEMORY());
+                   TAO_Set_Update_Interceptor,
+                   CORBA::NO_MEMORY());
 
   client_interceptor = ctmp;
 
-  info->add_client_request_interceptor (client_interceptor.in()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_client_request_interceptor (client_interceptor.in());
 
   PortableInterceptor::ServerRequestInterceptor_var  server_interceptor;
   PortableInterceptor::ServerRequestInterceptor_ptr  stmp;
@@ -50,14 +37,13 @@ FTEC_ORBInitializer::post_init (
                 CORBA::NO_MEMORY());
   server_interceptor = stmp;
 
-  info->add_server_request_interceptor (server_interceptor.in()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (server_interceptor.in());
   ACE_NEW_THROW_EX(stmp,
                 FtEventServiceInterceptor,
                 CORBA::NO_MEMORY());
   server_interceptor = stmp;
 
-  info->add_server_request_interceptor (server_interceptor.in()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (server_interceptor.in());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

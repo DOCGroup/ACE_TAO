@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
 *  @file    Topology_Object.h
-*
-*  $Id$
 *
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
@@ -14,8 +12,8 @@
 #define TOPOLOGY_OBJECT_H
 #include /**/ "ace/pre.h"
 
-#include "Object.h"
-#include "Name_Value_Pair.h"
+#include "orbsvcs/Notify/Object.h"
+#include "orbsvcs/Notify/Name_Value_Pair.h"
 
 #include "ace/SString.h"
 #include "ace/Vector_T.h"
@@ -24,6 +22,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// \namespace TAO_Notify
 /// \brief A namespace to be used by all of TAO's Notification Service
@@ -45,8 +44,6 @@
 //
 namespace TAO_Notify
 {
-  static const char TOPOLOGY_ID_NAME[] = "TopologyID";
-
   class Topology_Saver;
   class Topology_Parent;
 
@@ -58,7 +55,7 @@ namespace TAO_Notify
   {
    public:
     /// Destructor.
-    virtual ~Topology_Savable (void);
+    virtual ~Topology_Savable ();
 
     /// Save our state to a Topology_Saver.
     ///
@@ -73,23 +70,21 @@ namespace TAO_Notify
     ///   if (is_persistent ())
     ///   {
     ///     bool want_all_children = saver.begin_object(
-    ///       this->id(), type, attrs, change ACE_ENV_ARG_PARAMETER);
-    ///     ACE_CHECK;
+    ///       this->id(), type, attrs, change);
     ///     for all children
     ///     {
     ///       if (want_all_children || child.is_changed())
     ///       {
-    ///         child.save_persistent(saver ACE_ENV_ARG_PARAMETER);
-    ///         ACE_CHECK;
+    ///         child.save_persistent(saver);
     ///       }
     ///     }
     ///     for all deleted children
     ///     {
     ///       saver.delete_child(child_type, child_id);
     ///     }
-    ///     saver.end_object(this->id(), type ACE_ENV_ARG_PARAMETER);
+    ///     saver.end_object(this->id(), type);
     ///   )
-    virtual void save_persistent (Topology_Saver& saver ACE_ENV_ARG_DECL) = 0;
+    virtual void save_persistent (Topology_Saver& saver) = 0;
 
     /// Re-establish connections that we had before a shutdown.
     ///
@@ -97,8 +92,7 @@ namespace TAO_Notify
     /// to any external objects with whom we were interacting.  We should
     /// call the reconnect() method on all of our children to give them
     /// the chance to do the same.
-    virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
-
+    virtual void reconnect ();
   };
 
   /// \brief Base class for Persistent Topology Objects.
@@ -119,17 +113,16 @@ namespace TAO_Notify
     virtual ~Topology_Object ();
 
     /// Init this object with data from <rhs>.
-    virtual void initialize (Topology_Parent* topology_parent ACE_ENV_ARG_DECL);
+    virtual void initialize (Topology_Parent* topology_parent);
 
     /// \brief Create a child of the appropriate type and return it.
     ///
     /// Use "type" as passed in to determine what kind of child (supporting
     /// the Topology_Object interface) to create and return.  Inform it of
     /// its new ID.
-    virtual Topology_Object* load_child (const ACE_CString & /*type*/,
-      CORBA::Long /* id */,
-      const NVPList& /* attrs */
-      ACE_ENV_ARG_DECL_NOT_USED);
+    virtual Topology_Object* load_child (const ACE_CString & type,
+      CORBA::Long id,
+      const NVPList& attrs);
 
     /// \brief Find the id associated with topology object.
     ///
@@ -156,7 +149,7 @@ namespace TAO_Notify
     ///
     ///  see also Topology_Parent::child_change ()
     /// \return false if save will never happen
-    bool self_change (ACE_ENV_SINGLE_ARG_DECL);
+    bool self_change ();
 
     /// \brief pointer to our topological parent
     ///
@@ -166,7 +159,13 @@ namespace TAO_Notify
     /// \brief Handle details of propagating change
     ///
     /// \return false if save will never happen
-    bool send_change (ACE_ENV_SINGLE_ARG_DECL);
+    bool send_change ();
+
+    /// \brief Handle details of propagating change
+    ///  for a deleted object.
+    ///
+    /// \return false if save will never happen
+    bool send_deletion_change ();
 
   private:
     /// \brief Send change to parent.
@@ -175,7 +174,7 @@ namespace TAO_Notify
     /// (top level of tree)
     /// private virtual because this should only be called from send_change()
     /// \return false if save will never happen
-    virtual bool change_to_parent (ACE_ENV_SINGLE_ARG_DECL);
+    virtual bool change_to_parent ();
 
   protected:
     /// true if this object changed since last save_persistent
@@ -198,13 +197,14 @@ namespace TAO_Notify
     /// Called by a child that has changed.
     /// A child calls this method to report that it has changed.
     /// \return false if save will never happen
-    bool child_change (ACE_ENV_SINGLE_ARG_DECL);
+    bool child_change ();
   };
-
 } // namespace TAO_Notify
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Topology_Object.inl"
+#include "orbsvcs/Notify/Topology_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

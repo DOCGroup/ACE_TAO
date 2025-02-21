@@ -1,16 +1,13 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_EventChannel.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * A new implementation of the COS Event Channel.
  * This version does not rely on the RTEC in its implementation.
- *
- *
  */
 //=============================================================================
 
@@ -20,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_Factory.h"
+#include "orbsvcs/CosEvent/CEC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,9 +25,12 @@
 
 #include "orbsvcs/CosEventChannelAdminS.h"
 
-#include "CEC_Defaults.h"
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/CEC_Defaults.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Truncate.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_EventChannel_Attributes
@@ -54,7 +54,7 @@ public:
   /**
    * The basic constructor.
    * The attributes listed as arguments are *required* by the EC, and
-   * no appropiate defaults are available for them.
+   * no appropriate defaults are available for them.
    */
   TAO_CEC_EventChannel_Attributes (PortableServer::POA_ptr supplier_poa,
                                    PortableServer::POA_ptr consumer_poa);
@@ -105,7 +105,7 @@ public:
   {
   public:
     u_long operator() (PortableServer::ServantBase* const & ptr) const {
-      return reinterpret_cast<u_long> (ptr);
+      return ACE_Utils::truncate_cast<u_long> ((intptr_t)ptr);
     }
   };
 
@@ -117,7 +117,7 @@ public:
 
   /**
    * constructor
-   * If <own_factory> is not 0 it assumes ownership of the factory.
+   * If @a own_factory is not 0 it assumes ownership of the factory.
    * If the factory is <nil> it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
@@ -126,30 +126,30 @@ public:
                         int own_factory = 0);
 
   /// destructor
-  virtual ~TAO_CEC_EventChannel (void);
+  virtual ~TAO_CEC_EventChannel ();
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void activate ();
 
   /// Shutdown any internal threads, cleanup all the internal
   /// structures, flush all the messages, etc.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void shutdown ();
 
   /// Access the dispatching module....
-  TAO_CEC_Dispatching* dispatching (void) const;
+  TAO_CEC_Dispatching* dispatching () const;
 
   /// Access the consumer admin implementation.
-  TAO_CEC_ConsumerAdmin* consumer_admin (void) const;
+  TAO_CEC_ConsumerAdmin* consumer_admin () const;
 
   /// Access the supplier admin implementation.
-  TAO_CEC_SupplierAdmin* supplier_admin (void) const;
+  TAO_CEC_SupplierAdmin* supplier_admin () const;
 
   /// Access the consumer control strategy.
-  TAO_CEC_ConsumerControl* consumer_control (void) const;
+  TAO_CEC_ConsumerControl* consumer_control () const;
 
   /// Access the supplier control strategy.
-  TAO_CEC_SupplierControl* supplier_control (void) const;
+  TAO_CEC_SupplierControl* supplier_control () const;
 
   // = The factory methods, they delegate on the CEC_Factory.
   /// Create and destroy a ProxyPushSupplier
@@ -183,77 +183,66 @@ public:
   void destroy_proxy_collection (TAO_CEC_ProxyPullConsumer_Collection*);
 
   /// Access the supplier and consumer POAs from the factory.
-  PortableServer::POA_ptr supplier_poa (void);
-  PortableServer::POA_ptr consumer_poa (void);
+  PortableServer::POA_ptr supplier_poa ();
+  PortableServer::POA_ptr consumer_poa ();
 
   /// Locking strategies for the ProxyPushConsumer and
   /// ProxyPushSupplier objects
-  ACE_Lock* create_consumer_lock (void);
+  ACE_Lock* create_consumer_lock ();
   void destroy_consumer_lock (ACE_Lock*);
-  ACE_Lock* create_supplier_lock (void);
+  ACE_Lock* create_supplier_lock ();
   void destroy_supplier_lock (ACE_Lock*);
 
   /// Used to inform the EC that a Consumer has connected or
   /// disconnected from it.
-  virtual void connected (TAO_CEC_ProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void connected (TAO_CEC_ProxyPullConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPullConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPullConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushConsumer*);
+  virtual void reconnected (TAO_CEC_ProxyPushConsumer*);
+  virtual void disconnected (TAO_CEC_ProxyPushConsumer*);
+  virtual void connected (TAO_CEC_ProxyPullConsumer*);
+  virtual void reconnected (TAO_CEC_ProxyPullConsumer*);
+  virtual void disconnected (TAO_CEC_ProxyPullConsumer*);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
-  virtual void connected (TAO_CEC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void connected (TAO_CEC_ProxyPullSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPullSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPullSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushSupplier*);
+  virtual void reconnected (TAO_CEC_ProxyPushSupplier*);
+  virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
+  virtual void connected (TAO_CEC_ProxyPullSupplier*);
+  virtual void reconnected (TAO_CEC_ProxyPullSupplier*);
+  virtual void disconnected (TAO_CEC_ProxyPullSupplier*);
 
   // Simple flags to control the EC behavior, set by the application
   // at construction time.
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect (void) const;
+  int consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect (void) const;
+  int supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks (void) const;
+  int disconnect_callbacks () const;
 
   // = The CosEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
   virtual CosEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      for_consumers ();
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this (env);
   virtual CosEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      for_suppliers ();
 
   /// Commit suicide.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
-  ServantRetryMap& get_servant_retry_map (void);
+  ServantRetryMap& get_servant_retry_map ();
+
+  /// Forwarded to the factory
+  CORBA::Policy_ptr
+  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout);
 
 private:
   /// The POAs used to activate "supplier-side" and "consumer-side"
@@ -298,8 +287,10 @@ private:
   ServantRetryMap retry_map_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_EventChannel.i"
+#include "orbsvcs/CosEvent/CEC_EventChannel.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

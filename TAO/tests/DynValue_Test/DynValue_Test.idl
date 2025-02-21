@@ -1,0 +1,34 @@
+module DynValue_Test
+{
+  abstract valuetype avt
+  {
+    void print ();
+  };
+
+  valuetype BaseValue : avt
+  {
+    public unsigned short Base_us1;
+    public unsigned short Base_us2;
+  };
+
+  valuetype BoxedLong long;
+
+  valuetype NestedValue
+  {
+    public short Nested_s1;
+    public short Nested_s2;
+  };
+
+  valuetype NullValue
+  {
+  };
+
+  valuetype Trunc : truncatable BaseValue
+  {
+    public  BoxedLong   Trunc_bl;
+    public  NestedValue Trunc_nested;
+    private NullValue   Trunc_null1;
+    private NullValue   Trunc_null2;
+    private NullValue   Trunc_null3;
+  };
+};

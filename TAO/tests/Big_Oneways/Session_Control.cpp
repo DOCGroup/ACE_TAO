@@ -1,9 +1,4 @@
-//
-// $Id$
-//
 #include "Session_Control.h"
-
-ACE_RCSID(Big_Oneways, Session_Control, "$Id$")
 
 Session_Control::Session_Control (CORBA::ULong session_count)
   : session_count_ (session_count)
@@ -12,12 +7,12 @@ Session_Control::Session_Control (CORBA::ULong session_count)
 }
 
 int
-Session_Control::all_sessions_finished (void) const
+Session_Control::all_sessions_finished () const
 {
   return this->session_count_ == 0;
 }
 
-Session_Control::~Session_Control (void)
+Session_Control::~Session_Control ()
 {
   if (this->session_count_ == 0 && this->success_)
     {
@@ -41,11 +36,9 @@ Session_Control::~Session_Control (void)
 }
 
 void
-Session_Control::session_finished (CORBA::Boolean success
-                                   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Session_Control::session_finished (CORBA::Boolean success)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   if (this->session_count_ == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -63,13 +56,10 @@ Session_Control::session_finished (CORBA::Boolean success
   if (session_count_ == 0)
     {
       PortableServer::POA_var poa =
-        this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->_default_POA ();
       PortableServer::ObjectId_var oid =
-        poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-      poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        poa->servant_to_id (this);
+      poa->deactivate_object (oid.in ());
     }
 
 }

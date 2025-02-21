@@ -1,9 +1,9 @@
-<!-- $Id$ -->
+<!--  -->
 
 <html>
   <head>
     <title>Minimum TAO</title>
-    <link rev=made href="mailto:tao-users@cs.wustl.edu">
+    <link rev=made href="https://github.com/DOCGroup/ACE_TAO">
   </head>
 
 <body text = "#000000"
@@ -26,11 +26,11 @@ are pursuing two complementary strategies to reduce TAO's footprint:
 <LI> <B><EM>Implicit subsetting</EM></B>, e.g., by reducing
     dependencies in the TAO library so that programs need not link
     unused TAO components. <P>
-    
+
 <LI> <B><EM>Explicit subsetting</EM></B>, e.g., by supporting the <a
 href="http://www.omg.org/cgi-bin/doc?orbos/98-08-04.pdf"><em>minimumCORBA
 </em></a> specification to <a href =
-"http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>.  The <em>
+"http://www.dre.vanderbilt.edu/~schmidt/TAO.html">TAO</a>.  The <em>
 minimumCORBA </em> specification removes the following features from
 the <a href
 ="http://www.omg.org/technology/documents/formal/">CORBA</a>
@@ -51,11 +51,11 @@ programmer intervention.  In contrast, to minimize the footprint of
 TAO explicitly, you must
 <OL>
 <LI> <a
-href="../ACE-INSTALL.html">Configure</a> ACE to support only those
+href="../../ACE-INSTALL.html">Configure</a> ACE to support only those
 components that are required by TAO and <P>
 <LI> <a href =
-"../TAO/TAO-INSTALL.html">Configure</a> TAO to only support the
-components specified by the <em>minimumCORBA</em> specification.  
+"../../TAO/TAO-INSTALL.html">Configure</a> TAO to only support the
+components specified by the <em>minimumCORBA</em> specification.
 </OL>
 
 The following two tables show the footprint reduction achievable via
@@ -69,10 +69,10 @@ Note: All measurement are for ACE 5.0 and TAO 1.0 using egcs-2.91.60
 on SunOS5.7<P>
 
 The <a
-href="../ACE-INSTALL.html#flags">make
+href="../../ACE-INSTALL.html#flags">make
 flags</a> options used were: <P>
 
-<code> debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0 </code> <P>
+<code> debug=0 optimize=1 static_libs_only=1</code> <P>
 
 These options translate into:<P>
 <UL>
@@ -86,7 +86,7 @@ These options translate into:<P>
 To build a TAO static library, if shared libraries are the default,
 use <code>make static_libs_only=1</code> (make sure to do this for
 ACE, as well).  If you're using recent versions of GNU GCC, you can
-use the <A HREF="../ACE-INSTALL.html#repo">-frepo</A> option, which
+use the <A HREF="../../ACE-INSTALL.html#repo">-frepo</A> option, which
 typically reduces the footprint by another 25 percent. <P>
 
 <HR>
@@ -141,75 +141,75 @@ of these changes, along with the estimated effort to implement them.
     <TR>
       <TD>ACE</TD><TD>14 Kb</TD><TD>4 weeks</TD>
         <TD>
-	Implement a TAO-specific Reactor.
-	ACE's reactor supports a number of features that TAO does not
-	require.  Thus, a TAO-specific implementation is an important way to
-	reduce the footprint.
+  Implement a TAO-specific Reactor.
+  ACE's reactor supports a number of features that TAO does not
+  require.  Thus, a TAO-specific implementation is an important way to
+  reduce the footprint.
         </TD>
     </TR>
     <TR>
       <TD>ACE</TD><TD>20 Kb</TD><TD>4 weeks</TD>
         <TD>
-	Implement a TAO-specific Service Configurator.
-	TAO uses the ACE Service Configurator to dynamically configure
-	its strategies.  In many embedded applications the set of
-	strategies are selected at design-time, on those platforms it
-	would be appropriate to disable all the features to
-	dynamically load components into the ORB.
+  Implement a TAO-specific Service Configurator.
+  TAO uses the ACE Service Configurator to dynamically configure
+  its strategies.  In many embedded applications the set of
+  strategies are selected at design-time, on those platforms it
+  would be appropriate to disable all the features to
+  dynamically load components into the ORB.
         </TD>
     </TR>
     <TR>
       <TD>TAO</TD><TD>10-15 Kb</TD><TD>1-2 weeks</TD>
         <TD>
-	Eliminate duplicate code due to instantiations of string ->
-	pointer maps.  TAO uses several such maps, they could be replaced by a
-	generic version, wrapped with a fully inlined (i.e. zero
-	footprint) adapter for type-safety.
+  Eliminate duplicate code due to instantiations of string ->
+  pointer maps.  TAO uses several such maps, they could be replaced by a
+  generic version, wrapped with a fully inlined (i.e. zero
+  footprint) adapter for type-safety.
         </TD>
     </TR>
     <TR>
       <TD>TAO</TD><TD>3-10 Kb</TD><TD>1-2 weeks</TD>
         <TD>
-	Make message buffering strategies optional.
-	TAO supports policy extensions to control the outgoing oneway and AMI
-	request buffers.  Those policies are not used by all
-	applications.
+  Make message buffering strategies optional.
+  TAO supports policy extensions to control the outgoing oneway and AMI
+  request buffers.  Those policies are not used by all
+  applications.
         </TD>
     </TR>
     <TR>
       <TD>TAO</TD><TD>10 Kb</TD><TD>2 weeks</TD>
         <TD>
-	Make support for multiple ORBs optional.
-	TAO can support multiple ORBs in the same process, but most
-	applications only require one.
+  Make support for multiple ORBs optional.
+  TAO can support multiple ORBs in the same process, but most
+  applications only require one.
         </TD>
     </TR>
     <TR>
       <TD>TAO</TD><TD>5 Kb</TD><TD>1 week</TD>
         <TD>
-	Move the less common transport muxing and reply waiting
-	strategies to an optional library.
+  Move the less common transport muxing and reply waiting
+  strategies to an optional library.
         </TD>
     </TR>
     <TR>
       <TD>ACE+TAO</TD><TD>30 Kb</TD><TD>8 weeks</TD>
         <TD>
-	Decouple ACE (and then TAO) from the
-	<CODE>ACE_Thread_Manager</CODE> component.
-	This component is only used in the thread-per-connection
-	model, if we could decouple it in ACE then TAO could be
-	modified to only link this component when that concurrency
-	model is enabled.
+  Decouple ACE (and then TAO) from the
+  <CODE>ACE_Thread_Manager</CODE> component.
+  This component is only used in the thread-per-connection
+  model, if we could decouple it in ACE then TAO could be
+  modified to only link this component when that concurrency
+  model is enabled.
         </TD>
     </TR>
     <TR>
       <TD>TAO</TD><TD>&gt;50 Kb</TD><TD>6 weeks</TD>
         <TD>
-	Move <CODE>&lt;&lt;=</CODE> and <CODE>&gt;&gt;=</CODE>
-	operators to separate files.
-	Currently TAO includes nearly 500 such operators, moving them
-	to separate files (grouped by component?) would eliminate them
-	from most applications.
+  Move <CODE>&lt;&lt;=</CODE> and <CODE>&gt;&gt;=</CODE>
+  operators to separate files.
+  Currently TAO includes nearly 500 such operators, moving them
+  to separate files (grouped by component?) would eliminate them
+  from most applications.
         </TD>
     </TR>
   </TABLE>

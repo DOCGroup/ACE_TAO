@@ -1,6 +1,4 @@
-#!/usr/bin/perl -w
-#
-# $Id$
+#!/usr/bin/env perl -w
 #
 
 use English;

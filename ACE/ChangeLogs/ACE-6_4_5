@@ -1,0 +1,422 @@
+commit c432847e62f2b9daaf04320c59db1d0a4c9adba1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 7 08:56:50 2017 +0200
+
+    Removed file we don't need anymore
+
+commit 1cdfec588f4c562f9df8c9daedcad88c99040fc4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 5 13:31:49 2017 +0200
+
+    Extended TAO_IDL with a new -Gsd which enabled the generation of two additional static operations for each interface. _desc_repository_id to retrieve the repository id as string, second _desc_interface_name to return the interface name. Both can be useful in template meta programming use cases where we want to use the repository id or interface name of a specific type.
+    
+        * ACE/tests/Reactor_Exceptions_Test.cpp:
+        * TAO/TAO_IDL/be/be_global.cpp:
+        * TAO/TAO_IDL/be/be_util.cpp:
+        * TAO/TAO_IDL/be/be_visitor_argument/argument.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO/TAO_IDL/be_include/be_global.h:
+        * TAO/docs/compiler.html:
+        * TAO/tests/IDL_Test/IDL_Test.mpc:
+        * TAO/tests/IDL_Test/main.cpp:
+
+commit 7b8ed199a5222871fe70714d6bb9a57527368725
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 10:23:51 2017 +0200
+
+    Added two places where ACE has to be updated after a release
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit 4f2a76df93ae27b114b6b27de309a43e1df4330d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 10:14:19 2017 +0200
+
+    Cleanup
+    
+        * ACE/debian/platform_macros.GNU:
+
+commit 892c9d4647cab5e75b906adde329efeff9ab1791
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 10:12:56 2017 +0200
+
+    Removed not needed patch
+
+commit aba3a5abb50ea331034404e1e8278a02b25dc1d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 10:12:09 2017 +0200
+
+    Removed not needed patch
+
+commit ba22d8a44d842599ad2ea72d0d9b8c581862abc0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 09:59:37 2017 +0200
+
+    Updated debian updates
+    
+        * ACE/bin/make_release.py:
+
+commit 41a087da57168d350cfa77d8045366f457a8baa1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 09:57:26 2017 +0200
+
+    Sync with debian packaging
+
+commit 9e507eeb2b8b5dbc00e4b0cc3c84b6a6bb2574ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 09:49:51 2017 +0200
+
+    Updated to latest packaging versions
+
+commit 6312dca10a92cf3e77637ce8d30aca000dbcb549
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 3 09:29:53 2017 +0200
+
+    Added openssl11 as default to 0, has to be manually enabled
+    
+        * ACE/bin/MakeProjectCreator/config/global.features:
+
+commit a76ae17ae17dcc6511a9fa42998af29271075106
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 2 09:26:11 2017 +0200
+
+    TSS_Leak_Test is known to fail at this moment
+    
+        * ACE/tests/run_test.lst:
+
+commit 26a2f54f65a1c5a61b75fddc5069756c66e6aa2f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 1 22:00:48 2017 +0200
+
+    Remove google tracking code
+    
+        * ACE/docs/Download.html:
+
+commit 97c7c4b7a4b2e4f90c1e3a98b4c3f594a8c6c616
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 1 15:43:21 2017 +0200
+
+    OpenSSL v1.1 docu changes
+    
+        * ACE/ACE-INSTALL.html:
+        * ACE/NEWS:
+
+commit 41c5ca337221ae3fdd245e9f1912a0bac91e663c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 1 15:13:35 2017 +0200
+
+    Fixed 64bit conversion warning
+    
+        * ACE/apps/JAWS2/JAWS/Cache_Hash_T.cpp:
+        * ACE/apps/JAWS2/JAWS/Cache_Hash_T.h:
+
+commit 7fba52d361a4cff50d4a1181e8a503b5054935b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 20:09:57 2017 +0200
+
+    Cleanup empty commented out lines
+
+commit ecfc2a113f128b8acd0e8188b807441ce4898504
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 14:42:00 2017 +0200
+
+    Fixed typos
+    
+        * ACE/ACEXML/README:
+        * ACE/apps/JAWS2/main.cpp:
+        * ACE/contrib/FaCE/README:
+
+commit 4c31674fa5fa72a26b9927394c1cf01eed6ce20c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 12:20:18 2017 +0200
+
+    Removed this patch, only patches makefiles which we don't ship anymore
+
+commit 9770e4def8b689f87b820bb1a464fb1a516f798d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 12:15:35 2017 +0200
+
+    Removed left over Id tags
+
+commit 764d3a74cf80e3a3d439347fbaaf9077b0f93d42
+Merge: dc58459e8b7 ff78e6235f5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 08:39:28 2017 +0200
+
+    Merge pull request #494 from jwillemsen/jwi-openssl110support
+    
+    Add support for OpenSSL 1.1
+
+commit dc58459e8b75d06bbe49e048647b0d0993ff2d49
+Merge: 4c0075dad8d dd06341261d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 20:34:29 2017 +0200
+
+    Merge pull request #497 from jwillemsen/jwi-bugzilla-links
+    
+    Fixed links to bugzilla
+
+commit 4c0075dad8d158b59ce68dd6789f5279c1e9f46b
+Merge: 85a16c4b2f0 133dd7652d2
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Aug 30 13:02:12 2017 -0500
+
+    Merge pull request #492 from mitza-oci/tss-leak
+    
+    Added a test showing a leaked object created by ACE_TSS<T>
+
+commit dd06341261df2394b791fb1eeb3b189d5174c63a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 17:23:11 2017 +0200
+
+    Updated links to point to Vanderbilt bugzilla
+    
+        * ACE/tests/Based_Pointer_Test.cpp:
+        * ACE/tests/Bug_1576_Regression_Test.cpp:
+        * ACE/tests/Bug_1890_Regression_Test.cpp:
+        * ACE/tests/Bug_2368_Regression_Test.cpp:
+        * ACE/tests/Bug_2497_Regression_Test.cpp:
+        * ACE/tests/Bug_2540_Regression_Test.cpp:
+        * ACE/tests/Bug_2609_Regression_Test.cpp:
+        * ACE/tests/Bug_2610_Regression_Test.cpp:
+        * ACE/tests/Bug_2659_Regression_Test.cpp:
+        * ACE/tests/Bug_2740_Regression_Test.cpp:
+        * ACE/tests/Bug_2975_Regression_Test.cpp:
+        * ACE/tests/Bug_3102_Regression_Test.cpp:
+        * ACE/tests/Bug_3319_Regression_Test.cpp:
+        * ACE/tests/Bug_3500_Regression_Test.cpp:
+        * ACE/tests/Bug_3532_Regression_Test.cpp:
+        * ACE/tests/Bug_3541_Regression_Test.cpp:
+        * ACE/tests/Bug_3673_Regression_Test.cpp:
+        * ACE/tests/Bug_3709_Regression_Test.cpp:
+        * ACE/tests/Bug_3710_Regression_Test.cpp:
+        * ACE/tests/Bug_3911_Regression_Test.cpp:
+        * ACE/tests/Bug_3974_Regression_Test.cpp:
+        * TAO/docs/Security/SSLIOP-USAGE.html:
+        * TAO/docs/releasenotes/TODO.html:
+        * TAO/docs/releasenotes/ec.html:
+        * TAO/docs/releasenotes/orbcore.html:
+        * TAO/docs/rtcorba/issues.html:
+        * TAO/docs/rtcorba/status.html:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Dispatching_Task.inl:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+
+commit e7309a1c32ff422701b5cbc1e6e7f979701236b0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 17:21:47 2017 +0200
+
+    Fixed error
+    
+        * ACE/tests/SSL/Bug_2912_Regression_Test.cpp:
+
+commit ca2b85ec1b1945605cc6e1f83d5e711a43e47e5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 17:17:44 2017 +0200
+
+    Attempt to fix compile errors on Windows
+    
+        * ACE/tests/SSL/Bug_2912_Regression_Test.cpp:
+
+commit 69e82bb732facc858bb52df2b100710304940e77
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 16:18:11 2017 +0200
+
+    Fix gcc7 warnings and remove commented out throws
+    
+        * ACE/ace/OS_NS_Thread.h:
+        * TAO/examples/Quoter/Factory_Finder.cpp:
+        * TAO/examples/Quoter/client.cpp:
+        * TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
+        * TAO/tao/PortableServer/Servant_var.h:
+
+commit c015b4de5cbc146bf854a04da911215ba3626796
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 07:58:29 2017 +0200
+
+    Fixed compile error
+    
+        * ACE/protocols/ace/INet/SSL_X509Cert.inl:
+
+commit eefdb5a0165d02b3d12aff055e6ceb62a3e9a7ea
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 19:19:21 2017 +0200
+
+    Only one exit point in report_error
+    
+        * ACE/ace/SSL/SSL_Context.cpp:
+
+commit 19095a5d2567dc59eff2b555682005a859974d9b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 16:59:28 2017 +0200
+
+    Missing endif
+    
+        * ACE/protocols/ace/INet/SSL_X509Cert.inl:
+
+commit 31710940df845a1508fd7c5f0afc0772b602c668
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 16:50:35 2017 +0200
+
+    Fixed gcc7 warning
+    
+        * ACE/apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
+        * ACE/apps/Gateway/Peer/Peer.cpp:
+
+commit 9cfbd696dcf71d52fac9e4eb89561ceb1de4ecb6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 16:36:47 2017 +0200
+
+    OpenSSL 1.1 disables egd by default
+    
+        * ACE/ace/SSL/SSL_Context.cpp:
+
+commit 014e56cc756963adb6074476e670644d96627fbf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 16:29:42 2017 +0200
+
+    Fixed compile error
+    
+        * ACE/ace/SSL/SSL_Asynch_BIO.cpp:
+
+commit 544b037061830e2dc8df4aaff79eb97cd6ae30bd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 16:12:01 2017 +0200
+
+    Fixed for OpenSSL 1.1
+    
+        * ACE/ace/SSL/SSL_Context.cpp:
+
+commit 0af452951a7b0053128bbe19d1b181d054ce43ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 16:08:22 2017 +0200
+
+    Another change for OpenSSL 1.1
+    
+        * ACE/ace/SSL/SSL_Asynch_BIO.cpp:
+
+commit e1bcaae0f19969d986f306451e4d98f1f14ec98e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 15:50:36 2017 +0200
+
+    More fixes for OpenSSL 1.1
+    
+        * ACE/ace/SSL/SSL_Asynch_BIO.cpp:
+        * ACE/ace/SSL/SSL_Context.cpp:
+
+commit daf8e948580998fa2e45520c96d40d2499889309
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 15:40:00 2017 +0200
+
+    List OpenSSL 1.1 changes
+    
+        * ACE/NEWS:
+
+commit d148f4662b1cbea5574bb0c43b09a57b7a26ed6d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 15:35:33 2017 +0200
+
+    Fix gcc7 warning
+    
+        * ACE/tests/Based_Pointer_Test_Lib.cpp:
+        * TAO/tao/DynamicAny/DynAny_i.cpp:
+
+commit 77c2a42a2843ec9a85473e23371f4b088008d39c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 15:24:43 2017 +0200
+
+    Add support for OpenSSL 1.1.0 and newer
+    
+        * ACE/protocols/ace/INet/SSL_X509Cert.inl:
+
+commit 99897de90d645f4817b27333f81aba4108c2217d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 15:08:05 2017 +0200
+
+    Add support for OpenSSL 1.1.0 and newer
+    
+        * ACE/ace/SSL/SSL_Asynch_BIO.cpp:
+        * ACE/ace/SSL/SSL_Context.cpp:
+        * ACE/ace/SSL/SSL_Context.h:
+
+commit 73d936a2d6885e8ca547376e5f44f22b7bc49556
+Merge: c5d5c60b8be 1d2499adc8d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 21 10:18:45 2017 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+    
+    g Please enter a commit message to explain why this merge is necessary,
+
+commit c5d5c60b8bed1ed1328664fc53eb2956e1174793
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 21 10:18:37 2017 +0200
+
+    Updated links to point to Vanderbilt pages
+    
+        * ACE/COPYING:
+        * TAO/COPYING:
+
+commit 133dd7652d21d66801523b19642a8bdbc3c42378
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Aug 17 10:28:07 2017 -0500
+
+    Added a test showing a leaked object created by ACE_TSS<T>
+
+commit 8a36f8af7bdf47e66c27c1f265e90e99605661b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 16 12:27:53 2017 +0200
+
+    Moved rpath chagnes to the yosemite file
+    
+        * ACE/include/makeinclude/platform_macosx_elcapitan.GNU:
+
+commit 4a2073dcfa92e9320edb1513d4529ad1c95033fa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 16 12:26:45 2017 +0200
+
+    Fixed typo in tiger name
+    
+        * ACE/include/makeinclude/platform_macosx.GNU:
+
+commit 4802e538be4d7dd3fc24d7ae946ac50d7816371f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 14 14:02:42 2017 +0200
+
+    Upgrade to latest doxygen release
+    
+        * ACE/debian/cmp-installation.sh:
+        * ACE/etc/ace.doxygen:
+        * ACE/etc/ace_inet.doxygen:
+        * ACE/etc/ace_qos.doxygen:
+        * ACE/etc/ace_rmcast.doxygen:
+        * ACE/etc/ace_ssl.doxygen:
+        * ACE/etc/acexml.doxygen:
+
+commit b6fffc20761857bed69f0b0a8c01010899d89037
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 14 10:33:58 2017 +0200
+
+    List new CIAO and DAnCE release and ignore .git directories during packaging
+    
+        * ACE/bin/make_release.py:
+        * ACE/docs/Download.html:
+
+commit 8bbf1bfb85ac80e4f5b870fd539258b12b8721c9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 14 09:50:25 2017 +0200
+
+    Incremented TAO version
+    
+        * ACE/docs/Download.html:
+
+commit 5af437c7b4f5fe2dc1111e1215e9236489628602
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 14 09:48:31 2017 +0200
+
+    Make ACE 6.4.4 and TAO 2.4.4 available
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

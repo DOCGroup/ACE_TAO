@@ -1,7 +1,6 @@
-// $Id$
-
-#include "ECG_CDR_Message_Receiver.h"
-#include "ECG_CDR_Message_Sender.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Event/ECG_CDR_Message_Receiver.h"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
 
 #include "tao/Exception.h"
 
@@ -9,21 +8,20 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 #if !defined(__ACE_INLINE__)
-#include "ECG_CDR_Message_Receiver.i"
+#include "orbsvcs/Event/ECG_CDR_Message_Receiver.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           ECG_CDR_Message_Receiver,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor (void)
+TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor ()
 {
 }
 // ****************************************************************
 
-TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry (void)
+TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry ()
 {
   if (this->own_received_fragments_)
     {
@@ -111,7 +109,7 @@ TAO_ECG_UDP_Request_Entry::mark_received (CORBA::ULong fragment_id)
 }
 
 int
-TAO_ECG_UDP_Request_Entry::complete (void) const
+TAO_ECG_UDP_Request_Entry::complete () const
 {
   for (CORBA::ULong i = 0;
        i < this->received_fragments_size_;
@@ -149,13 +147,13 @@ TAO_ECG_CDR_Message_Receiver::Requests::init (size_t size,
 
   for (size_t i = 0; i < size; ++i)
     {
-      this->fragmented_requests_[i] = 0;
+      this->fragmented_requests_[i] = nullptr;
     }
 
   return 0;
 }
 
-TAO_ECG_CDR_Message_Receiver::Requests::~Requests (void)
+TAO_ECG_CDR_Message_Receiver::Requests::~Requests ()
 {
   for (size_t i = 0; i < this->size_; ++i)
     {
@@ -168,7 +166,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::~Requests (void)
 
   delete [] this->fragmented_requests_;
 
-  this->fragmented_requests_ = 0;
+  this->fragmented_requests_ = nullptr;
   this->size_ = 0;
   this->id_range_low_ = 0;
   this->id_range_high_ = 0;
@@ -180,7 +178,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::get_request (CORBA::ULong request_id)
   if (request_id < this->id_range_low_)
     // <request_id> is below the current range.
     {
-      return 0;
+      return nullptr;
     }
 
   if (request_id > this->id_range_high_)
@@ -227,14 +225,14 @@ TAO_ECG_CDR_Message_Receiver::Requests::purge_requests (
         {
           delete this->fragmented_requests_[index];
         }
-      this->fragmented_requests_[index] = 0;
+      this->fragmented_requests_[index] = nullptr;
     }
 }
 
 // ****************************************************************
 
 TAO_ECG_UDP_Request_Entry
-TAO_ECG_CDR_Message_Receiver::Request_Completed_ (0, 0, 0, 0);
+TAO_ECG_CDR_Message_Receiver::Request_Completed_ (false, 0, 0, 0);
 
 int
 TAO_ECG_CDR_Message_Receiver::handle_input (
@@ -245,7 +243,6 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
                         + ACE_CDR::MAX_ALIGNMENT];
   char *header_buf = ACE_ptr_align_binary (nonaligned_header,
                                            ACE_CDR::MAX_ALIGNMENT);
-
   char nonaligned_data[ACE_MAX_DGRAM_SIZE + ACE_CDR::MAX_ALIGNMENT];
   char *data_buf = ACE_ptr_align_binary (nonaligned_data,
                                          ACE_CDR::MAX_ALIGNMENT);
@@ -267,20 +264,20 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
       if (errno == EWOULDBLOCK)
         return 0;
 
-      ACE_ERROR_RETURN ((LM_ERROR, "Error reading mcast fragment (%m).\n"),
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Error reading mcast fragment (%m).\n"),
                         -1);
     }
 
   if (n == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Trying to read mcast fragment: "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Trying to read mcast fragment: "
                                   "read 0 bytes from socket.\n"),
                         0);
     }
 
   if (n < TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Trying to read mcast fragment: "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Trying to read mcast fragment: "
                                    "# of bytes read < mcast header size.\n"),
                          -1);
     }
@@ -295,7 +292,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
       crc = ACE::crc32 (iov, 2);
     }
   // Check whether the message is a loopback message.
-  if (this->ignore_from_.get () != 0
+  if (this->ignore_from_.get () != nullptr
       && this->ignore_from_->is_loopback (from))
     {
       return 0;
@@ -309,33 +306,33 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
   if ( this->check_crc_ && header.crc != crc)
     {
       static unsigned int err_count = 0;
-      ACE_ERROR ((LM_DEBUG,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "******************************\n"));
 
-      ACE_ERROR ((LM_DEBUG,
-                  "ERROR DETECTED \n"));
+      ORBSVCS_ERROR ((LM_ERROR,
+                  "ERROR DETECTED\n"));
 
       if (crc == 0)
         {
-          ACE_ERROR ((LM_DEBUG,
-                      "Sending process may not have computed CRC \n"));
+          ORBSVCS_ERROR ((LM_ERROR,
+                      "Sending process may not have computed CRC\n"));
         }
       else
         {
-          ACE_ERROR ((LM_DEBUG,
+          ORBSVCS_ERROR ((LM_ERROR,
                       " NETWORK CRC CHECKSUM FAILED\n"));
         }
 
-      ACE_ERROR ((LM_ERROR,
-                  "Message was received from [%s:%s:%d] \n",
+      ORBSVCS_ERROR ((LM_ERROR,
+                  "Message was received from [%s:%s:%d]\n",
                   from.get_host_name (),
                   from.get_host_addr (),
                   from.get_port_number()));
 
-      ACE_ERROR ((LM_ERROR,
-                  "Num errors = %d \n",
+      ORBSVCS_ERROR ((LM_ERROR,
+                  "Num errors = %d\n",
                   ++err_count));
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "This is a bad thing. Attempting to ignore ..\n"));
 
       return 0;
@@ -346,7 +343,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
     {
       // Update <request_map_> to mark this request as completed. (Not
       // needed if we don't care about duplicates.)
-      int result = this->mark_received (from, header.request_id);
+      int const result = this->mark_received (from, header.request_id);
       if (result != 1)
         return result;
 
@@ -373,21 +370,21 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
   TAO_ECG_UDP_Request_Entry ** request =
     entry->int_id_->get_request (request_id);
 
-  if (request == 0)
+  if (request == nullptr)
     {
-      ACE_DEBUG ((LM_WARNING, "Received mcast request with sequence"
+      ORBSVCS_DEBUG ((LM_WARNING, "Received mcast request with sequence"
                               "below currently expected range.\n"));
       return 0;
     }
   if (*request == &Request_Completed_)
     {
-      ACE_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
+      ORBSVCS_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
                            "(Request already complete).\n"));
       return 0;
     }
-  if (*request != 0)
+  if (*request != nullptr)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Inconsistent fragments for "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Inconsistent fragments for "
                                    "mcast request.\n"),
                          -1);
     }
@@ -412,19 +409,19 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
   TAO_ECG_UDP_Request_Entry ** request =
     source_entry->int_id_->get_request (header.request_id);
 
-  if (request == 0)
+  if (request == nullptr)
     {
-      ACE_DEBUG ((LM_WARNING, "Received mcast request with sequence "
+      ORBSVCS_DEBUG ((LM_WARNING, "Received mcast request with sequence "
                               "below currently expected range.\n"));
       return 0;
     }
   if (*request == &Request_Completed_)
     {
-      ACE_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
+      ORBSVCS_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
                            "(Request already complete).\n"));
       return 0;
     }
-  if (*request == 0)
+  if (*request == nullptr)
     // Entry for this request has not yet been allocated.
     {
       ACE_NEW_RETURN (*request,
@@ -443,7 +440,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
                                      header.fragment_id,
                                      header.fragment_count) == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "Received invalid mcast fragment.\n"),
                         -1);
     }
@@ -451,7 +448,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
   // Check whether this fragment was already received.
   if ((*request)->test_received (header.fragment_id) == 1)
     {
-      ACE_DEBUG ((LM_INFO, "Received duplicate mcast fragment.\n"));
+      ORBSVCS_DEBUG ((LM_INFO, "Received duplicate mcast fragment.\n"));
       return 0;
     }
 
@@ -484,21 +481,21 @@ TAO_ECG_CDR_Message_Receiver::Request_Map::ENTRY*
 TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
 {
   // Get the entry for <from> from the <request_map_>.
-  Request_Map::ENTRY * entry;
+  Request_Map::ENTRY * entry = nullptr;
 
   if (this->request_map_.find (from, entry) == -1)
     {
       // Create an entry if one doesn't exist.
-      Requests *requests = 0;
+      Requests *requests = nullptr;
       ACE_NEW_RETURN (requests,
                       Requests,
-                      0);
-      auto_ptr<Requests> requests_aptr (requests);
+                      nullptr);
+      std::unique_ptr<Requests> requests_aptr (requests);
 
       if (requests->init (this->max_requests_, this->min_purge_count_) == -1
           || this->request_map_.bind (from, requests, entry) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Unable to create hash map "
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to create hash map "
                                        "entry for a new request.\n"),
                             0);
         }
@@ -509,7 +506,7 @@ TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
 }
 
 void
-TAO_ECG_CDR_Message_Receiver::shutdown (void)
+TAO_ECG_CDR_Message_Receiver::shutdown ()
 {
   // ACE_GUARD (ACE_Lock, guard, *this->lock_);
 
@@ -535,7 +532,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
   this->byte_order = header[0];
   if(this->byte_order != 0 && this->byte_order != 1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Reading mcast packet header: byte "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Reading mcast packet header: byte "
                                    "order is neither 0 nor 1, it is %d.\n",
                          this->byte_order),
                         -1);
@@ -552,7 +549,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
       || !header_cdr.read_octet (c)
       || a != 'A' || b != 'B' || c != 'C')
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Error reading magic bytes "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Error reading magic bytes "
                                    "in mcast packet header.\n"),
                         -1);
     }
@@ -564,7 +561,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
       || !header_cdr.read_ulong (this->fragment_id)
       || !header_cdr.read_ulong (this->fragment_count))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                         "Error decoding mcast packet header.\n"),
                         -1);
     }
@@ -581,11 +578,11 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
           crcparts[cnt] = padding[cnt];
         }
 
-      this->crc = ntohl (this->crc);
+      this->crc = ACE_NTOHL (this->crc);
     }
 
   // Validate.
-  size_t data_bytes_received =
+  size_t const data_bytes_received =
     bytes_received - TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE;
 
   if (this->request_size < this->fragment_size
@@ -595,7 +592,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
           && (this->fragment_size != this->request_size
               || this->request_size != data_bytes_received)))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                         "Invalid mcast fragment: "
                         "inconsistent header fields.\n"),
                         -1);
@@ -604,25 +601,4 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
   return 0;
 }
 
-// ****************************************************************
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

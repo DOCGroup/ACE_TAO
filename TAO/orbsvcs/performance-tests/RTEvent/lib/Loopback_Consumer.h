@@ -1,15 +1,11 @@
 /**
  * @file Loopback_Consumer.h
- *
- * $Id$
- *
  */
 
 #ifndef TAO_PERF_RTEC_LOOPBACK_CONSUMER_H
 #define TAO_PERF_RTEC_LOOPBACK_CONSUMER_H
 
 #include "Loopback_Supplier.h"
-#include "tao/Utils/Servant_Var.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
@@ -21,7 +17,6 @@
  * @class Loopback_Consumer
  *
  * @brief Implement a simple consumer to keep track of the latency
- *
  */
 class TAO_RTEC_Perf_Export Loopback_Consumer
   : public virtual POA_RtecEventComm::PushConsumer
@@ -35,22 +30,17 @@ public:
                      PortableServer::POA_ptr poa);
 
   /// Connect to the event channel
-  void connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
 
   //@{
   /** @name The RtecEventComm::PushConsumer methods
    */
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
+  virtual PortableServer::POA_ptr _default_POA ();
   //@}
 
 private:
@@ -64,7 +54,7 @@ private:
   CORBA::Long event_type_;
 
   /// The supplier used to close the loopback
-  TAO::Utils::Servant_Var<Loopback_Supplier> supplier_;
+  PortableServer::Servant_var<Loopback_Supplier> supplier_;
 
   /// The proxy this object is connected to
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_supplier_;

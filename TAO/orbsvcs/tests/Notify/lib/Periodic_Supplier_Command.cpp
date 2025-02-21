@@ -1,11 +1,4 @@
-// $Id$
-
 #include "Periodic_Supplier_Command.h"
-
-ACE_RCSID (lib, 
-           TAO_Periodic_Supplier_Command, 
-           "$Id$")
-
 #include "LookupManager.h"
 #include "Name.h"
 #include "Periodic_Supplier.h"
@@ -14,7 +7,7 @@ ACE_RCSID (lib,
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
-TAO_Notify_Tests_Periodic_Supplier_Command::TAO_Notify_Tests_Periodic_Supplier_Command (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::TAO_Notify_Tests_Periodic_Supplier_Command ()
 {
 }
 
@@ -23,13 +16,13 @@ TAO_Notify_Tests_Periodic_Supplier_Command::~TAO_Notify_Tests_Periodic_Supplier_
 }
 
 const char*
-TAO_Notify_Tests_Periodic_Supplier_Command::get_name (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::get_name ()
 {
   return TAO_Notify_Tests_Periodic_Supplier_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_Periodic_Supplier_Command::name (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::name ()
 {
   return TAO_Notify_Tests_Name::periodic_supplier_command;
 }
@@ -40,25 +33,25 @@ TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
   if (arg_shifter.is_anything_left ())
     {
       /// -Create supplier_name admin_name -POA [POA_name] supplier_specific_options
-      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Create")) == 0)
         {
           this->command_ = CREATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
           int is_direct = 0;
           ACE_CString direct_target;
 
-          if (arg_shifter.cur_arg_strncasecmp ("-Direct") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Direct")) == 0)
             {
               is_direct = 1;
 
               arg_shifter.consume_arg ();
 
-              direct_target = arg_shifter.get_current ();
+              direct_target = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
 
@@ -76,59 +69,57 @@ TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
          LOOKUP_MANAGER->resolve (act_mgr);
 
          {
-           ACE_DECLARE_NEW_CORBA_ENV;
-           act_mgr->_register (supplier, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
+           act_mgr->_register (supplier, this->name_.c_str ());
          }
 
          supplier->init_state (arg_shifter);
         } /* -Create */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Offer") == 0) // -Offer supplier_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Offer")) == 0) // -Offer supplier_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
         {
           this->command_ = OFFER;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
           TAO_Notify_Tests_Options_Parser options_parser;
           options_parser.execute (this->added_, this->removed_, arg_shifter);
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Disconnect") == 0) //
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Disconnect")) == 0) //
         {
           this->command_ = DISCONNECT;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         } /* disconnect */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Deactivate") == 0) //
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Deactivate")) == 0) //
         {
           this->command_ = DEACTIVATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         } /* deactivate */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Status") == 0) //
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Status")) == 0) //
         {
           this->command_ = DUMP_STATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
         } /* -Dump */
-      else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS ec_name [Qos Options]
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Set_QoS")) == 0) // -Set_QoS ec_name [Qos Options]
         {
           this->command_ = SET_QOS;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
 
@@ -139,7 +130,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 TAO_Notify_Tests_Periodic_Supplier*
-TAO_Notify_Tests_Periodic_Supplier_Command::supplier (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::supplier ()
 {
   TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
@@ -147,9 +138,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::supplier (void)
   // Locate the supplier
   TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  act_mgr->resolve (supplier, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  act_mgr->resolve (supplier, this->name_.c_str ());
 
   if (supplier == 0)
     ACE_DEBUG ((LM_DEBUG, "Supplier %s not found by Lookup Manager\n", this->name_.c_str ()));
@@ -158,98 +147,94 @@ TAO_Notify_Tests_Periodic_Supplier_Command::supplier (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_create ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
     return;
 
-  supplier->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier->connect ();
 
   ACE_DEBUG ((LM_DEBUG, "Supplier %s is connected\n", this->name_.c_str ()));
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_offers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_offers ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
     return;
 
-  supplier->offer_change (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier->offer_change (this->added_, this->removed_);
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_disconnect ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier= this->supplier ();
   if (supplier == 0)
     return;
 
-  supplier->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier->disconnect ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_deactivate ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
     return;
 
-  supplier->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier->deactivate ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
-{
-  TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
-
-  if (supplier == 0)
-    return;
-
-  supplier->status (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_status ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
 
   if (supplier == 0)
     return;
 
-  supplier->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
+  supplier->status ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos ()
+{
+  TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
+
+  if (supplier == 0)
+    return;
+
+  supplier->set_qos (this->qos_);
+}
+
+void
+TAO_Notify_Tests_Periodic_Supplier_Command::execute_i ()
 {
   if (this->command_ == CREATE)
     {
-      this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_create ();
     }
   else if (this->command_ == OFFER)
     {
-      this->handle_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_offers ();
     }
   else if (this->command_ == DISCONNECT)
     {
-      this->handle_disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_disconnect ();
     }
   else if (this->command_ == DEACTIVATE)
     {
-      this->handle_deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_deactivate ();
     }
   else  if (this->command_ == DUMP_STATE)
     {
-      this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_status ();
     }
   else if (this->command_ == SET_QOS)
     {
-      this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_set_qos ();
     }
 }

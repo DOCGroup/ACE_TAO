@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<!-- Converted from notify.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!-- #  -->
+ <static id="Notify_Default_Event_Manager_Objects_Factory" params="-DispatchingThreads 1"/>
+</ACE_Svc_Conf>

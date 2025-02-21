@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef STATUS_I_H
 #define STATUS_I_H
@@ -9,11 +6,9 @@
 
 class corbaname_Status_i : public POA_corbaname::Status {
 public:
-  corbaname_Status_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  corbaname_Status_i ();
 
-  CORBA::Boolean print_status (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  CORBA::Boolean print_status ();
 };
 
 #endif /* STATUS_I_H */

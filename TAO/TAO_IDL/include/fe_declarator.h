@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -72,7 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class AST_Decl;
 class AST_Type;
 
-class FE_Declarator
+class TAO_IDL_FE_Export FE_Declarator
 {
 public:
   // Enum to denote types of declarators.
@@ -88,19 +86,19 @@ public:
   FE_Declarator (UTL_ScopedName *n,
                  DeclaratorType dt,
                  AST_Decl *cp);
-  virtual ~FE_Declarator (void) {}
+  virtual ~FE_Declarator () {}
 
   // Data Accessors.
-  AST_Decl *complex_part (void);
-  UTL_ScopedName *name (void);
-  DeclaratorType decl_type (void);
+  AST_Decl *complex_part ();
+  UTL_ScopedName *name ();
+  DeclaratorType decl_type ();
 
   // Other Operations.
 
   // Compose an FE_Declarator into an AST_Type once all the needed information
   // is available.
   AST_Type *compose (AST_Decl* tc);
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   // Data.

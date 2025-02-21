@@ -1,0 +1,16 @@
+
+
+This test is designed to test the very rare situation where an accept() will
+fail due to the fact that no file descriptors are available to the process
+(or system).  It assumes that file handles and socket handles come from the
+same pool (i.e., Non-Win32 systems).
+
+The server opens a file (the server executable itself) read-only until it
+runs out of file handles.  It then enters the ORB run loop.  When the client
+is started it attempts to call a two-way method which will initiate the
+connection.  This will trigger the accept error handling code in the
+TAO_Acceptor.  Prior to this code, the server process would tightly spin
+attempting to accept() the new connection.
+
+Unfortunately, the test relies on TAO debug messages to detect that the
+error situation occurred and that the error handling code was run.

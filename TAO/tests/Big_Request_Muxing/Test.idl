@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 module Test
 {
@@ -8,10 +5,9 @@ module Test
 
   interface Payload_Receiver
   {
-    /// Send the data using a twoway operat
-    oneway void more_data (in Payload the_payload);
+    /// Send the data using a oneway operation.
+    oneway void more_data (in Payload the_payload, in boolean maybe_lost);
 
-    /// Return the number of messages received so far
-    long get_message_count ();
+    void ping ();
   };
 };

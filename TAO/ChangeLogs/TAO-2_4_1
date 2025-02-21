@@ -1,0 +1,251 @@
+commit 999c2d14947c0e6f67061972cc8971789c5acbb4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 4 12:07:48 2016 +0200
+
+    Extended list of user visible changes
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 668e749f2e66f540932c15078be44e14c5e43016
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 30 12:38:23 2016 -0500
+
+    Fixed parallel build error
+
+commit f1e42feed37f849562a1782f7f80a8ad371a3e46
+Author: Huang-Ming Huang <huangh@ociweb.com>
+Date:   Thu Sep 22 16:38:33 2016 -0500
+
+    Remove null reference checks
+
+commit 9ef7b1dd9a1ac4181df901f81bd134b53884181b
+Author: Huang-Ming Huang <huangh@ociweb.com>
+Date:   Thu Sep 22 14:31:36 2016 -0500
+
+    Fix some fuzz errors
+
+commit 7a3126ae033cfab39c26ce38ad6112cf51e92f0d
+Author: Huang-Ming Huang <huangh@ociweb.com>
+Date:   Thu Sep 22 12:19:56 2016 -0500
+
+    Fix issues with explicit template instantiation with versioned namespace
+
+commit eb42ae1e7cbce5863f79e4519befccb13e8f9018
+Author: Huang-Ming Huang <huangh@ociweb.com>
+Date:   Wed Sep 21 14:29:22 2016 -0500
+
+    Fixed all explicit singleton template instantiation
+
+commit d4e368c76124dc6dea13e33f92411aef17197fca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 16:20:00 2016 +0200
+
+    Mark the IFRService persistence test with !FIXED_BUGS_ONLY, it fails frequently which goes back to 2009, see bugzilla 3699
+        * TAO/bin/tao_other_tests.lst:
+
+commit 5385cbc61f1ce880b06abd2960265297753f53cc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 16:00:48 2016 +0200
+
+    Cleanup
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
+
+commit 87671627d5de5ed9c4a5dd06c4e1f7710ecba9eb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 16:00:08 2016 +0200
+
+    Removed not needed variable
+        * TAO/orbsvcs/IFR_Service/IFR_Service.h:
+
+commit cdf54724dea3807bfd5ed0773b11838048c2cf3a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 15:41:09 2016 +0200
+
+    Zapped some empty lines
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/README:
+
+commit 616babd5d1d50df61646b23bb6b4200f70dffe45
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 15:40:52 2016 +0200
+
+    Added shutdown to cleanly shutdown the ORB and release all CORBA resources to resolve several valgrind reported memory leaks
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/test.cpp:
+
+commit 21737cc4d46d96e3b2c527b60277caf1bf4c3749
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 15:50:06 2016 +0200
+
+    Initialise member
+        * TAO/tao/Messaging/AMH_Response_Handler.cpp:
+
+commit 4be7a6680d28a33c81773e464e1c58c9d719e458
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 15:48:07 2016 +0200
+
+    Check the return value of get_component
+        * TAO/tao/IORManipulation/IORManip_IIOP_Filter.cpp:
+
+commit bbd816c5ddf6a8f44ccf6d5af520e134f578028b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 15:47:46 2016 +0200
+
+    Fixed coverity errors, initialize pointers
+        * TAO/tao/HTTP_Client.cpp:
+        * TAO/tao/HTTP_Handler.cpp:
+
+commit 5f217dc03ff7bb574f281056b2d526b50863d65b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 11:23:37 2016 +0200
+
+    Fixed memory leaks reported by Coverity
+        * TAO/orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+
+commit ac6416f590563684d6ba660ddb89bd13c0842c70
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 11:02:02 2016 +0200
+
+    Use own_factory_ at the moment to cleanup to delete the factory at the moment we own it at destruction, fixes coverity errors
+        * TAO/orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp:
+
+commit 5382791dbaa61a859cc4b8e6746b86c183d4f5b3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 11:01:35 2016 +0200
+
+    Initialise value with 0 to fix Coverity error
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+
+commit f3387d02b2617c272300f22f2ae7a5864065997f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 4 19:20:58 2016 +0200
+
+    Fixed warning
+        * TAO/utils/logWalker/Invocation.cpp:
+
+commit 03ef5706e8b3dcdd8de7636f39aaca7543b23283
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 2 20:53:02 2016 +0200
+
+    Revert "*_SINGLETON_DECLARE needs to appear in .cpp files, not .h."
+    
+    This reverts commit 411929ec7d2550f289eb1a2f045f2fc6651cb002.
+
+commit 1004be5609bb7842835d865422c65332d08425ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 2 20:52:39 2016 +0200
+
+    Revert "Updated previous change to TAO_AV_Core for versioned namespaces"
+    
+    This reverts commit 62cc01c2cc61f0da9618056e825274ec481a7686.
+
+commit 09cb0cc2e512ebcd3eba1a784dcf460568339d3f
+Merge: d1463d5 c96749e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 2 19:45:00 2016 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit d1463d5340978fac91d662c8518a40aee1430721
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 2 19:44:53 2016 +0200
+
+    Initialise pointer with 0
+        * TAO/orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp:
+
+commit fe1f3dfb843c1480f0b9639efacf36be64bc0a4d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 2 19:44:41 2016 +0200
+
+    Documentation changes
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Entries.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Properties.h:
+
+commit c96749ebafa25b5660884e9071bf178837b53298
+Merge: 62cc01c 068b865
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Wed Aug 31 18:54:50 2016 +0200
+
+    Merge pull request #286 from jwillemsen/master
+    
+    Documentation changes
+
+commit 068b86554f9954b3270d6e263adbc817c6b733fa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 31 11:48:02 2016 +0200
+
+    Documentation changes
+
+commit 62cc01c2cc61f0da9618056e825274ec481a7686
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Aug 24 17:17:26 2016 -0500
+
+    Updated previous change to TAO_AV_Core for versioned namespaces
+
+commit 411929ec7d2550f289eb1a2f045f2fc6651cb002
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Aug 24 15:40:44 2016 -0500
+
+    *_SINGLETON_DECLARE needs to appear in .cpp files, not .h.
+    
+    This prevents multiple definition of typeinfo symbols during linking,
+    only seen on arm-linux-gnueabihf-g++ but the code is invalid C++ on
+    all platforms.
+
+commit 18cb08464abc1d506ae5c9d50c0428229f8653f6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 13:40:32 2016 +0200
+
+    Fixed typo
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/server.h:
+
+commit ad958e7639275dc8626599ac0bfcc805a7e4ea76
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 13:28:52 2016 +0200
+
+    Fixed typos
+        * ACE/examples/QOS/Change_Receiver_FlowSpec/QoS_Util.cpp:
+        * ACE/examples/QOS/Change_Sender_TSpec/QoS_Util.cpp:
+        * ACE/examples/QOS/Simple/QoS_Util.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Supplier.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/server.h:
+
+commit 7664aa6b6c0f77ff5cdc01b16c1fe22c800dbd56
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 5 10:22:26 2016 +0200
+
+    Fixed typo and layout change
+        * TAO/orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+
+commit b169ad5ff5c2fe5e0b92f96f871bd568e3e18bcf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 2 15:37:58 2016 +0200
+
+    Indent changes to fix gcc 6.1 warnings
+        * TAO/tao/Dynamic_TP/DTP_POA_Strategy.cpp:
+
+commit 602c0b17174fd84710f8730ad905a9014ec1e84b
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Jul 6 13:32:00 2016 -0500
+
+    Fix bugzilla #4215: workaround for a compiler bug in vc14-update3
+
+commit da68e30dd6e6939b6aade74c46e25ca8594d7182
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 08:58:23 2016 +0200
+
+    Prepare for next release
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

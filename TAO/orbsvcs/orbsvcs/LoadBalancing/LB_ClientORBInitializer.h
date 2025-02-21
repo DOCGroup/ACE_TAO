@@ -4,8 +4,6 @@
 /**
  *  @file LB_ClientORBInitializer.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -16,13 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LocalObject.h"
+#include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI/PI.h"
+#include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -31,6 +29,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LB_ORBInitializer
@@ -44,10 +43,9 @@
  */
 class TAO_LB_ClientORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name PortableInterceptor::ORBInitializer Methods
    *
@@ -55,17 +53,13 @@ public:
    * interface.
    */
   //@{
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
   //@}
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

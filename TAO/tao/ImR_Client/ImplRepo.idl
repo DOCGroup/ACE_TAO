@@ -1,0 +1,215 @@
+// -*- IDL -*-
+
+#ifndef TAO_IMRCLIENT_IMPLREPO_PIDL
+#define TAO_IMRCLIENT_IMPLREPO_PIDL
+
+#include "ServerObject.idl"
+#include "tao/StringSeq.pidl"
+
+module ImplementationRepository
+{
+  // = Exceptions
+
+  /// Object already bound in the Implementation Repository
+  exception AlreadyRegistered {};
+
+  /// The server could not be restarted.
+  exception CannotActivate
+  {
+    string reason;
+  };
+
+  /// Object not found in the Implementation Repository
+  exception NotFound {};
+
+  /// Operation cannot be completed due to Activator version
+  /// or other incompatibility
+  exception CannotComplete
+  {
+    string reason;
+  };
+
+  /// One environment variable/value pair.
+  struct EnvironmentVariable
+  {
+    string name;
+    string value;
+  };
+
+  /// Complete Environment.
+  typedef sequence<EnvironmentVariable> EnvironmentList;
+
+  /// The type of Activation
+  enum ActivationMode {NORMAL, MANUAL, PER_CLIENT, AUTO_START};
+
+  /// Options used to start up the server.
+  struct StartupOptions
+  {
+    /// Startup command (program name and arguments).
+    string command_line;
+
+    /// Environment Variables.
+    EnvironmentList environment;
+
+    /// Working directory.
+    string working_directory;
+
+    /// Activation Mode
+    ActivationMode activation;
+
+    /// Name of the activator
+    string activator;
+
+    /// Number of retries allowed
+    long start_limit;
+  };
+
+  /// Status of server
+  enum ServerActiveStatus
+  {
+    /// No attempt as been made to determine status.
+    ACTIVE_MAYBE,
+
+    /// Server has been successfully pinged within ping interval.
+    ACTIVE_YES,
+
+    /// Server was not able to be pinged within ping interval.
+    ACTIVE_NO
+  };
+
+  struct ServerInformation
+  {
+    /// Server name.
+    string server;
+
+    /// How to start up the server.
+    StartupOptions startup;
+
+    /// This is used in places that require a partial IOR with
+    /// just the ObjectKey missing.
+    string partial_ior;
+
+    /// Server status
+    ServerActiveStatus activeStatus;
+  };
+
+  typedef sequence <ServerInformation> ServerInformationList;
+
+  /**
+    * @brief The Server Information Iterator Interface
+    *
+    * Interface for iterating over servers returned with
+    * Administration::list ().
+    */
+  interface ServerInformationIterator
+  {
+    /// This operation returns at most the requested number of
+    /// servers.
+    /// If how_many == 0, then returns all servers
+    boolean next_n (in unsigned long how_many,
+                    out ServerInformationList servers);
+
+    /// This operation destroys the iterator.
+    void destroy ();
+  };
+
+  /**
+    * @brief The Implementation Repository Administration Interface
+    *
+    * This interface exports all the administration functionality of
+    * the Implementation Repository.
+    */
+  interface Administration
+  {
+    /// Activate server that is named @a server.
+    ///
+    /// The @c NotFound exception is raised when @a server is not found
+    /// in the Implementation Repository.  The @c CannotActivate exception
+    /// is raised when @a server is found in the Repository but could not be
+    /// activated.
+    void activate_server (in string server)
+      raises (NotFound, CannotActivate);
+
+    /// Add/Update the the @a server.
+    /// The @c NotFound exception is raised when the activator specified
+    /// in the options is not registered.
+    void add_or_update_server (in string server, in StartupOptions options)
+      raises(NotFound);
+
+    /// Remove @a server from the Implementation Repository.
+    ///
+    /// The @c NotFound exception is raised when @a server is not found
+    /// in the Implementation Repository.
+    void remove_server (in string server)
+      raises (NotFound);
+
+    /// Tries to shutdown the server, first gracefully, then ungracefully.
+    ///
+    /// The @c NotFound exception is raised when @a server is not found
+    /// in the Implementation Repository.
+    void shutdown_server (in string server)
+      raises (NotFound);
+
+    /// Used to notify the Implementation Repository that @a server is alive
+    /// and well at @a partial_ior.
+    ///
+    /// The @c NotFound exception is raised when @a server is not found
+    /// in the Implementation Repository.
+    void server_is_running (in string server,
+                            in string partial_ior,
+                            in ServerObject server_object)
+      raises (NotFound);
+
+    /// Used to tell the Implementation Repository that @a server is shutting
+    /// down.
+    ///
+    /// The @c NotFound exception is raised when @a server is not found
+    /// in the Implementation Repository.
+
+    void server_is_shutting_down (in string server)
+      raises (NotFound);
+
+    /// Returns the startup information for a given @a server.
+    void find (in string server, out ServerInformation info);
+
+    /// Returns at most @a how_many servers in @a server_list.  If there
+    /// are additional servers, they can be received through the
+    /// @a server_iterator.  If there are no more servers, then
+    /// @a server_iterator is null.
+    /// If @a how_many == 0, then returns all servers.
+    /// If @a determine_active_status is true then
+    /// set ServerInformation::active_status attribute by determining
+    /// if the server is alive.
+    void list (in unsigned long how_many,
+               in boolean determine_active_status,
+               out ServerInformationList server_list,
+               out ServerInformationIterator server_iterator);
+
+    /// Shutdown the ImR, optionally shutting down registered
+    /// activators and servers first.
+    oneway void shutdown(in boolean activators, in boolean servers);
+  };
+
+  /**
+    * @brief The Extended Implementation Repository Administration Interface
+    *
+    * This interface adds operations in a way that maintains compatibility
+    */
+  interface AdministrationExt : Administration
+  {
+    /// Identify a set of peer poas that exist in the same process.
+    void link_servers (in string server, in CORBA::StringSeq peers)
+      raises(NotFound, CannotComplete);
+
+    /// Have the appropriate activator send a signal to the named server process
+    void kill_server (in string server, in short signum)
+      raises(NotFound, CannotComplete);
+
+    /// Combine the action of shutting down a running server instance if any via
+    /// a shutdown command if signum is 0, or via kill if signum is nonzero
+    void force_remove_server (in string server, in short signum)
+      raises(NotFound, CannotComplete);
+  };
+};
+
+#endif /* TAO_IMRCLIENT_IMPLREPO_PIDL */

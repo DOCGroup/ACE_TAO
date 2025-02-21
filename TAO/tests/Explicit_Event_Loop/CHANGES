@@ -1,19 +1,17 @@
-$Id$
-
-Changelog for chapter 3 example in "Advanced CORBA Programming 
-with C++" by Michi Henning and Steve Vinoski, Copyright 1999, 
+Changelog for chapter 3 example in "Advanced CORBA Programming
+with C++" by Michi Henning and Steve Vinoski, Copyright 1999,
 Addison-Wesley, Reading, MA.  The following changes have been made
-to the book's source code to make the example work with TAO and 
+to the book's source code to make the example work with TAO and
 with various platforms and compilers.
 
 ______________________________________________________________________________
 ESSENTIAL CHANGES:
-  1. changed filenames .cc to .cpp and .hh h, and modified #includes in 
+  1. changed filenames .cc to .cpp and .hh h, and modified #includes in
      client.cpp server.cpp and server.h appropriately.
 
   2. a) changed #include "time.h"  to  #include "timeC.h" in client.cpp
 
-     b) Moved standard #includes below local #includes, and commented-out 
+     b) Moved standard #includes below local #includes, and commented-out
         unnecessary #includes to avoid warnings and errors (g++)
           -client.cpp now reads:
               #include "timeC.h"
@@ -26,18 +24,18 @@ ESSENTIAL CHANGES:
 
 ______________________________________________________________________________
 ADDITIONAL CHANGES:
-  3. added .in() to _var type parameters 
+  3. added .in() to _var type parameters
        -3 times in client.cpp for calls to is_nil() and _narrow()
-       -3 times in main() in server.cpp for calls to _narrow(), 
+       -3 times in main() in server.cpp for calls to _narrow(),
         object_to_string, and <<
 
 ______________________________________________________________________________
 CHANGES MADE EXCLUSIVLY FOR TESTING PURPOSES
 
-  4. to allow the test to be built without exceptions=1, all try/catch 
-     code has been replaced with ACE_TRY macros, and the CORBA Environment 
+  4. to allow the test to be built without exceptions=1, all try/catch
+     code has been replaced with ACE_TRY macros, and the CORBA Environment
      variable has been added to the parameters of get_gmt().
- 
+
   5. In server.cpp, the call to orb->run() has been replaced with an explicit
      event utilizing orb->work_pending() and orb->perform_work().
 

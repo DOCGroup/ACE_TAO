@@ -1,11 +1,6 @@
-//
-// $Id$
-//
 #include "Controller.h"
 
-ACE_RCSID(LongUpcalls, Controller, "$Id$")
-
-Controller::Controller (void)
+Controller::Controller ()
   :  start_count_ (0)
   ,  finish_count_ (0)
 {
@@ -24,8 +19,7 @@ Controller::dump_results ()
 }
 
 void
-Controller::worker_started (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Controller::worker_started ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->start_count_++;
@@ -34,8 +28,7 @@ Controller::worker_started (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Controller::worker_finished (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Controller::worker_finished ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->finish_count_++;

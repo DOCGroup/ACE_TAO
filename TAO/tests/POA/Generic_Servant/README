@@ -1,0 +1,22 @@
+
+
+Generic Servant:
+===============
+
+File Name
+---------
+
+test.idl                 test idl interface
+test_i.h                 Servant definition for the test interface
+test_i.cpp               Servant implementation for the test interface
+client.cpp               A test client
+
+Typing
+
+% make
+
+creates an executable client and server library.
+
+To run the client, type
+
+% client -k file://ior

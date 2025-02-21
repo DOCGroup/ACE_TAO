@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef GATEWAY_IDL
 #define GATEWAY_IDL
 
@@ -8,7 +6,7 @@ module Gateway
   interface Object_Factory
   {
     Object create_object (in string interface_repository_id,
-			  in Object gatewayed_object);
+                          in Object gatewayed_object);
   };
 
 };

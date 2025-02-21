@@ -1,0 +1,105 @@
+project(*idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  idlflags += -GX \
+              -Wb,stub_export_macro=TAO_IFR_CLIENT_Export \
+              -Wb,stub_export_include=tao/IFR_Client/ifr_client_export.h \
+              -Wb,stub_export_file=ifr_client_export.h \
+              -Wb,skel_export_macro=TAO_IFR_CLIENT_SKEL_Export \
+              -Wb,skel_export_include=tao/IFR_Client/ifr_client_skel_export.h \
+              -Wb,skel_export_file=ifr_client_skel_export.h \
+              -iC tao/IFR_Client -GT
+  idlflags -= -Sa -St
+
+  IDL_Files {
+    idlflags += -Gxhst -Gxhsk
+    IFR_Base.pidl
+  }
+
+  IDL_Files {
+    IFR_Basic.pidl
+    IFR_Components.pidl
+    IFR_Extended.pidl
+  }
+
+  specific {
+    install_dir = tao/IFR_Client
+  }
+}
+
+project(IFR_Client) : taolib, tao_output, install, anytypecode, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_IFR_Client
+  dynamicflags += TAO_IFR_CLIENT_BUILD_DLL
+
+  Source_Files {
+    IFR_Client_Adapter_Impl.cpp
+    IFR_BaseC.cpp
+    IFR_BasicC.cpp
+    IFR_ComponentsC.cpp
+    IFR_ExtendedC.cpp
+  }
+
+  Header_Files {
+    *.h
+    ifr_client_export.h
+    ifr_client_skel_export.h
+    IFR_BaseC.h
+    IFR_BaseA.h
+    IFR_BasicC.h
+    IFR_BasicA.h
+    IFR_ComponentsC.h
+    IFR_ComponentsA.h
+    IFR_ExtendedC.h
+    IFR_ExtendedA.h
+  }
+
+  Inline_Files {
+    *.inl
+    IFR_BaseC.inl
+    IFR_BasicC.inl
+    IFR_ComponentsC.inl
+    IFR_ExtendedC.inl
+  }
+
+  specific {
+    install_dir = tao/IFR_Client
+  }
+}
+
+project(IFR_Client_skel) : ifr_client, taolib, tao_output, install, anytypecode, taoidldefaults, portableserver{
+  after       += *idl
+  sharedname   = TAO_IFR_Client_skel
+  dynamicflags += TAO_IFR_CLIENT_SKEL_BUILD_DLL
+
+  Source_Files {
+    IFR_BaseS.cpp
+    IFR_BasicS.cpp
+    IFR_ComponentsS.cpp
+    IFR_ExtendedS.cpp
+  }
+
+  Header_Files {
+    IFR_BaseS.h
+    IFR_BasicS.h
+    IFR_ComponentsS.h
+    IFR_ExtendedS.h
+    IFR_BaseS_T.h
+    IFR_BasicS_T.h
+    IFR_ComponentsS_T.h
+    IFR_ExtendedS_T.h
+  }
+
+  Template_Files {
+    IFR_BaseS_T.cpp
+    IFR_BasicS_T.cpp
+    IFR_ComponentsS_T.cpp
+    IFR_ExtendedS_T.cpp
+  }
+
+  Inline_Files {
+  }
+
+  specific {
+    install_dir = tao/IFR_Client
+  }
+}

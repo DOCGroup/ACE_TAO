@@ -1,24 +1,20 @@
 // -*- C++ -*-
-
-#include "LB_Random.h"
+#include "orbsvcs/LoadBalancing/LB_Random.h"
 
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID (LoadBalancing,
-           LB_Random,
-           "$Id$")
-
-#ifdef ACE_HAS_PTHREADS_STD
+#ifdef ACE_HAS_PTHREADS
 static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
-#endif  /* ACE_HAS_PTHREADS_STD */
+#endif  /* ACE_HAS_PTHREADS */
 
-extern "C" void tao_lb_random_init_routine (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+extern "C" void tao_lb_random_init_routine ()
 {
   ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time ()));
 }
-
 
 TAO_LB_Random::TAO_LB_Random (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa))
@@ -27,15 +23,13 @@ TAO_LB_Random::TAO_LB_Random (PortableServer::POA_ptr poa)
 }
 
 char *
-TAO_LB_Random::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_LB_Random::name ()
 {
   return CORBA::string_dup ("Random");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_LB_Random::get_properties ()
 {
   CosLoadBalancing::Properties * props = 0;
   ACE_NEW_THROW_EX (props,
@@ -45,7 +39,6 @@ TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (props);
 
   return props;
 }
@@ -53,62 +46,46 @@ TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_LB_Random::push_loads (
     const PortableGroup::Location & /* the_location */,
-    const CosLoadBalancing::LoadList & /* loads */
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::StrategyNotAdaptive))
+    const CosLoadBalancing::LoadList & /* loads */)
 {
-  ACE_THROW (CosLoadBalancing::StrategyNotAdaptive ());
+  throw CosLoadBalancing::StrategyNotAdaptive ();
 }
 
 CosLoadBalancing::LoadList *
 TAO_LB_Random::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
-                          const PortableGroup::Location & the_location
-                          ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::LocationNotFound))
+                          const PortableGroup::Location & the_location)
 {
   if (CORBA::is_nil (load_manager))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
-  return load_manager->get_loads (the_location
-                                  ACE_ENV_ARG_PARAMETER);
+  return load_manager->get_loads (the_location);
 }
 
 CORBA::Object_ptr
 TAO_LB_Random::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    CosLoadBalancing::LoadManager_ptr load_manager
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
+    CosLoadBalancing::LoadManager_ptr load_manager)
 {
   if (CORBA::is_nil (load_manager))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   PortableGroup::Locations_var locations =
-    load_manager->locations_of_members (object_group
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    load_manager->locations_of_members (object_group);
 
   return TAO_LB_Random::_tao_next_member (object_group,
                                           load_manager,
-                                          locations.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+                                          locations.in ());
 }
 
 void
 TAO_LB_Random::analyze_loads (
     PortableGroup::ObjectGroup_ptr /* object_group */,
-    CosLoadBalancing::LoadManager_ptr /* load_manager */
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    CosLoadBalancing::LoadManager_ptr /* load_manager */)
 {
 }
 
 PortableServer::POA_ptr
-TAO_LB_Random::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_Random::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -117,16 +94,11 @@ CORBA::Object_ptr
 TAO_LB_Random::_tao_next_member (
     PortableGroup::ObjectGroup_ptr object_group,
     CosLoadBalancing::LoadManager_ptr load_manager,
-    const PortableGroup::Locations & locations
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
+    const PortableGroup::Locations & locations)
 {
   const CORBA::ULong len = locations.length ();
   if (len == 0)
-    ACE_THROW_RETURN (CORBA::TRANSIENT (),
-                      CORBA::Object::_nil ());
+    throw CORBA::TRANSIENT ();
 
   // Pick a random location in the sequence using the higher order
   // bits (zero based indexing).
@@ -144,34 +116,31 @@ TAO_LB_Random::_tao_next_member (
   //       addition to the fact that the lower order bits should be as
   //       random as the higher order bits.
 
-  // Prevent integer arithmetic overflow.
-  const CORBA::Float flen = static_cast<CORBA::Float> (len);
-
-  const CORBA::ULong i =
-    static_cast<CORBA::ULong> (flen * ACE_OS::rand () / (RAND_MAX + 1.0));
-
-  ACE_ASSERT (i < len);
-
-//   ACE_DEBUG ((LM_DEBUG,
-//               "** Len = %u\t"
-//               "Location # %u\t"
-//               "Loc Name = \"%s\"\n",
-//               len,
-//               i,
-//               locations[i][0].id.in ()));
+  CORBA::ULong i = 0;
+  if (len > 1)
+    {
+      // Prevent integer arithmetic overflow.
+      double flen = static_cast<double> (len);
+      do
+        {
+          i = static_cast<CORBA::ULong> (flen * ACE_OS::rand () / (RAND_MAX + 1.0));
+        }
+      while (i == len);
+    }
 
   return load_manager->get_member_ref (object_group,
-                                       locations[i]
-                                       ACE_ENV_ARG_PARAMETER);
+                                       locations[i]);
 }
 
 void
-TAO_LB_Random::init (void)
+TAO_LB_Random::init ()
 {
-#ifdef ACE_HAS_PTHREADS_STD
+#ifdef ACE_HAS_PTHREADS
   (void) ::pthread_once (&::tao_lb_once_control,
                          ::tao_lb_random_init_routine);
 #else
   ::tao_lb_random_init_routine ();
-#endif  /* ACE_HAS_PTHREADS_STD */
+#endif  /* ACE_HAS_PTHREADS */
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

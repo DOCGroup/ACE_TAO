@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 1994-1995 Regents of the University of California.
  * All rights reserved.
  *
@@ -32,17 +32,21 @@
  * SUCH DAMAGE.
  */
 
-// $Id$
-#include "ntp-time.h"
-#include "RTCP.h"
-#include "media_timer.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/AV/ntp-time.h"
+#include "orbsvcs/AV/RTCP.h"
+#include "orbsvcs/AV/media_timer.h"
 #include "tao/debug.h"
-#include "global.h"
-#include "md5.h"
+#include "orbsvcs/AV/global.h"
+#include "orbsvcs/AV/md5.h"
 
-#include "RTCP_Packet.h"
+#include "orbsvcs/AV/RTCP_Packet.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Truncate.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
@@ -68,7 +72,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                               &more);
 
             if (!sr.is_valid(first_rtcp_packet))
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
@@ -92,7 +96,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                               &more);
 
             if (!rr.is_valid(first_rtcp_packet))
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
@@ -117,7 +121,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                                    &more);
 
             if (!sdes.is_valid(first_rtcp_packet))
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
@@ -131,7 +135,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                                  &more);
 
             if (!bye.is_valid(first_rtcp_packet))
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
@@ -159,13 +163,13 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
           }
         case RTCP_PT_APP:
           // If we receive one of these, ignore it.
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "TAO_AV_RTCP_Callback::receive_control_frame - "
                       "APP packet - ignore\n"));
           more -= (4 + (ACE_UINT16)buf_ptr[length - more + 2]);
           break;
         default:
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "TAO_AV_RTCP_Callback::receive_control_frame - "
                       "UNKNOWN packet type %u; ignore the rest\n",
                       (int)buf_ptr[length - more + 1]));
@@ -173,11 +177,10 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
       }
 
       first_rtcp_packet = 0;
-
     }
 
     if (more != 0)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "TAO_AV_RTCP_Callback::receive_control_frame - "
                   "Error in overall packet length\n"));
     return 0;
@@ -275,7 +278,7 @@ TAO_AV_RTCP::rtcp_interval (int members,
   if (initial)
     {
       // initialize the random number generator
-      ACE_OS::srand(ACE_OS::time(0L));
+      ACE_OS::srand(ACE_Utils::truncate_cast<u_int> (ACE_OS::time(0L)));
 
       rtcp_min_time /= 2;
       *avg_rtcp_size = 128;
@@ -326,13 +329,12 @@ TAO_AV_RTCP::rtcp_interval (int members,
 }
 
 
-
 // TAO_AV_RTCP_Flow_Factory
-TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory (void)
+TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory ()
 {
 }
 
-TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory (void)
+TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory ()
 {
 }
 
@@ -347,7 +349,7 @@ TAO_AV_RTCP_Flow_Factory::match_protocol (const char *flow_string)
 
 int
 TAO_AV_RTCP_Flow_Factory::init (int /* argc */,
-                                char * /* argv */ [])
+                                ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }
@@ -379,7 +381,7 @@ TAO_AV_RTCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry * /*entry*/,
 
 // TAO_AV_RTCP_Object
 int
-TAO_AV_RTCP_Object::handle_input (void)
+TAO_AV_RTCP_Object::handle_input ()
 {
   size_t bufsiz = 2*this->transport_->mtu ();
   ACE_Message_Block data (bufsiz);
@@ -388,13 +390,13 @@ TAO_AV_RTCP_Object::handle_input (void)
   if (n == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_ERROR, "TAO_AV_RTCP::handle_input:connection closed\n"));
+        ORBSVCS_DEBUG ((LM_ERROR, "TAO_AV_RTCP::handle_input:connection closed\n"));
       return -1;
     }
   if (n < 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_ERROR,"TAO_AV_RTCP::handle_input:recv error\n"));
+        ORBSVCS_DEBUG ((LM_ERROR,"TAO_AV_RTCP::handle_input:recv error\n"));
       return -1;
     }
   data.wr_ptr (n);
@@ -433,15 +435,14 @@ TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
 {
   rtcp_cb = &this->rtcp_cb_;
   this->client_cb_ = client_cb;
-
 }
 
-TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object (void)
+TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object ()
 {
 }
 
 int
-TAO_AV_RTCP_Object::destroy (void)
+TAO_AV_RTCP_Object::destroy ()
 {
   this->callback_->handle_destroy ();
   delete this;
@@ -456,13 +457,13 @@ TAO_AV_RTCP_Object::set_policies (const TAO_AV_PolicyList &/*policy_list*/)
 }
 
 int
-TAO_AV_RTCP_Object::start (void)
+TAO_AV_RTCP_Object::start ()
 {
   return this->callback_->handle_start ();
 }
 
 int
-TAO_AV_RTCP_Object::stop (void)
+TAO_AV_RTCP_Object::stop ()
 {
   return this->callback_->handle_stop ();
 }
@@ -492,7 +493,7 @@ TAO_AV_RTCP_Object::ts_offset (ACE_UINT32 ts_offset)
 }
 
 // TAO_AV_RTCP_Callback
-TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback (void)
+TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback ()
   :is_initial_timeout_(1),
    packet_size_(0)
 {
@@ -506,7 +507,7 @@ TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback (void)
   this->output_.cname(cname);
 }
 
-TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback (void)
+TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback ()
 {
 }
 
@@ -517,13 +518,13 @@ TAO_AV_RTCP_Callback::schedule (int ms)
 }
 
 int
-TAO_AV_RTCP_Callback::handle_start (void)
+TAO_AV_RTCP_Callback::handle_start ()
 {
   return 0;
 }
 
 int
-TAO_AV_RTCP_Callback::handle_stop (void)
+TAO_AV_RTCP_Callback::handle_stop ()
 {
   return this->send_report(1);
 }
@@ -589,8 +590,9 @@ TAO_AV_RTCP_Callback::send_report (int bye)
       // get the NTP timestamp
       ACE_Time_Value unix_now = ACE_OS::gettimeofday ();
       TAO_AV_RTCP::ntp64 ntp_now = ntp64time (unix_now);
-      ACE_UINT32 rtp_ts = unix_now.sec () * 8000 + unix_now.usec () / 125 +
-                      this->timestamp_offset_;
+      ACE_UINT32 rtp_ts = ACE_Utils::truncate_cast<ACE_UINT32> (
+                            unix_now.sec () * 8000 + unix_now.usec () / 125 +
+                            this->timestamp_offset_);
       ACE_NEW_RETURN(cp,
                      RTCP_SR_Packet (my_ssrc,
                                      ntp_now.upper,
@@ -697,13 +699,13 @@ TAO_AV_RTCP_Callback::send_report (int bye)
 
   ACE_Message_Block mb (cp_length + sdes_length + bye_length);
 
-  memcpy (mb.wr_ptr (), cp_ptr, cp_length);
+  ACE_OS::memcpy (mb.wr_ptr (), cp_ptr, cp_length);
   mb.wr_ptr (cp_length);
-  memcpy (mb.wr_ptr (), sdes_ptr, sdes_length);
+  ACE_OS::memcpy (mb.wr_ptr (), sdes_ptr, sdes_length);
   mb.wr_ptr (sdes_length);
   if (bye_length)
     {
-      memcpy (mb.wr_ptr (), bye_ptr, bye_length);
+      ACE_OS::memcpy (mb.wr_ptr (), bye_ptr, bye_length);
       mb.wr_ptr (bye_length);
     }
 
@@ -768,7 +770,7 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
 }
 
 int
-TAO_AV_RTCP_Callback::handle_destroy (void)
+TAO_AV_RTCP_Callback::handle_destroy ()
 {
   return 0;
 }
@@ -811,6 +813,7 @@ TAO_AV_RTCP_Callback::ts_offset (ACE_UINT32 offset)
   this->timestamp_offset_ = offset;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_RTCP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_RTCP_Flow_Factory,
@@ -821,27 +824,3 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_RTCP_Flow_Factory,
                        ACE_Service_Type::DELETE_OBJ,
                        0)
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<ACE_UINT32,RTCP_Channel_In *>;
-template class ACE_Hash_Map_Manager<ACE_UINT32,RTCP_Channel_In *,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_UINT32, RTCP_Channel_In *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_UINT32,RTCP_Channel_In *,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_UINT32, RTCP_Channel_In *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_UINT32, RTCP_Channel_In *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_UINT32,RTCP_Channel_In *,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_UINT32, RTCP_Channel_In *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_UINT32,RTCP_Channel_In *>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_UINT32,RTCP_Channel_In *,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_UINT32, RTCP_Channel_In *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_UINT32,RTCP_Channel_In *,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_UINT32, RTCP_Channel_In *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_UINT32, RTCP_Channel_In *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_UINT32,RTCP_Channel_In *,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_UINT32, RTCP_Channel_In *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

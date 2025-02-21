@@ -4,8 +4,6 @@
 /**
  *  @file    Object_T.h
  *
- *  $Id$
- *
  *   Templatized utilities common to all IDL interfaces.
  *
  *  @author  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -17,7 +15,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/CORBA_macros.h"
+#include "ace/config-all.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/Collocation_Strategy.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -27,11 +34,6 @@ namespace CORBA
 
 namespace TAO
 {
-  class Collocation_Proxy_Broker;
-
-  typedef
-    Collocation_Proxy_Broker * (* Proxy_Broker_Factory)(CORBA::Object_ptr);
-
   template<typename T>
   class Narrow_Utils
   {
@@ -39,18 +41,10 @@ namespace TAO
     typedef T *T_ptr;
 
     static T_ptr narrow (CORBA::Object_ptr,
-                         const char *repo_id,
-                         Proxy_Broker_Factory
-                         ACE_ENV_ARG_DECL);
+                         const char *repo_id);
 
-    // Version used the operators.
-    static T_ptr unchecked_narrow (CORBA::Object_ptr,
-                                   Proxy_Broker_Factory);
-
-    static T_ptr unchecked_narrow (CORBA::Object_ptr,
-                                   const char *repo_id,
-                                   Proxy_Broker_Factory
-                                   ACE_ENV_ARG_DECL);
+    /// Version used the operators.
+    static T_ptr unchecked_narrow (CORBA::Object_ptr);
 
   private:
     // Code for lazily evaluated IORs.
@@ -58,13 +52,9 @@ namespace TAO
   };
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Object_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Object_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/Object_T.cpp"
 
 #include /**/ "ace/post.h"
 

@@ -1,0 +1,22 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  exception MyException {};
+  /// A very simple interface
+  interface Hello
+  {
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+
+    // check the version of the context as per the spec
+    void check_normal_context () raises (MyException);
+
+    // check the extended version of the context
+    void check_extended_context () raises (MyException);
+
+  };
+};

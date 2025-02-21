@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 /// A simple module to avoid namespace pollution
 module Test

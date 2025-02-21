@@ -1,4 +1,4 @@
-$Id$
+
 
 This test involves a multithreaded client.  The purpose of the test is
 to verify that client-side and server-side RTCORBA processing works ok

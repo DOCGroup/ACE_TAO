@@ -1,39 +1,23 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Any operators for elements in the scope of
-//    the Module.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op.cpp
+ *
+ *  Visitor generating code for Any operators for elements in the scope of
+ *  the Module.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_module, 
-           any_op, 
-           "$Id$")
-
-// ***************************************************************************
-// Module visitor for generating Any operator declarations in the client header
-// and stub
-// ***************************************************************************
+#include "module.h"
 
 be_visitor_module_any_op::be_visitor_module_any_op (be_visitor_context *ctx)
   : be_visitor_module (ctx)
 {
 }
 
-be_visitor_module_any_op::~be_visitor_module_any_op (void)
+be_visitor_module_any_op::~be_visitor_module_any_op ()
 {
 }
 
@@ -44,7 +28,7 @@ be_visitor_module_any_op::visit_module (be_module *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_module::visit_module - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

@@ -4,8 +4,6 @@
 /**
  *  @file   SSLIOP_Credentials.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -15,27 +13,30 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_X509.h"
-#include "SSLIOP_EVP_PKEY.h"
+#include "orbsvcs/SSLIOP/SSLIOP_X509.h"
+#include "orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h"
 #include "orbsvcs/SecurityLevel3C.h"
 #include "tao/LocalObject.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   class SSLIOP_Credentials;
 
-   namespace SSLIOP
-   {
-     typedef SSLIOP_Credentials* Credentials_ptr;
-     typedef TAO_Pseudo_Var_T<SSLIOP_Credentials> Credentials_var;
-     typedef TAO_Pseudo_Out_T<SSLIOP_Credentials, Credentials_var> Credentials_out;
-   }
+  namespace SSLIOP
+  {
+    typedef SSLIOP_Credentials* Credentials_ptr;
+    typedef TAO_Pseudo_Var_T<SSLIOP_Credentials> Credentials_var;
+    typedef TAO_Pseudo_Out_T<SSLIOP_Credentials> Credentials_out;
+  }
 
     /**
      * @class SSLIOP_Credentials
@@ -54,9 +55,12 @@ namespace TAO
      */
     class TAO_SSLIOP_Export SSLIOP_Credentials
       : public virtual SecurityLevel3::Credentials,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
+      typedef SSLIOP::Credentials_ptr _ptr_type;
+      typedef SSLIOP::Credentials_var _var_type;
+      typedef SSLIOP::Credentials_out _out_type;
 
       /// Constructor
       SSLIOP_Credentials (::X509 * cert, ::EVP_PKEY * evp);
@@ -68,32 +72,20 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * creds_id (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual char * creds_id ();
 
-      virtual
-      SecurityLevel3::CredentialsType creds_type (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      virtual SecurityLevel3::CredentialsType creds_type () = 0;
 
-      virtual SecurityLevel3::CredentialsUsage creds_usage (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredentialsUsage creds_usage ();
 
-      virtual TimeBase::UtcT expiry_time (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual TimeBase::UtcT expiry_time ();
 
-      virtual SecurityLevel3::CredentialsState creds_state (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredentialsState creds_state ();
 
       virtual char * add_relinquished_listener (
-          SecurityLevel3::RelinquishedCredentialsListener_ptr listener
-          ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          SecurityLevel3::RelinquishedCredentialsListener_ptr listener);
 
-      virtual void remove_relinquished_listener (const char * id
-                                                 ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void remove_relinquished_listener (const char * id);
       //@}
 
 
@@ -103,7 +95,7 @@ namespace TAO
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::X509_var.
        */
-      ::X509 *x509 (void);
+      ::X509 *x509 ();
       //@}
 
       /// Return a pointer to the underlying private key.
@@ -113,20 +105,19 @@ namespace TAO
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::EVP_PKEY_var.
        */
-      ::EVP_PKEY *evp (void);
+      ::EVP_PKEY *evp ();
       //@}
 
       bool operator== (const SSLIOP_Credentials &rhs);
 
-      CORBA::ULong hash (void) const;
+      CORBA::ULong hash () const;
 
       // The static operations.
       static SSLIOP::Credentials_ptr _duplicate (SSLIOP::Credentials_ptr obj);
 
-      static SSLIOP::Credentials_ptr _narrow (CORBA::Object_ptr obj
-                                              ACE_ENV_ARG_DECL);
+      static SSLIOP::Credentials_ptr _narrow (CORBA::Object_ptr obj);
 
-      static SSLIOP::Credentials_ptr _nil (void)
+      static SSLIOP::Credentials_ptr _nil ()
       {
         return (SSLIOP::Credentials_ptr) 0;
       }
@@ -134,16 +125,14 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor.
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting  mechanism.
        */
-      ~SSLIOP_Credentials (void);
+      ~SSLIOP_Credentials ();
 
     protected:
-
       /// Reference to the X.509 certificate associated with this SSLIOP
       /// Credentials object.
       SSLIOP::X509_var x509_;
@@ -163,14 +152,13 @@ namespace TAO
 
       /// The validity of the Credentials.
       SecurityLevel3::CredentialsState creds_state_;
-
     };
-
-//   } // End SSLIOP namespace
 }   // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "SSLIOP_Credentials.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Credentials.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

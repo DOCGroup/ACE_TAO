@@ -1,11 +1,8 @@
-
 // -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Connection_Handler.h
- *
- *  $Id$
  *
  *  @author Balachandran Natarajan  <bala@cs.wustl.edu>
  */
@@ -16,19 +13,24 @@
 
 #include /**/ "ace/pre.h"
 
-#include "LF_CH_Event.h"
+#include "tao/LF_CH_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+#include "ace/Event_Handler.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_SOCK;
+class ACE_Event_Handler;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Transport;
-class ACE_SOCK;
-class ACE_Lock;
-class ACE_Event_Handler;
 
 /**
  * @class TAO_Connection_Handler
@@ -44,30 +46,29 @@ class ACE_Event_Handler;
 class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event
 {
 public:
-
   /// Constructor
-  TAO_Connection_Handler (void);
-
-  /// Constructor
-  TAO_Connection_Handler (TAO_ORB_Core *orb_core);
+  explicit TAO_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor
-  virtual ~TAO_Connection_Handler (void);
+  virtual ~TAO_Connection_Handler ();
 
   /// Return the underlying transport object
-  TAO_Transport *transport (void);
+  TAO_Transport *transport ();
 
   /// Set the underlying transport object
   void transport (TAO_Transport* transport);
 
-  /// Is the handler closed?
-  bool is_closed (void) const;
+  /// Is the handler closed or timed out?
+  bool is_closed () const;
 
   /// Is the handler open?
-  bool is_open (void) const;
+  bool is_open () const;
+
+  /// Closed due to timeout?
+  bool is_timeout () const;
 
   /// Is the handler in the process of being connected?
-  bool is_connecting (void) const;
+  bool is_connecting () const;
 
   /// Close the underlying connection.
   /**
@@ -78,7 +79,7 @@ public:
    * @return Return 0 if the connection was already closed, non-zero
    * otherwise.
    */
-  virtual int close_connection (void) = 0;
+  virtual int close_connection () = 0;
 
   /// The event handler calls, here so that other objects who hold a
   /// reference to this object can call the event handler methods.
@@ -86,7 +87,7 @@ public:
 
   /// This method is invoked from the svc () method of the Svc_Handler
   /// Object.
-  int svc_i (void);
+  int svc_i ();
 
   /// A open () hook
   /**
@@ -96,26 +97,44 @@ public:
 
   /// A close() hook, called by the Transport Connector when they want to close
   /// this handler
-  virtual int close_handler (void);
+  virtual int close_handler (u_long flags = 0);
+
+  /// When waiting for an asynchronous connection to complete an
+  /// additional reference must be maintained, related to bugzilla
+  /// #2417. However once the connection is successfully established,
+  /// this reference must be removed. Using connection_pending allows
+  /// the connection handler to know that it is opening as a result of
+  /// a delayed asynch connection rather than an immediate synch
+  /// connection, which has no additional reference needs.
+  void connection_pending ();
+
+  /// A pending connection may be canceled due to an error detected
+  /// while the initiating thread is still in the Connector.
+  void cancel_pending_connection ();
 
   /// Set the Diff-Serv codepoint on outgoing packets.  Only has
   /// effect for remote protocols (e.g., IIOP); no effect for local
   /// protocols (UIOP).  Default implementation is for local
   /// protocols.  Remote protocols must overwrite implementation.
   virtual int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  virtual int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   /// Release the OS resources related to this handler.
-  virtual int release_os_resources (void);
+  virtual int release_os_resources ();
+
+  virtual int handle_write_ready (const ACE_Time_Value *timeout);
 
 protected:
-
   /// Return our TAO_ORB_Core pointer
-  TAO_ORB_Core *orb_core (void);
+  TAO_ORB_Core *orb_core ();
+
+  /// A common function called at the start of any protocol-specific
+  /// open. Returns -1 on a failure (although no failure mode is
+  /// currently defined).
+  int shared_open ();
 
   /// Set options on the socket
-  int set_socket_option (ACE_SOCK &sock,
-                         int snd_size,
-                         int rcv_size);
+  int set_socket_option (ACE_SOCK &sock, int snd_size, int rcv_size);
 
   //@{
   /**
@@ -158,18 +177,59 @@ protected:
   virtual void pos_io_hook (int & return_value);
   //@}
 
-
 private:
+  TAO_Connection_Handler (const TAO_Connection_Handler &) = delete;
+  TAO_Connection_Handler &operator= (const TAO_Connection_Handler &) = delete;
+
   /// Pointer to the TAO_ORB_Core
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// Transport object reference
   TAO_Transport* transport_;
 
-  /// Internal state lock, needs to be separate from the reference
-  /// count / pending upcalls lock because they interleave.
-  ACE_Lock * lock_;
+  /// Stores the connection pending state
+  bool connection_pending_;
+
+  /// Once closed make sure the transport is not added back to the cache.
+  /// This is distinct from the leader-follower state so it cannot be reset.
+  bool is_closed_;
 };
+
+/**
+ * @class TAO_Auto_Reference
+ *
+ * @brief TAO_Auto_Reference acts as a "smart pointer" for
+ * reference-countable instances.
+ *
+ * It increments the reference count in the constructor and decrements
+ * it in the destructor. The only requirement for the template
+ * parameter is to be a class that provides add_reference() and
+ * remove_reference().
+ */
+template <class T> class TAO_Auto_Reference
+{
+public:
+  TAO_Auto_Reference (T& r): ref_ (r)
+  {
+    ref_.add_reference ();
+  }
+
+  TAO_Auto_Reference (const TAO_Auto_Reference &) = delete;
+  TAO_Auto_Reference (TAO_Auto_Reference &&) = delete;
+  TAO_Auto_Reference &operator= (const TAO_Auto_Reference &) = delete;
+  TAO_Auto_Reference &operator= (TAO_Auto_Reference &&) = delete;
+
+  ~TAO_Auto_Reference ()
+  {
+    ref_.remove_reference ();
+  }
+
+private:
+  T& ref_;
+};
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"

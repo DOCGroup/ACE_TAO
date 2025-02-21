@@ -1,15 +1,12 @@
 /**
  * @file Servant_var.h
  *
- * $Id$
- *
  * @author Jody Hagins <jody@atdesk.com>
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 #ifndef TAO_PERF_RTEC_SERVANT_VAR_H
 #define TAO_PERF_RTEC_SERVANT_VAR_H
 
-#include "ace/Swap.h"
 #include "tao/corba.h"
 
 /**
@@ -17,8 +14,7 @@
  *
  * @brief Implement a smart pointer class for Servants
  *
- * Many servants, are reference counted objects, for example, those
- * that derive from the PortableServer::RefCountServantBase mixin.
+ * All servants, are reference counted objects.
  * Unfortunately the specification lacks such an useful smart pointer
  * class to manage their life-cycle.
  */
@@ -75,8 +71,6 @@ private:
 #include "Servant_var.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Servant_var.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_PERF_RTEC_SERVANT_VAR_H */

@@ -1,24 +1,8 @@
 // -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   Pollable.pidl
- *
- *  $Id$
- *
- * This file was used to generate the code in Pollable{C,S,S_T}.{h,inl,cpp}
- *
- * The command used to generate code from this file is:
- *
- *   tao_idl
- *     -o orig -St -Sa -Gp -Gd -Ge 1 -SS -Sci
- *     -Wb,export_macro=TAO_Export
- *     -Wb,pre_include="ace/pre.h"
- *     -Wb,post_include="ace/post.h"
- *     Pollable.pidl
- *
  */
-//=============================================================================
 
 #ifndef TAO_POLLABLE_PIDL
 #define TAO_POLLABLE_PIDL

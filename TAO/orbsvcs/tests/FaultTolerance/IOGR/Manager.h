@@ -1,22 +1,15 @@
-//$Id$
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   test
-//
-// = FILENAME
-//    Manager.h
-//
-// = DESCRIPTION
-//    A manager class that merger IORS and designates primary
-//
-// = AUTHOR
-//     Bala Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Manager.h
+ *
+ *  A manager class that merger IORS and designates primary
+ *
+ *  @author  Bala Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 #ifndef TEST_FT_IOGR_MANAGER_H
 #define TEST_FT_IOGR_MANAGER_H
 
@@ -31,36 +24,34 @@
 class Manager
 {
 public:
-
-  Manager (void);
-  // Ctor
-
   void init (int argc,
-             char *argv[]
-             ACE_ENV_ARG_DECL);
+             ACE_TCHAR *argv[]);
 
   // Initialize the ORB, POA etc.
 
-  int make_merged_iors (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
-  // Merges the different IORS
+  /// Merges the different IORS
+  int make_merged_iors ();
 
-  int set_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
-  // Sets the properties for the profiles
+  /// Sets the properties for the profiles
+  int set_properties ();
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the  ORB event loop..
+  /// Run the  ORB event loop..
+  int run ();
 
-  int write_to_file (void);
-  // Write the merged IOR to a file
+  /// Write the merged IOR to a file
+  int write_to_file ();
 
-  CORBA::ORB_ptr orb (void);
-  // Return the pointer to the copy of our ORB
+  /// Return the pointer to the copy of our ORB
+  CORBA::ORB_ptr orb ();
 private:
-  CORBA::ORB_var orb_;
-  // Our ORB
+  CORBA::Object_var object_primary_;
+  CORBA::Object_var object_secondary_;
 
+  /// The merged IOR set
   CORBA::Object_var merged_set_;
-  // The merged IOR set
+
+  /// Our ORB
+  CORBA::ORB_var orb_;
 };
 
 #endif /*TEST_FT_IOGR_MANAGER_H */

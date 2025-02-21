@@ -1,0 +1,21 @@
+// Test Bug 2616
+
+struct AA
+{
+  long x;
+};
+struct BB
+{
+  AA data;
+};
+interface Interface1
+{
+  typedef BB Type;
+  void do_it(in Type value);
+};
+interface Interface2
+{
+  typedef AA Type;
+  void do_it(in Type value);
+};
+

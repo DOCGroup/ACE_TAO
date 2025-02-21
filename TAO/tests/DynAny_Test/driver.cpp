@@ -3,10 +3,7 @@
 /**
  *  @file    driver.cpp
  *
- *  $Id$
- *
  *  Implementation file for the driver program.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
@@ -25,35 +22,49 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Driver driver;
+  int error_count = 0;
+  try
+    {
+      Driver driver;
 
-  // initialize the driver
-  if (driver.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) driver.cpp - "
-                       "Driver initialization failed\n"),
-                      -1);
+      // initialize the driver
+      if (driver.init (argc, argv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "(%N:%l) driver.cpp - "
+                          "Driver initialization failed\n"),
+                          -1);
 
-  // run the tests
-  if (driver.run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) driver.cpp - "
-                       "tests failed\n"),
-                      -1);
-  return 0;
+      // run the tests
+      error_count = driver.run ();
+      if (error_count != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) driver.cpp - "
+                      "%d tests failed\n",
+                      error_count));
+        }
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Caught unexpected CORBA exception:");
+
+      ++error_count;
+    }
+
+  return error_count;
 }
 
 // constructor
-Driver::Driver (void)
+Driver::Driver ()
   : test_type_ (NO_TEST),
     debug_ (0)
 {
 }
 
 // destructor
-Driver::~Driver (void)
+Driver::~Driver ()
 {
   if (this->orb_.in () != 0)
     {
@@ -64,17 +75,13 @@ Driver::~Driver (void)
 
 // initialize the driver
 int
-Driver::init (int argc, char* argv[])
+Driver::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Retrieve the underlying ORB
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    "local"
-                                    ACE_ENV_ARG_PARAMETER);
+      this->orb_ = CORBA::ORB_init (argc, argv, "local");
 
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args (argc, argv) == -1)
@@ -82,49 +89,53 @@ Driver::init (int argc, char* argv[])
                           "(%N:%l) driver.cpp - "
                           "parse_args failed\n"),
                           -1);
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Driver::init");
+      ex._tao_print_exception ("Driver::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-Driver::parse_args (int argc, char* argv[])
+Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "usage:  %s"
-                       " -t [dynany|dynarray|dynenum|dynsequence|dynstruct|dynunion]"
-                       "\n",
+                       "usage:  %s\n"
+                       " -t [dynany|dynarray|dynenum|dynsequence|dynstruct|dynunion]\n"
+                       " -d\n",
                        argv [0]),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, "t:d");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:d"));
   int c;
+  const ACE_TCHAR *test_str = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 't':
-        if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynany"))
+        test_str = get_opts.opt_arg ();
+
+        if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynany")))
           this->test_type_ = TEST_DYNANY;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynarray"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynarray")))
           this->test_type_ = TEST_DYNARRAY;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynenum"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynenum")))
           this->test_type_ = TEST_DYNENUM;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynsequence"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynsequence")))
           this->test_type_ = TEST_DYNSEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynstruct"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynstruct")))
           this->test_type_ = TEST_DYNSTRUCT;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), "dynunion"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynunion")))
           this->test_type_ = TEST_DYNUNION;
+        else
+          ACE_DEBUG ((LM_DEBUG,
+                      "I don't recognize test type %s\n",
+                      test_str));
         break;
 
       case 'd':
@@ -147,9 +158,9 @@ Driver::parse_args (int argc, char* argv[])
 }
 
 int
-Driver::run (void)
+Driver::run ()
 {
-  int retstatus = 0;
+  int error_count = 0;
 
   switch (this->test_type_)
     {
@@ -157,7 +168,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynAny>* wrapper =
             new Test_Wrapper<Test_DynAny> (new Test_DynAny (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -165,7 +176,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynArray>* wrapper =
             new Test_Wrapper<Test_DynArray> (new Test_DynArray (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -173,7 +184,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynEnum>* wrapper =
             new Test_Wrapper<Test_DynEnum> (new Test_DynEnum (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -181,7 +192,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynSequence>* wrapper =
             new Test_Wrapper<Test_DynSequence> (new Test_DynSequence (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -189,7 +200,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynStruct>* wrapper =
             new Test_Wrapper<Test_DynStruct> (new Test_DynStruct (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -197,7 +208,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynUnion>* wrapper =
             new Test_Wrapper<Test_DynUnion> (new Test_DynUnion (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -205,21 +216,5 @@ Driver::run (void)
         break;
     }
 
-  return retstatus;
+  return error_count;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Test_Wrapper<Test_DynAny>;
-template class Test_Wrapper<Test_DynArray>;
-template class Test_Wrapper<Test_DynEnum>;
-template class Test_Wrapper<Test_DynSequence>;
-template class Test_Wrapper<Test_DynStruct>;
-template class Test_Wrapper<Test_DynUnion>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Test_Wrapper<Test_DynAny>
-#pragma instantiate Test_Wrapper<Test_DynArray>
-#pragma instantiate Test_Wrapper<Test_DynEnum>
-#pragma instantiate Test_Wrapper<Test_DynSequence>
-#pragma instantiate Test_Wrapper<Test_DynStruct>
-#pragma instantiate Test_Wrapper<Test_DynUnion>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

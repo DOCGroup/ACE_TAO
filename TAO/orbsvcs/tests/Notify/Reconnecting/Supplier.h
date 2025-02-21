@@ -1,17 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Supplier.h
-//
-// = DESCRIPTION
-//   Test Supplier reconnect to existing channel/admin/proxy Notification Service
-//
-// = AUTHOR
-//    Dale Wilson <wilson_d@ociweb.com>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Supplier.h
+ *
+ * Test Supplier reconnect to existing channel/admin/proxy Notification Service
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef RECONNECTNG_SUPPLIER_H
 #define RECONNECTNG_SUPPLIER_H
@@ -27,51 +24,27 @@ class StructuredPushSupplier_i : public virtual POA_CosNotifyComm::StructuredPus
 {
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosNotifyComm::InvalidEventType));
+      const CosNotification::EventTypeSeq & removed);
 
-  virtual void disconnect_structured_push_supplier (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_structured_push_supplier ();
 };
 
 class SequencePushSupplier_i : public virtual POA_CosNotifyComm::SequencePushSupplier
 {
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosNotifyComm::InvalidEventType));
+      const CosNotification::EventTypeSeq & removed);
 
-  virtual void disconnect_sequence_push_supplier (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_sequence_push_supplier ();
 };
 
 class AnyPushSupplier_i : public virtual POA_CosNotifyComm::PushSupplier
 {
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosNotifyComm::InvalidEventType));
+      const CosNotification::EventTypeSeq & removed);
 
-  virtual void disconnect_push_supplier (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
 };
 
 class ReconnectionCallback_i : public virtual POA_NotifyExt::ReconnectionCallback
@@ -83,20 +56,15 @@ public:
 
   void init (
     PortableServer::POA_ptr poa,
-    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_
-    ACE_ENV_ARG_DECL);
+    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_);
 
-  void fini (ACE_ENV_SINGLE_ARG_DECL);
+  void fini ();
 
   size_t reconnect_count () const;
 
-  virtual void reconnect (
-     CORBA::Object_ptr reconnection
-      ACE_ENV_ARG_DECL
-    ) ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void reconnect (CORBA::Object_ptr reconnection);
 
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean is_alive ();
 
 private:
   Supplier_Main & supplier_main_;
@@ -112,39 +80,37 @@ class Supplier_Main
   Supplier_Main ();
   ~Supplier_Main ();
 
-  int parse_args (int argc, char *argv[]);
-  int parse_single_arg (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_single_arg (int argc, ACE_TCHAR *argv[]);
 
-  int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int init (int argc, ACE_TCHAR *argv[]);
+  int run ();
+  int fini ();
   void usage (FILE * log) const;
 
   void reconnect (
-      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory
-      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
 
  private:
   /// Find naming service.
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service ();
 
   /// Resolve the Notify factory from the Naming service.
-  int find_notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  int find_notify_factory ();
 
   /// Resolve the Notify factory using resolve_initial_reference ("NotifyEventChannelFactory")
-  int resolve_notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_notify_factory ();
 
-  void init_event_channel (ACE_ENV_SINGLE_ARG_DECL);
-  void init_supplier_admin (ACE_ENV_SINGLE_ARG_DECL);
-  void init_structured_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL);
-  void init_sequence_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL);
-  void init_any_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL);
+  void init_event_channel ();
+  void init_supplier_admin ();
+  void init_structured_proxy_consumer ();
+  void init_sequence_proxy_consumer ();
+  void init_any_proxy_consumer ();
 
   /// send events.
-  void send_structured_event (ACE_ENV_SINGLE_ARG_DECL);
-  void send_sequence_event (ACE_ENV_SINGLE_ARG_DECL);
-  void send_any_event (ACE_ENV_SINGLE_ARG_DECL);
+  void send_structured_event ();
+  void send_sequence_event ();
+  void send_any_event ();
 
   void save_ids();
   bool load_ids();
@@ -158,19 +124,18 @@ class Supplier_Main
   ////////////////
   // Data members
  private:
-
   // set by command line parameters
   bool verbose_;             // -v make a glorious noise
   enum Mode_T {
     MODE_ANY,
     MODE_STRUCTURED,
     MODE_SEQUENCE} mode_;    // -any, -structured, or -sequence
-  ACE_CString channel_file_; // -channel filename
+  ACE_TString channel_file_; // -channel filename
   size_t send_;              // -send n
   bool use_naming_service_;  // -nonamesvc
   size_t serial_number_;     // -serial_number
   bool disconnect_on_exit_;  // -disconnect
-  ACE_CString id_file_;      // -ids
+  ACE_TString id_file_;      // -ids
   size_t pause_;             // -pause n (pause after sending n messages)
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
@@ -203,7 +168,6 @@ class Supplier_Main
 
   bool reconnecting_;
 };
-
 
 
 #endif /* RECONNECTNG_SUPPLIER_H */

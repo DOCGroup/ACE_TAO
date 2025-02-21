@@ -1,0 +1,69 @@
+
+//=============================================================================
+/**
+ *  @file    old_constants.idl
+ *
+ *  Tests of const IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+
+module OldConstants
+{
+  const short l = 4;
+
+  enum N
+  {
+    zero,
+    un,
+    deux,
+    trois
+  };
+
+  exception E
+  {
+    short cause ;
+  };
+
+  module M
+  {
+    const short l = 4;
+
+    enum N
+    {
+      zero,
+      un,
+      deux,
+      trois
+    };
+
+    exception E
+    {
+      short cause ;
+    };
+
+    interface A
+    {
+      const short l = 4;
+
+      enum N
+      {
+        zero,
+        un,
+        deux,
+        trois
+      };
+
+      exception E
+      {
+        short cause ;
+      };
+
+      N foo (in N x, out N y, inout N z);
+    };
+  };
+};
+

@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Operation_Table.h
- *
- *  $Id$
  *
  *  @author Aniruddha Gokhale
  */
@@ -15,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,31 +22,28 @@
 #include "tao/Object.h"
 #include "tao/Collocation_Strategy.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ServerRequest;
 class TAO_Abstract_ServantBase;
+class TAO_ServantBase;
 
-namespace CORBA
+namespace TAO
 {
-  class Environment;
+  namespace Portable_Server
+  {
+    class Servant_Upcall;
+  }
 }
 
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
-    void *,
-    void *
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
-    , CORBA::Environment &
-#endif
-  );
+    TAO::Portable_Server::Servant_Upcall *,
+    TAO_ServantBase *);
 
 typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
-    TAO::Argument **,
-    int
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
-    , CORBA::Environment &
-#endif
-  );
+    TAO::Argument **);
 
 /**
  * @struct TAO_operation_db_entry
@@ -69,6 +64,7 @@ struct TAO_operation_db_entry
   TAO_Collocated_Skeleton direct_skel_ptr;
 };
 
+// --------------------------
 
 namespace TAO
 {
@@ -81,9 +77,9 @@ namespace TAO
    * This is not used by the IDL compiler. This is used internally
    * within different strategies.
    */
-  struct Operation_Skeletons
+  struct TAO_PortableServer_Export Operation_Skeletons
   {
-    Operation_Skeletons (void);
+    Operation_Skeletons ();
 
     /// Remote skeleton pointer
     TAO_Skeleton skel_ptr;
@@ -127,8 +123,10 @@ public:
   virtual int bind (const char *opname,
                     const TAO::Operation_Skeletons skel_ptr) = 0;
 
-  virtual ~TAO_Operation_Table (void);
+  virtual ~TAO_Operation_Table ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_OPTABLE_H */

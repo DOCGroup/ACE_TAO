@@ -1,0 +1,40 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  exception MyException {};
+  /// A very simple interface
+  interface Hello
+  {
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+
+    // Methods for first test
+
+    // The client first calls this to generate a (user) exception
+    // which is handled in the application code
+    void throw_exception () raises (MyException);
+
+    // Starts the nested sequence - client calls...
+    boolean call_me_back (in Hello me);
+
+    // ... then the server calls this back onto the client,
+    // which prompts the client to call...
+    boolean call_back ();
+
+    // ... this ! The server interceptor will have been recording
+    // if any retention ID has been reused in the sequence of invocations
+    // @return true for all different, false otherwise.
+    boolean check_request_id ();
+
+    // Method for second test. Makes the servant perform
+    // a number of checks and then either commit suicide (to prompt a
+    // retry on the next member of the IOGR) or to return
+    // successfully if it has detected a regresssion.
+    // @return the number identifying this servant with teh group
+    unsigned long drop_down_dead ();
+  };
+};

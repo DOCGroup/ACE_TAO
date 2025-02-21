@@ -1,6 +1,15 @@
 // -*- MPC -*-
-// $Id$
+project : orbsvcsexe, install, naming, event_serv, svc_utils, iortable, messaging_optional, portableserver {
+  exename  = tao_cosevent
 
-project : orbsvcsexe, core, naming, event_serv, svc_utils, iortable, messaging, portableserver {
-  exename  = CosEvent_Service
+  specific {
+    install_dir = tao/docs/cosevent
+  }
+
+  InstallData_Files {
+    README
+  }
+
+  Documentation_Files {
+  }
 }

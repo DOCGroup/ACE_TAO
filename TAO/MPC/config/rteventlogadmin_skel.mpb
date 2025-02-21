@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : orbsvcslib, rteventlogadmin, dslogadmin_skel, rtevent_skel, portableserver {
+  after      += RTEventLogAdmin_Skel
+  libs       += TAO_RTEventLogAdmin_Skel
+}

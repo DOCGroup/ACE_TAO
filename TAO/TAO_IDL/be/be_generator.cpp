@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -81,6 +79,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_home.h"
+#include "be_porttype.h"
+#include "be_mirror_port.h"
+#include "be_connector.h"
+#include "be_template_module.h"
+#include "be_template_module_inst.h"
+#include "be_template_module_ref.h"
+#include "be_param_holder.h"
+#include "be_provides.h"
+#include "be_uses.h"
+#include "be_publishes.h"
+#include "be_emits.h"
+#include "be_consumes.h"
 #include "be_union.h"
 #include "be_union_fwd.h"
 #include "be_structure.h"
@@ -98,25 +108,24 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_enum_val.h"
 #include "be_array.h"
 #include "be_sequence.h"
+#include "be_map.h"
 #include "be_string.h"
 #include "be_typedef.h"
 #include "be_native.h"
+#include "be_fixed.h"
 #include "be_factory.h"
+#include "be_finder.h"
 #include "utl_identifier.h"
 #include "nr_extern.h"
 #include "ace/config-all.h"
 
-ACE_RCSID (be,
-           be_generator,
-           "$Id$")
-
 AST_Root *
 be_generator::create_root (UTL_ScopedName *n)
 {
-  be_root *retval = 0;
+  be_root *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_root (n),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -125,11 +134,11 @@ AST_PredefinedType *
 be_generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
                                       UTL_ScopedName *n)
 {
-  be_predefined_type *retval = 0;
+  be_predefined_type *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_predefined_type (t,
                                       n),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -138,78 +147,68 @@ AST_Module *
 be_generator::create_module (UTL_Scope *s,
                              UTL_ScopedName *n)
 {
-  // We create this first so if we find a module with the
-  // same name from an included file, we can add its
-  // members to the new module's scope.
-  AST_Module *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_module (n),
-                  0);
-
+  AST_Module *retval = nullptr;
 
   // Check for another module of the same name in this scope.
   for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
        !iter.is_done ();
        iter.next ())
     {
-      AST_Decl *d = iter.item ();
+      // Can't just check node type here, since it could be a
+      // template module or template module instantiation.
+      AST_Module *m = dynamic_cast<AST_Module*> (iter.item ());
 
-      if (d->node_type () == AST_Decl::NT_module)
+      if (m && m->local_name ()->compare (n->last_component ()))
         {
-          // Does it have the same name as the one we're
-          // supposed to create.
-          if (d->local_name ()->compare (n->last_component ()))
-            {
-              AST_Module *m = AST_Module::narrow_from_decl (d);
-
-              // Get m's previous_ member, plus all it's decls,
-              // into the new modules's previous_ member.
-              retval->add_to_previous (m);
-              retval->prefix (const_cast<char *> (m->prefix ()));
-            }
+          // Create this new module with referance to the
+          // "first" previous module found in scope.
+          ACE_NEW_RETURN (retval, be_module (n, m), nullptr);
+          retval->prefix (const_cast<char *> (m->prefix ()));
+          return retval;
         }
     }
 
-  // If this scope is itself a module, and has been previously
-  // opened, the previous opening may contain a previous opening
+  // Since the scope didn't contain the same module name, it
+  // doesn't mean that we haven't see it before. If the scope
+  // is itself a module, and has been previously opened, any
+  // of the previous openings may contain a previous opening
   // of the module we're creating.
-  AST_Decl *d = ScopeAsDecl (s);
-  AST_Decl::NodeType nt = d->node_type ();
-
-  if (nt == AST_Decl::NT_module || nt == AST_Decl::NT_root)
+  AST_Module *prev_module = dynamic_cast<AST_Module*> (s);
+  if (prev_module)
     {
-      AST_Module *m = AST_Module::narrow_from_decl (d);
-
-      // AST_Module::previous_ is a set, so it contains each
-      // entry only once, but previous_ will contain the decls
-      // from all previous openings. See comment in
-      // AST_Module::add_to_previous() body.
-      d = m->look_in_previous (n->last_component ());
-
-      if (d != 0)
+      while (!!(prev_module = prev_module->previous_opening ()))
         {
-          if (d->node_type () == AST_Decl::NT_module)
+          for (UTL_ScopeActiveIterator iter (prev_module, UTL_Scope::IK_decls);
+               !iter.is_done ();
+               iter.next ())
             {
-              m = AST_Module::narrow_from_decl (d);
-
-              retval->add_to_previous (m);
+              AST_Module *m = dynamic_cast<AST_Module*> (iter.item ());
+              if (m && m->local_name ()->compare (n->last_component ()))
+                {
+                  // Create this new module with referance to the
+                  // "first" previous module found in scope.
+                  ACE_NEW_RETURN (retval, be_module (n, m), nullptr);
+                  return retval;
+                }
             }
         }
     }
 
+  // There is no previous module to be found
+  ACE_NEW_RETURN (retval, be_module (n), nullptr);
   return retval;
 }
 
 AST_Interface *
 be_generator::create_interface (UTL_ScopedName *n,
-                                AST_Interface **ih,
+                                AST_Type **ih,
                                 long nih,
                                 AST_Interface **ih_flat,
                                 long nih_flat,
-                                idl_bool l,
-                                idl_bool a)
+                                bool l,
+                                bool a)
 {
-  be_interface *retval = 0;
+  be_interface *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_interface (n,
                                 ih,
@@ -218,38 +217,40 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 nih_flat,
                                 l,
                                 a),
-                  0);
+                  nullptr);
+
+  /// Trigger this interation over the included pragmas when the
+  /// first local interface is seen in the main file. In an
+  /// executor IDL file (the case we want), this happens near the
+  /// top. In other files, it will do no harm.
+  if (l && idl_global->in_main_file ())
+    {
+      FE_Utils::create_implied_ami_uses_stuff ();
+    }
 
   return retval;
 }
 
 AST_InterfaceFwd *
 be_generator::create_interface_fwd (UTL_ScopedName *n,
-                                    idl_bool local,
-                                    idl_bool abstract)
+                                    bool is_local,
+                                    bool is_abstract)
 {
-  AST_Decl *d =
-    idl_global->scopes ().top_non_null ()->lookup_by_name (n, I_TRUE);
+  AST_Interface *full_defn = this->create_interface (n,
+                                                     nullptr,
+                                                     -1,
+                                                     nullptr,
+                                                     0,
+                                                     is_local,
+                                                     is_abstract);
 
-  AST_Interface *dummy = this->create_interface (n,
-                                                 0,
-                                                 -1,
-                                                 0,
-                                                 0,
-                                                 local,
-                                                 abstract);
-
-  be_interface_fwd *retval = 0;
+  be_interface_fwd *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_interface_fwd (dummy,
+                  be_interface_fwd (full_defn,
                                     n),
-                  0);
+                  nullptr);
 
-  if (d != 0)
-    {
-      retval->prefix (const_cast<char *> (ScopeAsDecl (d->defined_in ())->prefix ()));
-    }
-
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
@@ -257,30 +258,30 @@ AST_ValueBox *
 be_generator::create_valuebox (UTL_ScopedName *n,
                                AST_Type *boxed_type)
 {
-  be_valuebox *retval = 0;
+  be_valuebox *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_valuebox (boxed_type,
                                n),
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 AST_ValueType *
 be_generator::create_valuetype (UTL_ScopedName *n,
-                                AST_Interface **inherits,
+                                AST_Type **inherits,
                                 long n_inherits,
-                                AST_ValueType *inherits_concrete,
+                                AST_Type *inherits_concrete,
                                 AST_Interface **inherits_flat,
                                 long n_inherits_flat,
-                                AST_Interface **supports,
+                                AST_Type **supports_list,
                                 long n_supports,
-                                AST_Interface *supports_concrete,
-                                idl_bool abstract,
-                                idl_bool truncatable,
-                                idl_bool custom)
+                                AST_Type *supports_concrete,
+                                bool is_abstract,
+                                bool is_truncatable,
+                                bool is_custom)
 {
-  be_valuetype *retval = 0;
+  be_valuetype *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_valuetype (n,
                                 inherits,
@@ -288,58 +289,59 @@ be_generator::create_valuetype (UTL_ScopedName *n,
                                 inherits_concrete,
                                 inherits_flat,
                                 n_inherits_flat,
-                                supports,
+                                supports_list,
                                 n_supports,
                                 supports_concrete,
-                                abstract,
-                                truncatable,
-                                custom),
-                  0);
+                                is_abstract,
+                                is_truncatable,
+                                is_custom),
+                  nullptr);
 
   return retval;
 }
 
 AST_ValueTypeFwd *
 be_generator::create_valuetype_fwd (UTL_ScopedName *n,
-                                    idl_bool abstract)
+                                    bool is_abstract)
 {
-  AST_ValueType *dummy = this->create_valuetype (n,
-                                                 0,
-                                                 -1,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 abstract,
-                                                 0,
-                                                 0);
+  AST_ValueType *full_defn = this->create_valuetype (n,
+                                                     nullptr,
+                                                     -1,
+                                                     nullptr,
+                                                     nullptr,
+                                                     0,
+                                                     nullptr,
+                                                     0,
+                                                     nullptr,
+                                                     is_abstract,
+                                                     false,
+                                                     false);
 
-  be_valuetype_fwd *retval = 0;
+  be_valuetype_fwd *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_valuetype_fwd (dummy,
+                  be_valuetype_fwd (full_defn,
                                     n),
-                  0);
+                  nullptr);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
 AST_EventType *
 be_generator::create_eventtype (UTL_ScopedName *n,
-                                AST_Interface **inherits,
+                                AST_Type **inherits,
                                 long n_inherits,
-                                AST_ValueType *inherits_concrete,
+                                AST_Type *inherits_concrete,
                                 AST_Interface **inherits_flat,
                                 long n_inherits_flat,
-                                AST_Interface **supports,
+                                AST_Type **supports_list,
                                 long n_supports,
-                                AST_Interface *supports_concrete,
-                                idl_bool abstract,
-                                idl_bool truncatable,
-                                idl_bool custom)
+                                AST_Type *supports_concrete,
+                                bool is_abstract,
+                                bool is_truncatable,
+                                bool is_custom)
 {
-  be_eventtype *retval = 0;
+  be_eventtype *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_eventtype (n,
                                 inherits,
@@ -347,60 +349,61 @@ be_generator::create_eventtype (UTL_ScopedName *n,
                                 inherits_concrete,
                                 inherits_flat,
                                 n_inherits_flat,
-                                supports,
+                                supports_list,
                                 n_supports,
                                 supports_concrete,
-                                abstract,
-                                truncatable,
-                                custom),
-                  0);
+                                is_abstract,
+                                is_truncatable,
+                                is_custom),
+                  nullptr);
 
   return retval;
 }
 
 AST_EventTypeFwd *
 be_generator::create_eventtype_fwd (UTL_ScopedName *n,
-                                    idl_bool abstract)
+                                    bool is_abstract)
 {
-  AST_EventType *dummy = this->create_eventtype (n,
-                                                 0,
-                                                 -1,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 abstract,
-                                                 0,
-                                                 0);
+  AST_EventType *full_defn = this->create_eventtype (n,
+                                                     nullptr,
+                                                     -1,
+                                                     nullptr,
+                                                     nullptr,
+                                                     0,
+                                                     nullptr,
+                                                     0,
+                                                     nullptr,
+                                                     is_abstract,
+                                                     false,
+                                                     false);
 
-  be_eventtype_fwd *retval = 0;
+  be_eventtype_fwd *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_eventtype_fwd (dummy,
+                  be_eventtype_fwd (full_defn,
                                     n),
-                  0);
+                  nullptr);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
 AST_Component *
 be_generator::create_component (UTL_ScopedName *n,
                                 AST_Component *base_component,
-                                AST_Interface **supports,
+                                AST_Type **supports_list,
                                 long n_supports,
                                 AST_Interface **supports_flat,
                                 long n_supports_flat)
 {
-  be_component *retval = 0;
+  be_component *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_component (n,
                                 base_component,
-                                supports,
+                                supports_list,
                                 n_supports,
                                 supports_flat,
                                 n_supports_flat),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -408,19 +411,20 @@ be_generator::create_component (UTL_ScopedName *n,
 AST_ComponentFwd *
 be_generator::create_component_fwd (UTL_ScopedName *n)
 {
-  AST_Component *dummy = this->create_component (n,
-                                                 0,
-                                                 0,
-                                                 -1,
-                                                 0,
-                                                 0);
+  AST_Component *full_defn = this->create_component (n,
+                                                     nullptr,
+                                                     nullptr,
+                                                     -1,
+                                                     nullptr,
+                                                     0);
 
-  be_component_fwd *retval = 0;
+  be_component_fwd *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_component_fwd (dummy,
+                  be_component_fwd (full_defn,
                                     n),
-                  0);
+                  nullptr);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
@@ -428,53 +432,53 @@ AST_Home *
 be_generator::create_home (UTL_ScopedName *n,
                            AST_Home *base_home,
                            AST_Component *managed_component,
-                           AST_ValueType *primary_key,
-                           AST_Interface **supports,
+                           AST_Type *primary_key,
+                           AST_Type **supports_list,
                            long n_supports,
                            AST_Interface **supports_flat,
                            long n_supports_flat)
 {
-  be_home *retval = 0;
+  be_home *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_home (n,
                            base_home,
                            managed_component,
                            primary_key,
-                           supports,
+                           supports_list,
                            n_supports,
                            supports_flat,
                            n_supports_flat),
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 AST_Exception *
 be_generator::create_exception (UTL_ScopedName *n,
-                                idl_bool local,
-                                idl_bool abstract)
+                                bool is_local,
+                                bool is_abstract)
 {
-  be_exception *retval = 0;
+  be_exception *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_exception (n,
-                                local,
-                                abstract),
-                  0);
+                                is_local,
+                                is_abstract),
+                  nullptr);
 
   return retval;
 }
 
 AST_Structure *
 be_generator::create_structure (UTL_ScopedName *n,
-                                idl_bool local,
-                                idl_bool abstract)
+                                bool is_local,
+                                bool is_abstract)
 {
-  be_structure *retval = 0;
+  be_structure *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_structure (n,
-                                local,
-                                abstract),
-                  0);
+                                is_local,
+                                is_abstract),
+                  nullptr);
 
   return retval;
 }
@@ -482,30 +486,30 @@ be_generator::create_structure (UTL_ScopedName *n,
 AST_StructureFwd *
 be_generator::create_structure_fwd (UTL_ScopedName *n)
 {
-
-  AST_Structure *dummy = this->create_structure (n,
-                                                 0,
-                                                 0);
-  be_structure_fwd *retval = 0;
+  AST_Structure *full_defn = this->create_structure (n,
+                                                     false,
+                                                     false);
+  be_structure_fwd *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_structure_fwd (dummy,
+                  be_structure_fwd (full_defn,
                                     n),
-                  0);
+                  nullptr);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
 AST_Enum *
 be_generator::create_enum (UTL_ScopedName *n,
-                           idl_bool local,
-                           idl_bool abstract)
+                           bool is_local,
+                           bool is_abstract)
 {
-  be_enum *retval = 0;
+  be_enum *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_enum (n,
-                           local,
-                           abstract),
-                  0);
+                           is_local,
+                           is_abstract),
+                  nullptr);
 
   return retval;
 }
@@ -514,17 +518,17 @@ AST_Operation *
 be_generator::create_operation (AST_Type *rt,
                                 AST_Operation::Flags fl,
                                 UTL_ScopedName *n,
-                                idl_bool local,
-                                idl_bool abstract)
+                                bool is_local,
+                                bool is_abstract)
 {
-  be_operation *retval = 0;
+  be_operation *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_operation (rt,
                                 fl,
                                 n,
-                                local,
-                                abstract),
-                  0);
+                                is_local,
+                                is_abstract),
+                  nullptr);
 
   return retval;
 }
@@ -534,12 +538,12 @@ be_generator::create_field (AST_Type *ft,
                             UTL_ScopedName *n,
                             AST_Field::Visibility vis)
 {
-  be_field *retval = 0;
+  be_field *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_field (ft,
                             n,
                             vis),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -549,31 +553,31 @@ be_generator::create_argument (AST_Argument::Direction d,
                                AST_Type *ft,
                                UTL_ScopedName *n)
 {
-  be_argument *retval = 0;
+  be_argument *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_argument (d,
                                ft,
                                n),
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 AST_Attribute *
-be_generator::create_attribute (idl_bool ro,
+be_generator::create_attribute (bool ro,
                                 AST_Type *ft,
                                 UTL_ScopedName *n,
-                                idl_bool local,
-                                idl_bool abstract)
+                                bool is_local,
+                                bool is_abstract)
 {
-  be_attribute *retval = 0;
+  be_attribute *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_attribute (ro,
                                 ft,
                                 n,
-                                local,
-                                abstract),
-                  0);
+                                is_local,
+                                is_abstract),
+                  nullptr);
 
   return retval;
 }
@@ -581,16 +585,16 @@ be_generator::create_attribute (idl_bool ro,
 AST_Union *
 be_generator::create_union (AST_ConcreteType *dt,
                             UTL_ScopedName *n,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool is_local,
+                            bool is_abstract)
 {
-  be_union *retval = 0;
+  be_union *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_union (dt,
                             n,
-                            local,
-                            abstract),
-                  0);
+                            is_local,
+                            is_abstract),
+                  nullptr);
 
   return retval;
 }
@@ -598,16 +602,17 @@ be_generator::create_union (AST_ConcreteType *dt,
 AST_UnionFwd *
 be_generator::create_union_fwd (UTL_ScopedName *n)
 {
-  AST_Union *dummy = this->create_union (0,
-                                         n,
-                                         0,
-                                         0);
-  be_union_fwd *retval = 0;
+  AST_Union *full_defn = this->create_union (nullptr,
+                                             n,
+                                             false,
+                                             false);
+  be_union_fwd *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_union_fwd (dummy,
+                  be_union_fwd (full_defn,
                                 n),
-                  0);
+                  nullptr);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
@@ -616,12 +621,12 @@ be_generator::create_union_branch (UTL_LabelList *ll,
                                    AST_Type *ft,
                                    UTL_ScopedName *n)
 {
-  be_union_branch *retval = 0;
+  be_union_branch *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_union_branch (ll,
                                    ft,
                                    n),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -630,11 +635,11 @@ AST_UnionLabel *
 be_generator::create_union_label (AST_UnionLabel::UnionLabel ul,
                                   AST_Expression *lv)
 {
-  be_union_label *retval = 0;
+  be_union_label *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_union_label (ul,
                                   lv),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -644,12 +649,12 @@ be_generator::create_constant (AST_Expression::ExprType et,
                                AST_Expression *ev,
                                UTL_ScopedName *n)
 {
-  be_constant *retval = 0;
+  be_constant *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_constant (et,
                                ev,
                                n),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -657,10 +662,10 @@ be_generator::create_constant (AST_Expression::ExprType et,
 AST_Expression *
 be_generator::create_expr (UTL_ScopedName *n)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_expression (n),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -669,11 +674,11 @@ AST_Expression *
 be_generator::create_expr (AST_Expression *b,
                            AST_Expression::ExprType t)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_expression (b,
                                  t),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -683,49 +688,79 @@ be_generator::create_expr (AST_Expression::ExprComb c,
                            AST_Expression *v1,
                            AST_Expression *v2)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_expression (c,
                                  v1,
                                  v2),
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 AST_Expression *
-be_generator::create_expr (long l)
+be_generator::create_expr (ACE_CDR::Long l)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_expression (l),
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 AST_Expression *
-be_generator::create_expr (long l,
-                           AST_Expression::ExprType t)
+be_generator::create_expr (ACE_CDR::LongLong l)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_expression (l,
-                                 t),
-                  0);
+                  be_expression (l),
+                  nullptr);
 
   return retval;
 }
 
 AST_Expression *
-be_generator::create_expr (idl_uns_long l,
+be_generator::create_expr (ACE_CDR::Boolean b)
+{
+  be_expression *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_expression (b),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Expression *
+be_generator::create_expr (ACE_CDR::ULong l)
+{
+  be_expression *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_expression (l),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Expression *
+be_generator::create_expr (ACE_CDR::ULongLong l)
+{
+  be_expression *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_expression (l),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Expression *
+be_generator::create_expr (ACE_CDR::ULong l,
                            AST_Expression::ExprType t)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_expression (l,
-                                 t),
-                  0);
+                  be_expression (l, t),
+                  nullptr);
 
   return retval;
 }
@@ -733,21 +768,21 @@ be_generator::create_expr (idl_uns_long l,
 AST_Expression *
 be_generator::create_expr (UTL_String *s)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_expression (s),
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 AST_Expression *
-be_generator::create_expr(char c)
+be_generator::create_expr (ACE_CDR::Char c)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_expression (c),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -755,10 +790,10 @@ be_generator::create_expr(char c)
 AST_Expression *
 be_generator::create_expr (ACE_OutputCDR::from_wchar wc)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_expression (wc),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -766,53 +801,64 @@ be_generator::create_expr (ACE_OutputCDR::from_wchar wc)
 AST_Expression *
 be_generator::create_expr (char *s)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_expression (s),
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 AST_Expression *
-be_generator::create_expr (double d)
+be_generator::create_expr (ACE_CDR::Double d)
 {
-  be_expression *retval = 0;
+  be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_expression (d),
-                  0);
+                  nullptr);
+
+  return retval;
+}
+
+AST_Expression *
+be_generator::create_expr (const ACE_CDR::Fixed &f)
+{
+  be_expression *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_expression (f),
+                  nullptr);
 
   return retval;
 }
 
 AST_EnumVal *
-be_generator::create_enum_val (unsigned long v,
+be_generator::create_enum_val (ACE_CDR::ULong v,
                                UTL_ScopedName *n)
 {
-  be_enum_val *retval = 0;
+  be_enum_val *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_enum_val (v,
                                n),
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 AST_Array *
 be_generator::create_array (UTL_ScopedName *n,
-                            unsigned long ndims,
+                            ACE_CDR::ULong ndims,
                             UTL_ExprList *dims,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool is_local,
+                            bool is_abstract)
 {
-  be_array *retval = 0;
+  be_array *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_array (n,
                             ndims,
                             dims,
-                            local,
-                            abstract),
-                  0);
+                            is_local,
+                            is_abstract),
+                  nullptr);
 
   return retval;
 }
@@ -821,17 +867,38 @@ AST_Sequence *
 be_generator::create_sequence (AST_Expression *v,
                                AST_Type *bt,
                                UTL_ScopedName *n,
-                               idl_bool local,
-                               idl_bool abstract)
+                               bool is_local,
+                               bool is_abstract)
 {
-  be_sequence *retval = 0;
+  be_sequence *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_sequence (v,
                                bt,
                                n,
-                               local,
-                               abstract),
-                  0);
+                               is_local,
+                               is_abstract),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Map *
+be_generator::create_map (AST_Expression *v,
+                          AST_Type *kt,
+                          AST_Type *vt,
+                          UTL_ScopedName *n,
+                          bool is_local,
+                          bool is_abstract)
+{
+  be_map *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_map (v,
+                          kt,
+                          vt,
+                          n,
+                          is_local,
+                          is_abstract),
+                  nullptr);
 
   return retval;
 }
@@ -841,15 +908,15 @@ be_generator::create_string (AST_Expression *v)
 {
   Identifier id ("string");
   UTL_ScopedName n (&id,
-                    0);
+                    nullptr);
 
-  be_string *retval = 0;
+  be_string *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_string (AST_Decl::NT_string,
                              &n,
                              v,
                              1),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -861,35 +928,46 @@ be_generator::create_wstring (AST_Expression *v)
                    ? "string"
                    : "wstring");
   UTL_ScopedName n (&id,
-                    0);
+                    nullptr);
   AST_Decl::NodeType nt = sizeof (ACE_CDR::WChar) == 1
                             ? AST_Decl::NT_string
                             : AST_Decl::NT_wstring;
 
-  be_string *retval = 0;
+  be_string *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_string (nt,
                              &n,
                              v,
                              sizeof (ACE_CDR::WChar)),
-                  0);
+                  nullptr);
 
+  return retval;
+}
+
+AST_Fixed *
+be_generator::create_fixed (AST_Expression *digits,
+                            AST_Expression *scale)
+{
+  Identifier id ("fixed");
+  UTL_ScopedName name (&id, nullptr);
+  AST_Fixed *retval = nullptr;
+  ACE_NEW_RETURN (retval, be_fixed (&name, digits, scale), nullptr);
   return retval;
 }
 
 AST_Typedef *
 be_generator::create_typedef (AST_Type *bt,
                               UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool is_local,
+                              bool is_abstract)
 {
-  be_typedef *retval = 0;
+  be_typedef *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_typedef (bt,
                               n,
-                              local,
-                              abstract),
-                  0);
+                              is_local,
+                              is_abstract),
+                  nullptr);
 
   return retval;
 }
@@ -897,10 +975,10 @@ be_generator::create_typedef (AST_Type *bt,
 AST_Native *
 be_generator::create_native (UTL_ScopedName *n)
 {
-  be_native *retval = 0;
+  be_native *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_native (n),
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -908,10 +986,201 @@ be_generator::create_native (UTL_ScopedName *n)
 AST_Factory *
 be_generator::create_factory (UTL_ScopedName *n)
 {
-  be_factory *retval = 0;
+  be_factory *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_factory (n),
-                  0);
+                  nullptr);
 
   return retval;
 }
+
+AST_Finder *
+be_generator::create_finder (UTL_ScopedName *n)
+{
+  be_finder *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_finder (n),
+                  nullptr);
+
+  return retval;
+}
+
+AST_PortType *
+be_generator::create_porttype (UTL_ScopedName *n)
+{
+  be_porttype *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_porttype (n),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Provides *
+be_generator::create_provides (UTL_ScopedName *n,
+                               AST_Type *provides_type)
+{
+  be_provides *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_provides (n,
+                               provides_type),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Uses *
+be_generator::create_uses (UTL_ScopedName *n,
+                           AST_Type *uses_type,
+                           bool is_multiple)
+{
+  be_uses *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_uses (n,
+                           uses_type,
+                           is_multiple),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Publishes *
+be_generator::create_publishes (UTL_ScopedName *n,
+                                AST_Type *publishes_type)
+{
+  be_publishes *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_publishes (n,
+                                publishes_type),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Emits *
+be_generator::create_emits (UTL_ScopedName *n,
+                            AST_Type *emits_type)
+{
+  be_emits *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_emits (n,
+                            emits_type),
+                  nullptr);
+
+  return retval;
+}
+AST_Consumes *
+be_generator::create_consumes (UTL_ScopedName *n,
+                               AST_Type *consumes_type)
+{
+  be_consumes *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_consumes (n,
+                               consumes_type),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Extended_Port *
+be_generator::create_extended_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref)
+{
+  be_extended_port *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_extended_port (n,
+                                    porttype_ref),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Mirror_Port *
+be_generator::create_mirror_port (
+  UTL_ScopedName *n,
+  AST_PortType *porttype_ref)
+{
+  be_mirror_port *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_mirror_port (n,
+                                  porttype_ref),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Connector *
+be_generator::create_connector (
+  UTL_ScopedName *n,
+  AST_Connector *base_connector)
+{
+  be_connector *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_connector (n,
+                                base_connector),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Template_Module *
+be_generator::create_template_module (
+  UTL_ScopedName *n,
+  FE_Utils::T_PARAMLIST_INFO *template_params)
+{
+  be_template_module *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_template_module (n,
+                                      template_params),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Template_Module_Inst *
+be_generator::create_template_module_inst (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  FE_Utils::T_ARGLIST *template_args)
+{
+  be_template_module_inst *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_template_module_inst (n,
+                                           ref,
+                                           template_args),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Template_Module_Ref *
+be_generator::create_template_module_ref (
+  UTL_ScopedName *n,
+  AST_Template_Module *ref,
+  UTL_StrList *param_refs)
+{
+  be_template_module_ref *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_template_module_ref (n,
+                                          ref,
+                                          param_refs),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Param_Holder *
+be_generator::create_param_holder (
+  UTL_ScopedName *parameter_name,
+  FE_Utils::T_Param_Info *info)
+{
+  be_param_holder *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_param_holder (parameter_name,
+                                   info),
+                  nullptr);
+
+  return retval;
+}
+

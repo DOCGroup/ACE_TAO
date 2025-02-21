@@ -1,0 +1,6 @@
+usr/lib/libACE-*.so usr/lib/@DEB_HOST_MULTIARCH@/
+usr/lib/libACE_ETCL-*.so usr/lib/@DEB_HOST_MULTIARCH@/
+usr/lib/libACE_Monitor_Control-*.so usr/lib/@DEB_HOST_MULTIARCH@/
+usr/lib/libACE_ETCL_Parser-*.so usr/lib/@DEB_HOST_MULTIARCH@/
+usr/lib/libACE_RLECompression-*.so usr/lib/@DEB_HOST_MULTIARCH@/
+usr/lib/libACE_Compression-*.so usr/lib/@DEB_HOST_MULTIARCH@/

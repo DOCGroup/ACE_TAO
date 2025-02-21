@@ -1,0 +1,33 @@
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project (*Client): taoclient, dynamicinterface {
+  after += *idl
+  Source_Files {
+    client.cpp
+    DII_ReplyHandler.cpp
+    testC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project (*Server): messaging, pi_server, taoserver, avoids_minimum_corba {
+  after += *idl
+  IDL_Files {
+  }
+
+  Source_Files {
+    server.cpp
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    orb_initializer.cpp
+    server_interceptor.cpp
+  }
+}

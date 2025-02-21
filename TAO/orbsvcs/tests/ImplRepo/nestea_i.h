@@ -4,10 +4,7 @@
 /**
  *  @file    nestea_i.h
  *
- *  $Id$
- *
  *  This class is an implementation of the Nestea Bookshelf interface.
- *
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
@@ -39,40 +36,33 @@ class Nestea_i: public POA_Nestea_Bookshelf
 {
 public:
   /// Constructor
-  Nestea_i (CORBA::ORB_ptr orb, const char *filename = "nestea.dat");
+  Nestea_i (CORBA::ORB_ptr orb, const ACE_TCHAR *filename = ACE_TEXT("nestea.dat"));
 
   /// Destructor
-  virtual ~Nestea_i (void);
+  virtual ~Nestea_i ();
 
   /// Add <cans> number of cans to the bookshelf.
-  virtual void drink (CORBA::Long cans
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void drink (CORBA::Long cans);
 
   /// Removes <cans> number of cans from the bookshelf.
-  virtual void crush (CORBA::Long cans
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void crush (CORBA::Long cans);
 
   /// Returns the number of cans in the bookshelf.
-  virtual CORBA::Long bookshelf_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long bookshelf_size ();
 
   /// Returns comments about your collection.
-  virtual char *get_praise (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char *get_praise ();
 
-  virtual void shutdown(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown();
 private:
   /// Saves bookshelf data to a file.
-  int save_data (void);
+  int save_data ();
 
   /// Loads bookshelf data from a file.
-  int load_data (void);
+  int load_data ();
 
   /// The name of the file to store the data in.
-  char *data_filename_;
+  ACE_TCHAR *data_filename_;
 
   /// Number of cans in the bookshelf.
   ACE_UINT32 cans_;

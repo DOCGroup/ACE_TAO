@@ -4,11 +4,7 @@
 /**
  *  @file   Notify_Supplier.h
  *
- *  $Id$
- *
  *  An example of using the Notify_Logging_Service.
- *
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
@@ -38,17 +34,16 @@ class Supplier
   //   This class is a supplier of events.
   //
 public:
-  Supplier (void);
+  Supplier ();
   // Constructor
 
   ~Supplier ();
   // Destructor.
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
 private:
-
   // = Data Members
   CORBA::ORB_var orb_;
   // The ORB that we use.
@@ -76,20 +71,17 @@ class Filter_StructuredPushSupplier
   //   Supplier for the filter example.
   //
  public:
-  // = Initialization and Termination code
-  Filter_StructuredPushSupplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  Filter_StructuredPushSupplier ();
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
   // Disconnect from the supplier.
 
-  virtual void send_event (const CosNotification::StructuredEvent& event
-                           ACE_ENV_ARG_DECL);
+  virtual void send_event (const CosNotification::StructuredEvent& event);
   // Send one event.
 
 protected:
@@ -107,21 +99,10 @@ protected:
   // = NotifySubscribe
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+        const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier method
-    virtual void disconnect_structured_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual void disconnect_structured_push_supplier ();
 };
 
 

@@ -1,0 +1,14 @@
+
+
+This test verifies that TAO::Storable_FlatFileStream along
+with TAO::Storable_File_Guard can be used to save/restore
+the state of an object (an instance of Savable) to the
+file system. To verifing Storable_File_Guard's file locking,
+two processes that read/write from the persistent store run
+in parallel.
+
+Note that this test does not explicitly validate the code in
+Storable_File_Guard that deals with the persistent store
+being obsolete.
+
+

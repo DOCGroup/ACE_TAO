@@ -1,38 +1,30 @@
-#include "IIOP_SSL_Transport.h"
-#include "IIOP_SSL_Connection_Handler.h"
-#include "SSLIOP_Util.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Transport.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Util.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 
-
-ACE_RCSID (SSLIOP,
-           IIOP_SSL_Transport,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::IIOP_SSL_Transport::IIOP_SSL_Transport (
     IIOP_SSL_Connection_Handler *handler,
-    TAO_ORB_Core *orb_core,
-    CORBA::Boolean flag)
-  : TAO_IIOP_Transport (handler,
-                        orb_core,
-                        flag)
+    TAO_ORB_Core *orb_core)
+  : TAO_IIOP_Transport (handler, orb_core)
 {
   this->current_ =
     TAO::SSLIOP::Util::current (orb_core);
 }
 
-TAO::IIOP_SSL_Transport::~IIOP_SSL_Transport (void)
+TAO::IIOP_SSL_Transport::~IIOP_SSL_Transport ()
 {
 }
 
 int
 TAO::IIOP_SSL_Transport::handle_input (TAO_Resume_Handle &rh,
-                                       ACE_Time_Value *max_wait_time,
-                                       int block)
+                                       ACE_Time_Value *max_wait_time)
 {
   int result = 0;
 
@@ -44,8 +36,7 @@ TAO::IIOP_SSL_Transport::handle_input (TAO_Resume_Handle &rh,
   if (result != 0)
     return -1;
 
-  return
-    this->TAO_IIOP_Transport::handle_input (rh,
-                                            max_wait_time,
-                                            block);
+  return this->TAO_IIOP_Transport::handle_input (rh, max_wait_time);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

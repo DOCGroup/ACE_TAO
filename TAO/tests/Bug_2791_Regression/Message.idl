@@ -1,0 +1,12 @@
+valuetype Message
+{
+  private string user_;
+  private string subject_;
+  private string text_;
+
+  attribute string user;
+  attribute string subject;
+  attribute string text;
+
+  void print ();
+};

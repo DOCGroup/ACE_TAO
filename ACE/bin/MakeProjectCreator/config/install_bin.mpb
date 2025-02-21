@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project {
+  specific {
+    install_this_target = 1
+  }
+}

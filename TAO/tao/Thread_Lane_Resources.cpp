@@ -1,11 +1,4 @@
-// $Id$
-
 #include "tao/Thread_Lane_Resources.h"
-
-ACE_RCSID (tao,
-           Thread_Lane_Resources,
-           "$Id$")
-
 #include "tao/Acceptor_Registry.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
@@ -14,50 +7,56 @@ ACE_RCSID (tao,
 #include "tao/Connector_Registry.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Core.h"
+#include "tao/Transport_Descriptor_Interface.h"
 
 #include "ace/Reactor.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     TAO_ORB_Core &orb_core,
-    TAO_New_Leader_Generator *new_leader_generator
-  )
+    TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
-    acceptor_registry_ (0),
-    connector_registry_ (0),
-    transport_cache_ (0),
-    leader_follower_ (0),
+    acceptor_registry_ (nullptr),
+    connector_registry_ (nullptr),
+    transport_cache_ (nullptr),
+    leader_follower_ (nullptr),
     new_leader_generator_ (new_leader_generator),
-    input_cdr_dblock_allocator_ (0),
-    input_cdr_buffer_allocator_ (0),
-    input_cdr_msgblock_allocator_ (0),
-    transport_message_buffer_allocator_ (0),
-    output_cdr_dblock_allocator_ (0),
-    output_cdr_buffer_allocator_ (0),
-    output_cdr_msgblock_allocator_ (0),
-    amh_response_handler_allocator_ (0),
-    ami_response_handler_allocator_ (0)
+    input_cdr_dblock_allocator_ (nullptr),
+    input_cdr_buffer_allocator_ (nullptr),
+    input_cdr_msgblock_allocator_ (nullptr),
+    transport_message_buffer_allocator_ (nullptr),
+    output_cdr_dblock_allocator_ (nullptr),
+    output_cdr_buffer_allocator_ (nullptr),
+    output_cdr_msgblock_allocator_ (nullptr),
+    amh_response_handler_allocator_ (nullptr),
+    ami_response_handler_allocator_ (nullptr)
 {
   // Create the transport cache.
   ACE_NEW (this->transport_cache_,
-           TAO::Transport_Cache_Manager (orb_core));
-
+           TAO::Transport_Cache_Manager (
+            orb_core.resource_factory ()->purge_percentage (),
+            orb_core.resource_factory ()->create_purging_strategy (),
+            orb_core.resource_factory ()->cache_maximum (),
+            orb_core.resource_factory ()->locked_transport_cache (),
+            orb_core.orbid ()));
 }
 
-TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources (void)
+TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources ()
 {
-
 }
 
 TAO::Transport_Cache_Manager &
-TAO_Thread_Lane_Resources::transport_cache (void)
+TAO_Thread_Lane_Resources::transport_cache ()
 {
   return *this->transport_cache_;
 }
 
 int
-TAO_Thread_Lane_Resources::has_acceptor_registry_been_created (void) const
+TAO_Thread_Lane_Resources::has_acceptor_registry_been_created () const
 {
-  return this->acceptor_registry_ != 0;
+  return this->acceptor_registry_ != nullptr;
 }
 
 int
@@ -72,19 +71,19 @@ TAO_Thread_Lane_Resources::is_collocated (const TAO_MProfile& mprofile)
 }
 
 TAO_Acceptor_Registry &
-TAO_Thread_Lane_Resources::acceptor_registry (void)
+TAO_Thread_Lane_Resources::acceptor_registry ()
 {
   // Double check.
-  if (this->acceptor_registry_ == 0)
+  if (this->acceptor_registry_ == nullptr)
     {
-      // @@todo: Wouldnt this crash big time if you happen to
+      // @todo: Wouldnt this crash big time if you happen to
       // dereference a null-pointer? Needs fixing.
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         ace_mon,
                         this->lock_,
                         *this->acceptor_registry_);
 
-      if (this->acceptor_registry_ == 0)
+      if (this->acceptor_registry_ == nullptr)
         {
           // @@ Not exception safe code
           // Get the resource factory.
@@ -101,48 +100,38 @@ TAO_Thread_Lane_Resources::acceptor_registry (void)
 }
 
 TAO_Connector_Registry *
-TAO_Thread_Lane_Resources::connector_registry (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Thread_Lane_Resources::connector_registry ()
 {
   // Double check.
-  if (this->connector_registry_ == 0)
+  if (this->connector_registry_ == nullptr)
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         ace_mon,
                         this->lock_,
-                        0);
+                        nullptr);
 
-      if (this->connector_registry_ == 0)
+      if (this->connector_registry_ == nullptr)
         {
           // Ask it to create a new acceptor registry.
           TAO_Connector_Registry *connector_registry =
             this->orb_core_.resource_factory ()->get_connector_registry ();
 
-          if (connector_registry == 0)
+          if (connector_registry == nullptr)
             {
-              ACE_THROW_RETURN (
-                  CORBA::INITIALIZE (
-                      CORBA::SystemException::_tao_minor_code (
-                          TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
-                          0
-                        ),
-                      CORBA::COMPLETED_NO
-                    ),
-                  0
-                );
+              throw ::CORBA::INITIALIZE (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
+                  0),
+                CORBA::COMPLETED_NO);
             }
 
           if (connector_registry->open (&this->orb_core_) != 0)
             {
-              ACE_THROW_RETURN (
-                  CORBA::INITIALIZE (
-                      CORBA::SystemException::_tao_minor_code (
-                          TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
-                          0
-                        ),
-                      CORBA::COMPLETED_NO
-                    ),
-                  0
-                );
+              throw ::CORBA::INITIALIZE (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
+                  0),
+                CORBA::COMPLETED_NO);
             }
 
           // Finally, everything is created and opened successfully:
@@ -157,17 +146,17 @@ TAO_Thread_Lane_Resources::connector_registry (ACE_ENV_SINGLE_ARG_DECL)
 
 
 TAO_Leader_Follower &
-TAO_Thread_Lane_Resources::leader_follower (void)
+TAO_Thread_Lane_Resources::leader_follower ()
 {
   // Double check.
-  if (this->leader_follower_ == 0)
+  if (this->leader_follower_ == nullptr)
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         ace_mon,
                         this->lock_,
                         *this->leader_follower_);
 
-      if (this->leader_follower_ == 0)
+      if (this->leader_follower_ == nullptr)
         {
           // Create a new Leader Follower object.
           ACE_NEW_RETURN (this->leader_follower_,
@@ -182,14 +171,14 @@ TAO_Thread_Lane_Resources::leader_follower (void)
 
 
 ACE_Allocator*
-TAO_Thread_Lane_Resources::input_cdr_dblock_allocator (void)
+TAO_Thread_Lane_Resources::input_cdr_dblock_allocator ()
 {
-  if (this->input_cdr_dblock_allocator_ == 0)
+  if (this->input_cdr_dblock_allocator_ == nullptr)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-      if (this->input_cdr_dblock_allocator_ == 0)
+      if (this->input_cdr_dblock_allocator_ == nullptr)
         {
           this->input_cdr_dblock_allocator_ =
             this->resource_factory ()->input_cdr_dblock_allocator ();
@@ -201,14 +190,14 @@ TAO_Thread_Lane_Resources::input_cdr_dblock_allocator (void)
 
 
 ACE_Allocator*
-TAO_Thread_Lane_Resources::input_cdr_buffer_allocator (void)
+TAO_Thread_Lane_Resources::input_cdr_buffer_allocator ()
 {
-  if (this->input_cdr_buffer_allocator_ == 0)
+  if (this->input_cdr_buffer_allocator_ == nullptr)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-      if (this->input_cdr_buffer_allocator_ == 0)
+      if (this->input_cdr_buffer_allocator_ == nullptr)
         {
           this->input_cdr_buffer_allocator_ =
             this->resource_factory ()->input_cdr_buffer_allocator ();
@@ -220,14 +209,14 @@ TAO_Thread_Lane_Resources::input_cdr_buffer_allocator (void)
 
 
 ACE_Allocator*
-TAO_Thread_Lane_Resources::input_cdr_msgblock_allocator (void)
+TAO_Thread_Lane_Resources::input_cdr_msgblock_allocator ()
 {
-  if (this->input_cdr_msgblock_allocator_ == 0)
+  if (this->input_cdr_msgblock_allocator_ == nullptr)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-      if (this->input_cdr_msgblock_allocator_ == 0)
+      if (this->input_cdr_msgblock_allocator_ == nullptr)
         {
           this->input_cdr_msgblock_allocator_ =
             this->resource_factory ()->input_cdr_msgblock_allocator ();
@@ -238,14 +227,14 @@ TAO_Thread_Lane_Resources::input_cdr_msgblock_allocator (void)
 }
 
 ACE_Allocator*
-TAO_Thread_Lane_Resources::transport_message_buffer_allocator (void)
+TAO_Thread_Lane_Resources::transport_message_buffer_allocator ()
 {
-  if (this->transport_message_buffer_allocator_ == 0)
+  if (this->transport_message_buffer_allocator_ == nullptr)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-      if (this->transport_message_buffer_allocator_ == 0)
+      if (this->transport_message_buffer_allocator_ == nullptr)
         {
           this->transport_message_buffer_allocator_ =
             this->resource_factory ()->input_cdr_dblock_allocator ();
@@ -257,14 +246,14 @@ TAO_Thread_Lane_Resources::transport_message_buffer_allocator (void)
 
 
 ACE_Allocator*
-TAO_Thread_Lane_Resources::output_cdr_dblock_allocator (void)
+TAO_Thread_Lane_Resources::output_cdr_dblock_allocator ()
 {
-  if (this->output_cdr_dblock_allocator_ == 0)
+  if (this->output_cdr_dblock_allocator_ == nullptr)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-      if (this->output_cdr_dblock_allocator_ == 0)
+      if (this->output_cdr_dblock_allocator_ == nullptr)
         {
           this->output_cdr_dblock_allocator_ =
             this->resource_factory ()->output_cdr_dblock_allocator ();
@@ -276,14 +265,14 @@ TAO_Thread_Lane_Resources::output_cdr_dblock_allocator (void)
 
 
 ACE_Allocator*
-TAO_Thread_Lane_Resources::output_cdr_buffer_allocator (void)
+TAO_Thread_Lane_Resources::output_cdr_buffer_allocator ()
 {
-  if (this->output_cdr_buffer_allocator_ == 0)
+  if (this->output_cdr_buffer_allocator_ == nullptr)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-      if (this->output_cdr_buffer_allocator_ == 0)
+      if (this->output_cdr_buffer_allocator_ == nullptr)
         {
           this->output_cdr_buffer_allocator_ =
             this->resource_factory ()->output_cdr_buffer_allocator ();
@@ -295,14 +284,14 @@ TAO_Thread_Lane_Resources::output_cdr_buffer_allocator (void)
 
 
 ACE_Allocator*
-TAO_Thread_Lane_Resources::output_cdr_msgblock_allocator (void)
+TAO_Thread_Lane_Resources::output_cdr_msgblock_allocator ()
 {
-  if (this->output_cdr_msgblock_allocator_ == 0)
+  if (this->output_cdr_msgblock_allocator_ == nullptr)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-      if (this->output_cdr_msgblock_allocator_ == 0)
+      if (this->output_cdr_msgblock_allocator_ == nullptr)
         {
           this->output_cdr_msgblock_allocator_ =
             this->resource_factory ()->output_cdr_msgblock_allocator ();
@@ -313,14 +302,14 @@ TAO_Thread_Lane_Resources::output_cdr_msgblock_allocator (void)
 }
 
 ACE_Allocator*
-TAO_Thread_Lane_Resources::amh_response_handler_allocator (void)
+TAO_Thread_Lane_Resources::amh_response_handler_allocator ()
 {
-  if (this->amh_response_handler_allocator_ == 0)
+  if (this->amh_response_handler_allocator_ == nullptr)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-      if (this->amh_response_handler_allocator_ == 0)
+      if (this->amh_response_handler_allocator_ == nullptr)
         {
           this->amh_response_handler_allocator_ =
             this->resource_factory ()->amh_response_handler_allocator ();
@@ -331,14 +320,14 @@ TAO_Thread_Lane_Resources::amh_response_handler_allocator (void)
 }
 
 ACE_Allocator*
-TAO_Thread_Lane_Resources::ami_response_handler_allocator (void)
+TAO_Thread_Lane_Resources::ami_response_handler_allocator ()
 {
-  if (this->ami_response_handler_allocator_ == 0)
+  if (this->ami_response_handler_allocator_ == nullptr)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-      if (this->ami_response_handler_allocator_ == 0)
+      if (this->ami_response_handler_allocator_ == nullptr)
         {
           this->ami_response_handler_allocator_ =
             this->resource_factory ()->ami_response_handler_allocator ();
@@ -350,47 +339,42 @@ TAO_Thread_Lane_Resources::ami_response_handler_allocator (void)
 
 int
 TAO_Thread_Lane_Resources::open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
-                                                   bool ignore_address
-                                                   ACE_ENV_ARG_DECL)
+                                                   bool ignore_address)
 {
   // Access the acceptor registry.
   TAO_Acceptor_Registry &ar = this->acceptor_registry ();
 
   // Open it.
-  int result = ar.open (&this->orb_core_,
-                        this->leader_follower ().reactor (),
-                        endpoint_set,
-                        ignore_address
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  return result;
+  return ar.open (&this->orb_core_,
+                  this->leader_follower ().reactor (),
+                  endpoint_set,
+                  ignore_address);
 }
 
 TAO_Resource_Factory *
-TAO_Thread_Lane_Resources::resource_factory (void)
+TAO_Thread_Lane_Resources::resource_factory ()
 {
   return this->orb_core_.resource_factory ();
 }
 
 void
-TAO_Thread_Lane_Resources::finalize (void)
+TAO_Thread_Lane_Resources::finalize ()
 {
   // Close connectors before acceptors!
   // Ask the registry to close all registered connectors.
-  if (this->connector_registry_ != 0)
+  if (this->connector_registry_ != nullptr)
     {
       this->connector_registry_->close_all ();
       delete this->connector_registry_;
-      this->connector_registry_ = 0;
+      this->connector_registry_ = nullptr;
     }
 
   // Ask the registry to close all registered acceptors.
-  if (this->acceptor_registry_ != 0)
+  if (this->acceptor_registry_ != nullptr)
     {
       this->acceptor_registry_->close_all ();
       delete this->acceptor_registry_;
-      this->acceptor_registry_ = 0;
+      this->acceptor_registry_ = nullptr;
     }
 
   // Set of handlers still in the connection cache.
@@ -405,7 +389,7 @@ TAO_Thread_Lane_Resources::finalize (void)
 
   // Go through the handler set, closing the connections and removing
   // the references.
-  TAO_Connection_Handler **handler = 0;
+  TAO_Connection_Handler **handler = nullptr;
 
   for (TAO::Connection_Handler_Set::iterator iter (handlers);
        iter.next (handler);
@@ -419,80 +403,80 @@ TAO_Thread_Lane_Resources::finalize (void)
     }
 
   delete this->transport_cache_;
-  this->transport_cache_ = 0;
+  this->transport_cache_ = nullptr;
 
   delete this->leader_follower_;
-  this->leader_follower_ = 0;
+  this->leader_follower_ = nullptr;
 
   // Delete all the allocators here.. They shouldnt be done earlier,
   // lest some of the contents in the above, say reactor or acceptor
   // may use memory from the pool..
-  if (this->input_cdr_dblock_allocator_ != 0)
+  if (this->input_cdr_dblock_allocator_ != nullptr)
     {
       this->input_cdr_dblock_allocator_->remove ();
       delete this->input_cdr_dblock_allocator_;
-      this->input_cdr_dblock_allocator_ = 0;
+      this->input_cdr_dblock_allocator_ = nullptr;
     }
 
-  if (this->input_cdr_buffer_allocator_ != 0)
+  if (this->input_cdr_buffer_allocator_ != nullptr)
     {
       this->input_cdr_buffer_allocator_->remove ();
       delete this->input_cdr_buffer_allocator_;
-      this->input_cdr_buffer_allocator_ = 0;
+      this->input_cdr_buffer_allocator_ = nullptr;
     }
 
-  if (this->input_cdr_msgblock_allocator_ != 0)
+  if (this->input_cdr_msgblock_allocator_ != nullptr)
     {
       this->input_cdr_msgblock_allocator_->remove ();
       delete this->input_cdr_msgblock_allocator_;
-      this->input_cdr_msgblock_allocator_ = 0;
+      this->input_cdr_msgblock_allocator_ = nullptr;
     }
 
-  if (this->transport_message_buffer_allocator_ != 0)
+  if (this->transport_message_buffer_allocator_ != nullptr)
     {
       this->transport_message_buffer_allocator_->remove ();
       delete this->transport_message_buffer_allocator_;
-      this->transport_message_buffer_allocator_ = 0;
+      this->transport_message_buffer_allocator_ = nullptr;
     }
 
-  if (this->output_cdr_dblock_allocator_ != 0)
+  if (this->output_cdr_dblock_allocator_ != nullptr)
     {
       this->output_cdr_dblock_allocator_->remove ();
       delete this->output_cdr_dblock_allocator_;
-      this->output_cdr_dblock_allocator_ = 0;
+      this->output_cdr_dblock_allocator_ = nullptr;
     }
 
-  if (this->output_cdr_buffer_allocator_ != 0)
+  if (this->output_cdr_buffer_allocator_ != nullptr)
     {
       this->output_cdr_buffer_allocator_->remove ();
       delete this->output_cdr_buffer_allocator_;
-      this->output_cdr_buffer_allocator_ = 0;
+      this->output_cdr_buffer_allocator_ = nullptr;
     }
 
-  if (this->output_cdr_msgblock_allocator_ != 0)
+  if (this->output_cdr_msgblock_allocator_ != nullptr)
     {
       this->output_cdr_msgblock_allocator_->remove ();
       delete this->output_cdr_msgblock_allocator_;
-      this->output_cdr_msgblock_allocator_ = 0;
+      this->output_cdr_msgblock_allocator_ = nullptr;
     }
 
-  if (this->amh_response_handler_allocator_ != 0)
+  if (this->amh_response_handler_allocator_ != nullptr)
     {
       this->amh_response_handler_allocator_->remove ();
       delete this->amh_response_handler_allocator_;
-      this->amh_response_handler_allocator_ = 0;
+      this->amh_response_handler_allocator_ = nullptr;
     }
 
-  if (this->ami_response_handler_allocator_ != 0)
+  if (this->ami_response_handler_allocator_ != nullptr)
     {
       this->ami_response_handler_allocator_->remove ();
       delete this->ami_response_handler_allocator_;
-      this->ami_response_handler_allocator_ = 0;
+      this->ami_response_handler_allocator_ = nullptr;
     }
 }
 
 void
-TAO_Thread_Lane_Resources::shutdown_reactor (void)
+TAO_Thread_Lane_Resources::shutdown_reactor ()
 {
   TAO_Leader_Follower &leader_follower = this->leader_follower ();
 
@@ -500,9 +484,7 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
              ace_mon,
              leader_follower.lock ());
 
-
   ACE_Reactor *reactor = leader_follower.reactor ();
-
 
   // Wakeup all the threads waiting blocked in the event loop, this
   // does not guarantee that they will all go away, but reduces the
@@ -516,40 +498,47 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
       leader_follower.has_clients ())
     {
       reactor->wakeup_all_threads ();
-      return;
     }
-
-  // End the reactor if we want shutdown dropping replies along the
-  // way.
-  reactor->end_reactor_event_loop ();
+  else
+    {
+      // End the reactor if we want shutdown dropping replies along the
+      // way.
+      reactor->end_reactor_event_loop ();
+    }
 }
 
 void
-TAO_Thread_Lane_Resources::cleanup_rw_transports (void)
+TAO_Thread_Lane_Resources::close_all_transports ()
 {
   // If we have no-drop-reply strategy or already fininalized simply return.
   if (!this->orb_core_.resource_factory ()->drop_replies_during_shutdown () ||
-       this->transport_cache_ == 0)
+       this->transport_cache_ == nullptr)
     return;
 
   // Set of handlers still in the connection cache.
   TAO::Connection_Handler_Set handlers;
 
-  this->transport_cache_->blockable_client_transports (handlers);
+  // Close the transport cache and return the handlers that were still
+  // registered.  The cache will decrease the #REFCOUNT# on the
+  // handler when it removes the handler from cache.  However,
+  // #REFCOUNT# is increased when the handler is placed in the handler
+  // set.
+  this->transport_cache_->close (handlers);
 
   // Go through the handler set, closing the connections and removing
   // the references.
-  TAO_Connection_Handler **handler = 0;
+  TAO_Connection_Handler **handler = nullptr;
 
   for (TAO::Connection_Handler_Set::iterator iter (handlers);
        iter.next (handler);
        iter.advance ())
     {
-      // Connection is closed. There will be a double closure but that
-      // is okay.
-      (*handler)->release_os_resources ();
+      // Connection is closed.  Potential removal from the Reactor.
+      (*handler)->close_connection ();
 
       // #REFCOUNT# related to the handler set decreases.
       (*handler)->transport ()->remove_reference ();
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

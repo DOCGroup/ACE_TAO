@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef SERVICE_CONTEXT_MANIPULATION_COLLOCATED_ORBINITIALIZER_H
 #define SERVICE_CONTEXT_MANIPULATION_COLLOCATED_ORBINITIALIZER_H
 #include /**/ "ace/pre.h"
@@ -22,19 +20,15 @@
 /// Collocated ORB initializer.
 class Collocated_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 public:
   /// Constructor
-  Collocated_ORBInitializer (void);
+  Collocated_ORBInitializer ();
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 };
 
 #if defined(_MSC_VER)

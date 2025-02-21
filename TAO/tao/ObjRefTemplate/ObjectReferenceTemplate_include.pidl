@@ -1,8 +1,6 @@
 /**
  * @file ObjectReferenceTemplate_include.pidl
  *
- * $Id$
- *
  * @brief Include file for use in applications that need ObjectReferenceTemplate.pidl.
  *
  * This file just includes ObjectReferenceTemplate.pidl. The *C.h file generated from
@@ -15,7 +13,7 @@
  *   1. Run the tao_idl compiler on the pidl file.  The command used for
  *     this is:
  *
- *     tao_idl -o orig -St -Sc -Sp
+ *     tao_idl -o orig -St -Sp
  *          -Wb,pre_include="ace/pre.h"
  *          -Wb,post_include="ace/post.h"
  *          ObjectReferenceTemplate_include.pidl
@@ -31,6 +29,8 @@
 
 #ifndef _OBJECTREFERENCETEMPLATE_INCLUDE_IDL_
 #define _OBJECTREFERENCETEMPLATE_INCLUDE_IDL_
+
+#pragma prefix ""
 
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
 

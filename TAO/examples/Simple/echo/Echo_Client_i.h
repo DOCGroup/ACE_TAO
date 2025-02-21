@@ -1,22 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Simple/echo
-//
-// = FILENAME
-//    Echo_Client_i.h
-//
-// = DESCRIPTION
-//    This class implements the  interface calls for RMI.
-//
-// = AUTHOR
-//    
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//    
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Echo_Client_i.h
+ *
+ *  This class implements the  interface calls for RMI.
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ECHO_CLIENT_I_H
 #define ECHO_CLIENT_I_H
@@ -24,28 +17,29 @@
 #include "../Simple_util.h"
 #include "EchoC.h"
 
+/**
+ * @class Echo_Client_i
+ *
+ * @brief Echo_Client interface subclass.
+ *
+ * This class implements the interface between the interface
+ * objects and the client .
+ */
 class Echo_Client_i
 {
-  // = TITLE
-  //   Echo_Client interface subclass.
-  //
-  // = DESCRIPTION
-  //   This class implements the interface between the interface
-  //   objects and the client .
 public:
-  // = Initialization and termination methods.
-  Echo_Client_i (void);
-  // Constructor
+  /// Constructor
+  Echo_Client_i () = default;
 
-  virtual  ~Echo_Client_i (void);
-  // Destructor
+  /// Destructor
+  ~Echo_Client_i () = default;
 
-  virtual int run (const char *, int, char **);
-  // Execute the methods
+  /// Execute the methods
+  int run (const char *, int, ACE_TCHAR **);
 
 private:
-  Client<Echo, Echo_var> client;
-  // Instantiate the client object.
+  /// Instantiate the client object.
+  Client<Echo> client_;
 };
 
 #endif /* TIME_CLIENT_I_H */

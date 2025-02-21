@@ -1,28 +1,16 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_ch.cpp
-//
-// = DESCRIPTION
-//    Concrete visitor for valuetypes.
-//    This one provides code generation for the CDR operators.
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    based on code from Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_ch.cpp
+ *
+ *  Concrete visitor for valuetypes.
+ *  This one provides code generation for the CDR operators.
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           cdr_op_ch, 
-           "$Id$")
+#include "valuetype.h"
 
 be_visitor_valuetype_cdr_op_ch::be_visitor_valuetype_cdr_op_ch (
     be_visitor_context *ctx
@@ -31,7 +19,7 @@ be_visitor_valuetype_cdr_op_ch::be_visitor_valuetype_cdr_op_ch (
 {
 }
 
-be_visitor_valuetype_cdr_op_ch::~be_visitor_valuetype_cdr_op_ch (void)
+be_visitor_valuetype_cdr_op_ch::~be_visitor_valuetype_cdr_op_ch ()
 {
 }
 
@@ -52,21 +40,30 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
                          "visit_valuetype - "
-                         "codegen for helper functions failed\n"), 
+                         "codegen for helper functions failed\n"),
                         -1);
     }
 
-  *os << be_nl << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
+
+  *os << be_global->core_versioning_begin () << be_nl;
 
   *os << be_global->stub_export_macro () << " "
-      << "CORBA::Boolean operator<< (TAO_OutputCDR &, const "
+      << "::CORBA::Boolean operator<< (TAO_OutputCDR &, const "
       << node->full_name () << " *);" << be_nl;
 
   *os << be_global->stub_export_macro () << " "
-      << "CORBA::Boolean operator>> (TAO_InputCDR &, "
-      << node->full_name () << " *&);";
+      << "::CORBA::Boolean operator>> (TAO_InputCDR &, "
+      << node->full_name () << " *&);" << be_nl;
+
+  if (be_global->gen_ostream_operators ())
+    {
+      *os << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (std::ostream &strm, const "
+          << node->full_name () << " *);" << be_nl;
+    }
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);
@@ -76,7 +73,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
                          "visit_valuetype - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -88,7 +85,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       visitor.visit_valuetype (node);
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }
 
@@ -97,5 +94,3 @@ be_visitor_valuetype_cdr_op_ch::visit_eventtype (be_eventtype *node)
 {
   return this->visit_valuetype (node);
 }
-
-

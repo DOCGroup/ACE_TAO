@@ -1,41 +1,35 @@
-//$Id$
 #ifndef TEST_H
 #define TEST_H
-#include /**/ "ace/pre.h"
-
 
 #include "MIF_Scheduler.h"
+#include "MIF_DT_Creator.h"
+
 #include "ace/Sched_Params.h"
 #include "tao/ORB_Core.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
-#include "MIF_DT_Creator.h"
 
 class Task_Stats;
 
 class DT_Test //:public ACE_Task <ACE_SYNCH>
 {
  public:
-  
-  DT_Test (void);
-  
-  int init (int argc, char *argv []
-	    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  DT_Test ();
 
-  void run (int argc, char *argv [] 
-	  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (int argc, ACE_TCHAR *argv []);
+
+  void run (int argc, ACE_TCHAR *argv []);
 
   void dt_creator (MIF_DT_Creator* dt_creator);
 
-  MIF_Scheduler* scheduler (void);
+  MIF_Scheduler* scheduler ();
 
-  int activate_task (void);
+  int activate_task ();
 
-  RTScheduling::Current_ptr current (void); 
 
 /*   protected: */
 /*   /// task svc */
-/*   virtual int svc (void); */
+/*   virtual int svc (); */
 
 
  private:
@@ -46,12 +40,11 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
   CORBA::ORB_var orb_;
   int max_priority_;
   int min_priority_;
-  RTScheduling::Current_var current_; 
+  RTScheduling::Current_var current_;
   MIF_DT_Creator* dt_creator_;
-  MIF_Scheduler* scheduler_;
+  PortableServer::Servant_var<MIF_Scheduler> scheduler_;
 };
 
 typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;
 
-#include /**/ "ace/post.h"
 #endif /*TEST_H*/

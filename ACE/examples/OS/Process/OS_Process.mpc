@@ -1,0 +1,13 @@
+// -*- MPC -*-
+project(*imore) : aceexe, avoids_ace_for_tao {
+  exename = imore
+  Source_Files {
+    imore.cpp
+  }
+}
+project(*process) : aceexe {
+  exename = process
+  Source_Files {
+    process.cpp
+  }
+}

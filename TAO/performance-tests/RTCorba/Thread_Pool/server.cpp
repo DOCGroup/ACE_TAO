@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Stats.h"
 #include "ace/Task.h"
@@ -11,8 +9,6 @@
 #include "tests/RTCORBA/common_args.cpp"
 #include "tests/RTCORBA/check_supported_priorities.cpp"
 
-ACE_RCSID(Thread_Pools, server, "$Id$")
-
 class test_i :
   public POA_test
 {
@@ -21,14 +17,13 @@ public:
           PortableServer::POA_ptr poa);
 
   void method (CORBA::ULong work,
-               CORBA::ULong prime_number
-               ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+               CORBA::ULong prime_number);
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  //FUZZ: disable check_for_lack_ACE_OS
+  void shutdown ();
+  //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   CORBA::ORB_var orb_;
@@ -44,9 +39,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 void
 test_i::method (CORBA::ULong work,
-                CORBA::ULong prime_number
-                ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                CORBA::ULong prime_number)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -60,32 +53,29 @@ test_i::method (CORBA::ULong work,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (false);
 }
 
-static const char *ior_output_file = "ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static CORBA::ULong static_threads = 1;
 static CORBA::ULong dynamic_threads = 0;
 static CORBA::ULong number_of_lanes = 0;
 static RTCORBA::Priority default_thread_priority = 0;
 static RTCORBA::Priority pool_priority = ACE_INT16_MIN;
 
-static const char *bands_file = "empty-file";
-static const char *lanes_file = "empty-file";
+static const ACE_TCHAR *bands_file = ACE_TEXT("empty-file");
+static const ACE_TCHAR *lanes_file = ACE_TEXT("empty-file");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
                         "b:f:hl:n:o:s:" // server options
@@ -167,15 +157,12 @@ parse_args (int argc, char *argv[])
 }
 
 int
-write_ior_to_file (const char *ior_file,
+write_ior_to_file (const ACE_TCHAR *ior_file,
                    CORBA::ORB_ptr orb,
-                   CORBA::Object_ptr object
-                   ACE_ENV_ARG_DECL)
+                   CORBA::Object_ptr object)
 {
   CORBA::String_var ior =
-    orb->object_to_string (object
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    orb->object_to_string (object);
 
   FILE *output_file =
     ACE_OS::fopen (ior_file,
@@ -199,14 +186,12 @@ write_ior_to_file (const char *ior_file,
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -217,47 +202,33 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       object =
-        this->orb_->resolve_initial_references ("RTORB"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::RTORB::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RTCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::Current::_narrow (object.in ());
 
       default_thread_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       int result = 0;
       CORBA::ULong stacksize = 0;
@@ -280,11 +251,9 @@ Task::svc (void)
                                              max_request_buffer_size,
                                              allow_borrowing,
                                              policies,
-                                             1
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                             1);
         }
-      else if (ACE_OS::strcmp (lanes_file, "empty-file") != 0)
+      else if (ACE_OS::strcmp (lanes_file, ACE_TEXT("empty-file")) != 0)
         {
           result =
             get_priority_lanes ("server",
@@ -298,9 +267,7 @@ Task::svc (void)
                                 max_request_buffer_size,
                                 allow_borrowing,
                                 policies,
-                                1
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                1);
 
           if (result != 0)
             return result;
@@ -310,9 +277,7 @@ Task::svc (void)
                                 bands_file,
                                 rt_orb.in (),
                                 policies,
-                                1
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                1);
 
           if (result != 0)
             return result;
@@ -330,26 +295,20 @@ Task::svc (void)
                                        pool_priority,
                                        allow_request_buffering,
                                        max_buffered_requests,
-                                       max_request_buffer_size
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                       max_request_buffer_size);
 
           policies.length (policies.length () + 1);
           policies[policies.length () - 1] =
-            rt_orb->create_threadpool_policy (threadpool_id
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            rt_orb->create_threadpool_policy (threadpool_id);
 
-          if (ACE_OS::strcmp (bands_file, "empty-file") != 0)
+          if (ACE_OS::strcmp (bands_file, ACE_TEXT("empty-file")) != 0)
             {
               result =
                 get_priority_bands ("server",
                                     bands_file,
                                     rt_orb.in (),
                                     policies,
-                                    1
-                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                    1);
 
               if (result != 0)
                 return result;
@@ -359,23 +318,17 @@ Task::svc (void)
       policies.length (policies.length () + 1);
       policies[policies.length () - 1] =
         root_poa->create_implicit_activation_policy
-        (PortableServer::IMPLICIT_ACTIVATION
-         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        (PortableServer::IMPLICIT_ACTIVATION);
 
       policies.length (policies.length () + 1);
       policies[policies.length () - 1] =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                              default_thread_priority
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                              default_thread_priority);
 
       PortableServer::POA_var poa =
         root_poa->create_POA ("RT POA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              policies);
 
       test_i *servant =
         new test_i (this->orb_.in (),
@@ -385,50 +338,39 @@ Task::svc (void)
       ACE_UNUSED_ARG (safe_servant);
 
       test_var test =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant->_this ();
 
       result =
         write_ior_to_file (ior_output_file,
                            this->orb_.in (),
-                           test.in ()
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                           test.in ());
 
       if (result != 0)
         return result;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         argv);
 
       int result =
         parse_args (argc, argv);
@@ -463,13 +405,11 @@ main (int argc, char *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

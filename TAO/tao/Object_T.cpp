@@ -1,76 +1,36 @@
-// $Id$
-#ifndef TAO_OBJECT_T_C
-#define TAO_OBJECT_T_C
+#ifndef TAO_OBJECT_T_CPP
+#define TAO_OBJECT_T_CPP
 
 #include "tao/Object_T.h"
+#include "tao/Object.h"
 #include "tao/Stub.h"
 #include "tao/SystemException.h"
+#include "ace/CORBA_macros.h"
 
-ACE_RCSID (tao,
-           Object_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   template<typename T>
   T *
   Narrow_Utils<T>::narrow (CORBA::Object_ptr obj,
-                           const char *repo_id,
-                           Proxy_Broker_Factory pbf
-                           ACE_ENV_ARG_DECL)
+                           const char *repo_id)
   {
     if (CORBA::is_nil (obj))
       {
         return T::_nil ();
       }
 
-    CORBA::Boolean is_it = obj->_is_a (repo_id
-                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (T::_nil ());
-
-    if (is_it == 0)
+    if (!obj->_is_a (repo_id))
       {
         return T::_nil ();
       }
 
-    return TAO::Narrow_Utils<T>::unchecked_narrow (obj,
-                                                   repo_id,
-                                                   pbf
-                                                   ACE_ENV_ARG_PARAMETER);
+    return TAO::Narrow_Utils<T>::unchecked_narrow (obj);
   }
 
   template<typename T> T *
-  Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
-                                     Proxy_Broker_Factory pbf)
-  {
-    ACE_DECLARE_NEW_CORBA_ENV;
-
-    T *proxy = 0;
-    ACE_TRY
-      {
-        proxy =
-          TAO::Narrow_Utils<T>::unchecked_narrow (obj,
-                                                  0,
-                                                  pbf
-                                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCHANY
-      {
-        // Swallow the exception
-        return T::_nil ();
-      }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (proxy);
-
-    return proxy;
-  }
-
-  template<typename T> T *
-  Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
-                                     const char *,
-                                     Proxy_Broker_Factory pbf
-                                     ACE_ENV_ARG_DECL)
+  Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj)
   {
     if (CORBA::is_nil (obj))
       {
@@ -82,34 +42,38 @@ namespace TAO
         return T::_duplicate (dynamic_cast<T *> (obj));
       }
 
-    T_ptr proxy = Narrow_Utils<T>::lazy_evaluation (obj);
-
-    if (!CORBA::is_nil (proxy))
+    T_ptr proxy = T::_nil ();
+    try
       {
-        return proxy;
-      }
-      
-    TAO_Stub* stub = obj->_stubobj ();
+        proxy = Narrow_Utils<T>::lazy_evaluation (obj);
 
-    if (stub == 0)
+        if (CORBA::is_nil (proxy))
+          {
+            TAO_Stub* stub = obj->_stubobj ();
+
+            if (stub != 0)
+              {
+                stub->_incr_refcnt ();
+
+                bool const collocated =
+                  !CORBA::is_nil (stub->servant_orb_var ().in ())
+                  && stub->optimize_collocation_objects ()
+                  && obj->_is_collocated ();
+
+                ACE_NEW_RETURN (proxy,
+                                T (stub,
+                                   collocated,
+                                   obj->_servant ()),
+                                T::_nil ());
+              }
+          }
+      }
+    catch (const CORBA::Exception&)
       {
-        // If we're here, we have been passed a bogus objref.
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (), T::_nil ());
+        // Swallow the exception
+        return T::_nil ();
       }
 
-    stub->_incr_refcnt ();
-
-    bool collocated =
-      !CORBA::is_nil (stub->servant_orb_var ().ptr ())
-      && stub->optimize_collocation_objects ()
-      && obj->_is_collocated ()
-      && pbf != 0;
-
-    ACE_NEW_THROW_EX (proxy,
-                      T (stub,
-                         collocated ? 1 : 0,
-                         obj->_servant ()),
-                      CORBA::NO_MEMORY ());
     return proxy;
   }
 
@@ -132,4 +96,6 @@ namespace TAO
   }
 }
 
-#endif /* TAO_OBJECT_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_OBJECT_T_CPP */

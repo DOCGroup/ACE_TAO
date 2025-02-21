@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -82,11 +80,14 @@ class AST_Expression;
 class TAO_IDL_FE_Export UTL_ExprList : public UTL_List
 {
 public:
-  UTL_ExprList (AST_Expression *s, 
+  UTL_ExprList (AST_Expression *s,
                 UTL_ExprList *cdr);
 
   // Get list item.
-  AST_Expression *head (void);
+  AST_Expression *head ();
+
+  // Cleanup.
+  virtual void destroy ();
 
 private:
   // Data.
@@ -100,7 +101,7 @@ public:
   UTL_ExprlistActiveIterator (UTL_ExprList *s);
 
   // Get current item.
-  AST_Expression *item (void);
+  AST_Expression *item ();
 };
 
 #endif           // _UTL_EXPRLIST_UTL_EXPRLIST_HH

@@ -1,12 +1,10 @@
 // -*- MPC -*-
-// $Id$
+project(*Server): namingexe, portableserver, bidir_giop, utils, avoids_corba_e_micro {
 
-project(*Server): namingexe, portableserver,bidir_giop, utils {
-
-  idlflags += -GA
+  exename = TimeServer
 
   Source_Files {
-  TimeServer.cpp
+    TimeServer.cpp
   }
 }
 

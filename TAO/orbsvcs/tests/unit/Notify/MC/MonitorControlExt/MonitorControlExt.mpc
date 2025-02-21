@@ -1,0 +1,3 @@
+project: notification_mc_ext {
+  exename = MonitorControlExt
+}

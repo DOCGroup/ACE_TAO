@@ -1,21 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    interop_test/wchar
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    C++ client side for testing interoperability with wchar data.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  C++ client side for testing interoperability with wchar data.
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "interop_wcharC.h"
 #include "wchar_reference.h"
@@ -101,72 +95,56 @@ assign_wstruct (short key, interop::wstruct & ws)
 
 CORBA::Boolean
 run_one_test (interop::WChar_Passer_ptr server,
-              int test_num ACE_ENV_ARG_DECL)
+              int test_num)
 {
   switch (test_num)
     {
     case WCHAR_TO_SERVER:
-      return server->wchar_to_server (ref.get_wchar(data_set),
-                                      data_set
-                                      ACE_ENV_ARG_PARAMETER);
+      return server->wchar_to_server (ref.get_wchar(data_set), data_set);
     case WSTRING_TO_SERVER:
-      return server->wstring_to_server (ref.get_wstring(data_set),
-                                        data_set
-                                        ACE_ENV_ARG_PARAMETER);
+      return server->wstring_to_server (ref.get_wstring(data_set), data_set);
     case WARRAY_TO_SERVER:
-      return server->warray_to_server (ref.get_warray(data_set),
-                                       data_set
-                                       ACE_ENV_ARG_PARAMETER);
+      return server->warray_to_server (ref.get_warray(data_set), data_set);
     case ANY_WCHAR_TO_SERVER:
       {
         CORBA::Any a;
         a <<= CORBA::Any::from_wchar(ref.get_wchar(data_set));
-        return server->any_to_server (a,data_set ACE_ENV_ARG_PARAMETER);
+        return server->any_to_server (a,data_set);
       }
     case WSTRING_EXCEPTION:
       {
-        ACE_TRY_NEW_ENV
+        try
           {
-            server->exception_test(data_set ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            server->exception_test(data_set);
           }
-        ACE_CATCH (interop::WChar_Passer::WStringException, e)
+        catch (const interop::WChar_Passer::WStringException& e)
           {
             return ref.match_except (data_set,e.why.in());
           }
-        ACE_ENDTRY;
         break;
       }
     case WCHAR_FROM_SERVER:
       {
-        CORBA::WChar wc = server->wchar_from_server (data_set
-                                                     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN(0);
+        CORBA::WChar wc = server->wchar_from_server (data_set);
         return ref.match_wchar (data_set,wc);
       }
     case WSTRING_FROM_SERVER:
       {
         CORBA::WString_var ws =
-          server->wstring_from_server (data_set
-                                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          server->wstring_from_server (data_set);
         return ref.match_wstring (data_set,ws.in());
       }
     case WARRAY_FROM_SERVER:
       {
         interop::warray_var wa =
-          server->warray_from_server (data_set
-                                      ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN(0);
+          server->warray_from_server (data_set);
         return ref.match_warray (data_set,wa.in());
       }
     case ANY_WCHAR_FROM_SERVER:
       {
         CORBA::WChar wc;
         CORBA::Any_var test = server->any_from_server (data_set,
-                                                       interop::is_wchar
-                                                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN(0);
+                                                       interop::is_wchar);
         if (test >>= CORBA::Any::to_wchar(wc))
           {
             return ref.match_wchar (data_set,wc);
@@ -177,16 +155,13 @@ run_one_test (interop::WChar_Passer_ptr server,
       {
         CORBA::Any a;
         a <<= ref.get_wstring(data_set);
-        return server->any_to_server (a,data_set
-                                      ACE_ENV_ARG_PARAMETER);
+        return server->any_to_server (a,data_set);
       }
     case ANY_WSTRING_FROM_SERVER:
       {
-        const CORBA::WChar *ws;
+        const CORBA::WChar *ws {};
         CORBA::Any_var test = server->any_from_server (data_set,
-                                                       interop::is_wstring
-                                                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN(0);
+                                                       interop::is_wstring);
         if (test >>= ws)
           {
             return ref.match_wstring (data_set,ws);
@@ -197,9 +172,8 @@ run_one_test (interop::WChar_Passer_ptr server,
       {
         CORBA::Any a;
         a <<= ref.get_wstring(data_set);
-        const CORBA::WChar *ws;
-        CORBA::Any_var test = server->any_echo (a ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN(0);
+        const CORBA::WChar *ws {};
+        CORBA::Any_var test = server->any_echo (a);
         if (test >>= ws)
           {
             return ref.match_wstring (data_set,ws);
@@ -209,8 +183,7 @@ run_one_test (interop::WChar_Passer_ptr server,
     case WSTRUCTSEQ_FROM_SERVER:
       {
         interop::wstructseq_var wsList =
-          server->wstructseq_from_server(data_set ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN(0);
+          server->wstructseq_from_server(data_set);
         int result = 1;
 
         for (CORBA::ULong i = 0; i < wsList->length(); i++)
@@ -227,13 +200,10 @@ run_one_test (interop::WChar_Passer_ptr server,
         {
           assign_wstruct(data_set, (*wsList)[i]);
         }
-        return server->wstructseq_to_server(wsList.in(), data_set
-                                            ACE_ENV_ARG_PARAMETER);
+        return server->wstructseq_to_server(wsList.in(), data_set);
       }
     case NUL_WSTRING_TO_SERVER:
-      return server->wstring_to_server (L"",
-                                        -1
-                                        ACE_ENV_ARG_PARAMETER);
+      return server->wstring_to_server (L"", -1);
     default:
       break;
     }
@@ -241,7 +211,7 @@ run_one_test (interop::WChar_Passer_ptr server,
 }
 
 short
-run_tests (interop::WChar_Passer_ptr server ACE_ENV_ARG_DECL)
+run_tests (interop::WChar_Passer_ptr server)
 {
   short successes = 0;
   short numtests = 0;
@@ -250,8 +220,7 @@ run_tests (interop::WChar_Passer_ptr server ACE_ENV_ARG_DECL)
   for (int i = 0; i < LAST_TEST; i++, t <<= 1)
     if ((tests_to_run & t) == t)
       {
-        CORBA::Boolean result = run_one_test (server,t ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN(0);
+        CORBA::Boolean result = run_one_test (server,t);
         ++numtests;
         if (result) ++successes;
         if (verbose)
@@ -312,7 +281,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   if (tests_to_run == 0)
     tests_to_run = ALL_TESTS;
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -324,17 +293,15 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
   ACE_UNUSED_ARG (argv);
   ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("This test requires wchar support\n")),0);
 #else
-  ACE_TRY_NEW_ENV
+  try
   {
-    ACE_Argv_Type_Converter command_line(argc, argv);
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( command_line.get_argc(), command_line.get_ASCII_argv() );
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
     if (parse_args(argc, argv) == -1)
       return 0;
 
     // Destringify ior
-    CORBA::Object_var obj = orb->string_to_object( ACE_TEXT_ALWAYS_CHAR(ior) ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::Object_var obj = orb->string_to_object(ior);
     if( CORBA::is_nil( obj.in() ) )
       ACE_ERROR_RETURN ((LM_ERROR,
                          "arg is not a valid ior sting"),
@@ -342,35 +309,30 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
 
     // Narrow
     interop::WChar_Passer_var server =
-      interop::WChar_Passer::_narrow( obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      interop::WChar_Passer::_narrow( obj.in());
 
     if( CORBA::is_nil( server.in() ))
       ACE_ERROR_RETURN ((LM_ERROR,
                          "arg is not a interop::WChar_Passer reference\n"),
                         -1);
 
-    short result = run_tests (server.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    short result = run_tests (server.in());
     CORBA::String_var server_orb =
-      server->orb_name(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      server->orb_name();
     ACE_ERROR ((LM_ERROR,
-                "wchar_interop test (TAO client, %s server) %s \n",
+                "wchar_interop test (TAO client, %C server) %C\n",
                 server_orb.in(),
                 (result ? "passed" : "failed")));
     if (kill_server)
     {
-      server->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown();
     }
   }
-  ACE_CATCH(CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION(ex, "Uncaught CORBA exception: ");
+    ex._tao_print_exception ("Uncaught CORBA exception: ");
     return 1;
   }
-  ACE_ENDTRY;
   return 0;
 #endif
 }

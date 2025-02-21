@@ -1,0 +1,7 @@
+/// This is a degenerate Naming Service that only binds one object
+interface SimpleNamingService {
+
+  void bind (in Object o);
+  Object resolve ();
+
+};

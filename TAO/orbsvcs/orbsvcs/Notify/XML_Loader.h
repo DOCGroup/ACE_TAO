@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    XML_Loader.h
- *
- *  $Id$
  *
  *  A topology saver class that outputs XML.
  *
@@ -21,15 +19,15 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Topology_Loader.h"
+#include "orbsvcs/Notify/Topology_Loader.h"
 
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 
-#include "tao/corba.h"
-
 #include "ace/streams.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -44,12 +42,12 @@ public:
 
   /// Open a file and perform preliminary validation to determine whether
   /// the file is complete and valid.
-  bool open (const ACE_CString & file_name);
+  bool open (const ACE_TString & file_name);
 
   ///////////////////////////////////
   // Override Topology_Loader methods
   // see Topology_Loader.h for documentation
-  virtual void load (Topology_Object *root ACE_ENV_ARG_DECL);
+  virtual void load (Topology_Object *root);
 
 
   /////////////////////////////////////////
@@ -58,28 +56,24 @@ public:
   virtual void startElement (const ACEXML_Char* namespaceURI,
     const ACEXML_Char* localName,
     const ACEXML_Char* qName,
-    ACEXML_Attributes* atts ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
+    ACEXML_Attributes* atts);
 
   virtual void endElement (const ACEXML_Char*,
     const ACEXML_Char*,
-    const ACEXML_Char* name ACEXML_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
-
+    const ACEXML_Char* name);
 
 private:
   /// The name of the file from which data is read.
-  ACE_CString file_name_;
-  /// A stream representing our current output.
-  FILE * input_;
+  ACE_TString file_name_;
 
   typedef ACE_Unbounded_Stack<Topology_Object*> TopoStack;
   TopoStack object_stack_;
-  // if false, then we're just checking syntax of topology file.
+  /// If false, then we're just checking syntax of topology file.
   bool live_;
 };
-
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* XML_LOADER_H */

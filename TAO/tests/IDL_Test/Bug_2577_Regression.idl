@@ -1,0 +1,20 @@
+// Test Bug 2577
+
+struct DateTime_T
+{
+  short t;
+};
+
+typedef DateTime_T WhenLastUpdated_T;
+
+valuetype Data_T
+{
+  // Typedef valuetype member was blocking generation of
+  // SArg specialization for the struct.
+  public WhenLastUpdated_T whenLastUpdated;
+};
+
+interface User_T {
+  DateTime_T getLoginTime();
+};
+

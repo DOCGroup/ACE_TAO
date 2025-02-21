@@ -1,0 +1,100 @@
+//
+// This file contains few valuetypes to show and test truncatable feature of
+// valuetype.
+//
+
+module OBV_TruncatableTest
+{
+  //
+  // Base valuetype.
+  //
+  valuetype BaseValue
+  {
+    public unsigned long basic_data;
+  };
+
+  //
+  // Valuetype with one-level truncatable inheritence.
+  //
+  valuetype TValue1 : truncatable BaseValue
+  {
+    public unsigned long data1;
+  };
+
+  //
+  // Valuetype with multi-level truncatable inheritence.
+  //
+  valuetype TValue2 : truncatable TValue1
+  {
+    public unsigned long data2;
+  };
+
+  //
+  // Valuetype with multi-level inheritence, but not all truncatable.
+  //
+  valuetype TValue3 : TValue1
+  {
+    public unsigned long data3;
+  };
+
+  //
+  // An valuetype nested in a valuetype.
+  //
+  valuetype NestedValue
+  {
+    public long data;
+  };
+
+  //
+  // Truncatable valuetype with nested valuetype.
+  //
+  valuetype TValue4 : truncatable BaseValue
+  {
+    public NestedValue nv4;
+    public unsigned long data4;
+  };
+
+  //
+  // More complex truncatable valuetype.
+  //
+  valuetype TValue5 : truncatable TValue4
+  {
+    public string str1;
+    public unsigned long data5;
+    public NestedValue nv5;
+    public string str2;
+  };
+
+  //
+  // No data valuetype with truncatable parent.
+  valuetype TValue6 : truncatable BaseValue
+  {
+  };
+
+  //
+  // Interface to pass valuetypes.
+  //
+  interface Test
+  {
+
+    //NOTE: the "desc" parameter helps verify that truncated values are skipped properly.
+    //      the output is "<id>: <input desc>"
+    void op1 (in string id, in BaseValue iv, out BaseValue ov, inout string desc);
+    void op2 (in TValue1 iv, in string id, out TValue1 ov, inout string desc);
+    void op3 (in string id, in TValue4 iv, out TValue4 ov, inout string desc);
+    BaseValue op4  (in string id,
+                    in TValue1 iv1,
+                    in short x,
+                    in TValue4 iv2,
+                    in TValue4 iv3,
+                    in TValue1 iv4,
+                    inout string desc);
+
+    void op5 (in any val, in string id, out TValue1 ov, inout string desc);
+
+    // Shutdown the romote ORB
+    oneway void shutdown ();
+
+  };
+
+};

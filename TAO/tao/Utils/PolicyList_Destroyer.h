@@ -3,15 +3,13 @@
 /**
  * @file PolicyList_Destroyer.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 //=============================================================================
 #ifndef TAO_UTILS_POLICYLIST_DESTROYER_H
 #define TAO_UTILS_POLICYLIST_DESTROYER_H
 #include /**/ "ace/pre.h"
-#include "utils_export.h"
+#include "tao/Utils/utils_export.h"
 
 #include "tao/PolicyC.h"
 
@@ -19,11 +17,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @class PolicyList_Destroyer
      *
@@ -35,15 +34,15 @@ namespace TAO
     {
     public:
       PolicyList_Destroyer(CORBA::ULong length_hint);
-      ~PolicyList_Destroyer()
-        ACE_THROW_SPEC (());
+      ~PolicyList_Destroyer() noexcept;
     };
-
   } // namespace Utils
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "PolicyList_Destroyer.inl"
+# include "tao/Utils/PolicyList_Destroyer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

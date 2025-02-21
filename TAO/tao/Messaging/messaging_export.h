@@ -1,6 +1,5 @@
 
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl
 // ------------------------------
@@ -36,5 +35,10 @@
 #endif /* TAO_MESSAGING_HAS_DLL == 1 */
 
 #endif /* TAO_MESSAGING_EXPORT_H */
+
+#if defined(TRANSPARENT)
+// Some platforms define this macro for ioctl()
+#undef TRANSPARENT
+#endif
 
 // End of auto generated file.

@@ -3,12 +3,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      if 0;
 
 # -*- perl -*-
-# $Id$
 
 use IO::Socket;
 
 $sock = new IO::Socket::INET (
-                              PeerAddr => 'localhost',
+                              PeerAddr => shift || 'localhost',
                               PeerPort => 15000,        # your server port here
                               Proto    => 'tcp',
                              );

@@ -1,0 +1,9 @@
+module Test {
+
+    interface Hello {
+        oneway void say_hello(in short count);
+
+        oneway void shutdown();
+    };
+
+};

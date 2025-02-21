@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
 use Env (ACE_ROOT);
@@ -22,7 +21,7 @@ $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        "$PerlACE::svcconf_ext " .
                        " -o $iorfile");
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+if (ACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;

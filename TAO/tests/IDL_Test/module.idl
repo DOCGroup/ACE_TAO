@@ -1,0 +1,33 @@
+
+//=============================================================================
+/**
+ *  @file    module.idl
+ *
+ *  Tests of module IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+
+module mod1
+{
+  module mod2
+  {
+    interface ex1
+    {
+      attribute long l1;
+      readonly attribute long l2;
+
+      long m1 (in long a);
+    };
+
+    interface ex2 : ex1
+    {
+      attribute long l3;
+
+      long m2 (in long a, out long b);
+    };
+  };
+};

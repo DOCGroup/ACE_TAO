@@ -1,0 +1,293 @@
+commit d6b268e7eee10aabaa775065f72e283e2ce053f0
+Merge: 15c371e5493 c7571f5ff80
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 6 09:42:41 2018 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 15c371e5493f0d727cd0bd395fe218b064bc4f16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 6 09:41:29 2018 +0200
+
+    List important changes for the upcoming release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit c7571f5ff80763484bf073f37dabfed0cb7983cc
+Merge: f475da3f322 4a09b0b10cb
+Author: mcorino <mcorino@remedy.nl>
+Date:   Sun Aug 5 17:45:31 2018 +0200
+
+    Merge pull request #656 from mcorino/mco-feature-4310-string-cdr-optimize
+    
+    add full support for streaming std::(w)string
+
+commit f475da3f3220f507ce3d9b21793819a1aee65a48
+Merge: 81d3d81c4cf 36ea9ed6bdd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 5 13:03:33 2018 +0200
+
+    Merge pull request #657 from jwillemsen/master
+    
+    When we log that there is a new ORB add the TAO version number and some unicode logging fixes
+
+commit 00889d546822fd839b75a1259c66f92be16ac5a4
+Merge: 36ea9ed6bdd 81d3d81c4cf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 5 11:38:04 2018 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 36ea9ed6bdd8cccc357464284673f3c3088245d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 5 11:37:12 2018 +0200
+
+    Unicode logging fixes
+    
+        * TAO/orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+
+commit 87a6798992b9a811f0cc18518eb67d1ad2eacdb9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 5 11:36:54 2018 +0200
+
+    When logging that we are a new ORB add the TAO version number so that we can easily determine what TAO version is being used
+    
+        * TAO/tao/TAO_Internal.cpp:
+
+commit 4a09b0b10cbea1fdcb16161583ee22f7d151784b
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Fri Aug 3 14:15:38 2018 +0200
+
+    add full support for streaming std::(w)string
+    
+    (optimized for C++11 and onwards)
+    added tests for optimized std::(w)string support
+    extend character translators with std::(w)string support also
+
+commit 81d3d81c4cf0904cd8d5b4c0872cd1821b5d874e
+Merge: 7dc5afd1290 4fd91ecdac2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 27 10:42:13 2018 +0200
+
+    Merge pull request #653 from jwillemsen/master
+    
+    Documentation enhancements
+
+commit 4fd91ecdac261befa4210db0f40512e33a02b0a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 27 09:15:34 2018 +0200
+
+    Removed references to CIDLC
+
+commit 217c6a22c82831e68367cce43967610a5fb2c9e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 27 09:10:18 2018 +0200
+
+    Document -GX flag
+    
+        * TAO/TAO_IDL/be/be_util.cpp:
+
+commit 8a9912c18c61fcb3141d661a6536370091a6fc67
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jul 9 10:08:30 2018 -0500
+
+    Removed duplicated project files (MPC issue 50)
+
+commit 99c9779877f85f1201b50b1d4e1e49cd552ad9aa
+Merge: d271d46ebb2 29b0969b1ca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 27 21:35:29 2018 +0200
+
+    Merge pull request #649 from jwillemsen/jwi-catchbyref
+    
+    Catch exceptions by reference, not by value
+
+commit 29b0969b1ca474cc83e8499faabafd0d9d162ec0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 27 19:48:34 2018 +0200
+
+    Catch exceptions by reference, not by value
+    
+        * TAO/orbsvcs/tests/Bug_3215_Regression/client.cpp:
+        * TAO/orbsvcs/tests/FT_Naming/stress_storable/client.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/filter.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3688_Regression/consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3688_Regression/supplier.cpp:
+        * TAO/tests/Bug_2241_Regression/Client_Task.cpp:
+        * TAO/tests/Collocated_ThruP_Sp/Client_Task.cpp:
+        * TAO/tests/Collocated_ThruP_Sp_Gd/Client_Task.cpp:
+        * TAO/tests/UNKNOWN_Exception/client.cpp:
+
+commit 7165c10ea6079dd7a01d5e490a4399d40d6f26f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 27 08:44:05 2018 +0200
+
+    Moved location of new define
+    
+        * TAO/tao/Object.h:
+
+commit 5cbcb4433ea1a1d193c4d9febc8f368473c15f49
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 27 08:43:48 2018 +0200
+
+    Set a new define when we use atomic refcount so that we can use that in OpenDDS
+    
+        * TAO/tao/Object.h:
+
+commit 1a4ad4bce2baf938893b004b267dd2a9740bf05c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 26 08:17:36 2018 +0200
+
+    Revert rename of ref_count_ to refcount_
+    
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+        * TAO/tao/PortableServer/Servant_Base.h:
+
+commit 5bcb4583a4d36e392cf41c6b47ccdb04fd55d504
+Merge: 15917ee2583 e1d2dd92025
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 25 18:27:03 2018 +0200
+
+    Merge pull request #643 from jwillemsen/jwi-atomicservantrefcount
+    
+    Make use of std::atomic for the refcount when we have C++11 enabled
+
+commit 15917ee25836f6704604a49e2aa76f8fb1423734
+Merge: 1e957f1a2ec c970fefc424
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 25 18:26:29 2018 +0200
+
+    Merge pull request #644 from jwillemsen/jwi-incorrectportablserverlogging
+    
+    Fixed incorrect ascii logging
+
+commit c970fefc4240a16c613ac35abd99f533c2fb8256
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 25 16:48:06 2018 +0200
+
+    Layout change
+    
+        * TAO/tao/PortableServer/IdUniquenessStrategyUnique.h:
+
+commit 5c09ab8d5f38438847a7a490a579840eea07d58a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 25 16:46:47 2018 +0200
+
+    Fixed incorrect logging of ascii strings in portableserver
+    
+        * TAO/tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/LifespanStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+
+commit e1d2dd92025037f1fac37a85a6bf465238e5c296
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 25 10:00:23 2018 +0200
+
+    Fixed another refcount issue where the ec event count was intended
+    
+        * TAO/orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.cpp:
+
+commit 65a1833f81bf3f84d4bd33d3944a9733f37aae94
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 25 09:14:51 2018 +0200
+
+    Fixed compile errors due to rename in the base, make clear that ec has its own refcount
+    
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_TPC_Dispatching_Task.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
+
+commit 36d7aee1a214c14b1621bf773e9aae82c9971af5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 24 19:23:50 2018 +0200
+
+    Make use of std::atomic when C++11 has been enabled
+    
+        * TAO/tao/AnyTypeCode/Any_Impl.cpp:
+        * TAO/tao/AnyTypeCode/Any_Impl.h:
+        * TAO/tao/AnyTypeCode/NVList.h:
+        * TAO/tao/AnyTypeCode/True_RefCount_Policy.h:
+        * TAO/tao/DynamicInterface/Context.cpp:
+        * TAO/tao/DynamicInterface/Context.h:
+        * TAO/tao/DynamicInterface/ExceptionList.cpp:
+        * TAO/tao/DynamicInterface/ExceptionList.h:
+        * TAO/tao/DynamicInterface/ExceptionList.inl:
+        * TAO/tao/DynamicInterface/Request.h:
+        * TAO/tao/DynamicInterface/Server_Request.h:
+        * TAO/tao/Intrusive_Ref_Count_Base_T.h:
+        * TAO/tao/Intrusive_Ref_Count_Base_T.inl:
+        * TAO/tao/ORB.h:
+        * TAO/tao/ORB.inl:
+        * TAO/tao/ORB_Core.h:
+        * TAO/tao/ORB_Core.inl:
+        * TAO/tao/Object.cpp:
+        * TAO/tao/Object.h:
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+        * TAO/tao/PortableServer/Servant_Base.h:
+        * TAO/tao/Principal.h:
+        * TAO/tao/Profile.h:
+        * TAO/tao/Refcounted_ObjectKey.cpp:
+        * TAO/tao/Refcounted_ObjectKey.h:
+        * TAO/tao/Refcounted_ObjectKey.inl:
+        * TAO/tao/Reply_Dispatcher.cpp:
+        * TAO/tao/Reply_Dispatcher.h:
+        * TAO/tao/Stub.h:
+        * TAO/tao/Valuetype/AbstractBase.h:
+        * TAO/tao/Valuetype/ValueBase.cpp:
+        * TAO/tao/Valuetype/ValueBase.h:
+        * TAO/tao/Valuetype/ValueFactory.cpp:
+        * TAO/tao/Valuetype/ValueFactory.h:
+
+commit 9d5ca158661004ec2ecabc64f2ff8297c4c2e1b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 23 21:21:17 2018 +0200
+
+    MacOSX doesn't have a std::atomic_uint32_t
+    
+        * TAO/tao/Intrusive_Ref_Count_Base_T.h:
+        * TAO/tao/PortableServer/Servant_Base.h:
+        * TAO/tao/Profile.h:
+        * TAO/tao/Stub.h:
+
+commit 2aeaf51d0efe793cf67281262260b906a5b0f21c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 23 11:41:51 2018 +0200
+
+    Make use of std::atomic for the refcount when we have C++11 enabled
+    
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+        * TAO/tao/PortableServer/Servant_Base.h:
+
+commit 89543cbe78f86834c54e053cd2d87516b50df585
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 22 12:51:09 2018 +0200
+
+    List empty PIDL_Files section to not generate DynamicANy.pidl twice
+    
+        * TAO/tao/DynamicAny/DynamicAny.mpc:
+
+commit 86fc71497323f80410c9fe0afe5d82fffb044c20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 15 08:37:26 2018 +0200
+
+    Add missing include of ace/Auto_Ptr.h
+    
+        * TAO/orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+
+commit 9f9cbdf71f7ef7c30c4b288de7f7b48f2a8c046e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 12 10:04:59 2018 +0200
+
+    Make x.5.0 public
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

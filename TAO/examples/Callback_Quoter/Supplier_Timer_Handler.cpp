@@ -1,32 +1,16 @@
-// $Id$
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//  Supplier_Time _Handler.cpp
-//
-// = DESCRIPTION
-//    Implementation of the Supplier_Time_Handler class.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  Implementation of the Supplier_Time_Handler class.
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
 
-#include "ace/OS.h"
 #include "ace/ACE.h"
-
 #include "Supplier_Timer_Handler.h"
-
-
-ACE_RCSID(Callback_Quoter, Supplier, "$Id$")
 
 // The supplier refernce is got so that the mathods in the supplier
 // can be accessed.
-
 Supplier_Timer_Handler:: Supplier_Timer_Handler (Supplier *supplier,
                                                  ACE_Reactor *reactor,
                                                  FILE *file_ptr)
@@ -34,34 +18,24 @@ Supplier_Timer_Handler:: Supplier_Timer_Handler (Supplier *supplier,
      reactor_ (reactor),
      file_ptr_ (file_ptr)
 {
-  // No-op.
-}
-
-// Destructor.
-
- Supplier_Timer_Handler::~Supplier_Timer_Handler (void)
-{
-  // No-op.
 }
 
 // Method which will be called by the reactor on timeout.
-
 int
 Supplier_Timer_Handler:: handle_timeout (const ACE_Time_Value & /* tv */,
                                          const void * /* arg */)
 {
-
   ACE_DEBUG ((LM_DEBUG,
-              "Sending Stock Market Information to Notifier... \n"));
+              "Sending Stock Market Information to Notifier...\n"));
 
   // The next current stock rates are obtained from a file.
   if (this->get_stock_information () == -1)
     return 0;
-  
-  
+
+
   // Send the stock information to the notifier.  Graceful exit when
   // the notifier doesnt accept the information.
-  if (this->supplier_obj_->send_market_status (stockname_, 
+  if (this->supplier_obj_->send_market_status (stockname_,
                                                value_) < 0)
     {
       this->reactor_->end_event_loop ();
@@ -75,12 +49,11 @@ Supplier_Timer_Handler:: handle_timeout (const ACE_Time_Value & /* tv */,
 }
 
 // Get the stock information from a file.
-
 int
-Supplier_Timer_Handler::get_stock_information (void)
+Supplier_Timer_Handler::get_stock_information ()
 {
   // Scan the file and obtain the stock information.
-  if (fscanf (file_ptr_, 
+  if (fscanf (file_ptr_,
               "%s %ld\n",
               stockname_,
               &value_) != EOF)
@@ -97,5 +70,4 @@ Supplier_Timer_Handler::get_stock_information (void)
       this->reactor_->end_event_loop ();
       return -1;
     }
-} 
-
+}

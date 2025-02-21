@@ -1,22 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Criteria_Evaluator.cpp
-//
-// = DESCRIPTION
-//    An Evaluator for the CosLifeCycle Criteria
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Criteria_Evaluator.cpp
+ *
+ *  An Evaluator for the CosLifeCycle Criteria
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "Criteria_Evaluator.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(LifeCycle_Service, Criteria_Evaluator, "$Id$")
 
 Criteria_Evaluator::Criteria_Evaluator (const CosLifeCycle::Criteria &criteria)
 : criteria_ (criteria)
@@ -27,18 +23,17 @@ Criteria_Evaluator::~Criteria_Evaluator ()
 {
 }
 
-LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *
-Criteria_Evaluator::getInitialization (ACE_ENV_SINGLE_ARG_DECL)
+const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *
+Criteria_Evaluator::getInitialization ()
 {
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr = 0;
+  const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr {};
 
-  CORBA::Any *any_ptr =
+  CORBA::Any_ptr any_ptr =
     this->getCriteriaMember ("initialization");
 
-  if (any_ptr == 0)
-    ACE_THROW_RETURN (LifeCycleService::Criteria_Evaluator::NotAvailable
-                         ("No initialization member found.\n"),
-                      0);
+  if (any_ptr == nullptr)
+    throw LifeCycleService::Criteria_Evaluator::NotAvailable(
+      "No initialization member found.\n");
 
   *any_ptr >>= sequence_ptr;
 
@@ -46,16 +41,15 @@ Criteria_Evaluator::getInitialization (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 char *
-Criteria_Evaluator::getFilter (ACE_ENV_SINGLE_ARG_DECL)
+Criteria_Evaluator::getFilter ()
 {
   const char* string;
   CORBA::Any value;
   CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
 
   if (any_ptr == 0)
-    ACE_THROW_RETURN (LifeCycleService::Criteria_Evaluator::NotAvailable
-                        ("No filter member found.\n"),
-                      0);
+    throw LifeCycleService::Criteria_Evaluator::NotAvailable(
+      "No filter member found.\n");
   *any_ptr >>= string;
   return CORBA::string_dup (string);
 }

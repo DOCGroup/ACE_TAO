@@ -1,0 +1,14 @@
+// -*- MPC -*-
+project(*client) : aceexe {
+  exename = client
+  Source_Files {
+    CPP-client.cpp
+  }
+}
+
+project(*server) : aceexe {
+  exename = server
+  Source_Files {
+    CPP-server.cpp
+  }
+}

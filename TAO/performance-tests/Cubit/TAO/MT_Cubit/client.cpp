@@ -1,10 +1,9 @@
-// $Id$
-
 #include "ace/config-all.h"
-#if defined (VXWORKS)
+
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 # undef ACE_MAIN
 # define ACE_MAIN client
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 
 #include "ace/Sched_Params.h"
 #include "tao/Strategies/advanced_resource.h"
@@ -17,9 +16,7 @@
 # include "quantify.h"
 #endif /* ACE_HAS_QUANTIFY */
 
-ACE_RCSID(MT_Cubit, client, "$Id$")
-
-#if defined (VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
 u_int ctx = 0;
 u_int ct = 0;
 
@@ -45,26 +42,27 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
   ACE_UNUSED_ARG (pOldTcb);
 
   // We create the client threads with names starting with "@".
-  if (pNewTcb->name[0] == '@')
-    ctx++;
+  char* name = ::taskName (::taskIdSelf ());
+  if (name[0] == '@')
+    ++ctx;
 
   if (ct < SWITCHES)
     {
       ACE_OS::strncpy (tInfo[ct].name,
-                       pNewTcb->name,
+                       name,
                        TASKNAME_LEN);
       tInfo[ct].tcb = pNewTcb;
       tInfo[ct].pc  = pNewTcb->regs.pc;
-      ct++;
+      ++ct;
     }
 
   return 0;
 }
-#endif /* VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 
 // Constructor.
 
-Client_i::Client_i (void)
+Client_i::Client_i ()
   : high_priority_client_ (0),
     low_priority_client_ (0),
     util_thread_ (0),
@@ -73,7 +71,7 @@ Client_i::Client_i (void)
     num_priorities_ (0),
     grain_ (0),
     counter_ (0),
-    task_id_ (0),
+    task_name_ (0),
     argc_ (0),
     argv_ (0),
     context_switch_ (0)
@@ -82,7 +80,7 @@ Client_i::Client_i (void)
 
 // Destructor.
 
-Client_i::~Client_i (void)
+Client_i::~Client_i ()
 {
   delete this->high_priority_client_;
   if (this->low_priority_client_ != 0)
@@ -97,7 +95,7 @@ Client_i::~Client_i (void)
 }
 
 int
-Client_i::init (int argc, char *argv[])
+Client_i::init (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -119,21 +117,20 @@ Client_i::init (int argc, char *argv[])
   // Preliminary argument processing.
   for (int i=0;
        i< this->argc_;
-       i++)
+       ++i)
     {
-      if (ACE_OS::strcmp (this->argv_[i],"-r") == 0)
+      if (ACE_OS::strcmp (this->argv_[i],ACE_TEXT("-r")) == 0)
         this->ts_->thread_per_rate_ = 1;
-      else if (ACE_OS::strcmp (this->argv_[i],"-t") == 0
+      else if (ACE_OS::strcmp (this->argv_[i],ACE_TEXT("-t")) == 0
                && (i - 1 < this->argc_))
         this->ts_->thread_count_ =
           ACE_OS::atoi (this->argv_[i+1]);
     }
-  PCCTIMER_INIT;
   return 0;
 }
 
 void
-Client_i::run (void)
+Client_i::run ()
 {
   if (this->ts_->thread_per_rate_ == 0)
     {
@@ -149,9 +146,9 @@ Client_i::run (void)
     this->do_thread_per_rate_test ();
 }
 
-#if defined (VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
 void
-Client_i::output_taskinfo (void)
+Client_i::output_taskinfo ()
 {
   FILE *file_handle = ACE_OS::fopen ("taskinfo.txt", "w");
 
@@ -166,7 +163,7 @@ Client_i::output_taskinfo (void)
   // This loop visits each client.  thread_count_ is the number of
   // clients.
 
-  for (u_int j = 0; j < SWITCHES; j ++)
+  for (u_int j = 0; j < SWITCHES; ++j)
     ACE_OS::fprintf(file_handle,
                     "\tname= %s\ttcb= %p\tpc= %p\n",
                     tInfo[j].name,
@@ -175,10 +172,10 @@ Client_i::output_taskinfo (void)
 
   ACE_OS::fclose (file_handle);
 }
-#endif /* VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 
 void
-Client_i::get_context_switches (void)
+Client_i::get_context_switches ()
 {
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
 
@@ -194,18 +191,18 @@ Client_i::get_context_switches (void)
     }
 #endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
-#if defined (VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
   if (this->ts_->context_switch_test_ == 1)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Adding the context switch hook!\n"));
       taskSwitchHookAdd ((FUNCPTR) &switchHook);
     }
-#endif /* VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 }
 
 void
-Client_i::output_latency (void)
+Client_i::output_latency ()
 {
   FILE *latency_file_handle = 0;
   char latency_file[BUFSIZ];
@@ -225,7 +222,7 @@ Client_i::output_latency (void)
   // clients.
   for (u_int j = 0;
        j < this->ts_->thread_count_;
-       j++)
+       ++j)
     {
       ACE_OS::sprintf(buffer,
                       "%s #%d",
@@ -248,11 +245,7 @@ Client_i::output_latency (void)
            i++,iterator.advance ())
         {
           ACE_OS::sprintf (buffer + ACE_OS::strlen (buffer),
-#if defined (CHORUS_MVME)
-                          "\t%u\n",
-#else
                           "\t%f\n",
-#endif /* !CHORUS_MVME */
                            *latency);
           ACE_OS::fputs (buffer,
                          latency_file_handle);
@@ -267,7 +260,7 @@ Client_i::output_latency (void)
 // when there are not enough different priorities for all threads.
 
 void
-Client_i::init_low_priority (void)
+Client_i::init_low_priority ()
 {
   ACE_Sched_Priority prev_priority = this->high_priority_;
   if (this->ts_->use_multiple_priority_ == 1)
@@ -287,7 +280,7 @@ Client_i::init_low_priority (void)
 }
 
 void
-Client_i::calc_util_time (void)
+Client_i::calc_util_time ()
 {
   MT_Cubit_Timer timer (ACE_ONE_SECOND_IN_MSECS);
   // Time the utilization thread' "computation" to get % IdleCPU at the
@@ -295,23 +288,17 @@ Client_i::calc_util_time (void)
 
   // Execute one computation.
   timer.start ();
-#if defined (CHORUS_MVME)
-  this->util_thread_->computation ();
-  timer.stop ();
-  this->util_task_duration_ = timer.get_elapsed ();
-#else
   for (u_int i = 0;
        i < NUM_UTIL_COMPUTATIONS;
-       i++)
+       ++i)
     this->util_thread_->computation ();
 
   timer.stop ();
   this->util_task_duration_ = timer.get_elapsed () / NUM_UTIL_COMPUTATIONS;
-#endif /* !CHORUS_MVME */
 }
 
 int
-Client_i::activate_high_client (void)
+Client_i::activate_high_client ()
 {
   ACE_NEW_RETURN (this->high_priority_client_,
                   Client (&this->client_thread_manager_,
@@ -321,12 +308,12 @@ Client_i::activate_high_client (void)
                           0),
                   -1);
 
-#if defined (VXWORKS)
-  // Set a task_id string starting with "@", so we are able to
+#if defined (ACE_HAS_VXTHREADS)
+  // Set a task_handle string starting with "@", so we are able to
   // accurately count the number of context switches.
-  ACE_OS::strcpy (this->task_id_,
+  ACE_OS::strcpy (this->task_name_,
                   "@High");
-#endif /* VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 
   this->high_priority_ =
     this->priority_.get_high_priority ();
@@ -334,6 +321,9 @@ Client_i::activate_high_client (void)
   ACE_DEBUG ((LM_DEBUG,
               "Creating 1 client with high priority of %d\n",
               this->high_priority_));
+
+  const char *t_name = this->task_name_;
+
   if (this->high_priority_client_->activate (
       GLOBALS::instance ()->thr_create_flags,
       1,
@@ -344,7 +334,8 @@ Client_i::activate_high_client (void)
       0,
       0,
       0,
-      (ACE_thread_t *) &this->task_id_) == -1)
+      0,
+      &t_name) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p; priority is %d\n",
                        "activate failed",
@@ -354,7 +345,7 @@ Client_i::activate_high_client (void)
 }
 
 int
-Client_i::activate_low_client (void)
+Client_i::activate_low_client ()
 {
   ACE_NEW_RETURN (this->low_priority_client_,
                   Client *[this->ts_->thread_count_],
@@ -386,23 +377,25 @@ Client_i::activate_low_client (void)
                               this->argv_,
                               i),
                       -1);
-#if defined (VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
       // Pace the connection establishment on VxWorks.
       const ACE_Time_Value delay (0L, 500000L);
       ACE_OS::sleep (delay);
 
-      // Set a task_id string startiing with "@", so we are able to
+      // Set a task_name string starting with "@", so we are able to
       // accurately count the number of context switches on VXWORKS
-      sprintf (this->task_id_,
-               "@Low%u",
-               i);
-#endif /* VXWORKS */
+      ACE_OS::sprintf (this->task_name_,
+                       "@Low%u",
+                       i);
+#endif /* ACE_HAS_VXTHREADS */
       ACE_DEBUG ((LM_DEBUG,
                   "Creating client with thread ID %d and priority %d\n",
                   i,
                   this->low_priority_));
       // The first thread starts at the lowest priority of all the low
       // priority clients.
+      const char *t_name = this->task_name_;
+
       if (this->low_priority_client_[i - 1]->activate (
           GLOBALS::instance ()->thr_create_flags,
           1,
@@ -413,7 +406,8 @@ Client_i::activate_low_client (void)
           0,                   // ACE_hthread_t thread_handles[] = 0,
           0,                   // void *stack[] = 0,
           0,                   // size_t stack_size[] = 0,
-          (ACE_thread_t *) &this->task_id_) == -1)
+          0,
+          &t_name) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p; priority is %d\n",
                     "activate failed",
@@ -437,7 +431,7 @@ Client_i::activate_low_client (void)
 }
 
 int
-Client_i::activate_util_thread (void)
+Client_i::activate_util_thread ()
 {
   ACE_NEW_RETURN (this->util_thread_,
                   Util_Thread (this->ts_,
@@ -473,7 +467,7 @@ Client_i::activate_util_thread (void)
 }
 
 void
-Client_i:: print_context_stats (void)
+Client_i:: print_context_stats ()
 {
   if (this->ts_->context_switch_test_ == 1)
     {
@@ -499,7 +493,7 @@ Client_i:: print_context_stats (void)
                   "Voluntary context switches=%d, Involuntary context switches=%d\n",
                   this->usage.ru_nvcsw,
                   this->usage.ru_nivcsw));
-#elif defined (VXWORKS) /* ACE_HAS_GETRUSAGE */
+#elif defined (ACE_HAS_VXTHREADS)
       taskSwitchHookDelete ((FUNCPTR) &switchHook);
       ACE_DEBUG ((LM_DEBUG,
                   "Context switches=%d\n",
@@ -509,12 +503,12 @@ Client_i:: print_context_stats (void)
 }
 
 void
-Client_i::print_latency_stats (void)
+Client_i::print_latency_stats ()
 {
   // If running the utilization test, don't report latency nor jitter.
   if (this->ts_->use_utilization_test_ == 0)
     {
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
       ACE_DEBUG ((LM_DEBUG,
                   "Test done.\n"
                   "High priority client latency : %f usec, jitter: %f usec\n"
@@ -527,18 +521,7 @@ Client_i::print_latency_stats (void)
       // it to Excel to calculate jitter, in the mean time we come up
       // with the sqrt() function.
       output_latency ();
-#elif defined (CHORUS_MVME)
-      ACE_DEBUG ((LM_DEBUG,
-                  "Test done.\n"
-                  "High priority client latency : %u usec\n"
-                  "Low priority client latency : %u usec\n",
-                  this->high_priority_client_->get_high_priority_latency (),
-                  this->low_priority_client_[0]->get_low_priority_latency () ));
-      // Output the latency values to a file, tab separated, to import
-      // it to Excel to calculate jitter, in the mean time we come up
-      // with the sqrt() function.
-      output_latency ();
-#else /* !CHORUS_MVME */
+#else
       ACE_DEBUG ((LM_DEBUG, "Test done.\n"
                   "High priority client latency : %f usec, jitter: %f usec\n"
                   "Low priority client latency : %f usec, jitter: %f usec\n",
@@ -547,12 +530,12 @@ Client_i::print_latency_stats (void)
                   this->low_priority_client_[0]->get_low_priority_latency (),
                   this->low_priority_client_[0]->get_low_priority_jitter ()));
       // output_latency ();
-#endif /* !VXWORKS && !CHORUS_MVME */
     }
+#endif
 }
 
 void
-Client_i::print_util_stats (void)
+Client_i::print_util_stats ()
 {
  if (this->ts_->use_utilization_test_ == 1)
     {
@@ -572,7 +555,7 @@ Client_i::print_util_stats (void)
 }
 
 void
-Client_i::print_priority_inversion_stats (void)
+Client_i::print_priority_inversion_stats ()
 {
   this->print_context_stats ();
   this->print_latency_stats ();
@@ -580,19 +563,19 @@ Client_i::print_priority_inversion_stats (void)
 }
 
 int
-Client_i::start_servant (void)
+Client_i::start_servant ()
 {
-  char high_thread_args[BUFSIZ];
+  ACE_TCHAR high_thread_args[BUFSIZ];
 
   ACE_OS::sprintf (high_thread_args,
-                   "-ORBSndSock 32768 "
-                   "-ORBRcvSock 32768 ");
+                   ACE_TEXT("-ORBSndSock 32768 ")
+                   ACE_TEXT("-ORBRcvSock 32768 "));
 
   Cubit_Task *high_priority_task;
 
   ACE_NEW_RETURN (high_priority_task,
-                  Cubit_Task ((const char *) high_thread_args,
-                              (const char *) "internet",
+                  Cubit_Task (high_thread_args,
+                              "internet",
                               (u_int) 1,
                               &this->server_thread_manager_,
                               (u_int) 0), // task id 0.
@@ -631,21 +614,21 @@ Client_i::start_servant (void)
 }
 
 int
-Client_i::do_priority_inversion_test (void)
+Client_i::do_priority_inversion_test ()
 {
   this->timer_.start ();
-#if defined (VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
   ctx = 0;
-  ACE_NEW_RETURN (this->task_id_,
-                  char[TASK_ID_LEN],
+  ACE_NEW_RETURN (this->task_name_,
+                  char[TASK_HANDLE_LEN],
                   -1);
-#endif /* VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) <<<<<<< starting test on %D\n"));
   GLOBALS::instance ()->num_of_objs = 1;
 
   for (int j = 0; j < this->argc_; j++)
-    if (ACE_OS::strcmp (this->argv_[j], "-u") == 0)
+    if (ACE_OS::strcmp (this->argv_[j], ACE_TEXT("-u")) == 0)
       {
         this->start_servant ();
         break;
@@ -712,7 +695,7 @@ Client_i::do_priority_inversion_test (void)
 }
 
 int
-Client_i::do_thread_per_rate_test (void)
+Client_i::do_thread_per_rate_test ()
 {
   Client CB_20Hz_client (&this->client_thread_manager_,
                          this->ts_,
@@ -836,7 +819,7 @@ Client_i::do_thread_per_rate_test (void)
 // metrics and print them.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::LOGGER);
 
@@ -850,24 +833,5 @@ main (int argc, char *argv[])
   // Run the tests.
   client.run ();
 
-#if defined (CHORUS_MVME)
-  int pTime;
-  if (pccTimer (PCC2_TIMER1_STOP,
-                &pTime) != K_OK)
-    ACE_DEBUG ((LM_DEBUG,
-                "pccTimer has a pending bench mark\n"));
-#endif /* CHORUS_MVME */
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Globals,ACE_Null_Mutex>;
-template class ACE_Unbounded_Queue<ACE_timer_t>;
-template class ACE_Unbounded_Queue_Iterator<ACE_timer_t>;
-template class ACE_Node<ACE_timer_t>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Globals,ACE_Null_Mutex>
-#pragma instantiate ACE_Unbounded_Queue<ACE_timer_t>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_timer_t>
-#pragma instantiate ACE_Node<ACE_timer_t>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

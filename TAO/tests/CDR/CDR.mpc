@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Alignment) : taoexe {
   exename  = alignment
 
@@ -17,7 +15,7 @@ project(*Allocator) : taoexe {
   }
 }
 
-project(*Basic Types) : taoexe {
+project(*Basic Types) : taoexe, anytypecode {
   exename  = basic_types
 
   Source_Files {
@@ -41,7 +39,7 @@ project(*Octet Sequence) : taoexe {
   }
 }
 
-project(*Tc) : taoexe {
+project(*Tc) : taoexe, anytypecode {
   exename  = tc
 
   Source_Files {

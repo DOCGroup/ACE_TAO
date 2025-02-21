@@ -1,0 +1,14 @@
+project(*Server): messaging, taoexe, portableserver, ami {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(*Client): messaging, taoexe, portableserver, ami {
+  after += *Server
+  Source_Files {
+    MessengerHandler.cpp
+    MessengerClient.cpp
+  }
+}

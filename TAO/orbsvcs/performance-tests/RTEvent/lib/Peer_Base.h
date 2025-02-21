@@ -1,10 +1,7 @@
 /**
  * @file Peer_Base.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 
 #ifndef TAO_RTEC_PERF_PEER_BASE_H
@@ -24,7 +21,6 @@ class RTServer_Setup;
  *
  * @brief Implement the shared portions of Federated_Test::Peer
  *        servants
- *
  */
 class TAO_RTEC_Perf_Export Peer_Base
  : public virtual POA_Federated_Test::Peer
@@ -32,33 +28,25 @@ class TAO_RTEC_Perf_Export Peer_Base
 public:
   /// Constructor
   Peer_Base (CORBA::ORB_ptr orb,
-             RTServer_Setup &rtserver_setup
-             ACE_ENV_ARG_DECL);
+             RTServer_Setup &rtserver_setup);
 
   /// Destructor
-  virtual ~Peer_Base (void);
+  virtual ~Peer_Base ();
 
   //@{
   /** @name The Federated_Test::Peer methods
    */
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
   virtual CORBA::Object_ptr
-      channel (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      channel ();
 
-  virtual void connect (Federated_Test::Peer_ptr remote_peer
-                        ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void connect (Federated_Test::Peer_ptr remote_peer);
 
   Federated_Test::Loopback_ptr setup_loopback (CORBA::Long experiment_id,
-                                               CORBA::Long base_event_type
-                                               ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                               CORBA::Long base_event_type);
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POA_ptr _default_POA ();
   //@}
 
 protected:

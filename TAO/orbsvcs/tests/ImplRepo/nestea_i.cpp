@@ -1,5 +1,3 @@
-// $Id$
-
 #include "nestea_i.h"
 #include "tao/debug.h"
 #include "ace/ACE.h"
@@ -11,9 +9,8 @@
 
 const size_t MAX_UINT32_STR_LEN = 11;  // Largest UINT32 is 8589934591 + NUL is 11 characters
 
-ACE_RCSID(ImplRepo, nestea_i, "$Id$")
 
-Nestea_i::Nestea_i (CORBA::ORB_ptr orb, const char *filename)
+Nestea_i::Nestea_i (CORBA::ORB_ptr orb, const ACE_TCHAR *filename)
 : cans_ (0)
 {
   orb_ = CORBA::ORB::_duplicate(orb);
@@ -25,18 +22,16 @@ Nestea_i::Nestea_i (CORBA::ORB_ptr orb, const char *filename)
 }
 
 
-Nestea_i::~Nestea_i (void)
+Nestea_i::~Nestea_i ()
 {
-  delete this->data_filename_;
+  delete [] this->data_filename_;
 }
 
 
 // Add <cans> number of cans to the bookshelf.
 
 void
-Nestea_i::drink (CORBA::Long cans
-                 ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Nestea_i::drink (CORBA::Long cans)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::drink %d cans\n", cans));
@@ -50,9 +45,7 @@ Nestea_i::drink (CORBA::Long cans
 // Removes <cans> number of cans from the bookshelf.
 
 void
-Nestea_i::crush (CORBA::Long cans
-                 ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Nestea_i::crush (CORBA::Long cans)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::crush %d cans\n", cans));
@@ -69,8 +62,7 @@ Nestea_i::crush (CORBA::Long cans
 // Returns the number of cans in the bookshelf.
 
 CORBA::Long
-Nestea_i::bookshelf_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Nestea_i::bookshelf_size ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::bookshelf_size\n"));
@@ -81,8 +73,7 @@ Nestea_i::bookshelf_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Returns comments about your collection.
 
 char *
-Nestea_i::get_praise (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Nestea_i::get_praise ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::get_praise\n"));
@@ -100,8 +91,7 @@ Nestea_i::get_praise (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Nestea_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Nestea_i::shutdown ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::shutdown\n"));
@@ -112,7 +102,7 @@ Nestea_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Saves bookshelf data to a file.
 
 int
-Nestea_i::save_data (void)
+Nestea_i::save_data ()
 {
   ACE_FILE_IO file;
   ACE_FILE_Connector connector;
@@ -138,7 +128,7 @@ Nestea_i::save_data (void)
 // Loads bookshelf data from a file.
 
 int
-Nestea_i::load_data (void)
+Nestea_i::load_data ()
 {
   ACE_FILE_IO file;
   ACE_FILE_Connector connector;

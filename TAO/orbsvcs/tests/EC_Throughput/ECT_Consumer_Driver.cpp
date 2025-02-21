@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ECT_Consumer_Driver.h"
 
 #include "orbsvcs/CosNamingC.h"
@@ -11,17 +9,13 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Throughput, 
-           ECT_Consumer_Driver, 
-           "$Id$")
-
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ECT_Consumer_Driver driver;
   return driver.run (argc, argv);
@@ -29,35 +23,32 @@ main (int argc, char *argv [])
 
 // ****************************************************************
 
-ECT_Consumer_Driver::ECT_Consumer_Driver (void)
+ECT_Consumer_Driver::ECT_Consumer_Driver ()
   : n_consumers_ (1),
     n_suppliers_ (1),
     type_start_ (ACE_ES_EVENT_UNDEFINED),
     type_count_ (1),
+    stall_length_(0),
     shutdown_event_channel_ (1),
     pid_file_name_ (0),
     active_count_ (0)
 {
 }
 
-ECT_Consumer_Driver::~ECT_Consumer_Driver (void)
+ECT_Consumer_Driver::~ECT_Consumer_Driver ()
 {
 }
 
 int
-ECT_Consumer_Driver::run (int argc, char* argv[])
+ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -65,12 +56,10 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (this->parse_args (argc, argv))
         return 1;
@@ -90,7 +79,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
                       this->type_start_,
                       this->type_count_,
 
-                      this->pid_file_name_?this->pid_file_name_:"nil") );
+                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
         }
 
       if (this->pid_file_name_ != 0)
@@ -104,10 +93,9 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
             }
         }
 
-      int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      int min_priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
+      // Enable FIFO scheduling
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   min_priority,
                                                   ACE_SCOPE_PROCESS)) != 0)
@@ -128,9 +116,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
         }
 
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -138,44 +124,35 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
       CORBA::Object_var sched_obj =
-        naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        naming_context->resolve (schedule_name);
       if (CORBA::is_nil (sched_obj.in ()))
         return 1;
       RtecScheduler::Scheduler_var scheduler =
-        RtecScheduler::Scheduler::_narrow (sched_obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RtecScheduler::Scheduler::_narrow (sched_obj.in ());
 
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        naming_context->resolve (name);
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
-        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
-                                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      this->connect_consumers (scheduler.in (), channel.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->connect_consumers (scheduler.in (), channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
@@ -183,8 +160,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       for (;;)
         {
           ACE_Time_Value tv (1, 0);
-          this->orb_->perform_work (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->orb_->perform_work (tv);
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
           if (this->active_count_ <= 0)
             break;
@@ -193,36 +169,30 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
 
       this->dump_results ();
 
-      this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->disconnect_consumers ();
 
       if (this->shutdown_event_channel_ != 0)
         {
-          channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          channel->destroy ();
         }
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
-  ACE_CATCH (CORBA::SystemException, sys_ex)
+  catch (const CORBA::SystemException& sys_ex)
     {
-      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
+      sys_ex._tao_print_exception ("SYS_EX");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX");
+      ex._tao_print_exception ("NON SYS EX");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
-ECT_Consumer_Driver::shutdown_consumer (void*
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+ECT_Consumer_Driver::shutdown_consumer (void*)
 {
   // int ID =
   //   (reinterpret_cast<Test_Consumer**> (consumer_cookie)
@@ -237,8 +207,7 @@ ECT_Consumer_Driver::shutdown_consumer (void*
 void
 ECT_Consumer_Driver::connect_consumers
      (RtecScheduler::Scheduler_ptr scheduler,
-      RtecEventChannelAdmin::EventChannel_ptr channel
-      ACE_ENV_ARG_DECL)
+      RtecEventChannelAdmin::EventChannel_ptr channel)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -252,42 +221,41 @@ ECT_Consumer_Driver::connect_consumers
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this,
                               this->consumers_ + i,
-                              this->n_suppliers_));
+                              this->n_suppliers_,
+                              this->stall_length_));
 
       this->consumers_[i]->connect (scheduler,
                                     buf,
                                     this->type_start_,
                                     this->type_count_,
-                                    channel
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                    channel);
     }
 }
 
 void
-ECT_Consumer_Driver::dump_results (void)
+ECT_Consumer_Driver::dump_results ()
 {
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Throughput_Stats throughput;
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02d", i);
+      ACE_TCHAR buf[BUFSIZ];
+      ACE_OS::sprintf (buf, ACE_TEXT("consumer_%02d"), i);
 
       this->consumers_[i]->dump_results (buf, gsf);
       this->consumers_[i]->accumulate (throughput);
     }
-  throughput.dump_results ("ECT_Consumer/totals", gsf);
+  throughput.dump_results (ACE_TEXT("ECT_Consumer/totals"), gsf);
 }
 
 void
-ECT_Consumer_Driver::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+ECT_Consumer_Driver::disconnect_consumers ()
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->consumers_[i]->disconnect ();
 
       delete this->consumers_[i];
       this->consumers_[i] = 0;
@@ -295,9 +263,9 @@ ECT_Consumer_Driver::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-ECT_Consumer_Driver::parse_args (int argc, char *argv [])
+ECT_Consumer_Driver::parse_args (int argc, ACE_TCHAR *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "xdc:s:h:p:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("xdc:s:h:p:o:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -319,7 +287,7 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
         case 'h':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -329,6 +297,10 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
 
         case 'p':
           this->pid_file_name_ = get_opt.opt_arg ();
+          break;
+
+        case 'o':
+          this->stall_length_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case '?':

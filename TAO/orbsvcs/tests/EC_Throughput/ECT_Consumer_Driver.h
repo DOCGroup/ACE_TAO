@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 //
 // ============================================================================
 //
@@ -33,34 +32,32 @@ class ECT_Consumer_Driver : public ECT_Driver
   // = DESCRIPTION
   //
 public:
-  ECT_Consumer_Driver (void);
-  virtual ~ECT_Consumer_Driver (void);
+  ECT_Consumer_Driver ();
+  virtual ~ECT_Consumer_Driver ();
 
   enum {
     MAX_CONSUMERS = 16
     // Maximum number of consumers.
   };
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Execute the test.
 
-  virtual void shutdown_consumer (void* consumer_cookie
-                                  ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void shutdown_consumer (void* consumer_cookie);
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.
 
 private:
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
-                          RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
-  void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec);
+  void disconnect_consumers ();
   // Connect and disconnect the consumers.
 
-  void dump_results (void);
+  void dump_results ();
   // Print out the results
 
 private:
@@ -80,10 +77,13 @@ private:
   // We receive the events whose type is in the range
   // [type_start,type_start+type_count)
 
+  int stall_length_;
+  // How long (in seconds) the consumer will wait after receiving the first event.
+
   int shutdown_event_channel_;
   // If not zero it will shutdown the event channel upon exit.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 
   CORBA::ORB_var orb_;

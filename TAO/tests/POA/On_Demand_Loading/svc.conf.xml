@@ -1,0 +1,5 @@
+<?xml version='1.0'?>
+<!-- Converted from ./examples/POA/On_Demand_Loading/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <static id="Server_Strategy_Factory" params="-ORBsystemidpolicydemuxstrategy dynamic -ORBtablesize 128"/>
+</ACE_Svc_Conf>

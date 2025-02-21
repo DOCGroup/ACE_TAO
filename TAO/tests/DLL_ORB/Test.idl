@@ -4,8 +4,6 @@
 /**
  * @file Test.idl
  *
- * $Id$
- *
  * "Test" IDL interface for the DLL_ORB test.
  *
  * @author Ossama Othman <ossama@uci.edu>

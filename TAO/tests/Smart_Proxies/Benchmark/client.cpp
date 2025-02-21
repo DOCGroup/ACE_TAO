@@ -1,20 +1,14 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/Smart_Proxies/Benchmark
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is the client program that tests TAO's Smart Proxy extension.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *   This is the client program that tests TAO's Smart Proxy extension.
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
@@ -22,29 +16,25 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (Benchmark,
-           client,
-           "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int register_smart_proxy = 1;
 
 class Marker
 {
  public:
-
   void accumulate_into (ACE_Throughput_Stats &throughput) const
     {
       // Accumulate the throughput statistics into <throughput>
       throughput.accumulate (this->throughput_);
     }
-  void dump_stats (const char* msg,
-                   ACE_UINT32 gsf)
+  void dump_stats (const ACE_TCHAR* msg,
+                   ACE_High_Res_Timer::global_scale_factor_type gsf)
     {
       // Print stats
       this->throughput_.dump_results (msg, gsf);
@@ -55,25 +45,24 @@ class Marker
       // get the sample.
       this->throughput_.sample (throughput_diff,
                                 latency_diff);
-
     }
  private:
+  /// Keep throughput statistics on a per-thread basis
   ACE_Throughput_Stats throughput_;
-  // Keep throughput statistics on a per-thread basis
 };
 
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:n:r:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:n:r:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'i':
-        ior = ACE_OS::strdup (get_opts.opt_arg ());
+        ior = get_opts.opt_arg ();
       break;
       case 'n':
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
@@ -95,12 +84,12 @@ parse_args (int argc, char *argv[])
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
@@ -117,29 +106,24 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
        CORBA::Object_var object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
       if (register_smart_proxy == 1)
         {
           // To use the smart proxy it is necessary to allocate the
           // user-defined smart factory on the heap as the smart proxy
           // generated classes take care of destroying the object. This
           // way it a win situation for the application developer who
-          // doesnt have to make sure to destoy it and also for the smart
+          // doesnt have to make sure to destroy it and also for the smart
           // proxy designer who now can manage the lifetime of the object
           // much surely.
 
@@ -148,25 +132,23 @@ main (int argc, char *argv[])
                           Smart_Test_Factory,
                           -1);
 
-          // To make KAI Compiler happy as it considers <test_factory> to be
-          // an unused variable.
           ACE_UNUSED_ARG (test_factory);
         }
 
       Test_var server =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil\n",
+                           "Object reference <%s> is nil.\n",
                            ior),
                           1);
        Marker marker;
        ACE_Throughput_Stats throughput;
        int i=0;
        ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
-       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+       ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
        ACE_DEBUG ((LM_DEBUG, "done\n"));
 
        marker.accumulate_into (throughput);
@@ -178,8 +160,7 @@ main (int argc, char *argv[])
            // Record current time.
            ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-           price = server->box_prices (ACE_ENV_SINGLE_ARG_PARAMETER);
-           ACE_TRY_CHECK;
+           price = server->box_prices ();
 
            if (price < 300)
              cost = server->tickets (5);
@@ -191,31 +172,30 @@ main (int argc, char *argv[])
            marker.sample (now - throughput_base,
                           now - latency_base);
 
-           ACE_TRY_CHECK;
            if (TAO_debug_level > 0 && i % 100 == 0)
-             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
+             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration <%d> - price <%d> - cost <%d>\n",
+                         i, price, cost));
          }
 
-       marker.dump_stats ("buying tickets ", gsf);
+       marker.dump_stats (ACE_TEXT("buying tickets "), gsf);
 
-       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+       server->shutdown ();
       /*
 
       Test_var server1 =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server1.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil\n",
+                           "Object reference <%C> is nil.\n",
                            ior),
                           1);
        Marker marker1;
        ACE_Throughput_Stats throughput1;
 
        ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
-       ACE_UINT32 gsf1 = ACE_High_Res_Timer::global_scale_factor ();
+       ACE_High_Res_Timer::global_scale_factor_type gsf1 =
+        ACE_High_Res_Timer::global_scale_factor ();
        ACE_DEBUG ((LM_DEBUG, "done\n"));
 
        marker1.accumulate_into (throughput1);
@@ -227,8 +207,7 @@ main (int argc, char *argv[])
            // Record current time.
            ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-           price1 = server1->box_prices (ACE_ENV_SINGLE_ARG_PARAMETER);
-           ACE_TRY_CHECK;
+           price1 = server1->box_prices ();
 
            if (price1 < 300)
              cost = server1->tickets (5);
@@ -240,24 +219,21 @@ main (int argc, char *argv[])
            marker.sample (now - throughput_base1,
                           now - latency_base);
 
-           ACE_TRY_CHECK;
            if (TAO_debug_level > 0 && i % 100 == 0)
              ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
          }
 
-       marker1.dump_stats ("buying tickets using a default proxy ", gsf1);
+       marker1.dump_stats (ACE_TEXT("buying tickets using a default proxy "), gsf1);
 
-       server1->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+       server1->shutdown ();
       */
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client-side exception:");
+      ex._tao_print_exception ("Client-side exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

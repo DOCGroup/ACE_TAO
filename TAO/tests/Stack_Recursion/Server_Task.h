@@ -1,9 +1,6 @@
-//
-// $Id$
-//
 
 #ifndef STACK_RECURSION_SERVER_TASK_H
-#define STACK_RECUSRION_SERVER_TASK_H
+#define STACK_RECURSION_SERVER_TASK_H
 #include /**/ "ace/pre.h"
 #include "tao/ORB.h"
 
@@ -25,7 +22,7 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Reference to the ORB
@@ -36,4 +33,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-#endif /* STACK_RECUSRION_SERVER_TASK_H */
+#endif /* STACK_RECURSION_SERVER_TASK_H */

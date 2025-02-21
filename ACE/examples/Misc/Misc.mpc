@@ -1,0 +1,70 @@
+// -*- MPC -*-
+project(*test_dump) : aceexe {
+  exename = test_dump
+  Source_Files {
+    test_dump.cpp
+  }
+}
+
+project(*test_get_opt) : aceexe {
+  exename = test_get_opt
+  Source_Files {
+    test_get_opt.cpp
+  }
+}
+
+project(*test_profile_timer) : aceexe, avoids_ace_for_tao {
+  exename = test_profile_timer
+  Source_Files {
+    test_profile_timer.cpp
+  }
+}
+
+project(*test_read_buffer) : aceexe {
+  exename = test_read_buffer
+  Source_Files {
+    test_read_buffer.cpp
+  }
+}
+
+project(*test_set) : aceexe {
+  exename = test_set
+  Source_Files {
+    test_set.cpp
+  }
+}
+
+project(*test_sstring) : aceexe {
+  exename = test_sstring
+  Source_Files {
+    test_sstring.cpp
+  }
+}
+
+project(*test_timestamp) : aceexe {
+  exename = test_timestamp
+  Source_Files {
+    test_timestamp.cpp
+  }
+}
+
+project(*test_trace) : aceexe {
+  exename = test_trace
+  Source_Files {
+    test_trace.cpp
+  }
+}
+
+project(*test_XtReactor1) : aceexe, ace_xtreactor, ace_motif {
+  exename = test_XtReactor1
+  Source_Files {
+    test_XtReactor1.cpp
+  }
+}
+
+project(*test_XtReactor2) : aceexe, ace_xtreactor, ace_motif {
+  exename = test_XtReactor2
+  Source_Files {
+    test_XtReactor2.cpp
+  }
+}

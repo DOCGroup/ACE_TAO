@@ -1,0 +1,28 @@
+// -*- MPC -*-
+project(*) : taoserver {
+  after += Service_Config_Dependent_DLL TAO
+  exename = Test
+
+  includes += ../lib
+
+  Source_Files {
+    Test.cpp
+  }
+}
+
+project(Service Config Dependent DLL) : acelib {
+  sharedname   = Service_Config_Dependent_DLL
+  dynamicflags += SERVICE_CONFIG_DLL_BUILD_DLL
+
+  includes += ../lib
+
+  Source_Files {
+    Service_Config_DLL.cpp
+  }
+  Header_Files {
+    Service_Config_DLL.h
+    Service_Config_DLL_Export.h
+  }
+}
+
+

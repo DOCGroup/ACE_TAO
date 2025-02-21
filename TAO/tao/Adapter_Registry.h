@@ -4,8 +4,6 @@
 /**
  *  @file    Adapter_Registry.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
 //=============================================================================
@@ -19,20 +17,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/CORBA_methods.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
   typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+  typedef TAO_Pseudo_Out_T<Object> Object_out;
 }
 
 namespace TAO
@@ -49,33 +48,28 @@ class TAO_Adapter;
 class TAO_Export TAO_Adapter_Registry
 {
 public:
-  TAO_Adapter_Registry (TAO_ORB_Core *orb_core);
+  explicit TAO_Adapter_Registry (TAO_ORB_Core *);
 
   /// Close the
-  ~TAO_Adapter_Registry (void);
+  ~TAO_Adapter_Registry ();
 
   /**
    * Close each of of the Adapters and then cleanup the Registry.
    * It is possible that an Adapter will reject a close() call if it
-   * is invoked in an innapropriate context (think shutting down the
+   * is invoked in an inappropriate context (think shutting down the
    * POA while performing an upcall).
    */
-  void close (int wait_for_completion
-              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+  void close (int wait_for_completion);
 
   /**
    * Verify if the close() call can be invoked in the current
    * context for *all* adapters.
    * Raise the right exception if not.
    */
-  void check_close (int wait_for_completion
-                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+  void check_close (int wait_for_completion);
 
   /// Insert a new adapter into the registry.
-  void insert (TAO_Adapter *adapter
-               ACE_ENV_ARG_DECL);
+  void insert (TAO_Adapter *adapter);
 
   /**
    * Dispatch the request to all the adapters.
@@ -84,24 +78,21 @@ public:
    */
   void dispatch (TAO::ObjectKey &key,
                  TAO_ServerRequest &request,
-                 CORBA::Object_out forward_to
-                 ACE_ENV_ARG_DECL);
+                 CORBA::Object_out forward_to);
 
   /// Create a collocated object using the given profile and stub.
-  CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                              const TAO_MProfile &);
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *, const TAO_MProfile &);
 
   /// Initialize a collocated object using the given stub and object
   /// pointer for lazily evaluated object references.
-  CORBA::Long initialize_collocated_object (TAO_Stub *,
-                                            CORBA::Object_ptr o);
+  CORBA::Long initialize_collocated_object (TAO_Stub *);
 
   /// Fetch the adapter named @a name
   TAO_Adapter *find_adapter (const char *name) const;
 
 private:
-  /// The ORB Core
-  TAO_ORB_Core *orb_core_;
+  TAO_Adapter_Registry (const TAO_Adapter_Registry &) = delete;
+  TAO_Adapter_Registry &operator= (const TAO_Adapter_Registry &) = delete;
 
   /**
    * @name A simple array of adapters.
@@ -112,6 +103,8 @@ private:
   TAO_Adapter **adapters_;
   //@}
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

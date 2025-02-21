@@ -1,0 +1,35 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults, fault_tolerance {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Client): taoserver, iortable, ftclientorb, fault_tolerance {
+  after += *idl
+  exename = client
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    client.cpp
+    Client_Task.cpp
+    Server_Task.cpp
+    TestImpl.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Server): taoserver, iortable, fault_tolerance {
+  after += *idl
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    server.cpp
+    Server_Task.cpp
+    TestImpl.cpp
+  }
+  IDL_Files {
+  }
+}

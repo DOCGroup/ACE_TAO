@@ -1,0 +1,9 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  struct theStruct
+  {
+    string theString;
+  };
+};

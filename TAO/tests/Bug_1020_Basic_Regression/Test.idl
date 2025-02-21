@@ -1,10 +1,7 @@
 /**
  * @file Test.idl
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef BUG_1020_TEST_IDL
 #define BUG_1020_TEST_IDL

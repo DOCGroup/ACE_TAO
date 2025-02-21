@@ -1,0 +1,27 @@
+Regression test for multi-threaded server concurrent MIOP message processing.
+
+(MIOP messages were being serialised by using a single server worker thread from any pool set-up, this test checks that multiple threads can concurrently process MIOP messages that are received.)
+
+This test relies on the client being able to send all of it's MIOP messages AND the server receiving all of them (which with MIOP is not actually guarrenteed). Each thread from the servers thread pool is tied up "processing" one of the messages via a barrier, so that all threads of the server thread pool end up working at the same time. Once all threads have received a message, the server shutsdown. The server will not shutdown (and thus the test will timeout and fail) if all of the threads don't process messages concurrently.
+
+Expected successful output is below.
+
+---------------------
+$> ./run_test.pl
+MIOP object is <IOR:010000000100000000000000010000000300000040000000010100000d0000003232352e31302e31302e313000008c3801000000270000001c0000000101000007000000646f6d61696e0000010000000000000000000000>
+Starting 2 thread, thread pool
+args to be used: -k 'file:///home/tao/sma/ACE_wrappers/TAO/orbsvcs/tests/Bug_4080_Regression/server.ior' -t 2
+Sending request 1
+Server 3086908336 received a message
+Sending request 2
+Server 3076418480 received a message
+Server 3076418480 Shutting down
+Stopping thread pool
+
+Server finished successfully.
+Client shutting down
+
+Client finished successfully
+Exit test status 0
+
+--------------------

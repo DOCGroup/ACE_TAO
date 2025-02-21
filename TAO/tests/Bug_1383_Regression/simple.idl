@@ -1,0 +1,10 @@
+#ifndef SIMPLE_IDL
+#define SIMPLE_IDL
+
+#include "callee.idl"
+
+interface Simple {
+  void registerCallee(in Callee value);
+};
+
+#endif

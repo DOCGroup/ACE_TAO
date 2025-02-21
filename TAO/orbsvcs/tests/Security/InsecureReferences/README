@@ -1,0 +1,27 @@
+/**
+
+
+
+@page InsecureReferences Test README File
+
+  This test validates a fix for a problem with decoding IIOP Profiles
+  containing multiple endpoints as tagged components, but that do not
+  include ssl components. The problem was that the code was
+  incorrectly accounting for the initial endpoint in the profile when
+  preparing additional generated ssl endpoints for the decoding
+  process. The test executable is run twice. Once with no ORBSvcConf
+  argument, and a -o argument to create the IOR, and then a second
+  time with the svc config argument and a -k argument to read in the
+  previously generated ior. The test is successful if the second run
+  does not crash.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+  or start the test executable manually:
+
+$ ./test -o <iorfile> -p <base_port>
+$ ./test -ORBSvcConf client.conf -k file://<iorfile>
+
+*/

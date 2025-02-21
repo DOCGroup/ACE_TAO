@@ -1,22 +1,18 @@
 // -*- MPC -*-
-// $Id$
-
-project(DsEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, event {
-
+project(DsEventLogAdmin_IDL) : orbsvcslib, orbsvcs_output, install, dslogadmin, event, tao_versioning_idl_defaults {
   custom_only = 1
-
-  idlflags += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
+  idlflags   += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
 
   IDL_Files {
     DsEventLogAdmin.idl
   }
 }
 
-project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
+project(DsEventLogAdmin) : orbsvcslib, orbsvcs_output, install, dslogadmin, event {
   sharedname   = TAO_DsEventLogAdmin
-  dynamicflags = TAO_EVENTLOG_BUILD_DLL
-
-  after += DsEventLogAdmin_IDL
+  dynamicflags += TAO_EVENTLOG_BUILD_DLL
+  tagchecks   += EventLog
+  after       += DsEventLogAdmin_IDL
 
   IDL_Files {
   }
@@ -47,9 +43,10 @@ project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
   }
 }
 
-project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_skel, event_skel, portableserver {
+project(DsEventLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dseventlogadmin, dslogadmin_skel, event_skel, portableserver {
   sharedname   = TAO_DsEventLogAdmin_Skel
-  dynamicflags = TAO_EVENTLOG_SKEL_BUILD_DLL
+  dynamicflags += TAO_EVENTLOG_SKEL_BUILD_DLL
+  tagchecks   += EventLog
 
   IDL_Files {
   }
@@ -60,17 +57,13 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_sk
 
   Header_Files {
     DsEventLogAdminS.h
-    DsEventLogAdminS_T.h
     Log/eventlog_skel_export.h
   }
 
   Inline_Files {
-    DsEventLogAdminS.inl
-    DsEventLogAdminS_T.inl
   }
 
   Template_Files {
-    DsEventLogAdminS_T.cpp
   }
 
   Pkgconfig_Files {
@@ -78,21 +71,23 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_sk
   }
 }
 
-project(DsEventLogAdmin_Serv) : orbsvcslib, core, dseventlogadmin_skel, dslogadmin_serv, event_serv {
+project(DsEventLogAdmin_Serv) : orbsvcslib, orbsvcs_output, install, dseventlogadmin_skel, dslogadmin_serv, event_serv {
   sharedname   = TAO_DsEventLogAdmin_Serv
-  dynamicflags = TAO_EVENTLOG_SERV_BUILD_DLL
+  dynamicflags += TAO_EVENTLOG_SERV_BUILD_DLL
   tagchecks   += EventLog
 
   IDL_Files {
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    DsEventLogAdmin {
-      Log/EventLogConsumer.cpp
-      Log/EventLogFactory_i.cpp
-      Log/EventLogNotification.cpp
-      Log/EventLog_i.cpp
-    }
+  Source_Files {
+    Log/EventLogConsumer.cpp
+    Log/EventLogFactory_i.cpp
+    Log/EventLogNotification.cpp
+    Log/EventLog_i.cpp
+  }
+
+  Header_Files {
+    Log/eventlog_serv_export.h
   }
 
   Inline_Files {

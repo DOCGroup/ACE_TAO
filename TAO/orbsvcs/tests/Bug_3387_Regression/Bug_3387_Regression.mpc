@@ -1,0 +1,33 @@
+// -*- MPC -*-
+project(*Server): taoexe, portableserver, namingexe, notification_skel {
+  Source_Files {
+    StructuredEventSupplier_i.cpp
+    MessengerServer.cpp         
+    Messenger_i.cpp
+  }
+}
+
+project(*Client): taoexe, namingexe, notification {
+
+  after += *Server
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}
+
+project(*Consumer): taoexe, portableserver, namingexe, notification_skel {
+
+  after += *Server
+  IDL_Files {
+  }
+
+  Source_Files {
+    MessengerConsumer.cpp
+    StructuredEventConsumer_i.cpp
+  }
+}

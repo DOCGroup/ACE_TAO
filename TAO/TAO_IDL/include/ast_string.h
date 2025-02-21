@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -78,25 +76,16 @@ class AST_Expression;
 class TAO_IDL_FE_Export AST_String : public virtual AST_ConcreteType
 {
 public:
-  // Operations.
-
-  // Constructor(s) and destructor
-  AST_String (void);
-
   AST_String (AST_Decl::NodeType nt,
               UTL_ScopedName *n,
               AST_Expression *max_size,
               long wide = 1);
 
-  virtual ~AST_String (void);
+  virtual ~AST_String ();
 
   // Data Accessors.
-  AST_Expression *max_size (void);
-  long width (void);
-
-  // Narrowing.
-  DEF_NARROW_METHODS1(AST_String, AST_ConcreteType);
-  DEF_NARROW_FROM_DECL(AST_String);
+  AST_Expression *max_size ();
+  long width ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -105,7 +94,9 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
+
+  static AST_Decl::NodeType const NT;
 
 private:
   // Data.

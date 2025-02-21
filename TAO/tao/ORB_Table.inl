@@ -1,52 +1,51 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "tao/ORB_Core.h"
 
+#include <algorithm>
 
-ACE_INLINE TAO_ORB_Core *
-TAO::ORB_Table::first_orb (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_INLINE ::TAO_ORB_Core *
+TAO::ORB_Table::first_orb ()
 {
   return this->first_orb_;
 }
 
 ACE_INLINE TAO::ORB_Table::iterator
-TAO::ORB_Table::begin (void)
+TAO::ORB_Table::begin ()
 {
   return this->table_.begin ();
 }
 
 ACE_INLINE TAO::ORB_Table::iterator
-TAO::ORB_Table::end (void)
+TAO::ORB_Table::end ()
 {
   return this->table_.end ();
 }
 
-ACE_INLINE TAO_ORB_Core* const *
-TAO::ORB_Table::get_orbs (size_t& num_orbs)
-{
-  num_orbs = this->num_orbs_;
-  return this->orbs_;
-}
-
 /// Accessor to the underlying table_
 ACE_INLINE TAO::ORB_Table::Table *
-TAO::ORB_Table::table (void)
+TAO::ORB_Table::table ()
 {
   return &this->table_;
+}
+
+ACE_INLINE TAO_SYNCH_MUTEX &
+TAO::ORB_Table::lock ()
+{
+  return this->lock_;
 }
 
 // ****************************************************************
 
 ACE_INLINE
-TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (void)
+TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter ()
   : core_ (0)
 {
 }
 
 ACE_INLINE
-TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (TAO_ORB_Core * core)
+TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (::TAO_ORB_Core * core)
   : core_ (core)
 {
 //   ACE_ASSERT (core != 0);
@@ -59,7 +58,7 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (TAO_ORB_Core * core)
 }
 
 ACE_INLINE
-TAO::ORB_Core_Ref_Counter::~ORB_Core_Ref_Counter (void)
+TAO::ORB_Core_Ref_Counter::~ORB_Core_Ref_Counter ()
 {
   if (this->core_)
     (void) this->core_->_decr_refcnt (); // Should never throw.
@@ -83,3 +82,5 @@ TAO::ORB_Core_Ref_Counter::operator= (TAO::ORB_Core_Ref_Counter const & rhs)
   TAO::ORB_Core_Ref_Counter tmp (rhs);
   std::swap (this->core_, tmp.core_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

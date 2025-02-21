@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : taolib, anytypecode {
+  after   += Compression
+  libs    += TAO_Compression
+}

@@ -4,8 +4,6 @@
 /**
  *  @file    ServerRequestInterceptor_Adapter.h
  *
- *  $Id$
- *
  *   This file an adapter class to simplify the support of
  *   interceptors.
  *
@@ -18,14 +16,21 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
+#include "tao/RequestInterceptor_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-#include "tao/SystemException.h"
+#include "tao/orbconf.h"
+#include "tao/Basic_Types.h"
+
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
+# include "tao/OctetSeqC.h"
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
@@ -35,20 +40,33 @@ namespace PortableInterceptor
   typedef CORBA::Short ReplyStatus;
 }
 
+namespace CORBA
+{
+  class PolicyList;
+}
+
 class TAO_ServerRequest;
 
 namespace TAO
 {
   class ServerRequestInfo;
   class Argument;
+  class PICurrent_Impl;
+  class Upcall_Command;
+
+  namespace Portable_Server
+  {
+    class Servant_Upcall;
+  }
 
   /**
    * @class ServerRequestInterceptor_Adapter
    */
   class TAO_Export ServerRequestInterceptor_Adapter
+    : public RequestInterceptor_Adapter
   {
   public:
-    virtual ~ServerRequestInterceptor_Adapter (void);
+    virtual ~ServerRequestInterceptor_Adapter ();
 
     /**
      * @name PortableInterceptor Server Side Interception Points
@@ -61,21 +79,19 @@ namespace TAO
     /// This method implements the "starting" server side interception
     /// point. It will be used as the first interception point and it is
     /// proprietary to TAO.
-    /// @@ Will go away once Bug 1369 is fixed
     virtual void tao_ft_interception_point (
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions,
-        CORBA::OctetSeq_out oc
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions,
+        CORBA::OctetSeq_out oc) = 0;
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
     /// This method implements the "intermediate" server side
     /// interception point if the above #ifdef is set to 1 and a
-    /// starting intercetion point if it is not set to 1.
+    /// starting interception point if it is not set to 1.
     ///
     /// @note This method should have been the "starting" interception
     ///       point according to the interceptor spec. This will be
@@ -84,20 +100,18 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
 
     /// This method an "intermediate" server side interception point.
     virtual void receive_request (
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -105,10 +119,9 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -116,10 +129,9 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -127,21 +139,32 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
     //@}
 
     /// Register an interceptor.
     virtual void add_interceptor (
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL) = 0;
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor) = 0;
 
-    virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;
+    /// Register an interceptor with policies.
+    virtual void add_interceptor (
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies) = 0;
+
+    virtual TAO::PICurrent_Impl *allocate_pi_current () = 0;
+
+    virtual void deallocate_pi_current (TAO::PICurrent_Impl *picurrent) = 0;
+
+    virtual void execute_command (
+        TAO_ServerRequest &server_request,
+        TAO::Upcall_Command &command) = 0;
   };
-
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_SERVER_REQUEST_INTERCEPTOR_ADAPTER_H */

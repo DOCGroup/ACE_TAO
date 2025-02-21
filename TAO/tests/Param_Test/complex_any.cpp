@@ -1,28 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    complex_any.cpp
-//
-// = DESCRIPTION
-//    tests complex Anys
-//
-// = AUTHORS
-//    Aniruddha Gokhale, Jeff Parsons, Frank Buschmann
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    complex_any.cpp
+ *
+ *  tests complex Anys
+ *
+ *  @author Aniruddha Gokhale
+ *  @author Jeff Parsons
+ *  @author Frank Buschmann
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "complex_any.h"
 #include "tao/debug.h"
-
-ACE_RCSID (Param_Test, 
-           complex_any, 
-           "$Id$")
 
 const int LEVEL_2_LENGTH = 5;
 const int LEVEL_3_LENGTH = 3;
@@ -33,28 +25,27 @@ const int LEVEL_3_LENGTH = 3;
 
 size_t Test_Complex_Any::counter = 0;
 
-Test_Complex_Any::Test_Complex_Any (void)
+Test_Complex_Any::Test_Complex_Any ()
   : opname_ (CORBA::string_dup ("test_complex_any")),
     out_ (new CORBA::Any),
     ret_ (new CORBA::Any)
 {
 }
 
-Test_Complex_Any::~Test_Complex_Any (void)
+Test_Complex_Any::~Test_Complex_Any ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Complex_Any::opname (void) const
+Test_Complex_Any::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Complex_Any::dii_req_invoke (CORBA::Request *req
-                                  ACE_ENV_ARG_DECL)
+Test_Complex_Any::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -62,29 +53,25 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_any);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   const CORBA::Any *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::Any (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = CORBA::Any (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new CORBA::Any (*tmp);
 }
 
 int
-Test_Complex_Any::init_parameters (Param_Test_ptr
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+Test_Complex_Any::init_parameters (Param_Test_ptr)
 {
   return this->reset_parameters ();
 }
@@ -97,7 +84,7 @@ Test_Complex_Any::init_parameters (Param_Test_ptr
 //                                                                  <- boolean
 //                                                                  <- short
 int
-Test_Complex_Any::reset_parameters (void)
+Test_Complex_Any::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -115,7 +102,7 @@ Test_Complex_Any::reset_parameters (void)
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "setting level 5 string = %s\n",
+                        "setting level 5 string = %C\n",
                         l5_str));
 
           level4_struct.level5_string = l5_str;
@@ -128,7 +115,7 @@ Test_Complex_Any::reset_parameters (void)
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "setting level 9 string = %s\n",
+                        "setting level 9 string = %C\n",
                         l9_str));
 
           level8_struct.level9_string = l9_str;
@@ -169,30 +156,26 @@ Test_Complex_Any::reset_parameters (void)
 }
 
 int
-Test_Complex_Any::run_sii_test (Param_Test_ptr objref
-                                ACE_ENV_ARG_DECL)
+Test_Complex_Any::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_complex_any (this->in_,
                                              this->inout_,
-                                             this->out_.out ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             this->out_.out ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 CORBA::Boolean
-Test_Complex_Any::check_validity (void)
+Test_Complex_Any::check_validity ()
 {
-  CORBA::AnySeq *level2_in_seq;
-  CORBA::AnySeq *level2_test_seq;
+  const CORBA::AnySeq *level2_in_seq = 0;
+  const CORBA::AnySeq *level2_test_seq = 0;
 
   if (!(this->in_ >>= level2_in_seq))
     return 0;
@@ -232,8 +215,8 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
 
   for (CORBA::ULong i = 0; i < level2_in_seq->length (); i++)
     {
-      CORBA::AnySeq *level3_in_seq;
-      CORBA::AnySeq *level3_test_seq;
+      const CORBA::AnySeq *level3_in_seq = 0;
+      const CORBA::AnySeq *level3_test_seq = 0;
 
       if (!((*level2_in_seq)[i] >>= level3_in_seq))
         return 0;
@@ -249,8 +232,8 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
 
       for (CORBA::ULong j = 0; j < level3_in_seq->length (); j ++)
         {
-          Param_Test::level4 *level4_in_struct;
-          Param_Test::level4 *level4_test_struct;
+          const Param_Test::level4 *level4_in_struct = 0;
+          const Param_Test::level4 *level4_test_struct = 0;
 
           if (!((*level3_in_seq)[j] >>= level4_in_struct))
             return 0;
@@ -280,8 +263,8 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           if (!((*level6_test_any) >>= level7_test_any))
             return 0;
 
-          Param_Test::level8 *level8_in_struct;
-          Param_Test::level8 *level8_test_struct;
+          const Param_Test::level8 *level8_in_struct = 0;
+          const Param_Test::level8 *level8_test_struct = 0;
 
           if (!((*level7_in_any) >>= level8_in_struct))
             return 0;
@@ -323,6 +306,6 @@ Test_Complex_Any::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Complex_Any::print_values (void)
+Test_Complex_Any::print_values ()
 {
 }

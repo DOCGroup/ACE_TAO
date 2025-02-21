@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : taolib, compression, bzip2 {
+  requires += bzip2
+  after   += Bzip2Compressor
+  libs    += TAO_Bzip2Compressor
+}

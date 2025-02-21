@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file EC_RTCORBA_Factory.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -16,13 +14,15 @@
 #define TAO_EC_RTCORBA_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_event_export.h"
-#include "EC_Factory.h"
+#include "orbsvcs/Event/rtcorba_event_export.h"
+#include "orbsvcs/Event/EC_Factory.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_RTCORBA_Factory
@@ -41,11 +41,11 @@ public:
                           const RTCORBA::ThreadpoolLanes &lanes);
 
   /// destructor...
-  virtual ~TAO_EC_RTCORBA_Factory (void);
+  virtual ~TAO_EC_RTCORBA_Factory ();
 
   // Decorated methods...
-  virtual int init (int argc, char* argv[]);
-  virtual int fini (void);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
+  virtual int fini ();
   virtual TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*);
   virtual void
@@ -94,9 +94,9 @@ public:
       create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
-  virtual ACE_Lock* create_consumer_lock (void);
+  virtual ACE_Lock* create_consumer_lock ();
   virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock (void);
+  virtual ACE_Lock* create_supplier_lock ();
   virtual void destroy_supplier_lock (ACE_Lock*);
   virtual TAO_EC_ConsumerControl*
       create_consumer_control (TAO_EC_Event_Channel_Base*);
@@ -114,6 +114,8 @@ protected:
   /// Configure the thread pool lanes.
   RTCORBA::ThreadpoolLanes lanes_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_RTCORBA_FACTORY_H */

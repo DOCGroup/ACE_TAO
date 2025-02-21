@@ -1,0 +1,8 @@
+// -*- MPC -*-
+project : aceexe, avoids_ace_for_tao {
+  exename = reader
+  Source_Files {
+    reader.cpp
+  }
+}
+

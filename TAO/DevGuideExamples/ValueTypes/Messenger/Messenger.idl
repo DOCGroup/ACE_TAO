@@ -1,0 +1,27 @@
+// Messenger.idl
+// Modified to make use of ValueTypes
+
+// Demonstrates how ValueTypes can let you make wrapper classes
+// that make sequences easier to work with, and can simplify
+// IDL interfaces by reducing the number of parameters.
+
+valuetype Message {
+  typedef sequence<string> AddrList;
+
+  private AddrList addrs_;
+  private string user_;
+  private string subject_;
+  private string text_;
+
+  AddrList getAddresses();
+  void addAddress(in string address);
+  attribute string user;
+  attribute string subject;
+  attribute string text;
+  void print();
+};
+
+interface Messenger {
+  boolean send_message(inout Message msg);
+};
+

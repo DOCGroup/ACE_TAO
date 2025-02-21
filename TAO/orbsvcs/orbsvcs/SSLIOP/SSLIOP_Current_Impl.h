@@ -4,8 +4,6 @@
 /**
  *  @file   SSLIOP_Current_Impl.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
@@ -23,9 +21,10 @@
 
 #include "orbsvcs/SSLIOPC.h"
 #include "orbsvcs/Security/SL3_SecurityCurrent_Impl.h"
-#include "tao/ORB_Core.h"
 
 #include <openssl/ssl.h>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -44,24 +43,19 @@ namespace TAO
     class Current_Impl : public TAO::SL3::SecurityCurrent_Impl
     {
     public:
-
       /// Constructor.
-      Current_Impl (void);
+      Current_Impl ();
 
       /// Destructor
-      ~Current_Impl (void);
+      ~Current_Impl ();
 
       /// Implementation of the SSLIOP-specific
       /// SecurityLevel3::client_credentials() method.
-      virtual SecurityLevel3::ClientCredentials_ptr client_credentials (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ();
 
       /// Implementation of the SSLIOP-specific
       /// SecurityLevel3::request_is_local() method.
-      virtual CORBA::Boolean request_is_local (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Boolean request_is_local ();
 
       /// Return the SSL peer certificate associated with the
       /// current request as an octet sequence, i.e. a DER encoded
@@ -76,33 +70,27 @@ namespace TAO
       void ssl (SSL *s);
 
       /// Return pointer to the SSL session state for the current upcall.
-      SSL *ssl (void);
+      SSL *ssl ();
 
     protected:
-
       /// Return the unique tag that identifies the concrete subclass.
-      virtual CORBA::ULong tag (void) const;
+      virtual CORBA::ULong tag () const;
 
     private:
-
-      /// Prevent copying through the copy constructor and the assignment
-      /// operator.
-      //@{
-      Current_Impl (const Current_Impl &);
-      void operator= (const Current_Impl &);
-      //@}
+      Current_Impl (const Current_Impl &) = delete;
+      void operator= (const Current_Impl &) = delete;
 
     private:
-
       /// The SSL session state corresponding to the current upcall.
       SSL *ssl_;
-
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "SSLIOP_Current_Impl.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

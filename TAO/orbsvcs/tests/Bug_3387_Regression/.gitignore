@@ -1,0 +1,8 @@
+MessengerC.cpp
+MessengerC.h
+MessengerC.inl
+MessengerClient
+MessengerConsumer
+MessengerS.cpp
+MessengerS.h
+MessengerServer

@@ -1,4 +1,3 @@
-// $Id$
 //---------------------------------------------------------------------------
 #ifndef ReceiverImplH
 #define ReceiverImplH
@@ -8,26 +7,25 @@
 class TReceiverImplementation : public POA_Receiver
 {
 public:
-  // = Initialization and termination methods.
-  TReceiverImplementation (void);
-  // Constructor.
+  /// Constructor.
+  TReceiverImplementation (;
 
-  ~TReceiverImplementation (void);
-  // Destructor.
+  /// Destructor.
+  ~TReceiverImplementation ();
 
-  virtual void message (const char* msg) throw (CORBA::SystemException);
+  virtual void message (const char* msg);
 
-  virtual void shutdown (void) throw (CORBA::SystemException);
-  // Called when the chat server is going away.  The client
-  // implementation should shutdown the chat client in response to
-  // this.
+  /// Called when the chat server is going away.  The client
+  /// implementation should shutdown the chat client in response to
+  /// this.
+  virtual void shutdown ();
 
+  /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
 
 private:
+  /// ORB pointer.
   CORBA::ORB_var orb_;
-  // ORB pointer.
 };
 //---------------------------------------------------------------------------
 #endif

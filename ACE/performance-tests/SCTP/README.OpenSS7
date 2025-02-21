@@ -1,0 +1,269 @@
+This document describes the OpenSS7 API in detail.
+
+Introduction
+=============
+
+OpenSS7 defines two types of services, UDP style and TCP style.  How OpenSS7
+distinguishes the two styles is by the way in which the data is presented to
+the application.  In OpenSS7, data is presented as byte streams or datagrams.
+The stream style is considered the TCP style socket, and the datagram is
+considered the UDP style socket.  The UDP style socket does not represent a one
+to many mapping of file descriptors to associations as the IETF compatible
+sockets does.
+
+Instead of adding new system calls, OpenSS7 decided to modify some of the
+existing system calls to play nicely with multi-homing.  So, to bind to
+multiple addresses, you pass in an array of struct sockaddr* structures and the
+total length in bytes of the array.  Also, when accepting connections from a
+peer, you would pass in a pointer to an array of struct sockaddr* and the
+length of the array in bytes.
+
+
+Building ACE/TAO with support for OpenSS7 SCTP
+==============================================
+
+        - apply OpenSS7's SCTP patch (see OpenSS7's readme for details)
+
+        - compile kernel with the following kernel variables (.config file)
+                + CONFIG_SCTP=y
+                + CONFIG_SCTP_TCP_COMPATIBLE=y
+                + CONFIG_SCTP_HMAC_SHA1=y
+                + CONFIG_SCTP_HMAC_MD5=y
+                + CONFIG_SCTP_ADLER_32=y
+                + CONFIG_SCTP_CRC_32C=y
+
+        - install header file (sctp.h) into /usr/local/include/sctp.h
+
+        - make ACE/TAO with "sctp=openss7" -- ie. "make sctp=openss7"
+
+Common Calls
+============
+
+There are a few common calls which have the same semantics no matter which
+interface you are using (UDP style or TCP style).  So, the usual calls used in
+a client are:
+
+  1) socket()
+  2) bind()
+  3) setsockopt()
+  4) connect()
+  5) send/recv()
+  6) close()
+
+while the usual calls for a server are as follows:
+
+  1) socket()
+  2) bind()
+  3) setsockopt()
+  4) listen()
+  5) accept()
+  6) close()
+
+The previous example mimics the way in which the TCP protocol is used.
+There are some exceptions to the above sequence which we will get into a little
+later. So, let's talk about the system calls above.
+
+Socket()
+--------
+The socket() call creates a file descriptor for the application to use to
+communicate with the SCTP stack.  The signature of socket() is as follows:
+
+  int socket(int network, int service, int proto)
+  Where:
+    network - AF_INET or AF_INET6 (AF_INET6 is not currently supported)
+    service - SOCK_SEQPACKET which gives us the UDP style interface
+              SOCK_STREAM which gives us the TCP style interface
+    proto   - IPPROTO_SCTP which is the SCTP protocol number(132)
+
+Bind()
+------
+The bind() call is used to attach the socket descriptor to the given array of
+addresses.  bind() may only be called once.  The address structures sent in as
+arguments to bind must have the same port number.  That is, you may have
+multiple addresses, but only 1 port number.  The signature of bind() is as
+follows:
+
+  int bind(int fd, struct sockaddr* addrs, socklen_t addrs_len)
+  Where:
+    fd        - A SCTP socket descriptor
+    addrs     - An array of struct sockaddr* which have the same port number
+    addrs_len - The total length in bytes of the addrs array
+
+If an address structure is sent in with the address of INADDR_ANY, then SCTP
+will bind to all the addresses on the host and either pick an ephemeral port or
+use the one specified in the address structure.
+
+Setsockopt()
+------------
+The setsockopt() call is used to adjust many different parameters to the SCTP
+protocol.  Please see the sctp(7) man page for more details.
+
+Connect()
+---------
+The connect() call can be used to initialize a connection with a peer SCTP
+machine.  A connection can be initialized in 2 ways.  The first is this
+call(connect()).  The second way is to allow implicit initialization when the
+application calls sendmsg or sendto with the address of the remote host
+specified.  To allow data to be piggybacked with the COOKIE_ECHO chunk, you
+must use the second initialization technique.  The signature of connect is as
+follows:
+
+  int connect(int fd, struct sockaddr* r_addr, socklen_t r_addr_len)
+  Where:
+    fd         - An SCTP socket descriptor
+    r_addr     - A single address structure with the address of the remote host
+    r_addr_len - Length in bytes of the the address structure
+
+Note that only one address is sent into the connect call.  The SCTP protocol
+will negotiate the valid IP addresses to use with multi-homing.
+
+Listen()
+--------
+The listen() call prepares the SCTP socket to accept new associations.  The
+signature is as follows:
+
+  int listen(int fd, int backlog)
+  Where:
+    fd    - An SCTP socket descriptor
+    backlog - The maximum number of unaccepted connections
+
+Accept()
+--------
+The accept() call allows the application to explicitly accept an incoming
+association initialization attempt.  accept() returns a new file descriptor
+which can be used to send data to the client.  accept() has a slightly
+different semantic which allows it to take an array of address structures.
+This gives the application the chance to get a specified number of addresses
+from the peer on initialization.  The signature of accept() is as follows:
+
+  int accept(int fd, struct sockaddr* r_addr, socklen_t *r_addr_len)
+  Where:
+    fd         - A SCTP socket descriptor
+    r_addr     - An array of address structures which will be filled with the
+                 addresses of the remote host
+    r_addr_len - The length of the array of address structures passed in.
+
+accept() will only put as many addresses in the address array as is specified
+by the r_addr_len argument.
+
+Close()
+-------
+Start the association shutdown sequence.  The signature is as follows:
+
+  int close(int fd)
+  Where:
+    fd - A SCTP socket descriptor
+
+Data Interfaces
+===============
+This section describes the sending and receiving of data on an SCTP socket.
+This is where the differences between the TCP style and UDP style sockets
+shows.  SCTP uses the standard pairs of calls:
+
+  1) send()/recv()
+  2) sendmsg()/recvmsg()
+  3) sendto()/readfrom()
+  4) write()/read()
+  5) writev()/readv()
+
+When the SCTP socket is opened as a UDP style socket, data is presented to the
+application as datagrams.  This means that calls to the receive class of system
+calls returns only datagrams.  For example, assume a sender sends 2 100 byte
+datagrams.  Now assume that the receiver calls one of the receive routines with
+a max buffer size of 120 bytes.  Assuming no errors are encountered, only 100
+bytes are returned to the receiver (only 1 datagram), leaving the last 20 bytes
+empty in the receivers buffer.  When the last of a datagram is read, the
+MSG_EOR flag is returned, and if the datagram is too big to fit into the
+specified buffer, the MSG_TRUNC flag is returned.
+
+With TCP styles sockets, the data is presented to the application as a stream
+of bytes (like TCP).  For example, assume the sender sends 2 100 byte
+datagrams.  Now assume that the receiver calls one of the receive routines with
+a max buffer size of 120.  Assuming no errors are encountered, 120 bytes are
+returned (100 from the first datagram and 20 from the next datagram), leaving
+80 bytes in the second datagram.  MSG_EOR and MSG_TRUNC are never returned.
+
+Send()/Recv()
+-------------
+The send/recv interface is one of the easiest ways of sending data back and
+forth between peers.  When send/recv is called, data is sent/read from the
+default stream.  The signature of send/recv is as follows:
+
+  int send(int fd, void *data, size_t d_len, int flags)
+  Where:
+    fd    - A SCTP socket descriptor
+    data  - Data to be sent to the peer
+    d_len - The length of the data in bytes
+    flags - Possible flags to be sent to be passed to the SCTP stack
+            (see send(3))
+
+Sendmsg()/Recvmsg()
+-------------------
+The sendmsg/recvmsg interface is the most powerful and hard to use interface
+in the SCTP stack.  This interface allows the specification of which stream to
+send data out or receive data from.  It also allows the sending of data with a
+specified protocol payload identifier.  The signature is as follows:
+
+  int sendmsg(int fd, struct msghdr *msg, int flags)
+  Where:
+    fd    - A SCTP socket descriptor
+    msg   - A struct msghdr structure which holds miscellaneous information
+    flags - Possible flags to be passed to the SCTP stack
+            (see sendmsg(3))
+
+The msg argument holds the data to be sent to the peer.  It also can take an
+address to send the data to.  So, for example, if you had an association with 2
+addresses for the peer and the default path used the first address, and you
+wanted to send data to the other address, you could specify that address in the
+msg structure.  If this address field is NULL, then data is sent out the
+default address.
+
+This interface also allows other functions by using the ancillary data field
+in the msg structure.  By using the ancillary data field, you may send data out
+a different stream by using the SCTP_SID control message.  This type of control
+message would take an integer representing the stream to send data out as it's
+data.  Another option is to use the SCTP_PPI control message which allows the
+setting of the protocol payload identifier to the specified integer argument.
+Both of these options only set their values for the current data being sent out.
+
+Sendto()/Recvfrom()
+-------------------
+The sendto/recvfrom interface allows the specification of which remote address
+to send data.  The signature of sendto/recvfrom is as follows:
+
+  int sendto(int fd, void *data, size_t d_len, int flags,
+             struct sockaddr* r_addr, socklen_t r_addr_len)
+  Where:
+    fd         - A SCTP socket descriptor
+    data       - Data to send to peer
+    d_len      - Length of the data to be sent
+    flags      - Possible flags to be passed to the SCTP stack
+    r_addr     - Address of peer to send data to
+    r_addr_len - Length of peer address
+
+Write()/Read()
+--------------
+This interface is the simplest way of sending data to a peer.  When this
+interface is used, data is sent/received through the default stream (as set by
+SCTP_SID).  The signature is as follows:
+
+  int write(int fd, void *data, size_t d_len)
+  Where:
+    fd    - A SCTP socket descriptor
+    data  - Data to be sent to peer
+    d_len - Length of data
+
+Writev()/Readv()
+----------------
+This interface allows the sending of multiple buffers of data in one system
+call.  This call places all the buffers into one SCTP data chunk.  The          signature is as follows:
+
+  int writev(int fd, struct iovec *iov, int ct)
+  Where:
+    fd  - A SCTP socket descriptor
+    iov - An array of iovec structures.  The order they are in the array is the
+          order they are placed in the data chunk
+    ct  - The number of iovec structures to send
+
+--
+

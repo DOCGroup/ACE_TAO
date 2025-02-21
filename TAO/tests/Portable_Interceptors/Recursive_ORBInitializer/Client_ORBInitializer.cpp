@@ -1,14 +1,7 @@
 // -*- C++ -*-
-//
-// $Id$
-//
 
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
-
-ACE_RCSID (Recursive_ORBInitializer,
-           Client_ORBInitializer,
-           "$Id$")
 
 Client_ORBInitializer::Client_ORBInitializer (Client_ORBInitializer *second) :
   pre_init_called (0),
@@ -18,18 +11,13 @@ Client_ORBInitializer::Client_ORBInitializer (Client_ORBInitializer *second) :
 }
 
 void
-Client_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Client_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
   ++pre_init_called;
 
   if (second_ != 0)
     {
-      PortableInterceptor::register_orb_initializer (second_
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      PortableInterceptor::register_orb_initializer (second_);
 
       // Registered the initializer, clear the pointer so that we only do it
       // once
@@ -38,10 +26,7 @@ Client_ORBInitializer::pre_init (
 }
 
 void
-Client_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Client_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr)
 {
   ++post_init_called;
 }

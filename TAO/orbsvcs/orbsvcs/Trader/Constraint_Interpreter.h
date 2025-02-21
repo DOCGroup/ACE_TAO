@@ -4,23 +4,22 @@
 /**
  *  @file    Constraint_Interpreter.h
  *
- *  $Id$
- *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
 #define TAO_CONSTRAINT_INTERPRETER_H
 #include /**/ "ace/pre.h"
 
-#include "Constraint_Nodes.h"
-#include "Constraint_Visitors.h"
-#include "Interpreter.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
+#include "orbsvcs/Trader/Interpreter.h"
 
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
@@ -44,27 +43,20 @@ class TAO_Constraint_Validator;
 class TAO_Trading_Serv_Export TAO_Constraint_Interpreter : public TAO_Interpreter
 {
 public:
-  // = Initialization and termination methods.
   TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-                              const char* constraints
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                     CORBA::NO_MEMORY));
+                              const char* constraints);
 
   /**
    * This constructor builds an expression tree representing the
-   * constraint specified in <constraints>, and throws an Illegal
+   * constraint specified in @a constraints, and throws an Illegal
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
   TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
-                              const char* constraints
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                     CORBA::NO_MEMORY));
+                              const char* constraints);
 
   /// Destructor
-  ~TAO_Constraint_Interpreter (void);
+  ~TAO_Constraint_Interpreter ();
 
   CORBA::Boolean evaluate (CosTrading::Offer* offer);
 
@@ -91,26 +83,19 @@ public:
 class TAO_Trading_Serv_Export TAO_Preference_Interpreter : public TAO_Interpreter
 {
 public:
-  // = Initialization and termination methods.
   TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-                              const char* preference
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                     CORBA::NO_MEMORY));
+                              const char* preference);
 
   /**
-	* Parse the preference string, determining first if it's
-	* valid. Throw an IllegalPreference exception if the preference
-	* doesn't conform to the BNF grammar for preferences.
-	*/
+    * Parse the preference string, determining first if it's
+    * valid. Throw an IllegalPreference exception if the preference
+    * doesn't conform to the BNF grammar for preferences.
+    */
   TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
-                              const char* preference
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                     CORBA::NO_MEMORY));
+                              const char* preference);
 
   /// Destructor
-  ~TAO_Preference_Interpreter(void);
+  ~TAO_Preference_Interpreter();
 
   void order_offer (CosTrading::Offer* offer,
                     CosTrading::OfferId offer_id = 0);
@@ -129,7 +114,7 @@ public:
   int remove_offer (CosTrading::Offer*& offer);
 
   /// Return the number of offers remaining in the ordering.
-  size_t num_offers (void);
+  size_t num_offers ();
 
   struct Preference_Info
   {
@@ -149,14 +134,16 @@ public:
   typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers;
 
 private:
-
-  /// Disallow copying.
-  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
-  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
+  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&) = delete;
+  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&) = delete;
+  TAO_Preference_Interpreter (TAO_Preference_Interpreter&&) = delete;
+  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter&&) = delete;
 
   /// The ordered list of offers.
   Ordered_Offers offers_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CONSTRAINT_INTERPRETER_H */

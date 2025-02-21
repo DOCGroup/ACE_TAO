@@ -1,0 +1,39 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults, ami {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): messaging, taoserver, ami {
+  after += *idl
+  Source_Files {
+    test_i.cpp
+    common.cpp
+    server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): messaging, taoserver, ami {
+  exename = client
+  after += *idl
+  Source_Files {
+    test_i.cpp
+    common.cpp
+    client.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+

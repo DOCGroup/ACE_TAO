@@ -4,8 +4,6 @@
 /**
  * @file    test_i.h
  *
- * $Id$
- *
  * Implementation header for the "test" IDL interface for the
  * PortableInterceptor::Current test.
  *
@@ -19,6 +17,7 @@
 #include "testS.h"
 
 #include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 
 /**
  * @class test_i
@@ -30,31 +29,29 @@
 class test_i : public virtual POA_PICurrentTest::test
 {
 public:
-
   /// Constructor.
   test_i (PortableInterceptor::Current_ptr current,
           PortableInterceptor::SlotId id,
           CORBA::ORB_ptr orb);
 
   /// Destructor.
-  ~test_i (void);
+  ~test_i ();
 
   /// Main servant test method.
-  virtual void invoke_me (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void invoke_me ();
 
   /// No-op method used so that a client request interceptor will be
   /// invoked when invoking this method from the above invoke_me()
   /// method.  Say that 10 times fast. :-)
-  virtual void invoke_you (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void invoke_you ();
+
+  /// Test just a set slot
+  virtual void invoke_we ();
 
   /// Shutdown the ORB.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-
   /// Reference to the PICurrent object.
   PortableInterceptor::Current_var current_;
 
@@ -63,7 +60,6 @@ private:
 
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;
-
 };
 
 #endif  /* TEST_I_H */

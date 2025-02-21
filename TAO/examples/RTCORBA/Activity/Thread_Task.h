@@ -3,8 +3,6 @@
 /**
  *  @file Thread_Task.h
  *
- *  $Id$
- *
  *  A periodic task implementation that uses sleep.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -25,21 +23,19 @@
  * exceeds its <exec_time_>, it is "late".
  * if <exec_time_> is greater than the <period_>, the activity(s) for the
  * overlapped period(s) are considered "missed".
- *
  */
-class activity_Export Thread_Task : public Periodic_Task
+class Thread_Task : public Periodic_Task
 {
  public:
   /// Constructor
-  Thread_Task (void);
+  Thread_Task ();
 
   /// Activate thread(s).
   virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping);
 
  protected:
-
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 #endif /* THREAD_TASK_H */

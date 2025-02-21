@@ -4,8 +4,6 @@
 /**
  * @file  PG_Property_Utils.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -22,9 +20,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
@@ -47,8 +46,9 @@ namespace TAO_PG
   TAO_PortableGroup_Export void override_properties (
     const PortableGroup::Properties & overrides,
     PortableGroup::Properties &properties);
-
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_PG_PROPERTY_UTILS_H */

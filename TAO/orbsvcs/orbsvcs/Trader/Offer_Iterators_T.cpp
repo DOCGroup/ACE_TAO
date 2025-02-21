@@ -1,11 +1,9 @@
-// $Id$
+#ifndef TAO_OFFER_ITERATORS_T_CPP
+#define TAO_OFFER_ITERATORS_T_CPP
 
-#ifndef TAO_OFFER_ITERATORS_T_C
-#define  TAO_OFFER_ITERATORS_T_C
+#include "orbsvcs/Trader/Offer_Iterators_T.h"
 
-#include "Offer_Iterators_T.h"
-
-ACE_RCSID(Trader, Offer_Iterators_T, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class MAP_LOCK_TYPE>
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
@@ -18,7 +16,7 @@ TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE> &db,
 
 template <class MAP_LOCK_TYPE>
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
-~TAO_Register_Offer_Iterator (void)
+~TAO_Register_Offer_Iterator ()
 {
   while (! this->offer_ids_.is_empty ())
     {
@@ -39,9 +37,7 @@ add_offer (CosTrading::OfferId id,
 
 template <class MAP_LOCK_TYPE> CORBA::ULong
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
-max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                  CosTrading::UnknownMaxLeft))
+max_left ()
 {
   return static_cast<CORBA::ULong> (this->offer_ids_.size ());
 }
@@ -49,9 +45,7 @@ max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 template <class MAP_LOCK_TYPE> CORBA::Boolean
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 next_n (CORBA::ULong n,
-        CosTrading::OfferSeq_out offers
-        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+        CosTrading::OfferSeq_out offers)
 {
   CORBA::ULong ret_offers = 0;
 
@@ -62,7 +56,6 @@ next_n (CORBA::ULong n,
   ACE_NEW_THROW_EX (offers,
                     CosTrading::OfferSeq,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   offers->length (max_possible_offers_in_sequence);
 
@@ -78,8 +71,7 @@ next_n (CORBA::ULong n,
       this->offer_ids_.dequeue_head (id);
 
       CosTrading::OfferId_var offerid_var (id);
-      CosTrading::Offer* offer = this->db_.lookup_offer (id ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      CosTrading::Offer* offer = this->db_.lookup_offer (id);
 
       if (offer != 0)
         this->pfilter_.filter_offer (offer,
@@ -92,4 +84,6 @@ next_n (CORBA::ULong n,
   return static_cast<CORBA::Boolean> (ret_offers != 0);
 }
 
-#endif /* TAO_REGISTER_OFFER_ITERATOR_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_REGISTER_OFFER_ITERATOR_CPP */

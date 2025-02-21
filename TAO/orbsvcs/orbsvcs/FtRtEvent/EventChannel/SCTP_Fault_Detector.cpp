@@ -1,17 +1,11 @@
-// $Id$
-
-#include "SCTP_Fault_Detector.h"
+#include "orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.h"
 
 #if (TAO_HAS_SCIOP == 1)
 
-#include "FTEC_Fault_Listener.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Fault_Listener.h"
 
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_sys_socket.h"
-
-ACE_RCSID (EventChannel,
-           SCTP_Fault_Detector,
-           "$Id$")
 
 #ifndef SCTP_HEARTBEAT_ITVL
 #define SCTP_HEARTBEAT_ITVL 19
@@ -20,6 +14,7 @@ ACE_RCSID (EventChannel,
 #define SOL_SCTP 132
 #endif
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 SCTP_Connector::SCTP_Connector()
 : heart_beat_(0)
@@ -75,7 +70,7 @@ SCTP_Fault_Detector::~SCTP_Fault_Detector()
 }
 
 
-int SCTP_Fault_Detector::parse_conf(int argc, char** argv)
+int SCTP_Fault_Detector::parse_conf(int argc, ACE_TCHAR** argv)
 {
   ACE_TRACE ("SCTP_Fault_Detector::parse_conf");
 
@@ -85,9 +80,11 @@ int SCTP_Fault_Detector::parse_conf(int argc, char** argv)
     {
       curarg++;
       if (curarg < argc)
-        connector_.set_heart_beat(atoi(argv[curarg]));
+        connector_.set_heart_beat(ACE_OS::atoi(argv[curarg]));
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_SCTP == 1 */

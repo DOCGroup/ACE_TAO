@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_Valuetype
 Description: TAO Valuetype Library
-Requires: TAO
+Requires: TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_Valuetype
 Cflags: -I${includedir}

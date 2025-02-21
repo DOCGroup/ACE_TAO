@@ -3,35 +3,30 @@
 //=============================================================================
 /**
  *  @file   Current.h
- *
- *  $Id$
- *
- *  @author
  */
 //=============================================================================
-
 
 #ifndef TAO_RTSCHEDULER_CURRENT_H
 #define TAO_RTSCHEDULER_CURRENT_H
 
 #include /**/ "ace/pre.h"
 
-#include "rtscheduler_export.h"
+#include "tao/RTScheduling/rtscheduler_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "RTScheduler.h"
+#include "tao/RTScheduling/RTScheduler.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTScheduler_Current_i;
 class TAO_TSS_Resources;
-
 
 /**
  * @class TAO_DTId_Hash
@@ -41,16 +36,14 @@ class TAO_TSS_Resources;
  * Define the hash() method for Object Ids.
  */
 
-typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
+typedef TAO::unbounded_value_sequence<CORBA::Octet> IdType;
 
 class TAO_RTScheduler_Export TAO_DTId_Hash
 {
 public:
-
   /// Returns hash value.
   u_long operator () (const IdType &id) const;
 };
-
 
 typedef ACE_Hash_Map_Manager_Ex<IdType,
                                 RTScheduling::DistributableThread_var,
@@ -77,89 +70,65 @@ typedef TAO_RTScheduler_Current* TAO_RTScheduler_Current_ptr;
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current
   : public RTScheduling::Current,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
  public:
-  static ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
+  static std::atomic<long> guid_counter;
 
-  TAO_RTScheduler_Current (void);
+  TAO_RTScheduler_Current () = default;
+  virtual ~TAO_RTScheduler_Current ();
 
-  void init (TAO_ORB_Core* orb
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void init (TAO_ORB_Core* orb);
 
-  virtual RTCORBA::Priority the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  RTCORBA::Priority the_priority () override;
 
-  virtual void the_priority (RTCORBA::Priority the_priority
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void the_priority (RTCORBA::Priority the_priority) override;
 
   void rt_current (RTCORBA::Current_ptr rt_current);
 
-  virtual void begin_scheduling_segment
+  void begin_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param
-     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
+     CORBA::Policy_ptr implicit_sched_param) override;
 
-  virtual void update_scheduling_segment
+  void update_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param
-     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
+     CORBA::Policy_ptr implicit_sched_param) override;
 
-  virtual void end_scheduling_segment
-    (const char * name
-     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void end_scheduling_segment (const char * name) override;
 
-  virtual RTScheduling::DistributableThread_ptr
-    lookup(const RTScheduling::Current::IdType & id
-           ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  RTScheduling::DistributableThread_ptr
+    lookup(const RTScheduling::Current::IdType & id) override;
 
   // returns a null reference if
   // the distributable thread is
   // not known to the local scheduler
-
-  virtual RTScheduling::DistributableThread_ptr
+  RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
            CORBA::VoidData data,
            const char* name,
            CORBA::Policy_ptr sched_param,
            CORBA::Policy_ptr implicit_sched_param,
            CORBA::ULong stack_size,
-           RTCORBA::Priority base_priority
-           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           RTCORBA::Priority base_priority) override;
 
-  virtual ::RTScheduling::Current::IdType *
-    id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  ::RTScheduling::Current::IdType *id () override;
 
-  virtual ::CORBA::Policy_ptr
-    scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  ::CORBA::Policy_ptr scheduling_parameter () override;
 
-  virtual ::CORBA::Policy_ptr
-    implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  ::CORBA::Policy_ptr implicit_scheduling_parameter ()  override;
 
-  virtual ::RTScheduling::Current::NameList *
-    current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  ::RTScheduling::Current::NameList *
+    current_scheduling_segment_names () override;
 
-  TAO_RTScheduler_Current_i* implementation (void);
+  TAO_RTScheduler_Current_i* implementation ();
 
   TAO_RTScheduler_Current_i* implementation (TAO_RTScheduler_Current_i*);
 
-  TAO_ORB_Core* orb (void);
+  TAO_ORB_Core* orb ();
 
-  DT_Hash_Map* dt_hash (void);
+  DT_Hash_Map* dt_hash ();
 
   /**
    * @name Reference Related Methods
@@ -170,27 +139,21 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
 
   static TAO_RTScheduler_Current_ptr _duplicate (TAO_RTScheduler_Current_ptr obj);
 
-  static TAO_RTScheduler_Current_ptr _narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static TAO_RTScheduler_Current_ptr _narrow (CORBA::Object_ptr obj);
 
-
-  static TAO_RTScheduler_Current_ptr _nil (void)
+  static TAO_RTScheduler_Current_ptr _nil ()
     {
-      return (TAO_RTScheduler_Current_ptr)0;
+      return nullptr;
     }
 
-  virtual const char* _interface_repository_id (void) const;
+  const char* _interface_repository_id () const override;
   //@}
 
- private:
+private:
   RTCORBA::Current_var rt_current_;
-  TAO_ORB_Core* orb_;
+  TAO_ORB_Core* orb_ {};
   DT_Hash_Map dt_hash_;
-
 };
-
-
 
 /**
  * @class TAO_RTScheduler_Current_var
@@ -199,53 +162,43 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_var
   : private TAO_Base_var
 {
 public:
-
-  TAO_RTScheduler_Current_var (void); // default constructor
+  TAO_RTScheduler_Current_var (); // default constructor
   TAO_RTScheduler_Current_var (TAO_RTScheduler_Current_ptr p) : ptr_ (p) {}
   TAO_RTScheduler_Current_var (const TAO_RTScheduler_Current_var &); // copy constructor
-  ~TAO_RTScheduler_Current_var (void); // destructor
+  ~TAO_RTScheduler_Current_var (); // destructor
 
   TAO_RTScheduler_Current_var &operator= (TAO_RTScheduler_Current_ptr);
   TAO_RTScheduler_Current_var &operator= (const TAO_RTScheduler_Current_var &);
-  TAO_RTScheduler_Current_ptr operator-> (void) const;
+  TAO_RTScheduler_Current_ptr operator-> () const;
 
   operator const TAO_RTScheduler_Current_ptr &() const;
   operator TAO_RTScheduler_Current_ptr &();
   // in, inout, out, _retn
-  TAO_RTScheduler_Current_ptr in (void) const;
-  TAO_RTScheduler_Current_ptr &inout (void);
-  TAO_RTScheduler_Current_ptr &out (void);
-  TAO_RTScheduler_Current_ptr _retn (void);
-  TAO_RTScheduler_Current_ptr ptr (void) const;
+  TAO_RTScheduler_Current_ptr in () const;
+  TAO_RTScheduler_Current_ptr &inout ();
+  TAO_RTScheduler_Current_ptr &out ();
+  TAO_RTScheduler_Current_ptr _retn ();
+  TAO_RTScheduler_Current_ptr ptr () const;
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
   static TAO_RTScheduler_Current_ptr duplicate (TAO_RTScheduler_Current_ptr);
   static void release (TAO_RTScheduler_Current_ptr);
-  static TAO_RTScheduler_Current_ptr nil (void);
-  static TAO_RTScheduler_Current_ptr narrow (
-      CORBA::Object *
-      ACE_ENV_ARG_DECL_NOT_USED
-    );
+  static TAO_RTScheduler_Current_ptr nil ();
+  static TAO_RTScheduler_Current_ptr narrow (CORBA::Object *);
   static CORBA::Object * upcast (void *);
 
 private:
-
   TAO_RTScheduler_Current_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  TAO_RTScheduler_Current_var (const TAO_Base_var &rhs);
-  TAO_RTScheduler_Current_var &operator= (const TAO_Base_var &rhs);
-
+  TAO_RTScheduler_Current_var (const TAO_Base_var &rhs) = delete;
+  TAO_RTScheduler_Current_var &operator= (const TAO_Base_var &rhs) = delete;
 };
-
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 {
- public:
-
+public:
   TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
-                             DT_Hash_Map* dt_hash
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                             DT_Hash_Map* dt_hash);
 
   TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
                              DT_Hash_Map* dt_hash,
@@ -254,12 +207,9 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
                              CORBA::Policy_ptr sched_param,
                              CORBA::Policy_ptr implicit_sched_param,
                              RTScheduling::DistributableThread_ptr dt,
-                             TAO_RTScheduler_Current_i* prev_current
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                             TAO_RTScheduler_Current_i* prev_current);
 
-  virtual ~TAO_RTScheduler_Current_i (void)
-    {
-    };
+  virtual ~TAO_RTScheduler_Current_i ();
 
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
@@ -268,83 +218,63 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
            CORBA::Policy_ptr sched_param,
            CORBA::Policy_ptr implicit_sched_param,
            CORBA::ULong stack_size,
-           RTCORBA::Priority base_priority
-           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           RTCORBA::Priority base_priority);
 
   virtual void begin_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param
-     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
+     CORBA::Policy_ptr implicit_sched_param);
 
   virtual void update_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param
-     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
+     CORBA::Policy_ptr implicit_sched_param);
 
-  virtual void end_scheduling_segment
-    (const char * name
-     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void end_scheduling_segment (const char * name);
 
-  virtual RTScheduling::Current::IdType *
-    id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual RTScheduling::Current::IdType *id ();
 
 
-  void  id (RTScheduling::Current::IdType guid );
+  void id (RTScheduling::Current::IdType guid);
 
-  virtual CORBA::Policy_ptr
-    scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr scheduling_parameter ();
 
-  virtual CORBA::Policy_ptr
-    implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  virtual CORBA::Policy_ptr implicit_scheduling_parameter ();
 
   void scheduling_parameter (CORBA::Policy_ptr);
 
   void implicit_scheduling_parameter (CORBA::Policy_ptr);
 
   virtual RTScheduling::Current::NameList *
-    current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    current_scheduling_segment_names ();
 
-  void cancel_thread (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void cancel_thread ();
 
-  void cleanup_DT (void);
+  void cleanup_DT ();
 
-  void cleanup_current (void);
+  void cleanup_current ();
 
-  void delete_all_currents (void);
+  void delete_all_currents ();
 
-  const char* name (void);
-  void name (char *);
+  const char* name ();
+  void name (const char *);
 
-  TAO_ORB_Core* orb (void);
+  TAO_ORB_Core* orb ();
 
-  RTScheduling::Scheduler_ptr scheduler (void);
+  RTScheduling::Scheduler_ptr scheduler ();
 
-  DT_Hash_Map* dt_hash (void);
+  DT_Hash_Map* dt_hash ();
 
-  RTScheduling::DistributableThread_ptr DT (void);
+  RTScheduling::DistributableThread_ptr DT ();
   void DT (RTScheduling::DistributableThread_ptr);
 
- private:
+private:
   RTScheduling::Scheduler_var scheduler_;
   TAO_ORB_Core* orb_;
   RTScheduling::Current::IdType guid_;
   CORBA::String_var name_;
-  CORBA::Policy_ptr sched_param_;
-  CORBA::Policy_ptr implicit_sched_param_;
+  CORBA::Policy_var sched_param_;
+  CORBA::Policy_var implicit_sched_param_;
   RTScheduling::DistributableThread_var dt_;
   TAO_RTScheduler_Current_i* previous_current_;
   DT_Hash_Map* dt_hash_;
@@ -354,9 +284,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 class DTTask : public ACE_Task <ACE_SYNCH>
 {
 public:
-  DTTask (//ACE_Thread_Manager manager,
-          TAO_ORB_Core* orb,
-          DT_Hash_Map* dt_hash,
+  DTTask (TAO_ORB_Core* orb,
+          DT_Hash_Map* ,
           TAO_RTScheduler_Current_i*,
           RTScheduling::ThreadAction_ptr start,
           CORBA::VoidData data,
@@ -364,16 +293,15 @@ public:
           CORBA::Policy_ptr sched_param,
           CORBA::Policy_ptr implicit_sched_param);
 
+  virtual ~DTTask ();
+
   int activate_task (RTCORBA::Priority base_priority,
-                     CORBA::ULong stack_size
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     CORBA::ULong stack_size);
 
-  virtual int svc (void);
+  int svc () override;
 
- private:
-  //ACE_Thread_Manager* manager_;
+private:
   TAO_ORB_Core* orb_;
-  DT_Hash_Map* dt_hash_;
   TAO_RTScheduler_Current_i* current_;
   RTScheduling::ThreadAction_var start_;
   CORBA::VoidData data_;
@@ -382,6 +310,8 @@ public:
   CORBA::Policy_var sched_param_;
   CORBA::Policy_var implicit_sched_param_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

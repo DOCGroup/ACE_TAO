@@ -1,21 +1,17 @@
-// $Id$
-
-#include "HTIOP_Endpoint.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
 #include "ace/os_include/os_netdb.h"
+#include "orbsvcs/Log_Macros.h"
 
 #include "tao/IOPC.h"
 #include "tao/debug.h"
 
-
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Endpoint,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
-# include "HTIOP_Endpoint.i"
+# include "orbsvcs/HTIOP/HTIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Endpoint::Endpoint (const ACE::HTBP::Addr &addr,
                                         int use_dotted_decimal_addresses)
@@ -48,7 +44,7 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     this->htid_ = htid;
 }
 
-TAO::HTIOP::Endpoint::Endpoint (void)
+TAO::HTIOP::Endpoint::Endpoint ()
   : TAO_Endpoint (OCI_TAG_HTIOP_PROFILE),
     host_ (),
     port_ (0),
@@ -76,7 +72,7 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     this->htid_ = htid;
 }
 
-TAO::HTIOP::Endpoint::~Endpoint (void)
+TAO::HTIOP::Endpoint::~Endpoint ()
 {
 }
 
@@ -93,7 +89,7 @@ TAO::HTIOP::Endpoint::set (const ACE::HTBP::Addr &addr,
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("TAO::HTIOP::Endpoint::set ")
                         ACE_TEXT ("- %p\n\n"),
@@ -154,7 +150,7 @@ TAO::HTIOP::Endpoint::htid (const char *h)
 }
 
 void
-TAO::HTIOP::Endpoint::reset_hint (void)
+TAO::HTIOP::Endpoint::reset_hint ()
 {
   // Commented out for the time being....
   /*  if (this->hint_)
@@ -162,13 +158,13 @@ TAO::HTIOP::Endpoint::reset_hint (void)
 }
 
 TAO_Endpoint *
-TAO::HTIOP::Endpoint::next (void)
+TAO::HTIOP::Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO::HTIOP::Endpoint::duplicate (void)
+TAO::HTIOP::Endpoint::duplicate ()
 {
   // @@ Bala, we probably need to make sure that the duplicate has the
   // same priority as the original.  Although it does not matter in
@@ -208,13 +204,11 @@ TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO::HTIOP::Endpoint::hash (void)
+TAO::HTIOP::Endpoint::hash ()
 {
-  // We could call ACE::HTBP::Addr::hash() since it does much the same
-  // thing except that it converts the port from network byte order to
-  // host byte order.  As such, this implementation is actually less
-  // costly.
   if (this->htid_.in() && ACE_OS::strlen (this->htid_.in()))
     return ACE::hash_pjw(this->htid_.in());
-  return this->object_addr ().get_ip_address () + this->port ();
+  return this->object_addr ().hash();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

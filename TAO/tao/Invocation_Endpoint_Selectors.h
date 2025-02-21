@@ -4,8 +4,6 @@
 /**
  *  @file   Invocation_Endpoint_Selectors.h
  *
- *  $Id$
- *
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
  *
@@ -17,16 +15,22 @@
 #define TAO_INVOCATION_ENDPOINT_SELECTOR_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/Versioned_Namespace.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_MProfile;
-class ACE_Time_Value;
 
 namespace TAO
 {
@@ -36,7 +40,6 @@ namespace TAO
 namespace CORBA
 {
   class Exception;
-  class Environment;
 }
 /**
  * @class TAO_Invocation_Endpoint_Selector
@@ -55,17 +58,12 @@ namespace CORBA
 class TAO_Export TAO_Invocation_Endpoint_Selector
 {
 public:
-  /// Constructor.
-  TAO_Invocation_Endpoint_Selector (void);
-
   /// Destructor.
-  virtual ~TAO_Invocation_Endpoint_Selector (void);
+  virtual ~TAO_Invocation_Endpoint_Selector ();
 
   /// Select the endpoint and set @a r's @c profile_
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val
-                                ACE_ENV_ARG_DECL) = 0;
-
+                                ACE_Time_Value *val) = 0;
 };
 
 // ****************************************************************
@@ -82,20 +80,19 @@ public:
  * profile in the IOR.  If that doesn't work, try the next
  * profile, and so on.
  */
-class TAO_Export TAO_Default_Endpoint_Selector :
-  public TAO_Invocation_Endpoint_Selector
+class TAO_Export TAO_Default_Endpoint_Selector
+  : public TAO_Invocation_Endpoint_Selector
 {
 public:
-  /// Constructor.
-  TAO_Default_Endpoint_Selector (void);
-
   /// Destructor.
-  virtual ~TAO_Default_Endpoint_Selector (void);
+  virtual ~TAO_Default_Endpoint_Selector ();
 
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val
-                                ACE_ENV_ARG_DECL);
+                                ACE_Time_Value *val);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_INVOCATION_ENDPOINT_SELECTOR_H */

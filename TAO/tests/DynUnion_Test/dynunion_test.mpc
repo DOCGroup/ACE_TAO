@@ -1,0 +1,18 @@
+project(*IDL): dynamicany {
+  IDL_Files {
+    dynany.idl
+  }
+  custom_only = 1
+}
+
+
+project(dynuniontest): dynamicany, typecodefactory {
+  exename = dynuniontest
+  after += *IDL
+  Source_Files {
+    DynUnionTest.cpp
+    dynanyC.cpp
+  }
+  IDL_Files {
+  }
+}

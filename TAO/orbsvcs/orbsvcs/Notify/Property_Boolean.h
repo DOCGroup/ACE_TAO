@@ -1,12 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Property_Boolean.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROPERTY_BOOLEAN_H
@@ -14,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,23 +19,22 @@
 
 #include "orbsvcs/CosNotificationC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_PropertySeq;
 
 /**
  * @class TAO_Notify_Property_Boolean
  *
  * @brief Boolean Property.
- *
  */
-/*******************************************************************************/
-
 class TAO_Notify_Serv_Export TAO_Notify_Property_Boolean
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Property_Boolean (const char* name, CORBA::Boolean initial);
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Property_Boolean (const char* name);
 
   /// Assignment from TAO_Notify_Property_Boolean
@@ -58,13 +54,13 @@ public:
   void get (CosNotification::PropertySeq& prop_seq);
 
   /// Return the name
-  const char * name (void) const;
+  const char * name () const;
 
   /// Return the value.
-  CORBA::Boolean value (void) const;
+  CORBA::Boolean value () const;
 
   /// Is the current value valid
-  CORBA::Boolean is_valid (void) const;
+  CORBA::Boolean is_valid () const;
 
 protected:
   /// The Property name.
@@ -77,8 +73,10 @@ protected:
   CORBA::Boolean valid_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Property_Boolean.inl"
+#include "orbsvcs/Notify/Property_Boolean.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

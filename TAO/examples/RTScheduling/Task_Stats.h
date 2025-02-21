@@ -3,8 +3,6 @@
 /**
  *  @file Task_Stats.h
  *
- *  $Id$
- *
  *  Utility Stats class that maintains the readings.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -13,21 +11,23 @@
 #ifndef TASK_STATS_H
 #define TASK_STATS_H
 
-#include "ace/OS_NS_time.h"
-#include "ace/Singleton.h"
+#include "rtschedtestlib_export.h"
+
 #include "tao/orbconf.h"
 #include "tao/debug.h"
+
+#include "ace/OS_NS_time.h"
+#include "ace/Singleton.h"
 
 /**
  * @class Base_Time
  *
  * @brief maintains readings recorded by tasks.
- *
  */
-class Base_Time
+class RTSCHEDTESTLIB_Export Base_Time
 {
  public:
-  Base_Time (void);
+  Base_Time ();
   ACE_hrtime_t base_time_;
 };
 
@@ -37,16 +37,15 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
  * @class Task_Stats
  *
  * @brief maintains readings recorded by tasks.
- *
  */
-class Task_Stats
+class RTSCHEDTESTLIB_Export Task_Stats
 {
  public:
   /// Constructor
-  Task_Stats (void);
+  Task_Stats ();
 
   /// Destructor
-  ~Task_Stats (void);
+  ~Task_Stats ();
 
   /// Init
   int init (size_t max_samples);
@@ -58,10 +57,9 @@ class Task_Stats
   void end_time (ACE_hrtime_t time);
 
   /// Record a sample
-  int sample (ACE_UINT32 thr_run_time, int thr_count);
+  int sample (time_t thr_run_time, int thr_count);
 
-  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
-                     ACE_UINT32 scale_factor);
+  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg);
  protected:
   void dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf);
 
@@ -76,7 +74,7 @@ class Task_Stats
   ACE_UINT32 samples_count_;
 
   /// The samples : the time of execution. and the recorded exec. time .
-  ACE_UINT32 *thr_run_time_;
+  time_t *thr_run_time_;
   int *thr_count_;
 
   /// The minimum value

@@ -1,18 +1,12 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel examples
-//
-// = FILENAME
-//   Supplier
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Supplier.h
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
@@ -24,39 +18,38 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Supplier
+ *
+ * @brief Simple supplier object
+ *
+ * This class is a supplier of events.
+ * It simply publishes one event type, when the perform_push()
+ * method is invoked it pushes the event through the event service
+ */
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //   This class is a supplier of events.
-  //   It simply publishes one event type, when the perform_push()
-  //   method is invoked it pushes the event through the event service
-  //
 public:
-  Supplier (void);
-  // Constructor
+  /// Constructor
+  Supplier ();
 
-  void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
-  // Connect to the event channel
+  /// Connect to the event channel
+  void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
-  // Disconnect from the event channel
+  /// Disconnect from the event channel
+  void disconnect ();
 
-  void perform_push (ACE_ENV_SINGLE_ARG_DECL);
-  // Push a single event
+  /// Push a single event
+  void perform_push ();
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // The skeleton methods.
+  /// The skeleton methods.
+  virtual void disconnect_push_supplier ();
 
 private:
+  /// The proxy
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_;
-  // The proxy
 };
 
 #endif /* SUPPLIER_H */

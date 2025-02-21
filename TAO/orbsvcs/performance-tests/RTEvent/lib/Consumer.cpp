@@ -1,8 +1,6 @@
 /**
  * @file Consumer.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -11,15 +9,11 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Consumer, 
-           "$Id$")
-
 Consumer::Consumer (CORBA::Long experiment_id,
                     CORBA::Long event_type,
                     CORBA::ULong iterations,
                     CORBA::Long workload_in_usecs,
-                    ACE_UINT32 gsf,
+                    ACE_High_Res_Timer::global_scale_factor_type gsf,
                     PortableServer::POA_ptr poa)
   : experiment_id_ (experiment_id)
   , event_type_ (event_type)
@@ -31,12 +25,10 @@ Consumer::Consumer (CORBA::Long experiment_id,
 }
 
 void
-Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                   ACE_ENV_ARG_DECL)
+Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_consumers ();
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -44,13 +36,11 @@ Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
       return;
 
     this->proxy_supplier_ =
-      consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      consumer_admin->obtain_push_supplier ();
   }
 
   RtecEventComm::PushConsumer_var consumer =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   RtecEventChannelAdmin::ConsumerQOS consumer_qos;
   consumer_qos.is_gateway = 0;
@@ -66,13 +56,11 @@ Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
   h1.source = this->experiment_id_;
 
   this->proxy_supplier_->connect_push_consumer (consumer.in (),
-                                                consumer_qos
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                consumer_qos);
 }
 
 void
-Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Consumer::disconnect ()
 {
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy;
   {
@@ -82,27 +70,22 @@ Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
     proxy = this->proxy_supplier_._retn ();
   }
 
-  Implicit_Deactivator deactivator (this
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  Implicit_Deactivator deactivator (this);
 
-  ACE_TRY {
-    proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-  } ACE_CATCHANY {
-  } ACE_ENDTRY;
+  try{
+    proxy->disconnect_push_supplier ();
+  } catch (const CORBA::Exception&) {
+  }
 }
 
 ACE_Sample_History &
-Consumer::sample_history (void)
+Consumer::sample_history ()
 {
   return this->sample_history_;
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet &events
-                ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer::push (const RtecEventComm::EventSet &events)
 {
   ACE_hrtime_t now = ACE_OS::gethrtime ();
 
@@ -125,8 +108,7 @@ Consumer::push (const RtecEventComm::EventSet &events
 }
 
 void
-Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer::disconnect_push_consumer ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->proxy_supplier_ =
@@ -134,8 +116,7 @@ Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 PortableServer::POA_ptr
-Consumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

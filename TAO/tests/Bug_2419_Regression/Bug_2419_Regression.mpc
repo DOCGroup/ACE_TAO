@@ -1,0 +1,7 @@
+// -*- MPC -*-
+project (*Client) : taoserver, messaging {
+  exename = client
+  Source_Files {
+    client.cpp
+    }
+}

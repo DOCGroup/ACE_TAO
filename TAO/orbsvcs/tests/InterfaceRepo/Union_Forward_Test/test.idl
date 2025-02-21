@@ -1,0 +1,20 @@
+module IFR_Test
+{
+
+  union test;
+
+  typedef sequence<test> test_seq;
+
+  union test switch (short)
+  {
+  case 0 : short x;
+  case 1 : test_seq seq;
+  default : string s;
+  };
+
+  interface test_if
+  {
+    attribute test foo;
+  };
+
+};

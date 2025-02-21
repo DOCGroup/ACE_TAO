@@ -1,0 +1,122 @@
+
+
+This utility is intended to assist in the analysis of large debug output
+files generated with -ORBDebuglevel 10. The utility summarizes thread,
+connection, and invocation details for a collection of related processes.
+
+This is a work in progress. It currently is limited to parsing logs of
+IIOP based apps only.
+
+The executable is installed as $ACE_ROOT/bin/tao_logWalker.
+
+The command line options are:
+
+  -t <version>	 	 where <version> represents a TAO minor version
+     			 number, currently 1.5 through 2.0 are supported.
+			 As variations in logfile output bound to version
+			 are found, this option will expand and may include
+			 micro release numbers as well. Default is 2.0.
+
+  -o <filename>		 redirects the output to the named file rather than
+     			 standard out.
+
+  -d <directory>         breaks the output into multiple files under the
+     			 named directory. The directory will be created if
+			 it does not exist. -o and -d are mutually exclusive.
+
+  -p <name=value>	 allows the tagging of processes participating in
+     			 a logged run, but for which no log file exists. The
+			 name in this case is some alias which will appear in
+			 the output, and value is the TCP endpoint used by
+			 the phantom process.
+
+  -a <name=value>	 allows for substitution of addresses. Some endpoints
+     			 may be logged using a hostname, while other instances
+			 may appear as an IP address. This is a simple means
+			 of substituting one for the other to improve the
+			 recognition of a peer process.
+
+  -m <filename>		 read argument from the named manifest file. For
+     			 repeated analysis of may perhaps distributed log files,
+			 use a manifest file to minimize keying in long command
+			 lines. Each line of the file contains one full argument.
+
+  [alias=]logfile        provide as many log files as needed. The optional
+  			 alias gives a way to assign a useful name to the process
+			 that generated the log output in the file. If many
+			 processes shared a logfile so that their output is
+			 comingled or consecutive, each process instance will be
+			 given an indexed alias such as alias_1, alias_2, etc.
+
+Below is a sample output resulting from a run of tests/Hello, which can be
+reproduced by running: ./tao_logWalker -m hello.mft
+
+
+Session summary report: 2 Processes detected.
+Host process HelloServer pid(8447) from logfile helloServer.log
+  listening on phil.ociweb.com:33152, 10.201.200.173:33152
+  1 threads, server to 1
+Host process HelloClient pid(8448) from logfile helloClient.log
+  listening on 10.201.200.173:40203
+  1 threads, client to 1
+
+
+
+Session detail threads report:
+
+Host process HelloServer pid (8447)  thread details:
+   Thread[1] tid = 2147483647	2 encounters
+
+Host process HelloClient pid (8448)  thread details:
+   Thread[1] tid = 2147483647	2 encounters
+
+
+
+Session detail peer process report:
+
+Host process HelloServer pid (8447)  peer processes:
+0 clients
+1 servers
+    peer process proc_0 handle[8] as  server to HelloClient referenced 1 objects in 2 invocations closed on line 71
+
+Host process HelloClient pid (8448)  peer processes:
+1 clients
+    peer process proc_1 handle[7] as client on 10.201.200.173:40203 to HelloServer referenced 1 objects in 2 invocations closed on line 77
+0 servers
+
+
+
+Session detail object report:
+
+Host process HelloServer pid (8447)  peer objects:
+1 Objects referenced in proc_0:
+0 has 2 invocations
+Total of  2 invocations
+
+
+Host process HelloClient pid (8448)  peer objects:
+1 Objects referenced in proc_1:
+0 has 2 invocations
+Total of  2 invocations
+
+
+
+
+Session detail invocation report:
+
+Host process HelloServer pid (8447)  invocations:
+
+ 2 Invocations with proc_0:
+ 1 for obj_0 from HelloClient [get_string]	 Request, line 30 Thread[1] Reply, line 37 log offset = 7
+ 2 for obj_0 from HelloClient [shutdown]	 Request, line 58 Thread[1] oneway
+
+Host process HelloServer pid (8447)  end invocation report
+
+Host process HelloClient pid (8448)  invocations:
+
+ 2 Invocations with proc_1:
+ 1 to obj_0 in HelloServer [get_string]	 Request, line 27 Thread[1] Reply, line 49 log offset = 22
+ 2 to obj_0 in HelloServer [shutdown]	 Request, line 62 Thread[1] oneway
+
+Host process HelloClient pid (8448)  end invocation report
+

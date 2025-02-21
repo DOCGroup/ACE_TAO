@@ -1,33 +1,22 @@
-// $Id$
+#include "tao/DLL_Parser.h"
 
-#include "DLL_Parser.h"
-#include "Object_Loader.h"
-#include "Object.h"
-#include "Environment.h"
-#include "ORB_Constants.h"
-#include "SystemException.h"
+# if (TAO_HAS_DDL_PARSER == 1)
+
+#include "tao/Object_Loader.h"
+#include "tao/Object.h"
+#include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-#if !defined(__ACE_INLINE__)
-#include "DLL_Parser.i"
-#endif /* __ACE_INLINE__ */
-
-
-ACE_RCSID (tao,
-           DLL_Parser,
-           "$Id$")
-
-
-TAO_DLL_Parser::~TAO_DLL_Parser (void)
-{
-}
-
 static const char dll_prefix[] = "DLL:";
 
-int
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+bool
 TAO_DLL_Parser::match_prefix (const char *ior_string) const
 {
   return (ACE_OS::strncmp (ior_string,
@@ -37,31 +26,32 @@ TAO_DLL_Parser::match_prefix (const char *ior_string) const
 
 CORBA::Object_ptr
 TAO_DLL_Parser::parse_string (const char *ior,
-                              CORBA::ORB_ptr orb
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                              CORBA::ORB_ptr orb)
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
   const char *name =
     ior + sizeof (::dll_prefix) - 1;
 
-  TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance (name);
+  TAO_ORB_Core *oc = orb->orb_core ();
 
-  if (loader == 0)
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (oc->configuration(), name);
+
+  if (loader == nullptr)
     {
-      ACE_THROW_RETURN
-        (CORBA::INV_OBJREF
+      throw
+         CORBA::INV_OBJREF
          (CORBA::SystemException::_tao_minor_code (
             0,
             EINVAL),
-          CORBA::COMPLETED_NO),
-         CORBA::Object::_nil ());
+          CORBA::COMPLETED_NO);
     }
 
-  return loader->create_object (orb, 0, 0 ACE_ENV_ARG_PARAMETER);
+  return loader->create_object (orb, 0, nullptr);
 }
+
 
 ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
                        ACE_TEXT ("DLL_Parser"),
@@ -71,11 +61,8 @@ ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
                                   ACE_Service_Type::DELETE_OBJ,
                        0)
 
-
 ACE_FACTORY_DEFINE (TAO, TAO_DLL_Parser)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* TAO_HAS_DDL_PARSER == 1 */

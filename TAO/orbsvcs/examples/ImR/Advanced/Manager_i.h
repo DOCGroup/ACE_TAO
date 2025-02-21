@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
 #ifndef MANAGERI_H_
 #define MANAGERI_H_
 
@@ -16,19 +14,15 @@ class  Manager_i
 public:
   Manager_i (long retryCount);
 
-  virtual ~Manager_i (void);
+  virtual ~Manager_i ();
 
-  virtual CORBA::Long registerServer ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long registerServer ();
 
-  virtual void startRetry (CORBA::Long count)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void startRetry (CORBA::Long count);
 
-  virtual CORBA::Long endRetry ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long endRetry ();
 
 private:
-
   long server_instance_;
   long retry_count_;
   long retry_attempt_;

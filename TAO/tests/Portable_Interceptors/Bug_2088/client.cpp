@@ -1,13 +1,9 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID(Interceptors, client, "$Id$")
-
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Client_ORBInitializer* initializer1 = 0;
   Client_ORBInitializer* initializer2 = 0;
@@ -21,47 +17,60 @@ main (int argc, char *argv[])
                   Client_ORBInitializer,
                   -1);  // No exceptions yet!
 
-  PortableInterceptor::ORBInitializer_var initializer_var1 =
-    initializer1;
+  PortableInterceptor::ORBInitializer_var initializer_var1 = initializer1;
+  PortableInterceptor::ORBInitializer_var initializer_var2 = initializer2;
 
-  PortableInterceptor::ORBInitializer_var initializer_var2 =
-    initializer2;
-
-  ACE_TRY_NEW_ENV
+  try
     {
-      PortableInterceptor::register_orb_initializer (initializer_var1.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (initializer_var1.in ());
 
-      PortableInterceptor::register_orb_initializer (initializer_var2.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (initializer_var2.in ());
 
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
     }
-  ACE_CATCH (CORBA::NO_MEMORY, ex)
+  catch (const CORBA::NO_MEMORY&)
     {
       // Initializer1 throws this exception and we should get it here
       caught_exception = true;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in client:");
+      ex._tao_print_exception ("Caught exception in client:");
       return 1;
     }
-  ACE_ENDTRY;
 
   // Only the pre init for initalizer 1 must be called, other initializers
   // shouldn't be caught
-  ACE_ASSERT (initializer1->pre_init_called == true);
-  ACE_ASSERT (initializer2->pre_init_called == false);
-  ACE_ASSERT (initializer1->post_init_called == false);
-  ACE_ASSERT (initializer2->post_init_called == false);
-  ACE_ASSERT (caught_exception == true);
+  if (initializer1->pre_init_called != true)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Pre init not called for 1\n"),
+                        -1);
+    }
+  if (initializer2->pre_init_called != false)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Pre init called for 2\n"),
+                        -1);
+    }
+  if (initializer1->post_init_called != false)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Post init not called for 1\n"),
+                        -1);
+    }
+  if (initializer2->post_init_called != false)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Post init not called for 1\n"),
+                        -1);
+    }
+  if (caught_exception != true)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Excep not caught\n"),
+                        -1);
+    }
 
   return 0;
 }

@@ -1,21 +1,14 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    driver.h
-//
-// = DESCRIPTION
-//    Header file for the driver program. The driver is a singleton.
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    driver.h
+ *
+ *  Header file for the driver program. The driver is a singleton.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef DRIVER_H
 #define DRIVER_H
@@ -23,30 +16,32 @@
 #include "options.h"
 #include "param_testC.h"
 
+/**
+ * @class Driver
+ *
+ * @brief Driver
+ *
+ * Driver program for the client
+ */
 class Driver
 {
-  // = TITLE
-  //    Driver
-  //
-  // = DESCRIPTION
-  //    Driver program for the client
 public:
   // = Constructor and destructor.
-  Driver (void);
-  ~Driver (void);
+  Driver ();
+  ~Driver ();
 
-  int init (int argc, char **argv);
-  // Initialize the driver object
+  /// Initialize the driver object
+  int init (int argc, ACE_TCHAR **argv);
 
-  int run (void);
-  // Execute client example code.
+  /// Execute client example code.
+  int run ();
 
 private:
+  /// underlying ORB (we do not own it)
   CORBA::ORB_var orb_;
-  // underlying ORB (we do not own it)
 
+  /// object reference (we do not own it)
   Param_Test_var objref_;
-  // object reference (we do not own it)
 };
 
 #endif /* !defined */

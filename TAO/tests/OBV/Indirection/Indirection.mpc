@@ -1,0 +1,36 @@
+project(*IDL): taoidldefaults, valuetype {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, valuetype {
+  exename = MessengerServer
+  after += *IDL
+  Source_Files {
+    Messenger_i.cpp
+    Factory.cpp
+    MessengerServer.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, valuetype {
+  exename = MessengerClient
+  after += *IDL
+  Source_Files {
+    Factory.cpp
+    MessengerClient.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}

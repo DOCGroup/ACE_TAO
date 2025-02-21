@@ -1,53 +1,42 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    field_ci.cpp
-//
-// = DESCRIPTION
-//     Visitor for the Valuetype class.
-//     This one generates code for accessor and modifier functions of
-//     valuetype state members (in the inline file).
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    field_ci.cpp
+ *
+ *   Visitor for the Valuetype class.
+ *   This one generates code for accessor and modifier functions of
+ *   valuetype state members (in the inline file).
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           field_ci, 
-           "$Id$")
+#include "valuetype.h"
 
 be_visitor_valuetype_field_ci::be_visitor_valuetype_field_ci (
     be_visitor_context *ctx
   )
   : be_visitor_decl (ctx),
-    in_obv_space_ (0)
+    in_obv_space_ (false)
 {
   setenclosings ("");
 }
 
-be_visitor_valuetype_field_ci::~be_visitor_valuetype_field_ci (void)
+be_visitor_valuetype_field_ci::~be_visitor_valuetype_field_ci ()
 {
 }
 
 int
 be_visitor_valuetype_field_ci::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cs::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -58,7 +47,7 @@ be_visitor_valuetype_field_ci::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cs::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -71,8 +60,9 @@ int
 be_visitor_valuetype_field_ci::visit_array (be_array *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_valuetype *bu = be_valuetype::narrow_from_decl (this->ctx_->scope ());
-  be_type *bt;
+  be_valuetype *bu =
+    dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -105,7 +95,7 @@ be_visitor_valuetype_field_ci::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ci::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -117,8 +107,9 @@ int
 be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_valuetype *bu = be_valuetype::narrow_from_decl (this->ctx_->scope ());
-  be_type *bt;
+  be_valuetype *bu =
+    dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -135,7 +126,7 @@ be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ci::"
                          "visit_structure - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -151,7 +142,7 @@ be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ci::"
                              "visit_structure - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -163,8 +154,9 @@ int
 be_visitor_valuetype_field_ci::visit_union (be_union *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_valuetype *bu = be_valuetype::narrow_from_decl (this->ctx_->scope ());
-  be_type *bt;
+  be_valuetype *bu =
+    dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -181,7 +173,7 @@ be_visitor_valuetype_field_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ci::"
                          "visit_union - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -197,7 +189,7 @@ be_visitor_valuetype_field_ci::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ci::"
                              "visit_union - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }

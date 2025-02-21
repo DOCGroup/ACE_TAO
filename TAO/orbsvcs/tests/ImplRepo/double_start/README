@@ -1,0 +1,5 @@
+This test demonstrates that a client may safely obtain a new reference to a
+previously crashed server by connecting to either a primary or backup ImR.
+
+Additionally, a secondary restart script is used to request a server restart
+when the server exits with a non-zero value.

@@ -4,11 +4,7 @@
 /**
  *  @file   RTEvent_Supplier.h
  *
- *  $Id$
- *
  *  An example of using the RTEvent_Logging_Service.
- *  
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
@@ -35,20 +31,18 @@ class Supplier : public POA_RtecEventComm::PushSupplier
   //   It simply publishes one event type.
   //
 public:
-  Supplier (void);
+  Supplier ();
   // Constructor
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
   // The skeleton methods.
 
 private:
-
   // = Data Members
   CosNaming::NamingContext_var naming_context_;
   // Handle to the name service.

@@ -1,0 +1,10 @@
+#ifndef CALLBACK_IDL
+#define CALLBACK_IDL
+
+interface Callback
+{
+  void test_method();
+};
+
+
+#endif

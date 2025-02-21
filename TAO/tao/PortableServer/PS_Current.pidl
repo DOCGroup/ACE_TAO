@@ -1,0 +1,41 @@
+/**
+ * @file PS_Current.pidl
+ *
+ * @brief PIDL source for the PortableServer module.
+ */
+
+#ifndef _PORTABLESERVER_CURRENT_IDL_
+#define _PORTABLESERVER_CURRENT_IDL_
+
+///FUZZ: disable check_for_include/
+#include "tao/PortableServer/PS_Forward.pidl"
+#include "tao/Current.pidl"
+
+#pragma prefix "omg.org"
+
+module PortableServer
+{
+# pragma version PortableServer 2.3
+
+  // Current interface.
+  local interface Current : CORBA::Current
+  {
+#   pragma version Current 2.3
+
+    exception NoContext {};
+
+    POA get_POA ()
+      raises (NoContext);
+
+    ObjectId get_object_id ()
+      raises (NoContext);
+
+    Object get_reference ()
+      raises (NoContext);
+
+    Servant get_servant ()
+      raises (NoContext);
+  };
+};
+
+#endif // _PORTABLESERVER_CURRENT_IDL_

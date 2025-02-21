@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Priority_Dispatching.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -16,16 +15,18 @@
 #define TAO_EC_PRIORITY_DISPATCHING_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Dispatching.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "sched_event_export.h"
+#include "orbsvcs/Event/sched_event_export.h"
 
 #include "ace/Thread_Manager.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Dispatching_Task;
 class TAO_EC_Event_Channel_Base;
@@ -54,18 +55,16 @@ public:
   TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info
-                     ACE_ENV_ARG_DECL);
+                     TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info
-                            ACE_ENV_ARG_DECL);
+                            TAO_EC_QOS_Info& qos_info);
 
 private:
   /// Use our own thread manager.
@@ -80,6 +79,8 @@ private:
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_PRIORITY_DISPATCHING_H */

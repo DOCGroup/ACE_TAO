@@ -1,0 +1,39 @@
+/**
+
+
+
+@page Hello Test README File
+
+	The simplest possible test for TAO.  This is a very simple
+test for TAO, it can be argued that it is in fact too simple to do
+anything useful, i.e. chances are that this test will always pass.
+
+	The goals of writing this test are:
+
+- Provide a very simple, very fast 'smoke test' for ORB developers.
+  If Hello does not pass then something is extremely broken and you
+  should go back to the drawing board.
+- Provide a code base to write more complex tests
+- Rule out basic infrastructure problems: if this test does not work
+  for a user then the infrastructure (network, DNS, host
+  configuration) are more likely to be at fault than the ORB.
+- External users are often asked to send us a 'simple test' for their
+  use case, we can now point them to this test to explain what do we
+  mean by "simple".
+- The -GA option has been added to the IDL compiler command line.
+  This option generates type code and Any insertion/extraction
+  operator implementations in a separate file with the extension *A.cpp.
+  This file is not included in the compilation however, to make sure
+  there is no dependency on it if the client and server do not use
+  type codes or Anys.
+
+	Please refrain from "improving", extending or expanding this
+test, if you need to change
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/

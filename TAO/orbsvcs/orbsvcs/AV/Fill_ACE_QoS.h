@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Fill_ACE_QoS.h
- *
- *  $Id$
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
@@ -18,31 +16,34 @@
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
+#include "tao/Versioned_Namespace.h"
+
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Synch.h"
 #include "ace/ACE.h"
 #include "ace/OS_QoS.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class Fill_ACE_QoS
- * 
+ *
  * This class helps users to add new flow specs and provides
  * utility functions for filling up the flow specs for simplex/duplex
  * sessions.
  */
 class Fill_ACE_QoS
 {
-
 public:
   typedef ACE_Hash_Map_Manager <ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex> FLOW_SPEC_HASH_MAP;
 
   //Initialization and termination methods.
   /// constructor.
-  Fill_ACE_QoS (void);
+  Fill_ACE_QoS ();
 
   /// destructor.
-  ~Fill_ACE_QoS (void);
+  ~Fill_ACE_QoS ();
 
   /// To be used by receivers. Fills the receiver qos and sets the
   /// sender qos to NO_TRAFFIC.
@@ -61,10 +62,9 @@ public:
                        ACE_Flow_Spec *sender_flow_spec);
 
   /// Returns the hash map of flowspecs indexed by flowspec name.
-  FLOW_SPEC_HASH_MAP& map (void);
+  FLOW_SPEC_HASH_MAP& map ();
 
 private:
-
   // The Service Provider is currently set to NULL for all ACE_QoS.
   static const iovec iov_;
 
@@ -75,6 +75,8 @@ private:
   // A list of flowspecs indexed by the flowspec name.
   FLOW_SPEC_HASH_MAP flow_spec_map_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 #endif /* FILL_ACE_QOS_H */

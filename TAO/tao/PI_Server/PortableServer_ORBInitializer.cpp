@@ -1,73 +1,32 @@
 // -*- C++ -*-
-
-#include "PortableServer_ORBInitializer.h"
-#include "PortableServer_PolicyFactory.h"
+#include "tao/PI_Server/PortableServer_ORBInitializer.h"
+#include "tao/PI_Server/PortableServer_PolicyFactory.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "POA_Current.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (PI_Server,
-           PortableServer_ORBInitializer,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_PortableServer_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PortableServer_ORBInitializer::pre_init (
+  PortableInterceptor::ORBInitInfo_ptr)
 {
-  this->register_poa_current (info
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-TAO_PortableServer_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
-                                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PortableServer_ORBInitializer::post_init (
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
-  this->register_policy_factories (info
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->register_policy_factories (info);
 }
 
 void
-TAO_PortableServer_ORBInitializer::register_poa_current (PortableInterceptor::ORBInitInfo_ptr info
-                                                         ACE_ENV_ARG_DECL)
+TAO_PortableServer_ORBInitializer::register_policy_factories (
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
-  // Narrow to a TAO_ORBInitInfo object to get access to the
-  // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info =
-    TAO_ORBInitInfo::_narrow (info
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (CORBA::is_nil (tao_info.in ()))
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) PortableServer_ORBInitializer::post_init:\n"
-                    "(%P|%t)    Unable to narrow "
-                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
-
-      ACE_THROW (CORBA::INTERNAL ());
-    }
-
-  // Create Current.
-  CORBA::Object_var current =
-    new TAO::Portable_Server::POA_Current;
-
-  // Setup the POA_Current object in the ORB Core.
-  tao_info->orb_core ()->poa_current (current.in ());
-}
-
-void
-TAO_PortableServer_ORBInitializer::register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info
-                                                              ACE_ENV_ARG_DECL)
-{
+#if !defined (CORBA_E_MICRO)
   // Register the PortableServer policy factories.
   PortableInterceptor::PolicyFactory_ptr tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -77,15 +36,14 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (PortableIntercepto
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::PolicyFactory_var policy_factory = tmp;
 
   // Bind the same policy factory to all PortableServer related policy
   // types since a single policy factory is used to create each of the
   // different types of PortableServer policies.
-  CORBA::PolicyType type[] = {
-#if (TAO_HAS_MINIMUM_POA == 0)
+  static CORBA::PolicyType const type[] = {
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
     PortableServer::THREAD_POLICY_ID,
     PortableServer::IMPLICIT_ACTIVATION_POLICY_ID,
     PortableServer::SERVANT_RETENTION_POLICY_ID,
@@ -96,21 +54,18 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (PortableIntercepto
     PortableServer::ID_ASSIGNMENT_POLICY_ID
   };
 
-  const CORBA::PolicyType *end =
+  CORBA::PolicyType const * end =
     type + sizeof (type) / sizeof (type[0]);
 
-  for (CORBA::PolicyType *i = type;
+  for (CORBA::PolicyType const *i = type;
        i != end;
        ++i)
     {
-      ACE_TRY
+      try
         {
-          info->register_policy_factory (*i,
-                                         policy_factory.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          info->register_policy_factory (*i, policy_factory.in ());
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -121,14 +76,12 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (PortableIntercepto
               // ORBInitializer.
               return;
             }
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_CATCHANY
-        {
-          // Rethrow any other exceptions...
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
+#else
+  ACE_UNUSED_ARG (info);
+#endif
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

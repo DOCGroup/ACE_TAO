@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Policy_Validator.h
- *
- *  $Id$
  *
  *  This file contains the declaration for the POA policy validator
  *  interface.
@@ -16,14 +16,16 @@
 #define TAO_POLICY_VALIDATOR_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
+#include /**/ "tao/TAO_Export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_Policy_Set;
@@ -32,8 +34,6 @@ class TAO_ORB_Core;
 namespace CORBA
 {
   typedef ULong PolicyType;
-
-  class Environment;
 }
 
 /**
@@ -47,7 +47,6 @@ namespace CORBA
  *  for the policies in the POA. This class seems so much useful for
  *  passing policy information between different loaded libraries.
  */
-
 class TAO_Export TAO_Policy_Validator
 {
 public:
@@ -55,21 +54,19 @@ public:
   TAO_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  virtual ~TAO_Policy_Validator (void);
+  virtual ~TAO_Policy_Validator ();
 
   /**
    * Validate that the policies in the specified set
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  void validate (TAO_Policy_Set &policies
-                 ACE_ENV_ARG_DECL);
+  void validate (TAO_Policy_Set &policies);
 
   /**
    * Add/merge policies.
    **/
-  void merge_policies (TAO_Policy_Set &policies
-                       ACE_ENV_ARG_DECL);
+  void merge_policies (TAO_Policy_Set &policies);
 
   /**
    * Return whether the specified policy type is legal for the
@@ -88,27 +85,30 @@ public:
    */
   void add_validator (TAO_Policy_Validator *validator);
 
-
- /**
-  * Accessor for the stored ORB core reference
-  */
+  /**
+   * Accessor for the stored ORB core reference
+   */
  TAO_ORB_Core & orb_core() const;
 
 protected:
-  virtual void validate_impl (TAO_Policy_Set &policies
-                              ACE_ENV_ARG_DECL) = 0;
+  virtual void validate_impl (TAO_Policy_Set &policies) = 0;
 
-  virtual void merge_policies_impl (TAO_Policy_Set &policies
-                                    ACE_ENV_ARG_DECL) = 0;
+  virtual void merge_policies_impl (TAO_Policy_Set &policies) = 0;
 
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) = 0;
 
   TAO_ORB_Core &orb_core_;
 
 private:
+  void operator= (const TAO_Policy_Validator &);
+  TAO_Policy_Validator (const TAO_Policy_Validator &);
+
+private:
   TAO_Policy_Validator *next_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
-#endif /* TAO_POLICY_VALIDATOR_H_ */
+#endif /* TAO_POLICY_VALIDATOR_H */

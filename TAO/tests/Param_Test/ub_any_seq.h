@@ -1,20 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_any_seq.h
-//
-// = DESCRIPTION
-//     Tests unbounded Any sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_any_seq.h
+ *
+ *   Tests unbounded Any sequences
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_UNBOUNDED_ANY_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_ANY_SEQUENCE_H
@@ -27,61 +21,59 @@
 class Test_AnySeq
 {
 public:
-  Test_AnySeq (void);
-  // ctor
+  /// ctor
+  Test_AnySeq ();
 
-  ~Test_AnySeq (void);
-  // dtor
+  /// dtor
+  ~Test_AnySeq ();
 
-  int run_sii_test (Param_Test_ptr objref
-                    ACE_ENV_ARG_DECL);
-  // run the SII test
+  /// run the SII test
+  int run_sii_test (Param_Test_ptr objref);
 
-  const char *opname (void) const;
-  // return operation name
+  /// return operation name
+  const char *opname () const;
 
-  int init_parameters (Param_Test_ptr objref
-                       ACE_ENV_ARG_DECL);
-  // set values for parameters
+  /// set values for parameters
+  int init_parameters (Param_Test_ptr objref);
 
-  int reset_parameters (void);
-  // reset values for CORBA
+  /// reset values for CORBA
+  int reset_parameters ();
 
-  CORBA::Boolean check_validity (void);
-  // check if results are valid
+  /// check if results are valid
+  CORBA::Boolean check_validity ();
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
-  void print_values (void);
-  // print all the values
+  /// print all the values
+  void print_values ();
 
-  void dii_req_invoke (CORBA::Request * ACE_ENV_ARG_DECL_NOT_USED);
-  // invoke DII request with appropriate exception handling.
+  /// invoke DII request with appropriate exception handling.
+  void dii_req_invoke (CORBA::Request *);
 
 protected:
+  /// compare
   CORBA::Boolean compare (const CORBA::AnySeq &s1,
                           const Param_Test::StructSeq &s2);
-  // compare
 
+  /// print individual sequence
   void print_sequence (const CORBA::AnySeq &s);
-  // print individual sequence
 
 private:
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// in parameter
   CORBA::AnySeq_var in_;
-  // in parameter
 
+  /// inout parameter
   CORBA::AnySeq_var inout_;
-  // inout parameter
 
+  /// out parameter
   CORBA::AnySeq_var out_;
-  // out parameter
 
+  /// return value
   CORBA::AnySeq_var ret_;
-  // return value
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_ANY_SEQUENCE_H */

@@ -1,0 +1,23 @@
+// -*- MPC -*-
+project(HTTPU) : ace_output, acelib {
+    sharedname = HTTPU
+    dynamicflags += HTTPU_BUILD_DLL
+    avoids += uses_wchar ace_for_tao
+    after += JAWS2
+    libs += JAWS2
+    includes += ..
+
+    Source_Files {
+        *.cpp
+    }
+
+    Template_Files{
+    }
+
+    Header_Files{
+        *.h
+    }
+
+    Inline_Files{
+    }
+}

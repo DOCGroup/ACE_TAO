@@ -1,0 +1,47 @@
+project(*idl) : tao_versioning_idl_defaults, gen_ostream, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -SS -Sorb -GA \
+                -Wb,export_macro=TAO_Valuetype_Export \
+                -Wb,export_include=tao/Valuetype/valuetype_export.h \
+                -iC tao/Valuetype
+    idlflags -= -Sa -St
+    StringValue.pidl
+  }
+
+  specific {
+    install_dir = tao/Valuetype
+  }
+}
+
+project(Valuetype) : taolib, tao_output, install, anytypecode, avoids_corba_e_micro, taoidldefaults, gen_ostream, valuetype_out_indirection {
+  after += *idl
+  sharedname    = TAO_Valuetype
+  dynamicflags  = TAO_VALUETYPE_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    StringValueA.cpp
+    StringValueC.cpp
+  }
+
+  Header_Files {
+    *.h
+    StringValueA.h
+    StringValueC.h
+    StringValueS.h
+  }
+
+  Inline_Files {
+    *.inl
+    StringValueC.inl
+  }
+
+  Template_Files {
+    *_T.cpp
+  }
+
+  specific {
+    install_dir = tao/Valuetype
+  }
+}

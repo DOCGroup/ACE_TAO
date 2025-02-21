@@ -1,5 +1,3 @@
-// $Id$
-
 #include "airplane_server_i.h"
 
 #include "tao/IORTable/IORTable.h"
@@ -11,25 +9,30 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
-
-ACE_RCSID (ImplRepo,
-           airplane_server_i,
-           "$Id$")
+#include "ace/OS_NS_unistd.h"
 
 // The server name of the Aiprlane Server
 const char SERVER_NAME[] = "airplane_server";
 
-Airplane_Server_i::Airplane_Server_i (void)
-  : server_impl_ (0),
-    ior_output_file_ (0)
+Airplane_Server_i::Airplane_Server_i ()
+  : argc_ (0),
+    argv_ (0),
+    orb_ (),
+    root_poa_ (),
+    airplane_poa_ (),
+    poa_manager_ (),
+    server_impl_ (0),
+    ior_output_file_ (0),
+    pid_output_file_ (0),
+    server_name_(SERVER_NAME)
 {
   // Nothing
 }
 
 int
-Airplane_Server_i::parse_args (void)
+Airplane_Server_i::parse_args ()
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:s:p:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -45,12 +48,24 @@ Airplane_Server_i::parse_args (void)
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
         break;
+      case 'p':  // output the pid to a file.
+        this->pid_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        if (this->pid_output_file_ == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.opt_arg ()), -1);
+        break;
+      case 's':  // extension to the server name.
+        this->server_name_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+        break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
-                           " [-o] <ior_output_file>"
+                           " [-o <ior_output_file>]"
+                           " [-p <pid_output_file>]"
+                           " [-s <the server name>]"
                            "\n",
                            argv_ [0]),
                           1);
@@ -61,17 +76,12 @@ Airplane_Server_i::parse_args (void)
 }
 
 int
-Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
+Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
 {
-  // Since the Implementation Repository keys off of the POA name, we need
-  // to use the SERVER_NAME as the POA's name.
-  const char *poa_name = SERVER_NAME;
-
-  ACE_TRY
+  try
     {
       // Initialize the ORB
-      this->orb_ = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_ = CORBA::ORB_init (argc, argv);
 
       // Save pointers to the command line arguments
       this->argc_ = argc;
@@ -85,18 +95,14 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
 
       // Get the POA from the ORB.
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
       ACE_ASSERT(! CORBA::is_nil (obj.in ()));
 
       // Narrow the object to a POA.
-      root_poa_ = PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa_ = PortableServer::POA::_narrow (obj.in ());
 
       // Get the POA_Manager.
-      this->poa_manager_ = this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_manager_ = this->root_poa_->the_POAManager ();
 
       // We now need to create a POA with the persistent and user_id policies,
       // since they are need for use with the Implementation Repository.
@@ -105,28 +111,23 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
       policies.length (2);
 
       policies[0] =
-        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK
+        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
 
       policies[1] =
-        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
+      // Since the Implementation Repository keys off of the POA name, we need
+      // to use the server_name_ as the POA's name.
       this->airplane_poa_ =
-        this->root_poa_->create_POA (poa_name,
-                              this->poa_manager_.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->create_POA (this->server_name_.c_str(),
+                                     this->poa_manager_.in (),
+                                     policies);
 
       // Creation of the new POA is over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
 
       ACE_NEW_RETURN (this->server_impl_, Airplane_i, -1);
@@ -135,71 +136,64 @@ Airplane_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
         PortableServer::string_to_ObjectId ("server");
 
       this->airplane_poa_->activate_object_with_id (server_id.in (),
-                                                    this->server_impl_
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    this->server_impl_);
 
-      obj = this->airplane_poa_->id_to_reference (server_id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = this->airplane_poa_->id_to_reference (server_id.in ());
       CORBA::String_var ior =
-        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "The ImRified IOR is: <%s>\n", ior.in ()));
+        ACE_DEBUG ((LM_DEBUG, "The ImRified IOR is: <%C>\n", ior.in ()));
 
       TAO_Root_POA* tmp_poa = dynamic_cast<TAO_Root_POA*>(airplane_poa_.in());
-      obj = tmp_poa->id_to_reference_i (server_id.in (), false ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = tmp_poa->id_to_reference_i (server_id.in (), false);
       CORBA::String_var plain_ior =
-        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "The plain IOR is: <%s>\n", plain_ior.in ()));
+        ACE_DEBUG ((LM_DEBUG, "The plain IOR is: <%C>\n", plain_ior.in ()));
 
       // Note : The IORTable will only be used for those clients who try to
       // invoke indirectly using a simple object_key reference
       // like "corbaloc::localhost:8888/airplane_server".
-      obj = this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = this->orb_->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        IORTable::Table::_narrow (obj.in ());
       ACE_ASSERT(! CORBA::is_nil (adapter.in ()));
-      adapter->bind (poa_name, plain_ior.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+      adapter->bind (this->server_name_.c_str(), plain_ior.in ());
 
-      this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_manager_->activate ();
 
       if (this->ior_output_file_)
         {
           ACE_OS::fprintf (this->ior_output_file_, "%s", ior.in ());
           ACE_OS::fclose (this->ior_output_file_);
         }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Airplane_Server_i::init");
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
+      if (this->pid_output_file_)
+        {
+          int pid = static_cast<int> (ACE_OS::getpid ());
+          ACE_OS::fprintf (this->pid_output_file_, "%d\n", pid);
+          ACE_OS::fclose (this->pid_output_file_);
+        }
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Airplane_Server_i::init");
+      throw;
+    }
 
   return 0;
 }
 
 int
-Airplane_Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
+Airplane_Server_i::run ()
 {
-  ACE_TRY
+  try
     {
       ACE_Time_Value tv(60);
       ACE_Time_Value tvStart = ACE_OS::gettimeofday();
 
-      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run (tv);
 
       ACE_Time_Value tvEnd = ACE_OS::gettimeofday();
 
@@ -209,19 +203,17 @@ Airplane_Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
       if (tvEnd - tvStart > tv - ACE_Time_Value(5))
         return 1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Airplane_Server_i::run");
-      ACE_RE_THROW;
+      ex._tao_print_exception ("Airplane_Server_i::run");
+      throw;
     }
-  ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
-Airplane_Server_i::~Airplane_Server_i (void)
+Airplane_Server_i::~Airplane_Server_i ()
 {
   delete this->server_impl_;
 }

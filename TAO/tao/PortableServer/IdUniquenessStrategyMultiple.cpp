@@ -1,32 +1,26 @@
-// $Id$
+// -*- C++ -*-
+#include "tao/PortableServer/IdUniquenessStrategyMultiple.h"
 
-#include "IdUniquenessStrategyMultiple.h"
-
-ACE_RCSID (PortableServer,
-           Id_Uniqueness_Strategy,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace Portable_Server
   {
     void
-    IdUniquenessStrategyMultiple::strategy_init (
-      TAO_Root_POA * /*poa*/
-      ACE_ENV_ARG_DECL_NOT_USED)
+    IdUniquenessStrategyMultiple::strategy_init (TAO_Root_POA * /*poa*/)
     {
     }
 
     void
-    IdUniquenessStrategyMultiple::strategy_cleanup(
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    IdUniquenessStrategyMultiple::strategy_cleanup ()
     {
     }
 
     bool
-    IdUniquenessStrategyMultiple::is_servant_activation_allowed (
-      PortableServer::Servant /*servant*/,
-      int & /*wait_occurred_restart_call*/)
+    IdUniquenessStrategyMultiple::is_servant_activation_allowed
+      (PortableServer::Servant/*servant*/,
+       bool &/*wait_occurred_restart_call*/)
     {
       // With the multiple id strategy we can always activate the servant
       // another time
@@ -34,26 +28,11 @@ namespace TAO
     }
 
     bool
-    IdUniquenessStrategyMultiple::allow_multiple_activations (void) const
+    IdUniquenessStrategyMultiple::allow_multiple_activations () const
     {
       return true;
     }
-
-    ::PortableServer::IdUniquenessPolicyValue
-    IdUniquenessStrategyMultiple::type() const
-    {
-      return ::PortableServer::MULTIPLE_ID;
-    }
-
-    ACE_FACTORY_DEFINE (ACE_Local_Service, IdUniquenessStrategyMultiple)
-
-    ACE_STATIC_SVC_DEFINE (
-        IdUniquenessStrategyMultiple,
-        ACE_TEXT ("IdUniquenessStrategyMultiple"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (IdUniquenessStrategyMultiple),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

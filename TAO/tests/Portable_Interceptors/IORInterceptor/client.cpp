@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 #include "ace/Get_Opt.h"
 
 #include "testC.h"
@@ -7,16 +6,12 @@
 
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (IORInterceptor,
-           client,
-           "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -37,10 +32,9 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 #if TAO_HAS_INTERCEPTORS == 1
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
@@ -52,25 +46,20 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "client_orb" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "client_orb");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       FOO::test_var server =
-        FOO::test::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        FOO::test::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -80,16 +69,15 @@ main (int argc, char *argv[])
                             1);
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "IORInterceptor test (client-side):");
+      ex._tao_print_exception ("IORInterceptor test (client-side):");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

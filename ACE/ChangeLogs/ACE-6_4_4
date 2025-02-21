@@ -1,0 +1,914 @@
+commit 857c1ac7a94d102806ad4c26f36d0b09938df55c
+Merge: bf6331d13f2 359f829d0e1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 13 10:05:17 2017 +0200
+
+    Merge pull request #484 from jwillemsen/jwi-logmsgtimestamp-96
+    
+    Fixed typos and remove references to manually maintained changelog
+
+commit 359f829d0e1c8fb96607c6c7d51544568bff75f0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 13 10:04:37 2017 +0200
+
+    Fixed typos and remove references to manually maintained changelog
+    
+        * ACE/docs/bczar/bczar.html:
+        * ACE/docs/bczar/privileges.html:
+
+commit df0adb80e8f5e622690c8a9079df5540446c6cfa
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Fri Aug 11 14:22:37 2017 -0500
+
+    Added News entry about ACE_INET_Addr fix
+
+commit 9da4c05d015992aec1665db2b60f1597707823e7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 11 15:45:34 2017 +0200
+
+    Extended the test to make sure %D and %#D also don't have a leading space
+    
+        * ACE/tests/Log_Msg_Test.cpp:
+
+commit 646c2eb84251f97113eef664707fe2732101dead
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 11 15:42:47 2017 +0200
+
+    Fixed that ACE_Log_Msg %T and %#T leave a leading space. Extended Log_Msg_Test to validate that there is no leading timestamp for these format specifier
+    
+        * ACE/ace/Log_Msg.cpp:
+        * ACE/tests/Log_Msg_Test.cpp:
+
+commit 04aab2062c4df0cd6b024f11646351d0064adc26
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 10 10:36:03 2017 +0200
+
+    Listed major changes
+    
+        * ACE/NEWS:
+
+commit 3a8418963de29a0e4c768e429998fafb7083bf8f
+Merge: d1038728a1d 95a65d274f4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 13:01:25 2017 +0200
+
+    Merge pull request #477 from jwillemsen/jwi-zapid
+    
+    Remove left over $Id tags
+
+commit 95a65d274f4a7fad79b00babe813336d3516e5e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 13:00:22 2017 +0200
+
+    Remove left over $Id tags
+    
+        * ACE/bin/msvc_static_order.lst:
+        * ACE/tests/run_test.lst:
+        * TAO/TAO_IDL/fe/idl.ypp:
+        * TAO/bin/tao_orb_tests.lst:
+        * TAO/bin/tao_other_tests.lst:
+        * TAO/tests/Bug_3755_Ext_Regression/all.lst:
+        * TAO/tests/COIOP/COIOP.lst:
+
+commit 90a3d0208d4134af21e56a075c13962ccff9b81b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 09:25:10 2017 +0200
+
+    For gmtime_r and asctime_r restored the functionality to fallback to gmtime/asctime in case the _r versions are not supported but the ones without _r are
+    
+        * ACE/ace/OS_NS_time.inl:
+
+commit 29568956e3a1e9b1f8c2c36d990fa166f53684d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 09:24:30 2017 +0200
+
+    Extend this test to check if gmtime_r is really supported, if not, we log that
+    
+        * ACE/tests/Bug_3432_Regression_Test.cpp:
+
+commit 08e91a5f675152759c0fb794644ce43b94749911
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 08:40:28 2017 +0200
+
+    Corrected placing pragma pop for bcc32c
+    
+        * ACE/tests/Malloc_Test.cpp:
+
+commit 559c94d52e76a334dc90f082f4bce256d82811da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 20:43:15 2017 +0200
+
+    Cleanup old automake support
+    
+        * ACE/ACE.mwc:
+        * TAO/tests/TransportCurrent/IIOP/IIOP.mpc:
+
+commit ceca71212a2c3b98442bdfc16b0169531a8abd89
+Merge: 36e066d32c9 f90c929c25a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 10:03:09 2017 +0200
+
+    Merge pull request #466 from jwillemsen/master
+    
+    Fix getversionex deprecated warnings with clang
+
+commit f90c929c25a49ca8f2b6d1270e91ae94096cb8b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 09:09:55 2017 +0200
+
+    Add new items
+    
+        * ACE/NEWS:
+
+commit a76b70b2dfaa6de7f38faae869ec3006eb706d36
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 09:08:32 2017 +0200
+
+    Fixed warning with clang
+    
+        * ACE/tests/Malloc_Test.cpp:
+
+commit 36e066d32c90d7a036925b878e179bdac6ac7a19
+Merge: 7b1f419dd99 22f7f39f2af
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 7 21:58:10 2017 +0200
+
+    Merge pull request #465 from jwillemsen/jwi-clang-warnings
+    
+    Disable deprecated warnings when using clang
+
+commit 9b6a281e258a5bf6d9ace2c1e0a651ce7c22906c
+Merge: 2948f1cb818 e2b8127a2b8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 7 20:21:21 2017 +0200
+
+    Merge pull request #462 from jwillemsen/jwi-exportnestedclasses
+    
+    Removed setting of ACE_EXPORT_NESTED_CLASSES
+
+commit 22f7f39f2afe326585566d3178595bfd644bfc88
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 7 15:55:30 2017 +0200
+
+    Only define NOMINMAX with the Microsoft compiler
+    
+        * ACE/tests/tests.mpc:
+
+commit 2df11be0a9b6d249285e657b3af26abc3e2ba066
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 7 15:30:13 2017 +0200
+
+    Disable deprecated warnings when using clang
+    
+        * ACE/ace/OS_NS_sys_utsname.cpp:
+        * ACE/ace/Object_Manager_Base.cpp:
+
+commit 85e7bbdc21db2a57a564fbef9833cfaf37c817d3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 7 12:16:47 2017 +0200
+
+    Extend Embarcadero documentation
+    
+        * ACE/ACE-INSTALL.html:
+
+commit e2b8127a2b86f8dad7d9e4a0185f1f86713318ec
+Merge: 6e7686ade99 b6989e89d16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 7 10:22:27 2017 +0200
+
+    Merge branch 'master' into jwi-exportnestedclasses
+
+commit dab014edf531581e3ca3905faa24eec4302fd182
+Author: Andreas L <avlplus42@gmail.com>
+Date:   Fri Aug 4 21:24:33 2017 +0200
+
+    Copy Solaris compile fix back to config-sunos5.10.h
+    
+    partially undo commit 2e7b11740589636e90a1e15659bbb56735c19d28
+    which removed it from config-sunos5.10.h rather than just adding
+    it to config-suncc-common.h
+
+commit e9e6550970c3a7f3dd338267c55244e2d7045eeb
+Author: Andreas L <avlplus42@gmail.com>
+Date:   Fri Aug 4 20:16:28 2017 +0200
+
+    Bump __SUNPRO_CC workaround check up to 0x5140
+    
+    Oracle's DeveloperStudio12.5 (C++ 5.14) compiler still has
+    std::reverse_iterator with 6 template parameters - at least
+    on Solaris 11.3.
+
+commit 74bcdaee4f94649d3e83691476c6da87d8924790
+Merge: b6989e89d16 acde23414b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 3 12:17:29 2017 +0200
+
+    Merge pull request #454 from jwillemsen/jwi-externcleanup
+    
+    Simplify ACE_NAMESPACE_INLINE_FUNCTION
+
+commit 00d1e532d132bb36225336c2028d7405f1d93b39
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 2 09:08:39 2017 +0200
+
+    Add workaround for bcc32
+    
+        * ACE/tests/Compiler_Features_37_Test.cpp:
+
+commit 51e59de3801b9bfaebf5a116af8d8067ef880156
+Merge: bf2f9cee122 dbcc7e1a50f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 2 09:07:04 2017 +0200
+
+    Merge branch 'master' into jwi-comp37testwarning
+
+commit bf2f9cee12237a03eac1d17a3b0fcb9f4186a2e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 2 09:04:48 2017 +0200
+
+    Fix compiler warning
+    
+        * ACE/tests/Compiler_Features_37_Test.cpp:
+
+commit dbcc7e1a50fb9554ac1c583075615ad7af566538
+Merge: 7497d5979f5 b1ccc1e2b25
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 2 09:04:18 2017 +0200
+
+    Merge pull request #456 from jwillemsen/jwi-bcc32-arraymapfix
+    
+    Add workaround for broken bcc32, see RSP-15011
+
+commit 7497d5979f5114a02a507e3a257749b6f379e9f3
+Merge: cbec012bd8f ec8faa7b1b5
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Tue Aug 1 14:41:30 2017 -0500
+
+    Merge pull request #390 from huangminghuang/Safety_Mac
+    
+    Fix compiler issues on macOS with ACE_FACE_SAFETY* defined
+
+commit cbec012bd8fdd49025c60f9f0081892abc570cb6
+Merge: 277d69d4c1f d31e33384ad
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Tue Aug 1 14:39:43 2017 -0500
+
+    Merge pull request #389 from huangminghuang/clang-warning
+    
+    Avoid clang warning
+
+commit ba97128a97be9f048ca422cbda8d1fd913f9e560
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 17:10:48 2017 +0200
+
+    Suppress some more warnings with bcc32 Tokyo
+    
+        * ACE/ace/post.h:
+        * ACE/ace/pre.h:
+
+commit 74cf589f6f5f3995f4a243be00ef44376c4798a9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 17:07:17 2017 +0200
+
+    Suppress some bcc32 warnings with newer Embarcadero releases
+    
+        * ACE/ace/Compression/rle/RLECompressor.cpp:
+
+commit 81dc0cd3c3e79cc20dc4fc8aa74c2efef5e12d03
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 11:49:42 2017 +0200
+
+    Add workaround for broken bcc32, see RSP-15011
+    
+        * ACE/ace/Array_Map.cpp:
+        * ACE/ace/Array_Map.h:
+
+commit 6e7686ade99acea109c2195c758cf0701ceb00a2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 11:26:51 2017 +0200
+
+    Removed setting of ACE_EXPORT_NESTED_CLASSES
+    
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-dmc.h:
+
+commit acde23414b5bbcf18abc8a8d1abb842ffbac98ba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 11:01:23 2017 +0200
+
+    Simplify ACE_NAMESPACE_INLINE_FUNCTION
+    
+        * ACE/ace/ACE_export.h:
+
+commit 277d69d4c1f71a874d34e135a684debf70b4c9c2
+Merge: f90b3531e4d 28c25159e2e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 10:57:59 2017 +0200
+
+    Merge pull request #452 from jwillemsen/jwi-namespaceinline
+    
+    Don't use dllexport/dllimport with inline methods
+
+commit 28c25159e2e5843300e0048312824a927acb38ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 10:54:12 2017 +0200
+
+    Fixed typos in documentation
+    
+        * ACE/ace/config-win32-common.h:
+        * TAO/docs/exceptions.html:
+
+commit 6c6cdbfe85c2eda6ebe854429db7b4993654641c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 31 17:34:14 2017 +0200
+
+    Fixed comment at end of code block
+    
+        * ACE/ace/config-win32-common.h:
+
+commit 71100f86c2c32382419942a605648d37fcd212ba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 29 12:21:18 2017 +0200
+
+    Don't use dllexport/dllimport with inline methods
+    
+        * ACE/ace/ACE_export.h:
+
+commit 60efab3e3f919206c3e2f5951d751531a5bddc92
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 22 19:18:07 2017 +0200
+
+    Only use different format specifiers for bcc32
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 2d51ee5608628d0a9c607340ae158859f7330787
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 11:22:43 2017 +0200
+
+    Use ACE_WIN32 and bcc32c doesn't set __WIN32__ but uses _WIN32
+    
+        * ACE/ASNMP/asnmp/octet.cpp:
+        * ACE/ASNMP/tests/Counter64_Test.cpp:
+        * ACE/ace/Configuration_Import_Export.cpp:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/examples/Mem_Map/IO-tests/IO_Test.cpp:
+        * ACE/examples/Mem_Map/IO-tests/test_io.cpp:
+        * TAO/tao/orbconf.h:
+
+commit ed8549c781c554d59f44450dac6bd44caf6490d3
+Merge: 79490ed992e 33df6ebc808
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 11:04:09 2017 +0200
+
+    Merge pull request #437 from jwillemsen/jwi-issplitting
+    
+    Removed ACE_IS_SPLITTING, simplifies our code
+
+commit 79490ed992ece150f305ea860275d3d7e77ae53d
+Merge: f68232ce5f1 104c724016f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 11:03:40 2017 +0200
+
+    Merge pull request #438 from jwillemsen/jwi-compilertest37
+    
+    New compiler test for a compiler bug found some time ago
+
+commit f68232ce5f1ede401352589072c2849843323f07
+Merge: 02b6faa12b3 20252d9a63a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 11:02:40 2017 +0200
+
+    Merge pull request #439 from jwillemsen/jwi-processchange
+    
+    Directly assign result to status
+
+commit 02b6faa12b3a0ce62413cb70d04d4e9701579a57
+Merge: 95fa9adbc6e e024a7de1df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 11:02:18 2017 +0200
+
+    Merge pull request #443 from jwillemsen/jwi-vsnprintfemulation
+    
+    Introduce new ACE_HAS_VSNPRINTF_EMULATION because the vsnprintf emula…
+
+commit 95fa9adbc6eee34214b2e63f8a78c91f1fc5200c
+Merge: 836c231750b 4d2f8e780fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 10:58:33 2017 +0200
+
+    Merge pull request #442 from jwillemsen/jwi-winapi-warning
+    
+    Fixed warning with Embarcadero C++ Builder
+
+commit 836c231750bc6060df6919df9dbd8f5084065999
+Merge: 9b3f77306d8 76e116f4002
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 10:58:19 2017 +0200
+
+    Merge pull request #440 from jwillemsen/jwi-embarcadero-fixes
+    
+    Improve support for Embarcadero C++ Builder
+
+commit 9ff084c8aef32cac89895d28470e56d263740b69
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jul 17 16:47:56 2017 +0200
+
+    Fix typo.
+    
+        * ACE/protocols/ace/INet/Sock_IOStream.h:
+
+commit 0ad218ded544094e63ef45df03143e6e258b5665
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jul 17 16:38:14 2017 +0200
+
+    Improve GCC7 changes.
+    
+        * ACE/protocols/ace/INet/SSLSock_IOStream.cpp:
+        * ACE/protocols/ace/INet/SSLSock_IOStream.h:
+        * ACE/protocols/ace/INet/Sock_IOStream.cpp:
+        * ACE/protocols/ace/INet/Sock_IOStream.h:
+
+commit 09d5f0d48fcec66b4667a257dc59b757d943f689
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jul 17 15:26:54 2017 +0200
+
+    Some changes to appease GCC7.
+    
+        * ACE/protocols/ace/INet/Sock_IOStream.h:
+
+commit e024a7de1dfbd52be626a3fb31761795349cf90b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 14 09:33:02 2017 +0200
+
+    Introduce new ACE_HAS_VSNPRINTF_EMULATION because the vsnprintf emulation was enabled in to many configuration, found during trying to port to Embarcadero C++ Builder
+    
+        * ACE/ace/OS_NS_stdio.cpp:
+        * ACE/ace/OS_NS_stdio.h:
+        * ACE/ace/OS_NS_stdio.inl:
+        * ACE/ace/config-lynxos.h:
+        * ACE/tests/OS_Test.cpp:
+
+commit 4d2f8e780fbf6314dad5ab25650cc07f872a7932
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 14 09:24:23 2017 +0200
+
+    Fixed warning with Embarcadero C++ Builder
+    
+        * ACE/ace/Object_Manager.cpp:
+
+commit 1e4ccb031516c5530cb18f54c025135a06a11e66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 14 09:20:45 2017 +0200
+
+    Fixed typo
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+        * TAO/docs/implrepo/paper.html:
+
+commit 76e116f40029b6af1c9667a566942b467cab3a87
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 14 09:06:20 2017 +0200
+
+    Improve support for Embarcadero C++ Builder
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 33df6ebc808daf3b7873728b7a3dbc3c822b22c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 13 20:41:03 2017 +0200
+
+    No ACE_INLINE in a cpp
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+
+commit 20252d9a63a66134769930a079836958c26ac3a9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 13 15:58:25 2017 +0200
+
+    Directly assign result to status
+    
+        * ACE/ace/Process.cpp:
+
+commit 104c724016f37392cae0d5996bfe8e8589149c2c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 13 15:56:15 2017 +0200
+
+    New compiler test for a compiler bug found some time ago
+    
+        * ACE/tests/Compiler_Features_37_Test.cpp:
+          Added.
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit 03a952982c51a7997ec31997e995e87ab991906b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 13 15:50:14 2017 +0200
+
+    Removed ACE_IS_SPLITTING, simplifies our code
+    
+        * ACE/ace/Capabilities.cpp:
+        * ACE/ace/Capabilities.h:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/OS_NS_Thread.inl:
+        * ACE/ace/Object_Manager.cpp:
+        * ACE/ace/Static_Object_Lock.h:
+
+commit cc2c628525a329073f488839e05f9fa323c095fa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 26 16:43:59 2017 +0200
+
+    Remove some more occurences of register
+    
+        * ACE/ace/ETCL/ETCL_l.cpp:
+        * TAO/TAO_IDL/fe/idl.yy.cpp:
+
+commit 96fa5aa2600309fbb8cb7e898a5a1462dd5a79db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 26 14:30:36 2017 +0200
+
+    Use a new no_deprecated which we can set to 1 independent of the c++xx flag
+    
+        * ACE/include/makeinclude/platform_g++_common.GNU:
+
+commit f335c4df62efa7e52712ab01b05d0f1641818077
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 23 19:45:41 2017 +0200
+
+    Fixed solaris compile issues
+    
+        * ACE/ace/CDR_Base.cpp:
+
+commit e373559a82efaa6146806948225a981f311ce52b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 22 08:30:59 2017 +0200
+
+    Remove las ACE_REGISTER
+    
+        * ACE/ace/OS_NS_stdlib.cpp:
+
+commit 29ba560d6aeba2856eea12234977f188da288b38
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 21 21:00:03 2017 +0200
+
+    Fixed
+    
+        * ACE/ace/CDR_Base.cpp:
+
+commit 534eaf41eaeadea4a5bae93cb9c92eef933a0334
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 21 20:51:43 2017 +0200
+
+    Fixed error
+    
+        * ACE/ace/CDR_Base.cpp:
+
+commit 126439237eeccce05608d9d431e3bf1c4d68e49a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 21 20:49:40 2017 +0200
+
+    Removed ACE_REGISTER completely. register is a compiler hint which is mostly ignored by compilers and recent compilers all give warnings when register is still used.
+    
+        * ACE/ASNMP/asnmp/asn1.cpp:
+        * ACE/ace/CDR_Base.cpp:
+        * ACE/ace/CDR_Base.inl:
+        * ACE/ace/ETCL/ETCL_y.cpp:
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/Handle_Set.cpp:
+        * ACE/ace/OS_NS_stdlib.cpp:
+        * ACE/ace/OS_NS_string.cpp:
+
+commit 247ef819c09c78d5bd11ce03d61a658ff105d581
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 21 10:55:40 2017 +0200
+
+    Fix gcc7.1 warnings
+    
+        * ACE/ace/Name_Proxy.cpp:
+        * TAO/TAO_IDL/be/be_visitor_module/module.cpp:
+
+commit e93baf289027067060b769448675df033c463298
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 19 16:25:31 2017 +0200
+
+    Indent change
+
+commit ec914cd8ff75da385f092b3b61900649784ae465
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 19 16:24:20 2017 +0200
+
+    Add c++14/c++17
+
+commit d719406a054d59e8f23edc408851acc47cac43f2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 19 15:34:25 2017 +0200
+
+    When __cplusplus is larger than 201402L we have C++17 support so set ACE_HAS_CPP17
+    
+        * ACE/ace/config-g++-common.h:
+
+commit 3eff03a95dac8cfbb83921d06aa8fdfe0247e068
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 18 10:42:49 2017 +0200
+
+    Just always set ACE_LACKS_FD_MASK
+    
+        * ACE/ace/config-android.h:
+
+commit 729686e29838e0d8fb44804e7423fe187042926e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 18 10:39:57 2017 +0200
+
+    Corrected fdmask check
+    
+        * ACE/ace/config-android.h:
+
+commit 0e89442ff2fbf2feecb03cbf58792aaba514acca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 18 10:35:52 2017 +0200
+
+    When ACE_HAS_FD_MASK has not been defined we set ACE_LACKS_FD_MASK
+    
+        * ACE/ace/config-android.h:
+
+commit ff520bc2d896229231d6f265a7ed247f8896b6d1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 17 10:19:15 2017 +0200
+
+    Changed android version check
+    
+        * ACE/ace/config-android.h:
+
+commit 659e3f3db44521afc41430c0d26914ed83f69e46
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 16 08:17:16 2017 +0200
+
+    Move versioned checks lower down in the file
+    
+        * ACE/ace/config-android.h:
+
+commit 6a7b62cae7e61948f85d98e265b4caca9a8dbd88
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 13 14:39:27 2017 +0200
+
+    Fix gcc7.1 compile errors
+    
+        * ACE/protocols/ace/INet/SSLSock_IOStream.cpp:
+
+commit d6a0696d56ec409892e5d810e16c4e44f1ae801f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 13 14:16:30 2017 +0200
+
+    Removed empty line
+
+commit 846e95c72dacecaf2d60d171ed3ab44aba9b2ac8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 13 08:20:57 2017 +0200
+
+    Removed trailing spaces
+
+commit 64ecc042474e2668cf6d69efeb19a375d471c9ca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 13 08:20:34 2017 +0200
+
+    Extended comment
+
+commit 964ebae0905d824e5681d36bfeeabda7b44f4131
+Author: Gary Grobe <gary.l.grobe@nasa.gov>
+Date:   Mon Jun 12 16:31:00 2017 -0500
+
+    Moved comment up, placed ANDROID_ABI in platform_macros.GNU and FD_MASK works with future versions.
+
+commit 3f3b07ce39c41635e776a8f85ca0da71a61c38de
+Author: Gary Grobe <gary.l.grobe@nasa.gov>
+Date:   Mon Jun 12 14:47:26 2017 -0500
+
+    Added arch specific flgas for arch arm-v8a. Added FD_MASK for android-24.
+
+commit d06b3d67d4def272e155cf00a05d962948e82304
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Thu Jun 8 12:24:13 2017 -0500
+
+    Fix INET_Addr in AIX
+
+commit b424a33e2f22580a3ad146b43cdf590cbb697af9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 8 10:14:26 2017 +0200
+
+    Layout changes
+    
+        * ACE/include/makeinclude/platform_macosx.GNU:
+
+commit 48c20030ac1f56049053f5ff5bb7abf2ad582648
+Merge: 7985eb74b11 e727da71312
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 8 10:12:54 2017 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 7985eb74b11e0dbb027725f22562ec1c244fa28e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 8 08:41:14 2017 +0200
+
+    Updated macosx version files
+    
+        * ACE/ace/config-macosx-highsierra.h:
+        * ACE/include/makeinclude/platform_macosx_highsierra.GNU:
+          Added.
+    
+        * ACE/ace/config-macosx.h:
+        * ACE/include/makeinclude/platform_macosx.GNU:
+        * ACE/include/makeinclude/platform_macosx_sierra.GNU:
+
+commit 8f59eb5e965eb433551c2d0bee7554571fabf792
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Tue Jun 6 14:03:52 2017 -0500
+
+    Add more detailed debug message for INET_Addr_Test
+
+commit 62b93d08d42c4c1f740a7e6621a5b698f34459e2
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Sun May 28 12:02:05 2017 -0500
+
+    Added more detailed debug message
+
+commit bf180c3394694fb6ead20c1422ecddaa27ebf489
+Merge: 134793b2fee ee4fc01b795
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 26 09:45:14 2017 +0200
+
+    Merge pull request #415 from jwillemsen/master
+    
+    Updated header for latest micro release to include version numbers
+
+commit ee4fc01b7959107abd6b5ffe6512f567cc10fe9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 26 09:43:32 2017 +0200
+
+    Updated header for latest micro release to include version numbers
+    
+        * ACE/docs/Download.html:
+
+commit e276777d25c5cff3feb7011140b6d80f94e35302
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue May 16 13:39:16 2017 -0500
+
+    fixed ACE_INet to build with GCC 7.1
+
+commit ea07fb750232053d79bdff9e5489bf8ffd8d9695
+Merge: c98d20647b7 ffec3729825
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Fri May 12 07:56:09 2017 -0500
+
+    Merge pull request #413 from huangminghuang/INET_Addr_Test-fix
+    
+    Added missing include for INET_Addr_Test
+
+commit ffec37298258234daafab61bfcf5b0a71d59f249
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Thu May 11 08:36:27 2017 -0500
+
+    Added missing include
+
+commit c98d20647b74b337827643948b0aad8e0e68dc99
+Merge: a119652fc02 41daabed578
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Wed May 10 10:06:49 2017 -0500
+
+    Merge pull request #412 from huangminghuang/INET_Addr_Test-fix
+    
+    Fix incorrect parenthesis placement
+
+commit 41daabed578f8dee06f79e61596b4bdb7d1a1cd1
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Wed May 10 08:27:40 2017 -0500
+
+    Fix incorrect parenthesis placement
+
+commit 511639b4dfdbf2400892304a34b340b498752cb4
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Tue May 9 12:46:54 2017 -0500
+
+    Fix connect to IPv4-mapped IPv6 address problem on Windows
+
+commit d73d0656fa1526ef7cd977e63985d2ff856d5271
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Mon May 8 14:14:26 2017 -0500
+
+    fix format specifier
+
+commit c7943623c0c8004b513e90b2bfec7d7932c45d95
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Mon May 8 08:23:35 2017 -0500
+
+    Fix typo
+
+commit c2d50c4a831e9ae5b85d050f8f52758802897190
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Fri May 5 15:09:22 2017 -0500
+
+    Add INET_Addr IPV6 test case
+    
+    # Conflicts:
+    #       ACE/ace/INET_Addr.cpp
+
+commit 94ea754dd3d543e37b4bfa68c9e47877c9331511
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Mon May 8 08:04:33 2017 -0500
+
+    Revert "Workaround for AIX getaddrinfo() problem"
+    
+    This reverts commit 119e433b020473407a9960c18cdc7e9c43aab611.
+
+commit 57178d439591d4144dfb22bbd1eec92d546442c5
+Merge: 246938b000e 7a838170151
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 1 09:42:24 2017 +0200
+
+    Merge pull request #408 from jwillemsen/master
+    
+    Fixed gcc warnings
+
+commit 7a838170151fb1a1e13f468e5d885c46e9502e9c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Apr 30 21:33:31 2017 +0200
+
+    Fixed gcc warnings
+    
+        * ACE/examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * TAO/tests/DII_AMI_Forward/server.cpp:
+        * TAO/tests/ForwardOnceUponException/client.cpp:
+        * TAO/tests/ForwardUponObjectNotExist/client.cpp:
+
+commit 246938b000ee0993b14046e93c301aaf1e19a5df
+Merge: f32fe237b80 119e433b020
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Tue Apr 25 13:13:26 2017 -0500
+
+    Merge pull request #406 from huangminghuang/inet_addr-fix
+    
+    Inet addr fix
+
+commit 91053c050585758f8c639fc68dc0d794211d0e67
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Apr 24 16:12:25 2017 -0400
+
+    Change recipe to use full pathname of source file for C/C++. Allows postprocessor scripts to keep track of where problems are in parallel builds.
+
+commit 119e433b020473407a9960c18cdc7e9c43aab611
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Thu Apr 20 13:37:28 2017 -0500
+
+    Workaround for AIX getaddrinfo() problem
+
+commit 1195b6637007fcec9784d866bc1a97f22130a1da
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Thu Apr 20 11:35:43 2017 -0500
+
+    Revert "Revert PR #394 #385 #382 #397"
+    
+    This reverts commit 13fb5d25bc7c0b3036ab2bb2cacea048914135ae.
+
+commit db7835a1010bba603e1b69775211040ab8a261c0
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Thu Apr 20 11:35:15 2017 -0500
+
+    Revert "Fix PR #400 incorrect revert"
+    
+    This reverts commit 98c20bb9fbf0b474f1addc519e43168a50dc9fa8.
+
+commit 44e776561baf81b2fef9e628259bc5ee47d5723b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 20 11:28:25 2017 +0200
+
+    Add Visual Studio 2017 as available in the full package
+    
+        * ACE/docs/Download.html:
+        * appveyor.yml:
+
+commit fd74599c612a1319800dadf865a0cb40748ceca9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 20 11:20:51 2017 +0200
+
+    Make ACE/TAO 6.4.3/2.4.3 public available
+    
+        * ACE/NEWS:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit ec8faa7b1b57c46718b072e46cb91009b4fae7e3
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Tue Apr 4 13:41:39 2017 -0500
+
+    Fix compiler issues on macOS with ACE_FACE_SAFETY* defined
+
+commit d31e33384ad16d4408e2804db2255a587fc9b5b1
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Mon Apr 3 16:22:33 2017 -0500
+
+    Avoid clang warning
+    
+    Use dynamic_cast to replace typeid() which causes the clang++ warning “expression with side effects will be evaluated despite being used as an operand to 'typeid' [-Wpotentially-evaluated-expression]”

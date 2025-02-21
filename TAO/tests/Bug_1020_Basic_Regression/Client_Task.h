@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef BUG_1020_BASIC_REGRESSION_CLIENT_TASK_H
 #define BUG_1020_BASIC_REGRESSION_CLIENT_TASK_H
@@ -21,10 +18,9 @@ public:
   Client_Task (CORBA::ORB_ptr orb);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
-
   CORBA::ORB_var orb_;
 };
 

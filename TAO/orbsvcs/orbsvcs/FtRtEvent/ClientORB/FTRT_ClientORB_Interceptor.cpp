@@ -1,14 +1,10 @@
-// $Id$
-
-#include "FTRT_ClientORB_Interceptor.h"
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
 #include "tao/CDR.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
-ACE_RCSID (ClientORB,
-           FTRT_ClientORB_Interceptor,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRT {
   const unsigned FT_TRANSACTION_DEPTH = 30;
@@ -22,41 +18,33 @@ FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth)
 {
 }
 
-FTRT_ClientORB_Interceptor::~FTRT_ClientORB_Interceptor (void)
+FTRT_ClientORB_Interceptor::~FTRT_ClientORB_Interceptor ()
 {
 }
 
 char *
-FTRT_ClientORB_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+FTRT_ClientORB_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-FTRT_ClientORB_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+FTRT_ClientORB_Interceptor::destroy ()
 {
 }
 
 void
 FTRT_ClientORB_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ClientRequestInfo_ptr)
 {
-  // Do Nothing
 }
 
 void
 FTRT_ClientORB_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   ACE_TRACE("FTRT_ClientORB_Interceptor::send_request");
-  ACE_TRY
+  try
   {
     // Add FT_REQUEST context
     IOP::ServiceContext sc;
@@ -88,38 +76,29 @@ FTRT_ClientORB_Interceptor::send_request (
       }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-    ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ri->add_request_service_context (sc, 0);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     // Not much can be done anyway. Just keep quiet
   }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
 FTRT_ClientORB_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   ACE_TRACE("FTRT_ClientORB_Interceptor::receive_reply");
 
 
   IOP::ServiceContext_var service_context;
-  ACE_TRY {
+  try{
     service_context =
-      ri->get_reply_service_context(FTRT::FT_FORWARD
-                                    ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      ri->get_reply_service_context(FTRT::FT_FORWARD);
   }
-  ACE_CATCHANY {
+  catch (const CORBA::Exception&){
     return;
   }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
 
   const char * buf =
@@ -133,27 +112,22 @@ FTRT_ClientORB_Interceptor::receive_reply (
 
   if (cdr >> obj) {
     // update the target
-     CORBA::Object_var target = ri->target(ACE_ENV_SINGLE_ARG_PARAMETER);
+     CORBA::Object_var target = ri->target();
      target->_stubobj ()->base_profiles ( obj->_stubobj()->base_profiles() );
-     ACE_DEBUG((LM_DEBUG, "target object updated\n"));
+     ORBSVCS_DEBUG((LM_DEBUG, "target object updated\n"));
   }
 }
 
 void
 FTRT_ClientORB_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ClientRequestInfo_ptr)
 {
 }
 
 void
 FTRT_ClientORB_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ClientRequestInfo_ptr /* ri */)
 {
-    ACE_UNUSED_ARG(ri);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

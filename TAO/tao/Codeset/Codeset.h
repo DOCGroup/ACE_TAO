@@ -1,11 +1,8 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Codeset.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
@@ -17,22 +14,27 @@
 
 #include /**/ "ace/pre.h"
 
-#include "codeset_export.h"
+#include "tao/Codeset/codeset_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Export TAO_Codeset_Initializer
 {
 public:
   /// Used to force the initialization of the ORB code.
-  static int init (void);
+  static int init ();
 };
 
 static int
 TAO_Requires_Codeset_Initializer = TAO_Codeset_Initializer::init ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

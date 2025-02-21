@@ -1,0 +1,134 @@
+
+/**
+
+@page msvc Miscellaneous Notes for ACE/TAO and Microsoft Visual C++
+
+Here are just some random information about ACE/TAO with Microsoft Visual
+C++.  This is more a collection of ideas right now, so it may not be as
+polished as other ACE documentation.
+
+@subsection msvc_configurations Configurations
+
+MSVC workspace and solution files come with several configurations.  The
+main two are Debug and Release.  Debug produces libraries and
+executables with debugging symbols and doesn't enable inlining.  The
+Release configuration enables optimizations and leaves out debugging
+symbols.  All projects contain both configurations. If you want to
+build static or mfc versions of the library you need to use different
+project and solution files. Project files with _Static extension
+denote workspaces for building static libraries.
+
+Different configurations produce different libraries and executables.  For
+example, Debug versions of dynamic libraries are always named *d.dll (like
+aced.dll) and the executables are placed in the current directory.  Release
+versions of dynamic libraries are named *.dll (such as ace.dll) and their
+executables are usually placed in the Release subdirectory.  Other common
+suffixes include *sd.lib for Static Debug and *s.lib for Static Release.
+
+Projects only use the same configuration versions of the libraries.  The Debug
+version of an ACE example only uses debug version of ACE library.
+
+@subsection msvc_otheroptions How to Set Other Options
+
+Other compile time options are set or unset via the config.h file.  For
+example, to turn on a compile time definition, #define it at the beginning of
+config.h.  Unsetting a definition just requires #define ACE_FOO 0 or a #undef
+at the end of the file (after including config-win32.h).  Different macros
+require different techniques.
+
+@subsection msvc_libraries ACE/TAO Libraries
+
+I don't think we have any documents really giving any info on what libraries
+are produced by the MSVC project files.
+
+So unlike the Unix platforms, Win32 libraries do not have a prefix of "lib",
+instead it is used as an extension.  For example, the debug version of the
+dynamic ace library is aced.lib (which is a stub for aced.dll).  The three
+ACE libraries are:
+
+- ace
+- ACE_RMCast
+- ACE_SSL
+- ACE_TMCast
+
+And for TAO we have the main TAO library and several sub libraries which
+contain extra features of TAO that aren't always needed (such as the POA
+in TAO_PortableServer).
+
+And finally we have the orbsvcs libraries.  Each ORB service is contained
+in its own library.  More libraries may be needed to be linked in, since
+some services require the use of others (such as TAO_AV requiring
+TAO_CosTrading and TAO_CosProperty).
+
+The *.lib and *.dll files are located in ACE_wrappers/lib.  You need
+to point your PATH to $ACE_ROOT/lib for running the applications.
+
+I hesitate to put down explicit instructions on what libraries need to be
+linked in, considering that the libraries are being split apart more and more
+for footprint purposes.  For most ACE stuff, you will only need to link in
+ace.lib.  For plain TAO clients TAO.lib is enough.  TAO servers also require
+TAO_PortableServer.lib for the POA.  If the TAO application uses Dynamic Anys,
+TAO_DynamicAny.lib is also needed.  Then if any of the ORB Services are used,
+more libraries are needed.  For example, a client that uses the Name Service
+would need to link TAO_CosNaming.lib.
+
+And note that the release versions of the libraries are listed above.  For
+debug configurations the libraries would be aced.lib, TAOd.lib, etc.
+
+@subsection msvc_external_projects External ACE/TAO Projects
+
+It is a little difficult for us to list how exactly one should create
+projects that use ACE/TAO but are external to the ACE_wrappers tree.  Since
+most projects we create are in that tree, we can make assumptions about
+directory structure that doesn't always apply for external projects.  In
+other words, we have ideas how they should work, but they usually remain
+a bit, um, untested. :-)
+
+There are three main dependencies a project would have on ACE/TAO.
+
+- Include paths:  Since all the headers use a subdirectory way of referring
+  to include files (such as "ace/OS.h" instead of just "OS.h").  In order
+  to make this work either the path to ACE_wrappers (and ACE_wrappers\TAO and
+  ACE_wrappers\TAO\orbsvcs, etc.) to the additional include paths of the
+  project or in MSVC.  I believe it is a better idea to add them to the global
+  MSVC directories.  That way the path to ACE on a machine doesn't get hard
+  coded into the project itself (this should make it easier to move the
+  project between machines where ACE is installed in different places).
+
+- Libraries and library paths:  Depending on what features are needed,
+  different libraries are needed to be linked in.  (This is covered more in
+  an above section).  These libraries are specified in the project, but can
+  be specified in different ways.  The first is the hard coded way (a full
+  path, such as "C:\ACE_wrappers\ace\aced.lib").  The second is listing only
+  the library (such as "aced.lib") and then specify the path either in the
+  project or via MSVC global settings.  Just like for the include paths, MSVC
+  global settings is probably the more robust way of specifying this.
+
+- TAO_IDL: TAO's IDL compiler resides in ACE_wrappers\bin.  If the external
+  project contains IDL files, then a custom build configuration can be used
+  to automatically call TAO_IDL.  Note that the location of the release
+  version of the compiler is in ACE_wrappers\bin\Release (although it doesn't
+  matter which version you use, they both produce the same output).  If
+  ACE_wrappers\bin is included in the path, then the build command can just
+  refer to tao_idl and it can be found via the path.  The other options are
+  to refer to tao_idl via an absolute hard coded path or to add
+  ACE_wrappers\bin to the MSVC's global executable path settings.  Either
+  way the bin directory must be in the path or in the global settings so
+  tao_idl can find aced.dll.
+
+So I guess in summary we would recommend adding most of the settings to Visual
+C++'s global settings (include paths, library paths, and executable paths)
+and just refer to the libraries without any paths.
+
+@subsection msvc_aceroot ACE_ROOT
+
+ACE_ROOT is an interesting environment variable.  Even though it is heavily
+used on Unix (in fact, ACE/TAO will not compile without it) it really isn't
+needed for MSVC.  The reason for this is that we were interested in making
+configuration and setup really easy for Visual C++ on Windows. In retrospect
+it might have made quite a few things easier to specify if ACE_ROOT was
+required.  One thing you might notice is that TAO_IDL will display a message
+if ACE_ROOT isn't set, but it is only a problem if the IDL file includes
+<orb.idl> and you don't use -I to specify where orb.idl is.
+
+*/

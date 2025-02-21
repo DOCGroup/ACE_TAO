@@ -2,8 +2,6 @@
 /**
  *  @file   ESF_Busy_Lock.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  *  http://doc.ece.uci.edu/~coryan/EC/index.html
@@ -17,6 +15,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include /**/ "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Adapt classes that implement the "busy lock" protocol, to conform
 /// to the ACE Lock interface.
@@ -47,30 +49,26 @@ public:
    * Check the documentation in ace/Synch.h for details.
    */
   //@{
-  int remove (void);
-  int acquire (void);
-  int tryacquire (void);
-  int release (void);
-  int acquire_read (void);
-  int acquire_write (void);
-  int tryacquire_read (void);
-  int tryacquire_write (void);
+  int remove ();
+  int acquire ();
+  int tryacquire ();
+  int release ();
+  int acquire_read ();
+  int acquire_write ();
+  int tryacquire_read ();
+  int tryacquire_write ();
   //@}
 
 private:
   Adaptee* adaptee_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ESF_Busy_Lock.i"
+#include "orbsvcs/ESF/ESF_Busy_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Busy_Lock.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Busy_Lock.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Busy_Lock.cpp"
 
 #endif /* TAO_ESF_BUSY_LOCK_H */

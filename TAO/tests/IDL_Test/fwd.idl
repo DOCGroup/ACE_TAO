@@ -1,34 +1,37 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    fwd.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has 
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    fwd.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 // This file, along with its companion full.idl, test the
 // handling of forward interface declarations that are
 // not defined in the same IDL file. The two files have
 // mutually dependent interfaces. It is no longer necessary
-// for such ILD files to include each other, as long as 
+// for such ILD files to include each other, as long as
 // they are part of the same build.
 
 module scope_test
 {
   interface i_scope_test;
+};
+
+module scope_test
+{
+  struct same_scope_struct
+  {
+    i_scope_test same_scope_member;
+  };
 };
 
 module mod2
@@ -39,14 +42,14 @@ module mod2
   };
 
   interface fwd;
-  
+
   exception exp
   {
     fwd fwd_mem;
   };
-  
+
   typedef fwd td_fwd;
-  
+
   interface full
   {
     fwd op (in fwd inarg,
@@ -59,3 +62,43 @@ module mod2
   interface fwd;
 };
 
+// Tests a bug where code generation for an interface
+// which was forward declared, then fully defined with
+// both concrete and abstract parents caused the IDL
+// compiler to crash.
+module fwd_mixed_intf
+{
+  interface mixed_parents;
+
+  interface concrete_parent {};
+
+  abstract interface abstract_parent {};
+
+  interface mixed_abs_first : abstract_parent, concrete_parent {};
+  interface mixed_conc_first : concrete_parent, abstract_parent {};
+};
+
+// Tests a bug found when the scope traversal was fixed. Forwarded valuetypes
+// have some different syntax supplied when used as initialization arguments
+// or in marshaling. This generated code did not compile.
+module obv_fwd
+{
+  valuetype ForwardedType;
+};
+
+module obv_fwd
+{
+  valuetype EnclosingType
+  {
+    public ::obv_fwd::ForwardedType forwarded;
+  };
+};
+
+module obv_fwd
+{
+  valuetype ForwardedType
+  {
+    public long number;
+  };
+
+};

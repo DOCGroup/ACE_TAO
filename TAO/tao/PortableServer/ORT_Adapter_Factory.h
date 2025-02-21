@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    ORT_Adapter_Factory.h
- *
- *  $Id$
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
@@ -16,13 +14,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
 #include "ace/Service_Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -45,7 +46,6 @@ namespace TAO
     : public ACE_Service_Object
   {
   public:
-
     /// Destructor.
     /**
      * @note Even though this class only defines an interface, a
@@ -54,7 +54,7 @@ namespace TAO
      *       line option.  Apparently the compiler generated
      *       destructor is inlined.
      */
-    virtual ~ORT_Adapter_Factory (void);
+    virtual ~ORT_Adapter_Factory ();
 
     /// Create a new adapter, in case not possible to allocate, returns 0
     virtual TAO::ORT_Adapter * create () = 0;
@@ -63,6 +63,8 @@ namespace TAO
     virtual void destroy (TAO::ORT_Adapter * adapter) = 0;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

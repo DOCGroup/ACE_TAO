@@ -1,22 +1,60 @@
-#include "LocateRequest_Invocation.h"
-#include "Profile_Transport_Resolver.h"
-#include "operation_details.h"
-#include "Stub.h"
-#include "Bind_Dispatcher_Guard.h"
-#include "Transport.h"
-#include "Synch_Reply_Dispatcher.h"
-#include "GIOP_Utils.h"
-#include "Profile.h"
-#include "ORB_Constants.h"
+// -*- C++ -*-
+#include "tao/LocateRequest_Invocation.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/operation_details.h"
+#include "tao/Stub.h"
+#include "tao/Bind_Dispatcher_Guard.h"
+#include "tao/Transport.h"
+#include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/GIOP_Utils.h"
+#include "tao/Profile.h"
+#include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 
-#include "ace/Countdown_Time.h"
+#include "tao/ORB_Time_Policy.h"
 
-ACE_RCSID (tao,
-           LocateRequest_Invocation,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  /**
+   * @class First_Request_Guard
+   *
+   * @brief Unique pointer like class for first_request flag in transport.
+   *
+   * Since codeset service context is only sent in the first request it might
+   * happen that after LocateRequest (which doesn't include service context)
+   * no codeset negotiation happens in subsequent calls. In this respect
+   * LocateRequest is not the first request and thus First_Request_Guard
+   * restores first_request in transport to its original state.
+   */
+  class First_Request_Guard
+  {
+  public:
+    First_Request_Guard (TAO_Transport &transport);
+
+    ~First_Request_Guard ();
+
+  private:
+    /// The transport that we guard.
+    TAO_Transport &transport_;
+
+    /// Original value of first_request from transport.
+    bool is_first_;
+  };
+
+  First_Request_Guard::First_Request_Guard (TAO_Transport &transport)
+    : transport_ (transport)
+  {
+    this->is_first_ = this->transport_.first_request ();
+  }
+
+  First_Request_Guard::~First_Request_Guard ()
+  {
+    this->transport_.first_request_sent (this->is_first_);
+  }
+
   LocateRequest_Invocation::LocateRequest_Invocation (
       CORBA::Object_ptr otarget,
       Profile_Transport_Resolver &resolver,
@@ -29,19 +67,24 @@ namespace TAO
   }
 
   Invocation_Status
-  LocateRequest_Invocation::invoke (ACE_Time_Value *max_wait_time
-                                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::Exception))
+  LocateRequest_Invocation::invoke (ACE_Time_Value *max_wait_time)
   {
-    ACE_Countdown_Time countdown (max_wait_time);
+    TAO::ORB_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher rd (this->resolver_.stub ()->orb_core (),
-                                   this->details_.reply_service_info ());
+    TAO_Synch_Reply_Dispatcher *rd_p =
+      new (std::nothrow) TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
+                                                     this->details_.reply_service_info ());
+    if (!rd_p)
+      {
+        throw ::CORBA::NO_MEMORY ();
+      }
+
+    ACE_Intrusive_Auto_Ptr<TAO_Synch_Reply_Dispatcher> rd(rd_p, false);
 
     // Register a reply dispatcher for this invocation. Use the
     // preallocated reply dispatcher.
     TAO_Bind_Dispatcher_Guard dispatch_guard (this->details_.request_id (),
-                                              &rd,
+                                              rd.get (),
                                               this->resolver_.transport ()->tms ());
 
     if (dispatch_guard.status () != 0)
@@ -50,38 +93,30 @@ namespace TAO
         // to call the interceptors in this case?
         this->resolver_.transport ()->close_connection ();
 
-        ACE_THROW_RETURN (CORBA::INTERNAL (TAO::VMCID,
-                                           CORBA::COMPLETED_NO),
-                          TAO_INVOKE_FAILURE);
+        throw ::CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
       }
 
-    TAO_Target_Specification tspec;
-    this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    TAO_Transport *transport = this->resolver_.transport ();
 
-    TAO_Transport *transport =
-      this->resolver_.transport ();
+    Invocation_Status s = TAO_INVOKE_FAILURE;
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon,
+                        transport->output_cdr_lock (), TAO_INVOKE_FAILURE);
+      TAO_OutputCDR &cdr = transport->out_stream ();
 
-    TAO_OutputCDR &cdr =
-      transport->out_stream ();
+      // This must restore first_request flag after message is sent.
+      First_Request_Guard fr_quard (*transport);
 
-    int retval =
-      transport->generate_locate_request (tspec,
-                                          this->details_,
-                                          cdr);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      TAO_Target_Specification tspec;
+      this->init_target_spec (tspec, cdr);
 
-    if (retval == -1)
-      return TAO_INVOKE_FAILURE;
+      if (transport->generate_locate_request (tspec, this->details_, cdr) == -1)
+        return TAO_INVOKE_FAILURE;
 
-    countdown.update ();
+      countdown.update ();
 
-    Invocation_Status s =
-      this->send_message (cdr,
-                          TAO_Transport::TAO_TWOWAY_REQUEST,
-                          max_wait_time
-                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      s = this->send_message (cdr, TAO_Message_Semantics (), max_wait_time);
+    }
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
@@ -89,25 +124,18 @@ namespace TAO
     countdown.update ();
 
     // For some strategies one may want to release the transport
-    // back to  cache. If the idling is successfull let the
+    // back to cache. If the idling is successful let the
     // resolver about that.
     if (this->resolver_.transport ()->idle_after_send ())
       this->resolver_.transport_released ();
 
-    s =
-      this->wait_for_reply (max_wait_time,
-                            rd,
-                            dispatch_guard
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    s = this->wait_for_reply (max_wait_time, *rd.get (), dispatch_guard);
 
-    s = this->check_reply (rd
-                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    s = this->check_reply (*rd.get ());
 
     // For some strategies one may want to release the transport
     // back to  cache after receiving the reply. If the idling is
-    // successfull let the resolver about that.
+    // successful let the resolver about that.
     if (this->resolver_.transport ()->idle_after_reply ())
       this->resolver_.transport_released ();
 
@@ -115,29 +143,23 @@ namespace TAO
   }
 
   Invocation_Status
-  LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher &rd
-                                         ACE_ENV_ARG_DECL)
+  LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher &rd)
   {
-    TAO_InputCDR &cdr =
-      rd.reply_cdr ();
+    TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
-    this->resolver_.transport ()->assign_translators (&cdr, 0);
+    this->resolver_.transport ()->assign_translators (&cdr, nullptr);
 
-    switch (rd.reply_status ())
+    switch (rd.locate_reply_status ())
       {
-      case TAO_GIOP_OBJECT_HERE:
+      case GIOP::OBJECT_HERE:
         break;
-      case TAO_GIOP_UNKNOWN_OBJECT:
-        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO::VMCID,
-                                                   CORBA::COMPLETED_YES),
-                          TAO_INVOKE_FAILURE);
-      case TAO_GIOP_OBJECT_FORWARD:
-      case TAO_GIOP_OBJECT_FORWARD_PERM:
-        return this->location_forward (cdr
-                                       ACE_ENV_ARG_PARAMETER);
-
-      case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
+      case GIOP::UNKNOWN_OBJECT:
+        throw ::CORBA::OBJECT_NOT_EXIST (TAO::VMCID, CORBA::COMPLETED_YES);
+      case GIOP::OBJECT_FORWARD:
+      case GIOP::OBJECT_FORWARD_PERM:
+        return this->location_forward (cdr);
+      case GIOP::LOC_SYSTEM_EXCEPTION:
         {
           // Pull the exception from the stream.
           CORBA::String_var buf;
@@ -146,18 +168,14 @@ namespace TAO
             {
               // Could not demarshal the exception id, raise a local
               // CORBA::MARSHAL exception.
-              ACE_THROW_RETURN (CORBA::MARSHAL (TAO::VMCID,
-                                                CORBA::COMPLETED_MAYBE),
-                                TAO_INVOKE_SYSTEM_EXCEPTION);
+              throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
             }
 
           // This kind of exception shouldn't happen with locate requests,
           // but if it does, we turn it into a CORBA::UNKNOWN exception.
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO::VMCID,
-                                            CORBA::COMPLETED_YES),
-                            TAO_INVOKE_SYSTEM_EXCEPTION);
+          throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
         }
-      case TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE:
+      case GIOP::LOC_NEEDS_ADDRESSING_MODE:
         {
           // We have received an exception with a request to change the
           // addressing mode. First let us read the mode that the
@@ -168,16 +186,12 @@ namespace TAO
             {
               // Could not demarshal the addressing disposition, raise a local
               // CORBA::MARSHAL exception.
-              ACE_THROW_RETURN (CORBA::MARSHAL (TAO::VMCID,
-                                                CORBA::COMPLETED_MAYBE),
-                                TAO_INVOKE_SUCCESS);
+              throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
             }
 
           // Now set this addressing mode in the profile, so that
           // the next invocation need not go through this.
-          this->resolver_.profile ()->addressing_mode (addr_mode
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (TAO_INVOKE_SUCCESS);
+          this->resolver_.profile ()->addressing_mode (addr_mode);
 
           // Restart the invocation.
           return TAO_INVOKE_RESTART;
@@ -187,3 +201,5 @@ namespace TAO
     return TAO_INVOKE_SUCCESS;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

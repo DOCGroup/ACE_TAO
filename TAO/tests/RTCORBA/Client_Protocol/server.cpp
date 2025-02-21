@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -16,11 +14,11 @@ public:
   Test_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void test_method ();
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  //FUZZ: disable check_for_lack_ACE_OS
+  void shutdown ();
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   CORBA::ORB_var orb_;
@@ -33,33 +31,31 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Test_i::test_method ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Test method invoked on the sever\n"));
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Shutting down \n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+              "(%P|%t) Shutting down\n"));
+  this->orb_->shutdown (false);
 }
 
 //*************************************************************************
 
-const char *ior_output_file1 = "test1.ior";
-const char *ior_output_file2 = "test2.ior";
+const ACE_TCHAR *ior_output_file1 = ACE_TEXT("test1.ior");
+const ACE_TCHAR *ior_output_file2 = ACE_TEXT("test2.ior");
 CORBA::ULong protocol_type = 0;
 
 // Parse command-line arguments.
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:c:p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:p:"));
   int c, result;
 
   while ((c = get_opts ()) != -1)
@@ -74,7 +70,7 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'p':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            "%u",
                            &protocol_type);
         if (result == 0 || result == EOF)
@@ -103,7 +99,7 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%s> is nil\n",
+                       "ERROR: Object reference <%C> is nil\n",
                        msg),
                       -1);
   else
@@ -114,25 +110,20 @@ int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *server_impl,
-               const char *filename
-               ACE_ENV_ARG_DECL)
+               const ACE_TCHAR *filename)
 {
   // Register with poa.
   PortableServer::ObjectId_var id =
-    poa->activate_object (server_impl ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    poa->activate_object (server_impl);
 
   CORBA::Object_var server =
-    poa->id_to_reference (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    poa->id_to_reference (id.in ());
 
   // Print out the IOR.
   CORBA::String_var ior =
-    orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    orb->object_to_string (server.in ());
 
-  ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
+  ACE_DEBUG ((LM_DEBUG, "<%C>\n\n", ior.in ()));
 
   // Print ior to the file.
   if (filename != 0)
@@ -151,14 +142,13 @@ create_object (PortableServer::POA_ptr poa,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
@@ -166,28 +156,22 @@ main (int argc, char *argv[])
 
       // RTORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RTORB");
+      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
       // RootPOA.
       object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
         return -1;
 
       // POAManager.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Create child POA with RTCORBA::ClientProtocolPolicy set.
       RTCORBA::ProtocolList protocols;
@@ -203,16 +187,12 @@ main (int argc, char *argv[])
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (1);
       poa_policy_list[0] =
-        rt_orb->create_client_protocol_policy (protocols
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        rt_orb->create_client_protocol_policy (protocols);
 
       PortableServer::POA_var poa =
         root_poa->create_POA ("Child_POA",
                               poa_manager.in (),
-                              poa_policy_list
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              poa_policy_list);
 
       // Servant.
       Test_i server_impl (orb.in ());
@@ -221,35 +201,30 @@ main (int argc, char *argv[])
       int result;
       ACE_DEBUG ((LM_DEBUG, "\nActivated object one as "));
       result = create_object (poa.in (), orb.in (), &server_impl,
-                              ior_output_file1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              ior_output_file1);
       if (result == -1)
         return -1;
 
       // Create object 2.
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
       result = create_object (root_poa.in (), orb.in (), &server_impl,
-                              ior_output_file2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              ior_output_file2);
       if (result == -1)
         return -1;
 
       // Run ORB Event loop.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception caught in ClientProtocolPolicy: test server");
+      ex._tao_print_exception (
+        "Unexpected exception caught in ClientProtocolPolicy: test server");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

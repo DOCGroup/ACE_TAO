@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef LONGUPCALLS_AMI_MANAGER_H
 #define LONGUPCALLS_AMI_MANAGER_H
 
@@ -16,11 +14,8 @@ public:
   // = The skeleton methods
   virtual void start_workers (CORBA::Short worker_count,
                               CORBA::Long milliseconds,
-                              Test::Controller_ptr controller
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                              Test::Controller_ptr controller);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -37,7 +32,7 @@ public:
           CORBA::Long milliseconds,
           CORBA::ORB_ptr orb);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The service method
 
 private:
@@ -61,16 +56,10 @@ public:
                       int *pending_replies);
   // Constructor
 
-  virtual void worker_started (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_started_excep (Test::AMI_ControllerExceptionHolder*
-                                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished_excep (Test::AMI_ControllerExceptionHolder*
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void worker_started ();
+  virtual void worker_started_excep (::Messaging::ExceptionHolder*);
+  virtual void worker_finished ();
+  virtual void worker_finished_excep (::Messaging::ExceptionHolder*);
 
 private:
   TAO_SYNCH_MUTEX *mutex_;

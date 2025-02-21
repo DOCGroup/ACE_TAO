@@ -1,0 +1,17 @@
+//  
+
+project(*Server): taoexe, portableserver, security, ssl {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(*Client): taoexe, security, ssl {
+  after += *Server
+
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}

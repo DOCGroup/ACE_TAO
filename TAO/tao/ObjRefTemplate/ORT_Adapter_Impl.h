@@ -4,8 +4,6 @@
 /**
  * @file ORT_Adapter_Impl.h
  *
- * $Id$
- *
  * This is the implementation of the TAO::ORT_Adapter
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -17,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ort_export.h"
+#include "tao/ObjRefTemplate/ort_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,10 +24,7 @@
 #include "tao/PortableServer/ORT_Adapter.h"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -38,7 +33,7 @@ namespace TAO
    *
    * @brief Implementation of the TAO::ORT_Adapter
    */
-  class TAO_ORT_Export ORT_Adapter_Impl
+  class ORT_Adapter_Impl
     : public ORT_Adapter
   {
   public:
@@ -46,19 +41,17 @@ namespace TAO
     virtual int activate (const char *server_id,
                           const char *orb_id,
                           PortableInterceptor::AdapterName *adapter_name,
-                          PortableServer::POA_ptr poa
-                          ACE_ENV_ARG_DECL);
+                          PortableServer::POA_ptr poa);
 
     /// Accessor methods to ObjectReferenceTemplate template
-    virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
+    virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template ();
 
     /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-    virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void);
+    virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory ();
 
     /// Set a different ort_factory to be used.
     virtual int set_obj_ref_factory (
-      PortableInterceptor::ObjectReferenceFactory * current_factory
-      ACE_ENV_ARG_DECL);
+      PortableInterceptor::ObjectReferenceFactory * current_factory);
 
     /**
      * @see @c TAO::ORT_Adapter for details.
@@ -70,15 +63,11 @@ namespace TAO
      * Methods
      */
     //@{
-    virtual char * tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * tao_server_id ();
 
-    virtual char * tao_orb_id (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * tao_orb_id ();
 
-    virtual PortableInterceptor::AdapterName * tao_adapter_name (
-        ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual PortableInterceptor::AdapterName * tao_adapter_name ();
     //@}
 
     /**
@@ -90,26 +79,19 @@ namespace TAO
     //@{
     virtual CORBA::Object_ptr make_object (
         const char * repository_id,
-        const PortableInterceptor::ObjectId & id
-        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+        const PortableInterceptor::ObjectId & id);
     //@}
 
   private:
-
     /// The ORT Template, this is the factory and its identity.
     PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 
     /// The ORT Factory.
     PortableInterceptor::ObjectReferenceFactory_var ort_factory_;
-
   };
-
 }
 
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

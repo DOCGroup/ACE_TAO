@@ -1,0 +1,36 @@
+// -*- IDL -*-
+
+/**
+ * @file PICurrent.pidl
+ *
+ * @brief Pre-compiled IDL source for the PortableInterceptor
+ * components in the ORB.
+ *
+ *  tao_idl
+ *     -o orig -Gp -Gd -GA -SS -Sci
+ *          -Wb,export_include="tao/TAO_Export.h"
+ *          -Wb,export_macro=TAO_Export
+ *          -Wb,pre_include="ace/pre.h"
+ *          -Wb,post_include="ace/post.h"
+ *          PICurrent.pidl
+ */
+
+#ifndef _PI_CURRENT_IDL_
+#define _PI_CURRENT_IDL_
+
+#include "tao/PI/InvalidSlot.pidl"
+#include "tao/PI_Forward.pidl"
+#include "tao/Current.pidl"
+
+module PortableInterceptor {
+
+  typeprefix PortableInterceptor "omg.org";
+
+  local interface Current : CORBA::Current
+  {
+    any get_slot (in SlotId id) raises (InvalidSlot);
+    void set_slot (in SlotId id, in any data) raises (InvalidSlot);
+  };
+};
+
+#endif  /* _PI_CURRENT_IDL_ */

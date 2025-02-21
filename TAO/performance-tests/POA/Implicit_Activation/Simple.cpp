@@ -1,25 +1,16 @@
-//
-// $Id$
-//
 #include "Simple.h"
 
-ACE_RCSID(Activation, Simple, "$Id$")
-
-Simple::Simple (void)
+Simple::Simple ()
 {
 }
 
 void
-Simple::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Simple::destroy ()
 {
-  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var poa = this->_default_POA ();
 
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (oid.in ());
 }

@@ -1,0 +1,35 @@
+@annotation unit {
+  string value;
+};
+
+@annotation range {
+  double min;
+  double max;
+};
+
+@annotation min {
+  long value;
+};
+
+@annotation max {
+  long value;
+};
+
+@annotation key {
+};
+
+module test {
+
+   @unit("deg")
+   @range(min=0.0, max=360.0)
+   typedef float angle_t;
+
+   @unit("degC") @min(-60) @max(100) typedef short temperature_t;
+
+   struct structure {
+      @key unsigned long key;
+      angle_t degrees;
+      temperature_t celsius;
+   };
+
+};

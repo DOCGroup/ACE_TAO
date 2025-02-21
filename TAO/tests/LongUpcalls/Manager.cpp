@@ -1,36 +1,22 @@
-//
-// $Id$
-//
 
 #include "Manager.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (LongUpcalls,
-           Manager,
-           "$Id$")
-
 static void
-validate_connection (Test::Controller_ptr controller
-                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (())
+validate_connection (Test::Controller_ptr controller)
 {
-  ACE_TRY
+  try
     {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
       CORBA::PolicyList_var unused;
-      controller->_validate_connection (unused
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      controller->_validate_connection (unused);
 #else
-      controller->_is_a ("Not_an_IDL_Type"
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      controller->_is_a ("Not_an_IDL_Type");
 #endif
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 }
 
 Manager::Manager (CORBA::ORB_ptr orb)
@@ -41,15 +27,11 @@ Manager::Manager (CORBA::ORB_ptr orb)
 void
 Manager::start_workers (CORBA::Short worker_count,
                         CORBA::Long milliseconds,
-                        Test::Controller_ptr controller
-                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                        Test::Controller_ptr controller)
 {
   ACE_Thread_Manager thread_manager;
 
-  validate_connection(controller
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  validate_connection(controller);
 
   // ACE_DEBUG ((LM_DEBUG, "Starting %d workers\n", worker_count));
   Worker worker (&thread_manager,
@@ -61,10 +43,9 @@ Manager::start_workers (CORBA::Short worker_count,
 }
 
 void
-Manager::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Manager::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 
@@ -80,34 +61,27 @@ Worker::Worker (ACE_Thread_Manager *thr_mgr,
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   // ACE_DEBUG ((LM_DEBUG, "Worker starts\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      validate_connection(this->controller_.in()
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      validate_connection(this->controller_.in());
 
-      this->controller_->worker_started (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->controller_->worker_started ();
 
       // ACE_DEBUG ((LM_DEBUG, "Worker start reported\n"));
 
       ACE_Time_Value tv (0, 1000 * this->milliseconds_);
       ACE_OS::sleep (tv);
 
-      this->controller_->worker_finished (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->controller_->worker_finished ();
 
       // ACE_DEBUG ((LM_DEBUG, "Worker completion reported\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in svc() method\n");
+      ex._tao_print_exception ("Exception in svc() method\n");
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -2,25 +2,20 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("Single_Threaded_POA");
-}
-else {
-    $T = new PerlACE::Process ("Single_Threaded_POA");
-}
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$client = $T->SpawnWaitKill (60);
+$SV = $server->CreateProcess ("Single_Threaded_POA");
 
-if ($client != 0) {
-  print STDERR "ERROR: test returned $client\n";
-  exit 1;
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
 exit 0;
-

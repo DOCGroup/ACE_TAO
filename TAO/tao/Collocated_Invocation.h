@@ -4,18 +4,16 @@
 /**
  *  @file    Collocated_Invocation.h
  *
- *  $Id$
- *
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
+
 #ifndef TAO_COLLOCATED_INVOCATION_H
 #define TAO_COLLOCATED_INVOCATION_H
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +22,8 @@
 #include "tao/Collocation_Strategy.h"
 #include "tao/Invocation_Base.h"
 #include "tao/Exception.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Operation_Details;
 class TAO_Stub;
@@ -80,15 +80,14 @@ namespace TAO
      *    servant.
      *
      */
-    Invocation_Status invoke (Collocation_Proxy_Broker *cpb,
-                              Collocation_Strategy strat
-                              ACE_ENV_ARG_DECL);
+    Invocation_Status invoke (Collocation_Strategy strat);
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (Collocated_Invocation (void))
-
+    Collocated_Invocation () = delete;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_COLLOCATED_INVOCATION_H*/

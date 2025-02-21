@@ -1,0 +1,7 @@
+
+module Test
+{
+  interface Hello
+  {
+  };
+};

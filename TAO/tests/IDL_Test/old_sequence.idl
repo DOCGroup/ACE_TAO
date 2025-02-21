@@ -1,0 +1,43 @@
+
+//=============================================================================
+/**
+ *  @file    old_sequence.idl
+ *
+ *  Tests of sequence IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+
+#include "simple.idl"
+
+typedef sequence<char,20> c20;
+typedef sequence<c20,23> cc23;
+typedef sequence<char,24> c24;
+typedef sequence< sequence<long,10>, 10> c30;
+
+typedef sequence<string> cstring;
+struct TProgram
+{
+  string  path;
+  cstring argv;
+  cstring envp;
+};
+
+struct sfoo
+{
+  long f1;
+  char f2;
+};
+
+typedef sfoo              sfoo_ar[20];
+typedef sequence<sfoo>    f_unbounded;
+typedef sequence<sfoo_ar> f_ar_unbounded;
+
+interface TestSeq
+{
+  attribute f_unbounded fattr;
+  typedef sequence<long,10> also_vec10;
+};

@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : orbsvcslib, dslogadmin_skel, dynamicany, etcl, svc_utils, utils {
+  after      += DsLogAdmin_Serv
+  libs       += TAO_DsLogAdmin_Serv
+}

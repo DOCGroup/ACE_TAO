@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : tao_etcl {
+  after += TAO_ETCL_Parser
+  libs += TAO_ETCL_Parser
+  includes += $(TAO_ROOT)/tao/ETCL/ETCL_include
+}

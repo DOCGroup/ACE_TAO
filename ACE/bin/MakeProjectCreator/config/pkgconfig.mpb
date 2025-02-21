@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project {
+  Define_Custom(pkgconfig) {
+    inputext = .pc.in
+  }
+}

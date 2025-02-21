@@ -1,11 +1,9 @@
-//$Id$
-
 # include "Client_i.h"
 
 // The client program for the application.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Checkpoint_Client_i client;
 
@@ -19,5 +17,4 @@ main (int argc, char **argv)
     return -1;
   else
     return 0;
-
 }

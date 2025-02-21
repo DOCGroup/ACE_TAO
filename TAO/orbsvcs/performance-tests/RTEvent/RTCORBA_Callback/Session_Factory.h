@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef SESSION_FACTORY_H
 #define SESSION_FACTORY_H
@@ -18,15 +15,11 @@ public:
                    PortableServer::POA_ptr poa);
 
   // = The skeleton methods
-  virtual Test::Session_ptr create_new_session (Test::Callback_ptr cb
-                                                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Test::Session_ptr create_new_session (Test::Callback_ptr cb);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   /// Use an ORB reference to shutdown the application.

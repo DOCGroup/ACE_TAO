@@ -1,22 +1,17 @@
 /**
  * @file Client_Peer.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Client_Peer.h"
 #include "Clock_Ticks.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(Nested_Upcall_Crash, Client_Peer, "$Id$")
-
 class Crasher : public ACE_Event_Handler
 {
 public:
-  Crasher (void);
+  Crasher ();
 
   virtual int handle_timeout (ACE_Time_Value const & current_time,
                               void const * arg);
@@ -30,28 +25,21 @@ Client_Peer::Client_Peer (CORBA::ORB_ptr orb)
 void
 Client_Peer::callme(Test::Peer_ptr callback,
                     CORBA::ULong max_depth,
-                    Test::Payload const &
-                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC((CORBA::SystemException))
+                    Test::Payload const &)
 {
   // ACE_DEBUG ((LM_DEBUG, "Received call, depth = %d\n", max_depth));
   if (max_depth > 0)
   {
-    Test::Peer_var me =
-      this->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    Test::Peer_var me = this->_this ();
 
     Test::Payload return_data;
 
-    callback->callme(me.in(), max_depth - 1, return_data
-                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    callback->callme(me.in(), max_depth - 1, return_data);
   }
 }
 
 void
-Client_Peer::crash(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC((CORBA::SystemException))
+Client_Peer::crash()
 {
   Crasher * crasher = new Crasher;
 
@@ -61,12 +49,11 @@ Client_Peer::crash(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Client_Peer::noop(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC((CORBA::SystemException))
+Client_Peer::noop()
 {
 }
 
-Crasher::Crasher(void)
+Crasher::Crasher()
 {
 }
 

@@ -1,0 +1,3 @@
+project(*test) : dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro, threads {
+  exename = test
+}

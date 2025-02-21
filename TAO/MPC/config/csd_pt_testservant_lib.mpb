@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : csd_pt_testinf_lib {
+  after += csd_pt_testservant
+  libs += CSD_PT_TestServant
+  libpaths += ../../CSD_Strategy/TestServant
+}

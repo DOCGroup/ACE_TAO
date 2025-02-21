@@ -1,7 +1,6 @@
 // -*- MPC -*-
-// $Id$
-
-project(MFC Server): namingexe, portableserver, ace_mfc {
+project(MFC_Server): namingexe, portableserver, ace_mfc {
+  after     += MFC_Client
   exename    = server
   pch_header = StdAfx.h
   pch_source = StdAfx.cpp

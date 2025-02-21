@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Utils.h
- *
- *  $Id$
  *
  *  Utility methods
  *
@@ -20,7 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -31,16 +32,15 @@ namespace TAO
    */
   class TAO_PortableGroup_Export PG_Utils
   {
-    public:
-
+  public:
     /// Set tagged component for the object group
     static CORBA::Boolean set_tagged_component (
-        PortableGroup::ObjectGroup *&ior,
+        PortableGroup::ObjectGroup *ior,
         PortableGroup::TagGroupTaggedComponent &t);
 
     /// Get tagged component for the object group
     static CORBA::Boolean get_tagged_component (
-        PortableGroup::ObjectGroup *&ior,
+        PortableGroup::ObjectGroup *ior,
         PortableGroup::TagGroupTaggedComponent &t);
 
   private:
@@ -50,7 +50,7 @@ namespace TAO
   };
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_PORTABLEGROUP_UTILS_H*/

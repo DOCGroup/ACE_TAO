@@ -1,0 +1,31 @@
+// -*- IDL -*-
+
+/**
+ *  @file   Messaging_Types.pidl
+ */
+
+#ifndef TAO_MESSAGING_NO_IMPL_TYPES_PIDL
+#define TAO_MESSAGING_NO_IMPL_TYPES_PIDL
+
+#include "tao/Policy_Forward.pidl"
+
+#pragma prefix "omg.org"
+
+module Messaging
+{
+  const CORBA::PolicyType REBIND_POLICY_TYPE = 23;
+  const CORBA::PolicyType SYNC_SCOPE_POLICY_TYPE = 24;
+  const CORBA::PolicyType REQUEST_PRIORITY_POLICY_TYPE = 25;
+  const CORBA::PolicyType REPLY_PRIORITY_POLICY_TYPE = 26;
+  const CORBA::PolicyType REQUEST_START_TIME_POLICY_TYPE = 27;
+  const CORBA::PolicyType REQUEST_END_TIME_POLICY_TYPE = 28;
+  const CORBA::PolicyType REPLY_START_TIME_POLICY_TYPE = 29;
+  const CORBA::PolicyType REPLY_END_TIME_POLICY_TYPE = 30;
+  const CORBA::PolicyType RELATIVE_REQ_TIMEOUT_POLICY_TYPE = 31;
+  const CORBA::PolicyType RELATIVE_RT_TIMEOUT_POLICY_TYPE = 32;
+  const CORBA::PolicyType ROUTING_POLICY_TYPE = 33;
+  const CORBA::PolicyType MAX_HOPS_POLICY_TYPE = 34;
+  const CORBA::PolicyType QUEUE_ORDER_POLICY_TYPE = 35;
+};
+
+#endif /*TAO_MESSAGING_NO_IMPL_TYPES_PIDL*/

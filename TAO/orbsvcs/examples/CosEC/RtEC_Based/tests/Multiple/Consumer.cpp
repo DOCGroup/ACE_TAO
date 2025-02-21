@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "Consumer.h"
 #include "ace/Get_Opt.h"
 
@@ -11,9 +9,9 @@ Consumer::Consumer ()
 }
 
 int
-Consumer::parse_args (int argc, char *argv [])
+Consumer::parse_args (int argc, ACE_TCHAR *argv [])
 {
- ACE_Get_Opt get_opt (argc, argv, "n:c:");
+ ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:c:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -21,7 +19,7 @@ Consumer::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name = get_opt.opt_arg ();
+          this->service_name_ = get_opt.opt_arg ();
           break;
 
         case 'c':
@@ -34,7 +32,7 @@ Consumer::parse_args (int argc, char *argv [])
                       "Usage: %s "
                       " -n <COS Event Service name>"
                       " -c event_count"
-                      " \n",
+                      "\n",
                       argv[0]));
           return -1;
         }
@@ -44,65 +42,52 @@ Consumer::parse_args (int argc, char *argv [])
 }
 
 void
-Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel
-                     ACE_ENV_ARG_DECL)
+Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
 {
   // = Connect as a consumer.
   this->consumer_admin_ =
-    event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    event_channel->for_consumers ();
 }
 
 void
-Consumer::close (ACE_ENV_SINGLE_ARG_DECL)
+Consumer::close ()
 {
-  this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->disconnect ();
 
   this->consumer_admin_ =
     CosEventChannelAdmin::ConsumerAdmin::_nil ();
 }
 
 void
-Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
+Consumer::connect ()
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
   CosEventComm::PushConsumer_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   this->supplier_proxy_ =
-    this->consumer_admin_->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->consumer_admin_->obtain_push_supplier ();
 
-  this->supplier_proxy_->connect_push_consumer (objref.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_proxy_->connect_push_consumer (objref.in ());
 }
 
 void
-Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_proxy_->disconnect_push_supplier ();
 
   this->supplier_proxy_ =
     CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void
-Consumer::push (const CORBA::Any &
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-      ))
+Consumer::push (const CORBA::Any &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P):%s\n",
@@ -121,62 +106,46 @@ Consumer::push (const CORBA::Any &
                   "(%P):%s\n",
                   "exiting the consumer."));
 
-      this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->close ();
 
       this->shutdown ();
     }
 }
 
 void
-Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
- ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
+Consumer::disconnect_push_consumer ()
 {
   // Deactivate this object.
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (id.in ());
 }
 
 int
-Consumer::init_Consumer (void)
+Consumer::init_Consumer ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
    {
-      this->open (this->cos_ec_
-                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->open (this->cos_ec_);
 
-      this->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->connect ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in Consumer::connect (void)\n");
+      ex._tao_print_exception ("Exception in Consumer::connect ()\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Consumer cons;
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "PP_Test_Client.h"
 
 #include "tao/Timeprobe.h"
@@ -12,8 +10,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -73,7 +69,7 @@ PP_Test_Client::PP_Test_Client (int shutdown)
 // Reads the Cubit factory ior from a file
 
 int
-PP_Test_Client::read_ior (char *filename)
+PP_Test_Client::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
@@ -97,7 +93,7 @@ PP_Test_Client::read_ior (char *filename)
                         -1);
     }
 
-  this->factory_key_ = ACE_OS::strdup (data);
+  this->factory_key_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
 
   ior_buffer.alloc ()->free (data);
 
@@ -107,9 +103,9 @@ PP_Test_Client::read_ior (char *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-PP_Test_Client::parse_args (void)
+PP_Test_Client::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "ovdn:f:k:x");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("ovdn:f:k:x"));
   int c;
   int result;
 
@@ -168,51 +164,39 @@ PP_Test_Client::parse_args (void)
 // Oneway test.
 
 void
-PP_Test_Client::send_oneway (void)
+PP_Test_Client::send_oneway ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
-      this->objref_->send_oneway (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->objref_->send_oneway ();
       this->call_count_++;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from send_oneway");
+      ex._tao_print_exception ("from send_oneway");
 
       this->error_count_++;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 // Twoway test.
 
 void
-PP_Test_Client::send_void (void)
+PP_Test_Client::send_void ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
-      this->objref_->send_void (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->objref_->send_void ();
       this->call_count_++;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                            "from send_void");
+      ex._tao_print_exception ("from send_void");
 
       this->error_count_++;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 // Send an octet
@@ -264,40 +248,33 @@ PP_Test_Client::run ()
 int
 PP_Test_Client::shutdown_server (int do_shutdown)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       if (do_shutdown)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "shutdown on Pluggable_Test object\n"));
 
-          this->objref_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->objref_->shutdown ();
 
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "server, please ACE_OS::exit"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from shutdown_server");
+      ex._tao_print_exception ("from shutdown_server");
 
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
-PP_Test_Client::run_oneway (void)
+PP_Test_Client::run_oneway ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       CORBA::ULong i;
 
@@ -317,30 +294,25 @@ PP_Test_Client::run_oneway (void)
 
           ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
 
-          this->objref_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->objref_->shutdown ();
 
           ACE_DEBUG ((LM_DEBUG,
                       "server, please ACE_OS::exit"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from objref_->shutdown");
+      ex._tao_print_exception ("from objref_->shutdown");
 
       return -1;
     }
-  ACE_ENDTRY;
   return this->error_count_ == 0 ? 0 : 1;
 }
 
 int
-PP_Test_Client::run_void (void)
+PP_Test_Client::run_void ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       CORBA::ULong i;
 
@@ -360,25 +332,22 @@ PP_Test_Client::run_void (void)
 
           ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
 
-          this->objref_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->objref_->shutdown ();
 
           ACE_DEBUG ((LM_DEBUG,
                       "server, please ACE_OS::exit"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from objref_->shutdown");
+      ex._tao_print_exception ("from objref_->shutdown");
 
       return -1;
     }
-  ACE_ENDTRY;
   return this->error_count_ == 0 ? 0 : 1;
 }
 
-PP_Test_Client::~PP_Test_Client (void)
+PP_Test_Client::~PP_Test_Client ()
 {
   // Free resources and close the IOR files.
   if (this->factory_ior_file_)
@@ -398,19 +367,17 @@ PP_Test_Client::~PP_Test_Client (void)
 }
 
 int
-PP_Test_Client::init (int argc, char **argv)
+PP_Test_Client::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "internet"
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    "internet");
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         {
@@ -426,14 +393,10 @@ PP_Test_Client::init (int argc, char **argv)
         }
 
       CORBA::Object_var factory_object =
-        this->orb_->string_to_object (this->factory_key_
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (this->factory_key_);
 
       this->factory_ =
-        Pluggable_Test_Factory::_narrow (factory_object.in()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Pluggable_Test_Factory::_narrow (factory_object.in());
 
       if (CORBA::is_nil (this->factory_.in ()))
         {
@@ -449,8 +412,7 @@ PP_Test_Client::init (int argc, char **argv)
       // Now retrieve the Pluggable_Test obj ref corresponding to the key.
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_MAKE_PLUGGABLE_START);
 
-      this->objref_ = this->factory_->make_pluggable_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->objref_ = this->factory_->make_pluggable_test ();
 
       if (CORBA::is_nil (this->objref_.in ()))
         {
@@ -459,13 +421,11 @@ PP_Test_Client::init (int argc, char **argv)
                             -1);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Pluggable_Test::init");
+      ex._tao_print_exception ("Pluggable_Test::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

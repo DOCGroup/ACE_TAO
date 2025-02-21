@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -75,30 +73,52 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // nodes and AST_UnionBranch nodes.
 
 #include "ast_field.h"
-#include "ast_type.h"
+#include "ast_param_holder.h"
 #include "ast_visitor.h"
+
 #include "utl_identifier.h"
+#include "utl_err.h"
 
-ACE_RCSID (ast, ast_field, "$Id$")
+#include "global_extern.h"
 
-AST_Field::AST_Field (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    pd_field_type (0),
-    pd_visibility (vis_NA)
-{
-}
+AST_Decl::NodeType const
+AST_Field::NT = AST_Decl::NT_field;
 
-// To be used when constructing an AST_Field node.
 AST_Field::AST_Field (AST_Type *ft,
                       UTL_ScopedName *n,
                       Visibility vis)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_field,
               n),
-    pd_field_type (ft),
-    pd_visibility (vis)
+    ref_type_ (ft),
+    visibility_ (vis),
+    owns_base_type_ (false)
 {
+  FE_Utils::tmpl_mod_ref_check (this, ft);
+
+  AST_Decl::NodeType fnt = ft->node_type ();
+
+  // In each of these cases, we are responsible for destroying
+  // our ref_type_ member.
+  this->owns_base_type_ =
+    fnt == AST_Decl::NT_array
+    || fnt == AST_Decl::NT_sequence
+    || fnt == AST_Decl::NT_fixed
+    || fnt == AST_Decl::NT_param_holder;
+
+  if (fnt == AST_Decl::NT_param_holder)
+    {
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (ft);
+
+      if (ph->info ()->type_ == AST_Decl::NT_const)
+        {
+          idl_global->err ()->not_a_type (ft);
+        }
+    }
+  else if (fnt == AST_Decl::NT_except)
+    {
+      idl_global->err ()->not_a_type (ft);
+    }
 }
 
 // To be used when constructing a node of a subclass of AST_Field.
@@ -109,20 +129,52 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
   : COMMON_Base (),
     AST_Decl (nt,
               n),
-    pd_field_type (ft),
-    pd_visibility (vis)
+    ref_type_ (ft),
+    visibility_ (vis),
+    owns_base_type_ (false)
+{
+  AST_Decl::NodeType fnt = ft->node_type ();
+
+  // In each of these cases, we are responsible for destroying
+  // our ref_type_ member.
+  this->owns_base_type_ =
+    fnt == AST_Decl::NT_array
+    || fnt == AST_Decl::NT_sequence
+    || fnt == AST_Decl::NT_fixed
+    || fnt == AST_Decl::NT_param_holder;
+
+  if (fnt == AST_Decl::NT_param_holder)
+    {
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (ft);
+
+      if (ph->info ()->type_ == AST_Decl::NT_const)
+        {
+          idl_global->err ()->not_a_type (ft);
+        }
+    }
+}
+
+AST_Field::AST_Field (
+  UTL_ScopedName *name,
+  AST_Field *other)
+  : COMMON_Base (),
+    AST_Decl (name, dynamic_cast<AST_Decl*>(other)),
+    ref_type_ (other->field_type ()),
+    visibility_ (other->visibility ()),
+    owns_base_type_ (false)
+{
+  // We definitely don't own the base type and the param holder check shouldn't
+  // be an issue here.
+}
+
+AST_Field::~AST_Field ()
 {
 }
 
-AST_Field::~AST_Field (void)
-{
-}
-
-// Dump this AST_Field node to the ostream o.
 void
 AST_Field::dump (ACE_OSTREAM_TYPE &o)
 {
-  switch (this->pd_visibility)
+  switch (this->visibility_)
     {
     case vis_PRIVATE:
       this->dump_i (o, "private ");
@@ -136,7 +188,7 @@ AST_Field::dump (ACE_OSTREAM_TYPE &o)
       break;
     }
 
-  this->pd_field_type->local_name ()->dump (o);
+  this->ref_type_->local_name ()->dump (o);
 
   this->dump_i (o, " ");
 
@@ -149,24 +201,44 @@ AST_Field::ast_accept (ast_visitor *visitor)
   return visitor->visit_field (this);
 }
 
-AST_Type *
-AST_Field::field_type (void)
+void
+AST_Field::destroy ()
 {
-  return this->pd_field_type;
+  if (this->owns_base_type_ && this->ref_type_)
+    {
+      this->ref_type_->destroy ();
+      delete this->ref_type_;
+      this->ref_type_ = nullptr;
+    }
+
+  this->AST_Decl::destroy ();
+}
+
+AST_Type *
+AST_Field::field_type () const
+{
+  return this->ref_type_;
 }
 
 AST_Field::Visibility
-AST_Field::visibility (void)
+AST_Field::visibility () const
 {
-  return this->pd_visibility;
+  return this->visibility_;
+}
+
+void
+AST_Field::visibility (AST_Field::Visibility val)
+{
+  visibility_ = val;
 }
 
 int
-AST_Field::contains_wstring (void)
+AST_Field::contains_wstring ()
 {
-  return this->pd_field_type->contains_wstring ();
+  return this->ref_type_->contains_wstring ();
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Field, AST_Decl)
-IMPL_NARROW_FROM_DECL(AST_Field)
+bool AST_Field::annotatable () const
+{
+  return true;
+}

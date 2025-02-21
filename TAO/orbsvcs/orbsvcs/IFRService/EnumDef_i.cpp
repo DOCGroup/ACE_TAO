@@ -1,16 +1,10 @@
-// $Id$
-
-#include "EnumDef_i.h"
-#include "Repository_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/EnumDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           EnumDef_i,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EnumDef_i::TAO_EnumDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -20,32 +14,28 @@ TAO_EnumDef_i::TAO_EnumDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EnumDef_i::~TAO_EnumDef_i (void)
+TAO_EnumDef_i::~TAO_EnumDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_EnumDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EnumDef_i::def_kind ()
 {
   return CORBA::dk_Enum;
 }
 
 CORBA::TypeCode_ptr
-TAO_EnumDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EnumDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  this->update_key ();
 
-  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i ();
 }
 
 CORBA::TypeCode_ptr
-TAO_EnumDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EnumDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -57,30 +47,25 @@ TAO_EnumDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "name",
                                             name);
 
-  CORBA::EnumMemberSeq_var members = this->members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  CORBA::EnumMemberSeq_var members = this->members_i ();
 
   return this->repo_->tc_factory ()->create_enum_tc (id.c_str (),
                                                      name.c_str (),
-                                                     members.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+                                                     members.in ());
 }
 
 CORBA::EnumMemberSeq *
-TAO_EnumDef_i::members (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EnumDef_i::members ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->members_i ();
 }
 
 CORBA::EnumMemberSeq *
-TAO_EnumDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EnumDef_i::members_i ()
 {
   u_int count = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -91,7 +76,6 @@ TAO_EnumDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (retval,
                     CORBA::EnumMemberSeq (count),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   retval->length (count);
 
@@ -116,23 +100,17 @@ TAO_EnumDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members
-                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members)
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->members_i (members
-                   ACE_ENV_ARG_PARAMETER);
+  this->members_i (members);
 }
 
 void
-TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
-                          ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "members",
@@ -152,9 +130,11 @@ TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
                                             1,
                                             member_key);
 
-      ACE_TString member_name (members[i].in ());
+      ACE_TString member_name (members[i]);
       this->repo_->config ()->set_string_value (member_key,
                                                 "name",
                                                 member_name);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

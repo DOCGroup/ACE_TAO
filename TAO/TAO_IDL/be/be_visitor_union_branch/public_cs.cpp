@@ -1,26 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    public_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union Branch in the client stubs
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    public_cs.cpp
+ *
+ *  Visitor generating code for Union Branch in the client stubs
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_union_branch, 
-           public_cs, 
-           "$Id$")
+#include "union_branch.h"
 
 // **********************************************
 //  Visitor for union_branch in the client stubs file.
@@ -33,21 +22,21 @@ be_visitor_union_branch_public_cs::be_visitor_union_branch_public_cs (
 {
 }
 
-be_visitor_union_branch_public_cs::~be_visitor_union_branch_public_cs (void)
+be_visitor_union_branch_public_cs::~be_visitor_union_branch_public_cs ()
 {
 }
 
 int
 be_visitor_union_branch_public_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_cs::"
                          "visit_union_branch - "
-                         "Bad union_branch type\n"), 
+                         "Bad union_branch type\n"),
                         -1);
     }
 
@@ -58,7 +47,7 @@ be_visitor_union_branch_public_cs::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_cs::"
                          "visit_union_branch - "
-                         "codegen for union_branch type failed\n"), 
+                         "codegen for union_branch type failed\n"),
                         -1);
     }
 
@@ -71,7 +60,7 @@ be_visitor_union_branch_public_cs::visit_array (be_array *node)
   // If not a typedef and we are defined in the use scope, we must be
   // defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // Anonymous array case.
       be_visitor_context ctx (*this->ctx_);
@@ -83,7 +72,7 @@ be_visitor_union_branch_public_cs::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_cs::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -103,7 +92,7 @@ be_visitor_union_branch_public_cs::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_cs::"
                          "visit_enum - "
-                         "codegen failed\n"), 
+                         "codegen failed\n"),
                         -1);
     }
 
@@ -117,7 +106,7 @@ be_visitor_union_branch_public_cs::visit_sequence (be_sequence *node)
   // defined.
 
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // Anonymous sequence case.
       be_visitor_context ctx (*this->ctx_);
@@ -129,7 +118,7 @@ be_visitor_union_branch_public_cs::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_cs::"
                              "visit_sequence - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -155,11 +144,20 @@ be_visitor_union_branch_public_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_cs::"
                          "visit_struct - "
-                         "codegen failed\n"), 
+                         "codegen failed\n"),
                         -1);
     }
 
   return 0;
+}
+
+int
+be_visitor_union_branch_public_cs::visit_structure_fwd (be_structure_fwd *node)
+{
+  be_structure *s =
+    dynamic_cast<be_structure*> (node->full_definition ());
+
+  return this->visit_structure (s);
 }
 
 int
@@ -174,9 +172,19 @@ be_visitor_union_branch_public_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_cs::"
                          "visit_union - "
-                         "codegen failed\n"), 
+                         "codegen failed\n"),
                         -1);
     }
 
   return 0;
 }
+
+int
+be_visitor_union_branch_public_cs::visit_union_fwd (be_union_fwd *node)
+{
+  be_union *u =
+    dynamic_cast<be_union*> (node->full_definition ());
+
+  return this->visit_union (u);
+}
+

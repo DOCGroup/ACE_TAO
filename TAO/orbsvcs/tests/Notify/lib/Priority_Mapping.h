@@ -2,11 +2,7 @@
 /**
  *  @file Priority_Mapping.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_PRIORITY_MAPPING_H
@@ -25,13 +21,12 @@
  * @class TAO_Notify_Tests_Priority_Mapping
  *
  * @brief A default Priority mapping. simply returns the same number.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Priority_Mapping
 {
 public:
   /// The destructor
-  virtual ~TAO_Notify_Tests_Priority_Mapping (void);
+  virtual ~TAO_Notify_Tests_Priority_Mapping ();
 
   virtual CORBA::Boolean
       to_native (CORBA::Short corba_priority,

@@ -1,0 +1,11 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// A very simple interface
+  interface IORTable_Shutdown_Race
+  {
+    void ping ();
+    oneway void shutdown ();
+  };
+};

@@ -1,25 +1,14 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   Storable.cpp
-//
-// = AUTHOR
-//    Bruce Trask <trask_b@ociweb.com>
-//    Chanaka Liyanaarachchi <chanaka@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Storable.cpp
+ *
+ *  @author Bruce Trask <trask_b@ociweb.com> Chanaka Liyanaarachchi <chanaka@ociweb.com>
+ */
+//=============================================================================
 
-#include "Storable.h"
+#include "orbsvcs/Naming/Storable.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Storable.inl"
+#include "orbsvcs/Naming/Storable.inl"
 #endif /* __ACE_INLINE__ */
-
-
-
-
 

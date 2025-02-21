@@ -1,0 +1,7 @@
+
+
+This test registers orb initializer which in turn registers Test_Protocol_Hooks.
+This is necessary for emulation of failure in TAO_IIOP_Connection_Handler::open()
+and probable in this case handle leak.
+TAO_IIOP_Connection_Handler::open() calls server_protocol_properties_at_orb_level()
+in Test_Protocol_Hooks and we throw an exception to make it fail.

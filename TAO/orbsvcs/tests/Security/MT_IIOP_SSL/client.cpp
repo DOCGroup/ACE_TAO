@@ -1,24 +1,21 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "Client_Worker.h"
 
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int do_shutdown = 0;
 int nthreads = 5;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:i:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:i:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-
       case 'k':
         ior = get_opts.opt_arg ();
         break;
@@ -46,33 +43,29 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Get Object Reference using IOR file
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       // Cast to Appropriate Type
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -92,28 +85,24 @@ main (int argc, char *argv[])
       client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) threads finished \n"));
+                  "(%P|%t) threads finished\n"));
 
       // Shut down the server if -x option given in command line
       if (do_shutdown)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
 
       // Destroying the ORB..
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
 
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -1,27 +1,71 @@
-#include "LF_CH_Event.h"
+#include "tao/LF_CH_Event.h"
+#include "tao/LF_Follower.h"
+#include "tao/debug.h"
+#include "tao/Connection_Handler.h"
+#include "tao/Transport.h"
 
-ACE_RCSID(tao,
-          LF_Invocation_Event,
-          "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_CH_Event::TAO_LF_CH_Event (void)
+TAO_LF_CH_Event::TAO_LF_CH_Event ()
   : TAO_LF_Event (),
     prev_state_ (TAO_LF_Event::LFS_IDLE)
 
 {
 }
 
-TAO_LF_CH_Event::~TAO_LF_CH_Event (void)
+TAO_LF_CH_Event::~TAO_LF_CH_Event ()
 {
 }
 
-void
-TAO_LF_CH_Event::state_changed_i (int new_state)
+int
+TAO_LF_CH_Event::bind (TAO_LF_Follower *follower)
 {
-  if (this->state_ == new_state)
-    return;
+  return this->followers_.bind (follower, 0);
+}
 
-    // Validate the state change
+int
+TAO_LF_CH_Event::unbind (TAO_LF_Follower *follower)
+{
+  return this->followers_.unbind (follower);
+}
+
+void
+TAO_LF_CH_Event::state_changed_i (LFS_STATE new_state)
+{
+  if (this->state_ != new_state)
+    {
+      this->validate_state_change (new_state);
+
+      if (TAO_debug_level > 9)
+        {
+          size_t id = 0;
+          TAO_Connection_Handler *ch = nullptr;
+          if ((ch = dynamic_cast<TAO_Connection_Handler *> (this))
+              && ch->transport ())
+            {
+              id = ch->transport ()->id ();
+            }
+
+          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::"
+                      "state_changed_i, state %C->%C\n",
+                      id,
+                      TAO_LF_Event::state_name(prev_state_),
+                      TAO_LF_Event::state_name(state_)));
+        }
+    }
+
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->followers_.mutex ()));
+
+  HASH_MAP::iterator end_it = this->followers_.end ();
+  for (HASH_MAP::iterator it = this->followers_.begin (); it != end_it ; ++it)
+    {
+      it->ext_id_->signal ();
+    }
+}
+
+void
+TAO_LF_CH_Event::validate_state_change (LFS_STATE new_state)
+{
   if (this->state_ == TAO_LF_Event::LFS_IDLE)
     {
       // From the LFS_IDLE state we can only become active.
@@ -64,9 +108,8 @@ TAO_LF_CH_Event::state_changed_i (int new_state)
   return;
 }
 
-
-int
-TAO_LF_CH_Event::successful (void) const
+bool
+TAO_LF_CH_Event::successful_i () const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
@@ -74,29 +117,42 @@ TAO_LF_CH_Event::successful (void) const
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }
 
-int
-TAO_LF_CH_Event::error_detected (void) const
+bool
+TAO_LF_CH_Event::error_detected_i () const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 
-  return 0;
+  return this->state_ == TAO_LF_Event::LFS_TIMEOUT;
 }
 
 void
-TAO_LF_CH_Event::set_state (int new_state)
+TAO_LF_CH_Event::set_state (LFS_STATE new_state)
 {
   // @@ NOTE: Is this still required?
-  if (this->is_state_final () == 0
+  if (!this->is_state_final ()
       && new_state == TAO_LF_Event::LFS_TIMEOUT)
     {
       this->state_ = new_state;
+      if (TAO_debug_level > 9)
+        {
+          size_t id = 0;
+          TAO_Connection_Handler *ch = nullptr;
+          if ((ch = dynamic_cast<TAO_Connection_Handler *> (this)) &&
+              ch->transport ())
+            {
+              id = ch->transport ()->id ();
+            }
+          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::set_state, "
+                      "state_ is LFS_TIMEOUT\n", id));
+        }
     }
 }
 
-
-int
-TAO_LF_CH_Event::is_state_final (void)
+bool
+TAO_LF_CH_Event::is_state_final () const
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,24 +1,28 @@
-// $Id$
-
-#include "Dynamic_Bitset.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
 #include <assert.h>
 #include <algorithm>
 
 #if !defined (__ACE_INLINE__)
-#include "Dynamic_Bitset.inl"
+#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl"
 #endif /* __ACE_INLINE__ */
 
+//FUZZ: disable check_for_lack_ACE_OS/
 inline unsigned ceil(unsigned numerator, unsigned denominator)
 {
   return numerator/denominator+ (numerator%denominator ? 1 : 0);
 }
+//FUZZ: enable check_for_lack_ACE_OS/
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+//FUZZ: disable check_for_lack_ACE_OS/
 Dynamic_Bitset::Dynamic_Bitset(Dynamic_Bitset::size_type size)
   : buffer_size_(ceil(size,BITS_PER_BLOCK))
   , bit_size_(size)
   , buffer_(new block[buffer_size_])
 {
-  memset(buffer_, 0, buffer_size_*BYTES_PER_BLOCK);
+//FUZZ: enable check_for_lack_ACE_OS/
+  ACE_OS::memset(buffer_, 0, buffer_size_*BYTES_PER_BLOCK);
 }
 
 
@@ -38,7 +42,11 @@ Dynamic_Bitset& Dynamic_Bitset::operator = (const Dynamic_Bitset& other)
 Dynamic_Bitset& Dynamic_Bitset::operator &=(const Dynamic_Bitset& other)
 {
   assert(other.bit_size_ == this->bit_size_);
+
+  //FUZZ: disable check_for_lack_ACE_OS/
   size_type len = ceil(bit_size_,BITS_PER_BLOCK);
+  //FUZZ: enable check_for_lack_ACE_OS/
+
   for (size_type i = 0; i < len; ++i)
     buffer_[i] &= other.buffer_[i];
   return *this;
@@ -64,7 +72,10 @@ void Dynamic_Bitset::set(Dynamic_Bitset::size_type bit, bool val)
 
 void Dynamic_Bitset::flip()
 {
+  //FUZZ: disable check_for_lack_ACE_OS/
   size_type len = ceil(bit_size_,BITS_PER_BLOCK);
+  //FUZZ: enable check_for_lack_ACE_OS/
+
   block mask = static_cast<block> (-1);
   for (size_type i = 0; i < len; ++i)
     buffer_[i] ^= mask;
@@ -72,10 +83,13 @@ void Dynamic_Bitset::flip()
 
 void Dynamic_Bitset::resize(Dynamic_Bitset::size_type num_bits, bool value)
 {
+  //FUZZ: disable check_for_lack_ACE_OS/
   size_type len = ceil(num_bits, BITS_PER_BLOCK);
+  //FUZZ: enable check_for_lack_ACE_OS/
+
   if (len > this->buffer_size_) {
     Dynamic_Bitset tmp(num_bits);
-    memcpy(tmp.buffer_, this->buffer_, this->buffer_size_*BYTES_PER_BLOCK);
+    ACE_OS::memcpy(tmp.buffer_, this->buffer_, this->buffer_size_*BYTES_PER_BLOCK);
     block mask = static_cast<block> (-1);
 
     size_type block_pos = this->bit_size_/BITS_PER_BLOCK;
@@ -119,3 +133,5 @@ bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs)
   mask >>= (Dynamic_Bitset::BITS_PER_BLOCK-bit_pos);
   return ((lhs.buffer_[i] ^ rhs.buffer_[i]) & mask ) == 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

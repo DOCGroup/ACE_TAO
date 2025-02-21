@@ -1,7 +1,4 @@
 #!/bin/sh
-#
-# $Id$
-#
 
 # The number of high-priority messages to send.
 HP_MSG_COUNT=400

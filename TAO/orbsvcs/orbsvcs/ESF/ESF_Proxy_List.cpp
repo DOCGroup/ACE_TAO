@@ -1,25 +1,21 @@
-// $Id$
-
 #ifndef TAO_ESF_PROXY_LIST_CPP
 #define TAO_ESF_PROXY_LIST_CPP
 
-#include "ESF_Proxy_List.h"
+#include "orbsvcs/ESF/ESF_Proxy_List.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Proxy_List.i"
+#include "orbsvcs/ESF/ESF_Proxy_List.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ESF, ESF_Proxy_List, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY>
-TAO_ESF_Proxy_List<PROXY>::
-      TAO_ESF_Proxy_List (void)
+TAO_ESF_Proxy_List<PROXY>::TAO_ESF_Proxy_List ()
 {
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_List<PROXY>::connected (PROXY *proxy
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_List<PROXY>::connected (PROXY *proxy)
 {
   int r = this->impl_.insert (proxy);
   if (r == 0)
@@ -39,8 +35,7 @@ TAO_ESF_Proxy_List<PROXY>::connected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_List<PROXY>::reconnected (PROXY *proxy
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_List<PROXY>::reconnected (PROXY *proxy)
 {
   int r = this->impl_.insert (proxy);
   if (r == 0)
@@ -64,8 +59,7 @@ TAO_ESF_Proxy_List<PROXY>::reconnected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_List<PROXY>::disconnected (PROXY *proxy
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_List<PROXY>::disconnected (PROXY *proxy)
 {
   int r = this->impl_.remove (proxy);
   if (r != 0)
@@ -78,7 +72,7 @@ TAO_ESF_Proxy_List<PROXY>::disconnected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_List<PROXY>::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_List<PROXY>::shutdown ()
 {
   Iterator end = this->impl_.end ();
   for (Iterator i = this->impl_.begin (); i != end; ++i)
@@ -88,5 +82,7 @@ TAO_ESF_Proxy_List<PROXY>::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     }
   this->impl_.reset ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_PROXY_LIST_CPP */

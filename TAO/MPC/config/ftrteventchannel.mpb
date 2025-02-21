@@ -1,0 +1,7 @@
+// -*- MPC -*-
+project : ftrtevent, utils, corba_messaging, pi_server {
+  after     += FTRT_EventChannel
+  libs      += TAO_FTRT_EventChannel
+  includes  += $(TAO_ROOT)/orbsvcs/FtRtEvent/EventChannel
+  tagchecks += FTRT_EventChannel
+}

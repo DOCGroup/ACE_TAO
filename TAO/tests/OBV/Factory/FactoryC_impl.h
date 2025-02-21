@@ -4,8 +4,6 @@
 /**
  *  @file   FactoryC_impl.h
  *
- *  $Id$
- *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
 // ===================================================================
@@ -39,26 +37,15 @@ class Value2_impl : public virtual OBV_OBV_FactoryTest::Value2,
 class Value2_init_impl : public OBV_FactoryTest::Value2_init
 {
 public:
-
   virtual OBV_FactoryTest::Value2* create_default (
-      CORBA::ULong id
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      CORBA::ULong id);
 
   virtual OBV_FactoryTest::Value2* create (
       CORBA::ULong id,
-      const OBV_FactoryTest::BaseValue::BV_Data & data
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      const OBV_FactoryTest::BaseValue::BV_Data & data);
 
 public:
-
-  virtual CORBA::ValueBase * create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
+  virtual CORBA::ValueBase * create_for_unmarshal ();
 };
 
 #endif /* TAO_FACTORY_FACTORY_C_IMPL_H */

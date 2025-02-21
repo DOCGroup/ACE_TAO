@@ -1,0 +1,34 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file   Current_Test.idl
+ *
+ * Simple IDL file to test TAO::TranspotCurrent
+ * support.
+ *
+ * @author  Iliyan Jeliazkov <iliyan@ociweb.com>
+ */
+//=============================================================================
+
+module Test
+{
+  module Transport
+  {
+    interface CurrentTest
+    {
+
+      const unsigned long ContextTag = 0xabcdef;
+
+      void invoked_by_client ();
+
+      void invoked_during_upcall ();
+
+      long self_test ();
+
+      oneway void shutdown ();
+    };
+  };
+};
+
+

@@ -1,4 +1,3 @@
-// $Id$
 #if !defined(AFX_NAMINGTREECTRL_H__1F34ADC2_B0D8_11D3_BF27_00C0F03C565A__INCLUDED_)
 #define AFX_NAMINGTREECTRL_H__1F34ADC2_B0D8_11D3_BF27_00C0F03C565A__INCLUDED_
 
@@ -24,40 +23,40 @@ public:
   void SetpORB(CORBA::ORB_ptr pORB);
 // Operations
 public:
-  CNamingObject* GetTreeObject(HTREEITEM hItem = NULL);
-  void ClearChildren(HTREEITEM hItem = NULL);
+  CNamingObject* GetTreeObject(HTREEITEM hItem = 0);
+  void ClearChildren(HTREEITEM hItem = 0);
   void ListContext(HTREEITEM hItem);
   void Resolve(CosNaming::NamingContext_ptr pRootContext);
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CNamingTreeCtrl)
-	protected:
-	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CNamingTreeCtrl)
+  protected:
+  virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CNamingTreeCtrl();
+  virtual ~CNamingTreeCtrl();
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CNamingTreeCtrl)
-	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnContextPopupViewreference();
-	afx_msg void OnItemexpanding(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnContextPopupRefresh();
-	afx_msg void OnContextPopupUnbind();
-	afx_msg void OnContextPopupDestroy();
-	afx_msg void OnContextPopupBindContext();
-	afx_msg void OnContextPopupBindobject();
-	afx_msg void OnDestroy();
-	afx_msg void OnContextpopupBindnewcontext();
-	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnObjectpopupUnbind();
-	afx_msg void OnObjectpopupViewrefrence();
-	//}}AFX_MSG
+  //{{AFX_MSG(CNamingTreeCtrl)
+  afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+  afx_msg void OnContextPopupViewreference();
+  afx_msg void OnItemexpanding(NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg void OnContextPopupRefresh();
+  afx_msg void OnContextPopupUnbind();
+  afx_msg void OnContextPopupDestroy();
+  afx_msg void OnContextPopupBindContext();
+  afx_msg void OnContextPopupBindobject();
+  afx_msg void OnDestroy();
+  afx_msg void OnContextpopupBindnewcontext();
+  afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg void OnObjectpopupUnbind();
+  afx_msg void OnObjectpopupViewrefrence();
+  //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
 
   void Refresh(HTREEITEM hItem);
   void OnCopy();

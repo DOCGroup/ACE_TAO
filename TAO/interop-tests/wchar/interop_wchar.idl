@@ -1,5 +1,3 @@
-// $Id$
-
 // Tests for interoperability between TAO and JacORB for sending wchar data
 // The CDR defines separate serialization functions for reading and writing
 // wchar, wchar[] and wstring data. Encapsulated wchar data is also tested.

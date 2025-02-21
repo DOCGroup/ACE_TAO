@@ -1,0 +1,87 @@
+// -*- MPC -*-
+project(TAO_IDL_GEN) {
+  requires += tao_idl_fe_gen
+  custom_only = 1
+
+  verbatim(gnuace, extension, 1) {
+    OUTPUT_DIRECTORY =
+  }
+
+  verbatim(gnuace, local) {
+    BISON_FLAGS := -d --feature=caret --warnings=error=deprecated --warnings=error=empty-rule --warnings=error=conflicts-rr
+    all: fe/fe_lookup.cpp fe/idl.yy.cpp fe/idl.tab.cpp fe/idl.tab.hpp
+    GPERF ?= $(ACE_ROOT)/bin/ace_gperf
+    fe/keywords.dat.tmp: fe/keywords.dat
+    "	$(GPERF) -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ > $@"
+
+    fe/fe_lookup.cpp: fe/keywords.dat.tmp
+    "	sed -f fe/post_gperf.sed $^ > $@"
+
+    fe/idl.yy.cpp: fe/idl.ll
+    "	@echo 'WARNING: Potentially outdated $@'"
+    "	@echo '         either touch(1) the file or explicitly'"
+    "	@echo '         generate it using:'"
+    "	@echo '    make lex.yy'"
+
+    .PHONY: lex.yy
+    lex.yy:
+    "ifeq ($(notdir $(LEX)), flex)"
+    "	$(LEX) -t -P tao_yy -ofe/idl.yy.cpp fe/idl.ll | \\"
+    "	sed -f fe/post_flex.sed > fe/idl.yy.cpp"
+    "else"
+    "	@echo 'ERROR: You must use flex 2.6.4 or higher to process this file'"
+    "	@/bin/false"
+    "endif"
+
+    fe/idl.tab.cpp fe/idl.tab.hpp: fe/idl.ypp
+    "	@echo 'WARNING: Potentially outdated $@'"
+    "	@echo '         either touch(1) the file or explicitly'"
+    "	@echo '         generate it using:'"
+    "	@echo '    make y.tab'"
+
+    debug_bison: BISON_FLAGS += --report=all --report-file=bison_report
+    debug_bison: y.tab
+
+    .PHONY: y.tab
+    y.tab: fe/idl.ypp
+    "ifeq ($(notdir $(YACC)), bison)"
+    "	$(YACC) $(BISON_FLAGS) -p tao_yy -b fe/idl fe/idl.ypp"
+    "else"
+    "	@echo 'ERROR: You must use bison 3 or higher to process this file'"
+    "	@/bin/false"
+    "endif"
+  }
+}
+
+project(TAO_IDL_FE) : acelib, install_lib, tao_rules, tao_output {
+  sharedname   = TAO_IDL_FE
+  dynamicflags += TAO_IDL_FE_BUILD_DLL
+  includes    += $(TAO_ROOT)
+  includes    += include fe
+  after       += TAO_IDL_GEN
+
+  specific {
+    // Override the template value for optimize.  Building the frontend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objecs
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    fe
+    ast
+    util
+    narrow
+  }
+
+  Header_Files {
+    include
+    fe
+  }
+
+  Template_Files {
+    include/utl_scope_T.cpp
+  }
+}
+

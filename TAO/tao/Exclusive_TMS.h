@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Exclusive_TMS.h
- *
- *  $Id$
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
@@ -22,8 +20,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
+class TAO_Reply_Dispatcher;
 
 /**
  * @class TAO_Exclusive_TMS
@@ -37,13 +37,12 @@ class TAO_Pluggable_Reply_Params;
  */
 class TAO_Export TAO_Exclusive_TMS : public TAO_Transport_Mux_Strategy
 {
-
 public:
   /// Constructor.
   TAO_Exclusive_TMS (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Exclusive_TMS (void);
+  virtual ~TAO_Exclusive_TMS ();
 
   /**
    * @name The TAO_Transport_Mux_Strategy overrided methods
@@ -52,16 +51,18 @@ public:
    * for details.
    */
   //@{
-  virtual CORBA::ULong request_id (void);
+  virtual CORBA::ULong request_id ();
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_Reply_Dispatcher *rh);
+                               ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd);
   virtual int unbind_dispatcher (CORBA::ULong request_id);
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
+  virtual int reply_timed_out (CORBA::ULong request_id);
 
-  virtual bool idle_after_send (void);
-  virtual bool idle_after_reply (void);
-  virtual void connection_closed (void);
+  virtual bool idle_after_send ();
+  virtual bool idle_after_reply ();
+  virtual void connection_closed ();
+  virtual bool has_request ();
   //@}
 
 protected:
@@ -69,26 +70,15 @@ protected:
   /// request_id().
   CORBA::ULong request_id_generator_;
 
-  /// If 0 then the request id and reply dispatcher below are
-  /// meaningless
-  int has_request_;
-
   /// Request id for the current request.
   CORBA::ULong request_id_;
 
-  /// Reply Dispatcher corresponding to the request.
-  TAO_Reply_Dispatcher *rd_;
-
-  // @@ Commented for the time being, let the commented line stay for
-  //    sometime - Bala
-  // TAO_GIOP_Message_State message_state_;
-  // Message state to read the incoming message.
-
-  // @@ Having members of type TAO_GIOP* indicates that we
-  // (Transport_Mux_Strategy) are aware of the underlying messaging
-  // protocol. But for the present let us close our eyes till we are
-  // able to iterate on a use case - Bala.
+  /// Reply Dispatcher corresponding to the request. If this is zero we don't
+  /// have a reply, if it not zero we have one
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* EXCLUSIVE_TMS_H */

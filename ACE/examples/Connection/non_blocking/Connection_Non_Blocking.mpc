@@ -1,0 +1,64 @@
+// -*- MPC -*-
+project (*SockClient) : aceexe {
+  exename = sock_client
+  Source_Files {
+    CPP-connector.cpp
+    test_sock_connector.cpp
+  }
+}
+
+project (*SockServer) : aceexe {
+  exename = sock_server
+  Source_Files {
+    CPP-acceptor.cpp
+    test_sock_acceptor.cpp
+  }
+}
+
+project (*LSockClient) : aceexe, avoids_ace_for_tao {
+  exename = lsock_client
+  Source_Files {
+    CPP-connector.cpp
+    test_lsock_connector.cpp
+  }
+}
+
+project (*LSockServer) : aceexe, avoids_ace_for_tao {
+  exename = lsock_server
+  Source_Files {
+    CPP-acceptor.cpp
+    test_lsock_acceptor.cpp
+  }
+}
+
+project (*SPipeClient) : aceexe {
+  exename = spipe_client
+  Source_Files {
+    CPP-connector.cpp
+    test_spipe_connector.cpp
+  }
+}
+
+project (*SPipeServer) : aceexe {
+  exename = spipe_server
+  Source_Files {
+    CPP-acceptor.cpp
+    test_spipe_acceptor.cpp
+  }
+}
+
+project (*TLIClient) : aceexe {
+  exename = tli_client
+  Source_Files {
+    CPP-connector.cpp
+    test_tli_connector.cpp
+  }
+}
+
+project (*TLIServer) : aceexe {
+  exename = tli_server
+  Source_Files {
+    CPP-acceptor.cpp
+    test_tli_acceptor.cpp
+  }
+}

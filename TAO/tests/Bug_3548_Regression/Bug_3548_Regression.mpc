@@ -1,0 +1,21 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  idlflags += -Sp
+  IDL_Files {
+    memeater.idl
+  }
+  custom_only = 1
+}
+
+project(*Client): taoclient {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    memeaterC.cpp
+  }
+  IDL_Files {
+  }
+}
+

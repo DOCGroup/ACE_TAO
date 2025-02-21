@@ -1,75 +1,61 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    fixed_array.cpp
-//
-// = DESCRIPTION
-//    tests fixed size arrays
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    fixed_array.cpp
+ *
+ *  tests fixed size arrays
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "fixed_array.h"
-
-ACE_RCSID (Param_Test, 
-           fixed_array, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Fixed_Array
 // ************************************************************************
 
-Test_Fixed_Array::Test_Fixed_Array (void)
+Test_Fixed_Array::Test_Fixed_Array ()
   : opname_ (CORBA::string_dup ("test_fixed_array")),
     ret_ (new Param_Test::Fixed_Array)
 {
 }
 
-Test_Fixed_Array::~Test_Fixed_Array (void)
+Test_Fixed_Array::~Test_Fixed_Array ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Fixed_Array::opname (void) const
+Test_Fixed_Array::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Fixed_Array::dii_req_invoke (CORBA::Request *req
-                                  ACE_ENV_ARG_DECL)
+Test_Fixed_Array::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= Param_Test::Fixed_Array_forany (this->in_);
   req->add_inout_arg ("s2") <<= Param_Test::Fixed_Array_forany (this->inout_);
   req->add_out_arg ("s3") <<= Param_Test::Fixed_Array_forany (this->out_);
   req->set_return_type (Param_Test::_tc_Fixed_Array);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Fixed_Array_forany forany;
   req->return_value () >>= forany;
   Param_Test::Fixed_Array_copy (this->ret_, forany.in ());
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *arg2->value () >>= forany;
   Param_Test::Fixed_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   Param_Test::Fixed_Array_forany out_any (this->out_);
   *arg3->value () >>= forany;
   Param_Test::Fixed_Array_copy (this->out_, forany.in ());
@@ -77,7 +63,7 @@ Test_Fixed_Array::dii_req_invoke (CORBA::Request *req
 
 int
 Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/
-                                   ACE_ENV_ARG_DECL_NOT_USED/*env*/)
+/*env*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -92,9 +78,8 @@ Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/
 }
 
 int
-Test_Fixed_Array::reset_parameters (void)
+Test_Fixed_Array::reset_parameters ()
 {
-
   for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
     {
       this->inout_ [i] = 0;
@@ -108,31 +93,25 @@ Test_Fixed_Array::reset_parameters (void)
 }
 
 int
-Test_Fixed_Array::run_sii_test (Param_Test_ptr objref
-                                ACE_ENV_ARG_DECL)
+Test_Fixed_Array::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_fixed_array (this->in_,
                                              this->inout_,
-                                             this->out_
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             this->out_);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Fixed_Array::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Fixed_Array::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Fixed_Array::check_validity (void)
+Test_Fixed_Array::check_validity ()
 {
   if (this->compare (this->in_, this->inout_) &&
       this->compare (this->in_, this->out_) &&
@@ -162,7 +141,7 @@ Test_Fixed_Array::compare (const Param_Test::Fixed_Array_slice *a1,
 }
 
 void
-Test_Fixed_Array::print_values (void)
+Test_Fixed_Array::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG, "IN array\n"));
   this->print (this->in_);

@@ -1,0 +1,17 @@
+
+
+This is a small example how to use process semaphores. We use it to
+synchronize between multiple processes and it was used to analyze
+some differences between ACE 5.6 and 5.6.2.
+
+To run do:
+1. Start a init-app. It will create the semaphore a go to sleep.
+2. Start a worker-app while the init-app still sleeps. This worker app will
+block on the semaphore.
+3. The init-app wakes up and releases the semahpre and exists.
+4. The worker-app will now lock the semphore and go to sleep.
+5. Start another worker-app while the first worker-app still sleeps. It will
+block on the semaphore.
+6. The first worker-app finally wakes up and releases the semaphore and
+start doing its work.
+

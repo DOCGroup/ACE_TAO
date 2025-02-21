@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping.h"
@@ -10,8 +8,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(TPP, server, "$Id$")
-
 class Server : public ACE_Task_Base
 {
   // = TITLE
@@ -21,14 +17,14 @@ class Server : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run the server threads.
   //
 public:
-  Server (void);
+  Server ();
   // ctor
 
-  void set (Test_i *server, int priority, int argc, char *argv[]);
+  void set (Test_i *server, int priority, int argc, ACE_TCHAR *argv[]);
   // Set the test attributes.
 
   // = The ACE_Task_Base methods....
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   Test_i *server_;
@@ -38,7 +34,7 @@ private:
   // used for creating the name of the orb.)
 
   int argc_;
-  char *argv_[256];
+  ACE_TCHAR *argv_[256];
 };
 
 // ****************************************************************
@@ -47,12 +43,12 @@ int nthreads = 0;
 const int MAX_THREADS = 128;
 Server servers[MAX_THREADS];
 int priorities[MAX_THREADS];
-const char *ior_output_file_base = "test.ior";
+const ACE_TCHAR *ior_output_file_base = ACE_TEXT("test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:t:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -78,19 +74,19 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int policy = ACE_SCHED_FIFO;
   int flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_FIFO|THR_BOUND;
   int priority =
     ACE_Sched_Params::priority_max (policy);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (policy,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -115,14 +111,13 @@ main (int argc, char *argv[])
   CORBA::ORB_var orb;
   RTCORBA::PriorityMapping *pm = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      char *argv_[256];
+      ACE_TCHAR *argv_[256];
       int argc_ = argc;
       for (int i = 0; i < argc; ++i)
         argv_[i] = argv[i];
-      orb = CORBA::ORB_init (argc_, argv_, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb = CORBA::ORB_init (argc_, argv_);
 
       // Parse the arguments.
       if (parse_args (argc_, argv_) != 0)
@@ -130,14 +125,10 @@ main (int argc, char *argv[])
 
       // Obtain Priority Mapping used by the ORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("PriorityMappingManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("PriorityMappingManager");
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
       if (CORBA::is_nil (mapping_manager.in ()))
         {
@@ -148,13 +139,12 @@ main (int argc, char *argv[])
 
       pm = mapping_manager->mapping ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in Orb per priority server:");
+      ex._tao_print_exception (
+        "Caught exception in Orb per priority server:");
       return 1;
     }
-  ACE_ENDTRY;
 
   for (int i = 0; i != nthreads; ++i)
     {
@@ -178,7 +168,7 @@ main (int argc, char *argv[])
 
 // ****************************************************************
 
-Server::Server (void)
+Server::Server ()
 {
 }
 
@@ -186,7 +176,7 @@ void
 Server::set (Test_i *server,
              int priority,
              int argc,
-             char *argv[])
+             ACE_TCHAR *argv[])
 {
   server_ = server;
   priority_ = priority;
@@ -196,7 +186,7 @@ Server::set (Test_i *server,
 }
 
 int
-Server::svc (void)
+Server::svc ()
 {
   ACE_hthread_t current;
   ACE_Thread::self (current);
@@ -210,17 +200,15 @@ Server::svc (void)
               priority_,
               native_priority));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       char orb_name[64];
       ACE_OS::sprintf (orb_name, "%d", this->priority_);
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc_, argv_, orb_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc_, argv_, orb_name);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -228,32 +216,27 @@ Server::svc (void)
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       PortableServer::ObjectId_var oid =
-        root_poa->activate_object (this->server_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->activate_object (this->server_);
 
       CORBA::Object_var obj =
-        root_poa->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->id_to_reference (oid.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (obj.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // Get the file name to store the ior.
       char file_name[100];
       ACE_OS::sprintf (file_name,
                        "%s_%d",
-                       ior_output_file_base,
+                       ACE_TEXT_ALWAYS_CHAR (ior_output_file_base),
                        this->priority_);
 
       // Output the ior to a file.
@@ -267,22 +250,18 @@ Server::svc (void)
       ACE_OS::fclose (output_file);
 
       // Start orb event loop.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+      orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       char message[100];
       ACE_OS::sprintf (message,
                        "ORB_per_Priority::server: Exception in thread with priority = %d",
                        this->priority_);
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, message);
+      ex._tao_print_exception (message);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

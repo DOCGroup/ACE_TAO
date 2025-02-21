@@ -1,5 +1,5 @@
-#include "SCIOP_Acceptor.h"
-#include "SCIOP_Profile.h"
+#include "tao/Strategies/SCIOP_Acceptor.h"
+#include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -9,44 +9,17 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/Transport.h"
 #include "tao/CDR.h"
+#include "ace/os_include/os_netdb.h"
+#include <cstring>
+#include <algorithm>
 
 #if !defined(__ACE_INLINE__)
-#include "SCIOP_Acceptor.i"
+#include "tao/Strategies/SCIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao,
-          SCIOP_Acceptor,
-          "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
-template class ACE_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_SCIOP_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_SCIOP_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO_SCIOP_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
-#pragma instantiate ACE_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_SCIOP_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_SCIOP_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_SCIOP_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (CORBA::Boolean flag)
+TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_SCIOP_PROFILE),
     addrs_ (0),
     port_span_ (1),
@@ -55,15 +28,14 @@ TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (CORBA::Boolean flag)
     hostname_in_ior_ (0),
     version_ (TAO_DEF_SCIOP_MAJOR, TAO_DEF_SCIOP_MINOR),
     orb_core_ (0),
-    lite_flag_ (flag),
-    base_acceptor_ (),
+    base_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0)
 {
 }
 
-TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor (void)
+TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -112,7 +84,7 @@ TAO_SCIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                         CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
-  int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
@@ -220,7 +192,7 @@ TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       // this code by comparing the IP address instead.  That would
       // trigger the following bug:
       //
-      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+      // http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1220
       //
       if (endp->port() == this->addrs_[i].get_port_number()
           && ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0)
@@ -231,7 +203,7 @@ TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_SCIOP_Acceptor::close (void)
+TAO_SCIOP_Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
@@ -239,19 +211,18 @@ TAO_SCIOP_Acceptor::close (void)
 int
 TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_Reactor *reactor,
-                         int major,
-                         int minor,
+                         int,
+                         int,
                          const char *address,
                          const char *options)
 {
-
   this->orb_core_ = orb_core;
 
   if (this->hosts_ != 0)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
                          ACE_TEXT ("SCIOP_Acceptor::open, ")
                          ACE_TEXT ("hostname already set\n\n")),
@@ -261,17 +232,14 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (address == 0)
     return -1;
 
-  ACE_UNUSED_ARG (major);
-  ACE_UNUSED_ARG (minor);
-
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
 
   ACE_Multihomed_INET_Addr addr;
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
-  ACE_Auto_Basic_Array_Ptr<char> tmp_host_auto;
+  const char *port_separator_loc = std::strchr (address, ':');
+  std::unique_ptr<char[]> tmp_host_auto;
 
   if (port_separator_loc == address)
     {
@@ -306,17 +274,16 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   size_t hostname_length = 0;
 
   if (port_separator_loc != 0) {
-
     // Port separator was found.  Check that the next character is
     // not the terminator.
     const char *port_loc = port_separator_loc;
     ++port_loc;
     if (port_loc == 0) {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
                          ACE_TEXT ("SCIOP_Acceptor::open - ")
                          ACE_TEXT ("no port number after the ")
-                         ACE_TEXT ("colon in \"%s\"\n"),
+                         ACE_TEXT ("colon in \"%C\"\n"),
                          address),
                         -1);
     }
@@ -329,15 +296,13 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
     // Set the length of the hostname
     hostname_length = port_separator_loc - address;
-
   } else {
-
     // Port separator was not found.  We allow port_number to retain
     // the value of 0, which will cause the port to be chosen for us
     // in open_i.
 
     // Set the length of the hostname
-    hostname_length = ACE_OS::strlen(address);
+    hostname_length = std::strlen(address);
   }
 
   ACE_NEW_RETURN(tmp_host, char[hostname_length + 1], -1);
@@ -352,10 +317,10 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   // Check that at least one hostname was obtained.
   if (hostnames.size() < 1) {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO (%P|%t) ")
                        ACE_TEXT ("SCIOP_Acceptor::open - ")
-                       ACE_TEXT ("no hostnames in string \"%s\"\n"),
+                       ACE_TEXT ("no hostnames in string \"%C\"\n"),
                        tmp_host),
                       -1);
   }
@@ -365,7 +330,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   {
     // Obtain a char* for the primary hostname.
     ACE_CString & primary_hostname_obj = hostnames[0];
-    ACE_Auto_Basic_Array_Ptr<char> primary_hostname_auto(primary_hostname_obj.rep());
+    std::unique_ptr<char[]> primary_hostname_auto(primary_hostname_obj.rep());
     const char* primary_hostname = primary_hostname_auto.get();
 
     // Convert the primary hostname to ACE_UINT32
@@ -378,7 +343,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   // Allocate an array of secondary ip addresses.
   ACE_UINT32 *secondary_ip_addrs = 0;
-  ACE_Auto_Basic_Array_Ptr<ACE_UINT32> secondary_ip_addrs_auto;
+  std::unique_ptr<ACE_UINT32[]> secondary_ip_addrs_auto;
   size_t num_secondary_ip_addrs = hostnames.size() - 1;
   if (num_secondary_ip_addrs > 0) {
     ACE_NEW_RETURN(secondary_ip_addrs,
@@ -391,10 +356,9 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   size_t i = 0;
   ACE_INET_Addr temp_addr;
   while (i < num_secondary_ip_addrs) {
-
     // Obtain a char* for a single secondary hostname.
     ACE_CString & hostname_obj = hostnames[i + 1];
-    ACE_Auto_Basic_Array_Ptr<char> hostname_auto(hostname_obj.rep());
+    std::unique_ptr<char[]> hostname_auto(hostname_obj.rep());
     const char* hostname = hostname_auto.get();
 
     // Obtain the ip address for this secondary hostname.
@@ -411,7 +375,10 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                primary_ip_addr,
                1,
                secondary_ip_addrs,
-               num_secondary_ip_addrs));
+               num_secondary_ip_addrs) != 0)
+    {
+      return -1;
+    }
 
   // Number of endpoints equals the size of the hostname array.
   this->endpoint_count_ = hostnames.size();
@@ -437,15 +404,16 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   // Set cached hostnames.
   i = 0;
   while (i < hostnames.size()) {
-
     // The hostname_in_ior_ field may override the FIRST hostname only.
     if (this->hostname_in_ior_ != 0 && i == 0)
     {
       if (TAO_debug_level > 2)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Overriding address in IOR with %s\n"),
-                    this->hostname_in_ior_));
+        TAOLIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - ")
+                      ACE_TEXT ("SCIOP_Acceptor::open, ")
+                      ACE_TEXT ("overriding address in IOR with %C\n"),
+                      this->hostname_in_ior_));
       }
       if (this->hostname (orb_core,
                           this->addrs_[i],
@@ -457,7 +425,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     {
       // Obtain a char* for the hostname.
       ACE_CString & hostname_obj = hostnames[i];
-      ACE_Auto_Basic_Array_Ptr<char> hostname_auto(hostname_obj.rep());
+      std::unique_ptr<char[]> hostname_auto(hostname_obj.rep());
       const char* hostname = hostname_auto.get();
 
       if (this->hostname (orb_core,
@@ -478,8 +446,8 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 int
 TAO_SCIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  ACE_Reactor *reactor,
-                                 int major,
-                                 int minor,
+                                 int,
+                                 int,
                                  const char *options)
 {
   this->orb_core_ = orb_core;
@@ -488,16 +456,12 @@ TAO_SCIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
                          ACE_TEXT ("SCIOP_Acceptor::open_default - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
-
-
-  ACE_UNUSED_ARG (major);
-  ACE_UNUSED_ARG (minor);
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -526,8 +490,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_SCIOP_CREATION_STRATEGY (this->orb_core_,
-                                              this->lite_flag_),
+                  TAO_SCIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
@@ -549,7 +512,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
                                      this->concurrency_strategy_) == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) SCIOP_Acceptor::open_i ")
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot open acceptor")));
@@ -560,17 +523,13 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
     {
       ACE_Multihomed_INET_Addr a(addr);
 
-      int found_a_port = 0;
-      ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
-      if (last_port > ACE_MAX_DEFAULT_PORT)
-        {
-          last_port = ACE_MAX_DEFAULT_PORT;
-        }
+      bool found_a_port = false;
+      ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {
           if (TAO_debug_level > 5)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) SCIOP_Acceptor::open_i() ")
                         ACE_TEXT ("trying to listen on port %d\n"), p));
 
@@ -582,16 +541,16 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
                                          this->accept_strategy_,
                                          this->concurrency_strategy_) != -1)
             {
-              found_a_port = 1;
+              found_a_port = true;
               break;
             }
         }
 
       // Now, if we couldn't locate a port, we punt
-      if (! found_a_port)
+      if (!found_a_port)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) SCIOP_Acceptor::open_i ")
                         ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
                         ACE_TEXT ("- %p\n\n"),
@@ -608,7 +567,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
     {
       // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("\n\nTAO (%P|%t) SCIOP_Acceptor::open_i ")
                     ACE_TEXT ("- %p\n\n"),
                     ACE_TEXT ("cannot get local addr")));
@@ -632,13 +591,20 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
     {
       for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nTAO (%P|%t) SCIOP_Acceptor::open_i - ")
-                      ACE_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
+                      ACE_TEXT ("listening on: <%C:%u>\n"),
+                      this->hosts_[i],
                       this->addrs_[i].get_port_number ()));
         }
     }
+
+  // In the event that an accept() fails, we can examine the reason.  If
+  // the reason warrants it, we can try accepting again at a later time.
+  // The amount of time we wait to accept again is governed by this orb
+  // parameter.
+  this->set_error_retry_delay (
+    this->orb_core_->orb_params ()->accept_error_delay());
 
   return 0;
 }
@@ -705,7 +671,7 @@ TAO_SCIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   if (tmp == 0 || result != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("\n\nTAO (%P|%t) ")
                     ACE_TEXT ("SCIOP_Acceptor::dotted_decimal_address ")
                     ACE_TEXT ("- %p\n\n"),
@@ -741,7 +707,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_WARNING,
+          TAOLIB_DEBUG ((LM_WARNING,
                       ACE_TEXT ("TAO (%P|%t) Unable to probe network ")
                       ACE_TEXT ("interfaces.  Using default.\n")));
         }
@@ -757,12 +723,12 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // the list of cached hostnames unless it is the only interface.
   size_t lo_cnt = 0;  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
-    if (if_addrs[j].get_ip_address () == INADDR_LOOPBACK)
-      lo_cnt++;
+    if (if_addrs[j].is_loopback ())
+      ++lo_cnt;
 
   // The instantiation for this template is in
   // tao/SCIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -792,15 +758,17 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
       if (if_cnt != lo_cnt &&
-          if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
+          if_addrs[i].is_loopback ())
         continue;
 
       if (this->hostname_in_ior_ != 0)
         {
           if (TAO_debug_level > 2)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Overriding address in IOR with %s\n"),
+              TAOLIB_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - ")
+                          ACE_TEXT ("SCIOP_Acceptor::probe_interfaces, ")
+                          ACE_TEXT ("overriding address in IOR with %C\n"),
                           this->hostname_in_ior_));
             }
           if (this->hostname (orb_core,
@@ -822,7 +790,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
         return -1;
 
-      host_cnt++;
+      ++host_cnt;
     }
 
   return 0;
@@ -832,14 +800,13 @@ int
 TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
                                               ACE_Array<ACE_CString> &hostnames_out)
 {
-
   // Make a copy of hostnames string
-  int hostnames_string_length = ACE_OS::strlen(hostnames) + 1;
+  int const hostnames_string_length = std::strlen(hostnames) + 1;
   char* hostnames_copy = 0;
   ACE_NEW_RETURN (hostnames_copy,
                   char[hostnames_string_length],
                   -1);
-  ACE_Auto_Basic_Array_Ptr<char> hostnames_copy_auto(hostnames_copy);
+  std::unique_ptr<char[]> hostnames_copy_auto(hostnames_copy);
   ACE_OS::strncpy(hostnames_copy, hostnames, hostnames_string_length);
 
   // Count the number of hostnames separated by "+"
@@ -854,8 +821,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 
   // Set the size of the array to the number of hostnames
   if (hostnames_out.size(num_hostnames) == -1) {
-
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO (%P|%t) Could not allocate storage ")
                        ACE_TEXT ("for %d hostnames in SCIOP endpoint\n"),
                        num_hostnames),
@@ -884,9 +850,8 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
   return 0;
 }
 
-
 CORBA::ULong
-TAO_SCIOP_Acceptor::endpoint_count (void)
+TAO_SCIOP_Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }
@@ -903,7 +868,8 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major, minor;
+  CORBA::Octet major = 0;
+  CORBA::Octet minor = 0;
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -912,7 +878,7 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) SCIOP_Profile::decode - v%d.%d\n"),
                       major,
                       minor));
@@ -929,7 +895,7 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) TAO_SCIOP_Acceptor::object_key - ")
                       ACE_TEXT ("error while decoding host/port")));
         }
@@ -937,14 +903,13 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     }
 
   // ... and object key.
-  if ((cdr >> object_key) == 0)
+  if (!(cdr >> object_key))
     return -1;
 
   // We are NOT bothered about the rest.
 
   return 1;
 }
-
 
 int
 TAO_SCIOP_Acceptor::parse_options (const char *str)
@@ -955,7 +920,6 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
-
   ACE_CString options (str);
 
   size_t len = options.length ();
@@ -971,7 +935,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i = 0; i < len; ++i)
     if (options[i] == option_delimiter)
-      option_count++;
+      ++option_count;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -981,33 +945,30 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  int begin = 0;
-  int end = -1;
+  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type end = 0;
 
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
-      begin += end + 1;
-
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast<CORBA::ULong> (len)
-          - begin;  // Handle last endpoint differently
+        end = len;
 
       if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) Zero length SCIOP option.\n")),
                           -1);
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt = options.substring (begin, end);
+          ACE_CString opt = options.substring (begin, end - begin);
 
-          int slot = opt.find ("=");
+          ACE_CString::size_type slot = opt.find ("=");
 
-          if (slot == static_cast<int> (len - 1)
+          if (slot == len - 1
               || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) SCIOP option <%s> is ")
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("TAO (%P|%t) SCIOP option <%C> is ")
                                ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
                               -1);
@@ -1016,26 +977,26 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
           ACE_CString value = opt.substring (slot + 1);
 
           if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Zero length SCIOP ")
                                ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid SCIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n")),
+                                 ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else if (name == "portspan")
             {
-              int range = static_cast<int> (ACE_OS::atoi (value.c_str ()));
+              int const range = ACE_OS::atoi (value.c_str ());
               // @@ What's the lower bound on the range?  zero, or one?
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
-                ACE_ERROR_RETURN ((LM_ERROR,
+                TAOLIB_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("TAO (%P|%t) Invalid SCIOP endpoint ")
-                                   ACE_TEXT ("portspan: <%s>\n")
+                                   ACE_TEXT ("portspan: <%C>\n")
                                    ACE_TEXT ("Valid range 1 -- %d\n"),
                                    value.c_str (), ACE_MAX_DEFAULT_PORT),
                                   -1);
@@ -1047,13 +1008,22 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
               this->hostname_in_ior_ = value.rep ();
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Invalid SCIOP option: <%s>\n"),
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("TAO (%P|%t) Invalid SCIOP option: <%C>\n"),
                                name.c_str ()),
                               -1);
+
+          begin = end + 1;
+        }
+      else
+        {
+          break; // No other options.
         }
     }
+
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

@@ -1,0 +1,63 @@
+<!--  -->
+
+<html>
+<head>
+<title> Build Czar powers </title>
+</head>
+<center><h1>Powers with the Build Czar</h1></center>
+  <P>
+  This document grants extensive privileges and powers to the Czar,
+  but those privileges impose several responsibilities that must be fulfilled,
+  failure to do so may result in some form of revolution
+  (picture a firing squad).
+  </P>
+
+  <P>
+  Previous generations of the honorable royal family have automated
+  the build process as much as possible, but all machines require attention:
+  the build Czar must keep a constant vigil, lest some runaway process
+  stops working and a critical bug escapes into the wild.
+  </P>
+
+  <P>Typically a runaway build is detected because on its next
+    execution an email indicating that the build is
+    <CODE>DISABLED</CODE>
+    is received.
+    The same email is also sent when a build is abruptly terminated (for
+    example because the machine running the build crashed).
+    Most of the time,
+    a test is not making progress and must be terminated,
+    the build then runs to completion.
+    If the machine crashed then it is necessary to go into the build
+    directory and remove the
+    <CODE>auto_compile/.disable</CODE>
+    file, so the next execution can complete successfully.
+    Occasionally the build fails because there is a CVS conflict,
+    there is not enough disk space or some similar problem,
+    in these cases the build Czar is encouraged to request advised
+    from previous generations in the royal family they will
+    be happy to come back from retirement to provide advice and help
+    if needed.
+  </P>
+  <P>The build Czar should also investigate the errors and warnings
+    reported by a build,
+    contact the person or persons responsible for the failed build and
+    prompt them to fix the situation. If that process above fails the
+    build Czar should  request help from a volunteer or proceed to fix
+    the problem himself/herself.  If there is no available
+    backup/volunteer and the build Czar  is busy, he/she will be
+    forced to excomunicate the original developer and report him or
+    her to the highest court of the land for whatever punishment is
+    deemed appropriate (lashing or bone breaking where not prohibited
+    by law).
+  </P>
+  <P>It is extremely important to fix broken builds within the day,
+    otherwise the errors tend to accumulate and once the process
+    breaks down it is extremely hard to recover,
+    in other words,
+    the term as a build Czar can extend beyond your expectations if
+    the builds are not clean again.
+  </P>
+<hr>
+</html>
+

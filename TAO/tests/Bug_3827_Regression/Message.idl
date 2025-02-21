@@ -1,0 +1,6 @@
+valuetype Message
+{
+  public string user;
+  public string subject;
+  public string text;
+};

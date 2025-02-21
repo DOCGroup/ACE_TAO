@@ -1,18 +1,13 @@
-// $Id$
-
 #include "test_i.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
 #if !defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(MT_Server, test_i, "$Id$")
-
 CORBA::Long
-Simple_Server_i::test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Simple_Server_i::test_method (CORBA::Long x)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Request in thread %t\n"));
@@ -22,8 +17,7 @@ Simple_Server_i::test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

@@ -1,9 +1,7 @@
 #include "orbsvcs/Log/Log_Flush_Handler.h"
 #include "orbsvcs/Log/Log_i.h"
 
-ACE_RCSID (Log,
-           Log_Flush_Handler,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Log_Flush_Handler::TAO_Log_Flush_Handler (ACE_Reactor* reactor,
                                               TAO_Log_i* log,
@@ -41,15 +39,15 @@ TAO_Log_Flush_Handler::cancel ()
 int
 TAO_Log_Flush_Handler::handle_timeout (const ACE_Time_Value&, const void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      log_->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      log_->flush ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
-  
+
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

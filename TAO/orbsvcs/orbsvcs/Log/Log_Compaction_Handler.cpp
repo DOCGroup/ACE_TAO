@@ -2,9 +2,7 @@
 #include "orbsvcs/Log/Log_i.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID (Log,
-           Log_Compaction_Handler,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Log_Compaction_Handler::TAO_Log_Compaction_Handler (ACE_Reactor* reactor,
                                                         TAO_Log_i* log,
@@ -47,15 +45,15 @@ int
 TAO_Log_Compaction_Handler::handle_timeout (const ACE_Time_Value&,
                                             const void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->log_->remove_old_records(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->log_->remove_old_records();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
-  
+
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

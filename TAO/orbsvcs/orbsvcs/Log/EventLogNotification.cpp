@@ -3,9 +3,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Log,
-           EventLogNotification,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EventLogNotification::TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr ec)
 : TAO_LogNotification (), event_channel_ (CosEventChannelAdmin::EventChannel::_duplicate (ec))
@@ -13,22 +11,21 @@ TAO_EventLogNotification::TAO_EventLogNotification (CosEventChannelAdmin::EventC
   obtain_proxy_consumer ();
 }
 
-TAO_EventLogNotification::~TAO_EventLogNotification (void)
+TAO_EventLogNotification::~TAO_EventLogNotification ()
 {
   // No-Op.
 }
 
 void
-TAO_EventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EventLogNotification::disconnect_push_supplier ()
 {
-  this->consumer_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_->disconnect_push_consumer ();
 }
 
 void
 TAO_EventLogNotification::obtain_proxy_consumer()
-{  
-  CosEventChannelAdmin::SupplierAdmin_var supplier_admin = 
+{
+  CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
     event_channel_->for_suppliers ();
 
   consumer_ = supplier_admin->obtain_push_consumer ();
@@ -40,11 +37,9 @@ TAO_EventLogNotification::obtain_proxy_consumer()
 }
 
 void
-TAO_EventLogNotification::send_notification (const CORBA::Any& any 
-                                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EventLogNotification::send_notification (const CORBA::Any& any)
 {
-  consumer_->push (any ACE_ENV_ARG_PARAMETER);
+  consumer_->push (any);
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

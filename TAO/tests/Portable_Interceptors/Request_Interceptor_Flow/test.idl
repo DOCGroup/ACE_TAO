@@ -4,15 +4,13 @@
 /**
  * @file test.idl
  *
- * $Id$
- *
  * IDL file to test request interceptor flow.
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
 
-#include <ULongSeq.pidl>
+#include "tao/ULongSeq.pidl"
 
 interface Test
 {

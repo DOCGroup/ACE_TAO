@@ -4,8 +4,6 @@
 /**
  * @file   LB_LoadManager.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -22,26 +20,33 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#include "LB_LoadAlertMap.h"
-#include "LB_MonitorMap.h"
-#include "LB_LoadListMap.h"
-#include "LB_Pull_Handler.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlertMap.h"
+#include "orbsvcs/LoadBalancing/LB_MonitorMap.h"
+#include "orbsvcs/LoadBalancing/LB_LoadListMap.h"
+#include "orbsvcs/LoadBalancing/LB_Pull_Handler.h"
 
 #include "orbsvcs/PortableGroupC.h"
 
 #include "orbsvcs/PortableGroup/PG_PropertyManager.h"
 #include "orbsvcs/PortableGroup/PG_GenericFactory.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "ace/Unbounded_Queue.h"
+#include "ace/Task.h"
+#include "tao/Condition.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LoadBalancing_Export TAO_LB_LoadManager
-  : public virtual POA_CosLoadBalancing::LoadManager
+  : public virtual POA_CosLoadBalancing::LoadManager,
+    public ACE_Task_Base
 {
 public:
-
   /// Constructor.
-  TAO_LB_LoadManager (void);
+  TAO_LB_LoadManager (int ping_timeout,
+                      int ping_interval);
+
+  virtual int svc ();
 
   /**
    * @name CosLoadBalancing::LoadManager Methods
@@ -49,78 +54,49 @@ public:
    * Methods required by the CosLoadBalancing::LoadManager interface.
    */
   //@{
-
   /// For the PUSH load monitoring style.
   virtual void push_loads (const PortableGroup::Location & the_location,
-                           const CosLoadBalancing::LoadList & loads
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                           const CosLoadBalancing::LoadList & loads);
 
   /// Return the raw loads at the given location.
   virtual CosLoadBalancing::LoadList * get_loads (
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::LocationNotFound));
+      const PortableGroup::Location & the_location);
 
   /// Inform member at given location of load alert condition.
-  virtual void enable_alert (const PortableGroup::Location & the_location
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CosLoadBalancing::LoadAlertNotFound));
+  virtual void enable_alert (const PortableGroup::Location & the_location);
 
   /// Inform member at given location that load alert condition has
   /// passed.
-  virtual void disable_alert (const PortableGroup::Location & the_location
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CosLoadBalancing::LoadAlertNotFound));
+  virtual void disable_alert (const PortableGroup::Location & the_location);
 
   /// Register a LoadAlert object for the member at the given
   /// location.
   virtual void register_load_alert (
       const PortableGroup::Location & the_location,
-      CosLoadBalancing::LoadAlert_ptr load_alert
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::LoadAlertAlreadyPresent,
-                     CosLoadBalancing::LoadAlertNotAdded));
+      CosLoadBalancing::LoadAlert_ptr load_alert);
 
   /// Retrieve the LoadAlert object for the member at the given
   /// location.
   virtual CosLoadBalancing::LoadAlert_ptr get_load_alert (
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::LoadAlertNotFound));
+      const PortableGroup::Location & the_location);
 
   /// Remove (de-register) the LoadAlert object for the member at the
   /// given location.
-  virtual void remove_load_alert (const PortableGroup::Location & the_location
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::LoadAlertNotFound));
+  virtual void remove_load_alert (const PortableGroup::Location & the_location);
 
   /// Register a load monitor with the load balancer.
   virtual void register_load_monitor (
       const PortableGroup::Location & the_location,
-      CosLoadBalancing::LoadMonitor_ptr load_monitor
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::MonitorAlreadyPresent));
+      CosLoadBalancing::LoadMonitor_ptr load_monitor);
 
   /// Return a reference to the load monitor at the given location.
   virtual CosLoadBalancing::LoadMonitor_ptr get_load_monitor (
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::LocationNotFound));
+      const PortableGroup::Location & the_location);
 
   /// Remove a load monitor at the given location from the load
   /// balancer.
   virtual void remove_load_monitor (
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::LocationNotFound));
+      const PortableGroup::Location & the_location);
 
   //@}
 
@@ -130,37 +106,22 @@ public:
    * Methods required by the PortableGroup::PropertyManager interface.
    */
   //@{
-
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
-      const PortableGroup::Properties & props
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & props);
 
   /// Get the default properties used by all object groups.
-  virtual PortableGroup::Properties * get_default_properties (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableGroup::Properties * get_default_properties ();
 
   /// Remove default properties.
   virtual void remove_default_properties (
-      const PortableGroup::Properties & props
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & props);
 
   /// Set properties associated with a given Replica type.  These
   /// properties override the default properties.
   virtual void set_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & overrides
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & overrides);
 
   /**
    * Return the properties associated with a give Replica type.  These
@@ -168,18 +129,12 @@ public:
    * addition to the default properties that were not overridden.
    */
   virtual PortableGroup::Properties * get_type_properties (
-      const char * type_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const char * type_id);
 
   /// Remove the given properties associated with the Replica type ID.
   virtual void remove_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & props
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & props);
 
   /**
    * Dynamically set the properties associated with a given object
@@ -189,12 +144,7 @@ public:
    */
   virtual void set_properties_dynamically (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Properties & overrides
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & overrides);
 
   /**
    * Return the properties currently in use by the given object
@@ -204,10 +154,7 @@ public:
    * that weren't overridden.
    */
   virtual PortableGroup::Properties * get_properties (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   //@}
 
@@ -218,33 +165,19 @@ public:
    * interface.
    */
   //@{
-
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
   virtual PortableGroup::ObjectGroup_ptr create_member (
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
       const char * type_id,
-      const PortableGroup::Criteria & the_criteria
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberAlreadyPresent,
-                     PortableGroup::NoFactory,
-                     PortableGroup::ObjectNotCreated,
-                     PortableGroup::InvalidCriteria,
-                     PortableGroup::CannotMeetCriteria));
+      const PortableGroup::Criteria & the_criteria);
 
   /// Add an existing object to the ObjectGroup.
   virtual PortableGroup::ObjectGroup_ptr add_member (
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
-      CORBA::Object_ptr member
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberAlreadyPresent,
-                     PortableGroup::ObjectNotAdded));
+      CORBA::Object_ptr member);
 
   /**
    * Remove an object at a specific location from the given
@@ -255,56 +188,33 @@ public:
    */
   virtual PortableGroup::ObjectGroup_ptr remove_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberNotFound));
+      const PortableGroup::Location & the_location);
 
   /// Return the locations of the members in the given ObjectGroup.
   virtual PortableGroup::Locations * locations_of_members (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   /// Return the locations of the members in the given ObjectGroup.
   virtual PortableGroup::ObjectGroups * groups_at_location (
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const PortableGroup::Location & the_location);
 
   /// Return the ObjectGroupId for the given ObjectGroup.
   virtual PortableGroup::ObjectGroupId get_object_group_id (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   /// @note Does this method make sense for load balanced objects?
   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   /// TAO specific method
   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-      PortableGroup::ObjectGroupId group_id
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC((
-       CORBA::SystemException,
-       PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroupId group_id);
 
   /// Return the reference corresponding to the Replica of a given
   /// ObjectGroup at the given location.
   virtual CORBA::Object_ptr get_member_ref (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & loc
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberNotFound));
+      const PortableGroup::Location & loc);
 
   //@}
 
@@ -314,7 +224,6 @@ public:
    * Methods required by the PortableGroup::GenericFactory interface.
    */
   //@{
-
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -325,14 +234,7 @@ public:
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
-        factory_creation_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::NoFactory,
-                     PortableGroup::ObjectNotCreated,
-                     PortableGroup::InvalidCriteria,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::CannotMeetCriteria));
+        factory_creation_id);
 
   /**
    * Delete the object corresponding to the provided
@@ -342,10 +244,7 @@ public:
    */
   virtual void delete_object (
       const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectNotFound));
+        factory_creation_id);
 
   //@}
 
@@ -356,30 +255,25 @@ public:
    * given ObjectId.  The object group's load balancing strategy
    * will be queried for that member.
    */
-  CORBA::Object_ptr next_member (const PortableServer::ObjectId & oid
-                                 ACE_ENV_ARG_DECL);
+  CORBA::Object_ptr next_member (const PortableServer::ObjectId & oid);
 
 public:
-
   /// Initialize the load balancer.  This will cause a child POA to be
   /// created with the appropriate policies to support ServantLocators
   /// (i.e. for the MemberLocator).
-  void init (ACE_Reactor * reactor,
-             CORBA::ORB_ptr orb,
-             PortableServer::POA_ptr root_poa
-             ACE_ENV_ARG_DECL);
+  void initialize (ACE_Reactor * reactor,
+                   CORBA::ORB_ptr orb,
+                   PortableServer::POA_ptr root_poa);
 
 protected:
-
   /// Destructor.
   /**
    * Destructor is protected to enforce correct memory management
    * through reference counting.
    */
-  ~TAO_LB_LoadManager (void);
+  ~TAO_LB_LoadManager ();
 
 private:
-
   /// Extract the value of the InitialNumberReplicas property from
   /// the_criteria.
   int get_initial_number_replicas (
@@ -405,16 +299,15 @@ private:
    * Strategy properties, and verifying that CustomStrategy references
    * are not nil.
    */
-  void preprocess_properties (PortableGroup::Properties & props
-                              ACE_ENV_ARG_DECL);
+  void preprocess_properties (PortableGroup::Properties & props);
 
   /// Create a built-in load balancing strategy and return a reference
   /// to it.
   CosLoadBalancing::Strategy_ptr make_strategy (
-    CosLoadBalancing::StrategyInfo * info
-    ACE_ENV_ARG_DECL);
+    const CosLoadBalancing::StrategyInfo * info);
 
 private:
+  CORBA::ORB_var orb_;
 
   /// Reactor used when pulling loads from registered load monitors.
   ACE_Reactor * reactor_;
@@ -452,7 +345,7 @@ private:
   /// necessary for application-controlled object group membership.
   TAO_PG_ObjectGroupManager object_group_manager_;
 
-  /// The PropertyManager that is reponsible for parsing all criteria,
+  /// The PropertyManager that is responsible for parsing all criteria,
   /// and keeping track of property-type_id associations.
   TAO_PG_PropertyManager property_manager_;
 
@@ -509,8 +402,19 @@ private:
   /// "org.omg.CosLoadBalancing.CustomStrategy".
   PortableGroup::Name custom_balancing_strategy_name_;
 
+  TAO_SYNCH_MUTEX validate_lock_;
+  TAO_Condition<TAO_SYNCH_MUTEX> validate_condition_;
+
+  bool shutdown_;
+
+  /// Short timeout for non_exist call. defaults to 1 second
+  TimeBase::TimeT ping_timeout_;
+  /// Long timeout for non_exist call. defaults to 5 seconds
+  ACE_Time_Value ping_interval_;
 };
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

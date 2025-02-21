@@ -1,26 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    public_reset_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union Branch in the client inline file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    public_reset_cs.cpp
+ *
+ *  Visitor generating code for Union Branch in the client inline file.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_union_branch, 
-           public_reset_cs, 
-           "$Id$")
+#include "union_branch.h"
 
 // *****************************************************
 //  visitor for union_branch in the client
@@ -34,49 +23,62 @@ be_visitor_union_branch_public_reset_cs (be_visitor_context *ctx)
 }
 
 be_visitor_union_branch_public_reset_cs::
-~be_visitor_union_branch_public_reset_cs (void)
+~be_visitor_union_branch_public_reset_cs ()
 {
 }
 
 // visit the union_branch node
 int
 be_visitor_union_branch_public_reset_cs::visit_union_branch (
-    be_union_branch *node
-  )
+    be_union_branch *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cs::"
                          "visit_union_branch - "
-                         "Bad union_branch type\n"), 
+                         "Bad union_branch type\n"),
                         -1);
     }
 
   this->ctx_->node (node); // save the node
-  
+
   *os << be_nl;
-  
-  for (unsigned long i = 0; i < node->label_list_length (); ++i)
+
+  const be_visitor_union::BoolUnionBranch bub =
+    be_visitor_union::boolean_branch (node);
+
+  switch (bub)
     {
-      // check if we are printing the default case
-      if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
+    case be_visitor_union::BUB_NONE:
+      for (unsigned long i = 0; i < node->label_list_length (); ++i)
         {
-          *os << "default:";
+          // check if we are printing the default case
+          if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
+            {
+              *os << "default:";
+            }
+          else
+            {
+              *os << "case ";
+              node->gen_label_value (os, i);
+              *os << ":";
+            }
+          if (i == (node->label_list_length () - 1))
+            *os << be_idt_nl;
+          else
+            *os << be_nl;
         }
-      else
-        {
-          *os << "case ";
-          node->gen_label_value (os, i);
-          *os << ":";
-        }
-      if (i == (node->label_list_length () - 1))
-        *os << be_idt_nl;
-      else
-        *os << be_nl;
+      break;
+    case be_visitor_union::BUB_TRUE:
+    case be_visitor_union::BUB_FALSE:
+      *os << "if (" << (bub == be_visitor_union::BUB_TRUE ? "" : "!")
+          << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
+    default:
+      break;
     }
 
   if (bt->accept (this) == -1)
@@ -84,8 +86,20 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cs::"
                          "visit_union_branch - "
-                         "codegen for union_branch type failed\n"), 
+                         "codegen for union_branch type failed\n"),
                         -1);
+    }
+
+  switch (bub)
+    {
+    case be_visitor_union::BUB_NONE:
+      *os << be_uidt_nl << "break;" << be_nl;
+      break;
+    case be_visitor_union::BUB_TRUE:
+    case be_visitor_union::BUB_FALSE:
+      *os << be_uidt_nl << "}" << be_uidt_nl;
+    default:
+      break;
     }
 
   return 0;
@@ -95,10 +109,10 @@ int
 be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -109,12 +123,12 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
       bt = node;
     }
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_enum - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                          -1);
     }
 
@@ -124,8 +138,8 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
 
   // save the node's local name and full name in a buffer for quick use later
   // on
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
@@ -137,7 +151,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
 
       if (bt->is_nested ())
         {
-          be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+          be_decl *parent = dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
           ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                            bt->local_name ()->get_string ());
         }
@@ -155,8 +169,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
 
   *os << fname << "_free (this->u_." << ub->local_name ()
       << "_);" << be_nl
-      << "this->u_." << ub->local_name () << "_ = 0;" << be_nl
-      << "break;" << be_uidt;
+      << "this->u_." << ub->local_name () << "_ = nullptr;" << be_nl;
 
   return 0;
 }
@@ -165,21 +178,18 @@ int
 be_visitor_union_branch_public_reset_cs::visit_enum (be_enum *)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_enum - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-  *os << "break;" << be_uidt;
 
   return 0;
 }
@@ -188,16 +198,16 @@ int
 be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -206,8 +216,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *)
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = 0;" << be_nl
-      << "break;" << be_uidt;
+      << "_ = nullptr;" << be_nl;
 
   return 0;
 }
@@ -216,16 +225,16 @@ int
 be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_interface_fwd - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -234,26 +243,26 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = 0;" << be_nl
-      << "break;" << be_uidt;
+      << "_ = nullptr;" << be_nl;
 
   return 0;
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_valuebox (be_valuebox *)
+be_visitor_union_branch_public_reset_cs::visit_valuebox (
+  be_valuebox *)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_valuebox - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -262,26 +271,26 @@ be_visitor_union_branch_public_reset_cs::visit_valuebox (be_valuebox *)
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = 0;" << be_nl
-      << "break;" << be_uidt_nl;
+      << "_ = nullptr;" << be_nl;
 
   return 0;
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_valuetype (be_valuetype *)
+be_visitor_union_branch_public_reset_cs::visit_valuetype (
+  be_valuetype *)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_valuetype - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -290,26 +299,26 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype (be_valuetype *)
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = 0;" << be_nl
-      << "break;" << be_uidt;
+      << "_ = nullptr;" << be_nl;
 
   return 0;
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (be_valuetype_fwd *)
+be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (
+  be_valuetype_fwd *)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_valuetype_fwd - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -318,8 +327,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (be_valuetype_fwd *
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = 0;" << be_nl
-      << "break;" << be_uidt;
+      << "_ = nullptr;" << be_nl;
 
   return 0;
 }
@@ -330,16 +338,16 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
   )
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_predefined_type - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -351,31 +359,26 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
       *os << "delete this->u_."
           << ub->local_name () << "_;" << be_nl;
       *os << "this->u_." << ub->local_name ()
-          << "_ = 0;" << be_nl
-          << "break;" << be_uidt;
+          << "_ = nullptr;" << be_nl;
 
       break;
     case AST_PredefinedType::PT_pseudo:
-      *os << "CORBA::release (this->u_."
-	        << ub->local_name () << "_);" << be_nl;
+      *os << "::CORBA::release (this->u_."
+          << ub->local_name () << "_);" << be_nl;
       *os << "this->u_." << ub->local_name ()
-          << "_ = 0;" << be_nl
-          << "break;" << be_uidt;
+          << "_ = nullptr;" << be_nl;
 
       break;
     case AST_PredefinedType::PT_any:
       *os << "delete this->u_."
-	        << ub->local_name () << "_;" << be_nl
+          << ub->local_name () << "_;" << be_nl
           << "this->u_." << ub->local_name ()
-          << "_ = 0;" << be_nl
-          << "break;" << be_uidt;
+          << "_ = nullptr;" << be_nl;
 
       break;
     case AST_PredefinedType::PT_void:
       break;
     default:
-      *os << "break;" << be_uidt;
-
       break;
     }
 
@@ -383,19 +386,20 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *)
+be_visitor_union_branch_public_reset_cs::visit_sequence (
+  be_sequence *)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_sequence - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -405,26 +409,26 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *)
       << ub->local_name () << "_;" << be_nl
       << "this->u_."
       << ub->local_name ()
-      << "_ = 0;" << be_nl
-      << "break;" << be_uidt;
+      << "_ = nullptr;" << be_nl;
 
   return 0;
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
+be_visitor_union_branch_public_reset_cs::visit_string (
+  be_string *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_string - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -432,30 +436,30 @@ be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::string_free (this->u_.";
+      *os << "::CORBA::string_free (this->u_.";
     }
   else
     {
-      *os << "CORBA::wstring_free (this->u_.";
+      *os << "::CORBA::wstring_free (this->u_.";
     }
 
   *os << ub->local_name () << "_);" << be_nl
       << "this->u_."
       << ub->local_name ()
-      << "_ = 0;" << be_nl
-      << "break;" << be_uidt;
+      << "_ = nullptr;" << be_nl;
 
   return 0;
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
+be_visitor_union_branch_public_reset_cs::visit_structure (
+  be_structure *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -466,12 +470,12 @@ be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
       bt = node;
     }
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_structure - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -484,12 +488,20 @@ be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
           << "_;" << be_nl
           << "this->u_."
           << ub->local_name ()
-          << "_ = 0;" << be_nl;
+          << "_ = nullptr;" << be_nl;
    }
 
-  *os << "break;" << be_uidt;
-
   return 0;
+}
+
+int
+be_visitor_union_branch_public_reset_cs::visit_structure_fwd (
+  be_structure_fwd *node)
+{
+  be_structure *s =
+    dynamic_cast<be_structure*> (node->full_definition ());
+
+  return this->visit_structure (s);
 }
 
 int
@@ -505,28 +517,29 @@ be_visitor_union_branch_public_reset_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_union (be_union *)
+be_visitor_union_branch_public_reset_cs::visit_union (
+  be_union *)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch ();
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_union - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -535,8 +548,18 @@ be_visitor_union_branch_public_reset_cs::visit_union (be_union *)
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_."
-      << ub->local_name () << "_ = 0;" << be_nl
-      << "break;" << be_uidt;
+      << ub->local_name () << "_ = nullptr;" << be_nl;
 
   return 0;
 }
+
+int
+be_visitor_union_branch_public_reset_cs::visit_union_fwd (
+  be_union_fwd *node)
+{
+  be_union *u =
+    dynamic_cast<be_union*> (node->full_definition ());
+
+  return this->visit_union (u);
+}
+

@@ -1,36 +1,19 @@
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    Consumer_i.cpp
-//
-// = DESCRIPTION
-//    Implements the Consumer_i class, which is used by the
-//    callback quoter client.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Consumer_i.cpp
+ *
+ *  Implements the Consumer_i class, which is used by the
+ *  callback quoter client.
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
 
 #include "Consumer_i.h"
 
-Consumer_i::Consumer_i (void)
-{
-}
-
-Consumer_i::~Consumer_i (void)
-{
-}
-
 void
-Consumer_i::push (const Callback_Quoter::Info &data
-                  ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer_i::push (const Callback_Quoter::Info &data)
 {
   // On getting the needed information you now proceed to the next
   // step, which could be obtaining the shares.
@@ -42,14 +25,11 @@ Consumer_i::push (const Callback_Quoter::Info &data
 }
 
 void
-Consumer_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer_i::shutdown ()
 {
-
   // Instruct the ORB to shutdown.
-
   ACE_DEBUG ((LM_DEBUG,
-              " consumer shutting down \n "));
+              " consumer shutting down \n"));
 
   this->orb_->shutdown ();
 }

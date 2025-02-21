@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Filter_Builder.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -19,11 +17,13 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Filter;
 class TAO_EC_ProxyPushSupplier;
@@ -42,15 +42,13 @@ class TAO_RTEvent_Serv_Export TAO_EC_Filter_Builder
 {
 public:
   /// destructor...
-  virtual ~TAO_EC_Filter_Builder (void);
+  virtual ~TAO_EC_Filter_Builder ();
 
   /// Create the filter, the caller must assume ownership of the filter
   /// returned.
   virtual TAO_EC_Filter*
       build (TAO_EC_ProxyPushSupplier *supplier,
-             RtecEventChannelAdmin::ConsumerQOS& qos
-             ACE_ENV_ARG_DECL) const = 0;
-
+             RtecEventChannelAdmin::ConsumerQOS& qos) const = 0;
 };
 
 // ****************************************************************
@@ -66,21 +64,22 @@ class TAO_RTEvent_Serv_Export TAO_EC_Null_Filter_Builder : public TAO_EC_Filter_
 {
 public:
   /// constructor.
-  TAO_EC_Null_Filter_Builder (void);
+  TAO_EC_Null_Filter_Builder ();
 
   /// destructor...
-  virtual ~TAO_EC_Null_Filter_Builder (void);
+  virtual ~TAO_EC_Null_Filter_Builder ();
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos
-                        ACE_ENV_ARG_DECL) const;
+                        RtecEventChannelAdmin::ConsumerQOS& qos) const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
 #if defined (__ACE_INLINE__)
-#include "EC_Filter_Builder.i"
+#include "orbsvcs/Event/EC_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

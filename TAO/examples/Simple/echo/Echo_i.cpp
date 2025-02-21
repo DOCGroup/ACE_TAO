@@ -1,23 +1,6 @@
-// $Id$
-
 #include "Echo_i.h"
 
-ACE_RCSID(Echo, Echo_i, "$Id$")
-
-// Constructor.
-
-Echo_i::Echo_i (void)
-{
-}
-
-// Destructor.
-
-Echo_i::~Echo_i (void)
-{
-}
-
 // Set the ORB pointer.
-
 void
 Echo_i::orb (CORBA::ORB_ptr o)
 {
@@ -25,16 +8,13 @@ Echo_i::orb (CORBA::ORB_ptr o)
 }
 
 // Return a list of object references.
-
 Echo::List *
-Echo_i::echo_list (const char *
-                   ACE_ENV_ARG_DECL)
- ACE_THROW_SPEC ((CORBA::SystemException))
+Echo_i::echo_list (const char *)
 {
   Echo::List_var list;
 
   {
-    Echo::List *tmp;
+    Echo::List *tmp = 0;
     ACE_NEW_RETURN (tmp,
                     Echo::List (3),
                     0);
@@ -47,19 +27,13 @@ Echo_i::echo_list (const char *
 
   // Just do something to get a list of object references.
   list[CORBA::ULong(0)] =
-    orb_->resolve_initial_references ("NameService"
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    orb_->resolve_initial_references ("NameService");
 
   list[CORBA::ULong(1)] =
-    orb_->resolve_initial_references ("NameService"
-                                      ACE_ENV_ARG_PARAMETER);;
-  ACE_CHECK_RETURN (0);
+    orb_->resolve_initial_references ("NameService");
 
   list[CORBA::ULong(2)] =
-    orb_->resolve_initial_references ("NameService"
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    orb_->resolve_initial_references ("NameService");
 
   return list._retn ();
 }
@@ -67,9 +41,7 @@ Echo_i::echo_list (const char *
 // Return the mesg string from the server
 
 char *
-Echo_i::echo_string (const char *mesg
-                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Echo_i::echo_string (const char *mesg)
 {
   // The pointer mesg was NULL, return.
   if (mesg == 0)
@@ -81,7 +53,7 @@ Echo_i::echo_string (const char *mesg
   // raised.
 
   if (str.in () == 0)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+    throw CORBA::NO_MEMORY ();
 
   // Got thru! now, make a deep copy of the mesg string and send it
   // back to the client.
@@ -94,12 +66,10 @@ Echo_i::echo_string (const char *mesg
 // Shutdown the server application.
 
 void
-Echo_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Echo_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n%s\n",
-              "The echo server is shutting down"));
+              ACE_TEXT ("\nThe echo server is shutting down\n")));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();

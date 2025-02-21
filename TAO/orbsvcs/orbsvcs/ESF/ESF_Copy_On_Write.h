@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Copy_On_Write.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -12,7 +11,7 @@
 #ifndef TAO_ESF_COPY_ON_WRITE_H
 #define TAO_ESF_COPY_ON_WRITE_H
 
-#include "ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #include "tao/Basic_Types.h"
 
@@ -20,17 +19,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<class COLLECTION, class ITERATOR>
 class TAO_ESF_Copy_On_Write_Collection
 {
 public:
-  TAO_ESF_Copy_On_Write_Collection (void);
+  TAO_ESF_Copy_On_Write_Collection ();
 
   /// Increment the reference count
-  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
 
   /// Decrement the reference count
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _decr_refcnt ();
 
   /// The actual collection
   COLLECTION collection;
@@ -61,7 +62,7 @@ public:
                                     Collection *&collection);
 
   /// Destructor
-  ~TAO_ESF_Copy_On_Write_Read_Guard (void);
+  ~TAO_ESF_Copy_On_Write_Read_Guard ();
 
   Collection *collection;
 
@@ -93,7 +94,7 @@ public:
                                      Collection*& collection);
 
   /// Destructor
-  ~TAO_ESF_Copy_On_Write_Write_Guard (void);
+  ~TAO_ESF_Copy_On_Write_Write_Guard ();
 
   Collection *copy;
 
@@ -123,21 +124,17 @@ public:
   /// Constructor
   typedef TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_SYNCH_MUTEX_T> Read_Guard;
   typedef TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE> Write_Guard;
-  TAO_ESF_Copy_On_Write (void);
+  TAO_ESF_Copy_On_Write ();
 
   /// Destructor
-  ~TAO_ESF_Copy_On_Write (void);
+  ~TAO_ESF_Copy_On_Write ();
 
   // = The TAO_ESF_Proxy methods
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker
-                         ACE_ENV_ARG_DECL);
-  virtual void connected (PROXY *proxy
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (PROXY *proxy
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (PROXY *proxy
-                             ACE_ENV_ARG_DECL);
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void for_each (TAO_ESF_Worker<PROXY> *worker);
+  virtual void connected (PROXY *proxy);
+  virtual void reconnected (PROXY *proxy);
+  virtual void disconnected (PROXY *proxy);
+  virtual void shutdown ();
 
 private:
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
@@ -162,18 +159,12 @@ private:
   Collection *collection_;
 };
 
-// ****************************************************************
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ESF_Copy_On_Write.i"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Copy_On_Write.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Copy_On_Write.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Copy_On_Write.cpp"
 
 #endif /* TAO_ESF_COPY_ON_WRITE_H */

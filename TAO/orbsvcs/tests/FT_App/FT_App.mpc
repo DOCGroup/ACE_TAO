@@ -1,11 +1,19 @@
-// $Id$
+project(*idl): taoidldefaults, orbsvcslib {
+  IDL_Files {
+    FT_TestReplica.idl
+  }
+  custom_only = 1
+}
 
-project(*Server): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
+project(*Server): taoserver, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = ft_replica
+  after += *idl
   Source_Files {
     FT_Replica.cpp
-    FT_TestReplica_i.cpp
     FT_ReplicaFactory_i.cpp
+    FT_TestReplica_i.cpp
+    FT_TestReplicaS.cpp
+    FT_TestReplicaC.cpp
   }
 // Custom folder: test scripts
 // too bad this doesn't work!
@@ -22,30 +30,26 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
 
   Documentation_Files {
     README
-    FT_App.mpc
-    run_test_basic.pl           // can the client talk to the server
-    run_test_detector.pl        // does a detector notice a server fault
-    run_test_notifier.pl        // does the notification get to an analyzer
-    run_test_fault_consumer.pl  // Is the notification analyzed correctly
-    run_test_registry.pl        // does the stand-along factory registry work
-    run_test_rmregistry.pl      // does the factory registry in the RM work
-    run_test_replication_mgr.pl //
-    run_test_demo.pl            // test it all together
+  }
+
+  IDL_Files {
   }
 }
 
-project(*Client): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
+project(*Client): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = ft_client
-  includes += $(TAO_ROOT)
-  after += *Server
+  after += *idl
   Source_Files {
     FT_Client.cpp
+    FT_TestReplicaC.cpp
   }
   Documentation_Files {
   }
+  IDL_Files {
+  }
 }
 
-project(*Notifier): taoserver, fault_tolerance, iormanip, orbsvcsexe, minimum_corba {
+project(*Notifier): taoserver, fault_tolerance, iormanip, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = ft_notifier
   Source_Files {
     FTAPP_Notifier_Main.cpp
@@ -76,7 +80,7 @@ project(*Analyzer): taoclient, fault_tolerance, notification_skel, orbsvcsexe {
   }
 }
 
-project(*FaultConsumer): taoserver, fault_tolerance, notification_skel, orbsvcsexe, minimum_corba {
+project(*FaultConsumer): taoserver, fault_tolerance, notification_skel, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, svc_utils {
   exename = ft_fault_consumer
   libs    += TAO_ReplicationManagerLib
   after   += FT_ReplicationManager_Lib
@@ -92,7 +96,7 @@ project(*FaultConsumer): taoserver, fault_tolerance, notification_skel, orbsvcse
   }
 }
 
-project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
+project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = ft_registry
 
   Source_Files {
@@ -109,7 +113,7 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe, minimum_corba
   }
 }
 
-project(*Creator): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
+project(*Creator): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = ft_create
 
   Source_Files {
@@ -125,7 +129,7 @@ project(*Creator): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
   }
 }
 
-project(*RMController): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
+project(*RMController): taoclient, fault_tolerance, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = replmgr_controller
   Source_Files {
     FT_ReplicationManagerController.cpp

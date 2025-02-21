@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : taoserver, taoidldefaults, strategies, csd_threadpool, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  idlflags += -Gd -St -Sa
+  exename   = Collocation
+}

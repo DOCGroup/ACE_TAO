@@ -1,4 +1,4 @@
-$Id$
+
 
 This is a simple CORBA example that makes a grid of user defined size.
 The grid can be imagined as a matrix with cells that can hold values.

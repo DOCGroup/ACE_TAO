@@ -4,8 +4,6 @@
 /**
  *  @file   NotifyLogConsumer.h
  *
- *  $Id$
- *
  *  The NotifyLogConsumer connects to the NotifyLog and logs the events
  *  that are pushed to the NotifyLog.
  *
@@ -27,12 +25,14 @@
 #include "orbsvcs/DsNotifyLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
 
-#include "notifylog_serv_export.h"
+#include "orbsvcs/Log/notifylog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_NotifyLog_i;
@@ -51,48 +51,29 @@ class TAO_Notify_LogConsumer :
   public virtual POA_CosNotifyComm::PushConsumer
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_Notify_LogConsumer (TAO_NotifyLog_i *log);
 
   /// Connect to NotifyLog.
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   /// Disconnect from NotifyLog.
-  virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect ();
 
 protected:
   /// Destructor.
-  virtual ~TAO_Notify_LogConsumer (void);
+  virtual ~TAO_Notify_LogConsumer ();
 
   // = NotifyPublish method
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosNotifyComm::InvalidEventType
-    ));
+    );
 
   // = PushSupplier methods
-  virtual void push (
-      const CORBA::Any & event
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosEventComm::Disconnected
-     ));
+  virtual void push (const CORBA::Any & event);
 
-  virtual void disconnect_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
-      )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  virtual void disconnect_push_consumer ();
 
   /// ProxyPushSupplier used to connect to NotifyLog.
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;
@@ -104,6 +85,8 @@ protected:
   /// and whose events are to be logged.
   TAO_NotifyLog_i *log_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,0 +1,17 @@
+
+
+udp_test sends TCP messages and records round-trip latency.  The client
+records the latencies and provides nice summary statistics.  The server
+simply echos packets back to the client.
+
+To run:
+  1) On server host:
+     % ./tcp_test -s
+
+  2) On client host:
+     % ./tcp_test -i 10000 <server host>
+
+The -i option specifies the number of samples (packets to send).
+Other command line options are available:  ./tcp_test -? to
+list them.
+

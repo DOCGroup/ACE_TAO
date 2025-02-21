@@ -3,8 +3,6 @@
 /**
  *  @file   Counting_Consumer.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -37,10 +35,9 @@ public:
 
   /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+                const RtecEventChannelAdmin::ConsumerQOS &qos);
+  void disconnect ();
+  void deactivate ();
 
   /// Print out an error message if the event count is too far from the
   /// expected count.
@@ -49,11 +46,8 @@ public:
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count;

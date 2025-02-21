@@ -1,0 +1,12 @@
+/**
+
+
+
+@page CSD_Strategy TestServant README File
+
+  This is a library for the specific test. It contains test idl files, the
+servant implementaions, test statistics and the client task with sequence
+of remote invocations. Adding this library is to simplify the tests with
+multiple clients or collocated tests.
+
+*/

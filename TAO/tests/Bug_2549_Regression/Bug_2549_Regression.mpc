@@ -1,0 +1,8 @@
+// -*- MPC -*-
+project(*Test) : taoserver, messaging, rtcorba, objreftemplate, rtscheduling, rtportableserver {
+  exename   = test
+
+  Source_Files {
+    test.cpp
+  }
+}

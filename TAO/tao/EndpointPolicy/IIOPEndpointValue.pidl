@@ -1,0 +1,30 @@
+/**
+ * @file IIOPEndpointValue.pidl
+ *
+ * This file contains idl definition for Endpoint policy interface and
+ * the policy value. This TAO-specific policy is used to filter endpoints
+ * in the profiles for use in Object References.
+ */
+
+#ifndef _TAO_IIOPENDPOINT_VALUE_IDL_
+#define _TAO_IIOPENDPOINT_VALUE_IDL_
+
+///FUZZ: disable check_for_include/
+#include "tao/EndpointPolicy/EndpointPolicy.pidl"
+
+#if !defined (TAO_LACKS_IIOP)
+
+module EndpointPolicy
+{
+  local interface IIOPEndpointValue : EndpointValueBase
+  {
+    // protocol_tag set to TAG_Internet_IOP;
+
+    attribute string host;
+    attribute unsigned short _port;
+  };
+};
+
+#endif /* TAO_LACKS_IIOP */
+
+#endif /* _TAO_IIOPENDPOINT_VALUE_IDL_ */

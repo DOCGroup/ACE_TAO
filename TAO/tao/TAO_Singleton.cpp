@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef TAO_SINGLETON_CPP
 #define TAO_SINGLETON_CPP
 
@@ -15,44 +12,35 @@
 
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
+#include "tao/debug.h"
+#include "ace/os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/TAO_Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           TAO_Singleton,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE, class ACE_LOCK> void
-TAO_Singleton<TYPE, ACE_LOCK>::dump (void)
+TAO_Singleton<TYPE, ACE_LOCK>::dump ()
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("TAO_Singleton<TYPE, ACE_LOCK>::dump");
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  TAOLIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
               TAO_Singleton<TYPE, ACE_LOCK>::instance_i ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+  TAOLIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class ACE_LOCK> TAO_Singleton<TYPE, ACE_LOCK> *&
-TAO_Singleton<TYPE, ACE_LOCK>::instance_i (void)
+TAO_Singleton<TYPE, ACE_LOCK>::instance_i ()
 {
-#if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  // Pointer to the Singleton instance.  This works around a bug with
-  // G++ and it's (mis-)handling of templates and statics...
-  static TAO_Singleton<TYPE, ACE_LOCK> *singleton_ = 0;
-
-  return singleton_;
-#else
   return TAO_Singleton<TYPE, ACE_LOCK>::singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
 template <class TYPE, class ACE_LOCK> TYPE *
-TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
+TAO_Singleton<TYPE, ACE_LOCK>::instance ()
 {
   ACE_TRACE ("TAO_Singleton<TYPE, ACE_LOCK>::instance");
 
@@ -93,8 +81,12 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
               ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with TAO_Singleton_Manager.
-              TAO_Singleton_Manager::at_exit (singleton);
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
+              TAO_Singleton_Manager::at_exit (singleton, 0,
+                                              typeid (TYPE).name ());
+#else
+              TAO_Singleton_Manager::at_exit (singleton, &lock,
+                                              typeid (TYPE).name());
             }
 #endif /* ACE_MT_SAFE */
         }
@@ -104,50 +96,47 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
 }
 
 template <class TYPE, class ACE_LOCK> void
-TAO_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
+TAO_Singleton<TYPE, ACE_LOCK>::cleanup (void *param)
 {
   delete this;
   TAO_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+
+#if defined ACE_MT_SAFE && ACE_MT_SAFE != 0
+  if (param)
+    {
+      ACE_LOCK **lock = static_cast<ACE_LOCK **> (param);
+      *lock = 0;
+    }
+#endif
 }
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Pointer to the Singleton instance.
 template <class TYPE, class ACE_LOCK> TAO_Singleton<TYPE, ACE_LOCK> *
 TAO_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
 
 template <class TYPE, class ACE_LOCK> TAO_TSS_Singleton<TYPE, ACE_LOCK> *
 TAO_TSS_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
-#endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
-
 
 template <class TYPE, class ACE_LOCK> void
-TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
+TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump ()
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"),
+  TAOLIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
               TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+  TAOLIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class ACE_LOCK> TAO_TSS_Singleton<TYPE, ACE_LOCK> *&
-TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i (void)
+TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()
 {
-#if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  // Pointer to the Singleton instance.  This works around a bug with
-  // G++ and it's (mis-)handling of templates and statics...
-  static TAO_TSS_Singleton<TYPE, ACE_LOCK> *singleton_ = 0;
-
-  return singleton_;
-#else
   return TAO_TSS_Singleton<TYPE, ACE_LOCK>::singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
 template <class TYPE, class ACE_LOCK> TYPE *
-TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
+TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
 {
   ACE_TRACE ("TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance");
 
@@ -189,7 +178,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
                               0);
 
               // Register for destruction with TAO_Singleton_Manager.
-              TAO_Singleton_Manager::at_exit (singleton);
+              TAO_Singleton_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */
@@ -205,5 +194,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
   delete this;
   TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_SINGLETON_CPP */

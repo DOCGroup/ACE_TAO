@@ -1,0 +1,34 @@
+project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  idlflags += -Sa -St
+
+  IDL_Files {
+    Messenger.idl
+  }
+
+  custom_only = 1
+}
+
+
+project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, imr_client {
+  after += *idl
+  exename = MessengerServer
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  exename = MessengerClient
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+  IDL_Files {
+  }
+}

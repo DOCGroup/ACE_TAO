@@ -1,43 +1,33 @@
-// $Id$
-#include "RT_Mutex.h"
+#include "tao/RTCORBA/RT_Mutex.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_ORB.h"
+#include "tao/RTCORBA/RT_ORB.h"
+#include "tao/SystemException.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(RTCORBA,
-          RT_Mutex,
-          "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Mutex::TAO_RT_Mutex (void)
-{
-}
-
-TAO_RT_Mutex::~TAO_RT_Mutex (void)
+TAO_RT_Mutex::~TAO_RT_Mutex ()
 {
 }
 
 void
-TAO_RT_Mutex::lock (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_Mutex::lock ()
 {
   if (this->mu_.acquire () != 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
 }
 
 void
-TAO_RT_Mutex::unlock (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_Mutex::unlock ()
 {
   if (this->mu_.release () != 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
 }
 
 CORBA::Boolean
-TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time
-                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
 {
   int result;
 
@@ -69,16 +59,16 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time
     return 0;
   else
     // Some really bad error.
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    throw ::CORBA::INTERNAL ();
 }
 
 const char *
-TAO_RT_Mutex::name (void) const
+TAO_RT_Mutex::name () const
 {
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name)
   : name_ (name)
@@ -86,18 +76,14 @@ TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name)
 }
 
 const char *
-TAO_Named_RT_Mutex::name (void) const
+TAO_Named_RT_Mutex::name () const
 {
   return this->name_.c_str ();
 }
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

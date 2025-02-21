@@ -1,20 +1,12 @@
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI_Timeouts
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    Implements the timeout CORBA Object and its reply handler.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    timeout_i.cpp
+ *
+ *  Implements the timeout CORBA Object and its reply handler.
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
 
 #include "timeout_i.h"
 #include "ace/OS_NS_unistd.h"
@@ -24,14 +16,8 @@ Timeout_i::Timeout_i (CORBA::ORB_ptr orb)
   orb_ = CORBA::ORB::_duplicate (orb);
 }
 
-Timeout_i::~Timeout_i ()
-{
-}
-
 void
-Timeout_i::sendTimeToWait (CORBA::Long msec
-                           ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Timeout_i::sendTimeToWait (CORBA::Long msec)
 {
   //ACE_DEBUG ((LM_DEBUG,
   //            "Timeout_i::sendTimeToWait: invoked with msec = %d\n\n",
@@ -48,8 +34,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec
 }
 
 void
-Timeout_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Timeout_i::shutdown ()
 {
   orb_->shutdown ();
   //ACE_DEBUG ((LM_DEBUG,
@@ -67,44 +52,35 @@ TimeoutHandler_i::TimeoutHandler_i ()
   timer_.stop ();
 }
 
-TimeoutHandler_i::~TimeoutHandler_i ()
-{
-}
-
 void
-TimeoutHandler_i::sendTimeToWait (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TimeoutHandler_i::sendTimeToWait ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "reply"));
-  reply_counter_++;
+  ++reply_counter_;
   timer_.stop ();
 }
 
 void
-TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutObjExceptionHolder *excep_holder
-                                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TimeoutHandler_i::sendTimeToWait_excep (::Messaging::ExceptionHolder *excep_holder)
 {
   timer_.stop ();
 
-  ACE_TRY
+  try
     {
-      excep_holder->raise_sendTimeToWait (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      excep_holder->raise_exception ();
     }
-  ACE_CATCH (CORBA::TIMEOUT, timeout)
+  catch (const CORBA::TIMEOUT& )
     {
       ACE_DEBUG ((LM_DEBUG,
                   "timeout"));
-      reply_excep_counter_++;
+      ++reply_excep_counter_;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Error: Unexpected exception"));
     }
-  ACE_ENDTRY;
 }
 
 void

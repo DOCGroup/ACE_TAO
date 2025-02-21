@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef STATUS_I_H
 #define STATUS_I_H
 
@@ -11,8 +9,7 @@ class corbaloc_Status_i : public POA_corbaloc::Status
 public:
   corbaloc_Status_i ();
 
-  CORBA::Boolean print_status (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Boolean print_status ();
 
   void set_name (const char *name) { server_name_ = name; }
 

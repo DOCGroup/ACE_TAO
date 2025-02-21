@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Location_Equal_To.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -22,10 +20,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Operators.h"
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PG_Location_Equal_To
@@ -39,17 +38,16 @@
 class TAO_PortableGroup_Export TAO_PG_Location_Equal_To
 {
 public:
-
   /// Perform a string comparison on each of the sequence elements in
   /// the given locations.
   int operator() (const PortableGroup::Location &lhs,
                   const PortableGroup::Location &rhs) const;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "PG_Location_Equal_To.inl"
+#include "orbsvcs/PortableGroup/PG_Location_Equal_To.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

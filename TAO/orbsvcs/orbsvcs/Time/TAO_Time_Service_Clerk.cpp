@@ -1,12 +1,14 @@
 // -*- C++ -*-
-// $Id$
-
-#include "TAO_Time_Service_Clerk.h"
-#include "TAO_TIO.h"
-#include "TAO_UTO.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
+#include "orbsvcs/Time/TAO_TIO.h"
+#include "orbsvcs/Time/TAO_UTO.h"
 
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_sys_time.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
@@ -23,14 +25,14 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
        0,
        ACE_Time_Value::zero,
        ACE_Time_Value(timer_value,timer_value_usecs)) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "%p\n",
                 "schedule_timer ()"));
 }
 
 // Destructor.
 
-TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk (void)
+TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk ()
 {
 }
 
@@ -38,9 +40,7 @@ TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk (void)
 // in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::universal_time (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTime::TimeUnavailable))
+TAO_Time_Service_Clerk::universal_time ()
 {
   TAO_UTO *uto = 0;
 
@@ -49,10 +49,9 @@ TAO_Time_Service_Clerk::universal_time (ACE_ENV_SINGLE_ARG_DECL)
                              this->inaccuracy (),
                              this->time_displacement_factor ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
   // Return the global time as a UTO.
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 // This method returns the global time in a UTO only if the time can
@@ -60,12 +59,9 @@ TAO_Time_Service_Clerk::universal_time (ACE_ENV_SINGLE_ARG_DECL)
 // implemented currently.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTime::TimeUnavailable))
+TAO_Time_Service_Clerk::secure_universal_time ()
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    CosTime::UTO::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 // This creates a new UTO based on the given parameters.
@@ -73,9 +69,7 @@ TAO_Time_Service_Clerk::secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                                             TimeBase::InaccuracyT inaccuracy,
-                                            TimeBase::TdfT tdf
-                                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                                            TimeBase::TdfT tdf)
 {
   TAO_UTO *uto = 0;
 
@@ -84,17 +78,14 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                              inaccuracy,
                              tdf),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 // This creates a new UTO given a time in the UtcT form.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc)
 {
   TAO_UTO *uto = 0;
 
@@ -110,17 +101,14 @@ TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc
                              inaccuracy,
                              utc.tdf),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 // This creates a new TIO with the given parameters.
 
 CosTime::TIO_ptr
 TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
-                                      TimeBase::TimeT upper
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                                      TimeBase::TimeT upper)
 {
   TAO_TIO *tio = 0;
 
@@ -128,12 +116,11 @@ TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
                     TAO_TIO (lower,
                              upper),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::TIO::_nil ());
-  return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return tio->_this ();
 }
 
 CORBA::ULongLong
-TAO_Time_Service_Clerk::get_time (void)
+TAO_Time_Service_Clerk::get_time ()
 {
   // Globally sync. time is the latest global time plus the time
   // elapsed since last updation was done.
@@ -150,7 +137,7 @@ TAO_Time_Service_Clerk::get_time (void)
 // Returns the time displacement factor in minutes.
 // This is displacement from the GMT.
 CORBA::Short
-TAO_Time_Service_Clerk::time_displacement_factor (void)
+TAO_Time_Service_Clerk::time_displacement_factor ()
 {
   return time_displacement_factor_;
 }
@@ -164,7 +151,7 @@ TAO_Time_Service_Clerk::time_displacement_factor (CORBA::Short tdf)
 
 // GET method for inaccuracy.
 TimeBase::InaccuracyT
-TAO_Time_Service_Clerk::inaccuracy (void)
+TAO_Time_Service_Clerk::inaccuracy ()
 {
   return this->inaccuracy_;
 }
@@ -175,3 +162,5 @@ TAO_Time_Service_Clerk::inaccuracy (TimeBase::InaccuracyT inaccuracy)
 {
   this->inaccuracy_ = inaccuracy;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

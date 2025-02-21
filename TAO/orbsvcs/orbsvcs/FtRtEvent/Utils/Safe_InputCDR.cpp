@@ -1,9 +1,5 @@
-#include "Safe_InputCDR.h"
-
-ACE_RCSID (Utils,
-           Safe_InputCDR,
-           "$Id$")
+#include "orbsvcs/FtRtEvent/Utils/Safe_InputCDR.h"
 
 #if !defined(__ACE_INLINE__)
-#include "Safe_InputCDR.inl"
+#include "orbsvcs/FtRtEvent/Utils/Safe_InputCDR.inl"
 #endif /* __ACE_INLINE__ */

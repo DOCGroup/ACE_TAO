@@ -1,17 +1,16 @@
-#include "SSLIOP_Accept_Strategy.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
+#include "orbsvcs/Log_Macros.h"
+#include "tao/debug.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (SSLIOP,
-           SSLIOP_Accept_Strategy,
-           "$Id$")
-
-
-TAO::SSLIOP::Accept_Strategy::Accept_Strategy (
-  TAO_ORB_Core * orb_core,
-  const ACE_Time_Value & timeout)
+TAO::SSLIOP::Accept_Strategy::Accept_Strategy (TAO_ORB_Core * orb_core,
+                                               const ACE_Time_Value & timeout,
+                                               bool check_host)
   : TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler,
-                        ACE_SSL_SOCK_ACCEPTOR> (orb_core),
-    timeout_ (timeout)
+                        ACE_SSL_SOCK_Acceptor> (orb_core),
+  timeout_ (timeout),
+  check_host_ (check_host)
 {
 }
 
@@ -40,7 +39,7 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  const int reset_new_handle = this->reactor_->uses_event_associations ();
+  int const reset_new_handle = this->reactor_->uses_event_associations ();
 
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    0,                // remote address
@@ -49,24 +48,34 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
                                    reset_new_handle  // reset new handler
                                    ) == -1)
     {
-      // Close down handler to avoid memory leaks.
-      svc_handler->close (0);
+      // Ensure that errno is preserved in case the svc_handler
+      // close() method resets it.
+      ACE_Errno_Guard error (errno);
+
+      // It doesn't make sense to close the handler since it didn't open.
+      svc_handler->transport ()->remove_reference ();
+
+      // #REFCOUNT# is zero at this point.
+      return -1;
+    }
+
+  // If required, verify the host in the endpoint match the cert
+  if (this->check_host_ && !svc_handler->check_host ())
+    {
+      // Close the handler.
+      svc_handler->close ();
+
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "TAO (%P|%t) - SLIIOP_Accept_Strategy::accept, "
+                          "hostname verification failed\n"));
+        }
 
       return -1;
     }
-  else
-    return 0;
+
+  return 0;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate ACE_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-# pragma instantiate TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

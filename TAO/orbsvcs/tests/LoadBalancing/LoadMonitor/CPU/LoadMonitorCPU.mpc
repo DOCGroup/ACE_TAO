@@ -1,5 +1,3 @@
-// $Id$
 project(*Client): loadbalancing {
-  includes += $(TAO_ROOT)/orbsvcs
+  exename = client
 }
-

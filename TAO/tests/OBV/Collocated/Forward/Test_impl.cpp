@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test_impl.h"
 
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
@@ -27,9 +25,7 @@ reflect_node (BaseNode* bn)
 }
 
 TreeController *
-Test_impl::reflect (TreeController * tc
-                    ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Test_impl::reflect (TreeController * tc)
 {
   if (tc != 0)
   {
@@ -40,8 +36,7 @@ Test_impl::reflect (TreeController * tc
 }
 
 void
-Test_impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Test_impl::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

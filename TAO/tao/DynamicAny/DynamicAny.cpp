@@ -1,31 +1,25 @@
-/* -*- C++ -*- */
-
 //=============================================================================
 /**
  *  @file    DynamicAny.cpp
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
 
 
-#include "DynamicAny.h"
-#include "DynAnyFactory.h"
+#include "tao/DynamicAny/DynamicAny.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 
-ACE_RCSID(DynamicAny, DynamicAny, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DynamicAny_Loader::TAO_DynamicAny_Loader (void)
+TAO_DynamicAny_Loader::TAO_DynamicAny_Loader ()
 {
 }
 
 CORBA::Object_ptr
 TAO_DynamicAny_Loader::create_object (CORBA::ORB_ptr,
                                       int,
-                                      ACE_TCHAR *[]
-                                      ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                                      ACE_TCHAR *[])
 {
   CORBA::Object_ptr obj;
   ACE_NEW_RETURN (obj,
@@ -35,10 +29,11 @@ TAO_DynamicAny_Loader::create_object (CORBA::ORB_ptr,
 }
 
 int
-TAO_DynamicAny_Loader::Initializer (void)
+TAO_DynamicAny_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_DynamicAny_Loader);
 }
+
 
 ACE_STATIC_SVC_DEFINE (TAO_DynamicAny_Loader,
                        ACE_TEXT ("DynamicAny_Loader"),
@@ -47,3 +42,5 @@ ACE_STATIC_SVC_DEFINE (TAO_DynamicAny_Loader,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_DynamicAny, TAO_DynamicAny_Loader)
+
+TAO_END_VERSIONED_NAMESPACE_DECL

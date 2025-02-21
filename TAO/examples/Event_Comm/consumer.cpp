@@ -1,34 +1,31 @@
-// $Id$
-
 #include "Consumer_Handler.h"
 #include "Consumer_Input_Handler.h"
 
-ACE_RCSID(Consumer, consumer, "$Id$")
-
+/**
+ * Consumer driver for the Publish/Subscribe example.
+ *
+ * The Consumer holds the <Consumer_Input_Handler> and
+ * <Cosumer_Handler> objects.
+ */
 class Consumer : public ACE_Event_Handler, public ShutdownCallback
 {
-  // = TITLE
-  //    Consumer driver for the Publish/Subscribe example.
-  //
-  // = DESCRIPTION
-  //    The Consumer holds the <Consumer_Input_Handler> and
-  //    <Cosumer_Handler> objects.
 public:
-  // = Initialization and termination methods.
-  Consumer (void);
+  Consumer () = default;
   // Constructor.
 
-  ~Consumer (void);
+  ~Consumer () = default;
   // Destructor.
 
-  int initialize (int argc, char *argv[]);
+  int initialize (int argc, ACE_TCHAR *argv[]);
   // Initialization method.
 
-  int run (void);
+  int run ();
   // Execute the consumer;
 
-  virtual void close (void);
+  //FUZZ: disable check_for_lack_ACE_OS
+  virtual void close ();
   // Shutdown the consumer.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
@@ -40,16 +37,6 @@ private:
   Consumer_Handler ch_;
   // Handler for CORBA Consumer.
 };
-
-Consumer::Consumer (void)
-{
-  // No-Op.
-}
-
-Consumer::~Consumer (void)
-{
-  // No-Op.
-}
 
 int
 Consumer::handle_signal (int signum,
@@ -69,7 +56,7 @@ Consumer::handle_signal (int signum,
 }
 
 void
-Consumer::close (void)
+Consumer::close ()
 {
   // clean up the input handler.
   ih_.close ();
@@ -78,55 +65,55 @@ Consumer::close (void)
 }
 
 int
-Consumer::run (void)
+Consumer::run ()
 {
   // Run the <Consumer_Handler>'s ORB.
   return ch_.run ();
 }
 
 int
-Consumer::initialize (int argc, char *argv[])
+Consumer::initialize (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the <Consumer_Handler>.
   if (this->ch_.init (argc, argv, this) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
-			"%p\n",
-			"Consumer_Handler failed to initialize\n"),
+                        "%p\n",
+                        "Consumer_Handler failed to initialize\n"),
                        -1);
    // Initialize the <Consumer_Input_Handler>.
   else if (this->ih_.initialize (&this->ch_) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
-			"%p\n",
-			"Consumer_Input_Handler failed to initialize\n"),
+                        "%p\n",
+                        "Consumer_Input_Handler failed to initialize\n"),
                        -1);
   else if (this->ch_.reactor ()->register_handler (SIGINT,
                                               this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "register_handler"),
+                       "%p\n",
+                       "register_handler"),
                       -1);
   else
     return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Initialize the supplier and consumer object references.
   Consumer consumer;
 
   if (consumer.initialize (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "Consumer init failed\n"),
-		      1);
+                       "%p\n",
+                       "Consumer init failed\n"),
+                      1);
 
   // Loop forever handling events.
   if (consumer.run () == -1)
-  ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "Consumer run failed\n"),
-		      1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "Consumer run failed\n"),
+                      1);
 
   return 0;
 }

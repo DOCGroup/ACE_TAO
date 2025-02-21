@@ -1,0 +1,31 @@
+#ifndef INHERITED_OP_IDL
+#define INHERITED_OP_IDL
+
+module Outer
+{
+  module Inner
+  {
+    interface Base
+    {
+      void BaseOp ();
+    };
+  };
+};
+
+module Outer
+{
+  module Inner
+  {
+    interface Base;
+  };
+};
+
+module Outer
+{
+  interface Derived : Inner::Base
+  {
+    void shutdown ();
+  };
+};
+
+#endif /* INHERITED_OP_IDL */

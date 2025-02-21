@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project(*Client) : namingexe, portableserver, messaging {
+  exename  = client
+}
+

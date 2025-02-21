@@ -1,27 +1,22 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    Contained_i.h
-//
-// = DESCRIPTION
-//    Contained servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    Contained_i.h
+ *
+ *  Contained servant class.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_CONTAINED_I_H
 #define TAO_CONTAINED_I_H
 
-#include "IRObject_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/IRObject_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,196 +27,129 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class TAO_Contained_i
+ *
+ * @brief TAO_Contained_i
+ *
+ * Abstract base class for all IR objects that are contained
+ * by other IR objects.
+ */
 class TAO_IFRService_Export TAO_Contained_i : public virtual TAO_IRObject_i
 {
-  // = TITLE
-  //    TAO_Contained_i
-  //
-  // = DESCRIPTION
-  //    Abstract base class for all IR objects that are contained
-  //    by other IR objects.
-  //
 public:
+  /// Constructor.
   TAO_Contained_i (TAO_Repository_i *repo);
-  // Constructor.
 
-  virtual ~TAO_Contained_i (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~TAO_Contained_i ();
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Remove the repository entry.
+  /// Remove the repository entry.
+  virtual void destroy ();
 
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy_i ();
 
-  virtual char *id (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char *id ();
 
-  char *id_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  char *id_i ();
 
-  virtual void id (
-      const char *id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void id (const char *id);
 
-  void id_i (
-      const char *id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void id_i (const char *id);
 
-  virtual char *name (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char *name ();
 
-  char *name_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  char *name_i ();
 
-  virtual void name (
-      const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void name (const char *name);
 
-  void name_i (
-      const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void name_i (const char *name);
 
-  virtual char *version (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char *version ();
 
-  char *version_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  char *version_i ();
 
-  virtual void version (
-      const char *version
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void version (const char *version);
 
-  void version_i (
-      const char *version
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void version_i (const char *version);
 
-  virtual CORBA::Container_ptr defined_in (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Container_ptr defined_in ();
 
-  CORBA::Container_ptr defined_in_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Container_ptr defined_in_i ();
 
-  virtual char *absolute_name (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char *absolute_name ();
 
-  char *absolute_name_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  char *absolute_name_i ();
 
-  virtual CORBA::Repository_ptr containing_repository (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Repository_ptr containing_repository ();
 
-  virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Contained::Description *describe ();
 
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Contained::Description *describe_i ();
 
   virtual void move (
       CORBA::Container_ptr new_container,
       const char *new_name,
-      const char *new_version
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const char *new_version);
 
+  /// Called from TAO_IFR_Service_Utils::name_exists.
   static int same_as_tmp_name (const char *name);
-  // Called from TAO_IFR_Service_Utils::name_exists.
 
 protected:
+  /**
+   * Engine for move() with an extra 'cleanup'
+   * parameter. Since a section removal can be
+   * recursive, this need be done only at the top
+   * level.
+   */
   void move_i (
       CORBA::Container_ptr new_container,
       const char *new_name,
       const char *new_version,
       CORBA::Boolean cleanup
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Engine for move() with an extra 'cleanup'
-  // parameter. Since a section removal can be
-  // recursive, this need be done only at the top
-  // level.
+    );
 
 private:
+  /// Check if <name> already exists in our container
   CORBA::Boolean name_exists (
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Check if <name> already exists in our container
+    );
 
+  /// Recursively update the scoped name of our contents.
   void contents_name_update (
       ACE_TString stem,
       ACE_Configuration_Section_Key key
     );
-  // Recursively update the scoped name of our contents.
 
+  /**
+   * Mangle the names of references that are also
+   * defined in the scope, so a name clash will
+   * not occur when create_* is called. Create_*
+   * unmangles the names.
+   */
   void move_pre_process (
       CORBA::Container_ptr container,
       const char *contained_path,
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Mangle the names of references that are also
-  // defined in the scope, so a name clash will
-  // not occur when create_* is called. Create_*
-  // unmangles the names.
+    );
 
+  /**
+   * Recursively calls move_i for definitions,
+   * as well as operations and attributes if
+   * applicable.
+   */
   void move_contents (
       CORBA::Container_ptr new_container
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Recursively calls move_i for definitions,
-  // as well as operations and attributes if
-  // applicable.
+    );
 
 private:
   static const char *tmp_name_holder_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

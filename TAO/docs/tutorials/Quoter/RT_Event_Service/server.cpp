@@ -1,19 +1,15 @@
-//
-// $Id$
-//
 
 #include "Stock_Factory_i.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try {
     // First initialize the ORB, that will remove some arguments...
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv,
-                       "" /* the ORB name, it can be anything! */);
+      CORBA::ORB_init (argc, argv);
     CORBA::Object_var poa_object =
       orb->resolve_initial_references ("RootPOA");
     PortableServer::POA_var poa =
@@ -67,7 +63,7 @@ int main (int argc, char* argv[])
         try {
           // Get the stock object
           Quoter::Stock_var stock =
-            stock_factory->get_stock (argv[i]);
+            stock_factory->get_stock (ACE_TEXT_ALWAYS_CHAR (argv[i]));
 
           CORBA::String_var full_name = stock->full_name ();
 
@@ -94,10 +90,10 @@ int main (int argc, char* argv[])
     stock_factory_i.destroy_stock_objects ();
 
     // Destroy the POA, waiting until the destruction terminates
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (CORBA::Exception &) {
+  catch (const CORBA::Exception &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;

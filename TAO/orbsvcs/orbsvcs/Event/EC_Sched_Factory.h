@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Sched_Factory.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -16,32 +14,33 @@
 #define TAO_EC_SCHED_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "sched_event_export.h"
+#include "orbsvcs/Event/sched_event_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Sched_Factory
  *
  * @brief Extend the default factory to support scheduling
- *
  */
 class TAO_RTSchedEvent_Export TAO_EC_Sched_Factory : public TAO_EC_Default_Factory
 {
 public:
   /// Constructor
-  TAO_EC_Sched_Factory (void);
+  TAO_EC_Sched_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Sched_Factory (void);
+  virtual ~TAO_EC_Sched_Factory ();
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
@@ -56,8 +55,10 @@ public:
 private:
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Sched_Factory.i"
+#include "orbsvcs/Event/EC_Sched_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Sched_Factory)

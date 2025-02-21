@@ -1,0 +1,7 @@
+This test validates the tao_imr link command by creating a server with 3 POAs
+and showing that when linked, concurrent startup requests for different POAs
+are treated as requests for the same server.
+
+A counter example is available, run "./run_test.pl -nolink" and the 3 POAs are
+registered separately and concurrent requests will trigger multiple server
+starts.

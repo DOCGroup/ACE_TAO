@@ -4,8 +4,6 @@
 /**
  *  @file   Security_Current_Impl.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
@@ -21,8 +19,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "security_export.h"
+#include "orbsvcs/Security/security_export.h"
 #include "orbsvcs/SecurityLevel2C.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -44,9 +44,8 @@ namespace TAO
     class TAO_Security_Export Current_Impl
     {
     public:
-
       /// Destructor.
-      virtual ~Current_Impl (void);
+      virtual ~Current_Impl ();
 
       /**
        * @name SecurityLevel1::Current Methods
@@ -59,9 +58,7 @@ namespace TAO
       /// the given attribute type list associated with the current
       /// request.
       virtual ::Security::AttributeList * get_attributes (
-          const ::Security::AttributeTypeList & attributes
-          ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+          const ::Security::AttributeTypeList & attributes) = 0;
       //@}
 
       /**
@@ -73,18 +70,16 @@ namespace TAO
       //@{
       /// Return the Credentials received from the client associate with
       /// the current request.
-      virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials () = 0;
       //@}
 
       /// Return the unique tag that identifies the concrete subclass.
-      virtual CORBA::ULong tag (void) const = 0;
-
+      virtual CORBA::ULong tag () const = 0;
     };
-
   }  // End Security namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

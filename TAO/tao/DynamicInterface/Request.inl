@@ -1,133 +1,99 @@
 // -*- C++ -*-
-//
-// $Id$
-
-ACE_INLINE
-void
-CORBA::release (CORBA::Request_ptr x)
-{
-  if (x != 0)
-    {
-      x->_decr_refcnt ();
-    }
-}
-
-ACE_INLINE
-CORBA::Boolean
-CORBA::is_nil (CORBA::Request_ptr x)
-{
-  return (CORBA::Boolean) (x == 0);
-}
-
-// ===================================================================
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Request_ptr
 CORBA::Request::_duplicate (CORBA::Request_ptr x)
 {
-  if (x != 0)
+  if (x)
     {
-      x->_incr_refcnt ();
+      x->_incr_refcount ();
     }
 
   return x;
 }
 
 ACE_INLINE CORBA::Request_ptr
-CORBA::Request::_nil (void)
+CORBA::Request::_nil ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE CORBA::Object_ptr
-CORBA::Request::target (void) const
+CORBA::Request::target () const
 {
   return this->target_;
 }
 
 // Return the operation name for the request.
 ACE_INLINE const CORBA::Char *
-CORBA::Request::operation (void) const
+CORBA::Request::operation () const
 {
   return this->opname_;
 }
 
 // Return the arguments for the request.
 ACE_INLINE CORBA::NVList_ptr
-CORBA::Request::arguments (void)
+CORBA::Request::arguments ()
 {
   return this->args_;
 }
 
 // Return the result for the request.
 ACE_INLINE CORBA::NamedValue_ptr
-CORBA::Request::result (void)
+CORBA::Request::result ()
 {
   return this->result_;
 }
 
 // Return the exceptions resulting from this request.
 ACE_INLINE CORBA::ExceptionList_ptr
-CORBA::Request::exceptions (void)
+CORBA::Request::exceptions ()
 {
   return this->exceptions_.in ();
 }
 
 // Return the request's contexts
 ACE_INLINE CORBA::ContextList_ptr
-CORBA::Request::contexts (void)
+CORBA::Request::contexts ()
 {
   return this->contexts_;
 }
 
-//// *** DEPRECATED ***  Return the <Environment> for this request.
-// ACE_INLINE CORBA::Environment *
-// CORBA::Request::env (void)
-// {
-//   return &this->env_;
-// }
-
 // The argument manipulation helper functions
-
 ACE_INLINE CORBA::Any &
-CORBA::Request::add_in_arg (void)
+CORBA::Request::add_in_arg ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_element (CORBA::ARG_IN ACE_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_element (CORBA::ARG_IN)->any_;
 }
 
 ACE_INLINE CORBA::Any &
 CORBA::Request::add_in_arg (const CORBA::Char *name)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_item (name, CORBA::ARG_IN ACE_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_item (name, CORBA::ARG_IN)->any_;
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::add_inout_arg (void)
+CORBA::Request::add_inout_arg ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_element (CORBA::ARG_INOUT ACE_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_element (CORBA::ARG_INOUT)->any_;
 }
 
 ACE_INLINE CORBA::Any &
 CORBA::Request::add_inout_arg (const CORBA::Char *name)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_item (name, CORBA::ARG_INOUT ACE_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_item (name, CORBA::ARG_INOUT)->any_;
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::add_out_arg (void)
+CORBA::Request::add_out_arg ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_element (CORBA::ARG_OUT ACE_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_element (CORBA::ARG_OUT)->any_;
 }
 
 ACE_INLINE CORBA::Any &
 CORBA::Request::add_out_arg (const CORBA::Char *name)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_item (name, CORBA::ARG_OUT ACE_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_item (name, CORBA::ARG_OUT)->any_;
 }
 
 ACE_INLINE void
@@ -137,13 +103,13 @@ CORBA::Request::set_return_type (CORBA::TypeCode_ptr tc)
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::return_value (void )
+CORBA::Request::return_value ()
 {
   return this->result_->any_;
 }
 
 ACE_INLINE CORBA::Context_ptr
-CORBA::Request::ctx (void) const
+CORBA::Request::ctx () const
 {
   return this->ctx_;
 }
@@ -161,7 +127,7 @@ CORBA::Request::_tao_lazy_evaluation (bool lazy_evaluation)
 }
 
 ACE_INLINE int
-CORBA::Request::_tao_byte_order (void) const
+CORBA::Request::_tao_byte_order () const
 {
   return this->byte_order_;
 }
@@ -181,18 +147,20 @@ CORBA::Request::raw_user_exception (TAO_InputCDR &cdr)
 }
 
 ACE_INLINE ACE_CString &
-CORBA::Request::raw_user_exception (void)
+CORBA::Request::raw_user_exception ()
 {
   return this->raw_user_exception_;
 }
 
 ACE_INLINE CORBA::Boolean
-CORBA::Request::response_received (void)
+CORBA::Request::response_received ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-		    ace_mon,
-		    this->lock_,
-		    0);
+                    ace_mon,
+                    this->lock_,
+                    false);
 
   return this->response_received_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

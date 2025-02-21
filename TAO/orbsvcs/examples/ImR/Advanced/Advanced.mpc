@@ -1,18 +1,29 @@
-//$Id$
-project(*Manager): orbsvcsexe, portableserver, exceptions {
+project(*IDL): taoidldefaults {
+  IDL_Files {
+    Manager.idl
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Manager): orbsvcsexe, portableserver {
+  after += *IDL
   Source_Files {
     manager_main.cpp
     Manager_i.cpp
+    ManagerS.cpp
+    ManagerC.cpp
   }
   Documentation_Files {
-    Advanced.mpc
-    run_test.pl
     README
     drivers/*
   }
+  IDL_Files {
+  }
 }
 
-project(*Server): orbsvcsexe, portableserver, iortable, exceptions {
+project(*Server): orbsvcsexe, portableserver, iortable, avoids_corba_e_micro {
+  after += *IDL
   Source_Files {
     server_main.cpp
     TestServer.cpp
@@ -21,16 +32,20 @@ project(*Server): orbsvcsexe, portableserver, iortable, exceptions {
     MessengerC.cpp
     Messenger_i.cpp
   }
+  IDL_Files {
+  }
 }
 
-project(*Client): orbsvcsexe, exceptions {
+project(*Client): orbsvcsexe {
+  after += *IDL
   Source_Files {
     client_main.cpp
     TestClient.cpp
     MessengerC.cpp
   }
-  verbatim(gnuace, macros) {
-    VDIR := .obj/Client/
+  IDL_Files {
   }
-
+  verbatim(gnuace, macros) {
+    VDIR = $(if $(ARCH),$(ARCH)/).obj/Client/
+  }
 }

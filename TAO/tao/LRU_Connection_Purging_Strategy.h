@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 // ================================================================
 /**
  *  @file   LRU_Connection_Purging_Strategy.h
- *
- *  $Id$
  *
  *  @author Chad Elliott (elliott_c@ociweb.com)
  */
@@ -21,6 +21,8 @@
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_LRU_Connection_Purging_Strategy
  *
@@ -31,8 +33,7 @@
  * has the smallest ordering number and will therefore be purged
  * first.
  */
-
-class TAO_Export TAO_LRU_Connection_Purging_Strategy 
+class TAO_Export TAO_LRU_Connection_Purging_Strategy
   : public TAO_Connection_Purging_Strategy
 {
 public:
@@ -40,15 +41,17 @@ public:
   TAO_LRU_Connection_Purging_Strategy (int cache_maximum);
 
   /// The destructor
-  virtual ~TAO_LRU_Connection_Purging_Strategy (void);
+  virtual ~TAO_LRU_Connection_Purging_Strategy ();
 
   /// Called when accessing an item from the cache
-  virtual void update_item (TAO_Transport* transport);
+  virtual void update_item (TAO_Transport& transport);
 
 private:
   /// The ordering information for each transport in the cache
   unsigned long order_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

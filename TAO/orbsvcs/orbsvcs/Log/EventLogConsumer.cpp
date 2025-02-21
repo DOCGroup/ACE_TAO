@@ -2,16 +2,14 @@
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/LogNotification.h"
 
-ACE_RCSID (Log,
-           EventLogConsumer,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Event_LogConsumer::TAO_Event_LogConsumer (TAO_EventLog_i *log)
 : log_ (log)
-{  
+{
 }
 
-TAO_Event_LogConsumer::~TAO_Event_LogConsumer (void)
+TAO_Event_LogConsumer::~TAO_Event_LogConsumer ()
 {
 }
 
@@ -25,11 +23,7 @@ TAO_Event_LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer
 }
 
 void
-TAO_Event_LogConsumer::push (const CORBA::Any& data ACE_ENV_ARG_DECL)
-ACE_THROW_SPEC ((
-                CORBA::SystemException,
-                CosEventComm::Disconnected
-        ))
+TAO_Event_LogConsumer::push (const CORBA::Any& data)
 {
   // create a record list...
   DsLogAdmin::RecordList recList (1);
@@ -61,38 +55,33 @@ ACE_THROW_SPEC ((
   //
   // I have submitted a defect report to the OMG for clarification.
   //    --jtc
-  ACE_TRY 
+  try
     {
       // log the RecordList.
-      this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->log_->write_recordlist (recList);
     }
-  ACE_CATCH (DsLogAdmin::LogFull, ex)
+  catch (const DsLogAdmin::LogFull& )
     {
-      ACE_THROW (CORBA::NO_RESOURCES ());
+      throw CORBA::NO_RESOURCES ();
     }
-  ACE_CATCH (DsLogAdmin::LogOffDuty, ex)
+  catch (const DsLogAdmin::LogOffDuty& )
     {
-      ACE_THROW (CORBA::NO_RESOURCES ());
+      throw CORBA::NO_RESOURCES ();
     }
-  ACE_CATCH (DsLogAdmin::LogLocked, ex)
+  catch (const DsLogAdmin::LogLocked& )
     {
-      ACE_THROW (CORBA::NO_PERMISSION ());
+      throw CORBA::NO_PERMISSION ();
     }
-  ACE_CATCH (DsLogAdmin::LogDisabled, ex)
+  catch (const DsLogAdmin::LogDisabled& )
     {
-      ACE_THROW (CORBA::TRANSIENT ());
+      throw CORBA::TRANSIENT ();
     }
-  ACE_ENDTRY;
 }
 
 void
-TAO_Event_LogConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((
-                CORBA::SystemException
-        ))
+TAO_Event_LogConsumer::disconnect_push_consumer ()
 {
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_proxy_->disconnect_push_supplier ();
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

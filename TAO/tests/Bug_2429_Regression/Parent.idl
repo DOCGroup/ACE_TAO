@@ -1,0 +1,6 @@
+interface Parent
+{
+  void parentMethod ();
+
+  oneway void shutdown ();
+};

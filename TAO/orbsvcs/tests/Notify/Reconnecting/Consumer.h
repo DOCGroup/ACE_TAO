@@ -1,17 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Consumer.h
-//
-// = DESCRIPTION
-//   Test Consumer reconnect to existing channel/admin/proxy Notification Service
-//
-// = AUTHOR
-//    Dale Wilson <wilson_d@ociweb.com>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Consumer.h
+ *
+ * Test Consumer reconnect to existing channel/admin/proxy Notification Service
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef RECONNECTNG_CONSUMER_H
 #define RECONNECTNG_CONSUMER_H
@@ -29,24 +26,12 @@ public:
   StructuredPushConsumer_i ();
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosNotifyComm::InvalidEventType));
+      const CosNotification::EventTypeSeq & removed);
 
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException,
-        CosEventComm::Disconnected));
+        const CosNotification::StructuredEvent & notification);
 
-  virtual void disconnect_structured_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_structured_push_consumer ();
 
   size_t received () const;
   void set_expectations (size_t expecte, size_t fail, size_t serial_number, bool verbose);
@@ -75,24 +60,12 @@ public:
   SequencePushConsumer_i ();
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosNotifyComm::InvalidEventType));
+      const CosNotification::EventTypeSeq & removed);
 
   virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException,
-        CosEventComm::Disconnected));
+        const CosNotification::EventBatch & notifications);
 
-  virtual void disconnect_sequence_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_sequence_push_consumer ();
 
   size_t received () const;
   void set_expectations (size_t expecte, size_t fail, size_t serial_number, bool verbose);
@@ -122,24 +95,11 @@ public:
 
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosNotifyComm::InvalidEventType));
+      const CosNotification::EventTypeSeq & removed);
 
-  virtual void push (
-        const CORBA::Any & data
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException,
-        CosEventComm::Disconnected));
+  virtual void push (const CORBA::Any & data);
 
-  virtual void disconnect_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer ();
 
   size_t received () const;
   void set_expectations (size_t expecte, size_t fail, size_t serial_number, bool verbose);
@@ -171,20 +131,15 @@ public:
 
   void init (
     PortableServer::POA_ptr poa,
-    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_
-    ACE_ENV_ARG_DECL);
+    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_);
 
-  void fini (ACE_ENV_SINGLE_ARG_DECL);
+  void fini ();
 
   size_t reconnect_count () const;
 
-  virtual void reconnect (
-      CORBA::Object_ptr reconnection
-      ACE_ENV_ARG_DECL
-    ) ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void reconnect (CORBA::Object_ptr reconnection);
 
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean is_alive ();
 
 private:
   Consumer_Main & consumer_main_;
@@ -200,36 +155,34 @@ class Consumer_Main
   Consumer_Main ();
   ~Consumer_Main ();
 
-  int parse_args (int argc, char *argv[]);
-  int parse_single_arg (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_single_arg (int argc, ACE_TCHAR *argv[]);
 
-  int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int init (int argc, ACE_TCHAR *argv[]);
+  int run ();
+  int fini ();
   void usage (FILE * log) const;
 
   void reconnect (
-      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory
-      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
 
  private:
   /// Find naming service.
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service ();
 
   /// Resolve the Notify factory from the Naming service.
-  int find_notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  int find_notify_factory ();
 
   /// Resolve the Notify factory using resolve_initial_reference ("NotifyEventChannelFactory")
-  int resolve_notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_notify_factory ();
 
-  void init_event_channel (ACE_ENV_SINGLE_ARG_DECL);
-  void init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL);
-  void init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL);
-  void init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL);
-  void init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL);
+  void init_event_channel ();
+  void init_consumer_admin ();
+  void init_structured_proxy_supplier ();
+  void init_sequence_proxy_supplier ();
+  void init_any_proxy_supplier ();
 
-  void set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy ACE_ENV_ARG_DECL);
+  void set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy);
 
   void save_ids();
   bool load_ids();
@@ -243,14 +196,13 @@ class Consumer_Main
   ////////////////
   // Data members
  private:
-
   // set by command line parameters
   bool verbose_;            // -v make a glorious noise
   enum Mode_T{
     MODE_ANY,
     MODE_STRUCTURED,
     MODE_SEQUENCE} mode_;   // -any, -structured, or -sequence
-  ACE_CString channel_file_; // -channel fileneame
+  ACE_TString channel_file_; // -channel fileneame
   size_t expect_;           // -expect n
   size_t fail_;             // -fail n
   bool use_naming_service_; // -nonamesvc

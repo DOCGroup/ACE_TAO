@@ -1,30 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    discriminant_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for discriminant of the union
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    discriminant_cs.cpp
+ *
+ *  Visitor generating code for discriminant of the union
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           discriminant_cs, 
-           "$Id$")
-
-// *************************************************************************
-// Visitor for discriminant in client stubs.
-// *************************************************************************
+#include "union.h"
 
 be_visitor_union_discriminant_cs::be_visitor_union_discriminant_cs (
     be_visitor_context *ctx
@@ -33,7 +18,7 @@ be_visitor_union_discriminant_cs::be_visitor_union_discriminant_cs (
 {
 }
 
-be_visitor_union_discriminant_cs::~be_visitor_union_discriminant_cs (void)
+be_visitor_union_discriminant_cs::~be_visitor_union_discriminant_cs ()
 {
 }
 
@@ -41,8 +26,8 @@ int
 be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
 {
   be_union *bu =
-    this->ctx_->be_node_as_union ();  // get the enclosing union backend
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -69,7 +54,7 @@ be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_discriminant_cs::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }

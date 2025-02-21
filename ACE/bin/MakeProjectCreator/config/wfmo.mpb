@@ -1,0 +1,4 @@
+// -*- MPC -*-
+feature(wfmo) {
+  requires += wfmo
+}

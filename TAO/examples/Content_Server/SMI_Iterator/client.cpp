@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Ossama Othman <ossama@uci.edu>
 
 #include "ace/FILE_Connector.h"
@@ -10,17 +8,9 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (SMI_Iterator,
-           client,
-           "$Id$")
-
-
 // Retrieve the data from the server
 int retrieve_data (const char *content_type,
-                   Web_Server::Content_Iterator_ptr contents
-                   ACE_ENV_ARG_DECL);
-
+                   Web_Server::Content_Iterator_ptr contents);
 
 // Map content type to viewer.
 int external_viewer (const char *content_type,
@@ -32,10 +22,9 @@ int spawn_viewer (const char *content_type,
                   const char *filename);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (argc < 2)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -43,22 +32,15 @@ main (int argc, char *argv[])
                           -1);
 
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "Mighty ORB"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "Mighty ORB");
 
       // Get a reference to the Name Service.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService");
 
       // Narrow to a Naming Context
       CosNaming::NamingContext_var nc =
-        CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (obj.in ());
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -74,8 +56,7 @@ main (int argc, char *argv[])
       name[0].id = CORBA::string_dup ("Iterator_Factory");
       name[0].kind = CORBA::string_dup ("");
 
-      obj = nc->resolve (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = nc->resolve (name);
 
       // Now narrow to an Iterator_Factory reference.
       Web_Server::Iterator_Factory_var factory =
@@ -83,7 +64,7 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Object pointed to by:\n ")
+                             ACE_TEXT ("Object pointed to by:\n")
                              ACE_TEXT ("%s\n")
                              ACE_TEXT ("is not an Iterator_Factory ")
                              ACE_TEXT ("object.\n"),
@@ -92,14 +73,11 @@ main (int argc, char *argv[])
         }
 
       // Get a Content_Iterator
-      const char *pathname = argv[1];
       Web_Server::Content_Iterator_var contents;
       Web_Server::Metadata_Type_var metadata;
-      factory->get_iterator (pathname,
+      factory->get_iterator (ACE_TEXT_ALWAYS_CHAR(argv[1]),
                              contents,
-                             metadata
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             metadata);
 
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("File <%s> has the following ")
@@ -111,24 +89,19 @@ main (int argc, char *argv[])
                   metadata->content_type.in ()));
 
       int result = ::retrieve_data (metadata->content_type.in (),
-                                    contents.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    contents.in ());
 
       if (result != 0)
         return -1;
 
       // Done with the Content_Iterator, so destroy it.
-      contents->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      contents->destroy ();
 
-      orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->shutdown (false);
 
-      // orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      // ACE_TRY_CHECK;
+      // orb->destroy ();
     }
-  ACE_CATCH (Web_Server::Error_Result, exc)
+  catch (const Web_Server::Error_Result& exc)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Caught Web Server exception ")
@@ -136,14 +109,12 @@ main (int argc, char *argv[])
                          exc.status),
                         -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Caught unexpected exception:"));
+      ex._tao_print_exception (ACE_TEXT ("Caught unexpected exception:"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   // Wait for all children to exit.
   ACE_Process_Manager::instance ()->wait ();
@@ -153,8 +124,7 @@ main (int argc, char *argv[])
 
 
 int retrieve_data (const char *content_type,
-                   Web_Server::Content_Iterator_ptr iterator
-                   ACE_ENV_ARG_DECL)
+                   Web_Server::Content_Iterator_ptr iterator)
 {
   Web_Server::Content_Iterator_var contents =
     Web_Server::Content_Iterator::_duplicate (iterator);
@@ -184,8 +154,7 @@ int retrieve_data (const char *content_type,
 
   for (;;)
     {
-      rc = contents->next_chunk (offset, chunk ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      rc = contents->next_chunk (offset, chunk);
 
       if (!rc)
         break;
@@ -211,7 +180,7 @@ int retrieve_data (const char *content_type,
 
   // Now spawn a view to display the retrieved data.
   if (::spawn_viewer (content_type,
-                      file_addr.get_path_name ()) != 0)
+                      ACE_TEXT_ALWAYS_CHAR(file_addr.get_path_name ())) != 0)
     return -1;
 
   return 0;

@@ -1,38 +1,32 @@
-// $Id$
-//
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/ORBSVCS/tests/SimpleNaming
-//
-// = FILENAME
-//    ncontextext_client_i.cpp
-//
-// = DESCRIPTION
-//    This class implements a simple CORBA client which
-//    converts a Name to a string and viceversa, forms a IIOPNAME
-//    url address and can resolve a stringified name.
-//
-// = AUTHORS
-//    Priyanka Gontla <pgontla@ece.uci.edu>
-//
-//============================================================
+//=============================================================================
+/**
+ *  @file    ncontextext_client_i.cpp
+ *
+ *  This class implements a simple CORBA client which
+ *  converts a Name to a string and viceversa, forms a IIOPNAME
+ *  url address and can resolve a stringified name.
+ *
+ *  @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #include "ncontextext_client_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_time.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 // Constructor
-NContextExt_Client_i::NContextExt_Client_i (void)
+NContextExt_Client_i::NContextExt_Client_i ()
 {
 }
 
-NContextExt_Client_i::~NContextExt_Client_i (void)
+NContextExt_Client_i::~NContextExt_Client_i ()
 {
 }
 
@@ -40,10 +34,9 @@ NContextExt_Client_i::~NContextExt_Client_i (void)
 // Parses the command line arguments and returns an
 // error status
 int
-NContextExt_Client_i::parse_args (void)
+NContextExt_Client_i::parse_args ()
 {
-
-  ACE_Get_Opt get_opts (argc_, argv_, "dvs");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dvs"));
   int c;
 
   this->view_ = 1;
@@ -77,9 +70,8 @@ NContextExt_Client_i::parse_args (void)
 char *
 NContextExt_Client_i::get_name ()
 {
-
   // USe time (NULL) to produce the seed:
-  srand (time (0));
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0)));
 
   const int len = 10;
   char *name_component = CORBA::string_alloc (len);
@@ -88,8 +80,7 @@ NContextExt_Client_i::get_name ()
 
   for (int i = 0; i < len; ++i)
     {
-
-      int rand_value = rand () % 10;
+      int rand_value = ACE_OS::rand () % 10;
 
       switch (rand_value)
         {
@@ -131,7 +122,7 @@ NContextExt_Client_i::get_name ()
         case 7:
         case 8:
         case 9:
-          *name_componentPtr = 'A' + ( rand () % 26 );
+          *name_componentPtr = 'A' + ( ACE_OS::rand () % 26);
           ++name_componentPtr;
           break;
 
@@ -144,14 +135,12 @@ NContextExt_Client_i::get_name ()
   *name_componentPtr = '\0';
 
   return name_component;
-
 }
 
 int
-NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
+NContextExt_Client_i::run ()
 {
-
-  ACE_TRY_EX (OuterBlock)
+  try
     {
       CosNaming::Name name;
 
@@ -163,30 +152,24 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       // Get the stringified form of the name
        CORBA::String_var str_name =
-        this->naming_context_->to_string (name
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (OuterBlock);
+        this->naming_context_->to_string (name);
 
       CORBA::Object_var factory_object;
 
-      ACE_TRY_EX (InnerBlock)
+      try
         {
           // Resolve the name using the stringified form of the name
           factory_object =
-            this->naming_context_->resolve_str (str_name.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (InnerBlock);
+            this->naming_context_->resolve_str (str_name.in ());
         }
-      ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
         }
-      ACE_ENDTRY;
 
       // Narrow
       Web_Server::Iterator_Factory_var factory =
-        Web_Server::Iterator_Factory::_narrow (factory_object.in () ACE_ENV_ARG_PARAMETER);
+        Web_Server::Iterator_Factory::_narrow (factory_object.in ());
 
-      ACE_TRY_CHECK_EX (OuterBlock);
 
       // Create bindings
       CosNaming::BindingIterator_var iter;
@@ -194,16 +177,12 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       this->naming_context_->list (2,
                                    bindings_list.out (),
-                                   iter.out ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (OuterBlock);
+                                   iter.out ());
 
       // Convert the stringified name back as CosNaming::Name and print
       // them out.
       CosNaming::Name *nam =
-        this->naming_context_->to_name (str_name.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (OuterBlock);
+        this->naming_context_->to_name (str_name.in ());
 
       // Declare a CosNaming::Name variable and assign length to it.
       CosNaming::Name nm;
@@ -226,10 +205,7 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::String_var obj_name = get_name ();
 
       CORBA::String_var url_string =
-        this->naming_context_->to_url (address.in (),
-                                       obj_name.in()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (OuterBlock);
+        this->naming_context_->to_url (address.in (), obj_name.in());
 
       if (this->view_ == 0)
         {
@@ -240,43 +216,36 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
                               url_string);
         }
     }
-  ACE_CATCH (CORBA::NO_MEMORY, ex)
+  catch (const CORBA::NO_MEMORY& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "A system exception oc client side");
+      ex._tao_print_exception ("A system exception oc client side");
       return -1;
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "A system exception oc client side");
+      ex._tao_print_exception ("A system exception oc client side");
       return -1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-NContextExt_Client_i::init (int argc, char **argv)
+NContextExt_Client_i::init (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (this->argc_,
-                         this->argv_,
-                         "" /* the ORB name, it can be anything! */
-                         ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (this->argc_, this->argv_);
 
       // There must be at least one argument, the file that has to be
       // retrieved
@@ -285,8 +254,7 @@ NContextExt_Client_i::init (int argc, char **argv)
 
       // Get a reference to the Naming Service
       CORBA::Object_var naming_context_object =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_context_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -295,21 +263,18 @@ NContextExt_Client_i::init (int argc, char **argv)
 
       // Narrow to get the correct reference
       this->naming_context_ =
-        CosNaming::NamingContextExt::_narrow (naming_context_object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContextExt::_narrow (naming_context_object.in ());
 
       if (CORBA::is_nil (this->naming_context_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot narrow Naming Service\n"),
                           1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -321,35 +286,33 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
                                     CORBA::String_var obj_name,
                                     CORBA::String_var url_string)
 {
-
-  ACE_DEBUG((LM_DEBUG, ACE_TEXT ("The first component id is %s,"
-             "The first component kind is %s,"
-             "The second component id is %s,"
-             "The second component kind is %s\n\n"),
+  ACE_DEBUG((LM_DEBUG, ACE_TEXT ("The first component id is %C,")
+             ACE_TEXT ("The first component kind is %C,")
+             ACE_TEXT ("The second component id is %C,")
+             ACE_TEXT ("The second component kind is %C\n\n"),
              name[0].id.in (),
              name[0].kind.in (),
              name[1].id.in (),
              name[1].kind.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The string form of the input name is: \n%s\n\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The string form of the input name is: \n%C\n\n"),
               str_name.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The unstringified version of the name components are:,"
-              "The first component id is %s,"
-              "The first component kind is %s,"
-              "The second component id is %s,"
-              "The second component kind is %s\n\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The unstringified version of the name components are:,")
+              ACE_TEXT ("The first component id is %C,")
+              ACE_TEXT ("The first component kind is %C,")
+              ACE_TEXT ("The second component id is %C,")
+              ACE_TEXT ("The second component kind is %C\n\n"),
               nm[0].id.in (),
               nm[0].kind.in (),
               nm[1].id.in (),
               nm[1].kind.in ()));
 
- ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("When the address of the NamingContext is:"
-             "myhost.555xyz.com:9999"
-             "and the Object name is \n%s\n"),
+ ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("When the address of the NamingContext is:")
+             ACE_TEXT ("myhost.555xyz.com:9999")
+             ACE_TEXT ("and the Object name is \n%C\n"),
              obj_name.in ()));
 
- ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("The URL form of the string is \n %s\n"),
+ ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("The URL form of the string is \n %C\n"),
              url_string.in ()));
-
 }

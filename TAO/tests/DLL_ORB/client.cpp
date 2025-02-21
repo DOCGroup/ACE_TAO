@@ -4,8 +4,6 @@
 /**
  * @file client.cpp
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -15,7 +13,7 @@
 #include "ace/Thread_Manager.h"
 
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   // Process a Service Configurator directive that will cause the test
   // client module to be dynamically loaded.
@@ -34,7 +32,6 @@ main (int, char *[])
           "_make_Test_Client_Module",
           "-k file://test.ior")) != 0)
     {
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
                          "ERROR: Client unable to process the "

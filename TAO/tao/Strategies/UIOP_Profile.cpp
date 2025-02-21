@@ -1,29 +1,28 @@
-#include "UIOP_Profile.h"
+#include "tao/Strategies/UIOP_Profile.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "uiop_endpointsC.h"
+#include "tao/Strategies/uiop_endpointsC.h"
 
 #include "tao/CDR.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
-
-ACE_RCSID (Strategies,
-           UIOP_Profile,
-           "$Id$")
+#include "ace/OS_NS_ctype.h"
+#include <cstring>
 
 static const char prefix_[] = "uiop";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char TAO_UIOP_Profile::object_key_delimiter_ = '|';
 
 char
-TAO_UIOP_Profile::object_key_delimiter (void) const
+TAO_UIOP_Profile::object_key_delimiter () const
 {
   return TAO_UIOP_Profile::object_key_delimiter_;
 }
@@ -65,7 +64,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
+TAO_UIOP_Profile::~TAO_UIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -81,37 +80,36 @@ TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
 }
 
 TAO_Endpoint*
-TAO_UIOP_Profile::endpoint (void)
+TAO_UIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO_UIOP_Profile::endpoint_count (void) const
+TAO_UIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
 
 void
-TAO_UIOP_Profile::parse_string_i (const char *string
-                                  ACE_ENV_ARG_DECL)
+TAO_UIOP_Profile::parse_string_i (const char *string)
 {
   if (!string || !*string)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Remove the "N.n@" version prefix, if it exists, and verify the
   // version is one that we accept.
 
   // Check for version
-  if (isdigit (string [0]) &&
+  if (ACE_OS::ace_isdigit (string [0]) &&
       string[1] == '.' &&
-      isdigit (string [2]) &&
+      ACE_OS::ace_isdigit (string [2]) &&
       string[3] == '@')
     {
       // @@ This may fail for non-ascii character sets [but take that
@@ -125,11 +123,11 @@ TAO_UIOP_Profile::parse_string_i (const char *string
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor  > TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
 
@@ -138,15 +136,15 @@ TAO_UIOP_Profile::parse_string_i (const char *string
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, this->object_key_delimiter_);
+  char *cp = std::strchr (start, this->object_key_delimiter_);
 
   if (cp == 0)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
       // No rendezvous point specified
     }
 
@@ -159,11 +157,11 @@ TAO_UIOP_Profile::parse_string_i (const char *string
 
   if (this->endpoint_.object_addr_.set (rendezvous.in ()) != 0)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   start = ++cp;  // increment past the object key separator
@@ -183,7 +181,7 @@ TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     dynamic_cast <const TAO_UIOP_Profile *> (other_profile);
 
   if (op == 0)
-    return 0;
+    return false;
 
   // Check endpoints equivalence.
   const TAO_UIOP_Endpoint *other_endp = &op->endpoint_;
@@ -194,15 +192,14 @@ TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::ULong
-TAO_UIOP_Profile::hash (CORBA::ULong max
-                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_UIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
@@ -241,7 +238,7 @@ TAO_UIOP_Profile::add_endpoint (TAO_UIOP_Endpoint *endp)
 
 
 char *
-TAO_UIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_UIOP_Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
@@ -275,7 +272,7 @@ TAO_UIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 const char *
-TAO_UIOP_Profile::prefix (void)
+TAO_UIOP_Profile::prefix ()
 {
   return ::prefix_;
 }
@@ -288,7 +285,7 @@ TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   // Get rendezvous_point
   if (cdr.read_string (rendezvous) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
+      TAOLIB_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
       return -1;
     }
 
@@ -302,7 +299,7 @@ TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       // exception.
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) UIOP_Profile::decode - ")
                       ACE_TEXT ("ACE_UNIX_Addr::set() failed\n")));
         }
@@ -332,9 +329,9 @@ TAO_UIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     encap << this->ref_object_key_->object_key ();
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "(%P|%t) TAO - UIOP_Profile::create_profile_body "
-                  "no object key marshalled \n"));
+                  "no object key marshalled\n"));
     }
 
   if (this->version_.major > 1
@@ -343,7 +340,7 @@ TAO_UIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_UIOP_Profile::encode_endpoints (void)
+TAO_UIOP_Profile::encode_endpoints ()
 {
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
@@ -367,8 +364,7 @@ TAO_UIOP_Profile::encode_endpoints (void)
 
   // Encode the data structure.
   TAO_OutputCDR out_cdr;
-  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-       == 0)
+  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
     return -1;
 
@@ -378,7 +374,7 @@ TAO_UIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_UIOP_Profile::decode_endpoints (void)
+TAO_UIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -434,7 +430,7 @@ TAO_UIOP_Profile::decode_endpoints (void)
               // exception.
               if (TAO_debug_level > 0)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) UIOP_Profile::decode_endpoints - ")
                               ACE_TEXT ("ACE_UNIX_Addr::set() failed\n")));
                 }
@@ -446,5 +442,7 @@ TAO_UIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_UIOP == 1 */

@@ -1,0 +1,9 @@
+// -*- MPC -*-
+project(TAO_ETCL) : anytypecode, ace_etcl, install, tao_output {
+  sharedname   = TAO_ETCL
+  dynamicflags += TAO_ETCL_BUILD_DLL
+
+  specific {
+    install_dir = tao/ETCL
+  }
+}

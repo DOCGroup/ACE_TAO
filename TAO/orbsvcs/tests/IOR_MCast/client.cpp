@@ -1,33 +1,24 @@
-// $Id$
-
 #include "ior_mcast_client_i.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
-
       ior_mcast_Client_i client;
 
-      int init_result;
-      init_result = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int status = client.init (argc, argv);
+      ACE_UNUSED_ARG (status);
 
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException&)
     {
-      //
+      // Ignore
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

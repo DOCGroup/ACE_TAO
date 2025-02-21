@@ -1,15 +1,12 @@
-// $Id$
-
 #include "Thread_Task.h"
 #include "ace/Atomic_Op.h"
-#include "ace/Lock_Adapter_T.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_index;
 
 RTScheduling::Current::IdType*
-Thread_Task::guids (void)
+Thread_Task::guids ()
 {
   return this->guid_;
 }
@@ -17,32 +14,18 @@ Thread_Task::guids (void)
 int
 Thread_Task::activate_task (CORBA::ORB_ptr orb)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      ACE_NEW_RETURN (shutdown_lock_,
-                      ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
-                      -1);
-
-      ACE_NEW_RETURN (lock_,
-                      ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
-                      -1);
-
       this->orb_ = CORBA::ORB::_duplicate (orb);
 
-      CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
-                                                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
 
-      this->current_ = RTScheduling::Current::_narrow (current_obj
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_ = RTScheduling::Current::_narrow (current_obj.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception:");
+      ex._tao_print_exception ("Exception:");
     }
-  ACE_ENDTRY;
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
   if (this->ACE_Task <ACE_SYNCH>::activate (flags,
@@ -58,14 +41,14 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
   return 0;
 }
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 int
-Thread_Task::svc (void)
+Thread_Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
@@ -74,36 +57,30 @@ Thread_Task::svc (void)
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Chamber of Secrets",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param);
 
       size_t count = 0;
+      RTScheduling::Current::IdType_var id = this->current_->id ();
       ACE_OS::memcpy (&count,
-                      current_->id ()->get_buffer (),
-                      current_->id ()->length ());
+                      id->get_buffer (),
+                      id->length ());
 
 
       this->current_->begin_scheduling_segment ("Potter",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param);
 
-      this->guid_[guid_index++] = *(this->current_->id ());
+      this->guid_[guid_index++] = id.in ();
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Harry",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param);
 
 
       {
-        ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
-        RTScheduling::Current::NameList* name_list = this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+        RTScheduling::Current::NameList_var name_list = this->current_->current_scheduling_segment_names ();
 
         ACE_DEBUG ((LM_DEBUG,
                     "Scheduling Segments for DT %d :\n",
@@ -112,37 +89,28 @@ Thread_Task::svc (void)
         for (unsigned int i = 0; i < name_list->length ();++i)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "Scheduling Segment Name - %s\n",
+                        "Scheduling Segment Name - %C\n",
                         (*name_list) [i].in ()));
           }
       }
 
-      ACE_OS::sleep (50);
+      ACE_OS::sleep (10);
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->end_scheduling_segment (name);
       //  End - Nested Scheduling Segment
 
 
-
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->end_scheduling_segment (name);
       //  End - Nested Scheduling Segment
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-
+      this->current_->end_scheduling_segment (name);
     }
-  ACE_CATCH (CORBA::THREAD_CANCELLED, thr_ex)
+  catch (const CORBA::THREAD_CANCELLED& )
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Distributable Thread Cancelled - Expected Exception\n"));
       {
-        ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
         --active_thread_count_;
         if (active_thread_count_ == 0)
           orb_->shutdown ();
@@ -150,11 +118,9 @@ Thread_Task::svc (void)
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
   return 0;
 }

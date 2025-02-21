@@ -4,8 +4,6 @@
 /**
  *  @file    Request_Dispatcher.h
  *
- *  $Id$
- *
  *  A class that strategizes the request dispatching procedure.
  *
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
@@ -18,15 +16,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/SystemException.h"
+#include "tao/Objref_VarOut_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Objref_VarOut_T.h"
+#include "tao/TAO_Export.h"
 #include "tao/Pseudo_VarOut_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_ServerRequest;
@@ -35,29 +34,29 @@ namespace CORBA
 {
   class Object;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+  typedef TAO_Pseudo_Out_T<Object> Object_out;
 }
 
 /**
  * @class TAO_Request_Dispatcher
  *
  * @brief A class that strategizes the request dispatching procedure.
- *
  */
 class TAO_Export TAO_Request_Dispatcher
 {
 public:
   /// Destructor.
-  virtual ~TAO_Request_Dispatcher (void);
+  virtual ~TAO_Request_Dispatcher ();
 
   /**
    * Dispatch a request.
    */
   virtual void dispatch (TAO_ORB_Core *orb_core,
                          TAO_ServerRequest &request,
-                         CORBA::Object_out forward_to
-                         ACE_ENV_ARG_DECL);
+                         CORBA::Object_out forward_to);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

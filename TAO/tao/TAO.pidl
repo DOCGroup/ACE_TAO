@@ -4,8 +4,6 @@
 /**
  *  @file TAO.pidl
  *
- *  $Id$
- *
  *  This file contains TAO-specific idl interfaces (not part of CORBA
  *  2.6).
  *
@@ -15,7 +13,7 @@
  *   this is:
  *
  *   tao_idl
- *       -o orig -Gp -Gd -Ge 1 -GA -SS -Sci
+ *       -o orig -Gp -Gd -GA -SS -Sci
  *       -Wb,export_macro=TAO_Export
  *       -Wb,pre_include="ace/pre.h"
  *       -Wb,post_include="ace/post.h"
@@ -28,45 +26,16 @@
 #ifndef TAO_TAO_IDL
 #define TAO_TAO_IDL
 
-#include "Policy.pidl"
-#include "TimeBase.pidl"
-#include "Messaging_SyncScope.pidl"
+#include "tao/Policy.pidl"
+#include "tao/TimeBase.pidl"
+#include "tao/Messaging_SyncScope.pidl"
 
 #pragma prefix "tao"
 
 module TAO
 {
-
-  //
-  // Buffering constraint.
-  //
-  typedef unsigned short BufferingConstraintMode;
-  const BufferingConstraintMode BUFFER_FLUSH         = 0x00;
-
-  // Note that timeout, message_count, and message_bytes can be or'd.
-  const BufferingConstraintMode BUFFER_TIMEOUT       = 0x01;
-  const BufferingConstraintMode BUFFER_MESSAGE_COUNT = 0x02;
-  const BufferingConstraintMode BUFFER_MESSAGE_BYTES = 0x04;
-
-  struct BufferingConstraint
-  {
-    BufferingConstraintMode mode;
-    TimeBase::TimeT timeout;
-    unsigned long message_count;
-    unsigned long message_bytes;
-  };
-
-  const CORBA::PolicyType BUFFERING_CONSTRAINT_POLICY_TYPE = 0x54410001;
-
-  local interface BufferingConstraintPolicy : CORBA::Policy
-    {
-      readonly attribute BufferingConstraint buffering_constraint;
-    };
-
   // = TAO specific.
-  const Messaging::SyncScope SYNC_EAGER_BUFFERING   = Messaging::SYNC_NONE;
   const Messaging::SyncScope SYNC_DELAYED_BUFFERING = -2;
-
 };
 
 #pragma prefix ""

@@ -4,8 +4,6 @@
 /**
  *  @file LF_Follower_Auto_Adder.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -23,6 +21,8 @@
 
 #include "tao/Leader_Follower.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @brief Implement an auto_adder-like class for the TAO_LF_Followers
  * allocated via a TAO_Leader_Follower set.
@@ -33,11 +33,10 @@ class TAO_Export TAO_LF_Follower_Auto_Adder
 {
 public:
   /// Constructor
-  TAO_LF_Follower_Auto_Adder (TAO_Leader_Follower &,
-                              TAO_LF_Follower *follower);
+  TAO_LF_Follower_Auto_Adder (TAO_Leader_Follower &, TAO_LF_Follower *follower);
 
   /// Destructor
-  ~TAO_LF_Follower_Auto_Adder (void);
+  ~TAO_LF_Follower_Auto_Adder ();
 
 private:
   /// Keep a reference to the leader follower
@@ -46,6 +45,8 @@ private:
   /// The follower
   TAO_LF_Follower *follower_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/LF_Follower_Auto_Adder.inl"

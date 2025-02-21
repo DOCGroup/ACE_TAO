@@ -1,0 +1,44 @@
+
+
+examples/NotifyService/SupplierSideNC/README
+
+This directory contains a simple example of using the Notification Service.
+
+This example extends the Messenger example in Filtering directory
+to illustrate how the Notification channel can be used to push messages
+from the supplier to the consumer. Furthermore, this example shows
+how you could set up filters so that only a certain events are
+passed to the consumer.
+
+This example uses the push/push model.
+
+In this example, the Notify Service initiation is incorporated into the
+MessengerServer.
+
+The MessengerSupplier in this example plays the role of a server for
+the MessengerClient and the role of a supplier for the MessengerConsumer.
+The flow of messages is shown below:
+
+MessengerClient->(MessengerSupplier->NotificationChannel)->MessengerConsumer.
+
+How to Run
+----------
+
+To start the Naming Service:
+----------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service &
+
+To start the supplier:
+------------------
+./MessengerServer
+
+To start the consumer
+---------------------
+./MessengerConsumer
+
+To start the client
+-------------------
+./MessengerClient
+To start the client:
+------------------
+./MessengerClient

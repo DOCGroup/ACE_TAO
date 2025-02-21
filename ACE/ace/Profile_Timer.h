@@ -1,0 +1,128 @@
+// -*- C++ -*-
+
+//==========================================================================
+/**
+ *  @file    Profile_Timer.h
+ *
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
+ */
+//==========================================================================
+
+
+#ifndef ACE_PROFILE_TIMER_H
+#define ACE_PROFILE_TIMER_H
+#include /**/ "ace/pre.h"
+
+#include /**/ "ace/config-all.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/High_Res_Timer.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class ACE_Profile_Timer
+ *
+ * @brief This class provides both a timing mechanism and a mechanism
+ * for reporting the resource usage of a process.
+ */
+class ACE_Export ACE_Profile_Timer
+{
+public:
+  /**
+   * @class ACE_Elapsed_Time
+   *
+   * @brief Keeps track of the various user, system, and elapsed (real)
+   * times.
+   */
+  class ACE_Elapsed_Time
+  {
+  public:
+    /// Elapsed wall clock time.
+    ACE_timer_t real_time;
+
+    /// CPU time spent in user space.
+    ACE_timer_t user_time;
+
+    /// CPU time spent in system space.
+    ACE_timer_t system_time;
+  };
+
+  typedef ACE_Rusage Rusage;
+
+  /// Default constructor. Clears all time values to 0.
+  ACE_Profile_Timer ();
+
+  /// Shutdown the timer.
+  ~ACE_Profile_Timer ();
+
+  // = Timer methods.
+  /// Activate the timer.
+  int start ();
+
+  /// Stop the timer.
+  int stop ();
+
+  // = Resource utilization methods.
+  /// Compute the time elapsed between calls to @c start() and @c stop().
+  int elapsed_time (ACE_Elapsed_Time &et);
+
+  /// Compute the amount of resource utilization between calls to @c start()
+  /// and @c stop().
+  void elapsed_rusage (ACE_Profile_Timer::Rusage &rusage);
+
+  /// Return the resource utilization (don't recompute it).
+  void get_rusage (ACE_Profile_Timer::Rusage &rusage);
+
+  /// Dump the state of an object.
+  void dump () const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
+private:
+  /// Compute how much time has elapsed.
+  void compute_times (ACE_Elapsed_Time &et);
+
+  /// Keep track of the starting resource utilization.
+  ACE_Profile_Timer::Rusage begin_usage_;
+
+  /// Keep track of the ending resource utilization.
+  ACE_Profile_Timer::Rusage end_usage_;
+
+  /// Keep track of the last rusage for incremental timing.
+  ACE_Profile_Timer::Rusage last_usage_;
+
+#if defined (ACE_HAS_GETRUSAGE)
+  /// Subtract two timestructs and store their difference.
+  void subtract (timeval &tdiff,
+                 timeval &t0,
+                 timeval &t1);
+
+  /// Keep track of the beginning time.
+  timeval begin_time_;
+
+  /// Keep track of the ending time.
+  timeval end_time_;
+
+  /// Keep track of the last time for incremental timing.
+  timeval last_time_;
+#endif /* ACE_HAS_GETRUSAGE */
+
+#if defined (ACE_WIN32) || !defined (ACE_HAS_GETRUSAGE)
+  /// The high resolution timer
+  ACE_High_Res_Timer timer_;
+#endif /* ACE_WIN32 || !ACE_HAS_GETRUSAGE */
+};
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+# include "ace/Profile_Timer.inl"
+#endif /* __ACE_INLINE__ */
+
+#include /**/ "ace/post.h"
+#endif /* ACE_PROFILE_TIMER_H */

@@ -2,11 +2,7 @@
 /**
  *  @file Application_Command.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_APPLICATION_COMMAND_H
@@ -28,13 +24,12 @@ class TAO_Notify_Tests_Application_Command;
  * @class TAO_Notify_Tests_Application_Command
  *
  * @brief Command to control the Application.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Application_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_Application_Command (void);
+  /// Constructor
+  TAO_Notify_Tests_Application_Command ();
 
   /// Destructor
   ~TAO_Notify_Tests_Application_Command ();
@@ -43,17 +38,13 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_i ();
 
   /// Get the command name.
-  virtual const char* get_name (void);
-  static const char* name (void);
+  virtual const char* get_name ();
+  static const char* name ();
 
 protected:
-#ifdef HPUX_11
-   // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h
-#undef COMMAND
-#endif
   enum COMMAND
   {
     INIT,
@@ -70,13 +61,13 @@ protected:
   int dump_samples_;
 
   ///= Handlers
-  virtual void handle_init (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_run (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_wait_for_completion (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_shutdown (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_dump_stats (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_signal_peer (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_wait_to_start (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void handle_init ();
+  void handle_run ();
+  void handle_wait_for_completion ();
+  void handle_shutdown ();
+  void handle_dump_stats ();
+  void handle_signal_peer ();
+  void handle_wait_to_start ();
 };
 
 #include /**/ "ace/post.h"

@@ -2,11 +2,7 @@
 /**
  *  @file EventChannelFactory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_EVENTCHANNELFACTORY_H
@@ -14,38 +10,43 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Topology_Object.h"
-#include "Topology_Factory.h"
-#include "Reconnection_Registry.h"
-#include "Routing_Slip.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+#include "orbsvcs/Notify/Topology_Factory.h"
+#include "orbsvcs/Notify/Reconnection_Registry.h"
+#include "orbsvcs/Notify/Routing_Slip.h"
+#include "orbsvcs/Notify/Validate_Client_Task.h"
+#include "orbsvcs/Notify/Name_Value_Pair.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/NotifyExtS.h"
+#include <memory>
 
-class TAO_Notify_EventChannel;
-template <class TYPE> class TAO_Notify_Container_T;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Notify_FilterFactory;
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_Notify_EventChannel;
+template <class TYPE> class TAO_Notify_Container_T;
+
 /**
  * @class TAO_Notify_EventChannelFactory
  *
  * @brief Implementation of CosNotifyChannelAdmin::EventChannelFactory
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
   : public virtual POA_NotifyExt::EventChannelFactory
   , public TAO_Notify::Topology_Parent
-
 {
   friend class TAO_Notify_Builder;
   typedef ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr> Routing_Slip_Set;
@@ -53,27 +54,29 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory > Ptr;
 
-  /// Constuctor
-  TAO_Notify_EventChannelFactory (void);
+  /// Constructor
+  TAO_Notify_EventChannelFactory ();
 
   /// Init the factory
-  void init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_ptr poa);
 
   /// Destructor
   virtual ~TAO_Notify_EventChannelFactory ();
 
   /// = ServantBase  Methods
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
-  /// Remove <channel> from the <ec_container_>
-  void remove (TAO_Notify_EventChannel* channel ACE_ENV_ARG_DECL);
+  /// Remove @a channel from the <ec_container_>
+  virtual void remove (TAO_Notify_EventChannel* channel);
 
-  /// Accesor for the default filter factory shared by all EC's.
-  virtual CosNotifyFilter::FilterFactory_ptr get_default_filter_factory (
-      ACE_ENV_SINGLE_ARG_DECL
-    );
-
+  /// This method is called by the Notify_Service when the event channel
+  /// is automatically created and bound in the name service.
+  virtual CosNotifyChannelAdmin::EventChannel_ptr create_named_channel (
+      const CosNotification::QoSProperties& initial_qos,
+      const CosNotification::AdminProperties& initial_admin,
+      CosNotifyChannelAdmin::ChannelID_out id,
+      const char* name);
 
   //////////////////////////
   // The following methods are for
@@ -82,7 +85,7 @@ public:
   /// Use the registered Topology_Factory to create a loader, and
   /// load the topology. If no Topology_Factory is registered
   /// then nothing will be loaded.
-  void load_topology (ACE_ENV_SINGLE_ARG_DECL);
+  void load_topology ();
 
   /// Use the passed in saver factory to generate topology saver objects.
   /// Does not take ownership.
@@ -92,82 +95,59 @@ public:
 
   virtual bool is_persistent () const;
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
-  virtual bool change_to_parent (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
+  virtual bool change_to_parent ();
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
-                                                   const TAO_Notify::NVPList& attrs
-                                                   ACE_ENV_ARG_DECL);
-  CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+                                                   const TAO_Notify::NVPList& attrs);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self ();
+  virtual void reconnect ();
+  virtual void validate ();
 
-  /// handle change notifications
-  bool handle_change (ACE_ENV_SINGLE_ARG_DECL);
+  /// at shutdown time, this causes the validator thread to exit.
+  void stop_validator ();
 
-  void load_event_persistence (ACE_ENV_SINGLE_ARG_DECL);
+  /// Handle change notifications
+  bool handle_change ();
 
-  virtual void save_topology (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void load_event_persistence ();
 
-  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
-  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
-  TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+  virtual void save_topology ();
+
+  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
+  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
+  TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position);
   virtual TAO_Notify_Object::ID get_id () const;
 
-
- private:
-
+private:
   /// = Data Members
 
-  /// The default filter factory.
-  CosNotifyFilter::FilterFactory_var default_filter_factory_;
-
   /// = NotifyExt methods
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void destroy ();
 
   /// shutdown
-  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown ();
 
   virtual
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
-      NotifyExt::ReconnectionCallback_ptr reconnection
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      NotifyExt::ReconnectionCallback_ptr reconnection);
 
   virtual void unregister_callback (
-      NotifyExt::ReconnectionRegistry::ReconnectionID id
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      NotifyExt::ReconnectionRegistry::ReconnectionID id);
 
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean is_alive ();
 
+protected:
   /// = CosNotifyChannelAdmin Methods
-
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
       const CosNotification::QoSProperties & initial_qos,
       const CosNotification::AdminProperties & initial_admin,
-      CosNotifyChannelAdmin::ChannelID_out id
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosNotification::UnsupportedQoS,
-                     CosNotification::UnsupportedAdmin));
+      CosNotifyChannelAdmin::ChannelID_out id);
 
-  virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels ();
 
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
-      CosNotifyChannelAdmin::ChannelID id
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosNotifyChannelAdmin::ChannelNotFound));
+      CosNotifyChannelAdmin::ChannelID id);
 
 private:
   typedef TAO_Notify_Container_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Container;
@@ -175,13 +155,13 @@ private:
   TAO_Notify_EventChannel_Container& ec_container();
 
   /// Container for Event Channels.
-  ACE_Auto_Ptr< TAO_Notify_EventChannel_Container > ec_container_;
+  std::unique_ptr< TAO_Notify_EventChannel_Container > ec_container_;
 
   TAO_SYNCH_MUTEX topology_save_lock_;
 
   CosNotifyChannelAdmin::EventChannelFactory_var channel_factory_;
 
-  /// change-in-progress detector to avoid duplicates
+  /// Change-in-progress detector to avoid duplicates
   short topology_save_seq_;
   TAO_Notify::Topology_Factory* topology_factory_;
   TAO_Notify::Reconnection_Registry reconnect_registry_;
@@ -190,9 +170,14 @@ private:
   Routing_Slip_Set routing_slip_restart_set_;
 
   /// Release this object.
-  virtual void release (void);
+  virtual void release ();
 
+  std::unique_ptr <TAO_Notify_validate_client_Task> validate_client_task_;
+
+  PortableServer::POA_var poa_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

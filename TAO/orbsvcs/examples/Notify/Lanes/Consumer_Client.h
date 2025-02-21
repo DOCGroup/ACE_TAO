@@ -2,11 +2,7 @@
 /**
  *  @file Consumer_Client.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_CONSUMER_CLIENT_H
@@ -27,32 +23,31 @@ class TAO_Notify_Lanes_Consumer;
  * @class TAO_Notify_Lanes_Consumer_Client
  *
  * @brief
- *
  */
 class TAO_Notify_Lanes_Consumer_Client  : public ACE_Task_Base
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Lanes_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Destructor
   ~TAO_Notify_Lanes_Consumer_Client ();
 
   /// Init
-  void initialize (ACE_ENV_SINGLE_ARG_DECL);
+  void initialize ();
 
   /// Run
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run ();
 
   /// Parse Args
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 protected:
   /// Create an RT POA with a single lane at the specified RT Priority.
-  PortableServer::POA_ptr create_rt_poa (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr create_rt_poa ();
 
   /// ORB Objects.
   TAO_Notify_ORB_Objects orb_objects_;

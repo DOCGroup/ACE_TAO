@@ -1,0 +1,46 @@
+
+
+This application demostrates explicit activation of Servant objects.
+
+The server program is available here. Use the Generic_Servant/client
+program to test this.
+
+________________________________________
+
+To test this example, type run_test.pl
+________________________________________
+
+Or
+________________________________________
+
+Run the server as follows:
+
+% ./server -f output
+
+This will produce three output files: output_1, output_2, and output_3
+
+Run the client as follows:
+
+% cd $TAO_ROOT/examples/POA/Generic_Servant
+% ./client -f ../Explicit_Activation/output_1
+% ./client -f ../Explicit_Activation/output_2
+% ./client -f ../Explicit_Activation/output_3
+________________________________________
+
+Or
+________________________________________
+
+Run the server as follows:
+
+% ./server -ORBobjrefstyle URL &
+
+Run the client as follows:
+
+% cd $TAO_ROOT/examples/POA/Generic_Servant
+% ./client -k <IOR>
+
+Comments :
+=========
+ - As soon as, the server prints out the IOR, cut it and use it for
+running the client.
+________________________________________

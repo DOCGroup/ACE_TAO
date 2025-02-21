@@ -1,21 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/MT_Client_Test
-//
-// = FILENAME
-//    local_server.cpp
-//
-// = DESCRIPTION
-//    This server will run the ORB briefly and then make
-//    several calls on the distant MT Object.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    local_server.cpp
+ *
+ *  This server will run the ORB briefly and then make
+ *  several calls on the distant MT Object.
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "local_server.h"
 #include "tao/debug.h"
@@ -24,11 +18,9 @@
 #include "ace/OS_NS_fcntl.h"
 #include "tao/Utils/ORB_Manager.h"
 
-ACE_RCSID(MT_Client_Test, local_server, "$Id$")
-
 MT_Server_Task::MT_Server_Task (ACE_Thread_Manager* thr_mgr_ptr,
                                 int argc,
-                                char **argv,
+                                ACE_TCHAR **argv,
                                 TAO_ORB_Manager* orb_manager_ptr)
    :ACE_Task<ACE_SYNCH> (thr_mgr_ptr),
     argc_ (argc),
@@ -38,7 +30,7 @@ MT_Server_Task::MT_Server_Task (ACE_Thread_Manager* thr_mgr_ptr,
 }
 
 int
-MT_Server_Task::svc (void)
+MT_Server_Task::svc ()
 {
   if (this->mT_Server_.init (this->argc_,
                              this->argv_,
@@ -59,14 +51,14 @@ MT_Server::MT_Server ()
 
 // Reads the MT Object IOR from a file
 int
-MT_Server::read_ior (char *filename)
+MT_Server::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename,0);
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for reading: %p\n",
+                       "Unable to open %s for reading\n",
                        filename),
                       -1);
 
@@ -83,11 +75,10 @@ MT_Server::read_ior (char *filename)
 }
 
 
-
 int
-MT_Server::parse_args (void)
+MT_Server::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "d:f:g:h:i:n:s:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("d:f:g:h:i:n:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -111,7 +102,7 @@ MT_Server::parse_args (void)
       case 'i':
       case 'n':
         break;
-      case 's': this->iterations_ = atoi (get_opts.opt_arg ());
+      case 's': this->iterations_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -135,7 +126,7 @@ MT_Server::parse_args (void)
 
 int
 MT_Server::init (int argc,
-                 char** argv,
+                 ACE_TCHAR** argv,
                  TAO_ORB_Manager* orb_manager_ptr)
 {
   this->argc_ = argc;
@@ -145,26 +136,21 @@ MT_Server::init (int argc,
                        "MT_Server::init: ORB_Manager is nil!\n"),
                        -1);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Call the init of TAO_ORB_Manager to create a child POA
       // under the root POA.
       this->orb_manager_ptr_->init_child_poa (argc,
                                               argv,
-                                              "child_poa"
-                                              ACE_ENV_ARG_PARAMETER);
+                                              "child_poa");
 
-      ACE_TRY_CHECK;
 
       this->parse_args ();
       // ~~ check for the return value here
 
       this->str_  =
         this->orb_manager_ptr_->activate_under_child_poa ("MT",
-                                                          &this->mT_Object_i_
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                          &this->mT_Object_i_);
 
 #if 0
       ACE_DEBUG ((LM_DEBUG,
@@ -189,18 +175,14 @@ MT_Server::init (int argc,
       CORBA::ORB_var orb_var = this->orb_manager_ptr_->orb ();
 
       CORBA::Object_var object_var =
-        orb_var->string_to_object (this->object_key_
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb_var->string_to_object (this->object_key_);
 
       if (CORBA::is_nil (object_var.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "No proper object has been returned.\n"),
                           -1);
 
-      this->mT_Object_var_ = MT_Object::_narrow (object_var.in()
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->mT_Object_var_ = MT_Object::_narrow (object_var.in());
 
       if (CORBA::is_nil (this->mT_Object_var_.in()))
         {
@@ -212,12 +194,11 @@ MT_Server::init (int argc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "We have a proper reference to the Object.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "MT_Client::init");
+      ex._tao_print_exception ("MT_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -225,78 +206,73 @@ MT_Server::init (int argc,
 int
 MT_Server::run ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int r = this->orb_manager_ptr_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int r = this->orb_manager_ptr_->run ();
 
       if (r == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "MT_Server::run"),
                           -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "MT_Server::run");
+      ex._tao_print_exception ("MT_Server::run");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
-MT_Server::~MT_Server (void)
+MT_Server::~MT_Server ()
 {
   if (this->object_key_ != 0)
     ACE_OS::free (this->object_key_);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (this->orb_manager_ptr_)
-        this->orb_manager_ptr_->deactivate_under_child_poa (this->str_.in ()
-                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_manager_ptr_->deactivate_under_child_poa (this->str_.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "MT_Client::~MT_Client");
+      ex._tao_print_exception ("MT_Client::~MT_Client");
     }
-  ACE_ENDTRY;
 }
 
 
 int
-MT_Server::run_ORB_briefly (void)
+MT_Server::run_ORB_briefly ()
 {
   if (this->iterations_ > 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) MT_Server::run: "
                       "going to call distant MT Object\n"));
 
+          PortableServer::POA_var root_poa =
+            this->orb_manager_ptr_->root_poa ();
+
           for (unsigned int i = 0; i < this->iterations_; i++)
             {
+              PortableServer::ObjectId_var id =
+                root_poa->activate_object (&mT_Object_i_);
+
+              CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
               MT_Object_var tmp =
-                this->mT_Object_i_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                MT_Object::_narrow (object_act.in ());
 
               this->mT_Object_var_->yadda (0,
-                                           tmp.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                           tmp.in ());
             }
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "MT_Server::run_ORB_briefly");
+          ex._tao_print_exception ("MT_Server::run_ORB_briefly");
           return -1;
         }
-      ACE_ENDTRY;
     }
   return 0;
 }

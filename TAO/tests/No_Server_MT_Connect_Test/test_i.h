@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_NO_SERVER_MT_CLIENT_TEST_I_H
 #define TAO_NO_SERVER_MT_CLIENT_TEST_I_H
 
@@ -18,11 +16,9 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void test_method ();
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

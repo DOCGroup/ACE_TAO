@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : orbsvcslib, naming, portableserver {
+  after     += CosNaming_Skel
+  libs      += TAO_CosNaming_Skel
+}

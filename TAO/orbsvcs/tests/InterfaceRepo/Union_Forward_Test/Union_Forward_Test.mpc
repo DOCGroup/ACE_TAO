@@ -1,0 +1,10 @@
+// -*- MPC -*-
+project(*Client): taoclient, dynamicinterface, dynamicany, anytypecode, ifr_client {
+
+  Source_Files {
+    client.cpp
+  }
+  IDL_Files {
+  }
+}
+

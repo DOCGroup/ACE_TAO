@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html>
   <head>
-    <!-- $Id$ -->
+    <!--  -->
     <title>Adding new IOR Parsers to TAO</title>
   </head>
 
@@ -70,7 +70,7 @@
 class HTTP_Parser : public TAO_IOR_Parser
 {
 public:
-  virtual int match_prefix (const char *ior_string) const;
+  virtual bool match_prefix (const char *ior_string) const;
   virtual CORBA::Object_ptr parse_string (const char *ior,
                                           CORBA::ORB_ptr orb,
                                           CORBA::Environment &)
@@ -93,7 +93,7 @@ public:
         prefixes that this parser supports.  Normally this is a single
         prefix, a typical implementation will look like this:
 <PRE>
-int
+bool
 HTTP_Parser::match_prefix (const char *ior_string) const
 {
   static char http_prefix[] = "http:";
@@ -112,9 +112,7 @@ HTTP_Parser::match_prefix (const char *ior_string) const
 <PRE>
 CORBA::Object_ptr
 HTTP_Parser::parse_string (const char *ior,
-                           CORBA::ORB_ptr orb,
-                           CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                           CORBA::ORB_ptr orb)
 {
   // Parse IOR as if it was an http:-URL
   ACE_URL_Addr *url_addr =
@@ -127,7 +125,7 @@ HTTP_Parser::parse_string (const char *ior,
   // contents in:
   char *document_contents = ...;
 
-  return orb->string_to_object (document_contents, ACE_TRY_ENV);
+  return orb->string_to_object (document_contents);
 }
 </PRE>
       </LI>
@@ -218,9 +216,5 @@ static Resource_Factory "-ORBIORPaser HTTP_Parser"
 
     <hr>
     <address><a href="mailto:coryan@uci.edu">Carlos O'Ryan</a></address>
-<!-- Created: Tue Feb 20 08:42:57 PST 2001 -->
-<!-- hhmts start -->
-Last modified: Tue Feb 20 16:32:13 PST 2001
-<!-- hhmts end -->
   </body>
 </html>

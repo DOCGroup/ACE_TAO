@@ -1,26 +1,24 @@
-#include "FT_ServerService_Activate.h"
-#include "FT_ServerORBInitializer.h"
+#include "orbsvcs/FaultTolerance/FT_ServerService_Activate.h"
+#include "orbsvcs/FaultTolerance/FT_ServerORBInitializer.h"
 #include "tao/ORB_Core.h"
 #include "tao/Service_Callbacks.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(FaultTolerance, FT_ServerService_Activate, "$Id$")
-
 static bool initialized = false;
 
-TAO_FT_ServerService_Activate::TAO_FT_ServerService_Activate (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_FT_ServerService_Activate::TAO_FT_ServerService_Activate ()
 {
 }
 
-TAO_FT_ServerService_Activate::~TAO_FT_ServerService_Activate (void)
+TAO_FT_ServerService_Activate::~TAO_FT_ServerService_Activate ()
 {
 }
-
-
 
 int
-TAO_FT_ServerService_Activate::Initializer (void)
+TAO_FT_ServerService_Activate::Initializer ()
 {
   if (initialized == false)
     {
@@ -43,6 +41,8 @@ TAO_FT_ServerService_Activate::Initializer (void)
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_FACTORY_DEFINE (TAO_FT_ServerORB,TAO_FT_ServerService_Activate)
 
 ACE_STATIC_SVC_DEFINE (TAO_FT_ServerService_Activate,
@@ -51,9 +51,3 @@ ACE_STATIC_SVC_DEFINE (TAO_FT_ServerService_Activate,
                        &ACE_SVC_NAME (TAO_FT_ServerService_Activate),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<TAO_FT_ServerService_Activate>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<TAO_FT_ServerService_Activate>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

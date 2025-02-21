@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -67,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_DEFINES_IDL_DEFINES_HH
 #define _IDL_DEFINES_IDL_DEFINES_HH
 
+#include "tao/idl_features.h"
+
 #include "ace/os_include/os_limits.h"
 
 /*
@@ -79,12 +79,39 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // HP-UX 64-bit warns that the result of '<<' is widened from an int to long.
 // They are assumed to be of type long within the tao_idl and IFR code.
 
-#define IDL_CF_VERSION          (long)(1 << 0)
 #define IDL_CF_DUMP_AST         (long)(1 << 1)
 #define IDL_CF_ONLY_PREPROC     (long)(1 << 2)
-#define IDL_CF_ONLY_USAGE       (long)(1 << 3)
 #define IDL_CF_INFORMATIVE      (long)(1 << 4)
 #define IDL_CF_NOWARNINGS       (long)(1 << 5)
+
+/**
+ * IDL_CF_ONLY_USAGE is deprecated but remains for backwards compatibility.
+ * It's direct successor is print_help (), but this was being used as part of
+ * an indicator of a argument being invalid. Convention is that cli programs
+ * only say that the argument(s) are wrong, not to print out the whole
+ * help/usage message, so instead this call should be used:
+ *   idl_global->parse_args_exit (1);
+ *
+ * When this is called, the argument parser should state the mistake and exit
+ * the parsing early. Afterwards tao_idl will print how to see the help and
+ * exit with an error status.
+ */
+#define IDL_CF_ONLY_USAGE       (long)(1 << 3)
+
+/**
+ * This signals that tao_idl has void idl_global->parse_args_exit (int status).
+ * Use something like this to have backends use the new behavior with tao_idl
+ * newer than 2.5.1 but still remain backwards compatible with older versions
+ * of tao_idl:
+ *   #ifdef TAO_IDL_HAS_PARSE_ARGS_EXIT
+ *   #define PARSE_ARGS_ERROR idl_global->parse_args_exit (1);
+ *   #else
+ *   #define PARSE_ARGS_ERROR \
+ *      idl_global->set_compile_flags ( \
+ *        idl_global->compile_flags () | IDL_CF_ONLY_USAGE);
+ *   #endif
+ */
+#define TAO_IDL_HAS_PARSE_ARGS_EXIT
 
 #define NAMEBUFSIZE 1024
 // Maximum length of static buffers used to store names.
@@ -92,7 +119,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define SUN_IDL_FE_VERSION "1.3.0"
 
 #if !defined (NFILES)
-# define NFILES 1024
+# define NFILES 2048
 #endif /* ! NFILES */
 
 #endif  // _IDL_DEFINES_IDL_DEFINES_HH

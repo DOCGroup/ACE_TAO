@@ -1,15 +1,10 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "FTEC_SupplierAdmin.h"
-#include "FTEC_ProxyConsumer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
 #include "tao/Stub.h"
 
-ACE_RCSID (EventChannel,
-           TAO_FTEC_SupplierAdmin,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const FtRtecEventChannelAdmin::OperationType
 TAO_FTEC_SupplierAdmin::OBTAIN_ID = FtRtecEventChannelAdmin::OBTAIN_PUSH_CONSUMER;
@@ -26,26 +21,20 @@ TAO_FTEC_SupplierAdmin::~TAO_FTEC_SupplierAdmin()
 
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_FTEC_SupplierAdmin::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_FTEC_SupplierAdmin::obtain_push_consumer ()
 {
-  return obtain_proxy(ACE_ENV_SINGLE_ARG_PARAMETER);
+  return obtain_proxy();
 }
 
 void
 TAO_FTEC_SupplierAdmin::disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr obj)
 {
-  ACE_TRY_NEW_ENV {
-    obj->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+  try{
+    obj->disconnect_push_consumer();
   }
-  ACE_CATCHALL
+  catch (...)
   {
   }
-  ACE_ENDTRY;
 }
 
-
-
-
-
+TAO_END_VERSIONED_NAMESPACE_DECL

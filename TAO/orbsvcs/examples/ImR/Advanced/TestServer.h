@@ -1,7 +1,6 @@
-//$Id$
 #include "Messenger_i.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "tao/IORTable/IORTable.h"
 
@@ -11,14 +10,14 @@
 class TestServer
 {
 public:
-  TestServer(CORBA::ORB_ptr, int argc, char* argv[]);
+  TestServer (CORBA::ORB_ptr, int argc, ACE_TCHAR *argv[]);
 
   ~TestServer();
 
   void run();
 
 private:
-  int parseCommands(int argc, char* argv[]);
+  int parseCommands (int argc, ACE_TCHAR *argv[]);
   bool verifyEnvironment() const;
   bool registerWithManager();
   void buildObjects();
@@ -29,7 +28,7 @@ private:
   bool  useIORTable_;
   bool  writeIORFile_;
   bool  retryQuery_;
-  char  pauseType_;
+  ACE_TCHAR  pauseType_;
   int   startupPause_;
   int   objActivatePause_;
   int   activatePause_;
@@ -38,10 +37,12 @@ private:
   int   numObjsPerPOA_;
   int   useItLoseItSecs_;
 
+  std::string managerIor_;
+  std::string outputIor_;
   std::string baseDir_;
   std::string expectedDir_;
   std::vector<std::pair<std::string, std::string> > expectedEnv_;
-  ACE_Auto_Ptr<Messenger_i>  servant_;
+  PortableServer::Servant_var<Messenger_i> servant_;
 
   CORBA::ORB_var                  orb_;
   IORTable::Table_var             iorTable_;

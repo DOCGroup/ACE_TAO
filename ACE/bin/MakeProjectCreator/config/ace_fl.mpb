@@ -1,0 +1,16 @@
+// -*- MPC -*-
+project : ace_x11, ace_gl {
+  requires += fl
+
+  // Depends on configuration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+    CPPFLAGS += $(PLATFORM_FL_CPPFLAGS)
+    CPPFLAGS += $(PLATFORM_GL_CPPFLAGS) $(PLATFORM_X11_CPPFLAGS)
+    LIBS += $(PLATFORM_FL_LIBS) $(PLATFORM_GL_LIBS) $(PLATFORM_X11_LIBS)
+    LDFLAGS += $(PLATFORM_FL_LDFLAGS) $(PLATFORM_GL_LDFLAGS)
+    LDFLAGS += $(PLATFORM_X11_LDFLAGS)
+  }
+  specific(prop:microsoft) {
+     libs += fltkdll
+  }
+}

@@ -1,0 +1,23 @@
+/* -*- C++ -*- */
+#if !defined (_ECHO_IDL)
+#define _ECHO_IDL
+
+// Defines an interface that encapsulates operations that return the
+// mesg string to be displayed and shuts down the server.
+interface Echo
+{
+  typedef sequence<Object> List;
+
+  // This operation returns the message as a sequence of Objects and
+  // displays it on the screen as a string.
+  List echo_list (in string message);
+
+  // This operation returns the message as a string and displays it on
+  // the screen.
+  string echo_string (in string message);
+
+  // This operation will shutdown the server.
+  oneway void shutdown ();
+};
+
+#endif /* _ECHO_IDL */

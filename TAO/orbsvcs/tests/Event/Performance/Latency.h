@@ -1,18 +1,12 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel testsuite
-//
-// = FILENAME
-//   Latency
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Latency.h
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef EC_LATENCY_H
 #define EC_LATENCY_H
@@ -25,7 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Sample_History;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /// Simple consumer, receives events and record roundtrip delays.
 class EC_Latency_Consumer : public POA_RtecEventComm::PushConsumer
@@ -37,13 +33,10 @@ public:
                        int message_count);
 
   /// Return 1 when all the messages have been received
-  int done (void);
+  int done ();
 
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
 
 private:
   /// Roundtrip delays are recorded here
@@ -62,10 +55,9 @@ class EC_Latency_Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
   /// Constructor
-  EC_Latency_Supplier (void);
+  EC_Latency_Supplier ();
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
 };
 
 // ****************************************************************
@@ -79,10 +71,10 @@ public:
         int iterations);
 
   /// Return 1 when all the messages have been sent
-  int done (void);
+  int done ();
 
   /// Run the experiment
-  int svc (void);
+  int svc ();
 
 private:
   /// The consumer

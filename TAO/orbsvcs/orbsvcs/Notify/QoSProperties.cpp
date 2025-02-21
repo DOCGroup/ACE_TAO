@@ -1,30 +1,28 @@
-// $Id$
-
-#include "QoSProperties.h"
+#include "orbsvcs/Notify/QoSProperties.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "QoSProperties.inl"
+#include "orbsvcs/Notify/QoSProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_QoSProperties, "$Id$")
+#include "orbsvcs/Notify/Property.h"
+#include "orbsvcs/Notify/Notify_Extensions.h"
 
-#include "Property.h"
-#include "Notify_Extensions.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_QoSProperties::TAO_Notify_QoSProperties (void)
-: event_reliability_(CosNotification::EventReliability)
-, connection_reliability_(CosNotification::ConnectionReliability)
-, priority_ (CosNotification::Priority)
-, timeout_ (CosNotification::Timeout)
-, stop_time_supported_ (CosNotification::StopTimeSupported)
-, maximum_batch_size_ (CosNotification::MaximumBatchSize)
-, pacing_interval_ (CosNotification::PacingInterval)
-, max_events_per_consumer_ (CosNotification::MaxEventsPerConsumer)
-, discard_policy_ (CosNotification::DiscardPolicy)
-, order_policy_ (CosNotification::OrderPolicy)
-, thread_pool_ (NotifyExt::ThreadPool)
-, thread_pool_lane_ (NotifyExt::ThreadPoolLanes)
-, blocking_policy_(TAO_Notify_Extensions::BlockingPolicy)
+TAO_Notify_QoSProperties::TAO_Notify_QoSProperties ()
+  : event_reliability_(CosNotification::EventReliability)
+  , connection_reliability_(CosNotification::ConnectionReliability)
+  , priority_ (CosNotification::Priority)
+  , timeout_ (CosNotification::Timeout)
+  , stop_time_supported_ (CosNotification::StopTimeSupported)
+  , maximum_batch_size_ (CosNotification::MaximumBatchSize)
+  , pacing_interval_ (CosNotification::PacingInterval)
+  , max_events_per_consumer_ (CosNotification::MaxEventsPerConsumer)
+  , discard_policy_ (CosNotification::DiscardPolicy)
+  , order_policy_ (CosNotification::OrderPolicy)
+  , thread_pool_ (NotifyExt::ThreadPool)
+  , thread_pool_lane_ (NotifyExt::ThreadPoolLanes)
+  , blocking_policy_(TAO_Notify_Extensions::BlockingPolicy)
 {
   unsupported_[0] = CosNotification::StartTimeSupported;
 }
@@ -160,13 +158,13 @@ TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, Co
         this->stop_time_supported_.set (*this);
         this->maximum_batch_size_.set (*this);
         this->pacing_interval_.set (*this);
-    this->max_events_per_consumer_.set (*this);
-    this->discard_policy_.set (*this);
-    this->order_policy_.set (*this);
+        this->max_events_per_consumer_.set (*this);
+        this->discard_policy_.set (*this);
+        this->order_policy_.set (*this);
 
         this->thread_pool_.set (*this);
         this->thread_pool_lane_.set (*this);
-    this->blocking_policy_.set (*this);
+        this->blocking_policy_.set (*this);
   }
 
   return err_index == -1 ? 0 : 1;
@@ -213,30 +211,4 @@ TAO_Notify_QoSProperties::transfer (TAO_Notify_QoSProperties& qos_properties)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_PropertyBase_T<CORBA::Long>;
-template class TAO_Notify_PropertyBase_T<CORBA::Short>;
-template class TAO_Notify_PropertyBase_T<TimeBase::TimeT>;
-
-template class TAO_Notify_Property_T<CORBA::Long>;
-template class TAO_Notify_Property_T<CORBA::Short>;
-template class TAO_Notify_Property_T<TimeBase::TimeT>;
-
-template class TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams>;
-template class TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_PropertyBase_T<CORBA::Long>
-#pragma instantiate TAO_Notify_PropertyBase_T<CORBA::Short>
-#pragma instantiate TAO_Notify_PropertyBase_T<TimeBase::TimeT>
-
-#pragma instantiate TAO_Notify_Property_T<CORBA::Long>
-#pragma instantiate TAO_Notify_Property_T<CORBA::Short>
-#pragma instantiate TAO_Notify_Property_T<TimeBase::TimeT>
-
-#pragma instantiate TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams>
-#pragma instantiate TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,35 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults, anytypecode {
+  IDL_Files {
+    publisher.idl
+    subscriber.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, messaging, threads {
+  after += *idl
+  Source_Files {
+    publisherC.cpp
+    publisherS.cpp
+    subscriberC.cpp
+    publisher_impl.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver, threads {
+  exename = client
+  after += *idl
+  Source_Files {
+    subscriberC.cpp
+    subscriberS.cpp
+    publisherC.cpp
+    subscriber_impl.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

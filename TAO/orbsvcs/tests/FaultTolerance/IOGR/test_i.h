@@ -1,44 +1,38 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/orbsvcs/tests/FaultTolerance/IOGR
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Bala Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  @author Bala Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_FT_IOGR_TEST_I_H
 #define TAO_FT_IOGR_TEST_I_H
 
 #include "testS.h"
 
+/**
+ * @class Simple_Server_i
+ *
+ * @brief Simpler Server implementation
+ *
+ * Implements the Simple_Server interface in test.idl
+ */
 class Simple_Server_i : public POA_Simple_Server
 {
-  // = TITLE
-  //   Simpler Server implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //
 public:
+  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb);
-  // ctor
 
-  Simple_Server_i (void);
-  // ctor
+  /// ctor
+  Simple_Server_i ();
 
   // = The Simple_Server methods.
-  void remote_call (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void remote_call ();
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

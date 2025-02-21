@@ -1,9 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file     Bind_Dispatcher_Guard.h
- *
- *  $Id$
  *
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  *  @author  Chad Elliott <elliott_c@ociweb.com>
@@ -16,7 +15,9 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Basic_Types.h"
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
@@ -28,13 +29,13 @@ public:
                              TAO_Reply_Dispatcher* rd,
                              TAO_Transport_Mux_Strategy* tms);
 
-  ~TAO_Bind_Dispatcher_Guard (void);
+  ~TAO_Bind_Dispatcher_Guard ();
 
-  /// Returns 0 if succesful and non-zero otherwise.
-  int unbind_dispatcher (void);
+  /// Returns 0 if successful and non-zero otherwise.
+  int unbind_dispatcher ();
 
   /// State information
-  enum
+  enum TAO_Bind_Dispatcher_Status
     {
       /// Unbind the dispatcher
       UNBIND = 0,
@@ -43,20 +44,21 @@ public:
     };
 
   /// Get status
-  int status (void) const;
+  TAO_Bind_Dispatcher_Status status () const;
 
   /// Set status
-  void status (int status);
+  void status (TAO_Bind_Dispatcher_Status status);
 
 private:
-  int                         status_;
+  TAO_Bind_Dispatcher_Status  status_;
   CORBA::ULong                request_id_;
-  TAO_Reply_Dispatcher*       rd_;
   TAO_Transport_Mux_Strategy* tms_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "tao/Bind_Dispatcher_Guard.i"
+# include "tao/Bind_Dispatcher_Guard.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,28 +1,20 @@
-// $Id$
 //---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
 #include "ace/ace.h"
 #include "tao/corba.h"
 #include "ChatClientWnd.h"
-USERES("ChatClient.res");
 USEFORM("ChatClientWnd.cpp", ChatClientWindow);
-USEUNIT("BroadcasterC.cpp");
-USEUNIT("BroadcasterS.cpp");
-USEUNIT("ReceiverC.cpp");
-USEUNIT("ReceiverS.cpp");
-USEUNIT("ReceiverImpl.cpp");
-USEUNIT("ORBThread.cpp");
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-void ace_init(void)
+void ace_init()
 {
   ACE::init();
 }
 #pragma startup ace_init
 
-void ace_fini(void)
+void ace_fini()
 {
   ACE::fini();
 }
@@ -35,13 +27,13 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
       Application->Initialize ();
       Application->Title = "CORBA Chat Client";
       Application->CreateForm(__classid(TChatClientWindow), &ChatClientWindow);
-       Application->Run ();
+      Application->Run ();
     }
   catch (Exception &exception)
     {
       Application->ShowException (&exception);
     }
-  catch (CORBA::Exception &exception)
+  catch (const CORBA::Exception &exception)
     {
       ShowMessage (String ("CORBA exception: ") + exception._rep_id ());
     }

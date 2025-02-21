@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CLIENT_LEAKS_PROCESS_FACTORY_H
 #define CLIENT_LEAKS_PROCESS_FACTORY_H
@@ -17,20 +14,17 @@ public:
   Process_Factory (CORBA::ORB_ptr orb);
 
   /// Return 1 if the shutdown message has been received already
-  int shutdown_received (void);
+  int shutdown_received ();
 
   // = The skeleton methods
-  virtual Test::Process_ptr create_new_process (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed));
+  virtual Test::Process_ptr create_new_process ();
 
-  virtual void noop (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void noop ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 

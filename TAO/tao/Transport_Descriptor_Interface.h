@@ -4,8 +4,6 @@
 /**
  *  @file   Transport_Descriptor_Interface.h
  *
- *  $Id$
- *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
@@ -15,13 +13,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Endpoint;
 
@@ -46,32 +46,39 @@ class TAO_Export TAO_Transport_Descriptor_Interface
 {
 public:
   /// Destructor
-  virtual ~TAO_Transport_Descriptor_Interface (void);
+  virtual ~TAO_Transport_Descriptor_Interface ();
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-  virtual  TAO_Transport_Descriptor_Interface *duplicate (void) = 0;
+  virtual  TAO_Transport_Descriptor_Interface *duplicate () = 0;
 
   /// Try to determine if this object is same as the @a other_prop.
   virtual CORBA::Boolean is_equivalent (
       const TAO_Transport_Descriptor_Interface *other_prop) = 0;
 
   /// Generate hash value for our class
-  virtual u_long hash (void) const = 0;
+  virtual u_long hash () const = 0;
 
   /// Return the underlying endpoint object
-  TAO_Endpoint *endpoint (void);
+  TAO_Endpoint *endpoint ();
+
+  /// Reset the endpoint pointer to point to another, if that one is
+  /// part of the chain based by the current endpoint. Although this
+  /// method is public it should only be used by the protocol specific
+  /// connector, right before caching, and only when a parallel
+  /// connect was attempted with more than one possible endpoints.
+  CORBA::Boolean reset_endpoint (TAO_Endpoint *ep);
 
   /// Set the BiDir flag
   void set_bidir_flag (CORBA::Boolean flag);
 
 protected:
   /// Default Constructor
-  TAO_Transport_Descriptor_Interface (void);
+  TAO_Transport_Descriptor_Interface ();
 
   /// Constructor
   TAO_Transport_Descriptor_Interface (TAO_Endpoint *endpoint,
-                                      CORBA::Boolean flag = 0);
+                                      CORBA::Boolean take_ownership = false);
 
   /// The base property of the connection ie. the peer's endpoint
   TAO_Endpoint *endpoint_;
@@ -81,8 +88,10 @@ protected:
 
   /// Is the endpoint allocated on the heap? If so, we will have to
   /// delete it when we destruct ourselves.
-  CORBA::Boolean endpoint_from_heap_;
+  CORBA::Boolean release_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Transport_Descriptor_Interface.inl"

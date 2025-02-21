@@ -4,8 +4,6 @@
 /**
  *  @file    DII_Invocation_Adapter.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -21,17 +19,26 @@
 
 
 #include "tao/Invocation_Adapter.h"
+#include "tao/Asynch_Reply_Dispatcher_Base.h"
+#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
+#include "ace/Auto_Functor.h"
 
+#if defined (TAO_HAS_AMI)
+#include "tao/Messaging/Messaging.h"
+#endif /* TAO_HAS_AMI */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Operation_Details;
 class TAO_Stub;
-class ACE_Time_Value;
 class TAO_ORB_Core;
-class TAO_DII_Deferred_Reply_Dispatcher;
 namespace  CORBA
 {
   class Object;
-  class Environment;
-  class SystemException;
   class ExceptionList;
   class Request;
 }
@@ -51,7 +58,7 @@ namespace TAO
     public Invocation_Adapter
   {
   public:
-    /// The only constructor used by the IDL compiler and onlly way to
+    /// The only constructor used by the IDL compiler and only way to
     /// create this adapter.
     /**
      *
@@ -67,15 +74,9 @@ namespace TAO
      *
      * @param operation The name of the operation being invoked.
      *
-     * @param ope_len Number of charecters in the operation name. This
+     * @param op_len Number of characters in the operation name. This
      * is an optimization which helps us to avoid calling strlen ()
      * while creating a message format.
-     *
-     * @param cpb The collocation proxy broker for the target if one
-     * exists.
-     *
-     * @param type The operation type which could be a oneway or two
-     * way operation. this information is availbe in the IDL file.
      *
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
@@ -84,42 +85,49 @@ namespace TAO
                             Argument **args,
                             int arg_number,
                             const char *operation,
-                            int op_len,
+                            size_t op_len,
                             CORBA::ExceptionList *exception,
                             CORBA::Request *r,
-                            Invocation_Mode m = TAO_DII_INVOCATION);
+                            Invocation_Mode mode = TAO_DII_INVOCATION);
 
+    virtual ~DII_Invocation_Adapter ();
 
-    virtual ~DII_Invocation_Adapter (void) {}
+    /// Invoke the target
+    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
 
   protected:
-
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+        ACE_Time_Value *&max_wait_time,
+        Invocation_Retry_State *retry_state = 0);
+
+    virtual Invocation_Status invoke_collocated_i (
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
+        CORBA::Object_var &effective_target,
+        Collocation_Strategy strat);
 
   private:
-
     CORBA::ExceptionList *exception_list_;
 
     CORBA::Request *request_;
+
+    TAO::Exception_Data *ex_data_;
   private:
-
-    /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (DII_Invocation_Adapter (void))
-
-    ACE_UNIMPLEMENTED_FUNC (
-        DII_Invocation_Adapter & operator= (const DII_Invocation_Adapter &))
+    DII_Invocation_Adapter () = delete;
+    DII_Invocation_Adapter (const DII_Invocation_Adapter &) = delete;
+    DII_Invocation_Adapter & operator= (const DII_Invocation_Adapter &) = delete;
   };
 
   /**
+   * @class  DII_Deferred_Invocation_Adapter
    *
+   * @brief This class is for deferred DII invocation.
    */
   class TAO_DynamicInterface_Export DII_Deferred_Invocation_Adapter
-    : protected Invocation_Adapter
+    : public Invocation_Adapter
   {
   public:
     DII_Deferred_Invocation_Adapter (
@@ -127,37 +135,69 @@ namespace TAO
         Argument **args,
         int arg_number,
         const char *operation,
-        int op_len,
-        Collocation_Proxy_Broker *b,
+        size_t op_len,
+        int collocation_opportunity,
         TAO_ORB_Core *oc,
         CORBA::Request *req,
         TAO::Invocation_Mode mode = TAO_DII_DEFERRED_INVOCATION);
 
     /// Invoke the target
-    virtual void invoke (TAO::Exception_Data *ex,
-                         unsigned long ex_count
-                         ACE_ENV_ARG_DECL);
-
+    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
 
   protected:
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+        ACE_Time_Value *&max_wait_time,
+        Invocation_Retry_State *retry_state = 0);
+
+    virtual Invocation_Status invoke_collocated_i (
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
+        CORBA::Object_var &effective_target,
+        Collocation_Strategy strat);
 
   private:
     CORBA::Request *request_;
 
     /// Reply dispatcher for the current Invocation.
-    TAO_DII_Deferred_Reply_Dispatcher *rd_;
+    /// Use special autopointer like holder to prevent leaking memory from
+    /// the reply dispatcher that we create.
+    ACE_Utils::Auto_Functor <TAO_DII_Deferred_Reply_Dispatcher,
+                             ARDB_Refcount_Functor> rd_;
 
     /// Cache the orb_core
-    TAO_ORB_Core *orb_core_;
+    TAO_ORB_Core * const orb_core_;
+  };
+
+  /**
+   * @class  DII_Oneway_Invocation_Adapter
+   *
+   * @brief This class is for oneway DII invocation.
+   */
+  class TAO_DynamicInterface_Export DII_Oneway_Invocation_Adapter
+    : public Invocation_Adapter
+  {
+  public:
+    DII_Oneway_Invocation_Adapter (
+       CORBA::Object *target,
+       Argument **args,
+       int arg_number,
+       const char *operation,
+       int op_len,
+       TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
+
+  protected:
+    virtual Invocation_Status invoke_collocated_i (
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
+        CORBA::Object_var &effective_target,
+        Collocation_Strategy strat);
   };
 } // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_INVOCATION_ADAPTER_H*/

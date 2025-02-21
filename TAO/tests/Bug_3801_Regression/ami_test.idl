@@ -1,0 +1,40 @@
+
+//=============================================================================
+/**
+ *  @file    ami_test.idl
+ *
+ *  IDL description of the AMI Test interface
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
+
+
+module A
+  {
+    exception DidTheRightThing {
+      long id;
+      string whatDidTheRightThing;
+    };
+    exception DidTheRightThingB {
+      long id;
+      string whatDidTheRightThing;
+    };
+
+    interface AMI_Test
+      {
+        attribute long yadda
+          getraises (DidTheRightThingB)
+          setraises (DidTheRightThing);
+
+        readonly attribute long dadda
+          raises (DidTheRightThing);
+
+        oneway void shutdown ();
+
+        void inout_arg_test (inout string str);
+      };
+  };

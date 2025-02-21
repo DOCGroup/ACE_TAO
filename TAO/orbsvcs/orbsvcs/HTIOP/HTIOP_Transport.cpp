@@ -1,12 +1,11 @@
-// $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/HTIOP/HTIOP_Transport.h"
 
-#include "HTIOP_Transport.h"
-
-#include "HTIOP_Connection_Handler.h"
-#include "HTIOP_Acceptor.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Session.h"
-
 
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
@@ -15,69 +14,43 @@
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Sync_Strategies.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
 
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Transport,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
-                                          TAO_ORB_Core *orb_core,
-                                          CORBA::Boolean flag)
+                                  TAO_ORB_Core *orb_core)
   : TAO_Transport (OCI_TAG_HTIOP_PROFILE, orb_core),
-    connection_handler_ (h),
-    messaging_object_ (0)
+    connection_handler_ (h)
 {
-  if (flag)
-    {
-      // Use the lite version of the protocol
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core));
-    }
-  else
-    {
-      // Use the normal GIOP object
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core));
-    }
 }
 
-TAO::HTIOP::Transport::~Transport (void)
+TAO::HTIOP::Transport::~Transport ()
 {
-  delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
-TAO::HTIOP::Transport::event_handler_i (void)
+TAO::HTIOP::Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO::HTIOP::Transport::connection_handler_i (void)
+TAO::HTIOP::Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
 
-TAO_Pluggable_Messaging *
-TAO::HTIOP::Transport::messaging_object (void)
-{
-  return this->messaging_object_;
-}
-
 ssize_t
 TAO::HTIOP::Transport::send (iovec *iov, int iovcnt,
-                           size_t &bytes_transferred,
-                           const ACE_Time_Value *max_wait_time)
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *max_wait_time)
 {
-  ACE_UNUSED_ARG (max_wait_time);
   ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
                                                              max_wait_time);
   if (retval > 0)
@@ -103,8 +76,7 @@ TAO::HTIOP::Transport::recv (char *buf,
       TAO_debug_level > 4 &&
       errno != ETIME)
     {
-
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::recv_i, ")
                   ACE_TEXT ("read failure - %m"),
                   this->id ()));
@@ -133,11 +105,11 @@ TAO::HTIOP::Transport::recv (char *buf,
 }
 
 int
-TAO::HTIOP::Transport::register_handler (void)
+TAO::HTIOP::Transport::register_handler ()
 {
   if (TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::register_handler\n"),
                   this->id ()));
     }
@@ -162,21 +134,25 @@ TAO::HTIOP::Transport::register_handler (void)
 
 int
 TAO::HTIOP::Transport::send_request (TAO_Stub *stub,
-                                   TAO_ORB_Core *orb_core,
-                                   TAO_OutputCDR &stream,
-                                   int message_semantics,
-                                   ACE_Time_Value *max_wait_time)
+                                     TAO_ORB_Core *orb_core,
+                                     TAO_OutputCDR &stream,
+                                     TAO_Message_Semantics message_semantics,
+                                     ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
-
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->send_message (stream,
                           stub,
+                          0,
                           message_semantics,
                           max_wait_time) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->first_request_sent();
 
@@ -185,13 +161,16 @@ TAO::HTIOP::Transport::send_request (TAO_Stub *stub,
 
 int
 TAO::HTIOP::Transport::send_message (TAO_OutputCDR &stream,
-                                   TAO_Stub *stub,
-                                   int message_semantics,
-                                   ACE_Time_Value *max_wait_time)
+                                     TAO_Stub *stub,
+                                     TAO_ServerRequest *request,
+                                     TAO_Message_Semantics message_semantics,
+                                     ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object_->format_message (stream) != 0)
-    return -1;
+  if (this->messaging_object ()->format_message (stream, stub, request) != 0)
+    {
+      return -1;
+    }
 
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = this->send_message_shared (stub,
@@ -206,76 +185,16 @@ TAO::HTIOP::Transport::send_message (TAO_OutputCDR &stream,
       // would return -1 with errno set to ENOENT. %p then would dump
       // a core. %m would then be softer on this.
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::send_message, ")
-                    ACE_TEXT (" write failure - %m\n"),
-                    this->id ()));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::send_message, ")
+                      ACE_TEXT (" write failure - %m\n"),
+                      this->id ()));
+        }
+
       return -1;
     }
 
-  return 1;
-}
-
-int
-TAO::HTIOP::Transport::send_message_shared (TAO_Stub *stub,
-                                          int message_semantics,
-                                          const ACE_Message_Block *message_block,
-                                          ACE_Time_Value *max_wait_time)
-{
-  int r;
-  {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
-    r = this->send_message_shared_i (stub, message_semantics,
-                                     message_block, max_wait_time);
-  }
-
-  if (r == -1)
-    {
-      this->close_connection ();
-    }
-
-  return r;
-}
-
-int
-TAO::HTIOP::Transport::generate_request_header (TAO_Operation_Details &opdetails,
-                                              TAO_Target_Specification &spec,
-                                              TAO_OutputCDR &msg)
-{
-  // Check whether we have a Bi Dir HTIOP policy set, whether the
-  // messaging objects are ready to handle bidirectional connections
-  // and also make sure that we have not recd. or sent any information
-  // regarding this before...
-  if (this->orb_core ()->bidir_giop_policy () &&
-      this->messaging_object_->is_ready_for_bidirectional (msg) &&
-      this->bidirectional_flag () < 0)
-    {
-      this->set_bidir_context_info (opdetails);
-
-      // Set the flag to 1  (i.e., originating side)
-      this->bidirectional_flag (1);
-
-      // At the moment we enable BiDIR giop we have to get a new
-      // request id to make sure that we follow the even/odd rule
-      // for request id's. We only need to do this when enabled
-      // it, after that the Transport Mux Strategy will make sure
-      // that the rule is followed
-      opdetails.request_id (this->tms ()->request_id ());
-    }
-
-  return TAO_Transport::generate_request_header (opdetails,
-                                                 spec,
-                                                 msg);
-}
-
-
-int
-TAO::HTIOP::Transport::messaging_init (CORBA::Octet major,
-                                     CORBA::Octet minor)
-{
-  this->messaging_object_->init (major,
-                                 minor);
   return 1;
 }
 
@@ -290,19 +209,12 @@ TAO::HTIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 
   ::HTIOP::ListenPointList listen_list;
   if ((cdr >> listen_list) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"tear_listen_point_list: no list\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"tear_listen_point_list: no list\n"),-1);
   //return -1;
 
   // As we have received a bidirectional information, set the flag to
   // 1 (i.e., non-originating side)
   this->bidirectional_flag (0);
-
-  // Just make sure that the connection handler is sane before we go
-  // head and do anything with it.
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->handler_lock_,
-                    -1);
 
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
@@ -310,8 +222,6 @@ TAO::HTIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 void
 TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 {
-  ACE_UNUSED_ARG (opdetails);
-
   // Get a handle to the acceptor registry
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
@@ -326,14 +236,14 @@ TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
        acceptor++)
     {
       // Check whether it is a HTIOP acceptor
-      if ((*acceptor)->tag () == OCI_TAG_HTIOP_PROFILE)
+      if ((*acceptor)->tag () == this->tag ())
         {
           if (this->get_listen_point (listen_point_list,
                                       *acceptor) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - TAO::HTIOP::Transport::set_bidir_info, "),
-                          ACE_TEXT("error getting listen_point \n")));
+                          ACE_TEXT("error getting listen_point\n")));
 
               return;
             }
@@ -345,20 +255,19 @@ TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_OutputCDR cdr;
 
   // Marshall the information into the stream
-  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-      || (cdr << listen_point_list) == 0)
+  if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+      || !(cdr << listen_point_list))
     return;
 
   // Add this info in to the svc_list
-  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
-                                                    cdr);
+  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
 
   return;
 }
 
 int
 TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
-                                       TAO_Acceptor *acceptor)
+                                         TAO_Acceptor *acceptor)
 {
   TAO::HTIOP::Acceptor *htiop_acceptor =
     dynamic_cast<TAO::HTIOP::Acceptor *> (acceptor );
@@ -384,7 +293,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
     if (this->connection_handler_->peer ().get_local_addr (local_addr)
         == -1)
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) Could not resolve local ")
                            ACE_TEXT ("host address in ")
                            ACE_TEXT ("get_listen_point()\n")),
@@ -394,7 +303,6 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
 
   if (local_addr.get_port_number() != 0)
     {
-
       // Note: Looks like there is no point in sending the list of
       // endpoints on interfaces on which this connection has not
       // been established. If this is wrong, please correct me.
@@ -405,9 +313,9 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
                                     local_addr,
                                     local_interface.out ()) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) Could not resolve local host")
-                             ACE_TEXT (" name \n")),
+                             ACE_TEXT (" name\n")),
                             -1);
         }
 
@@ -415,8 +323,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
            index != count;
            index++)
         {
-          if (local_addr.get_ip_address()
-              == endpoint_addr[index].get_ip_address())
+          if (local_addr.is_ip_equal (endpoint_addr[index]))
             {
               // Get the count of the number of elements
               CORBA::ULong len = lp_list.length ();
@@ -446,14 +353,11 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
 
 
 TAO_Connection_Handler *
-TAO::HTIOP::Transport::invalidate_event_handler_i (void)
+TAO::HTIOP::Transport::invalidate_event_handler_i ()
 {
   TAO_Connection_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
   return eh;
 }
 
-
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class HTIOP_Export ACE_Svc_Handler<ACE_HTBP_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+TAO_END_VERSIONED_NAMESPACE_DECL

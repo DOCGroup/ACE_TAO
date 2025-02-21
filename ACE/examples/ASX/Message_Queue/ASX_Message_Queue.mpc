@@ -1,0 +1,23 @@
+// -*- MPC -*-
+project(*Bounded_Buffer) : aceexe {
+  exename = bounded_buffer
+  Source_Files {
+    bounded_buffer.cpp
+  }
+}
+
+project(*Buffer_Stream) : aceexe {
+  avoids += uses_wchar
+  exename = buffer_stream
+  Source_Files {
+    buffer_stream.cpp
+  }
+}
+
+project(*Priority_Buffer) : aceexe {
+  exename = priority_buffer
+  Source_Files {
+    priority_buffer.cpp
+  }
+}
+

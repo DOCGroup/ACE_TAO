@@ -1,40 +1,23 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    component_fwd_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Component_Fwd node in the client header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    component_fwd_ch.cpp
+ *
+ *  Visitor generating code for Component_Fwd node in the client header.
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_component_fwd, 
-           component_fwd_ch, 
-           "$Id$")
-
-// ********************************************************************
-// Visitor implementation for the Component_Fwd type
-// This one for the client header file
-// ********************************************************************
+#include "component_fwd.h"
 
 be_visitor_component_fwd_ch::be_visitor_component_fwd_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_component_fwd_ch::~be_visitor_component_fwd_ch (void)
+be_visitor_component_fwd_ch::~be_visitor_component_fwd_ch ()
 {
 }
 

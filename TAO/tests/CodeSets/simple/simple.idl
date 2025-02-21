@@ -1,5 +1,3 @@
-// $Id$
-
 interface simple
 {
   string op1  (in string name,
@@ -7,4 +5,10 @@ interface simple
                out any outany);
 
   wstring op2 (in wstring s1);
+
+  /// A method to shutdown the ORB
+  /**
+    * This method is used to simplify the test shutdown process
+    */
+  oneway void shutdown ();
 };

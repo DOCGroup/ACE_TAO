@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -70,23 +68,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "utl_err.h"
 
-ACE_RCSID (ast, 
-           ast_check, 
-           "$Id$")
+#include "utl_scope.h"
 
 // Static storage for remembering nodes.
-static AST_Type	**ast_fwds = 0;
-static long	ast_n_fwds_used = 0;
-static long	ast_n_fwds_alloc = 0;
+static AST_Type  **ast_fwds = nullptr;
+static long  ast_n_fwds_used = 0;
+static long  ast_n_fwds_alloc = 0;
 
-#undef	INCREMENT
-#define	INCREMENT	64
+#undef  INCREMENT
+#define  INCREMENT  64
 
 // Store a node representing a forward declared struct or union.
 void
 AST_record_fwd_decl (AST_Type *n)
 {
-  AST_Type **o_ast_fwds = 0;
+  AST_Type **o_ast_fwds = nullptr;
   long o_ast_n_fwds_alloc = 0;
 
   // Make sure there's space to store one more.
@@ -122,9 +118,9 @@ AST_record_fwd_decl (AST_Type *n)
 
 // Check that all forward declared structs and unions were also defined.
 TAO_IDL_FE_Export void
-AST_check_fwd_decls (void)
+AST_check_fwd_decls ()
 {
-  AST_Type *d = 0;
+  AST_Type *d = nullptr;
 
   for (long i = 0; i < ast_n_fwds_used; ++i)
     {
@@ -132,7 +128,27 @@ AST_check_fwd_decls (void)
 
       if (!d->is_defined ())
         {
-          idl_global->err ()->fwd_decl_not_defined (d);
+          // The member pd_full_definition is no longer set for
+          // every fwd decl, if there is more than one. So if
+          // is_defined() fails, we try to look up the fwd decl
+          // that has the full def, and emit an error only if
+          // this lookup fails.
+          AST_Decl *f =
+            d->defined_in ()->lookup_by_name_local (d->local_name (),
+                                                    true);
+
+          if (f == nullptr)
+            {
+              idl_global->err ()->fwd_decl_not_defined (d);
+            }
         }
     }
+
+  // This method is called once per file in the command line,
+  // in between which the elements of ast_fwds are destroyed,
+  // so we have to clean up.
+  delete [] ast_fwds;
+  ast_fwds = nullptr;
+  ast_n_fwds_alloc = 0;
+  ast_n_fwds_used = 0;
 }

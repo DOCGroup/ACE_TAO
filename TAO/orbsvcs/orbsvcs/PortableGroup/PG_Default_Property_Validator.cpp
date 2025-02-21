@@ -1,13 +1,9 @@
-#include "PG_Default_Property_Validator.h"
-#include "PG_Operators.h"
+#include "orbsvcs/PortableGroup/PG_Default_Property_Validator.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (PortableGroup,
-           PG_Default_Property_Validator,
-           "$Id$")
-
-
-TAO_PG_Default_Property_Validator::TAO_PG_Default_Property_Validator (void)
+TAO_PG_Default_Property_Validator::TAO_PG_Default_Property_Validator ()
   : membership_ (1),
     factories_ (1)
 {
@@ -18,17 +14,9 @@ TAO_PG_Default_Property_Validator::TAO_PG_Default_Property_Validator (void)
   this->factories_[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
 }
 
-TAO_PG_Default_Property_Validator::~TAO_PG_Default_Property_Validator (void)
-{
-}
-
 void
 TAO_PG_Default_Property_Validator::validate_property (
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
+    const PortableGroup::Properties & props)
 {
   const CORBA::ULong len = props.length ();
 
@@ -42,22 +30,21 @@ TAO_PG_Default_Property_Validator::validate_property (
           if (!(property.val >>= membership)
               || (membership != PortableGroup::MEMB_APP_CTRL
                   && membership != PortableGroup::MEMB_INF_CTRL))
-            ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                       property.val));
+            throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
       else if (property.nam == this->factories_)
         {
           const PortableGroup::FactoriesValue * factories;
           if (!(property.val >>= factories))
-            ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                       property.val));
+            throw PortableGroup::InvalidProperty (property.nam, property.val);
           else
             {
               const CORBA::ULong flen = factories->length ();
 
               if (flen == 0)
-                ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                           property.val));
+                throw PortableGroup::InvalidProperty (
+                  property.nam,
+                  property.val);
 
               for (CORBA::ULong j = 0; j < flen; ++j)
                 {
@@ -66,8 +53,9 @@ TAO_PG_Default_Property_Validator::validate_property (
 
                   if (CORBA::is_nil (factory_info.the_factory.in ())
                       || factory_info.the_location.length () == 0)
-                    ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                               property.val));
+                    throw PortableGroup::InvalidProperty (
+                      property.nam,
+                      property.val);
                 }
             }
         }
@@ -76,11 +64,7 @@ TAO_PG_Default_Property_Validator::validate_property (
 
 void
 TAO_PG_Default_Property_Validator::validate_criteria (
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::CannotMeetCriteria))
+    const PortableGroup::Properties & props)
 {
   const CORBA::ULong len = props.length ();
   PortableGroup::Criteria invalid_criteria;
@@ -106,7 +90,7 @@ TAO_PG_Default_Property_Validator::validate_criteria (
         }
       else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue * factories;
+          const PortableGroup::FactoriesValue * factories = 0;
           if (!(property.val >>= factories))
             invalid_criteria[p++] = property;
           else
@@ -142,6 +126,8 @@ TAO_PG_Default_Property_Validator::validate_criteria (
       // deallocations should occur.
       invalid_criteria.length (p);
 
-      ACE_THROW (PortableGroup::InvalidCriteria (invalid_criteria));
+      throw PortableGroup::InvalidCriteria (invalid_criteria);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

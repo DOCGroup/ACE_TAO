@@ -1,33 +1,31 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ComponentRepository_i.h
-//
-// = DESCRIPTION
-//    ComponentRepository servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbiltl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    ComponentRepository_i.h
+ *
+ *  ComponentRepository servant class.
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbiltl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_COMPONENTREPOSITORY_I_H
 #define TAO_COMPONENTREPOSITORY_I_H
 
-#include "Repository_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ComponentContainer_i.h"
+#include "orbsvcs/IFRService/ComponentContainer_i.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ModuleDef_i;
 class TAO_ComponentDef_i;
@@ -46,49 +44,37 @@ class TAO_UsesDef_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * Provides global access to the Interface Repository,
+ * including access to information related to
+ * CORBA Components.
+ */
 class TAO_IFRService_Export TAO_ComponentRepository_i
   : public virtual TAO_Repository_i,
     public virtual TAO_ComponentContainer_i
 {
-  // = TITLE
-  //    TAO_ComponentRepository_i
-  //
-  // = DESCRIPTION
-  //    Provides global access to the Interface Repository,
-  //    including access to information related to
-  //    CORBA Components.
-  //
 public:
+  /// Constructor.
   TAO_ComponentRepository_i (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa,
                              ACE_Configuration *config);
-  // Constructor.
 
-  virtual ~TAO_ComponentRepository_i (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~TAO_ComponentRepository_i ();
 
-  virtual int create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL);
-  // We create a default servant servant for each IR Object
-  // type and its corresponding POA.
+  /// We create a default servant servant for each IR Object
+  /// type and its corresponding POA.
+  virtual int create_servants_and_poas ();
 
-  virtual TAO_IDLType_i *select_idltype (
-      CORBA::DefinitionKind def_kind
-    ) const;
-  virtual TAO_Container_i *select_container (
-      CORBA::DefinitionKind def_kind
-    ) const;
-  virtual TAO_Contained_i *select_contained (
-      CORBA::DefinitionKind def_kind
-    ) const;
-  // Return one of our servants for internal use.
+  /// Return one of our servants for internal use.
+  virtual TAO_IDLType_i *select_idltype (CORBA::DefinitionKind def_kind) const;
+  virtual TAO_Container_i *select_container (CORBA::DefinitionKind def_kind) const;
+  virtual TAO_Contained_i *select_contained (CORBA::DefinitionKind def_kind) const;
 
-  virtual PortableServer::POA_ptr select_poa (
-      CORBA::DefinitionKind def_kind
-    ) const;
-  // Select the right POA for object creation.
+  /// Select the right POA for object creation.
+  virtual PortableServer::POA_ptr select_poa (CORBA::DefinitionKind def_kind) const;
 
 protected:
-
 #ifdef CONCRETE_IR_OBJECT_TYPES
 #undef CONCRETE_IR_OBJECT_TYPES
 #endif
@@ -115,6 +101,8 @@ protected:
 #undef GEN_IR_OBJECT
   // Servants for each IR Object type, created at startup.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

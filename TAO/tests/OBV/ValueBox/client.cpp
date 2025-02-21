@@ -1,19 +1,12 @@
-// $Id$
-
 #include "valueboxC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(ValueBox,
-          client,
-          "$Id$")
-
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -32,12 +25,12 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 
-#define VERIFY(Condition) \
+#define OBV_VERITY(Condition) \
 { \
     if ((Condition)==0) \
     { \
@@ -62,36 +55,36 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
                     1);
 
     // should be a deep copy of val1...
-    VERIFY ( &valuebox_clone->_boxed_inout () != &valuebox->_boxed_inout () );
+    OBV_VERITY (&valuebox_clone->_boxed_inout () != &valuebox->_boxed_inout ());
 
     // but values should be equal
-    VERIFY ( valuebox_clone->_value () == valuebox->_value () );
+    OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), valuebox->_value ()));
 
     // Check that modifier is working.
-    valuebox_clone->_value ( val2 );
-    VERIFY ( valuebox_clone->_value () != valuebox->_value () );
+    valuebox_clone->_value (val2);
+    OBV_VERITY (!ACE::is_equal (valuebox_clone->_value (), valuebox->_value ()));
 
     // use operator=
     *valuebox = val2;
-    VERIFY ( valuebox_clone->_value () == valuebox->_value () );
+    OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), valuebox->_value ()));
 
     // Check that _value and _boxed_in are the same.
-    VERIFY ( valuebox_clone->_value () == valuebox_clone->_boxed_in () );
-    VERIFY ( valuebox->_value () == valuebox->_boxed_in () );
+    OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), valuebox_clone->_boxed_in ()));
+    OBV_VERITY (ACE::is_equal (valuebox->_value (), valuebox->_boxed_in ()));
 
     // Used _boxed_inout to change the value
-    VERIFY ( valuebox->_value () != val1 );
+    OBV_VERITY (!ACE::is_equal (valuebox->_value (), val1));
     valuebox->_boxed_inout () = val1;
-    VERIFY ( valuebox->_value () == val1 );
+    OBV_VERITY (ACE::is_equal (valuebox->_value (), val1));
 
     // Use _boxed_out to access the value
-    VERIFY ( valuebox_clone->_value () != val1 );
+    OBV_VERITY (!ACE::is_equal (valuebox_clone->_value (), val1));
     valuebox_clone->_boxed_out () = val1;
-    VERIFY ( valuebox_clone->_value () == val1 );
+    OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), val1));
 
     // Test _copy_value
     CORBA::ValueBase *copy = valuebox->_copy_value ();
-    VERIFY ( copy != 0 );
+    OBV_VERITY (copy != 0);
     // check add_ref, remove_ref
     copy->_add_ref ();
     copy->_remove_ref ();
@@ -105,10 +98,10 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
       }
     else
       {
-        VERIFY ( down->_value () == val1 );
-        down->_value ( val2 );
-        VERIFY ( down->_value () != valuebox->_value () );
-         VERIFY ( down->_value () == val2 );
+        OBV_VERITY (ACE::is_equal (down->_value (), val1));
+        down->_value (val2);
+        OBV_VERITY (!ACE::is_equal (down->_value (), valuebox->_value ()));
+        OBV_VERITY (ACE::is_equal (down->_value (), val2));
       }
 
     CORBA::remove_ref (copy);
@@ -132,7 +125,6 @@ int simple_box_test ()
     CORBA::remove_ref (p);
 
     return fail;
-
 }
 
 //
@@ -148,20 +140,20 @@ int box_test_ref (BoxT *valuebox, UT &val1, UT &val2)
                     1);
 
     // should be a deep copy of val1...
-    VERIFY ( &p->_boxed_inout () != &valuebox->_boxed_inout () );
+    OBV_VERITY (&p->_boxed_inout () != &valuebox->_boxed_inout ());
 
-    p->_value ( val2 ); // deep copy
-    VERIFY ( &p->_boxed_inout () != &valuebox->_boxed_inout () );
+    p->_value (val2); // deep copy
+    OBV_VERITY (&p->_boxed_inout () != &valuebox->_boxed_inout () );
 
     *valuebox = val2;      // deep copy, too.
-    VERIFY ( &p->_boxed_inout () != &valuebox->_boxed_inout () );
+    OBV_VERITY (&p->_boxed_inout () != &valuebox->_boxed_inout () );
 
     CORBA::remove_ref (p);
 
     return fail;
 }
 
-int test_basic (void)
+int test_basic ()
 {
     int fail = 0;
 
@@ -270,60 +262,58 @@ int test_basic_invocations (Test * test_object)
 {
     int fail = 0;
 
-    ACE_TRY_NEW_ENV
-      {
+    VBlong *p1 = 0;
+    VBlong *p2 = 0;
+    VBlong *p3;
 
+    vb_basic::M_VBlong *mp1 = 0;
+    vb_basic::M_VBlong *mp2 = 0;
+    vb_basic::M_VBlong *mp3;
+
+    try
+      {
         //============================================================
         // Test method invocation with boxed value
         //============================================================
 
-        VBlong *p1 = 0;
         ACE_NEW_RETURN (p1,
                         VBlong(25),
                         1);
-        VBlong *p2 = 0;
         ACE_NEW_RETURN (p2,
                         VBlong(53),
                         1);
-        VBlong *p3;
 
-        VERIFY (p1->_value () == 25);
-        VERIFY (p2->_value () == 53);
+        OBV_VERITY (p1->_value () == 25);
+        OBV_VERITY (p2->_value () == 53);
 
         VBlong_var result =
           test_object->basic_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
-        VERIFY (p2->_value () == (53*3));
-        VERIFY (p3->_value () == (53*5));
-        VERIFY (result->_value () == (p1->_value () *3));
+        OBV_VERITY (p2->_value () == (53*3));
+        OBV_VERITY (p3->_value () == (53*5));
+        OBV_VERITY (result->_value () == (p1->_value () *3));
 
         //============================================================
         // Test method invocation with boxed value from nested module
         //============================================================
 
-        vb_basic::M_VBlong *mp1 = 0;
         ACE_NEW_RETURN (mp1,
                         vb_basic::M_VBlong(25),
                         1);
 
-        vb_basic::M_VBlong *mp2 = 0;
         ACE_NEW_RETURN (mp2,
                         vb_basic::M_VBlong(53),
                         1);
 
-        vb_basic::M_VBlong *mp3;
-
-        VERIFY (mp1->_value () == 25);
-        VERIFY (mp2->_value () == 53);
+        OBV_VERITY (mp1->_value () == 25);
+        OBV_VERITY (mp2->_value () == 53);
 
         vb_basic::M_VBlong_var mresult =
           test_object->basic_op2(mp1, mp2, mp3);
-        ACE_TRY_CHECK;
 
-        VERIFY (mp2->_value () == (53*3));
-        VERIFY (mp3->_value () == (53*5));
-        VERIFY (mresult->_value () == (mp1->_value () *3));
+        OBV_VERITY (mp2->_value () == (53*3));
+        OBV_VERITY (mp3->_value () == (53*5));
+        OBV_VERITY (mresult->_value () == (mp1->_value () *3));
 
         //============================================================
         // Test _boxed_in(), _boxed_inout(), and _boxed_out())
@@ -335,32 +325,29 @@ int test_basic_invocations (Test * test_object)
         long lresult =
           test_object->basic_op3(p1->_boxed_in(), p2->_boxed_inout(),
                                  p3->_boxed_out());
-        ACE_TRY_CHECK;
 
-        VERIFY (p2->_value () == (93*3));
-        VERIFY (p3->_value () == (93*5));
-        VERIFY (lresult == (p1->_value()*3));
-
-        p1->_remove_ref ();
-        p2->_remove_ref ();
-        p3->_remove_ref ();
-
-        mp1->_remove_ref ();
-        mp2->_remove_ref ();
-        mp3->_remove_ref ();
+        OBV_VERITY (p2->_value () == (93*3));
+        OBV_VERITY (p3->_value () == (93*5));
+        OBV_VERITY (lresult == (p1->_value()*3));
       }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_basic_invocations");
+      ex._tao_print_exception ("test_basic_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) test_basic_invocations: caught a C++ exception \n"));
+                "(%P|%t) test_basic_invocations: caught a C++ exception\n"));
       fail = 1;
     }
-  ACE_ENDTRY;
+  if (p1) p1->_remove_ref ();
+  if (p2) p2->_remove_ref ();
+  if (p3) p3->_remove_ref ();
+
+  if (mp1) mp1->_remove_ref ();
+  if (mp2) mp2->_remove_ref ();
+  if (mp3) mp3->_remove_ref ();
 
   return fail;
 }
@@ -373,9 +360,9 @@ int test_boxed_string()
   const char *string2 = "Second-string";
 
   // Establish that we have data setup correctly...
-  VERIFY (strcmp (string1, string2) <  0);
-  VERIFY (strcmp (string2, string1) >  0);
-  VERIFY (strcmp (string1, string1) == 0);
+  OBV_VERITY (ACE_OS::strcmp (string1, string2) <  0);
+  OBV_VERITY (ACE_OS::strcmp (string2, string1) >  0);
+  OBV_VERITY (ACE_OS::strcmp (string1, string1) == 0);
 
   // Make some objects, using our data
   VBstring *temp = 0;
@@ -389,39 +376,39 @@ int test_boxed_string()
                   VBstring(string1), // tests const char * ctor.
                   1);
 
-  VERIFY (strcmp (vbstring1->_value(), string1) == 0);
-  VERIFY (strcmp (vbstring2->_value(), string1) == 0);
+  OBV_VERITY (ACE_OS::strcmp (vbstring1->_value(), string1) == 0);
+  OBV_VERITY (ACE_OS::strcmp (vbstring2->_value(), string1) == 0);
 
   // Test assignment operators
   char *carray1 = 0;
   ACE_NEW_RETURN (carray1,
                   char[15],
                   1);
-  memcpy(carray1, string2, strlen(string2));
+  ACE_OS::memcpy(carray1, string2, ACE_OS::strlen(string2));
   *vbstring2 = carray1;              // char * (adopted by box)
-  VERIFY ((*vbstring2)[0] == 'S');
+  OBV_VERITY ((*vbstring2)[0] == 'S');
   *vbstring2 = string1;
-  VERIFY ((*vbstring2)[0] == 'F');
+  OBV_VERITY ((*vbstring2)[0] == 'F');
   CORBA::String_var svar(string2);
   *vbstring2 = svar;
-  VERIFY ((*vbstring2)[0] == 'S');
+  OBV_VERITY ((*vbstring2)[0] == 'S');
 
   // Test _value modifiers--like assignment drill above.
   char *carray2 = 0;
   ACE_NEW_RETURN (carray2,
                   char[15],
                   1);
-  memcpy(carray2, string1, strlen(string1));
+  ACE_OS::memcpy(carray2, string1, ACE_OS::strlen(string1));
   vbstring2->_value(carray2);        // char * (adopted by box)
-  VERIFY ((*vbstring2)[0] == 'F');
+  OBV_VERITY ((*vbstring2)[0] == 'F');
   vbstring2->_value(string2);       // const char *
-  VERIFY ((*vbstring2)[0] == 'S');
+  OBV_VERITY ((*vbstring2)[0] == 'S');
   (*vbstring2)[0] = 'Y';
-  VERIFY ((*vbstring2)[0] != 'S');
+  OBV_VERITY ((*vbstring2)[0] != 'S');
   vbstring2->_value(svar);
-  VERIFY ((*vbstring2)[0] == 'S');
+  OBV_VERITY ((*vbstring2)[0] == 'S');
   // test value accessor
-  VERIFY ( (vbstring2->_value())[0] == 'S' );
+  OBV_VERITY ((vbstring2->_value())[0] == 'S');
 
   //
   // Test ctors.
@@ -430,9 +417,9 @@ int test_boxed_string()
   ACE_NEW_RETURN (vbstring3,
                   VBstring(*vbstring2),
                   1);
-  VERIFY ((*vbstring3)[0] == 'S');
+  OBV_VERITY ((*vbstring3)[0] == 'S');
   (*vbstring3)[0] = 'W';
-  VERIFY ((*vbstring3)[0] == 'W' && (*vbstring2)[0] == 'S');
+  OBV_VERITY ((*vbstring3)[0] == 'W' && (*vbstring2)[0] == 'S');
   vbstring3->_remove_ref ();
 
   //
@@ -441,12 +428,12 @@ int test_boxed_string()
   ACE_NEW_RETURN (carray3,
                   char[15],
                   1);
-  memcpy(carray3, string1, strlen(string1));
+  ACE_OS::memcpy(carray3, string1, ACE_OS::strlen(string1));
   VBstring *vbstring4 = 0;
   ACE_NEW_RETURN (vbstring4,
                   VBstring(carray3),
                   1);
-  VERIFY ((*vbstring4)[0] == 'F');
+  OBV_VERITY ((*vbstring4)[0] == 'F');
   vbstring4->_remove_ref ();
 
   //
@@ -455,9 +442,9 @@ int test_boxed_string()
   ACE_NEW_RETURN (vbstring5,
                   VBstring(svar),
                   1);
-  VERIFY ((*vbstring5)[0] == 'S');
+  OBV_VERITY ((*vbstring5)[0] == 'S');
   (*vbstring5)[0] = 'W';
-  VERIFY ((*vbstring5)[0] == 'W' && (svar.in())[0] == 'S');
+  OBV_VERITY ((*vbstring5)[0] == 'W' && (svar.in())[0] == 'S');
   vbstring5->_remove_ref ();
 
   // release, as usual
@@ -470,32 +457,31 @@ int test_boxed_string_invocations (Test * test_object)
 {
     int fail = 0;
 
-    ACE_TRY_NEW_ENV
-      {
+    VBstring *p1 = 0;
+    VBstring *p2 = 0;
+    VBstring *p3 = 0;
 
+    try
+      {
         //============================================================
         // Test method invocation with boxed value
         //============================================================
 
-        VBstring *p1 = 0;
         ACE_NEW_RETURN (p1,
                         VBstring(CORBA::string_dup ("string1")),
                         1);
-        VBstring *p2 = 0;
         ACE_NEW_RETURN (p2,
                         VBstring(CORBA::string_dup ("string2")),
                         1);
-        VBstring *p3 = 0;
 
-        VERIFY (strcmp(p1->_value (), "string1") == 0);
-        VERIFY (strcmp(p2->_value (), "string2") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p1->_value (), "string1") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p2->_value (), "string2") == 0);
 
         VBstring_var result = test_object->string_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
-        VERIFY (strcmp(p2->_value (), "2string") == 0);
-        VERIFY (strcmp(p3->_value (), "2string") == 0);
-        VERIFY (strcmp(result->_value (), "1string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p2->_value (), "2string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p3->_value (), "2string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(result->_value (), "1string") == 0);
 
         //============================================================
         // Test _boxed_in(), _boxed_inout(), and _boxed_out())
@@ -506,30 +492,26 @@ int test_boxed_string_invocations (Test * test_object)
         CORBA::String_var sresult =
           test_object->string_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                   p3->_boxed_out());
-        ACE_TRY_CHECK;
 
-        VERIFY (strcmp(p2->_value (), "2second string") == 0);
-        VERIFY (strcmp(p3->_value (), "2second string") == 0);
-        VERIFY (strcmp(sresult.in (), "1string") == 0);
-
-        p1->_remove_ref ();
-        p2->_remove_ref ();
-        p3->_remove_ref ();
-
+        OBV_VERITY (ACE_OS::strcmp(p2->_value (), "2second string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p3->_value (), "2second string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(sresult.in (), "1string") == 0);
       }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_string_invocations");
+      ex._tao_print_exception ("test_boxed_string_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_string_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
-  ACE_ENDTRY;
+  if (p1) p1->_remove_ref ();
+  if (p2) p2->_remove_ref ();
+  if (p3) p3->_remove_ref ();
 
   return fail;
 }
@@ -537,171 +519,176 @@ int test_boxed_string_invocations (Test * test_object)
 //
 // Test boxed sequence types.
 //
-int test_boxed_sequence (void)
+int test_boxed_sequence ()
 {
   int fail = 0;
-  VBseqlong     *vbseqlong1 = 0;
-  ACE_NEW_RETURN (vbseqlong1,
-                  VBseqlong (),
-                  1);
-
-  VBseqlong     *temp;
-  ACE_NEW_RETURN (temp,
-                  VBseqlong (),
-                  1);
-
-  VBseqlong_var  vbseqlong2 (temp);
-  VERIFY (vbseqlong1->length() == 0);
-  VERIFY (vbseqlong2->length() == 0);
-  CORBA::Long *longarray = 0;
-  ACE_NEW_RETURN (longarray,
-                  CORBA::Long[3],
-                  1);
-  longarray[0] = 101;
-  longarray[1] = 202;
-  longarray[2] = 303;
-
-  // Create a sequence
-  TDseqlong *temp2;
-  ACE_NEW_RETURN (temp2,
-                  TDseqlong(10, 3, longarray, 1),
-                  1);
-  TDseqlong_var seqlong1 (temp2);
-  VERIFY (seqlong1[0] == 101 && seqlong1[2] == 303);
-
-  VBseqlong *vbseqlong3 = 0;
-  ACE_NEW_RETURN (vbseqlong3,
-                  VBseqlong(seqlong1.in()),
-                  1);
-
-  // Test sequence ctor.
-  VBseqlong *vbseqlong4 = 0;
-  ACE_NEW_RETURN (vbseqlong4,
-                  VBseqlong(10, 3, longarray, 0),
-                  1);
-
-  // Test assignment and subscript operators
-  vbseqlong2 = vbseqlong3;
-  VERIFY (vbseqlong2->length() == 3);
-  VBseqlong &vbseqlong5 = *vbseqlong2.inout();
-  VERIFY (vbseqlong5[2] == 303);
-  vbseqlong5[2] = 444;
-  VERIFY (vbseqlong5[2] == 444);
-  VERIFY (seqlong1[0] == 101 && seqlong1[2] == 303);
-  VERIFY ((*vbseqlong4)[0] == 101 && (*vbseqlong4)[2] == 303);
-  seqlong1[0] = 111;
-  VERIFY ((*vbseqlong4)[0] == 111);
-  VERIFY (vbseqlong4->maximum() == 10);
-  *vbseqlong4 = vbseqlong1->_value();
-  VERIFY (vbseqlong4->length() == 0);
-
-  // Test copy_value
-  VBseqlong *vbseqlong6 = VBseqlong::_downcast( vbseqlong4->_copy_value() );
-  if (vbseqlong6 == 0)
+  try
     {
-      fail++;
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
+      VBseqlong     *vbseqlong1 = 0;
+      ACE_NEW_RETURN (vbseqlong1,
+                      VBseqlong (),
+                      1);
+
+      VBseqlong     *temp = 0;
+      ACE_NEW_RETURN (temp,
+                      VBseqlong (),
+                      1);
+
+      VBseqlong_var  vbseqlong2 (temp);
+      OBV_VERITY (vbseqlong1->length() == 0);
+      OBV_VERITY (vbseqlong2->length() == 0);
+      CORBA::Long *longarray = 0;
+      ACE_NEW_RETURN (longarray,
+                      CORBA::Long[3],
+                      1);
+      longarray[0] = 101;
+      longarray[1] = 202;
+      longarray[2] = 303;
+
+      // Create a sequence
+      TDseqlong *temp2 = 0;
+      ACE_NEW_RETURN (temp2,
+                      TDseqlong(10, 3, longarray, 1),
+                      1);
+      TDseqlong_var seqlong1 (temp2);
+      OBV_VERITY (seqlong1[0] == 101 && seqlong1[2] == 303);
+
+      VBseqlong *vbseqlong3 = 0;
+      ACE_NEW_RETURN (vbseqlong3,
+                      VBseqlong(seqlong1.in()),
+                      1);
+
+      // Test sequence ctor.
+      VBseqlong *vbseqlong4 = 0;
+      ACE_NEW_RETURN (vbseqlong4,
+                      VBseqlong(10, 3, longarray, 0),
+                      1);
+
+      // Test assignment and subscript operators
+      vbseqlong2 = vbseqlong3;
+      OBV_VERITY (vbseqlong2->length() == 3);
+      VBseqlong &vbseqlong5 = *vbseqlong2.inout();
+      OBV_VERITY (vbseqlong5[2] == 303);
+      vbseqlong5[2] = 444;
+      OBV_VERITY (vbseqlong5[2] == 444);
+      OBV_VERITY (seqlong1[0] == 101 && seqlong1[2] == 303);
+      OBV_VERITY ((*vbseqlong4)[0] == 101 && (*vbseqlong4)[2] == 303);
+      seqlong1[0] = 111;
+      OBV_VERITY ((*vbseqlong4)[0] == 111);
+      OBV_VERITY (vbseqlong4->maximum() == 10);
+      *vbseqlong4 = vbseqlong1->_value();
+      OBV_VERITY (vbseqlong4->length() == 0);
+
+      // Test copy_value
+      VBseqlong *vbseqlong6 = VBseqlong::_downcast( vbseqlong4->_copy_value());
+      if (vbseqlong6 == 0)
+        {
+          fail++;
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
+        }
+      else
+        {
+          OBV_VERITY (vbseqlong6->length() == 0);
+          vbseqlong6->_remove_ref ();
+        }
+
+      // release
+      vbseqlong1->_remove_ref ();
+      vbseqlong4->_remove_ref ();
     }
-  else
+  catch (const ::CORBA::Exception &ex)
     {
-      VERIFY (vbseqlong6->length() == 0);
-      vbseqlong6->_remove_ref ();
+      ex._tao_print_exception ("test_boxed_sequence");
+      fail = 1;
     }
-
-  // release
-  vbseqlong1->_remove_ref ();
-  vbseqlong3->_remove_ref ();
-  vbseqlong4->_remove_ref ();
-
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "test_boxed_sequence : unexpected exception caught\n"));
+    }
   return fail;
 }
 
 
-
 int test_boxed_sequence_invocations (Test * test_object)
 {
-    int fail = 0;
+  int fail = 0;
+  VBseqlong *p1 = 0;
+  VBseqlong *p2 = 0;
+  VBseqlong *p3;
 
-    ACE_TRY_NEW_ENV
-      {
-
-        //============================================================
-        // Test method invocation with boxed value
-        //============================================================
-
-        VBseqlong *p1 = 0;
-        ACE_NEW_RETURN (p1,
-                        VBseqlong(4),
-                        1);
-        VBseqlong *p2 = 0;
-        ACE_NEW_RETURN (p2,
-                        VBseqlong(3),
-                        1);
-        VBseqlong *p3;
-        p1->length(4);
-        p2->length(3);
-
-        (*p1)[0] = 10;
-        (*p1)[1] = 9;
-        (*p1)[2] = 8;
-        (*p1)[3] = 7;
-
-        (*p2)[0] = 100;
-        (*p2)[1] = 99;
-        (*p2)[2] = 98;
-
-        VERIFY ((*p1)[0] == 10);
-        VERIFY ((*p1)[1] ==  9);
-        VERIFY ((*p1)[2] ==  8);
-        VERIFY ((*p1)[3] ==  7);
-
-        VBseqlong_var result = test_object->seq_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
-
-        VERIFY ((*p2)[0] == 100*3);
-        VERIFY ((*p2)[1] == 99*3);
-        VERIFY ((*p2)[2] == 98*3);
-        VERIFY ((*p3)[0] == 100*5);
-        VERIFY ((*p3)[1] == 99*5);
-        VERIFY ((*p3)[2] == 98*5);
-        VERIFY ((*result.in ())[0] == 10);
-        VERIFY ((*result.in ())[1] ==  9);
-        VERIFY ((*result.in ())[2] ==  8);
-        VERIFY ((*result.in ())[3] ==  7);
-
-        //============================================================
-        // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-        //============================================================
-
-        test_object->seq_op2(p1->_boxed_in(), p2->_boxed_inout(),
-                             p3->_boxed_out());
-        ACE_TRY_CHECK;
-
-        VERIFY ((*p2)[0] == 100*3*3);
-        VERIFY ((*p2)[1] == 99*3*3);
-        VERIFY ((*p2)[2] == 98*3*3);
-        VERIFY ((*p3)[0] == (*p1)[0]*5);
-        VERIFY ((*p3)[1] == (*p1)[1]*5);
-        VERIFY ((*p3)[2] == (*p1)[2]*5);
-        VERIFY ((*p3)[3] == (*p1)[3]*5);
-
-        p1->_remove_ref ();
-        p2->_remove_ref ();
-        p3->_remove_ref ();
-      }
-  ACE_CATCH (CORBA::Exception, ex)
+  try
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_sequence_invocations");
+      //============================================================
+      // Test method invocation with boxed value
+      //============================================================
+
+      ACE_NEW_RETURN (p1,
+                      VBseqlong(4),
+                      1);
+      ACE_NEW_RETURN (p2,
+                      VBseqlong(3),
+                      1);
+      p1->length(4);
+      p2->length(3);
+
+      (*p1)[0] = 10;
+      (*p1)[1] = 9;
+      (*p1)[2] = 8;
+      (*p1)[3] = 7;
+
+      (*p2)[0] = 100;
+      (*p2)[1] = 99;
+      (*p2)[2] = 98;
+
+      OBV_VERITY ((*p1)[0] == 10);
+      OBV_VERITY ((*p1)[1] ==  9);
+      OBV_VERITY ((*p1)[2] ==  8);
+      OBV_VERITY ((*p1)[3] ==  7);
+
+      VBseqlong_var result = test_object->seq_op1(p1, p2, p3);
+
+      OBV_VERITY ((*p2)[0] == 100*3);
+      OBV_VERITY ((*p2)[1] == 99*3);
+      OBV_VERITY ((*p2)[2] == 98*3);
+      OBV_VERITY ((*p3)[0] == 100*5);
+      OBV_VERITY ((*p3)[1] == 99*5);
+      OBV_VERITY ((*p3)[2] == 98*5);
+      OBV_VERITY ((*result.in ())[0] == 10);
+      OBV_VERITY ((*result.in ())[1] ==  9);
+      OBV_VERITY ((*result.in ())[2] ==  8);
+      OBV_VERITY ((*result.in ())[3] ==  7);
+
+      //============================================================
+      // Test _boxed_in(), _boxed_inout(), and _boxed_out())
+      //============================================================
+
+      test_object->seq_op2(p1->_boxed_in(), p2->_boxed_inout(),
+                            p3->_boxed_out());
+
+      OBV_VERITY ((*p2)[0] == 100*3*3);
+      OBV_VERITY ((*p2)[1] == 99*3*3);
+      OBV_VERITY ((*p2)[2] == 98*3*3);
+      OBV_VERITY ((*p3)[0] == (*p1)[0]*5);
+      OBV_VERITY ((*p3)[1] == (*p1)[1]*5);
+      OBV_VERITY ((*p3)[2] == (*p1)[2]*5);
+      OBV_VERITY ((*p3)[3] == (*p1)[3]*5);
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("test_boxed_sequence_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_sequence_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
-  ACE_ENDTRY;
+
+  if (p1) p1->_remove_ref ();
+  if (p2) p2->_remove_ref ();
+  if (p3) p3->_remove_ref ();
 
   return fail;
 }
@@ -711,255 +698,249 @@ int test_boxed_sequence_invocations (Test * test_object)
 // Test a boxed struct type. This is not templated since the struct
 // members are accessed by name, so this is specific to a certain IDL.
 //
-int test_boxed_struct (void)
+int test_boxed_struct ()
 {
-    int fail = 0;
+  int fail = 0;
 
-    Fixed_Struct1 *fixed_struct_a = 0;
-    ACE_NEW_RETURN (fixed_struct_a,
-                    Fixed_Struct1 (),
-                    1);
-    fixed_struct_a->l = 3233;
-    fixed_struct_a->abstruct.s1 = 73;
-    fixed_struct_a->abstruct.s2 = 37;
+  Fixed_Struct1 *fixed_struct_a = 0;
+  ACE_NEW_RETURN (fixed_struct_a,
+                  Fixed_Struct1,
+                  1);
+  fixed_struct_a->l = 3233;
+  fixed_struct_a->abstruct.s1 = 73;
+  fixed_struct_a->abstruct.s2 = 37;
 
-    // Test the VBfixed_struct1 constructor
-    VBfixed_struct1 *valuebox1 = 0;
-    ACE_NEW_RETURN (valuebox1,
-                    VBfixed_struct1 (*fixed_struct_a),
-                    1);
+  // Test the VBfixed_struct1 constructor
+  VBfixed_struct1 *valuebox1 = 0;
+  ACE_NEW_RETURN (valuebox1,
+                  VBfixed_struct1 (*fixed_struct_a),
+                  1);
 
-    // Test boxed copy ctor.
-    VBfixed_struct1_var valuebox2;
-    ACE_NEW_RETURN (valuebox2,
-                    VBfixed_struct1 (*valuebox1),
-                    1);
+  // Test boxed copy ctor.
+  VBfixed_struct1* valuebox2_ptr = 0;
+  ACE_NEW_RETURN (valuebox2_ptr,
+                  VBfixed_struct1 (*valuebox1),
+                  1);
+  VBfixed_struct1_var valuebox2 = valuebox2_ptr;
 
-    VERIFY (valuebox1->l () == valuebox2->l ());
-    VERIFY ((valuebox1->abstruct ()).s1 == (valuebox2->abstruct ()).s1 );
-    VERIFY ((valuebox1->abstruct ()).s2 == (valuebox2->abstruct ()).s2 );
+  OBV_VERITY (valuebox1->l () == valuebox2->l ());
+  OBV_VERITY ((valuebox1->abstruct ()).s1 == (valuebox2->abstruct ()).s1);
+  OBV_VERITY ((valuebox1->abstruct ()).s2 == (valuebox2->abstruct ()).s2);
 
-    // Change an element
-    valuebox1->l (505);
-    VERIFY (valuebox1->l () != valuebox2->l ());
+  // Change an element
+  valuebox1->l (505);
+  OBV_VERITY (valuebox1->l () != valuebox2->l ());
 
-    // Change some more, to test other types.
-    (valuebox2->abstruct ()).s1 = 667;
-    VERIFY ((valuebox1->abstruct ()).s1 != (valuebox2->abstruct ()).s1 );
-    (valuebox2->abstruct ()).s2 = 1667;
-    VERIFY ((valuebox1->abstruct ()).s2 != (valuebox2->abstruct ()).s2 );
+  // Change some more, to test other types.
+  (valuebox2->abstruct ()).s1 = 667;
+  OBV_VERITY ((valuebox1->abstruct ()).s1 != (valuebox2->abstruct ()).s1);
+  (valuebox2->abstruct ()).s2 = 1667;
+  OBV_VERITY ((valuebox1->abstruct ()).s2 != (valuebox2->abstruct ()).s2);
 
-    Fixed_Struct1 *fixed_struct_b = 0;
-    ACE_NEW_RETURN (fixed_struct_b,
-                    Fixed_Struct1 (),
-                    1);
-    fixed_struct_b->l = 7372;
-    fixed_struct_b->abstruct.s1 = 11;
-    fixed_struct_b->abstruct.s2 = 51;
+  Fixed_Struct1 *fixed_struct_b = 0;
+  ACE_NEW_RETURN (fixed_struct_b,
+                  Fixed_Struct1,
+                  1);
+  fixed_struct_b->l = 7372;
+  fixed_struct_b->abstruct.s1 = 11;
+  fixed_struct_b->abstruct.s2 = 51;
 
-    // Make another VBfixed_struct1
-    VBfixed_struct1 *valuebox3 = 0;
-    ACE_NEW_RETURN (valuebox3,
-                    VBfixed_struct1 (),
-                    1);
+  // Make another VBfixed_struct1
+  VBfixed_struct1 *valuebox3 = 0;
+  ACE_NEW_RETURN (valuebox3,
+                  VBfixed_struct1 (),
+                  1);
 
-    // Test assignment operator
-    *valuebox3 = *fixed_struct_b;
+  // Test assignment operator
+  *valuebox3 = *fixed_struct_b;
 
-    VERIFY (valuebox3->l () == fixed_struct_b->l);
-    VERIFY ((valuebox3->abstruct ()).s1 == fixed_struct_b->abstruct.s1);
-    VERIFY ((valuebox3->abstruct ()).s2 == fixed_struct_b->abstruct.s2);
+  OBV_VERITY (valuebox3->l () == fixed_struct_b->l);
+  OBV_VERITY ((valuebox3->abstruct ()).s1 == fixed_struct_b->abstruct.s1);
+  OBV_VERITY ((valuebox3->abstruct ()).s2 == fixed_struct_b->abstruct.s2);
 
-    // Test _value modifier method
-    valuebox2->_value (*fixed_struct_b);
-    VERIFY (valuebox2->l () == fixed_struct_b->l);
-    VERIFY ((valuebox2->abstruct ()).s1 == fixed_struct_b->abstruct.s1);
-    VERIFY ((valuebox2->abstruct ()).s2 == fixed_struct_b->abstruct.s2);
+  // Test _value modifier method
+  valuebox2->_value (*fixed_struct_b);
+  OBV_VERITY (valuebox2->l () == fixed_struct_b->l);
+  OBV_VERITY ((valuebox2->abstruct ()).s1 == fixed_struct_b->abstruct.s1);
+  OBV_VERITY ((valuebox2->abstruct ()).s2 == fixed_struct_b->abstruct.s2);
 
-    // Test _copy_value and _downcast
-    VBfixed_struct1_var valuebox4 =
-      VBfixed_struct1::_downcast (valuebox3->_copy_value ());
-    if (valuebox4.in () == 0)
-      {
-        fail++;
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
-      }
-    else
-      {
-        VERIFY (valuebox4->l () == fixed_struct_b->l);
-        VERIFY ((valuebox4->abstruct ()).s1 == fixed_struct_b->abstruct.s1);
-        VERIFY ((valuebox4->abstruct ()).s2 == fixed_struct_b->abstruct.s2);
-      }
+  // Test _copy_value and _downcast
+  VBfixed_struct1_var valuebox4 =
+    VBfixed_struct1::_downcast (valuebox3->_copy_value ());
+  if (valuebox4.in () == 0)
+    {
+      fail++;
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
+    }
+  else
+    {
+      OBV_VERITY (valuebox4->l () == fixed_struct_b->l);
+      OBV_VERITY ((valuebox4->abstruct ()).s1 == fixed_struct_b->abstruct.s1);
+      OBV_VERITY ((valuebox4->abstruct ()).s2 == fixed_struct_b->abstruct.s2);
+    }
 
-    //
-    // valuebox1, valuebox2, and valuebox3 must be explicitly removed.
-    CORBA::remove_ref (valuebox1);
-    CORBA::remove_ref (valuebox2);
-    CORBA::remove_ref (valuebox3);
+  //
+  // valuebox1 and valuebox3 must be explicitly removed.
+  CORBA::remove_ref (valuebox1);
+  CORBA::remove_ref (valuebox3);
 
-    //
-    // as well as the structs we new'ed.
-    delete fixed_struct_a;
-    delete fixed_struct_b;
+  //
+  // as well as the structs we new'ed.
+  delete fixed_struct_a;
+  delete fixed_struct_b;
 
-    //
-    // Other types are _var so their dtors will clean up remaining
-    // allocations.
+  //
+  // Other types are _var so their dtors will clean up remaining
+  // allocations.
 
-    return fail;
+  return fail;
 }
-
 
 
 int test_boxed_struct_invocations (Test * test_object)
 {
-    int fail = 0;
+  int fail = 0;
 
-    ACE_TRY_NEW_ENV
-      {
-
-        //============================================================
-        // Fixed struct
-        // Test method invocation with boxed value
-        //============================================================
-        Fixed_Struct1 fs1;
-        fs1.l = 29;
-        fs1.abstruct.s1 = 117;
-        fs1.abstruct.s2 = 21;
-
-        VBfixed_struct1 *p1 = 0;
-        ACE_NEW_RETURN (p1,
-                        VBfixed_struct1(fs1),
-                        1);
-
-        Fixed_Struct1 fs2;
-        fs2.l = 92;
-        fs2.abstruct.s1 = 171;
-        fs2.abstruct.s2 = 12;
-
-        VBfixed_struct1 *p2 = 0;
-        ACE_NEW_RETURN (p2,
-                        VBfixed_struct1(fs2),
-                        1);
-
-        VBfixed_struct1 *p3;
-
-        VERIFY (p1->l() == 29);
-        VERIFY ((p1->abstruct()).s1 ==  117);
-        VERIFY ((p1->abstruct()).s2 ==  21);
-
-        VBfixed_struct1_var result = test_object->struct_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
-
-        VERIFY (p2->l() == 92*3);
-        VERIFY ((p2->abstruct()).s1 == 171*3);
-        VERIFY ((p2->abstruct()).s2 == 12*3);
-
-        VERIFY (p3->l() == 92*5);
-        VERIFY ((p3->abstruct()).s1 == 171*5);
-        VERIFY ((p3->abstruct()).s2 == 12*5);
-
-        VERIFY (result->l() == fs1.l);
-        VERIFY ((result->abstruct()).s1 == fs1.abstruct.s1);
-        VERIFY ((result->abstruct()).s2 == fs1.abstruct.s2);
-
-        //============================================================
-        // Fixed struct
-        // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-        //============================================================
-
-        test_object->struct_op2(p1->_boxed_in(), p2->_boxed_inout(),
-                                p3->_boxed_out());
-
-        VERIFY (p2->l() == 92*3*3);
-        VERIFY ((p2->abstruct()).s1 == 171*3*3);
-        VERIFY ((p2->abstruct()).s2 == 12*3*3);
-
-        VERIFY (p3->l() == fs1.l);
-        VERIFY ((p3->abstruct()).s1 == fs1.abstruct.s1);
-        VERIFY ((p3->abstruct()).s2 == fs1.abstruct.s2);
-
-
-        p1->_remove_ref ();
-        p2->_remove_ref ();
-        p3->_remove_ref ();
-
-
-        //============================================================
-        // Variable struct
-        // Test method invocation with boxed value
-        //============================================================
-
-        Variable_Struct1 vs1;
-        vs1.l = 29;
-        vs1.str = CORBA::string_dup ("variable1");
-
-        VBvariable_struct1 *p4 = 0;
-        ACE_NEW_RETURN (p4,
-                        VBvariable_struct1 (vs1),
-                        1);
-
-        Variable_Struct1 vs2;
-        vs2.l = 37;
-        vs2.str = "variable2";
-
-        VBvariable_struct1 *p5 = 0;
-        ACE_NEW_RETURN (p5,
-                        VBvariable_struct1 (vs2),
-                        1);
-
-        VBvariable_struct1 *p6;
-
-
-        VERIFY (p4->l() == 29);
-        VERIFY (strcmp(p4->str(), "variable1") == 0);
-
-        VBvariable_struct1_var result2 = test_object->struct_op3(p4, p5, p6);
-        ACE_TRY_CHECK;
-
-        VERIFY (p5->l() == vs2.l*3);
-        VERIFY (strcmp(p5->str(), "2variable") == 0);
-
-        VERIFY (p6->l() == vs2.l*3);
-        VERIFY (strcmp(p6->str(), "2variable") == 0);
-
-        VERIFY (result2->l() == vs1.l);
-        VERIFY (strcmp(result2->str(), vs1.str) == 0);
-
-
-        //============================================================
-        // Variable struct
-        // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-        //============================================================
-
-        test_object->struct_op4(p4->_boxed_in(), p5->_boxed_inout(),
-                                p6->_boxed_out());
-        ACE_TRY_CHECK;
-
-        VERIFY (p5->l() == vs2.l*3*3);
-        VERIFY (strcmp(p5->str(), "e2variabl") == 0);
-
-        VERIFY (p6->l() == vs1.l);
-        VERIFY (strcmp(p6->str(), vs1.str) == 0);
-
-
-        p4->_remove_ref ();
-        p5->_remove_ref ();
-        p6->_remove_ref ();
-      }
-  ACE_CATCH (CORBA::Exception, ex)
+  try
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_struct_invocations");
+      //============================================================
+      // Fixed struct
+      // Test method invocation with boxed value
+      //============================================================
+      Fixed_Struct1 fs1;
+      fs1.l = 29;
+      fs1.abstruct.s1 = 117;
+      fs1.abstruct.s2 = 21;
+
+      VBfixed_struct1 *p1 = 0;
+      ACE_NEW_RETURN (p1,
+                      VBfixed_struct1(fs1),
+                      1);
+
+      Fixed_Struct1 fs2;
+      fs2.l = 92;
+      fs2.abstruct.s1 = 171;
+      fs2.abstruct.s2 = 12;
+
+      VBfixed_struct1 *p2 = 0;
+      ACE_NEW_RETURN (p2,
+                      VBfixed_struct1(fs2),
+                      1);
+
+      VBfixed_struct1 *p3;
+
+      OBV_VERITY (p1->l() == 29);
+      OBV_VERITY ((p1->abstruct()).s1 ==  117);
+      OBV_VERITY ((p1->abstruct()).s2 ==  21);
+
+      VBfixed_struct1_var result = test_object->struct_op1(p1, p2, p3);
+
+      OBV_VERITY (p2->l() == 92*3);
+      OBV_VERITY ((p2->abstruct()).s1 == 171*3);
+      OBV_VERITY ((p2->abstruct()).s2 == 12*3);
+
+      OBV_VERITY (p3->l() == 92*5);
+      OBV_VERITY ((p3->abstruct()).s1 == 171*5);
+      OBV_VERITY ((p3->abstruct()).s2 == 12*5);
+
+      OBV_VERITY (result->l() == fs1.l);
+      OBV_VERITY ((result->abstruct()).s1 == fs1.abstruct.s1);
+      OBV_VERITY ((result->abstruct()).s2 == fs1.abstruct.s2);
+
+      //============================================================
+      // Fixed struct
+      // Test _boxed_in(), _boxed_inout(), and _boxed_out())
+      //============================================================
+
+      test_object->struct_op2(p1->_boxed_in(), p2->_boxed_inout(),
+                              p3->_boxed_out());
+
+      OBV_VERITY (p2->l() == 92*3*3);
+      OBV_VERITY ((p2->abstruct()).s1 == 171*3*3);
+      OBV_VERITY ((p2->abstruct()).s2 == 12*3*3);
+
+      OBV_VERITY (p3->l() == fs1.l);
+      OBV_VERITY ((p3->abstruct()).s1 == fs1.abstruct.s1);
+      OBV_VERITY ((p3->abstruct()).s2 == fs1.abstruct.s2);
+
+
+      p1->_remove_ref ();
+      p2->_remove_ref ();
+      p3->_remove_ref ();
+
+
+      //============================================================
+      // Variable struct
+      // Test method invocation with boxed value
+      //============================================================
+
+      Variable_Struct1 vs1;
+      vs1.l = 29;
+      vs1.str = CORBA::string_dup ("variable1");
+
+      VBvariable_struct1 *p4 = 0;
+      ACE_NEW_RETURN (p4,
+                      VBvariable_struct1 (vs1),
+                      1);
+
+      Variable_Struct1 vs2;
+      vs2.l = 37;
+      vs2.str = "variable2";
+
+      VBvariable_struct1 *p5 = 0;
+      ACE_NEW_RETURN (p5,
+                      VBvariable_struct1 (vs2),
+                      1);
+
+      VBvariable_struct1 *p6;
+
+
+      OBV_VERITY (p4->l() == 29);
+      OBV_VERITY (ACE_OS::strcmp(p4->str(), "variable1") == 0);
+
+      VBvariable_struct1_var result2 = test_object->struct_op3(p4, p5, p6);
+
+      OBV_VERITY (p5->l() == vs2.l*3);
+      OBV_VERITY (ACE_OS::strcmp(p5->str(), "2variable") == 0);
+
+      OBV_VERITY (p6->l() == vs2.l*3);
+      OBV_VERITY (ACE_OS::strcmp(p6->str(), "2variable") == 0);
+
+      OBV_VERITY (result2->l() == vs1.l);
+      OBV_VERITY (ACE_OS::strcmp(result2->str(), vs1.str) == 0);
+
+
+      //============================================================
+      // Variable struct
+      // Test _boxed_in(), _boxed_inout(), and _boxed_out())
+      //============================================================
+
+      test_object->struct_op4(p4->_boxed_in(), p5->_boxed_inout(),
+                              p6->_boxed_out());
+
+      OBV_VERITY (p5->l() == vs2.l*3*3);
+      OBV_VERITY (ACE_OS::strcmp(p5->str(), "e2variabl") == 0);
+
+      OBV_VERITY (p6->l() == vs1.l);
+      OBV_VERITY (ACE_OS::strcmp(p6->str(), vs1.str) == 0);
+
+
+      p4->_remove_ref ();
+      p5->_remove_ref ();
+      p6->_remove_ref ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("test_boxed_struct_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_struct_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
-  ACE_ENDTRY;
 
   return fail;
 }
@@ -969,194 +950,191 @@ int test_boxed_struct_invocations (Test * test_object)
 //
 int test_boxed_array()
 {
-    int fail = 0;
-    LongArray la;
-    la[0] = 101;
-    la[1] = 202;
-    la[2] = 303;
+  int fail = 0;
+  LongArray la;
+  la[0] = 101;
+  la[1] = 202;
+  la[2] = 303;
 
-    // three ctors
-    VBlongarray *valuebox1 = 0;
-    ACE_NEW_RETURN (valuebox1,
-                    VBlongarray,
-                    1);
-    VBlongarray *valuebox2 = 0;
-    ACE_NEW_RETURN (valuebox2,
-                    VBlongarray(la),
-                    1);
-    VBlongarray *valuebox3 = 0;
-    ACE_NEW_RETURN (valuebox3,
-                    VBlongarray(*valuebox2),
-                    1);
+  // three ctors
+  VBlongarray *valuebox1 = 0;
+  ACE_NEW_RETURN (valuebox1,
+                  VBlongarray,
+                  1);
+  VBlongarray *valuebox2 = 0;
+  ACE_NEW_RETURN (valuebox2,
+                  VBlongarray(la),
+                  1);
+  VBlongarray *valuebox3 = 0;
+  ACE_NEW_RETURN (valuebox3,
+                  VBlongarray(*valuebox2),
+                  1);
 
-    VERIFY ((*valuebox2)[0] == 101
-            && valuebox2->_value()[1] == 202
-            && valuebox2->_value()[2] == 303);
+  OBV_VERITY ((*valuebox2)[0] == 101
+          && valuebox2->_value()[1] == 202
+          && valuebox2->_value()[2] == 303);
 
-    VERIFY ((*valuebox3)[0] == 101
-            && (*valuebox3)[1] == 202
-            && (*valuebox3)[2] == 303);
+  OBV_VERITY ((*valuebox3)[0] == 101
+          && (*valuebox3)[1] == 202
+          && (*valuebox3)[2] == 303);
 
-    (*valuebox3)[0] = 111;
-    valuebox3->_value()[1] = 222;
+  (*valuebox3)[0] = 111;
+  valuebox3->_value()[1] = 222;
 
-    VERIFY ((*valuebox2)[0] == 101
-            && (*valuebox2)[1] == 202
-            && (*valuebox2)[2] == 303);
+  OBV_VERITY ((*valuebox2)[0] == 101
+          && (*valuebox2)[1] == 202
+          && (*valuebox2)[2] == 303);
 
-    VERIFY ((*valuebox3)[0] == 111
-            && (*valuebox3)[1] == 222
-            && (*valuebox3)[2] == 303);
+  OBV_VERITY ((*valuebox3)[0] == 111
+          && (*valuebox3)[1] == 222
+          && (*valuebox3)[2] == 303);
 
-    *valuebox1 = la;
+  *valuebox1 = la;
 
-    VERIFY ((*valuebox1)[0] == 101
-            && valuebox1->_value()[1] == 202
-            && valuebox1->_value()[2] == 303);
+  OBV_VERITY ((*valuebox1)[0] == 101
+          && valuebox1->_value()[1] == 202
+          && valuebox1->_value()[2] == 303);
 
-    valuebox2->_value(la);
+  valuebox2->_value(la);
 
-    VERIFY ((*valuebox2)[0] == 101
-            && valuebox2->_value()[1] == 202
-            && valuebox2->_value()[2] == 303);
+  OBV_VERITY ((*valuebox2)[0] == 101
+          && valuebox2->_value()[1] == 202
+          && valuebox2->_value()[2] == 303);
 
-    LongArray_var lv_la(LongArray_dup(la));
-    *valuebox2 = lv_la.in();
+  LongArray_var lv_la(LongArray_dup(la));
+  *valuebox2 = lv_la.in();
 
-    *valuebox2 = valuebox3->_value();
-    valuebox3->_value()[1] = 777;
-    VERIFY ((*valuebox2)[0] == 111
-            && valuebox2->_value()[1] == 222
-            && valuebox2->_value()[2] == 303);
+  *valuebox2 = valuebox3->_value();
+  valuebox3->_value()[1] = 777;
+  OBV_VERITY ((*valuebox2)[0] == 111
+          && valuebox2->_value()[1] == 222
+          && valuebox2->_value()[2] == 303);
 
-    // release
-    valuebox1->_remove_ref ();
-    valuebox2->_remove_ref ();
-    valuebox3->_remove_ref ();
+  // release
+  valuebox1->_remove_ref ();
+  valuebox2->_remove_ref ();
+  valuebox3->_remove_ref ();
 
-    return fail;
+  return fail;
 }
-
 
 
 int test_boxed_array_invocations (Test * test_object)
 {
-    int fail = 0;
+  int fail = 0;
 
-    ACE_TRY_NEW_ENV
-      {
-        //============================================================
-        // Array (fixed)
-        // Test method invocation with boxed value
-        //============================================================
+  try
+    {
+      //============================================================
+      // Array (fixed)
+      // Test method invocation with boxed value
+      //============================================================
 
-        LongArray la;
-        la[0] = 101;
-        la[1] = 202;
-        la[2] = 303;
+      LongArray la;
+      la[0] = 101;
+      la[1] = 202;
+      la[2] = 303;
 
-        VBlongarray *p1 = 0;
-        ACE_NEW_RETURN (p1,
-                        VBlongarray (la),
-                        1);
+      VBlongarray *p1 = 0;
+      ACE_NEW_RETURN (p1,
+                      VBlongarray (la),
+                      1);
 
-        LongArray la2;
-        la2[0] = 3101;
-        la2[1] = 3202;
-        la2[2] = 3303;
+      LongArray la2;
+      la2[0] = 3101;
+      la2[1] = 3202;
+      la2[2] = 3303;
 
-        VBlongarray *p2 = 0;
-        ACE_NEW_RETURN (p2,
-                        VBlongarray (la2),
-                        1);
+      VBlongarray *p2 = 0;
+      ACE_NEW_RETURN (p2,
+                      VBlongarray (la2),
+                      1);
 
-        VERIFY ((*p1)[0] == 101
-                && (*p1)[1] == 202
-                && (*p1)[2] == 303);
+      OBV_VERITY ((*p1)[0] == 101
+              && (*p1)[1] == 202
+              && (*p1)[2] == 303);
 
-        VBlongarray *p3;
+      VBlongarray *p3;
 
-        VBlongarray_var result = test_object->array_op1 (p1, p2, p3);
-        ACE_TRY_CHECK;
+      VBlongarray_var result = test_object->array_op1 (p1, p2, p3);
 
-        VERIFY ((*p2)[0] == (3101*3)
-                && (*p2)[1] == (3202*3)
-                && (*p3)[2] == (3303*3));
+      OBV_VERITY ((*p2)[0] == (3101*3)
+              && (*p2)[1] == (3202*3)
+              && (*p3)[2] == (3303*3));
 
-        VERIFY ((*p3)[0] == (3101*3)
-                && (*p3)[1] == (3202*3)
-                && (*p3)[2] == (3303*3));
+      OBV_VERITY ((*p3)[0] == (3101*3)
+              && (*p3)[1] == (3202*3)
+              && (*p3)[2] == (3303*3));
 
-        VERIFY ((*result.in ())[0] == 101
-                && (*result.in ())[1] == 202
-                && (*result.in ())[2] == 303);
+      OBV_VERITY ((*result.in ())[0] == 101
+              && (*result.in ())[1] == 202
+              && (*result.in ())[2] == 303);
 
-        //============================================================
-        // Array (fixed)
-        // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-        //============================================================
+      //============================================================
+      // Array (fixed)
+      // Test _boxed_in(), _boxed_inout(), and _boxed_out())
+      //============================================================
 
 // Exclude the following test for now until issues with _boxed_out()
 // for arrays are resolved.
 #if 0
-        test_object->array_op2(p1->_boxed_in(), p2->_boxed_inout(),
-                               p3->_boxed_out());
-        ACE_TRY_CHECK;
+      test_object->array_op2(p1->_boxed_in(), p2->_boxed_inout(),
+                              p3->_boxed_out());
 
-        VERIFY ((*p2)[0] == (3101*3*3)
-                && (*p2)[1] == (3202*3*3)
-                && (*p2)[2] == (3303*3*3));
+      OBV_VERITY ((*p2)[0] == (3101*3*3)
+              && (*p2)[1] == (3202*3*3)
+              && (*p2)[2] == (3303*3*3));
 
-        VERIFY ((*p3)[0] == (*p1)[0]
-                && (*p3)[1] == (*p1)[1]
-                && (*p3)[2] == (*p1)[2]);
+      OBV_VERITY ((*p3)[0] == (*p1)[0]
+              && (*p3)[1] == (*p1)[1]
+              && (*p3)[2] == (*p1)[2]);
 #endif
 
-        p1->_remove_ref ();
-        p2->_remove_ref ();
-        p3->_remove_ref ();
+      p1->_remove_ref ();
+      p2->_remove_ref ();
+      p3->_remove_ref ();
 
-        //============================================================
-        // Array (variable)
-        // Test method invocation with boxed value
-        //============================================================
+      //============================================================
+      // Array (variable)
+      // Test method invocation with boxed value
+      //============================================================
 
-        StringArray sa;
-        sa[0] = CORBA::string_dup ("in string1");
-        sa[1] = CORBA::string_dup ("in string2");
+      StringArray sa;
+      sa[0] = CORBA::string_dup ("in string1");
+      sa[1] = CORBA::string_dup ("in string2");
 
-        VBstringarray *p4 = 0;
-        ACE_NEW_RETURN (p4,
-                        VBstringarray (sa),
-                        1);
+      VBstringarray *p4 = 0;
+      ACE_NEW_RETURN (p4,
+                      VBstringarray (sa),
+                      1);
 
-        StringArray sa2;
-        sa2[0] = CORBA::string_dup ("inout string1");
-        sa2[1] = CORBA::string_dup ("inout string2");
+      StringArray sa2;
+      sa2[0] = CORBA::string_dup ("inout string1");
+      sa2[1] = CORBA::string_dup ("inout string2");
 
-        VBstringarray *p5 = 0;
-        ACE_NEW_RETURN (p5,
-                        VBstringarray (sa2),
-                        1);
+      VBstringarray *p5 = 0;
+      ACE_NEW_RETURN (p5,
+                      VBstringarray (sa2),
+                      1);
 
-        VERIFY (strcmp((*p4)[0], sa[0]) == 0);
-        VERIFY (strcmp((*p4)[1], sa[1]) == 0);
+      OBV_VERITY (ACE_OS::strcmp((*p4)[0], sa[0]) == 0);
+      OBV_VERITY (ACE_OS::strcmp((*p4)[1], sa[1]) == 0);
 
-        VBstringarray *p6;
+      VBstringarray *p6;
 
-        VBstringarray_var result2 = test_object->array_op3 (p4, p5, p6);
+      VBstringarray_var result2 = test_object->array_op3 (p4, p5, p6);
 
-        VERIFY (strcmp((*p5)[0], "1inout string") == 0);
-        VERIFY (strcmp((*p5)[1], "2inout string") == 0);
-        VERIFY (strcmp((*p6)[0], "1inout string") == 0);
-        VERIFY (strcmp((*p6)[1], "2inout string") == 0);
-        VERIFY (strcmp((*result2.in ())[0], sa[0]) == 0);
-        VERIFY (strcmp((*result2.in ())[1], sa[1]) == 0);
+      OBV_VERITY (ACE_OS::strcmp((*p5)[0], "1inout string") == 0);
+      OBV_VERITY (ACE_OS::strcmp((*p5)[1], "2inout string") == 0);
+      OBV_VERITY (ACE_OS::strcmp((*p6)[0], "1inout string") == 0);
+      OBV_VERITY (ACE_OS::strcmp((*p6)[1], "2inout string") == 0);
+      OBV_VERITY (ACE_OS::strcmp((*result2.in ())[0], sa[0]) == 0);
+      OBV_VERITY (ACE_OS::strcmp((*result2.in ())[1], sa[1]) == 0);
 
-        //============================================================
-        // Array (variable)
-        // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-        //============================================================
+      //============================================================
+      // Array (variable)
+      // Test _boxed_in(), _boxed_inout(), and _boxed_out())
+      //============================================================
 
 // Disable the following for now.  Need to troubleshoot it.
 #if 0
@@ -1166,42 +1144,40 @@ int test_boxed_array_invocations (Test * test_object)
 
 // Trying the following variation to troubleshoot.  No compilation error
 // but p6 is unchanged after return from method.
-        StringArray sa_experimental;
-        StringArray_slice *slice = p6->_boxed_out();
-        StringArray_out an_out (slice);
+      StringArray sa_experimental;
+      StringArray_slice *slice = p6->_boxed_out();
+      StringArray_out an_out (slice);
 
-        test_object->array_op4(p4->_boxed_in(), p5->_boxed_inout(),
-                               an_out);
+      test_object->array_op4(p4->_boxed_in(), p5->_boxed_inout(),
+                              an_out);
 
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) after array_op4\n"));
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) p5[0]=%s\n", (const char *)((*p5)[0])));
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) p5[1]=%s\n", (const char *)((*p5)[1])));
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[0]=%s\n", (const char *)((*p6)[0])));
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[1]=%s\n", (const char *)((*p6)[1])));
-        VERIFY (strcmp((*p5)[0], "g1inout strin") == 0);
-        VERIFY (strcmp((*p5)[1], "g2inout strin") == 0);
-        VERIFY (strcmp((*p6)[0],  sa[0]) == 0);
-        VERIFY (strcmp((*p6)[1],  sa[1]) == 0);
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) after array_op4\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p5[0]=%s\n", (const char *)((*p5)[0])));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p5[1]=%s\n", (const char *)((*p5)[1])));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[0]=%s\n", (const char *)((*p6)[0])));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[1]=%s\n", (const char *)((*p6)[1])));
+      OBV_VERITY (ACE_OS::strcmp((*p5)[0], "g1inout strin") == 0);
+      OBV_VERITY (ACE_OS::strcmp((*p5)[1], "g2inout strin") == 0);
+      OBV_VERITY (ACE_OS::strcmp((*p6)[0],  sa[0]) == 0);
+      OBV_VERITY (ACE_OS::strcmp((*p6)[1],  sa[1]) == 0);
 #endif
 
-        p4->_remove_ref ();
-        p5->_remove_ref ();
-        p6->_remove_ref ();
-
-      }
-  ACE_CATCH (CORBA::Exception, ex)
+      p4->_remove_ref ();
+      p5->_remove_ref ();
+      p6->_remove_ref ();
+    }
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_array_invocations");
+      ex._tao_print_exception ("test_boxed_array_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_array_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
-  ACE_ENDTRY;
 
   return fail;
 }
@@ -1212,257 +1188,248 @@ int test_boxed_array_invocations (Test * test_object)
 //
 int test_boxed_union()
 {
-    int fail = 0;
+  int fail = 0;
 
-    VBfixed_union1 *ptemp;
-    ACE_NEW_RETURN (ptemp,
-                    VBfixed_union1 (),
-                    1);
-    VBfixed_union1_var valuebox1(ptemp);
+  VBfixed_union1 *ptemp;
+  ACE_NEW_RETURN (ptemp,
+                  VBfixed_union1 (),
+                  1);
+  VBfixed_union1_var valuebox1(ptemp);
 
 
-    Fixed_Union1 *ptemp2;
-    ACE_NEW_RETURN (ptemp2,
-                    Fixed_Union1 (),
-                    1);
-    Fixed_Union1_var fixed_union1(ptemp2);
+  Fixed_Union1 *ptemp2;
+  ACE_NEW_RETURN (ptemp2,
+                  Fixed_Union1 (),
+                  1);
+  Fixed_Union1_var fixed_union1(ptemp2);
 
-    // Test modifiers, accessors, discriminant access
-    valuebox1->m1 (37);
-    VERIFY (valuebox1->m1 () == 37);
-    VERIFY (valuebox1->_d () == 1 || valuebox1->_d () == 2);
+  // Test modifiers, accessors, discriminant access
+  valuebox1->m1 (37);
+  OBV_VERITY (valuebox1->m1 () == 37);
+  OBV_VERITY (valuebox1->_d () == 1 || valuebox1->_d () == 2);
 
-    // Explicitly set discriminant, make sure thats the only thing
-    // that changes.
-    valuebox1->_d (2);
-    VERIFY (valuebox1->_d () == 2);
-    VERIFY (valuebox1->m1 () == 37);
-    valuebox1->_d (1);
-    VERIFY (valuebox1->_d () == 1);
-    VERIFY (valuebox1->m1 () == 37);
+  // Explicitly set discriminant, make sure thats the only thing
+  // that changes.
+  valuebox1->_d (2);
+  OBV_VERITY (valuebox1->_d () == 2);
+  OBV_VERITY (valuebox1->m1 () == 37);
+  valuebox1->_d (1);
+  OBV_VERITY (valuebox1->_d () == 1);
+  OBV_VERITY (valuebox1->m1 () == 37);
 
-    // Use _value() to access
-    valuebox1->_value ()._d (2);
-    VERIFY (valuebox1->_d () == 2);
+  // Use _value() to access
+  valuebox1->_value ()._d (2);
+  OBV_VERITY (valuebox1->_d () == 2);
 
-    // Use _value as modifier.
-    valuebox1->_value (fixed_union1.in());
-    VERIFY (valuebox1->_d () != 1 && valuebox1->_d () != 2);
+  // Use _value as modifier.
+  valuebox1->_value (fixed_union1.in());
+  OBV_VERITY (valuebox1->_d () != 1 && valuebox1->_d () != 2);
 
-    //
-    VBfixed_union1* valuebox2_ptr = 0;
-    ACE_NEW_RETURN (valuebox2_ptr,
-                    VBfixed_union1 (),
-                    1);
-    VBfixed_union1_var valuebox2 (valuebox2_ptr);
-    valuebox2->m2(333);
-    VERIFY (valuebox2->_d () == 2);
+  //
+  VBfixed_union1* valuebox2_ptr = 0;
+  ACE_NEW_RETURN (valuebox2_ptr,
+                  VBfixed_union1 (),
+                  1);
+  VBfixed_union1_var valuebox2 (valuebox2_ptr);
+  valuebox2->m2(333);
+  OBV_VERITY (valuebox2->_d () == 2);
 
-    // Test copy ctor
-    VBfixed_union1* valuebox3_ptr = 0;
-    ACE_NEW_RETURN (valuebox3_ptr,
-                    VBfixed_union1 (*valuebox2.in ()),
-                    1);
-    VBfixed_union1_var valuebox3 (valuebox3_ptr);
-    VERIFY (valuebox3->_d () == 2);
-    VERIFY (valuebox3->m2 () == 333);
+  // Test copy ctor
+  VBfixed_union1* valuebox3_ptr = 0;
+  ACE_NEW_RETURN (valuebox3_ptr,
+                  VBfixed_union1 (*valuebox2.in ()),
+                  1);
+  VBfixed_union1_var valuebox3 (valuebox3_ptr);
+  OBV_VERITY (valuebox3->_d () == 2);
+  OBV_VERITY (valuebox3->m2 () == 333);
 
-    // Test assignment op
-    valuebox3->m2 (456);
-    *valuebox3.in () = valuebox2->_value ();
-    VERIFY (valuebox3->_d () == 2);
-    VERIFY (valuebox3->m2 () == 333);
+  // Test assignment op
+  valuebox3->m2 (456);
+  *valuebox3.in () = valuebox2->_value ();
+  OBV_VERITY (valuebox3->_d () == 2);
+  OBV_VERITY (valuebox3->m2 () == 333);
 
-    // Test constructor taking union argument
-    fixed_union1->m2 (137);
-    VBfixed_union1 *valuebox4_ptr = 0;
-    ACE_NEW_RETURN (valuebox4_ptr,
-                    VBfixed_union1 (fixed_union1.in ()),
-                    1);
-    VBfixed_union1_var valuebox4 (valuebox4_ptr);
-    VERIFY (valuebox4->m2 () == 137);
-    VERIFY (valuebox4->_d () == 1 || valuebox4->_d () == 2);
+  // Test constructor taking union argument
+  fixed_union1->m2 (137);
+  VBfixed_union1 *valuebox4_ptr = 0;
+  ACE_NEW_RETURN (valuebox4_ptr,
+                  VBfixed_union1 (fixed_union1.in ()),
+                  1);
+  VBfixed_union1_var valuebox4 (valuebox4_ptr);
+  OBV_VERITY (valuebox4->m2 () == 137);
+  OBV_VERITY (valuebox4->_d () == 1 || valuebox4->_d () == 2);
 
-    return fail;
+  return fail;
 }
-
 
 
 
 int test_boxed_union_invocations (Test * test_object)
 {
-    int fail = 0;
+  int fail = 0;
 
-    ACE_TRY_NEW_ENV
-      {
-        //============================================================
-        // Union (fixed)
-        // Test method invocation with boxed value
-        //============================================================
-
-        Fixed_Union1 *ptemp = 0;
-        ACE_NEW_RETURN (ptemp,
-                        Fixed_Union1 (),
-                        1);
-        Fixed_Union1_var fixed_union1(ptemp);
-
-        fixed_union1->m1 (321);
-        VBfixed_union1 *p1 = 0;
-        ACE_NEW_RETURN (p1,
-                        VBfixed_union1 (fixed_union1.in ()),
-                        1);
-
-        Fixed_Union1 *ptemp2 = 0;
-        ACE_NEW_RETURN (ptemp2,
-                        Fixed_Union1 (),
-                        1);
-        Fixed_Union1_var fixed_union2(ptemp2);
-        fixed_union2->m2 (789);
-        VBfixed_union1 *p2 = 0;
-        ACE_NEW_RETURN (p2,
-                        VBfixed_union1 (fixed_union2.in ()),
-                        1);
-
-        VERIFY (p1->_d () == 1);
-        VERIFY (p1->m1 () == 321);
-        VERIFY (p2->_d () == 2);
-        VERIFY (p2->m2 () == 789);
-
-        VBfixed_union1 * p3;
-
-        VBfixed_union1_var result = test_object->union_op1 (p1, p2, p3);
-        ACE_TRY_CHECK;
-
-        VERIFY (p2->_d () == 2);
-        VERIFY (p2->m2 () == 789*3);
-        VERIFY (p3->_d () == 1);
-        VERIFY (p3->m1 () == 321*3);
-        VERIFY (result->_d () == 1);
-        VERIFY (result->m1 () == 321*3);
-
-
-        //============================================================
-        // Union (fixed)
-        // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-        //============================================================
-
-        test_object->union_op2(p1->_boxed_in(), p2->_boxed_inout(),
-                               p3->_boxed_out());
-
-        VERIFY (p2->_d () == 2);
-        VERIFY (p2->m2 () == 789*3*3);
-
-        VERIFY (p3->_d () == 1);
-        VERIFY (p3->m1 () == 321);
-
-        p1->_remove_ref ();
-        p2->_remove_ref ();
-        p3->_remove_ref ();
-
-        //============================================================
-        // Union (variable)
-        // Test method invocation with boxed value
-        //============================================================
-
-        Variable_Union1_var variable_union1;
-        ACE_NEW_RETURN (variable_union1,
-                        Variable_Union1 (),
-                        1);
-        variable_union1->m1 (321);
-        VBvariable_union1 *p4 = 0;
-        ACE_NEW_RETURN (p4,
-                        VBvariable_union1 (variable_union1.in ()),
-                        1);
-
-        Variable_Union1_var variable_union2;
-        ACE_NEW_RETURN (variable_union2,
-                        Variable_Union1 (),
-                        1);
-        variable_union2->m2 (CORBA::string_dup ("abracadabra"));
-        VBvariable_union1 *p5 = 0;
-        ACE_NEW_RETURN (p5,
-                        VBvariable_union1 (variable_union2.in ()),
-                        1);
-
-        VERIFY (p4->_d () == 1);
-        VERIFY (p4->m1 () == 321);
-        VERIFY (p5->_d () == 2);
-        VERIFY (strcmp(p5->m2 (), "abracadabra") == 0);
-
-        VBvariable_union1 * p6;
-
-        VBvariable_union1_var result2 = test_object->union_op3 (p4, p5, p6);
-        ACE_TRY_CHECK;
-
-        VERIFY (p5->_d () == 2);
-        VERIFY (strcmp(p5->m2 (), "aabracadabr") == 0);
-        VERIFY (p6->_d () == 1);
-        VERIFY (p6->m1 () == 321);
-        VERIFY (result2->_d () == 1);
-        VERIFY (result2->m1 () == 321);
-
-        //============================================================
-        // Union (variable)
-        // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-        //============================================================
-
-        p4->m1 (1722);
-
-        test_object->union_op4(p4->_boxed_in(), p5->_boxed_inout(),
-                               p6->_boxed_out());
-        ACE_TRY_CHECK;
-
-        VERIFY (p5->_d () == 2);
-        VERIFY (strcmp(p5->m2 (), "raabracadab") == 0);
-
-        VERIFY (p6->_d () == 1);
-        VERIFY (p6->m1 () == 1722);
-
-        p4->_remove_ref ();
-        p5->_remove_ref ();
-        p6->_remove_ref ();
-
-      }
-  ACE_CATCH (CORBA::Exception, ex)
+  try
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_union_invocations");
+      //============================================================
+      // Union (fixed)
+      // Test method invocation with boxed value
+      //============================================================
+
+      Fixed_Union1 *ptemp = 0;
+      ACE_NEW_RETURN (ptemp,
+                      Fixed_Union1 (),
+                      1);
+      Fixed_Union1_var fixed_union1(ptemp);
+
+      fixed_union1->m1 (321);
+      VBfixed_union1 *p1 = 0;
+      ACE_NEW_RETURN (p1,
+                      VBfixed_union1 (fixed_union1.in ()),
+                      1);
+
+      Fixed_Union1 *ptemp2 = 0;
+      ACE_NEW_RETURN (ptemp2,
+                      Fixed_Union1 (),
+                      1);
+      Fixed_Union1_var fixed_union2(ptemp2);
+      fixed_union2->m2 (789);
+      VBfixed_union1 *p2 = 0;
+      ACE_NEW_RETURN (p2,
+                      VBfixed_union1 (fixed_union2.in ()),
+                      1);
+
+      OBV_VERITY (p1->_d () == 1);
+      OBV_VERITY (p1->m1 () == 321);
+      OBV_VERITY (p2->_d () == 2);
+      OBV_VERITY (p2->m2 () == 789);
+
+      VBfixed_union1 * p3;
+
+      VBfixed_union1_var result = test_object->union_op1 (p1, p2, p3);
+
+      OBV_VERITY (p2->_d () == 2);
+      OBV_VERITY (p2->m2 () == 789*3);
+      OBV_VERITY (p3->_d () == 1);
+      OBV_VERITY (p3->m1 () == 321*3);
+      OBV_VERITY (result->_d () == 1);
+      OBV_VERITY (result->m1 () == 321*3);
+
+
+      //============================================================
+      // Union (fixed)
+      // Test _boxed_in(), _boxed_inout(), and _boxed_out())
+      //============================================================
+
+      test_object->union_op2(p1->_boxed_in(), p2->_boxed_inout(),
+                              p3->_boxed_out());
+
+      OBV_VERITY (p2->_d () == 2);
+      OBV_VERITY (p2->m2 () == 789*3*3);
+
+      OBV_VERITY (p3->_d () == 1);
+      OBV_VERITY (p3->m1 () == 321);
+
+      p1->_remove_ref ();
+      p2->_remove_ref ();
+      p3->_remove_ref ();
+
+      //============================================================
+      // Union (variable)
+      // Test method invocation with boxed value
+      //============================================================
+
+      Variable_Union1_var variable_union1;
+      ACE_NEW_RETURN (variable_union1,
+                      Variable_Union1 (),
+                      1);
+      variable_union1->m1 (321);
+      // TODO : resource leak
+      VBvariable_union1 *p4 = 0;
+      ACE_NEW_RETURN (p4,
+                      VBvariable_union1 (variable_union1.in ()),
+                      1);
+
+      Variable_Union1_var variable_union2;
+      ACE_NEW_RETURN (variable_union2,
+                      Variable_Union1 (),
+                      1);
+      variable_union2->m2 (CORBA::string_dup ("abracadabra"));
+      VBvariable_union1 *p5 = 0;
+      ACE_NEW_RETURN (p5,
+                      VBvariable_union1 (variable_union2.in ()),
+                      1);
+
+      OBV_VERITY (p4->_d () == 1);
+      OBV_VERITY (p4->m1 () == 321);
+      OBV_VERITY (p5->_d () == 2);
+      OBV_VERITY (ACE_OS::strcmp(p5->m2 (), "abracadabra") == 0);
+
+      VBvariable_union1 * p6;
+
+      VBvariable_union1_var result2 = test_object->union_op3 (p4, p5, p6);
+
+      OBV_VERITY (p5->_d () == 2);
+      OBV_VERITY (ACE_OS::strcmp(p5->m2 (), "aabracadabr") == 0);
+      OBV_VERITY (p6->_d () == 1);
+      OBV_VERITY (p6->m1 () == 321);
+      OBV_VERITY (result2->_d () == 1);
+      OBV_VERITY (result2->m1 () == 321);
+
+      //============================================================
+      // Union (variable)
+      // Test _boxed_in(), _boxed_inout(), and _boxed_out())
+      //============================================================
+
+      p4->m1 (1722);
+
+      test_object->union_op4(p4->_boxed_in(), p5->_boxed_inout(),
+                              p6->_boxed_out());
+
+      OBV_VERITY (p5->_d () == 2);
+      OBV_VERITY (ACE_OS::strcmp(p5->m2 (), "raabracadab") == 0);
+
+      OBV_VERITY (p6->_d () == 1);
+      OBV_VERITY (p6->m1 () == 1722);
+
+      p4->_remove_ref ();
+      p5->_remove_ref ();
+      p6->_remove_ref ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("test_boxed_union_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_union_invocations: "
-                  "caught a C++ exception \n"));
+                  "caught a C++ exception\n"));
       fail = 1;
     }
-  ACE_ENDTRY;
 
   return fail;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Test_var test_object;
   CORBA::ORB_var orb;
 
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY_EX (init)
+  try
     {
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (init);
+      orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (init);
+        orb->string_to_object(ior);
 
-      test_object = Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (init);
+      test_object = Test::_narrow(tmp.in ());
 
       if (CORBA::is_nil (test_object.in ()))
       {
@@ -1472,18 +1439,17 @@ main (int argc, char *argv[])
                           1);
       }
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "Initialization failure");
+      ex._tao_print_exception ("Initialization failure");
       return 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Initialization failure: caught a C++ exception \n"));
+                "(%P|%t) Initialization failure: caught a C++ exception\n"));
       return 1;
     }
-  ACE_ENDTRY;
 
   int fail = 0;
 
@@ -1512,23 +1478,19 @@ main (int argc, char *argv[])
   fail += test_boxed_union_invocations (test_object.in ());
 
 
-  ACE_TRY_EX (cleanup)
+  try
     {
-      test_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (cleanup);
+      test_object->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (cleanup);
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return (fail) ?  1 : 0;
 }

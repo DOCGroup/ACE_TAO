@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 // -*- C++ -*-
 
 #if !defined BUG_1330_REGRESSION_TEST_I_H
@@ -11,16 +8,21 @@
 class Test_i: public POA_Test
 {
 public:
-   /// Constructor
-   Test_i (void);
+  /// Constructor
+  Test_i (CORBA::ORB_ptr orb);
 
-   /// Destructor
-   ~Test_i (void);
+  /// Destructor
+  ~Test_i ();
 
-   /// A method
-   void test_method(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-     ACE_THROW_SPEC ((CORBA::SystemException));
+  /// A method
+  virtual void test_method();
 
+  virtual void shutdown ();
+
+private:
+  /// Use an ORB reference to convert strings to objects and shutdown
+  /// the application.
+  CORBA::ORB_var orb_;
 };
 
 #endif /* ! BUG_1330_REGRESSION_TEST_I_H */

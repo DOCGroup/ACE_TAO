@@ -1,18 +1,12 @@
-// $Id$
-
-#include "Repository_i.h"
-#include "ExtValueDef_i.h"
-#include "ExceptionDef_i.h"
-#include "IFR_Service_Utils.h"
-#include "IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/ExtValueDef_i.h"
+#include "orbsvcs/IFRService/ExceptionDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           ExtValueDef_i,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ExtValueDef_i::TAO_ExtValueDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -23,29 +17,24 @@ TAO_ExtValueDef_i::TAO_ExtValueDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtValueDef_i::~TAO_ExtValueDef_i (void)
+TAO_ExtValueDef_i::~TAO_ExtValueDef_i ()
 {
 }
 
 CORBA::ExtInitializerSeq *
 TAO_ExtValueDef_i::ext_initializers (
-    ACE_ENV_SINGLE_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->ext_initializers_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->ext_initializers_i ();
 }
 
 CORBA::ExtInitializerSeq *
 TAO_ExtValueDef_i::ext_initializers_i (
-    ACE_ENV_SINGLE_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ExtInitializerSeq *iseq = 0;
   ACE_NEW_RETURN (iseq,
@@ -123,26 +112,19 @@ TAO_ExtValueDef_i::ext_initializers_i (
             TAO_IFR_Service_Utils::path_to_idltype (holder,
                                                     this->repo_);
           retval[i].members[j].type =
-            impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+            impl->type_i ();
 
           obj =
             TAO_IFR_Service_Utils::path_to_ir_object (holder,
-                                                      this->repo_
-                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                                      this->repo_);
 
           retval[i].members[j].type_def =
-            CORBA::IDLType::_narrow (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+            CORBA::IDLType::_narrow (obj.in ());
         }
 
       this->fill_exceptions (retval[i].exceptions,
                              initializer_key,
-                             "excepts"
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                             "excepts");
     }
 
   return retval._retn ();
@@ -151,25 +133,19 @@ TAO_ExtValueDef_i::ext_initializers_i (
 void
 TAO_ExtValueDef_i::ext_initializers (
     const CORBA::ExtInitializerSeq &ext_initializers
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->ext_initializers_i (ext_initializers
-                            ACE_ENV_ARG_PARAMETER);
+  this->ext_initializers_i (ext_initializers);
 }
 
 void
 TAO_ExtValueDef_i::ext_initializers_i (
     const CORBA::ExtInitializerSeq &ext_initializers
-    ACE_ENV_ARG_DECL_NOT_USED
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration *config = this->repo_->config ();
   config->remove_section (this->section_key_,
@@ -212,23 +188,18 @@ TAO_ExtValueDef_i::ext_initializers_i (
 
 CORBA::ExtValueDef::ExtFullValueDescription *
 TAO_ExtValueDef_i::describe_ext_value (
-    ACE_ENV_SINGLE_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_ext_value_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_ext_value_i ();
 }
 
 CORBA::ExtValueDef::ExtFullValueDescription *
 TAO_ExtValueDef_i::describe_ext_value_i (
-    ACE_ENV_SINGLE_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ExtValueDef::ExtFullValueDescription *fv_desc = 0;
   ACE_NEW_RETURN (fv_desc,
@@ -318,23 +289,21 @@ TAO_ExtValueDef_i::describe_ext_value_i (
             TAO_IFR_Service_Utils::path_to_idltype (holder,
                                                     this->repo_);
           fv_desc->operations[i].result =
-            idl_type->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+            idl_type->type_i ();
 
           this->repo_->config ()->get_integer_value (op_key,
                                                      "mode",
                                                      val);
           fv_desc->operations[i].mode = static_cast<CORBA::OperationMode> (val);
           CORBA::TCKind kind =
-            fv_desc->operations[i].result->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+            fv_desc->operations[i].result->kind ();
 
           if (fv_desc->operations[i].mode == CORBA::OP_ONEWAY
               && kind != CORBA::tk_void)
             {
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 31,
-                                                  CORBA::COMPLETED_NO),
-                                0);
+              throw CORBA::BAD_PARAM (
+                CORBA::OMGVMCID | 31,
+                CORBA::COMPLETED_NO);
             }
 
           // Operation contexts.
@@ -381,21 +350,16 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                     TAO_IFR_Service_Utils::path_to_idltype (holder,
                                                             this->repo_);
                   fv_desc->operations[i].parameters[j].type =
-                    idl_type->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_CHECK_RETURN (0);
+                    idl_type->type_i ();
 
                   obj =
                     TAO_IFR_Service_Utils::path_to_ir_object (
                                                holder,
                                                this->repo_
-                                               ACE_ENV_ARG_PARAMETER
                                              );
-                  ACE_CHECK_RETURN (0);
 
                   fv_desc->operations[i].parameters[j].type_def =
-                    CORBA::IDLType::_narrow (obj.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-                  ACE_CHECK_RETURN (0);
+                    CORBA::IDLType::_narrow (obj.in ());
 
                   this->repo_->config ()->get_integer_value (param_key,
                                                              "mode",
@@ -460,8 +424,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                   TAO_ExceptionDef_i impl (this->repo_);
                   impl.section_key (except_def_key);
                   fv_desc->operations[i].exceptions[j].type =
-                    impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_CHECK_RETURN (0);
+                    impl.type_i ();
                 }
             }
         }
@@ -519,8 +482,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
             TAO_IFR_Service_Utils::path_to_idltype (holder,
                                                     this->repo_);
           fv_desc->attributes[i].type =
-            idl_type->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+            idl_type->type_i ();
 
           this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                holder,
@@ -534,16 +496,12 @@ TAO_ExtValueDef_i::describe_ext_value_i (
 
           this->fill_exceptions (fv_desc->attributes[i].get_exceptions,
                                  attr_key,
-                                 "get_excepts"
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                 "get_excepts");
 
 
           this->fill_exceptions (fv_desc->attributes[i].put_exceptions,
                                  attr_key,
-                                 "put_excepts"
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                 "put_excepts");
         }
     }
 
@@ -604,19 +562,14 @@ TAO_ExtValueDef_i::describe_ext_value_i (
             TAO_IFR_Service_Utils::path_to_idltype (holder,
                                                     this->repo_);
           fv_desc->members[i].type =
-            idl_type->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+            idl_type->type_i ();
 
           obj =
             TAO_IFR_Service_Utils::path_to_ir_object (holder,
-                                                      this->repo_
-                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                                      this->repo_);
 
           fv_desc->members[i].type_def =
-            CORBA::IDLType::_narrow (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+            CORBA::IDLType::_narrow (obj.in ());
         }
     }
 
@@ -688,29 +641,22 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                     TAO_IFR_Service_Utils::path_to_idltype (holder,
                                                              this->repo_);
                   fv_desc->initializers[i].members[j].type =
-                    impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_CHECK_RETURN (0);
+                    impl->type_i ();
 
                   obj =
                     TAO_IFR_Service_Utils::path_to_ir_object (
                                                holder,
                                                this->repo_
-                                               ACE_ENV_ARG_PARAMETER
                                              );
-                  ACE_CHECK_RETURN (0);
 
                   fv_desc->initializers[i].members[j].type_def =
-                    CORBA::IDLType::_narrow (obj.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-                  ACE_CHECK_RETURN (0);
+                    CORBA::IDLType::_narrow (obj.in ());
                 }
             }
 
           this->fill_exceptions (fv_desc->initializers[i].exceptions,
                                  initializer_key,
-                                 "excepts"
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                 "excepts");
         }
     }
 
@@ -732,12 +678,26 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                              "is_truncatable",
                                              val);
   fv_desc->is_truncatable = static_cast<CORBA::Boolean> (val);
-  this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_value",
-                                            holder);
+  status =
+    this->repo_->config ()->get_string_value (this->section_key_,
+                                              "base_value",
+                                              holder);
+
+  if (status == 0)
+    {
+      ACE_Configuration_Section_Key base_key;
+      this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                           holder,
+                                           base_key,
+                                           0);
+      this->repo_->config ()->get_string_value (base_key,
+                                                "id",
+                                                holder);
+    }
+
+  // If status isn't 0, then holder will be empty anyway.
   fv_desc->base_value = holder.fast_rep ();
-  fv_desc->type = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  fv_desc->type = this->type_i ();
 
   return retval._retn ();
 }
@@ -751,14 +711,11 @@ TAO_ExtValueDef_i::create_ext_attribute (
     CORBA::AttributeMode mode,
     const CORBA::ExceptionDefSeq &get_exceptions,
     const CORBA::ExceptionDefSeq &set_exceptions
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtAttributeDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ExtAttributeDef::_nil ());
+  this->update_key ();
 
   return this->create_ext_attribute_i (id,
                                        name,
@@ -766,8 +723,7 @@ TAO_ExtValueDef_i::create_ext_attribute (
                                        type,
                                        mode,
                                        get_exceptions,
-                                       set_exceptions
-                                       ACE_ENV_ARG_PARAMETER);
+                                       set_exceptions);
 }
 
 CORBA::ExtAttributeDef_ptr
@@ -779,9 +735,7 @@ TAO_ExtValueDef_i::create_ext_attribute_i (
     CORBA::AttributeMode mode,
     const CORBA::ExceptionDefSeq &get_exceptions,
     const CORBA::ExceptionDefSeq &set_exceptions
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -797,9 +751,7 @@ TAO_ExtValueDef_i::create_ext_attribute_i (
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "attrs"
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ExtAttributeDef::_nil ());
+                                          "attrs");
 
   // Store the path to the attribute's type definition.
   char *type_path = TAO_IFR_Service_Utils::reference_to_path (type);
@@ -825,14 +777,10 @@ TAO_ExtValueDef_i::create_ext_attribute_i (
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Attribute,
                                           path.c_str (),
-                                          this->repo_
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ExtAttributeDef::_nil ());
+                                          this->repo_);
 
   CORBA::ExtAttributeDef_var retval =
-    CORBA::ExtAttributeDef::_narrow (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ExtAttributeDef::_nil ());
+    CORBA::ExtAttributeDef::_narrow (obj.in ());
 
   return retval._retn ();
 }
@@ -840,8 +788,7 @@ TAO_ExtValueDef_i::create_ext_attribute_i (
 void
 TAO_ExtValueDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
                                     ACE_Configuration_Section_Key &key,
-                                    const char *sub_section
-                                    ACE_ENV_ARG_DECL)
+                                    const char *sub_section)
 {
   ACE_Configuration_Section_Key excepts_key;
   int status =
@@ -886,11 +833,10 @@ TAO_ExtValueDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
 
       TAO_ExceptionDef_i impl (this->repo_);
       impl.section_key (except_key);
-      exceptions[i].type = impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      exceptions[i].type = impl.type_i ();
 
       this->repo_->config ()->get_string_value (except_key,
-                                                "container_id",
+                                                ACE_TEXT("container_id"),
                                                 holder);
       exceptions[i].defined_in = holder.fast_rep ();
       this->repo_->config ()->get_string_value (except_key,
@@ -962,7 +908,7 @@ TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       type_path =
-        TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
+        TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (excepts_key,
@@ -970,3 +916,5 @@ TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
                                                 type_path);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

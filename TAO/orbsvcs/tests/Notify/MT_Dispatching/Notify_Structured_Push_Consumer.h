@@ -1,20 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   TAO/orbsvcs/tests/Notify/Discarding
-//
-// = FILENAME
-//   Notify_Structured_Push_Consumer.h
-//
-// = DESCRIPTION
-//   A structured push consumer implementation.
-//
-// = AUTHOR
-//    Chad Elliott <elliott_c@ociweb.com>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Structured_Push_Consumer.h
+ *
+ * A structured push consumer implementation.
+ *
+ *  @author Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 #ifndef TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
 #define TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
 
@@ -29,14 +23,17 @@ public:
                         const char* name,
                         unsigned int expected,
                         Notify_Test_Client& client);
+  void set_delay_parameters (unsigned int delay_count, unsigned long delay_period);
+
 protected:
-  void push_structured_event (const CosNotification::StructuredEvent&
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push_structured_event (const CosNotification::StructuredEvent&);
 
   ACE_CString name_;
   unsigned int expected_;
   unsigned int count_;
+  unsigned int delay_count_;
+  unsigned long delay_period_;
+
   Notify_Test_Client& client_;
 };
 

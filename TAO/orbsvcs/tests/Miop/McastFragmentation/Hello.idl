@@ -1,0 +1,16 @@
+module Test {
+    typedef sequence<octet> Octets;
+
+    const string ClientIDs =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    interface UIPMC_Object {
+        oneway void process (in Octets payload);
+    };
+
+    interface Hello {
+        UIPMC_Object get_object ();
+
+        oneway void shutdown ();
+    };
+};

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef SERVICE_CONTEXT_MANIPULATION_COLLOCATED_INTERCEPTORS_H
 #define SERVICE_CONTEXT_MANIPULATION_COLLOCATED_INTERCEPTORS_H
 
@@ -20,7 +18,7 @@
 
 class Echo_Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
@@ -30,35 +28,20 @@ public:
   virtual ~Echo_Client_Request_Interceptor ();
   // dtor.
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    PortableInterceptor::ForwardRequest));
+  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
 
 private:
   const char *myname_;
@@ -72,47 +55,31 @@ private:
 
 class Echo_Server_Request_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Server_Request_Interceptor (void);
+  Echo_Server_Request_Interceptor ();
   // cotr.
 
   ~Echo_Server_Request_Interceptor ();
   // dotr.
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+        PortableInterceptor::ServerRequestInfo_ptr);
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
 
 private:
   const char *myname_;

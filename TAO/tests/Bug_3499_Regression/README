@@ -1,0 +1,24 @@
+
+
+This test uses newly implemented '-ORBGestalt CURRENT' feature of ORB_init. Using
+this feature allows developers to control explicity control where an ORB services
+are located, especially when loading modules that initialize an ORB.
+
+__Regression Output__
+
+[hillj@tango Bug_3499_Regression]$ ./run_test.pl
+(1892)  16:17:45.849000 - LM_DEBUG - initializing the loaded service
+(1892)  16:17:45.849000 - LM_DEBUG - initializing the CORBA ORB
+(1892)  16:17:45.912000 - LM_DEBUG - resolving the RootPOA
+(1892)  16:17:45.927000 - LM_ERROR - caught unknown exception
+[followed by a segfault]
+
+__Successful Output__
+
+[hillj@tango Bug_3499_Regression]$ ./run_test.pl
+(832)  16:16:16.818000 - LM_DEBUG - initializing the loaded service
+(832)  16:16:16.818000 - LM_DEBUG - initializing the CORBA ORB
+(832)  16:16:16.865000 - LM_DEBUG - resolving the RootPOA
+(832)  16:16:16.896000 - LM_DEBUG - sleeping for 5 seconds
+(832)  16:16:21.896000 - LM_DEBUG - finalizing the service
+(832)  16:16:21.896000 - LM_DEBUG - destroying the service

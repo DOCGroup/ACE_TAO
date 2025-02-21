@@ -1,11 +1,9 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Grid_i.h"
 
 // Default constructor.
 
-Grid_i::Grid_i (void)
+Grid_i::Grid_i ()
   : width_ (0),
     height_ (0),
     array_ (0)
@@ -19,16 +17,25 @@ Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,
                 pool_t *mem_pool)
   : width_ (x),
-    height_ (y)
+    height_ (y),
+    array_ (0),
+    pool_t_ (0)
 {
   // First try to locate the matrix in the pool. If it is there then
   // it has already been created. In such a case we just get that
   // memory and assign it to array_
-  if (mem_pool->find ("Array", (void *&) array_) == -1)
+
+  void *tmp_array (0);
+
+  if (mem_pool->find ("Array", tmp_array) != -1)
+    {
+      array_ = reinterpret_cast <CORBA::Long **> (tmp_array);
+    }
+  else
     {
       // Allocate memory for the matrix.
-       ACE_ALLOCATOR (array_,
-                      static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
+      ACE_ALLOCATOR (array_,
+                     static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
       //array_ = (CORBA::Long **) mem_pool->malloc (y * sizeof (CORBA::Long *));
 
       if (array_ != 0)
@@ -46,13 +53,13 @@ Grid_i::Grid_i (CORBA::Short x,
           mem_pool->bind ("Array", array_);
         }
     }
+
 }
 
 // Default destructor.
 
-Grid_i::~Grid_i (void)
+Grid_i::~Grid_i ()
 {
-  // no-op.
 }
 
 //  Set a value in the grid.
@@ -60,16 +67,13 @@ Grid_i::~Grid_i (void)
 void
 Grid_i::set (CORBA::Short x,
              CORBA::Short y,
-             CORBA::Long value
-             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Grid::RANGE_ERROR))
+             CORBA::Long value)
 {
   if (x < 0
       || y < 0
       || x >= width_
       || y >= height_)
-    ACE_THROW (Grid::RANGE_ERROR ());
+    throw Grid::RANGE_ERROR ();
   else
     array_[x][y] = value;
 }
@@ -78,16 +82,13 @@ Grid_i::set (CORBA::Short x,
 
 CORBA::Long
 Grid_i::get (CORBA::Short x,
-             CORBA::Short y
-             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Grid::RANGE_ERROR))
+             CORBA::Short y)
 {
   if (x < 0
       || y < 0
       || x >= width_
       || y >= height_)
-    ACE_THROW_RETURN (Grid::RANGE_ERROR (), -1);
+    throw Grid::RANGE_ERROR ();
   else
     return array_[x][y];
 }
@@ -95,39 +96,32 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short
-Grid_i::width (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Grid_i::width ()
 {
   return this->width_;
 }
 
 CORBA::Short
-Grid_i::height (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Grid_i::height ()
 {
   return this->height_;
 }
 
 void
-Grid_i::width (CORBA::Short x
-               ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Grid_i::width (CORBA::Short x)
 {
   this->width_ = x;
 }
 
 void
-Grid_i::height (CORBA::Short y
-                ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Grid_i::height (CORBA::Short y)
 {
   this->height_ = y;
 }
 
 // Destroy the grid
 void
-Grid_i::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Grid_i::destroy ( )
 {
   // Delete the array.
   for (int i = 0; i < height_; i++)
@@ -148,29 +142,25 @@ Grid_i::set_pool (pool_t *pool)
 }
 // Constructor
 
-Grid_Factory_i::Grid_Factory_i (void)
+Grid_Factory_i::Grid_Factory_i ()
   : orb_ (0),
     pool_name_ (0),
     pool_t_ (0)
 {
-  // no-op
 }
 
 // Destructor
 
-Grid_Factory_i::~Grid_Factory_i (void)
+Grid_Factory_i::~Grid_Factory_i ()
 {
   delete this->pool_t_;
-  // no-op
 }
 
 // Make a <Grid>.
 
 Grid_ptr
 Grid_Factory_i::make_grid (CORBA::Short width,
-                           CORBA::Short height
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                           CORBA::Short height)
 {
   ACE_DEBUG ((LM_DEBUG,
               " (%P|%t) Making a new Grid\n"));
@@ -197,14 +187,14 @@ Grid_Factory_i::make_grid (CORBA::Short width,
                                  height,
                                  pool_t_);
   if (errno == ENOMEM)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+    throw CORBA::NO_MEMORY ();
 
   errno = prev_no;
 
   grid_ptr->set_pool (pool_t_);
 
   // Register the Grid pointer.
-  return grid_ptr->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return grid_ptr->_this ();
 }
 
 // Set the ORB pointer.
@@ -217,8 +207,7 @@ Grid_Factory_i::orb (CORBA::ORB_ptr o)
 
 // Shutdown.
 void
-Grid_Factory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Grid_Factory_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               " (%P|%t) %s\n",
@@ -229,8 +218,7 @@ Grid_Factory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Grid_Factory_i::cleanup (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Grid_Factory_i::cleanup ()
 {
   const char *name = "Array";
 
@@ -240,7 +228,7 @@ Grid_Factory_i::cleanup (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Grid_Factory_i::pool_name (const char *name)
+Grid_Factory_i::pool_name (const ACE_TCHAR *name)
 {
   this->pool_name_ = ACE_OS::strdup (name);
 }

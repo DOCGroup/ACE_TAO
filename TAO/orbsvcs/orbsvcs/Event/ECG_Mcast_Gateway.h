@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ECG_Mcast_Gateway.h
- *
- *  $Id$
  *
  *  @author Marina Spivak (marina@atdesk.com)
  */
@@ -11,22 +10,26 @@
 #define TAO_ECG_MCAST_GATEWAY_H
 #include /**/ "ace/pre.h"
 
-#include "ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ECG_Defaults.h"
-#include /**/ "event_serv_export.h"
-#include "ECG_UDP_Receiver.h"
-#include "ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_Defaults.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 #include "ace/SString.h"
 #include "ace/os_include/os_stdint.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Event_Handler;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_Mcast_Gateway
@@ -109,13 +112,11 @@ class ACE_Event_Handler;
  *  NOTE: Certain device drivers block the process if the physical
  *        link fails.
  *
- *
  * 2) Create an instance of TAO_ECG_Mcast_Gateway in your code, on the stack or
  *    dynamically, and use init () method to configure it.  No
  *    configuration files involved.  See service config options above for the
  *    description of configurable options, and init() method below for how
  *    to specify them.
- *
  *
  * Default configuration values (for either use case) can be found in
  * ECG_Defaults.h
@@ -124,19 +125,18 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_Gateway
   : public ACE_Service_Object
 {
 public:
-
   /// The Service_Object entry points.
   //@{
-  virtual int init (int argc, char* argv[]);
-  virtual int fini (void);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
+  virtual int fini ();
   //@}
 
   /// Helper function to register the Gateway into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   /// Constructor.
-  TAO_ECG_Mcast_Gateway (void);
+  TAO_ECG_Mcast_Gateway ();
 
   /// Values for some configuration parameters to init ().
   //@{
@@ -181,7 +181,7 @@ public:
    */
   struct TAO_RTEvent_Serv_Export Attributes
   {
-    Attributes (void);
+    Attributes ();
 
     Address_Server_Type address_server_type;
     Handler_Type handler_type;
@@ -215,46 +215,40 @@ public:
   /// The main method - create, configure and run federation
   /// components according to the specified configuration.
   void run (CORBA::ORB_ptr orb,
-            RtecEventChannelAdmin::EventChannel_ptr ec
-            ACE_ENV_ARG_DECL);
+            RtecEventChannelAdmin::EventChannel_ptr ec);
 
 private:
-
   /// Helpers.
   //@{
   /// Check that arguments to run() are not nil.
   void verify_args (CORBA::ORB_ptr orb,
-                    RtecEventChannelAdmin::EventChannel_ptr ec
-                    ACE_ENV_ARG_DECL);
+                    RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Verifies configuration values specified through init() make sense.
-  int validate_configuration (void);
+  int validate_configuration ();
   //@}
 
   /// Allocate and initialize appropriate objects.
   //@{
   PortableServer::ServantBase *
-        init_address_server (void);
+        init_address_server ();
 
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
+  PortableServer::Servant_var<TAO_ECG_UDP_Sender>
         init_sender (RtecEventChannelAdmin::EventChannel_ptr ec,
                      RtecUDPAdmin::AddrServer_ptr address_server,
-                     TAO_ECG_Refcounted_Endpoint endpoint_rptr
-                     ACE_ENV_ARG_DECL);
+                     TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
+  PortableServer::Servant_var<TAO_ECG_UDP_Receiver>
         init_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                        RtecUDPAdmin::AddrServer_ptr address_server,
-                       TAO_ECG_Refcounted_Endpoint endpoint_rptr
-                       ACE_ENV_ARG_DECL);
+                       TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
-  TAO_ECG_Refcounted_Endpoint init_endpoint (void);
+  TAO_ECG_Refcounted_Endpoint init_endpoint ();
 
   TAO_ECG_Refcounted_Handler
         init_handler (TAO_ECG_Dgram_Handler *recv,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
-                      ACE_Reactor * reactor
-                      ACE_ENV_ARG_DECL);
+                      ACE_Reactor * reactor);
   //@}
 
   /// Flags controlling configuration.
@@ -264,7 +258,7 @@ private:
   Address_Server_Type address_server_type_;
   ACE_CString address_server_arg_;
   u_char ttl_value_;
-  ACE_CString nic_;
+  ACE_TString nic_;
   int ip_multicast_loop_;
   int non_blocking_;
 
@@ -272,8 +266,10 @@ private:
   //@}
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ECG_Mcast_Gateway.i"
+#include "orbsvcs/Event/ECG_Mcast_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_ECG_Mcast_Gateway)

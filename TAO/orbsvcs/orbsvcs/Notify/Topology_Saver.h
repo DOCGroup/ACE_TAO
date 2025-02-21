@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
 *  @file    Topology_Saver.h
-*
-*  $Id$
 *
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
@@ -14,15 +12,16 @@
 #define TOPOLOGY_SAVER_H
 #include /**/ "ace/pre.h"
 
-#include "Topology_Object.h"
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
-#include "tao/corba.h"
 #include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -35,7 +34,6 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Topology_Saver
   {
   public:
-
     /// The destructor.
     virtual ~Topology_Saver ();
 
@@ -57,14 +55,13 @@ namespace TAO_Notify
     * \param id numeric id for this object
     * \param type string containing the unique type name for this class of objects
     * \param attrs a collection of name/value attributes
-    * \param change true if this object's attributes have changed.
+    * \param changed true if this object's attributes have changed.
     * \return bool want_all_children.  If true even changed children should be saved.
     */
     virtual bool begin_object (CORBA::Long id,
       const ACE_CString &type,
       const NVPList& attrs,
-      bool changed
-      ACE_ENV_ARG_DECL) = 0;
+      bool changed) = 0;
 
     /** \brief Report deleted children to the saver.
     *
@@ -75,10 +72,7 @@ namespace TAO_Notify
     * \param type the type name for the class of the deleted child.
     *
     */
-    virtual void delete_child (
-      CORBA::Long id,
-      const ACE_CString & type
-      ACE_ENV_ARG_DECL_NOT_USED)
+    virtual void delete_child (CORBA::Long id, const ACE_CString & type)
     {
       ACE_UNUSED_ARG (id);
       ACE_UNUSED_ARG (type);
@@ -89,9 +83,7 @@ namespace TAO_Notify
     * This function should be called to end the scope of the current object
     * and commit it to the persistent store.
     */
-    virtual void end_object (CORBA::Long id,
-      const ACE_CString &type
-      ACE_ENV_ARG_DECL) = 0;
+    virtual void end_object (CORBA::Long id, const ACE_CString &type) = 0;
 
     /**
      * \brief Close the saver.
@@ -102,9 +94,11 @@ namespace TAO_Notify
      * vary based on the type of saver, so we can't include it in the
      * interface.
      */
-    virtual void close (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void close ();
   };
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

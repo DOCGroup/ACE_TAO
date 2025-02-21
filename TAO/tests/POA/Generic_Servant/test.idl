@@ -1,0 +1,17 @@
+interface test
+{
+  void method ();
+  // A twoway operation.
+
+  oneway void oneway_method ();
+  // A oneway operation.
+
+  void timed_method (in unsigned long timeout);
+  // A timed twoway operation.
+
+  oneway void timed_oneway_method (in unsigned long timeout);
+  // A timed oneway operation.
+
+  void shutdown ();
+  // Shutdown the server.
+};

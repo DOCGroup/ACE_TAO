@@ -1,24 +1,21 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Endpoint_Strategy_T.h
- *
- *  $Id$
  *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================
 
-
-
 #ifndef TAO_AV_ENDPOINT_STRATEGY_T_H
 #define TAO_AV_ENDPOINT_STRATEGY_T_H
 #include /**/ "ace/pre.h"
 
-#include "Endpoint_Strategy.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_AV_Endpoint_Reactive_Strategy
@@ -28,27 +25,26 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Endpoint_Reactive_Strategy
 : public TAO_AV_Endpoint_Strategy
 {
-
 protected:
   // Constructor
 
   /// Constructor
-  TAO_AV_Endpoint_Reactive_Strategy (void);
+  TAO_AV_Endpoint_Reactive_Strategy ();
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy (void);
+  virtual ~TAO_AV_Endpoint_Reactive_Strategy ();
 
   /// creates and activates the streamendpoint, vdev, and mediacontrol
-  virtual int activate (void);
+  virtual int activate ();
 
   /// activates the stream_endpoint with the POA
-  virtual int activate_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual int activate_stream_endpoint () = 0;
 
   /// activates the vdev with the POA
-  virtual int activate_vdev (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int activate_vdev ();
 
   /// activates the media controller with the POA
-  virtual int activate_mediactrl (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int activate_mediactrl ();
 
   /// Bridge method to create a vdev, a la Acceptor. Applications
   /// can override this
@@ -63,7 +59,7 @@ protected:
   virtual int make_mediactrl (T_MediaCtrl *&media_ctrl);
 
 
-  char* activate_with_poa (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  char* activate_with_poa (PortableServer::Servant servant);
 
   CORBA::ORB_var orb_;
 
@@ -89,26 +85,22 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Endpoint_Reactive_Strategy_A
   : public TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev , T_MediaCtrl>
 {
-
 public:
-
-  TAO_AV_Endpoint_Reactive_Strategy_A (void);
+  TAO_AV_Endpoint_Reactive_Strategy_A ();
 
   /// Constructor
   int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy_A (void);
+  virtual ~TAO_AV_Endpoint_Reactive_Strategy_A ();
 
   /// Overrides the base class stream_endpoint activator, to activate
   /// an "A" type endpoint
-  virtual int activate_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int activate_stream_endpoint ();
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
-
+                        AVStreams::VDev_ptr &vdev);
 };
 
 // ----------------------------------------------------------------------
@@ -120,25 +112,22 @@ template <class T_StreamEndpoint, class T_Vdev , class T_MediaCtrl>
 class TAO_AV_Endpoint_Reactive_Strategy_B
   : public TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_Vdev, T_MediaCtrl>
 {
-
 public:
-
   /// Constructor
-  TAO_AV_Endpoint_Reactive_Strategy_B (void);
+  TAO_AV_Endpoint_Reactive_Strategy_B ();
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy_B (void);
+  virtual ~TAO_AV_Endpoint_Reactive_Strategy_B ();
 
   int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Overrides the base class stream_endpoint activator, to activate
   /// a "B" type endpoint
-  virtual int activate_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int activate_stream_endpoint ();
 
   /// Called by the MMDevice, when it needs to create a B type endpoint
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 };
 
 // ----------------------------------------------------------------------
@@ -152,7 +141,6 @@ public:
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Child_Process
 {
-
 public:
   /// Constructor
   TAO_AV_Child_Process ();
@@ -162,7 +150,7 @@ public:
 
   /// Initializes the ORB, creates and activates the
   /// T_StreamEndpoint, T_VDev, T_MediaCtrl in the POA
-  int init (int argc, char **argv, CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+  int init (int argc, ACE_TCHAR **argv, CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// runs the ORB event loop
   int run (ACE_Time_Value *tv = 0);
@@ -174,23 +162,22 @@ protected:
    * return them to the client
    */
   int activate_objects (int argc,
-                        char **argv
-                        ACE_ENV_ARG_DECL);
+                        ACE_TCHAR **argv);
 
   ///activate the servant with the poa
-  char* activate_with_poa (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  char* activate_with_poa (PortableServer::Servant servant);
 
   /// Removes the vdev and streamendpoint names from the naming service.
-  int unbind_names (void);
+  int unbind_names ();
 
   /// Binds to the naming service
-  int bind_to_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int bind_to_naming_service ();
 
   /// Registers vdev with the naming service
-  int register_vdev (ACE_ENV_SINGLE_ARG_DECL);
+  int register_vdev ();
 
   /// Registers stream_endpoint with the naming service
-  int register_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  int register_stream_endpoint ();
 
   /// Releases the semaphore on which the parent is waiting on
   int release_semaphore ();
@@ -240,7 +227,6 @@ protected:
   CORBA::ORB_ptr orb_;
 
   PortableServer::POA_ptr poa_;
-
 };
 
 // ----------------------------------------------------------------------
@@ -252,13 +238,12 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Child_Process_A
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
-
 public:
   /// Constructor.
-  TAO_AV_Child_Process_A (void);
+  TAO_AV_Child_Process_A ();
 
   /// Destructor.
-  virtual ~TAO_AV_Child_Process_A (void);
+  virtual ~TAO_AV_Child_Process_A ();
 };
 
 // ----------------------------------------------------------------------
@@ -271,22 +256,17 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Child_Process_B
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
-
 public:
   /// Constructor.
-  TAO_AV_Child_Process_B (void);
+  TAO_AV_Child_Process_B ();
 
   /// Destructor.
-  virtual ~TAO_AV_Child_Process_B (void);
+  virtual ~TAO_AV_Child_Process_B ();
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Endpoint_Strategy_T.cpp"
-#endif /*ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Endpoint_Strategy_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/AV/Endpoint_Strategy_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_ENDPOINT_STRATEGY_T_H */

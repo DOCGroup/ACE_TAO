@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCode_SArg_Traits.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman
  */
 //=============================================================================
@@ -23,7 +21,10 @@
 
 #include "tao/PortableServer/Object_SArgument_T.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/Any_Insert_Policy_T.h"
+#include "tao/PortableServer/portableserver_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -31,7 +32,7 @@ namespace CORBA
   typedef TypeCode *TypeCode_ptr;
 
   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
-  typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
+  typedef TAO_Pseudo_Out_T<TypeCode> TypeCode_out;
 }
 
 // --------------------------------------------------------------
@@ -46,10 +47,14 @@ namespace TAO
   class TAO_PortableServer_Export SArg_Traits<CORBA::TypeCode>
     : public Object_SArg_Traits_T<CORBA::TypeCode_ptr,
                                   CORBA::TypeCode_var,
-                                  CORBA::TypeCode_out>
+                                  CORBA::TypeCode_out,
+                                  TAO::Any_Insert_Policy_Stream
+                                 >
   {
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

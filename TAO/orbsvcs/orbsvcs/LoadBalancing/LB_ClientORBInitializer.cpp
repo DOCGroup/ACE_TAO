@@ -1,25 +1,18 @@
-#include "LB_ClientORBInitializer.h"
-#include "LB_ClientRequestInterceptor.h"
-
+#include "orbsvcs/LoadBalancing/LB_ClientORBInitializer.h"
+#include "orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (LoadBalancing,
-           LB_ClientORBInitializer,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_LB_ClientORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
 TAO_LB_ClientORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
   PortableInterceptor::ClientRequestInterceptor_ptr tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -29,11 +22,10 @@ TAO_LB_ClientORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor = tmp;
 
-  info->add_client_request_interceptor (client_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_client_request_interceptor (client_interceptor.in ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

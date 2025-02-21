@@ -1,8 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
-//
-// $Id$
-
-#include "PortableGroup_Acceptor_Registry.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 #include "tao/Protocol_Factory.h"
@@ -11,19 +8,14 @@
 #include "tao/Endpoint.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Leader_Follower.h"
+#include "tao/SystemException.h"
 
-ACE_RCSID (PortableGroup, 
-           PortableGroup_Acceptor_Registry, 
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PortableGroup_Acceptor_Registry::TAO_PortableGroup_Acceptor_Registry (void)
-{
-}
-
-TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry (void)
+TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry ()
 {
   // Free the memory for the endpoints.
-  Entry *entry;
+  Entry *entry = nullptr;
   Acceptor_Registry_Iterator iter (this->registry_);
 
   while (iter.next (entry))
@@ -34,13 +26,11 @@ TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry (void)
     }
 }
 
-
 void
 TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
-                                           TAO_ORB_Core &orb_core
-                                           ACE_ENV_ARG_DECL)
+                                           TAO_ORB_Core &orb_core)
 {
-  Entry *entry;
+  Entry *entry = nullptr;
 
   if (this->find (profile, entry) == 1)
     {
@@ -68,9 +58,7 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
             {
               this->open_i (profile,
                             orb_core,
-                            factory
-                            ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+                            factory);
 
               // found = 1;  // A usable protocol was found.
             }
@@ -85,8 +73,7 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
 void
 TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                                              TAO_ORB_Core &orb_core,
-                                             TAO_ProtocolFactorySetItor &factory
-                                             ACE_ENV_ARG_DECL)
+                                             TAO_ProtocolFactorySetItor &factory)
 {
   TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
 
@@ -112,18 +99,18 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
           delete acceptor;
 
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) ")
                         ACE_TEXT ("unable to open acceptor ")
                         ACE_TEXT ("for <%s>%p\n"),
                         buffer,
                         ""));
 
-          ACE_THROW (CORBA::BAD_PARAM (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                EINVAL),
-              CORBA::COMPLETED_NO));
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       // Add acceptor to list.
@@ -137,33 +124,33 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
           delete acceptor;
 
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) ")
                         ACE_TEXT ("unable to add acceptor to registry")
                         ACE_TEXT ("for <%s>%p\n"),
                         buffer,
                         ""));
 
-          ACE_THROW (CORBA::BAD_PARAM (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                EINVAL),
-              CORBA::COMPLETED_NO));
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
     }
   else
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) ")
                     ACE_TEXT ("unable to create acceptor ")
                     ));
 
-      ACE_THROW (CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-            EINVAL),
-          CORBA::COMPLETED_NO));
+      throw CORBA::BAD_PARAM (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 }
 
@@ -188,18 +175,4 @@ TAO_PortableGroup_Acceptor_Registry::find (const TAO_Profile* profile,
    return 0;
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Queue<TAO_PortableGroup_Acceptor_Registry::Entry>;
-template class ACE_Unbounded_Queue_Iterator<TAO_PortableGroup_Acceptor_Registry::Entry>;
-template class ACE_Node<TAO_PortableGroup_Acceptor_Registry::Entry>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Queue<TAO_PortableGroup_Acceptor_Registry::Entry>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_PortableGroup_Acceptor_Registry::Entry>
-#pragma instantiate ACE_Node<TAO_PortableGroup_Acceptor_Registry::Entry>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

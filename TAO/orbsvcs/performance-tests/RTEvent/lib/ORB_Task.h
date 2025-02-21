@@ -1,8 +1,6 @@
 /**
  * @file ORB_Task.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -21,7 +19,6 @@
  * @class ORB_Task
  *
  * @brief Implement a simple ACE_Task to send the events
- *
  */
 class TAO_RTEC_Perf_Export ORB_Task : public ACE_Task_Base
 {
@@ -30,10 +27,10 @@ public:
   ORB_Task (CORBA::ORB_ptr orb);
 
   /// Run the event loop
-  int svc (void);
+  int svc ();
 
   /// Smart-pointer operator
-  CORBA::ORB_ptr operator-> (void) const;
+  CORBA::ORB_ptr operator-> () const;
 
 private:
   CORBA::ORB_var orb_;

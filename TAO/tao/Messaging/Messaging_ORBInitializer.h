@@ -4,8 +4,6 @@
 /**
  *  @file     Messaging_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -16,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,14 +30,14 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Messaging ORB initializer.
-class TAO_Messaging_Export TAO_Messaging_ORBInitializer
+class TAO_Messaging_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name PortableInterceptor::ORBInitializer Methods
    *
@@ -47,30 +45,25 @@ public:
    * PortableInterceptor::ORBInitializer interface.
    */
   //@{
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   //@}
 
 private:
-
   /// Register Messaging policy factories.
-  void register_policy_factories (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL);
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
+
+  /// Register ExceptionHolder value factory
+  void register_value_factory (PortableInterceptor::ORBInitInfo_ptr info);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-
 
 #include /**/ "ace/post.h"
 

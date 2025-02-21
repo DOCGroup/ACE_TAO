@@ -2,11 +2,7 @@
 /**
  *  @file ConsumerAdmin_Command.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_CONSUMERADMIN_COMMAND_H
@@ -27,13 +23,12 @@
  * @class TAO_Notify_Tests_ConsumerAdmin_Command
  *
  * @brief Command for ConsumerAdmin objects.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_ConsumerAdmin_Command  : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_ConsumerAdmin_Command (void);
+  /// Constructor
+  TAO_Notify_Tests_ConsumerAdmin_Command ();
 
   /// Destructor
   ~TAO_Notify_Tests_ConsumerAdmin_Command ();
@@ -42,19 +37,14 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_i ();
 
   /// Name of object
-  virtual const char* get_name (void);
-  static const char* name (void);
+  virtual const char* get_name ();
+  static const char* name ();
 
 protected:
-
   /// = Data Members
-#ifdef HPUX_11
-   // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h
-#undef COMMAND
-#endif
   enum COMMAND
   {
     CREATE,
@@ -80,10 +70,10 @@ protected:
   CosNotification::EventTypeSeq removed_;
 
   /// = Handlers
-  void handle_create (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_subscriptions (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_status (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_set_qos (ACE_ENV_SINGLE_ARG_DECL);
+  void handle_create ();
+  void handle_subscriptions ();
+  void handle_status ();
+  void handle_set_qos ();
 };
 
 #include /**/ "ace/post.h"

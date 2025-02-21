@@ -1,0 +1,11 @@
+project: taoidldefaults, taoserver, strategies {
+  exename = shmiop_test
+
+  IDL_Files {
+    Test.idl
+  }
+
+  Source_Files {
+    shmiop_test.cpp
+  }
+}

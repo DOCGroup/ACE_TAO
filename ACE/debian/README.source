@@ -1,0 +1,25 @@
+= Compiling ACE Debian packages =
+
+= Repackaged source =
+
+This version of ACE was downloaded as a big tarball from the ACE FTP
+and repackaged as using uscan:
+
+$ uscan --force-download --repack --verbose --watchfile debian/watch
+
+ * ACE-src-<version>.tar.gz is retrieved from:
+     https://download.dre.vanderbilt.edu/previous_versions/
+   The -src version does not contain pre-generated Makefiles. They are
+   regenerated in the build process.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>, Tue,  1 Jan 2013 20:32:49 +0100
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>, Mon, 18 Aug 2014 22:58:18 +0200
+
+= New releases =
+
+When preparing a new release, there are several things to remember:
+
+ - Refresh reduce-doxygen-doc.diff patch by invoking the following command
+   from toplevel directory:
+
+   $ debian/fix_doxygen.sh

@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Proxy_List.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -16,8 +15,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
 #include "ace/Unbounded_Set.h"
 #include "ace/Containers.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// A concrete proxy collection.
 /**
@@ -35,49 +38,42 @@ public:
   typedef ACE_Unbounded_Set_Iterator<PROXY*> Iterator;
 
   /// Constructor
-  TAO_ESF_Proxy_List (void);
+  TAO_ESF_Proxy_List ();
 
   /// Return the first element in the collection, or end() if there
   /// are none
-  ACE_Unbounded_Set_Iterator<PROXY*> begin (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> begin ();
 
   /// Return one past the last element in the collection
-  ACE_Unbounded_Set_Iterator<PROXY*> end (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> end ();
 
   /// Return the number of elements in the collection
-  size_t size (void) const;
+  size_t size () const;
 
   /// Insert a new element to the collection
-  void connected (PROXY *
-                  ACE_ENV_ARG_DECL_NOT_USED);
+  void connected (PROXY *);
 
   /// Insert a new element that could be there already.
-  void reconnected (PROXY *
-                    ACE_ENV_ARG_DECL_NOT_USED);
+  void reconnected (PROXY *);
 
   /// Remove an element from the collection
-  void disconnected (PROXY *
-                     ACE_ENV_ARG_DECL_NOT_USED);
+  void disconnected (PROXY *);
 
   /// Shutdown the collection, i.e. remove all elements and release
   /// resources
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shutdown ();
 
 private:
   /// The underlying implementation object
   ACE_Unbounded_Set<PROXY*> impl_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ESF_Proxy_List.i"
+#include "orbsvcs/ESF/ESF_Proxy_List.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Proxy_List.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Proxy_List.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Proxy_List.cpp"
 
 #endif /* TAO_ESF_PROXY_LIST_H */

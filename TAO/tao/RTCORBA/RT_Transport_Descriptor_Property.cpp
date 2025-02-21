@@ -1,29 +1,25 @@
-// $Id$
-
-#include "RT_Transport_Descriptor_Property.h"
+#include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
 
 #include "ace/OS_Memory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "RT_Transport_Descriptor_Property.inl"
+#include "tao/RTCORBA/RT_Transport_Descriptor_Property.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (RTCORBA,
-           TAO_RT_Transport_Descriptor_Property,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Transport_Descriptor_Property::~TAO_RT_Transport_Descriptor_Property (void)
+TAO_RT_Transport_Descriptor_Property::~TAO_RT_Transport_Descriptor_Property ()
 {
 }
 
 /*************************************************************************************************/
 
-TAO_RT_Transport_Descriptor_Private_Connection_Property::~TAO_RT_Transport_Descriptor_Private_Connection_Property (void)
+TAO_RT_Transport_Descriptor_Private_Connection_Property::~TAO_RT_Transport_Descriptor_Private_Connection_Property ()
 {
 }
 
 TAO_RT_Transport_Descriptor_Property*
-TAO_RT_Transport_Descriptor_Private_Connection_Property::duplicate (void)
+TAO_RT_Transport_Descriptor_Private_Connection_Property::duplicate ()
 {
   // Construct a copy of our class
   TAO_RT_Transport_Descriptor_Private_Connection_Property *desc_prop = 0;
@@ -51,7 +47,7 @@ TAO_RT_Transport_Descriptor_Banded_Connection_Property::~TAO_RT_Transport_Descri
 }
 
 TAO_RT_Transport_Descriptor_Property*
-TAO_RT_Transport_Descriptor_Banded_Connection_Property::duplicate (void)
+TAO_RT_Transport_Descriptor_Banded_Connection_Property::duplicate ()
 {
   // Construct a copy of our class
   TAO_RT_Transport_Descriptor_Banded_Connection_Property *desc_prop = 0;
@@ -74,3 +70,5 @@ TAO_RT_Transport_Descriptor_Banded_Connection_Property::is_equivalent (const TAO
           this->low_priority_ == rhs->low_priority_ &&
           this->high_priority_ == rhs->high_priority_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

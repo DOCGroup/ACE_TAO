@@ -1,14 +1,12 @@
-#include "LB_ORBInitializer.h"
-#include "LB_IORInterceptor.h"
-#include "LB_ServerRequestInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ORBInitializer.h"
+#include "orbsvcs/LoadBalancing/LB_IORInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (LoadBalancing,
-           LB_ORBInitializer,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_ORBInitializer::TAO_LB_ORBInitializer (
   const CORBA::StringSeq & object_groups,
@@ -23,30 +21,21 @@ TAO_LB_ORBInitializer::TAO_LB_ORBInitializer (
 
 void
 TAO_LB_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
 TAO_LB_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
   CORBA::Object_var obj =
-    info->resolve_initial_references ("LoadManager"
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    info->resolve_initial_references ("LoadManager");
 
   CosLoadBalancing::LoadManager_var lm =
-    CosLoadBalancing::LoadManager::_narrow (obj.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CosLoadBalancing::LoadManager::_narrow (obj.in ());
 
-  CORBA::String_var orbid = info->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var orbid = info->orb_id ();
 
   PortableInterceptor::IORInterceptor_ptr tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -61,13 +50,10 @@ TAO_LB_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::IORInterceptor_var ior_interceptor = tmp;
 
-  info->add_ior_interceptor (ior_interceptor.in ()
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_ior_interceptor (ior_interceptor.in ());
 
   // ----------------
 
@@ -79,11 +65,10 @@ TAO_LB_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var sr_interceptor = sri;
 
-  info->add_server_request_interceptor (sr_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (sr_interceptor.in ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

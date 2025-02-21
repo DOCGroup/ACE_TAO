@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
-// ============================================================================
-//
-// = FILENAME
-//   Notify_Service.h
-//
-// = AUTHORS
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//   Service options code by Wei Chiang <Wei.Chiang@nokia.com>.
-//
-// = DESCRIPTION
-//   Notification Service front end.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Service.h
+ *
+ * Notification Service front end.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *  @author Service options code by Wei Chiang <Wei.Chiang@nokia.com>.
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_SERVICE_H
 #define NOTIFY_SERVICE_H
@@ -22,123 +19,169 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "../orbsvcs/Notify/CosNotify_Initializer.h"
+#include "orbsvcs/Notify/CosNotify_Initializer.h"
 #include "ace/SString.h"
+#include "ace/Reactor.h"
+#include "ace/Service_Object.h"
+#include "Notify_Service_Export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
+class TAO_Notify_Service_Driver;
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"
 
+class LoggingWorker : public ACE_Task_Base
+{
+public:
+  LoggingWorker (TAO_Notify_Service_Driver* ns);
+  virtual int svc ();
+  void start ();
+  void end ();
+private:
+  ACE_Reactor logging_reactor_;
+  TAO_Notify_Service_Driver* ns_;
+  bool started_;
+  long timer_id_;
+};
+
+/**
+ * @class Worker
+ *
+ * @brief Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
-  Worker (void);
-  // ctor
+  /// ctor
+  Worker ();
 
   void orb (CORBA::ORB_ptr orb);
 
-  virtual int svc (void);
-  // The thread entry point.
+  /// The thread entry point.
+  virtual int svc ();
 
 private:
+  /// The orb
   CORBA::ORB_var orb_;
-  // The orb
 };
 
-class TAO_Notify_Service_Driver
+/**
+ * @class TAO_Notify_Service_Driver
+ *
+ * @brief Notify_Service
+ *
+ * Implementation of the Notification Service front end.
+ */
+class TAO_Notify_Service_Export TAO_Notify_Service_Driver : public ACE_Service_Object
 {
-  // = TITLE
-  //   Notify_Service
-  //
-  // = DESCRIPTION
-  //   Implementation of the Notification Service front end.
+friend class LoggingWorker;
 
- public:
-  // = Initialization and termination methods.
-  TAO_Notify_Service_Driver (void);
-  // Constructor.
+public:
+  /// Constructor.
+  TAO_Notify_Service_Driver ();
 
-  virtual ~TAO_Notify_Service_Driver (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~TAO_Notify_Service_Driver ();
 
-  int init (int argc, ACE_TCHAR *argv[]
-            ACE_ENV_ARG_DECL);
-  // Initializes the Service.
-  // Returns 0 on success, -1 on error.
+  /// Initializes the Service.
+  /// Returns 0 on success, -1 on error.
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  // run the Service.
-  // Returns 0 on success, -1 on error.
+  /// run the Service.
+  /// Returns 0 on success, -1 on error.
+  int run ();
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // Shutdown the Service.
-  // Returns 0 on success, -1 on error.
+  /// Shutdown the Service.
+  /// Returns 0 on success, -1 on error.
+  virtual int fini ();
 
-
-  // CosNotifyChannelAdmin::EventChannelFactory_var obj;
-  //
 protected:
-  int init_ORB (int& argc, ACE_TCHAR *argv []
-                ACE_ENV_ARG_DECL);
-  // initialize the ORB.
+  /// initialize the ORB.
+  int init_ORB (int& argc, ACE_TCHAR *argv []);
+
+  /// initialize the dispatching ORB.
+  int init_dispatching_ORB (int& argc, ACE_TCHAR *argv []);
+
+  /// Apply a relative round-trip timeout to the ORB
+  void apply_timeout (CORBA::ORB_ptr orb);
 
   TAO_Notify_Service* notify_service_;
 
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
-  // Resolve the naming service.
+  /// Resolve the naming service.
+  int resolve_naming_service ();
 
-  int parse_args (int& argc, ACE_TCHAR *argv []);
-  // Parses the command line arguments.
+  /// Parses the command line arguments.
+  int parse_args (int argc, ACE_TCHAR *argv []);
 
   // = Data members
 
-  int bootstrap_;
-  // 1: this service is bootstrappable
+  /// true: this service is bootstrappable
+  bool bootstrap_;
 
-  int use_name_svc_;
-  // 1: register itself with the name service
+  /// true: register itself with the name service
+  bool use_name_svc_;
 
-  int register_ec_;
-  // 1:
+  /// File name where the IOR of the server object is stored.
+  const ACE_TCHAR *ior_output_file_name_;
 
-  FILE *ior_output_file_;
-  // File where the IOR of the server object is stored.
-
+  /// The Factory name.
   ACE_CString notify_factory_name_;
-  // The Factory name.
 
-  ACE_CString notify_channel_name_;
-  // The Factory name.
+  /// The event channel names.
+  ACE_Unbounded_Set <ACE_CString> notify_channel_name_;
 
-  int register_event_channel_;
-  // 1:  create an event channel and registers it with the Naming Service with
-  //     the name <notify_channel_name_>
+  /// true: create an event channel and registers it with the Naming Service
+  /// with the name <notify_channel_name_>
+  bool register_event_channel_;
 
+  /// The Factory.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
-  // The Factory.
 
+  /// The ORB that we use.
   CORBA::ORB_var orb_;
-  // The ORB that we use.
 
+  /// Separate dispatching orb if needed.
+  CORBA::ORB_var dispatching_orb_;
+
+  /// Reference to the root poa.
   PortableServer::POA_var poa_;
-  // Reference to the root poa.
 
-  CosNaming::NamingContext_var naming_;
-  // A naming context.
+  /// A naming context.
+  CosNaming::NamingContextExt_var naming_;
 
+  /// Worker for TP reactor mode.
   Worker worker_;
-  // Worker for TP reactor mode.
 
+  /// Number of worker threads.
   int nthreads_;
-  // Number of worker threads.
+
+  /// indicate that a separate ORB is used for dispatching events.
+  bool separate_dispatching_orb_;
+
+  /// The relative round-trip timeout
+  suseconds_t timeout_;
+
+  /// Logging interval
+  ACE_Time_Value logging_interval_;
+
+  /// Logging worker
+  LoggingWorker logging_worker_;
+
+  /// Shutdown the ORB?
+  bool shutdown_orb_;
+
+  /// Shutdown the dispatching ORB?
+  bool shutdown_dispatching_orb_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_Notify_Service_Driver)
+ACE_FACTORY_DECLARE (TAO_Notify_Service, TAO_Notify_Service_Driver)
 
 #include /**/ "ace/post.h"
 #endif /* NOTIFY_SERVICE_H */

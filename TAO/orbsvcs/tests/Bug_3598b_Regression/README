@@ -1,0 +1,12 @@
+
+
+This test attempts to contact a server IOR with no connectable profile in it (on account of how there is no server running).
+
+The method invocation should fail but the installed client request interceptor should have its send_request and receive_exception methods invoked regardless.
+
+The expected result looks like:
+
+Client about to make method call that is doomed to failure...
+ClientRequest_Interceptor::send_request called for operation: get_string - things are going well...
+ClientRequest_Interceptor::receive_exception called for operation: get_string - test has succeeded...
+Success - the server was unreachable and PI receive_exception was invoked.

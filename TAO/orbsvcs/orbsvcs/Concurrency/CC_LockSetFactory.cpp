@@ -1,33 +1,30 @@
-
 //=============================================================================
 /**
  *  @file   CC_LockSetFactory.cpp
- *
- *  $Id$
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================
 
 
-#include "CC_LockSetFactory.h"
-#include "CC_LockSet.h"
+#include "orbsvcs/Concurrency/CC_LockSetFactory.h"
+#include "orbsvcs/Concurrency/CC_LockSet.h"
 
-ACE_RCSID(Concurrency, CC_LockSetFactory, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor
-CC_LockSetFactory::CC_LockSetFactory (void)
+CC_LockSetFactory::CC_LockSetFactory ()
 {
 }
 
 // Destructor.
-CC_LockSetFactory::~CC_LockSetFactory (void)
+CC_LockSetFactory::~CC_LockSetFactory ()
 {
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_LockSetFactory::create (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+CC_LockSetFactory::create ()
 {
   CC_LockSet *ls = 0;
 
@@ -36,15 +33,12 @@ CC_LockSetFactory::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (ls,
                     CC_LockSet,
                     CORBA::NO_MEMORY());
-  ACE_CHECK_RETURN (CosConcurrencyControl::LockSet::_nil ());
 
-  return ls->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return ls->_this ();
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which)
 {
   CC_LockSet *ls = 0;
 
@@ -53,7 +47,8 @@ CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which
   ACE_NEW_THROW_EX (ls,
                     CC_LockSet (which),
                     CORBA::NO_MEMORY());
-  ACE_CHECK_RETURN (CosConcurrencyControl::LockSet::_nil ());
 
-  return ls->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return ls->_this ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

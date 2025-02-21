@@ -4,8 +4,6 @@
 /**
  *  @file  alias_typecode.h
  *
- *  $Id$
- *
  *  Alias (typedef) TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
@@ -17,7 +15,6 @@
 
 namespace TAO
 {
-
   /**
    * @class be_visitor_alias_typecode
    *
@@ -29,7 +26,6 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
-
     /// Constructor.
     be_visitor_alias_typecode (be_visitor_context * ctx);
 
@@ -50,9 +46,7 @@ namespace TAO
     int common (be_type * node,
                 be_type * base,
                 const char * tctype);
-
   };
-
 }
 
 #endif  /* TAO_BE_VISITOR_ALIAS_TYPECODE_H */

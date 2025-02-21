@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
@@ -15,16 +13,15 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method ();
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  //FUZZ: disable check_for_lack_ACE_OS
+  void shutdown ();
+  //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
-
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
 };
@@ -37,27 +34,23 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::method ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::method\n"));
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));
 
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -70,27 +63,31 @@ static CORBA::ULong max_buffered_requests = 0;
 static CORBA::ULong max_request_buffer_size = 0;
 static CORBA::Boolean allow_borrowing = 0;
 
-static const char *ior = "ior";
+static const ACE_TCHAR *ior = ACE_TEXT("ior");
 static int debug = 1;
 
-static const char *bands_file = "bands";
-static const char *lanes_file = "lanes";
+static const ACE_TCHAR *bands_file = ACE_TEXT ("bands");
+static const ACE_TCHAR *lanes_file = ACE_TEXT ("lanes");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:d:l:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:b:d:l:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'o':
+        ior = get_opts.opt_arg ();
+        break;
+
       case 'b':
         bands_file = get_opts.opt_arg ();
         break;
 
       case 'd':
-        debug = ::atoi (get_opts.opt_arg ());
+        debug = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'l':
@@ -104,6 +101,7 @@ parse_args (int argc, char **argv)
                            "-b <bands_file> "
                            "-d <debug> "
                            "-l <lanes_file> "
+                           "-o <ior file> "
                            "\n",
                            argv [0]),
                           -1);
@@ -115,17 +113,14 @@ parse_args (int argc, char **argv)
 static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
-                    const char *filename
-                    ACE_ENV_ARG_DECL)
+                    const ACE_TCHAR *filename)
 {
   FILE *file =
     ACE_OS::fopen (filename, "w");
   ACE_ASSERT (file != 0);
 
   CORBA::String_var ior =
-    orb->object_to_string (object
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    orb->object_to_string (object);
 
   u_int result = 0;
   result =
@@ -142,14 +137,12 @@ write_iors_to_file (CORBA::Object_ptr object,
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -160,33 +153,24 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTORB"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::RTORB::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::PolicyList policies;
 
@@ -195,9 +179,7 @@ Task::svc (void)
                             bands_file,
                             rt_orb.in (),
                             policies,
-                            debug
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            debug);
       if (result != 0)
         return result;
 
@@ -213,23 +195,17 @@ Task::svc (void)
                             max_request_buffer_size,
                             allow_borrowing,
                             policies,
-                            debug
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            debug);
       if (result != 0)
         return result;
 
       CORBA::Policy_var priority_model_policy =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                              0
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                              0);
 
       // Implicit_activation policy.
       CORBA::Policy_var implicit_activation_policy =
-        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
       policies.length (policies.length () + 1);
       policies[policies.length () - 1] =
@@ -242,59 +218,50 @@ Task::svc (void)
       PortableServer::POA_var poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              policies);
 
       test_i *servant = 0;
       ACE_NEW_THROW_EX (servant,
                         test_i (this->orb_.in (),
                                 poa.in ()),
                         CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
 
       PortableServer::ServantBase_var safe_servant (servant);
 
+      PortableServer::ObjectId_var id =
+        poa->activate_object (servant);
+
+      CORBA::Object_var object_act = poa->id_to_reference (id.in ());
+
       test_var test =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object_act.in ());
 
       write_iors_to_file (test.in (),
                           this->orb_.in (),
-                          ior
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                          ior);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
@@ -327,7 +294,7 @@ main (int argc, char **argv)
           if (errno == EPERM)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot create thread with scheduling policy %s\n"
+                                 "Cannot create thread with scheduling policy %C\n"
                                  "because the user does not have the appropriate privileges, terminating program....\n"
                                  "Check svc.conf options and/or run as root\n",
                                  sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
@@ -343,12 +310,11 @@ main (int argc, char **argv)
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

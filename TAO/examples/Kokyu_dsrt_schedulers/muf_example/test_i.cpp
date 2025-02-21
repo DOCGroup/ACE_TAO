@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Task.h"
@@ -8,24 +6,21 @@
 #include "ace/Countdown_Time.h"
 
 #if !defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(MT_Server, test_i, "$Id$")
-
 CORBA::Long
-Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Simple_Server_i::test_method (CORBA::Long exec_duration)
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
   int guid;
+  RTScheduling::Current::IdType_var id = this->current_->id ();
 
-  ACE_OS::
-    memcpy (&guid,
-            this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
-            sizeof (this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
+  ACE_OS::memcpy (&guid,
+                  id->get_buffer (),
+                  sizeof (id->length ()));
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -35,16 +30,16 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     {
       if (errno == ENOTSUP)
-	{
-	  ACE_DEBUG((LM_DEBUG,
-		     ACE_TEXT ("getprio not supported on this platform\n")
-		     ));
-	  return 0;
-	}
+        {
+          ACE_DEBUG((LM_DEBUG,
+                     ACE_TEXT ("getprio not supported on this platform\n")));
+          return 0;
+        }
+
       ACE_ERROR_RETURN ((LM_ERROR,
-			 ACE_TEXT ("%p\n"),
-			 ACE_TEXT ("getprio failed")),
-			-1);
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("getprio failed")),
+                        -1);
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -68,8 +63,8 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
   while (compute_count_down_time > ACE_Time_Value::zero)
     {
       ACE::is_prime (prime_number,
-		     2,
-		     prime_number / 2);
+                     2,
+                     prime_number / 2);
 
       ++j;
 
@@ -94,16 +89,14 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
           if (yield_count_down_time <= ACE_Time_Value::zero)
             {
               CORBA::Policy_var sched_param_policy =
-                CORBA::Policy::_duplicate (current_->
-                                           scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER));
+                current_->scheduling_parameter();
 
               const char * name = 0;
 
               CORBA::Policy_ptr implicit_sched_param = 0;
               current_->update_scheduling_segment (name,
                                                    sched_param_policy.in (),
-                                                   implicit_sched_param
-                                                   ACE_ENV_ARG_PARAMETER);
+                                                   implicit_sched_param);
               yield_count_down_time = yield_interval;
               yield_count_down.start ();
             }
@@ -114,17 +107,16 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
   timer.elapsed_time (elapsed_time);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Request processing in thread %t done, "
-	      "prio = %d, load = %d, elapsed time = %umsec\n",
-	      prio, exec_duration, elapsed_time.msec () ));
+              "Request processing in thread %t done, "
+              "prio = %d, load = %d, elapsed time = %umsec\n",
+              prio, exec_duration, elapsed_time.msec () ));
 
   return exec_duration;
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Simple_Server_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "shutdown request from client\n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

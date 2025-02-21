@@ -1,17 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   AdminProperties.h
-//
-// = DESCRIPTION
-//   Test for EC Admin QoS properties.
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   AdminProperties.h
+ *
+ * Test for EC Admin QoS properties.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ADMINPROPERTIES
 #define ADMINPROPERTIES
@@ -31,13 +28,7 @@ public:
   AdminProperties_StructuredPushConsumer (AdminProperties* client);
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (const CosNotification::StructuredEvent & notification
-                                      ACE_ENV_ARG_DECL
-                                      )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosEventComm::Disconnected
-                     ));
+  virtual void push_structured_event (const CosNotification::StructuredEvent & notification);
 
 protected:
   AdminProperties* client_;
@@ -46,26 +37,26 @@ protected:
 };
 
 
+/**
+ * @class AdminProperties_Task
+ *
+ * @brief Run a thread to dispatch events.
+ *
+ * Use the ACE_Task_Base class.
+ */
 class AdminProperties_Task : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a thread to dispatch events.
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class.
-  //
-
 public:
-  AdminProperties_Task (void);
-  // Constructor.
+  /// Constructor.
+  AdminProperties_Task ();
 
   /// Init this object.
   void init (TAO_Notify_Tests_StructuredPushSupplier *supplier, AdminProperties* client);
 
   virtual int init (int argc, ACE_TCHAR *argv []);
 
-  virtual int svc (void);
-  // The thread entry point.
+  /// The thread entry point.
+  virtual int svc ();
 
 private:
   /// Supplier
@@ -77,59 +68,59 @@ private:
 
 /***************************************************************************/
 
+/**
+ * @class AdminProperties
+ *
+ * @brief AdminProperties
+ *
+ * Test for Notify EC properties -
+ * max_queue_length
+ * max_consumers
+ * max_suppliers
+ * reject_new_events
+ */
 class AdminProperties : public Notify_Test_Client
 {
-  // = TITLE
-  //   AdminProperties
-  //
-  // = DESCRIPTION
-  //   Test for Notify EC properties -
-  //   max_queue_length
-  //   max_consumers
-  //   max_suppliers
-  //   reject_new_events
-  //
-
   friend class AdminProperties_StructuredPushConsumer;
   friend class AdminProperties_Task;
 
 public:
-  AdminProperties (void);
-  ~AdminProperties (void);
+  AdminProperties ();
+  ~AdminProperties ();
 
-  int parse_args (int argc, char *argv[]) ;
+  int parse_args (int argc, ACE_TCHAR *argv[]) ;
 
   // Initialization.
 
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the test.
+  /// Run the test.
+  void run_test ();
 
 private:
-  void create_suppliers (ACE_ENV_SINGLE_ARG_DECL);
-  void create_consumers (ACE_ENV_SINGLE_ARG_DECL);
-  void create_channel(bool reject ACE_ENV_ARG_DECL);
+  void create_suppliers ();
+  void create_consumers ();
+  void create_channel(bool reject);
 
   /// Test MaxSuppliers and MaxConsumers
-  void test_max_clients (ACE_ENV_SINGLE_ARG_DECL);
+  void test_max_clients ();
 
   /// Test MaxQueueLength properties
-  void test_max_queue_length (bool reject ACE_ENV_ARG_DECL);
+  void test_max_queue_length (bool reject);
 
   // Data Members
+  /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
-  // The one channel that we create using the factory.
 
+  /// The consumer admin used by consumers.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The consumer admin used by consumers.
 
+  /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The supplier admin used by suppliers.
 
+  /// Values for Admin Properties supplied by user.
   CORBA::Long max_queue_length_;
   CORBA::Long max_consumers_;
   CORBA::Long max_suppliers_;
   CORBA::Boolean reject_new_events_;
-  // Values for Admin Properties supplied by user.
 
   /// Number of consumers to connect to check MaxConsumers property.
   CORBA::Long consumers_;
@@ -137,8 +128,8 @@ private:
   /// Number of suppliers to connect to check MaxSuppliers property.
   CORBA::Long suppliers_;
 
+  /// Number of events to send to the channel.
   CORBA::Long event_count_;
-  // Number of events to send to the channel.
 
   /// Count of consumers successfully connect to the EC.
   int suppliers_connected_count_;

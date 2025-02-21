@@ -1,0 +1,7 @@
+// -*- MPC -*-
+project {
+  Define_Custom(Script) {
+    automatic = 1
+    inputext = .sh 
+  }
+}

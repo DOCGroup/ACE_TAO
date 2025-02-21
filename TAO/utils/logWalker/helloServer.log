@@ -1,0 +1,80 @@
+TAO (8447|140673593390832) Initializing the process-wide services
+TAO (8447|140673593390832) Default ORB - global initialization completed.
+TAO (8447|140673593390832) Initializing the orb-specific services
+TAO (8447|140673593390832) Default_Resource_Factory - unable to create codeset manager.
+TAO (8447|140673593390832) ORB_Core: Codeset Manager not available
+TAO (8447|140673593390832) Loaded default protocol <IIOP_Factory>
+TAO (8447|140673593390832) created new ORB <>
+TAO (8447|140673593390832) - IIOP_Acceptor::open_i, listening on: <phil.ociweb.com:33152>
+TAO (8447|140673593390832) - ORB_Core::run, start [run]
+TAO (8447|140673593390832) - ORB_Core::run, calling handle_events()
+TAO (8447|140673593390832) - Transport_Cache_Manager::fill_set_i: current_size = 0, cache_maximum = 512
+TAO (8447|140673593390832) - Transport_Cache_Manager::purge: Cache size after purging is [0]
+TAO (8447|140673593390832) - Concurrency_Strategy::activate_svc_handler, opened as TAO_SERVER_ROLE
+TAO (8447|140673593390832) - IIOP_Connection_Handler::open, The local addr is <10.201.200.173:33152> 
+TAO (8447|140673593390832) - IIOP_Connection_Handler::open, IIOP connection to peer <10.201.200.173:40203> on 8
+TAO (8447|140673593390832) - Transport_Cache_Manager::bind_i:  Transport[8] @ hash{181036472}
+TAO (8447|140673593390832) - Transport_Cache_Manager::bind_i: Bound Transport[8] @ hash:index{181036472:0} state IDLE_AND_PURGABLE. Cache size is [1]
+TAO (8447|140673593390832) - Transport[8]::register_handler
+TAO (8447|140673593390832) - ORB_Core::run, handle_events() returns 0
+TAO (8447|140673593390832) - ORB_Core::run, calling handle_events()
+TAO (8447|140673593390832) - Connection_Handler[8]::handle_input, handle = 8/8
+TAO (8447|140673593390832) - Transport[8]::handle_input
+TAO (8447|140673593390832) - Transport[8]::process_queue_head, 0 enqueued
+TAO (8447|140673593390832) - Transport[8]::handle_input_parse_data, enter
+TAO (8447|140673593390832) - Transport[8]::handle_input_parse_data, read 76 bytes
+TAO (8447|140673593390832) - GIOP_Message_State::parse_message_header_i
+TAO (8447|140673593390832) - GIOP_Message_State::get_version_info
+TAO (8447|140673593390832) - GIOP_Message_State::get_byte_order_info
+TAO (8447|140673593390832) - Transport[8]::process_parsed_messages, entering (missing data == 0)
+TAO (8447|140673593390832) - GIOP_Message_Base::dump_msg, recv GIOP v1.2 msg, 64 data bytes, my endian, Type Request[1]
+GIOP message - HEXDUMP 76 bytes
+47 49 4f 50 01 02 01 00  40 00 00 00 01 00 00 00   GIOP....@.......
+03 00 00 00 00 00 00 00  1b 00 00 00 14 01 0f 00   ................
+52 53 54 44 87 2e 4a 13  c9 01 00 00 00 00 00 01   RSTD..J.........
+00 00 00 01 00 00 00 00  0b 00 00 00 67 65 74 5f   ............get_
+73 74 72 69 6e 67 00 00  00 00 00 00               string......    
+TAO (8447|140673593390832) - GIOP_Message_Base::dump_msg, send GIOP v1.2 msg, 29 data bytes, my endian, Type Reply[1]
+GIOP message - HEXDUMP 41 bytes
+47 49 4f 50 01 02 01 01  1d 00 00 00 01 00 00 00   GIOP............
+00 00 00 00 00 00 00 00  0d 00 00 00 48 65 6c 6c   ............Hell
+6f 20 74 68 65 72 65 21  00                        o there!.       
+TAO (8447|140673593390832) - Transport[8]::cleanup_queue, byte_count = 41
+TAO (8447|140673593390832) - Transport[8]::cleanup_queue, after transfer, bc = 0, all_sent = 1, ml = 0
+TAO (8447|140673593390832) - Transport[8]::drain_queue_helper, byte_count = 41, head_is_empty = 1
+TAO (8447|140673593390832) - Transport[8]::drain_queue_i, helper retval = 1
+TAO (8447|140673593390832) - Connection_Handler[8]::handle_input, handle = 8/8, retval = 0
+TAO (8447|140673593390832) - ORB_Core::run, handle_events() returns 0
+TAO (8447|140673593390832) - ORB_Core::run, calling handle_events()
+TAO (8447|140673593390832) - Connection_Handler[8]::handle_input, handle = 8/8
+TAO (8447|140673593390832) - Transport[8]::handle_input
+TAO (8447|140673593390832) - Transport[8]::process_queue_head, 0 enqueued
+TAO (8447|140673593390832) - Transport[8]::handle_input_parse_data, enter
+TAO (8447|140673593390832) - Transport[8]::handle_input_parse_data, read 76 bytes
+TAO (8447|140673593390832) - GIOP_Message_State::parse_message_header_i
+TAO (8447|140673593390832) - GIOP_Message_State::get_version_info
+TAO (8447|140673593390832) - GIOP_Message_State::get_byte_order_info
+TAO (8447|140673593390832) - Transport[8]::process_parsed_messages, entering (missing data == 0)
+TAO (8447|140673593390832) - GIOP_Message_Base::dump_msg, recv GIOP v1.2 msg, 64 data bytes, my endian, Type Request[2]
+GIOP message - HEXDUMP 76 bytes
+47 49 4f 50 01 02 01 00  40 00 00 00 02 00 00 00   GIOP....@.......
+00 00 00 00 00 00 00 00  1b 00 00 00 14 01 0f 00   ................
+52 53 54 44 87 2e 4a 13  c9 01 00 00 00 00 00 01   RSTD..J.........
+00 00 00 01 00 00 00 00  09 00 00 00 73 68 75 74   ............shut
+64 6f 77 6e 00 67 00 00  00 00 00 00               down.g......    
+TAO (8447|140673593390832) - Connection_Handler[8]::handle_input, handle = 8/8, retval = 0
+TAO (8447|140673593390832) - ORB_Core::run, handle_events() returns 0
+TAO (8447|140673593390832) - ORB_Core::run, ends with result = 0
+(8447|140673593390832) server - event loop finished
+CORBA::ORB::destroy() called on ORB <>.
+Destroying ORB <>
+TAO (8447|140673593390832) - Connection_Handler[8]::close_connection_eh, purging entry from cache
+TAO (8447|140673593390832) - Transport[8]::cleanup_queue_i, cleaning up complete queue
+TAO (8447|140673593390832) - Transport[8]::cleanup_queue_i, discarded 0 messages, 0 bytes.
+TAO (8447|140673593390832) - Connection_Handler[8]::close_connection_eh, removing from the reactor
+TAO (8447|140673593390832) - Connection_Handler[8]::close_connection_eh, cancel all timers
+TAO (8447|140673593390832) - Transport[8]::cleanup_queue_i, cleaning up complete queue
+TAO (8447|140673593390832) - Transport[8]::cleanup_queue_i, discarded 0 messages, 0 bytes.
+TAO (8447|140673593390832) - Connection_Handler[8]::close_connection_eh
+TAO (8447|140673593390832) - Transport[8]::cleanup_queue_i, cleaning up complete queue
+TAO (8447|140673593390832) - Transport[8]::cleanup_queue_i, discarded 0 messages, 0 bytes.

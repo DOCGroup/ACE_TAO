@@ -18,33 +18,29 @@
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 
-ACE_RCSID (Log,
-           RTEventLogNotification,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-TAO_RTEventLogNotification::TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr ec)
-: TAO_LogNotification (), event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
+TAO_RTEventLogNotification::TAO_RTEventLogNotification (
+  RtecEventChannelAdmin::EventChannel_ptr ec)
+  : TAO_LogNotification (),
+    event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  obtainProxyConsumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+  obtainProxyConsumer ();
 }
 
-TAO_RTEventLogNotification::~TAO_RTEventLogNotification (void)
+TAO_RTEventLogNotification::~TAO_RTEventLogNotification ()
 {
   // No-Op.
 }
 
 void
-TAO_RTEventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RTEventLogNotification::disconnect_push_supplier ()
 {
   // No-Op.
 }
 
 void
-TAO_RTEventLogNotification::obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTEventLogNotification::obtainProxyConsumer ()
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     event_channel_->for_suppliers();
@@ -52,7 +48,7 @@ TAO_RTEventLogNotification::obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL)
   consumer_ = supplier_admin->obtain_push_consumer();
 
   RtecEventComm::PushSupplier_var supplier =
-  this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->_this ();
 
   // Simple publication, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
@@ -68,7 +64,6 @@ TAO_RTEventLogNotification::obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_RTEventLogNotification::send_notification (const CORBA::Any& any)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::EventSet event (1);
   event.length (1);
@@ -84,4 +79,4 @@ TAO_RTEventLogNotification::send_notification (const CORBA::Any& any)
   consumer_->push(event);
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

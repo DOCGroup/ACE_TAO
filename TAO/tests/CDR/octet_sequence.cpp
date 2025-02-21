@@ -1,22 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//   octet_sequence.cpp
-//
-// = DESCRIPTION
-//   Verifies that reference counting is performed correctly for octet
-//   sequence marshaling.
-//
-// = AUTHORS
-//   Dave Meyer (dmeyer@std.saic.com)
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   octet_sequence.cpp
+ *
+ * Verifies that reference counting is performed correctly for octet
+ * sequence marshaling.
+ *
+ *  @author Dave Meyer (dmeyer@std.saic.com)Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "ace/Log_Msg.h"
 
@@ -27,10 +20,10 @@ ACE_Message_Block * m1;
 ACE_Message_Block * m2;
 ACE_Message_Block * m3;
 
-void dump(const char * msg)
+void dump (const char * msg)
 {
   ACE_DEBUG ((LM_INFO,
-              "%s\n"
+              "%C\n"
               "m1: %d\n"
               "m2: %d\n"
               "m3: %d\n",
@@ -40,7 +33,7 @@ void dump(const char * msg)
               m3->data_block()->reference_count()));
 }
 
-int main(int, char*[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // setup mb's
   char buf[1024];

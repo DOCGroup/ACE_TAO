@@ -1,0 +1,42 @@
+
+
+CORBA Messaging
+
+
+File: DevGuideExamples/Messaging/RelativeRoundtripTimeout/README
+
+
+This directory contains an example illustrating the relative
+round trip timeout policy defined in CORBA Messaging.
+
+At each request invocation on the server, the client checks
+against a user-specified timout value. If the time spent since
+the start of the request exceeds the timeout value, a CORBA::TIMEOUT
+exception is raised.
+
+This example is based on the Messenger example in GettingStarted
+directory.
+
+
+How to Run
+----------
+
+To start the server:
+------------------
+./MessengerServer
+
+
+To start the client:
+------------------
+./MessengerClient
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+

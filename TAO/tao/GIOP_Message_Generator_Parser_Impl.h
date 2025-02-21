@@ -1,10 +1,8 @@
-
 // -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   GIOP_Message_Generator_Parser_Impl.h
- *
- *  $Id$
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
@@ -24,6 +22,8 @@
 #include "tao/GIOP_Message_Generator_Parser_12.h"
 #include "tao/orbconf.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_GIOP_Message_Generator_Parser_Impl
  *
@@ -32,14 +32,12 @@
  *
  *  This class can be done away with if we want to use the svc.conf
  *  file to load the right GIOP protocol. But that would require some
- *  work as we need to make sure that we have the behaviours of lower
+ *  work as we need to make sure that we have the behavior of lower
  *  versions in the higher versions.
  */
-
-class TAO_Export TAO_GIOP_Message_Generator_Parser_Impl
+class TAO_GIOP_Message_Generator_Parser_Impl
 {
 public:
-
   /// Performs a check of the revision numbers
   static CORBA::Boolean check_revision (CORBA::Octet incoming_major,
                                         CORBA::Octet incoming_minor);
@@ -53,6 +51,9 @@ public:
   /// Version 1.2 of GIOP
   TAO_GIOP_Message_Generator_Parser_12 tao_giop_12;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Generator_Parser_Impl.inl"

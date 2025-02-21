@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project: ace_xt {
+  macros   += ACE_HAS_ATHENA3D
+  requires += athena3d
+  lit_libs += Xaw3d
+}

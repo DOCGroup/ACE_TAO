@@ -1,0 +1,4 @@
+// -*- MPC -*-
+feature(minimum_corba) {
+  macros += TAO_HAS_MINIMUM_CORBA=1
+}

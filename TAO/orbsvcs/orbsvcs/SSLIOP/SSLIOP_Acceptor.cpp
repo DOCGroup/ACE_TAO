@@ -1,6 +1,6 @@
-#include "SSLIOP_Acceptor.h"
-#include "SSLIOP_Profile.h"
-#include "SSLIOP_Current.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
 
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
@@ -10,45 +10,23 @@
 #include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
-#include "SSLIOP_Acceptor.i"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
+#include <algorithm>
 
-ACE_RCSID (SSLIOP,
-           SSLIOP_Acceptor,
-           "$Id$")
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class TAO_Creation_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
-                                 const ACE_Time_Value & timeout)
+                                 const ACE_Time_Value & timeout,
+                                 bool check_host)
   : TAO::IIOP_SSL_Acceptor (),
-    ssl_acceptor_ (),
+    ssl_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
-    timeout_ (timeout)
+    timeout_ (timeout),
+    check_host_ (check_host)
 {
   // --- CSIv1 ---
 
@@ -106,7 +84,7 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
                   CSIIOP::NoProtection);
 }
 
-TAO::SSLIOP::Acceptor::~Acceptor (void)
+TAO::SSLIOP::Acceptor::~Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -267,8 +245,11 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                             &(this->ssl_component_)),
                       -1);
 
-      TAO_SSLIOP_Endpoint *ssliop_endp =
+      TAO_SSLIOP_Endpoint * const ssliop_endp =
         dynamic_cast<TAO_SSLIOP_Endpoint *> (ssliop_profile->endpoint ());
+
+      if (!ssliop_endp)
+        return -1;
 
       ssliop_endp->priority (priority);
       ssliop_endp->iiop_endpoint ()->priority (priority);
@@ -359,23 +340,20 @@ TAO::SSLIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
   if (endp == 0)
     return 0;
 
+  const TAO_IIOP_Endpoint *iiop = endp->iiop_endpoint ();
+
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
-      // @@ TODO The following code looks funky, why only the address
-      //    is compared?  What about the IIOP address?  Why force a
-      //    DNS lookup every time an SSLIOP object is decoded:
-      //
-      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
-      //
-      if (endp->iiop_endpoint ()->object_addr () == this->addrs_[i])
-        return 1;  // Collocated
+      if (iiop->port () == this->addrs_[i].get_port_number ()
+          && ACE_OS::strcmp (iiop->host (), this->hosts_[i]) == 0)
+        return 1;
     }
 
-  return 0;  // Not collocated
+  return 0;
 }
 
 int
-TAO::SSLIOP::Acceptor::close (void)
+TAO::SSLIOP::Acceptor::close ()
 {
   int r = this->ssl_acceptor_.close ();
   if (this->IIOP_SSL_Acceptor::close () != 0)
@@ -399,6 +377,11 @@ TAO::SSLIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                                          minor) != 0)
     return -1;
 
+  ACE_INET_Addr addr;
+  ACE_CString specified_hostname;
+  if (this->parse_address (address, addr, specified_hostname) == -1)
+    return -1;
+
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
   if (this->IIOP_SSL_Acceptor::open (orb_core,
@@ -411,8 +394,7 @@ TAO::SSLIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
   // The SSL port is set in the parse_options() method. All we have
   // to do is call open_i()
-  ACE_INET_Addr addr (this->ssl_component_.port,
-                      this->addrs_[0].get_host_addr ());
+  addr.set_port_number (this->ssl_component_.port);
 
   return this->ssliop_open_i (orb_core,
                               addr,
@@ -466,13 +448,8 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  // Explicitly disable GIOPlite support since it introduces security
-  // holes.
-  static const int giop_lite = 0;
-
   ACE_NEW_RETURN (this->creation_strategy_,
-                  CREATION_STRATEGY (this->orb_core_,
-                                     giop_lite),
+                  CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
@@ -481,7 +458,8 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 
   ACE_NEW_RETURN (this->accept_strategy_,
                   ACCEPT_STRATEGY (this->orb_core_,
-                                   this->timeout_),
+                                   this->timeout_,
+                                   this->check_host_),
                   -1);
 
   u_short requested_port = addr.get_port_number ();
@@ -492,10 +470,12 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                                     reactor,
                                     this->creation_strategy_,
                                     this->accept_strategy_,
-                                    this->concurrency_strategy_) == -1)
+                                    this->concurrency_strategy_,
+                                    0, 0, 0, 1,
+                                    this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
                         ACE_TEXT ("cannot open acceptor")));
@@ -507,16 +487,12 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
       ACE_INET_Addr a(addr);
 
       int found_a_port = 0;
-      ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
-      if (last_port > ACE_MAX_DEFAULT_PORT)
-        {
-          last_port = ACE_MAX_DEFAULT_PORT;
-        }
+      ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {
           if (TAO_debug_level > 5)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i() ")
                         ACE_TEXT ("trying to listen on port %d\n"), p));
 
@@ -526,7 +502,9 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                                         reactor,
                                         this->creation_strategy_,
                                         this->accept_strategy_,
-                                        this->concurrency_strategy_) != -1)
+                                        this->concurrency_strategy_,
+                                        0, 0, 0, 1,
+                                        this->reuse_addr_) != -1)
             {
               found_a_port = 1;
               break;
@@ -537,7 +515,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
       if (! found_a_port)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
                         ACE_TEXT ("cannot open acceptor")));
@@ -553,7 +531,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
     {
       // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("\n\nTAO (%P|%t) ")
                     ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
                     ACE_TEXT ("cannot get local addr")));
@@ -574,14 +552,21 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
     {
       for (size_t i = 0; i < this->endpoint_count_; ++i)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) ")
                       ACE_TEXT ("SSLIOP_Acceptor::open_i - ")
-                      ACE_TEXT ("listening on: <%s:%u>\n"),
+                      ACE_TEXT ("listening on: <%C:%u>\n"),
                       this->hosts_[i],
                       this->ssl_component_.port));
         }
     }
+
+  // In the event that an accept() fails, we can examine the reason.  If
+  // the reason warrants it, we can try accepting again at a later time.
+  // The amount of time we wait to accept again is governed by this orb
+  // parameter.
+  this->set_error_retry_delay (
+    this->orb_core_->orb_params ()->accept_error_delay());
 
   return 0;
 }
@@ -590,7 +575,7 @@ int
 TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
 {
   //first, do the base class parser, then parse the leftovers.
-  int result = this->IIOP_SSL_Acceptor::parse_options_i(argc,argv);
+  int const result = this->IIOP_SSL_Acceptor::parse_options_i(argc,argv);
   if (result == -1)
     return result;
 
@@ -601,15 +586,15 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
       // since the base class has already iterated over the list once,
       // it has vound any ill-formed options. Therefore we don't need
       // to do that again here.
-      int slot = argv[i]->find ("=");
+      size_t const slot = argv[i]->find ("=");
       ACE_CString name = argv[i]->substring (0, slot);
       ACE_CString value = argv[i]->substring (slot + 1);
 
       if (name == "priority")
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) Invalid SSLIOP endpoint format: ")
-                             ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                             ACE_TEXT ("endpoint priorities no longer supported.\n"),
                              value.c_str ()),
                             -1);
         }
@@ -620,7 +605,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
           if (ssl_port >= 0 && ssl_port < 65536)
             this->ssl_component_.port = ssl_port;
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid ")
                                ACE_TEXT ("IIOP/SSL endpoint ")
                                ACE_TEXT ("port: <%s>\n"),
@@ -642,7 +627,6 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
       for (int j = i; j <= argc-1; j++)
         argv[j] = argv[j+1];
       argv[argc] = temp;
-
     }
   return 0;
 }
@@ -680,7 +664,7 @@ TAO::SSLIOP::Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
                            ::Security::NoProtection))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Cannot support secure ")
                     ACE_TEXT ("IIOP over SSL connection if\n")
                     ACE_TEXT ("(%P|%t) standard profile ")
@@ -694,3 +678,5 @@ TAO::SSLIOP::Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,84 @@
+name: macosx
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 1 * * SUN'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-13, macos-14]
+        include:
+          - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU
+    runs-on: ${{ matrix.os }}
+    name: "${{ matrix.os }}-C++"
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/MPC
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v4
+    - name: checkout MPC
+      uses: actions/checkout@v4
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+    - name: create $ACE_ROOT/ace/config.h
+      run: |
+        '#include "ace/config-macosx.h"' > ${env:ACE_ROOT}/ace/config.h
+      shell: pwsh
+    - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
+        '${{ matrix.platform_file }}' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+      run: |
+        'ipv6=1' > ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        'versioned_namespace=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/tests/IDL_Test
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDL_Test -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/tests/IDLv4
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDLv4 -workers 4
+      shell: pwsh
+    - name: Build TAO_ACE project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}
+      shell: pwsh
+    - name: Build ACE/tests project
+      run: |
+        make -j 6 -C ${env:ACE_ROOT}/tests
+      shell: pwsh
+    - name: Build TAO/tests/IDL_Test project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}/tests/IDL_Test
+      shell: pwsh
+    - name: Build TAO/tests/IDLv4/maps project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}/tests/IDLv4
+      shell: pwsh
+

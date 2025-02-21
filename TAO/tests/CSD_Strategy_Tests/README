@@ -1,0 +1,119 @@
+
+
+This directory contains tests for the Custom Servant Dispatching (CSD)
+feature implemented within TAO.  Specifically, these tests use the reference
+implementation CSD Strategy, called the Thread Pool (TP) CSD Strategy.
+
+Each sub-directory should contain its own README file which describes the
+contents of the particular sub-directory in more detail.  The following
+is a list of sub-directories located here under the
+$TAO_ROOT/tests/CSD_Strategy_Tests directory:
+
+TP_Test_Lib
+-----------
+
+    This sub-directory contains source code used to build the
+    "CSD_TP_Test" library (ie, libCSD_TP_Test.so).  This library contains
+    infrastructure code used by all of the CSD test applications.  The
+    purpose of this library is code re-use and ease of maintenance (ie,
+    change/fix something in this library, and all applications using it
+    will gain the benefit.)
+
+
+TP_Foo_A
+--------
+
+    This sub-directory contains source code used to build the
+    "CSD_TP_Foo_A" library (ie, libCSD_TP_Foo_A.so).  This library contains
+    one IDL file which declares the "Foo_A" interface.  All of the other
+    source code in this library is used to support client and/or server
+    applications that will use the Foo_A interface.
+
+
+TP_Foo_B
+--------
+
+    This sub-directory contains source code used to build the
+    "CSD_TP_Foo_B" library (ie, libCSD_TP_Foo_B.so).  This library contains
+    one IDL file which declares the "Foo_B" interface.  All of the other
+    source code in this library is used to support client and/or server
+    applications that will use the Foo_B interface.
+
+
+TP_Foo_C
+--------
+
+    This sub-directory contains source code used to build the
+    "CSD_TP_Foo_C" library (ie, libCSD_TP_Foo_C.so).  This library contains
+    one IDL file which declares the "Foo_C" interface.  All of the other
+    source code in this library is used to support client and/or server
+    applications that will use the Foo_C interface.
+
+
+TP_Test_1
+---------
+
+    This sub-directory contains source code that is used to build a
+    client application and a server application.  These applications
+    make use of the Foo_A interface (see the TP_Foo_A directory).
+    This particular pair of applications do not use all of the infrastructure
+    types made available to them by the TP_Test_Lib.
+
+    The TP_Test_1 application code is really more of an example than a test.
+    Other test applications (ie, TP_Test_2) do the same thing as TP_Test_1,
+    except that the other test applications take advantage of the
+    infrastructure types provided by the TP_Test_Lib.  Another big difference
+    is that the TP_Test_1 does not perform any "actual" vs. "expected"
+    results checking - and the other TP tests do perform these checks.
+
+
+TP_Test_2
+---------
+
+    This sub-directory contains source code that is used to build a
+    client application and a server application.  These applications
+    make use of the Foo_A interface (see the TP_Foo_A directory).
+
+    The Foo_A interface is a simple interface with just a few simple
+    operations (both one-way and two-way).
+
+    Each launched client application (ie, client process) represents a
+    "remote" client of a Foo_A servant object that lives in a server
+    process.  The server application can be instructed, upon start up,
+    to use any number of "collocated clients".  Each collocated client is
+    essentially a new thread in the server process that will perform the
+    same logic that is performed by the remote client application.
+
+
+TP_Test_3
+---------
+
+    This sub-directory contains source code that is used to build a
+    client application and a server application.  These applications
+    make use of the Foo_B interface (see the TP_Foo_B directory).
+
+    The Foo_B interface has a rich set of operations, using a wide variety
+    of argument types.
+
+    The TP_Test_3 applications are nearly identical to their TP_Test_2
+    counterparts, except for the fact that Foo_B is the interface type
+    used in TP_Test_3, and Foo_A is the interface type used in TP_Test_2.
+
+
+TP_Test_4
+---------
+
+    This sub-directory contains source code that is used to build a
+    client application and a server application.  These applications
+    make use of the Foo_C interface (see the TP_Foo_C directory).
+
+    The Foo_C interface is a simple interface with just a few simple
+    operations (both one-way and two-way).  It is nearly (if not exactly)
+    identical to the Foo_A interface.
+
+    The TP_Test_4 applications are nearly identical to the TP_Test_2
+    applications with one significant difference: the TP_Test_4 server
+    application makes use of the "custom requests" feature provided by
+    the CSD Thread Pool Strategy.  These custom requests are performed
+    by the collocated client code within the server application.
+

@@ -1,0 +1,89 @@
+project (asnmp_tests_Oid_Test) : aceexe {
+  exename = Oid_Test
+  after += asnmp_lib
+  libs  += asnmp
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    Oid_Test.cpp
+  }
+}
+
+project (asnmp_tests_Counter_Test) : aceexe {
+  exename = Counter_Test
+  after += asnmp_lib
+  libs  += asnmp
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    Counter_Test.cpp
+  }
+}
+
+project (asnmp_tests_Counter64_Test) : aceexe {
+  exename = Counter64_Test
+  after += asnmp_lib
+  libs  += asnmp
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    Counter64_Test.cpp
+  }
+}
+
+project (asnmp_tests_Integer_Test) : aceexe {
+  exename = Integer_Test
+  after += asnmp_lib
+  libs  += asnmp
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    Integer_Test.cpp
+  }
+}
+
+project (asnmp_tests_Octet_Test) : aceexe {
+  exename = Octet_Test
+  after += asnmp_lib
+  libs  += asnmp
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    Octet_Test.cpp
+  }
+}
+
+project (asnmp_tests_Gauge_Test) : aceexe {
+  exename = Gauge_Test
+  after += asnmp_lib
+  libs  += asnmp
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    Gauge_Test.cpp
+  }
+}
+
+project (asnmp_tests_Address_Test) : aceexe {
+  exename = Address_Test
+  after += asnmp_lib
+  libs  += asnmp
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    Address_Test.cpp
+  }
+}
+
+project (asnmp_tests_Target_Test) : aceexe {
+  exename = Target_Test
+  after += asnmp_lib
+  libs  += asnmp
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    Target_Test.cpp
+  }
+}
+
+project (asnmp_tests_Varbind_Test) : aceexe {
+  exename = Varbind_Test
+  after += asnmp_lib
+  libs  += asnmp
+  includes += $(ACE_ROOT)/ASNMP
+  source_files {
+    Varbind_Test.cpp
+  }
+}

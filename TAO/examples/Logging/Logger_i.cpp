@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LoggerC.h"
 #include "Logger_i.h"
 #include "tao/debug.h"
@@ -8,22 +6,18 @@
 #include "ace/Log_Record.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID(Log, Logger_i, "$Id$")
-
-Logger_Factory_i::Logger_Factory_i (void)
+Logger_Factory_i::Logger_Factory_i ()
 {
 }
 
-Logger_Factory_i::~Logger_Factory_i (void)
+Logger_Factory_i::~Logger_Factory_i ()
 {
 }
 
 Logger_ptr
-Logger_Factory_i::make_logger (const char *name
-                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Logger_Factory_i::make_logger (const char *name)
 {
-  Logger_i *result;
+  Logger_i *result = 0;
   // If name is already in the map, <find> will assign <result> to the
   // appropriate value
 
@@ -38,7 +32,6 @@ Logger_Factory_i::make_logger (const char *name
       ACE_NEW_THROW_EX (result,
                         Logger_i (name),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (Logger::_nil ());
     }
 
   // Enter the new logger into the hash map.  Check if the <bind>
@@ -48,8 +41,7 @@ Logger_Factory_i::make_logger (const char *name
   if (hash_map_.bind (name, result) == -1)
     {
       delete result;
-      ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                        Logger::_nil ());
+      throw CORBA::UNKNOWN ();
     }
   else
     // Logger of name <name> already bound.  <result> is set
@@ -63,7 +55,10 @@ Logger_Factory_i::make_logger (const char *name
   // registration attempt.
   // @@ Matt, this code doesn't seem right.  Can you please check with
   // Irfan and Carlos about whether this is the right thing to do?
-  return result->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  if (!result)
+    return Logger::_nil ();
+
+  return result->_this ();
 }
 
 Logger_i::Logger_i (const char *name)
@@ -73,7 +68,7 @@ Logger_i::Logger_i (const char *name)
   // Do nothing
 }
 
-Logger_i::~Logger_i (void)
+Logger_i::~Logger_i ()
 {
   ACE_OS::free (this->name_);
 }
@@ -111,35 +106,27 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 }
 
 void
-Logger_i::log (const Logger::Log_Record &log_rec
-               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Logger_i::log (const Logger::Log_Record &log_rec)
 {
-  this->logv (log_rec, verbosity_level_ ACE_ENV_ARG_PARAMETER);
+  this->logv (log_rec, verbosity_level_);
 }
 
 void
-Logger_i::log_twoway (const Logger::Log_Record &log_rec
-                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Logger_i::log_twoway (const Logger::Log_Record &log_rec)
 {
-  this->logv (log_rec, verbosity_level_ ACE_ENV_ARG_PARAMETER);
+  this->logv (log_rec, verbosity_level_);
 }
 
 void
 Logger_i::logv_twoway (const Logger::Log_Record &log_rec,
-                       Logger::Verbosity_Level verbosity
-                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                       Logger::Verbosity_Level verbosity)
 {
-  this->logv (log_rec, verbosity ACE_ENV_ARG_PARAMETER);
+  this->logv (log_rec, verbosity);
 }
 
 void
 Logger_i::logv (const Logger::Log_Record &log_rec,
-               Logger::Verbosity_Level verbosity
-               ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+               Logger::Verbosity_Level verbosity)
 {
   // Create an <ACE_Log_Record> to leverage existing logging
   // code. Since Logger::Log_Priority enum tags don't cleanly map to
@@ -154,11 +141,11 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
   ACE_TCHAR msgbuf [ACE_MAXLOGMSGLEN + 4];
 
   // Format the message for proper display.
-  ACE_OS::strcpy (msgbuf, "::");
+  ACE_OS::strcpy (msgbuf, ACE_TEXT("::"));
 
   // Copy the message data into the temporary buffer
   ACE_OS::strncat (msgbuf,
-                   log_rec.msg_data,
+                   ACE_TEXT_CHAR_TO_TCHAR(log_rec.msg_data),
                    ACE_MAXLOGMSGLEN);
 
   // Set <ACE_Log_Record.msg_data> to the value stored in <msgbuf>.
@@ -174,7 +161,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
   // Create a buffer and fill it with the host name of the logger
   ACE_TCHAR namebuf[MAXHOSTNAMELEN + 1];
 
-  ACE_OS::strncpy (namebuf, addy.get_host_addr (), MAXHOSTNAMELEN);
+  ACE_OS::strncpy (namebuf, ACE_TEXT_CHAR_TO_TCHAR(addy.get_host_addr ()), MAXHOSTNAMELEN);
 
   u_long verb_level = this->verbosity_conversion (verbosity);
 
@@ -186,33 +173,8 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 }
 
 void
-Logger_i::verbosity (Logger::Verbosity_Level level
-                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Logger_i::verbosity (Logger::Verbosity_Level level)
 {
   this->verbosity_level_ = level;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<ACE_CString, Logger_i *>;
-template class ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_CString, Logger_i *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, Logger_i *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, Logger_i *>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, Logger_i *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, Logger_i *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

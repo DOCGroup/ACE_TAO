@@ -1,10 +1,8 @@
-// $Id$
+#include "orbsvcs/Notify/Timer_Queue.h"
 
-#include "Timer_Queue.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (Notify, TAO_Notify_Timer_Queue, "$Id$")
-
-TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue (void)
+TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue ()
 {
 }
 
@@ -13,7 +11,7 @@ TAO_Notify_Timer_Queue::~TAO_Notify_Timer_Queue ()
 }
 
 void
-TAO_Notify_Timer_Queue::release (void)
+TAO_Notify_Timer_Queue::release ()
 {
   delete this;
   //@@ inform factory
@@ -24,10 +22,11 @@ TAO_Notify_Timer_Queue::schedule_timer (ACE_Event_Handler *handler,
                                     const ACE_Time_Value &delay_time,
                                     const ACE_Time_Value &interval)
 {
-  return this->timer_queue_.schedule (handler,
-                                      0,
-                                      timer_queue_.gettimeofday () + delay_time,
-                                      interval);
+  return
+    this->timer_queue_.schedule (handler,
+                                 0,
+                                 timer_queue_.gettimeofday () + delay_time,
+                                 interval);
 }
 
 int
@@ -37,7 +36,9 @@ TAO_Notify_Timer_Queue::cancel_timer (long timer_id)
 }
 
 ACE_Timer_Queue&
-TAO_Notify_Timer_Queue::impl (void)
+TAO_Notify_Timer_Queue::impl ()
 {
   return this->timer_queue_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,10 @@
+// file      : StateTransfer.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+interface StateTransfer
+{
+  short
+  number ();
+
+  oneway void
+  shutdown ();
+};

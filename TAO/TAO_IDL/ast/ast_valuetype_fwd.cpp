@@ -1,25 +1,14 @@
-// $Id$
-
 #include "ast_valuetype_fwd.h"
 #include "ast_interface.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast, 
-           ast_valuetype_fwd, 
-           "$Id$")
-
-AST_ValueTypeFwd::AST_ValueTypeFwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_InterfaceFwd ()
-{
-}
+AST_Decl::NodeType const
+AST_ValueTypeFwd::NT = AST_Decl::NT_valuetype_fwd;
 
 AST_ValueTypeFwd::AST_ValueTypeFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : COMMON_Base (I_FALSE,
+  : COMMON_Base (false,
                  dummy->is_abstract ()),
     AST_Decl (AST_Decl::NT_valuetype_fwd,
               n),
@@ -30,7 +19,7 @@ AST_ValueTypeFwd::AST_ValueTypeFwd (AST_Interface *dummy,
 {
 }
 
-AST_ValueTypeFwd::~AST_ValueTypeFwd (void)
+AST_ValueTypeFwd::~AST_ValueTypeFwd ()
 {
 }
 
@@ -57,10 +46,7 @@ AST_ValueTypeFwd::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_ValueTypeFwd::destroy (void)
+AST_ValueTypeFwd::destroy ()
 {
+  this->AST_InterfaceFwd::destroy ();
 }
-
-// Narrowing methods.
-IMPL_NARROW_METHODS1 (AST_ValueTypeFwd, AST_InterfaceFwd)
-IMPL_NARROW_FROM_DECL (AST_ValueTypeFwd)

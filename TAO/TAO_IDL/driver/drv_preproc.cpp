@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -66,18 +64,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
-#include "idl_bool.h"
+
 #include "idl_defines.h"
 #include "global_extern.h"
 #include "fe_extern.h"
 #include "drv_extern.h"
 #include "utl_string.h"
+#include "utl_err.h"
+
 #include "ace/Version.h"
-#include "ace/Process_Manager.h"
+#include "ace/Process.h"
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ARGV.h"
-#include "ace/UUID.h"
+#include "ace/Dirent.h"
+#include "ace/OS_NS_sys_stat.h"
+#include "ace/Truncate.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -85,406 +87,925 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_sys_stat.h"
 
-ACE_RCSID (driver,
-           drv_preproc,
-           "$Id$")
+// Storage for preprocessor args.
+unsigned long const DRV_MAX_ARGCOUNT = 1024;
+unsigned long DRV_argcount = 0;
+ACE_TCHAR const * DRV_arglist[DRV_MAX_ARGCOUNT] = { nullptr };
 
-static long argcount = 0;
-static long max_argcount = 128;
-static const char *arglist[128];
-static const char *output_arg_format = 0;
+static char const * output_arg_format = nullptr;
 static long output_arg_index = 0;
+
+ACE_TCHAR const TCHAR_DIR_DOT[] = ACE_TEXT(".");
+
+#if defined (ACE_HAS_TCHAR_DIRENT)
+// ACE_TCHAR const DIR_DOT[] = ACE_TEXT(".");
+ACE_TCHAR const DIR_DOT_DOT[] = ACE_TEXT("..");
+#else
+// char const DIR_DOT[] = ".";
+char const DIR_DOT_DOT[] = "..";
+#endif /* ACE_HAS_TCHAR_DIRENT */
+
+// File names.
+static char tmp_file [MAXPATHLEN + 1] = { 0 };
+static char tmp_ifile[MAXPATHLEN + 1] = { 0 };
+
+// Lines can be 1024 chars long intially -
+// it will expand as required.
+#define LINEBUF_SIZE 1024
+char* drv_line = nullptr;
+static size_t drv_line_size = LINEBUF_SIZE + 1;
 
 // Push the new CPP location if we got a -Yp argument.
 void
-DRV_cpp_new_location (const char *new_loc)
+DRV_cpp_new_location (char const * new_loc)
 {
-  arglist[0] = new_loc;
+  ACE::strdelete (const_cast<ACE_TCHAR *> (DRV_arglist[0]));
+  DRV_arglist[0] =
+    ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (new_loc));
 }
 
-// Push an argument into the arglist.
+// Push an argument into the DRV_arglist.
 void
 DRV_cpp_putarg (const char *str)
 {
-  if (argcount >= max_argcount)
+  if (DRV_argcount >= DRV_MAX_ARGCOUNT)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s %d %s\n",
+                  "%C: More than %d arguments to preprocessor\n",
                   idl_global->prog_name (),
-                  ": More than",
-                  max_argcount,
-                  "arguments to preprocessor"));
+                  DRV_MAX_ARGCOUNT ));
 
-      ACE_OS::exit (99);
+      throw Bailout ();
     }
 
-  arglist[argcount++] = ACE::strnew (str);
+  char *replace = nullptr;
+  if (str)
+    {
+      bool allocate_error = false;
+
+#ifdef ACE_WIN32
+      const char *const first_quote = ACE_OS::strchr (str, '"');
+      if (first_quote)
+        {
+          // Escape Doublequotes on Windows
+
+          size_t quote_count = 0;
+          for (const char *quote = first_quote; quote; quote = ACE_OS::strchr (quote, '"'))
+            {
+              ++quote_count;
+              ++quote;
+            }
+
+          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + quote_count + 1]);
+          allocate_error = !replace;
+          if (replace)
+            {
+              char *to = replace;
+              for (const char *from = str; *from; ++from)
+                {
+                  if (*from == '"')
+                    {
+                      *to = '\\';
+                      ++to;
+                    }
+                  *to = *from;
+                  ++to;
+                }
+              *to = '\0';
+            }
+        }
+#endif
+      if (ACE_OS::strchr (str, ' '))
+        {
+          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + 3]);
+          allocate_error = !replace;
+          if (replace)
+            {
+              replace[0] = '"';
+              ACE_OS::strcpy (replace + 1, str);
+              ACE_OS::strcat (replace, "\"");
+            }
+        }
+
+      if (allocate_error)
+        {
+          idl_global->err()->misc_error ("DRV_cpp_putarg failed to allocate memory for argument!");
+          throw Bailout ();
+        }
+    }
+
+  DRV_arglist[DRV_argcount++] = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (replace ? replace : str));
+
+  if (replace)
+    {
+      delete [] replace;
+      replace = nullptr;
+    }
 }
 
 // Expand the output argument with the given filename.
 void
 DRV_cpp_expand_output_arg (const char *filename)
 {
-  if (output_arg_format != 0)
+  if (output_arg_format != nullptr)
     {
-      delete [] const_cast<char *> (arglist[output_arg_index]);
-      arglist[output_arg_index] = 0;
+      ACE::strdelete (const_cast<ACE_TCHAR *> (
+                        DRV_arglist[output_arg_index]));
+      DRV_arglist[output_arg_index] = nullptr;
 
-      char *output_arg = 0;
-      ACE_NEW (output_arg,
-               char [ACE_OS::strlen (output_arg_format)
+      ACE_NEW (DRV_arglist[output_arg_index],
+               ACE_TCHAR [ACE_OS::strlen (output_arg_format)
                      + ACE_OS::strlen (filename)
                      + 1]);
 
-      ACE_OS::sprintf (output_arg,
-                       output_arg_format,
-                       filename);
-
-      arglist[output_arg_index] = output_arg;
+      ACE_OS::sprintf (const_cast<ACE_TCHAR *> (
+                         DRV_arglist[output_arg_index]),
+                       ACE_TEXT_CHAR_TO_TCHAR (output_arg_format),
+                       ACE_TEXT_CHAR_TO_TCHAR (filename));
     }
 }
 
-// Lines can be 1024 chars long.
-#define LINEBUF_SIZE 1024
-static char drv_line[LINEBUF_SIZE + 1];
+// calculate the total size of all commandline arguments
+unsigned int
+DRV_cpp_calc_total_argsize()
+{
+  unsigned long size = 0;
+  unsigned long ix = 0;
+  while (DRV_arglist[ix] != nullptr)
+    {
+      size += ACE_Utils::truncate_cast<unsigned long> (ACE_OS::strlen (DRV_arglist[ix]) + 1);
+      ++ix;
+    }
+  return size;
+}
 
 // Get a line from stdin.
-static long
-DRV_get_line (FILE *f)
+static bool
+DRV_get_line (FILE *file)
 {
-    char *l = fgets (drv_line,
-                     LINEBUF_SIZE,
-                     f);
-    size_t i = 0;
+  char *line = ACE_OS::fgets (drv_line,
+                              ACE_Utils::truncate_cast<int> (drv_line_size),
+                              file);
+  if (!line || (!*line && feof (file)))
+    {
+      // End of file, nothing else read in.
+      return false;
+    }
 
-    if (l == 0)
-      {
-        return I_FALSE;
-      }
+  do
+    {
+      // Check for line continuation escape...
+      size_t len = ACE_OS::strlen (drv_line);
+      if (2 <= len &&
+          '\n' == drv_line [len-1] &&
+          '\\' == drv_line [len-2]    )
+        {
+          // This is a "false" end-of-line, remove token
+          len-= 2;
+          drv_line [len]= '\0';
+        }
 
-    if (*l == '\0' && feof (f))
-      {
-        return I_FALSE;
-      }
+      // Check for end-of-line
+      if (len && '\n' == drv_line [len-1])
+        {
+          // Replace the end-of-line with a null
+          drv_line [len-1] = '\0';
+          return true;
+        }
 
-    if (*l == '\0')
-      {
-        return I_TRUE;
-      }
+      // Need to continue to read more of this line in,
+      // is there enough space left in the buffer?
+      if (drv_line_size - len < 10)
+        {
+          // Create a bigger buffer
+          size_t temp_size = drv_line_size * 2;
+          char *temp = nullptr;
+          ACE_NEW_RETURN (temp, char [temp_size], false);
+          ACE_OS::strcpy (temp, drv_line);
+          delete [] drv_line;
+          drv_line = temp;
+          drv_line_size = temp_size;
+        }
 
-    i = strlen(l) - 1;
+      line = ACE_OS::fgets (drv_line + len,
+                            ACE_Utils::truncate_cast<int> (drv_line_size - len),
+                            file);
+    } while (line && *line);
 
-    if (l[i] == '\n')
-      {
-        l[i] = '\0';
-      }
-
-    return I_TRUE;
+  return true;
 }
 
 // Initialize the cpp argument list.
 void
-DRV_cpp_init (void)
+DRV_cpp_init ()
 {
-  const char *cpp_loc = FE_get_cpp_loc_from_env ();
+  // Create the line buffer.
+  // (JP) Deleting this at the end or DRV_pre_proc() causes
+  // Purify to output a Freeing Mismatched Memory warning.
+  // When it is not deleted (currently the case) there is no
+  // memory leak reported by Purify. I don't know why.
+  ACE_NEW (drv_line,
+           char [drv_line_size]);
+
+  char const * const cpp_loc = FE_get_cpp_loc_from_env ();
   DRV_cpp_putarg (cpp_loc);
 
   // Add an option to the IDL compiler to make the TAO version
-  // available to the user. A XX.YY.ZZ release gets version 0xXXYYZZ,
-  // for example, 5.1.14 gets 0x050114.
+  // available to the user. A XX.YY.ZZ release gets
+  // version 0xXXYYZZ, for example, 5.1.14 gets 0x050114.
   char version_option[128];
   ACE_OS::sprintf (version_option,
                    "-D__TAO_IDL=0x%2.2d%2.2d%2.2d",
                    ACE_MAJOR_VERSION,
                    ACE_MINOR_VERSION,
-                   ACE_BETA_VERSION);
-                   
+                   ACE_MICRO_VERSION);
+
   DRV_cpp_putarg (version_option);
   DRV_cpp_putarg ("-I.");
-  const char *cpp_args = FE_get_cpp_args_from_env ();
 
-  if (cpp_args == 0)
+  const char *platform_cpp_args =
+    FE_get_cpp_args_from_env ();
+
+  if (platform_cpp_args == nullptr)
     {
       // If no cpp flag was defined by the user, we define some
       // platform specific flags here.
-      char option[BUFSIZ];
 
 #if defined (TAO_IDL_PREPROCESSOR_ARGS)
-      cpp_args = TAO_IDL_PREPROCESSOR_ARGS;
+      platform_cpp_args = TAO_IDL_PREPROCESSOR_ARGS;
 #elif defined (ACE_CC_PREPROCESSOR_ARGS)
-      cpp_args = ACE_CC_PREPROCESSOR_ARGS;
+      platform_cpp_args = ACE_CC_PREPROCESSOR_ARGS;
 #else
-      cpp_args = "-E";
+      platform_cpp_args = "-E";
 #endif /* TAO_IDL_PREPROCESSOR_ARGS */
 
       // So we can find OMG IDL files, such as `orb.idl'.
-      
-      ACE_OS::strcpy (option, "-I");
+      ACE_CString include_path1, include_path2;
+
       char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
-      size_t len = 0;
-      
-      if (TAO_ROOT != 0)
+
+      if (TAO_ROOT != nullptr)
         {
-          len = ACE_OS::strlen (TAO_ROOT);
+            DRV_add_include_path (include_path1,
+                                  TAO_ROOT,
+                                  nullptr,
+                                  true);
 
-          // Some compilers choke on "//" separators.
-          if (TAO_ROOT[len - 1] == '/')
-            {
-              TAO_ROOT[len - 1] = '\0';
-            }
-
-          ACE_OS::strcat (option, TAO_ROOT);
-#if defined (ACE_WIN32)
-          ACE_OS::strcat (option, "\\tao");
-#else
-          ACE_OS::strcat (option, "/tao");
-#endif
+            DRV_add_include_path (include_path2,
+                                  TAO_ROOT,
+                                  "/tao",
+                                  true);
         }
       else
         {
           char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
 
-          if (ACE_ROOT != 0)
+          if (ACE_ROOT != nullptr)
             {
-              len = ACE_OS::strlen (ACE_ROOT);
+              DRV_add_include_path (include_path1,
+                                    ACE_ROOT,
+                                    "/TAO",
+                                    true);
 
-              // Some compilers choke on "//" separators.
-              if (ACE_ROOT[len - 1] == '/')
-                {
-                  ACE_ROOT[len - 1] = '\0';
-                }
-
-              ACE_OS::strcat (option, ACE_ROOT);
-#if defined (ACE_WIN32)
-              ACE_OS::strcat (option, "\\TAO\\tao");
-#else
-              ACE_OS::strcat (option, "/TAO/tao");
-#endif
+              DRV_add_include_path (include_path2,
+                                    ACE_ROOT,
+                                    "/TAO/tao",
+                                    true);
             }
           else
             {
 #if defined (TAO_IDL_INCLUDE_DIR)
-              // TAO_IDL_INCLUDE_DIR should be in quotes,
+              // TAO_IDL_INCLUDE_DIR may be in quotes,
               // e.g. "/usr/local/include/tao"
-              ACE_OS::strcat (option,
-                              TAO_IDL_INCLUDE_DIR);
+              // We deal with a case like this below ...
+              DRV_add_include_path (include_path1,
+                                    TAO_IDL_INCLUDE_DIR,
+                                    0,
+                                    true);
+              DRV_add_include_path (include_path2,
+                                    TAO_IDL_INCLUDE_DIR,
+                                    "/tao",
+                                    true);
 #else
-              ACE_ERROR ((LM_WARNING,
-                          "NOTE: The environment variables "
-                          "TAO_ROOT and ACE_ROOT are not defined.\n"
-                          "      TAO_IDL may not be able to "
-                          "locate orb.idl\n"));
-
-              ACE_OS::strcat (option, ".");
+              DRV_add_include_path (include_path1,
+                                    ".",
+                                    nullptr,
+                                    true);
 #endif  /* TAO_IDL_INCLUDE_DIR */
             }
         }
 
-      DRV_cpp_putarg (option);
-      idl_global->add_include_path (ACE_CString (option + 2).c_str ());
-      idl_global->tao_root (option + 2);
+      idl_global->tao_root (include_path1.c_str ());
     }
 
-  // Add any flags in cpp_args to cpp's arglist.
-  ACE_ARGV arglist (cpp_args);
+  // Add any flags in platform_cpp_args to cpp's DRV_arglist.
+  ACE_ARGV platform_arglist (
+    ACE_TEXT_CHAR_TO_TCHAR (platform_cpp_args));
 
-  for (size_t arg_cnt = 0; arg_cnt < (size_t)arglist.argc (); ++arg_cnt)
+  for (int i = 0; i < platform_arglist.argc (); ++i)
     {
-      // Check for an argument that specifies the preprocessor's output file.
-      if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0
-          && output_arg_format == 0)
+      // Check for an argument that specifies
+      // the preprocessor's output file.
+      if (ACE_OS::strstr (platform_arglist[i], ACE_TEXT ("%s")) != nullptr
+          && output_arg_format == nullptr)
         {
-          output_arg_format = ACE::strnew (arglist[arg_cnt]);
-          output_arg_index = argcount;
-          DRV_cpp_putarg (0);
+          output_arg_format =
+            ACE::strnew (ACE_TEXT_ALWAYS_CHAR (platform_arglist[i]));
+          output_arg_index = DRV_argcount;
+          DRV_cpp_putarg (nullptr);
         }
       else
         {
-          DRV_cpp_putarg (arglist[arg_cnt]);
+          DRV_cpp_putarg (ACE_TEXT_ALWAYS_CHAR (platform_arglist[i]));
         }
     }
 }
 
-// We really need to know whether this line is a "#include ...". If
-// so, we would like to separate the "file name" and keep that in the
-// idl_global. We need them to produce "#include's in the stubs and
-// skeletons.
-void
-DRV_check_for_include (const char* buf)
+int
+DRV_sweep_dirs (const char *rel_path,
+                const char *base_path)
 {
-  const char* r = buf;
-  const char* h;
-
-  // Skip the tabs and spaces.
-  while (*r == ' ' || *r == '\t')
+  // Zero rel_path means we're not using this option, and
+  // so we become a no-op.
+  if (rel_path == nullptr)
     {
-      ++r;
+      return 0;
     }
 
-  // Skip initial '#'.
-  if (*r != '#')
+  if (ACE_OS::chdir (rel_path) == -1)
     {
-      return;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "DRV_sweep_dirs: chdir %C failed\n",
+                         rel_path),
+                        -1);
+    }
+
+  ACE_Dirent dir (TCHAR_DIR_DOT);
+  ACE_CString bname (base_path);
+  bname += (bname.length () > 0 ? "/" : "");
+  bname += rel_path;
+  bool include_added = false;
+  char abspath[MAXPATHLEN] = "";
+  char *full_path = nullptr;
+
+  for (ACE_DIRENT *dir_entry; (dir_entry = dir.read ()) != nullptr;)
+    {
+      // Skip the ".." and "." files in each directory.
+      if (ACE::isdotdir (dir_entry->d_name) == true)
+        {
+          continue;
+        }
+
+#if defined (ACE_HAS_TCHAR_DIRENT)
+      ACE_CString lname (ACE_TEXT_ALWAYS_CHAR (dir_entry->d_name));
+#else
+      ACE_CString lname (dir_entry->d_name);
+#endif
+      ACE_stat stat_buf;
+
+      if (ACE_OS::lstat (lname.c_str (), &stat_buf) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DRV_sweep_dirs: ACE_OS::lstat"
+                             " (%C) failed\n",
+                             lname.c_str ()),
+                            -1);
+        }
+
+      size_t len = 0;
+
+      switch (stat_buf.st_mode & S_IFMT)
+        {
+        case S_IFREG: // Either a regular file or an executable.
+          len = lname.length ();
+
+          if (len > 4 && lname.substr (len - 4) == ".idl")
+            {
+              if (!include_added)
+                {
+                  ACE_CString incl_arg ("-I");
+                  incl_arg += bname;
+                  DRV_cpp_putarg (incl_arg.c_str ());
+                  idl_global->add_rel_include_path (bname.c_str ());
+                  full_path = ACE_OS::realpath ("", abspath);
+
+                  if (full_path != nullptr)
+                    {
+                      idl_global->add_include_path (full_path,
+                                                    false);
+                    }
+
+                  include_added = true;
+                }
+
+              ACE_CString fname (bname);
+              fname += "/";
+              fname += lname;
+              DRV_push_file (fname.c_str ());
+            }
+
+          break;
+        case S_IFDIR: // Subdirectory.
+          DRV_sweep_dirs (lname.c_str (), bname.c_str ());
+          break;
+        case S_IFLNK: // Either a file link or directory link.
+        default: // Some other type of file (PIPE/FIFO/device).
+          break;
+        }
+    }
+
+  // Move back up a level.
+  if (ACE_OS::chdir (DIR_DOT_DOT) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "DRV_sweep_dirs: chdir "
+                         ".. (from %C) failed\n",
+                         rel_path),
+                        -1);
+    }
+
+  return 0;
+}
+
+ACE_CString&
+DRV_add_include_path (ACE_CString& include_path,
+                      const char *path,
+                      const char *suffix,
+                      bool is_system)
+{
+  if (path == nullptr)
+    {
+      return include_path;
+    }
+
+  const bool needToQuote =
+    (('"' == *path) || ACE_OS::strchr (path, ' '));
+  const size_t pathLength = ACE_OS::strlen (path);
+  const char
+#if defined (ACE_WIN32)
+    nativeDir =  '\\',
+    foreignDir = '/';
+#else
+    nativeDir =  '/',
+    foreignDir = '\\';
+#endif
+
+  // Eliminate possible enclosing quotes
+  // from the path, and since some compilers
+  // choke on double directory separators in
+  // paths, ensure that the path does not
+  // end with a directory slash.
+  include_path =
+    ACE_CString (path + ('"' == *path),     // Skip leading Quote
+                 pathLength
+                 - ('"' == *path)           // Don't count leading Quote
+                 - ( (1uL < pathLength) &&  // Don't count trailing Quote XOR directory
+                     ('"'        == path [pathLength - 1uL] ||
+                      nativeDir  == path [pathLength - 1uL] ||
+                      foreignDir == path [pathLength - 1uL]
+                   ) )
+                 - ( (2uL < pathLength) &&  // Don't count trailing Quote AND directory
+                     '"' == path [pathLength - 1uL] &&
+                     (nativeDir  == path [pathLength - 2uL] ||
+                      foreignDir == path [pathLength - 2uL]
+                   ) )
+                );
+
+  if (suffix != nullptr)
+    {
+      if (!include_path.length ()
+          && ((nativeDir == *suffix) || (foreignDir == *suffix)))
+        {
+          // Path is empty, don't add the
+          // suffix's leading directory separator.
+          ++suffix;
+        }
+
+      if (include_path.length ()
+          && (*suffix != '\0')
+          && (nativeDir != *suffix)
+          && (foreignDir != *suffix))
+        {
+          // Force a directory separator.
+          include_path += nativeDir;
+        }
+
+      // Add the suffix string to the path,
+      // ensuring that foreign directory slashes
+      // are added as the native type.
+      for ( ; *suffix != '\0'; ++suffix)
+        {
+          include_path += (foreignDir == *suffix)
+                             ? nativeDir
+                             : *suffix;
+        }
+    }
+
+  // Build up the include string from the new path+suffix
+  ACE_CString include_option ("-I\"", 2 + needToQuote);
+  include_option+= include_path;
+
+  if (needToQuote)
+    {
+      include_option+= '"';
+    }
+
+  DRV_cpp_putarg (include_option.c_str ());
+
+  idl_global->add_include_path (include_path.c_str (),
+                                is_system);
+
+  return include_path;
+}
+
+// Adds additional include paths, but after parse_args() has
+// added user-defined include paths.
+void
+DRV_cpp_post_init ()
+{
+  char idl_version_arg[128];
+  ACE_OS::sprintf (idl_version_arg, "-D__TAO_IDL_IDL_VERSION=%s",
+    idl_global->idl_version_.to_macro ());
+  DRV_cpp_putarg (idl_version_arg);
+
+  DRV_cpp_putarg ("-D__TAO_IDL_FEATURES="
+#ifdef TAO_IDL_FEATURES
+    TAO_IDL_FEATURES
+#else
+    "\"tao/idl_features.h\""
+#endif
+  );
+
+  // Add include path for TAO_ROOT/orbsvcs.
+  char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+
+  ACE_CString include_path3, include_path4, include_path5;
+
+  // When adding new dirs here don't forget to update
+  // FE_Utils::validate_orb_include accordingly.
+  if (TAO_ROOT != nullptr)
+    {
+      DRV_add_include_path (include_path3,
+                            TAO_ROOT,
+                            "/orbsvcs",
+                            true);
     }
   else
     {
-      r++;
-    }
+      // If TAO_ROOT isn't defined, assume it's under ACE_ROOT.
+      char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
 
-  // Skip the tabs and spaces.
-  while (*r == ' ' || *r == '\t')
-    {
-      ++r;
-    }
-
-  // Probably we are at the word `include`. If not return.
-  if (*r != 'i')
-    {
-      return;
-    }
-
-  // Check whether this word is `include` or no.
-  const char* include_str = "include";
-
-  for (size_t ii = 0;
-       ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
-       ++r, ++ii)
-    {
-      // Return if it doesn't match.
-      if (include_str [ii] != *r)
+      if (ACE_ROOT != nullptr)
         {
-          return;
+          DRV_add_include_path (include_path3,
+                                ACE_ROOT,
+                                "/TAO/orbsvcs",
+                                true);
+        }
+      else
+        {
+#if defined (TAO_IDL_INCLUDE_DIR)
+          DRV_add_include_path (include_path3,
+                                TAO_IDL_INCLUDE_DIR,
+                                "/orbsvcs",
+                                true);
+#else
+          // If ACE_ROOT isn't defined either, there will already
+          // be a warning from DRV_preproc().
+          DRV_add_include_path (include_path3,
+                                ".",
+                                nullptr,
+                                true);
+#endif  /* TAO_IDL_INCLUDE_DIR */
         }
     }
 
-  // Next thing is finding the file that has been `#include'd. Skip
-  // all the blanks and tabs and reach the startng " or < character.
-  for (; (*r != '"') && (*r != '<'); ++r)
+  // Add include paths for CIAO_ROOT and CIAO_ROOT/ciao.
+  char* CIAO_ROOT = ACE_OS::getenv ("CIAO_ROOT");
+
+  // When adding new dirs here don't forget to update
+  // FE_Utils::validate_orb_include accordingly.
+  if (CIAO_ROOT != nullptr)
     {
-      if (*r == '\n' || *r == '\0')
-        {
-          return;
-        }
+      DRV_add_include_path (include_path4,
+                            CIAO_ROOT,
+                            nullptr,
+                            true);
+
+      DRV_add_include_path (include_path5,
+                            CIAO_ROOT,
+                            "/ciao",
+                            true);
+
+      DRV_add_include_path (include_path5,
+                            CIAO_ROOT,
+                            "/ccm",
+                            true);
     }
 
-  // Decide on the end char.
-  char end_char = '"';
+  // Save path of current directory, in case
+  // the call to DRV_sweep_dirs()
+  // below is not a no-op - then the current
+  // working directory will
+  // have to be restored.
+  char cwd_path[MAXPATHLEN];
 
-  if (*r == '<')
-    {
-      end_char = '>';
-    }
-
-  // Skip this " or <.
-  ++r;
-
-  // Store this position.
-  h = r;
-
-  // We're not handling redirection from stdin.
-  if (*h == '\0')
+  if (ACE_OS::getcwd (cwd_path, sizeof (cwd_path)) == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("IDL: No input files\n")));
+                  "DRV_cpp_post_init: ACE_OS::getcwd failed\n"));
 
-      ACE_OS::exit (99);
+      throw Bailout ();
     }
 
-  // Find the closing " or < character.
-  for (; *r != end_char; ++r)
+  // If first arg is non-zero, adds an include path and filename
+  // for every IDL file found in all subdirectories. This is a
+  // no-op for most backends.
+  if (DRV_sweep_dirs (idl_global->recursion_start (), "") == -1)
     {
-      continue;
+      ACE_ERROR ((LM_ERROR,
+                  "DRV_cpp_post_init: DRV_sweep_dirs (%C) failed\n",
+                  idl_global->recursion_start ()));
+
+      throw Bailout ();
     }
 
-  // Make a new string for this file name.
-  char* file_name = 0;
-  ACE_NEW (file_name,
-           char [r - h + 1]);
-
-  // Copy the char's.
-  size_t fi = 0;
-
-  for (; h != r; ++fi, ++h)
+  // This is redundant for most backends, but not if the call to
+  // DRV_sweep_dirs() above is more than a no-op.
+  if (ACE_OS::chdir (cwd_path) == -1)
     {
-      file_name [fi] = *h;
-    }
+      ACE_ERROR ((LM_ERROR,
+                  "DRV_cpp_post_init: ACE_OS::chdir (%C) failed\n",
+                  cwd_path));
 
-  // Terminate the string.
-  file_name [fi] = '\0';
-
-  // Put Microsoft-style pathnames into a canonical form.
-  size_t i = 0;
-
-  for (size_t j = 0; file_name [j] != '\0'; ++i, ++j)
-    {
-      if (file_name [j] == '\\' && file_name [j + 1] == '\\')
-        {
-          j++;
-        }
-
-      file_name [i] = file_name [j];
-    }
-
-  // Terminate this string.
-  file_name [i] = '\0';
-  
-  size_t len = ACE_OS::strlen (file_name);
-
-  // Some backends pass this file through, others don't.
-  if (ACE_OS::strcmp (file_name, "orb.idl") == 0)
-    {
-      if (idl_global->pass_orb_idl ())
-        {
-          idl_global->add_to_included_idl_files (file_name);
-        }
-      else
-        {
-          DRV_get_orb_idl_includes ();
-        }
-    }
-  // We have special lookup for orb.idl (TAO_ROOT/tao) that
-  // also kicks in for .pidl files. If one of the latter is
-  // included as a local name only, we add the 'tao/' prefix
-  // so the generated C++ include files will be correct.
-  else if (ACE_OS::strcmp (file_name + len - 5, ".pidl") == 0
-           && ACE_OS::strchr (file_name, '/') == 0
-           && ACE_OS::strchr (file_name, '\\') == 0)
-    {
-      ACE_CString fixed_name ("tao/");
-      fixed_name += file_name;
-      idl_global->add_to_included_idl_files (fixed_name.rep ());
-    }
-  else
-    {
-      idl_global->add_to_included_idl_files (file_name);
+      throw Bailout ();
     }
 }
 
-void
-DRV_get_orb_idl_includes (void)
+// Local/internal helper function.
+namespace
 {
-  ACE_CString orb_idl_path (idl_global->tao_root ());
-  orb_idl_path += "/orb.idl";
-  FILE *fd = ACE_OS::fopen (orb_idl_path.fast_rep (), "r");
+  // Advances the input char buffer to the first non-white
+  // space character, handles /**/ comments as well.
+  char
+  DRV_skip_over_white_spaces (const char *&input)
+  {
+    while (*input != 0)
+      {
+        // Skip the spaces, tabs, vertical-tabs and form feeds.
+        while (' ' == *input ||
+              '\t' == *input ||
+              '\v' == *input ||
+              '\f' == *input)
+          {
+            ++input;
+          }
 
-  if (fd == 0) {
-    ACE_ERROR ((LM_ERROR,
-		"%s%s",
-		orb_idl_path.fast_rep (),
-		": cannot open input file\n"));
+        // Skip any "/*...*/" inline comments
+        // (Note we can't cope with fully multi-line comments since we
+        //  are scanning only single lines at a time here.)
+        if ('/' != *input)
+          {
+            // This is the first non-white space character (could be
+            // end of line).
+            return *input;
+          }
 
-    ACE_OS::exit (99);
+        if ('*' != *++input)
+          {
+            // Wasn't the start of a comment so / was the first non-white space character.
+            return *--input;
+          }
+
+        // Skip over the contents of the comment (if we reach the end of the input
+        // line we have no option but to concider the comment closed, bummer).
+        do
+          {
+            // Looking for the closing "*/" characters
+            while ('*' != *++input && *input)
+              {}
+
+            while ('*' == *input)
+              {
+                ++input;
+              }
+          } while ('/' != *input && *input);
+
+          if ('/' == *input)
+            {
+              ++input;
+            }
+      }
+
+    return '\0'; // Reached end of line.
   }
 
-  while (DRV_get_line (fd))
+  // Checks for and skips over #include, positions buffer
+  // at the leading quote character of the filename if
+  // #include is found.
+  bool
+  DRV_find_include_filename (const char *&input)
+  {
+    // Must have initial # character
+    if ('#' != DRV_skip_over_white_spaces (input))
+      {
+        return false;
+      }
+
+    // Only want #include to match
+    const char *include_str = "include";
+
+    if (*include_str != DRV_skip_over_white_spaces (++input))
+      {
+        return false;
+      }
+
+    while (*++include_str == *++input && *input)
+      {}
+
+    if (*include_str || !*input)
+      {
+        // Not #include (or it ends before filename given).
+        return false;
+      }
+
+    // Next thing is finding the file that has been `#include'd. Skip
+    // over to the starting " or < character.
+    const char start_char = DRV_skip_over_white_spaces (input);
+    return ('"' == start_char || '<' == start_char);
+  }
+
+  // We really need to know whether
+  // this line is a "#include ...". If
+  // so, we would like to separate the
+  // "file name" and keep that in the
+  // idl_global. We need them to produce
+  // "#include's in the stubs and
+  // skeletons.
+  void
+  DRV_check_for_include (const char *buf)
+  {
+    if (!DRV_find_include_filename (buf))
+      {
+        return;
+      }
+
+    // Skip over this leading " or < and
+    // copy the filename upto the
+    // closing " or > character.
+    const char
+      start_char = *buf++,
+      end_char   = ('<' == start_char) ? '>' : start_char;
+
+    char
+      incl_file[MAXPATHLEN + 1],
+      *fi = incl_file;
+
+    while (*buf != '\0' && *buf != end_char)
+      {
+        // Put Microsoft-style pathnames into a canonical form.
+        if ('\\' == buf[0] && '\\' == buf [1])
+          {
+            ++buf;
+          }
+
+        *fi++ = *buf++;
+
+        if (fi == incl_file + sizeof (incl_file) - 1)
+          {
+            // Safety valve, filename given was too long!
+            break;
+          }
+      }
+
+    *fi= '\0';
+    const size_t len = fi - incl_file;
+
+    if (len == 0)
     {
-      // Find the included .pidl files and add them to
-      // the included IDL file list.
+      return; // Null filename not allowed.
+    }
+
+    ACE_CString const name_str (incl_file);
+    ACE_CString const simple ("orb.idl");
+    ACE_CString const nix_path ("tao/orb.idl");
+    ACE_CString const win_path ("tao\\orb.idl");
+
+    // Some backends pass this file through, others don't.
+    if (name_str == simple
+        || name_str == nix_path
+        || name_str == win_path)
+      {
+        if (idl_global->pass_orb_idl ())
+          {
+            idl_global->add_to_included_idl_files (incl_file);
+          }
+        else
+          {
+            DRV_get_orb_idl_includes ();
+          }
+      }
+    // We have special lookup for orb.idl (TAO_ROOT/tao) that
+    // also kicks in for .pidl files. If one of the latter is
+    // included as a local name only, we add the 'tao/' prefix
+    // so the generated C++ include files will be correct.
+    else if ((5 <= len && !ACE_OS::strcmp (incl_file + len - 5, ".pidl"))
+             && !ACE_OS::strchr (incl_file, '/')
+             && !ACE_OS::strchr (incl_file, '\\'))
+      {
+        ACE_CString fixed_name ("tao/");
+        fixed_name += incl_file;
+
+        idl_global->add_to_included_idl_files (fixed_name.c_str ());
+      }
+    else
+      {
+        idl_global->add_to_included_idl_files (incl_file);
+      }
+  }
+
+  // This method turns a line like '#include "a.idl"' into the
+  // line '#include <a.idl>'
+  void
+  DRV_convert_includes (char *buf)
+  {
+    const char *input = buf;
+
+    if (!DRV_find_include_filename (input) || '"' != *input)
+      {
+        return; // Only interested in #include "" type
+      }
+
+    buf = const_cast<char *> (input);
+
+    // Find the closing '"' character.
+    char *open_quote= buf;
+
+    while ('"' != *++buf && *buf != '\0')
+      {
+        if ('>' == *buf)
+          {
+            // Can't change to #include <> as it
+            // has a > character in the filename!
+            return;
+          }
+      }
+    if ('"' == *buf)
+      {
+        // Replace the quotes with angle brackets.
+        *open_quote = '<';
+        *buf = '>';
+      }
+  }
+} // End of local/internal namespace
+
+void
+DRV_get_orb_idl_includes ()
+{
+  static char const orb_idl[] = "tao/orb.idl";
+
+ // Search for orb.idl in supplied include file search paths.
+  char const * directory = nullptr;
+  FILE * fp = FE_Utils::open_included_file (orb_idl, directory);
+
+  if (fp == nullptr)
+    {
+      // Fall back on $TAO_ROOT/tao/orb.idl if orb.idl is not in the
+      // include path.
+      ACE_CString orb_idl_path (ACE_CString (idl_global->tao_root ())
+                                + ACE_CString ('/')
+                                + ACE_CString (orb_idl));
+
+      fp = ACE_OS::fopen (orb_idl_path.c_str (), "r");
+
+      if (fp == nullptr)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO_IDL: cannot open or find file: %C\n",
+                      orb_idl_path.c_str ()));
+
+          throw Bailout ();
+        }
+    }
+  else
+    {
+      // Make sure the include directory containing orb.idl is passed
+      // to the preprocessor.
+      // This should go after user supplied include paths.
+      ACE_CString include_path_arg;
+      DRV_add_include_path (include_path_arg, directory, "/tao", true);
+    }
+
+  while (DRV_get_line (fp))
+    {
+      // Find the included .pidl files in orb.idl and add them to the
+      // included IDL file list.
       DRV_check_for_include (drv_line);
     }
 
-  ACE_OS::fclose (fd);
+  ACE_OS::fclose (fp);
 }
 
 // Copy to a file.
@@ -494,30 +1015,30 @@ DRV_copy_input (FILE *fin,
                 const char *fn,
                 const char *orig_filename)
 {
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: cannot open temp file \"%s\" for writing\n",
+                  "%C: cannot open temp file \"%C\" for copying from \"%C\": %m\n",
                   idl_global->prog_name (),
-                  fn));
+                  fn,
+                  orig_filename));
 
-      ACE_OS::exit (99);
+      throw Bailout ();
     }
 
-  if (fin == 0)
+  if (fin == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s",
-                  idl_global->prog_name (),
-                  ": cannot open input file\n"));
+                  "%C: cannot open input file\n",
+                  idl_global->prog_name ()));
 
-      ACE_OS::exit (99);
+      throw Bailout ();
     }
 
 #if !defined (ACE_WIN32)
-  fprintf (f,
-           "#line 1 \"%s\"\n",
-           orig_filename);
+  ACE_OS::fprintf (f,
+                   "#line 1 \"%s\"\n",
+                   orig_filename);
 #else
   // Convert single \ into double \ otherwise MSVC++ pre-processor
   // gets awfully confused.
@@ -529,11 +1050,11 @@ DRV_copy_input (FILE *fin,
       if (*s == '\\')
         {
           *d = '\\';
-          d++;
+          ++d;
         }
 
       *d = *s;
-      d++;
+      ++d;
     }
 
   *d = 0;
@@ -544,6 +1065,8 @@ DRV_copy_input (FILE *fin,
 
   while (DRV_get_line (fin))
     {
+      DRV_convert_includes (drv_line);
+
       // Print the line to the temporary file.
       ACE_OS::fprintf (f,
                        "%s\n",
@@ -560,18 +1083,6 @@ DRV_copy_input (FILE *fin,
   ACE_OS::fclose (f);
 }
 
-#ifdef ACE_LACKS_MKSTEMP
-static void
-DRV_copy_input (FILE *fin,
-                const char *fn,
-                const char *orig_filename)
-{
-  FILE *f = ACE_OS::fopen (fn, "w");
-
-  ::DRV_copy_input (fin, f, fn, orig_filename);
-}
-#endif  /* ACE_LACKS_MKSTEMP */
-
 // Strip down a name to the last component,
 // i.e. everything after the last '/' or '\' character.
 static char *
@@ -580,12 +1091,12 @@ DRV_stripped_name (char *fn)
     char *n = fn;
     size_t l;
 
-    if (n == 0)
+    if (n == nullptr)
       {
-        return 0;
+        return nullptr;
       }
 
-    l = strlen (n);
+    l = ACE_OS::strlen (n);
     int slash_found = 0;
 
     for (n += l - 1; n >= fn && !slash_found; n--)
@@ -603,96 +1114,86 @@ DRV_stripped_name (char *fn)
     return n;
 }
 
-// File names.
-static char tmp_file [MAXPATHLEN + 1] = { 0 };
-static char tmp_ifile[MAXPATHLEN + 1] = { 0 };
-
 // Pass input through preprocessor.
 void
 DRV_pre_proc (const char *myfile)
 {
+  // Check to see that the file is a normal file. If we don't and the file is a
+  // directory, then the copy would be blank and any error message later might
+  // not be helpful.
+  ACE_stat file_stat;
+  if (ACE_OS::stat (myfile, &file_stat) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: ERROR: Unable to open file (stat) \"%C\": %m\n",
+                  idl_global->prog_name (),
+                  myfile));
+      throw Bailout ();
+    }
+  else if ((file_stat.st_mode & S_IFREG) != S_IFREG)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: ERROR: This is not a regular file: \"%C\"\n",
+                  idl_global->prog_name (),
+                  myfile));
+      throw Bailout ();
+    }
+
   const char* tmpdir = idl_global->temp_dir ();
   static const char temp_file_extension[] = ".cpp";
 
-  // If ACE_LACKS_MKSTEMP is defined, we use ACE's uuid generator
-  // to create a unique id to append to tao_idl*_template to get
-  // unique temporary file names.
-  size_t uuid_len = 0;
+  static char const tao_idlf_template[] = "tao-idlf_XXXXXX";
+  static char const tao_idli_template[] = "tao-idli_XXXXXX";
 
-#ifdef ACE_LACKS_MKSTEMP
-
-  static const char tao_idlf_template[] = "tao-idlf_";
-  static const char tao_idli_template[] = "tao-idli_";
-
-  // The generated string format has 32 characters and 4 dashes.
-  uuid_len = 36;
-
-#else
-
-  static const char tao_idlf_template[] = "tao-idlf_XXXXXX";
-  static const char tao_idli_template[] = "tao-idli_XXXXXX";
-
-#endif  /* ACE_LACKS_MKSTEMP */
-
-  size_t tlen =
-    ACE_OS::strlen (tmpdir) + sizeof (temp_file_extension) + uuid_len;
+  size_t const tlen =
+    ACE_OS::strlen (tmpdir) + sizeof (temp_file_extension);
 
   // Prevent a buffer overrun.
   if (tlen + sizeof (tao_idlf_template) > sizeof (tmp_file)
       || tlen + sizeof (tao_idli_template) > sizeof (tmp_ifile))
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: temporary path/filename length is greater than "
+                  "%C: temporary path/filename length is greater than "
                   "length allowed by platform\n",
                   idl_global->prog_name ()));
 
-      return;
+      throw Bailout ();
     }
 
   ACE_OS::strcpy (tmp_file,  tmpdir);
   ACE_OS::strcpy (tmp_ifile, tmpdir);
 
-#ifdef ACE_LACKS_MKSTEMP
-
-  ACE_CString ftmpl (tao_idlf_template);
-  ACE_CString itmpl (tao_idli_template);
-
-  // Append temporary filename template to temporary directory.
-  ACE_OS::strcat (tmp_file,  ftmpl.substr (0, 9).c_str ());
-  ACE_OS::strcat (tmp_ifile, itmpl.substr (0, 9).c_str ());
-
-  ACE_CString uuid = FE_generate_UUID ();
-
-  const char *suffix = uuid.c_str ();
-
-  ACE_OS::strcat (tmp_file, suffix);
-  ACE_OS::strcat (tmp_ifile, suffix);
-  ACE_OS::strcat (tmp_file,  temp_file_extension);
-  ACE_OS::strcat (tmp_ifile, temp_file_extension);
-
-  char * t_file  = tmp_file;
-  char * t_ifile = tmp_ifile;
-
-#else
-
   // Append temporary filename template to temporary directory.
   ACE_OS::strcat (tmp_file,  tao_idlf_template);
   ACE_OS::strcat (tmp_ifile, tao_idli_template);
 
-  int ti_fd = ACE_OS::mkstemp (tmp_ifile);
-  int tf_fd = ACE_OS::mkstemp (tmp_file);
+  ACE_HANDLE const ti_fd = ACE_OS::mkstemp (tmp_ifile);
 
-  if (ti_fd == -1 || tf_fd == -1)
+  if (ti_fd == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to create temporary file: %m\n",
-                  idl_global->prog_name ()));
+                  "%C: Unable to create temporary file \"%C\": %m\n",
+                  idl_global->prog_name (),
+                  tmp_ifile));
 
-      return;
+      throw Bailout ();
     }
 
-  static char tmp_cpp_file [MAXPATHLEN + 1] = { 0 };
-  static char tmp_cpp_ifile[MAXPATHLEN + 1] = { 0 };
+  ACE_HANDLE const tf_fd = ACE_OS::mkstemp (tmp_file);
+
+  if (tf_fd == ACE_INVALID_HANDLE)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: Unable to create temporary file \"%C\": %m\n",
+                  idl_global->prog_name (),
+                  tmp_file));
+
+      (void) ACE_OS::unlink (tmp_ifile);
+      throw Bailout ();
+    }
+
+  char tmp_cpp_file [MAXPATHLEN + 1] = { 0 };
+  char tmp_cpp_ifile[MAXPATHLEN + 1] = { 0 };
 
   // Append C++ source file extension.  Temporary files will be renamed
   // to these filenames.
@@ -701,76 +1202,121 @@ DRV_pre_proc (const char *myfile)
   ACE_OS::strcat (tmp_cpp_file,  temp_file_extension);
   ACE_OS::strcat (tmp_cpp_ifile, temp_file_extension);
 
-  char * t_file  = tmp_cpp_file;
-  char * t_ifile = tmp_cpp_ifile;
+  char * const t_file  = tmp_cpp_file;
+  char * const t_ifile = tmp_cpp_ifile;
 
   ACE_OS::close (tf_fd);
 
-#endif  /* ACE_LACKS_MKSTEMP */
-
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
+  FILE * const file = ACE_OS::fopen (myfile, "r");
+  if (file == nullptr)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: ERROR: Unable to open file (fopen) \"%C\": %m\n",
+                  idl_global->prog_name (),
+                  myfile));
+      (void) ACE_OS::unlink (tmp_ifile);
+      (void) ACE_OS::unlink (tmp_file);
+      throw Bailout ();
+    }
 
-  UTL_String *tmp = 0;
-
-  FILE *file = ACE_OS::fopen (myfile, "r");
   DRV_copy_input (file,
-#ifndef ACE_LACKS_MKSTEMP
-                  ACE_OS::fdopen (ti_fd, "w"),
-#endif  /* !ACE_LACKS_MKSTEMP */
+                  ACE_OS::fdopen (ti_fd, ACE_TEXT("w")),
                   tmp_ifile,
                   myfile);
   ACE_OS::fclose (file);
 
-  ACE_NEW (tmp,
-           UTL_String (myfile));
-  idl_global->set_main_filename (tmp);
+  UTL_String *utl_string = nullptr;
+
+  ACE_NEW (utl_string,
+           UTL_String (myfile, true));
+
+  idl_global->set_main_filename (utl_string);
 
   ACE_Auto_String_Free safety (ACE_OS::strdup (myfile));
-  ACE_NEW (tmp,
-           UTL_String (DRV_stripped_name (safety.get ())));
-  idl_global->set_stripped_filename (tmp);
 
-  ACE_NEW (tmp,
-           UTL_String (t_ifile));
-  idl_global->set_real_filename (tmp);
+  UTL_String *stripped_tmp = nullptr;
+  ACE_NEW (stripped_tmp,
+           UTL_String (DRV_stripped_name (safety.get ()), true));
+
+  idl_global->set_stripped_filename (stripped_tmp);
+
+  UTL_String *real_tmp = nullptr;
+  ACE_NEW (real_tmp,
+           UTL_String (t_ifile, true));
+
+  idl_global->set_real_filename (real_tmp);
 
   // We use ACE instead of the (low level) fork facilities, this also
   // works on NT.
   ACE_Process process;
 
-  // For complex builds, the default command line buffer size of 1024
-  // is sometimes not enough. We use 4096 here.
-  ACE_Process_Options cpp_options (1,       // Inherit environment.
-                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
-
   DRV_cpp_expand_output_arg (t_file);
   DRV_cpp_putarg (t_ifile);
-  DRV_cpp_putarg (0); // Null terminate the arglist.
+  DRV_cpp_putarg (nullptr); // Null terminate the DRV_arglist.
 
-  cpp_options.command_line (arglist);
+  // For complex builds, the default
+  // command line buffer size of 1024
+  // is often not enough. We determine
+  // the required space and arg nr
+  // dynamically here.
+  ACE_Process_Options cpp_options (true,       // Inherit environment.
+                                   DRV_cpp_calc_total_argsize (),
+                                   16 * 1024,
+                                   512,
+                                   DRV_argcount);
 
-#ifndef ACE_LACKS_MKSTEMP
+  if (cpp_options.command_line (DRV_arglist) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%C: command line processing \"%s\" failed\n"),
+                  idl_global->prog_name (),
+                  DRV_arglist[0]));
+
+      (void) ACE_OS::unlink (tmp_ifile);
+      (void) ACE_OS::unlink (tmp_file);
+      throw Bailout ();
+    }
+
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.  Renaming is (supposed to be) an atomic
   // operation so we shouldn't be susceptible to attack.
-  if (ACE_OS::rename (tmp_file, t_file) != 0
-      || ACE_OS::rename (tmp_ifile, t_ifile) != 0)
+  if (ACE_OS::rename (tmp_file, t_file) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to rename temporary file: %m\n",
-                  idl_global->prog_name ()));
+                  "%C: Unable to rename temporary "
+                  "file \"%C\" to \"%C\": %m\n",
+                  idl_global->prog_name (),
+                  tmp_file,
+                  t_file));
 
-      return;
+
+      (void) ACE_OS::unlink (tmp_ifile);
+      (void) ACE_OS::unlink (tmp_file);
+      throw Bailout ();
     }
-#endif  /* !ACE_LACKS_MKSTEMP */
+
+  if (ACE_OS::rename (tmp_ifile, t_ifile) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: Unable to rename temporary "
+                  "file \"%C\" to \"%C\": %m\n",
+                  idl_global->prog_name (),
+                  tmp_ifile,
+                  t_ifile));
+
+      (void) ACE_OS::unlink (tmp_ifile);
+      (void) ACE_OS::unlink (t_file);
+      throw Bailout ();
+    }
 
   // Remove any existing output file.
   (void) ACE_OS::unlink (t_file);
 
   ACE_HANDLE fd = ACE_INVALID_HANDLE;
 
-  if (output_arg_format == 0)
+  if (output_arg_format == nullptr)
     {
       // If the following open() fails, then we're either being hit with a
       // symbolic link attack, or another process opened the file before
@@ -782,24 +1328,43 @@ DRV_pre_proc (const char *myfile)
       if (fd == ACE_INVALID_HANDLE)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s: cannot open temp file \"%s\" for writing\n",
+                      "%C: cannot open temp file"
+                      " \"%C\" for writing: %m\n",
                       idl_global->prog_name (),
                       t_file));
 
-          return;
+          (void) ACE_OS::unlink (t_file);
+          (void) ACE_OS::unlink (t_ifile);
+          throw Bailout ();
         }
 
-      cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
+      if (cpp_options.set_handles (ACE_INVALID_HANDLE, fd) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "%C: cannot set stdout for child process: %m\n",
+                      idl_global->prog_name ()));
+
+          throw Bailout ();
+        }
+    }
+
+  if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
+    {
+      ACE_DEBUG ((LM_DEBUG, "%C: spawning: %s\n",
+                  idl_global->prog_name (),
+                  cpp_options.command_line_buf ()));
     }
 
   if (process.spawn (cpp_options) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: spawn of \"%s\" failed\n",
+                  "%C: spawn of \"%s\" failed\n",
                   idl_global->prog_name (),
-                  arglist[0]));
+                  DRV_arglist[0]));
 
-      return;
+
+      (void) ACE_OS::unlink (t_file);
+      (void) ACE_OS::unlink (t_ifile);
+      throw Bailout ();
     }
 
   if (fd != ACE_INVALID_HANDLE)
@@ -808,73 +1373,90 @@ DRV_pre_proc (const char *myfile)
       if (ACE_OS::close (fd) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s: cannot close temp file \"%s\" on parent\n",
+            "%C: cannot close temp file \"%C\" on parent: %m\n",
                       idl_global->prog_name (),
                       t_file));
 
-          return;
+          (void) ACE_OS::unlink (t_file);
+          (void) ACE_OS::unlink (t_ifile);
+          throw Bailout ();
         }
     }
 
-  // Remove the null termination and the input file from the arglist,
+  // Remove the null termination and the
+  // input file from the DRV_arglist,
   // the next file will the previous args.
-  argcount -= 2;
-
+  DRV_argcount -= 2;
+  ACE::strdelete (
+    const_cast<ACE_TCHAR *> (DRV_arglist[DRV_argcount]));
+  DRV_arglist[DRV_argcount] = nullptr;
   ACE_exitcode status = 0;
 
   if (process.wait (&status) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: wait for child process failed\n",
+                  "%C: wait for child process failed\n",
                   idl_global->prog_name ()));
 
-      return;
+      (void) ACE_OS::unlink (t_file);
+      (void) ACE_OS::unlink (t_ifile);
+      throw Bailout ();
     }
 
   if (WIFEXITED ((status)))
     {
-      // child terminated normally?
+      // Child terminated normally?
       if (WEXITSTATUS ((status)) != 0)
         {
           errno = WEXITSTATUS ((status));
 
           ACE_ERROR ((LM_ERROR,
-                      "%s: preprocessor \"%s\" returned with an error\n",
+                      "%C: preprocessor \"%s\" "
+                      "returned with an error\n",
                       idl_global->prog_name (),
-                      arglist[0]));
+                      DRV_arglist[0]));
 
-          ACE_OS::exit (1);
+          (void) ACE_OS::unlink (t_file);
+          (void) ACE_OS::unlink (t_ifile);
+          throw Bailout ();
         }
     }
   else
     {
-      // child didn't call exit(); perhaps it received a signal?
+      // Child didn't call exit(); perhaps it received a signal?
       errno = EINTR;
 
       ACE_ERROR ((LM_ERROR,
-                  "%s: preprocessor \"%s\" appears to have been interrupted\n",
+                  "%C: preprocessor \"%s\" appears "
+                  "to have been interrupted\n",
                   idl_global->prog_name (),
-                  arglist[0]));
+                  DRV_arglist[0]));
 
-      ACE_OS::exit (1);
+      (void) ACE_OS::unlink (t_file);
+      (void) ACE_OS::unlink (t_ifile);
+      throw Bailout ();
     }
-  // TODO: Manage problems in the pre-processor, in the previous
-  // version the current process would exit if the pre-processor
+  // TODO: Manage problems in the
+  // pre-processor, in the previous
+  // version the current process
+  // would exit if the pre-processor
   // returned with error.
+  FILE * const yyin = ACE_OS::fopen (t_file, "r");
 
-  FILE *yyin = ACE_OS::fopen (t_file, "r");
-
-  if (yyin == NULL)
+  if (yyin == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not open cpp output file \"%s\"\n",
+                  "%C: Could not open cpp "
+                  "output file \"%C\": %m\n",
                   idl_global->prog_name (),
                   t_file));
 
-      ACE_OS::exit (99);
+      (void) ACE_OS::unlink (t_file);
+      (void) ACE_OS::unlink (t_ifile);
+      throw Bailout ();
     }
 
-  FE_set_yyin (reinterpret_cast<File *> (yyin));
+  FE_set_yyin (yyin);
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
@@ -882,14 +1464,17 @@ DRV_pre_proc (const char *myfile)
       char buffer[ACE_MAXLOGMSGLEN];
       size_t bytes;
 
-      if (preproc == 0)
+      if (preproc == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s: Could not open cpp output file: %s\n",
+                      "%C: Could not open cpp "
+                      "output file \"%C\": %m\n",
                       idl_global->prog_name (),
                       t_file));
 
-          ACE_OS::exit (99);
+          (void) ACE_OS::unlink (t_file);
+          (void) ACE_OS::unlink (t_ifile);
+          throw Bailout ();
         }
 
       // ACE_DEBUG sends to stderr - we want stdout for this dump
@@ -906,12 +1491,10 @@ DRV_pre_proc (const char *myfile)
                                      sizeof (char),
                                      ACE_MAXLOGMSGLEN - 1,
                                      preproc))
-          != 0)
+               != 0)
         {
           buffer[bytes] = 0;
-
-          ACE_DEBUG ((LM_DEBUG,
-                      buffer));
+          ACE_DEBUG ((LM_DEBUG, buffer));
         }
 
       ACE_OS::fclose (preproc);
@@ -920,27 +1503,22 @@ DRV_pre_proc (const char *myfile)
   if (ACE_OS::unlink (t_ifile) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not remove cpp input file \"%s\"\n",
+                  "%C: Could not remove cpp "
+                  "input file \"%C\": %m\n",
                   idl_global->prog_name (),
                   t_ifile));
 
-      ACE_OS::exit (99);
+      throw Bailout ();
     }
 
-#if !defined (ACE_WIN32) || defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   if (ACE_OS::unlink (t_file) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not remove cpp output file \"%s\"\n",
+                  "%C: Could not remove cpp "
+                  "output file \"%C\": %m\n",
                   idl_global->prog_name (),
                   t_file));
 
-      ACE_OS::exit (99);
-    }
-#endif /* ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0 */
-
-  if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
-    {
-      ACE_OS::exit (0);
+      throw Bailout ();
     }
 }

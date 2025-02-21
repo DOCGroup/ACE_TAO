@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "Stock_Consumer.h"
 #include "QuoterC.h"
@@ -33,14 +30,12 @@ Stock_Consumer::disconnect ()
 }
 
 void
-Stock_Consumer::push (const RtecEventComm::EventSet &data
-                      ACE_ENV_ARG_DECL_NOT_USED)
-  throw (CORBA::SystemException)
+Stock_Consumer::push (const RtecEventComm::EventSet &data)
 {
   for (CORBA::ULong i = 0; i != data.length (); ++i) {
     const RtecEventComm::Event &e = data[i];
 
-    Quoter::Event *event;
+    const Quoter::Event *event {};
     if ((e.data.any_value >>= event) == 0)
       continue; // Invalid event
 
@@ -52,8 +47,7 @@ Stock_Consumer::push (const RtecEventComm::EventSet &data
 }
 
 void
-Stock_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    throw (CORBA::SystemException)
+Stock_Consumer::disconnect_push_consumer ()
 {
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();

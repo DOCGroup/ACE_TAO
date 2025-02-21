@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef TAO_TUTORIAL_QUOTER_SIMPLE_SERVER_STOCK_FACTORY_I_H
 #define TAO_TUTORIAL_QUOTER_SIMPLE_SERVER_STOCK_FACTORY_I_H
@@ -11,8 +8,7 @@ class Quoter_Stock_Factory_i : public POA_Quoter::Stock_Factory {
 public:
   Quoter_Stock_Factory_i ();
 
-  Quoter::Stock_ptr get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol);
+  Quoter::Stock_ptr get_stock (const char *symbol);
 
 private:
   Quoter_Stock_i rhat_;

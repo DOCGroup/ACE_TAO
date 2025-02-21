@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -68,28 +66,70 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	     It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	     will cease to operate correctly if you use either multiple or
-//	     public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
 #include "utl_labellist.h"
+#include "ast_union_label.h"
+#include "ast_expression.h"
+#include "ast_generator.h"
 
-ACE_RCSID (util, 
-           utl_labellist, 
-           "$Id$")
+#include "global_extern.h"
 
-UTL_LabelList::UTL_LabelList (AST_UnionLabel *s, 
+#include "ace/OS_Memory.h"
+
+UTL_LabelList::UTL_LabelList (AST_UnionLabel *s,
                               UTL_LabelList *cdr)
-  : UTL_List(cdr),
-	  pd_car_data(s)
+  : UTL_List (cdr),
+    pd_car_data (s)
 {
 }
 
 // Get list item.
 AST_UnionLabel *
-UTL_LabelList::head (void)
+UTL_LabelList::head ()
 {
   return this->pd_car_data;
+}
+
+// Copy a label list.
+UTL_LabelList *
+UTL_LabelList::copy ()
+{
+  AST_Expression *val = this->pd_car_data->label_val ();
+
+  AST_Expression *val_copy = nullptr;
+  ACE_NEW_RETURN (val_copy,
+                  AST_Expression (val, val->ev ()->et),
+                  nullptr);
+
+  AST_UnionLabel *label_copy =
+    idl_global->gen ()->create_union_label (this->pd_car_data->label_kind (),
+                                            val_copy);
+
+  UTL_LabelList *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  UTL_LabelList (label_copy,
+                                 nullptr),
+                  nullptr);
+
+  if (this->tail () != nullptr)
+    {
+      retval->nconc ((UTL_LabelList *) this->tail ()->copy ());
+    }
+
+  return retval;
+}
+
+void
+UTL_LabelList::destroy ()
+{
+  this->pd_car_data->destroy ();
+  delete this->pd_car_data;
+  this->pd_car_data = nullptr;
+
+  this->UTL_List::destroy ();
 }
 
 UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)
@@ -97,16 +137,17 @@ UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)
 {
 }
 
-
 // Get current item.
 AST_UnionLabel *
-UTL_LabellistActiveIterator::item (void)
+UTL_LabellistActiveIterator::item ()
 {
-  if (source == 0)
+  if (this->source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
-  return ((UTL_LabelList *) source)->head ();
+  UTL_LabelList *llist = dynamic_cast<UTL_LabelList *> (this->source);
+
+  return (llist != nullptr ? llist->head () : nullptr);
 }
 

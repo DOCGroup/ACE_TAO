@@ -1,37 +1,22 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    union_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Unions in the client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    union_ch.cpp
+ *
+ *  Visitor generating code for Unions in the client header
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_union,
-           union_ch,
-           "$Id$")
-
-// ******************************************************
-// For client header.
-// ******************************************************
+#include "union.h"
 
 be_visitor_union_ch::be_visitor_union_ch (be_visitor_context *ctx)
   : be_visitor_union (ctx)
 {
 }
 
-be_visitor_union_ch::~be_visitor_union_ch (void)
+be_visitor_union_ch::~be_visitor_union_ch ()
 {
 }
 
@@ -46,7 +31,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   // the recursive typecode include in the stub source file.
   ACE_Unbounded_Queue<AST_Type *> list;
   (void) node->in_recursion (list);
-        
+
   // Instantiate a visitor context with a copy of our context. This info
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
@@ -57,34 +42,26 @@ int be_visitor_union_ch::visit_union (be_union *node)
   // Generate _var and _out class typedefs.
   node->gen_common_varout (os);
 
-  // Generate the ifdefined macro for the union type.
-  os->gen_ifdef_macro (node->flat_name ());
-
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "class " << be_global->stub_export_macro () << " "
       << node->local_name () << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
 
     // Generate default and copy constructors.
-      << node->local_name () << " (void);" << be_nl
+      << node->local_name () << " ();" << be_nl
       << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl
     // Generate destructor.
-      << "~" << node->local_name () << " (void);" << be_nl;
-
-  if (be_global->any_support ())
-    {
-      *os << "static void _tao_any_destructor (void*);"
-          << be_nl << be_nl;
-    }
+      << "~" << node->local_name () << " ();";
 
     // Generate assignment operator.
-  *os << node->local_name () << " &operator= (const "
+  *os << be_nl_2
+      << node->local_name () << " &operator= (const "
       << node->local_name () << " &);";
 
   // Retrieve the disriminant type.
-  be_type *bt = be_type::narrow_from_decl (node->disc_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {
@@ -103,18 +80,13 @@ int be_visitor_union_ch::visit_union (be_union *node)
   if (bt->accept (&ud_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ch::"
-                         " visit_union - "
-                         "codegen for discriminant failed\n"),
+                         ACE_TEXT ("be_visitor_union_ch::")
+                         ACE_TEXT (" visit_union - ")
+                         ACE_TEXT ("codegen for discriminant failed\n")),
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  // Generate the _var_type typedef.
-  *os << be_nl << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;";
+  node->gen_stub_decls (os);
 
   // Now generate the public defn for the union branch members. For this,
   // set our state to reflect what we are aiming to do.
@@ -123,9 +95,10 @@ int be_visitor_union_ch::visit_union (be_union *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ch::"
-                         "visit_union - "
-                         "codegen for public defn of union members\n"),
+                         ACE_TEXT ("be_visitor_union_ch::")
+                         ACE_TEXT ("visit_union - ")
+                         ACE_TEXT ("codegen for public ")
+                         ACE_TEXT ("defn of union members\n")),
                         -1);
     }
 
@@ -135,30 +108,28 @@ int be_visitor_union_ch::visit_union (be_union *node)
   if (node->default_value (dv) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ch::"
-                         "visit_union - "
-                         "computing default value failed\n"),
+                         ACE_TEXT ("be_visitor_union_ch::")
+                         ACE_TEXT ("visit_union - ")
+                         ACE_TEXT ("computing default ")
+                         ACE_TEXT ("value failed\n")),
                         -1);
     }
 
   if ((dv.computed_ != 0) && (node->default_index () == -1))
     {
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
-      *os << be_nl << be_nl
-          << "void _default (void);";
+      *os << be_nl_2
+          << "void _default ();";
     }
 
   *os << be_uidt_nl;
 
   // Now generate the private data members of the union.
   *os << "private:" << be_idt_nl;
-  *os << bt->nested_type_name (node) << " disc_;" << be_nl;
-  *os << bt->nested_type_name (node) << " holder_;" << be_nl << be_nl;
-  // Emit the ACE_NESTED_CLASS macro.
+  *os << bt->nested_type_name (node) << " disc_;" << be_nl_2;
 
   // The members are inside of a union.
   *os << "union" << be_nl;
@@ -169,9 +140,10 @@ int be_visitor_union_ch::visit_union (be_union *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ch::"
-                         "visit_union - "
-                         "codegen for private members of union\n"),
+                         ACE_TEXT ("be_visitor_union_ch::")
+                         ACE_TEXT ("visit_union - ")
+                         ACE_TEXT ("codegen for private")
+                         ACE_TEXT (" members of union\n")),
                         -1);
     }
 
@@ -179,10 +151,9 @@ int be_visitor_union_ch::visit_union (be_union *node)
   *os << "} u_;";
 
   // The reset method (TAO extension).
-  *os << be_nl << be_nl
-      << "// TAO extension - frees any allocated storage." << be_nl;
-  *os << "void _reset (" << bt->nested_type_name (node)
-      << ", CORBA::Boolean /* finalize */);";
+  *os << be_nl_2
+      << "/// TAO extension - frees any allocated storage." << be_nl;
+  *os << "void _reset ();";
 
   *os << be_uidt_nl << "};";
 
@@ -194,15 +165,13 @@ int be_visitor_union_ch::visit_union (be_union *node)
       if (node->accept (&tc_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_ch::"
-                             "visit_union - "
-                             "TypeCode declaration failed\n"),
+                             ACE_TEXT ("be_visitor_union_ch::")
+                             ACE_TEXT ("visit_union - ")
+                             ACE_TEXT ("TypeCode declaration failed\n")),
                             -1);
         }
     }
 
-  os->gen_endif ();
-
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

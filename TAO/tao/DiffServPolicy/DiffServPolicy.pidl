@@ -1,0 +1,59 @@
+// -*- IDL -*-
+
+// ================================================================
+/**
+ *  @file DiffServPolicy.pidl
+ *
+ *  This file contains TAO-specific idl interfaces for adding
+ *  network priority or DiffServ support (not part of CORBA
+ *  2.6).
+ *
+ *  The steps to regenerate the code are as follows:
+ *
+ * 1. Run the tao_idl compiler on the pidl file.  The command used for
+ *   this is:
+ *
+ *   tao_idl
+ *       -o orig -Gp -Gd -Ge 1 -GA -SS -Sci
+ *       -Wb,export_macro=TAO_Export
+ *       -Wb,pre_include="ace/pre.h"
+ *       -Wb,post_include="ace/post.h"
+ *       TAO_Network_Priority_Policy.pidl
+ *
+ * 2. The files are ready to use
+ */
+// ================================================================
+
+#ifndef TAO_DIFFSERV_POLICY_IDL
+#define TAO_DIFFSERV_POLICY_IDL
+
+#include "tao/Policy.pidl"
+
+#pragma prefix "tao"
+
+module TAO
+{
+  typedef long DiffservCodepoint;
+
+  enum NetworkPriorityModel
+  {
+    CLIENT_PROPAGATED_NETWORK_PRIORITY,
+    SERVER_DECLARED_NETWORK_PRIORITY,
+    NO_NETWORK_PRIORITY
+  };
+
+  const CORBA::PolicyType SERVER_NETWORK_PRIORITY_TYPE = 0x54410002;
+  const CORBA::PolicyType CLIENT_NETWORK_PRIORITY_TYPE = 0x54410003;
+  const CORBA::PolicyType NETWORK_PRIORITY_TYPE = 0x54410004;
+
+  local interface NetworkPriorityPolicy : CORBA::Policy
+    {
+      attribute NetworkPriorityModel network_priority_model;
+      attribute DiffservCodepoint request_diffserv_codepoint;
+      attribute DiffservCodepoint reply_diffserv_codepoint;
+    };
+};
+
+#pragma prefix ""
+
+#endif /* TAO_DIFFSERV_POLICY_IDL */

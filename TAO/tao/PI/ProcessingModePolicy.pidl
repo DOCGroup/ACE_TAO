@@ -1,0 +1,40 @@
+/**
+ * @file ProcessingModePolicy.pidl
+ *
+ * @brief Pre-compiled IDL source for the ProcessingModePolicy within
+ * the PortableInterceptor module.
+ *
+ * tao_idl \
+ *     -o orig -Gp -Gd -GT -GA \
+ *          -Wb,export_include="tao/TAO_Export.h" \
+ *          -Wb,export_macro=TAO_Export \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          ProcessingModePolicy.pidl
+ */
+
+#ifndef _PROCESSING_MODE_POLICY_PIDL_
+#define _PROCESSING_MODE_POLICY_PIDL_
+
+#include "tao/Policy.pidl"
+
+module PortableInterceptor
+{
+
+   // ProcessingMode Policy (default = LOCAL_AND_REMOTE)
+   typedef short ProcessingMode;
+   const ProcessingMode LOCAL_AND_REMOTE = 0;
+   const ProcessingMode REMOTE_ONLY      = 1;
+   const ProcessingMode LOCAL_ONLY       = 2;
+
+   /// @todo - Need to get the proper Policy Type code from OMG
+   const CORBA::PolicyType PROCESSING_MODE_POLICY_TYPE = 100;
+
+   local interface ProcessingModePolicy : CORBA::Policy
+   {
+     readonly attribute ProcessingMode processing_mode;
+   };
+
+};
+
+#endif /* _PROCESSING_MODE_POLICY_PIDL_ */

@@ -4,8 +4,6 @@
 /**
  *  @file   default_environment.h
  *
- *  $Id$
- *
  * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -15,11 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
+#include /**/ "tao/Versioned_Namespace.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -32,7 +33,9 @@ namespace CORBA
 /**
  * @note We tried with CORBA::default_environment() and others.
  */
-TAO_Export CORBA::Environment& TAO_default_environment (void);
+TAO_Export CORBA::Environment& TAO_default_environment ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

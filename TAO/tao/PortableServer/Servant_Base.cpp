@@ -1,35 +1,44 @@
-// $Id$
+// -*- C++ -*-
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Operation_Table.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 
-#include "Servant_Base.h"
-#include "Root_POA.h"
-#include "Operation_Table.h"
-#include "POA_Current_Impl.h"
+#include "tao/PortableInterceptor.h"
+#include "tao/PortableServer/SUpcall_commands.h"
+
+#include "tao/PortableServer/SArg_Traits_T.h"
+#include "tao/PortableServer/Basic_SArguments.h"
+#include "tao/PortableServer/Special_Basic_SArguments.h"
+#include "tao/PortableServer/Fixed_Size_SArgument_T.h"
+#include "tao/PortableServer/Var_Size_SArgument_T.h"
+#include "tao/PortableServer/Object_SArg_Traits.h"
+#include "tao/PortableServer/UB_String_SArguments.h"
+#include "tao/PortableServer/get_arg.h"
+#include "tao/Object.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 #include "tao/Stub.h"
-#include "tao/Environment.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/IFR_Client_Adapter.h"
+#include "tao/Basic_Types.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (PortableServer,
-           Servant_Base,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
-# include "Servant_Base.i"
+# include "tao/PortableServer/Servant_Base.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Servant_Base_Timeprobe_Description[] =
+static const char *TAO_ServantBase_Timeprobe_Description[] =
 {
-  "Servant_Base::_find - start",
-  "Servant_Base::_find - end"
+  "TAO_ServantBase::_find - start",
+  "TAO_ServantBase::_find - end"
 };
 
 enum
@@ -39,15 +48,17 @@ enum
   };
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ServantBase_Timeprobe_Description,
                                   TAO_SERVANT_BASE_FIND_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_ServantBase::TAO_ServantBase (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table* optable)
   : TAO_Abstract_ServantBase ()
   , ref_count_ (1)
-  , optable_ (0)
+  , optable_ (optable)
 {
 }
 
@@ -61,104 +72,377 @@ TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
 TAO_ServantBase &
 TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
 {
-  this->optable_ = rhs.optable_;
+  if (this != std::addressof(rhs))
+  {
+    this->optable_ = rhs.optable_;
+  }
   return *this;
 }
 
-TAO_ServantBase::~TAO_ServantBase (void)
-{
-}
-
 PortableServer::POA_ptr
-TAO_ServantBase::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ServantBase::_default_POA ()
 {
-  CORBA::Object_var object =
-    TAO_ORB_Core_instance ()->root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+  CORBA::Object_var object = TAO_ORB_Core_instance ()->root_poa ();
 
-  return PortableServer::POA::_narrow (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+  return PortableServer::POA::_narrow (object.in ());
 }
+
+
+void
+TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
+                             TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR(servant_upcall),
+                             TAO_ServantBase *servant)
+{
+  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits< char *>::in_arg_val _tao_repository_id;
+
+  TAO::Argument * const args[] =
+    {
+      &retval,
+      &_tao_repository_id
+    };
+
+  _is_a_Upcall_Command command (
+    servant,
+    args);
+
+  TAO::Upcall_Wrapper upcall_wrapper;
+  upcall_wrapper.upcall (server_request
+                         , args
+                         , 2
+                         , command
+#if TAO_HAS_INTERCEPTORS == 1
+                         , servant_upcall
+                         , nullptr
+                         , 0
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                         );
+}
+
+void
+TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
+                                      TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
+                                      TAO_ServantBase *servant)
+{
+  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits< char *>::in_arg_val _tao_repository_id;
+
+  TAO::Argument * const args[] =
+    {
+      &retval,
+      &_tao_repository_id
+    };
+
+  _is_a_thru_poa_Upcall_Command command (
+    servant,
+    server_request.operation_details (),
+    args);
+
+  TAO::Upcall_Wrapper upcall_wrapper;
+  upcall_wrapper.upcall (server_request
+                         , args
+                         , 2
+                         , command
+#if TAO_HAS_INTERCEPTORS == 1
+                         , servant_upcall
+                         , nullptr
+                         , 0
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                         );
+}
+
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+void
+TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
+                                    TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
+                                    TAO_ServantBase *servant)
+{
+  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
+
+  TAO::Argument * const args[] =
+    {
+      &retval
+    };
+
+  _non_existent_Upcall_Command command (
+    servant,
+    args);
+
+  TAO::Upcall_Wrapper upcall_wrapper;
+  upcall_wrapper.upcall (server_request
+                         , args
+                         , 1
+                         , command
+#if TAO_HAS_INTERCEPTORS == 1
+                         , servant_upcall
+                         , nullptr
+                         , 0
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                         );
+}
+
+void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_request,
+                                                  TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
+                                                  TAO_ServantBase *servant)
+{
+  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
+
+  TAO::Argument * const args[] =
+    {
+      &retval
+    };
+
+  _non_existent_thru_poa_Upcall_Command command (
+    servant,
+    server_request.operation_details (),
+    args);
+
+  TAO::Upcall_Wrapper upcall_wrapper;
+  upcall_wrapper.upcall (server_request
+                         , args
+                         , 1
+                         , command
+#if TAO_HAS_INTERCEPTORS == 1
+                         , servant_upcall
+                         , nullptr
+                         , 0
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                         );
+}
+
+
+# if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+void
+TAO_ServantBase::_interface_skel (TAO_ServerRequest & server_request,
+                                  TAO::Portable_Server::Servant_Upcall* /* servant_upcall */,
+                                  TAO_ServantBase *servant)
+{
+  TAO_IFR_Client_Adapter *_tao_adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ());
+
+  if (!_tao_adapter)
+    {
+      throw ::CORBA::INTF_REPOS (::CORBA::OMGVMCID | 1, ::CORBA::COMPLETED_NO);
+    }
+
+  ::CORBA::InterfaceDef_ptr _tao_retval = servant->_get_interface ();
+  server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = *server_request.outgoing ();
+
+  ::CORBA::Boolean const _tao_result =
+    _tao_adapter->interfacedef_cdr_insert (_tao_out, _tao_retval);
+
+  _tao_adapter->dispose (_tao_retval);
+
+  if (!_tao_result)
+    {
+      throw ::CORBA::MARSHAL ();
+    }
+}
+
+void
+TAO_ServantBase::_component_skel (TAO_ServerRequest & server_request,
+                                  TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
+                                  TAO_ServantBase *servant)
+{
+  TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
+
+  TAO::Argument * const args[] =
+    {
+      &retval
+    };
+
+  _get_component_Upcall_Command command (
+    servant,
+    args);
+
+  TAO::Upcall_Wrapper upcall_wrapper;
+  upcall_wrapper.upcall (server_request
+                         , args
+                         , 1
+                         , command
+#if TAO_HAS_INTERCEPTORS == 1
+                         , servant_upcall
+                         , nullptr
+                         , 0
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                         );
+}
+
+void
+TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
+                                          TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
+                                          TAO_ServantBase *servant)
+{
+  TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
+
+  TAO::Argument * const args[] =
+    {
+      &retval
+    };
+
+  _get_component_thru_poa_Upcall_Command command (
+    servant,
+    server_request.operation_details (),
+    args);
+
+  TAO::Upcall_Wrapper upcall_wrapper;
+  upcall_wrapper.upcall (server_request
+                         , args
+                         , 1
+                         , command
+#if TAO_HAS_INTERCEPTORS == 1
+                         , servant_upcall
+                         , nullptr
+                         , 0
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                         );
+}
+
+# endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
+
+
+void
+TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
+                                      TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
+                                      TAO_ServantBase *servant)
+{
+  TAO::SArg_Traits< char *>::ret_val retval;
+
+  TAO::Argument * const args[] =
+    {
+      &retval
+    };
+
+  _repository_id_Upcall_Command command (
+    servant,
+    args);
+
+  TAO::Upcall_Wrapper upcall_wrapper;
+  upcall_wrapper.upcall (server_request
+                         , args
+                         , 1
+                         , command
+#if TAO_HAS_INTERCEPTORS == 1
+                         , servant_upcall
+                         , nullptr
+                         , 0
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                         );
+}
+
+void
+TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_request,
+                                              TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
+                                              TAO_ServantBase *servant)
+{
+  TAO::SArg_Traits< char *>::ret_val retval;
+
+  TAO::Argument * const args[] =
+    {
+      &retval
+    };
+
+  _repository_id_thru_poa_Upcall_Command command (
+    servant,
+    server_request.operation_details (),
+    args);
+
+  TAO::Upcall_Wrapper upcall_wrapper;
+  upcall_wrapper.upcall (server_request
+                         , args
+                         , 1
+                         , command
+#if TAO_HAS_INTERCEPTORS == 1
+                         , servant_upcall
+                         , nullptr
+                         , 0
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                         );
+}
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 CORBA::Boolean
-TAO_ServantBase::_is_a (const char *logical_type_id
-                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ServantBase::_is_a (const char *logical_type_id)
 {
   static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
   return ACE_OS::strcmp (logical_type_id, id) == 0;
 }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 CORBA::Boolean
-TAO_ServantBase::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_non_existent ()
 {
   return false;
 }
 
 CORBA::InterfaceDef_ptr
-TAO_ServantBase::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ServantBase::_get_interface ()
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
+        TAO_ORB_Core::ifr_client_adapter_name ());
 
-  if (adapter == 0)
+  if (adapter == nullptr)
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        0);
+      throw ::CORBA::INTF_REPOS ();
     }
 
   // This doesn't take multiple ORBs into account, but it's being
   // used only to resolve the IFR, so we should be ok.
   return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
-                                 this->_interface_repository_id ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                 this->_interface_repository_id ());
 }
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 CORBA::Object_ptr
-TAO_ServantBase::_get_component (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_get_component ()
 {
   return CORBA::Object::_nil ();
 }
-
+#endif
 char *
-TAO_ServantBase::_repository_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_repository_id ()
 {
   return CORBA::string_dup (this->_interface_repository_id ());
 }
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,
-                        const unsigned int length)
+                        const size_t length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-  return this->optable_->find (opname, skelfunc, length);
+  return this->optable_->find (opname, skelfunc,
+                               static_cast<unsigned int> (length));
 }
 
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Collocated_Skeleton& skelfunc,
                         TAO::Collocation_Strategy st,
-                        const unsigned int length)
+                        const size_t length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-  return this->optable_->find (opname, skelfunc, st, length);
+  return this->optable_->find (opname, skelfunc, st,
+                               static_cast<unsigned int> (length));
 }
 
 TAO_Stub *
-TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ServantBase::_create_stub ()
 {
-  TAO_Stub *stub = 0;
+  TAO_Stub *stub = nullptr;
 
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast<TAO::Portable_Server::POA_Current_Impl *>
-                    (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                    (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
-  CORBA::ORB_ptr servant_orb = 0;
+  CORBA::ORB_ptr servant_orb = nullptr;
 
-  if (poa_current_impl != 0
-      && this == poa_current_impl->servant ())
+  if (poa_current_impl != nullptr && this == poa_current_impl->servant ())
     {
       servant_orb = poa_current_impl->orb_core ().orb () ;
 
@@ -166,20 +450,13 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
         poa_current_impl->poa ()->key_to_stub (
             poa_current_impl->object_key (),
             this->_interface_repository_id (),
-            poa_current_impl->priority ()
-            ACE_ENV_ARG_PARAMETER
-          );
-      ACE_CHECK_RETURN (0);
+            poa_current_impl->priority ());
     }
   else
     {
-      PortableServer::POA_var poa =
-        this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      PortableServer::POA_var poa = this->_default_POA ();
 
-      CORBA::Object_var object =
-        poa->servant_to_reference (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      CORBA::Object_var object = poa->servant_to_reference (this);
 
       // Get the stub object
       stub = object->_stubobj ();
@@ -195,30 +472,24 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
   return stub;
 }
 
-void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
-                                                   void * servant_upcall,
-                                                   void * derived_this
-                                                   ACE_ENV_ARG_DECL)
+void
+TAO_ServantBase::synchronous_upcall_dispatch (
+  TAO_ServerRequest & req,
+  TAO::Portable_Server::Servant_Upcall* servant_upcall,
+  TAO_ServantBase *derived_this)
 {
   TAO_Skeleton skel;
   char const * const opname = req.operation ();
 
-  // It seems that I might have missed s/g here.  What if
-  // it is a one way that is SYNC_WITH_SERVER.
-  // Add the following line to handle this reply send as well.
-
-  // Handle the one ways that are SYNC_WITH_SERVER
-  if (req.sync_with_server ())
-    {
-      req.send_no_exception_reply ();
-    }
+  // Handle the one ways that are SYNC_WITH_SERVER and not queued
+  req.sync_after_dispatch ();
 
   // Fetch the skeleton for this operation
   if (this->_find (opname,
                    skel,
                    static_cast <unsigned int> (req.operation_length())) == -1)
     {
-      ACE_THROW (CORBA::BAD_OPERATION ());
+      throw ::CORBA::BAD_OPERATION ();
     }
 
   CORBA::Boolean const send_reply =
@@ -226,17 +497,13 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
     && req.response_expected ()
     && !req.deferred_reply ();
 
-  ACE_TRY
+  try
     {
       // Invoke the skeleton, it will demarshal the arguments, invoke
       // the right operation on the skeleton class, and marshal any
-      // results.  De/marshaling will only occur in the uncollocated
+      // results.  De/marshaling will only occur in the not collocated
       // case.
-      skel (req,
-            servant_upcall,
-            derived_this
-            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      skel (req, servant_upcall, derived_this);
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent
@@ -248,7 +515,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
           req.tao_send_reply ();
         }
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
@@ -257,22 +524,19 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
           if (req.collocated ())
             {
               // Report the exception to the collocated client.
-              ACE_RE_THROW;
+              throw;
             }
           else
-            req.tao_send_reply_exception (ACE_ANY_EXCEPTION);
+            req.tao_send_reply_exception (ex);
         }
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
-
-  return;
 }
 
-void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
-                                                    void * servant_upcall,
-                                                    void * derived_this
-                                                    ACE_ENV_ARG_DECL)
+void
+TAO_ServantBase::asynchronous_upcall_dispatch (
+  TAO_ServerRequest &req,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
+  TAO_ServantBase *derived_this)
 {
   TAO_Skeleton skel;
   const char *opname = req.operation ();
@@ -292,20 +556,16 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
                    skel,
                    static_cast <unsigned int> (req.operation_length())) == -1)
     {
-      ACE_THROW (CORBA::BAD_OPERATION ());
+      throw ::CORBA::BAD_OPERATION ();
     }
 
-  ACE_TRY
+  try
     {
       // Invoke the skeleton, it will demarshal the arguments, invoke
       // the right operation on the skeleton class, and marshal any
-      // results.  De/marshaling will only occur in the uncollocated
+      // results.  De/marshaling will only occur in the not collocated
       // case.
-      skel (req,
-            servant_upcall,
-            derived_this
-            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      skel (req, servant_upcall, derived_this);
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent
@@ -313,159 +573,58 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
       // Return immediately. Do not send a reply; this is an
       // asynchronous upcall. (unless, of course there is a system
       // exception.
-
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
-      req.tao_send_reply_exception (ACE_ANY_EXCEPTION);
+      req.tao_send_reply_exception (ex);
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
-
-  return;
 }
 
 void
-TAO_ServantBase::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_add_ref ()
 {
   ++this->ref_count_;
 }
 
 void
-TAO_ServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ServantBase::_remove_ref ()
 {
-  long const new_count = --this->ref_count_;
+  CORBA::ULong const new_count = --this->ref_count_;
 
   if (new_count == 0)
-    delete this;
+    {
+      delete this;
+    }
 }
 
 CORBA::ULong
-TAO_ServantBase::_refcount_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+TAO_ServantBase::_refcount_value () const
 {
-  return static_cast<CORBA::ULong> (this->ref_count_.value ());
+  return this->ref_count_;
 }
 
-// -------------------------------------------------------------------
-
-TAO_ServantBase_var::TAO_ServantBase_var (const TAO_ServantBase_var &b)
-  : ptr_ (b.ptr_)
+void
+TAO_ServantBase::_collocated_dispatch (::CORBA::Object_ptr obj,
+                                       ::CORBA::Object_out forward_obj,
+                                       bool &is_forwarded,
+                                       TAO::Argument ** args,
+                                       int num_args,
+                                       const char * op,
+                                       size_t op_len,
+                                       TAO::Collocation_Strategy strategy)
 {
-  if (this->ptr_ != 0)
-    {
-      ACE_TRY_NEW_ENV
-        {
-          this->ptr_->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHALL
-        {
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-    }
+  TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;
+  collocation_upcall_wrapper.upcall (
+    obj,
+    forward_obj,
+    is_forwarded,
+    args,
+    num_args,
+    op,
+    op_len,
+    strategy);
 }
 
-TAO_ServantBase_var::~TAO_ServantBase_var (void)
-{
-  if (this->ptr_ != 0)
-    {
-      // We should not allow exceptions to pass through
-      ACE_TRY_NEW_ENV
-        {
-          this->ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHALL
-        {
-        }
-      ACE_ENDTRY;
-    }
-}
-
-TAO_ServantBase_var &
-TAO_ServantBase_var::operator= (TAO_ServantBase *p)
-{
-  if (this->ptr_ == p)
-    return *this;
-
-  ACE_TRY_NEW_ENV
-    {
-      if (this->ptr_ != 0)
-        {
-          this->ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHALL
-    {
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-
-  this->ptr_ = p;
-
-  return *this;
-}
-
-TAO_ServantBase_var &
-TAO_ServantBase_var::operator= (const TAO_ServantBase_var &b)
-{
-  if (this->ptr_ != b.ptr_)
-    {
-      ACE_TRY_NEW_ENV
-        {
-          if (this->ptr_ != 0)
-            {
-              this->ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-
-          if ((this->ptr_ = b.ptr_) != 0)
-            {
-              this->ptr_->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-        }
-      ACE_CATCHALL
-        {
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-    }
-
-  return *this;
-}
-
-TAO_ServantBase *&
-TAO_ServantBase_var::out (void)
-{
-  ACE_TRY_NEW_ENV
-    {
-      if (this->ptr_ != 0)
-        {
-          this->ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHALL
-    {
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-
-  this->ptr_ = 0;
-
-  return this->ptr_;
-}
-
-TAO_ServantBase *
-TAO_ServantBase_var::_retn (void)
-{
-  TAO_ServantBase *retval = this->ptr_;
-  this->ptr_ = 0;
-  return retval;
-}
-
+TAO_END_VERSIONED_NAMESPACE_DECL

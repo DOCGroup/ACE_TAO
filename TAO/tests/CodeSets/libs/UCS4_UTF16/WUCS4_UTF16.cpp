@@ -1,27 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    WUCS4_UTF16.cpp
-//
-// = DESCRIPTION
-//    Defines the arrays required to convert between UCS-4 a 4 byte wide char
-//    codeset, and UCS-16, aka unicode, a 2-byte codeset.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    WUCS4_UTF16.cpp
+ *
+ *  Defines the arrays required to convert between UCS-4 a 4 byte wide char
+ *  codeset, and UCS-16, aka unicode, a 2-byte codeset.
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "WUCS4_UTF16.h"
-#include "ace/OS.h"
-
-ACE_RCSID(UCS4_UTF16, WUCS4_UTF16, "$Id$")
+#include "ace/OS_Memory.h"
 
 // ****************************************************************
 
@@ -62,9 +54,6 @@ static const unsigned long ACE_UTF16_RAW_END = 0x00010000LU;
 // largest value that can be represented in UTF16 + 1
 static const unsigned long ACE_UTF16_END = 0x00110000LU;
 
-// largest value that can be represented in UTF-32 + 1
-static const unsigned long ACE_UTF32_END = 0x80000000LU;
-
 static const unsigned short ACE_UNICODE_SUBSTITUTE_CHARACTER = 0xFFFDU;
 static const unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
 static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
@@ -104,8 +93,7 @@ convert_surrogate_pair (ACE_UTF16_T high, ACE_UTF16_T low)
 {
   return static_cast<ACE_CDR::WChar> (((high - ACE_UTF16_SURROGATE_HIGH_BEGIN) << ACE_UTF16_SURROGATE_HIGH_SHIFT)
     + (low - ACE_UTF16_SURROGATE_LOW_BEGIN)
-    + ACE_UTF16_SURROGATE_OFFSET
-    );
+    + ACE_UTF16_SURROGATE_OFFSET);
 }
 
 /// load wchar from utf16 buffer
@@ -162,15 +150,23 @@ size_t encode_utf16 (ACE_UTF16_T * buffer, ACE_CDR::WChar value)
 {
   buffer[0] = static_cast<ACE_UTF16_T> (value);
   size_t length = 1;
+
+  // On platforms where sizeof(ACE_CDR::WChar) == 2, the test using
+  // ul_value will always be false, since we are improperly using
+  // a 4-byte native wchar codeset. But since this is for a simple
+  // test that has to run on machines with 4 byte wchars, this cast
+  // avoids compile time issues of comparing a value that starts out
+  // as a short with a constant that is too big for a short.
+  unsigned long ul_value = static_cast<unsigned long>(value);
   if (value >= ACE_UTF16_SURROGATE_HIGH_BEGIN)
     {
       if (value < ACE_UTF16_SURROGATE_LOW_END)
         {
           buffer[0] = ACE_UNICODE_SUBSTITUTE_CHARACTER;
         }
-      else if ((unsigned long)value >= ACE_UTF16_RAW_END)
+      else if (ul_value >= ACE_UTF16_RAW_END)
         {
-          if ((unsigned long)value >= ACE_UTF16_END)
+          if (ul_value >= ACE_UTF16_END)
             {
               buffer[0] = ACE_UNICODE_SUBSTITUTE_CHARACTER;
             }
@@ -198,9 +194,10 @@ size_t count_potential_surrogates (
   size_t count = 0;
   for (size_t i = 0; i < len; ++i)
     {
-      ACE_CDR::WChar value = buffer[i];
-      if ((unsigned long)value >= ACE_UTF16_RAW_END &&
-          (unsigned long)value < ACE_UTF16_END)
+      // see comments above in encode_utf16().
+      unsigned long ul_value = static_cast<unsigned long>(buffer[i]);
+      if (ul_value >= ACE_UTF16_RAW_END &&
+          ul_value < ACE_UTF16_END)
         {
           count += 1;
         }
@@ -212,14 +209,12 @@ size_t count_potential_surrogates (
 /////////////////////////////
 // WUCS4_UTF16 implementation
 
-WUCS4_UTF16::WUCS4_UTF16 (void)
+WUCS4_UTF16::WUCS4_UTF16 ()
 {
-
 }
 
-WUCS4_UTF16::~WUCS4_UTF16 (void)
+WUCS4_UTF16::~WUCS4_UTF16 ()
 {
-
 }
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
@@ -269,7 +264,7 @@ WUCS4_UTF16::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
             if (! this->read_2 (cdr, &low))
               {
                 cdr.reset_byte_order (old_bo);
-                return 0;;
+                return 0;
               }
             if (low < ACE_UTF16_SURROGATE_LOW_BEGIN
               || low >= ACE_UTF16_SURROGATE_LOW_END)
@@ -389,7 +384,6 @@ WUCS4_UTF16::read_wchar_array_i (ACE_InputCDR & cdr,
       return 1;
     }
   return 0;
-
 }
 
 
@@ -437,8 +431,11 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
 {
   // If the desired char cannot be translated into a single unicode char,
   // we must raise a marshal exception.
-  if ((unsigned long)x >= ACE_UTF16_RAW_END &&
-      (unsigned long)x < ACE_UTF16_END)
+  //
+  // see the comment in encode_utf16() regarding the cast.
+  unsigned long ul_x = static_cast<unsigned long>(x);
+  if (ul_x >= ACE_UTF16_RAW_END &&
+      ul_x < ACE_UTF16_END)
     return 0;
 
   int len = 0;
@@ -488,24 +485,31 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
       ACE_UTF16_T bom = ACE_UNICODE_BOM_CORRECT;
       ACE_CDR::ULong length = len + count_potential_surrogates (x, len);
       ACE_CDR::ULong l = length * ACE_UTF16_CODEPOINT_SIZE;
+
       if (this->write_4 (cdr, &l) && x != 0)
         {
-          this->write_2 (cdr,&bom);
+          this->write_2 (cdr, &bom);
           return this->write_measured_wchar_array (cdr, x, len, length);
         }
     }
   else
     {
       ACE_CDR::ULong l = len + 1;
+
       if (this->write_4 (cdr, &l))
-        if (x != 0)
-          return this->write_wchar_array (cdr, x, len + 1);
-    else
-      {
-        ACE_UTF16_T s = 0;
-        return this->write_2 (cdr,&s);
-      }
+        {
+          if (x != 0)
+            {
+              return this->write_wchar_array (cdr, x, len + 1);
+            }
+          else
+            {
+              ACE_UTF16_T s = 0;
+              return this->write_2 (cdr, &s);
+            }
+        }
     }
+
   return 0;
 }
 
@@ -563,14 +567,14 @@ WUCS4_UTF16::write_measured_wchar_array (ACE_OutputCDR & cdr,
       sbpos += encode_utf16 (& sb[sbpos], x[i]);
     }
 #if defined (ACE_ENABLE_SWAP_ON_WRITE)
-  // NOTE this will rarely be enabled.  See the comments in ace/OS.h
+  // @note this will rarely be enabled.
   if (cdr.do_byte_swap())
     {
       // note can't use swap_2_array because in-place swaps are not safe :-<
       // and we don't want to allocate a new array
       for (size_t i = 0; i < sbpos; i++)
         {
-          char * pchar = static_cast<char *> (&sb[i]);
+          char * pchar = reinterpret_cast<char *> (&sb[i]);
           // ACE_CDR::swap_2 (pchar, pchar);
           // can't use swap_2 because inplace swaps are not safe
           // and work-arounds like copying to another buffer lose

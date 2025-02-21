@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Client_i.h"
 #include "Event_Types_impl.h"
 
@@ -11,7 +9,7 @@
 int
 Checkpoint_Client_i::run (const char *name,
                           int argc,
-                          char *argv[])
+                          ACE_TCHAR *argv[])
 {
   // Initialize the client (read ior...).
   if (checkpoint.init (name,argc, argv) == -1)
@@ -21,9 +19,8 @@ Checkpoint_Client_i::run (const char *name,
   ACE_Time_Value now (ACE_OS::gettimeofday ());
   ACE_OS::srand ((unsigned int) now.sec () );
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Make factories to unmarshal OBV, when getting back a list
       // of events which raised an alarm condition.
@@ -43,15 +40,13 @@ Checkpoint_Client_i::run (const char *name,
       Temperature_var t_e (static_cast<Temperature*> (new Temperature_impl (temperature)));
       t_e->origin_id_ (KITCHEN);
       t_e->do_print ();
-      checkpoint->put_event (t_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      checkpoint->put_event (t_e);
 
       temperature = random_number (25,30);
       t_e = new Temperature_impl (temperature);
       t_e->origin_id_ (BATHROOM);
       t_e->do_print ();
-      checkpoint->put_event (t_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      checkpoint->put_event (t_e);
 
       Point point = { random_number (0,4),
                       random_number (0,4),
@@ -59,8 +54,7 @@ Checkpoint_Client_i::run (const char *name,
       Position_var p_e (static_cast<Position*> (new Position_impl (point)));
       p_e->origin_id_ (JONAS);
       p_e->do_print ();
-      checkpoint->put_event (p_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      checkpoint->put_event (p_e);
 
 
       int urgent = (random_number (0,2) > 1) ? 1 : 0;
@@ -69,14 +63,12 @@ Checkpoint_Client_i::run (const char *name,
       Log_Msg_var l_e (static_cast<Log_Msg*> (new Log_Msg_impl (urgent, a_text)));
       l_e->origin_id_ (JONAS);
       l_e->do_print ();
-      checkpoint->put_event (l_e ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      checkpoint->put_event (l_e);
 
 
       ACE_DEBUG ((LM_DEBUG, "\nNow getting the alarms:\n"));
 
-      Event_List_var list (checkpoint->get_critical_events (ACE_ENV_SINGLE_ARG_PARAMETER));
-      ACE_TRY_CHECK;
+      Event_List_var list (checkpoint->get_critical_events ());
 
       for (Event_List_Iterator i (list); i.next (); i.advance ())
         {
@@ -84,29 +76,25 @@ Checkpoint_Client_i::run (const char *name,
         }
 
       if (checkpoint.shutdown () == 1)
-        checkpoint->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-      ACE_TRY_CHECK;
+        checkpoint->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"\n Exception in RMI");
+      ex._tao_print_exception ("\n Exception in RMI");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 // Constructor.
-Checkpoint_Client_i::Checkpoint_Client_i (void)
+Checkpoint_Client_i::Checkpoint_Client_i ()
 {
   //no-op
 }
 
 //Destructor.
-Checkpoint_Client_i::~Checkpoint_Client_i (void)
+Checkpoint_Client_i::~Checkpoint_Client_i ()
 {
   //no-op
 }
@@ -119,9 +107,3 @@ CORBA::Float random_number (double min, double max)
   return static_cast<CORBA::Float> ((min + (range * ACE_OS::rand () / (RAND_MAX + 1.0))));
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Checkpoint,Checkpoint_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Client<Checkpoint,Checkpoint_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

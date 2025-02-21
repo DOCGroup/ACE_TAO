@@ -2,11 +2,7 @@
 /**
  *  @file EventType.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_EVENTTYPE_H
@@ -14,14 +10,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotificationC.h"
-#include "Topology_Object.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_EventType
@@ -30,22 +29,21 @@
  *
  * This type is used to compare different event types.
  * It is used by the Event Manager as a key to find subscription lists.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_Savable
 {
 public:
-  /// Constuctor
-  TAO_Notify_EventType (void);
+  /// Constructor
+  TAO_Notify_EventType ();
   TAO_Notify_EventType (const char* domain_name, const char* type_name);
   TAO_Notify_EventType (const CosNotification::EventType& event_type);
-  // Constuctor
+  // Constructor
 
   /// Destructor
   virtual ~TAO_Notify_EventType ();
 
   /// hash value
-  u_long hash (void) const;
+  u_long hash () const;
 
   /// Assignment from CosNotification::EventType
   TAO_Notify_EventType& operator=(const CosNotification::EventType& event_type);
@@ -59,42 +57,49 @@ public:
   /// != operator
   bool operator!=(const TAO_Notify_EventType& notify_event_type) const;
 
-  static TAO_Notify_EventType special (void);
-  // Return the special event type.
+  /// Return the special event type.
+  static TAO_Notify_EventType special ();
 
-  CORBA::Boolean is_special (void) const;
-  // Is this the special event (accept everything).
+  /// Is this the special event (accept everything).
+  CORBA::Boolean is_special () const;
 
-  const CosNotification::EventType& native (void) const;
-  // Get the type underneath us.
+  /// Get the type underneath us.
+  const CosNotification::EventType& native () const;
 
   /// Helper to print contents.
-  void dump (void) const;
+  void dump () const;
 
   /// Initialize from an NVPList, return false on failure
   bool init(const TAO_Notify::NVPList& attrs);
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
 
 protected:
+  friend class TAO_Notify_Constraint_Interpreter;
+
   /// Init this object.
   void init_i (const char* domain_name, const char* type_name);
 
-  void recompute_hash (void);
-  // Recompute the hash value.
+  /// Recompute the hash value.
+  void recompute_hash ();
+
+  bool domain_is_wildcard (const char* domain) const;
+  bool type_is_wildcard (const char* type) const;
 
   // = Data Members
+  /// The event_type that we're decorating.
   CosNotification::EventType event_type_;
-  // The event_type that we're decorating.
 
+  /// The hash value computed.
   u_long hash_value_;
-  // The hash value computed.
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EventType.inl"
+#include "orbsvcs/Notify/EventType.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

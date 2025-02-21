@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : acelib, ace_qt5, qt5_widgets {
+  requires += ace_qt5reactor
+  after    += ACE_Qt5Reactor
+  libs     += ACE_QtReactor
+}

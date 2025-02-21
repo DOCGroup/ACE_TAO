@@ -3,8 +3,6 @@
 /**
  *  @file    FT_Notifier.idl
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  This was original part of the OMG FT.idl file
  *

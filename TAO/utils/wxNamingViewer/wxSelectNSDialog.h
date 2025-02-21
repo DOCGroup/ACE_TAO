@@ -1,4 +1,3 @@
-// $Id$
 // wxSelectNSDialog.h
 
 #ifndef i_WxSelectNSDialog_h

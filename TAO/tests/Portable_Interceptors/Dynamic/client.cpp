@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 
 #include "testC.h"
@@ -7,16 +5,12 @@
 
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (Dynamic,
-           client,
-           "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "ef:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ef:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -40,117 +34,99 @@ parse_args (int argc, char *argv[])
 }
 
 void
-run_test (Test_Interceptors::Visual_ptr server
-          ACE_ENV_ARG_DECL)
+run_test (Test_Interceptors::Visual_ptr server)
 {
   CORBA::String_var msg;
 
-  server->normal (10,
-                  msg.out ()
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  server->normal (10, msg.out ());
 
   CORBA::Long one = 1, two = 1, result = 0;
-  result = server->calculate (one,
-                              two
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  result = server->calculate (one, two);
 
   ACE_DEBUG ((LM_DEBUG,
               "calculate() result = %d\n",
               result));
 
   Test_Interceptors::Visual::VarLenStruct_var v =
-    server->the_structure (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    server->the_structure ();
 
   ACE_DEBUG ((LM_DEBUG,
               "the_structure() result is:\n"
               "  flag    = %d\n"
-              "  message = %s\n",
+              "  message = %C\n",
               v->flag,
               v->message.in ()));
 
-  ACE_TRY
+  try
     {
-      server->user (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->user ();
     }
-  ACE_CATCH (Test_Interceptors::Silly, userex)
+  catch (const Test_Interceptors::Silly&)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught Silly\n"));
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
-  ACE_TRY_EX (SYS)
+  try
     {
-      server->system (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (SYS);
+      server->system ();
     }
-  ACE_CATCH (CORBA::INV_OBJREF, sysex)
+  catch (const CORBA::INV_OBJREF&)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  int result = 0;
+
+  try
     {
 #if TAO_HAS_INTERCEPTORS == 1
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
       ACE_NEW_RETURN (temp_initializer,
-                      Echo_Client_ORBInitializer,
+                      Echo_Client_ORBInitializer (result),
                       -1);  // No exceptions yet!
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test_Interceptors::Visual_var server =
-        Test_Interceptors::Visual::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test_Interceptors::Visual::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
 
-      run_test (server.in () ACE_ENV_ARG_PARAMETER);
+      run_test (server.in ());
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
-  return 0;
+  return result;
 }

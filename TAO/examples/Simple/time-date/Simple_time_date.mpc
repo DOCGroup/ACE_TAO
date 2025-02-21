@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*lib): portableserver, taolib_with_idl {
   sharedname    = Time_Date
   // The svc conf files assume that the dll is in the current directory

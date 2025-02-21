@@ -4,9 +4,6 @@
 /**
  *  @file    LocateRequest_Invocation.h
  *
- *  $Id$
- *
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -23,12 +20,9 @@
 
 #include "tao/Synch_Invocation.h"
 
-class TAO_Synch_Reply_Dispatcher;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-namespace CORBA
-{
-  class SystemException;
-}
+class TAO_Synch_Reply_Dispatcher;
 
 namespace TAO
 {
@@ -39,10 +33,9 @@ namespace TAO
    *
    * @brief Object created by TAO::LocateRequest_Invocation_Adapter to
    * create and send LocateRequest invocation.
-   *
    */
-  class TAO_Export LocateRequest_Invocation
-    : protected Synch_Twoway_Invocation
+  class LocateRequest_Invocation
+    : public Synch_Twoway_Invocation
   {
   public:
     /**
@@ -63,17 +56,15 @@ namespace TAO
         TAO_Operation_Details &detail);
 
     /// Start the invocation.
-    Invocation_Status invoke (ACE_Time_Value *max_wait_time
-                              ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::Exception));
+    Invocation_Status invoke (ACE_Time_Value *max_wait_time);
 
   private:
     /// Helper to check the reply status
-    Invocation_Status check_reply (TAO_Synch_Reply_Dispatcher &rd
-                                   ACE_ENV_ARG_DECL);
-
+    Invocation_Status check_reply (TAO_Synch_Reply_Dispatcher &rd);
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

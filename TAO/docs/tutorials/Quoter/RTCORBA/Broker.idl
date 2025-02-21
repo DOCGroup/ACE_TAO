@@ -1,0 +1,53 @@
+/**
+ * @file Broker.idl
+ * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
+ *
+ * Contains IDL definitions for the Stock Broker in the Publish/Subscribe Real-time CORBA
+ * Stock Quoter Service.
+ */
+
+#ifndef QUOTER_BROKER_IDL
+#define QUOTER_BROKER_IDL
+
+#include "Common.idl"
+#include "Distributor.idl"
+
+module Stock
+{
+  /**
+   * @class StockBroker
+   * @brief Provides interfaces for stock broker clients.
+   */
+  interface StockBroker
+  {
+    /// Factory operation to return StockNameConsumer object reference.
+    StockNameConsumer get_consumer_notifier ();
+
+    /// Connects the broker to a supplied Quoter object reference.
+    void connect_quoter_info  (in StockQuoter c);
+
+    /// Disconnects a the quoter connection.
+    StockQuoter disconnect_quoter_info ();
+
+    /// Gets the current quoter connection.
+    StockQuoter get_connection_quoter_info ();
+
+    /// Shutdown the object and terminate the application
+    oneway void shutdown ();
+  };
+
+  /**
+   * @class StockBrokerHome
+   * @brief Interface that aids in managing StockBroker lifecycles.
+   */
+  interface StockBrokerHome
+  {
+    /// Create a StockBroker object.
+    StockBroker create (in StockDistributor dist,
+                        in string stock_name);
+  };
+};
+
+#endif

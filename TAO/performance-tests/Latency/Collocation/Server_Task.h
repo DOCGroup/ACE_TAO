@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef COLLOCATED_SERVER_TASK_H
 #define COLLOCATED_SERVER_TASK_H
@@ -32,7 +29,6 @@ public:
   Test::Roundtrip * get_reference ();
 
 private:
-
   ACE_Manual_Event &cond_;
   /// Manual event to wake up the main thread to create a client
   /// thread.

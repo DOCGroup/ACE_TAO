@@ -4,10 +4,7 @@
 /**
  * @file SHMIOP_Endpoint.h
  *
- * $Id$
- *
  * SHMIOP implementation of PP Framework Endpoint interface.
- *
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  */
@@ -17,20 +14,22 @@
 #define TAO_SHMIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Endpoint.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
 #include "tao/CORBA_String.h"
-#include "strategies_export.h"
+#include "tao/Endpoint.h"
+#include "tao/Strategies/strategies_export.h"
 
 #include "ace/INET_Addr.h"
 #include "ace/MEM_Addr.h"
 
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_SHMIOP_Endpoint
@@ -42,13 +41,10 @@
 class TAO_Strategies_Export TAO_SHMIOP_Endpoint : public TAO_Endpoint
 {
 public:
-
   friend class TAO_SHMIOP_Profile;
 
-  // = Initialization and termination methods.
-
   /// Default constructor.
-  TAO_SHMIOP_Endpoint (void);
+  TAO_SHMIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
@@ -72,7 +68,7 @@ public:
                        CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_SHMIOP_Endpoint (void);
+  ~TAO_SHMIOP_Endpoint ();
 
   /**
    * @name TAO_Endpoint Methods
@@ -81,33 +77,33 @@ public:
    */
   //@{
   /// Return a copy of @c this
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate ();
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
-  /// endpoints are equivalent iff their port and host are the same.
+  /// endpoints are equivalent if their port and host are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  CORBA::ULong hash (void);
+  CORBA::ULong hash ();
   //@}
 
   // = SHMIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
-  const ACE_INET_Addr &object_addr (void) const;
+  const ACE_INET_Addr &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const char *host (void) const;
+  const char *host () const;
 
-  /// Copy the string <h> into <host_> and return the resulting pointer.
+  /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
   const char *host (const char *h);
 
   /// Return the port number.
-  CORBA::UShort port (void) const;
+  CORBA::UShort port () const;
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
@@ -130,13 +126,15 @@ private:
   /// Flag to indicate if the address has been resolved and set.
   int object_addr_set_;
 
-  /// SHMIOP Endpoints can be stringed into a list.  Return the next
+  /// SHMIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_SHMIOP_Endpoint *next_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "SHMIOP_Endpoint.i"
+# include "tao/Strategies/SHMIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

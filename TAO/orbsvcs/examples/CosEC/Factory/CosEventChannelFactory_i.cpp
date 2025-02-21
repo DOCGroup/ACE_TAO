@@ -1,31 +1,19 @@
 // -*- C++ -*-
-// $Id$
-
 #include "CosEventChannelFactory_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
-TAO_CosEventChannelFactory_i::TAO_CosEventChannelFactory_i (void)
+TAO_CosEventChannelFactory_i::TAO_CosEventChannelFactory_i ()
   :poa_ (PortableServer::POA::_nil ()),
    naming_ (CosNaming::NamingContext::_nil ())
 {
 }
 
-TAO_CosEventChannelFactory_i::~TAO_CosEventChannelFactory_i (void)
-{
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              "in TAO_CosEventChannelFactory_i dtor"));
-#endif
-  // No-Op.
-}
-
 int
 TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
                                     const char* child_poa_name,
-                                    CosNaming::NamingContext_ptr naming
-                                    ACE_ENV_ARG_DECL)
+                                    CosNaming::NamingContext_ptr naming)
 {
   // Check if we have a parent poa.
   if (CORBA::is_nil (poa))
@@ -37,14 +25,10 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
   // Create a UNIQUE_ID and USER_ID policy because we want the POA
   // to detect duplicates for us.
   PortableServer::IdUniquenessPolicy_var idpolicy =
-    poa->create_id_uniqueness_policy (PortableServer::UNIQUE_ID
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    poa->create_id_uniqueness_policy (PortableServer::UNIQUE_ID);
 
   PortableServer::IdAssignmentPolicy_var assignpolicy =
-    poa->create_id_assignment_policy (PortableServer::USER_ID
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    poa->create_id_assignment_policy (PortableServer::USER_ID);
 
   // Create a PolicyList
   CORBA::PolicyList policy_list;
@@ -55,23 +39,18 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
     PortableServer::IdAssignmentPolicy::_duplicate (assignpolicy.in ());
 
   PortableServer::POAManager_ptr manager =
-    poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    poa->the_POAManager ();
   // @@ Pradeep : TODO - find a way to destroy the policy_list if we return here.
 
   // Create the child POA.
   this->poa_ = poa->create_POA (child_poa_name,
                                 manager,
-                                policy_list
-                                ACE_ENV_ARG_PARAMETER);
+                                policy_list);
 
-  ACE_CHECK_RETURN (-1);
 
-  idpolicy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  idpolicy->destroy ();
 
-  assignpolicy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  assignpolicy->destroy ();
 
   //this->poa_ =  PortableServer::POA::_duplicate (poa);
   // uncomment this if we want to use the parent poa for some reason.
@@ -80,27 +59,20 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
 
 CosEventChannelAdmin::EventChannel_ptr
 TAO_CosEventChannelFactory_i::create (const char * channel_id,
-                                      CORBA::Boolean store_in_naming_service
-                                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventChannelFactory::DuplicateChannel,
-        CosEventChannelFactory::BindFailed
-      ))
+                                      CORBA::Boolean store_in_naming_service)
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
   CosEventChannelAdmin::EventChannel_var ec_return;
 
-  ACE_TRY
+  try
     {
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId (channel_id);
 
       // let all those contained in FactoryEC use the default POA.
       // We only need the FactoryEC's to be unique!
-      PortableServer::POA_ptr defPOA = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::POA_ptr defPOA = this->_default_POA ();
 
       TAO_CEC_EventChannel_Attributes attr (defPOA, defPOA);
 
@@ -108,23 +80,18 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
       ACE_NEW_THROW_EX (impl,
                         TAO_CEC_EventChannel (attr, 0, 0),
                         CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
 
-      auto_ptr <TAO_CEC_EventChannel> ec (impl);
+      std::unique_ptr <TAO_CEC_EventChannel> ec (impl);
 
-      impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      impl->activate ();
 
       this->poa_->activate_object_with_id (oid.in (),
-                                           ec.get ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                           ec.get ());
 
       ec.release ();
 
       CORBA::Object_var obj =
-        this->poa_->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->poa_->id_to_reference (oid.in ());
 
       if (store_in_naming_service &&
           !CORBA::is_nil (this->naming_.in ()))
@@ -134,91 +101,67 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
           name[0].id = CORBA::string_dup (channel_id);
 
           this->naming_->rebind (name,
-                                 obj.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                 obj.in ());
         }
 
       ec_return = CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
     }
-  ACE_CATCH (PortableServer::POA::ServantAlreadyActive, sa_ex)
+  catch (const PortableServer::POA::ServantAlreadyActive&)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
-                        ec_return._retn ());
+      throw CosEventChannelFactory::DuplicateChannel ();
     }
-  ACE_CATCH (PortableServer::POA::ObjectAlreadyActive, oaa_ex)
+  catch (const PortableServer::POA::ObjectAlreadyActive&)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
-                        ec_return._retn ());
+      throw CosEventChannelFactory::DuplicateChannel ();
     }
-  ACE_CATCH (PortableServer::POA::WrongPolicy, wp_ex)
+  catch (const PortableServer::POA::WrongPolicy&)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                        ec_return._retn ());
+      throw CORBA::UNKNOWN ();
     }
-  ACE_CATCH (PortableServer::POA::ObjectNotActive, ona_ex)
+  catch (const PortableServer::POA::ObjectNotActive&)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_return._retn ());
+      throw CosEventChannelFactory::BindFailed ();
     }
-  ACE_CATCH (CosNaming::NamingContext::NotFound, nf_ex)
+  catch (const CosNaming::NamingContext::NotFound&)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_return._retn ());
+      throw CosEventChannelFactory::BindFailed ();
     }
-  ACE_CATCH (CosNaming::NamingContext::CannotProceed, cp_ex)
+  catch (const CosNaming::NamingContext::CannotProceed&)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_return._retn ());
+      throw CosEventChannelFactory::BindFailed ();
     }
-  ACE_CATCH (CosNaming::NamingContext::InvalidName, in_ex)
+  catch (const CosNaming::NamingContext::InvalidName&)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_return._retn ());
+      throw CosEventChannelFactory::BindFailed ();
     }
-  ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ab)
+  catch (const CosNaming::NamingContext::AlreadyBound&)
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
-                        ec_return._retn ());
+      throw CosEventChannelFactory::BindFailed ();
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (ec_return._retn ());
 
   return ec_return._retn ();
 }
 
 void
 TAO_CosEventChannelFactory_i::destroy
-(
- const char * channel_id,
- CORBA::Boolean unbind_from_naming_service
- ACE_ENV_ARG_DECL
- )
- ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventChannelFactory::NoSuchChannel
-      ))
+  (const char * channel_id,
+   CORBA::Boolean unbind_from_naming_service)
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
-  ACE_TRY
+  try
     {
       // Get hold of the objectid first.
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId (channel_id);
 
       CORBA::Object_var obj =
-        this->poa_->id_to_reference (oid.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->poa_->id_to_reference (oid.in ());
 
       CosEventChannelAdmin::EventChannel_var fact_ec =
-        CosEventChannelAdmin::EventChannel::_narrow (obj.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
 
-      fact_ec->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fact_ec->destroy ();
 
       // Remove from the naming service.
       if (unbind_from_naming_service &&
@@ -228,112 +171,69 @@ TAO_CosEventChannelFactory_i::destroy
           name.length (1);
           name[0].id = CORBA::string_dup (channel_id);
 
-          this->naming_->unbind (name
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->naming_->unbind (name);
         }
     }
-  ACE_CATCH (CosNaming::NamingContext::NotFound, nf_ex)
+  catch (const CosNaming::NamingContext::NotFound&)
     {
       return; // don't bother the user with exceptions if unbind fails.
     }
-  ACE_CATCH (CosNaming::NamingContext::CannotProceed, cp_ex)
+  catch (const CosNaming::NamingContext::CannotProceed&)
     {
       return; // don't bother the user with exceptions if unbind fails.
     }
-  ACE_CATCH (CosNaming::NamingContext::InvalidName, in_ex)
+  catch (const CosNaming::NamingContext::InvalidName&)
     {
       return; // don't bother the user with exceptions if unbind fails.
     }
-  ACE_CATCH (CORBA::UserException, ue) // Translate any other user exception.
+  catch (const CORBA::UserException&)// Translate any other user exception.
     {
-      ACE_THROW (CosEventChannelFactory::NoSuchChannel ());
+      throw CosEventChannelFactory::NoSuchChannel ();
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 CosEventChannelAdmin::EventChannel_ptr
-TAO_CosEventChannelFactory_i::find
-(
- const char * channel_id
- ACE_ENV_ARG_DECL
- )
-  ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventChannelFactory::NoSuchChannel
-      ))
+TAO_CosEventChannelFactory_i::find(const char * channel_id)
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
   CosEventChannelAdmin::EventChannel_var ec_return;
 
-  ACE_TRY
+  try
     {
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId (channel_id);
 
       CORBA::Object_var obj =
-        this->poa_->id_to_reference (oid.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->poa_->id_to_reference (oid.in ());
 
       ec_return = CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
     }
-  ACE_CATCH (CORBA::UserException, ue) // Translate any user exception.
+  catch (const CORBA::UserException&)// Translate any user exception.
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::NoSuchChannel (),
-                        ec_return._retn ());
+      throw CosEventChannelFactory::NoSuchChannel ();
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (ec_return._retn ());
 
   return ec_return._retn ();
 }
 
 char*
-TAO_CosEventChannelFactory_i::find_channel_id
-(
- CosEventChannelAdmin::EventChannel_ptr channel
- ACE_ENV_ARG_DECL
- )
-  ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventChannelFactory::NoSuchChannel
-      ))
+TAO_CosEventChannelFactory_i::find_channel_id(CosEventChannelAdmin::EventChannel_ptr channel)
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
   CORBA::String_var str_return;
-  ACE_TRY
+  try
     {
       PortableServer::ObjectId_var oid =
-        this->poa_->reference_to_id (channel
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->poa_->reference_to_id (channel);
 
       str_return = PortableServer::ObjectId_to_string (oid.in ());
     }
-  ACE_CATCH (CORBA::UserException, ue) // Translate any user exception.
+  catch (const CORBA::UserException&)// Translate any user exception.
     {
-      ACE_THROW_RETURN (CosEventChannelFactory::NoSuchChannel (),
-                        str_return._retn ());
+      throw CosEventChannelFactory::NoSuchChannel ();
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (str_return._retn ());
 
   return str_return._retn ();
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr <TAO_CEC_EventChannel>;
-template class ACE_Auto_Basic_Ptr <TAO_CEC_EventChannel>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr <TAO_CEC_EventChannel>
-#pragma instantiate  ACE_Auto_Basic_Ptr <TAO_CEC_EventChannel>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

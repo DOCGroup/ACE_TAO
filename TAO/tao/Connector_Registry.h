@@ -4,8 +4,6 @@
 /**
  *  @file    Connector_Registry.h
  *
- *  $Id$
- *
  *  Interface for the TAO Connector Registry
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
@@ -16,15 +14,16 @@
 #define TAO_CONNECTOR_REGISTRY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
 #include "tao/Basic_Types.h"
 #include "ace/Global_Macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_ORB_Core;
@@ -32,11 +31,6 @@ class TAO_Connector;
 class TAO_MProfile;
 class TAO_Profile;
 class TAO_InputCDR;
-
-namespace CORBA
-{
-  class Environment;
-}
 
 typedef TAO_Connector** TAO_ConnectorSetIterator;
 
@@ -57,25 +51,23 @@ class TAO_Export TAO_Connector_Registry
 {
 public:
   ///  Default constructor.
-  TAO_Connector_Registry (void);
+  TAO_Connector_Registry ();
 
   ///  Default destructor.
-  ~TAO_Connector_Registry (void);
+  ~TAO_Connector_Registry ();
 
   /// Return the connector bridges
-  TAO_Connector *get_connector (CORBA::ULong tag);
+  TAO_Connector *get_connector (CORBA::ULong tag) const;
 
   /// Initialize all registered connectors.
   int open (TAO_ORB_Core *orb_core);
 
   /// Close all open connectors.
-  int close_all (void);
+  int close_all ();
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.
-  int make_mprofile (const char *ior,
-                     TAO_MProfile &mprofile
-                     ACE_ENV_ARG_DECL);
+  int make_mprofile (const char *ior, TAO_MProfile &mprofile);
 
   /// Create a profile based on the contents of @a cdr
   TAO_Profile* create_profile (TAO_InputCDR& cdr);
@@ -85,13 +77,14 @@ public:
   char object_key_delimiter (const char *ior);
 
   // = Iterator.
-  TAO_ConnectorSetIterator begin (void);
-  TAO_ConnectorSetIterator end (void);
+  TAO_ConnectorSetIterator begin () const;
+  TAO_ConnectorSetIterator end () const;
 
 private:
-  // Prohibited
-  ACE_UNIMPLEMENTED_FUNC (TAO_Connector_Registry (const TAO_Connector_Registry&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connector_Registry&))
+  TAO_Connector_Registry (const TAO_Connector_Registry&) = delete;
+  void operator= (const TAO_Connector_Registry&) = delete;
+  TAO_Connector_Registry (TAO_Connector_Registry&&) = delete;
+  void operator= (TAO_Connector_Registry&&) = delete;
 
 private:
   /// List of connectors that are currently open.
@@ -101,8 +94,10 @@ private:
   size_t size_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "tao/Connector_Registry.i"
+#include "tao/Connector_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

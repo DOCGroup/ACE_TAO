@@ -1,4 +1,3 @@
-// $Id$
 //---------------------------------------------------------------------------
 #ifndef ORBThreadH
 #define ORBThreadH
@@ -8,21 +7,20 @@
 class PACKAGE TORBThread : public TThread
 {
   // Class for running the orb in a separate thread.
-public: 
-  // = Initialization and termination methods.
-  __fastcall TORBThread (CORBA::ORB_ptr orb);
+public:
   // Constructor.
+  __fastcall TORBThread (CORBA::ORB_ptr orb);
 
-  __fastcall ~TORBThread ();
   // Destructor.
+  __fastcall ~TORBThread ();
 
 protected:
-  void __fastcall Execute ();
   // Perform the thread's work.
+  void __fastcall Execute ();
 
 private:
-  CORBA::ORB_var orb_;
   // Reference to the orb.
+  CORBA::ORB_var orb_;
 };
 //---------------------------------------------------------------------------
 #endif

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef FACTORY_H
 #define FACTORY_H
 
@@ -18,9 +15,8 @@ class Factory
   : public virtual POA_PortableGroup::GenericFactory
 {
 public:
-
   /// Constructor
-  Factory (void);
+  Factory ();
   /// creates a Test::Simple servant reference.
   /// This reference is then passed as a FactoryInfos property
   /// when the LoadManager creates the object group.
@@ -31,14 +27,7 @@ public:
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
-        factory_creation_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::NoFactory,
-                     PortableGroup::ObjectNotCreated,
-                     PortableGroup::InvalidCriteria,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::CannotMeetCriteria));
+        factory_creation_id);
 
   /// The LoadManager is passed the FactoryCreationId, it received
   /// from the create_object () call.
@@ -46,10 +35,7 @@ public:
 
   virtual void delete_object (
       const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectNotFound));
+        factory_creation_id);
 private:
   /// The factory creation id.
   CORBA::ULong fcid_;
@@ -65,7 +51,6 @@ private:
 
   /// Lock used to synchronize access to the factory creation id
   TAO_SYNCH_MUTEX lock_;
-
 };
 
 #if defined(_MSC_VER)

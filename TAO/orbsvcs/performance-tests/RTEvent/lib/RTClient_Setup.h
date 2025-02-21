@@ -1,8 +1,6 @@
 /**
  * @file RTClient_Setup.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -13,7 +11,7 @@
 #include "RTCORBA_Setup.h"
 #include "PriorityBand_Setup.h"
 #include "SyncScope_Setup.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +23,6 @@ class RT_Class;
  * @class RTClient_Setup
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export RTClient_Setup
 {
@@ -34,20 +31,18 @@ public:
   RTClient_Setup (int use_rt_corba,
                   CORBA::ORB_ptr orb,
                   const RT_Class &rt_class,
-                  int nthreads
-                  ACE_ENV_ARG_DECL);
+                  int nthreads);
 
   /// Return non-zero if RTCORBA is enabled
-  int use_rt_corba (void) const;
+  int use_rt_corba () const;
 
   /// Return the underlying RTCORBA_Setup pointer
-  RTCORBA_Setup *rtcorba_setup (void);
+  RTCORBA_Setup *rtcorba_setup ();
 
 private:
   int use_rt_corba_;
 
-  auto_ptr<RTCORBA_Setup> rtcorba_setup_;
-  auto_ptr<PriorityBand_Setup> priorityband_setup_;
+  std::unique_ptr<RTCORBA_Setup> rtcorba_setup_;
   SyncScope_Setup syncscope_setup_;
 };
 

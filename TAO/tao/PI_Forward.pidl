@@ -3,16 +3,14 @@
 /**
  * @file PI_Forward.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for typedefs in the
  * PortableInterceptor module.
  *
  * This file is used to generate PI_Forward.{h,cpp},
  * using the following command:
-	 *
+ *
  *   tao_idl.exe
- *        -o orig -Gp -Gd -Ge 1 -Sc -Sci
+ *        -o orig -Gp -Gd -Sci
  *        -Wb,export_macro=TAO_Export
  *        -Wb,export_include=tao/TAO_Export.h
  *        -Wb,pre_include="ace/pre.h"
@@ -24,7 +22,6 @@
  * cp orig/PI_ForwardC.{h,cpp} .
  *
  * The code left in PI_ForwardC.{h,cpp}
- *
  */
 
 // File: PI_Forward.pidl
@@ -32,8 +29,8 @@
 #ifndef _PI_FORWARD_IDL_
 #define _PI_FORWARD_IDL_
 
-#include <OctetSeq.pidl>
-#include <StringSeq.pidl>
+#include "tao/OctetSeq.pidl"
+#include "tao/StringSeq.pidl"
 
 module PortableInterceptor
 {
@@ -43,7 +40,7 @@ module PortableInterceptor
   typedef string ORBId;
   typedef CORBA::StringSeq AdapterName;
   typedef CORBA::OctetSeq ObjectId;
-  typedef long AdapterManagerId;
+  typedef string AdapterManagerId;
   typedef short AdapterState;
   typedef unsigned long SlotId;
   typedef short ReplyStatus;

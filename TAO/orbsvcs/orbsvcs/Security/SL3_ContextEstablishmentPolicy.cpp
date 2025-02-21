@@ -1,12 +1,6 @@
-// $Id$
+#include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
 
-#include "SL3_ContextEstablishmentPolicy.h"
-
-
-ACE_RCSID (Security,
-           SL3_ContextEstablishmentPolicy,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::ContextEstablishmentPolicy::ContextEstablishmentPolicy (
   SecurityLevel3::CredsDirective             creds_directive,
@@ -24,77 +18,62 @@ TAO::SL3::ContextEstablishmentPolicy::ContextEstablishmentPolicy (
 {
 }
 
-TAO::SL3::ContextEstablishmentPolicy::~ContextEstablishmentPolicy (void)
+TAO::SL3::ContextEstablishmentPolicy::~ContextEstablishmentPolicy ()
 {
 }
 
 SecurityLevel3::CredsDirective
-TAO::SL3::ContextEstablishmentPolicy::creds_directive (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::ContextEstablishmentPolicy::creds_directive ()
 {
   return this->creds_directive_;
 }
 
 SecurityLevel3::OwnCredentialsList *
-TAO::SL3::ContextEstablishmentPolicy::creds_list (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::ContextEstablishmentPolicy::creds_list ()
 {
   SecurityLevel3::OwnCredentialsList * creds = 0;
 
   ACE_NEW_THROW_EX (creds,
                     SecurityLevel3::OwnCredentialsList (this->creds_list_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (creds);
 
   return creds;
 }
 
 SecurityLevel3::FeatureDirective
-TAO::SL3::ContextEstablishmentPolicy::use_client_auth (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::ContextEstablishmentPolicy::use_client_auth ()
 {
   return this->use_client_auth_;
 }
 
 SecurityLevel3::FeatureDirective
-TAO::SL3::ContextEstablishmentPolicy::use_target_auth (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::ContextEstablishmentPolicy::use_target_auth ()
 {
   return this->use_target_auth_;
 }
 
 SecurityLevel3::FeatureDirective
-TAO::SL3::ContextEstablishmentPolicy::use_confidentiality (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::ContextEstablishmentPolicy::use_confidentiality ()
 {
   return this->use_confidentiality_;
 }
 
 SecurityLevel3::FeatureDirective
-TAO::SL3::ContextEstablishmentPolicy::use_integrity (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::ContextEstablishmentPolicy::use_integrity ()
 {
   return this->use_integrity_;
 }
 
 CORBA::PolicyType
-TAO::SL3::ContextEstablishmentPolicy::policy_type (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::ContextEstablishmentPolicy::policy_type ()
 {
   return SecurityLevel3::ContextEstablishmentPolicyType;
 }
 
 CORBA::Policy_ptr
-TAO::SL3::ContextEstablishmentPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::ContextEstablishmentPolicy::copy ()
 {
-  CORBA::Policy_ptr p = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr p = CORBA::Policy_ptr ();
   ACE_NEW_THROW_EX (p,
                     TAO::SL3::ContextEstablishmentPolicy (
                       this->creds_directive_,
@@ -104,15 +83,12 @@ TAO::SL3::ContextEstablishmentPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
                       this->use_confidentiality_,
                       this->use_integrity_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (p);
 
   return p;
 }
 
 void
-TAO::SL3::ContextEstablishmentPolicy::destroy (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::ContextEstablishmentPolicy::destroy ()
 {
   this->creds_directive_     = SecurityLevel3::CD_Default;
   this->creds_list_.length (0);
@@ -121,3 +97,5 @@ TAO::SL3::ContextEstablishmentPolicy::destroy (
   this->use_confidentiality_ = SecurityLevel3::FD_UseDefault;
   this->use_integrity_       = SecurityLevel3::FD_UseDefault;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,3 @@
-//$Id$
-
 /// This interface abstracts a counter. It provides methods
 /// for increasing and getting the value of the counter.
 interface Counter

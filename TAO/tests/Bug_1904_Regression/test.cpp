@@ -1,4 +1,3 @@
-// $Id$
 #include "testS.h"
 
 class con_i : public virtual POA_con
@@ -6,7 +5,7 @@ class con_i : public virtual POA_con
 };
 
 int
-main (int , char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   return 0;
 }

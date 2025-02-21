@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef BASIC_H
 #define BASIC_H
 
@@ -26,17 +23,13 @@ public:
          CORBA::Short num,
          const char *loc);
 
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * get_string ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
-  virtual void remove_member (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void remove_member ();
 
-  virtual CORBA::Short number (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Short number ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

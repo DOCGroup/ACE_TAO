@@ -3,8 +3,6 @@
 /**
  *  @file Periodic_Task.h
  *
- *  $Id$
- *
  *  Base class for Periodic Tasks
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -17,24 +15,24 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Task.h"
 #include "ace/SString.h"
+#include "ace/Arg_Shifter.h"
 #include "JobC.h"
-#include "activity_export.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
-class ACE_Arg_Shifter;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 class Task_Stats;
 
 /**
  * @class Periodic_Task
  *
  * @brief Periodic_Task executes jobs.
- *
  */
-class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
+class Periodic_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
-  /// = Initialization and termination code.
-  Periodic_Task (void);
+  Periodic_Task ();
   ~Periodic_Task ();
 
   /// Init the state of this object.
@@ -48,7 +46,7 @@ class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
 
   /// = Job get/set
   /// Returns the name of the Job exec'ed by this Task.
-  const char* job (void);
+  const char* job ();
 
   /// Sets the Job to exec.
   void job (Job_ptr job);

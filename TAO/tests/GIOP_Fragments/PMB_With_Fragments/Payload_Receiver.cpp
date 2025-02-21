@@ -1,9 +1,4 @@
-//
-// $Id$
-//
 #include "Payload_Receiver.h"
-
-ACE_RCSID(PMB_With_Fragments, Payload_Receiver, "$Id$")
 
 Payload_Receiver::Payload_Receiver (CORBA::ORB_ptr orb)
  : count_ (0),
@@ -12,10 +7,7 @@ Payload_Receiver::Payload_Receiver (CORBA::ORB_ptr orb)
 }
 
 void
-Payload_Receiver::more_data (const Test::Payload &payload
-                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Test::Payload_Receiver::Invalid_Payload))
+Payload_Receiver::more_data (const Test::Payload &payload)
 {
   ++this->count_;
 
@@ -24,17 +16,16 @@ Payload_Receiver::more_data (const Test::Payload &payload
     {
       if (payload[i] != 'A')
         {
-          ACE_THROW (Test::Payload_Receiver::Invalid_Payload ());
+          throw Test::Payload_Receiver::Invalid_Payload ();
         }
     }
 }
 
 
 void
-Payload_Receiver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-   ACE_THROW_SPEC ((CORBA::SystemException))
+Payload_Receiver::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 

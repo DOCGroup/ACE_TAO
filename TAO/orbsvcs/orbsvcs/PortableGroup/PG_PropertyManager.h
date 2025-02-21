@@ -4,8 +4,6 @@
 /**
  * @file PG_PropertyManager.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -21,14 +19,16 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Default_Property_Validator.h"
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/PG_Default_Property_Validator.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class TAO_PG_ObjectGroupManager;
@@ -49,7 +49,6 @@ class TAO_PortableGroup_Export TAO_PG_PropertyManager
   : public virtual POA_PortableGroup::PropertyManager
 {
 public:
-
   /// Constructor.
   TAO_PG_PropertyManager (TAO_PG_ObjectGroupManager & object_group_manager);
 
@@ -60,37 +59,22 @@ public:
    * interface.
    */
   //@{
-
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
-      const PortableGroup::Properties & props
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & props);
 
   /// Get the default properties used by all object groups.
-  virtual PortableGroup::Properties * get_default_properties (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableGroup::Properties * get_default_properties ();
 
   /// Remove default properties.
   virtual void remove_default_properties (
-      const PortableGroup::Properties & props
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & props);
 
   /// Set properties associated with a given Member type.  These
   /// properties override the default properties.
   virtual void set_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & overrides
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & overrides);
 
   /**
    * Return the properties associated with a give Replica type.  These
@@ -98,18 +82,12 @@ public:
    * addition to the default properties that were not overridden.
    */
   virtual PortableGroup::Properties * get_type_properties (
-      const char * type_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const char * type_id);
 
   /// Remove the given properties associated with the Replica type ID.
   virtual void remove_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & props
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & props);
 
   /**
    * Dynamically set the properties associated with a given object
@@ -119,12 +97,7 @@ public:
    */
   virtual void set_properties_dynamically (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Properties & overrides
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & overrides);
 
   /**
    * Return the properties currently in use by the given object
@@ -134,10 +107,7 @@ public:
    * that weren't overridden.
    */
   virtual PortableGroup::Properties * get_properties (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   //@}
 
@@ -150,18 +120,12 @@ public:
     ACE_Null_Mutex> Type_Prop_Table;
 
 private:
-
   /// Remove properties "to_be_removed" from the given list of
   /// properties.
   void remove_properties (const PortableGroup::Properties & to_be_removed,
-                          PortableGroup::Properties &properties
-                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+                          PortableGroup::Properties &properties);
 
 private:
-
   /// Table that maps ObjectId to Object Group related information.
   TAO_PG_ObjectGroupManager & object_group_manager_;
 
@@ -180,8 +144,9 @@ private:
    * @todo Strategize the validator, or use template policies.
    */
   TAO_PG_Default_Property_Validator property_validator_;
-
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

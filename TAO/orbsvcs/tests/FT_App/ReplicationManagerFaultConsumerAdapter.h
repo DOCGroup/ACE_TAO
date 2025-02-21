@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
 #ifndef REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
 #define REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
 #include /**/ <ace/pre.h>
@@ -38,12 +36,12 @@ public:
   /**
    * Parse command line arguments.
    */
-  int parse_args (int argc, char * argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
 
   /**
    * Initialize this object
    */
-  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (CORBA::ORB_ptr orb);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -55,12 +53,12 @@ public:
    * @param result [out] status code to return from process
    * @returns 0 to continue; nonzero to quit
    */
-  int idle(int &result ACE_ENV_ARG_DECL);
+  int idle(int &result);
 
   /**
    * Clean house for process shut down.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini ();
 
 
   size_t notifications() const;
@@ -68,7 +66,6 @@ public:
   /////////////////
   // Implementation
 private:
-
   ////////////////////
   // Forbidden methods
 private:
@@ -80,7 +77,6 @@ private:
   /////////////////////////
   // Implementation methods
 private:
-
   ///////////////
   // Data Members
 private:
@@ -102,12 +98,12 @@ private:
   /**
    * a file to write to to signal "ready"
    */
-  const char * readyFile_;
+  const ACE_TCHAR * readyFile_;
 
   /**
-   * Detecor's IOR
+   * Detector's IOR
    */
-  const char * detector_ior_;
+  const ACE_TCHAR * detector_ior_;
 
   /**
    * The FaultDetectorFactory object reference.
@@ -127,7 +123,7 @@ private:
   /**
    * A file from which the notifier's IOR should be read.
    */
-  const char * notifier_ior_;
+  const ACE_TCHAR * notifier_ior_;
 
   /**
    * the fault notifier
@@ -144,7 +140,6 @@ private:
    */
   TAO::FT_FaultConsumer* p_fault_consumer_;
   PortableServer::ServantBase_var consumer_servant_;
-
 };
 #include /**/ <ace/post.h>
 

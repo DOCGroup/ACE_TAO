@@ -3,10 +3,7 @@
 /**
  *  @file    driver.h
  *
- *  $Id$
- *
  *  Header file for the driver program.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
@@ -22,8 +19,8 @@ class Driver
 {
 public:
   // = Constructor and destructor.
-  Driver (void);
-  ~Driver (void);
+  Driver ();
+  ~Driver ();
 
 enum TEST_TYPE
   {
@@ -37,13 +34,16 @@ enum TEST_TYPE
   };
 
   /// Initialize the driver object.
-  int init (int argc, char* argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
 
   /// Parse command line arguments.
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Execute test code.
-  int run (void);
+  /**
+   * @return The number of errors detected
+   */
+  int run ();
 
 private:
   /// underlying ORB (we do not own it)

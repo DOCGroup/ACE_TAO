@@ -1,0 +1,11 @@
+// -*- MPC -*-
+project(*test_idl): taoexe, ifr_client,dynamicany  {
+  exename = test_idl
+
+  Source_Files {
+    test_idl.cpp
+  }
+
+  IDL_Files {
+  }
+}

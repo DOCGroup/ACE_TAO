@@ -1,0 +1,59 @@
+#ifndef TAO_MONITOR_MONITOR_PIDL
+#define TAO_MONITOR_MONITOR_PIDL
+
+#include "tao/Monitor/Monitor_Types.pidl"
+
+module Monitor
+{
+  interface Subscriber
+  {
+    oneway void push (in DataList dil);
+  };
+
+  /**
+   * @todo Make it possible to use then namelist as filter
+   */
+  interface MC
+  {
+    NameList get_statistic_names (in NameFilter filter);
+
+    /**
+     * Get the statistics for the given monitor points.
+     * The return value only contains the values for the existing
+     * monitoring points. If they don't exist they are just
+     * not in the list.
+     */
+    DataList get_statistics (in NameList names);
+
+    /**
+     * Get and clear the statistics for the given monitor points.
+     * The return value only contains the values for the existing
+     * monitoring points. If they don't exist they are just
+     * not in the list.
+     */
+    DataList get_and_clear_statistics (in NameList names);
+
+    /**
+     * Clear the statistics for the given monitor points.
+     * The return value only contains the names of the cleared
+     * monitoring points. If they don't exist they are just
+     * not in the list.
+     */
+    NameList clear_statistics (in NameList names);
+
+    /**
+     * Register a constraint for the given monitoring points specified
+     * by @a names. When the constraint evaluates to true the
+     * @a sub is called
+     * @return Returns a list with constraint id and monitor name
+     */
+    ConstraintStructList register_constraint (in NameList names, in Constraint cs, in Subscriber sub);
+
+    /**
+     * Unregister for certain constraints
+     */
+    void unregister_constraints (in ConstraintStructList constraint);
+  };
+};
+
+#endif /* TAO_MONITOR_MONITOR_PIDL */

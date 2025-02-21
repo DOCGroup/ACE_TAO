@@ -1,9 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file Asynch_Reply_Dispatcher_Base.h
- *
- *  $Id$
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
@@ -22,15 +21,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IOP_IORC.h"
+#include "tao/IOPC.h"
 
-class TAO_Pluggable_Reply_Params;
-class TAO_ORB_Core ;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
-class TAO_Transport;
 class ACE_Lock;
 class ACE_Allocator;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Pluggable_Reply_Params;
+class TAO_ORB_Core;
+class TAO_Transport;
 /**
  * @class TAO_Asynch_Reply_Dispatcher_Base
  *
@@ -48,26 +51,9 @@ public:
   /// Sets the transport for this invocation.
   void transport (TAO_Transport *t);
 
-  /// @name The Reply Dispatcher methods
-  //@{
-  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &) = 0;
-
-  virtual void connection_closed (void) = 0;
-  //@}
-
-  /// Inform that the reply timed out
-  virtual void reply_timed_out (void) = 0;
-
   /// Install the timeout handler
-  virtual long schedule_timer (CORBA::ULong ,
-                               const ACE_Time_Value &
-                               ACE_ENV_ARG_DECL) = 0;
+  virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &) = 0;
 
-  /// @name Mutators for refcount
-  //@{
-  long incr_refcount (void);
-  long decr_refcount (void);
-  //@}
 
   /// A helper method that can be used by the subclasses
   /**
@@ -84,12 +70,15 @@ public:
    * Why are we clumping everything in one method. Answer is we need
    * atomicity?
    */
-  bool try_dispatch_reply (void);
+  bool try_dispatch_reply ();
 
 protected:
-
   /// Destructor.
-  virtual ~TAO_Asynch_Reply_Dispatcher_Base (void);
+  virtual ~TAO_Asynch_Reply_Dispatcher_Base ();
+
+private:
+  void operator= (const TAO_Asynch_Reply_Dispatcher_Base &);
+  TAO_Asynch_Reply_Dispatcher_Base (const TAO_Asynch_Reply_Dispatcher_Base &);
 
 protected:
   /// The service context list.
@@ -116,18 +105,11 @@ protected:
   TAO_Transport *transport_;
 
 private:
-  /// Lock to protect refcount and @c is_reply_dispatched_ flag.
+  /// Lock to protect @c is_reply_dispatched_ flag.
   ACE_Lock *lock_;
-
-  /// Refcount paraphernalia for this class
-  long refcount_;
 
   /// Has the reply been dispatched?
   bool is_reply_dispatched_;
-
-  /// Allocator that was used to allocate this reply dispatcher. In case of
-  /// zero we come from the heap.
-  ACE_Allocator *allocator_;
 };
 
 namespace TAO
@@ -150,14 +132,14 @@ namespace TAO
   class TAO_Export ARDB_Refcount_Functor
   {
   public:
-    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb)
-      ACE_THROW_SPEC (());
+    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb) noexcept;
   };
-
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "tao/Asynch_Reply_Dispatcher_Base.i"
+#include "tao/Asynch_Reply_Dispatcher_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

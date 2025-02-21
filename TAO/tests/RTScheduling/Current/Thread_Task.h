@@ -1,4 +1,3 @@
-//$Id$
 #ifndef THREAD_TASK_H
 #define THREAD_TASK_H
 
@@ -10,15 +9,15 @@
 class Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
+  Thread_Task (CORBA::ORB_ptr orb);
 
-  int activate_task (CORBA::ORB_ptr orb,
-		     int thr_count);
+  int activate_task (int thr_count);
 
-  ~Thread_Task (void);
-  
+  ~Thread_Task ();
+
  protected:
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
  private:
   CORBA::ORB_var orb_;
  RTScheduling::Current_var current_;

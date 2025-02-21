@@ -1,15 +1,11 @@
-// $Id$
-
 #include "server_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Simple, server, "$Id$")
-
 static int quiet = 0;
 // The test is quiet...
 
-static const char *ior_file = "test.ior";
+static const ACE_TCHAR *ior_file = ACE_TEXT ("test.ior");
 // File of file to which the ior is written
 
 static int number_of_threads = 1;
@@ -19,7 +15,7 @@ class Server_Task : public ACE_Task_Base
 {
 public:
   Server_Task (CORBA::ORB_ptr orb);
-  int svc (void);
+  int svc ();
 
 private:
   CORBA::ORB_var orb_;
@@ -31,19 +27,16 @@ Server_Task::Server_Task (CORBA::ORB_ptr orb)
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -65,7 +58,7 @@ write_ior_to_file (const char *ior)
   if (result < 0 ||
       static_cast<size_t> (result) != ACE_OS::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
+                       "ACE_OS::fprintf failed while writing %C to %s\n",
                        ior,
                        ior_file),
                       -1);
@@ -77,9 +70,9 @@ write_ior_to_file (const char *ior)
 
 static int
 parse_args (int argc,
-            char **argv)
+            ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "q:f:t:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("q:f:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -113,47 +106,37 @@ parse_args (int argc,
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc,
-                               argv);
+      int result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
-      CORBA::Object_var object = orb->resolve_initial_references ("RootPOA"
-                                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       server_i server_servant (quiet,
                                orb.in ());
 
-      server_var server_object = server_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&server_servant);
 
-      CORBA::String_var ior = orb->object_to_string (server_object.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
+      server_var server_object = server::_narrow (object_act.in ());
+
+      CORBA::String_var ior = orb->object_to_string (server_object.in ());
 
       result = write_ior_to_file (ior.in ());
       if (result != 0)
@@ -172,18 +155,13 @@ main (int argc,
       if (result != 0)
         return result;
 
-      root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "server::main");
+      ex._tao_print_exception ("server::main");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

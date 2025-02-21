@@ -1,14 +1,12 @@
 #include "StdAfx.h"
 
-// $Id$
-
 #include "w32_test_impl.h"
 
-W32_Test_Impl::~W32_Test_Impl (void)
+W32_Test_Impl::~W32_Test_Impl ()
 {
 }
 
-W32_Test_Impl::W32_Test_Impl (void)
+W32_Test_Impl::W32_Test_Impl ()
 {
   blabla = 1;
 }
@@ -24,10 +22,10 @@ W32_Test_Impl::getresponse (CORBA::Long respnr)
     case 1:
       myreturn = CORBA::string_dup ("Parameter 1");
       break;
-    case 2: 
+    case 2:
       myreturn = CORBA::string_dup ("Parameter 2");
       break;
-    default: 
+    default:
       myreturn = CORBA::string_dup ("Parameter unknown!");
       break;
     }

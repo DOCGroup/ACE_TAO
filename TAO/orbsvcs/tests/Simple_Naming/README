@@ -1,4 +1,4 @@
-// $Id$
+
 
 This application tests different features of TAO's Naming Service.
 
@@ -156,7 +156,7 @@ root->resolve (level1/level2/foo) to make sure correct reference is returned.
 
 Expected Output:
 
-All funtions work properly
+All functions work properly
 ********************************************
 
 Exceptions Test.

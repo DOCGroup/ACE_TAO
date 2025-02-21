@@ -1,7 +1,4 @@
 // -*- IDL -*-
-//
-// $Id$
-
 #ifndef HTIOP_IDL
 #define HTIOP_IDL
 
@@ -15,7 +12,7 @@ module HTIOP
   struct ListenPoint
   {
     string host;
-    unsigned short port;
+    unsigned short _port;
     string htid;
   };
 

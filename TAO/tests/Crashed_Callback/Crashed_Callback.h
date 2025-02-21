@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CRASHED_CALLBACK_CRASHED_CALLBACK_H
 #define CRASHED_CALLBACK_CRASHED_CALLBACK_H
@@ -14,17 +11,14 @@ class Crashed_Callback
 {
 public:
   /// Constructor
-  Crashed_Callback (void);
+  Crashed_Callback ();
 
   // = The skeleton methods
-  virtual CORBA::Boolean are_you_there (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean are_you_there ();
 
-  virtual void crash_now_please (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void crash_now_please ();
 
-  virtual void test_oneway (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void test_oneway ();
 };
 
 #include /**/ "ace/post.h"

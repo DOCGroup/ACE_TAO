@@ -1,0 +1,4 @@
+abstract interface abstract_parent
+{
+   void method (in abstract_parent aParent);
+};

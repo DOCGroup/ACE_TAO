@@ -1,0 +1,11 @@
+// -*- MPC -*-
+project {
+  macros   += ACE_HAS_GTK
+
+  // Depends on configuration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+    CPPFLAGS += $(PLATFORM_GTK_CPPFLAGS)
+    LIBS += $(PLATFORM_GTK_LIBS)
+    LDFLAGS += $(PLATFORM_GTK_LDFLAGS)
+  }
+}

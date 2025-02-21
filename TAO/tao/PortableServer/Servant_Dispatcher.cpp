@@ -1,11 +1,10 @@
-// @(#) $Id$
+// -*- C++ -*-
+#include "tao/PortableServer/Servant_Dispatcher.h"
 
-#include "Servant_Dispatcher.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID(PortableServer,
-          Servant_Dispatcher,
-          "$Id$")
-
-TAO_Servant_Dispatcher::~TAO_Servant_Dispatcher (void)
+TAO_Servant_Dispatcher::~TAO_Servant_Dispatcher ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

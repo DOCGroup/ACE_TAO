@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Filter.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -19,11 +17,13 @@
 
 #include "orbsvcs/RtecEventCommC.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_QOS_Info;
 
@@ -50,13 +50,13 @@ class TAO_RTEvent_Serv_Export TAO_EC_Filter
 {
 public:
   /// constructor...
-  TAO_EC_Filter (void);
+  TAO_EC_Filter ();
 
   /// destructor...
-  virtual ~TAO_EC_Filter (void);
+  virtual ~TAO_EC_Filter ();
 
   /// Obtain the parent of this filter.
-  TAO_EC_Filter* parent (void) const;
+  TAO_EC_Filter* parent () const;
 
   /// Become the parent of @a child.
   void adopt_child (TAO_EC_Filter* child);
@@ -76,9 +76,9 @@ public:
    * interface as if they all had children, but for simple filters the
    * iterators return an empty range.
    */
-  virtual ChildrenIterator begin (void) const;
-  virtual ChildrenIterator end (void) const;
-  virtual int size (void) const;
+  virtual ChildrenIterator begin () const;
+  virtual ChildrenIterator end () const;
+  virtual int size () const;
 
   /**
    * Filter this event, returns 1 if the event is accepted, 0
@@ -93,11 +93,9 @@ public:
    * EC_ProxyPushSupplier take an event rather than a set?
    */
   virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info
-                      ACE_ENV_ARG_DECL) = 0;
+                      TAO_EC_QOS_Info& qos_info) = 0;
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info
-                             ACE_ENV_ARG_DECL) = 0;
+                             TAO_EC_QOS_Info& qos_info) = 0;
 
   /**
    * This is called by the children when they accept an event and
@@ -106,18 +104,16 @@ public:
    * not const then filter can take ownership of the event.
    */
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info
-                     ACE_ENV_ARG_DECL) = 0;
+                     TAO_EC_QOS_Info& qos_info) = 0;
   virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info
-                            ACE_ENV_ARG_DECL) = 0;
+                            TAO_EC_QOS_Info& qos_info) = 0;
 
   /// Clear any saved state, must reset and assume no events have been
   /// received.
-  virtual void clear (void) = 0;
+  virtual void clear () = 0;
 
   /// Returns the maximum size of the events pushed by this filter.
-  virtual CORBA::ULong max_event_size (void) const = 0;
+  virtual CORBA::ULong max_event_size () const = 0;
 
   /**
    * Returns 0 if an event with that header could never be accepted.
@@ -141,8 +137,7 @@ public:
    * fairly soon.
    */
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info& qos_info
-                                ACE_ENV_ARG_DECL) = 0;
+                                const TAO_EC_QOS_Info& qos_info) = 0;
 
   /**
    * Obtain the QOS information for this filter, the default
@@ -150,8 +145,7 @@ public:
    * support scheduling information implement this method.
    * @return Returns 0 on success and -1 on failure
    */
-  virtual void get_qos_info (TAO_EC_QOS_Info& qos_info
-                             ACE_ENV_ARG_DECL);
+  virtual void get_qos_info (TAO_EC_QOS_Info& qos_info);
 
 private:
   /// The parent...
@@ -177,28 +171,23 @@ class TAO_RTEvent_Serv_Export TAO_EC_Null_Filter : public TAO_EC_Filter
 {
 public:
   /// Constructor.
-  TAO_EC_Null_Filter (void);
+  TAO_EC_Null_Filter ();
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info
-                      ACE_ENV_ARG_DECL);
+                      TAO_EC_QOS_Info& qos_info);
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info
-                             ACE_ENV_ARG_DECL);
+                             TAO_EC_QOS_Info& qos_info);
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info
-                     ACE_ENV_ARG_DECL);
+                     TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info
-                            ACE_ENV_ARG_DECL);
-  virtual void clear (void);
-  virtual CORBA::ULong max_event_size (void) const;
+                            TAO_EC_QOS_Info& qos_info);
+  virtual void clear ();
+  virtual CORBA::ULong max_event_size () const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info
-                                ACE_ENV_ARG_DECL);
+                                const TAO_EC_QOS_Info &qos_info);
 };
 
 // ****************************************************************
@@ -212,8 +201,10 @@ public:
 
 // ****************************************************************
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Filter.i"
+#include "orbsvcs/Event/EC_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,5 +1,4 @@
 /*
- * $Id$
  */
 
 /// A simple interface to test the ORB
@@ -11,7 +10,7 @@ interface Simple_Server
 
   /// Shutdown the server
   /**
-   * Provide a simple way to cleanup the test when it finishes 
+   * Provide a simple way to cleanup the test when it finishes
    */
   oneway void shutdown ();
 };

@@ -1,43 +1,32 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    sched
-//
-// = FILENAME
-//    DynSched.cpp
-//
-// = CREATION DATE
-//    23 January 1997
-//
-// = AUTHOR
-//    Chris Gill
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DynSched.cpp
+ *
+ *  @author Chris Gill
+ */
+//=============================================================================
 
-#include "DynSched.h"
+
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Sched/DynSched.h"
 #include "ace/Basic_Types.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Null_Mutex.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "DynSched.i"
+#include "orbsvcs/Sched/DynSched.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Sched, DynSched, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
 // Helper functions //
 //////////////////////
 
 // compare the DFS finish times of two task entries, order higher time *first*
-#if defined (ACE_HAS_WINCE)
-int _cdecl compare_entry_finish_times (const void *first, const void *second)
-#else
 extern "C" int compare_entry_finish_times (const void *first, const void *second)
-#endif  // ACE_HAS_WINCE
 {
   // sort blank entries to the end
   if (! first)
@@ -314,7 +303,6 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
   // = registers a task.
 
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::get_rt_info (Object_Name name,
                                RT_Info* &rtinfo)
@@ -361,7 +349,6 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
     }
 }
 
-
 
 
 int ACE_DynScheduler::priority (
@@ -436,8 +423,8 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
       // swap the handles and point to the caller instead of the called operation
       if (lookup_rt_info (d.rt_info, temp_info) != SUCCEEDED)
       {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT("cannot find %d to add dependency\n"), d.rt_info));
+        ORBSVCS_ERROR ((LM_ERROR,
+                    ACE_TEXT("cannot find %d to add dependency\n"), d.rt_info));
         return -1;
       }
 
@@ -446,17 +433,17 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
 
     default:
 
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT("unrecognized dependency type %d for %s\n"),
-                  d.dependency_type, ACE_TEXT_CHAR_TO_TCHAR(rt_info->entry_point.in ())));
+      ORBSVCS_ERROR ((LM_ERROR,
+                  ACE_TEXT("unrecognized dependency type %d for %C\n"),
+                  d.dependency_type, rt_info->entry_point.in ()));
       return -1;
   }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT("Sched (%t) adding %s dependency to caller: %s\n"),
+  ORBSVCS_DEBUG ((LM_DEBUG,
+              ACE_TEXT("Sched (%t) adding %s dependency to caller: %C\n"),
               (const ACE_TCHAR *) ((d.dependency_type == RtecBase::TWO_WAY_CALL)
-                              ? ACE_LIB_TEXT("TWO_WAY") : ACE_LIB_TEXT("ONE_WAY")),
-              ACE_TEXT_CHAR_TO_TCHAR(temp_info->entry_point.in ())));
+                              ? ACE_TEXT("TWO_WAY") : ACE_TEXT("ONE_WAY")),
+              temp_info->entry_point.in ()));
 
   RtecScheduler::Dependency_Set& set = temp_info->dependencies;
   int l = set.length();
@@ -493,13 +480,11 @@ void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
       (void) ACE_OS::fprintf (file, "%s, %d\n",
                               (const char*)tmp.entry_point,
                               info.dependencies[i].number_of_calls);
-
     }
 
   (void) ACE_OS::fprintf (file, "# end calls\n%d\n%d\n\n",
                           info.priority,
                           info.preemption_subpriority);
-
 
 }
 
@@ -513,8 +498,8 @@ ACE_DynScheduler::dispatch_configuration (const Preemption_Priority & p_priority
   Config_Info *config_info;
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("Config info for priority %lu could not be found\n"),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("Config info for priority %lu could not be found\n"),
                        p_priority),
                       -1);
   }
@@ -1243,7 +1228,7 @@ ACE_DynScheduler::propagate_dispatches (
 
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::calculate_utilization_params (void)
+ACE_DynScheduler::calculate_utilization_params ()
 {
   critical_set_frame_size_ = 0;
   utilization_ = 0.0;
@@ -1292,7 +1277,6 @@ ACE_DynScheduler::calculate_utilization_params (void)
 }
 
 
-
 void
 ACE_DynScheduler::update_priority_level_params ()
 {
@@ -1313,7 +1297,7 @@ ACE_DynScheduler::update_priority_level_params ()
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::setup_task_entries (void)
+ACE_DynScheduler::setup_task_entries ()
 {
   // store number of tasks, based on registrations
   tasks (static_cast<u_int> (rt_info_entries_.size ()));
@@ -1390,7 +1374,7 @@ ACE_DynScheduler::setup_task_entries (void)
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::relate_task_entries (void)
+ACE_DynScheduler::relate_task_entries ()
 {
   status_t status = SUCCEEDED;
 
@@ -1418,7 +1402,6 @@ ACE_DynScheduler::relate_task_entries (void)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
 {
-
   // may have entered at a non-root node previously, so this does
   //  not necessarily indicate a cycle in the dependency graph
         if (entry.dfs_status () != Task_Entry::NOT_VISITED)
@@ -1549,11 +1532,11 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
 
           task_entries_ [i].has_unresolved_remote_dependencies (1);
 
-          ACE_DEBUG (
+          ORBSVCS_DEBUG (
              (LM_DEBUG,
-              ACE_LIB_TEXT("Warning: an operation identified by ")
-              ACE_LIB_TEXT("\"%s\" has unresolved remote dependencies.\n"),
-              ACE_TEXT_CHAR_TO_TCHAR((const char*)task_entries_ [i].rt_info ()->entry_point)));
+              ACE_TEXT("Warning: an operation identified by ")
+              ACE_TEXT("\"%C\" has unresolved remote dependencies.\n"),
+              (const char*)task_entries_ [i].rt_info ()->entry_point));
 
           // Record entry point in list of unresolved remote dependencies
           ACE_OS::sprintf (string_buffer, "// %s\n",
@@ -1565,12 +1548,12 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
       else
         {
           // Local node that no one calls and has neither rate nor threads is suspect
-          ACE_DEBUG (
+          ORBSVCS_DEBUG (
              (LM_DEBUG,
-              ACE_LIB_TEXT("Error: operation \"%s\" does not specify a period or\n")
-              ACE_LIB_TEXT("visible threads, and is not called by any other operation.\n")
-              ACE_LIB_TEXT("Are there backwards dependencies.\n"),
-              ACE_TEXT_CHAR_TO_TCHAR((const char*)task_entries_ [i].rt_info ()->entry_point)));
+              ACE_TEXT("Error: operation \"%C\" does not specify a period or\n")
+              ACE_TEXT("visible threads, and is not called by any other operation.\n")
+              ACE_TEXT("Are there backwards dependencies.\n"),
+              (const char*)task_entries_ [i].rt_info ()->entry_point));
 
           result = ST_UNRESOLVED_LOCAL_DEPENDENCIES;
 
@@ -1590,7 +1573,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::check_dependency_cycles (void)
+ACE_DynScheduler::check_dependency_cycles ()
 {
   status_t return_status = SUCCEEDED;
 
@@ -1653,10 +1636,10 @@ ACE_DynScheduler::check_dependency_cycles_recurse (Task_Entry &entry)
     if ((*calling_entry_link)->caller ().dfs_status () == Task_Entry::NOT_VISITED)
     {
       // indicate the two tasks are in (the same) dependency cycle
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT("Tasks \"%s\" and \"%s\" are part of a call cycle.\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR((*calling_entry_link)->caller ().rt_info ()->entry_point.in ()),
-                  ACE_TEXT_CHAR_TO_TCHAR(entry.rt_info ()->entry_point.in ())));
+      ORBSVCS_ERROR ((LM_ERROR,
+                  ACE_TEXT("Tasks \"%C\" and \"%C\" are part of a call cycle.\n"),
+                  (*calling_entry_link)->caller ().rt_info ()->entry_point.in (),
+                  entry.rt_info ()->entry_point.in ()));
 
       // set return status, ignore status returned by recursive call:
       // we already know there are cycles in the dependencies
@@ -1754,16 +1737,16 @@ ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduli
   // calls internal dispatch scheduling method.
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::store_assigned_info (void)
+ACE_DynScheduler::store_assigned_info ()
 {
   for  (u_int i = 0; i < dispatch_entry_count_; ++i)
     {
       if ((! ordered_dispatch_entries_) || (! (ordered_dispatch_entries_[i])) ||
           (! (ordered_dispatch_entries_[i]->task_entry ().rt_info ())))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT("ACE_DynScheduler::store_assigned_info () could not store ")
-                             ACE_LIB_TEXT("priority information (error in internal representation)")),
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ACE_DynScheduler::store_assigned_info () could not store ")
+                             ACE_TEXT("priority information (error in internal representation)")),
                              ST_BAD_INTERNAL_POINTER);
         }
 
@@ -1833,7 +1816,6 @@ ACE_DynScheduler::create_timeline ()
     Dispatch_Entry *rescheduled_entry;
     while (reschedule_queue.is_empty () == 0)
     {
-
       if (reschedule_queue.dequeue_head (rescheduled_entry) < 0)
       {
         status = ST_BAD_INTERNAL_POINTER;
@@ -1922,25 +1904,24 @@ ACE_DynScheduler::create_timeline ()
   // Create a timeline.
 
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_priorities (const char *filename)
 {
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
   // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_LIB_TEXT("w"));
+  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
   if (file)
   {
     status = output_dispatch_priorities (file);
-    fclose (file);
+    ACE_OS::fclose (file);
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
-                ACE_LIB_TEXT("Could not open schedule file (\"%s\")"),
-                ACE_TEXT_CHAR_TO_TCHAR(filename)));
+    ORBSVCS_ERROR ((LM_ERROR,
+                ACE_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
+                ACE_TEXT("Could not open schedule file (\"%C\")"),
+                filename));
   }
 
   return status;
@@ -1950,7 +1931,6 @@ ACE_DynScheduler::output_dispatch_priorities (const char *filename)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 {
-
   u_long dispatch_count = 0;
   u_long i = 0;
   for (i = 0; i < dispatch_entry_count_; ++i)
@@ -1975,9 +1955,9 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
             "Minimum Critical Priority:         %3d\n\n\n"
 
             "DISPATCH PRIORITIES:\n\n"
-            "                                  (critical              \n"
-            "                                   instant)              \n"
-            "             dispatch              dynamic      static   \n"
+            "                                  (critical             \n"
+            "                                   instant)             \n"
+            "             dispatch              dynamic      static  \n"
             "operation          ID  priority  subpriority  subpriority\n"
             "---------    --------  --------  -----------  -----------\n",
       dispatch_count, threads_, tasks_, status_,
@@ -1991,9 +1971,9 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
       int(minimum_critical_priority ())) < 0)
 
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
-                       ACE_LIB_TEXT("Could not write to schedule file\n")),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
+                       ACE_TEXT("Could not write to schedule file\n")),
                       UNABLE_TO_WRITE_SCHEDULE_FILE);
   }
 
@@ -2007,9 +1987,9 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
         ordered_dispatch_entries_[i]->dynamic_subpriority (),
         ordered_dispatch_entries_[i]->static_subpriority ()) < 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
-                         ACE_LIB_TEXT("Could not write to schedule file\n")),
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
+                         ACE_TEXT("Could not write to schedule file\n")),
                         UNABLE_TO_WRITE_SCHEDULE_FILE);
     }
   }
@@ -2024,17 +2004,17 @@ ACE_DynScheduler::output_dispatch_timeline (const char *filename)
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
   // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_LIB_TEXT("w"));
+  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
   if (file)
   {
     status = output_dispatch_timeline (file);
-    fclose (file);
+    ACE_OS::fclose (file);
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
-                ACE_LIB_TEXT("Could not open schedule file (\"%s\")"),
+    ORBSVCS_ERROR ((LM_ERROR,
+                ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
+                ACE_TEXT("Could not open schedule file (\"%s\")"),
                 filename));
   }
 
@@ -2044,17 +2024,19 @@ ACE_DynScheduler::output_dispatch_timeline (const char *filename)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_timeline (FILE *file)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   if (ACE_OS::fprintf (
       file, "\n\nDISPATCH TIMELINE:\n\n"
             "                dispatch  arrival  deadline     start        stop    execution     latency        laxity\n"
             "operation             ID   (nsec)    (nsec)    (nsec)      (nsec)  time (nsec)      (nsec)        (nsec)\n"
             "---------    -----------  -------  --------     -----      ------  -----------      -------       ------\n") < 0)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
-                       ACE_LIB_TEXT("Could not write to schedule file")),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
+                       ACE_TEXT("Could not write to schedule file")),
                       UNABLE_TO_WRITE_SCHEDULE_FILE);
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // iterate through timeline, picking out entries whose prev_ pointer
   // is null (i.e. those representing the start of a dispatch), find end
@@ -2065,9 +2047,9 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
     TimeLine_Entry_Link *link;
     if ((iter.next (link) == 0) || (! link))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
-                         ACE_LIB_TEXT("Bad internal pointer\n")),
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
+                         ACE_TEXT("Bad internal pointer\n")),
                         ST_BAD_INTERNAL_POINTER);
     }
 
@@ -2105,9 +2087,9 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
                               last_entry->stop ())) < 0)
 
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
-                             ACE_LIB_TEXT("Unable to write to schedule file\n")),
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
+                             ACE_TEXT("Unable to write to schedule file\n")),
                             UNABLE_TO_WRITE_SCHEDULE_FILE);
         }
       }
@@ -2130,9 +2112,9 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
                               last_entry->stop ())) < 0)
 
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
-                             ACE_LIB_TEXT("Unable to write to schedule file\n")),
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
+                             ACE_TEXT("Unable to write to schedule file\n")),
                             UNABLE_TO_WRITE_SCHEDULE_FILE);
         }
       }
@@ -2149,18 +2131,18 @@ ACE_DynScheduler::output_preemption_timeline (const char *filename)
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
   // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_LIB_TEXT("w"));
+  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
   if (file)
   {
     status = output_preemption_timeline (file);
-    fclose (file);
+    ACE_OS::fclose (file);
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
-                ACE_LIB_TEXT("Cannot open timeline file (\"%s\")\n"),
-                ACE_TEXT_CHAR_TO_TCHAR(filename)));
+    ORBSVCS_ERROR ((LM_ERROR,
+                ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
+                ACE_TEXT("Cannot open timeline file (\"%C\")\n"),
+                filename));
   }
 
   return status;
@@ -2171,13 +2153,13 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
 {
   if (ACE_OS::fprintf (
         file, "\n\nPREEMPTION TIMELINE:\n\n"
-        "              dispatch     start      stop  \n"
+        "              dispatch     start      stop \n"
         "operation           ID    (nsec)    (nsec)\n"
         "---------  -----------    ------    ------\n") < 0)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
-                       ACE_LIB_TEXT("Cannot write to timeline file\n")),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
+                       ACE_TEXT("Cannot write to timeline file\n")),
                       UNABLE_TO_WRITE_SCHEDULE_FILE);
   }
 
@@ -2188,9 +2170,9 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
   {
     if ((iter.next (link) == 0) || (! link))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
-                         ACE_LIB_TEXT("Bad internal pointer\n")),
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
+                         ACE_TEXT("Bad internal pointer\n")),
                          ST_BAD_INTERNAL_POINTER);
     }
 
@@ -2205,9 +2187,9 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
             ACE_U64_TO_U32 (link->entry ().start ()),
             ACE_U64_TO_U32 (link->entry ().stop ())) < 0)
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
-                           ACE_LIB_TEXT("Cannot write to timeline file\n")),
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
+                           ACE_TEXT("Cannot write to timeline file\n")),
                           UNABLE_TO_WRITE_SCHEDULE_FILE);
       }
     }
@@ -2221,9 +2203,9 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
             ACE_U64_TO_U32 (link->entry ().start ()),
             ACE_U64_TO_U32 (link->entry ().stop ())) < 0)
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
-                           ACE_LIB_TEXT("Cannot write to timeline file\n")),
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
+                           ACE_TEXT("Cannot write to timeline file\n")),
                           UNABLE_TO_WRITE_SCHEDULE_FILE);
       }
     }
@@ -2239,11 +2221,11 @@ ACE_DynScheduler::output_viewer_timeline (const char *filename)
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
   // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_LIB_TEXT("w"));
+  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
   if (file)
   {
     status = output_dispatch_timeline (file);
-    fclose (file);
+    ACE_OS::fclose (file);
   }
 
   return status;
@@ -2252,14 +2234,16 @@ ACE_DynScheduler::output_viewer_timeline (const char *filename)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_viewer_timeline (FILE *file)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   if (ACE_OS::fprintf (
       file, "\n\nVIEWER TIMELINE:\n\n"
-            "                                    arrival  deadline   completion    execution  \n"
+            "                                    arrival  deadline   completion    execution \n"
             "operation  utilization   overhead    (nsec)    (nsec)  time (nsec)  time (nsec)\n"
             "---------  -----------   --------   -------  --------  -----------  -----------\n") < 0)
   {
     return UNABLE_TO_WRITE_SCHEDULE_FILE;
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // iterate through timeline, picking out dispatches in chronological
   // order of operation completion time
@@ -2360,21 +2344,21 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
   if ((! up_to_date_) || (! timeline_))
   {
     status = NOT_SCHEDULED;
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT("ACE_DynScheduler::output_timeline: ")
-                ACE_LIB_TEXT("Schedule not generated")));
+    ORBSVCS_ERROR ((LM_ERROR,
+                ACE_TEXT("ACE_DynScheduler::output_timeline: ")
+                ACE_TEXT("Schedule not generated")));
   }
 
   if (status == SUCCEEDED)
   {
     // open the file
-    file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_LIB_TEXT("w"));
+    file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
     if (! file)
     {
       status = UNABLE_TO_OPEN_SCHEDULE_FILE;
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT("ACE_DynScheduler::output_timeline: ")
-                  ACE_LIB_TEXT("Could not open schedule file")));
+      ORBSVCS_ERROR ((LM_ERROR,
+                  ACE_TEXT("ACE_DynScheduler::output_timeline: ")
+                  ACE_TEXT("Could not open schedule file")));
     }
   }
 
@@ -2383,9 +2367,9 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
     if (ACE_OS::fprintf (file, "%s\n\n", heading) < 0)
     {
       status = UNABLE_TO_WRITE_SCHEDULE_FILE;
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT("ACE_DynScheduler::output_timeline: ")
-                  ACE_LIB_TEXT("Could not write to schedule file")));
+      ORBSVCS_ERROR ((LM_ERROR,
+                  ACE_TEXT("ACE_DynScheduler::output_timeline: ")
+                  ACE_TEXT("Could not write to schedule file")));
     }
   }
 
@@ -2411,74 +2395,11 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
 
   if (file)
   {
-    fclose (file);
+    ACE_OS::fclose (file);
   }
 
   return status;
 }
   // this prints the entire set of timeline outputs to the specified file
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Entry<ACE_CString, RtecScheduler::RT_Info *>;
-template class ACE_Map_Manager<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>;
-template class ACE_Map_Iterator<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>;
-template class ACE_DNode<Dispatch_Entry_Link>;
-template class ACE_DNode<Dispatch_Proxy_Iterator *>;
-template class ACE_DNode<TimeLine_Entry_Link>;
-template class ACE_Node<RtecScheduler::RT_Info *>;
-template class ACE_Node<Task_Entry_Link *>;
-template class ACE_Ordered_MultiSet<Dispatch_Entry_Link>;
-template class ACE_Ordered_MultiSet<Dispatch_Proxy_Iterator *>;
-template class ACE_Ordered_MultiSet<TimeLine_Entry_Link>;
-template class ACE_Ordered_MultiSet_Iterator<Dispatch_Entry_Link>;
-template class ACE_Ordered_MultiSet_Iterator<Dispatch_Proxy_Iterator *>;
-template class ACE_Ordered_MultiSet_Iterator<TimeLine_Entry_Link>;
-template class ACE_Unbounded_Queue<Dispatch_Entry *>;
-template class ACE_Unbounded_Queue_Iterator<Dispatch_Entry *>;
-template class ACE_Unbounded_Set<RtecScheduler::RT_Info *>;
-template class ACE_Unbounded_Set<Task_Entry_Link *>;
-template class ACE_Unbounded_Set_Iterator<RtecScheduler::RT_Info *>;
-template class ACE_Unbounded_Set_Iterator<Task_Entry_Link *>;
-template class ACE_Node<RtecScheduler::Config_Info *>;
-template class ACE_Unbounded_Set<RtecScheduler::Config_Info *>;
-template class ACE_Unbounded_Set_Iterator<RtecScheduler::Config_Info *>;
-template class ACE_Node<RtecScheduler::Scheduling_Anomaly *>;
-template class ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *>;
-template class ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Entry<ACE_CString, RtecScheduler::RT_Info *>
-#pragma instantiate ACE_Map_Manager<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_DNode<Dispatch_Entry_Link>
-#pragma instantiate ACE_DNode<Dispatch_Proxy_Iterator *>
-#pragma instantiate ACE_DNode<TimeLine_Entry_Link>
-#pragma instantiate ACE_Node<RtecScheduler::RT_Info *>
-#pragma instantiate ACE_Node<Task_Entry_Link *>
-#pragma instantiate ACE_Ordered_MultiSet<Dispatch_Entry_Link>
-#pragma instantiate ACE_Ordered_MultiSet<Dispatch_Proxy_Iterator *>
-#pragma instantiate ACE_Ordered_MultiSet<TimeLine_Entry_Link>
-#pragma instantiate ACE_Ordered_MultiSet_Iterator<Dispatch_Entry_Link>
-#pragma instantiate ACE_Ordered_MultiSet_Iterator<Dispatch_Proxy_Iterator *>
-#pragma instantiate ACE_Ordered_MultiSet_Iterator<TimeLine_Entry_Link>
-#pragma instantiate ACE_Unbounded_Queue<Dispatch_Entry *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Dispatch_Entry *>
-#pragma instantiate ACE_Unbounded_Set<RtecScheduler::RT_Info *>
-#pragma instantiate ACE_Unbounded_Set<Task_Entry_Link *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<RtecScheduler::RT_Info *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<Task_Entry_Link *>
-#pragma instantiate ACE_Node<RtecScheduler::Config_Info *>
-#pragma instantiate ACE_Unbounded_Set<RtecScheduler::Config_Info *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<RtecScheduler::Config_Info *>
-#pragma instantiate ACE_Node<RtecScheduler::Scheduling_Anomaly *>
-#pragma instantiate ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
-
-
-// EOF
+TAO_END_VERSIONED_NAMESPACE_DECL

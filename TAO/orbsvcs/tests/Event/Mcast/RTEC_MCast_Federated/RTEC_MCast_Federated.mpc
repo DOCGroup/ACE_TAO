@@ -1,0 +1,23 @@
+// -*- MPC -*-
+project(*Supplier): namingexe, rteventexe, rtevent_serv {
+  exename   = EchoEventSupplier
+
+  includes += ../Common
+
+  Source_Files {
+    SimpleAddressServer.cpp
+    EchoEventSupplierMain.cpp
+    EchoEventSupplier_i.cpp
+  }
+}
+
+project(*Consumer): namingexe, rteventexe,  {
+  exename   = EchoEventConsumer
+
+  includes += ../Common
+
+  Source_Files {
+    EchoEventConsumerMain.cpp
+    EchoEventConsumer_i.cpp
+  }
+}

@@ -1,9 +1,8 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Object_Group.h
- *
- *  $Id$
  *
  *  Manage all information related to an object group.
  *  @@ Note: the above description is optimistic.  The hope is to eventually
@@ -20,7 +19,7 @@
 #define TAO_PG_OBJECT_GROUP_H_
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -29,14 +28,16 @@
 
 /////////////////////////////////
 // Includes needed by this header
-#include "PG_Property_Set.h"
-#include "PG_Location_Hash.h"
-#include "PG_Location_Equal_To.h"
-#include "PG_Object_Group_Manipulator.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set.h"
+#include "orbsvcs/PortableGroup/PG_Location_Hash.h"
+#include "orbsvcs/PortableGroup/PG_Location_Equal_To.h"
+#include "orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/ACE.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////
 // Forward references
@@ -54,6 +55,7 @@ namespace TAO
    */
   class TAO_PortableGroup_Export PG_Object_Group
   {
+  protected:
     // Information about an object group member
     struct MemberInfo
     {
@@ -70,10 +72,8 @@ namespace TAO
       /// Location where this member exists
       PortableGroup::Location location_;
 
-
       /// TRUE if this is primary member
       CORBA::Boolean is_primary_;
-
 
       ///////////////
       // Methods
@@ -121,18 +121,25 @@ namespace TAO
       const PortableGroup::TagGroupTaggedComponent & tagged_component,
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
-      TAO::PG_Property_Set * type_properties);
-
+      const TAO::PG_Property_Set_var & type_properties);
+    /**
+     * This constructor is to be used for initialization when
+     * reading the object group from a stream.
+     */
+    PG_Object_Group (
+      CORBA::ORB_ptr orb,
+      PortableGroup::FactoryRegistry_ptr factory_registry,
+      TAO::PG_Object_Group_Manipulator & manipulator);
 
     /// Destructor
-    ~PG_Object_Group ();
+    virtual ~PG_Object_Group ();
 
     /////////////////
     // public methods
 
   public:
     /// return a duplicated reference to this group (IOGR)
-    PortableGroup::ObjectGroup_ptr reference()const;
+    PortableGroup::ObjectGroup_ptr reference() const;
 
     /**
      * Note the caller receives a copy of the factoryinfos in the result argument.
@@ -143,7 +150,7 @@ namespace TAO
     /**
      * get location of primary member
      */
-    const PortableGroup::Location & get_primary_location() const;
+    virtual const PortableGroup::Location & get_primary_location();
 
     /**
      * returns a duplicate
@@ -168,39 +175,30 @@ namespace TAO
     PortableGroup::InitialNumberMembersValue get_initial_number_members () const;
 
 
-
     /**
      * @@TODO DOC
      */
     void set_properties_dynamically (
-        const PortableGroup::Properties & overrides
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableGroup::InvalidProperty,
-                       PortableGroup::UnsupportedProperty));
+        const PortableGroup::Properties & overrides);
 
     /**
      * @@TODO DOC
      */
-    void get_properties (PortableGroup::Properties_var & result) const
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void get_properties (PortableGroup::Properties_var & result) const;
 
     /**
      * @@TODO DOC
      */
-    PortableGroup::ObjectGroupId  get_object_group_id () const;
+    virtual PortableGroup::ObjectGroupId  get_object_group_id () const;
 
     /**
      * Add a new member to the group.
      * @param the_location the location for the new member
      * @param member the member to be added
      */
-    void add_member (
+    virtual void add_member (
         const PortableGroup::Location & the_location,
-        CORBA::Object_ptr member
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ( (CORBA::SystemException,
-                       PortableGroup::ObjectNotAdded));
+        CORBA::Object_ptr member);
 
     /**
      * set the replica at the given location to be primary.
@@ -209,90 +207,77 @@ namespace TAO
      * it returns a boolean result.  A false return means caller should
      * throw FT::PrimaryNot_Set.
      */
-    int set_primary_member (
+    virtual int set_primary_member (
       TAO_IOP::TAO_IOR_Property * prop,
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::MemberNotFound
-      ));
+      const PortableGroup::Location & the_location);
 
     /**
      * @@TODO DOC
      */
-    void remove_member (
-        const PortableGroup::Location & the_location
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ( (CORBA::SystemException,
-                       PortableGroup::MemberNotFound));
+    virtual void remove_member (
+        const PortableGroup::Location & the_location);
 
 
     /**
      * @@TODO DOC
      */
-    void create_member (
+    virtual void create_member (
         const PortableGroup::Location & the_location,
         const char * type_id,
-        const PortableGroup::Criteria & the_criteria
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ( (CORBA::SystemException,
-        PortableGroup::MemberAlreadyPresent,
-        PortableGroup::NoFactory,
-        PortableGroup::ObjectNotCreated,
-        PortableGroup::InvalidCriteria,
-        PortableGroup::CannotMeetCriteria));
+        const PortableGroup::Criteria & the_criteria);
 
     /**
      * @@TODO DOC
      */
-    PortableGroup::Locations * locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual PortableGroup::Locations * locations_of_members ();
 
     /**
      * @@TODO DOC
      */
-    CORBA::Object_ptr get_member_reference (
-        const PortableGroup::Location & the_location
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableGroup::MemberNotFound));
+    virtual CORBA::Object_ptr get_member_reference (
+        const PortableGroup::Location & the_location);
 
 
     /**
      * @@TODO DOC
      */
-    void initial_populate (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void initial_populate ();
 
     /**
      * @@TODO DOC
      */
-    void minimum_populate (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void minimum_populate ();
 
 
     /**
      * @@TODO DOC
      */
-    int has_member_at (const PortableGroup::Location & location );
+    virtual int has_member_at (const PortableGroup::Location & location );
+
+
+    /**
+     * Tell the object group that it should distribute updates to the object
+     * group state.
+     */
+    virtual void distribute (int value);
+
+    virtual void set_name (const char* group_name);
+
+    virtual const char* get_name ();
 
     /////////////////////////
     // Implementation methods
   private:
-
     int increment_version ();
 
-    void distribute_iogr (ACE_ENV_SINGLE_ARG_DECL);
+    void distribute_iogr ();
 
-    PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member ACE_ENV_ARG_DECL);
+    void create_members (size_t count);
 
+  protected:
+    virtual PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
 
-    void create_members (size_t count ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableGroup::NoFactory
-        ));
-
+    void clear_members_map ();
 
     /////////////////////////
     // Forbidden methods
@@ -305,40 +290,44 @@ namespace TAO
     /////////////////
     // Static Methods
   public:
-
     ///////////////
     // Static Data
   private:
-
     ///////////////
     // Data Members
   private:
-
     /**
      * Protect internal state.
      */
     mutable TAO_SYNCH_MUTEX internals_;
 
+  protected:
     CORBA::ORB_var orb_;
 
+  private:
     /// Where to find the factories for replicas.
     PortableGroup::FactoryRegistry_var factory_registry_;
 
-
+  protected:
     // The object group manipulator
     TAO::PG_Object_Group_Manipulator & manipulator_;
+
+    /// boolean true if updates should be distributed
+    int distribute_;
 
     /// boolean true if empty group
     int empty_;
 
     ACE_CString role_;
+
+
     PortableGroup::TypeId_var type_id_;
 
     /**
      * the GroupTaggedComponent that defines this group
      * contains:
      *   GIOP::Version component_version;
-     *   TAO_String_Manager group_domain_id;
+     *   TAO::String_Manager group_domain_id;
      *   PortableGroup::ObjectGroupId object_group_id;
      *   PortableGroup::ObjectGroupRefVersion object_group_ref_version;
      */
@@ -354,6 +343,12 @@ namespace TAO
      */
     PortableServer::ObjectId_var object_id_;
 
+    /**
+     * an optional attribute of the object group which is a string
+     * name that is assigned to the object group by the creator.
+     */
+    char* group_name_;
+
     // group members
     MemberMap members_;
 
@@ -368,9 +363,10 @@ namespace TAO
     PortableGroup::InitialNumberMembersValue initial_number_members_;
     PortableGroup::MinimumNumberMembersValue minimum_number_members_;
     PortableGroup::FactoryInfos group_specific_factories_;
-
   };
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

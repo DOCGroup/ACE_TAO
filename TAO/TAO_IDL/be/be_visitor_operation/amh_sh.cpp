@@ -1,48 +1,38 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    amh_sh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating AMH skeleton code for Operation node in the
-//    skeleton header.
-//
-// = AUTHOR
-//    Mayur Deshpande <mayur@ics.uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    amh_sh.cpp
+ *
+ *  Visitor generating AMH skeleton code for Operation node in the
+ *  skeleton header.
+ *
+ *  @author Mayur Deshpande <mayur@ics.uci.edu>
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           amh_sh, 
-           "$Id$")
-
-// ******************************************************
-// Visitor for generating AMH skeleton for "operation" in skeleton header.
-// ******************************************************
+#include "operation.h"
 
 be_visitor_amh_operation_sh::be_visitor_amh_operation_sh (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_amh_operation_sh::~be_visitor_amh_operation_sh (void)
+be_visitor_amh_operation_sh::~be_visitor_amh_operation_sh ()
 {
 }
 
 int
 be_visitor_amh_operation_sh::visit_operation (be_operation *node)
 {
-  // If there is an argument of type "native", return immediately.
+  /// If there is an argument of type "native", return immediately.
   if (node->has_native ())
+    {
+      return 0;
+    }
+
+  /// These are not for the server side.
+  if (node->is_sendc_ami ())
     {
       return 0;
     }
@@ -63,9 +53,9 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
        i.next ())
     {
       be_argument *argument =
-        be_argument::narrow_from_decl (i.item ());
+        dynamic_cast<be_argument*> (i.item ());
 
-      if (argument == 0
+      if (argument == nullptr
           || argument->direction () == AST_Argument::dir_OUT)
         {
           continue;
@@ -83,32 +73,9 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
         }
     }
 
-  *os << be_nl
-      << "ACE_ENV_ARG_DECL"
-      << be_uidt_nl << ")" << be_uidt_nl;
+  *os << be_uidt_nl
+      << ") = 0;" << be_uidt_nl;
 
-  if (be_global->use_raw_throw ())
-    {
-      *os << "throw (";
-    }
-  else
-    {
-      *os << "ACE_THROW_SPEC ((";
-    }
-
-  *os << "CORBA::SystemException";
-
-  if (be_global->use_raw_throw ())
-    {
-      *os << ")";
-    }
-  else
-    {
-      *os << "))";
-    }
-
-  *os << " = 0;";
-  
   return 0;
 }
 
@@ -118,15 +85,8 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->generate_shared_prologue (node, os, "_get_");
 
-  if (!be_global->exception_support ())
-    {
-      *os << be_nl
-          << "ACE_ENV_ARG_DECL";
-    }
-
-  *os << be_uidt_nl 
-      << ")" << be_uidt_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;" << be_nl;
+  *os << be_uidt_nl
+      << ") = 0;" << be_uidt_nl;
 
   if (node->readonly ())
     {
@@ -143,18 +103,16 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
   be_visitor_context ctx (*this->ctx_);
   be_visitor_args_arglist visitor (&ctx);
 
-  if (visitor.visit_argument (&the_argument) == -1)
+  int status = visitor.visit_argument (&the_argument);
+
+  the_argument.destroy ();
+
+  if (-1 == status)
     {
       return -1;
     }
 
-  if (!be_global->exception_support ())
-    {
-      *os << be_nl << "ACE_ENV_ARG_DECL";
-    }
-
-  *os << be_uidt_nl << ")" << be_uidt_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;" << be_nl;
+  *os << be_uidt_nl << ") = 0;" << be_uidt_nl;
 
   return 0;
 }
@@ -163,35 +121,33 @@ void
 be_visitor_amh_operation_sh::generate_shared_prologue (
     be_decl *node,
     TAO_OutStream *os,
-    const char *skel_prefix
-  )
+    const char *skel_prefix)
 {
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "static void " << skel_prefix
+      << this->ctx_->port_prefix ().c_str ()
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_req," << be_nl
-      << "void *_tao_obj," << be_nl
-      << "void *_tao_servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << "TAO::Portable_Server::Servant_Upcall *_tao_obj," << be_nl
+      << "TAO_ServantBase *_tao_servant_upcall"
+      << ");" << be_uidt_nl << be_uidt_nl;
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context
   be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_interface*> (node->defined_in ());
 
-  if (this->ctx_->attribute () != 0)
+  if (this->ctx_->attribute () != nullptr)
     {
-      intf = be_interface::narrow_from_scope (
+      intf = dynamic_cast<be_interface*> (
                  this->ctx_->attribute()->defined_in ()
                );
     }
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_visitor_amh_operation_sh::"
@@ -220,5 +176,5 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
   // buf was allocated by ACE_OS::strdup, so we must use free instead
   // of delete.
   ACE_OS::free (buf);
-  buf = 0;
+  buf = nullptr;
 }

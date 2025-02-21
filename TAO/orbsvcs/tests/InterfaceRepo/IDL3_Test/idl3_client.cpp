@@ -1,13 +1,8 @@
 // -*- C++ -*-
-// $Id$
-
 #include "idl3_client.h"
+#include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (Application_Test, 
-           ifr_dii_client, 
-           "$Id$")
 
 // All the magic quantities are here at the top.
 
@@ -30,7 +25,7 @@ const CORBA::ULong ATTRS_LEN = 1;
 const CORBA::ULong OPS_LEN = 1;
 const CORBA::ULong FACTORY_LEN = 2;
 
-const char *ATTR_LOCAL_NAMES[] = 
+const char *ATTR_LOCAL_NAMES[] =
   {
     "c_attr1"
   };
@@ -72,14 +67,14 @@ const char *PARAM_NAMES[] =
     "outarg"
   };
 
-const CORBA::ULong OP_EXCEP_LEN[] = 
+const CORBA::ULong OP_EXCEP_LEN[] =
   {
     2
   };
 
 const CORBA::ULong COMP_SUPPORTED_LEN = 2;
 
-const char *COMP_SUPPORTED_IDS[] = 
+const char *COMP_SUPPORTED_IDS[] =
   {
     "IDL:help/c_supp1:1.0",
     "IDL:help/c_supp2:1.0"
@@ -151,7 +146,7 @@ const char *CONSUMES_IDS[] =
 
 const CORBA::ULong VT_SUPPORTED_LEN = 2;
 
-const char *VT_SUPPORTED_IDS[] = 
+const char *VT_SUPPORTED_IDS[] =
   {
     "IDL:help/v_supp1:1.0",
     "IDL:help/v_supp2:1.0"
@@ -246,30 +241,23 @@ const char *HOME_FINDER_EXCEP_NAMES[][1] =
     {"whups"}
   };
 
-IDL3_Client::IDL3_Client (void)
-  : debug_ (0)
+IDL3_Client::IDL3_Client ()
+  : debug_ (false)
 {
 }
 
-IDL3_Client::~IDL3_Client (void)
+IDL3_Client::~IDL3_Client ()
 {
 }
 
 int
 IDL3_Client::init (int argc,
-                   char *argv[]
-                   ACE_ENV_ARG_DECL)
+                   ACE_TCHAR *argv[])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                0
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("InterfaceRepository"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->resolve_initial_references ("InterfaceRepository");
 
   if (CORBA::is_nil (obj.in ()))
     {
@@ -278,10 +266,8 @@ IDL3_Client::init (int argc,
                         -1);
     }
 
-  this->repo_ = 
-    CORBA::ComponentIR::Repository::_narrow (obj.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->repo_ =
+    CORBA::ComponentIR::Repository::_narrow (obj.in ());
 
   if (CORBA::is_nil (this->repo_.in ()))
     {
@@ -299,10 +285,9 @@ IDL3_Client::init (int argc,
 }
 
 int
-IDL3_Client::run (ACE_ENV_SINGLE_ARG_DECL)
+IDL3_Client::run ()
 {
-  int status = this->component_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int status = this->component_test ();
 
   if (status != 0)
     {
@@ -310,17 +295,14 @@ IDL3_Client::run (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   status = this->valuetype_test (VALUETYPE_ID,
-                                 "value"
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                 "value");
 
   if (status != 0)
     {
       return status;
     }
 
-  status = this->home_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  status = this->home_test ();
 
   if (status != 0)
     {
@@ -328,9 +310,7 @@ IDL3_Client::run (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   status = this->valuetype_test (EVENTTYPE_ID,
-                                 "event"
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                 "event");
 
   if (status != 0)
     {
@@ -342,23 +322,21 @@ IDL3_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 
 int
 IDL3_Client::parse_args (int argc,
-                         char *argv[])
+                         ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "d");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("d"));
   int c;
 
   while ((c = opts ()) != -1)
     switch (c)
       {
       case 'd':   // Turn on debugging outoput.
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s"
-                           " [-d]"
-                           "\n",
+                           "usage: %s [-d]\n",
                            argv [0]),
                           -1);
       }
@@ -367,12 +345,10 @@ IDL3_Client::parse_args (int argc,
 }
 
 int
-IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
+IDL3_Client::component_test ()
 {
   CORBA::Contained_var result =
-    this->repo_->lookup_id (COMPONENT_ID
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->repo_->lookup_id (COMPONENT_ID);
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -385,9 +361,8 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  CORBA::String_var str = 
-    result->absolute_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::String_var str =
+    result->absolute_name ();
 
   const char *tmp = str.in ();
 
@@ -415,13 +390,10 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::ComponentIR::ComponentDef_var comp_def =
-    CORBA::ComponentIR::ComponentDef::_narrow (result.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    CORBA::ComponentIR::ComponentDef::_narrow (result.in ());
 
-  CORBA::TypeCode_var comp_tc = 
-    comp_def->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::TypeCode_var comp_tc =
+    comp_def->type ();
 
   if (CORBA::is_nil (comp_tc.in ()))
     {
@@ -435,8 +407,7 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  tmp = comp_tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  tmp = comp_tc->id ();
 
   if (tmp == 0 || ACE_OS::strcmp (tmp, COMPONENT_ID) != 0)
     {
@@ -451,8 +422,7 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var desc =
-    comp_def->describe_ext_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    comp_def->describe_ext_interface ();
 
   if (desc.ptr () == 0)
     {
@@ -466,27 +436,21 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  int status = this->component_attribute_test (desc
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int status = this->component_attribute_test (desc);
 
   if (status != 0)
     {
       return -1;
     }
 
-  status = this->component_inheritance_test (comp_def
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  status = this->component_inheritance_test (comp_def);
 
   if (status != 0)
     {
       return -1;
     }
 
-  status = this->component_port_test (comp_def
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  status = this->component_port_test (comp_def);
 
   if (status != 0)
     {
@@ -497,12 +461,10 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
+IDL3_Client::home_test ()
 {
   CORBA::Contained_var result =
-    this->repo_->lookup_id (HOME_ID
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->repo_->lookup_id (HOME_ID);
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -516,9 +478,7 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::ComponentIR::HomeDef_var home =
-    CORBA::ComponentIR::HomeDef::_narrow (result.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    CORBA::ComponentIR::HomeDef::_narrow (result.in ());
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -532,8 +492,7 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::ComponentIR::ComponentDef_var managed =
-    home->managed_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    home->managed_component ();
 
   if (CORBA::is_nil (managed.in ()))
     {
@@ -546,8 +505,7 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  CORBA::String_var str = managed->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::String_var str = managed->id ();
 
   if (str.in () == 0 || ACE_OS::strcmp (str.in (), COMPONENT_ID) != 0)
     {
@@ -560,9 +518,8 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  CORBA::ValueDef_var pkey = 
-    home->primary_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::ValueDef_var pkey =
+    home->primary_key ();
 
   if (CORBA::is_nil (pkey.in ()))
     {
@@ -575,8 +532,7 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  str = pkey->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  str = pkey->id ();
 
   if (str.in () == 0 || ACE_OS::strcmp (str.in (), HOME_KEY_ID) != 0)
     {
@@ -589,9 +545,7 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  int status = this->home_inheritance_test (home
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int status = this->home_inheritance_test (home);
 
   if (status != 0)
     {
@@ -599,10 +553,9 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::Contained::Description_var desc =
-    home->describe (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    home->describe ();
 
-  CORBA::ComponentIR::HomeDescription *home_desc = 0;
+  const CORBA::ComponentIR::HomeDescription *home_desc = 0;
 
   if ((desc->value >>= home_desc) == 0)
     {
@@ -615,18 +568,14 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  status = this->home_factory_test (home_desc
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  status = this->home_factory_test (home_desc);
 
   if (status != 0)
     {
       return -1;
     }
 
-  status = this->home_finder_test (home_desc
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  status = this->home_finder_test (home_desc);
 
   if (status != 0)
     {
@@ -638,50 +587,43 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
 
 int
 IDL3_Client::valuetype_test (const char *repo_id,
-                             const char *prefix
-                             ACE_ENV_ARG_DECL)
+                             const char *prefix)
 {
   CORBA::Contained_var result =
-    this->repo_->lookup_id (repo_id
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->repo_->lookup_id (repo_id);
 
   if (CORBA::is_nil (result.in ()))
     {
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_test: lookup by id failed\n",
+                      "%Ctype_test: lookup by id failed\n",
                       prefix));
         }
 
       return -1;
     }
 
-  CORBA::ExtValueDef_var evd = 
-    CORBA::ExtValueDef::_narrow (result.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::ExtValueDef_var evd =
+    CORBA::ExtValueDef::_narrow (result.in ());
 
   if (CORBA::is_nil (evd.in ()))
     {
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_test: narrow to ExtValueDef failed\n"));
+                      "%Ctype_test: narrow to ExtValueDef failed\n",
+                      prefix));
         }
 
       return -1;
     }
 
   CORBA::ExtValueDef::ExtFullValueDescription_var desc =
-    evd->describe_ext_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    evd->describe_ext_value ();
 
   int status = this->valuetype_attribute_test (desc,
-                                               prefix
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                               prefix);
 
   if (status != 0)
     {
@@ -689,9 +631,7 @@ IDL3_Client::valuetype_test (const char *repo_id,
     }
 
   status = this->valuetype_inheritance_test (evd,
-                                             prefix
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                             prefix);
 
   if (status != 0)
     {
@@ -699,9 +639,7 @@ IDL3_Client::valuetype_test (const char *repo_id,
     }
 
   status = this->valuetype_operation_test (desc,
-                                           prefix
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                           prefix);
 
   if (status != 0)
     {
@@ -709,19 +647,14 @@ IDL3_Client::valuetype_test (const char *repo_id,
     }
 
   status = this->valuetype_member_test (desc,
-                                        prefix
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                        prefix);
 
   if (status != 0)
     {
       return -1;
     }
 
-  status = this->valuetype_factory_test (desc,
-                                         prefix
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  status = this->valuetype_factory_test (desc, prefix);
 
   if (status != 0)
     {
@@ -733,9 +666,7 @@ IDL3_Client::valuetype_test (const char *repo_id,
 
 int
 IDL3_Client::component_attribute_test (
-    CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &desc
-    ACE_ENV_ARG_DECL
-  )
+    CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &desc)
 {
   if (desc->attributes.length () != ATTRS_LEN)
     {
@@ -767,9 +698,8 @@ IDL3_Client::component_attribute_test (
           return -1;
         }
 
-      CORBA::TCKind kind = 
-        desc->attributes[i].type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      CORBA::TCKind kind =
+        desc->attributes[i].type->kind ();
 
       if (kind != ATTR_TC_KINDS[i])
         {
@@ -818,13 +748,10 @@ IDL3_Client::component_attribute_test (
 
 int
 IDL3_Client::component_inheritance_test (
-    CORBA::ComponentIR::ComponentDef_var &comp_def
-    ACE_ENV_ARG_DECL
-  )
+    CORBA::ComponentIR::ComponentDef_var &comp_def)
 {
   CORBA::ComponentIR::ComponentDef_var comp_base =
-    comp_def->base_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    comp_def->base_component ();
 
   if (CORBA::is_nil (comp_base.in ()))
     {
@@ -838,8 +765,7 @@ IDL3_Client::component_inheritance_test (
       return -1;
     }
 
-  CORBA::String_var str = comp_base->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::String_var str = comp_base->id ();
 
   if (str.in () == 0 || ACE_OS::strcmp (str.in (), COMP_BASE_ID) != 0)
     {
@@ -854,8 +780,7 @@ IDL3_Client::component_inheritance_test (
     }
 
   CORBA::InterfaceDefSeq_var supported =
-    comp_base->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    comp_base->supported_interfaces ();
 
   CORBA::ULong length = supported->length ();
 
@@ -873,10 +798,9 @@ IDL3_Client::component_inheritance_test (
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      str = supported[i].in ()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      str = supported[i]->id ();
 
-      if (str.in () == 0 
+      if (str.in () == 0
           || ACE_OS::strcmp (str.in (), COMP_SUPPORTED_IDS[i]) != 0)
         {
           if (this->debug_)
@@ -896,15 +820,12 @@ IDL3_Client::component_inheritance_test (
 
 int
 IDL3_Client::component_port_test (
-    CORBA::ComponentIR::ComponentDef_var &comp_def
-    ACE_ENV_ARG_DECL
-  )
+    CORBA::ComponentIR::ComponentDef_var &comp_def)
 {
   CORBA::Contained::Description_var desc =
-    comp_def->describe (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    comp_def->describe ();
 
-  CORBA::ComponentIR::ComponentDescription *cd = 0;
+  const CORBA::ComponentIR::ComponentDescription *cd = 0;
 
   if ((desc->value >>= cd) == 0)
     {
@@ -918,18 +839,14 @@ IDL3_Client::component_port_test (
       return -1;
     }
 
-  int status = this->provides_test (cd->provided_interfaces
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int status = this->provides_test (cd->provided_interfaces);
 
   if (status != 0)
     {
       return -1;
     }
 
-  status = this->uses_test (cd->used_interfaces
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  status = this->uses_test (cd->used_interfaces);
 
   if (status != 0)
     {
@@ -940,9 +857,7 @@ IDL3_Client::component_port_test (
                                   EMITS_LEN,
                                   "emits",
                                   EMITS_NAMES,
-                                  EMITS_IDS
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                  EMITS_IDS);
 
   if (status != 0)
     {
@@ -953,9 +868,7 @@ IDL3_Client::component_port_test (
                                   PUBLISHES_LEN,
                                   "publishes",
                                   PUBLISHES_NAMES,
-                                  PUBLISHES_IDS
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                  PUBLISHES_IDS);
 
   if (status != 0)
     {
@@ -966,9 +879,7 @@ IDL3_Client::component_port_test (
                                   CONSUMES_LEN,
                                   "consumes",
                                   CONSUMES_NAMES,
-                                  CONSUMES_IDS
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                  CONSUMES_IDS);
 
   if (status != 0)
     {
@@ -979,8 +890,7 @@ IDL3_Client::component_port_test (
 }
 
 int
-IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &pds
-                            ACE_ENV_ARG_DECL_NOT_USED)
+IDL3_Client::provides_test (const CORBA::ComponentIR::ProvidesDescriptionSeq &pds)
 {
   if (pds.length () != PROVIDES_LEN)
     {
@@ -1033,8 +943,7 @@ IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &pds
 }
 
 int
-IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq &uds
-                        ACE_ENV_ARG_DECL_NOT_USED)
+IDL3_Client::uses_test (const CORBA::ComponentIR::UsesDescriptionSeq &uds)
 {
   if (uds.length () != USES_LEN)
     {
@@ -1103,12 +1012,11 @@ IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq &uds
 }
 
 int
-IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
+IDL3_Client::event_port_test (const CORBA::ComponentIR::EventPortDescriptionSeq &eds,
                               CORBA::ULong seq_length,
                               const char *port_type,
                               const char **names,
-                              const char **ids
-                              ACE_ENV_ARG_DECL_NOT_USED)
+                              const char **ids)
 {
   if (eds.length () != seq_length)
     {
@@ -1116,7 +1024,7 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
         {
           ACE_DEBUG ((LM_DEBUG,
                       "event_port_test: "
-                      "wrong number of event %s ports\n",
+                      "wrong number of event %C ports\n",
                       port_type));
         }
 
@@ -1135,7 +1043,7 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
             {
               ACE_DEBUG ((LM_DEBUG,
                           "event_port_test: "
-                          "wrong local name for %s port #%d\n",
+                          "wrong local name for %C port #%d\n",
                           port_type,
                           i + 1));
             }
@@ -1151,7 +1059,7 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
             {
               ACE_DEBUG ((LM_DEBUG,
                           "event_port_test: "
-                          "wrong base event type id for %s port #%d\n",
+                          "wrong base event type id for %C port #%d\n",
                           port_type,
                           i + 1));
             }
@@ -1165,18 +1073,16 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
 
 int
 IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
-                                         const char *prefix
-                                         ACE_ENV_ARG_DECL)
+                                         const char *prefix)
 {
-  CORBA::ValueDef_var bvd = vd->base_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::ValueDef_var bvd = vd->base_value ();
 
   if (CORBA::is_nil (bvd.in ()))
     {
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_inheritance_test: "
+                      "%Ctype_inheritance_test: "
                       "base valuetype is null\n",
                       prefix));
         }
@@ -1184,15 +1090,14 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
       return -1;
     }
 
-  CORBA::String_var str = bvd->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::String_var str = bvd->id ();
 
   if (str.in () == 0 || ACE_OS::strcmp (str.in (), VT_BASE_ID) != 0)
     {
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_inheritance_test: "
+                      "%Ctype_inheritance_test: "
                       "wrong repo id for base valuetype\n",
                       prefix));
         }
@@ -1200,9 +1105,8 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
       return -1;
     }
 
-  CORBA::InterfaceDefSeq_var supported = 
-    vd->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::InterfaceDefSeq_var supported =
+    vd->supported_interfaces ();
 
   CORBA::ULong length = supported->length ();
 
@@ -1211,7 +1115,7 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_inheritance_test: "
+                      "%Ctype_inheritance_test: "
                       "wrong number of supported interfaces\n",
                       prefix));
         }
@@ -1221,16 +1125,15 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      str = supported[i].in ()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      str = supported[i]->id ();
 
-      if (str.in () == 0 
+      if (str.in () == 0
           || ACE_OS::strcmp (str.in (), VT_SUPPORTED_IDS[i]) != 0)
         {
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_inheritance_test: "
+                          "%Ctype_inheritance_test: "
                           "bad id on supported interface #%d\n",
                           prefix,
                           i + 1));
@@ -1246,16 +1149,14 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
 int
 IDL3_Client::valuetype_attribute_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix
-    ACE_ENV_ARG_DECL
-  )
+    const char *prefix)
 {
   if (desc->attributes.length () != ATTRS_LEN)
     {
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_attribute_test: wrong number of attrs\n",
+                      "%Ctype_attribute_test: wrong number of attrs\n",
                       prefix));
         }
 
@@ -1273,7 +1174,7 @@ IDL3_Client::valuetype_attribute_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_attribute_test: "
+                          "%Ctype_attribute_test: "
                           "wrong local name for attribute #%d\n",
                           prefix,
                           i + 1));
@@ -1282,16 +1183,15 @@ IDL3_Client::valuetype_attribute_test (
           return -1;
         }
 
-      CORBA::TCKind kind = 
-        desc->attributes[i].type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      CORBA::TCKind kind =
+        desc->attributes[i].type->kind ();
 
       if (kind != ATTR_TC_KINDS[i])
         {
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_attribute_test: "
+                          "%Ctype_attribute_test: "
                           "wrong TCKind for attribute #%d\n",
                           prefix,
                           i + 1));
@@ -1305,7 +1205,7 @@ IDL3_Client::valuetype_attribute_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_attribute_test: "
+                          "%Ctype_attribute_test: "
                           "wrong number of get-exceptions"
                           " for attribute #%d\n",
                           prefix,
@@ -1320,7 +1220,7 @@ IDL3_Client::valuetype_attribute_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_attribute_test: "
+                          "%Ctype_attribute_test: "
                           "wrong number of put-exceptions"
                           " for attribute #%d\n",
                           prefix,
@@ -1338,7 +1238,6 @@ int
 IDL3_Client::valuetype_operation_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
     const char *prefix
-    ACE_ENV_ARG_DECL
   )
 {
   CORBA::ULong ops_length = desc->operations.length ();
@@ -1348,7 +1247,7 @@ IDL3_Client::valuetype_operation_test (
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_operation_test: "
+                      "%Ctype_operation_test: "
                       "wrong number of operations\n",
                       prefix));
         }
@@ -1369,7 +1268,7 @@ IDL3_Client::valuetype_operation_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_operation_test: "
+                          "%Ctype_operation_test: "
                           "wrong name for operation #%d\n",
                           prefix,
                           i + 1));
@@ -1378,16 +1277,15 @@ IDL3_Client::valuetype_operation_test (
           return -1;
         }
 
-      CORBA::TCKind ret_kind = 
-        desc->operations[i].result.in ()->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      CORBA::TCKind ret_kind =
+        desc->operations[i].result.in ()->kind ();
 
       if (ret_kind != OP_RET_KINDS[i])
         {
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_operation_test: "
+                          "%Ctype_operation_test: "
                           "wrong return type\n",
                           prefix));
             }
@@ -1402,7 +1300,7 @@ IDL3_Client::valuetype_operation_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_operation_test: "
+                          "%Ctype_operation_test: "
                           "wrong number of parameters in operation #%d\n",
                           prefix,
                           i + 1));
@@ -1420,11 +1318,11 @@ IDL3_Client::valuetype_operation_test (
               if (this->debug_)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "%stype_operation_test: "
+                              "%Ctype_operation_test: "
                               "wrong name for operation #%d,"
                               "parameter #%d\n",
                               prefix,
-                              i + 1, 
+                              i + 1,
                               j + 1));
                 }
 
@@ -1439,7 +1337,7 @@ IDL3_Client::valuetype_operation_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_operation_test: "
+                          "%Ctype_operation_test: "
                           "wrong number of exceptions in operation #%d\n",
                           prefix,
                           i + 1));
@@ -1455,9 +1353,7 @@ IDL3_Client::valuetype_operation_test (
 int
 IDL3_Client::valuetype_member_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
+    const char *prefix)
 {
   CORBA::ULong length = desc->members.length ();
 
@@ -1466,7 +1362,7 @@ IDL3_Client::valuetype_member_test (
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_member_test: "
+                      "%Ctype_member_test: "
                       "wrong number of members\n",
                       prefix));
         }
@@ -1483,7 +1379,7 @@ IDL3_Client::valuetype_member_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_member_test: "
+                          "%Ctype_member_test: "
                           "wrong access value in member #%d\n",
                           prefix,
                           i + 1));
@@ -1499,7 +1395,7 @@ IDL3_Client::valuetype_member_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_member_test: "
+                          "%Ctype_member_test: "
                           "wrong repo id for member #%d\n",
                           prefix,
                           i + 1));
@@ -1515,9 +1411,7 @@ IDL3_Client::valuetype_member_test (
 int
 IDL3_Client::valuetype_factory_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
+    const char *prefix)
 {
   CORBA::ULong length = desc->initializers.length ();
 
@@ -1526,7 +1420,7 @@ IDL3_Client::valuetype_factory_test (
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "%stype_factory_test: "
+                      "%Ctype_factory_test: "
                       "wrong number of factories\n",
                       prefix));
         }
@@ -1546,7 +1440,7 @@ IDL3_Client::valuetype_factory_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_factory_test: "
+                          "%Ctype_factory_test: "
                           "wrong number of params in factory #%d\n",
                           prefix,
                           i + 1));
@@ -1561,13 +1455,13 @@ IDL3_Client::valuetype_factory_test (
         {
           tmp = desc->initializers[i].members[j].name.in ();
 
-          if (tmp == 0 
+          if (tmp == 0
               || ACE_OS::strcmp (tmp, VT_FACTORY_PARAM_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "%stype_factory_test: "
+                              "%Ctype_factory_test: "
                               "wrong name for arg #%d in factory #%d\n",
                               prefix,
                               j + 1,
@@ -1585,7 +1479,7 @@ IDL3_Client::valuetype_factory_test (
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%stype_factory_test: "
+                          "%Ctype_factory_test: "
                           "wrong number of exceptions in factory #%d\n",
                           prefix,
                           i + 1));
@@ -1598,13 +1492,13 @@ IDL3_Client::valuetype_factory_test (
         {
           tmp = desc->initializers[i].exceptions[j].name.in ();
 
-          if (tmp == 0 
+          if (tmp == 0
               || ACE_OS::strcmp (tmp, VT_FACTORY_EXCEP_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "%stype_factory_test: "
+                              "%Ctype_factory_test: "
                               "wrong name for exception #%d in factory #%d\n",
                               prefix,
                               j + 1,
@@ -1620,12 +1514,10 @@ IDL3_Client::valuetype_factory_test (
 }
 
 int
-IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd
-                                    ACE_ENV_ARG_DECL)
+IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd)
 {
-  CORBA::ComponentIR::HomeDef_var bhd = 
-    hd->base_home (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::ComponentIR::HomeDef_var bhd =
+    hd->base_home ();
 
   if (CORBA::is_nil (bhd.in ()))
     {
@@ -1639,8 +1531,7 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd
       return -1;
     }
 
-  CORBA::String_var str = bhd->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::String_var str = bhd->id ();
 
   if (str.in () == 0 || ACE_OS::strcmp (str.in (), HOME_BASE_ID) != 0)
     {
@@ -1654,9 +1545,8 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd
       return -1;
     }
 
-  CORBA::InterfaceDefSeq_var supported = 
-    bhd->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::InterfaceDefSeq_var supported =
+    bhd->supported_interfaces ();
 
   CORBA::ULong length = supported->length ();
 
@@ -1674,10 +1564,9 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      str = supported[i].in ()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      str = supported[i]->id ();
 
-      if (str.in () == 0 
+      if (str.in () == 0
           || ACE_OS::strcmp (str.in (), HOME_SUPPORTED_IDS[i]) != 0)
         {
           if (this->debug_)
@@ -1696,8 +1585,7 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd
 }
 
 int
-IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription *hd
-                                ACE_ENV_ARG_DECL_NOT_USED)
+IDL3_Client::home_factory_test (const CORBA::ComponentIR::HomeDescription *hd)
 {
   CORBA::ULong length = hd->factories.length ();
 
@@ -1738,7 +1626,7 @@ IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription *hd
         {
           tmp = hd->factories[i].parameters[j].name.in ();
 
-          if (tmp == 0 
+          if (tmp == 0
               || ACE_OS::strcmp (tmp, HOME_FACTORY_PARAM_NAMES[i][j]) != 0)
             {
               if (this->debug_)
@@ -1773,7 +1661,7 @@ IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription *hd
         {
           tmp = hd->factories[i].exceptions[j].name.in ();
 
-          if (tmp == 0 
+          if (tmp == 0
               || ACE_OS::strcmp (tmp, HOME_FACTORY_EXCEP_NAMES[i][j]) != 0)
             {
               if (this->debug_)
@@ -1794,8 +1682,7 @@ IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription *hd
 }
 
 int
-IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription *hd
-                               ACE_ENV_ARG_DECL_NOT_USED)
+IDL3_Client::home_finder_test (const CORBA::ComponentIR::HomeDescription *hd)
 {
   CORBA::ULong length = hd->finders.length ();
 
@@ -1836,7 +1723,7 @@ IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription *hd
         {
           tmp = hd->finders[i].parameters[j].name.in ();
 
-          if (tmp == 0 
+          if (tmp == 0
               || ACE_OS::strcmp (tmp, HOME_FINDER_PARAM_NAMES[i][j]) != 0)
             {
               if (this->debug_)
@@ -1871,7 +1758,7 @@ IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription *hd
         {
           tmp = hd->finders[i].exceptions[j].name.in ();
 
-          if (tmp == 0 
+          if (tmp == 0
               || ACE_OS::strcmp (tmp, HOME_FINDER_EXCEP_NAMES[i][j]) != 0)
             {
               if (this->debug_)

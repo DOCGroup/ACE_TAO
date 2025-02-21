@@ -1,36 +1,22 @@
-//
-// $Id$
-//
 
 #include "AMI_Manager.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (LongUpcalls,
-           AMI_Manager,
-           "$Id$")
-
 static void
-validate_connection (Test::Controller_ptr controller
-                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC (())
+validate_connection (Test::Controller_ptr controller)
 {
-  ACE_TRY
+  try
     {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
       CORBA::PolicyList_var unused;
-      controller->_validate_connection (unused
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      controller->_validate_connection (unused);
 #else
-      controller->_is_a ("Not_an_IDL_Type"
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      controller->_is_a ("Not_an_IDL_Type");
 #endif
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 }
 
 AMI_Manager::AMI_Manager (CORBA::ORB_ptr orb)
@@ -41,15 +27,11 @@ AMI_Manager::AMI_Manager (CORBA::ORB_ptr orb)
 void
 AMI_Manager::start_workers (CORBA::Short worker_count,
                             CORBA::Long milliseconds,
-                            Test::Controller_ptr controller
-                            ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                            Test::Controller_ptr controller)
 {
   ACE_Thread_Manager thread_manager;
 
-  validate_connection(controller
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  validate_connection(controller);
 
   // ACE_DEBUG ((LM_DEBUG, "Starting %d workers\n", worker_count));
   Worker worker (&thread_manager,
@@ -62,10 +44,9 @@ AMI_Manager::start_workers (CORBA::Short worker_count,
 }
 
 void
-AMI_Manager::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+AMI_Manager::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************
@@ -82,11 +63,10 @@ Worker::Worker (ACE_Thread_Manager *thr_mgr,
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   // ACE_DEBUG ((LM_DEBUG, "Worker starts\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       TAO_SYNCH_MUTEX mutex;
       int pending_requests = 2;
@@ -99,47 +79,48 @@ Worker::svc (void)
                                             &pending_requests),
                         -1);
 
+        CORBA::Object_var poa_object =
+          this->orb_->resolve_initial_references("RootPOA");
+
+        PortableServer::POA_var root_poa =
+          PortableServer::POA::_narrow (poa_object.in ());
+
+        PortableServer::ObjectId_var id =
+          root_poa->activate_object (handler_impl);
+
+        CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
         PortableServer::ServantBase_var auto_destroy (handler_impl);
-        handler = handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        handler = Test::AMI_ControllerHandler::_narrow (object.in ());
       }
 
-      validate_connection(this->controller_.in()
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      validate_connection(this->controller_.in());
 
-      this->controller_->sendc_worker_started (handler.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->controller_->sendc_worker_started (handler.in ());
 
       // ACE_DEBUG ((LM_DEBUG, "Worker start reported\n"));
 
       ACE_Time_Value tv (0, 1000 * this->milliseconds_);
       ACE_OS::sleep (tv);
 
-      this->controller_->sendc_worker_finished (handler.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->controller_->sendc_worker_finished (handler.in ());
 
       // ACE_DEBUG ((LM_DEBUG, "Worker completion reported\n"));
 
       for (;;)
         {
           ACE_Time_Value tv (0, 1000 * this->milliseconds_);
-          this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->orb_->run (tv);
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, mutex, -1);
           if (pending_requests == 0)
             break;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in svc() method\n");
+      ex._tao_print_exception ("Exception in svc() method\n");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -153,8 +134,7 @@ Controller_Handler::Controller_Handler (TAO_SYNCH_MUTEX *mutex,
 }
 
 void
-Controller_Handler::worker_started (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Controller_Handler::worker_started ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   (*this->pending_replies_)--;
@@ -162,27 +142,21 @@ Controller_Handler::worker_started (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Controller_Handler::worker_started_excep
-    (Test::AMI_ControllerExceptionHolder* h
-     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    (::Messaging::ExceptionHolder* h)
 {
-  ACE_TRY
+  try
     {
-      h->raise_worker_started (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      h->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Controller_Handler exception raised in"
-                           " worker_started");
+      ex._tao_print_exception (
+        "Controller_Handler exception raised in"" worker_started");
     }
-  ACE_ENDTRY;
 }
 
 void
-Controller_Handler::worker_finished (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Controller_Handler::worker_finished ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   (*this->pending_replies_)--;
@@ -190,20 +164,15 @@ Controller_Handler::worker_finished (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Controller_Handler::worker_finished_excep
-    (Test::AMI_ControllerExceptionHolder *h
-     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    (::Messaging::ExceptionHolder *h)
 {
-  ACE_TRY
+  try
     {
-      h->raise_worker_finished (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      h->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Controller_Handler exception raised in"
-                           " worker_finished");
+      ex._tao_print_exception (
+        "Controller_Handler exception raised in"" worker_finished");
     }
-  ACE_ENDTRY;
 }

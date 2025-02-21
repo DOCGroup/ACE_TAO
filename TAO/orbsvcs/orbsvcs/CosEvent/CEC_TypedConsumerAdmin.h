@@ -1,5 +1,5 @@
-// $Id$
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_TypedConsumerAdmin.h
@@ -24,8 +24,10 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Admin.h"
 
-#include "CEC_ProxyPushSupplier.h"
-#include "CEC_TypedEvent.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
+#include "orbsvcs/CosEvent/CEC_TypedEvent.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_TypedEventChannel;
 
@@ -34,56 +36,43 @@ class TAO_Event_Serv_Export TAO_CEC_TypedConsumerAdmin
   : public POA_CosTypedEventChannelAdmin::TypedConsumerAdmin
 {
 public:
-
   // Constructor
   TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChannel* typed_event_channel);
 
   // Destructor
-  virtual ~TAO_CEC_TypedConsumerAdmin (void);
+  virtual ~TAO_CEC_TypedConsumerAdmin () = default;
 
   /// For each elements call <worker->work()>.
-  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker
-                 ACE_ENV_ARG_DECL);
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker);
 
   /// Invoke the typed event on all the consumers
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event
-                       ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
-  virtual void connected (TAO_CEC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushSupplier*);
+  virtual void reconnected (TAO_CEC_ProxyPushSupplier*);
+  virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
 
   /// The typed event channel is shutting down, inform all the consumers of
   /// this
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown ();
 
   // = The CosTypedEventChannelAdmin::TypedConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_typed_push_supplier (const char * uses_interface ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosTypedEventChannelAdmin::NoSuchImplementation));
+    obtain_typed_push_supplier (const char * uses_interface);
   virtual CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
-    obtain_typed_pull_supplier (const char * supported_interface ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosTypedEventChannelAdmin::InterfaceNotSupported));
+    obtain_typed_pull_supplier (const char * supported_interface);
 
   // = The CosEventChannelAdmin::ConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    obtain_push_supplier ();
 
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-    obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    obtain_pull_supplier ();
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 private:
   /// The Event Channel we belong to
@@ -102,21 +91,19 @@ class TAO_CEC_Propagate_Typed_Event : public TAO_ESF_Worker<TAO_CEC_ProxyPushSup
 {
 public:
   TAO_CEC_Propagate_Typed_Event (const TAO_CEC_TypedEvent& typed_event,
-                                 TAO_CEC_TypedEventChannel* typed_event_channel);
+                                 TAO_CEC_TypedEventChannel*);
 
-  void work (TAO_CEC_ProxyPushSupplier *supplier
-             ACE_ENV_ARG_DECL);
+  void work (TAO_CEC_ProxyPushSupplier *supplier);
 
 private:
   /// The typed event
   const TAO_CEC_TypedEvent typed_event_;
-
-  /// The typed EC
-  TAO_CEC_TypedEventChannel* typed_event_channel_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_TypedConsumerAdmin.i"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

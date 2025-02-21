@@ -1,50 +1,46 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
+#include "tao/DynamicAny/DynSequence_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
+#include "tao/DynamicAny/DynAnyUtils_T.h"
 
-#include "DynSequence_i.h"
-#include "DynAnyFactory.h"
-#include "tao/Marshal.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+
 #include "tao/CDR.h"
 
-ACE_RCSID (DynamicAny,
-           DynSequence_i,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-TAO_DynSequence_i::TAO_DynSequence_i (void)
+TAO_DynSequence_i::TAO_DynSequence_i (CORBA::Boolean allow_truncation)
+  : TAO_DynCommon (allow_truncation)
 {
 }
 
-TAO_DynSequence_i::~TAO_DynSequence_i (void)
+TAO_DynSequence_i::~TAO_DynSequence_i ()
 {
 }
 
 void
-TAO_DynSequence_i::init_common (void)
+TAO_DynSequence_i::init_common ()
 {
-  this->ref_to_component_ = 0;
-  this->container_is_destroying_ = 0;
-  this->has_components_ = 1;
-  this->destroyed_ = 0;
+  this->ref_to_component_ = false;
+  this->container_is_destroying_ = false;
+  this->has_components_ = true;
+  this->destroyed_ = false;
   this->current_position_ = -1;
   this->component_count_ = static_cast<CORBA::ULong> (this->da_members_.size ());
 }
 
 void
-TAO_DynSequence_i::init (const CORBA::Any& any
-                         ACE_ENV_ARG_DECL)
+TAO_DynSequence_i::init (const CORBA::Any& any)
 {
   CORBA::TypeCode_var tc = any.type ();
 
-  CORBA::TCKind kind =
-    TAO_DynAnyFactory::unalias (tc.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind != CORBA::tk_sequence)
     {
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
 
   this->type_ = tc;
@@ -57,9 +53,12 @@ TAO_DynSequence_i::init (const CORBA::Any& any
 
   if (impl->encoded ())
     {
-      TAO::Unknown_IDL_Type *unk =
+      TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
+      if (!unk)
+        throw CORBA::INTERNAL ();
+
       cdr = unk->_tao_get_cdr ();
     }
   else
@@ -80,8 +79,7 @@ TAO_DynSequence_i::init (const CORBA::Any& any
 
   // Get the type of the sequence elments.
   CORBA::TypeCode_var field_tc =
-    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->get_element_type ();
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -89,36 +87,30 @@ TAO_DynSequence_i::init (const CORBA::Any& any
       TAO_InputCDR unk_in (cdr);
       TAO::Unknown_IDL_Type *field_unk = 0;
       ACE_NEW (field_unk,
-               TAO::Unknown_IDL_Type (field_tc.in (),
-                                      unk_in));
+               TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
       field_any.replace (field_unk);
 
       // This recursive step will call the correct constructor
       // based on the type of field_any.
       this->da_members_[i] =
-        TAO_DynAnyFactory::make_dyn_any (field_any
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+          field_any._tao_get_typecode (),
+          field_any,
+          this->allow_truncation_ );
 
       // Move to the next field in the CDR stream.
-      (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
-                                               &cdr
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &cdr);
     }
 }
 
 void
-TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc
-                         ACE_ENV_ARG_DECL)
+TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc);
 
   if (kind != CORBA::tk_sequence)
     {
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
 
   // Empty sequence.
@@ -132,8 +124,7 @@ TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynSequence_i *
-TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref
-                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
@@ -146,28 +137,23 @@ TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref
 // ****************************************************************
 
 CORBA::TypeCode_ptr
-TAO_DynSequence_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynSequence_i::get_element_type ()
 {
   CORBA::TypeCode_var element_type =
     CORBA::TypeCode::_duplicate (this->type_.in ());
 
   // Strip away aliases (if any) on top of the outer type.
-  CORBA::TCKind kind = element_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  CORBA::TCKind kind = element_type->kind ();
 
   while (kind != CORBA::tk_sequence)
     {
-      element_type = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      element_type = element_type->content_type ();
 
-      kind = element_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      kind = element_type->kind ();
     }
 
   // Return the content type.
-  CORBA::TypeCode_ptr retval =
-    element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  CORBA::TypeCode_ptr retval = element_type->content_type ();
 
   return retval;
 }
@@ -175,45 +161,33 @@ TAO_DynSequence_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
 // = Functions specific to DynSequence.
 
 CORBA::ULong
-TAO_DynSequence_i::get_length (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynSequence_i::get_length ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   return this->component_count_;
 }
 
 void
-TAO_DynSequence_i::set_length (CORBA::ULong length
-                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::InvalidValue
-    ))
+TAO_DynSequence_i::set_length (CORBA::ULong length)
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   // CORBA::TypeCode::length() does not accept aliased type codes.
   CORBA::TypeCode_var stripped_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  CORBA::ULong bound = stripped_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::ULong bound = stripped_tc->length ();
 
   if (bound > 0 && length > bound)
     {
-      ACE_THROW (DynamicAny::DynAny::InvalidValue ());
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 
   // CORBA 2.3.1 has several explicit rules about resetting the
@@ -246,15 +220,15 @@ TAO_DynSequence_i::set_length (CORBA::ULong length
       this->da_members_.size (length);
 
       CORBA::TypeCode_var elemtype =
-        stripped_tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        stripped_tc->content_type ();
 
       for (CORBA::ULong i = this->component_count_; i < length; ++i)
         {
           this->da_members_[i] =
-            TAO_DynAnyFactory::make_dyn_any (elemtype.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
+          elemtype.in (),
+          elemtype.in (),
+          this->allow_truncation_ );
         }
     }
   else if (length < this->component_count_)
@@ -262,8 +236,7 @@ TAO_DynSequence_i::set_length (CORBA::ULong length
       // Destroy any dangling members first, then shrink array.
       for (CORBA::ULong j = length; j < this->component_count_; ++j)
         {
-          this->da_members_[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->da_members_[j]->destroy ();
         }
 
       this->da_members_.size (length);
@@ -274,15 +247,11 @@ TAO_DynSequence_i::set_length (CORBA::ULong length
 }
 
 DynamicAny::AnySeq *
-TAO_DynSequence_i::get_elements (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynSequence_i::get_elements ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
@@ -291,7 +260,6 @@ TAO_DynSequence_i::get_elements (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (elements,
                     DynamicAny::AnySeq (length),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   elements->length (length);
   DynamicAny::AnySeq_var safe_retval = elements;
@@ -300,9 +268,8 @@ TAO_DynSequence_i::get_elements (ACE_ENV_SINGLE_ARG_DECL)
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       CORBA::Any_var tmp =
-        this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->da_members_[i]->to_any ();
 
-      ACE_CHECK_RETURN (0);
 
       safe_retval[i] = tmp.in ();
     }
@@ -311,31 +278,22 @@ TAO_DynSequence_i::get_elements (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value
-                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
+TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value)
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::TypeCode_var stripped_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   CORBA::ULong length = value.length ();
-  CORBA::ULong bound = stripped_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::ULong bound = stripped_tc->length ();
 
   if (bound > 0 && length > bound)
     {
-      ACE_THROW (DynamicAny::DynAny::InvalidValue ());
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 
   // CORBA 2.4.2.
@@ -354,9 +312,7 @@ TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value
       this->da_members_.size (length);
     }
 
-  CORBA::TypeCode_var element_type =
-    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TypeCode_var element_type = this->get_element_type ();
 
   CORBA::TypeCode_var value_tc;
 
@@ -365,35 +321,32 @@ TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value
       // Check each arg element for type match.
       value_tc = value[i].type ();
       CORBA::Boolean equivalent =
-        value_tc->equivalent (element_type.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        value_tc->equivalent (element_type.in ());
 
       if (equivalent)
         {
           // Destroy any existing members.
           if (i < this->component_count_)
             {
-              this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
+              this->da_members_[i]->destroy ();
             }
 
           this->da_members_[i] =
-            TAO_DynAnyFactory::make_dyn_any (value[i]
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+            TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+              value[i]._tao_get_typecode (),
+              value[i],
+              this->allow_truncation_ );
         }
       else
         {
-          ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
     }
 
   // Destroy any dangling members.
   for (CORBA::ULong j = length; j < this->component_count_; ++j)
     {
-      this->da_members_[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->da_members_[j]->destroy ();
     }
 
   // If the array shrinks, we must wait until now to do it.
@@ -407,22 +360,17 @@ TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value
 }
 
 DynamicAny::DynAnySeq *
-TAO_DynSequence_i::get_elements_as_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynSequence_i::get_elements_as_dyn_any ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   DynamicAny::DynAnySeq *retval = 0;
   ACE_NEW_THROW_EX (retval,
                     DynamicAny::DynAnySeq (this->component_count_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   retval->length (this->component_count_);
   DynamicAny::DynAnySeq_var safe_retval (retval);
@@ -431,14 +379,10 @@ TAO_DynSequence_i::get_elements_as_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
     {
       // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
       // Set the flag so the caller can't destroy.
-      this->set_flag (this->da_members_[i].in (),
-                      0
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->set_flag (this->da_members_[i].in (), 0);
 
       safe_retval[i] =
         DynamicAny::DynAny::_duplicate (this->da_members_[i].in ());
-      ACE_CHECK_RETURN (0);
     }
 
   return safe_retval._retn ();
@@ -446,32 +390,22 @@ TAO_DynSequence_i::get_elements_as_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_DynSequence_i::set_elements_as_dyn_any (
-    const DynamicAny::DynAnySeq & values
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
+  const DynamicAny::DynAnySeq & values)
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::TypeCode_var stripped_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   CORBA::ULong length = values.length ();
-  CORBA::ULong bound = stripped_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::ULong bound = stripped_tc->length ();
 
   if (bound > 0 && length > bound)
     {
-      ACE_THROW (DynamicAny::DynAny::InvalidValue ());
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 
   // If the array grows, we must do it now.
@@ -480,47 +414,39 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
       this->da_members_.size (length);
     }
 
-  CORBA::TypeCode_var element_type = 
-    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TypeCode_var element_type =
+    this->get_element_type ();
 
   CORBA::TypeCode_var val_type;
   CORBA::Boolean equivalent;
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      val_type = values[i]->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      val_type = values[i]->type ();
 
-      equivalent = val_type->equivalent (element_type.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-
-      ACE_CHECK;
+      equivalent = val_type->equivalent (element_type.in ());
 
       if (equivalent)
         {
           // Destroy any existing members.
           if (i < this->component_count_)
             {
-              this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
+              this->da_members_[i]->destroy ();
             }
 
-          this->da_members_[i] = 
-            values[i]->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->da_members_[i] =
+            values[i]->copy ();
         }
       else
         {
-          ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
     }
 
   // Destroy any dangling members.
   for (CORBA::ULong j = length; j < this->component_count_; ++j)
     {
-      this->da_members_[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->da_members_[j]->destroy ();
     }
 
   // If the array shrinks, we must wait until now to do it.
@@ -536,24 +462,16 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
 // ****************************************************************
 
 void
-TAO_DynSequence_i::from_any (const CORBA::Any & any
-                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
+TAO_DynSequence_i::from_any (const CORBA::Any & any)
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = 
-    this->type_.in ()->equivalent (tc.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Boolean equivalent =
+    this->type_.in ()->equivalent (tc.in ());
 
   if (equivalent)
     {
@@ -564,9 +482,12 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
 
       if (impl->encoded ())
         {
-          TAO::Unknown_IDL_Type *unk =
+          TAO::Unknown_IDL_Type * const unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-            
+
+          if (!unk)
+            throw CORBA::INTERNAL ();
+
           cdr = unk->_tao_get_cdr ();
         }
       else
@@ -590,8 +511,7 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
         }
 
       CORBA::TypeCode_var field_tc =
-        this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->get_element_type ();
 
       for (CORBA::ULong i = 0; i < arg_length; ++i)
         {
@@ -605,27 +525,23 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
 
           if (i < this->component_count_)
             {
-              this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
+              this->da_members_[i]->destroy ();
             }
 
           this->da_members_[i] =
-            TAO_DynAnyFactory::make_dyn_any (field_any
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+            TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+              field_any._tao_get_typecode (),
+              field_any,
+              this->allow_truncation_ );
 
           // Move to the next field in the CDR stream.
-          (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
-                                                   &cdr
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &cdr);
         }
 
       // Destroy any dangling members.
       for (CORBA::ULong j = arg_length; j < this->component_count_; ++j)
         {
-          this->da_members_[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->da_members_[j]->destroy ();
         }
 
       // If the array shrinks, we must wait until now to do it.
@@ -641,35 +557,29 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 
 CORBA::Any_ptr
-TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynSequence_i::to_any ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   TAO_OutputCDR out_cdr;
   out_cdr.write_ulong (this->component_count_);
 
   CORBA::TypeCode_var field_tc =
-    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->get_element_type ();
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
       // Recursive step
       CORBA::Any_var field_any =
-        this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+        this->da_members_[i]->to_any ();
 
       TAO::Any_Impl *field_impl = field_any->impl ();
       TAO_OutputCDR field_out;
@@ -677,9 +587,12 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
       if (field_impl->encoded ())
         {
-          TAO::Unknown_IDL_Type *field_unk =
+          TAO::Unknown_IDL_Type * const field_unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
-            
+
+          if (!field_unk)
+            throw CORBA::INTERNAL ();
+
           field_cdr = field_unk->_tao_get_cdr ();
         }
       else
@@ -691,9 +604,7 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
       (void) TAO_Marshal_Object::perform_append (field_tc.in (),
                                                  &field_cdr,
-                                                 &out_cdr
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                                                 &out_cdr);
     }
 
   TAO_InputCDR in_cdr (out_cdr);
@@ -702,47 +613,37 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   retval->replace (unk);
   return retval;
 }
 
 CORBA::Boolean
-TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs
-                          ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = rhs->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::TypeCode_var tc = rhs->type ();
 
-  CORBA::Boolean equivalent = tc->equivalent (this->type_.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::Boolean equivalent = tc->equivalent (this->type_.in ());
 
   if (!equivalent)
     {
-      return 0;
+      return false;
     }
 
   if (rhs->component_count () != this->component_count_)
     {
-      return 0;
+      return false;
     }
 
   DynamicAny::DynAny_var tmp;
@@ -750,36 +651,28 @@ TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
-      rhs->seek (static_cast<CORBA::Long> (i)
-                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      rhs->seek (static_cast<CORBA::Long> (i));
 
-      tmp = rhs->current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      tmp = rhs->current_component ();
 
       // Recursive step.
-      member_equal = tmp->equal (this->da_members_[i].in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      member_equal = tmp->equal (this->da_members_[i].in ());
 
       if (!member_equal)
         {
-          return 0;
+          return false;
         }
     }
 
-  return 1;
+  return true;
 }
 
 void
-TAO_DynSequence_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynSequence_i::destroy ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (!this->ref_to_component_ || this->container_is_destroying_)
@@ -787,13 +680,9 @@ TAO_DynSequence_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
       // Do a deep destroy.
       for (CORBA::ULong i = 0; i < this->component_count_; ++i)
         {
-          this->set_flag (da_members_[i].in (),
-                          1
-                          ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->set_flag (da_members_[i].in (), 1);
 
-          this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->da_members_[i]->destroy ();
         }
 
       this->destroyed_ = 1;
@@ -801,16 +690,11 @@ TAO_DynSequence_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynSequence_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
+TAO_DynSequence_i::current_component ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->current_position_ == -1)
@@ -820,12 +704,9 @@ TAO_DynSequence_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::ULong index = static_cast<CORBA::ULong> (this->current_position_);
 
-  this->set_flag (this->da_members_[index].in (),
-                  0
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
+  this->set_flag (this->da_members_[index].in (), 0);
 
-  return DynamicAny::DynAny::_duplicate (
-            this->da_members_[index].in ()
-          );
+  return DynamicAny::DynAny::_duplicate (this->da_members_[index].in ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

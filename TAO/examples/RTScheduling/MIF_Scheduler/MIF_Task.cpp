@@ -1,16 +1,16 @@
-//$Id$
 #include "MIF_Task.h"
 #include "test.h"
+
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
 
 MIF_Task::MIF_Task (int importance,
-		    int start_time,
-		    int load,
-		    int iter,
-		    int dist,
-		    char *job_name,
-		    DT_Creator *dt_creator)
+                    time_t start_time,
+                    int load,
+                    int iter,
+                    int dist,
+                    char *job_name,
+                    DT_Creator *dt_creator)
 {
   this->load_ = load;
   this->iter_ = iter;
@@ -23,60 +23,55 @@ MIF_Task::MIF_Task (int importance,
   // create the stat object.
   ACE_NEW (task_stats_, Task_Stats);
   task_stats_->init (iter_);
-
 }
 
-MIF_Task::~MIF_Task (void)
+MIF_Task::~MIF_Task ()
 {
   delete task_stats_;
 }
 
 void
-MIF_Task::pre_activate (void)
+MIF_Task::pre_activate ()
 {
   DT_TEST::instance ()->scheduler ()->incr_thr_count ();
 }
 
 void
-MIF_Task::post_activate (void)
+MIF_Task::post_activate ()
 {
   DT_TEST::instance ()->scheduler ()->wait ();
 }
 
 int
 MIF_Task::activate_task (RTScheduling::Current_ptr current,
-			 CORBA::Policy_ptr sched_param,
-			 long flags,
-			 ACE_Time_Value* base_time
-			 ACE_ENV_ARG_DECL)
+       CORBA::Policy_ptr sched_param,
+       long flags,
+       ACE_Time_Value* base_time)
 {
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"Thread_Task::activate %d\n",
-		importance_));
+    "MIF_Task::activate %d\n",
+    importance_));
 
   char msg [BUFSIZ];
-  ACE_OS::sprintf (msg, "Thread_Task::activate task\n");
+  ACE_OS::sprintf (msg, "MIF_Task::activate task\n");
   dt_creator_->log_msg (msg);
 
   base_time_ = base_time;
 
-  current_ = RTScheduling::Current::_narrow (current
-					     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  current_ = RTScheduling::Current::_narrow (current);
 
   sched_param_ = CORBA::Policy::_duplicate (sched_param);
 
   pre_activate ();
 
   if (this->activate (flags,
-		      1) == -1)
+          1) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   ACE_TEXT ("Insufficient privilege to run this test.\n")),
-			  -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+         ACE_TEXT ("Insufficient privilege to run this test.\n")),
+        -1);
     }
 
   post_activate ();
@@ -84,22 +79,21 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
 }
 
 int
-MIF_Task::perform_task (void)
+MIF_Task::perform_task ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-
-      char msg [BUFSIZ];
+      ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
-                       "MIF_Task::perform_task "
+                       ACE_TEXT("MIF_Task::perform_task ")
                        ACE_SIZE_T_FORMAT_SPECIFIER
-                       "\n",
+                       ACE_TEXT("\n"),
                        count_);
-      dt_creator_->log_msg (msg);
+      dt_creator_->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
       static CORBA::ULong prime_number = 9619;
       CORBA::Policy_var sched_param;
-      sched_param = CORBA::Policy::_duplicate (dt_creator_->sched_param (this->importance_));
+      sched_param = dt_creator_->sched_param (this->importance_);
       const char * name = 0;
 
       for (int i = 0; i < this->iter_; i++)
@@ -121,9 +115,7 @@ MIF_Task::perform_task (void)
 
           current_->update_scheduling_segment (name,
                                                sched_param.in (),
-                                               sched_param.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                               sched_param.in ());
         }
 
       if (this->dist_)
@@ -141,7 +133,6 @@ MIF_Task::perform_task (void)
 
               while (count_down_time > ACE_Time_Value::zero)
                 {
-
                   ACE::is_prime (prime_number,
                                  2,
                                  prime_number / 2);
@@ -150,27 +141,22 @@ MIF_Task::perform_task (void)
 
               current_->update_scheduling_segment (name,
                                                    sched_param.in (),
-                                                   sched_param.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
+                                                   sched_param.in ());
             }
 
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"Thread %d\n",
-		this->count_));
+    "Thread %d\n",
+    this->count_));
 
   if (dist_)
     job_->shutdown ();

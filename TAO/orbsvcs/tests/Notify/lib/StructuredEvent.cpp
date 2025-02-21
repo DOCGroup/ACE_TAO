@@ -1,10 +1,7 @@
-// $Id$
-
 #include "StructuredEvent.h"
 
-ACE_RCSID(RT_Notify, TAO_Notify_Tests_StructuredEvent, "$Id$")
 
-TAO_Notify_Tests_StructuredEvent::TAO_Notify_Tests_StructuredEvent (void)
+TAO_Notify_Tests_StructuredEvent::TAO_Notify_Tests_StructuredEvent ()
 {
 }
 
@@ -44,7 +41,7 @@ TAO_Notify_Tests_StructuredEvent::type (const char* domain, const char* type)
 }
 
 const char*
-TAO_Notify_Tests_StructuredEvent::type (void)
+TAO_Notify_Tests_StructuredEvent::type ()
 {
   return event_.header.fixed_header.event_type.type_name;
 }
@@ -82,7 +79,7 @@ TAO_Notify_Tests_StructuredEvent::payload (CORBA::Any& value)
 }
 
 CosNotification::StructuredEvent&
-TAO_Notify_Tests_StructuredEvent::event (void)
+TAO_Notify_Tests_StructuredEvent::event ()
 {
   return this->event_;
 }

@@ -1,11 +1,6 @@
-//
-// $Id$
-//
 #include "Process_Factory.h"
 #include "Startup_Callback.h"
 #include "ace/Process.h"
-
-ACE_RCSID(Client_Leaks, Process_Factory, "$Id$")
 
 Process_Factory::Process_Factory (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -14,34 +9,41 @@ Process_Factory::Process_Factory (CORBA::ORB_ptr orb)
 }
 
 int
-Process_Factory::shutdown_received (void)
+Process_Factory::shutdown_received ()
 {
   return this->shutdown_received_;
 }
 
 Test::Process_ptr
-Process_Factory::create_new_process (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed))
+Process_Factory::create_new_process ()
 {
   Startup_Callback *startup_callback_impl;
   ACE_NEW_THROW_EX (startup_callback_impl,
                     Startup_Callback,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Test::Process::_nil ());
 
   PortableServer::ServantBase_var owner_transfer(startup_callback_impl);
 
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
+
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (poa_object.in ());
+
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (startup_callback_impl);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
   Test::Startup_Callback_var startup_callback =
-    startup_callback_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Test::Process::_nil ());
+    Test::Startup_Callback::_narrow (object.in ());
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (startup_callback.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Test::Process::_nil ());
+    this->orb_->object_to_string (startup_callback.in ());
 
-  const char* argv[3] = {
-    "child",
-    ior.in (),
+  const ACE_TCHAR* argv[3] = {
+    ACE_TEXT("child"),
+    ACE_TEXT_CHAR_TO_TCHAR(ior.in ()),
     0};
 
   ACE_Process_Options options;
@@ -59,8 +61,8 @@ Process_Factory::create_new_process (ACE_ENV_SINGLE_ARG_DECL)
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Process_Factory::create_new_process, "
                   " spawn call failed (%d)\n",
-                  errno));
-      ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
+                  ACE_ERRNO_GET));
+      throw Test::Spawn_Failed ();
     }
 
   int process_has_started = 0;
@@ -68,28 +70,23 @@ Process_Factory::create_new_process (ACE_ENV_SINGLE_ARG_DECL)
   for (int i = 0; i != 500 && !process_has_started; ++i)
     {
       ACE_Time_Value interval (0, 10000);
-      this->orb_->perform_work (interval ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (Test::Process::_nil ());
+      this->orb_->perform_work (interval);
 
       process_has_started =
         startup_callback_impl->process_has_started (the_process.out ());
     }
 
-  ACE_TRY
+  try
     {
       PortableServer::POA_var poa =
-        startup_callback_impl->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        startup_callback_impl->_default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (startup_callback_impl ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->servant_to_id (startup_callback_impl);
+      poa->deactivate_object (id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   if (process_has_started == 0)
     {
@@ -97,22 +94,20 @@ Process_Factory::create_new_process (ACE_ENV_SINGLE_ARG_DECL)
                   "(%P|%t) Process_Factory::create_new_process, "
                   " timeout while waiting for child\n"));
       (void) child_process.terminate ();
-      ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
+      throw Test::Spawn_Failed ();
     }
 
   return the_process._retn ();
 }
 
 void
-Process_Factory::noop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Process_Factory::noop ()
 {
 }
 
 void
-Process_Factory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Process_Factory::shutdown ()
 {
   this->shutdown_received_ = 1;
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

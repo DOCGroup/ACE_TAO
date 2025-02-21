@@ -4,9 +4,6 @@
 /**
  *  @file    Profile_Transport_Resolver.h
  *
- *  $Id$
- *
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -21,20 +18,22 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
+#include "tao/Transport_Selection_Guard.h"
 
-#include "tao/SystemException.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Stub;
 class TAO_Profile;
 class TAO_Transport;
 class TAO_Endpoint;
-class ACE_Time_Value;
 class TAO_Transport_Descriptor_Interface;
 
 namespace CORBA
 {
-  class Environment;
   class Object;
   class PolicyList;
 
@@ -74,7 +73,7 @@ namespace TAO
                                 TAO_Stub *stub,
                                 bool block = true);
 
-    ~Profile_Transport_Resolver (void);
+    ~Profile_Transport_Resolver ();
 
     /// Method where the bunch of the action takes place.
     /**
@@ -83,13 +82,11 @@ namespace TAO
      * the ORB_Core to decide on the strategy to be used for selecting
      * the profile.
      */
-    void resolve (ACE_Time_Value *val
-                  ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void resolve (ACE_Time_Value *val);
 
     //@{
     /**
-     * Accessors and mutators for this class. The following methods
+     * @name Accessors and mutators for this class. The following methods
      * are used by the clients of this class to access strategies and
      * other internal workings.
      */
@@ -98,48 +95,71 @@ namespace TAO
     void profile (TAO_Profile *pfile);
 
     /// Accessor for profile.
-    TAO_Profile *profile (void) const;
+    TAO_Profile *profile () const;
 
     /// Accessor for TAO_Stub
-    TAO_Stub *stub (void) const;
+    TAO_Stub *stub () const;
 
     /// Accessor for the target in use
-    CORBA::Object *object (void) const;
+    CORBA::Object *object () const;
 
     /// Accessor for the transport reserved for this invocation.
-    TAO_Transport *transport (void) const;
+    TAO_Transport *transport () const;
+
+    /// See if the transport cache has an available transport and
+    /// use that one rather than trying to connect via the connector.
+    /// Separating this functionality enables the look up of many
+    /// endpoints before trying the more time-consuming trip through
+    /// the actual connector.
+    int find_transport (TAO_Transport_Descriptor_Interface *);
 
     /// Accessor to indicate whether we should block while
     /// establishing a connection.
-    bool blocked_connect (void) const;
+    bool blocked_connect () const;
     //@}
 
     /// Signal to let the resolver know that the transport has been
     /// released back to the cache.
-    void transport_released (void) const;
+    void transport_released () const;
 
-    /// This is a callback method used by the endpoint selectors, to
+    /// This is a callback method used by the endpoint selectors to
     /// delegate the responsibility of reserving a transport from the
-    /// connection cache for this invocation.
+    /// connection cache for this invocation. When the descriptor
+    /// contains more than one endpoint (as part of a linked list) and
+    /// the parallel flag is true then the connector will look for a
+    /// connection on any of the endpoints if it supports that
+    /// behavior, otherwise an ENOTSUP errno will be set and the
+    /// method will return false.
     bool try_connect (TAO_Transport_Descriptor_Interface *desc,
-                      ACE_Time_Value *val
-                      ACE_ENV_ARG_DECL);
+                      ACE_Time_Value *val);
+
+    bool try_parallel_connect (TAO_Transport_Descriptor_Interface *desc,
+                               ACE_Time_Value *val);
+
+    /// This method wraps a call to the orb core to see if parallel
+    /// connection attempts are even desired. This is controlled by
+    /// the -ORBUseParallelConnects 1|0 commandline option.
+    bool use_parallel_connect () const;
 
     /// Initialize the inconsistent policy list that this object has
     /// cached.
-    void init_inconsistent_policies (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void init_inconsistent_policies ();
 
-    CORBA::PolicyList *inconsistent_policies (void) const;
+    CORBA::PolicyList *inconsistent_policies () const;
 
-    CORBA::PolicyList *steal_inconsistent_policies (void);
+    CORBA::PolicyList *steal_inconsistent_policies ();
   private:
-
     /// Helper method to access get the connection timeout from the
     /// ORB.
     bool get_connection_timeout (ACE_Time_Value &max_wait_time);
 
+    void operator= (const Profile_Transport_Resolver &);
+    Profile_Transport_Resolver (const Profile_Transport_Resolver &);
+
   private:
+    bool try_connect_i (TAO_Transport_Descriptor_Interface *desc,
+                        ACE_Time_Value *val,
+                        bool parallel);
 
     /// Target object
     mutable CORBA::Object *obj_;
@@ -148,7 +168,10 @@ namespace TAO
     TAO_Stub *stub_;
 
     /// The transport selected for this invocation.
-    TAO_Transport *transport_;
+
+    /// Using the wrapper guard ensures it is available for use with
+    /// the Transport Current interfaces.
+    TAO::Transport_Selection_Guard transport_;
 
     /// The profile that has been selected for this invocation.
     TAO_Profile *profile_;
@@ -157,12 +180,12 @@ namespace TAO
     /**
      * If current effective policies cause the invocation to raise
      * CORBA::INV_POLICY exception, the conflicting/problematic policies
-     * are stored in this list.  This is used by \param
-     * Object::_validate_connection method to inform clients about
+     * are stored in this list.  This is used by
+     * Object::_validate_connection() method to inform clients about
      * causes of invocation failure.
      * @par
-     * Conflicting policies are only stored in this list if \param
-     * init_inconsistent_policies method has been called prior to the
+     * Conflicting policies are only stored in this list if
+     * init_inconsistent_policies() method has been called prior to the
      * beginning of invocation.  This saves extra work of conflicting
      * policies 'logging' when it's not needed.
      *
@@ -181,8 +204,10 @@ namespace TAO
   };
 } // TAO namespace end
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Profile_Transport_Resolver.inl"
+# include "tao/Profile_Transport_Resolver.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

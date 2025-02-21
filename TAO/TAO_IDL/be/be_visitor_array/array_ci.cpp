@@ -1,34 +1,18 @@
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    array_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Arrays in the client inline.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
 
-ACE_RCSID (be_visitor_array,
-           array_ci,
-           "$Id$")
+//=============================================================================
+/**
+ *  @file    array_ci.cpp
+ *
+ *  Visitor generating code for Arrays in the client inline.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-
-// ************************************************************************
-//  visitor for array declaration in client inline
-// ************************************************************************
+#include "array.h"
 
 be_visitor_array_ci::be_visitor_array_ci (be_visitor_context *ctx)
   : be_visitor_array (ctx)
-{
-}
-
-be_visitor_array_ci::~be_visitor_array_ci (void)
 {
 }
 
@@ -43,8 +27,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   this->ctx_->node (node); // save the array node
 
   // If we contain an anonymous sequence, generate code for it here.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  AST_Decl::NodeType nt = bt->node_type ();
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -54,6 +37,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
                          "bad base type\n"),
                         -1);
     }
+
+  AST_Decl::NodeType nt = bt->node_type ();
 
   if (nt == AST_Decl::NT_sequence)
     {
@@ -72,8 +57,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
-      && bt->is_child (this->ctx_->scope ()))
+  if (this->ctx_->alias () == nullptr // Not a typedef.
+      && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);
@@ -132,7 +117,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -154,8 +139,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the array traits specialization definitions,
   // guarded by #ifdef on unaliased array element type and length.
@@ -164,7 +148,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   if (nt == AST_Decl::NT_typedef)
     {
-      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      be_typedef *td = dynamic_cast<be_typedef*> (bt);
       unique = td->primitive_base_type ()->flat_name ();
     }
   else
@@ -173,81 +157,196 @@ int be_visitor_array_ci::visit_array (be_array *node)
     }
 
   char buf[NAMEBUFSIZE];
+  ACE_CDR::ULong i;
 
-  for (unsigned long i = 0; i < node->n_dims (); ++i)
+  for (i = 0UL; i < node->n_dims (); ++i)
     {
       ACE_OS::memset (buf,
                       '\0',
                       NAMEBUFSIZE);
       ACE_OS::sprintf (buf,
-                       "_%ld",
+                       "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        node->dims ()[i]->ev ()->u.ulval);
       unique += buf;
     }
 
   unique += "_traits";
 
-  *os << be_nl << be_nl
-//       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
+  *os << be_nl
+      << be_global->core_versioning_begin ();
+
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << "TAO::Array_Traits<" << be_idt << be_idt_nl
-      << fname << "," << be_nl
-      << fname << "_slice," << be_nl
-      << fname << "_tag" << be_uidt_nl
-      << ">::free ("<< be_idt_nl
-      << fname << "_slice * _tao_slice" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "TAO::Array_Traits<" << fname << "_forany>::free ("
+      << be_idt << be_idt_nl
+      << fname << "_slice * _tao_slice)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << fname << "_free (_tao_slice);" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
-//       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << "TAO::Array_Traits<" << be_idt << be_idt_nl
-      << fname << "," << be_nl
-      << fname << "_slice," << be_nl
-      << fname << "_tag" << be_uidt_nl
-      << ">::dup (" << be_idt_nl
-      << "const " << fname << "_slice * _tao_slice" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "TAO::Array_Traits<" << fname << "_forany>::dup ("
+      << be_idt << be_idt_nl
+      << "const " << fname << "_slice * _tao_slice)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << fname << "_dup (_tao_slice);" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
-//       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << "TAO::Array_Traits<" << be_idt << be_idt_nl
-      << fname << "," << be_nl
-      << fname << "_slice," << be_nl
-      << fname << "_tag" << be_uidt_nl
-      << ">::copy (" << be_idt_nl
+      << "TAO::Array_Traits<" << fname << "_forany>::copy ("
+      << be_idt << be_idt_nl
       << fname << "_slice * _tao_to," << be_nl
-      << "const " << fname << "_slice * _tao_from" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "const " << fname << "_slice * _tao_from)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << fname << "_copy (_tao_to, _tao_from);" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
-//       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
+  *os << be_nl_2
+      << "ACE_INLINE" << be_nl
+      << "void" << be_nl
+      << "TAO::Array_Traits<" << fname << "_forany>::zero ("
+      << be_idt << be_idt_nl
+      << fname << "_slice * _tao_slice)" << be_uidt << be_uidt_nl
+      << "{" << be_idt_nl;
+
+  ACE_CDR::ULong ndims = node->n_dims ();
+  be_array *primitive_type = nullptr;
+
+  if (bt->node_type () == AST_Decl::NT_typedef)
+    {
+      // Base type of the array node is a typedef. We need to make sure that
+      // this typedef is not to another array type. If it is, then we cannot
+      // assign an array to another. We will have to invoke the underlying
+      // array type's copy method for every array dimension.
+
+      // There may be more than one level of typedef.
+      be_type *tmp = bt;
+
+      while (tmp->node_type () == AST_Decl::NT_typedef)
+        {
+          be_typedef *tdef = dynamic_cast<be_typedef*> (tmp);
+          tmp = dynamic_cast<be_type*> (tdef->base_type ());
+        }
+
+      primitive_type = dynamic_cast<be_array*> (tmp);
+    }
+
+  *os << "// Zero each individual element." << be_nl;
+
+  // Generate nested loops for as many dimensions as there are.
+  for (i = 0; i < ndims; ++i)
+    {
+      // Retrieve the ith dimension value.
+      AST_Expression *expr = node->dims ()[i];
+
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                              "(%N:%l) be_visitor_array_cs::"
+                              "visit_array - "
+                              "bad array dimension\n"),
+                            -1);
+        }
+
+      if (expr->ev ()->et == AST_Expression::EV_ulong)
+        {
+          // Generate a loop for each dimension.
+          *os << "for (::CORBA::ULong i" << i << " = 0; i" << i << " < "
+              << expr->ev ()->u.ulval << "; ++i" << i << ")" << be_idt_nl
+              << "{" << be_idt_nl;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                              "(%N:%l) be_visitor_array_cs::"
+                              "visit_array - "
+                              "bad array dimension value\n"),
+                            -1);
+        }
+    }
+
+  if (primitive_type)
+    {
+      // The base type is a typedef to another array type, so
+      // we use the base type's copy method.
+      *os << "// call the underlying _zero" << be_nl;
+
+      * os << "TAO::Array_Traits< ";
+
+      if (bt->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                              "be_visitor_array_cs::"
+                              "visit_array - "
+                              "base type decl failed\n"),
+                            -1);
+        }
+
+      * os << "_forany";
+
+      * os << ">::";
+
+      *os << "zero (_tao_slice";
+
+      for (i = 0; i < ndims; ++i)
+        {
+          *os << "[i" << i << "]";
+        }
+
+      *os << ");";
+    }
+  else
+    {
+      // The base type is not a typedef to possibly another array type. In
+      // such a case, assign each element.
+
+      *os << "_tao_slice";
+
+      for (i = 0; i < ndims; ++i)
+        {
+          *os << "[i" << i << "]";
+        }
+
+      *os << " = ";
+
+      if (bt->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                              "be_visitor_array_ch::"
+                              "visit_array - "
+                              "base type decl failed\n"),
+                            -1);
+        }
+
+      *os << " ();";
+    }
+
+  for (i = 0; i < ndims; ++i)
+    {
+      // Add closing braces as many times as the number of dimensions.
+      *os << be_uidt_nl << "}" << be_uidt;
+    }
+  *os << be_uidt_nl << "}";
+
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << "TAO::Array_Traits<" << be_idt << be_idt_nl
-      << fname << "," << be_nl
-      << fname << "_slice," << be_nl
-      << fname << "_tag" << be_uidt_nl
-      << ">::alloc (void)" << be_uidt_nl
+     << "TAO::Array_Traits<" << fname << "_forany>::alloc ()"
+      << be_idt << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << fname << "_alloc ();" << be_uidt_nl
       << "}";
 
   *os << be_nl;
 
-  node->cli_inline_gen (I_TRUE);
+  *os << be_nl
+      << be_global->core_versioning_end ();
+
+  node->cli_inline_gen (true);
   return 0;
 }

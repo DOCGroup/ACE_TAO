@@ -3,14 +3,13 @@
 /**
  *  @file    FT_ReplicationManagerFaultAnalyzer.cpp
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *
  *  @author Steve Totten <totten_s@ociweb.com>
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "FT_ReplicationManagerFaultAnalyzer.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/FT_NotifierC.h"
@@ -22,9 +21,7 @@
 #include "tao/debug.h"
 #include <iostream>
 
-ACE_RCSID (FT_ReplicationManagerFaultAnalyzer,
-           FT_ReplicationManagerFaultAnalyzer,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Constructor.
 TAO::FT_ReplicationManagerFaultAnalyzer::FT_ReplicationManagerFaultAnalyzer (
@@ -65,10 +62,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   {
     for (CORBA::ULong n_prop = 0; n_prop < item_count; ++n_prop)
     {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT(
-          "TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event: "
-          "Property Name: <%s>\n"),
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT("TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event: ")
+        ACE_TEXT("Property Name: <%C>\n"),
         filterable[n_prop].name.in()
       ));
     }
@@ -157,10 +153,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_type_id (
   const char* type_id_value;
   if ((val >>= type_id_value) == 0)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::get_type_id: "
-        "Could not extract TypeId value from any.\n")),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+      ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_type_id: ")
+      ACE_TEXT("Could not extract TypeId value from any.\n")),
       -1);
   }
 
@@ -176,10 +171,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_object_group_id (
   PortableGroup::ObjectGroupId temp_id = (PortableGroup::ObjectGroupId)0;
   if ((val >>= temp_id) == 0)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::get_object_group_id: "
-        "Could not extract ObjectGroupId value from any.\n")),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+      ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_object_group_id: ")
+      ACE_TEXT("Could not extract ObjectGroupId value from any.\n")),
       -1);
   }
   id = temp_id;
@@ -192,10 +186,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_location (
   const PortableGroup::Location* temp_loc;
   if ((val >>= temp_loc) == 0)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::get_location: "
-        "Could not extract Location value from fault event.\n")),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+      ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_location: ")
+      ACE_TEXT("Could not extract Location value from fault event.\n")),
       -1);
   }
   // Make a deep copy of the Location.
@@ -224,10 +217,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_membership_style (
   {
     if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_membership_style: "
-          "MembershipStyle is <%d>:\n"),
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT("TAO::FT_ReplicationManagerFaultAnalyzer::get_membership_style: ")
+        ACE_TEXT("MembershipStyle is <%d>:\n"),
         membership_style
       ));
     }
@@ -255,10 +247,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_replication_style (
   {
     if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_replication_style: "
-          "ReplicationStyle is <%d>:\n"),
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_replication_style: ")
+        ACE_TEXT ("ReplicationStyle is <%d>:\n"),
         replication_style
       ));
     }
@@ -286,10 +277,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_minimum_number_members (
   {
     if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_minimum_number_members: "
-          "MinimumNumberMembers is <%d>:\n"),
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_minimum_number_members: ")
+        ACE_TEXT ("MinimumNumberMembers is <%d>:\n"),
         minimum_number_members
       ));
     }
@@ -317,10 +307,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_members (
   {
     if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_members: "
-          "InitialNumberMembers is <%d>:\n"),
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_members: ")
+        ACE_TEXT ("InitialNumberMembers is <%d>:\n"),
         initial_number_members
       ));
     }
@@ -342,32 +331,30 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
   prop_name[0].id = CORBA::string_dup (FT::FT_FACTORIES);
   int result = 0;
 
-  PortableGroup::FactoryInfos_var temp_factories;
+  const PortableGroup::FactoryInfos* temp_factories = 0;
   PortableGroup::Value value;
   if (TAO_PG::get_property_value (prop_name, properties, value) == 1)
   {
     if ((value >>= temp_factories) == 0)
     {
-      ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_factories: "
-          "Could not extract Factories from properties.\n")
+      ORBSVCS_ERROR ((LM_ERROR,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_factories: ")
+        ACE_TEXT ("Could not extract Factories from properties.\n")
       ));
       result = -1;
     }
     else
     {
       // Make a deep copy of the Factories.
-      ACE_NEW_RETURN (factories, PortableGroup::FactoryInfos (temp_factories.in()), -1);
+      ACE_NEW_RETURN (factories, PortableGroup::FactoryInfos (*temp_factories), -1);
       result = 0;
     }
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::get_factories: "
-        "Could not find Factories property.\n")
+    ORBSVCS_ERROR ((LM_ERROR,
+      ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_factories: ")
+      ACE_TEXT ("Could not find Factories property.\n")
     ));
     result = -1;
   }
@@ -379,7 +366,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
   const PortableGroup::Location & location,
   int & object_is_primary)
 {
-
   // To determine if this was a primary that faulted:
   // Get the TagFTGroupTaggedComponent from the IOGR and search
   // for the primary, using the TAO_FT_IOGR_Property helper class.
@@ -389,7 +375,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
   int result = 0;
   object_is_primary = 0;
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Create an "empty" TAO_FT_IOGR_Property and use it to get the
     // tagged component.
@@ -397,8 +383,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
     FT::TagFTGroupTaggedComponent ft_group_tagged_component;
     CORBA::Boolean got_tagged_component =
       temp_ft_prop.get_tagged_component (
-          iogr, ft_group_tagged_component ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+          iogr, ft_group_tagged_component);
     if (got_tagged_component)
     {
       // Create a new TAO_FT_IOGR_Property with the tagged
@@ -407,41 +392,35 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
 
       // Check to see if a primary is set.
       CORBA::Boolean primary_is_set = ft_prop.is_primary_set (
-        iogr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        iogr);
       if (primary_is_set)
       {
         // Get the primary object.
         CORBA::Object_var primary_obj = ft_prop.get_primary (
-          iogr ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          iogr);
         if (CORBA::is_nil (primary_obj.in()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-            ACE_TEXT (
-              "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
-              "Could not get primary IOR from IOGR.\n")),
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+            ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
+            ACE_TEXT ("Could not get primary IOR from IOGR.\n")),
             -1);
         }
 
         // Get the object reference of the failed member.
         CORBA::Object_var failed_obj =
           this->replication_manager_->get_member_ref (
-            iogr, location ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+            iogr, location);
         if (CORBA::is_nil (failed_obj.in()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-            ACE_TEXT (
-              "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
-              "Could not get IOR of failed member from IOGR.\n")),
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+            ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
+            ACE_TEXT ("Could not get IOR of failed member from IOGR.\n")),
             -1);
         }
 
         // Are the two object refs (primary and failed) equivalent?
         CORBA::Boolean equiv = primary_obj->_is_equivalent (
-          failed_obj.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          failed_obj.in());
         if (equiv)
         {
           object_is_primary = 1;
@@ -450,34 +429,28 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
       }
       else  // primary is not set
       {
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
-            "Primary is not set on IOGR.\n")
+        ORBSVCS_ERROR ((LM_ERROR,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
+          ACE_TEXT ("Primary is not set on IOGR.\n")
         ));
         result = -1;
       }
     }
     else // could not get tagged component
     {
-      ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
-          "Could not get tagged component from IOGR.\n")
+      ORBSVCS_ERROR ((LM_ERROR,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
+        ACE_TEXT ("Could not get tagged component from IOGR.\n")
       ));
       result = -1;
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (
-      ACE_ANY_EXCEPTION,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
-    );
+    ex._tao_print_exception (
+      ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "));
     result = -1;
   }
-  ACE_ENDTRY;
 
   return result;
 }
@@ -490,43 +463,35 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
   PortableGroup::ObjectGroup_var the_object_group = PortableGroup::ObjectGroup::_nil();
   PortableGroup::Properties_var properties;
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Get the object group reference based on the ObjectGroupId.
     the_object_group =
       this->replication_manager_->get_object_group_ref_from_id (
-        fault_event_desc.object_group_id
-        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+        fault_event_desc.object_group_id);
 
     // This should not happen, but let us be safe.
     if (CORBA::is_nil (the_object_group.in()))
     {
-      ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Could not get ObjectGroup reference from ObjectGroupId: <%Q>.\n"),
+      ORBSVCS_ERROR ((LM_ERROR,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+        ACE_TEXT ("Could not get ObjectGroup reference from ObjectGroupId: <%Q>.\n"),
           fault_event_desc.object_group_id
       ));
-      ACE_TRY_THROW (PortableGroup::ObjectGroupNotFound ());
+      throw PortableGroup::ObjectGroupNotFound ();
     }
 
     // Get the properties associated with this ObjectGroup.
     properties = this->replication_manager_->get_properties (
-      the_object_group.in()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      the_object_group.in());
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (
-      ACE_ANY_EXCEPTION,
+    ex._tao_print_exception (
       ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
-    );
+        "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "));
     result = -1;
   }
-  ACE_ENDTRY;
 
   if (result == 0)
   {
@@ -536,11 +501,10 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     if (result != 0)
     {
       //@@ it seems a shame to fail here.  We should at least remove the failed replica from the group.
-      ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Could not extract MembershipStyle from properties on "
-          "ObjectGroup with id <%Q>.\n"),
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+        ACE_TEXT ("Could not extract MembershipStyle from properties on ")
+        ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
         fault_event_desc.object_group_id),
         -1);
     }
@@ -549,10 +513,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       fault_event_desc.membership_style = membership_style;
       if (TAO_debug_level > 6)
       {
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "MembershipStyleValue = <%d>"),
+        ORBSVCS_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("MembershipStyleValue = <%d>"),
             fault_event_desc.membership_style
         ));
       }
@@ -564,11 +527,10 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     if (result != 0)
     {
       //@@ it seems a shame to fail here.  We should at least remove the failed replica from the group.
-      ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Could not extract ReplicationStyle from properties on "
-          "ObjectGroup with id <%Q>.\n"),
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+        ACE_TEXT ("Could not extract ReplicationStyle from properties on ")
+        ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
         fault_event_desc.object_group_id),
         -1);
     }
@@ -577,10 +539,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       fault_event_desc.replication_style = replication_style;
       if (TAO_debug_level > 6)
       {
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "ReplicationStyleValue = <%d>"),
+        ORBSVCS_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("ReplicationStyleValue = <%d>"),
             fault_event_desc.replication_style
         ));
       }
@@ -596,11 +557,10 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       result = 0;
       if (TAO_debug_level > 3)
       {
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Could not extract MinimumNumberMembers from properties on "
-            "ObjectGroup with id <%Q>.\n"),
+        ORBSVCS_ERROR ((LM_ERROR,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Could not extract MinimumNumberMembers from properties on ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id));
       }
     }
@@ -609,10 +569,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       fault_event_desc.minimum_number_members = minimum_number_members;
       if (TAO_debug_level > 6)
       {
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "MinimumNumberMembers = <%d>"),
+        ORBSVCS_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("MinimumNumberMembers = <%d>"),
             fault_event_desc.minimum_number_members
         ));
       }
@@ -628,11 +587,10 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       result = 0;
       if (TAO_debug_level > 3)
       {
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Could not extract InitialNumberMembers from properties on "
-            "ObjectGroup with id <%Q>.\n"),
+        ORBSVCS_ERROR ((LM_ERROR,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Could not extract InitialNumberMembers from properties on ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id));
       }
     }
@@ -641,10 +599,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       fault_event_desc.initial_number_members = initial_number_members;
       if (TAO_debug_level > 6)
       {
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "InitialNumberMembers = <%d>"),
+        ORBSVCS_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("InitialNumberMembers = <%d>"),
             fault_event_desc.initial_number_members
         ));
       }
@@ -660,11 +617,10 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       result = 0;
       if (TAO_debug_level > 3)
       {
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Could not extract Factories from properties on "
-            "ObjectGroup with id <%Q>.\n"),
+        ORBSVCS_ERROR ((LM_ERROR,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Could not extract Factories from properties on ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id));
        }
     }
@@ -672,11 +628,10 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     {
       if (TAO_debug_level > 6)
       {
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Got Factories from properties on "
-            "ObjectGroup with id <%Q>.\n"),
+        ORBSVCS_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Got Factories from properties on ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
             fault_event_desc.object_group_id
         ));
       }
@@ -694,11 +649,10 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
   {
     if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Checking to see if failed replica was the primary for "
-          "ObjectGroup with id <%Q>.\n"),
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+        ACE_TEXT ("Checking to see if failed replica was the primary for ")
+        ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id
       ));
     }
@@ -714,7 +668,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
   if ((result == 0) &&
       (fault_event_desc.membership_style == FT::MEMB_INF_CTRL))
   {
-
     PortableGroup::ObjectGroup_var new_object_group;
     result = this->remove_failed_member (
         the_object_group.in(),
@@ -729,11 +682,10 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     {
       if (TAO_debug_level > 6)
       {
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Setting new primary for "
-            "ObjectGroup with id <%Q>.\n"),
+        ORBSVCS_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Setting new primary for ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
             fault_event_desc.object_group_id
         ));
       }
@@ -758,11 +710,10 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
   {
     if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Potentially adding new members to "
-          "ObjectGroup with id <%Q>.\n"),
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+        ACE_TEXT ("Potentially adding new members to ")
+        ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id
       ));
     }
@@ -784,25 +735,21 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member (
   int result = 0;
   new_iogr = PortableGroup::ObjectGroup::_nil ();
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Remove the old primary member from the object group.
     PortableGroup::ObjectGroup_var temp_iogr =
       this->replication_manager_->remove_member (
         iogr,
-        fault_event_desc.location.in()
-        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+        fault_event_desc.location.in());
     new_iogr = temp_iogr._retn ();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (
-      ACE_ANY_EXCEPTION,
+    ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member: ");
     result = -1;
   }
-  ACE_ENDTRY;
   return result;
 }
 
@@ -818,42 +765,35 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
   int result = 0;
   new_iogr = PortableGroup::ObjectGroup::_nil ();
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Get the locations of the remaining members of the object group.
     PortableGroup::Locations_var locations =
       this->replication_manager_->locations_of_members (
-        iogr
-        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+        iogr);
 
     // Choose the first location as our new primary location.
     if (locations->length() >= 1)
     {
       new_iogr = this->replication_manager_->set_primary_member (
         iogr,
-        (*locations)[0]
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        (*locations)[0]);
     }
     else
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary: "
-          "No locations remaining in ObjectGroup with id <%Q>.\n"),
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary: ")
+        ACE_TEXT ("No locations remaining in ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id),
         -1);
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (
-      ACE_ANY_EXCEPTION,
+    ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary: ");
     result = -1;
   }
-  ACE_ENDTRY;
 
   return result;
 }
@@ -871,15 +811,13 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
   int result = 0;
   new_iogr = PortableGroup::ObjectGroup::_nil ();
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Get current number of members in object group
     // (same as number of locations).
     PortableGroup::Locations_var locations =
       this->replication_manager_->locations_of_members (
-        iogr
-        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+        iogr);
     CORBA::ULong num_members = locations->length();
 
     // If it is less than the MinimumNumberMembers property, add
@@ -893,8 +831,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
       PortableGroup::Criteria fake_criteria;
       PortableGroup::FactoryRegistry_var factory_registry =
         this->replication_manager_->get_factory_registry (
-          fake_criteria ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          fake_criteria);
 
 
       // @@ DLW SAYS: we need to find out the role played by this object
@@ -903,8 +840,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
       CORBA::String_var type_id;
       PortableGroup::FactoryInfos_var factories_by_type =
           factory_registry->list_factories_by_role (
-          fault_event_desc.type_id.in(), type_id ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          fault_event_desc.type_id.in(), type_id);
 
       //
       // Build a set of locations of factories for this type that we
@@ -942,9 +878,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
           iogr,
           good_location.in(),
           fault_event_desc.type_id.in(),
-          fake_criteria
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          fake_criteria);
 
         // Stop adding members when we reach the value of the
         // MinimumNumberMembers property.
@@ -954,14 +888,12 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
 
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (
-      ACE_ANY_EXCEPTION,
+    ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::add_members: ");
     result = -1;
   }
-  ACE_ENDTRY;
 
   return result;
 }
@@ -981,26 +913,23 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
   //   location.
   // - Handle each one of them as a single replica failure.
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Get the factory registry from the Replication Manager.
     PortableGroup::Criteria fake_criteria;
     PortableGroup::FactoryRegistry_var factory_registry =
       this->replication_manager_->get_factory_registry (
-        fake_criteria ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+        fake_criteria);
 
     // Unregister all factories at the failed location.
     factory_registry->unregister_factory_by_location (
-      fault_event_desc.location.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      fault_event_desc.location.in());
 
     // Determine all the object groups that had members at that
     // location.
     PortableGroup::ObjectGroups_var object_groups_at_location =
       this->replication_manager_->groups_at_location (
-      fault_event_desc.location.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      fault_event_desc.location.in());
 
     // Handle each one of them as a single replica failure.
     for (CORBA::ULong i=0;
@@ -1010,27 +939,23 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
       // Get the object group id.
       fault_event_desc.object_group_id =
         this->replication_manager_->get_object_group_id (
-          object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          object_groups_at_location[i]);
 
       // Get type id of this object group.
       fault_event_desc.type_id =
         this->replication_manager_->type_id (
-          object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          object_groups_at_location[i]);
 
       // Handle it as a single replica failure.
       result = this->single_replica_failure (fault_event_desc);
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (
-      ACE_ANY_EXCEPTION,
+    ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::location_failure: ");
     result = -1;
   }
-  ACE_ENDTRY;
 
   return result;
 }
@@ -1050,30 +975,26 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
   //   location of that type.
   // - Handle each one of them as a single replica failure.
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Get the factory registry from the Replication Manager.
     PortableGroup::Criteria fake_criteria;
     PortableGroup::FactoryRegistry_var factory_registry =
       this->replication_manager_->get_factory_registry (
-        fake_criteria ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+        fake_criteria);
 
     // Unregister the factory at the failed location associated with
     // the role.
     //@@ Using type_id as the role for now.
     factory_registry->unregister_factory (
       fault_event_desc.type_id.in(),
-      fault_event_desc.location.in()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      fault_event_desc.location.in());
 
     // Get all the object groups that had members at that
     // location.
     PortableGroup::ObjectGroups_var object_groups_at_location =
       this->replication_manager_->groups_at_location (
-      fault_event_desc.location.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      fault_event_desc.location.in());
 
     // For each one, if it was of the same type as the failed type,
     // handle it as a single replica failure.
@@ -1084,14 +1005,12 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
       // Get the object group id.
       fault_event_desc.object_group_id =
         this->replication_manager_->get_object_group_id (
-          object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          object_groups_at_location[i]);
 
       // Get type id of this object group.
       PortableGroup::TypeId_var type_id =
         this->replication_manager_->type_id (
-          object_groups_at_location[i] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          object_groups_at_location[i]);
 
       // If the type id is the same as the failed type id...
       if (ACE_OS::strcmp (type_id.in(), fault_event_desc.type_id.in()) == 0)
@@ -1101,28 +1020,14 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
       }
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (
-      ACE_ANY_EXCEPTION,
+    ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::type_failure: ");
     result = -1;
   }
-  ACE_ENDTRY;
 
   return result;
 }
 
-// Template instantiations.
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Set<PortableGroup::Location>;
-template class ACE_Unbounded_Set_Iterator<PortableGroup::Location>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Set<PortableGroup::Location>
-#pragma instantiate ACE_Unbounded_Set_Iterator<PortableGroup::Location>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+TAO_END_VERSIONED_NAMESPACE_DECL

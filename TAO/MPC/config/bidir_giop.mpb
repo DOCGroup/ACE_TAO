@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : taolib, pi, avoids_corba_e_micro {
+  after   += BiDir_GIOP
+  libs    += TAO_BiDirGIOP
+}

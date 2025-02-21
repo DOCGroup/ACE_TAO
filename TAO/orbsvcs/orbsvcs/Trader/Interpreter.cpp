@@ -1,16 +1,16 @@
-// $Id$
-
-#include "Interpreter.h"
+#include "orbsvcs/Trader/Interpreter.h"
 #include "ace/OS_NS_string.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
 
-TAO_Interpreter::TAO_Interpreter (void)
+TAO_Interpreter::TAO_Interpreter ()
   : root_ (0)
 {
 }
 
-TAO_Interpreter::~TAO_Interpreter (void)
+TAO_Interpreter::~TAO_Interpreter ()
 {
   delete root_;
 }
@@ -73,14 +73,15 @@ char* TAO_Lex_String_Input::end_ = 0;
 int
 TAO_Lex_String_Input::copy_into (char* buf, int max_size)
 {
-  int chars_left =  TAO_Lex_String_Input::end_ - TAO_Lex_String_Input::current_;
+  int chars_left = static_cast<int> (TAO_Lex_String_Input::end_ -
+                                     TAO_Lex_String_Input::current_);
   int n = max_size > chars_left ? chars_left : max_size;
 
   if (n > 0)
     {
-      ACE_OS:: memcpy (buf,
-                       TAO_Lex_String_Input::current_,
-                       n);
+      ACE_OS::memcpy (buf,
+                      TAO_Lex_String_Input::current_,
+                      n);
       TAO_Lex_String_Input::current_ += n;
     }
 
@@ -95,3 +96,5 @@ TAO_Lex_String_Input::reset (char* input_string)
   TAO_Lex_String_Input::end_ = input_string +
     ACE_OS::strlen (TAO_Lex_String_Input::string_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

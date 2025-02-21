@@ -1,0 +1,14 @@
+// -*- MPC -*-
+project {
+  specific(prop:microsoft) {
+  } else {
+    requires += x11
+  }
+
+  // Depends on configuration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+	CPPFLAGS += $(PLATFORM_X11_CPPFLAGS)
+	LIBS += $(PLATFORM_X11_LIBS)
+	LDFLAGS += $(PLATFORM_X11_LDFLAGS)
+  }
+}

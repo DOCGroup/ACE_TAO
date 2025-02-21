@@ -1,6 +1,4 @@
-// $Id$
-
-#include "UserException.h"
+#include "tao/UserException.h"
 
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
@@ -9,25 +7,7 @@
 # include "tao/UserException.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           UserException,
-           "$Id$")
-
-
-CORBA::UserException::UserException (void)
-{
-}
-
-CORBA::UserException::UserException (char const * repository_id,
-                                     char const * local_name)
-  : CORBA::Exception (repository_id,
-                      local_name)
-{
-}
-
-CORBA::UserException::~UserException (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::UserException &
 CORBA::UserException::operator= (CORBA::UserException const & rhs)
@@ -36,16 +16,15 @@ CORBA::UserException::operator= (CORBA::UserException const & rhs)
   return *this;
 }
 
-int
-CORBA::UserException::_is_a (char const * interface_id) const
+// Virtual.  Do not inline.
+CORBA::TypeCode_ptr
+CORBA::UserException::_tao_type () const
 {
-  return ACE_OS::strcmp (interface_id,
-                         "IDL:omg.org/CORBA/UserException:1.0") == 0
-    || this->Exception::_is_a (interface_id);
+  return nullptr;
 }
 
 ACE_CString
-CORBA::UserException::_info (void) const
+CORBA::UserException::_info () const
 {
   // @@ we can use the exception's typecode to dump all the data held
   // within it ...
@@ -55,3 +34,5 @@ CORBA::UserException::_info (void) const
   user_exception_info += "'";
   return user_exception_info;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

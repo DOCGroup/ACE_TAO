@@ -1,0 +1,36 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Client): taoclient, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = client
+  after += *idl
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+
+project(*Manager): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = manager
+  after += *idl
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    Servant_Locator.cpp
+    Manager.cpp
+  }
+}

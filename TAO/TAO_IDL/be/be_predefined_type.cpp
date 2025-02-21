@@ -1,54 +1,36 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_predefined_type.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_PredefinedType that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_predefined_type.cpp
+ *
+ *  Extension of class AST_PredefinedType that provides additional means for C++
+ *  mapping.
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
 
 #include "be_predefined_type.h"
 #include "be_visitor.h"
-#include "utl_identifier.h"
+#include "be_helper.h"
+
 #include "global_extern.h"
+
+#include "utl_identifier.h"
+#include "utl_err.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (be, 
-           be_predefined_type, 
-           "$Id$")
-
-be_predefined_type::be_predefined_type (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    AST_PredefinedType (),
-    be_decl (),
-    be_type ()
-{
-}
-
-be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
-                                        UTL_ScopedName *n)
+be_predefined_type::be_predefined_type (
+      AST_PredefinedType::PredefinedType t,
+      UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_pre_defined,
               n,
-              I_TRUE),
+              true),
     AST_Type (AST_Decl::NT_pre_defined,
               n),
     AST_ConcreteType (AST_Decl::NT_pre_defined,
@@ -71,11 +53,15 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
 
   if (t == AST_PredefinedType::PT_object)
     {
-      this->fwd_helper_name_ = "CORBA::tao_Object";
+      this->fwd_helper_name_ = "::CORBA::tao_Object";
     }
   else if (t == AST_PredefinedType::PT_value)
     {
-      this->fwd_helper_name_ = "CORBA::tao_ValueBase";
+      this->fwd_helper_name_ = "::CORBA::tao_ValueBase";
+    }
+  else if (t == AST_PredefinedType::PT_abstract)
+    {
+      this->fwd_helper_name_ = "::CORBA::tao_AbstractBase";
     }
 
   switch (t)
@@ -91,6 +77,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
       case AST_PredefinedType::PT_value:
       case AST_PredefinedType::PT_void:
       case AST_PredefinedType::PT_pseudo:
+      case AST_PredefinedType::PT_abstract:
         break;
       default:
         idl_global->basic_type_seen_ = true;
@@ -98,21 +85,68 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
     }
 }
 
+// Overridden method.
+void
+be_predefined_type::gen_member_ostream_operator (TAO_OutStream *os,
+                                                 const char *instance_name,
+                                                 bool use_underscore,
+                                                 bool accessor)
+{
+  switch (this->pt ())
+    {
+      case AST_PredefinedType::PT_boolean:
+        *os << "ACE_OutputCDR::from_boolean (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_char:
+        *os << "ACE_OutputCDR::from_char (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_octet:
+        *os << "ACE_OutputCDR::from_octet (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_wchar:
+        *os << "ACE_OutputCDR::from_wchar (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_uint8:
+        *os << "ACE_OutputCDR::from_uint8 (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_int8:
+        *os << "ACE_OutputCDR::from_int8 (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_object:
+      case AST_PredefinedType::PT_abstract:
+      case AST_PredefinedType::PT_pseudo:
+        *os << instance_name << (accessor ? " ()" : ".in ()");
+        break;
+      default:
+        this->be_type::gen_member_ostream_operator (os,
+                                                    instance_name,
+                                                    use_underscore,
+                                                    accessor);
+        break;
+    }
+}
+
 // Overriden method.
 void
-be_predefined_type::compute_tc_name (void)
+be_predefined_type::compute_tc_name ()
 {
   // Start with the head as the CORBA namespace.
-  Identifier *corba_id = 0;
+  Identifier *corba_id = nullptr;
   ACE_NEW (corba_id,
            Identifier ("CORBA"));
 
   ACE_NEW (this->tc_name_,
            UTL_ScopedName (corba_id,
-                           0));
+                           nullptr));
 
-  Identifier *id = 0;
-  UTL_ScopedName *conc_name = 0;
+  Identifier *id = nullptr;
+  UTL_ScopedName *conc_name = nullptr;
 
   switch (this->pt ())
     {
@@ -175,15 +209,19 @@ be_predefined_type::compute_tc_name (void)
     case AST_PredefinedType::PT_any:
       ACE_NEW (id,
                Identifier ("_tc_any"));
-    break;
+      break;
     case AST_PredefinedType::PT_object:
       ACE_NEW (id,
                Identifier ("_tc_Object"));
-    break;
+      break;
     case AST_PredefinedType::PT_value:
       ACE_NEW (id,
                Identifier ("_tc_ValueBase"));
-    break;
+      break;
+    case AST_PredefinedType::PT_abstract:
+      ACE_NEW (id,
+               Identifier ("_tc_AbstractBase"));
+      break;
     case AST_PredefinedType::PT_pseudo:
       {
         char tcname [100];
@@ -195,25 +233,34 @@ be_predefined_type::compute_tc_name (void)
                  Identifier (tcname));
         break;
       }
-    default:
-      ACE_ERROR ((LM_WARNING, "Unknown or invalid predefined type"));
+    case AST_PredefinedType::PT_uint8:
+      ACE_NEW (id, Identifier ("_tc_uint8"));
       break;
+    case AST_PredefinedType::PT_int8:
+      ACE_NEW (id, Identifier ("_tc_int8"));
+      break;
+    default:
+      idl_global->err ()->misc_error (
+        "be_predefined_type::compute_tc_name: Unknown or invalid predefined type", this);
+      // Nothing else to do. We will segfault if we continue, return, or throw Bailout
+      ACE_OS::abort ();
     }
 
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
-                           0));
+                           nullptr));
 
   this->tc_name_->nconc (conc_name);
 }
 
 void
-be_predefined_type::compute_repoID (void)
+be_predefined_type::compute_repoID ()
 {
   switch (this->pt ())
     {
     case AST_PredefinedType::PT_object:
-	    this->repoID_ = ACE::strnew ("IDL:omg.org/CORBA/Object:1.0");
+      ACE::strdelete (this->repoID_);
+      this->repoID_ = ACE::strnew ("IDL:omg.org/CORBA/Object:1.0");
       break;
     default:
       AST_Decl::compute_repoID ();
@@ -228,12 +275,8 @@ be_predefined_type::accept (be_visitor *visitor)
 }
 
 void
-be_predefined_type::destroy (void)
+be_predefined_type::destroy ()
 {
   this->AST_PredefinedType::destroy ();
   this->be_type::destroy ();
 }
-
-// Narrowing
-IMPL_NARROW_METHODS2 (be_predefined_type, AST_PredefinedType, be_type)
-IMPL_NARROW_FROM_DECL (be_predefined_type)

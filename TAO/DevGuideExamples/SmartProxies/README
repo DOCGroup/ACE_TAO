@@ -1,0 +1,26 @@
+
+
+DevGuideExamples/SmartProxies/README
+
+The example in this directory extends the Messenger example in
+GettingStarted directory to use the Smart Proxy feature in TAO.
+
+A new Interface, Logger which supports an operation to log the messages
+(log_message) is used to log the information about the use of the
+Messenger.
+
+How to Run
+----------
+
+To start the logger server:
+---------------------------
+./LoggerServer
+
+To start the messenger server:
+-----------------------------
+./MessengerServer
+
+
+To start the messenger client:
+-----------------------------
+./MessengerClient

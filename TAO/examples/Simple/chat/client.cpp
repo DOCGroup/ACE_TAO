@@ -1,43 +1,32 @@
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/tests/Simple/chat
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    The Chat client program entry point.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  The Chat client program entry point.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Client_i.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Client_i client_i;
 
-      if (client_i.init (argc, argv) == -1
-	  || client_i.run () == -1)
-	return -1;
-
-      ACE_TRY_CHECK;
+      if (client_i.init (argc, argv) == -1 || client_i.run () == -1)
+        return -1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "client::main\t\n");
+      ex._tao_print_exception ("client::main\t\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

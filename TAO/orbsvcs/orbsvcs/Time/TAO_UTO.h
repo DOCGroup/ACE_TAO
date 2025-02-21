@@ -4,22 +4,20 @@
 /**
  *  @file    TAO_UTO.h
  *
- *  $Id$
- *
  *  This class implements the CosTime::UTO IDL interface.
- *
  *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_UTO_H
 #define TAO_UTO_H
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/TimeServiceS.h"
-#include "time_export.h"
+#include "orbsvcs/Time/time_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_UTO
@@ -39,50 +37,41 @@
  * - Conversion from relative to absolute time, and conversion to
  * an interval (TIO).
  */
-class TAO_Time_Export TAO_UTO : public POA_CosTime::UTO
+class TAO_Time_Serv_Export TAO_UTO : public POA_CosTime::UTO
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_UTO (TimeBase::TimeT time,
            TimeBase::InaccuracyT inaccuracy,
            TimeBase::TdfT tdf);
 
   /// Destructor.
-  ~TAO_UTO (void);
+  ~TAO_UTO ();
 
   /// For the readonly attribute <time>.
-  virtual TimeBase::TimeT time (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TimeBase::TimeT time ();
 
   /// For the readonly attribute <inaccuracy>.
-  virtual TimeBase::InaccuracyT  inaccuracy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TimeBase::InaccuracyT  inaccuracy ();
 
   /// For the readonly attribute <tdf>, which is the "time displacement
   /// factor".
-  virtual TimeBase::TdfT tdf (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TimeBase::TdfT tdf ();
 
   /// For the readonly attribute <utc_time>.
-  virtual TimeBase::UtcT utc_time (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TimeBase::UtcT utc_time ();
 
   /**
    * Absolute time = Relative time + Base time.
    * ?? Find out more about the Base Time, UTC and
    *    Distributed Time Sync. Algos. [3
    */
-  CosTime::UTO_ptr absolute_time (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CosTime::UTO_ptr absolute_time ();
 
   /// Compares the time contained in the object with the time in the
   /// supplied uto according to the supplied comparison type.
   CosTime::TimeComparison compare_time (CosTime::ComparisonType comparison_type,
-                                        CosTime::UTO_ptr uto
-                                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                        CosTime::UTO_ptr uto);
 
   /**
    * Returns a TIO representing the time interval between the time in
@@ -91,14 +80,11 @@ public:
    * two UTOs. Inaccuracies are ignored.  Note the result of this
    * operation is meaningless if the base times of UTOs are different.
    */
-  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr
-                                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr);
 
   /// Returns a TIO object representing the error interval around the
   /// time value in the UTO.
-  CosTime::TIO_ptr interval (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CosTime::TIO_ptr interval ();
 
 private:
   /**
@@ -110,6 +96,8 @@ private:
    */
   TimeBase::UtcT attr_utc_time_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_UTO_H */

@@ -1,17 +1,13 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Native_Exceptions, server, "$Id$")
-
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -30,17 +26,17 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -56,13 +52,18 @@ main (int argc, char *argv[])
 
       Simple_Server_i server_impl (orb.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&server_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Simple_Server_var server =
-        server_impl._this ();
+        Simple_Server::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -83,9 +84,9 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
-  catch (CORBA::SystemException &ex)
+  catch (const CORBA::SystemException &ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
 

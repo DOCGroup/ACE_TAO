@@ -1,17 +1,12 @@
-// $Id$
-
 #include "Consumer.h"
 
-ACE_RCSID(EC_Examples, Consumer, "$Id$")
 
-Consumer::Consumer (void)
+Consumer::Consumer ()
 {
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer::push (const RtecEventComm::EventSet& events)
 {
   if (events.length () == 0)
     {
@@ -25,13 +20,7 @@ Consumer::push (const RtecEventComm::EventSet& events
 }
 
 void
-Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer::disconnect_push_consumer ()
 {
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

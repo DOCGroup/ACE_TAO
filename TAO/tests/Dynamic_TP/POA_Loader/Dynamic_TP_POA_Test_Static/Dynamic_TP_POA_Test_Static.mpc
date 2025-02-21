@@ -1,0 +1,33 @@
+// -*- MPC -*-
+project(Dynamic_TP_POA_Test_Static_idl): taoidldefaults, avoids_corba_e_compact, avoids_corba_e_micro {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(Dynamic_TP_POA_Test_Static_Server): taoserver, csd_threadpool, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += Dynamic_TP_POA_Test_Static_idl
+  Source_Files {
+    Hello.cpp
+    server.cpp
+    TestC.cpp
+    TestS.cpp
+  }
+
+  IDL_Files {
+  }
+
+}
+
+project(Dynamic_TP_POA_Test_Static_Client): taoclient, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += Dynamic_TP_POA_Test_Static_Server
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+
+  IDL_Files {
+  }
+
+}

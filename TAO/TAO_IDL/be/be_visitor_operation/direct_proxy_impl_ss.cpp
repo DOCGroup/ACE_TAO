@@ -1,8 +1,4 @@
-// $Id$
-
-ACE_RCSID (be_visitor_operation,
-           direct_proxy_impl_ss,
-           "$Id$")
+#include "operation.h"
 
 be_visitor_operation_direct_proxy_impl_ss::
 be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx)
@@ -11,35 +7,53 @@ be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx)
 }
 
 be_visitor_operation_direct_proxy_impl_ss::
-~be_visitor_operation_direct_proxy_impl_ss (void)
+~be_visitor_operation_direct_proxy_impl_ss ()
 {
 }
 
 int
 be_visitor_operation_direct_proxy_impl_ss::visit_operation (
-    be_operation *node
-  )
+  be_operation *node)
 {
+  /// These implied IDL operations are not to be processed on
+  /// the skeleton side.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context.
-  be_interface *intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+  UTL_Scope *s =
+    this->ctx_->attribute ()
+      ? this->ctx_->attribute ()->defined_in ()
+      : node->defined_in ();
 
-  if (!intf)
+  be_interface *intf = dynamic_cast<be_interface*> (s);
+
+  if (intf == nullptr)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_direct_collocated_ss::"
-                         "visit_operation - "
-                         "bad interface scope\n"),
-                        -1);
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
+
+      if (pt == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_operation_")
+                             ACE_TEXT ("direct_proxy_impl_ss::")
+                             ACE_TEXT ("visit_operation - ")
+                             ACE_TEXT ("bad scope\n")),
+                            -1);
+        }
+      else
+        {
+          intf = this->ctx_->interface ();
+        }
     }
 
-  *os << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << intf->full_direct_proxy_impl_name () << "::";
@@ -58,7 +72,8 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
         }
     }
 
-  *os << node->local_name () << " (" << be_idt << be_idt_nl
+  *os << this->ctx_->port_prefix ().c_str ()
+      << node->local_name () << " (" << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase  *servant," << be_nl
       << "TAO::Argument **";
 
@@ -67,27 +82,19 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       *os << " args";
     }
 
-  *os << "," << be_nl
-      << "int " << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")";
-
-  if (this->gen_throw_spec (node) != 0)
-    {
-      return -1;
-    }
+  *os << ")" << be_uidt_nl;
 
   *os << be_uidt_nl
       << "{" << be_idt_nl;
 
-#if 0
-      << "TAO::Portable_Server::Servant_Upcall servant_upcall ("
-      << be_idt << be_idt_nl
-      << "obj->_stubobj ()"
-      << "->servant_orb_var ()->orb_core ()"
-      << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-#endif /*if 0*/
+  *os << intf->full_skel_name () << "_ptr _tao_ptr = " << be_idt_nl
+      << "dynamic_cast<" << intf->full_skel_name () << "_ptr> ("
+      << "servant);" << be_uidt_nl;
+
+  *os << "if (!_tao_ptr)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
 
   if (!node->void_return_type ())
     {
@@ -100,9 +107,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       *os << ">::ret_val *) args[0])->arg () =" << be_idt_nl;
     }
 
-  *os << "dynamic_cast<" << be_idt
-      << intf->full_skel_name () << "_ptr>" << be_nl << "("
-      << "servant)" << be_uidt_nl;
+  *os << "_tao_ptr";
 
   be_visitor_context ctx;
 
@@ -116,18 +121,12 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       *os << be_uidt;
     }
 
-  *os << be_uidt << be_uidt_nl;
+  *os << be_uidt << be_uidt << be_uidt_nl;
 
-  if (!be_global->exception_support ())
-    {
-      *os << "ACE_CHECK;";
-    }
-  *os << be_uidt_nl
-      << "}" << be_nl;
+  *os << "}" << be_nl << be_nl;
 
   return 0;
 }
-
 
 
 int
@@ -146,19 +145,18 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
 
   if (si.is_done ())
     {
-      *os << be_nl
-          << "ACE_ENV_SINGLE_ARG_PARAMETER" << be_uidt_nl
+      *os << be_uidt_nl
           << ");";
 
       return 0;
     }
 
-  AST_Argument *arg = 0;
+  AST_Argument *arg = nullptr;
   int index = 1;
 
   for (; !si.is_done (); si.next (), ++index)
     {
-      arg = AST_Argument::narrow_from_decl (si.item ());
+      arg = dynamic_cast<AST_Argument*> (si.item ());
 
       *os << (index == 1 ? "" : ",") << be_nl
           << "((TAO::Arg_Traits< ";
@@ -187,8 +185,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
     }
 
   // End the upcall
-  *os << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+  *os << be_uidt_nl
       << ");";
 
   return 0;

@@ -1,0 +1,5 @@
+
+
+This is a compile only test to check that the IDL compiler can deal with IDL containing unfeasibly long lines. If it builds - it's passed.
+
+The file OneLineCosNaming.idl is the complete IDL for the Naming Service, including comments, with all the newlines removed.

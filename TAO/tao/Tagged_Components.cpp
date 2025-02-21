@@ -1,17 +1,13 @@
-// $Id$
-
 #include "tao/Tagged_Components.h"
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Tagged_Components.i"
+# include "tao/Tagged_Components.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao,
-           Tagged_Components,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_Tagged_Components::set_orb_type (CORBA::ULong orb_type)
@@ -43,10 +39,8 @@ TAO_Tagged_Components::set_code_sets (
 void
 TAO_Tagged_Components::set_code_sets (CONV_FRAME::CodeSetComponentInfo &ci)
 {
-  this->set_code_sets_i (this->code_sets_.ForCharData,
-                         ci.ForCharData);
-  this->set_code_sets_i (this->code_sets_.ForWcharData,
-                         ci.ForWcharData);
+  this->set_code_sets_i (this->code_sets_.ForCharData, ci.ForCharData);
+  this->set_code_sets_i (this->code_sets_.ForWcharData, ci.ForWcharData);
   this->code_sets_set_ = 1;
 
   TAO_OutputCDR cdr;
@@ -62,10 +56,10 @@ TAO_Tagged_Components::set_code_sets_i (
     CONV_FRAME::CodeSetComponent &rhs)
 {
   lhs.native_code_set = rhs.native_code_set;
-  CORBA::ULong max = rhs.conversion_code_sets.maximum ();
-  CORBA::ULong len = rhs.conversion_code_sets.length ();
-  CONV_FRAME::CodeSetId *buffer = rhs.conversion_code_sets.get_buffer (1);
-  lhs.conversion_code_sets.replace (max, len, buffer, 1);
+  CORBA::ULong const max = rhs.conversion_code_sets.maximum ();
+  CORBA::ULong const len = rhs.conversion_code_sets.length ();
+  CONV_FRAME::CodeSetId *buffer = rhs.conversion_code_sets.get_buffer (true);
+  lhs.conversion_code_sets.replace (max, len, buffer, true);
 }
 
 // ****************************************************************
@@ -83,7 +77,7 @@ TAO_Tagged_Components::set_component_i (IOP::ComponentId tag,
   CORBA::Octet *buf = component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *i = cdr.begin ();
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
@@ -139,7 +133,7 @@ TAO_Tagged_Components::set_known_component_i (
 
   CORBA::Boolean byte_order;
 
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     {
       return;
     }
@@ -150,7 +144,7 @@ TAO_Tagged_Components::set_known_component_i (
     {
       CORBA::ULong orb_type;
 
-      if ((cdr >> orb_type) == 0)
+      if (!(cdr >> orb_type))
         {
           return;
         }
@@ -162,15 +156,13 @@ TAO_Tagged_Components::set_known_component_i (
     {
       CONV_FRAME::CodeSetComponentInfo ci;
 
-      if ((cdr >> ci) == 0)
+      if (!(cdr >> ci))
         {
           return;
         }
 
-      this->set_code_sets_i (this->code_sets_.ForCharData,
-                             ci.ForCharData);
-      this->set_code_sets_i (this->code_sets_.ForWcharData,
-                             ci.ForWcharData);
+      this->set_code_sets_i (this->code_sets_.ForCharData, ci.ForCharData);
+      this->set_code_sets_i (this->code_sets_.ForWcharData, ci.ForWcharData);
       this->code_sets_set_ = 1;
     }
 }
@@ -179,7 +171,7 @@ void
 TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
-  //    can't find out and take appropiate action.
+  //    can't find out and take appropriate action.
   for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
     {
       if (component.tag == this->components_[i].tag)
@@ -214,7 +206,7 @@ void
 TAO_Tagged_Components::add_component_i (IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
-  //    can't find out and take appropiate action.
+  //    can't find out and take appropriate action.
   CORBA::ULong l = this->components_.length ();
   this->components_.length (l + 1);
   this->components_[l].tag = component.tag;
@@ -228,7 +220,7 @@ void
 TAO_Tagged_Components::add_component_i (const IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
-  //    can't find out and take appropiate action.
+  //    can't find out and take appropriate action.
   CORBA::ULong l = this->components_.length ();
   this->components_.length (l + 1);
   this->components_[l] = component;
@@ -248,8 +240,7 @@ TAO_Tagged_Components::remove_component (IOP::ComponentId id)
 }
 
 int
-TAO_Tagged_Components::remove_known_component_i (
-    IOP::ComponentId tag)
+TAO_Tagged_Components::remove_known_component_i (IOP::ComponentId tag)
 {
   if (tag == IOP::TAG_ORB_TYPE)
     {
@@ -317,17 +308,16 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
   this->orb_type_set_ = 0;
   this->code_sets_set_ = 0;
 
-  if ((cdr >> this->components_) == 0)
+  if (!(cdr >> this->components_))
     {
       return 0;
     }
 
-  CORBA::ULong l = this->components_.length ();
+  CORBA::ULong const l = this->components_.length ();
 
   for (CORBA::ULong i = 0; i != l; ++i)
     {
-      const IOP::TaggedComponent &component =
-        this->components_[i];
+      const IOP::TaggedComponent &component = this->components_[i];
 
       if (this->known_tag (component.tag))
         {
@@ -338,3 +328,4 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
   return 1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

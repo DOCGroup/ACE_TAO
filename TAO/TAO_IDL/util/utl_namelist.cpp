@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -68,55 +66,61 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	     It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	     will cease to operate correctly if you use either multiple or
-//	     public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
 #include "utl_namelist.h"
 
-ACE_RCSID (util, 
-           utl_namelist, 
-           "$Id$")
-
-UTL_NameList::UTL_NameList (UTL_ScopedName *s, 
+UTL_NameList::UTL_NameList (UTL_ScopedName *s,
                             UTL_NameList *cdr)
-	: UTL_List (cdr),
-	  pd_car_data (s),
-    pd_truncatable (I_FALSE)
+  : UTL_List (cdr),
+    pd_car_data (s),
+    pd_truncatable (false)
 {
 }
 
 // Get list item.
 UTL_ScopedName *
-UTL_NameList::head (void)
+UTL_NameList::head ()
 {
   return this->pd_car_data;
 }
 
-idl_bool
-UTL_NameList::truncatable (void) const
+bool
+UTL_NameList::truncatable () const
 {
   return this->pd_truncatable;
 }
 
 void
-UTL_NameList::truncatable (idl_bool val)
+UTL_NameList::truncatable (bool val)
 {
   this->pd_truncatable = val;
 }
 
+void
+UTL_NameList::destroy ()
+{
+  this->pd_car_data->destroy ();
+  delete this->pd_car_data;
+  this->pd_car_data = nullptr;
+
+  this->UTL_List::destroy ();
+}
+
 UTL_NamelistActiveIterator::UTL_NamelistActiveIterator (UTL_NameList *s)
-	: UTL_ListActiveIterator(s)
+  : UTL_ListActiveIterator(s)
 {
 }
 
 // Get current item.
 UTL_ScopedName *
-UTL_NamelistActiveIterator::item (void)
+UTL_NamelistActiveIterator::item ()
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_NameList *) source)->head ();

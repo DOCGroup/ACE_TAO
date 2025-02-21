@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -84,24 +82,14 @@ public:
       dir_INOUT = 0x04
     };
 
-  // Operations.
-
-  // Constructor(s).
-  AST_Argument (void);
-
   AST_Argument (Direction direction,
                 AST_Type *ft,
                 UTL_ScopedName *n);
 
-  // Destructor.
-  virtual ~AST_Argument (void);
+  virtual ~AST_Argument ();
 
   // Data Accessors.
-  Direction direction (void);
-
-  // Narrowing
-  DEF_NARROW_METHODS1(AST_Argument, AST_Field);
-  DEF_NARROW_FROM_DECL(AST_Argument);
+  Direction direction ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -109,11 +97,14 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-private:
-  // Data.
+  // Cleanup.
+  virtual void destroy ();
 
+  static AST_Decl::NodeType const NT;
+
+private:
   const Direction pd_direction;
-  // Argument direction
+  // Argument direction.
 };
 
 #endif           // _AST_ARGUMENT_AST_ARGUMENT_HH

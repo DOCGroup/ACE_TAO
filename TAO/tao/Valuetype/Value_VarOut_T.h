@@ -4,8 +4,6 @@
 /**
  *  @file    Value_VarOut_T.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  */
 //=============================================================================
@@ -23,79 +21,71 @@
 
 #include "tao/varbase.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
    * struct Value_Traits
    *
    * @brief Specialized for each valuetype in generated code.
-   *
    */
-  template<typename T>
-  struct Value_Traits
-  {
-    static void add_ref (T *);
-    static void remove_ref (T *);
-
-    // For INOUT value type arguments, so they can use the same set
-    // of arg classes as interfaces.
-    static void release (T *);
-  };
+  template<typename T> struct Value_Traits;
 }
 
 /**
  * @class TAO_Value_Var_T
  *
  * @brief Parametrized implementation of _var class for valuetypes.
- *
  */
 template <typename T>
 class TAO_Value_Var_T : private TAO_Base_var
 {
 public:
-  TAO_Value_Var_T (void);
+  TAO_Value_Var_T ();
   TAO_Value_Var_T (T *);
   TAO_Value_Var_T (const TAO_Value_Var_T<T> &);
 
   // (TAO extension)
   TAO_Value_Var_T (const T *);
 
-  ~TAO_Value_Var_T (void);
+  ~TAO_Value_Var_T ();
 
   TAO_Value_Var_T &operator= (T *);
   TAO_Value_Var_T &operator= (const TAO_Value_Var_T<T> &);
 
-  T * operator-> (void) const;
+  T * operator-> () const;
 
   operator const T * () const;
   operator T *& ();
 
+  typedef T *  _in_type;
+  typedef T *& _inout_type;
+  typedef T *& _out_type;
+  typedef T *  _retn_type;
+
   // in, inout, out, _retn
-  T * in (void) const;
-  T *& inout (void);
-  T *& out (void);
-  T * _retn (void);
+  _in_type in () const;
+  _inout_type inout ();
+  _out_type out ();
+  _retn_type _retn ();
 
   // (TAO extension)
-  T * ptr (void) const;
+  T * ptr () const;
 
 private:
-
   // Prevent widening assignment.
   TAO_Value_Var_T (const TAO_Base_var &);
   void operator= (const TAO_Base_var &);
 
 private:
-
   T * ptr_;
-
 };
 
 /**
  * @class TAO_Value_Var_T
  *
  * @brief Parametrized implementation of _out class for valuetypes.
- *
  */
 template <typename T>
 class TAO_Value_Out_T
@@ -106,26 +96,22 @@ public:
   TAO_Value_Out_T (const TAO_Value_Out_T<T> &);
 
   TAO_Value_Out_T &operator= (const TAO_Value_Out_T<T> &);
-  TAO_Value_Out_T &operator= (const TAO_Value_Var_T<T> &);
   TAO_Value_Out_T &operator= (T *);
 
   operator T *& ();
-  T *& ptr (void);
+  T *& ptr ();
 
-  T * operator-> (void);
+  T * operator-> ();
 
 private:
-  typedef TAO_Value_Out_T<T> THIS_OUT_TYPE;
   T *& ptr_;
+  /// Assignment from _var not allowed.
+  TAO_Value_Out_T &operator= (const TAO_Value_Var_T<T> &);
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Value_VarOut_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Value_VarOut_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/Valuetype/Value_VarOut_T.cpp"
 
 #include /**/ "ace/post.h"
 

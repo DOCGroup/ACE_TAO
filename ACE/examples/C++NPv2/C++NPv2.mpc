@@ -1,0 +1,180 @@
+// -*- MPC -*-
+// The specific section for gnuace is here to avoid problems
+// with parallel builds.  Since the libraries in question share source
+// files, we need to ensure that one of them is built before all others.
+// Also, a specific section was used because you can't set build order
+// without setting a build dependency within vc6 and the like.
+
+project(*AC_CLD) : acelib, ssl, threads {
+  avoids += uses_wchar
+  sharedname = AC_CLD
+  dynamicflags += AC_CLD_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
+  Source_Files {
+    AC_Client_Logging_Daemon.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*AIO_CLD) : acelib, ssl {
+  sharedname = AIO_CLD
+  dynamicflags += AIO_CLD_BUILD_DLL
+  Source_Files {
+    AIO_Client_Logging_Daemon.cpp
+  }
+}
+
+project(*CLD) : acelib, avoids_ace_for_tao {
+  avoids += uses_wchar
+  sharedname = CLD
+  dynamicflags += CLD_BUILD_DLL
+  Source_Files {
+    Client_Logging_Daemon.cpp
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*Configurable_Log_Server) : aceexe {
+  avoids += uses_wchar
+  exename = configurable_logging_server
+  Source_Files {
+    Configurable_Logging_Server.cpp
+    Service_Reporter.cpp
+  }
+}
+
+project(*Display_Logfile) : aceexe, avoids_ace_for_tao {
+  exename = display_logfile
+  Source_Files {
+    display_logfile.cpp
+  }
+}
+
+project(*Reactor_Log_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = reactor_logging_server
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    Reactor_Logging_Server.cpp
+  }
+}
+
+project(*Select_Reactor_Log_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = select_reactor_logging_server
+  specific(gnuace) {
+    after += *Reactor_Log_Server
+  }
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    Select_Reactor_Logging_Server.cpp
+  }
+}
+
+project(*SLD) : acelib, avoids_ace_for_tao {
+  avoids += uses_wchar
+  sharedname = SLD
+  dynamicflags += SLD_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
+  Source_Files {
+    SLD.cpp
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*SLDex) : acelib, avoids_ace_for_tao {
+  avoids += uses_wchar
+  sharedname = SLDex
+  dynamicflags += SLDEX_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    Reactor_Logging_Server_Adapter.cpp
+    Server_Shutdown.cpp
+    SLDex.cpp
+  }
+}
+
+project(*SR_Configurable_Log_Server) : aceexe {
+  exename = sr_configurable_logging_server
+  Source_Files {
+    SR_Configurable_Logging_Server.cpp
+  }
+}
+
+project(*TP_Reactor_Log_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = tp_reactor_logging_server
+  specific(gnuace) {
+    after += *Reactor_Log_Server
+  }
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    TP_Reactor_Logging_Server.cpp
+  }
+}
+
+project(*TPCLS) : acelib, ssl {
+  avoids += uses_wchar
+  sharedname = TPCLS
+  dynamicflags += TPCLS_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
+  Source_Files {
+    TPC_Logging_Server.cpp
+    Logging_Handler.cpp
+  }
+}
+
+project(*TPLS) : acelib, avoids_ace_for_tao {
+  avoids += uses_wchar
+  sharedname = TPLS
+  dynamicflags += TPLS_BUILD_DLL
+  specific(gnuace) {
+    after += *CLD
+  }
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Handler.cpp
+    TP_Logging_Server.cpp
+  }
+}
+
+project(*WFMO_Reactor_Log_Server) : aceexe, wfmo, avoids_ace_for_tao {
+  avoids += uses_wchar
+  exename = wfmo_reactor_logging_server
+  specific(gnuace) {
+    after += *Reactor_Log_Server
+  }
+  Source_Files {
+    Logging_Acceptor.cpp
+    Logging_Event_Handler.cpp
+    Logging_Event_Handler_Ex.cpp
+    Logging_Handler.cpp
+    WFMO_Reactor_Logging_Server.cpp
+  }
+}

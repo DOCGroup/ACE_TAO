@@ -1,23 +1,21 @@
-// $Id$
-
 #ifndef TAO_ESF_IMMEDIATE_CHANGES_CPP
 #define TAO_ESF_IMMEDIATE_CHANGES_CPP
 
-#include "ESF_Immediate_Changes.h"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Immediate_Changes.i"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
-ACE_RCSID(ESF, ESF_Immediate_Changes, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
 template<class PROXY, class C, class ITERATOR, class ACE_LOCK>
 TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
-    TAO_ESF_Immediate_Changes (void)
+    TAO_ESF_Immediate_Changes ()
 {
 }
 
@@ -30,8 +28,7 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
 
 template<class PROXY, class C, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
-    for_each (TAO_ESF_Worker<PROXY> *worker
-              ACE_ENV_ARG_DECL)
+    for_each (TAO_ESF_Worker<PROXY> *worker)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -39,9 +36,10 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
   ITERATOR end = this->collection_.end ();
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
-      worker->work ((*i) ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      worker->work ((*i));
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_IMMEDIATE_CHANGES_CPP */

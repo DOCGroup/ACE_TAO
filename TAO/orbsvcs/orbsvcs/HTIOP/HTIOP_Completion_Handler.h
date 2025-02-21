@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
  *  @file   HTIOP_Completion_Handler.h
- *
- *  $Id$
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
@@ -24,8 +22,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "HTIOP_Export.h"
-#include "HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Export.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 // ****************************************************************
@@ -34,7 +34,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     /**
      * @class Completion_Handler
      *
@@ -45,26 +44,24 @@ namespace TAO
      * are known so the stream may be handed off to either an existing
      * session, or to a newly created one.
      */
-
+    typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY2;
     typedef TAO_Concurrency_Strategy<Connection_Handler> CONCURRENCY_STRATEGY2;
 
     typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> COMPLETION_BASE;
 
     class HTIOP_Export Completion_Handler : public COMPLETION_BASE
     {
-
     public:
       Completion_Handler (ACE_Thread_Manager* t = 0);
-      /// Constructor. <arg> parameter is used by the Acceptor to pass the
-      /// protocol configuration properties for this connection.
+      /// Constructor.
       Completion_Handler (TAO_ORB_Core *orb_core,
-                          CORBA::Boolean = 0 );
+                          CORBA::Boolean = false);
 
       /// Destructor.
-      ~Completion_Handler (void);
+      ~Completion_Handler ();
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
-      /// connected.  Argument is unused.
+      /// connected. Argument is unused.
       virtual int open (void *);
 
       //@{
@@ -72,24 +69,21 @@ namespace TAO
        */
       virtual int handle_input (ACE_HANDLE);
 
-      virtual int resume_handler (void);
+      virtual int resume_handler ();
       virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
       //@}
 
-      // this does nothing, but satisfies a requirement for the TAO_Accept_stratgy.
-      int add_transport_to_cache (void);
-
     private:
-      int make_svc_handler (Connection_Handler *&sh);
-      int activate_svc_handler (Connection_Handler *sh);
-
       TAO_ORB_Core *orb_core_;
       ACE::HTBP::Channel *channel_;
 
+      CREATION_STRATEGY2 *creation_strategy_;
       CONCURRENCY_STRATEGY2 *concurrency_strategy_;
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* HTIOP_COMPLETION_HANDLER_H */

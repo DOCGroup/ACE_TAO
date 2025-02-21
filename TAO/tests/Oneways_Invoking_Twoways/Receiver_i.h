@@ -1,9 +1,6 @@
-// This may look like C, but it's really -*- C++ -*-
 // ===================================================================
 /**
  *  @file   Receiver_i.h
- *
- *  $Id$
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  **/
@@ -30,15 +27,18 @@ public:
               CORBA::ULong iter);
 
   ///Destructor
-  virtual ~Receiver_i (void);
+  virtual ~Receiver_i ();
 
   // = The skeleton methods
-  virtual CORBA::Long receive_call (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long receive_call ();
 
   /// Retun the number of calls that every thread would make...
-  virtual CORBA::Long get_call_count (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long get_call_count ();
+
+  virtual void shutdown ();
+
+  /// Number of calls processed so far..
+  CORBA::ULong no_calls_;
 
 private:
   /// Our Orb...
@@ -49,9 +49,6 @@ private:
 
   /// Number of invocations to be made on the sender..
   CORBA::ULong iteration_;
-
-  /// Number of calls processed so far..
-  CORBA::ULong no_calls_;
 };
 
 #include /**/ "ace/post.h"

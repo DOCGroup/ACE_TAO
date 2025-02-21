@@ -1,7 +1,7 @@
-// $Id$
-
-#include "HTIOP_Connector.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/HTIOP/HTIOP_Connector.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
@@ -10,18 +10,16 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Connect_Strategy.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "ace/Strategies_T.h"
+#include "ace/OS_NS_strings.h"
 
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Connector,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
   : TAO_Connector (OCI_TAG_HTIOP_PROFILE),
@@ -31,7 +29,7 @@ TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
 {
 }
 
-TAO::HTIOP::Connector::~Connector (void)
+TAO::HTIOP::Connector::~Connector ()
 {
 }
 
@@ -49,8 +47,7 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (this->connect_creation_strategy_,
                   CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
-                       orb_core,
-                       0),
+                       orb_core),
                   -1);
 
 
@@ -62,7 +59,7 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO::HTIOP::Connector::close (void)
+TAO::HTIOP::Connector::close ()
 {
   delete this->concurrency_strategy_;
   delete this->connect_creation_strategy_;
@@ -100,11 +97,11 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
      {
        if (TAO_debug_level > 0)
          {
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_LIB_TEXT ("TAO (%P|%t) TAO_HTIOP connection failed.\n")
-                       ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
-                       ACE_LIB_TEXT ("due to a hostname lookup ")
-                       ACE_LIB_TEXT ("failure.\n")));
+           ORBSVCS_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO (%P|%t) TAO_HTIOP connection failed.\n")
+                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
+                       ACE_TEXT ("due to a hostname lookup ")
+                       ACE_TEXT ("failure.\n")));
          }
 
        return -1;
@@ -114,11 +111,10 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 }
 
 TAO_Transport *
-TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
+TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout)
 {
-
   /**
    * \par
    * Connector is used only in the processes inside the firewall
@@ -144,30 +140,25 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
 
   ACE::HTBP::Session_Id_t session_id;
-  ACE_INET_Addr *proxy;
-  ACE_CString proxy_host;
+  ACE_TString proxy_host;
   unsigned proxy_port;
 
-  int port_set = this->ht_env_->get_proxy_port(proxy_port);
-  int host_set = this->ht_env_->get_proxy_host(proxy_host);
+  int const port_set = this->ht_env_->get_proxy_port(proxy_port);
+  int const host_set = this->ht_env_->get_proxy_host(proxy_host);
   if (port_set != 0 ||
       host_set != 0)
     {
       proxy_port = htiop_endpoint->port();
-      proxy_host = htiop_endpoint->host();
+      proxy_host = ACE_TEXT_CHAR_TO_TCHAR(htiop_endpoint->host());
     }
   else
     {
       ACE::HTBP::ID_Requestor req(ht_env_);
-      session_id.local_ = req.get_HTID();
+      session_id.local_ = ACE_TEXT_ALWAYS_CHAR(req.get_HTID());
     }
 
   if (proxy_port == 0)
     return 0;
-
-  ACE_NEW_RETURN (proxy,
-                  ACE_INET_Addr(proxy_port,proxy_host.c_str()),
-                  0);
 
   session_id.peer_ = htiop_endpoint->object_addr ();
   session_id.id_ = ACE::HTBP::Session::next_session_id();
@@ -176,7 +167,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     {
       char buffer[BUFSIZ];
       htiop_endpoint->addr_to_string(buffer,BUFSIZ);
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - TAO::HTIOP::Connector::make_connection, "
                 "to <%s>\n",
                 buffer));
@@ -188,14 +179,9 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  // If we don't need to block for a transport just set the timeout to
-  // be zero.
-  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked_connect ())
-    {
-      synch_options.timeout (ACE_Time_Value::zero);
-      timeout = &tmp_zero;
-    }
+  // The code used to set the timeout to zero, with the intent of
+  // polling the reactor for connection completion. However, the side-effect
+  // was to cause the connection to timeout immediately.
 
   // This is where we need to set the ACE::HTBP::Stream to the connection
   // handler.
@@ -209,9 +195,13 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   ACE::HTBP::Session *session = 0;
   if (ACE::HTBP::Session::find_session (session_id, session) == -1)
     {
+      ACE_INET_Addr *proxy = 0;
+      ACE_NEW_RETURN (proxy,
+                      ACE_INET_Addr(static_cast<u_short> (proxy_port),proxy_host.c_str()),
+                      0);
       ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id,proxy, 1), 0);
       if (ACE::HTBP::Session::add_session (session) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "ACE::HTBP::Initial_Filter::recv_data_header %p",
                            "add_session"),
                           0);
@@ -220,6 +210,9 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // Make the svc_handler
   this->connect_creation_strategy_->make_svc_handler (svc_handler);
   // we now have a connection handler that has an unconnected stream
+
+  // Make sure that we always do a remove_reference
+  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
   svc_handler->peer().session(session);
   session->handler(svc_handler);
@@ -237,15 +230,11 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // strategy, which does not apply here. Therefore the whole bit of logic
   // of dealing with a failed wait but an unclosed svc_handler is skipped.
 
-
-  // Regardless of success or failure, remove the extra #REFCOUNT#.
-  svc_handler->remove_reference ();
-
   if (closed) // would be result == -1 in IIOP_Connector
     {
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
                       ACE_TEXT("connection to  <%s:%d> failed (%p)\n"),
                        htiop_endpoint->host (), htiop_endpoint->port (),
@@ -255,7 +244,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     }
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
                 ACE_TEXT("new connection to <%s:%d> on Transport[%d]\n"),
                 htiop_endpoint->host (), htiop_endpoint->port (),
@@ -272,12 +261,12 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     this->orb_core ()->lane_resources ().
     transport_cache ().cache_transport (&desc, transport);
 
-  if (retval != 0)
+  if (retval == -1)
     {
       svc_handler->close();
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
                       ACE_TEXT("could not add the new")
                       ACE_TEXT(" connection to cache\n")));
@@ -295,7 +284,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
                       ACE_TEXT("could not register the new connection")
                       ACE_TEXT(" in the reactor\n")));
@@ -303,6 +292,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
+  svc_handler_auto_ptr.release ();
   return transport;
 }
 
@@ -320,13 +310,12 @@ TAO::HTIOP::Connector::cancel_svc_handler (
     return 0;
 
   return -1;
-
 }
 
 
 /**
  * @brief Create a profile and initialize it based on the
- * encapsulation in <cdr>
+ * encapsulation in @a cdr
  */
 TAO_Profile *
 TAO::HTIOP::Connector::create_profile (TAO_InputCDR& cdr)
@@ -350,7 +339,7 @@ TAO::HTIOP::Connector::create_profile (TAO_InputCDR& cdr)
  * @brief Create a profile with a given endpoint.
  */
 TAO_Profile *
-TAO::HTIOP::Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO::HTIOP::Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -365,7 +354,6 @@ TAO::HTIOP::Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return profile;
 }
@@ -395,7 +383,7 @@ TAO::HTIOP::Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO::HTIOP::Connector::object_key_delimiter (void) const
+TAO::HTIOP::Connector::object_key_delimiter () const
 {
   return TAO::HTIOP::Profile::object_key_delimiter_;
 }
@@ -415,38 +403,4 @@ TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
   return htiop_endpoint;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Connect_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO::HTIOP::Connection_Handler>;
-
-//template class ACE_Strategy_Connector<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>;
-//template class ACE_Connect_Strategy<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>;
-//template class ACE_Connector<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>;
-
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*>;
-template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO::HTIOP::Connection_Handler>
-
-//#pragma instantiate ACE_Strategy_Connector<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>
-//#pragma instantiate ACE_Connect_Strategy<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>
-//#pragma instantiate ACE_Connector<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>
-
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

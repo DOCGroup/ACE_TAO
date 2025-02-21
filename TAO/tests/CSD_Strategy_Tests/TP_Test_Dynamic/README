@@ -1,0 +1,38 @@
+
+
+===========================================================================
+Directory: $TAO_ROOT/tests/CSD_Strategy_Tests/TP_Test_5
+
+===========================================================================
+
+===========================================================================
+Directory: $TAO_ROOT/tests/CSD_Strategy_Tests/TP_Test_Static
+
+===========================================================================
+This test shows the ThreadPool strategy can automatically apply to the poa
+via service configuration file dynamic directive.
+
+This simple test is a copy of $TAO_ROOT/tests/Hello test. The difference is
+this test contains the svc.conf file to configure the CSD strategies and the
+poas that apply the CSD strategy.
+
+A new TP_Strategy object is created during the initialization of the
+TP_Strategy_Factory service object and it will be automatically applied to
+a poa.
+
+The service configuration file specifies the number of threads that
+the ThreadPool strategy have and also specify which poa the strategy should
+apply to. We can specify multiple ThreadPool strategies and the poas via -CSDtp
+option.
+
+e.g
+dynamic TAO_CSD_TP_Strategy_Factory Service_Object *
+TAO_CSD_ThreadPool:_make_TAO_CSD_TP_Strategy_Factory() "-CSDtp RootPOA:2 -CSDtp childpoa:4"
+
+
+To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+

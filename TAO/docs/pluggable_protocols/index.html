@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 
-<!-- $Id$ -->
+<!--  -->
 
 <HTML>
 <HEAD>
@@ -59,9 +59,9 @@ links that describe TAO's pluggable protocols framework, though not
 how to implement one: <BLOCKQUOTE> <A
 HREF="../releasenotes/index.html#pp">../releasenotes/index.html#pp</A><BR>
 
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/PfHSN.pdf">http://www.cs.wustl.edu/~schmidt/PDF/PfHSN.pdf</A><BR>
+<A HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/PfHSN.pdf">http://www.dre.vanderbilt.edu/~schmidt/PDF/PfHSN.pdf</A><BR>
 <A
-HREF="http://www.cs.wustl.edu/~schmidt/PDF/pluggable_protocols.pdf">http://www.cs.wustl.edu/~schmidt/PDF/pluggable_protocols.pdf</A>
+HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/pluggable_protocols.pdf">http://www.dre.vanderbilt.edu/~schmidt/PDF/pluggable_protocols.pdf</A>
 </BLOCKQUOTE>
 
 <P>
@@ -131,7 +131,7 @@ Overview of Implementation of Pluggable Protocols for TAO</A>
 <P>
 There are several basic implementation details that should be followed when
 implementing pluggable protocols for
-<A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>. This
+<A HREF="http://www.dre.vanderbilt.edu/~schmidt/TAO.html">TAO</A>. This
 section describes them.
 
 <P>
@@ -142,7 +142,7 @@ The Hard Way</A>
 
 <P>
 It is possible to implement a pluggable protocol for TAO without using
-any <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
+any <A HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE.html">ACE</A>
 components, or using existing pluggable protocols as a reference, but that is
 certainly more difficult than taking advantage of the code reuse offered by
 using existing ACE and TAO models and implementations.
@@ -374,7 +374,7 @@ object, hiding the transport- and strategy-specific details of the acceptor.
 
 <P>
 TAO's <TT>Acceptor</TT> interface, shown below, is declared in the  file
-<TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+<TT>&lt;<A HREF="../../tao/Transport_Acceptor.h">tao/Transport_Acceptor.h</A>&gt;</TT>.
 All <TT>Acceptor</TT> implementations must inherit from the <TT>TAO_Acceptor</TT>
 abstract base class.
 
@@ -969,7 +969,8 @@ object and to the <TT>Transport</TT> objects that were created.
 </H3>
 
 <P>
-TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;
+<A HREF="../../tao/Transport_Connector.h">tao/Transport_Connector.h</A>&gt;</TT>.
 All <TT>Connector</TT> implementations must inherit from the <TT>TAO_Connector</TT>
 abstract base class.
 
@@ -1053,7 +1054,7 @@ public:&nbsp;
 <BR>
 &nbsp;&nbsp;//&nbsp;To&nbsp;support&nbsp;pluggable&nbsp;we&nbsp;need&nbsp;to&nbsp;abstract&nbsp;away&nbsp;the&nbsp;connect()&nbsp;
 <BR>
-&nbsp;&nbsp;//&nbsp;method&nbsp;so&nbsp;it&nbsp;can&nbsp;be&nbsp;called&nbsp;from&nbsp;the&nbsp;GIOP&nbsp;code&nbsp;independant&nbsp;of&nbsp;the&nbsp;
+&nbsp;&nbsp;//&nbsp;method&nbsp;so&nbsp;it&nbsp;can&nbsp;be&nbsp;called&nbsp;from&nbsp;the&nbsp;GIOP&nbsp;code&nbsp;independent&nbsp;of&nbsp;the&nbsp;
 <BR>
 &nbsp;&nbsp;//&nbsp;actual&nbsp;transport&nbsp;protocol&nbsp;in&nbsp;use.&nbsp;
 <BR>
@@ -1316,7 +1317,7 @@ as follows:
 <DD>uioploc:///tmp/foobar/some_other_object_key</DD>
 </DL>
 <P>
-it then becomes impossible to tell if the rendezous point is ``<TT>/tmp</TT>''
+it then becomes impossible to tell if the rendezvous point is ``<TT>/tmp</TT>''
 or ``<TT>/tmp/foobar</TT>,'' and similarly for the object key, hence the need
 for an object key delimiter other than `<TT>/</TT>.'
 
@@ -1328,7 +1329,7 @@ that contains the object key delimiter appropriate for the given pluggable proto
  </DD>
 <DT><STRONG><TT>create_profile</TT>.</STRONG></DT>
 <DD>This method creates and initializes a profile using
-the provided CDR stream. Most of this code is also ``boilerblate.'' As such,
+the provided CDR stream. Most of this code is also ``boilerplate.'' As such,
 it may be factored out in future TAO releases.</DD>
 <P>
 <DT><STRONG><TT>make_profile</TT>.</STRONG></DT>
@@ -2199,7 +2200,7 @@ class.
 
 <P>
 All TAO pluggable protocol <TT>Transport</TT> classes must inherit from the
-<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="../../tao/Transport.h">tao/Transport.h</A>&gt;</TT>.
 The <TT>TAO_Transport</TT> interface is shown below. Again, only the methods
 that should be implemented for a given pluggable protocol are shown:
 
@@ -2369,7 +2370,7 @@ public:&nbsp;
 <BR>
 &nbsp;&nbsp;//&nbsp;Using&nbsp;this&nbsp;method,&nbsp;instead&nbsp;of&nbsp;send(),&nbsp;allows&nbsp;the&nbsp;transport&nbsp;(and&nbsp;
 <BR>
-&nbsp;&nbsp;//&nbsp;wait&nbsp;strategy)&nbsp;to&nbsp;take&nbsp;appropiate&nbsp;action.&nbsp;
+&nbsp;&nbsp;//&nbsp;wait&nbsp;strategy)&nbsp;to&nbsp;take&nbsp;appropriate&nbsp;action.&nbsp;
 <BR>
 &nbsp;
 <BR>
@@ -2467,7 +2468,7 @@ useful for clients.</DD>
 <DD>Depending on the concurrency strategy used by the transport
 it may be required to setup state to receive a reply before the request is sent.
 Using this method, instead of <TT>send</TT>, allows the transport (and wait
-strategy) to take appropiate action. This method is closely tied to TAO's GIOP
+strategy) to take appropriate action. This method is closely tied to TAO's GIOP
 implementation. <TT>send_request</TT> implementations should essentially be
 the same in all pluggable protocol implementations. The only thing that should
 differ is the type of <TT>Profile</TT> being used. Note that this method is
@@ -2558,38 +2559,38 @@ were:
 <BLOCKQUOTE>
 Reactor (
 <A HREF="http://www.cs.wustl.edu/~schmidt/Reactor.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor.pdf">PDF</A>
+<A HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/Reactor.pdf">PDF</A>
 )<BR>
 
 Reactor1-93 (
 <A HREF="http://www.cs.wustl.edu/~schmidt/Reactor1-93.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor1-93.pdf">PDF</A>
+<A HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/Reactor1-93.pdf">PDF</A>
 )<BR>
 
 Reactor2-93 (
 <A HREF="http://www.cs.wustl.edu/~schmidt/Reactor2-93.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor2-93.pdf">PDF</A>
+<A HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/Reactor2-93.pdf">PDF</A>
 )<BR>
 
 reactor-rules (
 <A HREF="http://www.cs.wustl.edu/~schmidt/reactor-rules.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-rules.pdf">PDF</A>
+<A HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/reactor-rules.pdf">PDF</A>
 )<BR>
 
 reactor-siemens (
 <A HREF="http://www.cs.wustl.edu/~schmidt/reactor-siemens.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-siemens.pdf">PDF</A>
+<A HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/reactor-siemens.pdf">PDF</A>
 )<BR>
 
 Svc-Conf (
 <A
 HREF="http://www.cs.wustl.edu/~schmidt/Svc-Conf.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">PDF</A>
+<A HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/Svc-Conf.pdf">PDF</A>
 )<BR>
 
 Acc-Con (
 <A HREF="http://www.cs.wustl.edu/~schmidt/Acc-Con.ps.gz">PostScript</A>
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Acc-Con.pdf">PDF</A>
+<A HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/Acc-Con.pdf">PDF</A>
 )
 </BLOCKQUOTE>
 <P>These are all readily available from the TAO and ACE website.
@@ -2916,7 +2917,7 @@ Bibliography</A>
 </H3><DL COMPACT><DD><P></P><DT><A NAME="Schmidt:97c">1</A>
 <DD>
 D. C. Schmidt,
-``<A HREF=http://www.cs.wustl.edu/~schmidt/PDF/Acc-Con.pdf>
+``<A HREF=http://www.dre.vanderbilt.edu/~schmidt/PDF/Acc-Con.pdf>
   Acceptor and Connector: Design Patterns for Initializing
   Communication Services</A>,''
   in <EM> Pattern Languages of Program Design</EM>
@@ -2926,7 +2927,7 @@ D. C. Schmidt,
 <P></P><DT><A NAME="Schmidt:97e">2</A>
 <DD>
 C. Cleeland, D. C. Schmidt and T. Harrison,
-``<A HREF=http://www.cs.wustl.edu/~schmidt/PDF/External-Polymorphism.pdf>
+``<A HREF=http://www.dre.vanderbilt.edu/~schmidt/PDF/External-Polymorphism.pdf>
   External Polymorphism -- An Object Structural Pattern for
   Transparently Extending Concrete Data Types</A>,''
   in <EM> Pattern Languages of Program Design</EM>
@@ -2936,7 +2937,7 @@ C. Cleeland, D. C. Schmidt and T. Harrison,
 <P></P><DT><A NAME="Schmidt:94k">3</A>
 <DD>
 D. C. Schmidt and T. Suda,
-  ``<A HREF=http://www.cs.wustl.edu/~schmidt/PDF/DSEJ-94.pdf>
+  ``<A HREF=http://www.dre.vanderbilt.edu/~schmidt/PDF/DSEJ-94.pdf>
   An Object-Oriented Framework for Dynamically
   Configuring Extensible Distributed Communication Systems</A>,'' <EM> IEE/BCS
   Distributed Systems Engineering Journal (Special Issue on Configurable
@@ -2951,14 +2952,14 @@ H. Hueni, R. Johnson, and R. Engel, ``A Framework for Network Protocol
 <P></P><DT><A NAME="Buschmann:95b">5</A>
 <DD>
 F. Buschmann, R. Meunier, H. Rohnert, P. Sommerlad, and M. Stal, <A
-HREF="http://www.cs.wustl.edu/~schmidt/POSA/">Pattern-Oriented Software
+HREF="http://www.dre.vanderbilt.edu/~schmidt/POSA/">Pattern-Oriented Software
 Architecture - A System of Patterns</EM>.</A> Wiley and Sons, 1996.
 
 <P></P><DT><A NAME="Schmidt:99x">6</A>
 <DD>
 Carlos O'Ryan, Fred Kuhns, Douglas C. Schmidt, Ossama Othman, and Jeff
 Parsons, <A
-HREF="http://www.cs.wustl.edu/~schmidt/PDF/pluggable_protocols.pdf"> The
+HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/pluggable_protocols.pdf"> The
 Design and Performance of a Pluggable Protocols Framework for
 Real-time Distributed Object Computing Middleware</A>, Proceedings of
 the IFIP/ACM <A
@@ -2967,7 +2968,7 @@ Conference, Pallisades, New York, April 3-7, 2000. <P>
 
 <P></P><DT><A NAME="Schmidt:99c">7</A> <DD> Fred Kuhns, Carlos O'Ryan,
 Douglas C. Schmidt, Ossama Othman, and Jeff Parsons, <A
-HREF="http://www.cs.wustl.edu/~schmidt/PDF/PfHSN.pdf">The Design and
+HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/PfHSN.pdf">The Design and
 Performance of a Pluggable Protocols Framework for Object Request
 Broker Middleware,</A> Proceedings of the <A
 HREF="http://www.isi.edu/pfhsn99/call.html">IFIP Sixth International

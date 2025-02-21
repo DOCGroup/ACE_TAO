@@ -1,0 +1,62 @@
+
+
+The test should complete without exceptions or asserts.
+
+This test checks that simply calling GetSlot works at every
+Server side interception point.
+
+This used to trigger the following assert in the send_reply
+interception point if the slot had not actually been updated
+after the RSC->TSC logical copy that occurs after the
+"receive_request_service_contexts" (such as in the
+"receive_request" or the actual IDL interface implementation
+code) before the logical copy TSC->RSC that then occurs
+before the "send_reply" interception point.
+
+send_reply -> get_slot(TSC) -> long (62) SERVER
+send_reply -> get_slot(RSC)
+ACE_ASSERT: file ...\TAO\tao\PI\PICurrent_Impl.cpp, line 53
+assertion failed for 'this->lc_slot_table_ !=
+&this->slot_table_'.Aborting...
+
+This test also checks that the set_slot(RSC) does not effect
+the TSC that exists before the first logical copy (at the end
+of receive_request_service_contexts) and after the second
+logical copy that occurs after the IDL interface implimentation
+call (i.e. during send_reply).
+
+The run should look like this:
+
+Allocated slot with id 0.
+Server is ready, IOR is in 'server.ior'
+SERVER receive_request_service_contexts -> get_slot(TSC) -> is EMPTY -> OK
+SERVER receive_request_service_contexts -> get_slot(RSC) -> is EMPTY -> OK
+SERVER receive_request_service_contexts -> set_slot(RSC) -> long (62)
+SERVER receive_request_service_contexts -> get_slot(TSC) -> is EMPTY -> OK
+SERVER receive_request_service_contexts -> get_slot(RSC) -> is long (62) -> OK
+SERVER receive_request -> get_slot(TSC) -> is long (62) -> OK
+SERVER receive_request -> get_slot(RSC) -> is long (62) -> OK
+invoke_me
+SERVER send_reply -> get_slot(TSC) -> is long (62) -> OK
+SERVER send_reply -> get_slot(RSC) -> is long (62) -> OK
+SERVER send_reply -> set_slot(RSC) -> long (63)
+SERVER send_reply -> get_slot(TSC) -> is long (62) -> OK
+SERVER send_reply -> get_slot(RSC) -> is long (63) -> OK
+
+SERVER receive_request_service_contexts -> get_slot(TSC) -> is long (62) -> OK
+SERVER receive_request_service_contexts -> get_slot(RSC) -> is EMPTY -> OK
+SERVER receive_request_service_contexts -> set_slot(RSC) -> long (62)
+SERVER receive_request_service_contexts -> get_slot(TSC) -> is long (62) -> OK
+SERVER receive_request_service_contexts -> get_slot(RSC) -> is long (62) -> OK
+SERVER receive_request -> get_slot(TSC) -> is long (62) -> OK
+SERVER receive_request -> get_slot(RSC) -> is long (62) -> OK
+invoke_me
+SERVER send_reply -> get_slot(TSC) -> is long (62) -> OK
+SERVER send_reply -> get_slot(RSC) -> is long (62) -> OK
+SERVER send_reply -> set_slot(RSC) -> long (63)
+SERVER send_reply -> get_slot(TSC) -> is long (62) -> OK
+SERVER send_reply -> get_slot(RSC) -> is long (63) -> OK
+
+
+Server is shutting down.
+Event loop finished.

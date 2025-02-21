@@ -4,8 +4,6 @@
 /**
  * @file FOO_IORInterceptor_ORBInitializer.h
  *
- * $Id$
- *
  * Implementation header for the "FOO" IOR test interceptor ORB
  * initializer.
  *
@@ -40,10 +38,9 @@
  */
 class FOO_IORInterceptor_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the ORBInitializer Interface
    *
@@ -54,17 +51,12 @@ public:
   //@{
   /// The pre-initialization hook.
   virtual void pre_init (
-      PortableInterceptor::ORBInitInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ORBInitInfo_ptr info);
 
   /// The post-initialization hook.
   virtual void post_init (
-      PortableInterceptor::ORBInitInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ORBInitInfo_ptr info);
   //@}
-
 };
 
 #if defined(_MSC_VER)

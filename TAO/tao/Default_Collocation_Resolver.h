@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Default_Collocation_Resolver.h
- *
- *  $Id$
  *
  *  @author  Irfan Pyarali
  */
@@ -20,10 +20,8 @@
 
 #include "tao/Collocation_Resolver.h"
 
-namespace CORBA
-{
-  class Environment;
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Default_Collocation_Resolver
  *
@@ -37,14 +35,14 @@ class TAO_Export TAO_Default_Collocation_Resolver :
   public TAO_Collocation_Resolver
 {
 public:
-
   /// Is @a object collocated?
-  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
-                                        ACE_ENV_ARG_DECL) const;
+  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object) const;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Collocation_Resolver)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Collocation_Resolver)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

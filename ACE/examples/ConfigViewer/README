@@ -1,0 +1,76 @@
+
+
+Configuration Viewer 1.0
+========================
+
+This is something I quickly threw together to allow GUI editing of
+ACE_Configuration files.  I thought it would be useful and serve as a
+better example of how to use ACE_Configuration.  I developed this under
+Windows 2000, but it should easily port to any platform that wxWindows
+supports (see http://www.wxwindows.org.).
+
+==============
+   Usage
+==============
+All functionality is delivered through the file menu and right mouse button
+context menus.  The file menu lets you create the different types of
+ACE_Configurations such as a transient heap, persistent heap or Win32
+Registry heap.  A new persistent heap may be created, or an older one
+may be opened.  The win32 registry will require you to enter the path
+from HKEY_LOCAL_MACHINE that you want to open.  For example: "Software/TAO"
+would set the Win32Registry's root to HKEY_LOCAL_MACHINE/Software/TAO.
+Note that this quick implementation loads the entire tree, so if you
+enter "Software" it may take a minute to load up - beware!  Next you
+may import or export entries from a heap to an INI file using the
+Import/Export file commands.
+
+The right mouse button opens up a context menu in both the tree control
+and the list control.
+From the tree context menu, you can:
+1) Create new keys (these hold name/value pairs)
+2) Create new string values
+3) Create new integer values
+4) Delete a key (beware, everything beneath it will be removed as well)
+
+From the list control context menu, you can:
+1) Modify a the value of an entry
+2) Delete the entry
+3) Rename the entry
+
+Known Bugs/Issues:
+*) You cannot enter/edit binary types
+*) Adding a new string/integer value with the same name as an existing
+   entry will overwrite the existing entry without warning.  I think there
+   is a memory leak that occurs as well.
+*) You can add entries to the root key, but they will not be imported
+   or exported.  I think this is by design and the GUI should prevent
+   this.  I need to investigate this further.
+*) The entire configuration file is loaded into the tree when it is opened.
+   For large configurations, this may take a while.  A good improvement
+   would be to load items as the user expands them.
+*) At the time of this writing, there is a nasty bug in
+   ACE_Configuration_Heap that has to do with changing the value
+   of an existing entry.  I have submitted a patch to fix this, but
+   it may not go in until 5.1.3 (current version is 5.1.2).  I strongly
+   recommend that you get the patch/newer version!
+*) Renaming of Keys is not supported.  This requires an enhancement to
+   ACE_Configuration first.
+*) No makefiles for other platforms exist, can you donate one?
+*) This has only been tested for non MFC DLL builds of ACE, it
+   should work fine in the other configurations, but I haven't tested it.
+
+=============================================
+
+This was developed using:
+*) wxWindows 2.1.15
+*) ACE 5.0.16 + My patch to fix a bug in ACE_Configuration_Heap
+*) Windows 2000
+*) MSVC 6.0 + SP3
+
+If you have any questions or comments, please send me an email.  I really
+enjoy hearing about others that find this contribution useful!
+
+Chris Hafey
+May 2, 2000
+chris@stentorsoft.com
+

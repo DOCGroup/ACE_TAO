@@ -1,0 +1,19 @@
+#ifndef __MASTERCLIENT_IDL_DEFINED_
+#define __MASTERCLIENT_IDL_DEFINED_
+
+module MasterClient
+{
+  interface Server
+  {
+    void ping();
+    oneway void shutdown ();
+  };
+
+  interface Master
+  {
+    void registerServer(in Server c);
+  };
+
+};
+
+#endif // __MASTERCLIENT_IDL_DEFINE_D

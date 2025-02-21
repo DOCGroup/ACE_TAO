@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CLIENT_LEAKS_STARTUP_CALLBACK_H
 #define CLIENT_LEAKS_STARTUP_CALLBACK_H
@@ -14,7 +11,7 @@ class Startup_Callback
 {
 public:
   /// Constructor
-  Startup_Callback (void);
+  Startup_Callback ();
 
   /// Return 1 if the process has started already
   /**
@@ -24,9 +21,7 @@ public:
   int process_has_started (Test::Process_out the_process);
 
   // = The skeleton methods
-  virtual void started (Test::Process_ptr the_process
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void started (Test::Process_ptr the_process);
 
 private:
   /// Synchronize changes to the internal data

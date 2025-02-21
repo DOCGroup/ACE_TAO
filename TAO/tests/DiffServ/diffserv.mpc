@@ -1,0 +1,33 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*client) : taoserver, diffservpolicy, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = client
+  after += *idl
+  source_files {
+    client.cpp
+  }
+  source_files {
+    testC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*server) : taoserver, diffservpolicy, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  source_files {
+    server.cpp
+  }
+  source_files {
+    testC.cpp
+    testS.cpp
+  }
+  IDL_Files {
+  }
+}

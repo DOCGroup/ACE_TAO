@@ -1,0 +1,18 @@
+// -*- IDL -*-
+#include "tao/PortableInterceptor.pidl"
+#include "tao/PI_Server/PI_Server_include.pidl"
+
+module Collocated_ForwardRequestTest
+{
+  interface test
+  {
+    short collocated_call ();
+  };
+
+  local interface ServerRequestInterceptor
+    : PortableInterceptor::ServerRequestInterceptor
+  {
+    /// Set the references to which requests will be forwarded.
+    void forward (in Object to);
+  };
+};

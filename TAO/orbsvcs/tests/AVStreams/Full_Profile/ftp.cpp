@@ -1,15 +1,13 @@
-// $Id$
-
 #include "ftp.h"
 
 
-FTP_Client_Callback::FTP_Client_Callback (void)
+FTP_Client_Callback::FTP_Client_Callback ()
   :count_ (0)
 {
 }
 
 int
-FTP_Client_Callback::handle_end_stream (void)
+FTP_Client_Callback::handle_end_stream ()
 {
   TAO_AV_CORE::instance ()->stop_run ();
   return 0;
@@ -28,7 +26,7 @@ FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
 int
 FTP_Client_Callback::handle_timeout (void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_Message_Block mb (BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::handle_timeout\n"));
@@ -49,11 +47,9 @@ FTP_Client_Callback::handle_timeout (void *)
                 {
                   ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
                   AVStreams::flowSpec stop_spec (1);
-                  CLIENT::instance ()->streamctrl ()->stop (stop_spec ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
-                  //CLIENT::instance ()->streamctrl ()->destroy (stop_spec ACE_ENV_ARG_PARAMETER);
+                  CLIENT::instance ()->streamctrl ()->stop (stop_spec);
+                  //CLIENT::instance ()->streamctrl ()->destroy (stop_spec);
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-                  ACE_TRY_CHECK;
                   return 0;
                 }
               else
@@ -65,19 +61,19 @@ FTP_Client_Callback::handle_timeout (void *)
       mb.wr_ptr (n);
       int result = this->protocol_object_->send_frame (&mb);
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
-      ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
+        ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send\n"),-1);
+      ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent successfully\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"FTP_Client_Callback::handle_timeout Failed");
+      ex._tao_print_exception (
+        "FTP_Client_Callback::handle_timeout Failed");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
-FTP_Client_Producer::FTP_Client_Producer (void)
+FTP_Client_Producer::FTP_Client_Producer ()
   :TAO_FlowProducer ("Data",CLIENT::instance ()->protocols (),CLIENT::instance ()->format ())
 {
 }
@@ -103,9 +99,9 @@ FTP_Client_Producer::get_callback (const char *,
 
 int
 Client::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc,argv,"f:l:a:p:s");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:l:a:p:s"));
 
   this->use_sfp_ = 0;
   int c;
@@ -116,18 +112,18 @@ Client::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_OS::strdup (opts.opt_arg ());
+          this->filename_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 'l':
-          this->address_ = ACE_OS::strdup (opts.opt_arg ());
-		  l_addr = 1;
+          this->address_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
+          l_addr = 1;
           break;
         case 'a':
-          this->peer_addr_ = ACE_OS::strdup (opts.opt_arg ());
-		  p_addr =1;
+          this->peer_addr_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
+          p_addr =1;
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
+          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 's':
           this->use_sfp_ = 1;
@@ -141,7 +137,7 @@ Client::parse_args (int argc,
     {
       char buf [BUFSIZ];
       ACE_OS::hostname (buf,
-			BUFSIZ);
+                        BUFSIZ);
       address_ = buf;
       address_ += ":5000";
     }
@@ -150,7 +146,7 @@ Client::parse_args (int argc,
     {
       char buf [BUFSIZ];
       ACE_OS::hostname (buf,
-			BUFSIZ);
+                        BUFSIZ);
       peer_addr_ = buf;
       peer_addr_ += ":5050";
     }
@@ -159,19 +155,19 @@ Client::parse_args (int argc,
 }
 
 FILE *
-Client::file (void)
+Client::file ()
 {
   return this->fp_;
 }
 
 const char*
-Client::flowname (void)
+Client::flowname ()
 {
   return this->flowname_.c_str();
 }
 
 AVStreams::protocolSpec
-Client::protocols (void)
+Client::protocols ()
 {
   AVStreams::protocolSpec protocols (1);
   protocols.length (1);
@@ -182,25 +178,25 @@ Client::protocols (void)
 }
 
 const char *
-Client::format (void)
+Client::format ()
 {
   return "UNS:ftp";
 }
 
 const char *
-Client::address (void)
+Client::address ()
 
 {
   return this->address_.c_str ();
 }
 
 TAO_StreamCtrl*
-Client::streamctrl (void)
+Client::streamctrl ()
 {
   return &this->streamctrl_;
 }
 
-Client::Client (void)
+Client::Client ()
   : fp_ (0),
     protocol_ (ACE_OS::strdup ("UDP")),
     orb_ (TAO_AV_CORE::instance ()->orb ()),
@@ -212,16 +208,14 @@ Client::Client (void)
 
 
 int
-Client::init (int argc,char **argv)
+Client::init (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
   CORBA::String_var ior;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
 
@@ -229,22 +223,19 @@ Client::init (int argc,char **argv)
 
       this->parse_args (this->argc_, this->argv_);
 
-      ACE_NEW_RETURN ( this->streamendpoint_a_,
-		      TAO_StreamEndPoint_A, -1 );
+      ACE_NEW_RETURN (this->streamendpoint_a_,
+                      TAO_StreamEndPoint_A, -1);
 
-      ACE_NEW_RETURN (this->fep_a_, FTP_Client_Producer, -1 );
+      ACE_NEW_RETURN (this->fep_a_, FTP_Client_Producer, -1);
       this->flowname_ = "Data";
 
-      sep_a_ = this->streamendpoint_a_->_this( ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sep_a_ = this->streamendpoint_a_->_this();
 
-      fep_a_obj_ = this->fep_a_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fep_a_obj_ = this->fep_a_->_this ();
 
-      CORBA::String_var s1 = sep_a_->add_fep( fep_a_obj_.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var s1 = sep_a_->add_fep( fep_a_obj_.in());
 
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %C\n", s1.in() ));
 
       this->fp_ = ACE_OS::fopen (this->filename_,"r");
 
@@ -254,25 +245,22 @@ Client::init (int argc,char **argv)
         }
       else
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %s could not be opened\n",
+          ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %C could not be opened\n",
                                        this->filename_), -1);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client::init\n");
+      ex._tao_print_exception ("Client::init\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 int
-Client::run (void)
+Client::run ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       char flow_protocol_str [BUFSIZ];
       if (this->use_sfp_)
@@ -292,7 +280,7 @@ Client::run (void)
                                         this->protocol_,
                                         &addr);
 
-      ACE_INET_Addr peer_addr (this->peer_addr_.c_str ());;
+      ACE_INET_Addr peer_addr (this->peer_addr_.c_str ());
       entry.set_peer_addr (&peer_addr);
 
       flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
@@ -303,105 +291,80 @@ Client::run (void)
 
 
       CORBA::Object_var obj_b = this->orb_->string_to_object("corbaname:rir:#Server_StreamEndPoint_b");
-      AVStreams::StreamEndPoint_B_var sep_b = AVStreams::StreamEndPoint_B::_narrow ( obj_b.in() );
+      AVStreams::StreamEndPoint_B_var sep_b = AVStreams::StreamEndPoint_B::_narrow (obj_b.in());
 
       CORBA::Boolean result =
         this->streamctrl_.bind (sep_a_.in(),
-				sep_b.in(),
-				the_qos.inout(),
-				flow_spec
-				ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
+                                sep_b.in(),
+                                the_qos.inout(),
+                                flow_spec);
 
       timer.stop ();
       timer.elapsed_time (elapsed);
       elapsed.dump ();
-      ACE_TRY_CHECK;
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind failed\n"),-1);
 
       AVStreams::flowSpec start_spec (1);
-      this->streamctrl_.start (start_spec ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->streamctrl_.start (start_spec);
 
       // Schedule a timer for the for the flow handler.
       ACE_Time_Value tv (10000,0);
-      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run (tv);
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client::run\n");
+      ex._tao_print_exception ("Client::run\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      poa.in ());
 
 
       int result = 0;
-      result = CLIENT::instance ()->init (argc,argv);
+      result = CLIENT::instance ()->init (argc, argv);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      poa->destroy (true, true);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      orb->destroy ();
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
 
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client Failed\n");
+    ex._tao_print_exception ("Client Failed\n");
     return -1;
   }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   CLIENT::close ();  // Explicitly finalize the Unmanaged_Singleton.
 
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unmanaged_Singleton <Client,ACE_Null_Mutex>;
-template class TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unmanaged_Singleton <Client,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Unmanaged_Singleton<Client, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Client, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

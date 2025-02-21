@@ -1,17 +1,12 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/Xt_Stopwatch/Stopwatch_client
-//
-// = FILENAME
-//   Client.h
-//
-// = AUTHOR
-//   Balachandran  Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Client.h
+ *
+ *  @author Balachandran  Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CLIENT_H
 #define CLIENT_H
@@ -19,43 +14,40 @@
 #include "testC.h"
 
 
-#include "tao/XtResource_Loader.h"
+#include "tao/XtResource/XtResource_Loader.h"
 class Control;
 
 class Client
 {
 public:
-
+  /// ctor
   Client (CORBA::ORB_ptr orb);
-  // ctor
 
-  ~Client (void);
-  //Dtor..
+  ///Dtor..
+  ~Client ();
 
+  /// The callbacks
   static void start_callback (Widget w,
                               XtPointer client_data,
                               XtPointer call_data);
   static void stop_callback  (Widget w,
                               XtPointer client_data,
                               XtPointer call_data);
-  // The callbacks
 
-  void start_hook (void);
-  void stop_hook (void);
-  // The hooks...
+  /// The hooks...
+  void start_hook ();
+  void stop_hook ();
 
+  /// Adds the callbacks to the GUI underneath.....
   void add_callback (Control &);
-  // Adds the callbacks to the GUI underneath.....
 
-  void parse_args (int argc, char *argv[]
-                   ACE_ENV_ARG_DECL);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
 private:
-
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 
+  /// The server.
   Stopwatch_var server_;
-  // The server.
 };
 
 #endif /* CLIENT_H */

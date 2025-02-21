@@ -1,79 +1,58 @@
 #include "ServerRequestInterceptor.h"
 
-ACE_RCSID (LoadBalancing,
-           ServerRequestInterceptor,
-           "$Id$")
-
-
-ServerRequestInterceptor::ServerRequestInterceptor (void)
+ServerRequestInterceptor::ServerRequestInterceptor ()
   : request_count_ (0)
 {
 }
 
-ServerRequestInterceptor::~ServerRequestInterceptor (void)
+ServerRequestInterceptor::~ServerRequestInterceptor ()
 {
 }
 
 char *
-ServerRequestInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+ServerRequestInterceptor::name ()
 {
   return CORBA::string_dup ("ServerRequestInterceptor");
 }
 
 void
-ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+ServerRequestInterceptor::destroy ()
 {
 }
 
 void
 ServerRequestInterceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */)
 {
   ++this->request_count_;
 }
 
 void
 ServerRequestInterceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
 void
 ServerRequestInterceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */)
 {
 }
 
 void
 ServerRequestInterceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
 void
 ServerRequestInterceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
 CORBA::Long
-ServerRequestInterceptor::request_count (void)
+ServerRequestInterceptor::request_count ()
 {
   const CORBA::Long r = this->request_count_.value ();
   this->request_count_ = 0;

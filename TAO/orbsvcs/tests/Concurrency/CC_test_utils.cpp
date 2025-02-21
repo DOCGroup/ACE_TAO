@@ -1,28 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests
-//
-// = FILENAME
-//    CC_test_utils.cpp
-//
-// = DESCRIPTION
-//      This class provides a namespace for utility functions for the
-//      concurrency service test.
-//
-// = AUTHORS
-//      Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CC_test_utils.cpp
+ *
+ *    This class provides a namespace for utility functions for the
+ *    concurrency service test.
+ *
+ *  @author   Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID(Concurrency, CC_test_utils, "$Id$")
 
 char *CC_TestUtils::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 {
@@ -45,29 +36,25 @@ char *CC_TestUtils::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_TestUtils::create_lock_set (void)
+CC_TestUtils::create_lock_set ()
 {
   // Create the lock set and return an obj ref corresponding to the
   // key.
   CosConcurrencyControl::LockSet_ptr lock_set(0);
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       lock_set =
-        CC_naming_service::Instance()->get_lock_set_factory ()->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CC_naming_service::Instance()->get_lock_set_factory ()->create ();
 
       if (CORBA::is_nil (lock_set))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "null lock set objref returned by factory\n"),
                           0);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_Client::create_lock_set");
+      ex._tao_print_exception ("CC_Client::create_lock_set");
       return 0;
     }
-  ACE_ENDTRY;
   return lock_set;
 }

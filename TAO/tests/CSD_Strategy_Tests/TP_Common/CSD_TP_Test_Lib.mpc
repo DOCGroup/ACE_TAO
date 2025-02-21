@@ -1,0 +1,38 @@
+project(CSD_TP_Test_Lib) : taolib_with_idl, csd_threadpool, avoids_corba_e_micro {
+  sharedname   = CSD_TP_Test
+  dynamicflags += CSD_TP_TEST_BUILD_DLL
+  idlflags  += -Wb,export_macro=CSD_TP_Test_Export \
+               -Wb,export_include=CSD_TP_Test_Export.h
+  includes    += $(TAO_ROOT)/tao
+
+  IDL_Files {
+    FooException.idl
+    TestAppException.idl
+    CancelledException.idl
+    CustomException.idl
+  }
+
+  Source_Files {
+    AppHelper.cpp
+    AppShutdown.cpp
+    ClientEngine.cpp
+    ClientTask.cpp
+    OrbRunner.cpp
+    OrbTask.cpp
+    TestAppBase.cpp
+    StatisticsHelper.cpp
+    OrbShutdownTask.cpp
+    FooExceptionC.cpp
+    FooExceptionS.cpp
+    TestAppExceptionC.cpp
+    TestAppExceptionS.cpp
+    CancelledExceptionC.cpp
+    CancelledExceptionS.cpp
+    CustomExceptionC.cpp
+    CustomExceptionS.cpp
+  }
+
+  Template_Files {
+    ServantList_T.cpp
+  }
+}

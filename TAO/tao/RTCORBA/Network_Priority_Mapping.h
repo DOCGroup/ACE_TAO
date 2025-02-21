@@ -1,13 +1,11 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Network_Priority_Mapping.h
  *
- *  $Id$
- *
  *  Class that declares the Network Priority Mapping
  *  that can be overriden to provide different mappings
- *
  *
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
@@ -24,11 +22,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#define TAO_RTCORBA_SAFE_INCLUDE
-#include "RTCORBAC.h"
-#undef TAO_RTCORBA_SAFE_INCLUDE
-
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
+#include "tao/RTCORBA/RTCORBA_includeC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Network_Priority_Mapping
@@ -41,21 +39,22 @@ class TAO_RTCORBA_Export TAO_Network_Priority_Mapping
 {
 public:
   /// The destructor
-  virtual ~TAO_Network_Priority_Mapping (void);
+  virtual ~TAO_Network_Priority_Mapping ();
 
   virtual CORBA::Boolean
     to_network (RTCORBA::Priority corba_priority,
-		RTCORBA::NetworkPriority &network_priority) = 0;
+                RTCORBA::NetworkPriority &network_priority) = 0;
   virtual CORBA::Boolean
     to_CORBA (RTCORBA::NetworkPriority network_priority,
-	      RTCORBA::Priority &corba_priority) = 0;
+              RTCORBA::Priority &corba_priority) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NETWORK_PRIORITY_MAPPING_H */
-
 
 
 

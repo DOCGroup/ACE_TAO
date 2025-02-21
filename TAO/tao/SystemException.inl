@@ -1,9 +1,8 @@
 // -*- C++ -*-
-//
-// $Id$
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
-CORBA::SystemException::minor (void) const
+CORBA::SystemException::minor () const
 {
   return this->minor_;
 }
@@ -15,7 +14,7 @@ CORBA::SystemException::minor (CORBA::ULong m)
 }
 
 ACE_INLINE CORBA::CompletionStatus
-CORBA::SystemException::completed (void) const
+CORBA::SystemException::completed () const
 {
   return this->completed_;
 }
@@ -100,3 +99,15 @@ CORBA::name ::_downcast (CORBA::Exception const * exception) \
 
 TAO_STANDARD_SYSTEM_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+ACE_INLINE void \
+CORBA::name ::_tao_any_destructor (void * x) \
+{ \
+  delete static_cast<CORBA::name *> (x); \
+}
+
+TAO_STANDARD_SYSTEM_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+TAO_END_VERSIONED_NAMESPACE_DECL

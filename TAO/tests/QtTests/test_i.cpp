@@ -1,10 +1,4 @@
-// $Id$
-
 #include "test_i.h"
-
-ACE_RCSID( QtTests,
-           test_i,
-           "$Id$")
 
 LCD_Display_imp::LCD_Display_imp (CORBA::ORB_ptr orb)
 
@@ -13,22 +7,19 @@ LCD_Display_imp::LCD_Display_imp (CORBA::ORB_ptr orb)
 }
 
 void
-LCD_Display_imp::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+LCD_Display_imp::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "The ORB has been shutdown, Close the windows to exit \n"));
-  this->orb_->shutdown (0);
+              "The ORB has been shutdown, Close the windows to exit\n"));
+  this->orb_->shutdown (false);
   this->orb_->destroy ();
 }
 
 void
-LCD_Display_imp::send_val (CORBA::Long val
-                           ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+LCD_Display_imp::send_val (CORBA::Long val)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "The value from server is <%d> \n", val));
+              "The value from server is <%d>\n", val));
   emit set_value (val);
 }
 

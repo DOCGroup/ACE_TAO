@@ -4,8 +4,6 @@
 /**
  *  @file   test_i.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
@@ -21,33 +19,20 @@ class Visual_i : public POA_Test_Interceptors::Visual
 public:
   Visual_i (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Long calculate (CORBA::Long one,
-                                 CORBA::Long two
-                                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Long calculate (CORBA::Long one, CORBA::Long two) override;
 
-  void normal (CORBA::Long arg,
-               CORBA::String_out msg
-               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void normal (CORBA::Long arg, CORBA::String_out msg)  override;
 
-  virtual Test_Interceptors::Visual::VarLenStruct * the_structure (
-      ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  Test_Interceptors::Visual::VarLenStruct * the_structure () override;
 
-  virtual void user (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException, Test_Interceptors::Silly));
+  void user () override;
 
-  virtual void system (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void system () override;
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown () override;
 
 private:
-
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* TAO_INTERCEPTOR_TEST_I_H */

@@ -2,11 +2,7 @@
 /**
  *  @file StructuredPushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_STRUCTUREDPUSHSUPPLIER_H
@@ -36,7 +32,7 @@ public:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier_Traits
 {
 public:
-  TAO_Notify_Tests_StructuredPushSupplier_Traits (void);
+  TAO_Notify_Tests_StructuredPushSupplier_Traits ();
 
   typedef CosNotifyComm::StructuredPushSupplier INTERFACE;
   typedef CosNotifyComm::StructuredPushSupplier_ptr PTR;
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_StructuredPushSupplier_Trai
  * @class TAO_Notify_Tests_StructuredPushSupplier
  *
  * @brief StructuredPushSupplier Implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier_Base
 {
@@ -66,28 +61,24 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier : public TA
   typedef Peer_Traits::Proxy_Traits Proxy_Traits;
 
 public:
-  /// Constuctor
-  TAO_Notify_Tests_StructuredPushSupplier (void);
+  /// Constructor
+  TAO_Notify_Tests_StructuredPushSupplier ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_StructuredPushSupplier ();
 
   /// Send one event.
-  virtual void send_event (const CosNotification::StructuredEvent& event
-                           ACE_ENV_ARG_DECL);
+  virtual void send_event (const CosNotification::StructuredEvent& event);
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL);
+  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_from_proxy ();
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void disconnect_structured_push_supplier ();
 };
 
 #if defined (__ACE_INLINE__)

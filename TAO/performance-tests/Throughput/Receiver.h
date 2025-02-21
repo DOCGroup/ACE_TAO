@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef THROUGHPUT_RECEIVER_H
 #define THROUGHPUT_RECEIVER_H
@@ -20,15 +17,12 @@ class Receiver
 {
 public:
   /// Constructor
-  Receiver (void);
+  Receiver ();
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Message &message
-                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_data (const Test::Message &message);
 
-  virtual void done (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void done ();
 
 private:
   /// The timestamp for the first message

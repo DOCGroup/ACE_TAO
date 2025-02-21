@@ -2,23 +2,27 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
 # This is a Perl script that runs the client and all the other servers that
 # are needed
 
-use lib '../../../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
+
+my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+$test->AddLibPath ('../lib');
 
 $status = 0;
+my $conf_suffix = "$PerlACE::svcconf_ext";
 
-$svc_conf = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
-$observer_conf = PerlACE::LocalFile ("observer$PerlACE::svcconf_ext");
-$svc_complex_conf = PerlACE::LocalFile ("svc.complex$PerlACE::svcconf_ext");
-$mt_svc_conf = PerlACE::LocalFile ("mt.svc$PerlACE::svcconf_ext");
-$svc_complex_conf = PerlACE::LocalFile ("svc.complex$PerlACE::svcconf_ext");
-$control_conf = PerlACE::LocalFile ("control$PerlACE::svcconf_ext");
+$svc_conf         = $test->LocalFile ("svc$conf_suffix");
+$observer_conf    = $test->LocalFile ("observer$conf_suffix");
+$svc_complex_conf = $test->LocalFile ("svc.complex$conf_suffix");
+$mt_svc_conf      = $test->LocalFile ("mt.svc$conf_suffix");
+$svc_complex_conf = $test->LocalFile ("svc.complex$conf_suffix");
+$control_conf     = $test->LocalFile ("control$conf_suffix");
 
 sub RunTest ($$$)
 {
@@ -26,14 +30,14 @@ sub RunTest ($$$)
     my $program = shift;
     my $arguments = shift;
 
-    my $TEST = new PerlACE::Process ($program, $arguments);
+    my $T = $test->CreateProcess ($program, $arguments);
 
     print STDERR "\n\n$message\n";
-    
-    my $test = $TEST->SpawnWaitKill (240);
 
-    if ($test != 0) {
-        print STDERR "ERROR: Test returned $test\n";
+    my $test_status = $T->SpawnWaitKill ($test->ProcessStartWaitInterval() + 225);
+
+    if ($test_status != 0) {
+        print STDERR "ERROR: Test returned $test_status\n";
         $status = 1;
     }
 }

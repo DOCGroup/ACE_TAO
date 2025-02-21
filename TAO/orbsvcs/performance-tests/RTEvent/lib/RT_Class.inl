@@ -1,37 +1,35 @@
 /**
  * @file RT_Class.inl
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
 ACE_INLINE int
-RT_Class::prc_sched_class (void) const
+RT_Class::prc_sched_class () const
 {
   return this->prc_sched_class_;
 }
 
 ACE_INLINE int
-RT_Class::thr_sched_class (void) const
+RT_Class::thr_sched_class () const
 {
   return this->thr_sched_class_;
 }
 
 ACE_INLINE int
-RT_Class::priority_process (void) const
+RT_Class::priority_process () const
 {
   return this->priority_process_;
 }
 
 ACE_INLINE int
-RT_Class::priority_high (void) const
+RT_Class::priority_high () const
 {
   return this->priority_high_;
 }
 
 ACE_INLINE int
-RT_Class::priority_low (void) const
+RT_Class::priority_low () const
 {
   return this->priority_low_;
 }

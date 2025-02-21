@@ -1,8 +1,6 @@
 /**
  * @file RTPOA_Setup.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -22,17 +20,15 @@ class RTCORBA_Setup;
  * @class RTPOA_Setup
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export RTPOA_Setup
 {
 public:
   /// Constructor
   RTPOA_Setup (CORBA::ORB_ptr orb,
-               const RTCORBA_Setup &rtcorba_setup
-               ACE_ENV_ARG_DECL);
+               const RTCORBA_Setup &rtcorba_setup);
 
-  PortableServer::POA_ptr poa (void);
+  PortableServer::POA_ptr poa ();
 
 private:
   PortableServer::POA_var poa_;

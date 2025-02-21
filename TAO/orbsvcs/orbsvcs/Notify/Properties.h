@@ -1,12 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Properties.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROPERTIES_H
@@ -14,17 +11,21 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Singleton.h"
-#include "tao/ORB.h"
+#include "orbsvcs/CosNotificationC.h"
+#include "orbsvcs/CosNotifyChannelAdminC.h"
+
 #include "tao/PortableServer/PortableServer.h"
 
-#include "orbsvcs/CosNotificationC.h"
+#include "tao/TAO_Singleton.h"
+#include "tao/ORB.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Factory;
 class TAO_Notify_Builder;
@@ -32,72 +33,90 @@ class TAO_Notify_Builder;
 /**
  * @class TAO_Notify_Properties
  *
- * @brief Global properties that strategize Notify's run-time behaviour.
- *
+ * @brief Global properties that strategize Notify's run-time behavior.
  */
 class TAO_Notify_Serv_Export TAO_Notify_Properties
 {
-  friend class TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>;
-
 public:
-  /// Constuctor
-  TAO_Notify_Properties (void);
+  /// Constructor
+  TAO_Notify_Properties ();
 
   /// Destructor
   ~TAO_Notify_Properties ();
 
+  /// Return a singleton instance of this class.
+  static TAO_Notify_Properties * instance ();
+
+  static void close ();
+
   // = Property Accessors
-  TAO_Notify_Factory* factory (void);
+  TAO_Notify_Factory* factory ();
   void factory (TAO_Notify_Factory* factory);
 
-  TAO_Notify_Builder* builder (void);
+  TAO_Notify_Builder* builder ();
   void builder (TAO_Notify_Builder* builder);
 
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
   void orb (CORBA::ORB_ptr orb);
+  CORBA::ORB_ptr dispatching_orb ();
+  void dispatching_orb (CORBA::ORB_ptr dispatching_orb);
 
-  PortableServer::POA_ptr default_poa (void);
+  PortableServer::POA_ptr default_poa ();
   void default_poa (PortableServer::POA_ptr default_poa);
 
-  CORBA::Boolean asynch_updates (void);
+  CORBA::Boolean asynch_updates ();
   void asynch_updates (CORBA::Boolean asynch_updates);
 
-  bool allow_reconnect (void);
+  bool allow_reconnect ();
   void allow_reconnect (bool b);
+  bool validate_client ();
+  void validate_client (bool b);
+  ACE_Time_Value validate_client_delay ();
+  void validate_client_delay (ACE_Time_Value b);
+  ACE_Time_Value validate_client_interval ();
+  void validate_client_interval (ACE_Time_Value b);
 
   // Turn on/off update messages.
-  CORBA::Boolean updates (void);
+  CORBA::Boolean updates ();
   void updates (CORBA::Boolean updates);
+  bool separate_dispatching_orb ();
+  void separate_dispatching_orb (bool b);
 
   // The QoS Property that must be applied to each newly created Event Channel
-  const CosNotification::QoSProperties& default_event_channel_qos_properties (void);
+  const CosNotification::QoSProperties& default_event_channel_qos_properties ();
 
   // Set the default EC QoS Property.
   void default_event_channel_qos_properties (const CosNotification::QoSProperties &ec_qos);
 
   // The QoS Property that must be applied to each newly created Supplier Admin
-  const CosNotification::QoSProperties& default_supplier_admin_qos_properties (void);
+  const CosNotification::QoSProperties& default_supplier_admin_qos_properties ();
 
   // Set the default SA QoS Property.
   void default_supplier_admin_qos_properties (const CosNotification::QoSProperties &sa_qos);
 
   // The QoS Property that must be applied to each newly created Consumer Admin
-  const CosNotification::QoSProperties& default_consumer_admin_qos_properties (void);
+  const CosNotification::QoSProperties& default_consumer_admin_qos_properties ();
 
   // Set the default CA QoS Property.
   void default_consumer_admin_qos_properties (const CosNotification::QoSProperties &ca_qos);
 
   // The QoS Property that must be applied to each newly created Proxy Supplier
-  const CosNotification::QoSProperties& default_proxy_supplier_qos_properties (void);
+  const CosNotification::QoSProperties& default_proxy_supplier_qos_properties ();
 
   // Set the default PS QoS Property.
   void default_proxy_supplier_qos_properties (const CosNotification::QoSProperties &ps_qos);
 
   // The QoS Property that must be applied to each newly created Proxy Consumer
-  const CosNotification::QoSProperties& default_proxy_consumer_qos_properties (void);
+  const CosNotification::QoSProperties& default_proxy_consumer_qos_properties ();
 
   // Set the default PC QoS Property.
   void default_proxy_consumer_qos_properties (const CosNotification::QoSProperties &pc_qos);
+
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp ();
+  void defaultConsumerAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op);
+
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp ();
+  void defaultSupplierAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op);
 
 protected:
   /// Object Factory
@@ -109,7 +128,10 @@ protected:
   /// ORB
   CORBA::ORB_var orb_;
 
-  // POA
+  /// dispatching orb
+  CORBA::ORB_var dispatching_orb_;
+
+  /// POA
   PortableServer::POA_var default_poa_;
 
   /// True if send asynch updates.
@@ -117,6 +139,12 @@ protected:
 
   /// True if clients can reconnect to proxies.
   bool allow_reconnect_;
+  bool validate_client_;
+  ACE_Time_Value validate_client_delay_;
+  ACE_Time_Value validate_client_interval_;
+
+  /// True is separate dispatching orb
+  bool separate_dispatching_orb_;
 
   /// True if updates are enabled (default).
   CORBA::Boolean updates_;
@@ -138,14 +166,23 @@ protected:
 
   /// The default PC QoS Properties.
   CosNotification::QoSProperties pc_qos_;
+
+  /// The default consumer admin filter operator.
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp_;
+
+  /// The default supplier admin filter operator.
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp_;
 };
 
-typedef TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX> TAO_Notify_PROPERTIES;
+/**
+ * @todo Remove this legacy TAO_Notify_Properties typedef.
+ */
+typedef TAO_Notify_Properties TAO_Notify_PROPERTIES;
 
-TAO_NOTIFY_SERV_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYNCH_MUTEX)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Properties.inl"
+#include "orbsvcs/Notify/Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

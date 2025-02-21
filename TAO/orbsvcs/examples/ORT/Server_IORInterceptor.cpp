@@ -1,12 +1,5 @@
-// $Id$
-
 #include "Server_IORInterceptor.h"
 #include "Gateway_ObjRef_Factory.h"
-
-ACE_RCSID (ORT,
-           Server_IORInterceptor,
-           "$Id$")
-
 
 Server_IORInterceptor::
 Server_IORInterceptor (Gateway::Object_Factory_ptr factory)
@@ -14,22 +7,20 @@ Server_IORInterceptor (Gateway::Object_Factory_ptr factory)
 {
 }
 
-Server_IORInterceptor::~Server_IORInterceptor (void)
+Server_IORInterceptor::~Server_IORInterceptor ()
 {
   CORBA::release (this->gateway_object_factory_);
 }
 
 
 char *
-Server_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Server_IORInterceptor::name ()
 {
   return CORBA::string_dup ("Server_IORInterceptor");
 }
 
 void
-Server_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Server_IORInterceptor::destroy ()
 {
   CORBA::release (this->gateway_object_factory_);
   this->gateway_object_factory_ = Gateway::Object_Factory::_nil ();
@@ -37,49 +28,37 @@ Server_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Server_IORInterceptor::establish_components (
-    PortableInterceptor::IORInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::IORInfo_ptr)
 {
 }
 
 void
 Server_IORInterceptor::components_established (
-    PortableInterceptor::IORInfo_ptr ior_info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::IORInfo_ptr ior_info)
 {
-  Gateway_ObjRef_Factory *my_factory;
+  Gateway_ObjRef_Factory *my_factory = 0;
 
   PortableInterceptor::ObjectReferenceFactory_var current_factory =
-    ior_info->current_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ior_info->current_factory ();
 
   ACE_NEW_THROW_EX (my_factory,
                     Gateway_ObjRef_Factory (this->gateway_object_factory_,
                                             current_factory.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
-  ior_info->current_factory (my_factory
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ior_info->current_factory (my_factory);
 }
 
 void
 Server_IORInterceptor::adapter_manager_state_changed (
-    PortableInterceptor::AdapterManagerId,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    const char *,
+    PortableInterceptor::AdapterState)
 {
 }
 
 void
 Server_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::AdapterState)
 {
 }

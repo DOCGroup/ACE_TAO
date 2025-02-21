@@ -3,8 +3,6 @@
 /**
  *  @file Job_i.h
  *
- *  $Id$
- *
  *  This file defines the servant for the Job.idl interface
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -15,51 +13,45 @@
 
 #include "JobS.h"
 #include "Task_Stats.h"
-#include "ace/SString.h"
+#include "rtschedtestlib_export.h"
 
-class ACE_Arg_Shifter;
+#include "ace/SString.h"
+#include "ace/Arg_Shifter.h"
+
 class DT_Creator;
 
 /**
  * @class Job_i
  *
  * @brief Implements a Job that performs some cpu bound work.
- *
  */
-class Job_i : public POA_Job
+class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 {
  public:
   /// Constructor
   Job_i (DT_Creator* dt_creator);
 
-  ~Job_i (void);
+  ~Job_i ();
 
   /// Init the state of this object.
   int init (ACE_Arg_Shifter& arg_shifter);
 
   /// = Accessors
-  const ACE_CString& name (void);
-  const ACE_CString& poa (void);
+  const ACE_CString& name ();
+  const ACE_CString& poa ();
 
   /// = inteface Job method implementation.
   virtual void work (CORBA::ULong work,
-		     CORBA::Short importance
-		     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+         CORBA::Short importance);
 
   virtual void post_work (int guid,
-			  int importance);
+        int importance);
 
-  void dump_stats (void);
+  void dump_stats ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void shutdown ();
 
-  int guid (void);
+  int guid ();
 
  protected:
   /// The name of this Job

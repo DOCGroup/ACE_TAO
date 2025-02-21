@@ -4,11 +4,8 @@
 /**
  *  @file   Notify_Consumer.h
  *
- *  $Id$
- *
  *  An example of using the Notify_Logging_Service.
  *  The Notify_Consumer consumes log-generated events.
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
@@ -37,47 +34,28 @@ class Consumer
   //   This class is a consumer of log generated events.
   //
 public:
-  Consumer (void);
+  Consumer ();
   // Constructor
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
 protected:
-
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
   // The proxy_supplier id.
 
   // = Methods
 
-  // Destructor
-
   // = NotifyPublish method
-    virtual void offer_change (
+  virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+        const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier methods
-virtual void push (const CORBA::Any &event
-                     ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ));
+  virtual void push (const CORBA::Any &event);
 
 
-  virtual void disconnect_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL
-        )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual void disconnect_push_consumer ();
 
 private:
   CORBA::ULong event_count_;
@@ -93,8 +71,6 @@ private:
   DsNotifyLogAdmin::NotifyLogFactory_var notify_log_factory_;
 
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;
-
-
 };
 
 #endif /* NOTIFY_CONSUMER_H */

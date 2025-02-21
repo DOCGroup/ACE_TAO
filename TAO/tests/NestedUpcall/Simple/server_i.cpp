@@ -1,5 +1,3 @@
-// $Id$
-
 #include "server_i.h"
 
 server_i::server_i (int quiet,
@@ -11,22 +9,14 @@ server_i::server_i (int quiet,
 
 void
 server_i::start (client_ptr c,
-                 CORBA::UShort time_to_live
-                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                 CORBA::UShort time_to_live)
 {
   this->client_ = client::_duplicate (c);
-  this->ping (time_to_live
-              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  return;
+  this->ping (time_to_live);
 }
 
 void
-server_i::ping (CORBA::UShort time_to_live
-                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+server_i::ping (CORBA::UShort time_to_live)
 {
   if (!this->quiet_)
     ACE_DEBUG ((LM_DEBUG,
@@ -37,17 +27,12 @@ server_i::ping (CORBA::UShort time_to_live
 
   if (time_to_live > 0)
     {
-      this->client_->ping (time_to_live
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->client_->ping (time_to_live);
     }
 }
 
 void
-server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+server_i::shutdown ()
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (false);
 }

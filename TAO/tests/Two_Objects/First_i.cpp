@@ -1,14 +1,10 @@
-//
-// $Id$
-//
 
 #include "First_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "ace/Synch.h"
-
-ACE_RCSID(Test, Test, "$Id$")
+#include "ace/Auto_Event.h"
 
 First_i::First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -17,8 +13,7 @@ First_i::First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done)
 }
 
 void
-First_i::oneway_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+First_i::oneway_method ()
 {
   ACE_DEBUG ((LM_DEBUG, "Oneway servant : (%P|%t) one way method called. About to wait for two way call completion\n"));
 

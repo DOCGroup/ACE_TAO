@@ -1,22 +1,16 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/MT_Client_Test
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    Start one server thread calling a distant MT Object serveral times,
-//    also starting serveral client threads which call the MT Object too.
-//    The server does nested upcalls.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  Start one server thread calling a distant MT Object several times,
+ *  also starting several client threads which call the MT Object too.
+ *  The server does nested upcalls.
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "client.h"
 #include "local_server.h"
@@ -25,10 +19,10 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/Malloc_Base.h"
+#include "ace/Truncate.h"
 
-ACE_RCSID(MT_Client_Test, client, "$Id$")
-
-MT_Client_Task::MT_Client_Task (int argc, char **argv,
+MT_Client_Task::MT_Client_Task (int argc, ACE_TCHAR **argv,
                                 int client_number)
   : argc_ (argc),
     argv_ (argv),
@@ -37,7 +31,7 @@ MT_Client_Task::MT_Client_Task (int argc, char **argv,
 }
 
 int
-MT_Client_Task::svc (void)
+MT_Client_Task::svc ()
 {
   if (this->mT_Client_.init (this->argc_,
                              this->argv_,
@@ -58,14 +52,14 @@ MT_Client::MT_Client ()
 // Reads the Object A IOR from a file
 
 int
-MT_Client::read_ior (char *filename)
+MT_Client::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename,0);
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for reading: %p\n",
+                       "Unable to open %s for reading\n",
                        filename),
                       -1);
 
@@ -85,9 +79,9 @@ MT_Client::read_ior (char *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-MT_Client::parse_args (void)
+MT_Client::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:g:h:i:n:s:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:g:h:i:n:s:"));
   int c;
   int result;
 
@@ -105,7 +99,7 @@ MT_Client::parse_args (void)
           // read IOR for MT Object
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to read ior from %s : %p\n",
+                               "Unable to read ior from %s\n",
                                get_opts.opt_arg ()),
                               -1);
         }
@@ -117,7 +111,7 @@ MT_Client::parse_args (void)
           // read IOR for Object A
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to read ior from %s : %p\n",
+                               "Unable to read ior from %s\n",
                                get_opts.opt_arg ()),
                               -1);
         }
@@ -147,10 +141,9 @@ MT_Client::parse_args (void)
 }
 
 int
-MT_Client::run (void)
+MT_Client::run ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       for (unsigned long i = 0; i < this->iterations_; i++)
         {
@@ -164,57 +157,48 @@ MT_Client::run (void)
           // call the recursive object MT_Object for nested upcalls
           // testing
           this->mT_Object_var_->yadda (0,
-                                       0
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                       0);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_Client:run");
+      ex._tao_print_exception ("MT_Client:run");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
-MT_Client::~MT_Client (void)
+MT_Client::~MT_Client ()
 {
   if (this->object_key_ != 0)
-    ACE_OS::free (this->object_key_);
+    ACE_Allocator::instance ()->free (this->object_key_);
   if (this->argv_ != 0)
     delete [] this->argv_;
 }
 
 
 int
-MT_Client::init (int argc, char **argv,
+MT_Client::init (int argc, ACE_TCHAR **argv,
                  int client_number)
 {
-
   // Make a copy of argv since ORB_init will change it.
   this->argc_ = argc;
-  this->argv_ = new char *[argc];
+  this->argv_ = new ACE_TCHAR *[argc];
   for (int i = 0; i < argc; i++)
     this->argv_[i] = argv[i];
 
-
   this->client_number_ = client_number;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       char buf[64];
-      ACE_OS::sprintf (buf, "thread_%lx", reinterpret_cast<long> (this));
+      ACE_OS::sprintf (buf, "thread_%lx", ACE_Utils::truncate_cast<long> ((intptr_t)this));
 
       this->orb_var_ =
         CORBA::ORB_init (this->argc_,
                          this->argv_,
-                         buf
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         buf);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -225,20 +209,15 @@ MT_Client::init (int argc, char **argv,
                              "The IOR is nil, not able to get the object.\n"),
                             -1);
 
-
       CORBA::Object_var object_var =
-        this->orb_var_->string_to_object (this->object_key_
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_var_->string_to_object (this->object_key_);
 
       if (CORBA::is_nil (object_var.in()))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "No proper object has been returned.\n"),
                             -1);
 
-      this->mT_Object_var_ = MT_Object::_narrow (object_var.in()
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->mT_Object_var_ = MT_Object::_narrow (object_var.in());
 
       if (CORBA::is_nil (this->mT_Object_var_.in()))
         {
@@ -251,8 +230,7 @@ MT_Client::init (int argc, char **argv,
         ACE_DEBUG ((LM_DEBUG, "We have a proper reference to the Object.\n"));
 
       CORBA::Object_var poa_object =
-        this->orb_var_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_var_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -260,23 +238,18 @@ MT_Client::init (int argc, char **argv,
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_Client::init");
+      ex._tao_print_exception ("MT_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -285,17 +258,16 @@ MT_Client::init (int argc, char **argv,
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  int result = 0;
+
+  try
     {
       TAO_ORB_Manager orb_manager;
 
       int r = orb_manager.init (argc,
-                                argv
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                argv);
 
       if (r != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -308,7 +280,7 @@ main (int argc, char **argv)
       int threads = 1;
 
       for (i = 0; i < argc; i++)
-        if (ACE_OS::strcmp (argv[i], "-n") == 0)
+        if (ACE_OS::strcmp (argv[i], ACE_TEXT("-n")) == 0)
           threads = ACE_OS::atoi(argv[i + 1]);
 
       // create a separate server thread
@@ -340,7 +312,7 @@ main (int argc, char **argv)
                       "MT_Client_Task.\n"),
                      -1);  // @@ Memory leak!
 
-      int result = ACE_Thread_Manager::instance ()->wait ();
+      result = ACE_Thread_Manager::instance ()->wait ();
 
       for (i = 0; i < threads; i++)
         delete clients[i];
@@ -352,13 +324,12 @@ main (int argc, char **argv)
 
       delete server;
 
-      return result;
+      orb_manager.fini ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "main");
+      ex._tao_print_exception ("main");
     }
-  ACE_ENDTRY;
 
-  return 1;
+  return result;
 }

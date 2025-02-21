@@ -1,12 +1,6 @@
-// $Id$
-
 #include "Custom_Network_Priority_Mapping.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (Strategies,
-           Custom_Network_Priority_Mapping,
-           "$Id$")
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 #define IPDSFIELD_DSCP_CS1      0x08
@@ -84,7 +78,7 @@ static const char *dscp_char[]=
 };
 */
 
-Custom_Network_Priority_Mapping::Custom_Network_Priority_Mapping (void)
+Custom_Network_Priority_Mapping::Custom_Network_Priority_Mapping ()
   : corba_priority_ (RTCORBA::minPriority)
 {
 }

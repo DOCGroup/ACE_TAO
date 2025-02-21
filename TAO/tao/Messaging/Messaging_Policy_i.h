@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Messaging_Policy_i.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
@@ -23,6 +21,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 /*
@@ -33,11 +33,10 @@
  *  This policy controls the total (round-trip) timeout time for a
  *  request.
  */
-class TAO_Messaging_Export TAO_RelativeRoundtripTimeoutPolicy
+class TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry);
@@ -54,30 +53,25 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
 
-  /// Returns a copy of <this>.
-  virtual TAO_RelativeRoundtripTimeoutPolicy *clone (void) const;
+  /// Returns a copy of @c this.
+  virtual TAO_RelativeRoundtripTimeoutPolicy *clone () const;
 
   // = The Messaging::RelativeRoundtripTimeoutPolicy methods
-  virtual TimeBase::TimeT relative_expiry (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TimeBase::TimeT relative_expiry ();
 
-  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
 
-  // Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  /// Return the cached policy type for this policy.
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
 private:
   /// The attribute
@@ -100,9 +94,8 @@ private:
  */
 class TAO_Messaging_Export TAO_Sync_Scope_Policy
   : public Messaging::SyncScopePolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
@@ -119,40 +112,36 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   /// Returns a copy of <this>.
-  virtual TAO_Sync_Scope_Policy *clone (void) const;
+  virtual TAO_Sync_Scope_Policy *clone () const;
 
   // = The Messaging::SyncScopePolicy methods.
 
-  virtual Messaging::SyncScope synchronization (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Messaging::SyncScope synchronization ();
 
   void get_synchronization (Messaging::SyncScope &synchronization) const;
 
-  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   // Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 private:
-
   /// The attribute
   Messaging::SyncScope synchronization_;
 };
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Messaging_Policy_i.i"
+#include "tao/Messaging/Messaging_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

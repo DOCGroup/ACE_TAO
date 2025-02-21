@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -71,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 
 class UTL_ExceptList;
+class AST_Type;
 
 class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl,
                                         public virtual UTL_Scope
@@ -84,35 +83,34 @@ public:
      , OP_idempotent            // Operation is idempotent.
   };
 
-  // Constructor(s).
-  AST_Operation (void);
-
   AST_Operation (AST_Type *return_type,
                  Flags flags,
                  UTL_ScopedName *n,
-                 idl_bool local,
-                 idl_bool abstract);
+                 bool local,
+                 bool abstract);
 
-  // Destructor.
-  virtual ~AST_Operation (void);
+  virtual ~AST_Operation ();
 
   // Data Accessors.
 
-  AST_Type *return_type (void);
+  AST_Type *return_type ();
 
-  Flags flags (void);
+  Flags flags ();
 
-  UTL_StrList *context (void);
+  UTL_StrList *context ();
 
-  UTL_ExceptList *exceptions (void);
+  UTL_ExceptList *exceptions ();
 
   // Public operations.
 
-  int void_return_type (void);
+  bool void_return_type ();
   /// Returns 1 if the operation has a void return type.
 
   /// Return the number of arguments
-  virtual int argument_count (void);
+  virtual int argument_count ();
+
+  /// Return the flag indicating a request sends argument data
+  virtual bool has_in_arguments ();
 
   /// Count the number of arguments of a certain type.
   /**
@@ -126,35 +124,28 @@ public:
    */
   int count_arguments_with_direction (int direction_mask);
 
-  virtual int has_native (void);
+  virtual int has_native ();
   // Any of the arguments or the return value is a <native> type.
   // This is important because in that case no code should be
   // generated for the stubs.
 
-  // Narrowing.
-  DEF_NARROW_METHODS2(AST_Operation, AST_Decl, UTL_Scope);
-  DEF_NARROW_FROM_DECL(AST_Operation);
-  DEF_NARROW_FROM_SCOPE(AST_Operation);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
-  // Method to add exceptions
-  UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
-
-  // Add an argument to the scope.
-  AST_Argument *be_add_argument (AST_Argument *arg);
-
-  // Insert an exception at the head of the list.
-  int be_insert_exception (AST_Exception *ex);
-
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-private:
+  // Method to add exceptions
+  UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
+
+  static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const;
+
+protected:
   // Data.
 
   AST_Type *pd_return_type;
@@ -172,17 +163,20 @@ private:
   int argument_count_;
   // Number of arguments.
 
+  bool has_in_arguments_;
+  // True if any arguments are IN or INOUT
+
   int has_native_;
   // Is any argument of type native.
 
   // Operations.
 
-  int compute_argument_attr (void);
+  int compute_argument_attr ();
   // Count the number of arguments.
 
   // Scope Management Protocol.
 
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   virtual AST_Argument *fe_add_argument (AST_Argument *a);
   virtual UTL_StrList *fe_add_context (UTL_StrList *c);
   virtual UTL_NameList *fe_add_exceptions (UTL_NameList *e);

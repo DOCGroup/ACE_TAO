@@ -1,0 +1,28 @@
+// -*- MPC -*-
+project(*Zlib_Server): taoserver, compression, zlibcompressor,  {
+  exename = zlibserver
+  Source_Files {
+    zlibserver.cpp
+  }
+}
+
+project(*Bzip2_Server): taoserver, compression, bzip2compressor,  {
+  exename = bzip2server
+  Source_Files {
+    bzip2server.cpp
+  }
+}
+
+project(*Lzo_Server): taoserver, compression, lzocompressor,  {
+  exename = lzoserver
+  Source_Files {
+    lzoserver.cpp
+  }
+}
+
+project(*Rle_Server) : taolib, compression, rlecompressor {
+  exename = rleserver
+  Source_Files {
+    RLECompressorTest.cpp
+  }
+}

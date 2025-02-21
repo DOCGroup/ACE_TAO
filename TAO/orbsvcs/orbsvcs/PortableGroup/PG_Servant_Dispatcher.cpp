@@ -1,25 +1,16 @@
-// @(#) $Id$
+#include "orbsvcs/PortableGroup/GOA.h"
+#include "orbsvcs/PortableGroup/PG_Servant_Dispatcher.h"
 
-#include "PG_Servant_Dispatcher.h"
-#include "GOA.h"
-
-ACE_RCSID(PortableGroup,
-          PG_Servant_Dispatcher,
-          "$Id$")
-
-TAO_PG_Servant_Dispatcher::~TAO_PG_Servant_Dispatcher (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Root_POA *
 TAO_PG_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
-                                            TAO_POA_Manager &poa_manager,
+                                            PortableServer::POAManager_ptr poa_manager,
                                             const TAO_POA_Policy_Set &policies,
                                             ACE_Lock &lock,
                                             TAO_SYNCH_MUTEX &thread_lock,
                                             TAO_ORB_Core &orb_core,
-                                            TAO_Object_Adapter *object_adapter
-                                            ACE_ENV_ARG_DECL)
+                                            TAO_Object_Adapter *object_adapter)
 {
   TAO_Root_POA *poa = 0;
 
@@ -31,33 +22,34 @@ TAO_PG_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                              lock,
                              thread_lock,
                              orb_core,
-                             object_adapter
-                             ACE_ENV_ARG_PARAMETER),
+                             object_adapter),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return poa;
 }
 
 void
-TAO_PG_Servant_Dispatcher::pre_invoke_remote_request (TAO_Root_POA &,
-                                                      CORBA::Short,
-                                                      TAO_ServerRequest &,
-                                                      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
-                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_PG_Servant_Dispatcher::pre_invoke_remote_request (
+  TAO_Root_POA &,
+  CORBA::Short,
+  TAO_ServerRequest &,
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
 }
 
 void
-TAO_PG_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &,
-                                                          CORBA::Short,
-                                                          TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
-                                                          ACE_ENV_ARG_DECL_NOT_USED)
+TAO_PG_Servant_Dispatcher::pre_invoke_collocated_request (
+  TAO_Root_POA &,
+  CORBA::Short,
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
 }
 
 void
-TAO_PG_Servant_Dispatcher::post_invoke (TAO_Root_POA &,
-                                        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
+TAO_PG_Servant_Dispatcher::post_invoke (
+  TAO_Root_POA &,
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,13 +1,6 @@
-//
-// $Id$
-//
 #include "Session_Factory.h"
 #include "Session.h"
 #include "Servant_var.h"
-
-ACE_RCSID (TAO_RTEC_Perf_RTCORBA_Callback, 
-           Session_Factory, 
-           "$Id$")
 
 Session_Factory::Session_Factory (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa)
@@ -17,26 +10,22 @@ Session_Factory::Session_Factory (CORBA::ORB_ptr orb,
 }
 
 Test::Session_ptr
-Session_Factory::create_new_session (Test::Callback_ptr cb
-                                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Session_Factory::create_new_session (Test::Callback_ptr cb)
 {
   Servant_var<Session> session_impl (new Session (cb,
                                                   this->poa_.in ()));
 
-  return session_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return session_impl->_this ();
 }
 
 void
-Session_Factory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Session_Factory::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-Session_Factory::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Session_Factory::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

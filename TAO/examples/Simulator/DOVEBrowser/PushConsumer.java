@@ -1,7 +1,5 @@
-// $Id$
 //
 // ============================================================================
-//
 //
 // = FILENAME
 //    PushConsumer.java
@@ -12,7 +10,6 @@
 // = DESCRIPTION
 //    This is a Push Consumer which takes the data field of the
 //    event and updates with it a Data Handler.
-//
 //
 // ============================================================================
 
@@ -143,7 +140,7 @@ public class PushConsumer extends RtecEventComm.PushConsumerPOA
         suppliers_ = consumer_admin_.obtain_push_supplier ();
 
         org.omg.CORBA.Object objref = poa_.servant_to_reference (this);
-        RtecEventComm.PushConsumer consumer_ref = 
+        RtecEventComm.PushConsumer consumer_ref =
           RtecEventComm.PushConsumerHelper.narrow (objref);
         suppliers_.connect_push_consumer (consumer_ref, qos);
 

@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Sched_Filter_Builder.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -16,13 +15,16 @@
 #define TAO_EC_SCHED_FILTER_BUILDER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Filter_Builder.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "sched_event_export.h"
+#include "orbsvcs/Event/sched_event_export.h"
+#include "orbsvcs/RtecSchedulerC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel_Base;
@@ -43,12 +45,11 @@ public:
   TAO_EC_Sched_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   /// destructor...
-  virtual ~TAO_EC_Sched_Filter_Builder (void);
+  virtual ~TAO_EC_Sched_Filter_Builder ();
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos
-                        ACE_ENV_ARG_DECL) const;
+                        RtecEventChannelAdmin::ConsumerQOS& qos) const;
 
 private:
   /// Recursively build the filter tree.
@@ -56,15 +57,13 @@ private:
                                   RtecEventChannelAdmin::ConsumerQOS& qos,
                                   CORBA::ULong& pos,
                                   RtecScheduler::Scheduler_ptr scheduler,
-                                  RtecScheduler::handle_t parent_info
-                                  ACE_ENV_ARG_DECL) const;
+                                  RtecScheduler::handle_t parent_info) const;
 
   /// Build the name recursively...
   void recursive_name (RtecEventChannelAdmin::ConsumerQOS& qos,
                        CORBA::ULong& pos,
                        RtecScheduler::Scheduler_ptr scheduler,
-                       ACE_CString &name
-                       ACE_ENV_ARG_DECL) const;
+                       ACE_CString &name) const;
 
   /// Count the number of children of the current node, i.e. until a
   /// conjunction or disjunction starts.
@@ -76,8 +75,10 @@ private:
   TAO_EC_Event_Channel_Base* event_channel_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Sched_Filter_Builder.i"
+#include "orbsvcs/Event/EC_Sched_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

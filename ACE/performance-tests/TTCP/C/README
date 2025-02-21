@@ -1,0 +1,36 @@
+
+
+    TTCP for c_version and ACE-wrappers
+    ----------------------------------------------------
+
+This is the super-readme file for the "ttcp" code. This directory
+contains the C and ACE-wrappers versions of ttcp code. To compile the
+code, you have to do the following:
+
+1. You should have ACE installed in your system and configured
+   correctly. (see the reference manual for installation and
+   configuration procedure)
+
+2. Copy this directory (ttcp) in the same directory structure to your
+   disk space.
+
+3. setup the following environment parameters (before compilation stage):
+   ACE_ROOT, LD_LIBRARY_PATH.
+
+For example:
+ACE_ROOT=/project/adaptive/ACE_wrappers
+LD_LIBRARY_PATH=/project/adaptive/ACE_wrappers/build/SunOS5.4/ace
+
+4. Do make (using GNU make) in this directory level. This will create
+   the executable ttcp target code for each ttcp version.
+
+5. Read the README or How_to_run_tests file existing in each directory
+   to know how to use the  executable.
+
+6. Have fun.
+
+Ehab S. Al-Shaer
+6/30/1995
+
+
+

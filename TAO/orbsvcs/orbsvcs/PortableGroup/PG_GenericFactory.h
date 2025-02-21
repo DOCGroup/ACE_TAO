@@ -4,8 +4,6 @@
 /**
  * @file  PG_GenericFactory.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -22,12 +20,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Factory_Map.h"
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/PG_Factory_Map.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "tao/PortableServer/PortableServerC.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "ace/Null_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class TAO_PG_ObjectGroupManager;
@@ -50,19 +49,17 @@ class TAO_PortableGroup_Export TAO_PG_GenericFactory
   : public virtual PortableGroup::GenericFactory
 {
 public:
-
   /// Constructor.
   TAO_PG_GenericFactory (TAO_PG_ObjectGroupManager & object_group_map,
                          TAO_PG_PropertyManager & property_manager);
 
   /// Destructor.
-  ~TAO_PG_GenericFactory (void);
+  ~TAO_PG_GenericFactory ();
 
   /**
    * @name TAO_LoadBalancer::GenericFactory methods
    */
   //@{
-
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -73,14 +70,7 @@ public:
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
-        factory_creation_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::NoFactory,
-                     PortableGroup::ObjectNotCreated,
-                     PortableGroup::InvalidCriteria,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::CannotMeetCriteria));
+        factory_creation_id);
 
   /**
    * Delete the object corresponding to the provided
@@ -90,10 +80,7 @@ public:
    */
   virtual void delete_object (
       const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectNotFound));
+        factory_creation_id);
 
   //@}
 
@@ -109,8 +96,7 @@ public:
    * factories.
    */
   void delete_object_i (TAO_PG_Factory_Set & factory_set,
-                        CORBA::Boolean ignore_exceptions
-                        ACE_ENV_ARG_DECL);
+                        CORBA::Boolean ignore_exceptions);
 
   /// If the member corresponding to the given group ID and location
   /// was created by the infrastructure, call delete_object() on the
@@ -120,8 +106,7 @@ public:
    * when ObjectGroupManager::remove_member() is explicitly called.
    */
   void delete_member (CORBA::ULong group_id,
-                      const PortableGroup::Location & location
-                      ACE_ENV_ARG_DECL);
+                      const PortableGroup::Location & location);
 
   /// Verify that the MinimumNumberMembers criterion is satisfied.
   /**
@@ -134,8 +119,7 @@ public:
   void check_minimum_number_members (
     PortableGroup::ObjectGroup_ptr object_group,
     CORBA::ULong group_id,
-    const char * type_id
-    ACE_ENV_ARG_DECL);
+    const char * type_id);
 
   /// Create a new object group member using the supplied FactoryInfo
   /// and RepositoryId and add it to the given object group.
@@ -146,18 +130,9 @@ public:
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::FactoryInfo & factory_info,
       const char * type_id,
-      const CORBA::Boolean propagate_member_already_present
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::NoFactory,
-                     PortableGroup::ObjectNotCreated,
-                     PortableGroup::InvalidCriteria,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::CannotMeetCriteria,
-		     PortableGroup::MemberAlreadyPresent));
+      const CORBA::Boolean propagate_member_already_present);
 
 private:
-
   /// Populate the object group being created.  Called when the
   /// infrastructure-controlled membership style is used for the
   /// object group being created.
@@ -166,14 +141,13 @@ private:
          const char * type_id,
          const PortableGroup::FactoryInfos &factory_infos,
          PortableGroup::InitialNumberMembersValue initial_number_members,
-         TAO_PG_Factory_Set & factory_set
-         ACE_ENV_ARG_DECL);
+         TAO_PG_Factory_Set & factory_set);
 
   /// Get a new ObjectId to be used when creating a new ObjectGroup.
   /**
    * An ObjectId created by this method will never be reused within
    * the scope of a given ReplicationManager.  A value suitable for
-   * use in a map association <ext_id> is also returned.
+   * use in a map association  ext_id  is also returned.
    */
   void get_ObjectId (CORBA::ULong fcid,
                      PortableServer::ObjectId_out oid);
@@ -196,11 +170,9 @@ private:
     PortableGroup::MembershipStyleValue & membership_style,
     PortableGroup::FactoriesValue & factory_infos,
     PortableGroup::InitialNumberMembersValue & initial_number_members,
-    PortableGroup::MinimumNumberMembersValue & minimum_number_members
-    ACE_ENV_ARG_DECL);
+    PortableGroup::MinimumNumberMembersValue & minimum_number_members);
 
 private:
-
   /// Reference to the POA used to create object group references.
   PortableServer::POA_var poa_;
 
@@ -237,9 +209,9 @@ private:
   /// Lock used to synchronize access to the factory creation id
   /// index (i.e. next_fcid_).
   TAO_SYNCH_MUTEX lock_;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

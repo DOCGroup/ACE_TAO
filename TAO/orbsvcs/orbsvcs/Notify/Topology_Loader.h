@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Topology_Loader.h
- *
- *  $Id$
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
@@ -14,19 +12,26 @@
 #define TOPOLOGY_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #include "ace/config-all.h"
-
-#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+#include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace CORBA
+{
+  class Environment;
+}
+
 namespace TAO_Notify
 {
-
 /// A forward declaration.
 class Topology_Object;
 
@@ -34,7 +39,6 @@ class Topology_Object;
  * \brief An interface for an object that loads Persistent Topology Information.
  *
  * A persistent store must provide an implemention this interface.
- *
  */
 class TAO_Notify_Serv_Export Topology_Loader
 {
@@ -52,7 +56,7 @@ public:
    * call the load_child method of the object passed in, then do the same
    * loading process on the returned object.
    */
-  virtual void load (Topology_Object *root ACE_ENV_ARG_DECL) = 0;
+  virtual void load (Topology_Object *root) = 0;
 
   /**
    * \brief Close the loader after loading is complete.
@@ -64,10 +68,11 @@ public:
    * vary based on the type of loader, so we can't include it in the
    * interface.
    */
-  virtual void close (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void close ();
 };
-
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

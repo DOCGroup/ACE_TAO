@@ -1,0 +1,17 @@
+#include "tao/PortableServer/PortableServer_include.pidl"
+#include "tao/CodecFactory/IOP_Codec_include.pidl"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl"
+#include "tao/PI_Server/PI_Server_include.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
+#include "tao/RTPortableServer/RTPortableServer_include.pidl"
+#include "tao/RTScheduling/RTScheduler_include.pidl"
+
+#ifdef I_AM_NOT_DEFINED_AT_ALL
+#include "tao/CodecFactory/IOP_Codec.pidl"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
+#include "tao/PI_Server/PI_Server.pidl"
+#include "tao/PortableServer/PortableServer.pidl"
+#include "tao/RTCORBA/RTCORBA.pidl"
+#include "tao/RTPortableServer/RTPortableServer.pidl"
+#include "tao/RTScheduling/RTScheduler.pidl"
+#endif

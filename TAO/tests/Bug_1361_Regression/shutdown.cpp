@@ -1,42 +1,29 @@
-// $Id$
-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
-
-ACE_RCSID(Bug_1270_Regression, shutdown, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[]);
+parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
              "Starting shutdown\n"));
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Test::Echo_Caller_var server =
-        Test::Echo_Caller::_narrow(tmp.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Echo_Caller::_narrow(tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -46,27 +33,23 @@ main (int argc, char *argv[])
                             1);
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -85,6 +68,6 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }

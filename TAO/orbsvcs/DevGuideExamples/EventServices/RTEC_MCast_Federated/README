@@ -1,0 +1,140 @@
+
+
+Real-Time Event Service
+
+
+File: DevGuideExamples/EventServices/RTEC_MCast_Federated/README
+
+
+This directory contains an example that shows how to create and
+federate real-time event channels using the classes in EC_Gateway_UDP.h.
+Depending on the options, it will use either UDP or multicast to link
+the event channels.
+
+-------------------------------------------------------------------------
+
+Note: To run this example, you must first run the Naming Service, e.g.:
+
+  $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior&
+
+-------------------------------------------------------------------------
+
+To start the supplier/EC processes on a single host and federate them
+using UDP, do the following (after starting the Naming_Service):
+
+  ./EchoEventSupplier -ORBInitRef NameService=file://ns.ior -udp -ecname name1 -port 1233 -listenport 1234
+  ./EchoEventSupplier -ORBInitRef NameService=file://ns.ior -udp -ecname name2 -port 1234 -listenport 1233
+
+This will start two EC/supplier processes on the same node.  One (name1)
+will listen on port 1234 and send on port 1233.  The other (name2) will
+do the opposite. You should be able to use any available port as long as
+the port and listenport options are symmetric (listenport of one process
+must be the port of the other).  The -address option can be used to
+specify a supplier/EC process on another host.  Here is an example of two
+processes on different hosts:
+
+On node1:
+  ./EchoEventSupplier -ORBInitRef NameService=file://ns.ior -udp -ecname name1 -port 1233 -listenport 1234 -address node2
+On node2:
+  ./EchoEventSupplier -ORBInitRef NameService=file://ns.ior -udp -ecname name2 -port 1234 -listenport 1233 -address node1
+
+When using UDP, this example is limited to federating two ECs.
+
+-------------------------------------------------------------------------
+
+To start the supplier/EC processes and federate them using multicast, do the
+following (after starting the Naming_Service):
+
+./EchoEventSupplier -ORBInitRef NameService=file://ns.ior -ORBSvcConf supplier.conf -ecname name1 -address 224.9.9.2 -port 1234
+./EchoEventSupplier -ORBInitRef NameService=file://ns.ior -ORBSvcConf supplier.conf -ecname name2 -address 224.9.9.2 -port 1234
+
+The -address and -port options should be passed a valid and available
+multicast address and port.
+
+-------------------------------------------------------------------------
+
+To start the consumers, simply do the following (this works the same for
+both types of federations):
+
+./EchoEventConsumer -ORBInitRef NameService=file://ns.ior -ecname name1
+./EchoEventConsumer -ORBInitRef NameService=file://ns.ior -ecname name2
+
+It may be easiest to start these in separate windows.  Each consumer
+connects to one EC (specified by the -ecname option).  You should see
+events from both suppliers on each event channel (each supplier passes
+events containing with the name of the EC they are using).
+
+-------------------------------------------------------------------------
+
+EchoEventSupplerMain.cpp
+
+  Main program for a PushSupplier.
+
+    EchoEventSupplier [ -ORBSvcConf supplier.conf ] [ -udp ] -ecname <name>
+                      [ -address <address> ] [ -port <port> ]
+                      [ -listenport <lport> ]
+
+  This will create a local RTEC event channel and bind it under
+  the root context of the naming service with the name <name>.
+  It will also federate with remote event channels specified via
+  the other options.  By default, it uses multicast to federate
+  the ECs (specifying -udp forces use of UDP).  <address> is
+  the address of the remote EC when using UDP and the multicast
+  address when using multicast.  <port> is the port to send
+  to when using UDP and the multicast port when using multicast.
+  <lport> is the port to listen on for UDP (and not used by
+  multicast.  You must pass -ORBSvcConf supplier.conf when
+  using multicast so as to enable Observers.
+
+  After initializing the local event channel and setting up the
+  connection for the federation, it publishes an event to the
+  local event channel every 10 milliseconds.  This event will
+  contain the string <name> in the any_value field.
+
+  Use Control-C to kill the process.
+
+-------------------------------------------------------------------------
+
+EchoEventConsumerMain.cpp
+
+  Main program for a PushConsumer.
+
+  To run it:
+
+    EchoEventConsumer -ecname <name>
+
+  This will look for an event channel bound to <name> in the Root context
+  of the Naming Service.  It will consume events from this channel and
+  print the type, source, and string contents contained in any_value.
+
+  Use Control-C to kill the process.
+
+-------------------------------------------------------------------------
+
+EchoEventConsumer_i.{h,cpp}
+
+  Call which implements the RtecEventComm::PushConsumer interface.
+
+-------------------------------------------------------------------------
+
+SimpleAddressServer.{h,cpp}
+
+  This is a servant class that implements the RtecUDPAdmin::AddrServer
+  interface.  It is used by the UDP/multicast senders to return an
+  address that they will send out particular events on.  It is also
+  used by the multicast event handler, to determine which addresses
+  to listen to based on consumer subscriptions.  This simple
+  implementation always returns the same address.
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+
+By default, this script uses multicast; pass -udp to the
+script to use udp.

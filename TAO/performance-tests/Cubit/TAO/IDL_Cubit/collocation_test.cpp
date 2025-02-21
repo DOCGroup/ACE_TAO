@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Cubit_Client.h"
 #include "Cubit_Server.h"
 
@@ -11,9 +9,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")
-
-#define  THE_IOR "theior"
+#define  THE_IOR ACE_TEXT("theior")
 
 struct Barriers
 {
@@ -26,7 +22,7 @@ struct Barriers
   ACE_Barrier client_fini_;
 };
 
-static const char *server_cmd = 0;
+static const ACE_TCHAR *server_cmd = 0;
 
 void *
 svr_worker (void *arg)
@@ -34,50 +30,46 @@ svr_worker (void *arg)
   Cubit_Server cubit_server;
   Barriers *thread_barrier = (Barriers *) arg;
 
-  char cmd_line[BUFSIZ];
-  ACE_OS::strcpy (cmd_line, "server ");
+  ACE_TCHAR cmd_line[BUFSIZ];
+  ACE_OS::strcpy (cmd_line, ACE_TEXT("server "));
   if (server_cmd != 0)
     ACE_OS::strcat (cmd_line, server_cmd);
-  ACE_OS::strcat (cmd_line, " -f " THE_IOR);
+  ACE_OS::strcat (cmd_line, ACE_TEXT(" -f ") THE_IOR);
   ACE_ARGV args (cmd_line);
 
-  ACE_TRY_NEW_ENV
+  try
     {
       int result = cubit_server.init (args.argc (),
-                                      args.argv ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      args.argv ());
 
       if (result == -1)
         return (void *) 1;
 
       thread_barrier->server_init_.wait ();
-      cubit_server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      cubit_server.run ();
 
       thread_barrier->client_fini_.wait ();
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return (void *) 1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return (void *) 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:c:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:"));
   int c = -1;
-  const char *client_cmd = 0;
+  const ACE_TCHAR *client_cmd = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -96,11 +88,11 @@ main (int argc, char **argv)
                           -1);
       }
 
-  char cmd_line[1024];
-  ACE_OS::strcpy (cmd_line, "client ");
+  ACE_TCHAR cmd_line[1024];
+  ACE_OS::strcpy (cmd_line, ACE_TEXT("client "));
   if (client_cmd != 0)
     ACE_OS::strcat (cmd_line, client_cmd);
-  ACE_OS::strcat (cmd_line, " -f " THE_IOR);
+  ACE_OS::strcat (cmd_line, ACE_TEXT(" -f ") THE_IOR);
   ACE_ARGV args (cmd_line);
 
   Barriers thread_barrier (2);

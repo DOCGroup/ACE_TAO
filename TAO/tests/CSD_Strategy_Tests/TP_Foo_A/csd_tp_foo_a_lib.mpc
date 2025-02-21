@@ -1,0 +1,19 @@
+project : csd_tp_test_lib, avoids_corba_e_micro {
+  sharedname   = CSD_TP_Foo_A
+  dynamicflags += CSD_TP_FOO_A_BUILD_DLL
+  idlflags  += -Wb,export_macro=CSD_TP_Foo_A_Export -Wb,export_include=CSD_TP_Foo_A_Export.h
+  includes  += $(TAO_ROOT)/tao
+
+  IDL_Files {
+    Foo_A.idl
+  }
+
+  Source_Files {
+    Foo_AC.cpp
+    Foo_AS.cpp
+    Foo_A_ClientEngine.cpp
+    Foo_A_i.cpp
+    Foo_A_Statistics.cpp
+  }
+
+}

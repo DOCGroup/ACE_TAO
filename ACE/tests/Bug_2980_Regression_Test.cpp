@@ -1,0 +1,192 @@
+//FUZZ: disable check_for_lack_ACE_OS
+
+#include "ace/config-lite.h"
+
+#include <iostream>
+#include <assert.h>
+#include <cstdio>
+#include <string.h>
+#include <stdlib.h>
+#include <string.h>
+
+// This is a non-ACE driver program which loads an ACE-based DLL.  The
+// usual ACE-related defines will not apply and we must use
+// platform-specific ones.
+//
+// This test has not been made to work on Windows and vxWorks, yet ...
+#if defined (ACE_HAS_THREADS)
+#  define CAN_USE_THREADS
+#else
+#  undef CAN_USE_THREADS
+#endif
+
+#if !(defined (WIN32) || defined (ACE_VXWORKS) || defined (ACE_HAS_LYNXOS_178))\
+    && !defined ACE_FACE_SAFETY_EXTENDED
+#  define CAN_RUN_TEST
+
+#  include <dlfcn.h>
+
+namespace {
+#  if defined (ACE_DLL_SUFFIX)
+  const char *DllTestName = "./libBug_2980_Regression" ACE_DLL_SUFFIX;
+#else
+  const char *DllTestName = "./libBug_2980_Regression.so";
+#endif /* ACE_DLL_SUFFIX */
+}
+
+#  if defined CAN_USE_THREADS
+#    include <pthread.h>
+#  endif
+
+#else
+#  undef CAN_RUN_TEST
+#endif
+
+using voidfunction = int (*)();
+
+#if defined (CAN_RUN_TEST)
+static void * dllHandle;
+static voidfunction   capi_init = 0;
+static voidfunction   capi_fini = 0;
+static voidfunction   capi_dosomething = 0;
+#endif /* defined (CAN_RUN_TEST) */
+
+extern "C"
+void* loadDll(void*)
+{
+#if defined (CAN_RUN_TEST)
+  std::printf ("loadDll - entered\n");
+  const char *subdir_env = getenv ("ACE_EXE_SUB_DIR");
+  if (subdir_env)
+    {
+      char *dllFile =
+        (char *) malloc (2 + strlen (subdir_env) + strlen (DllTestName));
+      strcpy (dllFile, subdir_env);
+      strcat (dllFile, "/");
+      strcat (dllFile, DllTestName);
+      dllHandle = dlopen (dllFile, RTLD_NOW);
+      free (dllFile);
+    }
+  else
+    {
+      dllHandle = dlopen (DllTestName, RTLD_NOW);
+    }
+
+  if (dllHandle == 0)
+  {
+    std::printf ("unable to load library: %s\n", dlerror());
+    assert(dllHandle != 0);
+  }
+
+  void* temp = dlsym (dllHandle, "capi_init");
+  memcpy (&capi_init, &temp, sizeof (temp));
+  if (capi_init == 0)
+  {
+    std::printf ("unable to resolve symbol capi_init: %s\n", dlerror());
+    assert(capi_init != 0);
+  }
+
+  temp = dlsym (dllHandle, "capi_fini");
+  memcpy (&capi_fini, &temp, sizeof (temp));
+  if (capi_fini == 0)
+  {
+    std::printf ("unable to resolve symbol capi_fini: %s\n", dlerror());
+    assert(capi_fini != 0);
+  }
+
+  temp = dlsym (dllHandle, "capi_dosomething");
+  memcpy (&capi_dosomething, &temp, sizeof (temp));
+  if (capi_dosomething == 0)
+  {
+    std::printf ("unable to resolve symbol capi_dosomething: %s\n", dlerror());
+    assert(capi_dosomething != 0);
+  }
+  capi_init();
+  std::printf ("loadDll - leaving\n");
+#endif /* defined (CAN_RUN_TEST) */
+  return 0;
+}
+
+extern "C"
+void* unloadDll(void*)
+{
+#if defined (CAN_RUN_TEST)
+  std::printf ("unloadDll - entered\n");
+  capi_fini();
+  dlclose(dllHandle);
+  std::printf ("unloadDll - leaving\n");
+#endif /* defined (CAN_RUN_TEST) */
+  return 0;
+}
+
+void * loadunloadDll(void *pp)
+{
+  loadDll(pp);
+
+#if defined (CAN_RUN_TEST)
+  assert(capi_dosomething != 0);
+  capi_dosomething();
+#endif /* defined (CAN_RUN_TEST) */
+
+  unloadDll(pp);
+
+  return 0;
+}
+// FUZZ: disable check_for_improper_main_declaration
+int main (int, char *[])
+{
+#if !defined (CAN_RUN_TEST)
+# ifndef ACE_FACE_SAFETY_EXTENDED
+  std::printf ("Terminating because this test has not been designed "
+          "to run on WIN32 or VXWORKS.\n");
+# endif
+#else
+  std::printf ("main called\n");
+  std::printf ("main - calling loadDll\n");
+
+#  if defined (CAN_USE_THREADS)
+  int result = 0;
+  pthread_t tid1;
+  result = pthread_create(&tid1, 0, &loadDll, 0);
+  if (result != 0)
+  {
+    std::printf ("pthread_create() failed: %d\n", result);
+    return result;
+  }
+
+  pthread_join(tid1, 0);
+  std::printf ("loadDll thread finished and re-joined\n");
+
+#  else
+
+  loadDll(0);
+  std::printf ("loadDll finished\n");
+
+#  endif /* defined (CAN_USE_THREADS) */
+
+  std::printf ("main - calling unloadDll\n");
+
+#  if defined (CAN_USE_THREADS)
+  pthread_t tid2;
+  result = pthread_create(&tid2, 0, &unloadDll, 0);
+  if (result != 0)
+  {
+    std::printf ("pthread_create() failed: %d\n", result);
+    return 1;
+  }
+  pthread_join(tid2, 0);
+  std::printf ("unloadDll thread finished and re-joined\n");
+
+#  else
+
+  unloadDll(0);
+  std::printf ("unloadDll finished\n");
+
+#  endif /* defined (CAN_USE_THREADS) */
+
+  std::printf ("main finished\n");
+#endif /* defined (CAN_RUN_TEST) */
+
+  return 0;
+}
+//FUZZ: enable check_for_lack_ACE_OS

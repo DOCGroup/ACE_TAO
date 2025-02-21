@@ -4,12 +4,9 @@
 /**
  *  @file    Client_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_CLIENT_ORB_INITIALIZER_H
 #define TAO_CLIENT_ORB_INITIALIZER_H
@@ -41,18 +38,12 @@
  */
 class Client_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 public:
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 };
 
 #if defined(_MSC_VER)

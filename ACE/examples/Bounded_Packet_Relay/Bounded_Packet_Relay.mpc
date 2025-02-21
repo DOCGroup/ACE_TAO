@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : aceexe {
+  exename = bpr_thread
+  macros += ACE_HAS_DEFERRED_TIMER_COMMANDS
+}

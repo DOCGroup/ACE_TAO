@@ -1,25 +1,19 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/SString.h"
 #include "testC.h"
 
-ACE_RCSID (Send_File, 
-           client, 
-           "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char *cert_file = "cacert.pem";
 
 CORBA::Boolean call_shutdown = 0;
 int wait_time = 10;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "sk:w:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("sk:w:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -43,35 +37,30 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
-      ACE_TString env ("SSL_CERT_FILE=");
+      ACE_CString env ("SSL_CERT_FILE=");
       env += cert_file;
       ACE_OS::putenv (env.c_str ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -83,7 +72,7 @@ main (int argc, char *argv[])
 
       for (CORBA::ULong i = 0; i < 2; i++)
         {
-          ACE_TRY_EX(nested_try)
+          try
             {
               ACE_DEBUG ((LM_DEBUG,
                           "CLIENT (%P): Connecting to the server...\n"));
@@ -91,16 +80,15 @@ main (int argc, char *argv[])
               // If we are retrying then make just one request.
               do
                 {
-                  server->send_line ("some data" ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK_EX (nested_try);
-
+                  server->send_line ("some data");
                 }
               while (i == 0);
             }
-          ACE_CATCH (CORBA::COMM_FAILURE, ex)
+          catch (const CORBA::COMM_FAILURE&)
             {
               // If this happens second time then we are done.
-              if (i != 0) ACE_RE_THROW;
+              if (i != 0)
+                throw;
 
               // Waiting for server to come back
               ACE_DEBUG ((LM_DEBUG,
@@ -110,37 +98,54 @@ main (int argc, char *argv[])
                           wait_time));
               ACE_OS::sleep (wait_time);
             }
-          ACE_ENDTRY;
-          ACE_TRY_CHECK;
+          catch (const CORBA::TRANSIENT&)
+            {
+              // If this happens second time then we are done.
+              if (i != 0)
+                throw;
+
+              // Waiting for server to come back
+              ACE_DEBUG ((LM_DEBUG,
+                          "CLIENT (%P): Caught CORBA::TRANSIENT. "
+                          "Assuming server crashed and will come up soon.\n"
+                          "CLIENT (%P): Waiting for %d seconds...\n",
+                          wait_time));
+              ACE_OS::sleep (wait_time);
+            }
         }
 
       if (call_shutdown)
         {
-
           // Let other clients to finish their task if any
-          ACE_OS::sleep (3);
+          ACE_OS::sleep (wait_time);
 
           ACE_DEBUG ((LM_DEBUG,
                       "CLIENT (%P): Calling shutdown...\n"));
 
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          try
+            {
+              server->shutdown ();
+            }
+          catch (const CORBA::COMM_FAILURE&)
+            {
+              // Ignored
+            }
+          catch (const CORBA::TRANSIENT&)
+            {
+              // Ignored
+            }
         }
 
-
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "CLIENT (%P): Done.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CLIENT (%P): Caught exception:");
+      ex._tao_print_exception ("CLIENT (%P): Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

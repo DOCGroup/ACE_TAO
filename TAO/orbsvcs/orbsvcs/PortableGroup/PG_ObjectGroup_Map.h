@@ -4,8 +4,6 @@
 /**
  *  @file    PG_ObjectGroup_Map.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=======================================================================
@@ -22,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_MemberInfo.h"
+#include "orbsvcs/PortableGroup/PG_MemberInfo.h"
 
 #include "orbsvcs/PortableGroupC.h"
 
@@ -32,6 +30,8 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_PG_ObjectGroup_Map_Entry
  *
@@ -40,7 +40,6 @@
 struct TAO_PG_ObjectGroup_Map_Entry
 {
 public:
-
   /// The RepositoryId corresponding to all Members in the
   /// ObjectGroup.
   CORBA::String_var type_id;
@@ -64,7 +63,6 @@ public:
   /// Properties used when creating this object group, in addition to
   /// those set dynamically after the creation.
   PortableGroup::Properties properties;
-
 };
 
 /// ObjectId hash map typedef.
@@ -75,6 +73,7 @@ typedef ACE_Hash_Map_Manager_Ex<
   ACE_Equal_To<PortableServer::ObjectId>,
   ACE_Null_Mutex> TAO_PG_ObjectGroup_Map;
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,0 +1,36 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  idlflags += -Sp
+  IDL_Files {
+    master.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, threads {
+  after += *idl
+  Source_Files {
+    server.cpp
+  }
+  Source_Files {
+    masterC.cpp
+    masterS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Master): taoserver, threads {
+  exename = master
+  after += *idl
+  Source_Files {
+    master.cpp
+  }
+  Source_Files {
+    masterC.cpp
+    masterS.cpp
+  }
+  IDL_Files {
+  }
+}
+

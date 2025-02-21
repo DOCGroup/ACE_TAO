@@ -1,0 +1,76 @@
+
+
+File: DevGuideExamples/Multithreading/ThreadPool/README
+
+
+This directory contains a CORBA example illustrating a simple client
+and a server with an interface Messenger.  This example is based on the
+Getting Started example, but adds concurrent request processing
+capabilities to the server using the thread pool concurrency model.
+The server creates 4 threads for the thread pool.
+
+
+How to Run
+----------
+
+To start the server :
+------------------
+./MessengerServer
+
+
+To start the client:
+------------------
+./MessengerClient
+
+
+Tip:
+----
+Run several clients simultaneously against the server.  Some client
+requests should be handled by separate threads in the server.  To
+verify this, the server returns the thread ID that handled the request
+in the reply message that is printed by the client.  You may see the
+same thread used to handle multiple requests, but it is unlikely that
+the same thread will be used to handle all of the requests.
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+
+Here is sample output from the Perl script:
+
+Starting MessengerServer
+IOR written to file Messenger.ior
+
+
+Starting 9 MessengerClients.
+The server should use different threads to handle requests.
+
+Reply: Message handled on thread 1620
+Reply: Message handled on thread 1620
+Reply: Message handled on thread 1620
+Reply: Message handled on thread 1868
+Reply: Message handled on thread 1592
+Reply: Message handled on thread 1868
+Reply: Message handled on thread 1300
+Reply: Message handled on thread 1620
+Reply: Message handled on thread 1620
+
+NOTE:
+
+  Since the Perl script starts several clients simultaneously, output
+  may become garbled since each client writes its output to stdout.
+
+NOTE:
+
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
+   perl ../run_test.pl
+
+
+

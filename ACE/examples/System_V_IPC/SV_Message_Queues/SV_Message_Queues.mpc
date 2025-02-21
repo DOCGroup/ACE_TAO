@@ -1,0 +1,26 @@
+// -*- MPC -*-
+project(*MQ Client) : aceexe, avoids_ace_for_tao {
+  exename = mqclient
+  Source_Files {
+    MQ_Client.cpp
+  }
+}
+project(*MQ Server) : aceexe, avoids_ace_for_tao {
+  exename = mqserver
+  Source_Files {
+    MQ_Server.cpp
+  }
+}
+project(*TMQ Client) : aceexe, avoids_ace_for_tao {
+  exename = tmqclient
+  Source_Files {
+    TMQ_Client.cpp
+  }
+}
+project(*TMQ Server) : aceexe, avoids_ace_for_tao {
+  exename = tmqserver
+  Source_Files {
+    TMQ_Server.cpp
+  }
+}
+

@@ -1,58 +1,44 @@
-// $Id$
+#include "tao/orbconf.h"
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
 #include "tao/ORB_Constants.h"
-#include "ServantActivatorC.h"
-#include "RequestProcessingStrategyServantActivator.h"
-#include "Servant_Base.h"
-#include "Non_Servant_Upcall.h"
-#include "Root_POA.h"
-#include "POA_Current_Impl.h"
-#include "Servant_Upcall.h"
+#include "tao/PortableServer/ServantActivatorC.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Servant_Upcall.h"
 
-ACE_RCSID (PortableServer,
-           Request_Processing,
-           "$Id$")
-
-#if (TAO_HAS_MINIMUM_POA == 0)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyServantActivator::RequestProcessingStrategyServantActivator (void) :
-      etherealize_objects_ (1)
-    {
-    }
-
     void
-    RequestProcessingStrategyServantActivator::strategy_cleanup (
-      ACE_ENV_SINGLE_ARG_DECL)
+    RequestProcessingStrategyServantActivator::strategy_cleanup ()
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
         ACE_UNUSED_ARG (non_servant_upcall);
 
-        this->servant_activator_ =
-          PortableServer::ServantActivator::_nil ();
+        this->servant_activator_ = PortableServer::ServantActivator::_nil ();
       }
 
-      RequestProcessingStrategy::strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+      RequestProcessingStrategy::strategy_cleanup ();
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyServantActivator::get_servant_manager (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
+    RequestProcessingStrategyServantActivator::get_servant_manager ()
     {
       return PortableServer::ServantManager::_duplicate (this->servant_activator_.in ());
     }
 
     void
     RequestProcessingStrategyServantActivator::set_servant_manager (
-      PortableServer::ServantManager_ptr imgr
-      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
+      PortableServer::ServantManager_ptr imgr)
     {
       // This operation sets the default servant manager associated with the
       // POA. This operation may only be invoked once after a POA has been
@@ -61,38 +47,29 @@ namespace TAO
       // standard minor code 6 being raised (see 11.3.9.12 of the corba spec)
       if (!CORBA::is_nil (this->servant_activator_.in ()))
         {
-          ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 6,
-                                           CORBA::COMPLETED_NO));
+          throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 6, CORBA::COMPLETED_NO);
         }
 
       this->servant_activator_ =
-        PortableServer::ServantActivator::_narrow (imgr
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        PortableServer::ServantActivator::_narrow (imgr);
 
-      this->validate_servant_manager (this->servant_activator_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->validate_servant_manager (this->servant_activator_.in ());
     }
 
-    TAO_SERVANT_LOCATION
+    TAO_Servant_Location
     RequestProcessingStrategyServantActivator::locate_servant (
       const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant
-      ACE_ENV_ARG_DECL)
+      PortableServer::Servant &servant)
     {
-      TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
+      TAO_Servant_Location location = TAO_Servant_Location::Not_Found;
 
-      location = this->poa_->servant_present (system_id,
-                                              servant
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO_SERVANT_NOT_FOUND);
+      location = this->poa_->servant_present (system_id, servant);
 
-      if (location == TAO_SERVANT_NOT_FOUND)
+      if (location == TAO_Servant_Location::Not_Found)
         {
           if (!CORBA::is_nil (this->servant_activator_.in ()))
             {
-              location = TAO_SERVANT_MANAGER;
+              location = TAO_Servant_Location::Servant_Manager;
             }
         }
 
@@ -105,18 +82,11 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      int &wait_occurred_restart_call
-      ACE_ENV_ARG_DECL)
+      bool &wait_occurred_restart_call)
     {
-      PortableServer::Servant servant = 0;
+      PortableServer::Servant servant = this->poa_->find_servant (system_id, servant_upcall, poa_current_impl);
 
-      servant = this->poa_->find_servant (system_id,
-                                          servant_upcall,
-                                          poa_current_impl
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (servant != 0)
+      if (servant != nullptr)
         {
           return servant;
         }
@@ -140,14 +110,9 @@ namespace TAO
       // reference.
       //
 
-      this->validate_servant_manager (this->servant_activator_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->validate_servant_manager (this->servant_activator_.in ());
 
-      servant =
-        this->incarnate_servant (poa_current_impl.object_id ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      servant = this->incarnate_servant (poa_current_impl.object_id ());
 
       // If the incarnate operation returns a servant that is
       // already active for a different Object Id and if the POA
@@ -156,16 +121,14 @@ namespace TAO
       // will raise an OBJ_ADAPTER system exception for the
       // request.
       bool may_activate =
-        this->poa_->is_servant_activation_allowed (servant,
-                                                   wait_occurred_restart_call);
+        this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
         {
           // If we are not allowed to activate the servant, throw an exception
           // etherealize is not called because the servant is never added to
           // the active object map
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       // The POA enters the returned Servant value into the Active
@@ -175,7 +138,7 @@ namespace TAO
       // are no errors or if a restart is not required.
       if (!wait_occurred_restart_call)
         {
-          int result =
+          int const result =
             this->poa_->
               rebind_using_user_id_and_system_id (servant,
                                                   poa_current_impl.object_id (),
@@ -185,8 +148,7 @@ namespace TAO
             {
               // Throw an exception, etherealize is not called because servant
               // is not added to the active object map
-              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                                0);
+              throw ::CORBA::OBJ_ADAPTER ();
             }
 
           // Increment the reference count on the servant upcall.
@@ -197,9 +159,7 @@ namespace TAO
           CORBA::Boolean cleanup_in_progress = 0;
           this->etherealize_servant (poa_current_impl.object_id (),
                                      servant,
-                                     cleanup_in_progress
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                     cleanup_in_progress);
 
           // We ended up waiting on a condition variable, the
           // POA state may have changed while we are waiting.
@@ -215,10 +175,9 @@ namespace TAO
     RequestProcessingStrategyServantActivator::etherealize_servant (
       const PortableServer::ObjectId& object_id,
       PortableServer::Servant servant,
-      CORBA::Boolean cleanup_in_progress
-      ACE_ENV_ARG_DECL)
+      CORBA::Boolean cleanup_in_progress)
     {
-      CORBA::Boolean remaining_activations =
+      CORBA::Boolean const remaining_activations =
         this->poa_->servant_has_remaining_activations (servant);
 
       // ATTENTION: Trick locking here, see class header for details
@@ -232,15 +191,12 @@ namespace TAO
                                              this->poa_,
                                              servant,
                                              cleanup_in_progress,
-                                             remaining_activations
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                             remaining_activations);
     }
 
     PortableServer::Servant
     RequestProcessingStrategyServantActivator::incarnate_servant (
-      const PortableServer::ObjectId& object_id
-      ACE_ENV_ARG_DECL)
+      const PortableServer::ObjectId& object_id)
     {
       PortableServer::Servant servant = 0;
 
@@ -252,16 +208,11 @@ namespace TAO
       // Invocations of incarnate on the servant manager are serialized.
       // Invocations of etherealize on the servant manager are serialized.
       // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-      servant = this->servant_activator_->incarnate (object_id,
-                                                     this->poa_
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      servant = this->servant_activator_->incarnate (object_id, this->poa_);
 
       if (servant == 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7,
-                                                CORBA::COMPLETED_NO),
-                                                0);
+          throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
         }
       else
         {
@@ -272,8 +223,7 @@ namespace TAO
     void
     RequestProcessingStrategyServantActivator::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id
-      ACE_ENV_ARG_DECL)
+      const PortableServer::ObjectId &user_id)
     {
       // If a servant manager is associated with the POA,
       // ServantLocator::etherealize will be invoked with the oid and the
@@ -307,9 +257,7 @@ namespace TAO
             {
               this->etherealize_servant (user_id,
                                          servant,
-                                         this->poa_->cleanup_in_progress ()
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+                                         this->poa_->cleanup_in_progress ());
             }
           else
             {
@@ -317,18 +265,22 @@ namespace TAO
               Non_Servant_Upcall non_servant_upcall (*this->poa_);
               ACE_UNUSED_ARG (non_servant_upcall);
 
-              servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
+              try
+                {
+                  servant->_remove_ref ();
+                }
+              catch (...)
+                {
+                  // Ignore exceptions from servant cleanup.
+                }
             }
         }
 
       // This operation causes the association of the Object Id specified
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
-      int result = this->poa_->unbind_using_user_id (user_id);
-
-      if (result != 0)
-        ACE_THROW (CORBA::OBJ_ADAPTER ());
+      if (this->poa_->unbind_using_user_id (user_id) != 0)
+        throw ::CORBA::OBJ_ADAPTER ();
     }
 
     void
@@ -346,5 +298,7 @@ namespace TAO
     }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -1,0 +1,9 @@
+//  -*- MPC -*-
+project(TAO_XtResource) : acelib, taolib, install, tao_output, taodefaults, ace_xtreactor, taoidldefaults {
+  sharedname   = TAO_XtResource
+  dynamicflags += TAO_XTRESOURCE_BUILD_DLL
+
+  specific {
+    install_dir = tao/XtResource
+  }
+}

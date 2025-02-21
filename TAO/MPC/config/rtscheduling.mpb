@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : rtcorba, portableserver, pi, pi_server, avoids_corba_e_micro {
+  after   += RTScheduler
+  libs    += TAO_RTScheduler
+}

@@ -1,0 +1,9 @@
+#ifndef __TEST3_IDL__
+#define __TEST3_IDL__
+module test {
+  interface aaa
+  {
+    void aaatest(in long data);
+  };
+};
+#endif // __TEST3_IDL__

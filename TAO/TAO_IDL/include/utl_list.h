@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -76,7 +74,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       public virtual inheritance.
 
 #include "TAO_IDL_FE_Export.h"
-#include "idl_bool.h"
+
+#include "ace/CDR_Base.h"
 
 // Forward declare active iterator for UTL_List.
 class  UTL_ListActiveIterator;
@@ -86,32 +85,32 @@ class TAO_IDL_FE_Export UTL_List
 public:
   UTL_List (UTL_List *c);
 
-  virtual ~UTL_List (void);
+  virtual ~UTL_List ();
 
   // Smash last cdr pointer in "this" with l.
   void nconc (UTL_List *l);
 
   // Copy the list starting at "this".
-  virtual UTL_List *copy (void);
+  virtual UTL_List *copy ();
 
   // Get next list.
-  UTL_List *tail (void);
+  UTL_List *tail ();
 
   // Set next list
   void set_tail (UTL_List *l);
 
   // How long is this list?
-  long length (void);
+  ACE_CDR::Long length ();
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   // The next list.
   UTL_List *pd_cdr_data;
 
   // Operations
-  long list_length (long n);
+  ACE_CDR::Long list_length (ACE_CDR::Long n);
 
   // Friend class.
   friend class UTL_ListActiveIterator;
@@ -121,16 +120,15 @@ private:
 class TAO_IDL_FE_Export UTL_ListActiveIterator
 {
 public:
-
   UTL_ListActiveIterator (UTL_List *s);
 
-  virtual ~UTL_ListActiveIterator (void) {}
+  virtual ~UTL_ListActiveIterator () {}
 
   // Get next list.
-  virtual void next (void);
+  virtual void next ();
 
   // Are we at the end of this list?
-  virtual idl_bool is_done (void);
+  virtual bool is_done ();
 
 protected:
   // On what to iterate?

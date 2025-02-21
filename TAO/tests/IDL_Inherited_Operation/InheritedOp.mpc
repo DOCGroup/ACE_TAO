@@ -1,0 +1,51 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    InheritedOp.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver {
+  after += *idl
+  
+  Source_Files {
+    InheritedOpC.cpp
+    InheritedOpS.cpp
+    InheritedOp_i.cpp
+    server.cpp
+  }
+  
+  Header_Files {
+    InheritedOpC.h
+    InheritedOpS.h
+    InheritedOp_i.h
+  }
+  
+  Inline_Files {
+    InheritedOpC.inl
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient {
+  after += *idl
+
+  Source_Files {
+    InheritedOpC.cpp
+    client.cpp
+  }
+
+  Header_Files {
+    InheritedOpC.h
+  }
+
+  Inline_Files {
+    InheritedOpC.inl
+  }
+
+  IDL_Files {
+  }
+}

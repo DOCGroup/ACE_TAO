@@ -1,12 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file PropertySeq.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROPERTYSEQ_H
@@ -14,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,17 +23,18 @@
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_PropertySeq
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_PropertySeq
 {
 public:
-  /// Constuctor
-  TAO_Notify_PropertySeq (void);
+  /// Constructor
+  TAO_Notify_PropertySeq ();
 
   /// Destructor
   ~TAO_Notify_PropertySeq ();
@@ -65,8 +63,10 @@ protected:
   PROPERTY_MAP property_map_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "PropertySeq.inl"
+#include "orbsvcs/Notify/PropertySeq.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

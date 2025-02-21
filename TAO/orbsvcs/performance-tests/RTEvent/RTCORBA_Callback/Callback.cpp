@@ -1,13 +1,6 @@
-//
-// $Id$
-//
 #include "Callback.h"
 #include "Implicit_Deactivator.h"
 #include "ace/OS_NS_time.h"
-
-ACE_RCSID (TAO_RTEC_Perf_RTCORBA_Callback, 
-           Callback, 
-           "$Id$")
 
 Callback::Callback (int iterations,
                     PortableServer::POA_ptr poa)
@@ -17,15 +10,13 @@ Callback::Callback (int iterations,
 }
 
 ACE_Sample_History &
-Callback::sample_history (void)
+Callback::sample_history ()
 {
   return this->sample_history_;
 }
 
 void
-Callback::sample (Test::Timestamp the_timestamp
-                  ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Callback::sample (Test::Timestamp the_timestamp)
 {
   ACE_hrtime_t elapsed = ACE_OS::gethrtime () - the_timestamp;
 
@@ -36,8 +27,7 @@ Callback::sample (Test::Timestamp the_timestamp
 }
 
 PortableServer::POA_ptr
-Callback::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Callback::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

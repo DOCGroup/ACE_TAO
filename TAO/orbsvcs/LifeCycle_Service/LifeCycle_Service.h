@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    LifeCycle_Service.h
-//
-// = DESCRIPTION
-//    A creation service for objects using the CosLifeCycle GenericFactory.
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    LifeCycle_Service.h
+ *
+ *  A creation service for objects using the CosLifeCycle GenericFactory.
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 
@@ -25,42 +22,43 @@
 #ifndef LIFECYCLE_SERVICE_H
 #define LIFECYCLE_SERVICE_H
 
+/**
+ * @class Life_Cycle_Service_Server
+ = TILE
+ * Server object for the LifeCycle Service
+ */
 class Life_Cycle_Service_Server
 {
-  // = TILE
-  //   Server object for the LifeCycle Service
-
 public:
-  Life_Cycle_Service_Server (void);
-  // Default constructor
+  /// Default constructor
+  Life_Cycle_Service_Server ();
 
-  ~Life_Cycle_Service_Server (void);
-  // Destructor
+  /// Destructor
+  ~Life_Cycle_Service_Server ();
 
+  /// Initialize the Server state - parsing arguments and ...
   int init (int argc,
-            ACE_TCHAR *argv[]
-            ACE_ENV_ARG_DECL);
-  // Initialize the Server state - parsing arguments and ...
+            ACE_TCHAR *argv[]);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the orb.
+  /// Run the orb.
+  int run ();
 
+  /// Parse the passed parameters.
   u_int parse_args (int argc,
                     ACE_TCHAR* argv[]);
-  // Parse the passed parameters.
 
 private:
+  /// instance of the ORB Manager
   TAO_ORB_Manager orb_manager_;
-  // instance of the ORB Manager
 
+  /// Instance of the creation service
   Life_Cycle_Service_i *life_Cycle_Service_i_ptr_;
-  // Instance of the creation service
 
+  /// reference to the naming service
   CosNaming::NamingContext_var namingContext_var_;
-  // reference to the naming service
 
+  /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_;
-  // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
 };
 
 #endif /* LIFECYCLE_SERVICE_H */

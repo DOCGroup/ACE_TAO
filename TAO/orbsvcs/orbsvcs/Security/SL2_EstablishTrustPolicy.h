@@ -4,8 +4,6 @@
 /**
  *  @file   SL2_EstablishTrustPolicy.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
@@ -16,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "security_export.h"
+#include "orbsvcs/Security/security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,11 +24,12 @@
 
 #include "tao/LocalObject.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Security
   {
-
     /**
      * @class EstablishTrustPolicy
      *
@@ -49,12 +48,11 @@ namespace TAO
      * appropriate Security::EstablishTrust structure (inserted into a
      * CORBA::Any).
      */
-    class TAO_Security_Export EstablishTrustPolicy
+    class EstablishTrustPolicy
       : public virtual SecurityLevel2::EstablishTrustPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       EstablishTrustPolicy (const ::Security::EstablishTrust &trust);
 
@@ -62,40 +60,34 @@ namespace TAO
        * @name CORBA::Policy Methods
        */
       //@{
-      virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::PolicyType policy_type ();
 
-      virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Policy_ptr copy ();
 
-      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void destroy ();
       //@}
 
       /// Return the "establish trust" value associated with this
       /// policy.
-      virtual ::Security::EstablishTrust trust (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual ::Security::EstablishTrust trust ();
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~EstablishTrustPolicy (void);
+      ~EstablishTrustPolicy ();
 
     private:
-
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
-      ::Security::EstablishTrust trust_;
-
+      ::Security::EstablishTrust const trust_;
     };
-
   } // End Security namespace
 }  // End TAO namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

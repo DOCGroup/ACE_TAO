@@ -1,8 +1,6 @@
-//$Id$
 #include "Job_i.h"
 
 #include "tao/debug.h"
-#include "ace/Arg_Shifter.h"
 
 #include "Activity.h"
 
@@ -11,13 +9,13 @@ Job_i::Job_i ()
 }
 
 const ACE_CString&
-Job_i::name (void)
+Job_i::name ()
 {
   return job_name_;
 }
 
 const ACE_CString&
-Job_i::poa (void)
+Job_i::poa ()
 {
   return POA_name_;
 }
@@ -25,18 +23,19 @@ Job_i::poa (void)
 int
 Job_i::init (ACE_Arg_Shifter& arg_shifter)
 {
-  job_name_ = arg_shifter.get_current (); // Read the name of the Job
+  // Read the name of the Job
+  job_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
   arg_shifter.consume_arg ();
 
-  POA_name_ = arg_shifter.get_current (); // Read the name of the POA
+  // Read the name of the POA
+  POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
   arg_shifter.consume_arg ();
 
   return 0;
 }
 
 void
-Job_i::work (CORBA::ULong work ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Job_i::work (CORBA::ULong work)
 {
   static CORBA::ULong prime_number = 9619;
 
@@ -52,8 +51,7 @@ Job_i::work (CORBA::ULong work ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-Job_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Job_i::shutdown ()
 {
   ACTIVITY::instance()->job_ended (this);
 }

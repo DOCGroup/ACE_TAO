@@ -1,31 +1,27 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    main.cpp
-//
-// = DESCRIPTION
-//    The only things that needs to be tested in execution
-//    are the pragma prefixes generated in pragma.idl, so
-//    we check them here. The rest needs only to build cleanly
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    main.cpp
+ *
+ *  We test the pragma prefixes generated in pragma.idl, and
+ *  the values of some generated constants in constants.idl.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "pragmaS.h"
 #include "unionC.h"
 #include "repo_id_modC.h"
-
+#include "constantsC.h"
 #include "nested_scopeS.h"
+#include "typedefC.h"
+#include "expressionsC.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "tao/AnyTypeCode/Any.h"
 
 class hello_i : public virtual POA_hello
 {
@@ -79,94 +75,191 @@ class schmegegging_i : public virtual gleep::schmegegging
 {
 };
 
-struct something_handler : public POA_bug_1985_c::d::AMI_somethingHandler
+struct something_handler
+  : public POA_bug_1985_c::d::AMI_somethingHandler
 {
 };
 
+template <typename Type>
+void
+expect_equals (int &error_count, const char *name, Type actual, Type expected)
+{
+  if (actual != expected)
+    {
+      *ACE_DEFAULT_LOG_STREAM
+        << "ERROR: For " << name << " expected: " << expected
+        << ", but got " << actual << "\n";
+      ++error_count;
+    }
+}
+
+void
+test_expressions (int &error_count)
+{
+  expect_equals<CORBA::Short> (error_count, "ShortValues::a", ShortValues::a, 6);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::b", ShortValues::b, 3);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::div", ShortValues::div, 2);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::mul", ShortValues::mul, 18);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::add", ShortValues::add, 9);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::sub", ShortValues::sub, 3);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::mod", ShortValues::mod, 0);
+
+  expect_equals<CORBA::Long> (error_count, "LongValues::a", LongValues::a, 6);
+  expect_equals<CORBA::Long> (error_count, "LongValues::b", LongValues::b, 3);
+  expect_equals<CORBA::Long> (error_count, "LongValues::div", LongValues::div, 2);
+  expect_equals<CORBA::Long> (error_count, "LongValues::mul", LongValues::mul, 18);
+  expect_equals<CORBA::Long> (error_count, "LongValues::add", LongValues::add, 9);
+  expect_equals<CORBA::Long> (error_count, "LongValues::sub", LongValues::sub, 3);
+  expect_equals<CORBA::Long> (error_count, "LongValues::mod", LongValues::mod, 0);
+
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::div", MixedIntValues::div, 2);
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::mul", MixedIntValues::mul, 18);
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::add", MixedIntValues::add, 9);
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::sub", MixedIntValues::sub, 3);
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::mod", MixedIntValues::mod, 0);
+
+  expect_equals<CORBA::Float> (error_count, "FloatValues::a", FloatValues::a, 6.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::b", FloatValues::b, 3.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::div", FloatValues::div, 2.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::mul", FloatValues::mul, 18.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::add", FloatValues::add, 9.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::sub", FloatValues::sub, 3.0f);
+
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::a", DoubleValues::a, 6.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::b", DoubleValues::b, 3.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::div", DoubleValues::div, 2.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::mul", DoubleValues::mul, 18.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::add", DoubleValues::add, 9.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::sub", DoubleValues::sub, 3.0);
+
+  expect_equals<CORBA::Double> (error_count, "MixedFloatValues::div", MixedFloatValues::div, 2.0);
+  expect_equals<CORBA::Double> (error_count, "MixedFloatValues::mul", MixedFloatValues::mul, 18.0);
+  expect_equals<CORBA::Double> (error_count, "MixedFloatValues::add", MixedFloatValues::add, 9.0);
+  expect_equals<CORBA::Double> (error_count, "MixedFloatValues::sub", MixedFloatValues::sub, 3.0);
+}
+
 int
-main (int argc , char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
 
-  ACE_TRY_NEW_ENV
+  const ACE_CDR::ULongLong test_ull =
+    ACE_UINT64_LITERAL (122192928000000000);
+
+  if (test_ull != AAA)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Generated value of unsigned")
+                  ACE_TEXT (" long long AAA in constants.idl")
+                  ACE_TEXT (" is incorrect\n")));
+    }
+
+  const CORBA::LongLong test_nll = ACE_INT64_LITERAL (-122192928000000000);
+
+  if (test_nll != NAAA)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Generated value of signed")
+                  ACE_TEXT (" long long NAAA in constants.idl")
+                  ACE_TEXT (" is incorrect\n")));
+    }
+
+  const CORBA::LongLong test_pll = ACE_INT64_LITERAL (122192928000000000);
+
+  if (test_pll != PAAA)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Generated value of signed")
+                  ACE_TEXT (" long long PAAA in constants.idl")
+                  ACE_TEXT (" is incorrect\n")));
+    }
+
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       // Test of #pragma prefix behavior.
 
       CORBA::Object_var obj;
 
       hello_i h;
-      obj = h._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var id = root_poa->activate_object (&h);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = hello::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/hello:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'hello'\n"));
         }
 
       goodbye_i g;
-      obj = g._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      id = root_poa->activate_object (&g);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = goodbye::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/goodbye:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'goodbye'\n"));
         }
 
       sayonara_i s;
-      obj = s._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      id = root_poa->activate_object (&s);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = salutation::sayonara::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:hammer.com/salutation/sayonara:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'sayonara'\n"));
         }
 
+      // Check whether the implementation of Dubble and Toil are generated
+      CommaList::Dubble dub;
+      CommaList::Toil toi;
+      dub.length (4);
+      toi.length (4);
+
       ciao_i c;
-      obj = c._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      id = root_poa->activate_object (&c);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = ciao::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/ciao:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'ciao'\n"));
         }
 
       aloha_i a;
-      obj = a._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      id = root_poa->activate_object (&a);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = aloha::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/aloha:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'aloha'\n"));
         }
 
@@ -178,7 +271,7 @@ main (int argc , char *argv[])
                           "IDL:gleep_prefix/gleep/schmooze:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmooze'\n"));
         }
 
@@ -188,7 +281,7 @@ main (int argc , char *argv[])
                           "IDL:gleep_prefix/gleep/schmeer:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmeer'\n"));
         }
 
@@ -198,7 +291,7 @@ main (int argc , char *argv[])
                           "IDL:gleep_prefix/gleep/schlemiel:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schlemiel'\n"));
         }
 
@@ -208,7 +301,7 @@ main (int argc , char *argv[])
                           "IDL:gleep_prefix/gleep/spilkis:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'spilkis'\n"));
         }
 
@@ -218,7 +311,7 @@ main (int argc , char *argv[])
                           "ABRA:cadabra/hocus/pocus:1.23"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmuck'\n"));
         }
 
@@ -228,8 +321,22 @@ main (int argc , char *argv[])
                           "IDL:floop_prefix/gleep/floop/schmendrick:524.23"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmendrick'\n"));
+        }
+      if (ACE_OS::strcmp (gleep::floop::schmendrick::_desc_repository_id (),
+                          "IDL:floop_prefix/gleep/floop/schmendrick:524.23"))
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "error in _desc_repository_id 'schmendrick'\n"));
+        }
+      if (ACE_OS::strcmp (gleep::floop::schmendrick::_desc_interface_name (),
+                          "schmendrick"))
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "error in _desc_interface_name 'schmendrick'\n"));
         }
 
       schlemazel_i s_schlemazel;
@@ -240,7 +347,7 @@ main (int argc , char *argv[])
             ))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schlemazel'\n"));
         }
 
@@ -250,7 +357,7 @@ main (int argc , char *argv[])
                           "IDL:gleep_prefix/gleep/schmegegging:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmegegging'\n"));
         }
 
@@ -264,13 +371,13 @@ main (int argc , char *argv[])
           "IDL:omg.org/CORBA/Object:1.0"
         };
 
-        for (int i = 0; i != sizeof (base)/sizeof (base[0]); ++i)
+        for (size_t i = 0; i != sizeof (base)/sizeof (base[0]); ++i)
           {
             if (!x._is_a (base[i]))
               {
                 ++error_count;
-                ACE_DEBUG ((LM_DEBUG,
-                           "something_handler::_is_a should return true for %s\n",
+                ACE_ERROR ((LM_ERROR,
+                           "something_handler::_is_a should return true for %C\n",
                            base[i]));
               }
           }
@@ -278,24 +385,24 @@ main (int argc , char *argv[])
         if (!dynamic_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (&x))
           {
             ++error_count;
-            ACE_DEBUG( (LM_DEBUG,
-                       "mismatch in downcast for %s\n",
+            ACE_ERROR ((LM_ERROR,
+                       "mismatch in downcast for %C\n",
                         base[0]));
           }
 
         if (!dynamic_cast<POA_bug_1985_a::b::AMI_somethingHandler*> (&x))
           {
             ++error_count;
-            ACE_DEBUG ((LM_DEBUG,
-                       "mismatch in downcast for %s\n",
+            ACE_ERROR ((LM_ERROR,
+                       "mismatch in downcast for %C\n",
                        base[1]));
           }
 
         if (!dynamic_cast<POA_Messaging::ReplyHandler*> (&x))
           {
             ++error_count;
-            ACE_DEBUG ((LM_DEBUG,
-                       "mismatch in downcast for %s\n",
+            ACE_ERROR ((LM_ERROR,
+                       "mismatch in downcast for %C\n",
                        base[2]));
           }
       }
@@ -305,17 +412,16 @@ main (int argc , char *argv[])
 
       Field field;
       field.value.strValue (
-          CORBA::string_dup ("duplicate case label test string")
-        );
+          CORBA::string_dup ("duplicate case label test string"));
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;
-      Field *outfield;
+      const Field *outfield = 0;
 
       if ((any1 >>= outfield) == 0)
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "error in extraction of "
                       "duplicate case label value\n"));
         }
@@ -325,7 +431,7 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (str, "duplicate case label test string") != 0)
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "error - corruption of "
                       "duplicate case label value\n"));
         }
@@ -336,7 +442,7 @@ main (int argc , char *argv[])
       if ((any1 >>= outfield) == 0)
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "error in extraction of "
                       "default case label value\n"));
         }
@@ -346,23 +452,28 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (str, "default case test string") != 0)
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "error - corruption of "
                       "default case label value\n"));
         }
 
-      root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (SignedGen::val !=  -3)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "error - signed integer literal "
+                      "generated as unsigned\n"));
+        }
+
+      root_poa->destroy (true, true);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception in main");
+      ex._tao_print_exception ("Unexpected exception in main");
       return 1;
     }
-  ACE_ENDTRY;
 
-  return error_count;
+  test_expressions (error_count);
+
+  return error_count ? 1 : 0;
 }

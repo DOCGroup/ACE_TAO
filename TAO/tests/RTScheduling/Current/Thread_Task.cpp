@@ -1,14 +1,16 @@
-// $Id$
-
 #include "Thread_Task.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
+
+Thread_Task::Thread_Task (CORBA::ORB_ptr orb)
+ : orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
 
 int
-Thread_Task::activate_task (CORBA::ORB_ptr orb,
-                            int thr_count)
+Thread_Task::activate_task (int thr_count)
 {
-
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_NEW_RETURN (shutdown_lock_,
                       TAO_SYNCH_MUTEX,
@@ -20,69 +22,54 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
 
       active_thread_count_ = thr_count;
 
-      this->orb_ = CORBA::ORB::_duplicate (orb);
+      CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
 
-      CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
-									      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      this->current_ = RTScheduling::Current::_narrow (current_obj
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_ = RTScheduling::Current::_narrow (current_obj.in ());
 
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
       CORBA::Policy_ptr implicit_sched_param = 0;
 
-      ACE_TRY_EX (ESS_out_of_cxt)
+      try
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Making an end_scheduling_segment call without first calling begin_scheduling_segment\n"));
-          this->current_->end_scheduling_segment (name
-                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX(ESS_out_of_cxt);
+          this->current_->end_scheduling_segment (name);
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
+      catch (const CORBA::BAD_INV_ORDER& )
         {
           ACE_DEBUG ((LM_DEBUG,
             "End Scheduling Segment is out of context - Expected Exception\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "\n");
+          ex._tao_print_exception ("\n");
         }
-      ACE_ENDTRY;
 
-      ACE_TRY_EX(USS_out_of_cxt)
+      try
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Making an update_scheduling_segment call without first calling begin_scheduling_segment\n"));
 
           this->current_->update_scheduling_segment (name,
                                                      sched_param,
-                                                     implicit_sched_param
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX(USS_out_of_cxt);
+                                                     implicit_sched_param);
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
+      catch (const CORBA::BAD_INV_ORDER& )
         {
         ACE_DEBUG ((LM_DEBUG,
               "Update Scheduling Segment is out of context - Expected Exception\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Update Scheduling Segment is out of context:");
+          ex._tao_print_exception (
+            "Update Scheduling Segment is out of context:");
         }
-      ACE_ENDTRY;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception:");
+      ex._tao_print_exception ("Exception:");
     }
-  ACE_ENDTRY;
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
   if (this->activate (flags,
@@ -97,9 +84,9 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
 }
 
 int
-Thread_Task::svc (void)
+Thread_Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
@@ -107,14 +94,13 @@ Thread_Task::svc (void)
 
       this->current_->begin_scheduling_segment ("Fellowship of the Rings",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param);
 
       size_t count = 0;
+      RTScheduling::Current::IdType_var id = this->current_->id ();
       ACE_OS::memcpy (&count,
-                      this->current_->id ()->get_buffer (),
-                      this->current_->id ()->length ());
+                      id->get_buffer (),
+                      id->length ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Starting Distributable Thread %d with 3 nested scheduling segments....\n",
@@ -123,21 +109,16 @@ Thread_Task::svc (void)
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Two Towers",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param);
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("The Return of the King",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param);
 
 
-      RTScheduling::Current::NameList* segment_name_list =
-        this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      RTScheduling::Current::NameList_var segment_name_list =
+        this->current_->current_scheduling_segment_names ();
 
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *lock_, -1);
@@ -148,23 +129,17 @@ Thread_Task::svc (void)
         for (unsigned int i = 0; i < segment_name_list->length (); i ++)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "%s\n",
+                        "%C\n",
                         (*segment_name_list)[i].in ()));
           }
       }
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->end_scheduling_segment (name);
       //End - Nested Scheduling Segment
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->end_scheduling_segment (name);
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->end_scheduling_segment (name);
       //End - Nested Scheduling Segment
 
       ACE_DEBUG ((LM_DEBUG,
@@ -175,21 +150,25 @@ Thread_Task::svc (void)
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *shutdown_lock_,-1);
         --active_thread_count_;
         if (active_thread_count_ == 0)
-          orb_->shutdown ();
+          {
+            // Without this sleep, we will occasionally get BAD_INV_ORDER
+            // exceptions on fast dual processor machines.
+            ACE_OS::sleep (1);
+
+            orb_->shutdown (false);
+          }
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
-Thread_Task::~Thread_Task (void)
+Thread_Task::~Thread_Task ()
 {
   delete shutdown_lock_;
   delete lock_;

@@ -2,8 +2,6 @@
 /**
 *  @file   be_visitor_amh_pre_proc.h
 *
-*  $Id$
-*
 *  This visitor creates for AMH implied IDL constructs for the ResponseHandler,
 *  the appropriate AST
 *  (Abstract Syntax Tree) node, sets the corresponding interface or operation
@@ -29,7 +27,7 @@
 class be_visitor_amh_pre_proc : public be_visitor_scope
 {
 private:
-  typedef enum 
+  typedef enum
   {
     NORMAL,
     GET_OPERATION,
@@ -39,7 +37,7 @@ private:
 public:
   be_visitor_amh_pre_proc (be_visitor_context *ctx);
 
-  virtual ~be_visitor_amh_pre_proc (void);
+  virtual ~be_visitor_amh_pre_proc ();
 
   virtual int visit_root (be_root *node);
 
@@ -81,7 +79,7 @@ private:
   /// Create the exception holder valuetype
   be_valuetype *create_exception_holder (be_interface *node);
 
-  /// And the concrete implemenation of the exception holder valuetype
+  /// And the concrete implementation of the exception holder valuetype
   //  be_valuetype *create_exception_holder_concrete (be_valuetype *parent);
 
   /// Creates a raise operation from node and inserts it in

@@ -1,26 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale & Angelo Corsaro
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_cs.cpp
+ *
+ *  Visitor generating code for Operation in the stubs file.
+ *
+ *  @author Aniruddha Gokhale & Angelo Corsaro
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           operation_cs,
-           "$Id$")
+#include "operation.h"
 
 // ************************************************************
 // Operation visitor for client stubs
@@ -31,7 +20,7 @@ be_visitor_operation_cs::be_visitor_operation_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_cs::~be_visitor_operation_cs (void)
+be_visitor_operation_cs::~be_visitor_operation_cs ()
 {
 }
 
@@ -44,7 +33,7 @@ be_visitor_operation_cs::post_process (be_decl *bd)
 
   if (!this->last_node (bd))
     {
-      *os << ",\n";
+      *os << "," << be_nl;
     }
 
   return 0;
@@ -53,17 +42,38 @@ be_visitor_operation_cs::post_process (be_decl *bd)
 int
 be_visitor_operation_cs::visit_operation (be_operation *node)
 {
-  be_interface *intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+  UTL_Scope *s =
+    this->ctx_->attribute ()
+      ? this->ctx_->attribute ()->defined_in ()
+      : node->defined_in ();
 
-  if (!intf)
+  be_interface *intf = dynamic_cast<be_interface*> (s);
+
+  if (intf == nullptr)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "bad interface scope\n"),
-                        -1);
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
+
+      if (pt == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_operation_cs::")
+                             ACE_TEXT ("visit_operation - ")
+                             ACE_TEXT ("bad scope\n")),
+                            -1);
+        }
+      else
+        {
+          intf = this->ctx_->interface ();
+
+          if (intf == nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_operation_cs::")
+                                 ACE_TEXT ("visit_operation - ")
+                                 ACE_TEXT ("bad scope\n")),
+                                -1);
+            }
+        }
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -74,18 +84,17 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       return 0;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   // Retrieve the operation return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "Bad return type\n"),
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("bad return type\n")),
                         -1);
     }
 
@@ -96,14 +105,15 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (bt->accept (&rt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for return type failed\n"),
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("codegen for return type failed\n")),
                         -1);
     }
 
   // Generate the operation name
-  *os << " " << node->name ();
+  *os << be_nl
+      << intf->name () << "::" << node->local_name ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
@@ -113,14 +123,45 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (node->accept (&al_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for argument list failed\n"),
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("codegen for argument list failed\n")),
                         -1);
     }
 
-  return this->gen_stub_operation_body (node,
-                                        bt);
+  if (this->gen_stub_operation_body (node, bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("codegen for stub body failed\n")),
+                        -1);
+    }
+
+  /// If we are in a reply handler, are not an execp_* operation,
+  /// and have no native args, then generate the AMI static
+  /// reply stub declaration.
+  if (intf != nullptr
+      && intf->is_ami_rh ()
+      && !node->is_excep_ami ()
+      && !node->has_native ())
+    {
+      be_visitor_operation_ami_handler_reply_stub_operation_cs v (
+        this->ctx_);
+
+      int status = v.visit_operation (node);
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_operation_cs::")
+                             ACE_TEXT ("visit_operation - ")
+                             ACE_TEXT ("codegen for AMI reply stub failed\n")),
+                            -1);
+        }
+    }
+
+  return 0;
 }
 
 int
@@ -129,14 +170,14 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
   // This method is used to generate the ParamData table entry.
 
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_argument - "
-                         "Bad argument type\n"),
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("bad argument type\n")),
                         -1);
     }
 
@@ -157,5 +198,6 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
     }
 
   *os << "0}";
+
   return 0;
 }

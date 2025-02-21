@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : orbsvcslib, time, portableserver {
+  after     += CosTime_Skel
+  libs      += TAO_CosTime_Skel
+  tagchecks += Time
+}

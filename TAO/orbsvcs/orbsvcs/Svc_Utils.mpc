@@ -1,10 +1,8 @@
 // -*- MPC -*-
-// $Id$
-
-project(Svc_Utils) : orbsvcslib, core, portableserver {
+project(Svc_Utils) : orbsvcslib, orbsvcs_output, install, portableserver, tao_versioning_idl_defaults {
   sharedname   = TAO_Svc_Utils
   idlflags    += -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h
-  dynamicflags = TAO_SVC_UTILS_BUILD_DLL
+  dynamicflags += TAO_SVC_UTILS_BUILD_DLL
 
   IDL_Files {
     TimeBase.idl
@@ -19,6 +17,8 @@ project(Svc_Utils) : orbsvcslib, core, portableserver {
     Shutdown_Utilities.cpp
     Time_Utilities.cpp
     IOR_Multicast.cpp
+    Daemon_Utilities.cpp
+    Log_Macros.cpp
   }
 
   Header_Files {

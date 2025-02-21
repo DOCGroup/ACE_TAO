@@ -1,32 +1,26 @@
-// $Id$
 
-//===================================================================
-//  = LIBRARY
-//      TAO/tests/POA/Default_Servant/client
-//
-//  = FILENAME
-//     client.cpp
-//
-//  = DESCRIPTION
-//      A client program for the File IDL module
-//
-//  = AUTHOR
-//     Irfan Pyarali
-//
-//====================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *    A client program for the File IDL module
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "FileC.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS.h"
 #include "ace/SString.h"
 #include "ace/Thread_Manager.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Default_Servant, client, "client.cpp,v 1.8 2001/03/26 21:16:52 coryan Exp")
-
-  static const char *iorfile = "ior";
-static const char *filename = "big.txt";
+static const ACE_TCHAR *iorfile = ACE_TEXT("ior");
+static const ACE_TCHAR *filename = ACE_TEXT("big.txt");
 
 static int NUM_THREADS = 4;
 static int iterations = 100;
@@ -34,9 +28,9 @@ static int iterations = 100;
 static CORBA::ORB_var orb;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "t:dk:f:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:dk:f:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -80,59 +74,45 @@ parse_args (int argc, char **argv)
 }
 
 void
-validate_connection (CORBA::Object_ptr object
-                     ACE_ENV_ARG_DECL)
+validate_connection (CORBA::Object_ptr object)
 {
   // Try to validate the connection several times, ignoring transient
   // exceptions.  If the connection can still not be setup, return
   // failure.
   for (int i = 0; i < 100; ++i)
     {
-      ACE_TRY
+      try
         {
-          object->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          object->_non_existent ();
         }
-      ACE_CATCH (CORBA::TRANSIENT, exception)
+      catch (const CORBA::TRANSIENT& )
         {
           // Ignore...
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           // Rethrow any other exceptions.
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
 static void *
 MTTEST (void *args)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
   ACE_CString &ior = *(ACE_CString*)args;
-  ACE_TRY
+  try
     {
-      CORBA::Object_var object = orb->string_to_object (ior.c_str ()
-                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = orb->string_to_object (ior.c_str ());
 
-      validate_connection (object.in ()
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      validate_connection (object.in ());
 
       // Narrow the object reference to a File::System
-      File::System_var file_system = File::System::_narrow (object.in ()
-                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      File::System_var file_system = File::System::_narrow (object.in ());
 
-      // Creat the file filename i.e "test"
-      File::Descriptor_var fd = file_system->open (filename,
-                                                   O_RDONLY
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // Create the file filename i.e "test"
+      File::Descriptor_var fd = file_system->open (ACE_TEXT_ALWAYS_CHAR(filename),
+                                                   O_RDONLY);
 
       for( int i = 0; i < iterations; ++i)
         {
@@ -141,40 +121,32 @@ MTTEST (void *args)
           ACE_DEBUG((LM_DEBUG,"Making request number %d\n",i));
 #endif /*if 0*/
 
-          fd->lseek (0, SEEK_SET ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          fd->lseek (0, SEEK_SET);
 
           // Read back the written message
           // Twice the size of the socket buffer
-          File::Descriptor::DataBuffer_var data_received = fd->read (128*1024
-                                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          File::Descriptor::DataBuffer_var data_received = fd->read (128*1024);
         }
 
       // close the file
-      fd->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fd->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in main");
+      ex._tao_print_exception ("Exception caught in main");
       return 0;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Initialize the ORB
-      orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb = CORBA::ORB_init (argc, argv);
 
       // Parse the command-line arguments to get the IOR
       parse_args (argc, argv);
@@ -198,7 +170,7 @@ main (int argc, char **argv)
                           -1);
 
       ACE_CString ior = data;
-      ior_buffer.alloc ()-> free (data);
+      ior_buffer.alloc ()->free (data);
       ACE_OS::close (input_file);
 
       if (ACE_Thread_Manager::instance ()->spawn_n (NUM_THREADS,
@@ -212,13 +184,11 @@ main (int argc, char **argv)
         }
       ACE_Thread_Manager::instance()->wait();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in main");
+      ex._tao_print_exception ("Exception caught in main");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -1,0 +1,48 @@
+
+
+This directory contains groups of client and server test programs that
+exercise the various C++ wrappers for sockets.  In general, the test
+programs do more or less the same thing -- the client establishes a
+connection with the server and then transfers data to the server,
+which keeps printing the data until EOF is reached (e.g., user types
+^D).
+
+Unless noted differently, the server is implemented as an "iterative
+server," i.e., it only deals with one client at a time.  The following
+describes each set of tests in more detail:
+
+  . C-{inclient,inserver}.cpp -- This is basically a C code
+    implementation that opens a connection to the server and
+    sends all the data from the stdin using Internet domain
+    sockets (i.e., TCP).
+
+  . CPP-{inclient,inserver}.cpp -- This test is
+          a more sophisticated C++ wrapper version of the preceeding
+          "C" test using Internet domain sockets (i.e., TCP).
+          It allows you to test oneway and twoway socket communication
+          latency and throughput between two processes on the same
+          machine or on different machines.
+
+        . CPP-inserver-fancy.cpp -- This program is a more glitzy
+          version of CPP-inserver.cpp that illustrates additional
+          features of ACE, such as ACE_Svc_Handler.
+
+  . CPP-inserver-poll.cpp -- This test illustrates how to
+    write single-threaded concurrent servers using UNIX SVR4
+    poll().  You can run this test using the CPP-inclient.cpp
+    program as the oneway client.
+
+  . CPP-{unclient,unserver}.cpp -- This test is basically
+    a C++ wrapper version of the preceeding "C++" test using
+    UNIX domain sockets.  Note that this test only works
+          between a client and server process on the same machine.
+
+  . FD-{unclient,inclient}.cpp -- This test illustrates
+    how to pass file descriptors between a client and a
+    concurrent server process on the same machine using the ACE
+    C++ wrappers for UNIX domain sockets.
+
+For examples of the ACE SOCK_{Dgram,CODgram} and
+SOCK_Dgram_{Mcast,Bcast} wrappers, please take a look in the
+./examples/Reactor/{Dgram,Multicast,Ntalker} directories.
+

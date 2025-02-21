@@ -4,21 +4,23 @@
 /**
  *  @file   Codeset_Translator_Factory_T.h
  *
- *  $Id$
- *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-// =========================
+// ===================================================================
+
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_T_H
 #define TAO_CODESET_TRANSLATOR_FACTORY_T_H
 
 #include /**/ "ace/pre.h"
 
-#include "Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Codeset_Translator_Factory_T
@@ -36,8 +38,7 @@ class TAO_Codeset_Translator_Factory_T
 : public TAO_Codeset_Translator_Factory
 {
 public:
-
-  TAO_Codeset_Translator_Factory_T ();
+  TAO_Codeset_Translator_Factory_T () = default;
   virtual ~TAO_Codeset_Translator_Factory_T ();
 
   /// initialize the factory service object. Instantiates the translator.
@@ -60,20 +61,16 @@ public:
   virtual void assign (TAO_OutputCDR *) const;
 
 private:
-  NCS_TO_TCS *translator_;
+  NCS_TO_TCS *translator_ {};
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Codeset_Translator_Factory_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Codeset_Translator_Factory_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/Codeset/Codeset_Translator_Factory_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Codeset_Translator_Factory_T */

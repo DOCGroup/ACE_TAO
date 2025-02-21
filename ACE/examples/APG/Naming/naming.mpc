@@ -1,0 +1,48 @@
+// -*- MPC -*-
+project(Netlocal) : aceexe, avoids_ace_for_tao {
+  requires += ace_other
+  exename = Netlocal
+  Source_Files {
+    Netlocal.cpp
+    Temperature_Monitor2.cpp
+  }
+}
+
+project(Netlocal Reader) : aceexe, avoids_ace_for_tao {
+  requires += ace_other
+  exename = Netlocal_reader
+  Source_Files {
+    Netlocal_reader.cpp
+    Graph.cpp
+    Temperature_Grapher.cpp
+  }
+}
+
+project(Nodelocal) : aceexe, avoids_ace_for_tao {
+  requires += ace_other
+  exename = Nodelocal
+  Source_Files {
+    Nodelocal.cpp
+    Temperature_Monitor.cpp
+  }
+}
+
+project(Nodelocal Shared) : aceexe, avoids_ace_for_tao {
+  requires += ace_other
+  exename = Nodelocal_shared
+  Source_Files {
+    Nodelocal_shared.cpp
+    Temperature_Monitor2.cpp
+  }
+}
+
+project(Nodelocal Shared Reader) : aceexe, avoids_ace_for_tao {
+  requires += ace_other
+  exename = Nodelocal_shared_reader
+  Source_Files {
+    Nodelocal_shared_reader.cpp
+    Graph.cpp
+    Temperature_Grapher.cpp
+    Temperature_Monitor.cpp
+  }
+}

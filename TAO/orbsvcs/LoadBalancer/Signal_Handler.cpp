@@ -1,12 +1,7 @@
+#include "orbsvcs/Log_Macros.h"
 #include "Signal_Handler.h"
-
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
-
-ACE_RCSID (LoadBalancer,
-           Signal_Handler,
-           "$Id$")
-
 
 TAO_LB_Signal_Handler::TAO_LB_Signal_Handler (CORBA::ORB_ptr orb,
                                               PortableServer::POA_ptr poa)
@@ -24,7 +19,7 @@ TAO_LB_Signal_Handler::TAO_LB_Signal_Handler (CORBA::ORB_ptr orb,
 }
 
 int
-TAO_LB_Signal_Handler::svc (void)
+TAO_LB_Signal_Handler::svc ()
 {
   // This method is only invoked when performing synchronous signal
   // handling.
@@ -34,7 +29,7 @@ TAO_LB_Signal_Handler::svc (void)
   // Block waiting for the registered signals.
   if (ACE_OS::sigwait (this->sigset_, &signum) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) %p\n",
                          "ERROR waiting on signal"),
                         -1);
@@ -42,7 +37,7 @@ TAO_LB_Signal_Handler::svc (void)
 
   ACE_ASSERT (signum == SIGINT || signum == SIGTERM);
 
-//   ACE_DEBUG ((LM_DEBUG,
+//   ORBSVCS_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("(%P|%t) synchronous signal handler done\n")));
 
   return this->perform_cleanup (signum);
@@ -58,7 +53,8 @@ TAO_LB_Signal_Handler::activate (long flags,
                                  ACE_hthread_t thread_handles[],
                                  void *stack[],
                                  size_t stack_size[],
-                                 ACE_thread_t thread_ids[])
+                                 ACE_thread_t thread_ids[],
+                                 const char* thr_name[])
 {
   // sigwait() is not implemented on MS Windows.  Handle signals
   // asynchronously through the ORB's reactor in that case instead.
@@ -74,7 +70,8 @@ TAO_LB_Signal_Handler::activate (long flags,
                                         thread_handles,
                                         stack,
                                         stack_size,
-                                        thread_ids);
+                                        thread_ids,
+                                        thr_name);
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (n_threads);
@@ -86,6 +83,7 @@ TAO_LB_Signal_Handler::activate (long flags,
   ACE_UNUSED_ARG (stack);
   ACE_UNUSED_ARG (stack_size);
   ACE_UNUSED_ARG (thread_ids);
+  ACE_UNUSED_ARG (thr_name);
 
   return
     this->orb_->orb_core ()->reactor ()->register_handler (this->sigset_,
@@ -96,7 +94,7 @@ TAO_LB_Signal_Handler::activate (long flags,
 int
 TAO_LB_Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-//   ACE_DEBUG ((LM_DEBUG,
+//   ORBSVCS_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("(%P|%t) ASYNCHRONOUS signal handler done\n")));
 
   // This method is only used in the asynchronous signal handling case
@@ -113,35 +111,27 @@ TAO_LB_Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 int
 TAO_LB_Signal_Handler::perform_cleanup (int signum)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Shutdown the POA.
       //
       // Shutting down the POA will cause servants "owned" by the POA
       // to be destroyed.  Servants will then have the opportunity to
       // clean up all resources they are responsible for.
-      this->poa_->destroy (1, 1
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_->destroy (1, 1);
 
       // Now shutdown the ORB.
-      this->orb_->shutdown (1
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->shutdown (true);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception");
+      ex._tao_print_exception ("Caught exception");
 
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "Problem during cleanup initiated by signal %d.\n",
                          signum),
                         -1);
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

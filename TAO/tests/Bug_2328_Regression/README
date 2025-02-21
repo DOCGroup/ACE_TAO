@@ -1,0 +1,18 @@
+/**
+
+
+
+@page Bug_2328_Regression README File
+
+This test sends 3 strings to the server. The server is using the codeset
+library, the client is configured that it doesn't use it. This gives a marshal
+exception in TAO 1.4.7 because it uses UTF8 Latin1 to demarshal the strings
+which then causes things to go wrong in the stream.
+
+        To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/

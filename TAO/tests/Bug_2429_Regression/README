@@ -1,0 +1,16 @@
+
+
+This test makes a call via AMI and then waits to receive a call back. The server throws an exception so the client expects to receive that. The method called is a method inherited from a parent interface (parentMethod).
+
+_Expected Success Result_
+
+Successfully received an Internal Excep*ion as expected.
+event loop finished
+
+_Regression Result_
+
+_Perfect_Hash_OpTable:find for operation 'parentMethod_excep' (length=18) failed
+ERROR: /home/sm/bugs/tao321/client timedout
+ERROR: Regression - Non zero result from client or client timed out.
+
+

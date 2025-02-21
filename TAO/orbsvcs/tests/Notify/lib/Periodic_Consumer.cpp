@@ -1,9 +1,8 @@
-// $Id$
-
 #include "Periodic_Consumer.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Task.h"
 #include "tao/debug.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "StructuredEvent.h"
@@ -12,13 +11,9 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
-ACE_RCSID (RT_Notify,
-           TAO_Notify_Tests_Periodic_Consumer,
-           "$Id$")
-
 int WARMUP_COUNT = 10;
 
-TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer (void)
+TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
   : count_ (-2)
   , warmup_countdown_ (WARMUP_COUNT)
   , max_count_ (-1)
@@ -50,7 +45,7 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter ("-MaxCount")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MaxCount"))))
         {
           this->max_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -61,7 +56,7 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
               this->client_->done (this);
           }
         }
-       else if (arg_shifter.cur_arg_strncasecmp ("-Check_Priority") == 0)
+       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Check_Priority")) == 0)
          {
           this->check_priority_ = 1;
 
@@ -80,7 +75,7 @@ void
 TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq& prop_seq)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event \n", this->name_.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event\n", this->name_.c_str ()));
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
@@ -144,7 +139,7 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT (" ACE_Thread::get_prio\n")));
 
-          return ;
+          return;
         }
 
       CORBA::Short native_priority = CORBA::Short (priority);
@@ -169,15 +164,10 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ))
+TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   const CosNotification::PropertySeq& prop_seq =
     notification.header.variable_header;
@@ -207,7 +197,7 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received %d event type (%s,%s) \n", this->name_.c_str (), this->count_,
+      ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received %d event type (%s,%s)\n", this->name_.c_str (), this->count_,
                   notification.header.fixed_header.event_type.domain_name.in(),
                   notification.header.fixed_header.event_type.type_name.in()));
     }
@@ -251,20 +241,20 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
         this->client_->done (this);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s done \n", this->name_.c_str ()));
+        ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s done\n", this->name_.c_str ()));
     }
 }
 
 void
 TAO_Notify_Tests_Periodic_Consumer::dump_stats (ACE_TCHAR* msg, int dump_samples)
 {
-  char buf[BUFSIZ];
-  ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());
+  ACE_TCHAR buf[BUFSIZ];
+  ACE_OS::sprintf (buf, ACE_TEXT("%s.dat"), this->name_.c_str ());
 
-  ACE_CString fname (buf);
+  ACE_TString fname (buf);
 
   ACE_OS::sprintf (buf,
-                   "%s# Consumer Name = %s, Proxy ID = %d Load = %u\n",
+                   ACE_TEXT("%s# Consumer Name = %s, Proxy ID = %d Load = %u\n"),
                    msg,
                    this->name_.c_str (), this->proxy_id_, this->load_);
 

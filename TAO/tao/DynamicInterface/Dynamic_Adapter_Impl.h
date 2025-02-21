@@ -1,21 +1,16 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    DynamicInterface
-//
-// = FILENAME
-//    Dynamic_Adapter_Impl.h
-//
-// = DESCRIPTION
-//    Header file for class TAO_Dynamic_Adapter_Impl.
-//
-// = AUTHOR
-//     Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    Dynamic_Adapter_Impl.h
+ *
+ *  Header file for class TAO_Dynamic_Adapter_Impl.
+ *
+ *  @author  Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DYNAMIC_ADAPTER_IMPL_H
 #define TAO_DYNAMIC_ADAPTER_IMPL_H
@@ -27,23 +22,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "dynamicinterface_export.h"
+#include "tao/DynamicInterface/dynamicinterface_export.h"
 #include "ace/Service_Config.h"
 
-  /**
-   * @class TAO_Dynamic_Adapter_Impl
-   *
-   * Concrete subclass of TAO_Dynamic_Adapter
-   * in the TAO library. This class helps implement various
-   * functions in the CORBA namespace relating to DII/DSI
-   * invocations.
-   */
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class TAO_Dynamic_Adapter_Impl
+ *
+ * Concrete subclass of TAO_Dynamic_Adapter
+ * in the TAO library. This class helps implement various
+ * functions in the CORBA namespace relating to DII/DSI
+ * invocations.
+ */
 class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
   : public TAO_Dynamic_Adapter
 {
 public:
-  TAO_Dynamic_Adapter_Impl (void);
-  virtual ~TAO_Dynamic_Adapter_Impl (void);
+  TAO_Dynamic_Adapter_Impl ();
+  virtual ~TAO_Dynamic_Adapter_Impl ();
 
   // CORBA::Object::_create_request and CORBA::Object::_request.
 
@@ -54,13 +51,11 @@ public:
                                CORBA::NamedValue_ptr result,
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags
-                               ACE_ENV_ARG_DECL);
+                               CORBA::Flags req_flags);
 
   virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
-                                      const char *op
-                                      ACE_ENV_ARG_DECL);
+                                      const char *op);
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
@@ -78,19 +73,20 @@ public:
 
   // CORBA::ORB::create_exception_list.
 
-  virtual void create_exception_list (CORBA::ExceptionList_ptr &list
-                                      ACE_ENV_ARG_DECL);
+  virtual void create_exception_list (CORBA::ExceptionList_ptr &list);
 
   // Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
-
-ACE_STATIC_SVC_DECLARE (TAO_Dynamic_Adapter_Impl)
-ACE_FACTORY_DECLARE (TAO_DynamicInterface, TAO_Dynamic_Adapter_Impl)
 
 static int
 TAO_Requires_Request_Factory_Initializer =
   TAO_Dynamic_Adapter_Impl::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_Dynamic_Adapter_Impl)
+ACE_FACTORY_DECLARE (TAO_DynamicInterface, TAO_Dynamic_Adapter_Impl)
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DYNAMIC_ADAPTER_IMPL_H */

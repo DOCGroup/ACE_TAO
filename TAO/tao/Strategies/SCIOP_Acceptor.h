@@ -1,4 +1,5 @@
-// $Id$
+// -*- C++ -*-
+
 // ===================================================================
 /*
  *  @file   SCIOP_Acceptor.h
@@ -7,17 +8,12 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Acceptor, Originally by
- *  @author  Fred Kuhns <fredk@cs.wustl.edu>
- *  @author  Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
-
 
 #ifndef TAO_SCIOP_ACCEPTOR_H
 #define TAO_SCIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
-#include "ace/Acceptor.h"
 
 #include "tao/orbconf.h"
 
@@ -27,14 +23,17 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "ace/SOCK_SEQPACK_Acceptor.h"
-
 #include "tao/Transport_Acceptor.h"
-#include "SCIOP_Connection_Handler.h"
+#include "tao/Strategies/SCIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
 
-// TAO SCIOP_Acceptor concrete call defination
+#include "ace/SOCK_SEQPACK_Acceptor.h"
+#include "ace/Acceptor.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// TAO SCIOP_Acceptor concrete call definition
 
 /**
  * @class TAO_SCIOP_Acceptor
@@ -47,19 +46,19 @@ class TAO_Strategies_Export TAO_SCIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_SCIOP_Acceptor (CORBA::Boolean flag = 0);
+  TAO_SCIOP_Acceptor ();
 
   /// Destructor.
-  ~TAO_SCIOP_Acceptor (void);
+  ~TAO_SCIOP_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address (void) const;
+  const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints (void);
+  const ACE_INET_Addr *endpoints ();
 
-  typedef ACE_Strategy_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR> TAO_SCIOP_BASE_ACCEPTOR;
+  typedef TAO_Strategy_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR> TAO_SCIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_SCIOP_Connection_Handler> TAO_SCIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_SCIOP_Connection_Handler> TAO_SCIOP_CONCURRENCY_STRATEGY;
   typedef TAO_Accept_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR> TAO_SCIOP_ACCEPT_STRATEGY;
@@ -79,12 +78,12 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0);
-  virtual int close (void);
+  virtual int close ();
   virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
   virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count ();
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);
@@ -109,7 +108,6 @@ public:
                               char *&host);
 
 protected:
-
   /**
    * Implement the common part of the open*() methods.  This method is
    * virtual to allow a derived class implementation to be invoked
@@ -148,7 +146,7 @@ protected:
 
   /// Obtain tcp properties that must be used by this acceptor, i.e.,
   /// initialize <tcp_properties_>.
-  int init_tcp_properties (void);
+  int init_tcp_properties ();
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
@@ -163,7 +161,6 @@ protected:
                              CORBA::Short priority);
 
 protected:
-
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
   ACE_INET_Addr *addrs_;
@@ -203,11 +200,7 @@ protected:
   /// ORB Core.
   TAO_ORB_Core *orb_core_;
 
-  /// Should we use GIOP lite??
-  CORBA::Boolean lite_flag_;
-
 private:
-
   /// the concrete acceptor, as a pointer to it's base class.
   TAO_SCIOP_BASE_ACCEPTOR base_acceptor_;
 
@@ -215,11 +208,12 @@ private:
   TAO_SCIOP_CREATION_STRATEGY *creation_strategy_;
   TAO_SCIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
   TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy_;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "SCIOP_Acceptor.i"
+#include "tao/Strategies/SCIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SCIOP == 1 */

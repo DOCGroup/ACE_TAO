@@ -1,0 +1,30 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// A very simple interface
+  interface Hello
+  {
+    exception A {};
+    exception B {};
+
+    /// Return a simple string
+    string get_string ();
+
+    /// test system exception internal
+    void system_exception_test ();
+
+    /// Method that has defined raises A and which throws also that
+    /// exception
+    void user_exception_expected () raises (A);
+
+    /// Method that has defined raises A and but which throws B
+    void user_exception_not_expected () raises (A);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};

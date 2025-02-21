@@ -1,21 +1,13 @@
 // -*- C++ -*-
-
 #include "ace/Get_Opt.h"
-
 #include "testC.h"
 
-
-ACE_RCSID (ORB_Shutdown,
-           client,
-           "$Id$")
-
-
-const char *ior = 0;
+const ACE_TCHAR *ior = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -29,7 +21,7 @@ parse_args (int argc, char *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
+                           "Usage: %s "
                            "-k IOR\n",
                            argv[0]),
                           -1);
@@ -39,50 +31,41 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Client ORB"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "Client ORB");
 
       if (::parse_args (argc, argv) != 0)
         return -1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
-      test_var server = test::_narrow (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var server = test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
 
-      server->hello (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->hello ();
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO,
               "PortableInterceptor ORB::shutdown() test passed.\n"));

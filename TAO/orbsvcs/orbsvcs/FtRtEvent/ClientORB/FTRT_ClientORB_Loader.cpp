@@ -1,25 +1,20 @@
-// $Id$
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
-#include "FTRT_ClientORB_Loader.h"
-
-#include "FTRT_ClientORB_Initializer.h"
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (ClientORB,
-           FTRT_ClientORB_Loader,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRT {
-  FTRT_ClientORB_Loader::FTRT_ClientORB_Loader (void)
+  FTRT_ClientORB_Loader::FTRT_ClientORB_Loader ()
   {
   }
 
-  FTRT_ClientORB_Loader::~FTRT_ClientORB_Loader (void)
+  FTRT_ClientORB_Loader::~FTRT_ClientORB_Loader ()
   {
   }
 
@@ -40,17 +35,18 @@ namespace TAO_FTRT {
 
     // Parse any service configurator parameters.
     for (curarg = 0; curarg < argc; curarg++)
-      if (ACE_OS::strcasecmp (argv[curarg],
-        ACE_LIB_TEXT("-ORBTransactionDepth")) == 0)
       {
-        curarg++;
-        if (curarg < argc)
-          transaction_depth = atoi(argv[curarg]);
+        if (ACE_OS::strcasecmp (argv[curarg],
+          ACE_TEXT("-ORBTransactionDepth")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            transaction_depth = ACE_OS::atoi(argv[curarg]);
+        }
       }
 
-
-      // Register the ORB initializer.
-      ACE_TRY_NEW_ENV
+    // Register the ORB initializer.
+    try
       {
         PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
           PortableInterceptor::ORBInitializer::_nil ();
@@ -64,34 +60,37 @@ namespace TAO_FTRT {
           TAO::VMCID,
           ENOMEM),
           CORBA::COMPLETED_NO));
-        ACE_TRY_CHECK;
         orb_initializer = temp_orb_initializer;
 
-        PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        PortableInterceptor::register_orb_initializer (orb_initializer.in ());
       }
-      ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-          "Unexpected exception caught while "
-          "initializing the TransactionDepth");
+        ex._tao_print_exception (
+          "Unexpected exception caught while ""initializing the TransactionDepth");
         return 1;
       }
-      ACE_ENDTRY;
 
-      return 0;
+    return 0;
   }
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
   /////////////////////////////////////////////////////////////////////
 
-  ACE_FACTORY_DEFINE (TAO_FTRT, FTRT_ClientORB_Loader)
-  ACE_STATIC_SVC_DEFINE (FTRT_ClientORB_Loader,
-    ACE_TEXT ("FTRT_ClientORB_Service"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (FTRT_ClientORB_Loader),
-    ACE_Service_Type::DELETE_THIS
-    | ACE_Service_Type::DELETE_OBJ,
-    0)
-}
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_FTRT,
+  FTRT_ClientORB_Loader,
+  TAO_FTRT::FTRT_ClientORB_Loader)
+
+ACE_STATIC_SVC_DEFINE (
+  FTRT_ClientORB_Loader,
+  ACE_TEXT ("FTRT_ClientORB_Service"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (FTRT_ClientORB_Loader),
+  ACE_Service_Type::DELETE_THIS
+  | ACE_Service_Type::DELETE_OBJ,
+  0)
+
 

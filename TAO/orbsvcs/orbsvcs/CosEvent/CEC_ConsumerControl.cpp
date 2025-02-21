@@ -1,47 +1,32 @@
-// $Id$
+#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
 
-#include "CEC_ConsumerControl.h"
-
-ACE_RCSID (CosEvent,
-           CEC_ConsumerControl,
-           "$Id$")
-
-TAO_CEC_ConsumerControl::TAO_CEC_ConsumerControl (void)
-{
-}
-
-TAO_CEC_ConsumerControl::~TAO_CEC_ConsumerControl (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_CEC_ConsumerControl::activate (void)
+TAO_CEC_ConsumerControl::activate ()
 {
   return 0;
 }
 
 int
-TAO_CEC_ConsumerControl::shutdown (void)
+TAO_CEC_ConsumerControl::shutdown ()
 {
   return 0;
 }
 
 void
-TAO_CEC_ConsumerControl::consumer_not_exist (TAO_CEC_ProxyPushSupplier *
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CEC_ConsumerControl::consumer_not_exist (TAO_CEC_ProxyPushSupplier *)
 {
 }
 
 void
-TAO_CEC_ConsumerControl::consumer_not_exist (TAO_CEC_ProxyPullSupplier *
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CEC_ConsumerControl::consumer_not_exist (TAO_CEC_ProxyPullSupplier *)
 {
 }
 
 void
 TAO_CEC_ConsumerControl::system_exception (TAO_CEC_ProxyPushSupplier *,
-                                           CORBA::SystemException &
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+                                           CORBA::SystemException &)
 {
 }
 
@@ -56,8 +41,4 @@ TAO_CEC_ConsumerControl::successful_transmission (PortableServer::ServantBase*)
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

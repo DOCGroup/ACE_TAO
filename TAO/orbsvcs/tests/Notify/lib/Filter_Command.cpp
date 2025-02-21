@@ -1,14 +1,11 @@
-// $Id$
-
 #include "Filter_Command.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(lib, TAO_Filter_Command, "$Id$")
 
 #include "LookupManager.h"
 #include "Name.h"
 
-TAO_Notify_Tests_Filter_Command::TAO_Notify_Tests_Filter_Command (void)
+TAO_Notify_Tests_Filter_Command::TAO_Notify_Tests_Filter_Command ()
 {
 }
 
@@ -17,13 +14,13 @@ TAO_Notify_Tests_Filter_Command::~TAO_Notify_Tests_Filter_Command ()
 }
 
 const char*
-TAO_Notify_Tests_Filter_Command::get_name (void)
+TAO_Notify_Tests_Filter_Command::get_name ()
 {
   return TAO_Notify_Tests_Filter_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_Filter_Command::name (void)
+TAO_Notify_Tests_Filter_Command::name ()
 {
   return TAO_Notify_Tests_Name::filter_command;
 }
@@ -33,64 +30,64 @@ TAO_Notify_Tests_Filter_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-CreateFactory") == 0) // -Create factory_name ec
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-CreateFactory")) == 0) // -Create factory_name ec
         {
           this->command_ = CREATE_FACTORY;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // FF name
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // FF name
           arg_shifter.consume_arg ();
 
-          this->factory_ = arg_shifter.get_current (); //EC
+          this->factory_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); //EC
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-CreateFilter") == 0) // -CreateFilter filter_name filterfactory_name
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-CreateFilter")) == 0) // -CreateFilter filter_name filterfactory_name
         {
           this->command_ = CREATE_FILTER;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // Filter name
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Filter name
 
           arg_shifter.consume_arg ();
 
-          this->factory_ = arg_shifter.get_current (); //FF
+          this->factory_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); //FF
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Add_Constraint") == 0) // -Add_Constraint filter_name constraint_expr
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Add_Constraint")) == 0) // -Add_Constraint filter_name constraint_expr
         {
           this->command_ = ADD_CONSTRAINT;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // Filter name
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Filter name
 
           arg_shifter.consume_arg ();
 
-          this->constraint_ = arg_shifter.get_current (); //Constraint
+          this->constraint_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); //Constraint
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Add_Filter") == 0) // -Add_Filter filter_name FilterAdmin_Name
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Add_Filter")) == 0) // -Add_Filter filter_name FilterAdmin_Name
         {
           this->command_ = ADD_FILTER;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // Filter name
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Filter name
 
           arg_shifter.consume_arg ();
 
-          this->factory_ = arg_shifter.get_current (); //FilterAdmin
+          this->factory_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); //FilterAdmin
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Destroy") == 0) // -Destroy filter_name
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Destroy")) == 0) // -Destroy filter_name
         {
           this->command_ = DESTROY;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current (); // filter
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // filter
 
           arg_shifter.consume_arg ();
         }
@@ -98,44 +95,37 @@ TAO_Notify_Tests_Filter_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_create_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_create_filter_factory ()
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str ());
 
   CosNotifyFilter::FilterFactory_var ff =
-    ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->default_filter_factory ();
 
-  LOOKUP_MANAGER->_register (ff.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->_register (ff.in(), this->name_.c_str ());
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_create_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_create_filter ()
 {
   CosNotifyFilter::FilterFactory_var ff;
 
-  LOOKUP_MANAGER->resolve (ff , this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (ff , this->factory_.c_str ());
 
   CosNotifyFilter::Filter_var filter =
-    ff->create_filter ("ETCL" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    ff->create_filter ("ETCL");
 
-  LOOKUP_MANAGER->_register (filter.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->_register (filter.in(), this->name_.c_str ());
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_add_constraint (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_add_constraint ()
 {
   CosNotifyFilter::Filter_var filter;
 
-  LOOKUP_MANAGER->resolve (filter , this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (filter , this->name_.c_str ());
 
   CosNotifyFilter::ConstraintExpSeq constraint_list (1);
   constraint_list.length (1);
@@ -144,60 +134,54 @@ TAO_Notify_Tests_Filter_Command::handle_add_constraint (ACE_ENV_SINGLE_ARG_DECL)
   constraint_list[0].constraint_expr = CORBA::string_dup (this->constraint_.c_str ());
 
   ACE_DEBUG ((LM_DEBUG, "Adding constraint %s\n", this->constraint_.c_str ()));
-  filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_add_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_add_filter ()
 {
   CosNotifyFilter::Filter_var filter;
 
-  LOOKUP_MANAGER->resolve (filter , this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (filter , this->name_.c_str ());
 
   CosNotifyFilter::FilterAdmin_var filter_admin;
 
-  LOOKUP_MANAGER->resolve (filter_admin , this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (filter_admin , this->factory_.c_str ());
 
-  filter_admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  filter_admin->add_filter (filter.in ());
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_destroy_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_destroy_filter ()
 {
   CosNotifyFilter::Filter_var filter;
 
-  LOOKUP_MANAGER->resolve (filter, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (filter, this->name_.c_str ());
 
-  filter->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  filter->destroy ();
 }
 
 void
-TAO_Notify_Tests_Filter_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::execute_i ()
 {
   if (this->command_ == CREATE_FACTORY)
     {
-      this->handle_create_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_create_filter_factory ();
     }
   else if (this->command_ == CREATE_FILTER)
     {
-      this->handle_create_filter (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_create_filter ();
     }
   else if (this->command_ == ADD_CONSTRAINT)
     {
-      this->handle_add_constraint (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_add_constraint ();
     }
   else if (this->command_ == ADD_FILTER)
     {
-      this->handle_add_filter (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_add_filter ();
     }
   else if (this->command_ == DESTROY)
     {
-      this->handle_destroy_filter (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_destroy_filter ();
     }
 }

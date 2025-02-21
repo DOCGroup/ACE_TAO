@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Supplier.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -9,17 +7,13 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Examples, 
-           Supplier, 
-           "$Id$")
-
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
 const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
-static const char* ecname = 0;
+static const ACE_TCHAR *ecname = 0;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Supplier supplier;
 
@@ -28,15 +22,14 @@ main (int argc, char* argv[])
 
 // ****************************************************************
 
-Supplier::Supplier (void)
+Supplier::Supplier ()
 {
 }
 
 int
-Supplier::run (int argc, char* argv[])
+Supplier::run (int argc, ACE_TCHAR* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // First parse our command line options
       if (this->parse_args(argc, argv) != 0)
@@ -46,25 +39,19 @@ Supplier::run (int argc, char* argv[])
 
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // Obtain the event channel from the naming service
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -72,34 +59,27 @@ Supplier::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (ecname);
+      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(ecname));
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        naming_context->resolve (name);
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
 
       // The canonical protocol to connect to the EC
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_suppliers ();
 
       RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
-        supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        supplier_admin->obtain_push_consumer ();
 
       RtecEventComm::PushSupplier_var supplier =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->_this ();
 
       // Publish the events the supplier provides.
       ACE_SupplierQOS_Factory qos;
@@ -108,9 +88,7 @@ Supplier::run (int argc, char* argv[])
                   0,                 // handle to the rt_info structure
                   1);                // number of calls
 
-      consumer->connect_push_supplier (supplier.in (), qos
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer->connect_push_supplier (supplier.in (), qos);
 
       // Push the events...
       ACE_Time_Value sleep_time (0, 10000); // 10 milliseconds
@@ -132,55 +110,47 @@ Supplier::run (int argc, char* argv[])
                          "Supplier (%P|%t): %d events send\n",
                          i));
             }
-          consumer->push (event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          consumer->push (event);
           ACE_OS::sleep (sleep_time);
         }
 
       // Disconnect from the EC
-      consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer->disconnect_push_consumer ();
 
       // Destroy the EC....
-      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel->destroy ();
 
       // Deactivate this object...
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->servant_to_id (this);
+      poa->deactivate_object (id.in ());
 
       // Destroy the POA
-      poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa->destroy (1, 0);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Supplier::run");
+      ex._tao_print_exception ("Supplier::run");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
-Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Supplier::disconnect_push_supplier ()
 {
 }
 
 int
-Supplier::parse_args (int argc, char *argv[])
+Supplier::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (arg, "-e") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-e")) == 0)
         {
           arg_shifter.consume_arg ();
           ecname = arg_shifter.get_current ();
@@ -189,12 +159,7 @@ Supplier::parse_args (int argc, char *argv[])
       arg_shifter.ignore_arg ();
     }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

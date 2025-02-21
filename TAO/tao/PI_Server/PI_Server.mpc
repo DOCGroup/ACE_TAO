@@ -1,0 +1,55 @@
+project(*idl) : tao_versioning_idl_defaults, install, pidl_install {
+  custom_only = 1
+  idlflags += \
+              -Wb,export_macro=TAO_PI_Server_Export \
+              -Wb,export_include=tao/PI_Server/pi_server_export.h \
+              -iC tao/PI_Server
+
+  IDL_Files {
+    idlflags += -Sci -SS -GA -Gp -Gd -Sorb -Sal
+//                -Wb,include_guard=TAO_PI_SERVER_SAFE_INCLUDE \
+//                -Wb,safe_include=tao/PI_Server/PI_Server.h
+    idlflags -= -Sa -St
+    ServerRequestInfo.pidl
+  }
+
+  IDL_Files {
+    idlflags += -SS -Sorb -GX -Sci \
+                -Wb,unique_include=tao/PI_Server/PI_Server.h
+    PI_Server_include.pidl
+  }
+
+  PidlInstallWithoutBuilding_Files {
+    ServerRequestInterceptor.pidl
+  }
+
+  specific {
+    install_dir = tao/PI_Server
+  }
+}
+
+project(PI_Server) : taolib, tao_output, pi, portableserver, install, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_PI_Server
+  dynamicflags += TAO_PI_SERVER_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    ServerRequestInfoC.cpp
+    PI_Server_includeC.cpp
+  }
+
+  Header_Files {
+    *.h
+    ServerRequestInfoC.h
+    ServerRequestInfoS.h
+    ServerRequestInfoA.h
+    PI_Server_includeC.h
+    PI_Server_includeS.h
+    PI_Server_includeA.h
+  }
+
+  specific {
+    install_dir = tao/PI_Server
+  }
+}

@@ -1,0 +1,13 @@
+// -*- MPC -*-
+project(*MM) : aceexe, avoids_ace_for_tao {
+  exename = testmm
+  Source_Files {
+    test_MM.cpp
+  }
+}
+project(*SV) : aceexe, avoids_ace_for_tao {
+  exename = testsv
+  Source_Files {
+    test_SV.cpp
+  }
+}

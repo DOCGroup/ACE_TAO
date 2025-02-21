@@ -4,8 +4,6 @@
 /**
  *  @file   Replication_Service.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -14,14 +12,16 @@
 #define REPLCATION_SERVICE_H
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "FTEC_Become_Primary_Listener.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "tao/PortableInterceptorC.h"
 #include "ace/Service_Object.h"
-#include "ftrtec_export.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC
 {
@@ -43,10 +43,10 @@ namespace FTRTEC
     /**
      * Used for checking if the incoming replication message is out of sequence.
      */
-    void check_validity(ACE_ENV_SINGLE_ARG_DECL);
+    void check_validity();
 
     typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-      (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);
+      (const FtRtecEventChannelAdmin::ObjectId&);
 
    /**
     * Replicate a request.
@@ -55,28 +55,27 @@ namespace FTRTEC
     * @param rollback The rollback operation when the replication failed.
     */
     void replicate_request(const FtRtecEventChannelAdmin::Operation& update,
-      RollbackOperation rollback
-      ACE_ENV_ARG_DECL);
+      RollbackOperation rollback);
 
    /**
     * Inform the backup replicas that a new replica has joined the object
     * group.
     */
     void add_member(const FTRT::ManagerInfo & info,
-                    CORBA::ULong object_group_ref_version
-                    ACE_ENV_ARG_DECL);
+                    CORBA::ULong object_group_ref_version);
 
-    int  acquire_read (void);
-    int  acquire_write (void);
-    int  release (void);
+    int  acquire_read ();
+    int  acquire_write ();
+    int  release ();
 
     int threads() const;
   };
-
-
-  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Replication_Service)
-  ACE_STATIC_SVC_REQUIRE(Replication_Service)
-  ACE_FACTORY_DECLARE (TAO_FTRTEC, Replication_Service)
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Replication_Service)
+ACE_STATIC_SVC_REQUIRE(Replication_Service)
+ACE_FACTORY_DECLARE (TAO_FTRTEC, Replication_Service)
 
 #endif //REPLCATION_SERVICE_H

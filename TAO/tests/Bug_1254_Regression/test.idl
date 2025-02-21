@@ -1,0 +1,30 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file test.idl
+ *
+ * "test" IDL interface for the CORBA_MARSHALL exception with sequence<octed>
+ * as inout parameters (bug#1254).
+ *
+ * @author Kees van Marle <kvmarle@ermedy.nl>
+ */
+//=============================================================================
+
+
+typedef sequence<octet> BlobType1;
+typedef sequence<octet> BlobType2;
+
+interface BlobServer
+{
+    void test(inout BlobType1 blob1, inout BlobType2 blob2);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+};
+
+
+

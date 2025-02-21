@@ -1,33 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    var_struct.cpp
-//
-// = DESCRIPTION
-//    test variable sized structures
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    var_struct.cpp
+ *
+ *  test variable sized structures
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "var_struct.h"
-
-ACE_RCSID (Param_Test,
-           var_struct, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Var_Struct
 // ************************************************************************
 
-Test_Var_Struct::Test_Var_Struct (void)
+Test_Var_Struct::Test_Var_Struct ()
   : opname_ (CORBA::string_dup ("test_var_struct")),
     inout_ (new Param_Test::Var_Struct),
     out_ (new Param_Test::Var_Struct),
@@ -35,7 +25,7 @@ Test_Var_Struct::Test_Var_Struct (void)
 {
 }
 
-Test_Var_Struct::~Test_Var_Struct (void)
+Test_Var_Struct::~Test_Var_Struct ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -44,14 +34,13 @@ Test_Var_Struct::~Test_Var_Struct (void)
 }
 
 const char *
-Test_Var_Struct::opname (void) const
+Test_Var_Struct::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Var_Struct::dii_req_invoke (CORBA::Request *req
-                                 ACE_ENV_ARG_DECL)
+Test_Var_Struct::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -59,29 +48,25 @@ Test_Var_Struct::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Var_Struct);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  Param_Test::Var_Struct *tmp;
+  const Param_Test::Var_Struct *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Var_Struct (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::Var_Struct (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Var_Struct (*tmp);
 }
 
 int
-Test_Var_Struct::init_parameters (Param_Test_ptr
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+Test_Var_Struct::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -117,7 +102,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Var_Struct::reset_parameters (void)
+Test_Var_Struct::reset_parameters ()
 {
   this->inout_ = new Param_Test::Var_Struct; // delete the previous ones
   this->out_ = new Param_Test::Var_Struct;
@@ -135,37 +120,31 @@ Test_Var_Struct::reset_parameters (void)
 }
 
 int
-Test_Var_Struct::run_sii_test (Param_Test_ptr objref
-                               ACE_ENV_ARG_DECL)
+Test_Var_Struct::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Var_Struct_out out (this->out_.out ());
       this->ret_ = objref->test_var_struct (this->in_,
                                             this->inout_.inout (),
-                                            out
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Var_Struct::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Var_Struct::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Var_Struct::check_validity (void)
+Test_Var_Struct::check_validity ()
 {
   CORBA::Boolean flag = 0;
-  if (this->in_.dbl == this->inout_->dbl &&
-      this->in_.dbl == this->out_->dbl &&
-      this->in_.dbl == this->ret_->dbl &&
+  if (ACE::is_equal (this->in_.dbl, this->inout_->dbl) &&
+      ACE::is_equal (this->in_.dbl, this->out_->dbl) &&
+      ACE::is_equal (this->in_.dbl, this->ret_->dbl) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->out_->dummy1)) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->ret_->dummy1)) &&
@@ -203,14 +182,14 @@ Test_Var_Struct::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Var_Struct::print_values (void)
+Test_Var_Struct::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"
-              "in_.dummy1 = %s\n"
-              "inout_.dummy1 = %s\n"
-              "out_.dummy1 = %s\n"
-              "ret_.dummy1 = %s\n",
+              "in_.dummy1 = %C\n"
+              "inout_.dummy1 = %C\n"
+              "out_.dummy1 = %C\n"
+              "ret_.dummy1 = %C\n",
               this->in_.dummy1.in (),
               this->inout_->dummy1.in (),
               this->out_->dummy1.in (),
@@ -218,10 +197,10 @@ Test_Var_Struct::print_values (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"
-              "in_.dummy2 = %s\n"
-              "inout_.dummy2 = %s\n"
-              "out_.dummy2 = %s\n"
-              "ret_.dummy2 = %s\n",
+              "in_.dummy2 = %C\n"
+              "inout_.dummy2 = %C\n"
+              "out_.dummy2 = %C\n"
+              "ret_.dummy2 = %C\n",
               this->in_.dummy2.in (),
               this->inout_->dummy2.in (),
               this->out_->dummy2.in (),
@@ -233,7 +212,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in.seq : %s\n",
+                  "in.seq : %C\n",
                   i,
                   (this->in_.seq[i]? (const char *)this->in_.seq[i]:"<nul>")));
     }
@@ -242,7 +221,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "inout : %s\n",
+                  "inout : %C\n",
                   i,
                   (this->inout_->seq[i]? (const char *)this->inout_->seq[i]:"<nul>")));
     }
@@ -253,7 +232,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->out_->seq[i]? (const char *)this->out_->seq[i]:"<nul>")));
     }
@@ -264,7 +243,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->ret_->seq[i]? (const char *)this->ret_->seq[i]:"<nul>")));
     }

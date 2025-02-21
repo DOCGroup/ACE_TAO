@@ -1,8 +1,6 @@
 /**
  * @file Auto_Disconnect.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 #ifndef TAO_PERF_RTEC_AUTO_DISCONNECT_H
@@ -47,8 +45,6 @@ public:
 #include "Auto_Disconnect.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Auto_Disconnect.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_PERF_RTEC_AUTO_DISCONNECT_H */

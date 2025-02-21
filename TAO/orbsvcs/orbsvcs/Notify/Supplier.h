@@ -1,65 +1,71 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Supplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SUPPLIER_H
 #define TAO_Notify_SUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Peer.h"
+#include "orbsvcs/Notify/Peer.h"
 
 #include "orbsvcs/CosNotifyCommC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_ProxyConsumer;
 
 /**
  * @class TAO_Notify_Supplier
  *
  * @brief Base Wrappers for Suppliers that connect to the EventChannel.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Supplier : public TAO_Notify_Peer
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Supplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
   virtual ~TAO_Notify_Supplier ();
 
   /// Access Specific Proxy.
-  TAO_Notify_ProxyConsumer* proxy_consumer (void);
+  TAO_Notify_ProxyConsumer* proxy_consumer ();
 
   /// Access Base Proxy.
-  virtual TAO_Notify_Proxy* proxy (void);
+  virtual TAO_Notify_Proxy* proxy ();
+
+  virtual CORBA::Object_ptr get_supplier () = 0;
+
+  bool is_alive (bool allow_nil_supplier);
 
 protected:
   /// Dispatch updates implementation.
   virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed
-                                   ACE_ENV_ARG_DECL);
+                                   const CosNotification::EventTypeSeq& removed);
 
   /// The proxy that we associate with.
   TAO_Notify_ProxyConsumer* proxy_;
 
   /// Interface that accepts subscription_changes
   CosNotifyComm::NotifySubscribe_var subscribe_;
+
+  CORBA::Object_var rtt_obj_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Supplier.inl"
+#include "orbsvcs/Notify/Supplier.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

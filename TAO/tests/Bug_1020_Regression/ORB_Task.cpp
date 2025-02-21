@@ -1,15 +1,11 @@
 /**
  * @file ORB_Task.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "ORB_Task.h"
 #include "tao/Environment.h"
 
-ACE_RCSID(Bug_1230_Regression, ORB_Task, "$Id$")
 
 ORB_Task::ORB_Task(CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
@@ -17,17 +13,14 @@ ORB_Task::ORB_Task(CORBA::ORB_ptr orb)
 }
 
 int
-ORB_Task::svc (void)
+ORB_Task::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run();
     }
-  ACE_CATCH(CORBA::Exception, ex)
+  catch (const CORBA::Exception& )
     {
     }
-  ACE_ENDTRY;
   return 0;
 }

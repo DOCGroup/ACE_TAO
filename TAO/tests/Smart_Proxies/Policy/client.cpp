@@ -1,46 +1,38 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/Smart_Proxy
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is the client program that tests TAO's Smart Proxy extension.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *   This is the client program that tests TAO's Smart Proxy extension.
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
 
-ACE_RCSID(Smart_Proxy, client, "$Id$")
-
-const char *ior1 = "file://test1.ior";
-const char *ior2 = "file://test2.ior";
+const ACE_TCHAR *ior1 = ACE_TEXT("file://test1.ior");
+const ACE_TCHAR *ior2 = ACE_TEXT("file://test2.ior");
 int one_shot_factory = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:j:f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:j:f:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'i':
-        ior1 = ACE_OS::strdup (get_opts.opt_arg ());
+        ior1 = get_opts.opt_arg ();
         break;
       case 'j':
-        ior2 = ACE_OS::strdup (get_opts.opt_arg ());
+        ior2 = get_opts.opt_arg ();
         break;
        case 'f':
         one_shot_factory = ACE_OS::atoi (get_opts.opt_arg ());
@@ -63,55 +55,46 @@ run_test (CORBA::ORB_ptr orb_ptr,
 {
   CORBA::ORB_var orb = CORBA::ORB::_duplicate (orb_ptr);
   CORBA::Object_var object;
-  ACE_TRY_NEW_ENV
+  try
     {
       if (target == 1)
         {
           object =
-            orb->string_to_object (ior1
-                                   ACE_ENV_ARG_PARAMETER);
+            orb->string_to_object (ior1);
         }
       else
         {
           object =
-            orb->string_to_object (ior2
-                                   ACE_ENV_ARG_PARAMETER);
+            orb->string_to_object (ior2);
         }
-      ACE_TRY_CHECK;
 
       Test_var server =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        Test::_narrow (object.in ());
+
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Object reference is nil\n"),
                           1);
 
       server->method (0);
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client-side exception:");
+      ex._tao_print_exception ("Client-side exception:");
     }
-  ACE_ENDTRY;
 return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -120,7 +103,7 @@ main (int argc, char *argv[])
       // user-defined smart factory on the heap as the smart proxy
       // generated classes take care of destroying the object. This
       // way it a win situation for the application developer who
-      // doesnt have to make sure to destoy it and also for the smart
+      // doesnt have to make sure to destroy it and also for the smart
       // proxy designer who now can manage the lifetime of the object
       // much surely.
       // By default this factory is permanent (i.e. registered for
@@ -131,22 +114,18 @@ main (int argc, char *argv[])
                       Smart_Test_Factory (one_shot_factory),
                       -1);
 
-      // To make KAI Compiler happy as it considers <test_factory> to be
-      // an unused variable.
       ACE_UNUSED_ARG (test_factory);
 
       run_test (orb.in (), 1);
       run_test (orb.in (), 2);
 
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client-side exception:");
+      ex._tao_print_exception ("Client-side exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -1,34 +1,25 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// =================================================================
-//
-// = LIBRARY
-//    TAO/tao/TypeCodeFactory
-//
-// = FILENAME
-//    TypeCodeFactory_Loader.cpp
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// =================================================================
+//=============================================================================
+/**
+ *  @file    TypeCodeFactory_Loader.cpp
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
 
-#include "TypeCodeFactory_Loader.h"
-#include "TypeCodeFactory_i.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
+#include "ace/Log_Msg.h"
 
-ACE_RCSID(TypeCodeFactory, TypeCodeFactory_Loader, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_TypeCodeFactory_Loader::TAO_TypeCodeFactory_Loader (void)
+TAO_TypeCodeFactory_Loader::TAO_TypeCodeFactory_Loader ()
 {
 }
 
 CORBA::Object_ptr
-TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr,
-                                           int,
-                                           ACE_TCHAR * []
-                                           ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR * [])
 {
   CORBA::Object_ptr obj;
   ACE_NEW_RETURN (obj,
@@ -38,10 +29,13 @@ TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr,
 }
 
 int
-TAO_TypeCodeFactory_Loader::Initializer (void)
+TAO_TypeCodeFactory_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_TypeCodeFactory_Loader);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 ACE_STATIC_SVC_DEFINE (
     TAO_TypeCodeFactory_Loader,

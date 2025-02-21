@@ -1,50 +1,13 @@
 // -*- C++ -*-
-//
-// $Id$
-
-ACE_INLINE
-void
-CORBA::release (CORBA::Context_ptr x)
-{
-  if (x != 0)
-    {
-      x->_decr_refcnt ();
-    }
-}
-
-ACE_INLINE
-CORBA::Boolean
-CORBA::is_nil (CORBA::Context_ptr x)
-{
-  return (CORBA::Boolean) (x == 0);
-}
-
-ACE_INLINE
-void
-CORBA::release (CORBA::ContextList *x)
-{
-  if (x != 0)
-    {
-      x->_decr_refcnt ();
-    }
-}
-
-ACE_INLINE
-CORBA::Boolean
-CORBA::is_nil (CORBA::ContextList_ptr x)
-{
-  return (CORBA::Boolean) (x == 0);
-}
-
-// ===================================================================
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 CORBA::Context_ptr
 CORBA::Context::_duplicate (CORBA::Context_ptr x)
 {
-  if (x != 0)
+  if (x)
     {
-      x->_incr_refcnt ();
+      x->_incr_refcount ();
     }
 
   return x;
@@ -52,9 +15,9 @@ CORBA::Context::_duplicate (CORBA::Context_ptr x)
 
 ACE_INLINE
 CORBA::Context_ptr
-CORBA::Context::_nil (void)
+CORBA::Context::_nil ()
 {
-  return (CORBA::Context_ptr)0;
+  return nullptr;
 }
 
 // *************************************************************
@@ -62,32 +25,29 @@ CORBA::Context::_nil (void)
 // *************************************************************
 
 ACE_INLINE
-CORBA::ContextList::ContextList (void)
-{
-}
-
-ACE_INLINE
 CORBA::ULong
-CORBA::ContextList::count (void)
+CORBA::ContextList::count ()
 {
   return (CORBA::ULong) this->ctx_list_.size ();
 }
 
 ACE_INLINE
 CORBA::ContextList_ptr
-CORBA::ContextList::_nil (void)
+CORBA::ContextList::_nil ()
 {
-  return (CORBA::ContextList_ptr)0;
+  return nullptr;
 }
 
 ACE_INLINE
 CORBA::ContextList_ptr
 CORBA::ContextList::_duplicate (CORBA::ContextList_ptr x)
 {
-  if (x != 0)
+  if (x)
     {
-      x->_incr_refcnt ();
+      x->_incr_refcount ();
     }
 
   return x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

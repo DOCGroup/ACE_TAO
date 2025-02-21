@@ -1,0 +1,7 @@
+// -*- MPC -*-
+project : csd_tp_test_lib, avoids_corba_e_micro {
+  after += csd_tp_foo_b_lib
+  includes += ../../CSD_Strategy_Tests/TP_Foo_B
+  libs += CSD_TP_Foo_B
+  libpaths += ../../CSD_Strategy_Tests/TP_Foo_B
+}

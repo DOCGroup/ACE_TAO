@@ -1,19 +1,9 @@
-// -*- C++ -*-
-// $Id$
+#include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
-#include "UTF8_Latin1_Factory.h"
+#include "ace/Log_Msg.h"
+#include "tao/Codeset/UTF8_Latin1_Factory.h"
 
-// Instantiate templates that allow discovery of this factory
-// in the Service Manager.
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_UTF8_Latin1_Factory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_UTF8_Latin1_Factory>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
                        ACE_TEXT ("UTF8_Latin1_Factory"),
@@ -24,10 +14,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF8_Latin1_Factory)
 
-TAO_UTF8_Latin1_Factory::TAO_UTF8_Latin1_Factory()
-  : translator_ (0)
-{
-}
 
 TAO_UTF8_Latin1_Factory::~TAO_UTF8_Latin1_Factory ()
 {
@@ -89,10 +75,12 @@ TAO_UTF8_Latin1_Factory::create_translator () const
     if (this->translator_ == 0)
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) TAO_UTF8_Latin1_Factory cannot ")
                     ACE_TEXT("create TAO_UTF8_Latin1_Translator\n")
                     ));
     }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

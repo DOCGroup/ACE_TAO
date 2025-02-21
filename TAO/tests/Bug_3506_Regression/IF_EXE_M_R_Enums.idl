@@ -1,0 +1,161 @@
+#ifndef __IF_EXE_M_R_ENUMS_DEFINED
+#define __IF_EXE_M_R_ENUMS_DEFINED
+
+module IF_EXE_M_R {
+  enum FOOAMode_E {
+    FOOAMODE_E_THROUG_WATER,
+    FOOAMODE_E_OVER_GROUND,
+    FOOAMODE_E_X_NOT_SET
+  };
+
+  enum FOOBMode_E {
+    FOOBMODE_E_ABSOLUTE,
+    FOOBMODE_E_HEIGHT_OVER_GROUND,
+    FOOBMODE_E_X_NOT_SET
+  };
+
+  enum FOOCMode_E {
+    FOOCMODE_E_CORPEN,
+    FOOCMODE_E_TURN
+  };
+
+  /* Keywords: selection */
+  enum ENUM_Selection {
+    X_YES,
+    X_NO
+  };
+
+  /* Keywords: FOOI names */
+  enum ENUM_FOOD {
+   FOOH_FOOG,
+   FOOH_FOOP,
+   FOOH_Q_FOOO,
+   FOOH_GPS_UPDATE,
+   FOOH_DESCENT,
+   FOOH_SURFACE,
+   FOOH_FOON,
+   BASE_FOOG,
+   BASE_ARC,
+   BASE_CROSS,
+   IMCMS_FOOG,
+   BASE_CIRCLE,
+   FOOH_SV_PROFILE,
+   FOOQ_FOOG,
+   FOOQ_FOOJ,
+   FOOQ_FULL_FOOR_1,
+   FOOQ_FINAL_FOOR_1,
+   FOOQ_FULL_FOOR_2,
+   FOOQ_FINAL_FOOR_2,
+   FOOQ_RETRANSIT,
+   FOOQ_PASS_SAFETY_AREA,
+   FOOQ_DIRECT_TARGET_FOOR
+ };
+
+                /* Keywords: maximum FOOI duration */
+
+                enum ENUM_FOOE {
+                        ABORT_FOOI,
+                        ABORT_FOOH
+    };
+
+                /* Keywords: FOOI coverage */
+
+                enum ENUM_FOOF {
+      MAXIMUM,
+      ECOX_NOMY
+    };
+
+    /* Keywords: control mode */
+
+    enum ENUM_ControlMode {
+      LINEAR,
+      IMMEDIATELY
+    };
+
+                /* Keywords: FOOA reference */
+
+
+
+    /* Keywords: FOOP direction */
+
+    enum ENUM_FOOPDirection {
+      LEFT_TO_RIGHT,
+      RIGHT_TO_LEFT
+    };
+
+    /* Keywords: Q_FOOO direction */
+
+    enum ENUM_QFOOODirection {
+      MIDDLE_TO_LEFT,
+      MIDDLE_TO_RIGHT
+    };
+
+    /* Keywords: FOON direction */
+
+    enum ENUM_FOONDirection {
+      CLOCKWISE,
+      COUNTERCLOCKWISE
+    };
+
+    /* Keywords: FOOM activity mode */
+
+    enum ENUM_FOOMMode {
+      OFF,
+      ON_COMPLETE_FOOI,
+      ON_ONLY_ON_FOOGS
+    };
+
+    /* Keywords: transition status (base FOOI) */
+    enum ENUM_TransitionStatus {
+      X_NO_TRANSITION,
+      FOOGTRANSITION,
+      ENDTRANSITION
+    };
+
+    enum ENUM_ParameterType {
+      SET1,
+      SET2,
+      SET3
+    };
+
+    enum ENUM_FOOHType {
+      FOOH,
+      IMCMS,
+      FOOQ
+    };
+
+    enum ENUM_FOOKType {
+      WP_UNDEF,
+      WP_1,
+      WP_2,
+      WP_3,
+      WP_A,
+      WP_0,
+      WP_S,
+      WP_TGT
+    };
+
+    enum ENUM_CL_FOOSMode {
+      FOOROACH_CONTROL,
+      FOOG_CONTROL
+    };
+
+    enum ENUM_FOOLSide {
+      LP_STARBOARD,
+      LP_PORT,
+      LP_STERN
+    };
+
+    enum ENUM_FOOJType {
+        LEFT_2_RIGHT_BOTTOM_2_TOP,
+        RIGHT_2_LEFT_BOTTOM_2_TOP,
+        LEFT_2_RIGHT_TOP_2_BOTTOM,
+        RIGHT_2_LEFT_TOP_2_BOTTOM,
+        INSIDE_2_OUTSIDE_BOTTOM_2_TOP_CW,
+        INSIDE_2_OUTSIDE_BOTTOM_2_TOP_CTR_CW,
+        INSIDE_2_OUTSIDE_TOP_2_BOTTOM_CW,
+        INSIDE_2_OUTSIDE_TOP_2_BOTTOM_CTR_CW
+    };
+};
+
+#endif

@@ -4,8 +4,6 @@
 /**
  *  @file     PortableGroup_Acceptor_Registry.h
  *
- *  $Id$
- *
  *  Registry for dynamically created acceptors.
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
@@ -25,10 +23,12 @@
 
 #include "ace/CORBA_macros.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #include "tao/Transport_Acceptor.h"
 #include "tao/Resource_Factory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 
@@ -40,14 +40,11 @@ namespace CORBA
 /**
  * @class TAO_PortableGroup_Acceptor_Registry
  *
- * @brief .
- *
- * There is one TAO_PortableGroup_Acceptor_Registry per ORB_Core.
+ * @brief There is one TAO_PortableGroup_Acceptor_Registry per ORB_Core.
  */
 class TAO_PortableGroup_Export TAO_PortableGroup_Acceptor_Registry
 {
 public:
-
   /**
    * @struct Entry
    *
@@ -65,32 +62,26 @@ public:
     int cnt;
   };
 
-
-  // = Initialization and termination methods.
   ///  Default constructor.
-  TAO_PortableGroup_Acceptor_Registry (void);
+  TAO_PortableGroup_Acceptor_Registry () = default;
 
   ///  Default destructor.
-  ~TAO_PortableGroup_Acceptor_Registry (void);
+  ~TAO_PortableGroup_Acceptor_Registry ();
 
   /// Open an acceptor based on a tagged profile.
-  void open (const TAO_Profile* profile,
-             TAO_ORB_Core &orb_core
-             ACE_ENV_ARG_DECL);
+  void open (const TAO_Profile* profile, TAO_ORB_Core &orb_core);
 
   /// Close all open acceptors.
-  int close_all (void);
+  int close_all ();
 
   typedef ACE_Unbounded_Queue<Entry> Acceptor_Registry;
   typedef ACE_Unbounded_Queue_Iterator<Entry> Acceptor_Registry_Iterator;
 
 protected:
-
   /// Helper function to open a group acceptor.
   void open_i (const TAO_Profile* profile,
                TAO_ORB_Core &orb_core,
-               TAO_ProtocolFactorySetItor &factory
-               ACE_ENV_ARG_DECL);
+               TAO_ProtocolFactorySetItor &factory);
 
   /// Find an acceptor by using a profile.
   int find (const TAO_Profile* profile,
@@ -98,22 +89,17 @@ protected:
 
 private:
   // The acceptor registry should not be copied.
-  ACE_UNIMPLEMENTED_FUNC (TAO_PortableGroup_Acceptor_Registry (
-                              const TAO_PortableGroup_Acceptor_Registry&
-                            ))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (
-                              const TAO_PortableGroup_Acceptor_Registry&
-                            ))
+  TAO_PortableGroup_Acceptor_Registry (
+    const TAO_PortableGroup_Acceptor_Registry&);
+  void operator= (const TAO_PortableGroup_Acceptor_Registry&);
 
 private:
   /// List of acceptors that are currently open.
   Acceptor_Registry registry_;
 };
 
-//#if defined(__ACE_INLINE__)
-//#include "tao/PortableGroup_Acceptor_Registry.i"
-//#endif /* __ACE_INLINE__ */
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_PORTABLEGROUP_ACCEPTOR_REGISTRY_H */

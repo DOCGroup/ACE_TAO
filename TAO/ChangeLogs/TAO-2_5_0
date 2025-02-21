@@ -1,0 +1,303 @@
+commit cf42f2ce36123105d52cfeff3d736775436cd96a
+Merge: 7d72360c4d6 7bd7f6cfe57
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 7 21:09:16 2018 +0200
+
+    Merge pull request #637 from jwillemsen/master
+    
+    Fixed typo and removed some empty lines
+
+commit 7bd7f6cfe5764bc2bb9f6fb7204bdf773d693c05
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 7 13:02:49 2018 +0200
+
+    Removed empty lines
+    
+        * TAO/tests/Portable_Interceptors/AdvSlot/client.cpp:
+        * TAO/tests/Portable_Interceptors/AdvSlot/server.cpp:
+        * TAO/tests/Portable_Interceptors/Service_Context_Manipulation/server_interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/Service_Context_Manipulation/test_i.h:
+
+commit ec9ea2cb073f98e1f56f23f23ede885c5e4d831e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 7 13:02:39 2018 +0200
+
+    Fixed typo in comment
+    
+        * TAO/tao/PI/ClientRequestInfo.cpp:
+
+commit 7a03ab755914edbf2494d5fe3f9b3eb9bd5bf2dd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 2 09:55:50 2018 +0200
+
+    Fixed compile errors
+    
+        * TAO/examples/PluggableUDP/tests/Performance/server.cpp:
+        * TAO/orbsvcs/tests/Bug_1393_Regression/client.cpp:
+
+commit 4bb2475504a0f1b85d1358f8daeedb4c65f9f548
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 1 17:02:27 2018 +0200
+
+    Add unit test for issue #570
+    
+        * TAO/tests/Bug_3845_Regression/issue570.idl:
+          Added.
+    
+        * TAO/tests/Bug_3845_Regression/run_test.pl:
+
+commit 0e06e1e74355e86aeda52bf2a2ca8f4dd2cde954
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 1 16:59:44 2018 +0200
+
+    Fix issue #570, crash of TAO_IDL on invalid IDL
+    
+        * TAO/TAO_IDL/util/utl_scope.cpp:
+
+commit 80bce7afb0cccdb9dbf82b24aebdcb36f918f2aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 1 14:34:35 2018 +0200
+
+    Fixed CodeFactor issues
+
+commit 8956a849cf8ccd48dacaf8db7b2add3df2c4a84d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 1 14:28:30 2018 +0200
+
+    Layout changes
+    
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/Messenger_i.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/IOR/ClientInitializer.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/SimpleCodec/ClientInitializer.cpp:
+        * TAO/TAO_IDL/ast/ast_interface.cpp:
+        * TAO/TAO_IDL/ast/ast_union.cpp:
+        * TAO/TAO_IDL/be/be_global.cpp:
+        * TAO/examples/Advanced/ch_18/client.cpp:
+        * TAO/examples/Advanced/ch_18/server.h:
+        * TAO/examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/EDF_Scheduler.h:
+        * TAO/examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/MIF_Scheduler.h:
+        * TAO/examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/MUF_Scheduler.h:
+        * TAO/examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * TAO/examples/PluggableUDP/tests/Performance/client.cpp:
+        * TAO/examples/PluggableUDP/tests/Performance/server.cpp:
+        * TAO/orbsvcs/DevGuideExamples/NotifyService/EventSequence/Messenger_i.cpp:
+        * TAO/orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * TAO/orbsvcs/IFR_Service/be_global.cpp:
+        * TAO/orbsvcs/IFR_Service/be_produce.cpp:
+        * TAO/orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.cpp:
+        * TAO/orbsvcs/examples/CosEC/TypedSimple/Country_i.cpp:
+        * TAO/orbsvcs/examples/Notify/Lanes/Supplier.cpp:
+        * TAO/orbsvcs/examples/Notify/ThreadPool/Supplier.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/TCP.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
+        * TAO/orbsvcs/tests/Bug_1393_Regression/client.cpp:
+        * TAO/orbsvcs/tests/Bug_2287_Regression/ServerORBInitializer2.h:
+        * TAO/orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.h:
+
+commit 10b5846921aa7d988936cdc21057a592b51d7690
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 1 14:18:32 2018 +0200
+
+    Layout change
+    
+        * TAO/orbsvcs/examples/Notify/Lanes/Consumer.cpp:
+
+commit b870908ba95d171f8d2ffbc456ab8a7b659c4433
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 1 11:24:20 2018 +0200
+
+    Removed last TAO env macros and some layout changes
+
+commit 51d87f3608962ffe1fb12e7a1de31e4c9fa7d729
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 30 11:51:07 2018 +0200
+
+    Next release will be minor
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 98b95510000b4da8460034b8936422e98527740f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 16 18:27:21 2018 +0200
+
+    List std::unique_ptr usage
+
+commit 03ead678354f6e07c988a46e158b997896f8aeca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 19:09:14 2018 +0200
+
+    Make use of std::unique_ptr
+    
+        * TAO/tao/PortableServer/Object_Adapter.cpp:
+
+commit 43bdfc0437da6a2e78732f072253c9725818d556
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 17:15:22 2018 +0200
+
+    Layout changes
+    
+        * TAO/tao/IORManipulation/IORManipulation.cpp:
+        * TAO/tao/Valuetype/ValueBase.inl:
+
+commit 774e7f6ef1630fc42d3bf45d45e37fbaeb101659
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 17:01:11 2018 +0200
+
+    Make use of std::unique_ptr when we have C++11
+    
+        * TAO/tao/IORManipulation/IORManipulation.cpp:
+
+commit 330d868ab419f28e24dfe1b9d29500eafac66b7e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 16:24:30 2018 +0200
+
+    Use std::unique_ptr when usign C++11
+    
+        * TAO/tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+        * TAO/tao/PortableServer/Object_Adapter.cpp:
+        * TAO/tao/PortableServer/Root_POA.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:
+
+commit c4a7434d85ec752a5939bfafc35384534fc4705d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 15:32:58 2018 +0200
+
+    Make use of std::unique_ptr with C++11
+    
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+commit 2201a11b5acbbe38c86f72e8e444b1932196d38e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 15:04:20 2018 +0200
+
+    Use std::unique_ptr with C++11
+    
+        * TAO/tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * TAO/tao/AnyTypeCode/Any_Basic_Impl_T.cpp:
+        * TAO/tao/AnyTypeCode/Any_SystemException.cpp:
+        * TAO/tao/AnyTypeCode/NVList.cpp:
+        * TAO/tao/IORManipulation/IORManipulation.cpp:
+
+commit 074ca6ccfcbd44a76620ef52a42d644a32737eb0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 15:00:27 2018 +0200
+
+    Fixed typo in error message
+    
+        * TAO/tao/PortableServer/Active_Object_Map.cpp:
+        * TAO/tao/PortableServer/Object_Adapter.cpp:
+
+commit c32cb0f99e00b506c78644fcaa0098f3b72c912d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 14:38:57 2018 +0200
+
+    Further changes for using std::unique_ptr
+    
+        * TAO/tao/PortableServer/Active_Object_Map.cpp:
+
+commit df6d9751d3bf1a45c22c6282fe404ba2857f6ff4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 14:07:19 2018 +0200
+
+    No need to initialise auto_ptr/unique_ptr to 0 in the constructor
+    
+        * TAO/tao/PortableServer/Active_Object_Map.cpp:
+
+commit 80f2464b6e7f72016db991dbd12e87ba1fd83271
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 13:43:53 2018 +0200
+
+    Make use of std::unique_ptr when we have C++11
+    
+        * TAO/tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+        * TAO/tao/AnyTypeCode/Any_Special_Impl_T.cpp:
+
+commit b361514d8bea5de5bd984bb10205ecf0843c04c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 13:12:51 2018 +0200
+
+    Make use of std::unique_ptr when we have C++11
+    
+        * TAO/tao/PortableServer/Active_Object_Map.h:
+
+commit afa546317cb4ad800e4337edd4ea98f91135e7c9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 13:03:34 2018 +0200
+
+    Use std::unique_ptr when using C++11
+    
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * TAO/tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+        * TAO/tao/AnyTypeCode/Any_Impl_T.cpp:
+        * TAO/tao/Connector_Registry.cpp:
+        * TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * TAO/tao/Load_Protocol_Factory_T.h:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/RTCORBA/Thread_Pool.cpp:
+        * TAO/tao/Stub.cpp:
+        * TAO/tao/Synch_Invocation.cpp:
+
+commit e915b48fcd7eee34bf661673b532bfa0b6e9cccb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 12:28:55 2018 +0200
+
+    Make use of std::unique_ptr when we have C++11
+    
+        * TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * TAO/tao/Load_Protocol_Factory_T.h:
+
+commit 880d4ee94da593dedaa766e0ded0cb09eb15394b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 11:56:40 2018 +0200
+
+    Make use of std::unique_ptr when we have C++11
+    
+        * TAO/tao/RTCORBA/Thread_Pool.cpp:
+
+commit 7344ff452a10010a88fa937d85ebaed40eddb638
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 11:46:45 2018 +0200
+
+    Make use of std::unique_ptr when we have C++11
+    
+        * TAO/tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+
+commit c3953feb3a48473bc0b78691e7fe18d08f477df8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 11:07:52 2018 +0200
+
+    When we have C++11 make use of std::unique_ptr
+    
+        * TAO/tao/AnyTypeCode/Any_Impl_T.cpp:
+        * TAO/tao/Connector_Registry.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Stub.cpp:
+        * TAO/tao/Synch_Invocation.cpp:
+
+commit c560110d8f3206a7866866cff325489eb2ea88db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 14 16:27:08 2018 +0200
+
+    ACE+TAO x.4.8 release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

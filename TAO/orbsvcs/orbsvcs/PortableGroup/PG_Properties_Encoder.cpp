@@ -1,9 +1,6 @@
-/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    PG_Properties_Encoder.cpp
- *
- *  $Id$
  *
  *  This file implements classes to help manage the Properties
  *  defined in the Portable Object Group.
@@ -11,23 +8,17 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#include "PG_Properties_Encoder.h"
-
+#include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "PG_Properties_Encoder.inl"
+#include "orbsvcs/PortableGroup/PG_Properties_Encoder.inl"
 #endif /* !  __ACE_INLINE__ */
 
-//////////
-// Properties_Encoder
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_PG::Properties_Encoder::Properties_Encoder ()
 {
 }
-
-TAO_PG::Properties_Encoder::~Properties_Encoder ()
-{
-}
-
 
 void TAO_PG::Properties_Encoder::add (
   const char * name,
@@ -37,13 +28,12 @@ void TAO_PG::Properties_Encoder::add (
   values_.push_back(nv);
 }
 
-void TAO_PG::Properties_Encoder::encode (
-  PortableGroup::Properties * property_set) const
+void TAO_PG::Properties_Encoder::encode (PortableGroup::Properties * property_set) const
 {
   ACE_ASSERT (property_set != 0);
-  size_t count = values_.size();
+  CORBA::ULong const count = static_cast<CORBA::ULong> (values_.size());
   property_set->length(count);
-  for( size_t nItem = 0; nItem < count; ++nItem )
+  for( CORBA::ULong nItem = 0; nItem < count; ++nItem )
   {
     const NamedValue & nv = values_[nItem];
     PortableGroup::Property & property = (*property_set)[nItem];
@@ -63,8 +53,4 @@ void TAO_PG::Properties_Encoder::encode (
   }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Vector< TAO_PG::Properties_Encoder::NamedValue, 10 >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Vector< TAO_PG::Properties_Encoder::NamedValue, 10 >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

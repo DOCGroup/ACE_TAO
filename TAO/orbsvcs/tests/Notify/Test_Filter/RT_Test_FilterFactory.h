@@ -2,11 +2,7 @@
 /**
  *  @file RT_Test_FilterFactory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_RT_Test_FILTERFACTORY_H
@@ -31,43 +27,38 @@
  * @class TAO_Notify_Tests_RT_Test_FilterFactory
  *
  * @brief
- *
  */
 class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_FilterFactory
   : public virtual POA_CosNotifyFilter::FilterFactory
   , public virtual TAO_Notify_FilterFactory
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_RT_Test_FilterFactory (void);
+  /// Constructor
+  TAO_Notify_Tests_RT_Test_FilterFactory ();
 
   /// Destructor
   ~TAO_Notify_Tests_RT_Test_FilterFactory ();
 
   ///= TAO_Notify_Tests_FilterFactory methods.
 
-  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL);
+  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_ptr filter_poa);
+  virtual void destroy ();
 
   ///= CosNotifyFilter::FilterFactory methods
 
-  virtual CosNotifyFilter::Filter_ptr create_filter (const char * constraint_grammar
-                                                     ACE_ENV_ARG_DECL
-                                                     )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidGrammar
-                     ));
+  virtual CosNotifyFilter::Filter_ptr create_filter (const char * constraint_grammar);
 
   virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (const char * constraint_grammar,
-                                                                    const CORBA::Any & default_value
-                                                                    ACE_ENV_ARG_DECL
-                                                                    )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidGrammar
-                     ));
+                                                                    const CORBA::Any & default_value);
+
+  virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter);
+  virtual CosNotifyFilter::Filter_ptr get_filter (const TAO_Notify_Object::ID& id);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
 
 protected:
+  /// Release this object.
+  virtual void release ();
+
   /// The POA in which to activate the Filters.
   PortableServer::POA_var filter_poa_;
 };

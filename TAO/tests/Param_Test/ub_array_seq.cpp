@@ -1,33 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_array_seq.cpp
-//
-// = DESCRIPTION
-//    tests unbounded array sequences
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_array_seq.cpp
+ *
+ *  tests unbounded array sequences
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_array_seq.h"
-
-ACE_RCSID (Param_Test, 
-           ub_array_seq, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Array_Sequence
 // ************************************************************************
 
-Test_Array_Sequence::Test_Array_Sequence (void)
+Test_Array_Sequence::Test_Array_Sequence ()
   : opname_ (CORBA::string_dup ("test_array_sequence")),
     inout_ (new Param_Test::ArraySeq),
     out_ (new Param_Test::ArraySeq),
@@ -35,7 +25,7 @@ Test_Array_Sequence::Test_Array_Sequence (void)
 {
 }
 
-Test_Array_Sequence::~Test_Array_Sequence (void)
+Test_Array_Sequence::~Test_Array_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -44,14 +34,13 @@ Test_Array_Sequence::~Test_Array_Sequence (void)
 }
 
 const char *
-Test_Array_Sequence::opname (void) const
+Test_Array_Sequence::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Array_Sequence::dii_req_invoke (CORBA::Request *req
-                                     ACE_ENV_ARG_DECL)
+Test_Array_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -59,29 +48,25 @@ Test_Array_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_ArraySeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  Param_Test::ArraySeq *tmp;
+  const Param_Test::ArraySeq *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::ArraySeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::ArraySeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::ArraySeq (*tmp);
 }
 
 int
-Test_Array_Sequence::init_parameters (Param_Test_ptr
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+Test_Array_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -119,7 +104,7 @@ Test_Array_Sequence::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Array_Sequence::reset_parameters (void)
+Test_Array_Sequence::reset_parameters ()
 {
   // Delete the previous ones.
   this->inout_ = new Param_Test::ArraySeq;
@@ -129,33 +114,27 @@ Test_Array_Sequence::reset_parameters (void)
 }
 
 int
-Test_Array_Sequence::run_sii_test (Param_Test_ptr objref
-                                   ACE_ENV_ARG_DECL)
+Test_Array_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::ArraySeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_array_sequence (this->in_,
                                                 this->inout_.inout (),
-                                                out
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Array_Sequence::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Array_Sequence::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Array_Sequence::check_validity (void)
+Test_Array_Sequence::check_validity ()
 {
   if (this->compare (this->in_, this->inout_.in ()) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -172,7 +151,7 @@ Test_Array_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Array_Sequence::print_values (void)
+Test_Array_Sequence::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"

@@ -1,28 +1,16 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    arglist.cpp
-//
-// = DESCRIPTION
-//    Visitor generating the parameter list of operations
-//    in the Valuetype class.
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    based on code from Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    arglist.cpp
+ *
+ *  Visitor generating the parameter list of operations
+ *  in the Valuetype class.
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuetype,
-           arglist,
-           "$Id$")
+#include "valuetype.h"
 
 // ************************************************************
 //   Operation visitor to generate the argument list.
@@ -37,42 +25,42 @@ be_visitor_obv_operation_arglist::be_visitor_obv_operation_arglist (
 {
 }
 
-be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist (void)
+be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist ()
 {
 }
 
-idl_bool
+bool
 be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
 {
   UTL_Scope *scope = node->defined_in ();
-  be_interface *iface = be_interface::narrow_from_scope (scope);
+  be_interface *iface = dynamic_cast<be_interface*> (scope);
 
-  if (iface != 0)
+  if (iface != nullptr)
     {
       if (ACE_OS::strncmp (iface->local_name (), "AMH_", 4) == 0)
         {
           const char *last_E = ACE_OS::strrchr (iface->full_name (), 'E');
 
-          if (last_E != 0
+          if (last_E != nullptr
               && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
             {
-              return I_TRUE;
+              return true;
             }
         }
     }
 
-  return I_FALSE;
+  return false;
 }
 
 int
 be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 {
-  int amh_valuetype = this->is_amh_exception_holder (node);
+  bool amh_valuetype = this->is_amh_exception_holder (node);
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << " (";
-  
-  if (!be_global->exception_support () || node->nmembers () > 0)
+
+  if (node->nmembers () > 0)
     {
       *os << be_idt << be_idt_nl;
 
@@ -86,66 +74,16 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                             -1);
         }
 
-      // Generate the ACE_ENV_ARG_DECL parameter for the alternative mapping.
-      if (!be_global->exception_support ())
-        {
-          /***********************************************************/
-          // If it ian an AMHExceptionHolder we are going to generate the
-          // function definition "in-place" right here.  Also all
-          // AMHExceptionHolder 'raise' methods do not take any
-          // parameters.  So always declare
-          // ACE_ENV_SINGLE_ARG_DECL_NOT_USED when generating argument
-          // list for AMHExceptioHolders
-          /***********************************************************/
-          if (amh_valuetype)
-            {
-              *os << "ACE_ENV_SINGLE_ARG_DECL";
-            }
-          /***********************************************************/
-          else
-            {
-              // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL
-              // depending on whether the operation node has parameters.
-              
-              if (node->argument_count () == 0)
-                {
-                  *os << " ACE_ENV_SINGLE_ARG_DECL";
-                }
-              else
-                {
-                  *os << " ACE_ENV_ARG_DECL";
-                }
-            } 
-
-          if (!amh_valuetype)
-            {
-              switch (this->ctx_->state ())
-                {
-                case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
-                  // Last argument - is always ACE_ENV_ARG_DECL.
-                  *os << "_WITH_DEFAULTS";
-                  break;
-                default:
-                  break;
-                }
-            }
-        }
-
       *os << be_uidt_nl
           << ")";
     }
   else
-    {  
-      *os << "void)";
+    {
+      *os << ")";
     }
 
   be_visitor_context ctx = *this->ctx_;
   be_visitor_operation operation_visitor (&ctx);
-
-  if (operation_visitor.gen_throw_spec (node) == -1)
-    {
-      return -1;
-    }
 
   switch (this->ctx_->state ())
     {
@@ -182,9 +120,17 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
   // defined. We need this since argument types may very well be declared
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
-  be_operation *op = this->ctx_->be_scope_as_operation ();
+  be_operation *op =
+    dynamic_cast<be_operation*> (this->ctx_->node ());
 
-  if (!op)
+  // Sometimes the operation is stored in the context scope instead.
+  if (op == nullptr)
+    {
+      op =
+        dynamic_cast<be_operation*> (this->ctx_->scope ());
+    }
+
+  if (op == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"
@@ -198,8 +144,8 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
   // information from the context.
   // %! use AST_Interface
   be_interface *intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (op->defined_in ());
+    ? dynamic_cast<be_interface*> (this->ctx_->attribute ()->defined_in ())
+    : dynamic_cast<be_interface*> (op->defined_in ());
 
   if (!intf)
     {
@@ -214,7 +160,7 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
   ctx.node (node); // save the argument node
 
   // Retrieve the type.
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

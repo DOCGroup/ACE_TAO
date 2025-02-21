@@ -1,0 +1,14 @@
+// -*- MPC -*-
+project(*client) : aceexe, avoids_ace_for_tao {
+  exename = client
+  Source_Files {
+   client.cpp
+  }
+}
+
+project(*server) : aceexe, avoids_ace_for_tao {
+  exename = server
+  Source_Files {
+   server.cpp
+  }
+}

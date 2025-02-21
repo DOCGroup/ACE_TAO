@@ -1,0 +1,54 @@
+
+
+This application tests the replication features of TAO's FT Naming Service.
+
+To run all tests automatically -
+	execute Perl script run_test.pl
+
+To run tests manually -
+	start the Naming Service (see
+	TAO/orbsvcs/Naming_Service/README for valid options),
+	then run ./client the optional options are shown below.
+
+NOTE: if running tests manually, the NameService directory must exist
+before starting the Naming Service and this directory must be cleaned out
+manually after stopping the Naming Service.
+
+The following options exist:
+---------------------------
+-b	Breath of Context tree, default is 4, minimum is 2
+
+-d	Depth of Context tree, default is 4, minimum is 2
+
+-o	Breath of Object tree, default is 4, minimum is 2
+
+-p      ior for Naming Server 1
+
+-q      ior for Naming Server 2
+
+The client creates two context trees, one of breath b and one of depth d,
+and another node with o objects.  It then removes the contexts b-1, d and
+the object o-1.  All these are done using the first name server.  The
+client then accesses contexts b, b-1, d, d-1, and objects o, o-1 looking
+for the appropriate found/not-found returns using the second name server.
+
+        Example (on a Unix system):
+        $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o nsior1\
+          -r NameService -ORBEndPoint iiop://localhost:10001 &
+        $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o nsior2\
+          -r NameService -ORBEndPoint iiop://localhost:10002 &
+        $ ./client -p file://nsior1 -q file://nsior2
+
+        where the steps correspond to 1&2)starting the Naming Service
+        in redundant mode, 3) running the client.
+        Don't forget to kill the name servers after you are done.
+
+
+
+EXPECTED OUTPUT FOR THIS TEST
+*****************************
+
+Redundancy test OK.
+
+
+

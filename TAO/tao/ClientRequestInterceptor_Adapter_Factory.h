@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    ClientRequestInterceptor_Adapter_Factory.h
- *
- *  $Id$
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
@@ -16,14 +14,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
 #include "ace/Service_Object.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -39,10 +40,12 @@ class TAO_Export TAO_ClientRequestInterceptor_Adapter_Factory
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_ClientRequestInterceptor_Adapter_Factory (void);
+  virtual ~TAO_ClientRequestInterceptor_Adapter_Factory ();
 
-  virtual TAO::ClientRequestInterceptor_Adapter *create (void) = 0;
+  virtual TAO::ClientRequestInterceptor_Adapter *create () = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

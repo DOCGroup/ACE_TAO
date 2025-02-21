@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -67,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ARRAY_AST_ARRAY_HH
 #define _AST_ARRAY_AST_ARRAY_HH
 
+#include "ace/CDR_Base.h"
+
 #include "ast_concrete_type.h"
 
 class UTL_ExprList;
@@ -76,38 +76,35 @@ class ast_visitor;
 
 // Representation of array declaration:
 // An array is a combination of a list of dimensions and a base type.
-
 class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
 public:
-  // Operations.
-
-  // Constructor(s).
-  AST_Array (void);
-
   AST_Array (UTL_ScopedName *n,
-             unsigned long ndims,
+             ACE_CDR::ULong ndims,
              UTL_ExprList *dims,
-             idl_bool local,
-             idl_bool abstract);
+             bool local,
+             bool abstract);
 
-  // Destructor.
-  virtual ~AST_Array (void);
+  virtual ~AST_Array ();
 
   // Data Accessors.
 
-  unsigned long n_dims (void);
+  ACE_CDR::ULong n_dims ();
 
-  AST_Expression **dims (void);
+  AST_Expression **dims ();
   void set_dims (AST_Expression **,
-                 unsigned long);
+                 ACE_CDR::ULong);
 
-  AST_Type *base_type (void);
+  AST_Type *base_type () const;
   void set_base_type (AST_Type *nbt);
 
-  // Narrowing.
-  DEF_NARROW_METHODS1(AST_Array, AST_ConcreteType);
-  DEF_NARROW_FROM_DECL(AST_Array);
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
+  virtual bool legal_for_primary_key () const;
+
+  // Cleanup.
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -115,14 +112,24 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  static AST_Decl::NodeType const NT;
+
+  /**
+   * Get and Set Annotations on the base type
+   */
+  ///{
+  AST_Annotation_Appls &base_type_annotations ();
+  void base_type_annotations (const AST_Annotation_Appls &annotations);
+  ///}
+
 protected:
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
 
 private:
   // Data.
 
-  unsigned long pd_n_dims;
+  ACE_CDR::ULong pd_n_dims;
   // How many dimensions?
 
   AST_Expression **pd_dims;
@@ -131,11 +138,18 @@ private:
   AST_Type *pd_base_type;
   // Base type of array.
 
-  // Operations.
+  bool owns_base_type_;
+  // If our base type is anonymous array or sequence, we're
+  // responsible for destroying it.
 
   // Compute how many dimensions.
   AST_Expression **compute_dims (UTL_ExprList *dims,
-                                 unsigned long ndims);
+                                 ACE_CDR::ULong ndims);
+
+  /**
+   * Annotations on the base type
+   */
+  AST_Annotation_Appls base_type_annotations_;
 };
 
 #endif           // _AST_ARRAY_AST_ARRAY_HH

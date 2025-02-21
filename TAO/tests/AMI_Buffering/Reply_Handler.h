@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef REPLY_HANDLER_H
 #define REPLY_HANDLER_H
@@ -14,26 +11,17 @@ class Reply_Handler
 {
 public:
   /// Constructor
-  Reply_Handler (void);
+  Reply_Handler ();
 
   // = The skeleton methods
-  virtual void receive_data (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void receive_data_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_data ();
+  virtual void receive_data_excep (::Messaging::ExceptionHolder *holder);
 
-  virtual void sync (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void sync_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void sync ();
+  virtual void sync_excep (::Messaging::ExceptionHolder *holder);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
+  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder);
 };
 
 #include /**/ "ace/post.h"

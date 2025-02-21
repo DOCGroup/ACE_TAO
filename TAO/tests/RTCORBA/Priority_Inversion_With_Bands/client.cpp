@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -7,17 +5,15 @@
 #include "ace/Task.h"
 #include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Priority_Inversion_With_Bands, client, "$Id$")
-
-static const char *ior = "file://ior_1";
+static const ACE_TCHAR *ior = ACE_TEXT("file://ior_1");
 static int iterations = 12;
 static CORBA::ULong work = 2;
 static int make_banded_invocations = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:k:i:w:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:k:i:w:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,18 +52,17 @@ parse_args (int argc, char *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
 };
@@ -80,41 +75,30 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (ior);
 
       test_var test =
-        test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RTORB"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::RTORB::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RTCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var rt_current =
-        RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::Current::_narrow (object.in ());
 
       RTCORBA::Priority default_thread_priority =
-        rt_current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        get_implicit_thread_CORBA_priority (this->orb_.in ());
 
       RTCORBA::Priority low_priority =
         default_thread_priority;
@@ -134,28 +118,19 @@ Task::svc (void)
           CORBA::PolicyList policies;
           policies.length (1);
           policies[0] =
-            rt_orb->create_priority_banded_connection_policy (bands
-                                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            rt_orb->create_priority_banded_connection_policy (bands);
 
           object =
             test->_set_policy_overrides (policies,
-                                         CORBA::SET_OVERRIDE
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                         CORBA::SET_OVERRIDE);
 
           test =
-            test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            test::_narrow (object.in ());
         }
 
-      rt_current->the_priority (low_priority
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      rt_current->the_priority (low_priority);
 
-      test->initialize (iterations * 2
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test->initialize (iterations * 2);
 
       int i = 0;
       char iteration_description[BUFSIZ];
@@ -163,43 +138,34 @@ Task::svc (void)
         {
           ACE_OS::sprintf (iteration_description, "L:%02d", i);
           test->method (work,
-                        iteration_description
-                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                        iteration_description);
         }
 
-      rt_current->the_priority (high_priority
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      rt_current->the_priority (high_priority);
 
       for (i = 0; i != iterations; ++i)
         {
           ACE_OS::sprintf (iteration_description, "H:%02d", i);
           test->method (work,
-                        iteration_description
-                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                        iteration_description);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
@@ -248,12 +214,11 @@ main (int argc, char *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

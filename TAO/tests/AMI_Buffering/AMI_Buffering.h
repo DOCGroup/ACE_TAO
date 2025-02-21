@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef AMI_BUFFERING_H
 #define AMI_BUFFERING_H
@@ -18,25 +15,41 @@ public:
                  Test::AMI_Buffering_Admin_ptr admin);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &the_payload
-                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_data (const Test::Payload &the_payload);
 
-  virtual void flush (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void flush ();
 
-  virtual void sync (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void sync ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
-private:
+  /// internal implementation of shutdown. This
+  void try_shutdown ();
+
+  class Nest_Guard
+    {
+    public:
+      Nest_Guard (AMI_Buffering &);
+      ~Nest_Guard ();
+    private:
+      AMI_Buffering &target_;
+    };
+
   /// Use an ORB reference to shutdown the application.
   CORBA::ORB_var orb_;
 
   /// Report request progress to this interface
   Test::AMI_Buffering_Admin_var admin_;
+
+  /// nesting depth count for receive_data processing
+  int nest_;
+
+  /// maximum nesting depth reached during run
+  int max_nest_;
+
+  /// flag indicating that a shutdown is required as soon
+  /// as the nest count reaches 0.
+  bool must_shutdown_;
 };
 
 #include /**/ "ace/post.h"

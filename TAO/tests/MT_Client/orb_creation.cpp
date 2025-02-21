@@ -1,20 +1,16 @@
-// $Id$
-
 #include "testC.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(MT_Client, orb_creation, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -40,7 +36,7 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -57,7 +53,7 @@ public:
           const char* ior);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
@@ -69,29 +65,26 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
@@ -107,16 +100,13 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -131,10 +121,9 @@ Client::Client (int niterations,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       for (int i = 0; i < this->niterations_; ++i)
         {
@@ -144,16 +133,13 @@ Client::svc (void)
           CORBA::String_var argv0 = CORBA::string_dup ("dummy_argv");
           char* argv[1] = { argv0.inout () };
           CORBA::ORB_var orb =
-            CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            CORBA::ORB_init (argc, argv);
 
           CORBA::Object_var object =
-            orb->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->string_to_object (this->ior_);
 
           Simple_Server_var server =
-            Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            Simple_Server::_narrow (object.in ());
 
           if (CORBA::is_nil (server.in ()))
             {
@@ -163,17 +149,14 @@ Client::svc (void)
                                 1);
             }
 
-          server->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->test_method ();
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_Client: exception raised");
+      ex._tao_print_exception ("MT_Client: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -1,0 +1,18 @@
+project(*Supplier): namingexe, event_skel {
+  exename   = EchoEventSupplier
+  includes += ../common
+  Source_Files {
+    EchoEventSupplierMain.cpp
+  }
+}
+
+project(*Consumer): namingexe, event_skel {
+  exename   = EchoEventConsumer
+  includes += ../common
+
+  Source_Files {
+    EchoEventConsumerMain.cpp
+    EchoEventConsumer_i.cpp
+  }
+}
+

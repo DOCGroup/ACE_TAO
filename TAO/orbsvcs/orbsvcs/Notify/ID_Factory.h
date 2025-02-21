@@ -2,11 +2,7 @@
 /**
  *  @file ID_Factory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ID_FACTORY_H
@@ -14,7 +10,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,36 +18,38 @@
 
 #include "ace/Atomic_Op.h"
 
-#include "Object.h"
+#include "orbsvcs/Notify/Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_ID_Factory
  *
  * @brief A simple factory for generating ID's for objects created by Notify.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ID_Factory
 {
 public:
-  /// Constuctor
-  TAO_Notify_ID_Factory (void);
+  /// Constructor
+  TAO_Notify_ID_Factory ();
 
   /// Destructor
   ~TAO_Notify_ID_Factory ();
 
-  TAO_Notify_Object::ID id (void);
+  TAO_Notify_Object::ID id ();
 
   void set_last_used (const TAO_Notify_Object::ID id);
 
 private:
-  // Can't use atomic op, because we added the set_last_used() method.
+  /// Can't use atomic op, because we added the set_last_used() method.
   TAO_Notify_Object::ID seed_;
   TAO_SYNCH_MUTEX mtx_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ID_Factory.inl"
+#include "orbsvcs/Notify/ID_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

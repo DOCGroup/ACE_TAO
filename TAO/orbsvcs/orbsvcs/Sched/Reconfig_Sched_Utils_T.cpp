@@ -1,24 +1,17 @@
-// ============================================================================
-//
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Reconfig_Sched_Utils_T.cpp
-//
-// = AUTHOR
-//     Chris Gill <cdgill@cs.wustl.edu>
-//
-// ============================================================================
+/**
+ *  @file    Reconfig_Sched_Utils_T.cpp
+ *
+ *  @author  Chris Gill <cdgill@cs.wustl.edu>
+ */
+//=============================================================================
 
-#ifndef TAO_RECONFIG_SCHED_UTILS_T_C
-#define TAO_RECONFIG_SCHED_UTILS_T_C
 
-#include "Reconfig_Sched_Utils_T.h"
+#ifndef TAO_RECONFIG_SCHED_UTILS_T_CPP
+#define TAO_RECONFIG_SCHED_UTILS_T_CPP
+
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Sched/Reconfig_Sched_Utils_T.h"
 #include "ace/Sched_Params.h"
 #include "ace/ACE.h"
 
@@ -26,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(Sched, Reconfig_Sched_Utils_T, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ////////////////////////////////
 // TAO_RSE_Dependency_Visitor //
@@ -59,7 +52,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
   // modifications that are applied to each node unconditionally.
   if (this->unconditional_action (rse) < 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "TAO_RSE_Dependency_Visitor::"
                          "visit: error from unconditional action.\n"), -1);
     }
@@ -71,7 +64,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
   result = this->precondition (rse);
   if (result < 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "TAO_RSE_Dependency_Visitor::"
                          "visit: error from precondition evaluation.\n"), -1);
     }
@@ -82,7 +75,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
       // modifications on the node prior to visiting its successors.
       if (this->prefix_action (rse) < 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "TAO_RSE_Dependency_Visitor::"
                              "visit: error from prefix action.\n"), -1);
         }
@@ -99,16 +92,16 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
             {
               // Skip over disabled dependencies
               if ((*dependency_set) [i].enabled == RtecBase::DEPENDENCY_DISABLED)
-		{
+                {
                   continue;
-		}
+                }
 
               // Take the handle from the dependency and use it
               // to obtain an RT_Info pointer from the map.
               if (rt_info_map_.find ((*dependency_set) [i].rt_info,
                                      next_rt_info) != 0)
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR, "RT_Info (%i) not found.\n",
+                  ORBSVCS_ERROR_RETURN ((LM_ERROR, "RT_Info (%i) not found.\n",
                                      (*dependency_set) [i].rt_info), -1);
                 }
 
@@ -116,20 +109,19 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
 
               if (next_rt_info == 0)
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR, "RT_Info in map was null.\n"),
+                  ORBSVCS_ERROR_RETURN ((LM_ERROR, "RT_Info in map was null.\n"),
                                     -1);
                 }
 
               // Reference the associated scheduling entry: the double cast is
               // needed to ensure that the size of the pointer and the size of the
-              // stored magic cookie are the same (see the definition of
-              // ptr_arith_t in ACE to grok how this works portably).
+              // stored magic cookie are the same
               next_rse =
                 ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                                      next_rt_info->volatile_token);
               if (next_rse == 0)
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR,
+                  ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                      "Entry pointer in RT_Info was null.\n"),
                                     -1);
                 }
@@ -141,7 +133,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
                                                  (*dependency_set) [i]);
               if (result < 0)
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR,
+                  ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                      "TAO_RSE_Dependency_Visitor::visit: "
                                      "error from pre-recursion action.\n"),
                                     -1);
@@ -160,7 +152,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
       // modifications on the node after visiting all its successors.
       if (this->postfix_action (rse) < 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "TAO_RSE_Dependency_Visitor::"
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_RSE_Dependency_Visitor::"
                              "visit: error from postfix action.\n"), -1);
         }
     }
@@ -168,19 +160,18 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
   return 0;
 }
 
-/* WSOA merge - commented out
-// Performs an unconditional action when the entry is first reached.
-// Returns 0 for success, and -1 if an error occurred.
+// WSOA merge - commented out
+// // Performs an unconditional action when the entry is first reached.
+// // Returns 0 for success, and -1 if an error occurred.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
-TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-unconditional_action (TAO_Reconfig_Scheduler_Entry &rse)
-{
-  // Default behavior: just return success.
-  ACE_UNUSED_ARG (rse);
-  return 0;
-}
-*/
+// template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
+// TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
+// unconditional_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
+// {
+//   // Default behavior: just return success.
+//   return 0;
+// }
+//
 
 // Tests whether or not any conditional actions should be taken for
 // the entry.  Returns 0 if the actions should be applied, 1 if the
@@ -202,10 +193,9 @@ precondition (TAO_Reconfig_Scheduler_Entry &rse)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
+prefix_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
 {
   // Default behavior: just return success.
-  ACE_UNUSED_ARG (rse);
   return 0;
 }
 
@@ -215,14 +205,11 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
-                    TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+pre_recurse_action (TAO_Reconfig_Scheduler_Entry & /* entry */,
+                    TAO_Reconfig_Scheduler_Entry & /* successor */,
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
   // Default behavior: just return success.
-  ACE_UNUSED_ARG (entry);
-  ACE_UNUSED_ARG (successor);
-  ACE_UNUSED_ARG (di);
   return 0;
 }
 
@@ -232,13 +219,11 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
+postfix_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
 {
   // Default behavior: just return success.
-  ACE_UNUSED_ARG (rse);
   return 0;
 }
-
 
 
 /////////////////////////
@@ -250,8 +235,8 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_DFS_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map),
     DFS_time_ (0)
@@ -297,13 +282,10 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
-                    TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+pre_recurse_action (TAO_Reconfig_Scheduler_Entry & /* entry */,
+                    TAO_Reconfig_Scheduler_Entry & successor,
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
-  ACE_UNUSED_ARG (entry);
-  ACE_UNUSED_ARG (di);
-
   // Enabled operations we reached via a dependency and that do not
   // specify a period are not thread delineators.
   if (successor.enabled_state () != RtecScheduler::RT_INFO_DISABLED
@@ -340,8 +322,8 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_SCC_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map),
     DFS_time_ (0),
@@ -354,7 +336,7 @@ TAO_RSE_SCC_Visitor
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-number_of_cycles (void)
+number_of_cycles ()
 {
   return this->number_of_cycles_;
 }
@@ -365,7 +347,7 @@ number_of_cycles (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-in_a_cycle (void)
+in_a_cycle ()
 {
   return this->in_a_cycle_;
 }
@@ -445,10 +427,8 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
-  ACE_UNUSED_ARG (di);
-
   if  (successor.enabled_state () !=
          RtecScheduler::RT_INFO_DISABLED
        && successor.rev_dfs_status () ==
@@ -460,7 +440,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
           ++this->number_of_cycles_;
         }
 
-      ACE_DEBUG ((LM_ERROR,
+      ORBSVCS_DEBUG ((LM_ERROR,
                   "RT_Infos \"%s\" and \"%s\" are part of dependency cycle %d.\n",
                   entry.actual_rt_info ()->entry_point.in (),
                   successor.actual_rt_info ()->entry_point.in (),
@@ -493,8 +473,8 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Reverse_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Reverse_Propagation_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK> (dependency_map, rt_info_map)
 {
 }
@@ -504,10 +484,8 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Reverse_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
-  ACE_UNUSED_ARG (di);
-
   // @TODO - check for conjunction nodes here and perform conjunctive
   // function on existing rate tuples.  Idea: treat conjunctive tuples
   // as skolem functions over the possible rates of their incedent
@@ -524,7 +502,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
   // Do not allow conjunction nodes for now.
   if (entry.actual_rt_info ()->info_type == RtecScheduler::CONJUNCTION)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Conjunction Nodes are not supported currently.")),
                         -1);
     }
@@ -540,10 +518,10 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       // Since we're visiting in topological order (called nodes before
       // calling nodes), the successor's aggregate time is up to date.
       if (successor.enabled_state () != RtecScheduler::RT_INFO_DISABLED)
-	{
+        {
           entry.aggregate_exec_time (entry.aggregate_exec_time ()
                                      + successor.aggregate_exec_time ());
-	}
+        }
     }
 
 
@@ -561,8 +539,8 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Forward_Propagation_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK> (dependency_map, rt_info_map),
     unresolved_locals_ (0),
     unresolved_remotes_ (0),
@@ -575,7 +553,7 @@ TAO_RSE_Forward_Propagation_Visitor
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-unresolved_locals (void)
+unresolved_locals ()
 {
   return this->unresolved_locals_;
 }
@@ -595,7 +573,7 @@ unresolved_locals (int i)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-unresolved_remotes (void)
+unresolved_remotes ()
 {
   return this->unresolved_remotes_;
 }
@@ -614,7 +592,7 @@ unresolved_remotes (int i)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-thread_specification_errors (void)
+thread_specification_errors ()
 {
   return this->thread_specification_errors_;
 }
@@ -657,7 +635,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
               {
                 ++this->unresolved_remotes_;
 
-                ACE_DEBUG ((LM_ERROR,
+                ORBSVCS_DEBUG ((LM_ERROR,
                             "RT_Info \"%s\" has unresolved "
                             "remote dependencies.\n",
                             rse.actual_rt_info ()->entry_point.in ()));
@@ -666,7 +644,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
               {
                 ++this->unresolved_locals_;
 
-                ACE_DEBUG ((LM_ERROR,
+                ORBSVCS_DEBUG ((LM_ERROR,
                             "RT_Info \"%s\" has unresolved "
                             "local dependencies.\n",
                             rse.actual_rt_info ()->entry_point.in ()));
@@ -677,7 +655,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
             // Specification error: any RT_Info that specifies threads
             // must also specify a period.
             ++this->thread_specification_errors_;
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         "RT_Info \"%s\" specifies %1d "
                         "threads, but no period.\n",
                         rse.actual_rt_info ()->entry_point.in (),
@@ -697,14 +675,13 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
   if (successor.enabled_state () == RtecScheduler::RT_INFO_DISABLED)
     {
       return 1;
     }
 
-  ACE_UNUSED_ARG (di);
   TAO_RT_Info_Tuple **tuple_ptr_ptr;
 
   TUPLE_SET_ITERATOR orig_tuple_iter (entry.orig_tuple_subset ());
@@ -714,7 +691,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       if (orig_tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "Failed to access tuple under iterator"));
           return -1;
         }
@@ -723,7 +700,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       // function on existing rate tuples.
 
 #ifdef SCHEDULER_LOGGING
-      ACE_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
+      ORBSVCS_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
                  successor.actual_rt_info ()->handle,
                  &successor,
                  (*tuple_ptr_ptr)));
@@ -747,7 +724,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       if (prop_tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "Failed to access tuple under iterator"));
           return -1;
         }
@@ -756,7 +733,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       // function on existing rate tuples.
 
 #ifdef SCHEDULER_LOGGING
-      ACE_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
+      ORBSVCS_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
                  successor.actual_rt_info ()->handle,
                  &successor,
                  (*tuple_ptr_ptr)));
@@ -811,7 +788,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
 {
   int result = 0;
 #ifdef SCHEDULER_LOGGING
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "Priority_Visitor visiting %s[%d],crit=%d,period=%d\n",
               rse.actual_rt_info ()->entry_point.in(),
               rse.actual_rt_info ()->handle,
@@ -832,7 +809,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
   else
     {
 #ifdef SCHEDULER_LOGGING
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Previous entry %s[%d],crit=%d,period=%d\n",
                   previous_entry_->actual_rt_info ()->entry_point.in(),
                   previous_entry_->actual_rt_info ()->handle,
@@ -869,7 +846,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
 
           ++priority_;
 #ifdef SCHEDULER_LOGGING
-          ACE_DEBUG ((LM_DEBUG, "New priority %d formed\n", priority_));
+          ORBSVCS_DEBUG ((LM_DEBUG, "New priority %d formed\n", priority_));
 #endif
           os_priority_ = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                               os_priority_,
@@ -968,11 +945,11 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
       if (this->critical_utilization_ + this->noncritical_utilization_
           +delta_utilization
           < this->critical_utilization_threshold_)
-	{
+        {
           this->critical_utilization_ += delta_utilization;
           entry->current_admitted_tuple (&t);
           entry->actual_rt_info ()->period = t.period;
-	}
+        }
     }
   else
     {
@@ -980,11 +957,11 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
       if (this->critical_utilization_ + this->noncritical_utilization_
           +delta_utilization
           < this->noncritical_utilization_threshold_)
-	{
+        {
           this->noncritical_utilization_ += delta_utilization;
           entry->current_admitted_tuple (&t);
           entry->actual_rt_info ()->period = t.period;
-	}
+        }
     }
   return 0;
 }
@@ -1049,8 +1026,8 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::noncritical_utilization_th
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Criticality_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Criticality_Propagation_Visitor
-  (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-   ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
+  (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+   typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map)
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK> (dependency_map, rt_info_map)
 {
 }
@@ -1060,12 +1037,10 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Criticality_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
-  ACE_UNUSED_ARG (di);
-
 #ifdef SCHEDULER_LOGGING
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "Crit Prop_Visitor visiting %s[%d], successor is %s[%d]\n",
               entry.actual_rt_info ()->entry_point.in(),
               entry.actual_rt_info ()->handle,
@@ -1087,7 +1062,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       successor.actual_rt_info ()->criticality = max_crit;
 
 #ifdef SCHEDULER_LOGGING
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Successor's new criticality is %d\n",
                   successor.actual_rt_info ()->criticality));
 #endif
@@ -1097,5 +1072,6 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
   return 1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_RECONFIG_SCHED_UTILS_T_C */
+#endif /* TAO_RECONFIG_SCHED_UTILS_T_CPP */

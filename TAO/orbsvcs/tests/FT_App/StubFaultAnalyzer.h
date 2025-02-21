@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
 #ifndef STUBFAULTANALYZER_H
 #define STUBFAULTANALYZER_H
 #include /**/ <ace/pre.h>
@@ -43,12 +41,12 @@ public:
   /**
    * Parse command line arguments.
    */
-  int parse_args (int argc, char * argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
 
   /**
    * Initialize this object
    */
-  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orb);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -60,18 +58,18 @@ public:
    * @param result [out] status code to return from process
    * @returns 0 to continue; nonzero to quit
    */
-  int idle(int &result ACE_ENV_ARG_DECL);
+  int idle(int &result);
 
   /**
    * Prepare to exit.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini ();
 
   /////////////////
   // Implementation
 private:
-  int readIORFile(const char * fileName, CORBA::String_var & ior);
+  int readIORFile(const ACE_TCHAR * fileName, CORBA::String_var & ior);
 
   ///////////////
   // Data Members
@@ -99,19 +97,19 @@ private:
   /**
    * a file to write to to signal "ready"
    */
-  const char * readyFile_;
+  const ACE_TCHAR * readyFile_;
 
   /**
-   * The detecor's IOR  (-d option)
+   * The detector's IOR  (-d option)
    */
-  const char * detector_ior_;
+  const ACE_TCHAR * detector_ior_;
 
   ::FT::FaultDetectorFactory_var factory_;
 
   /**
    * The notifier's IOR (-n option)
    */
-  const char * notifier_ior_;
+  const ACE_TCHAR * notifier_ior_;
 
   ::FT::FaultNotifier_var notifier_;
 
@@ -125,7 +123,6 @@ private:
 
   StubFaultConsumer faultConsumer_;
   StubBatchConsumer batchConsumer_;
-
 };
 
 #include /**/ <ace/post.h>

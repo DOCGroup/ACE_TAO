@@ -1,53 +1,40 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    Object_B_i.cpp
-//
-// = DESCRIPTION
-//    This class implements the Object B  of the
-//    Nested Upcalls - Triangle test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Object_B_i.cpp
+ *
+ *  This class implements the Object B  of the
+ *  Nested Upcalls - Triangle test.
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "tao/Exception.h"
 #include "Object_B_i.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Triangle_Test, Object_B_i, "$Id$")
-
 // CTOR
-Object_B_i::Object_B_i (void)
+Object_B_i::Object_B_i ()
 {
 }
 
 // DTOR
-Object_B_i::~Object_B_i (void)
+Object_B_i::~Object_B_i ()
 {
 }
 
 
-
 void
-Object_B_i::foo (Object_A_ptr theObject_A_ptr
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Object_B_i::foo (Object_A_ptr theObject_A_ptr)
 {
-  ACE_TRY
+  try
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) BEGIN Object_B_i::foo: Trying to call Object A\n"));
 
-      theObject_A_ptr->finish (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      theObject_A_ptr->finish ();
 
       // Start to wait on this variable, it is set to true
       // by the method finish ()
@@ -55,12 +42,20 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr
       ACE_Time_Value pause(0, usecs);
 
       ACE_OS::sleep(pause);
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "calling the initiator");
+      ex._tao_print_exception ("calling the initiator");
     }
-  ACE_ENDTRY;
 
+}
+
+void
+Object_B_i::shutdown ()
+{
+  int argc = 0;
+  ACE_TCHAR **argv = 0;
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+  orb->shutdown ();
 }

@@ -3,8 +3,6 @@
 /**
  *  @file   Observer.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -33,27 +31,26 @@ class EC_Observer;
 class EC_Master
 {
 public:
-  EC_Master (void);
+  EC_Master ();
 
-  virtual ~EC_Master (void);
+  virtual ~EC_Master ();
 
   /// Execute the test.
-  virtual int run (int argc, char* argv[]);
+  virtual int run (int argc, ACE_TCHAR* argv[]);
 
   /// Obtain the orb and the poa pointers
-  virtual void initialize_orb_and_poa (int& argc, char* argv[]
-                                       ACE_ENV_ARG_DECL);
+  virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
 
   /// Accessors
-  int channel_count (void) const;
+  int channel_count () const;
   EC_Observer* channel (int i) const;
 
 private:
-  int parse_args (int &argc, char *argv []);
+  int parse_args (int &argc, ACE_TCHAR *argv []);
 
 private:
   /// The seed
-  ACE_RANDR_TYPE seed_;
+  unsigned int seed_;
 
   /// The driver programs
   int n_channels_;
@@ -70,45 +67,41 @@ private:
  * @class EC_Observer
  *
  * @brief Test the EC observers
- *
  */
 class EC_Observer : public EC_Driver
 {
 public:
   /// Constructor
   EC_Observer (EC_Master *master,
-               ACE_RANDR_TYPE seed,
+               unsigned int seed,
                CORBA::ORB_ptr orb,
                PortableServer::POA_ptr root_poa,
                int id);
 
   /// Destructor
-  ~EC_Observer (void);
+  ~EC_Observer ();
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable observerions
-  virtual void initialize_orb_and_poa (int& argc, char* argv[]
-                                       ACE_ENV_ARG_DECL);
-  virtual int parse_args (int& argc, char* argv[]);
-  virtual void print_args (void) const;
-  virtual void print_usage (void);
+  virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
+  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
+  virtual void print_args () const;
+  virtual void print_usage ();
 
   /// Run the suppliers, using the <thread_manager> parameter
-  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
-  void run_cleanup (ACE_ENV_SINGLE_ARG_DECL);
+  void execute_test ();
+  void run_cleanup ();
 
-  void dump_results (void);
+  void dump_results ();
   void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i
-    ACE_ENV_ARG_DECL);
+    int i);
   void consumer_push (void*,
-                      const RtecEventComm::EventSet&
-                      ACE_ENV_ARG_DECL);
+                      const RtecEventComm::EventSet&);
 
 private:
   EC_Master *master_;
-  ACE_RANDR_TYPE seed_;
+  unsigned int seed_;
   int id_;
 
   TAO_EC_Gateway_IIOP *gwys_;

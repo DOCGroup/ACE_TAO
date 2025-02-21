@@ -1,26 +1,53 @@
-// $Id$
-
+// -*- C++ -*-
 #include "TestC.h"
+#include "ace/Get_Opt.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-main (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'k':
+        ior = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-k <ior> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates successful parsing of the command line
+  return 0;
+}
+
+
+int
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int received_expected_exception = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
+
+      if (parse_args (argc, argv) != 0)
+        return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
@@ -30,21 +57,25 @@ main (int argc, char *argv[])
                             1);
         }
 
-      Test::Timestamp time = 10;
-      roundtrip->test_method (time ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      try{
+          Test::Timestamp time = 10;
+          roundtrip->test_method (time);
+        }
+      catch (const Test::ServerOverload& )
+        {
+          ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
+          received_expected_exception = 1;
+
+          roundtrip->shutdown ();
+        }
+
+      orb->destroy ();
     }
-  ACE_CATCH(Test::ServerOverload, ov)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
-      received_expected_exception = 1;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
+      ex._tao_print_exception ("");
       return 1;
     }
-  ACE_ENDTRY;
 
   if(!received_expected_exception)
     {

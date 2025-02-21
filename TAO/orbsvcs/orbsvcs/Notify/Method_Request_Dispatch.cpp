@@ -1,24 +1,21 @@
-// $Id$
-
-#include "Method_Request_Dispatch.h"
-
-ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
-
-#include "ProxySupplier.h"
-#include "Consumer.h"
-#include "Admin.h"
-#include "ConsumerAdmin.h"
-#include "EventChannelFactory.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/Method_Request_Dispatch.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Consumer.h"
+#include "orbsvcs/Notify/Admin.h"
+#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "orbsvcs/Notify/EventChannelFactory.h"
 
 #include "tao/debug.h"
-#include "tao/corba.h"
+#include "tao/CDR.h"
 
 #include "ace/OS_NS_stdio.h"
 
-//#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constuct from event
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
@@ -58,14 +55,9 @@ TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
 
 TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch ()
 {
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Destroy TAO_Notify_Method_Request_Dispatch @%@\n"),
-              this));
-#endif
 }
 
-int TAO_Notify_Method_Request_Dispatch::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+int TAO_Notify_Method_Request_Dispatch::execute_i ()
 {
   if (this->proxy_supplier_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
@@ -73,37 +65,37 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->filtering_ == 1)
     {
       TAO_Notify_Admin& parent = this->proxy_supplier_->consumer_admin ();
-      CORBA::Boolean val =  this->proxy_supplier_->check_filters (this->event_,
+      CORBA::Boolean const val = this->proxy_supplier_->check_filters (this->event_,
                                                                   parent.filter_admin (),
-                                                                  parent.filter_operator ()
-                                                                  ACE_ENV_ARG_PARAMETER);
+                                                                  parent.filter_operator ());
 
       if (TAO_debug_level > 1)
-        ACE_DEBUG ((LM_DEBUG, "Proxysupplier %x filter eval result = %d",&this->proxy_supplier_ , val));
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Notify (%P|%t) Proxysupplier %x filter ")
+                    ACE_TEXT ("eval result = %d\n"),
+          &this->proxy_supplier_ , val));
 
       // Filter failed - do nothing.
-      if (val == 0)
+      if (!val)
         return 0;
     }
 
-  ACE_TRY
+  try
     {
       TAO_Notify_Consumer* consumer = this->proxy_supplier_->consumer ();
 
       if (consumer != 0)
         {
-          consumer->deliver (this ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          consumer->deliver (this);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        ACE_TEXT ("TAO_Notify_Method_Request_Dispatch::: error sending event.\n ")
-        );
+        ex._tao_print_exception (
+          ACE_TEXT (
+            "TAO_Notify_Method_Request_Dispatch::: error sending event.\n"));
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -113,8 +105,7 @@ TAO_Notify_Method_Request_Dispatch_Queueable *
 TAO_Notify_Method_Request_Dispatch::unmarshal (
     TAO_Notify::Delivery_Request_Ptr & delivery_request,
     TAO_Notify_EventChannelFactory &ecf,
-    TAO_InputCDR & cdr
-    ACE_ENV_ARG_DECL)
+    TAO_InputCDR & cdr)
 {
   bool ok = true;
   TAO_Notify_Method_Request_Dispatch_Queueable * result = 0;
@@ -130,7 +121,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
       {
         id_path.push_back (id);
         char idbuf[20];
-        ACE_OS::snprintf (idbuf, sizeof(idbuf)-1, "/%d", static_cast<int> (id));
+        ACE_OS::snprintf (idbuf, sizeof(idbuf), "/%d", static_cast<int> (id));
         textpath += idbuf;
       }
       else
@@ -142,41 +133,41 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
     if (ok)
     {
       TAO_Notify_ProxySupplier* proxy_supplier = ecf.find_proxy_supplier (id_path,
-        0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN(0);
+        0);
       if (proxy_supplier != 0)
       {
-        if (DEBUG_LEVEL > 6) ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch reload event for %s\n")
-          , textpath.c_str()
-          ));
+        if (DEBUG_LEVEL > 6)
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                      ACE_TEXT (" reload event for %C\n"),
+                      textpath.c_str()));
         ACE_NEW_NORETURN (result,
           TAO_Notify_Method_Request_Dispatch_Queueable (delivery_request, proxy_supplier, true));
       }
       else
       {
-        TAO_Notify_ProxyConsumer * proxy_consumer = ecf.find_proxy_consumer (id_path, 0 ACE_ENV_ARG_PARAMETER); //@@todo
+        TAO_Notify_ProxyConsumer * proxy_consumer = ecf.find_proxy_consumer (id_path, 0); //@@todo
         if (proxy_consumer == 0)
         {
-          ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch::unmarshal: unknown proxy id %s\n")
-            , textpath.c_str()
-            ));
+          ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                      ACE_TEXT ("::unmarshal: unknown proxy id %C\n"),
+                      textpath.c_str()));
         }
         else
         {
-          ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch::unmarshal: wrong type of proxy id %s\n")
-            , textpath.c_str()
-            ));
+          ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                      ACE_TEXT ("::unmarshal: wrong type of proxy id %C\n"),
+                      textpath.c_str()));
         }
       }
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch::unmarshal: Cant read proxy id path\n")
-        ));
+      ORBSVCS_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                  ACE_TEXT ("::unmarshal: Cant read proxy id path\n")));
     }
   }
   return result;
@@ -199,11 +190,6 @@ TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch
   , TAO_Notify_Method_Request_Queueable (event.get ())
   , event_var_( event )
 {
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Construct Method_Request_Dispatch @%@\n"),
-    this));
-#endif
 }
 
   /// Constuct construct from Delivery Request
@@ -217,42 +203,20 @@ TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch
   , event_var_( request->event () )
 
 {
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Construct unmarshalled Method_Request_Dispatch_Queueable  @%@\n"),
-    this));
-#endif
 }
 
 TAO_Notify_Method_Request_Dispatch_Queueable::~TAO_Notify_Method_Request_Dispatch_Queueable ()
 {
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Destroy TAO_Notify_Method_Request_Dispatch_Queueable @%@\n"),
-    this));
-#endif
 }
 
 int
-TAO_Notify_Method_Request_Dispatch_Queueable::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Dispatch_Queueable::execute ()
 {
-  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->execute_i ();
 }
 
 /*********************************************************************************************************/
 
-TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (
-      const TAO_Notify_Event* event,
-      TAO_Notify_ProxySupplier* proxy_supplier,
-      bool filtering)
-  : TAO_Notify_Method_Request_Dispatch (event, proxy_supplier, filtering)
-{
-#if 0
-    ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Construct Method_Request_Dispatch_No_Copy @%@\n"),
-      this));
-#endif
-}
   /// Constuct construct from another method request
 TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (
       const TAO_Notify_Method_Request_Event & request,
@@ -260,36 +224,25 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_N
       bool filtering)
   : TAO_Notify_Method_Request_Dispatch (request, request.event (), proxy_supplier, filtering)
 {
-#if 0
-    ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Construct Method_Request_Dispatch_No_Copy @%@\n"),
-      this));
-#endif
 }
 
 TAO_Notify_Method_Request_Dispatch_No_Copy:: ~TAO_Notify_Method_Request_Dispatch_No_Copy ()
 {
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Destroy Method_Request_Dispatch_No_Copy @%@\n"),
-    this));
-#endif
 }
 
 int
-TAO_Notify_Method_Request_Dispatch_No_Copy::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Dispatch_No_Copy::execute ()
 {
-  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->execute_i ();
 }
 
 TAO_Notify_Method_Request_Queueable*
-TAO_Notify_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Dispatch_No_Copy::copy ()
 {
-  TAO_Notify_Method_Request_Queueable* request;
+  TAO_Notify_Method_Request_Queueable* request = 0;
 
   TAO_Notify_Event::Ptr event_var (
-    this->event_->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER) );
-  ACE_CHECK_RETURN (0);
+    this->event_->queueable_copy () );
 
   ACE_NEW_THROW_EX (request,
                     TAO_Notify_Method_Request_Dispatch_Queueable (*this, event_var, this->proxy_supplier_.get(), this->filtering_),
@@ -299,3 +252,4 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
   return request;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

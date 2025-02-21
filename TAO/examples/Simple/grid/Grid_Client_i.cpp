@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Grid_Client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
@@ -9,7 +7,7 @@
 // This is the interface program that accesses the remote object
 
 // Constructor.
-Grid_Client_i::Grid_Client_i (void)
+Grid_Client_i::Grid_Client_i ()
   : height_ (0),
     width_ (0),
     setx_ (0),
@@ -21,18 +19,17 @@ Grid_Client_i::Grid_Client_i (void)
 }
 
 //Destructor.
-Grid_Client_i::~Grid_Client_i (void)
+Grid_Client_i::~Grid_Client_i ()
 {
-  ACE_DEBUG ((LM_DEBUG, "Called \n"));
   //no-op
 }
 
 int
 Grid_Client_i::parse_args (int argc,
-                           char *argv[])
+                           ACE_TCHAR *argv[])
 {
   // Parses some of the options that are specific to this example
-  ACE_Get_Opt get_opts (argc, argv, "df:nk:xw:h:p:q:v:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("df:nk:xw:h:p:q:v:"));
 
   int c = 0;
   while ((c = get_opts ()) != -1)
@@ -40,28 +37,28 @@ Grid_Client_i::parse_args (int argc,
       {
       case 'p': // A horizontal position of the grid where
                 // the value is stored
-        setx_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        setx_ = (CORBA::UShort) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'q': // A vertical position of the grid where a
                 // value is stored
-        sety_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        sety_ = (CORBA::UShort) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'w':
-        width_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        width_ = (CORBA::UShort) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'h':
-        height_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        height_ = (CORBA::UShort) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'v':
-        value_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        value_ = (CORBA::UShort) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       }
 
-  if (setx_ == 0 )
+  if (setx_ == 0)
     setx_ = Grid::DEFAULT_LOCATION;
-  if (sety_ == 0 )
+  if (sety_ == 0)
     sety_ = Grid::DEFAULT_LOCATION;
-  if (value_ == 0 )
+  if (value_ == 0)
     value_ = Grid::DEFAULT_VALUE;
   return 0;
 }
@@ -69,74 +66,87 @@ Grid_Client_i::parse_args (int argc,
 int
 Grid_Client_i::run (const char *name,
                     int argc,
-                    char *argv[])
+                    ACE_TCHAR *argv[])
 {
   // Initialize the client.
-  if (client.init (name, argc, argv) == -1)
+  if (client_.init (name, argc, argv) == -1)
     return -1;
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Make the Grid.
-
-      Grid_var grid = client->make_grid (width_,
-                                         height_
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Grid_var grid = client_->make_grid (width_,
+                                          height_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Made the grid succesfully\n"));
+                  ACE_TEXT ("(%P|%t) Made the grid successfully\n")));
 
       // Set a value on the grid
       grid->set (setx_,
                  sety_,
-                 value_
-                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                 value_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Setting a value for the grid\n"));
+                  ACE_TEXT ("(%P|%t) Setting a value for the grid\n")));
 
       CORBA::Long ret_val = grid->get (setx_,
-                                       sety_
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                       sety_);
 
       ACE_ASSERT (ret_val == value_);
 
-      if (client.shutdown () == 1) {
-        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      }
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Changing grid's width from %i to 5\n"),
+                  width_));
 
-      client.orb ()->destroy ();
+      grid->width (5);
+
+      ret_val = grid->get (setx_,
+                           sety_);
+
+      ACE_ASSERT (ret_val == value_);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Changing grid's height from %d to 5\n"),
+                  height_));
+
+      grid->height (5);
+
+      ret_val = grid->get (setx_,
+                           sety_);
+
+      ACE_ASSERT (ret_val == value_);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Destroing the grid\n")));
+
+      grid->destroy ();
+
+      try
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Accessing the grid out of range\n")));
+
+          grid->get (setx_,
+                     sety_);
+        }
+      catch (const Grid::RANGE_ERROR &)
+        {
+          // It's ok.
+        }
+
+      if (client_.do_shutdown () == 1)
+        client_->shutdown ();
+
       ACE_UNUSED_ARG (ret_val);
     }
-  ACE_CATCH (CORBA::UserException, range_ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (range_ex,
-                           "\tFrom get and set grid");
+      ex._tao_print_exception ("Exception in Grid_Client_i::run:");
       return -1;
     }
-  ACE_CATCH (CORBA::SystemException, memex)
-    {
-      ACE_PRINT_EXCEPTION (memex,
-                           "Cannot make grid as Memory exhausted");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Grid_Factory,Grid_Factory_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Client<Grid_Factory,Grid_Factory_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

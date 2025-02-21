@@ -1,55 +1,40 @@
-// $Id$
-
-#include "InterfaceAttrExtension_i.h"
-#include "Repository_i.h"
-#include "InterfaceDef_i.h"
-#include "OperationDef_i.h"
-#include "AttributeDef_i.h"
-#include "ExtAttributeDef_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/InterfaceAttrExtension_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/InterfaceDef_i.h"
+#include "orbsvcs/IFRService/OperationDef_i.h"
+#include "orbsvcs/IFRService/AttributeDef_i.h"
+#include "orbsvcs/IFRService/ExtAttributeDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           InterfaceAttrExtension_i,
-           "$Id$")
-
-
-
 // =====================================================================
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_InterfaceAttrExtension_i::TAO_InterfaceAttrExtension_i (
-    TAO_Repository_i *repo
-  )
+    TAO_Repository_i *repo)
   : TAO_IRObject_i (repo)
 {
 }
 
-TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i (void)
+TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i ()
 {
 }
 
 
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
-TAO_InterfaceAttrExtension_i::describe_ext_interface (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_InterfaceAttrExtension_i::describe_ext_interface ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_ext_interface_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_ext_interface_i ();
 }
 
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
-TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
 {
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *fifd = 0;
   ACE_NEW_RETURN (fifd,
@@ -84,10 +69,18 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
   CORBA::ULong j = 0;
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
 
+  // Store our section key for later restoration after we have
+  // traversed entries for inherited interfaces.
+  ACE_Configuration_Section_Key key_holder = this->section_key_;
+
   // Operations
   TAO_InterfaceDef_i iface (this->repo_);
   iface.section_key (this->section_key_);
   iface.inherited_operations (key_queue);
+
+  // Restore our original section key.
+  //   I am not sure this is needed but it will not hurt.
+  this->section_key (key_holder);
 
   ACE_Configuration_Section_Key ops_key, op_key;
   int status =
@@ -131,13 +124,20 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
       TAO_OperationDef_i op (this->repo_);
       op.section_key (key);
 
-      op.make_description (fifd->operations[i]
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      op.make_description (fifd->operations[i]);
     }
+
+  // Restore our original section key.
+  //   It may have been overwritten by a superclass key as part of the
+  //   make_description() call.
+  this->section_key (key_holder);
 
   // Attributes.
   iface.inherited_attributes (key_queue);
+
+  // Restore our original section key.
+  //   I am not sure this is needed but it will not hurt.
+  this->section_key (key_holder);
 
   ACE_Configuration_Section_Key attrs_key;
   status =
@@ -182,14 +182,16 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
       TAO_ExtAttributeDef_i attr (this->repo_);
       attr.section_key (key);
 
-      attr.fill_description (fifd->attributes[i]
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      attr.fill_description (fifd->attributes[i]);
     }
 
+  // Restore our original section key.
+  //   It may have been overwritten by a superclass key as part of the
+  //   fill_description() call.
+  this->section_key (key_holder);
+
   CORBA::InterfaceDefSeq_var bases =
-    iface.base_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    iface.base_interfaces_i ();
 
   CORBA::ULong length = bases->length ();
   CORBA::RepositoryIdSeq repo_ids (length);
@@ -215,8 +217,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
 
   fifd->base_interfaces = repo_ids;
 
-  fifd->type = iface.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  fifd->type = iface.type_i ();
 
   return retval._retn ();
 }
@@ -229,15 +230,11 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute (
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode,
     const CORBA::ExceptionDefSeq &get_exceptions,
-    const CORBA::ExceptionDefSeq &set_exceptions
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    const CORBA::ExceptionDefSeq &set_exceptions)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtAttributeDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ExtAttributeDef::_nil ());
+  this->update_key ();
 
   return this->create_ext_attribute_i (id,
                                        name,
@@ -245,8 +242,7 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute (
                                        type,
                                        mode,
                                        get_exceptions,
-                                       set_exceptions
-                                       ACE_ENV_ARG_PARAMETER);
+                                       set_exceptions);
 }
 
 CORBA::ExtAttributeDef_ptr
@@ -257,10 +253,7 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode,
     const CORBA::ExceptionDefSeq &get_exceptions,
-    const CORBA::ExceptionDefSeq &set_exceptions
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    const CORBA::ExceptionDefSeq &set_exceptions)
 {
   TAO_Container_i::tmp_name_holder (name);
   ACE_Configuration_Section_Key new_key;
@@ -276,9 +269,7 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "attrs"
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ExtAttributeDef::_nil ());
+                                          "attrs");
 
   // Store the path to the attribute's type definition.
   char *type_path = TAO_IFR_Service_Utils::reference_to_path (type);
@@ -306,14 +297,12 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Attribute,
                                           path.c_str (),
-                                          this->repo_
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ExtAttributeDef::_nil ());
+                                          this->repo_);
 
   CORBA::ExtAttributeDef_var retval =
-    CORBA::ExtAttributeDef::_narrow (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ExtAttributeDef::_nil ());
+    CORBA::ExtAttributeDef::_narrow (obj.in ());
 
   return retval._retn ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

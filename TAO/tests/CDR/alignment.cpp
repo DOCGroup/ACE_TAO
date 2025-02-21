@@ -1,27 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/CDR
-//
-// = FILENAME
-//   alignment.cpp
-//
-// = DESCRIPTION
-//   Verifies that octet sequence marshaling does not affect
-//   marshaling.
-//
-// = AUTHORS
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   alignment.cpp
+ *
+ * Verifies that octet sequence marshaling does not affect
+ * marshaling.
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "tao/CDR.h"
 
 #include "ace/Log_Msg.h"
 
-int main(int, char*[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int status = 0;
 
@@ -62,7 +56,7 @@ int main(int, char*[])
       if (input.read_double (read_dbl) == 0)
         ACE_DEBUG ((LM_DEBUG, "Failure reading double...\n"));
 
-      if (read_dbl != dbl)
+      if (!ACE::is_equal (read_dbl, dbl))
         {
           status = 1;
           ACE_DEBUG ((LM_DEBUG,
@@ -76,13 +70,13 @@ int main(int, char*[])
               ACE_HEX_DUMP ((LM_DEBUG,
                              j->rd_ptr (),
                              j->length (),
-                             "Output CDR stream"));
+                             ACE_TEXT("Output CDR stream")));
             }
           TAO_InputCDR debug (cdr);
           ACE_HEX_DUMP ((LM_DEBUG,
                          debug.rd_ptr (),
                          debug.length (),
-                         "Input CDR stream"));
+                         ACE_TEXT("Input CDR stream")));
         }
     }
 

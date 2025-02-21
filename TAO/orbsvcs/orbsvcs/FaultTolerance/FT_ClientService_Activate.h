@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  * @file FT_ClientService_Activate.h
- *
- * $Id$
  *
  * A concrete implementation of a service callback
  *
@@ -14,7 +14,7 @@
 #define TAO_FT_CLIENTACTIVATE_H
 #include /**/ "ace/pre.h"
 
-#include "FT_ClientORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,6 +22,8 @@
 
 #include "tao/Services_Activate.h"
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Service_Callbacks;
 
@@ -37,32 +39,31 @@ class TAO_Service_Callbacks;
  */
 class TAO_FT_ClientORB_Export TAO_FT_ClientService_Activate : public TAO_Services_Activate
 {
-
 public:
   /// Constructor
-  TAO_FT_ClientService_Activate (void);
+  TAO_FT_ClientService_Activate ();
 
   /// The destructor
-  virtual ~TAO_FT_ClientService_Activate (void);
+  virtual ~TAO_FT_ClientService_Activate ();
 
   /**
    * Create and activate the service callbacks into the orb.
    * This method cannot throw any exception, but it can return a nil
    * object to indicate an error condition.
    */
-  virtual TAO_Service_Callbacks *activate_services (TAO_ORB_Core *orb)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TAO_Service_Callbacks *activate_services (TAO_ORB_Core *orb);
 
   /// Used to force the initialization.
-  static int Initializer (void);
-
+  static int Initializer ();
 };
-
-ACE_STATIC_SVC_DECLARE (TAO_FT_ClientService_Activate)
-ACE_FACTORY_DECLARE (TAO_FT_ClientORB, TAO_FT_ClientService_Activate)
 
 static int
 TAO_FT_Requires_ClientService_Activate = TAO_FT_ClientService_Activate::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_FT_ClientService_Activate)
+ACE_FACTORY_DECLARE (TAO_FT_ClientORB, TAO_FT_ClientService_Activate)
 
 #include /**/ "ace/post.h"
 #endif /*TAO_FT_CLIENTACTIVATE_H*/

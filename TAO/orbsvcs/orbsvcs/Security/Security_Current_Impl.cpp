@@ -1,12 +1,10 @@
 // -*- C++ -*-
+#include "orbsvcs/Security/Security_Current_Impl.h"
 
-#include "Security_Current_Impl.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (Security,
-           SL3_Security_Current_Impl,
-           "$Id$")
-
-
-TAO::Security::Current_Impl::~Current_Impl (void)
+TAO::Security::Current_Impl::~Current_Impl ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

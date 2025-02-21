@@ -4,8 +4,6 @@
 /**
  *  @file   Log_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::Log interface.
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
@@ -32,7 +30,9 @@
 #include "orbsvcs/Log/LogRecordStore.h"
 #include "orbsvcs/DsLogAdminS.h"
 #include "ace/Reactor.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 
@@ -46,9 +46,7 @@ class TAO_LogMgr_i;
  */
 class TAO_Log_Serv_Export TAO_Log_i : public virtual POA_DsLogAdmin::Log
 {
-
 public:
-
   /// Constructor.
   TAO_Log_i (CORBA::ORB_ptr orb,
              TAO_LogMgr_i& logmgr_i,
@@ -60,7 +58,7 @@ public:
   ~TAO_Log_i ();
 
   /// Initlialize the Log.
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void init ();
 
   /**
    * @name DsLogAdmin::Log Methods
@@ -69,122 +67,89 @@ public:
    */
   //@{
   /// Return the factory of the log.
-  DsLogAdmin::LogMgr_ptr my_factory (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  DsLogAdmin::LogMgr_ptr my_factory ();
 
   /// Return the id of the log.
-  DsLogAdmin::LogId id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  DsLogAdmin::LogId id ();
 
   /// Get the list of the QoS properties supported by the log.
   DsLogAdmin::QoSList*
-  get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_log_qos ();
 
   /// Set the list of the QoS properties supported by the log.
-  void set_log_qos (const DsLogAdmin::QoSList & qos
-                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::UnsupportedQoS));
+  void set_log_qos (const DsLogAdmin::QoSList & qos);
 
   /// Get the record life in seconds (0 infinite).
   CORBA::ULong
-  get_max_record_life (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_max_record_life ();
 
   /// Set the record life in seconds (0 infinite).
   void
-  set_max_record_life (CORBA::ULong life
-                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  set_max_record_life (CORBA::ULong life);
 
   /// Get the maximum size in octets.
   CORBA::ULongLong
-  get_max_size (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_max_size ();
 
   /// Set the maximum size in octets.
   void
-  set_max_size (CORBA::ULongLong size
-                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidParam));
+  set_max_size (CORBA::ULongLong size);
 
   /// Get the current size of the log in octets.
   CORBA::ULongLong
-  get_current_size (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_current_size ();
 
   /// Return the number of records in the log.
   CORBA::ULongLong
-  get_n_records (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_n_records ();
 
   /// Get the action to be taken when the log reaches its maximum size.
   DsLogAdmin::LogFullActionType
-  get_log_full_action (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_log_full_action ();
 
   /// Set the action to be taken when the log reaches its maximum size.
   void
-  set_log_full_action (DsLogAdmin::LogFullActionType action
-                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-		     DsLogAdmin::InvalidLogFullAction));
+  set_log_full_action (DsLogAdmin::LogFullActionType action);
 
   /// Get the administrative state of the log.
   DsLogAdmin::AdministrativeState
-  get_administrative_state (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_administrative_state ();
 
   /// Set the administrative state of the log.
   void
-  set_administrative_state (DsLogAdmin::AdministrativeState state
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  set_administrative_state (DsLogAdmin::AdministrativeState state);
 
   /// Get the forwarding state of the log.
   /// @@ Note: is it ok to make this method virtual?
   /// @@@ Of course!  get_forwarding_state() is virtual in the base
   ///     class dictated by the IDL!  -Ossama
   virtual DsLogAdmin::ForwardingState
-  get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_forwarding_state ();
 
   /// Set the forwarding state of the log.
   /// @@ Note: is it ok to make this method virtual?
   void
-    set_forwarding_state (DsLogAdmin::ForwardingState state
-                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_forwarding_state (DsLogAdmin::ForwardingState state);
 
   /// Get the operational state of the log.
   DsLogAdmin::OperationalState
-  get_operational_state (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_operational_state ();
 
   /// Get the log duration
   DsLogAdmin::TimeInterval
-  get_interval (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_interval ();
 
   /// Set the log duration.
   void
-  set_interval (const DsLogAdmin::TimeInterval & interval
-                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidTime,
-                     DsLogAdmin::InvalidTimeInterval));
+  set_interval (const DsLogAdmin::TimeInterval & interval);
 
   /// Get the availability status
   DsLogAdmin::AvailabilityStatus
-  get_availability_status (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_availability_status ();
 
   /// Get the capacity alarm threshold
   DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    get_capacity_alarm_thresholds ();
 
   /**
    * Set the capacity alarm threshold. Threshold values represent
@@ -196,168 +161,141 @@ public:
    */
   void
   set_capacity_alarm_thresholds
-  (const DsLogAdmin::CapacityAlarmThresholdList & threshs
-   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidThreshold));
+  (const DsLogAdmin::CapacityAlarmThresholdList & threshs);
 
   /// Get the weekly scheduling parameters
   DsLogAdmin::WeekMask*
-  get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_week_mask ();
 
   /// Set the weekly scheduling parameters.
   void
-  set_week_mask (const DsLogAdmin::WeekMask & masks
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidTime,
-                     DsLogAdmin::InvalidTimeInterval,
-                     DsLogAdmin::InvalidMask));
+  set_week_mask (const DsLogAdmin::WeekMask & masks);
 
   /// Returns all records in the log that match the given constraint
   /// <c>.
   DsLogAdmin::RecordList*
   query (const char * grammar,
          const char * c,
-         DsLogAdmin::Iterator_out i
-         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint));
+         DsLogAdmin::Iterator_out i);
 
   /// Retrieve <how_many> records from time <from_time> using iterator
   /// <i>.
   DsLogAdmin::RecordList*
   retrieve (DsLogAdmin::TimeT from_time,
             CORBA::Long how_many,
-            DsLogAdmin::Iterator_out i
-            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+            DsLogAdmin::Iterator_out i);
 
   /// Returns the number of records matching constraint <c>.
   CORBA::ULong
   match (const char * grammar,
-         const char * c
-         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint));
+         const char * c);
 
   /// Delete records matching constraint <c>.
   CORBA::ULong
   delete_records (const char * grammar,
-                  const char * c
-                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint));
+                  const char * c);
 
   /// Delete records matching ids in <ids>
   CORBA::ULong
-  delete_records_by_id (const DsLogAdmin::RecordIdList & ids
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  delete_records_by_id (const DsLogAdmin::RecordIdList & ids);
 
 
   /// Write records to the log storage.
   void
-  write_records (const DsLogAdmin::Anys & records
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::LogFull,
-                     DsLogAdmin::LogOffDuty,
-                     DsLogAdmin::LogLocked,
-                     DsLogAdmin::LogDisabled));
+  write_records (const DsLogAdmin::Anys & records);
 
   /// Write a list of record ids to storage. Raises DsLogAdmin::LogFull
   /// and DsLogAdmin::LogLocked
   void
-  write_recordlist (const DsLogAdmin::RecordList & list
-                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::LogFull,
-                     DsLogAdmin::LogOffDuty,
-                     DsLogAdmin::LogLocked,
-                     DsLogAdmin::LogDisabled));
+  write_recordlist (const DsLogAdmin::RecordList & list);
 
   /// Set single record attributes.
   void
   set_record_attribute (DsLogAdmin::RecordId id,
-                        const DsLogAdmin::NVList & attr_list
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidRecordId,
-                     DsLogAdmin::InvalidAttribute));
+                        const DsLogAdmin::NVList & attr_list);
 
   /// Set the attributes of all records that matches the
   /// constraints with same attr_list.
   CORBA::ULong
   set_records_attribute (const char * grammar,
                          const char * c,
-                         const DsLogAdmin::NVList & attr_list
-                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint,
-                     DsLogAdmin::InvalidAttribute));
+                         const DsLogAdmin::NVList & attr_list);
 
   /// Get the attributes of the record with id <id>. Raises
   /// DsLogAdmin::InvalidRecordId
   DsLogAdmin::NVList*
-  get_record_attribute (DsLogAdmin::RecordId id
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidRecordId));
+  get_record_attribute (DsLogAdmin::RecordId id);
 
   /// Causes all pending events to be written to storage. Raises
   /// DsLogAdmin::UnsupportedQos
   void
-  flush (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::UnsupportedQoS));
+  flush ();
   //@}
 
   /// Remove records that have exceeded max_record_life_.
-  void remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void remove_old_records ();
 
 protected:
+  /// Get the availability status
+  /// @note must be called with locks held
+  DsLogAdmin::AvailabilityStatus
+  get_availability_status_i ();
+
   /// Tells if the Log is scheduled to run now.
-  CORBA::Boolean scheduled (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  /// @note must be called with locks held
+  CORBA::Boolean scheduled ();
 
   /// Copy the attributes of the log being passed.
-  void copy_attributes (DsLogAdmin::Log_ptr log
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void copy_attributes (DsLogAdmin::Log_ptr log);
 
   /// Check if threshold reached.
-  void check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void check_capacity_alarm_threshold ();
 
   /// Reset capacity alarm threshold.
-  void reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void reset_capacity_alarm_threshold ();
 
   /// Check that valid threshold values have been given.
   static CORBA::Boolean validate_capacity_alarm_thresholds (
-    const DsLogAdmin::CapacityAlarmThresholdList & threshs
-   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    const DsLogAdmin::CapacityAlarmThresholdList & threshs);
+
+  /// Reset Log QoS
+  void reset_log_qos (const DsLogAdmin::QoSList& qos);
+
+  /// Validate log QoS
+  void validate_log_qos (const DsLogAdmin::QoSList& qos);
+
+  /// Reset Week Mask
+  ///
+  /// Used to initialize internal data structures that represent the
+  /// week mask list when the log service starts, and to reinitialize
+  /// them when they are changed.
+  ///
+  void reset_week_mask (const DsLogAdmin::WeekMask& masks);
+
+  /// Validate Week Mask
+  ///
+  /// Used to check whether week mask is valid.  If not, throws an
+  /// InvalidTime, InvalidTimeInterval, or InvalidMask exception.
+  ///
+  void validate_week_mask (const DsLogAdmin::WeekMask& masks);
 
 protected:
+  /// Reference to the LogMgr servant
+  TAO_LogMgr_i& logmgr_i_;
 
-  /// The factory of the log
+  /// The log's object reference
+  DsLogAdmin::Log_var log_;
+
+  /// The log's factory's object reference
   DsLogAdmin::LogMgr_var factory_;
 
-  /// The id of the log
+  /// The log's id
   DsLogAdmin::LogId logid_;
 
-  /// The operational state of the log
+  /// The log's operational state
   DsLogAdmin::OperationalState op_state_;
 
-  /// The availability of the log
+  /// The log's availability status
   DsLogAdmin::AvailabilityStatus avail_status_;
 
   /// The list of points at which the log should generate events
@@ -367,11 +305,8 @@ protected:
   /// The next capacity alarm threshold.
   CORBA::ULong current_threshold_;
 
-  /// The days of the week that the log should be operational
-  DsLogAdmin::WeekMask weekmask_;
-
   /// A Sequence of the weekly intervals when the log is in operation.
-  TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval> weekly_intervals_;
+  DsLogAdmin::TimeIntervalSeq weekly_intervals_;
 
   /// The QoS type of the log
   DsLogAdmin::QoSType qostype_;
@@ -380,23 +315,89 @@ protected:
   ACE_Reactor *reactor_;
 
   /// The storage for all the records
-  TAO_LogRecordStore*		recordstore_;
+  TAO_LogRecordStore*   recordstore_;
 
   /// For sending Log Generated events.
-  TAO_LogNotification* 		notifier_;
+  TAO_LogNotification*    notifier_;
 
   /// Log Compaction Handler
-  TAO_Log_Compaction_Handler	log_compaction_handler_;
+  TAO_Log_Compaction_Handler  log_compaction_handler_;
 
   /// Log Compaction Interval
-  static const ACE_Time_Value	log_compaction_interval_;
+  static const ACE_Time_Value log_compaction_interval_;
 
   /// Log Flush Handler
-  TAO_Log_Flush_Handler		log_flush_handler_;
+  TAO_Log_Flush_Handler   log_flush_handler_;
 
   /// Log Flush Interval
-  static const ACE_Time_Value	log_flush_interval_;
+  static const ACE_Time_Value log_flush_interval_;
 };
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs);
+
+bool TAO_Log_Serv_Export
+operator==(const DsLogAdmin::WeekMask& rhs,
+           const DsLogAdmin::WeekMask& lhs);
+
+bool TAO_Log_Serv_Export
+operator!=(const DsLogAdmin::WeekMask& rhs,
+           const DsLogAdmin::WeekMask& lhs);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

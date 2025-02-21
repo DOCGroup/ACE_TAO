@@ -1,8 +1,6 @@
 /**
  * @file Server_ORBInitializer.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 
@@ -15,18 +13,14 @@
 
 class Server_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer
-  , public virtual TAO_Local_RefCounted_Object
+  , public virtual ::CORBA::LocalObject
 {
 public:
-  Server_ORBInitializer (void);
+  Server_ORBInitializer ();
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 };
 
 #include /**/ "ace/post.h"

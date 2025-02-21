@@ -1,0 +1,16 @@
+// -*- MPC -*-
+project (*client) : aceexe {
+  exename = client
+  Source_Files {
+    client.cpp
+  }
+}
+
+project (*server) : aceexe {
+  exename = server
+  Source_Files {
+    server.cpp
+    AcceptHandler.cpp
+    ReadHandler.cpp
+  }
+}

@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -73,37 +71,31 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_predefined_type.h"
 #include "ast_visitor.h"
-#include "utl_identifier.h"
 #include "global_extern.h"
+
+#include "utl_identifier.h"
+#include "utl_err.h"
+
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (ast, 
-           ast_predefined_type, 
-           "$Id$")
-
-AST_PredefinedType::AST_PredefinedType (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    pd_pt (PT_long)
-{
-}
+AST_Decl::NodeType const
+AST_PredefinedType::NT = AST_Decl::NT_pre_defined;
 
 AST_PredefinedType::AST_PredefinedType (PredefinedType t,
                                         UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_pre_defined,
               n,
-              I_TRUE),
+              true),
     AST_Type (AST_Decl::NT_pre_defined,
               n),
     AST_ConcreteType (AST_Decl::NT_pre_defined,
                       n),
     pd_pt (t)
 {
-  UTL_ScopedName *new_name = 0;
-  Identifier *id = 0;
+  UTL_ScopedName *new_name = nullptr;
+  Identifier *id = nullptr;
 
   // Generate a new Scoped Name for us such that we belong to the CORBA
   // namespace.
@@ -114,7 +106,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
 
       ACE_NEW (new_name,
                UTL_ScopedName (id,
-                               0));
+                               nullptr));
     }
   else
     {
@@ -123,9 +115,9 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
 
       ACE_NEW (new_name,
                UTL_ScopedName (id,
-                               0));
+                               nullptr));
 
-      UTL_ScopedName *conc_name = 0;
+      UTL_ScopedName *conc_name = nullptr;
 
       switch (this->pt ())
         {
@@ -193,26 +185,53 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
           ACE_NEW (id,
                    Identifier ("ValueBase"));
           break;
+        case AST_PredefinedType::PT_abstract:
+          ACE_NEW (id,
+                   Identifier ("AbstractBase"));
+          break;
         case AST_PredefinedType::PT_pseudo:
           ACE_NEW (id,
                    Identifier (n->last_component ()->get_string ()));
           break;
+        case AST_PredefinedType::PT_uint8:
+          ACE_NEW (id, Identifier ("UInt8"));
+          break;
+        case AST_PredefinedType::PT_int8:
+          ACE_NEW (id, Identifier ("Int8"));
+          break;
         default:
-          ACE_ERROR ((LM_ERROR,
-                      "AST_PredefinedType - bad enum value\n"));
+          idl_global->err ()->misc_error ("AST_PredefinedType: bad enum value", this);
+          // Nothing else to do. We will segfault if we continue, return, or throw Bailout
+          ACE_OS::abort ();
         }
 
       ACE_NEW (conc_name,
                UTL_ScopedName (id,
-                               0));
+                               nullptr));
 
       new_name->nconc (conc_name);
     }
 
+  // The repo id computation in the AST_Decl constructor can't
+  // be easily modified to work for predefined types.
+  ACE_CString repo_id = ACE_CString ("IDL:omg.org/CORBA/")
+                        + id->get_string ()
+                        + ":"
+                        + this->version ();
+  delete [] this->repoID_;
+  size_t len = repo_id.length ();
+  ACE_NEW (this->repoID_,
+           char[len + 1]);
+  this->repoID_[0] = '\0';
+  ACE_OS::sprintf (this->repoID_,
+                   "%s",
+                   repo_id.c_str ());
+  this->repoID_[len] = '\0';
+
   this->set_name (new_name);
 }
 
-AST_PredefinedType::~AST_PredefinedType (void)
+AST_PredefinedType::~AST_PredefinedType ()
 {
 }
 
@@ -227,7 +246,7 @@ AST_PredefinedType::dump (ACE_OSTREAM_TYPE &o)
 
 // Compute the size type of the node in question.
 int
-AST_PredefinedType::compute_size_type (void)
+AST_PredefinedType::compute_size_type ()
 {
   switch (this->pd_pt)
   {
@@ -251,19 +270,15 @@ AST_PredefinedType::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_PredefinedType::destroy (void)
+AST_PredefinedType::destroy ()
 {
-  this->AST_Type::destroy ();
+  this->AST_ConcreteType::destroy ();
 }
 
 // Data accessors.
 
 AST_PredefinedType::PredefinedType
-AST_PredefinedType::pt (void)
+AST_PredefinedType::pt ()
 {
   return this->pd_pt;
 }
-
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_PredefinedType, AST_ConcreteType)
-IMPL_NARROW_FROM_DECL(AST_PredefinedType)

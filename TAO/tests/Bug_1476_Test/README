@@ -1,0 +1,32 @@
+/**
+
+
+
+@page Bug_1476_Test Test README File
+
+	This test is built on the Hello test. The client pings
+the server with either the SYNC_NONE or SYNC_DELAYED_BUFFERING
+applied at the object, orb or thread level. The run_test iterates
+through all the possible permutations.
+
+In each scenario the client should initiate a non-blocking connection.
+Since there is no listening server a blocking connection attempt will
+result in an exception and hense test failure.
+
+NOTES:
+1. Make sure the client always uses a named ORB. In the past
+inconsistencies have been discovered when using the default
+orb.
+2. Make sure the interface names of the two tests always match.
+The signature can change, but the name 'Hello' needs to match as
+its embedded in the IOR.
+3. The IOR should always point locally else the test will take a
+long time to fail.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/

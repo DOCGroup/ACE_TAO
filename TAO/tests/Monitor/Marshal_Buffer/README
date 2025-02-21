@@ -1,0 +1,31 @@
+
+
+This directory contains a simple example of the marshaling
+buffer size monitor. A marshaling buffer is identical, in
+CORBA, with the total size of an output CDR stream, one of
+which is associated with each connection.
+
+In this example, there are 3 processes - a regular server
+and client that send and reply a string as described in
+the IDL interface, and a monitoring client, which gets
+the object reference of the regular client's Monitor::MC
+interface, and queries it repeatedly for the value stored
+in the monitor point associated with the connection's
+output CDR stream.
+
+Note that the regular 'client' in this example also
+plays the role of a server, since it must make its
+Monitor::MC object reference available and listen for
+calls on it.
+
+To run the example, execute the 'run_test.pl' Perl script.
+The server process outputs the length of the strings it
+receives, the client process outputs the length of the
+string replies it gets, and the monitor client outputs
+the size of the marshaling buffer each time it queries.
+
+There are 3 strings passed (and returned) in the execution
+of the example, of length 1k (1024), 2k (2048) and 3k (3072)
+bytes. Notice that, due to alignment and CDR encoding rules,
+the buffer sizes are always slightly larger than the raw
+string length.

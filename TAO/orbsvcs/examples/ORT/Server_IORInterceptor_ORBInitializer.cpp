@@ -1,39 +1,26 @@
-// $Id$
-
 #include "Server_IORInterceptor_ORBInitializer.h"
 #include "Server_IORInterceptor.h"
 #include "tao/ORB_Constants.h"
 
 #include "GatewayC.h"
 
-ACE_RCSID (ORT,
-           Server_IORInterceptor_ORBInitializer,
-           "$Id: ")
-
 void
 Server_IORInterceptor_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    )
 {
 }
 
 void
 Server_IORInterceptor_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
   CORBA::Object_var obj =
-    info->resolve_initial_references ("Gateway_Object_Factory"
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    info->resolve_initial_references ("Gateway_Object_Factory");
 
   /// Narrow it down correctly.
   Gateway::Object_Factory_var gateway_object_factory =
-    Gateway::Object_Factory::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    Gateway::Object_Factory::_narrow (obj.in ());
 
   /// Check for nil reference
   if (CORBA::is_nil (gateway_object_factory.in ()))
@@ -49,11 +36,8 @@ Server_IORInterceptor_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::IORInterceptor_var ior_interceptor = gateway;
 
-  info->add_ior_interceptor (ior_interceptor.in ()
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_ior_interceptor (ior_interceptor.in ());
 }

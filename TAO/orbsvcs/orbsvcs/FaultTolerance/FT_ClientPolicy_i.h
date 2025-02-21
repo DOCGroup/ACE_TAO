@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   FT_ClientPolicy_i.h
- *
- *  $Id$
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
@@ -22,7 +21,9 @@
 #endif /* _MSC_VER */
 
 #include "tao/LocalObject.h"
-#include "FT_ClientORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_FT_Request_Duration_Policy
@@ -39,12 +40,11 @@
  * to keep trying to connect to server object groups under certain
  * conditions.
  */
-class TAO_FT_ClientORB_Export TAO_FT_Request_Duration_Policy
+class TAO_FT_Request_Duration_Policy
   : public FT::RequestDurationPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_FT_Request_Duration_Policy (const TimeBase::TimeT& relative_expiry);
 
@@ -53,27 +53,19 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   /// Returns a copy of <this>.
-  virtual TAO_FT_Request_Duration_Policy *clone (void) const;
+  virtual TAO_FT_Request_Duration_Policy *clone () const;
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TimeBase::TimeT request_duration_policy_value ();
 
-  virtual CORBA::PolicyType policy_type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
@@ -92,12 +84,11 @@ private:
  * If this  policy is set, it enables the client ORB to send
  * heartbeats to the server ORB over the open connections.
  */
-class TAO_FT_ClientORB_Export TAO_FT_Heart_Beat_Policy
+class TAO_FT_Heart_Beat_Policy
   : public FT::HeartbeatPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_FT_Heart_Beat_Policy (const CORBA::Boolean boolean,
                             const TimeBase::TimeT &interval,
@@ -108,34 +99,25 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   /// Returns a copy of <this>.
-  virtual TAO_FT_Heart_Beat_Policy *clone (void) const;
+  virtual TAO_FT_Heart_Beat_Policy *clone () const;
 
   // = The FT::HeartBeatPolicy methods
-  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual FT::HeartbeatPolicyValue heartbeat_policy_value ();
 
-  virtual CORBA::PolicyType policy_type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value,
                        const TimeBase::TimeT &timebase);
 
 private:
-
   // The attributes
   /// <heartbeat_> indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_;
@@ -147,12 +129,14 @@ private:
   TimeBase::TimeT heartbeat_timeout_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "FT_ClientPolicy_i.inl"
+#include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -1,11 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Gateway_IIOP_Factory.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  (jwillemsen@remedy.nl)
- *
  */
 
 #ifndef TAO_EC_GATEWAY_IIOP_FACTORY_H
@@ -22,7 +20,11 @@
 #include "ace/Service_Object.h"
 #include "ace/SString.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ECG_ConsumerEC_Control;
 class TAO_EC_Gateway_IIOP;
@@ -38,18 +40,18 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP_Factory
   : public ACE_Service_Object
 {
 public:
-  TAO_EC_Gateway_IIOP_Factory (void);
-  virtual ~TAO_EC_Gateway_IIOP_Factory (void);
+  TAO_EC_Gateway_IIOP_Factory ();
+  virtual ~TAO_EC_Gateway_IIOP_Factory ();
 
   /// The Service_Object entry points.
   //@{
-  virtual int init (int argc, char* argv[]);
-  virtual int fini (void);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
+  virtual int fini ();
   //@}
 
   /// Helper function to register the Gateway into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   /// Create the consumer event channel control.
   TAO_ECG_ConsumerEC_Control *
@@ -59,16 +61,16 @@ public:
   void destroy_consumerec_control (TAO_ECG_ConsumerEC_Control* x);
 
   /// Accessors to use_ttl flag
-  int use_ttl (void) const;
+  int use_ttl () const;
 
   /// Accessors to use_consumer_proxy_map flag
-  int use_consumer_proxy_map (void) const;
+  int use_consumer_proxy_map () const;
 
 private:
   /// Helper for agrument parsing.  Prints out an error message about
   /// unsupported option value.
-  void unsupported_option_value (const char * option_name,
-                                 const char * option_value);
+  void unsupported_option_value (const ACE_TCHAR * option_name,
+                                 const ACE_TCHAR * option_value);
 
 protected:
   /// Use this ORB to locate global resources.
@@ -96,11 +98,13 @@ protected:
   int use_consumer_proxy_map_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_DECLARE (TAO_EC_Gateway_IIOP_Factory)
 ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_EC_Gateway_IIOP_Factory)
 
 #if defined (__ACE_INLINE__)
-#include "EC_Gateway_IIOP_Factory.i"
+#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

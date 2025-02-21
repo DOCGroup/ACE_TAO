@@ -3,8 +3,6 @@
 /**
  *  @file    Receiver_Stats.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -35,10 +33,10 @@ public:
    * The number of samples is pre-allocated, and cannot changes once
    * the class is initialized.
    */
-  Receiver_Stats (void);
+  Receiver_Stats ();
 
   /// The number of samples received so far
-  ACE_UINT32 samples_count (void) const;
+  ACE_UINT32 samples_count () const;
 
   /// Record one sample.
   void sample (ACE_UINT64 value);
@@ -54,9 +52,9 @@ public:
    * presented in microseconds.
    */
   void dump_results (const ACE_TCHAR *msg,
-		     FILE *file,
+                     FILE *file,
                      ACE_UINT32 scale_factor) const;
- 
+
 private:
   /// The number of samples
   ACE_UINT32 samples_count_;

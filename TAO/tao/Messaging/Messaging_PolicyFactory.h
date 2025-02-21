@@ -4,8 +4,6 @@
 /**
  * @file Messaging_PolicyFactory.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  * @author Ossama Othman <ossama@uci.edu>
  */
@@ -17,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,20 +31,19 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Policy factory for all Messaging related policies.
-class TAO_Messaging_Export TAO_Messaging_PolicyFactory
+class TAO_Messaging_PolicyFactory
   : public virtual PortableInterceptor::PolicyFactory,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any & value
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::PolicyError));
+                                           const CORBA::Any & value);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

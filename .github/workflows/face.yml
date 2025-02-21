@@ -1,0 +1,87 @@
+name: face
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 1 * * SUN'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.feature }}
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/MPC
+      CC: ${{ matrix.CC }}
+      CXX: ${{ matrix.CXX }}
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v4
+    - name: checkout MPC
+      uses: actions/checkout@v4
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+    - name: Add Repo
+      run: |
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
+      if: matrix.Repo != ''
+    - name: Add packages
+      run: |
+        sudo apt-get --yes update
+        sudo apt-get --yes install ${{ matrix.PackageDeps }}
+    - name: create $ACE_ROOT/ace/config.h
+      run: |
+        '#define ACE_FACE_SAFETY_BASE' > ${env:ACE_ROOT}/ace/config.h
+        '#include "ace/config-linux.h"' >> ${env:ACE_ROOT}/ace/config.h
+      shell: pwsh
+    - name: add optional optional macros
+      run: |
+        '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+      if: matrix.optional_macros != ''
+    - name: extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
+        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: add optional optional feature
+      run: |
+        '${{ matrix.optional_feature }}' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      if: matrix.optional_feature != ''
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/ace/ace.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/ace/ace.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+      shell: pwsh
+    - name: Build ace project
+      run: |
+        make -j 6 -C ${env:ACE_ROOT}/ace
+      shell: pwsh
+    - name: Build ACE/tests project
+      run: |
+        make -j 6 -C ${env:ACE_ROOT}/tests
+      shell: pwsh

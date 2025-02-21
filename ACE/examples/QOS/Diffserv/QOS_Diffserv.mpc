@@ -1,0 +1,15 @@
+// -*- MPC -*-
+project(*client) : aceexe, qos, avoids_ace_for_tao {
+  exename = client
+  requires += qos
+  Source_Files {
+    diffserv_test.cpp
+  }
+}
+project(*server) : aceexe, qos {
+  exename = server
+  requires += qos
+  Source_Files {
+    server.cpp
+  }
+}

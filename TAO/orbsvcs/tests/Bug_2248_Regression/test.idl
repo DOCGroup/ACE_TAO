@@ -1,0 +1,6 @@
+interface Simple_Server
+{
+  string remote_call ();
+  string shutdown (in string ior_file);
+  string abort (in string ior_file);
+};

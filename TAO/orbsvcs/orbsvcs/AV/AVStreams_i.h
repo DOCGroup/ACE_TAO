@@ -4,8 +4,6 @@
 /**
  *  @file   AVStreams_i.h
  *
- *  $Id$
- *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
@@ -15,7 +13,18 @@
 #define AVSTREAMS_I_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "orbsvcs/AV/AV_Core.h"
+
+#include "orbsvcs/AV/AV_export.h"
+#include "orbsvcs/CosPropertyS.h"
+#include "orbsvcs/AVStreamsS.h"
+#include "orbsvcs/Property/CosPropertyService_i.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/AV/AV_Core.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/Null_MediaCtrlS.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ATM_Addr.h"
 #include "ace/Containers_T.h"
@@ -28,18 +37,10 @@
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
 
-#include "orbsvcs/AV/AV_export.h"
-#include "orbsvcs/CosPropertyS.h"
-#include "orbsvcs/AVStreamsS.h"
-#include "orbsvcs/Property/CosPropertyService_i.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/AV/AV_Core.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/Null_MediaCtrlS.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
-
 #define FLOWSPEC_MAX 5
 // for the Hash_Map helper classes.
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>  FlowEndPoint_Map;
 typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowEndPoint_var> FlowEndPoint_Map_Entry;
@@ -50,18 +51,14 @@ typedef ACE_Hash_Map_Entry <ACE_CString,TAO_AV_Flow_Handler*> Flow_Handler_Map_E
 typedef ACE_Hash_Map_Iterator <ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map_Iterator;
 
 
-#include "AV_Core.h"
-
 class TAO_AV_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl
 {
 public:
-  AV_Null_MediaCtrl (void);
+  AV_Null_MediaCtrl ();
 
 protected:
-
-  virtual ~AV_Null_MediaCtrl (void);
-
+  virtual ~AV_Null_MediaCtrl ();
 };
 
 /**
@@ -73,80 +70,51 @@ class TAO_AV_Export TAO_Basic_StreamCtrl
   : public virtual POA_AVStreams::Basic_StreamCtrl,
     public virtual TAO_PropertySet
 {
-
 public:
   /// Default Constructor
-  TAO_Basic_StreamCtrl (void);
+  TAO_Basic_StreamCtrl ();
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
-  virtual void stop (const AVStreams::flowSpec &the_spec
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
+  virtual void stop (const AVStreams::flowSpec &the_spec);
 
   /// Start the transfer of data in the stream.
   /// Empty the_spec means apply operation to all flows
-  virtual void start (const AVStreams::flowSpec &the_spec
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
+  virtual void start (const AVStreams::flowSpec &the_spec);
 
   /**
    * Tears down the stream. This will close the connection, and delete
    * the streamendpoint and vdev associated with this stream
    * Empty the_spec means apply operation to all flows
    */
-  virtual void destroy (const AVStreams::flowSpec &the_spec
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
+  virtual void destroy (const AVStreams::flowSpec &the_spec);
 
   /// Changes the QoS associated with the stream
   /// Empty the_spec means apply operation to all flows
   virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                                     const AVStreams::flowSpec &the_spec
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed));
+                                     const AVStreams::flowSpec &the_spec);
 
   /// Used by StreamEndPoint and VDev to inform StreamCtrl of events.
   /// E.g., loss of flow, reestablishment of flow, etc..
-  virtual void push_event (const struct CosPropertyService::Property & the_event
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push_event (const struct CosPropertyService::Property & the_event);
 
   /// Used to control the flow protocol parameters.
   virtual void set_FPStatus (const AVStreams::flowSpec &the_spec,
                              const char *fp_name,
-                             const CORBA::Any &fp_settings
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::FPError));
+                             const CORBA::Any &fp_settings);
 
   /// Not implemented in the light profile, will raise the notsupported
   /// exception
-  virtual CORBA::Object_ptr get_flow_connection (const char *flow_name
-                                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::notSupported));
+  virtual CORBA::Object_ptr get_flow_connection (const char *flow_name);
 
   /// Not implemented in the light profile, will raise the notsupported
   /// exception
   virtual void set_flow_connection (const char *flow_name,
-                                    CORBA::Object_ptr flow_connection
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::notSupported));
+                                    CORBA::Object_ptr flow_connection);
 
 protected:
-
   /// Destructor.
-  virtual ~TAO_Basic_StreamCtrl (void);
+  virtual ~TAO_Basic_StreamCtrl ();
 
 
   /// The Virtual Devices for this stream
@@ -174,9 +142,7 @@ class TAO_AV_Export TAO_Negotiator
 {
 public:
   virtual CORBA::Boolean negotiate (AVStreams::Negotiator_ptr remote_negotiator,
-                                    const AVStreams::streamQoS &qos_spec
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                    const AVStreams::streamQoS &qos_spec);
 };
 
 class TAO_MCastConfigIf;
@@ -185,7 +151,7 @@ class TAO_AV_Export MMDevice_Map_Hash_Key
 {
 public:
   /// default constructor.
-  MMDevice_Map_Hash_Key (void);
+  MMDevice_Map_Hash_Key ();
 
   /// constructor.
   MMDevice_Map_Hash_Key (AVStreams::MMDevice_ptr mmdevice);
@@ -194,7 +160,7 @@ public:
   MMDevice_Map_Hash_Key (const MMDevice_Map_Hash_Key&);
 
   /// destructor.
-  ~MMDevice_Map_Hash_Key (void);
+  ~MMDevice_Map_Hash_Key ();
 
   /// operator== needed by  ACE_Hash_Map_Manager.
   bool operator == (const MMDevice_Map_Hash_Key &hash_key) const;
@@ -204,7 +170,7 @@ public:
                           const MMDevice_Map_Hash_Key &right);
 
   /// hash function for this mmdevice.
-  u_long hash (void) const;
+  u_long hash () const;
 
   static const int hash_maximum_;
 protected:
@@ -221,38 +187,27 @@ class TAO_AV_Export TAO_StreamCtrl
   : public virtual POA_AVStreams::StreamCtrl,
     public virtual TAO_Basic_StreamCtrl
 {
-
 public:
-
   /// Default Constructor
-  TAO_StreamCtrl (void);
+  TAO_StreamCtrl ();
 
   /// virtual destructor.
-  virtual ~TAO_StreamCtrl (void);
+  virtual ~TAO_StreamCtrl ();
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
-  virtual void stop (const AVStreams::flowSpec &the_spec
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
+  virtual void stop (const AVStreams::flowSpec &the_spec);
 
   /// Start the transfer of data in the stream.
   /// Empty the_spec means apply operation to all flows
-  virtual void start (const AVStreams::flowSpec &the_spec
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
+  virtual void start (const AVStreams::flowSpec &the_spec);
 
   /**
    * Tears down the stream. This will close the connection, and delete
    * the streamendpoint and vdev associated with this stream
    * Empty the_spec means apply operation to all flows
    */
-  virtual void destroy (const AVStreams::flowSpec &the_spec
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
+  virtual void destroy (const AVStreams::flowSpec &the_spec);
 
   /**
    * Establish a stream between a_party and b_party,
@@ -264,12 +219,7 @@ public:
   virtual CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party,
                                     AVStreams::MMDevice_ptr b_party,
                                     AVStreams::streamQoS& the_qos,
-                                    const AVStreams::flowSpec& the_flows
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed));
+                                    const AVStreams::flowSpec& the_flows);
 
   /**
    * Establish a connection between two streamendpoints. This can
@@ -279,50 +229,27 @@ public:
   virtual CORBA::Boolean bind (AVStreams::StreamEndPoint_A_ptr a_party,
                                AVStreams::StreamEndPoint_B_ptr b_party,
                                AVStreams::streamQoS &the_qos,
-                               const AVStreams::flowSpec &the_flows
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   AVStreams::streamOpFailed,
-                   AVStreams::noSuchFlow,
-                   AVStreams::QoSRequestFailed));
+                               const AVStreams::flowSpec &the_flows);
 
   virtual void unbind_dev (AVStreams::MMDevice_ptr dev,
-                           const AVStreams::flowSpec & the_spec
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::noSuchFlow));
+                           const AVStreams::flowSpec & the_spec);
 
   /// Unbind the_ep from the stream. Empty the_spec means apply to all flows.
   virtual void unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
-                             const AVStreams::flowSpec &the_spec
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::noSuchFlow));
+                             const AVStreams::flowSpec &the_spec);
 
   /// unbind the stream. Same effect as Basic_StreamCtrl::destroy ()
-  virtual void unbind (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed));
+  virtual void unbind ();
 
   virtual AVStreams::VDev_ptr get_related_vdev (AVStreams::MMDevice_ptr adev,
-                                                AVStreams::StreamEndPoint_out sep
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed));
+                                                AVStreams::StreamEndPoint_out sep);
 
   /// Changes the QoS associated with the stream
   /// Empty the_spec means apply operation to all flows
   virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                                     const AVStreams::flowSpec &the_spec
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed));
+                                     const AVStreams::flowSpec &the_spec);
 
 protected:
-
   struct MMDevice_Map_Entry
   {
     AVStreams::StreamEndPoint_var sep_;
@@ -347,7 +274,6 @@ class TAO_AV_Export TAO_MCastConfigIf
     public virtual TAO_PropertySet
 {
 public:
-
   enum Peer_Interface {VDEV = 0, FLOWENDPOINT=1};
   struct Peer_Info
   {
@@ -359,40 +285,24 @@ public:
   };
 
   /// Default constructor.
-  TAO_MCastConfigIf (void);
+  TAO_MCastConfigIf ();
 
   /// Dtor
-  ~TAO_MCastConfigIf (void);
+  ~TAO_MCastConfigIf ();
 
   virtual CORBA::Boolean set_peer (CORBA::Object_ptr peer,
                                    AVStreams::streamQoS & the_qos,
-                                   const AVStreams::flowSpec & the_spec
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::streamOpFailed));
+                                   const AVStreams::flowSpec & the_spec);
 
-  virtual void configure (const CosPropertyService::Property & a_configuration
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void configure (const CosPropertyService::Property & a_configuration);
 
-  virtual void set_initial_configuration (const CosPropertyService::Properties & initial
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void set_initial_configuration (const CosPropertyService::Properties & initial);
 
   virtual void set_format (const char * flowName,
-                           const char * format_name
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported));
+                           const char * format_name);
 
   virtual void set_dev_params (const char * flowName,
-                               const CosPropertyService::Properties & new_params
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::PropertyException,
-                     AVStreams::streamOpFailed));
+                               const CosPropertyService::Properties & new_params);
 
 protected:
   /// checks whether the flowname is  in the flow_spec.
@@ -417,12 +327,12 @@ class TAO_AV_Export TAO_AV_QoS
 {
 public:
   /// constructor.
-  TAO_AV_QoS (void);
+  TAO_AV_QoS ();
 
   /// constructor taking a stream qos parameter.
   TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
 
-  /// sets the maps with the QoS paramter.
+  /// sets the maps with the QoS parameter.
   int set (AVStreams::streamQoS &stream_qos);
 
   /// gets the flow_qos.
@@ -461,29 +371,25 @@ class TAO_AV_Flow_Handler;
 class TAO_AV_Export TAO_Base_StreamEndPoint
   :public virtual TAO_PropertySet
 {
-
   // @@Naga: Rename this class to TAO_Base_EndPoint since both stream and flowendpoints derive from it.
 public:
-  TAO_Base_StreamEndPoint (void);
-  virtual ~TAO_Base_StreamEndPoint (void);
+  TAO_Base_StreamEndPoint ();
+  virtual ~TAO_Base_StreamEndPoint ();
 
   /// called when streamendpoint is instantiated
-  virtual int handle_open (void);
+  virtual int handle_open ();
 
   /// called when streamendpoint is being destructed
-  virtual int handle_close (void);
+  virtual int handle_close ();
 
   /// Application needs to define this
-  virtual int handle_stop (const AVStreams::flowSpec &the_spec
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual int handle_stop (const AVStreams::flowSpec &the_spec);
 
   /// Application needs to define this
-  virtual int handle_start (const AVStreams::flowSpec &the_spec
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual int handle_start (const AVStreams::flowSpec &the_spec);
 
   /// Application needs to define this
-  virtual int handle_destroy (const AVStreams::flowSpec &the_spec
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec);
 
   /// Application needs to define this
   virtual CORBA::Boolean handle_preconnect (AVStreams::flowSpec &the_spec);
@@ -492,8 +398,7 @@ public:
   virtual CORBA::Boolean handle_postconnect (AVStreams::flowSpec &the_spec);
 
   /// Application needs to define this
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec
-                                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec);
 
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
@@ -510,13 +415,12 @@ public:
   virtual void set_control_flow_handler (const char *flowname,
                                          TAO_AV_Flow_Handler *handler);
 
-  TAO_AV_QoS &qos (void);
+  TAO_AV_QoS &qos ();
 
-  void protocol_object_set (void);
-  int is_protocol_object_set (void);
+  void protocol_object_set ();
+  int is_protocol_object_set ();
 
 protected:
-
   TAO_AV_QoS qos_;
   Flow_Handler_Map flow_handler_map_;
   Flow_Handler_Map control_flow_handler_map_;
@@ -538,141 +442,78 @@ class TAO_AV_Export TAO_StreamEndPoint
   : public virtual POA_AVStreams::StreamEndPoint,
     public virtual TAO_Base_StreamEndPoint
 {
-
 public:
   /// Constructor
-  TAO_StreamEndPoint (void);
+  TAO_StreamEndPoint ();
 
    /// Stop the stream. Empty the_spec means, for all the flows
-  virtual void stop (const AVStreams::flowSpec &the_spec
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
+  virtual void stop (const AVStreams::flowSpec &the_spec);
 
   /// Start the stream, Empty the_spec means, for all the flows
-  virtual void start (const AVStreams::flowSpec &the_spec
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
+  virtual void start (const AVStreams::flowSpec &the_spec);
 
   /// Destroy the stream, Empty the_spec means, for all the flows
-  virtual void destroy (const AVStreams::flowSpec &the_spec
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
+  virtual void destroy (const AVStreams::flowSpec &the_spec);
 
   /// Called by StreamCtrl. responder is the peer to connect to
   virtual CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder,
                                   AVStreams::streamQoS& qos_spec,
-                                  const AVStreams::flowSpec& the_spec
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::streamOpFailed));
+                                  const AVStreams::flowSpec& the_spec);
 
   /// Called by the peer StreamEndPoint. The flow_spec indicates the
   /// flows (which contain transport addresses etc.)
   virtual CORBA::Boolean request_connection (AVStreams::StreamEndPoint_ptr initiator,
                                              CORBA::Boolean is_mcast,
                                              AVStreams::streamQoS &qos,
-                                             AVStreams::flowSpec &the_spec
-                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpDenied,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::FPError));
+                                             AVStreams::flowSpec &the_spec);
 
   /// Change the transport qos on a stream
   virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                                     const AVStreams::flowSpec &the_flows
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed));
+                                     const AVStreams::flowSpec &the_flows);
 
   virtual int change_qos (AVStreams::streamQoS &new_qos,
-                          const AVStreams::flowSpec &the_flows
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                          const AVStreams::flowSpec &the_flows);
 
   /// Used to restrict the set of protocols
-  virtual CORBA::Boolean set_protocol_restriction (const AVStreams::protocolSpec &the_pspec
-                                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean set_protocol_restriction (const AVStreams::protocolSpec &the_pspec);
 
   /// disconnect the flows
-  virtual void disconnect (const AVStreams::flowSpec &the_spec
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::streamOpFailed));
+  virtual void disconnect (const AVStreams::flowSpec &the_spec);
 
   /// Used to control the flow
   virtual void set_FPStatus (const AVStreams::flowSpec &the_spec,
                              const char *fp_name,
-                             const CORBA::Any &fp_settings
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::FPError));
+                             const CORBA::Any &fp_settings);
 
   /// Not implemented in the light profile, throws notsupported
-  virtual CORBA::Object_ptr get_fep (const char *flow_name
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported,
-                     AVStreams::noSuchFlow));
+  virtual CORBA::Object_ptr get_fep (const char *flow_name);
 
   /// Not implemented in the light profile, throws notsupported
-  virtual char * add_fep (CORBA::Object_ptr the_fep
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported,
-                     AVStreams::streamOpFailed));
+  virtual char * add_fep (CORBA::Object_ptr the_fep);
 
   /// Not implemented in the light profile, throws notsupported
-  virtual void remove_fep (const char *fep_name
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported,
-                     AVStreams::streamOpFailed));
+  virtual void remove_fep (const char *fep_name);
 
   /// Used to "attach" a negotiator to the endpoint
-  virtual void set_negotiator (AVStreams::Negotiator_ptr new_negotiator
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void set_negotiator (AVStreams::Negotiator_ptr new_negotiator);
 
   /// Used for public key encryption.
   virtual void set_key (const char *flow_name,
-                        const AVStreams::key & the_key
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                        const AVStreams::key & the_key);
 
   /// Used to set a unique id for packets sent by this streamendpoint
-  virtual void set_source_id (CORBA::Long source_id
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void set_source_id (CORBA::Long source_id);
 
   /// Destructor
-  virtual ~TAO_StreamEndPoint (void);
+  virtual ~TAO_StreamEndPoint ();
 
   CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
-                               AVStreams::flowSpec &the_spec
-                               ACE_ENV_ARG_DECL);
+                               AVStreams::flowSpec &the_spec);
 
 protected:
   /// Helper methods to implement add_fep()
-  char* add_fep_i (AVStreams::FlowEndPoint_ptr fep
-                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported,
-                     AVStreams::streamOpFailed));
-  char* add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep
-                                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported,
-                     AVStreams::streamOpFailed));
+  char* add_fep_i (AVStreams::FlowEndPoint_ptr fep);
+  char* add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep);
 
   /// translate from application level to network level qos.
   int translate_qos (const AVStreams::streamQoS& application_qos,
@@ -714,7 +555,7 @@ protected:
   TAO_AV_FlowSpecSet forward_flow_spec_set;
   TAO_AV_FlowSpecSet reverse_flow_spec_set;
   AVStreams::StreamEndPoint_var peer_sep_;
-  AVStreams::SFPStatus *sfp_status_;
+  const AVStreams::SFPStatus *sfp_status_;
   AVStreams::StreamCtrl_var streamctrl_;
 };
 
@@ -726,43 +567,25 @@ class TAO_AV_Export TAO_StreamEndPoint_A :
   public virtual POA_AVStreams::StreamEndPoint_A,
   public virtual TAO_StreamEndPoint
 {
-
 public:
   /// Constructor
-  TAO_StreamEndPoint_A (void);
+  TAO_StreamEndPoint_A ();
 
   /// Used for ATM-style multicast
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
-                                       AVStreams::flowSpec &the_spec
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::streamOpFailed));
+                                       AVStreams::flowSpec &the_spec);
 
   /// Used for ATM-style multicast
   virtual CORBA::Boolean connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
                                        AVStreams::streamQoS &the_qos,
-                                       const AVStreams::flowSpec &the_flows
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::notSupported));
+                                       const AVStreams::flowSpec &the_flows);
 
   /// Used to remove a multicast leaf
   virtual void disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
-                                const AVStreams::flowSpec &theSpec
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::noSuchFlow,
-                     AVStreams::notSupported));
+                                const AVStreams::flowSpec &theSpec);
 
   /// Destructor
-  virtual ~TAO_StreamEndPoint_A (void);
-
+  virtual ~TAO_StreamEndPoint_A ();
 };
 
 // For backward compatibility.
@@ -781,20 +604,14 @@ class TAO_AV_Export TAO_StreamEndPoint_B :
   //     The "B" side of a streamendpoint
 public:
   /// Constructor
-  TAO_StreamEndPoint_B (void);
+  TAO_StreamEndPoint_B ();
 
   /// Used for internet-style multicast
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
-                                       AVStreams::flowSpec &the_spec
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::FPError));
+                                       AVStreams::flowSpec &the_spec);
 
   /// Destructor
-  virtual ~TAO_StreamEndPoint_B (void);
+  virtual ~TAO_StreamEndPoint_B ();
 };
 
 /**
@@ -806,71 +623,44 @@ class TAO_AV_Export TAO_VDev
   :public virtual TAO_PropertySet,
    public virtual POA_AVStreams::VDev
 {
-
 public:
   /// Default Constructor
-  TAO_VDev (void);
+  TAO_VDev ();
 
   /// Called to tell the vdev who the streamctrl, peer vdev is
   virtual CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                                    AVStreams::VDev_ptr the_peer_dev,
                                    AVStreams::streamQoS &the_qos,
-                                   const AVStreams::flowSpec &the_spec
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::streamOpFailed));
+                                   const AVStreams::flowSpec &the_spec);
 
   /// Used to set the streamctrl and multicast device
   virtual CORBA::Boolean set_Mcast_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                                          AVStreams::MCastConfigIf_ptr a_mcastconfigif,
                                          AVStreams::streamQoS &the_qos,
-                                         const AVStreams::flowSpec &the_spec
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::streamOpFailed));
+                                         const AVStreams::flowSpec &the_spec);
 
   /// Called by the peer VDev to configure the device (catch all)
-  virtual void configure (const CosPropertyService::Property &the_config_mesg
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::PropertyException,
-                     AVStreams::streamOpFailed));
+  virtual void configure (const CosPropertyService::Property &the_config_mesg);
 
   /// Used to set a format on a flowname
   virtual void set_format (const char *flowName,
-                           const char *format_name
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported));
+                           const char *format_name);
 
   /// Used to set device parameters
   virtual void set_dev_params (const char *flowName,
-                               const CosPropertyService::Properties &new_params
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::PropertyException,
-                     AVStreams::streamOpFailed));
+                               const CosPropertyService::Properties &new_params);
 
   /// Called to change QoS of the device
   virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &the_qos,
-                                     const AVStreams::flowSpec &the_spec
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed));
+                                     const AVStreams::flowSpec &the_spec);
 
 protected:
   /// Destructor for a servant should be protected or private.
   /// Use _remove_ref() to delete this servant.
-  virtual ~TAO_VDev (void);
+  virtual ~TAO_VDev ();
 
   /// hook called after set_peer is done to set the media ctrl of the peer vdev.
-  virtual CORBA::Boolean set_media_ctrl (CORBA::Object_ptr media_ctrl
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::Boolean set_media_ctrl (CORBA::Object_ptr media_ctrl);
 
   /// My stream controller
   AVStreams::StreamCtrl_var streamctrl_;
@@ -892,9 +682,7 @@ class TAO_AV_Export TAO_MMDevice
   :public virtual POA_AVStreams::MMDevice,
    public virtual TAO_PropertySet
 {
-
 public:
-
   /// Constructor
   enum MMDevice_Type {MMDEVICE_A = 0,MMDEVICE_B = 1};
   TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
@@ -905,31 +693,20 @@ public:
                                                      AVStreams::streamQoS &the_qos,
                                                      CORBA::Boolean_out met_qos,
                                                      char *&named_vdev,
-                                                     const AVStreams::flowSpec &the_spec
-                                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                                     const AVStreams::flowSpec &the_spec);
 
   /// Can be used to request the MMDevice to create a new StreamCtrl,
   /// and call bind_devs on it
   virtual AVStreams::StreamCtrl_ptr  bind (AVStreams::MMDevice_ptr peer_device,
                                            AVStreams::streamQoS &the_qos,
                                            CORBA::Boolean_out is_met,
-                                           const AVStreams::flowSpec &the_spec
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed));
+                                           const AVStreams::flowSpec &the_spec);
 
   /// Multicast bind
   virtual AVStreams::StreamCtrl_ptr  bind_mcast (AVStreams::MMDevice_ptr first_peer,
                                                  AVStreams::streamQoS &the_qos,
                                                  CORBA::Boolean_out is_met,
-                                                 const AVStreams::flowSpec &the_spec
-                                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::noSuchFlow,
-                     AVStreams::QoSRequestFailed));
+                                                 const AVStreams::flowSpec &the_spec);
 
   /// Called by StreamCtrl to create a "A" type streamandpoint and vdev
   virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester,
@@ -937,14 +714,7 @@ public:
                                                      AVStreams::streamQoS &the_qos,
                                                      CORBA::Boolean_out met_qos,
                                                      char *&named_vdev,
-                                                     const AVStreams::flowSpec &the_spec
-                                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::streamOpDenied,
-                     AVStreams::notSupported,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::noSuchFlow));
+                                                     const AVStreams::flowSpec &the_spec);
 
   /// Called by StreamCtrl to create a "B" type streamandpoint and vdev
   virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester,
@@ -952,57 +722,29 @@ public:
                                                      AVStreams::streamQoS &the_qos,
                                                      CORBA::Boolean_out met_qos,
                                                      char *&named_vdev,
-                                                     const AVStreams::flowSpec &the_spec
-                                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::streamOpDenied,
-                     AVStreams::notSupported,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::noSuchFlow));
+                                                     const AVStreams::flowSpec &the_spec);
 
   /// Remove the StreamEndPoint and the related vdev
   virtual void destroy (AVStreams::StreamEndPoint_ptr the_ep,
-                        const char *vdev_name
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported));
+                        const char *vdev_name);
 
   /// Not supported in the light profile, raises notsupported
-  virtual char * add_fdev (CORBA::Object_ptr the_fdev
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported,
-                     AVStreams::streamOpFailed));
+  virtual char * add_fdev (CORBA::Object_ptr the_fdev);
 
   /// Not supported in the light profile, raises notsupported
-  virtual CORBA::Object_ptr get_fdev (const char *flow_name
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported,
-                     AVStreams::noSuchFlow));
+  virtual CORBA::Object_ptr get_fdev (const char *flow_name);
 
   /// Not supported in the light profile, raises notsupported
-  virtual void remove_fdev (const char *flow_name
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported,
-                     AVStreams::noSuchFlow,
-                     AVStreams::streamOpFailed));
+  virtual void remove_fdev (const char *flow_name);
 
   /// Destructor
-  virtual ~TAO_MMDevice (void);
+  virtual ~TAO_MMDevice ();
 
 protected:
   /// Helper method to implement add_fdev()
-  char* add_fdev_i (AVStreams::FDev_ptr fdev
-                    ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                   AVStreams::notSupported,
-                   AVStreams::streamOpFailed));
+  char* add_fdev_i (AVStreams::FDev_ptr fdev);
 
 protected:
-
   TAO_AV_Endpoint_Strategy *endpoint_strategy_;
 
   /// Count of the number of flows in this MMDevice , used to
@@ -1038,87 +780,53 @@ class TAO_AV_Export TAO_FlowConnection
  : public virtual POA_AVStreams::FlowConnection,
    public virtual TAO_PropertySet
 {
-
 public:
   /// default constructor.
-  TAO_FlowConnection (void);
+  TAO_FlowConnection ();
 
   /// stop this flow.
-  virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void stop ();
 
   /// start this flow.
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void start ();
 
   /// destroy this flow.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   /// modify the QoS for this flow.
-  virtual CORBA::Boolean modify_QoS (AVStreams::QoS & new_qos
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::QoSRequestFailed));
+  virtual CORBA::Boolean modify_QoS (AVStreams::QoS & new_qos);
 
   /// use the specified flow protocol for this flow.
   virtual CORBA::Boolean use_flow_protocol (const char * fp_name,
-                                            const CORBA::Any & fp_settings
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::FPError,
-                     AVStreams::notSupported));
+                                            const CORBA::Any & fp_settings);
 
   /// pushes an event , to be handled by the application.
-  virtual void push_event (const AVStreams::streamEvent & the_event
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push_event (const AVStreams::streamEvent & the_event);
 
 
   /// connect 2 Flow Devices.
   virtual CORBA::Boolean connect_devs (AVStreams::FDev_ptr a_party,
                                        AVStreams::FDev_ptr b_party,
-                                       AVStreams::QoS & the_qos
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::streamOpFailed,
-                     AVStreams::streamOpDenied,
-                     AVStreams::QoSRequestFailed));
+                                       AVStreams::QoS & the_qos);
 
   /// Connect a flow producer and consumer under this flow connection.
   virtual CORBA::Boolean connect (AVStreams::FlowProducer_ptr flow_producer,
                                   AVStreams::FlowConsumer_ptr flow_consumer,
-                                  AVStreams::QoS & the_qos
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::formatMismatch,
-                     AVStreams::FEPMismatch,
-                     AVStreams::alreadyConnected));
+                                  AVStreams::QoS & the_qos);
 
   /// disconnect this flow connection.
-  virtual CORBA::Boolean disconnect (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean disconnect ();
 
   /// adds the producer to this flow connection.
   virtual CORBA::Boolean add_producer (AVStreams::FlowProducer_ptr flow_producer,
-                                       AVStreams::QoS & the_qos
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::alreadyConnected,
-                     AVStreams::notSupported));
+                                       AVStreams::QoS & the_qos);
 
   /// adds a consumer to this flow connection.
   virtual CORBA::Boolean add_consumer (AVStreams::FlowConsumer_ptr flow_consumer,
-                                       AVStreams::QoS & the_qos
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::alreadyConnected));
+                                       AVStreams::QoS & the_qos);
 
   /// drops a flow endpoint from the flow.
-  virtual CORBA::Boolean drop (AVStreams::FlowEndPoint_ptr target
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notConnected));
+  virtual CORBA::Boolean drop (AVStreams::FlowEndPoint_ptr target);
 
   int set_mcast_addr (ACE_CString addr,u_short port);
   void set_protocol (const char *protocol);
@@ -1153,11 +861,9 @@ class TAO_AV_Export TAO_FlowEndPoint :
   public virtual POA_AVStreams::FlowEndPoint,
   public virtual TAO_Base_StreamEndPoint
 {
-
 public:
-
   ///default constructor.
-  TAO_FlowEndPoint (void);
+  TAO_FlowEndPoint ();
 
   TAO_FlowEndPoint (const char *flowname,
                     AVStreams::protocolSpec &protocols,
@@ -1176,95 +882,58 @@ public:
                                    TAO_AV_Protocol_Object *object);
 
   /// lock the flow endpoint for a particular flow.
-  virtual CORBA::Boolean lock (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean lock ();
 
   /// unlock the flow endpoint for subsequent use.
-  virtual void unlock (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void unlock ();
 
 
   /// destroy this flow.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   /// get method for the related streamendpoint under which this
   /// flowendpoint is.
-  virtual AVStreams::StreamEndPoint_ptr related_sep(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual AVStreams::StreamEndPoint_ptr related_sep();
 
   /// set method for the related streamendpoint under which this
   /// flowendpoint is.
-  virtual void related_sep (AVStreams::StreamEndPoint_ptr related_sep
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void related_sep (AVStreams::StreamEndPoint_ptr related_sep);
 
-  virtual AVStreams::FlowConnection_ptr related_flow_connection(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual AVStreams::FlowConnection_ptr related_flow_connection();
 
   // accessor for the related flow connection attribute.
 
   /// set method for the related flow connection attribute.
-  virtual void related_flow_connection (AVStreams::FlowConnection_ptr related_flow_connection
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void related_flow_connection (AVStreams::FlowConnection_ptr related_flow_connection);
 
   /// returns the other flowendpoint to which this is connected.
-  virtual AVStreams::FlowEndPoint_ptr get_connected_fep (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notConnected,
-                     AVStreams::notSupported));
+  virtual AVStreams::FlowEndPoint_ptr get_connected_fep ();
 
   //// use the specified flow protocol.
   virtual CORBA::Boolean use_flow_protocol (const char * fp_name,
-                                            const CORBA::Any & fp_settings
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::FPError,
-                     AVStreams::notSupported));
+                                            const CORBA::Any & fp_settings);
 
   /// sets the data format.
-  virtual void set_format (const char * format
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported));
+  virtual void set_format (const char * format);
 
   /// sets the device parameters.
-  virtual void set_dev_params (const CosPropertyService::Properties & new_settings
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::PropertyException,
-                     AVStreams::streamOpFailed));
+  virtual void set_dev_params (const CosPropertyService::Properties & new_settings);
 
   /// sets the list of protocols to be used.
-  virtual void set_protocol_restriction (const AVStreams::protocolSpec & the_spec
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::notSupported));
+  virtual void set_protocol_restriction (const AVStreams::protocolSpec & the_spec);
 
   /// checks whether the passed flowendpoint is compatible with this.
-  virtual CORBA::Boolean is_fep_compatible (AVStreams::FlowEndPoint_ptr fep
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::formatMismatch,
-                     AVStreams::deviceQosMismatch));
+  virtual CORBA::Boolean is_fep_compatible (AVStreams::FlowEndPoint_ptr fep);
 
   /// sets the peer flowendpoint.
   virtual CORBA::Boolean set_peer (AVStreams::FlowConnection_ptr the_fc,
                                    AVStreams::FlowEndPoint_ptr the_peer_fep,
-                                   AVStreams::QoS & the_qos
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::QoSRequestFailed,
-                     AVStreams::streamOpFailed));
+                                   AVStreams::QoS & the_qos);
 
   /// sets the multicast peer flowendpoint, not implemented.
   virtual CORBA::Boolean set_Mcast_peer (AVStreams::FlowConnection_ptr the_fc,
                                          AVStreams::MCastConfigIf_ptr a_mcastconfigif,
-                                         AVStreams::QoS & the_qos
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::QoSRequestFailed));
+                                         AVStreams::QoS & the_qos);
 
 
   /**
@@ -1274,23 +943,13 @@ public:
    */
   virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
                                           const char * address,
-                                          const char * use_flow_protocol
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToConnect,
-                     AVStreams::FPError,
-                     AVStreams::QoSRequestFailed)) = 0;
+                                          const char * use_flow_protocol) = 0;
 
   /// connect to the peer endpoint.
   virtual CORBA::Boolean connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
                                             AVStreams::QoS & the_qos,
                                             const char * address,
-                                            const char * use_flow_protocol
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToConnect,
-                     AVStreams::FPError,
-                     AVStreams::QoSRequestFailed));
+                                            const char * use_flow_protocol);
 
   /**
    * This should be implemented in both the FlowProducer and consumer and hence is
@@ -1300,24 +959,14 @@ public:
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
                                AVStreams::FlowEndPoint_ptr peer,
-                               char *& flowProtocol
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToListen,
-                     AVStreams::FPError,
-                     AVStreams::QoSRequestFailed)) = 0;
+                               char *& flowProtocol) = 0;
 
   /// listen request from the peer.
   virtual char * go_to_listen_i (TAO_FlowSpec_Entry::Role role,
                                  AVStreams::QoS & the_qos,
                                  CORBA::Boolean is_mcast,
                                  AVStreams::FlowEndPoint_ptr peer,
-                                 char *& flowProtocol
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToListen,
-                     AVStreams::FPError,
-                     AVStreams::QoSRequestFailed));
+                                 char *& flowProtocol);
 
 
 protected:
@@ -1347,6 +996,12 @@ protected:
   CosPropertyService::Properties dev_params_;
   TAO_AV_FlowSpecSet flow_spec_set_;
   CORBA::String_var reverse_channel_;
+
+#if defined (ACE_WIN32_VC14)
+  // Workaround for connect issue 1577211
+  TAO_FlowEndPoint (const TAO_FlowEndPoint &) = delete;
+  TAO_FlowEndPoint &operator= (const TAO_FlowEndPoint &) = delete;
+#endif
 };
 
 class TAO_AV_Export TAO_FlowProducer:
@@ -1355,7 +1010,7 @@ class TAO_AV_Export TAO_FlowProducer:
 {
 public:
   /// default constructor
-  TAO_FlowProducer (void);
+  TAO_FlowProducer ();
 
   TAO_FlowProducer (const char *flowname,
                     AVStreams::protocolSpec protocols,
@@ -1368,61 +1023,36 @@ public:
    * UDP if the producer is listening and the consumer connects (logically) then the producer needs to
    * know the reverse channel on its peer fep to send data to.
    */
-  virtual char * get_rev_channel (const char * pcol_name
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * get_rev_channel (const char * pcol_name);
 
   /// stop this flow, to be overridden by the application.
-  virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void stop ();
 
   /// start this flow, to be overridden by the application.
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void start ();
 
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
                                AVStreams::FlowEndPoint_ptr peer,
-                               char *& flowProtocol
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToListen,
-                     AVStreams::FPError,
-                     AVStreams::QoSRequestFailed));
+                               char *& flowProtocol);
 
   virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
                                           const char * address,
-                                          const char * use_flow_protocol
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToConnect,
-                     AVStreams::FPError,
-                     AVStreams::QoSRequestFailed));
+                                          const char * use_flow_protocol);
 
   /// connect to the multicast address, not implemented.
   virtual char * connect_mcast (AVStreams::QoS & the_qos,
                                 CORBA::Boolean_out is_met,
                                 const char * address,
-                                const char * use_flow_protocol
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToConnect,
-                     AVStreams::notSupported,
-                     AVStreams::FPError,
-                     AVStreams::QoSRequestFailed));
-
+                                const char * use_flow_protocol);
 
 
   /// sets the public key  to be used for encryption of the data.
-  virtual void set_key (const AVStreams::key & the_key
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void set_key (const AVStreams::key & the_key);
 
   /// sets the source id of this flow producer so that it can be used
   /// to distinguish this producer from others in the multicast case.
-  virtual void set_source_id (CORBA::Long source_id
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void set_source_id (CORBA::Long source_id);
 
 protected:
   /// source id of this producer.
@@ -1436,38 +1066,26 @@ class TAO_AV_Export TAO_FlowConsumer :
 {
 public:
   /// default constructor.
-  TAO_FlowConsumer (void);
+  TAO_FlowConsumer ();
 
   TAO_FlowConsumer (const char *flowname,
                     AVStreams::protocolSpec protocols,
                     const char *format);
 
   /// stop this flow, to be overridden by the application.
-  virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void stop ();
 
   /// start this flow, to be overridden by the application.
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void start ();
 
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
                                AVStreams::FlowEndPoint_ptr peer,
-                               char *& flowProtocol
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToListen,
-                     AVStreams::FPError,
-                     AVStreams::QoSRequestFailed));
+                               char *& flowProtocol);
 
   virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
                                           const char * address,
-                                          const char * use_flow_protocol
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::failedToConnect,
-                     AVStreams::FPError,
-                     AVStreams::QoSRequestFailed));
+                                          const char * use_flow_protocol);
 };
 
 /**
@@ -1479,54 +1097,34 @@ public:
 class TAO_AV_Export TAO_MediaControl
   :public virtual POA_AVStreams::MediaControl
 {
-
 public:
   /// default constructor
-  TAO_MediaControl (void);
+  TAO_MediaControl ();
 
   virtual AVStreams::Position get_media_position (AVStreams::PositionOrigin an_origin,
-                                                  AVStreams::PositionKey a_key
-                                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::MediaControl::PostionKeyNotSupported)) =0;
+                                                  AVStreams::PositionKey a_key) = 0;
 
-  virtual void set_media_position (const AVStreams::Position & a_position
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::MediaControl::PostionKeyNotSupported,
-                     AVStreams::InvalidPosition)) =0;
+  virtual void set_media_position (const AVStreams::Position & a_position) = 0;
 
-  virtual void start (const AVStreams::Position & a_position
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::InvalidPosition)) =0;
+  virtual void start (const AVStreams::Position & a_position) = 0;
 
-  virtual void pause (const AVStreams::Position & a_position
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::InvalidPosition)) =0;
+  virtual void pause (const AVStreams::Position & a_position) = 0;
 
-  virtual void resume (const AVStreams::Position & a_position
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::InvalidPosition)) =0;
+  virtual void resume (const AVStreams::Position & a_position) = 0;
 
-  virtual void stop (const AVStreams::Position & a_position
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::InvalidPosition)) =0;
-
+  virtual void stop (const AVStreams::Position & a_position) = 0;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "Transport.h"
+#include "orbsvcs/AV/Transport.h"
 
 #if defined (__ACE_INLINE__)
 #include "tao/debug.h"
-#include "AVStreams_i.i"
+#include "orbsvcs/AV/AVStreams_i.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "Flows_T.h"
+#include "orbsvcs/AV/Flows_T.h"
 
 #include /**/ "ace/post.h"
 #endif /* AVSTREAMS_I_H */

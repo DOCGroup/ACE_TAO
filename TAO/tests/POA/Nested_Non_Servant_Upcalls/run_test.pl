@@ -2,20 +2,24 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("Nested_Non_Servant_Upcalls");
-}
-else {
-    $T = new PerlACE::Process ("Nested_Non_Servant_Upcalls");
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
 }
 
-$test = $T->SpawnWaitKill (60);
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+$SV = $server->CreateProcess ("Nested_Non_Servant_Upcalls", "-ORBdebuglevel $debug_level");
+
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";

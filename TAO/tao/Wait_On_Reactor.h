@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Wait_On_Reactor.h
- *
- *  $Id$
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
@@ -21,31 +19,36 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Wait_On_Reactor
  *
- * @brief Wait on the Reactor. Happens in s Single Threaded client
- * environment.
- *
+ * Wait on the Reactor. Happens in a single threaded client environment.
  */
-class TAO_Export TAO_Wait_On_Reactor : public TAO_Wait_Strategy
+class TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {
-
 public:
   /// Constructor.
-  TAO_Wait_On_Reactor (TAO_Transport *transport);
+  explicit TAO_Wait_On_Reactor (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_On_Reactor (void);
+  ~TAO_Wait_On_Reactor () override = default;
 
-  // = Documented in TAO_Wait_Strategy.
+  /*! @copydoc TAO_Wait_Strategy::wait() */
+  int wait (ACE_Time_Value *max_wait_time, TAO_Synch_Reply_Dispatcher &rd) override;
 
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    TAO_Synch_Reply_Dispatcher &rd);
-  virtual int register_handler (void);
-  virtual bool non_blocking (void) const;
-  virtual bool can_process_upcalls (void) const;
+  /*! @copydoc TAO_Wait_Strategy::register_handler() */
+  int register_handler () override;
+
+  /*! @copydoc TAO_Wait_Strategy::non_blocking() */
+  bool non_blocking () const override;
+
+  /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
+  bool can_process_upcalls () const override;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

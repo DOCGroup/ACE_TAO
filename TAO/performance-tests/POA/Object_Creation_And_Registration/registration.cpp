@@ -1,28 +1,22 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/POA/Object_Creation_And_Registration
-//
-// = FILENAME
-//    registration.cpp
-//
-// = DESCRIPTION
-//
-//    This test is used to measure the time it takes to register and
-//    activate an object in the POA.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    registration.cpp
+ *
+ *  This test is used to measure the time it takes to register and
+ *  activate an object in the POA.
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Truncate.h"
 
 //
 // The following macros help take a very precise look into the
@@ -67,9 +61,12 @@ inline int QuantifyStopRecordingData ()
 #endif /* ACE_WIN32 */
 #endif /* USING_QUANTIFY */
 
+/**
+ * @class test_i
+ *
+ * @brief Oversimplified servant class
+ */
 class test_i : public POA_test
-  // = TITLE
-  //     Oversimplified servant class
 {
 };
 
@@ -78,9 +75,9 @@ static int measure_reverse_map_effectiveness = 0;
 static u_long iterations = 1000;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:r");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:r"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -128,10 +125,10 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
       double tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\titerations\t = %d, \n"
-                  "\treal_time\t = %0.06f ms, \n"
-                  "\tuser_time\t = %0.06f ms, \n"
-                  "\tsystem_time\t = %0.06f ms, \n"
+                  "\titerations\t = %d,\n"
+                  "\treal_time\t = %0.06f ms,\n"
+                  "\tuser_time\t = %0.06f ms,\n"
+                  "\tsystem_time\t = %0.06f ms,\n"
                   "\t%0.00f calls/second\n",
                   iterations,
                   elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
@@ -141,7 +138,7 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
     }
   else
     ACE_ERROR ((LM_ERROR,
-                "\tNo time stats printed.  Zero iterations or error ocurred.\n"));
+                "\tNo time stats printed.  Zero iterations or error occurred.\n"));
 }
 
 
@@ -172,7 +169,7 @@ reverse_map_effectiveness (test_i *servants)
   // Calculate the effectiveness of the hash.
   for (i = 0; i < iterations; i++)
     {
-      u_long hash_index = u_long (&servants[i]) % active_object_map_size;
+      u_long hash_index = ACE_Utils::truncate_cast<u_long> ((intptr_t)&servants[i]) % active_object_map_size;
       hash_counter[hash_index]++;
     }
 
@@ -210,7 +207,7 @@ public:
       }
   }
 
-  ~stats (void)
+  ~stats ()
   {
     if (this->quantify_)
       {
@@ -228,8 +225,7 @@ public:
     this->timer_.elapsed_time (elapsed_time);
 
     // compute average time.
-    ACE_DEBUG ((LM_DEBUG,
-                "\n%s stats...\n",
+    ACE_DEBUG ((LM_DEBUG, "\n%C stats...\n",
                 this->test_name_));
     print_stats (elapsed_time);
   }
@@ -242,8 +238,7 @@ private:
 };
 
 void
-child_poa_testing (PortableServer::POA_ptr root_poa
-                   ACE_ENV_ARG_DECL)
+child_poa_testing (PortableServer::POA_ptr root_poa)
 {
   // Policies for the child POA.
   CORBA::PolicyList policies (1);
@@ -251,17 +246,13 @@ child_poa_testing (PortableServer::POA_ptr root_poa
 
   // Id Assignment Policy
   policies[0] =
-    root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
   // Create the child POA under the RootPOA.
   PortableServer::POA_var child_poa =
     root_poa->create_POA ("child POA",
                           PortableServer::POAManager::_nil (),
-                          policies
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                          policies);
 
   // Create an array of servants
   test_i *servants =
@@ -298,9 +289,7 @@ child_poa_testing (PortableServer::POA_ptr root_poa
 
         objects[i] =
           child_poa->create_reference_with_id (object_ids[i].in (),
-                                               "IDL:test:1.0"
-                                               ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+                                               "IDL:test:1.0");
       }
   }
 
@@ -313,9 +302,7 @@ child_poa_testing (PortableServer::POA_ptr root_poa
     for (i = 0; i < iterations; i++)
       {
         child_poa->activate_object_with_id (object_ids[i].in (),
-                                            &servants[i]
-                                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+                                            &servants[i]);
       }
   }
 
@@ -327,9 +314,7 @@ child_poa_testing (PortableServer::POA_ptr root_poa
 
     for (i = 0; i < iterations; i++)
       {
-        child_poa->deactivate_object (object_ids[i].in ()
-                                      ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        child_poa->deactivate_object (object_ids[i].in ());
       }
   }
 
@@ -340,33 +325,23 @@ child_poa_testing (PortableServer::POA_ptr root_poa
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA"
-                                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       // Create an array of servants
       test_i *servants =
@@ -395,8 +370,10 @@ main (int argc, char **argv)
 
         for (i = 0; i < iterations; i++)
           {
-            objects[i] = servants[i]._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            PortableServer::ObjectId_var id =
+              root_poa->activate_object (&servants[i]);
+            CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+            objects[i] = test::_narrow (object.in ());
           }
       }
 
@@ -407,35 +384,26 @@ main (int argc, char **argv)
 
         for (i = 0; i < iterations; i++)
           {
-            object_ids[i] = root_poa->servant_to_id (&servants[i]
-                                                     ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            object_ids[i] = root_poa->servant_to_id (&servants[i]);
           }
       }
 
       // Create the child POA.
-      child_poa_testing (root_poa.in ()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      child_poa_testing (root_poa.in ());
 
       // Destroy RootPOA.
-      root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
 
       // Cleanup
       delete[] object_ids;
       delete[] objects;
       delete[] servants;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

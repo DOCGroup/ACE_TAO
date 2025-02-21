@@ -1,4 +1,4 @@
-$Id$
+
 
 This is a simple CORBA example that has a module Bank with two
 interfaces Account and AccountManager.  The Account interface has
@@ -107,8 +107,3 @@ The client executes the following tests :
    more than the current balance. The server throws an exception which is
    passed to the client and the client displays the reason for the
    exception.
-
-
-
-
-

@@ -1,0 +1,50 @@
+
+
+This is a collection of tests for the refactoring of the Service Configurator.
+The following executables are self-sufficient test suites:
+
+These tests require ACE_wrappers/tests/Test_Output.
+
+test-bunch
+
+  A collection of miscellaneous tests for
+  * (testCompatibility) Compatibility of the new interfaces with the old;
+  * (testCommandLineDirectives) Processing of the command-line directives;
+  * (testOpenDynamicServices) Loading dynamic services in a local repository;
+  * (testORBInitializer_Registry) Loading the ORBInitializer_Registry locally;
+  * (testTSSGestalt) Test the helper components used to implement the
+    temporary substitution of the repository currently used as "global" for the
+    sake of registering static services, which are dependent on a dynamic
+    service;
+
+test-dependency
+
+  * Tests the working of the ACE_Dynamic_Service_Dependency class;
+
+test-new-cfg
+
+  *
+
+test-orb-service
+
+  * Loading a dynamic service, which initializes its own ORB;
+
+test-reusing-globals
+
+  * If all default-constructor-created Service Config instances refer to the
+    The One Global Configuration;
+
+test-separation
+
+  * Services registered with separate repositories must remain separate
+    and inaccessible through anyone but the one they were registered with
+
+test-simple
+
+  * Dynamic services loading through the new interfaces;
+
+test-too-many
+
+  * Testing the size limits of a gestalt
+
+The executables can be run independently, or together using the run_test.pl

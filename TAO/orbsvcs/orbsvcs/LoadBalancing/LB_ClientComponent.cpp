@@ -1,12 +1,10 @@
-#include "LB_ClientComponent.h"
-#include "LB_ClientORBInitializer.h"
+#include "orbsvcs/LoadBalancing/LB_ClientComponent.h"
+#include "orbsvcs/LoadBalancing/LB_ClientORBInitializer.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (LoadBalancing,
-           LB_ClientComponent,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_LB_ClientComponent::init (int /* argc */, ACE_TCHAR * /* argv */[])
@@ -15,16 +13,15 @@ TAO_LB_ClientComponent::init (int /* argc */, ACE_TCHAR * /* argv */[])
 }
 
 int
-TAO_LB_ClientComponent::fini (void)
+TAO_LB_ClientComponent::fini ()
 {
   return 0;
 }
 
 int
-TAO_LB_ClientComponent::register_orb_initializer (void)
+TAO_LB_ClientComponent::register_orb_initializer ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Register the LB_ClientComponent ORB initializer.
       PortableInterceptor::ORBInitializer_ptr tmp;
@@ -35,26 +32,22 @@ TAO_LB_ClientComponent::register_orb_initializer (void)
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       PortableInterceptor::ORBInitializer_var initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (initializer.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to register LB_ClientComponent ORB "
-                           "initializer.");
+      ex._tao_print_exception (
+        "Unable to register LB_ClientComponent ORB ""initializer.");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_LB_ClientComponent,
                        ACE_TEXT ("LB_ClientComponent"),

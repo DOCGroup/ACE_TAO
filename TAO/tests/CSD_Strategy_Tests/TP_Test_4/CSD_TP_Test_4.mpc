@@ -1,0 +1,19 @@
+// -*- MPC -*-
+project(*Server): csd_tp_test_exe_c {
+  exename=server_main
+
+  Source_Files {
+    ServerApp.cpp
+    server_main.cpp
+  }
+}
+
+project(*Client): csd_tp_test_exe_c {
+  exename=client_main
+
+  Source_Files {
+    ClientApp.cpp
+    client_main.cpp
+  }
+}
+

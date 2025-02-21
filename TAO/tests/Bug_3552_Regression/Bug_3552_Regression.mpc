@@ -1,0 +1,20 @@
+// -*- MPC -*-
+project(*IDL): taoidldefaults, anytypecode {
+  idlflags += -SS
+  IDL_Files {
+    struct.idl
+  }
+  custom_only = 1
+}
+
+project(*CDRTest): taoclient, anytypecode, codecfactory {
+  after += *IDL
+  exename = check
+
+  Source_Files {
+    structC.cpp
+    check.cpp
+  }
+  IDL_Files {
+  }
+}

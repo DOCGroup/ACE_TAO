@@ -4,8 +4,6 @@
 /**
  * @file IORInterceptor.h
  *
- * $Id$
- *
  * Implementation header for the IOR test interceptor.
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
@@ -42,12 +40,11 @@
  */
 class IORInterceptor
   : public virtual PortableInterceptor::IORInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
-  IORInterceptor (void);
+  IORInterceptor ();
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -58,51 +55,27 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void components_established (
-      PortableInterceptor::IORInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void adapter_manager_state_changed (
-      PortableInterceptor::AdapterManagerId id,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void adapter_state_changed (
-      const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::IORInfo_ptr info);
   //@}
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~IORInterceptor (void);
+  ~IORInterceptor ();
 
 private:
-
   /// IORInterceptor successfully called and executed.
   bool success_;
-
 };
 
 #if defined(_MSC_VER)

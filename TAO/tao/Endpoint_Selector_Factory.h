@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Endpoint_Selector_Factory.h
- *
- *  $Id$
  *
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
@@ -18,20 +16,20 @@
 #define TAO_ENDPOINT_SELECTOR_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
 #include "ace/Service_Object.h"
 
-#include "tao/TAO_Export.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  class Environment;
-
   class Exception;
 }
 
@@ -46,7 +44,7 @@ class TAO_Invocation_Endpoint_Selector;
  * @brief Factory for initializing <Endpoint_Selection_State> and
  * obtaining appropriate <Invocation_Endpoint_Selector>.
  *
- * Used by Invocation classes to intialize its endpoint selection
+ * Used by Invocation classes to initialize its endpoint selection
  * strategy and state based on the effective policies.
  * Endpoint selection strategies are stateless objects - all the
  * state they need is contained by Invocation in
@@ -61,15 +59,14 @@ class TAO_Export TAO_Endpoint_Selector_Factory
 {
 public:
   /// Destructor.
-  virtual ~TAO_Endpoint_Selector_Factory (void);
+  virtual ~TAO_Endpoint_Selector_Factory ();
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (
-              ACE_ENV_SINGLE_ARG_DECL) = 0;
-
-
+  virtual TAO_Invocation_Endpoint_Selector *get_selector () = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_ENDPOINT_SELECTOR_FACTORY_H */

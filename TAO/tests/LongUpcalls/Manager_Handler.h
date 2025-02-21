@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef LONGUPCALLS_MANAGER_HANDLER_H
 #define LONGUPCALLS_MANAGER_HANDLER_H
@@ -17,11 +14,8 @@ public:
   // Constructor
 
   // = The skeleton methods
-  virtual void start_workers (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void start_workers_excep (Test::AMI_ManagerExceptionHolder*
-                                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void start_workers ();
+  virtual void start_workers_excep (::Messaging::ExceptionHolder *holder);
 
 private:
   Test::Manager_var manager_;

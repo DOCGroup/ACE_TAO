@@ -4,8 +4,6 @@
 /**
  *  @file    Upcall_Wrapper.h
  *
- *  $Id$
- *
  *  @author Ossama Othman
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
@@ -17,16 +15,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
-#ifndef ACE_LACKS_PRAGMA_ONCE
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* !ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
-#include "ace/CORBA_macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ServantBase;
 class TAO_ServerRequest;
@@ -38,15 +36,15 @@ namespace PortableServer
   typedef ::TAO_ServantBase ServantBase;
 }
 
-namespace CORBA
-{
-  class Environment;
-}
-
 namespace TAO
 {
   class Argument;
   class Upcall_Command;
+
+  namespace Portable_Server
+  {
+    class Servant_Upcall;
+  }
 
   /**
    * @class Upcall_Wrapper
@@ -57,7 +55,6 @@ namespace TAO
   class TAO_PortableServer_Export Upcall_Wrapper
   {
   public:
-
     /**
      * @note The TAO::Argument corresponding to the return value is
      *       always the first element in the array, regardless of
@@ -73,10 +70,8 @@ namespace TAO
      *                       argument list.
      * @param command        @c Command object that performs the
      *                       actual upcall into the servant.
-     *
      * @param servant_upcall Object containing information for POA
      *                       that dispatched the servant.
-     * @param servant        The servant handling the upcall.
      * @param exceptions     Array of user exceptions the operation
      *                       may raise.
      * @param nexceptions    The number of exceptions in the operation
@@ -86,18 +81,14 @@ namespace TAO
                  TAO::Argument * const args[],
                  size_t nargs,
                  TAO::Upcall_Command & command
-
 #if TAO_HAS_INTERCEPTORS == 1
-                 , void * servant_upcall
+                 , TAO::Portable_Server::Servant_Upcall *servant_upcall
                  , CORBA::TypeCode_ptr const * exceptions
-                 , size_t nexceptions
+                 , CORBA::ULong nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-                 ACE_ENV_ARG_DECL);
+                );
 
   private:
-
-
     /// Perform pre-upcall operations.
     /**
      * Perform pre-upcall operations, including operation @c IN and
@@ -105,23 +96,20 @@ namespace TAO
      */
     void pre_upcall (TAO_InputCDR & cdr,
                      TAO::Argument * const * args,
-                     size_t nargs
-                     ACE_ENV_ARG_DECL);
+                     size_t nargs);
 
     /// Perform post-upcall operations.
     /**
      * Perform post-upcall operations, including operation @c INOUT
      * and @c OUT argument marshaling.
      */
-    void post_upcall (TAO_OutputCDR & cdr,
+    void post_upcall (TAO_ServerRequest& server_request,
                       TAO::Argument * const * args,
-                      size_t nargs
-                      ACE_ENV_ARG_DECL);
-
+                      size_t nargs);
   };
-
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

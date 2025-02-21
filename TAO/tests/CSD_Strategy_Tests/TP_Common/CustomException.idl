@@ -1,0 +1,6 @@
+#ifndef CUSTOMEXCEPTION_IDL
+#define CUSTOMEXCEPTION_IDL
+
+exception CustomException {};
+
+#endif

@@ -1,27 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    big_union.cpp
-//
-// = DESCRIPTION
-//    tests Big_Unions
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    big_union.cpp
+ *
+ *  tests Big_Unions
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "big_union.h"
-
-ACE_RCSID (Param_Test, 
-           big_union, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Big_Union
@@ -29,26 +19,25 @@ ACE_RCSID (Param_Test,
 
 size_t Test_Big_Union::counter = 0;
 
-Test_Big_Union::Test_Big_Union (void)
+Test_Big_Union::Test_Big_Union ()
   : opname_ (CORBA::string_dup ("test_big_union"))
 {
 }
 
-Test_Big_Union::~Test_Big_Union (void)
+Test_Big_Union::~Test_Big_Union ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Big_Union::opname (void) const
+Test_Big_Union::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Big_Union::dii_req_invoke (CORBA::Request *req
-                                ACE_ENV_ARG_DECL)
+Test_Big_Union::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -56,53 +45,48 @@ Test_Big_Union::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Big_Union);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  Param_Test::Big_Union *tmp;
+  const Param_Test::Big_Union *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Big_Union (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = *tmp;
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Big_Union (*tmp);
 }
 
 int
-Test_Big_Union::init_parameters (Param_Test_ptr objref
-                                 ACE_ENV_ARG_DECL)
+Test_Big_Union::init_parameters (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       // get access to a Coffee Object
-      this->cobj_ = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->cobj_ = objref->make_coffee ();
 
       this->reset_parameters ();
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex,"System Exception doing make_coffee");
+      sysex._tao_print_exception ("System Exception doing make_coffee");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "An exception caught in make_coffee");
+      ex._tao_print_exception (
+        "An exception caught in make_coffee");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 int
-Test_Big_Union::reset_parameters (void)
+Test_Big_Union::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
   CORBA::ULong index = (counter++ % Test_Big_Union::BIG_UNION_N_BRANCHES);
@@ -135,7 +119,8 @@ Test_Big_Union::reset_parameters (void)
       break;
     case 3:
       {
-        Param_Test::Big_Union::_another_array x;
+        Param_Test::short_array x;
+
         for (int i = 0; i < 32; ++i)
           {
             x[i] = gen->gen_short ();
@@ -230,31 +215,25 @@ Test_Big_Union::reset_parameters (void)
 }
 
 int
-Test_Big_Union::run_sii_test (Param_Test_ptr objref
-                              ACE_ENV_ARG_DECL)
+Test_Big_Union::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_big_union (this->in_,
                                            this->inout_,
-                                           this->out_
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                           this->out_);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Big_Union::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Big_Union::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Big_Union::check_validity (void)
+Test_Big_Union::check_validity ()
 {
   if (this->in_._d () != this->inout_._d ()
       || this->in_._d () != this->out_->_d ()
@@ -288,8 +267,7 @@ Test_Big_Union::check_validity (void)
       break;
     case 1:
       {
-        ACE_DECLARE_NEW_CORBA_ENV;
-        ACE_TRY
+        try
           {
             Coffee_ptr in    = this->in_.the_interface ();
             Coffee_ptr inout = this->inout_.the_interface ();
@@ -303,17 +281,13 @@ Test_Big_Union::check_validity (void)
               return 0;
 
             Coffee::Desc_var in_desc =
-              in->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              in->description ();
             Coffee::Desc_var inout_desc =
-              inout->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              inout->description ();
             Coffee::Desc_var out_desc =
-              out->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              out->description ();
             Coffee::Desc_var ret_desc =
-              ret->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              ret->description ();
 
             if (ACE_OS::strcmp (in_desc->name.in (),
                                 inout_desc->name.in ())
@@ -323,11 +297,10 @@ Test_Big_Union::check_validity (void)
                                    ret_desc->name.in ()))
               return 0;
           }
-        ACE_CATCHANY
+        catch (const CORBA::Exception&)
           {
             return 0;
           }
-        ACE_ENDTRY;
       }
       break;
     case 2:
@@ -336,44 +309,50 @@ Test_Big_Union::check_validity (void)
         CORBA::Long inout = this->inout_.the_long ();
         CORBA::Long out   = this->out_->the_long ();
         CORBA::Long ret   = this->ret_->the_long ();
+
         if (in != out || in != inout || in != ret)
-          return 0;
+          {
+            return 0;
+          }
       }
       break;
-
     case 3:
       {
-        Param_Test::Big_Union::_another_array_slice* in_array    =
+        Param_Test::short_array_slice* in_array    =
           this->in_.another_array ();
-        Param_Test::Big_Union::_another_array_slice* inout_array =
+        Param_Test::short_array_slice* inout_array =
           this->inout_.another_array ();
-        Param_Test::Big_Union::_another_array_slice* out_array   =
+        Param_Test::short_array_slice* out_array   =
           this->out_->another_array ();
-        Param_Test::Big_Union::_another_array_slice* ret_array   =
+        Param_Test::short_array_slice* ret_array   =
           this->ret_->another_array ();
+
         for (int i = 0; i != 32; ++i)
           {
             if (in_array[i] != inout_array[i]
                 || in_array[i] != out_array[i]
                 || in_array[i] != ret_array[i])
-              return 0;
+              {
+                return 0;
+              }
           }
       }
       break;
-
     case 4:
       {
         const char* in    = this->in_.the_string ();
         const char* inout = this->inout_.the_string ();
         const char* out   = this->out_->the_string ();
         const char* ret   = this->ret_->the_string ();
+
         if (ACE_OS::strcmp (in,out)
             || ACE_OS::strcmp (in,inout)
             || ACE_OS::strcmp (in,ret))
-          return 0;
+          {
+            return 0;
+          }
       }
       break;
-
     case 5:
       {
         const CORBA::ShortSeq& in =
@@ -395,11 +374,12 @@ Test_Big_Union::check_validity (void)
             if (in[i] != out[i]
                 || in[i] != inout[i]
                 || in[i] != ret[i])
-              return 0;
+              {
+                return 0;
+              }
           }
       }
       break;
-
     case 6:
       {
         CORBA::Any in = this->in_.the_any ();
@@ -411,52 +391,62 @@ Test_Big_Union::check_validity (void)
         CORBA::Short inout_short;
         CORBA::Short out_short;
         CORBA::Short ret_short;
+
         if (!(in >>= in_short)
             || !(inout >>= inout_short)
             || !(out >>= out_short)
             || !(ret >>= ret_short))
-          return 0;
+          {
+            return 0;
+          }
 
         if (in_short != inout_short
             || in_short != out_short
             || in_short != ret_short)
-          return 0;
+          {
+            return 0;
+          }
       }
       break;
-
     case 7:
       {
         CORBA::Octet in    = this->in_.the_octet ();
         CORBA::Octet inout = this->inout_.the_octet ();
         CORBA::Octet out   = this->out_->the_octet ();
         CORBA::Octet ret   = this->ret_->the_octet ();
+
         if (in != out || in != inout || in != ret)
-          return 0;
+          {
+            return 0;
+          }
       }
       break;
-
     case 8:
       {
         CORBA::Char in    = this->in_.the_char ();
         CORBA::Char inout = this->inout_.the_char ();
         CORBA::Char out   = this->out_->the_char ();
         CORBA::Char ret   = this->ret_->the_char ();
+
         if (in != out || in != inout || in != ret)
-          return 0;
+          {
+            return 0;
+          }
       }
       break;
-
     case 9:
       {
         CORBA::Boolean in    = this->in_.the_boolean ();
         CORBA::Boolean inout = this->inout_.the_boolean ();
         CORBA::Boolean out   = this->out_->the_boolean ();
         CORBA::Boolean ret   = this->ret_->the_boolean ();
+
         if (in != out || in != inout || in != ret)
-          return 0;
+          {
+            return 0;
+          }
       }
       break;
-
     case 10:
       {
         const Param_Test::Var_Struct& in =
@@ -480,23 +470,30 @@ Test_Big_Union::check_validity (void)
                                  ret.dummy1.in ()) == 0
                && ACE_OS::strcmp (in.dummy2.in (),
                                   ret.dummy2.in ()) == 0))
-          return 0;
+          {
+            return 0;
+          }
 
         if (in.seq.length () != inout.seq.length ()
             || in.seq.length () != out.seq.length ()
             || in.seq.length () != ret.seq.length ())
-          return 0;
+          {
+            return 0;
+          }
 
         CORBA::ULong len = in.seq.length ();
+
         for (CORBA::ULong i = 0; i != len; ++i)
           {
-            if (ACE_OS::strcmp (in.seq[i].in (),
-                                inout.seq[i].in ())
-                || ACE_OS::strcmp (in.seq[i].in (),
-                                   out.seq[i].in ())
-                || ACE_OS::strcmp (in.seq[i].in (),
-                                   ret.seq[i].in ()))
-              return 0;
+            if (ACE_OS::strcmp (in.seq[i],
+                                inout.seq[i])
+                || ACE_OS::strcmp (in.seq[i],
+                                   out.seq[i])
+                || ACE_OS::strcmp (in.seq[i],
+                                   ret.seq[i]))
+              {
+                return 0;
+              }
           }
       }
       break;
@@ -515,24 +512,26 @@ Test_Big_Union::check_validity (void)
                && in.c == inout.c
                && in.s == inout.s
                && in.o == inout.o
-               && in.f == inout.f
+               && ACE::is_equal (in.f, inout.f)
                && in.b == inout.b
-               && in.d == inout.d)
+               && ACE::is_equal (in.d, inout.d))
             || !(in.l == out.l
                  && in.c == out.c
                  && in.s == out.s
                  && in.o == out.o
-                 && in.f == out.f
+                 && ACE::is_equal (in.f, out.f)
                  && in.b == out.b
-                 && in.d == out.d)
+                 && ACE::is_equal (in.d, out.d))
             || !(in.l == ret.l
                  && in.c == ret.c
                  && in.s == ret.s
                  && in.o == ret.o
-                 && in.f == ret.f
+                 && ACE::is_equal (in.f, ret.f)
                  && in.b == ret.b
-                 && in.d == ret.d))
-          return 0;
+                 && ACE::is_equal (in.d, ret.d)))
+          {
+            return 0;
+          }
       }
       break;
     }
@@ -548,6 +547,6 @@ Test_Big_Union::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Big_Union::print_values (void)
+Test_Big_Union::print_values ()
 {
 }

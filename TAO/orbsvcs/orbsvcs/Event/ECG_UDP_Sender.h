@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  * @file ECG_UDP_Sender.h
- *
- * $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Marina Spivak (marina@atdesk.com)
@@ -31,7 +30,6 @@
  * @todo The class makes an extra copy of the events, we need to
  * investigate if closer collaboration with its collocated EC could
  * be used to remove that copy.
- *
  */
 
 #ifndef TAO_ECG_UDP_SENDER_H
@@ -44,14 +42,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
-#include "EC_Lifetime_Utils.h"
-#include "EC_Lifetime_Utils_T.h"
-#include "ECG_CDR_Message_Sender.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK_Dgram;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ECG_UDP_Out_Endpoint;
 
 /**
@@ -67,7 +70,7 @@ class TAO_ECG_UDP_Out_Endpoint;
 class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender_Disconnect_Command
 {
 public:
-  TAO_ECG_UDP_Sender_Disconnect_Command (void);
+  TAO_ECG_UDP_Sender_Disconnect_Command ();
   TAO_ECG_UDP_Sender_Disconnect_Command (
               RtecEventChannelAdmin::ProxyPushSupplier_ptr proxy);
 
@@ -77,10 +80,9 @@ public:
   TAO_ECG_UDP_Sender_Disconnect_Command &
    operator= (const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
 
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute ();
 
 private:
-
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
 };
 
@@ -92,23 +94,20 @@ private:
  *        NOT THREAD-SAFE.
  * This class connect as a consumer to an EventChannel
  * and forwards the events it receives from that EC using UDP.
- *
  */
 class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender :
   public virtual POA_RtecEventComm::PushConsumer,
   public TAO_EC_Deactivated_Object
 {
 public:
-
   /// Initialization and termination methods.
   //@{
-
   /// Create a new TAO_ECG_UDP_Sender object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
-  static TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
+  static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
 
-  ~TAO_ECG_UDP_Sender (void);
+  ~TAO_ECG_UDP_Sender ();
 
   /**
    * @param lcl_ec Event Channel to which we will act as a consumer of events.
@@ -130,17 +129,15 @@ public:
    */
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              RtecUDPAdmin::AddrServer_ptr addr_server,
-             TAO_ECG_Refcounted_Endpoint endpoint_rptr
-             ACE_ENV_ARG_DECL);
+             TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
   /// Connect or reconnect to the EC with the given subscriptions.
   /**
-   * NOTE: if we are already connected to EC and a reconnection is
+   * @note if we are already connected to EC and a reconnection is
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */
-  void connect (const RtecEventChannelAdmin::ConsumerQOS &sub
-                ACE_ENV_ARG_DECL);
+  void connect (const RtecEventChannelAdmin::ConsumerQOS &sub);
 
   /// Deactivate from POA and disconnect from EC, if necessary.  Shut
   /// down all sender components.
@@ -148,7 +145,7 @@ public:
    * Calling this method may result in decrementing of the reference
    * count (due to deactivation) and deletion of the object.
    */
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown ();
   //@}
 
   /// Accessors.
@@ -160,7 +157,7 @@ public:
    * header + 8 bytes must fit).
    */
   int mtu (CORBA::ULong mtu);
-  CORBA::ULong mtu (void) const;
+  CORBA::ULong mtu () const;
 
   /// Get the local endpoint used to send the events.
   int get_local_addr (ACE_INET_Addr& addr);
@@ -170,30 +167,23 @@ public:
   //@{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void push (const RtecEventComm::EventSet &events
-                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer ();
+  virtual void push (const RtecEventComm::EventSet &events);
   //@}
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Sender objects using the static create() method.
   TAO_ECG_UDP_Sender (CORBA::Boolean crc = 0);
 
 private:
-
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.
-  void new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub
-                    ACE_ENV_ARG_DECL);
+  void new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub);
 
   // Updates existing connection to the Event Channel.
-  void reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub
-                  ACE_ENV_ARG_DECL);
+  void reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub);
   //@}
 
   /// Proxy used to receive events from the Event Channel.
@@ -214,8 +204,10 @@ private:
   ECG_Sender_Auto_Proxy_Disconnect auto_proxy_disconnect_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "ECG_UDP_Sender.inl"
+#include "orbsvcs/Event/ECG_UDP_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

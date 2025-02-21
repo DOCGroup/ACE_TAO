@@ -1,0 +1,32 @@
+#ifndef __IFR_INHERITANCE_TEST_DEFINED
+#define __IFR_INHERITANCE_TEST_DEFINED
+
+module IFR_Test
+{
+  typedef sequence<string>  NameList;
+
+  interface InterfaceRoot
+  {
+    readonly attribute string root_attr1;
+    attribute string root_attr2;
+
+    void get_root(in string root_name, out InterfaceRoot iroot);
+
+    readonly attribute string root_attr3;
+
+    NameList get_all_roots();
+  };
+
+  interface SubInterface : InterfaceRoot
+  {
+    attribute long sub_attr1;
+
+    void set_sub(in string sub_name);
+
+    NameList get_all_subs();
+
+    readonly attribute string sub_attr2;
+  };
+};
+
+#endif

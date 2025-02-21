@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef LONGUPCALLS_MANAGER_H
 #define LONGUPCALLS_MANAGER_H
@@ -18,11 +15,8 @@ public:
   // = The skeleton methods
   virtual void start_workers (CORBA::Short worker_count,
                               CORBA::Long milliseconds,
-                              Test::Controller_ptr controller
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                              Test::Controller_ptr controller);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -38,7 +32,7 @@ public:
           Test::Controller_ptr controller,
           CORBA::Long milliseconds);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The service method
 
 private:

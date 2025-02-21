@@ -1,12 +1,20 @@
 // -*- MPC -*-
-// $Id$
-
-project(*server) : taoserver, utils, iortable {
+project(*IDL): taoidldefaults {
   IDL_Files {
     Receiver.idl
     Broadcaster.idl
   }
+  custom_only = 1
+}
+
+project(*server) : taoserver, utils, iortable {
+  after += *IDL
+  IDL_Files {
+  }
   Source_Files {
+    BroadcasterC.cpp
+    BroadcasterS.cpp
+    ReceiverC.cpp 
     Broadcaster_i.cpp
     Server_i.cpp
     server.cpp
@@ -14,11 +22,14 @@ project(*server) : taoserver, utils, iortable {
 }
 
 project(*client): taoexe, portableserver, utils {
+  exename = client
+  after += *IDL
   IDL_Files {
-    Receiver.idl
-    Broadcaster.idl
   }
   Source_Files {
+    ReceiverC.cpp 
+    ReceiverS.cpp 
+    BroadcasterC.cpp
     Receiver_i.cpp
     Client_i.cpp
     client.cpp

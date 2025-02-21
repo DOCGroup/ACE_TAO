@@ -1,23 +1,15 @@
-// $Id$
-
 #include "tao/Wait_On_Reactor.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 #include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/ORB_Time_Policy.h"
 
 #include "ace/Reactor.h"
-#include "ace/Countdown_Time.h"
 
-ACE_RCSID (tao,
-           Wait_On_Reactor,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
-{
-}
-
-TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 {
 }
 
@@ -27,11 +19,14 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 {
   // Start the count down timer to account for the time spent in this
   // method.
-  ACE_Countdown_Time countdown (max_wait_time);
+  TAO::ORB_Countdown_Time countdown (max_wait_time);
 
   // Reactor does not change inside the loop.
-  ACE_Reactor* reactor =
+  ACE_Reactor *const reactor =
     this->transport_->orb_core ()->reactor ();
+
+  TAO_Leader_Follower &leader_follower =
+    this->transport_->orb_core ()->leader_follower ();
 
   // Do the event loop, till we fully receive a reply.
   int result = 0;
@@ -43,14 +38,14 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 
       // If we got our reply, no need to run the event loop any
       // further.
-      if (!rd.keep_waiting ())
+      if (!rd.keep_waiting (leader_follower))
         {
           break;
         }
 
       // Did we timeout? If so, stop running the loop.
       if (result == 0
-          && max_wait_time != 0
+          && max_wait_time != nullptr
           && *max_wait_time == ACE_Time_Value::zero)
         {
           break;
@@ -65,15 +60,15 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
       // Otherwise, keep going...
     }
 
-  if (result == -1 || rd.error_detected ())
+  if (result == -1 || rd.error_detected (leader_follower))
     {
       return -1;
     }
 
   // Return an error if there was a problem receiving the reply.
-  if (max_wait_time != 0)
+  if (max_wait_time != nullptr)
     {
-      if (rd.successful () && *max_wait_time == ACE_Time_Value::zero)
+      if (rd.successful (leader_follower) && *max_wait_time == ACE_Time_Value::zero)
         {
           result = -1;
           errno = ETIME;
@@ -83,7 +78,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
     {
       result = 0;
 
-      if (rd.error_detected ())
+      if (rd.error_detected (leader_follower))
         {
           result = -1;
         }
@@ -94,9 +89,9 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 
 // Register the handler with the Reactor.
 int
-TAO_Wait_On_Reactor::register_handler (void)
+TAO_Wait_On_Reactor::register_handler ()
 {
-  if (this->is_registered_ == 0)
+  if (!this->is_registered_)
     {
       return this->transport_->register_handler ();
     }
@@ -105,13 +100,15 @@ TAO_Wait_On_Reactor::register_handler (void)
 }
 
 bool
-TAO_Wait_On_Reactor::non_blocking (void) const
+TAO_Wait_On_Reactor::non_blocking () const
 {
   return true;
 }
 
 bool
-TAO_Wait_On_Reactor::can_process_upcalls (void) const
+TAO_Wait_On_Reactor::can_process_upcalls () const
 {
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    XML_Saver.h
- *
- *  $Id$
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
@@ -14,18 +12,18 @@
 #define XML_SAVER_H
 #include /**/ "ace/pre.h"
 
-#include "Topology_Saver.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
 
-#include "tao/corba.h"
 #include "ace/streams.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
-
 /**
  * \brief Save Notification Service Topology to an XML file.
  */
@@ -41,7 +39,7 @@ public:
   /// Open the output file.
   /// \param file_name the fully qualified file name
   /// \return true if successful
-  bool open (const ACE_CString & file_name, size_t backup_count);
+  bool open (const ACE_TString & file_name, size_t backup_count);
 
   //////////////////////////////////
   // Override Topology_Saver methods
@@ -49,17 +47,15 @@ public:
   virtual bool begin_object (CORBA::Long id,
     const ACE_CString& type,
     const NVPList& attrs,
-    bool changed
-    ACE_ENV_ARG_DECL);
+    bool changed);
 
   virtual void end_object (CORBA::Long id,
-    const ACE_CString& type
-    ACE_ENV_ARG_DECL);
+    const ACE_CString& type);
 
-  virtual void close (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void close ();
 
 private:
-  void backup_file_name (char * file_path, int nfile);
+  void backup_file_name (ACE_TCHAR * file_path, size_t nfile);
 
 private:
   /// A stream representing our current output.
@@ -67,7 +63,7 @@ private:
   bool close_out_;
 
   /// the name of the output file
-  ACE_CString base_name_;
+  ACE_TString base_name_;
   size_t backup_count_;
 
   /// true to enable timestamping
@@ -75,10 +71,10 @@ private:
 
   /// A string consisting of spaces that is our current indentation level.
   ACE_CString indent_;
-
 };
-
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* XML_SAVER_H */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 
@@ -19,7 +17,7 @@ Receiver_StreamEndPoint::get_callback (const char *,
   return 0;
 }
 
-Receiver_Callback::Receiver_Callback (void)
+Receiver_Callback::Receiver_Callback ()
   : frame_count_ (1)
 {
 }
@@ -58,46 +56,40 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Receiver_Callback::handle_destroy (void)
+Receiver_Callback::handle_destroy ()
 {
   // Called when the distributer requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       done=1;
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Receiver_Callback::handle_destroy Failed\n");
+      ex._tao_print_exception ("Receiver_Callback::handle_destroy Failed\n");
       return -1;
-
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : mmdevice_ (0),
-    output_file_name_ ("output"),
-    addr_file_ ("addr_file"),
+    output_file_name_ (ACE_TEXT ("output")),
+    addr_file_ (ACE_TEXT ("addr_file")),
     sender_name_ ("distributer"),
     receiver_name_ ("receiver")
 {
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
 }
 
 int
-Receiver::init (int,
-                char **
-                ACE_ENV_ARG_DECL)
+Receiver::init (int, ACE_TCHAR *[])
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -112,7 +104,7 @@ Receiver::init (int,
   if (result != 0)
     return result;
 
-  this->connection_manager_.load_ep_addr (this->addr_file_.c_str ());
+  this->connection_manager_.load_ep_addr (ACE_TEXT_ALWAYS_CHAR (this->addr_file_.c_str ()));
 
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
@@ -124,26 +116,21 @@ Receiver::init (int,
     this->mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->mmdevice_->_this ();
 
   // Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->receiver_name_,
-                                            mmdevice.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                            mmdevice.in ());
 
   // Connect to the sender.
-  this->connection_manager_.connect_to_sender (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->connection_manager_.connect_to_sender ();
 
   return 0;
 }
 
 int
-Receiver::parse_args (int argc,
-                      char **argv)
+Receiver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Parse the command line arguments
   ACE_Get_Opt opts (argc,
@@ -155,17 +142,17 @@ Receiver::parse_args (int argc,
     {
       switch (c)
         {
-	case 'a':
-	  this->addr_file_ = opts.opt_arg ();
-	  break;
+        case 'a':
+          this->addr_file_ = opts.opt_arg ();
+          break;
         case 'f':
           this->output_file_name_ = opts.opt_arg ();
           break;
         case 's':
-          this->sender_name_ = opts.opt_arg ();
+          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->receiver_name_ = opts.opt_arg ();
+          this->receiver_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -177,55 +164,40 @@ Receiver::parse_args (int argc,
   return 0;
 }
 
-ACE_CString
-Receiver::output_file_name (void)
+ACE_TString
+Receiver::output_file_name ()
 {
   return this->output_file_name_;
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       Receiver receiver;
       int result =
-        receiver.parse_args (argc,
-                             argv);
+        receiver.parse_args (argc, argv);
       if (result == -1)
         return -1;
 
@@ -236,7 +208,7 @@ main (int argc,
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
-                           receiver.output_file_name ().c_str ()),
+                           receiver.output_file_name ().c_str () ),
                           -1);
 
       else
@@ -244,10 +216,7 @@ main (int argc,
                     "File Opened Successfully\n"));
 
       result =
-        receiver.init (argc,
-                       argv
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        receiver.init (argc, argv);
 
       if (result != 0)
         return result;
@@ -255,31 +224,19 @@ main (int argc,
       ACE_Time_Value tv(0, 10000);
       while(!done)
       {
-         orb->run (tv ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
+         orb->run (tv);
       }
 
       // Hack for now....
       ACE_OS::sleep (1);
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"receiver::init");
+      ex._tao_print_exception ("receiver::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_OS::fclose (output_file);
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

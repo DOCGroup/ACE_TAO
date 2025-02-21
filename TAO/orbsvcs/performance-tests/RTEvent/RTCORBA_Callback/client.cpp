@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Callback.h"
 
 #include "RT_Class.h"
@@ -18,7 +16,6 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
 #include "ace/Auto_Functor.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Basic_Stats.h"
 #include "ace/Stats.h"
@@ -26,35 +23,28 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (TAO_PERF_RTEC_RTCORBA_Baseline,
-           client,
-           "$Id$")
-
 class Roundtrip_Task : public ACE_Task_Base
 {
 public:
   Roundtrip_Task (Test::Session_Factory_ptr session_factory,
-                  ACE_Barrier *barrier)
+                  ACE_Barrier *the_barrier)
     : session_factory_ (Test::Session_Factory::_duplicate (session_factory))
-    , barrier_ (barrier)
+    , the_barrier_ (the_barrier)
   {
   }
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void run_test () = 0;
 
-  virtual int svc (void)
+  virtual int svc ()
   {
-    this->barrier_->wait ();
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    this->the_barrier_->wait ();
+    try
       {
-        this->run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->run_test ();
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
       {
       }
-    ACE_ENDTRY;
 
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) done...\n"));
     return 0;
@@ -63,36 +53,33 @@ public:
 protected:
   Test::Session_Factory_var session_factory_;
 
-  ACE_Barrier *barrier_;
+  ACE_Barrier *the_barrier_;
 };
 
 class High_Priority_Task : public Roundtrip_Task
 {
 public:
   High_Priority_Task (Test::Session_Factory_ptr session_factory,
-                      ACE_Barrier *barrier,
+                      ACE_Barrier *the_barrier,
                       PortableServer::POA_ptr poa,
                       int iterations,
                       int period_in_usecs)
-    : Roundtrip_Task (session_factory, barrier)
+    : Roundtrip_Task (session_factory, the_barrier)
     , callback (new Callback (iterations, poa))
     , iterations_ (iterations)
     , period_in_usecs_ (period_in_usecs)
   {
   }
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void run_test ()
   {
     Test::Callback_var cb =
-      callback->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      callback->_this ();
 
     Implicit_Deactivator deactivator (callback);
 
     Test::Session_var session =
-      this->session_factory_->create_new_session (cb.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      this->session_factory_->create_new_session (cb.in ());
 
     ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
 
@@ -108,13 +95,11 @@ public:
         ACE_Time_Value period (0, this->period_in_usecs_);
         ACE_OS::sleep (period);
 
-        ACE_TRY {
+        try{
           ACE_hrtime_t start = ACE_OS::gethrtime ();
-          (void) session->sample (start
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        } ACE_CATCHANY {
-        } ACE_ENDTRY;
+          (void) session->sample (start);
+        } catch (const CORBA::Exception&) {
+        }
       }
   }
 
@@ -130,34 +115,31 @@ class Low_Priority_Task : public Roundtrip_Task
 {
 public:
   Low_Priority_Task (Test::Session_Factory_ptr session_factory,
-                     ACE_Barrier *barrier,
+                     ACE_Barrier *the_barrier,
                      PortableServer::POA_ptr poa,
                      int period_in_usecs)
-    : Roundtrip_Task (session_factory, barrier)
+    : Roundtrip_Task (session_factory, the_barrier)
     , callback (new Callback (1, poa))
     , stopped_ (0)
     , period_in_usecs_ (period_in_usecs)
   {
   }
 
-  void stop (void)
+  void stop ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->stopped_ = 1;
   }
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void run_test ()
   {
     Test::Callback_var cb =
-      callback->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      callback->_this ();
 
     Implicit_Deactivator deactivator (callback);
 
     Test::Session_var session =
-      this->session_factory_->create_new_session (cb.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      this->session_factory_->create_new_session (cb.in ());
 
     ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
 
@@ -172,14 +154,11 @@ public:
             return;
         }
 
-        ACE_TRY {
+        try{
           CORBA::ULongLong dummy = 0;
-          (void) session->sample (dummy
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-        } ACE_CATCHANY {
-        } ACE_ENDTRY;
+          (void) session->sample (dummy);
+        } catch (const CORBA::Exception&) {
+        }
       }
   }
 
@@ -193,16 +172,14 @@ private:
   int period_in_usecs_;
 };
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      ORB_Holder orb (argc, argv, ""
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ORB_Holder orb (argc, argv, "");
 
       Client_Options options (argc, argv);
       if (argc != 1)
@@ -226,22 +203,16 @@ int main (int argc, char *argv[])
       RTServer_Setup rtserver_setup (options.use_rt_corba,
                                      orb,
                                      rt_class,
-                                     options.nthreads
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     options.nthreads);
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
-                                                  "RootPOA"
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                  "RootPOA");
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       PortableServer::POA_var the_poa (rtserver_setup.poa ());
 
@@ -254,33 +225,29 @@ int main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
       CORBA::Object_var object =
-        orb->string_to_object (options.ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (options.ior);
 
       Test::Session_Factory_var session_factory =
-        Test::Session_Factory::_narrow (object.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Session_Factory::_narrow (object.in ());
 
       CORBA::PolicyList_var inconsistent_policies;
-      (void) session_factory->_validate_connection (inconsistent_policies
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      (void) session_factory->_validate_connection (inconsistent_policies);
 
       int thread_count = 1 + options.nthreads;
-      ACE_Barrier barrier (thread_count);
+      ACE_Barrier the_barrier (thread_count);
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
 
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
       int per_thread_period = options.low_priority_period;
       if (options.global_low_priority_rate)
         per_thread_period = options.low_priority_period * options.nthreads;
       Low_Priority_Task low_priority (session_factory.in (),
-                                      &barrier,
+                                      &the_barrier,
                                       the_poa.in (),
                                       per_thread_period);
       low_priority.activate (rt_class.thr_sched_class ()
@@ -289,7 +256,7 @@ int main (int argc, char *argv[])
                              rt_class.priority_low ());
 
       High_Priority_Task high_priority (session_factory.in (),
-                                        &barrier,
+                                        &the_barrier,
                                         the_poa.in (),
                                         options.iterations,
                                         options.high_priority_period);
@@ -307,33 +274,26 @@ int main (int argc, char *argv[])
         high_priority.callback->sample_history ();
       if (options.dump_history)
         {
-          history.dump_samples ("HISTORY", gsf);
+          history.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
 
       ACE_Basic_Stats high_priority_stats;
       history.collect_basic_stats (high_priority_stats);
-      high_priority_stats.dump_results ("High Priority", gsf);
+      high_priority_stats.dump_results (ACE_TEXT("High Priority"), gsf);
 
       low_priority.wait ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - all task(s) joined\n"));
 
-      session_factory->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      session_factory->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,0 +1,18 @@
+/* -*- C++ -*- */
+interface ThreeTier
+{
+  /// record the occurrence of a tick
+  oneway void tick ();
+
+  /// record the occurrence of a tock
+  void tock ();
+
+  /// report the number of ticks
+  unsigned long tickCount();
+
+  /// report the number of tocks
+  unsigned long tockCount();
+
+  /// Shutdown the application.
+  oneway void shutdown ();
+};

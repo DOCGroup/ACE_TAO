@@ -1,0 +1,30 @@
+
+//=============================================================================
+/**
+ *  @file    test.idl
+ *
+ *  Test to verify the correctness of the fix for bug 4141
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
+
+module Interop
+{
+
+  interface CDR_Out_Arg
+  {
+    // = TITLE
+    //   A test idl for checking interceptor visually.
+    //
+    // = DESCRIPTION
+    //
+
+    void get_out (out long arg);
+    // Normal operation.
+
+   oneway void shutdown ();
+    // shutdown the ORB
+  };
+};

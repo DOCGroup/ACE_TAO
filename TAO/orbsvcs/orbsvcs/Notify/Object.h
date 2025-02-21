@@ -1,12 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Object.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_OBJECT_H
@@ -14,22 +11,24 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "QoSProperties.h"
-#include "AdminProperties.h"
-#include "Worker_Task.h"
-#include "Refcountable.h"
-#include "Name_Value_Pair.h"
-#include "Event_Manager.h"
+#include "orbsvcs/Notify/QoSProperties.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/Refcountable.h"
+#include "orbsvcs/Notify/Name_Value_Pair.h"
+#include "orbsvcs/Notify/Event_Manager.h"
 
 #include "orbsvcs/NotifyExtC.h"
 
 #include "tao/PortableServer/Servant_Base.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_POA_Helper;
 class TAO_Notify_Timer;
@@ -39,7 +38,6 @@ class TAO_Notify_RT_Builder;
  * @class TAO_Notify_Object
  *
  * @brief Base Object for RT_Notify's CORBA Objects.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Object : public TAO_Notify_Refcountable
 {
@@ -51,57 +49,59 @@ public:
   typedef CORBA::Long ID;
 
   /// Destructor
-  virtual ~TAO_Notify_Object (void);
+  virtual ~TAO_Notify_Object ();
 
   /// This Object's ID
-  ID id (void) const;
+  ID id () const;
 
   /// Activate
-  virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr activate (PortableServer::Servant servant);
 
   /// Activate with existing id
   virtual CORBA::Object_ptr activate (
       PortableServer::Servant servant,
-      CORBA::Long id
-      ACE_ENV_ARG_DECL);
+      CORBA::Long id);
 
   /// Deactivate
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate ();
 
-  /// Have we been shutdown. returns 1 if shutdown.
-  int has_shutdown (void);
+  /// Have we been shutdown. returns true if shutdown.
+  bool has_shutdown ();
 
-  void execute_task (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL);
+  void execute_task (TAO_Notify_Method_Request& method_request);
 
   /// Get CORBA Ref.
-  CORBA::Object_ptr ref (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr ref ();
 
   /// Set the QoS Properties.
-  virtual void set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL);
+  virtual void set_qos (const CosNotification::QoSProperties & qos);
 
   /// Get the QoS Properties.
-  CosNotification::QoSProperties* get_qos (ACE_ENV_SINGLE_ARG_DECL);
+  CosNotification::QoSProperties* get_qos ();
 
   bool find_qos_property_value (
     const char * name,
     CosNotification::PropertyValue & value)const;
 
   /// Obtain the Timer manager associated with this object.
-  virtual TAO_Notify_Timer* timer (void);
+  virtual TAO_Notify_Timer* timer ();
 
   /// Accessor for the Event Manager
-  TAO_Notify_Event_Manager& event_manager (void);
+  TAO_Notify_Event_Manager& event_manager ();
 
-  /// shutdown. Returns 1 ifif the shutdown was already run once before.
-  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  /// Shutdown. Returns 1 if the shutdown was already run once before.
+  virtual int shutdown ();
 
   /// Load our attributes. Each derived type should call the superclass
   /// load first before loading its own attributes.
   virtual void load_attrs(const TAO_Notify::NVPList& attrs);
 
+  /// Allow access to the underlying worker task.
+  TAO_Notify_Worker_Task* get_worker_task ();
+
 protected:
   /// Constructor
-  TAO_Notify_Object (void);
+  TAO_Notify_Object ();
 
   /// Init this object with data from <rhs>.
   void initialize (TAO_Notify_Object* parent);
@@ -114,26 +114,27 @@ protected:
 
   /// Changes the primary poa to the current proxy poa
   void set_primary_as_proxy_poa();
- 
+
   /// Accessor for the proxy_poa_
-  TAO_Notify_POA_Helper* proxy_poa (void);
+  TAO_Notify_POA_Helper* proxy_poa ();
 
   /// Accessor for the object_poa_
-  TAO_Notify_POA_Helper* object_poa (void);
+  TAO_Notify_POA_Helper* object_poa ();
 
   /// Get the POA assigned to us.
-  TAO_Notify_POA_Helper* poa (void);
+  TAO_Notify_POA_Helper* poa ();
 
   // Sets the admin properties
-  void set_event_manager( TAO_Notify_Event_Manager* event_manager );
+  void set_event_manager(TAO_Notify_Event_Manager* event_manager);
 
   // Sets the admin properties
-  void set_admin_properties( TAO_Notify_AdminProperties* admin_properties );
+  void set_admin_properties(TAO_Notify_AdminProperties* admin_properties);
 
   /// Accessor for the Admin Properties
-  TAO_Notify_AdminProperties& admin_properties (void);
+  TAO_Notify_AdminProperties& admin_properties ();
 
-  /// Notification that can be overridden by subclasses to be informed that <qos_properties_> have been modified.
+  /// Notification that can be overridden by subclasses to be informed that
+  /// <qos_properties_> have been modified.
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Called by derived types to save their attributes. Each
@@ -160,25 +161,27 @@ private:
   void set_poa (TAO_Notify_POA_Helper* object_poa);
 
   /// Shutdown the current worker task and delete it if we own it.
-  void shutdown_worker_task (void);
+  void shutdown_worker_task ();
 
   /// Shutdown the current proxy poa.
-  void destroy_proxy_poa (void);
+  void destroy_proxy_poa ();
 
   /// Shutdown the current object poa.
-  void destroy_object_poa (void);
+  void destroy_object_poa ();
 
   /// Shutdown the current poa.
-  void destroy_poa (void);
+  void destroy_poa ();
 
-  ///= Private data members.
+protected:
+  /// The mutex to serialize access to state variables.
+  TAO_SYNCH_MUTEX lock_;
 
+private:
   /// The POA in which the object is activated.
   TAO_Notify_POA_Helper* poa_;
 
   /// The POA in which the proxys are activated.
   TAO_Notify_POA_Helper* proxy_poa_;
-
   bool own_proxy_poa_;
 
   /// The POA in which the object's children are activated.
@@ -189,7 +192,7 @@ private:
   ID id_;
 
   /// The event manager.
-  //TAO_Notify_Event_Manager inl includes Object.h
+  /// TAO_Notify_Event_Manager inl includes Object.h
   TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager > event_manager_;
 
   /// Admin Properties.
@@ -203,8 +206,10 @@ private:
   bool shutdown_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Object.inl"
+#include "orbsvcs/Notify/Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

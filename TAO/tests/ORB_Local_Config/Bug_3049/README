@@ -1,0 +1,4 @@
+
+
+This test was borrowed from bugzilla 1459 and intends to test the
+ability to use differently configured ORBs within the same process.

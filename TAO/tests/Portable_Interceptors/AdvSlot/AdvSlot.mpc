@@ -1,0 +1,27 @@
+project(*idl): taoidldefaults {
+  IDL_Files {
+    StateTransfer.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, pi_server {
+  after += *idl
+  Source_Files {
+    StateTransferC.cpp
+    StateTransferS.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient {
+  after += *idl
+  Source_Files {
+    StateTransferC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

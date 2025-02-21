@@ -1,24 +1,21 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Routing_Slip.h
  *
- *  $Id$
- *
  *  @author Dale Wilson <wilson_d@ociweb.com>
- *
- *
  */
 
 #ifndef TAO_NOTIFY_ROUTING_SLIP_H
 #define TAO_NOTIFY_ROUTING_SLIP_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
-#include "Event.h"
-#include "Delivery_Request.h"
-#include "Event_Persistence_Factory.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
+#include "orbsvcs/Notify/Event_Persistence_Factory.h"
 
-#include "Persistent_File_Allocator.h"  // for Persistent_Callback
+#include "orbsvcs/Notify/Persistent_File_Allocator.h"  // for Persistent_Callback
 
 #include <ace/Vector_T.h>
 #include <ace/Malloc_Base.h>  // necessary?
@@ -26,6 +23,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations of classes/pointers/collections
 // referenced from this header
@@ -37,7 +36,6 @@ class TAO_Notify_Method_Request_Queueable;
 
 namespace TAO_Notify
 {
-
 class Routing_Slip_Persistence_Manager;
 
 // Forward declarations of TAO_Notify classes/pointers/collections
@@ -64,11 +62,12 @@ class Routing_Slip_Queue;
  */
 class TAO_Notify_Serv_Export Routing_Slip : public Persistent_Callback
 {
+// FUZZ: disable check_for_ACE_Guard
   typedef ACE_Guard< TAO_SYNCH_MUTEX > Routing_Slip_Guard;
+// FUZZ: enable check_for_ACE_Guard
 public:
   /// "Factory" method for normal use.
-  static Routing_Slip_Ptr create (const TAO_Notify_Event::Ptr& event
-    ACE_ENV_ARG_DECL);
+  static Routing_Slip_Ptr create (const TAO_Notify_Event::Ptr& event);
 
   /// "Factory" method for use during reload from persistent storage.
   static Routing_Slip_Ptr create (
@@ -77,9 +76,9 @@ public:
 
   void set_rspm (Routing_Slip_Persistence_Manager * rspm);
 
-  void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void reconnect ();
 
-  /// destructor (should be private but that inspires compiler wars)
+  /// Destructor (should be private but that inspires compiler wars)
   virtual ~Routing_Slip ();
 
   //////////////////
@@ -88,12 +87,12 @@ public:
   /// Route this event to destinations
   /// must be the Action request after
   /// the routing slip is created.
-  void route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV_ARG_DECL);
+  void route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel);
 
   /// \brief Schedule delivery to a consumer via a proxy supplier
   /// \param proxy_supplier the proxy supplier that will deliver the event
   /// \param filter should consumer-based filtering be applied?
-  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter ACE_ENV_ARG_DECL);
+  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
 
 
   /////////////////////////////////////////
@@ -232,8 +231,9 @@ private:
 
   static Routing_Slip_Queue persistent_queue_;
 };
-
 } // namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_ROUTING_SLIP_H */

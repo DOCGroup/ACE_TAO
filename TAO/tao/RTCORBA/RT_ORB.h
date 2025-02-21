@@ -3,8 +3,6 @@
 /**
  *  @file   RT_ORB.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
@@ -21,10 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#define TAO_RTCORBA_SAFE_INCLUDE
-#include "RTCORBAC.h"
-#undef TAO_RTCORBA_SAFE_INCLUDE
-
+#include "tao/RTCORBA/RTCORBA_includeC.h"
+#include "tao/RTCORBA/RT_ORBInitializer.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -37,6 +33,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward reference for TAO_Named_RT_Mutex_Manager
 class TAO_RT_Mutex;
 class TAO_Thread_Pool_Manager;
@@ -45,39 +43,26 @@ class TAO_Thread_Pool_Manager;
  * @class TAO_Named_RT_Mutex_Manager
  *
  * @brief Manages the names of named and unnamed RT Mutexes
- *
  */
-
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex_Manager
 {
-
 public:
   /// Constructor.
-  TAO_Named_RT_Mutex_Manager (void);
+  TAO_Named_RT_Mutex_Manager ();
 
   /// Destructor.
-  ~TAO_Named_RT_Mutex_Manager (void);
+  ~TAO_Named_RT_Mutex_Manager ();
 
-  RTCORBA::Mutex_ptr create_mutex (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  RTCORBA::Mutex_ptr create_mutex ();
 
-  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex);
 
   RTCORBA::Mutex_ptr create_named_mutex (const char *name,
-                                         CORBA::Boolean_out created_flag
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         CORBA::Boolean_out created_flag);
 
-  RTCORBA::Mutex_ptr open_named_mutex (const char * name
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTCORBA::RTORB::MutexNotFound
-                     ));
+  RTCORBA::Mutex_ptr open_named_mutex (const char * name);
 
 private:
-
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
   /// Hash map for named RT Mutexes
   ACE_Hash_Map_Manager_Ex<
@@ -102,11 +87,13 @@ private:
  */
 class TAO_RTCORBA_Export TAO_RT_ORB
   : public RTCORBA::RTORB,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
-  TAO_RT_ORB (TAO_ORB_Core *orb_core);
+  TAO_RT_ORB (TAO_ORB_Core *orb_core,
+              TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+              ACE_Time_Value const &dynamic_thread_time);
 
   /**
    * Create a new mutex.  Mutexes returned by this method
@@ -114,17 +101,14 @@ public:
    * consistant priority inheritance/piority ceiling semantics
    * can be guaranteed.
    */
-  virtual RTCORBA::Mutex_ptr create_mutex (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual RTCORBA::Mutex_ptr create_mutex ();
 
   /**
    * Destroy a mutex.  Currently this is a no-op since RTCORBA::Mutex
    * instances are destroyed as soon as their reference counts go to
    * 0.
    */
-  virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex);
 
   /**
    * Create a mutex and assign a name to it.  If the
@@ -132,68 +116,49 @@ public:
    * is set to 0.
    */
   virtual RTCORBA::Mutex_ptr create_named_mutex (const char *name,
-                                                 CORBA::Boolean_out created_flag
-                                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                                 CORBA::Boolean_out created_flag);
 
   /// Retrieve a previously created mutex.
-  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS )
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RTCORBA::RTORB::MutexNotFound
-                      ));
+  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name);
 
   /**
    * Create and return a TCPProtocolProperties instance with the specified
    * parameters.
    */
   RTCORBA::TCPProtocolProperties_ptr
-  create_tcp_protocol_properties (
-                                  CORBA::Long send_buffer_size,
+  create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                   CORBA::Long recv_buffer_size,
                                   CORBA::Boolean keep_alive,
                                   CORBA::Boolean dont_route,
                                   CORBA::Boolean no_delay,
-                                  CORBA::Boolean enable_network_priority
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException ));
+                                  CORBA::Boolean enable_network_priority);
 
   RTCORBA::UnixDomainProtocolProperties_ptr
-  create_unix_domain_protocol_properties (
-                                          CORBA::Long send_buffer_size,
-                                          CORBA::Long recv_buffer_size
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_unix_domain_protocol_properties (CORBA::Long send_buffer_size,
+                                          CORBA::Long recv_buffer_size);
 
   RTCORBA::SharedMemoryProtocolProperties_ptr
-  create_shared_memory_protocol_properties (
-                                            CORBA::Long send_buffer_size,
+  create_shared_memory_protocol_properties (CORBA::Long send_buffer_size,
                                             CORBA::Long recv_buffer_size,
                                             CORBA::Boolean keep_alive,
                                             CORBA::Boolean dont_route,
                                             CORBA::Boolean no_delay,
                                             CORBA::Long preallocate_buffer_size,
                                             const char *mmap_filename,
-                                            const char *mmap_lockname
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                            const char *mmap_lockname);
 
   RTCORBA::UserDatagramProtocolProperties_ptr
-  create_user_datagram_protocol_properties (
-                                            CORBA::Boolean enable_network_priority
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_user_datagram_protocol_properties (CORBA::Long send_buffer_size,
+                                            CORBA::Long recv_buffer_size,
+                                            CORBA::Boolean enable_network_priority);
 
   RTCORBA::StreamControlProtocolProperties_ptr
-  create_stream_control_protocol_properties (
-                                             CORBA::Long send_buffer_size,
+  create_stream_control_protocol_properties (CORBA::Long send_buffer_size,
                                              CORBA::Long recv_buffer_size,
                                              CORBA::Boolean keep_alive,
                                              CORBA::Boolean dont_route,
                                              CORBA::Boolean no_delay,
-                                             CORBA::Boolean enable_network_priority
-                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                             CORBA::Boolean enable_network_priority);
 
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
   virtual RTCORBA::ThreadpoolId
@@ -203,9 +168,7 @@ public:
                      RTCORBA::Priority default_priority,
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
-                     CORBA::ULong max_request_buffer_size
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                     CORBA::ULong max_request_buffer_size);
 
   /**
    * Create a threadpool and separate it into subsets based on
@@ -217,29 +180,19 @@ public:
                                 CORBA::Boolean allow_borrowing,
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
-                                CORBA::ULong max_request_buffer_size
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                CORBA::ULong max_request_buffer_size);
 
   /// Free the resources associated with the specified threadpool.
-  virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTCORBA::RTORB::InvalidThreadpool));
+  virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool);
 
   /// Create a priority model policy for use when configuring a POA.
   virtual RTCORBA::PriorityModelPolicy_ptr
-  create_priority_model_policy (
-                                RTCORBA::PriorityModel priority_model,
-                                RTCORBA::Priority server_priority
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_priority_model_policy (RTCORBA::PriorityModel priority_model,
+                                RTCORBA::Priority server_priority);
 
   /// Create a ThreadpoolPolicy instance for POA creation
   virtual RTCORBA::ThreadpoolPolicy_ptr
-  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool);
 
   /**
    * Create a PriorityBandedConnectionPolicy instance
@@ -247,9 +200,7 @@ public:
    */
   virtual RTCORBA::PriorityBandedConnectionPolicy_ptr
   create_priority_banded_connection_policy (const RTCORBA::PriorityBands &
-                                            priority_bands
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                            priority_bands);
 
   /**
    * Create a PrivateConnectionPolicy instance to use on client
@@ -257,32 +208,27 @@ public:
    * to the server.
    */
   virtual RTCORBA::PrivateConnectionPolicy_ptr
-  create_private_connection_policy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_private_connection_policy ();
 
   /**
    * Create a ServerProtocolPolicy instance to select and configure
    * communication protocols on the server side.
    */
   virtual RTCORBA::ServerProtocolPolicy_ptr
-  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols);
 
   /**
    * Create a ClientProtocolPolicy instance to select and configure
    * communication protocols on the client side.
    */
   virtual RTCORBA::ClientProtocolPolicy_ptr
-  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols);
 
   /// Reference to our creating ORB Core.
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   /// Get the Thread Pool Manager.
-  TAO_Thread_Pool_Manager &tp_manager (void) const;
+  TAO_Thread_Pool_Manager &tp_manager () const;
 
   /**
    * This method changes the scheduling policy of the calling thread
@@ -304,17 +250,26 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_RT_ORB (void);
+  virtual ~TAO_RT_ORB ();
 
+protected:
   /// Reference to our creating ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// mutex_mgr_ manages the names associated with named mutexes.
   TAO_Named_RT_Mutex_Manager mutex_mgr_;
 
   /// Thread Pool Manager
   TAO_Thread_Pool_Manager *tp_manager_;
+
+  /// Dynamic thread lifespan policy
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan_;
+
+  /// Dynamic thread run time
+  ACE_Time_Value const dynamic_thread_time_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

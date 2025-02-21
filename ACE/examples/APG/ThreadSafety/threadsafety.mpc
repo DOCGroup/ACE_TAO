@@ -1,0 +1,56 @@
+// -*- MPC -*-
+project(Atomic Op) : aceexe {
+  exename = Atomic_Op
+  Source_Files {
+    Atomic_Op.cpp
+  }
+}
+
+project(Barrier) : aceexe {
+  exename = Barrier
+  Source_Files {
+    Barrier.cpp
+  }
+}
+
+project(Mutex) : aceexe {
+  exename = Mutex
+  Source_Files {
+    Mutex.cpp
+  }
+}
+
+project(RW Lock) : aceexe, avoids_ace_for_tao {
+  exename = RW_Lock
+  Source_Files {
+    RW_Lock.cpp
+  }
+}
+
+project(Semaphore) : aceexe, avoids_ace_for_tao {
+  exename = Semaphore
+  Source_Files {
+    Semaphore.cpp
+  }
+}
+
+project(Tokens) : aceexe {
+  exename = Tokens
+  Source_Files {
+    Tokens.cpp
+  }
+}
+
+project(Tokens Deadlock) : aceexe {
+  exename = Tokens_Deadlock
+  Source_Files {
+    Tokens_Deadlock.cpp
+  }
+}
+
+project(TSS) : aceexe {
+  exename = TSS
+  Source_Files {
+    TSS.cpp
+  }
+}

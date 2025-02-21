@@ -3,8 +3,6 @@
 /**
  *  @file   Storable_Naming_Context.h
  *
- *  $Id$
- *
  *  @author Bruce Trask <trask_b@ociweb.com>
  */
 //=============================================================================
@@ -14,21 +12,32 @@
 #define TAO_STORABLE_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
-#include "Hash_Naming_Context.h"
+#include "orbsvcs/Naming/Hash_Naming_Context.h"
+#include "tao/Storable_File_Guard.h"
 #include "ace/Hash_Map_Manager.h"
+#include <memory>
 
-#include "Storable.h"
+#include "orbsvcs/Naming/Storable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  class Storable_Base;
+  class Storable_Factory;
+}
+
+class TAO_Storable_Naming_Context_Factory;
+
 class TAO_Naming_Serv_Export TAO_Storable_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_Storable_IntId (void);
+  TAO_Storable_IntId ();
 
   /// Constructor.
   TAO_Storable_IntId (/* in */ const char * ior,
@@ -38,7 +47,7 @@ public:
   TAO_Storable_IntId (const TAO_Storable_IntId & rhs);
 
   /// Destructor.
-  ~TAO_Storable_IntId (void);
+  ~TAO_Storable_IntId ();
 
   /// Assignment operator.
   void operator= (const TAO_Storable_IntId & rhs);
@@ -55,10 +64,8 @@ public:
 class TAO_Naming_Serv_Export TAO_Storable_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
-  TAO_Storable_ExtId (void);
+  TAO_Storable_ExtId ();
 
   /// Constructor.
   TAO_Storable_ExtId (/* in */ const char *id,
@@ -68,7 +75,7 @@ public:
   TAO_Storable_ExtId (const TAO_Storable_ExtId & rhs);
 
   /// Destructor.
-  ~TAO_Storable_ExtId (void);
+  ~TAO_Storable_ExtId ();
 
   // = Assignment and comparison methods.
 
@@ -83,7 +90,7 @@ public:
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data members.
 
@@ -98,9 +105,8 @@ public:
   // Accessors.
   // follow the mapping rules!
 
-  const char * id (void);
-  const char * kind (void);
-
+  const char * id ();
+  const char * kind ();
 };
 
 
@@ -116,31 +122,28 @@ public:
 class TAO_Naming_Serv_Export TAO_Storable_Bindings_Map : public TAO_Bindings_Map
 {
 public:
-
   /// Underlying data structure - typedef for ease of use.
   typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
                                TAO_Storable_IntId,
                                ACE_Null_Mutex> HASH_MAP;
 
-  // = Initialization and termination methods.
-
   /// Constructor.
   TAO_Storable_Bindings_Map (size_t hash_table_size, CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_Storable_Bindings_Map (void);
+  virtual ~TAO_Storable_Bindings_Map ();
 
   // = Accessors.
 
   /// Get a reference to the underlying hash map.
-  HASH_MAP &map (void);
+  HASH_MAP &map ();
 
   /// Return the size of the underlying hash table.
-  size_t total_size (void);
+  size_t total_size ();
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  virtual size_t current_size (void);
+  virtual size_t current_size ();
 
   // = Name bindings manipulation methods.
 
@@ -169,8 +172,7 @@ public:
    * Remove a binding containing <id> and <kind> from the table.
    * Return 0 on success and -1 on failure.
    */
-  virtual int unbind (const char * id,
-                      const char * kind);
+  virtual int unbind (const char * id, const char * kind);
 
   /**
    * Find the binding containing <id> and <kind> in the table, and
@@ -185,7 +187,6 @@ public:
                     CosNaming::BindingType &type);
 
 private:
-
   /// Helper: factors common code from <bind> and <rebind>.
   int shared_bind (const char *id,
                    const char *kind,
@@ -197,7 +198,6 @@ private:
   HASH_MAP map_;
 
   CORBA::ORB_var orb_;
-
 };
 
 /**
@@ -215,24 +215,20 @@ private:
  */
 class TAO_Naming_Serv_Export TAO_Storable_Naming_Context : public TAO_Hash_Naming_Context
 {
-
 public:
-
   /// Underlying data structure - typedef for ease of use.
   typedef TAO_Storable_Bindings_Map::HASH_MAP HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
-                               TAO_Naming_Service_Persistence_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
+                               TAO_Storable_Naming_Context_Factory *cxt_factory,
+                               TAO::Storable_Factory *factory,
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
-  virtual ~TAO_Storable_Naming_Context (void);
+  virtual ~TAO_Storable_Naming_Context ();
 
   // = Utility methods.
   /**
@@ -245,25 +241,22 @@ public:
   static CosNaming::NamingContext_ptr make_new_context (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
-                               const char *poa_id,
-                               size_t context_size,
-                               TAO_Naming_Service_Persistence_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
-                               TAO_Storable_Naming_Context **new_context
-                               ACE_ENV_ARG_DECL);
+                               const char *context_id,
+                               TAO_Storable_Naming_Context_Factory *cxt_factory,
+                               TAO::Storable_Factory *pers_factory,
+                               TAO_Storable_Naming_Context **new_context);
 
   // = Methods not implemented in TAO_Hash_Naming_Context.
 
-  static CosNaming::NamingContext_ptr recreate_all(
+  static CosNaming::NamingContext_ptr recreate_all (
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
-                              const char *poa_id,
+                              const char *context_id,
                               size_t context_size,
                               int reentering,
-                              TAO_Naming_Service_Persistence_Factory *factory,
-                              const ACE_TCHAR *persistence_directory,
-                              int use_redundancy
-                              ACE_ENV_ARG_DECL);
+                              TAO_Storable_Naming_Context_Factory *cxt_factory,
+                              TAO::Storable_Factory *pers_factory,
+                              int use_redundancy);
 
 
   /**
@@ -271,7 +264,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (ACE_ENV_SINGLE_ARG_DECL);
+  virtual CosNaming::NamingContext_ptr new_context ();
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -281,13 +274,11 @@ public:
    */
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi
-                     ACE_ENV_ARG_DECL);
+                     CosNaming::BindingIterator_out &bi);
 
 
   virtual void rebind (const CosNaming::Name& n,
-                       CORBA::Object_ptr obj
-                       ACE_ENV_ARG_DECL);
+                       CORBA::Object_ptr obj);
 
   /**
    * Create a binding for name <n> and object <obj> in the naming
@@ -299,8 +290,7 @@ public:
    * participate in name resolution later.
    */
   virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj
-                     ACE_ENV_ARG_DECL);
+                     CORBA::Object_ptr obj);
 
 
   /**
@@ -309,8 +299,7 @@ public:
    * compound names are passed to be resolved.
    */
   virtual void bind_context (const CosNaming::Name &n,
-                             CosNaming::NamingContext_ptr nc
-                             ACE_ENV_ARG_DECL);
+                             CosNaming::NamingContext_ptr nc);
 
   /**
    * This is a version of <rebind> specifically for naming contexts,
@@ -318,8 +307,7 @@ public:
    * names are passed.
    */
    virtual void rebind_context (const CosNaming::Name &n,
-                                CosNaming::NamingContext_ptr nc
-                                ACE_ENV_ARG_DECL);
+                                CosNaming::NamingContext_ptr nc);
 
   /**
    * Return object reference that is bound to the name.  Compound name
@@ -328,16 +316,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n
-                                     ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n
-                       ACE_ENV_ARG_DECL);
+  virtual void unbind (const CosNaming::Name &n);
 
   /**
    * This operation creates a new context and binds it to the name
@@ -346,20 +332,46 @@ public:
    * bound (the name argument excluding the last component).
    */
   virtual CosNaming::NamingContext_ptr bind_new_context (
-                                const CosNaming::Name &n
-                                ACE_ENV_ARG_DECL);
+                                const CosNaming::Name &n);
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
    * bindings in which the given context is bound to some names, to
    * avoid dangling references when invoking <destroy> operation.
-   * NOTE: <destory> is a no-op on the root context.
+   * NOTE: <destroy> is a no-op on the root context.
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void destroy ();
 
 protected:
+  /**
+   * A helper function to ensure the current object was not destroyed by raising
+   * an exception if it was. Uses the lock as a Reader.
+   */
+  void verify_not_destroyed ();
+
+  /**
+   * A helper function to validate the name argument and return a final context
+   * if the supplied name is nested
+   */
+  bool nested_context (const CosNaming::Name &n,
+                       CosNaming::NamingContext_out nc);
+
+  /**
+   * An internal callback invoked by the File_Open_Lock_and_Check object to
+   * signal that this context was updated and written to disk.
+   * This will have been done after the file is closed. Check the
+   * last_changed_ attribute for the time of the write.
+   */
+  virtual void context_written ();
+
+  /**
+   * An internal callback invoked by the File_Open_Lock_and_Check
+   * object to determine if this context is obsolete with respect to the
+   * file object .
+   */
+  virtual bool is_obsolete (time_t stored_time);
 
   /// Global counter used for generation of POA ids for children Naming
   /// Contexts.
@@ -379,11 +391,16 @@ protected:
 
   CORBA::ORB_var orb_;
 
-  ACE_CString name_;
+  /// The name of the context used as its object id when registered
+  /// with the POA.
+  ACE_CString context_name_;
 
+  /// The POA that this context was registered with.
   PortableServer::POA_var poa_;
 
-  TAO_Naming_Service_Persistence_Factory *factory_;
+  TAO_Storable_Naming_Context_Factory *context_factory_;
+
+  TAO::Storable_Factory *factory_;
 
   /// The directory in which to store the files
   ACE_CString persistence_directory_;
@@ -393,78 +410,74 @@ protected:
 
   /// Disk time that match current memory state
   time_t last_changed_;
+  time_t last_check_;
 
-  /// Flag to tell use whether we are redundant or not
+  /// Flag to tell us whether we are redundant or not
   static int redundant_;
 
   static const char * root_name_;
 
   /// The pointer to the global file used to allocate new contexts
-  static ACE_Auto_Ptr<TAO_Storable_Base> gfl_;
+  static std::unique_ptr<TAO::Storable_Base> gfl_;
 
 /**
  * @class File_Open_Lock_and_Check
  *
- * @brief Helper class for the TAO_Storable_Naming_Context.
- *
- * Guard class for the TAO_Storable_Naming_Context.  It opens
- * a file for read/write and sets a lock on it.  It then checks
- * if the file has changed and re-reads it if it has.
- *
- * The destructor insures that the lock gets released.
- *
- * <pre>
- * How to use this class:
- *   File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
-     ACE_CHECK;
- * </pre>
+ * @brief File guard specific for storable naming contexts.
  */
-class File_Open_Lock_and_Check
+class TAO_Naming_Serv_Export File_Open_Lock_and_Check :
+public TAO::Storable_File_Guard
 {
 public:
+  /// Constructor
+  File_Open_Lock_and_Check (TAO_Storable_Naming_Context * context,
+                            Method_Type method_type,
+                            bool loadnow = true);
 
-  /// Constructor - we always need the object which we guard.
-  File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
-                                const char * mode 
-                                ACE_ENV_ARG_DECL);
+  ~File_Open_Lock_and_Check ();
 
-  /// Destructor
-  ~File_Open_Lock_and_Check(void);
+protected:
+  /// Check if the guarded object is current with the last
+  /// update which could have been performed independently of
+  /// the owner of this object.
+  virtual bool object_obsolete ();
 
-  /// Releases the lock, closes the file, and deletes the I/O stream.
-  void release(void);
+  /// Mark the object as current with respect to the
+  /// file to which it was persisted.
+  virtual void mark_object_current ();
 
-  /// Returns the stream to read/write on
-  TAO_Storable_Base & peer(void);
+  /// Mark the time at which the object was modified and
+  virtual void set_object_last_changed (const time_t & time);
+
+  /// Get the time which the object was last written to the
+  /// file.
+  virtual time_t get_object_last_changed ();
+
+  virtual int load_from_stream ();
+
+  virtual bool is_loaded_from_stream ();
+
+  virtual TAO::Storable_Base * create_stream (const char * mode);
 
 private:
   /// Default constructor
-  File_Open_Lock_and_Check(void);
+  File_Open_Lock_and_Check();
 
-  /// A flag to keep us from trying to close things more than once.
-  int closed_;
-
-  /// We need to save the pointer to our parent for cleaning up
   TAO_Storable_Naming_Context * context_;
-
-  /// The pointer to the actual file I/O (bridge pattern)
-  TAO_Storable_Base *fl_;
-
-  /// The flags that we were opened with
-  int rwflags_;
-
-  /// Symbolic values for the flags in the above
-  enum{ mode_write = 1, mode_read = 2, mode_create = 4 };
 }; // end of embedded class File_Open_Lock_and_Check
 
   friend class File_Open_Lock_and_Check;
+  friend class TAO_Storable_Naming_Context_ReaderWriter;
 
-  int load_map(File_Open_Lock_and_Check *flck ACE_ENV_ARG_DECL);
+  int load_map(TAO::Storable_Base& storable);
 
-  void Write(TAO_Storable_Base& wrtr);
+  void Write(TAO::Storable_Base& wrtr);
 
+  /// Is set by the Write operation.  Used to determine
+  int write_occurred_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_STORABLE_NAMING_CONTEXT_H */

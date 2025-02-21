@@ -3,8 +3,6 @@
 /**
  *  @file   Counting_Supplier.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -34,7 +32,7 @@ class EC_Test_Export EC_Counting_Supplier : public POA_RtecEventComm::PushSuppli
 {
 public:
   /// Constructor
-  EC_Counting_Supplier (void);
+  EC_Counting_Supplier ();
 
   // = The RtecEventComm::PushSupplier methods
 
@@ -45,32 +43,25 @@ public:
    * receives the timeout.
    */
   void activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                 int period
-                 ACE_ENV_ARG_DECL);
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+                 int period);
+  void deactivate ();
 
   /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 int published_source,
                 int published_type,
                 int event_source,
-                int event_type
-                ACE_ENV_ARG_DECL);
+                int event_type);
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+                const RtecEventChannelAdmin::SupplierQOS &qos);
+  void disconnect ();
 
   /// The Consumer side methods.
-  void push (const RtecEventComm::EventSet& events
-             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push (const RtecEventComm::EventSet& events);
+  void disconnect_push_consumer ();
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
 
   /// Count the number of events sent
   CORBA::ULong event_count;
@@ -102,13 +93,13 @@ public:
   EC_Counting_Supplier_Task (EC_Counting_Supplier *supplier);
 
   // = Check the ACE_Task_Base documentation.
-  int svc (void);
+  int svc ();
 
-  void stop (void);
-  CORBA::ULong push_count (void);
+  void stop ();
+  CORBA::ULong push_count ();
 
   /// Run a single iteration of the test
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run ();
 
 private:
   /// The supplier we are turning into an active object

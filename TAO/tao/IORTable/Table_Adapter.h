@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file Table_Adapter.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
@@ -15,7 +13,9 @@
 #define TAO_TABLE_ADAPTER_H
 #include /**/ "ace/pre.h"
 
-#include "iortable_export.h"
+#include "tao/IORTable/iortable_export.h"
+#include "tao/IORTable/IORTable.h"
+#include "tao/IORTable/IOR_Table_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,44 +24,53 @@
 #include "tao/Adapter.h"
 #include "tao/Adapter_Factory.h"
 #include "ace/Service_Config.h"
+#include "ace/Lock.h"
+#include "tao/ORB_Core.h"
 
-class TAO_IOR_Table_Impl;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IORTable_Export TAO_Table_Adapter : public TAO_Adapter
 {
 public:
   /// Constructor
-  TAO_Table_Adapter (TAO_ORB_Core *orb_core);
+  TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
-  virtual ~TAO_Table_Adapter (void);
+  virtual ~TAO_Table_Adapter ();
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void close (int wait_for_completion
-                      ACE_ENV_ARG_DECL);
-  virtual void check_close (int wait_for_completion
-                            ACE_ENV_ARG_DECL);
-  virtual int priority (void) const;
+  virtual void open ();
+  virtual void close (int wait_for_completion);
+  virtual void check_close (int wait_for_completion);
+  virtual int priority () const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual const char *name (void) const;
-  virtual CORBA::Object_ptr root (void);
+                        CORBA::Object_out foward_to);
+
+  virtual const char *name () const;
+  virtual CORBA::Object_ptr root ();
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
-                                                    CORBA::Object_ptr);
-private:
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *stub);
+
+protected:
+  static ACE_Lock * create_lock (TAO_SYNCH_MUTEX &l);
+
+  /// Helper method to find an object bound in the table.
+  bool find_object (TAO::ObjectKey &key,
+                    CORBA::Object_out forward_to);
+
   /// The ORB Core we belong to
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core &orb_core_;
 
   /// The table implementation
-  TAO_IOR_Table_Impl *root_;
+  TAO_IOR_Table_Impl_var root_;
+
+  bool closed_;
+  TAO_SYNCH_MUTEX thread_lock_;
+  ACE_Lock *lock_;
 };
 
 // ****************************************************************
@@ -70,12 +79,14 @@ class TAO_IORTable_Export TAO_Table_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
   /// Constructor
-  TAO_Table_Adapter_Factory (void);
+  TAO_Table_Adapter_Factory ();
 
-  // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
-  // details.
+  /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
+  /// details.
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Table_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_IORTable, TAO_Table_Adapter_Factory)

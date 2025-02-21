@@ -4,45 +4,41 @@
 /**
  *  @file ThreadStrategyORBControl.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
 #ifndef TAO_THREADSTRATEGYORBCONTROL_H
 #define TAO_THREADSTRATEGYORBCONTROL_H
+
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/ThreadStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ThreadStrategy.h"
-#include "ace/Service_Config.h"
 #include "tao/orbconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    class ThreadStrategyORBControl
-       : public ThreadStrategy
+    class ThreadStrategyORBControl : public ThreadStrategy
     {
     public:
-      virtual int enter ();
+      int enter () override;
 
-      virtual int exit ();
-
-      virtual ::PortableServer::ThreadPolicyValue type() const;
+      int exit () override;
     };
-
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategyORBControl)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategyORBControl)
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_THREADSTRATEGYORBCONTROL_H */

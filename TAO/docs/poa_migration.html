@@ -2,7 +2,7 @@
 <HEAD>
   <META NAME="GENERATOR" CONTENT="Adobe PageMill 2.0 Mac">
   <TITLE>Migrating from the BOA to the POA</TITLE>
-  <!-- $Id$ -->
+  <!--  -->
 </HEAD>
 
 <BODY text = "#000000"
@@ -22,7 +22,7 @@ implementation, which is the only Object Adapter supported by TAO.
 For more information on the benefits of the POA please see the <A
 HREF="http://www.cs.wustl.edu/~schmidt/report-doc.html">Object
 Interconnection</A> columns written by <A
-HREF="http://www.cs.wustl.edu/~schmidt/">Doug Schmidt</A> and <A
+HREF="http://www.dre.vanderbilt.edu/~schmidt/">Doug Schmidt</A> and <A
 HREF="http://www.iona.com/hyplan/vinoski/">Steve Vinoski</a>.
 
 <h3>Contents</h3>
@@ -109,22 +109,17 @@ method, usually written like this:
 
 class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
 {
-  void destroy (CORBA_Environment &ACE_TRY_ENV);
+  void destroy ();
 };
 
 void
-TAO_Thread_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Policy::destroy ()
 {
-  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
+  PortableServer::POA_var poa = this->_default_POA ();
 
-  PortableServer::ObjectId_var id = poa->servant_to_id (this,
-                                                        ACE_TRY_ENV);
-  ACE_CHECK;
+  PortableServer::ObjectId_var id = poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
-  ACE_CHECK;
+  poa->deactivate_object (id.in ());
 
   // Commit suicide: must have been dynamically allocated.
   delete this;
@@ -136,31 +131,23 @@ The correct implementation is:
 
 <PRE>
 
-class TAO_Export TAO_Thread_Policy : public virtual PortableServer::RefCountServantBase,
-                                     public virtual POA_PortableServer::ThreadPolicy
+class TAO_Export TAO_Thread_Policy : public virtual POA_PortableServer::ThreadPolicy
 {
-  void destroy (CORBA_Environment &ACE_TRY_ENV);
+  void destroy ();
 };
 
 void
-TAO_Thread_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Policy::destroy ()
 {
-  //
   // Remove self from POA.  Because of reference counting, the POA
   // will automatically delete the servant when all pending requests
   // on this servant are complete.
-  //
 
-  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
+  PortableServer::POA_var poa = this->_default_POA ();
 
-  PortableServer::ObjectId_var id = poa->servant_to_id (this,
-                                                        ACE_TRY_ENV);
-  ACE_CHECK;
+  PortableServer::ObjectId_var id = poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
-  ACE_CHECK;
+  poa->deactivate_object (id.in ());
 }
 
 </PRE>
@@ -169,13 +156,11 @@ One additional step required is to make the POA responsible for the
 servant after it has been registered with the POA:
 
 <PRE>
-
   // Register with the POA.
-  PortableServer::ThreadPolicy_var result = new_thread_policy->_this (ACE_TRY_ENV);
+  PortableServer::ThreadPolicy_var result = new_thread_policy->_this ();
 
   // Give ownership of this servant to the POA.
-  new_thread_policy->_remove_ref (ACE_TRY_ENV);
-
+  new_thread_policy->_remove_ref ();
 </PRE>
 
 If you use the above approach of multiple inheritance, you must add
@@ -193,8 +178,8 @@ the following to your header file:
 
 To see the above example in detail, checkout <A
 HREF="../examples/POA/Reference_Counted_Servant">TAO/examples/POA/Reference_Counted_Servant</A>
-and/or <A HREF="../tao/PortableServer/POA.cpp">POA.cpp</A> and <A
-HREF="../tao/PortableServer/POA.h">POA.h</A>. </li> <p>
+and/or <A HREF="../tao/PortableServer/Root_POA.cpp">Root_POA.cpp</A> and <A
+HREF="../tao/PortableServer/Root_POA.h">Root_POA.h</A>. </li> <p>
 
 </ul>
 

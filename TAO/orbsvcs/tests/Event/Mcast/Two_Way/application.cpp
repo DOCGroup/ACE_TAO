@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Constants.h"
 
 #include "orbsvcs/Event_Utilities.h"
@@ -41,12 +39,11 @@ class Heartbeat_Application :
   public TAO_EC_Deactivated_Object
 {
 public:
-
   /// Constructor.
-  Heartbeat_Application (void);
+  Heartbeat_Application ();
 
   /// Destructor.
-  ~Heartbeat_Application (void);
+  ~Heartbeat_Application ();
 
   // Initializes the object: connects with EC as a supplier and a
   // consumer and registers with reactor for timeouts.  If init ()
@@ -56,13 +53,14 @@ public:
   // will not have a chance to execute, it is the responsibility of
   // the user.)
   void init (CORBA::ORB_var orb,
-             RtecEventChannelAdmin::EventChannel_var ec
-             ACE_ENV_ARG_DECL);
+             RtecEventChannelAdmin::EventChannel_var ec);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // No-op if the object hasn't been fully initialized.  Otherwise,
   // deregister from reactor and poa, destroy ec or just disconnect from it
   // (based on <destroy_ec> flag), and shut down the orb.
-  void shutdown (void);
+  void shutdown ();
+  //FUZZ: enable check_for_lack_ACE_OS
 
   /// Send another heartbeat or, if we already sent/attempted the required
   /// number of heartbeats, perform shutdown().
@@ -72,17 +70,13 @@ public:
   /// PushConsumer methods.
   //@{
   /// Update our <heartbeats_> database to reflect newly received heartbeats.
-  virtual void push (const RtecEventComm::EventSet &events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet &events);
 
   /// Initiate shutdown().
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC((CORBA::SystemException));
+  virtual void disconnect_push_consumer ();
   //@}
 
 private:
-
   /**
    * @class Timeout_Handler
    *
@@ -107,16 +101,16 @@ private:
   int check_args (CORBA::ORB_var orb,
                   RtecEventChannelAdmin::EventChannel_var ec);
   /// Connects to EC as a supplier.
-  void connect_as_supplier (ACE_ENV_SINGLE_ARG_DECL);
+  void connect_as_supplier ();
   /// Connects to EC as a consumer.  Activate with default POA.
-  void connect_as_consumer (ACE_ENV_SINGLE_ARG_DECL);
+  void connect_as_consumer ();
   /// Call destroy() on the EC.  Does not propagate exceptions.
-  void destroy_ec (void);
+  void destroy_ec ();
   /// Registers with orb's reactor for timeouts ocurring every 0.5
   /// seconds. Returns 0 on success, -1 on error.
-  int register_for_timeouts (void);
+  int register_for_timeouts ();
   /// Deregister from reactor.
-  void stop_timeouts (void);
+  void stop_timeouts ();
   //@}
 
   /// Flag indicating whether this object has been fully initialized.
@@ -177,7 +171,7 @@ handle_timeout (const ACE_Time_Value& tv,
 
 // **************************************************************************
 
-Heartbeat_Application::Heartbeat_Application (void)
+Heartbeat_Application::Heartbeat_Application ()
   : initialized_ (0)
   , timeout_handler_ (this)
   , n_timeouts_ (0)
@@ -189,7 +183,7 @@ Heartbeat_Application::Heartbeat_Application (void)
 {
 }
 
-Heartbeat_Application::~Heartbeat_Application (void)
+Heartbeat_Application::~Heartbeat_Application ()
 {
 }
 
@@ -221,13 +215,12 @@ Heartbeat_Application::check_args (CORBA::ORB_var orb,
 
 void
 Heartbeat_Application::init (CORBA::ORB_var orb,
-                             RtecEventChannelAdmin::EventChannel_var ec
-                             ACE_ENV_ARG_DECL)
+                             RtecEventChannelAdmin::EventChannel_var ec)
 {
   // Verify arguments.
   if (this->check_args (orb, ec) == -1)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   // Get hostname & process id, i.e., identity of this application.
@@ -243,26 +236,22 @@ Heartbeat_Application::init (CORBA::ORB_var orb,
       ACE_ERROR ((LM_ERROR,
                   "Heartbeat_Application::init - "
                   "cannot get hostname\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   // Connect to EC as a supplier.
-  this->connect_as_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->connect_as_supplier ();
 
   // Connect to EC as a consumer.
-  ACE_TRY
+  try
     {
-      this->connect_as_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->connect_as_consumer ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       this->consumer_proxy_disconnect_.execute ();
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   // Register for reactor timeouts.
   if (this->register_for_timeouts () == -1)
@@ -270,14 +259,14 @@ Heartbeat_Application::init (CORBA::ORB_var orb,
       this->consumer_proxy_disconnect_.execute ();
       this->supplier_proxy_disconnect_.execute ();
       this->deactivator_.deactivate ();
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   this->initialized_ = 1;
 }
 
 int
-Heartbeat_Application::register_for_timeouts (void)
+Heartbeat_Application::register_for_timeouts ()
 {
   // Schedule timeout every 0.5 seconds, for sending heartbeat events.
   ACE_Time_Value timeout_interval (0, 500000);
@@ -297,7 +286,7 @@ Heartbeat_Application::register_for_timeouts (void)
 }
 
 void
-Heartbeat_Application::stop_timeouts (void)
+Heartbeat_Application::stop_timeouts ()
 {
   ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
   if (!reactor
@@ -310,26 +299,22 @@ Heartbeat_Application::stop_timeouts (void)
 }
 
 void
-Heartbeat_Application::connect_as_supplier (ACE_ENV_SINGLE_ARG_DECL)
+Heartbeat_Application::connect_as_supplier ()
 {
   // Obtain reference to SupplierAdmin.
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->ec_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->ec_->for_suppliers ();
 
   // Obtain ProxyPushConsumer and connect this supplier.
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
-    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_admin->obtain_push_consumer ();
   Consumer_Proxy_Disconnect new_proxy_disconnect (proxy.in ());
 
   ACE_SupplierQOS_Factory qos;
   qos.insert (SOURCE_ID, HEARTBEAT, 0, 1);
 
   proxy->connect_push_supplier (RtecEventComm::PushSupplier::_nil (),
-                                qos.get_SupplierQOS ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                qos.get_SupplierQOS ());
 
   // Update resource managers.
   this->consumer_ = proxy._retn ();
@@ -337,7 +322,7 @@ Heartbeat_Application::connect_as_supplier (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Heartbeat_Application::connect_as_consumer (ACE_ENV_SINGLE_ARG_DECL)
+Heartbeat_Application::connect_as_consumer ()
 {
   // Activate with poa.
   RtecEventComm::PushConsumer_var consumer_ref;
@@ -347,19 +332,15 @@ Heartbeat_Application::connect_as_consumer (ACE_ENV_SINGLE_ARG_DECL)
   activate (consumer_ref,
             poa.in (),
             this,
-            deactivator
-            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+            deactivator);
 
   // Obtain reference to ConsumerAdmin.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->ec_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->ec_->for_consumers ();
 
   // Obtain ProxyPushSupplier..
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
   Supplier_Proxy_Disconnect new_proxy_disconnect (proxy.in ());
 
   // Connect this consumer.
@@ -367,9 +348,7 @@ Heartbeat_Application::connect_as_consumer (ACE_ENV_SINGLE_ARG_DECL)
   qos.start_disjunction_group (1);
   qos.insert_type (ACE_ES_EVENT_ANY, 0);
   proxy->connect_push_consumer (consumer_ref.in (),
-                                qos.get_ConsumerQOS ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                qos.get_ConsumerQOS ());
 
   // Update resource managers.
   this->supplier_proxy_disconnect_.set_command (new_proxy_disconnect);
@@ -380,7 +359,7 @@ int
 Heartbeat_Application::handle_timeout (const ACE_Time_Value&,
                                        const void*)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (this->n_timeouts_++ < HEARTBEATS_TO_SEND)
         {
@@ -399,8 +378,7 @@ Heartbeat_Application::handle_timeout (const ACE_Time_Value&,
                                           (u_char *)this->hostname_and_pid_,
                                           0);
 
-          this->consumer_->push (events ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->consumer_->push (events);
         }
       else
         // We already sent the required number of heartbeats.  Time to
@@ -409,20 +387,16 @@ Heartbeat_Application::handle_timeout (const ACE_Time_Value&,
           this->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Suppressed the following exception in "
-                           "Heartbeat_Application::handle_timeout:\n");
+      ex._tao_print_exception (
+        "Suppressed the following exception in ""Heartbeat_Application::handle_timeout:\n");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
-Heartbeat_Application::push (const RtecEventComm::EventSet &events
-                             ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC((CORBA::SystemException))
+Heartbeat_Application::push (const RtecEventComm::EventSet &events)
 {
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
@@ -453,7 +427,7 @@ Heartbeat_Application::push (const RtecEventComm::EventSet &events
             {
               ACE_ERROR ((LM_ERROR,
                           "Unable to add new entry "
-                          "to heartbeat database \n"));
+                          "to heartbeat database\n"));
               break;
             }
 
@@ -467,35 +441,31 @@ Heartbeat_Application::push (const RtecEventComm::EventSet &events
 }
 
 void
-Heartbeat_Application::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC((CORBA::SystemException))
+Heartbeat_Application::disconnect_push_consumer ()
 {
   this->shutdown ();
 }
 
 void
-Heartbeat_Application::destroy_ec (void)
+Heartbeat_Application::destroy_ec ()
 {
   if (!CORBA::is_nil (this->ec_.in ()))
     {
-      ACE_TRY_NEW_ENV
+      try
         {
-          this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->ec_->destroy ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Suppressed the following exception in "
-                               "Application_Heartbeat::destroy_ec\n");
+          ex._tao_print_exception (
+            "Suppressed the following exception in ""Application_Heartbeat::destroy_ec\n");
         }
-      ACE_ENDTRY;
 
       this->ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
     }
 }
 void
-Heartbeat_Application::shutdown (void)
+Heartbeat_Application::shutdown ()
 {
   if (!this->initialized_)
     return;
@@ -541,18 +511,15 @@ Heartbeat_Application::shutdown (void)
     }
 
   // Shutdown the ORB.
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->shutdown (false);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "The following exception occured in "
-                           "Heartbeat_Application::shutdown:\n");
+      ex._tao_print_exception (
+        "The following exception occurred in ""Heartbeat_Application::shutdown:\n");
     }
-  ACE_ENDTRY;
 }
 
 ////////////////////////////////////////////////////////////
@@ -569,9 +536,9 @@ check_for_nil (CORBA::Object_ptr obj, const char *message)
 }
 
 int
-parse_args (int argc, char ** argv)
+parse_args (int argc, ACE_TCHAR ** argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, "d");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("d"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -597,41 +564,34 @@ parse_args (int argc, char ** argv)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // We may want this to be alive beyond the next block.
-  TAO_EC_Servant_Var<Heartbeat_Application> app;
+  PortableServer::Servant_var<Heartbeat_Application> app;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
         return 1;
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
       if (check_for_nil (poa.in (), "POA") == -1)
         return 1;
 
       PortableServer::POAManager_var manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
       // Obtain reference to EC.
-      obj = orb->resolve_initial_references ("Event_Service" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = orb->resolve_initial_references ("Event_Service");
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (obj.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
       if (check_for_nil (ec.in (), "EC") == -1)
         return 1;
 
@@ -640,27 +600,22 @@ main (int argc, char *argv[])
       if (!app.in ())
         return 1;
 
-      app->init (orb, ec ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      app->init (orb, ec);
 
       // Allow processing of CORBA requests.
-      manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager->activate ();
 
       // Receive events from EC.
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in Heartbeat Application:");
+      ex._tao_print_exception ("Exception in Heartbeat Application:");
       // Since there was an exception, application might not have had
       // a chance to shutdown.
       app->shutdown ();
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

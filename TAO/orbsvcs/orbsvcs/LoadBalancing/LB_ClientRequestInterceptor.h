@@ -4,8 +4,6 @@
 /**
  * @file LB_ClientRequestInterceptor.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -30,6 +28,8 @@
 #endif /* _MSC_VER */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_LB_ClientRequestInterceptor
  *
@@ -52,10 +52,9 @@
  */
 class TAO_LB_ClientRequestInterceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the Client Request Interceptor
    * Interface
@@ -66,43 +65,28 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestInterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
   //@}
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

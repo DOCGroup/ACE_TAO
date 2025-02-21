@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef MUXING_RECEIVER_H
 #define MUXING_RECEIVER_H
@@ -22,22 +19,24 @@ class Receiver
 {
 public:
   /// Constructor
-  Receiver (void);
+  Receiver (CORBA::ORB_ptr orb);
 
   /// Print out the results
-  void dump_results (void);
+  void dump_results ();
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &payload
-                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::Long get_event_count (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_data (const Test::Payload &payload);
+  virtual CORBA::Long get_event_count ();
+
+  virtual void shutdown ();
 
 private:
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
   CORBA::ULong message_count_;
   CORBA::ULong byte_count_;
+  /// Use an ORB reference to shutdown
+  /// the application.
+  CORBA::ORB_var orb_;
 };
 
 #if defined(_MSC_VER)

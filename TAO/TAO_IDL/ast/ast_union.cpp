@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -80,34 +78,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "global_extern.h"
+#include "ast_annotation_appl.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (ast, 
-           ast_union, 
-           "$Id$")
-
-AST_Union::AST_Union (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    AST_Structure (),
-    default_index_ (-2)
-{
-}
-
 AST_Union::AST_Union (AST_ConcreteType *dt,
                       UTL_ScopedName *n,
-                      idl_bool local,
-                      idl_bool abstract)
+                      bool local,
+                      bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_union,
@@ -124,11 +109,11 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
 {
   this->default_value_.computed_ = -2;
 
-  AST_PredefinedType *pdt = 0;
+  AST_PredefinedType *pdt = nullptr;
 
-  if (dt == 0)
+  if (dt == nullptr)
     {
-      this->pd_disc_type = 0;
+      this->pd_disc_type = nullptr;
       this->pd_udisc_type = AST_Expression::EV_none;
       return;
     }
@@ -138,11 +123,11 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
   // the pd_udisc_type field.
   if (dt->node_type () == AST_Decl::NT_pre_defined)
     {
-      pdt = AST_PredefinedType::narrow_from_decl (dt);
+      pdt = dynamic_cast<AST_PredefinedType*> (dt);
 
-      if (pdt == 0)
+      if (pdt == nullptr)
         {
-          this->pd_disc_type = 0;
+          this->pd_disc_type = nullptr;
           this->pd_udisc_type = AST_Expression::EV_none;
           return;
         }
@@ -157,17 +142,29 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
         case AST_PredefinedType::PT_ulong:
           this->pd_udisc_type = AST_Expression::EV_ulong;
           break;
+        case AST_PredefinedType::PT_longlong:
+          this->pd_udisc_type = AST_Expression::EV_longlong;
+          break;
+        case AST_PredefinedType::PT_ulonglong:
+          this->pd_udisc_type = AST_Expression::EV_ulonglong;
+          break;
         case AST_PredefinedType::PT_short:
           this->pd_udisc_type = AST_Expression::EV_short;
           break;
         case AST_PredefinedType::PT_ushort:
           this->pd_udisc_type = AST_Expression::EV_ushort;
           break;
+        case AST_PredefinedType::PT_int8:
+          this->pd_udisc_type = AST_Expression::EV_int8;
+          break;
         case AST_PredefinedType::PT_char:
           this->pd_udisc_type = AST_Expression::EV_char;
           break;
         case AST_PredefinedType::PT_wchar:
           this->pd_udisc_type = AST_Expression::EV_wchar;
+          break;
+        case AST_PredefinedType::PT_uint8:
+          this->pd_udisc_type = AST_Expression::EV_uint8;
           break;
         case AST_PredefinedType::PT_octet:
           this->pd_udisc_type = AST_Expression::EV_octet;
@@ -177,7 +174,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
           break;
         default:
           this->pd_udisc_type = AST_Expression::EV_none;
-          this->pd_disc_type = 0;
+          this->pd_disc_type = nullptr;
           break;
         }
     }
@@ -189,10 +186,10 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
   else
     {
       this->pd_udisc_type = AST_Expression::EV_none;
-      this->pd_disc_type = 0;
+      this->pd_disc_type = nullptr;
     }
 
-  if (this->pd_disc_type == 0)
+  if (this->pd_disc_type == nullptr)
     {
       idl_global->err ()->error2 (UTL_Error::EIDL_DISC_TYPE,
                                   this,
@@ -200,7 +197,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     }
 }
 
-AST_Union::~AST_Union (void)
+AST_Union::~AST_Union ()
 {
 }
 
@@ -209,9 +206,9 @@ AST_Union::~AST_Union (void)
 void
 AST_Union::redefine (AST_Structure *from)
 {
-  AST_Union *u = AST_Union::narrow_from_decl (from);
+  AST_Union *u = dynamic_cast<AST_Union*> (from);
 
-  if (u == 0)
+  if (u == nullptr)
     {
       idl_global->err ()->redef_error (from->local_name ()->get_string (),
                                        this->local_name ()->get_string ());
@@ -229,7 +226,7 @@ AST_Union::redefine (AST_Structure *from)
 
 // Return the default_index.
 int
-AST_Union::default_index (void)
+AST_Union::default_index ()
 {
   if (this->default_index_ == -2)
     {
@@ -240,25 +237,43 @@ AST_Union::default_index (void)
 }
 
 // Are we or the parameter node involved in any recursion?
-idl_bool
+bool
 AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
+  bool self_test = (list.size () == 0);
+
+  // We should calculate this only once. If it has already been
+  // done, just return it.
+  if (self_test && this->in_recursion_ != -1)
+    {
+      return (this->in_recursion_ == 1);
+    }
+
+  if (list.size () > 1)
+  {
+    if (match_names (this, list))
+      {
+        // We've found ourselves outside of a sequence.
+        // This happens when we are not recursed ourselves but instead
+        // are part of another recursive type
+        return false;
+      }
+  }
+
+  list.enqueue_tail(this);
+
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
-      ACE_Unbounded_Queue<AST_Type *> scope_list = list;
-      scope_list.enqueue_tail (this);
-        
       // Initialize an iterator to iterate thru our scope.
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
            !si.is_done ();
            si.next ())
         {
-          AST_UnionBranch *field = 
-            AST_UnionBranch::narrow_from_decl (si.item ());
+          AST_UnionBranch *field = dynamic_cast<AST_UnionBranch*> (si.item ());
 
-          if (field == 0)
+          if (field == nullptr)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
@@ -269,11 +284,11 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
               type = td->primitive_base_type ();
             }
 
-          if (type == 0)
+          if (type == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Union::")
@@ -282,26 +297,28 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                                 0);
             }
 
-          if (type->in_recursion (scope_list))
+          if (type->in_recursion (list))
             {
-              this->in_recursion_ = 1;
+              if (self_test)
+                this->in_recursion_ = 1;
               idl_global->recursive_type_seen_ = true;
-              return this->in_recursion_;
+              return true;
             }
         }
     }
 
   // Not in recursion.
-  this->in_recursion_ = 0;
-  return this->in_recursion_;
+  if (self_test)
+    this->in_recursion_ = 0;
+  return false;
 }
 
 // Look up the default branch in union.
 AST_UnionBranch *
-AST_Union::lookup_default (void)
+AST_Union::lookup_default ()
 {
-  AST_UnionBranch *b = 0;
-  AST_Decl *d = 0;
+  AST_UnionBranch *b = nullptr;
+  AST_Decl *d = nullptr;
 
   for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_both);
        !i.is_done();
@@ -311,14 +328,14 @@ AST_Union::lookup_default (void)
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
-          b = AST_UnionBranch::narrow_from_decl (d);
+          b = dynamic_cast<AST_UnionBranch*> (d);
 
-          if (b == 0)
+          if (b == nullptr)
             {
               continue;
             }
 
-          if (b->label () != 0
+          if (b->label () != nullptr
               && b->label ()->label_kind () == AST_UnionLabel::UL_default)
             {
               idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
@@ -329,7 +346,7 @@ AST_Union::lookup_default (void)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Look up a branch by label.
@@ -339,17 +356,17 @@ AST_Union::lookup_label (AST_UnionBranch *b)
   AST_UnionLabel *label = b->label ();
   AST_Expression *lv = label->label_val ();
 
-  if (label->label_val () == 0)
+  if (label->label_val () == nullptr)
     {
       return b;
     }
 
-  AST_Decl *d = 0;
-  AST_UnionBranch       *fb = 0;
+  AST_Decl *d = nullptr;
+  AST_UnionBranch *fb = nullptr;
 
   lv->set_ev (lv->coerce (this->pd_udisc_type));
 
-  if (lv->ev () == 0)
+  if (lv->ev () == nullptr)
     {
       idl_global->err ()->eval_error (lv);
       return b;
@@ -363,14 +380,14 @@ AST_Union::lookup_label (AST_UnionBranch *b)
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
-          fb = AST_UnionBranch::narrow_from_decl (d);
+          fb = dynamic_cast<AST_UnionBranch*> (d);
 
-          if (fb == 0)
+          if (fb == nullptr)
             {
               continue;
             }
 
-          if (fb->label() != 0
+          if (fb->label() != nullptr
               && fb->label ()->label_kind () == AST_UnionLabel::UL_label
               && fb->label ()->label_val ()->compare (lv))
             {
@@ -382,7 +399,7 @@ AST_Union::lookup_label (AST_UnionBranch *b)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Look up a branch in an enum which is the discriminator type for this
@@ -393,16 +410,16 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 {
   AST_UnionLabel *label = b->label();
   AST_Expression *lv = label->label_val ();
-  AST_Enum *e = AST_Enum::narrow_from_decl (this->pd_disc_type);
-  AST_Decl *d = 0;
-  AST_UnionBranch       *fb = 0;
+  AST_Enum *e = dynamic_cast<AST_Enum*> (this->pd_disc_type);
+  AST_Decl *d = nullptr;
+  AST_UnionBranch       *fb = nullptr;
 
-  if (e == 0)
+  if (e == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
-  if (lv == 0)
+  if (lv == nullptr)
     {
       return b;
     }
@@ -418,9 +435,9 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
   // See if the symbol defines a constant in the discriminator enum.
   UTL_ScopedName *sn = lv->n ();
   d = e->lookup_by_name (sn,
-                         I_TRUE);
+                         true);
 
-  if (d == 0 || d->defined_in () != e)
+  if (d == nullptr || d->defined_in () != e)
     {
       idl_global->err ()->enum_val_lookup_failure (this,
                                                    e,
@@ -438,14 +455,14 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
-          fb = AST_UnionBranch::narrow_from_decl (d);
+          fb = dynamic_cast<AST_UnionBranch*> (d);
 
-          if (fb == 0)
+          if (fb == nullptr)
             {
               continue;
             }
 
-          if (fb->label() != 0
+          if (fb->label() != nullptr
               && fb->label ()->label_kind () == AST_UnionLabel::UL_label
               && fb->label ()->label_val ()->compare (lv))
             {
@@ -457,7 +474,7 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Look up a branch by value. This is the top level branch label resolution
@@ -466,14 +483,14 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 AST_UnionBranch *
 AST_Union::lookup_branch (AST_UnionBranch *branch)
 {
-  AST_UnionLabel *label = 0;
+  AST_UnionLabel *label = nullptr;
 
-  if (branch != 0)
+  if (branch != nullptr)
     {
       label = branch->label ();
     }
 
-  if (label != 0)
+  if (label != nullptr)
     {
       if (label->label_kind () == AST_UnionLabel::UL_default)
         {
@@ -489,7 +506,7 @@ AST_Union::lookup_branch (AST_UnionBranch *branch)
       return this->lookup_label (branch);
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Return the default value.
@@ -516,14 +533,19 @@ AST_Union::default_value (AST_Union::DefaultValue &dv)
 
 // Determine the default value (if any).
 int
-AST_Union::compute_default_value (void)
+AST_Union::compute_default_value ()
 {
   // Check if we really need a default value. This will be true if there is an
   // explicit default case OR if an implicit default exists because not all
   // values of the discriminant type are covered by the cases.
 
   // Compute the total true "case" labels i.e., exclude the "default" case.
-  int total_case_members = 0;
+  ACE_UINT64 total_case_members = 0;
+
+  // In the case of a (unsigned) long long discriminant being fully used
+  // the total case count would actually overflow back to zero.
+  // This is 'end of days' programming but what the heck. We're here now.
+  bool first_case_found = false;
 
   // Instantiate a scope iterator.
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -531,10 +553,9 @@ AST_Union::compute_default_value (void)
        si.next ())
     {
       // Get the next AST decl node.
-      AST_UnionBranch *ub =
-        AST_UnionBranch::narrow_from_decl (si.item ());
+      AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (si.item ());
 
-      if (ub != 0)
+      if (ub != nullptr)
         {
           // If the label is a case label, increment by 1.
           for (unsigned long i = 0; i < ub->label_list_length (); ++i)
@@ -542,6 +563,7 @@ AST_Union::compute_default_value (void)
               if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                 {
                   ++total_case_members;
+                  first_case_found = true;
                 }
             }
         }
@@ -558,7 +580,7 @@ AST_Union::compute_default_value (void)
     {
     case AST_Expression::EV_short:
     case AST_Expression::EV_ushort:
-      if (total_case_members == ACE_UINT16_MAX + 1)
+      if (total_case_members > ACE_UINT16_MAX)
         {
           this->default_value_.computed_ = 0;
         }
@@ -566,7 +588,11 @@ AST_Union::compute_default_value (void)
       break;
     case AST_Expression::EV_long:
     case AST_Expression::EV_ulong:
-      if ((unsigned int) total_case_members > ACE_UINT32_MAX)
+    case AST_Expression::EV_enum:
+      // Enums in CORBA are always 32bits in size, so unless
+      // there are that many enum labels in the set, it is
+      // incomplete (reguardless as to the actual member_count).
+      if (total_case_members > ACE_UINT32_MAX)
         {
           this->default_value_.computed_ = 0;
         }
@@ -574,19 +600,26 @@ AST_Union::compute_default_value (void)
       break;
     case AST_Expression::EV_longlong:
     case AST_Expression::EV_ulonglong:
-      // Error for now.
-      this->default_value_.computed_ = -1;
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          ACE_TEXT ("(%N:%l) AST_Union::compute_default_value ")
-          ACE_TEXT ("- unimplemented discriminant type ")
-          ACE_TEXT ("(longlong or ulonglong)\n")
-        ),
-        -1
-      );
-      ACE_NOTREACHED (break;)
+      // We would wrap to 0 here - we are using a 64 bit count
+      if (first_case_found && total_case_members == 0)
+        {
+          // If anyone ever produces a "default clause is invalid here" error
+          // after passing through here I will buy them a a house.
+          this->default_value_.computed_ = 0;
+        }
+
+      break;
     case AST_Expression::EV_char:
-      if (total_case_members == ACE_OCTET_MAX + 1)
+    case AST_Expression::EV_int8:
+      if (total_case_members > ACE_INT8_MAX)
+        {
+          this->default_value_.computed_ = 0;
+        }
+
+      break;
+    case AST_Expression::EV_uint8:
+    case AST_Expression::EV_octet:
+      if (total_case_members > ACE_UINT8_MAX)
         {
           this->default_value_.computed_ = 0;
         }
@@ -605,38 +638,6 @@ AST_Union::compute_default_value (void)
           this->default_value_.computed_ = 0;
         }
 
-      break;
-    case AST_Expression::EV_enum:
-      // Has to be enum.
-      {
-        AST_Decl *d = AST_Decl::narrow_from_decl (this->disc_type ());
-
-        if (d->node_type () == AST_Decl::NT_typedef)
-          {
-            AST_Typedef *bt = AST_Typedef::narrow_from_decl (d);
-            d = bt->primitive_base_type ();
-          }
-
-        AST_Enum *en = AST_Enum::narrow_from_decl (d);
-
-        if (en != 0)
-          {
-            if (total_case_members == en->member_count ())
-              {
-                this->default_value_.computed_ = 0;
-              }
-          }
-        else
-          {
-            // Error.
-            this->default_value_.computed_ = -1;
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%N:%l) AST_Union::")
-                               ACE_TEXT ("compute_default_value ")
-                               ACE_TEXT ("- disc type not an ENUM\n")),
-                              -1);
-          }
-      }
       break;
     default:
       // Error.
@@ -693,6 +694,9 @@ AST_Union::compute_default_value (void)
     case AST_Expression::EV_ulong:
       this->default_value_.u.ulong_val = 0;
       break;
+    case AST_Expression::EV_uint8:
+    case AST_Expression::EV_octet:
+    case AST_Expression::EV_int8:
     case AST_Expression::EV_char:
       this->default_value_.u.char_val = 0;
       break;
@@ -700,14 +704,17 @@ AST_Union::compute_default_value (void)
       this->default_value_.u.wchar_val = 0;
       break;
     case AST_Expression::EV_bool:
-      this->default_value_.u.bool_val = 0;
+      this->default_value_.u.bool_val = false;
       break;
     case AST_Expression::EV_enum:
       this->default_value_.u.enum_val = 0;
       break;
     case AST_Expression::EV_longlong:
+      this->default_value_.u.longlong_val = 0;
+      break;
     case AST_Expression::EV_ulonglong:
-      // Unimplemented.
+      this->default_value_.u.ulonglong_val = 0;
+      break;
     default:
       // Error caught earlier.
       break;
@@ -724,10 +731,9 @@ AST_Union::compute_default_value (void)
            si.next ())
         {
           // Get the next AST decl node
-          AST_UnionBranch *ub =
-            AST_UnionBranch::narrow_from_decl (si.item ());
+          AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (si.item ());
 
-          if (ub != 0)
+          if (ub != nullptr)
             {
               for (unsigned long i = 0;
                    i < ub->label_list_length () && !break_loop;
@@ -738,7 +744,7 @@ AST_Union::compute_default_value (void)
                       // Not a default.
                       AST_Expression *expr = ub->label (i)->label_val ();
 
-                      if (expr == 0)
+                      if (expr == nullptr)
                         {
                           // Error.
                           this->default_value_.computed_ = -1;
@@ -746,8 +752,7 @@ AST_Union::compute_default_value (void)
                               LM_ERROR,
                               ACE_TEXT ("(%N:%l) AST_Union::")
                               ACE_TEXT ("compute_default_value - ")
-                              ACE_TEXT ("Bad case label value\n")
-                            ),
+                              ACE_TEXT ("Bad case label value\n")),
                             -1
                           );
                         }
@@ -794,6 +799,9 @@ AST_Union::compute_default_value (void)
                             }
 
                           break;
+                        case AST_Expression::EV_uint8:
+                        case AST_Expression::EV_octet:
+                        case AST_Expression::EV_int8:
                         case AST_Expression::EV_char:
                           if (this->default_value_.u.char_val
                                 == expr->ev ()->u.cval)
@@ -816,7 +824,7 @@ AST_Union::compute_default_value (void)
                           if (this->default_value_.u.bool_val
                                 == expr->ev ()->u.bval)
                             {
-                              this->default_value_.u.bool_val++;
+                              this->default_value_.u.bool_val ^= true;
                               break_loop = 1;
                             }
 
@@ -833,8 +841,23 @@ AST_Union::compute_default_value (void)
 
                           break;
                         case AST_Expression::EV_longlong:
+                          if (this->default_value_.u.longlong_val
+                                == expr->ev ()->u.llval)
+                            {
+                              this->default_value_.u.longlong_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
                         case AST_Expression::EV_ulonglong:
-                          // Unimplemented. right now - flag as error.
+                          if (this->default_value_.u.ulonglong_val
+                                == expr->ev ()->u.ullval)
+                            {
+                              this->default_value_.u.ulonglong_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
                         default:
                           // Error.
                           break;
@@ -860,10 +883,10 @@ AST_Union::compute_default_value (void)
 
 // Compute the default index.
 int
-AST_Union::compute_default_index (void)
+AST_Union::compute_default_index ()
 {
-  AST_Decl *d = 0;
-  AST_UnionBranch *ub = 0;
+  AST_Decl *d = nullptr;
+  AST_UnionBranch *ub = nullptr;
   int i = 0;
 
   // If default case does not exist, it will have a value of -1 according to
@@ -890,12 +913,12 @@ AST_Union::compute_default_index (void)
 
           if (!d->imported ())
             {
-              ub = AST_UnionBranch::narrow_from_decl (d);
+              ub = dynamic_cast<AST_UnionBranch*> (d);
 
               for (unsigned long j = 0; j < ub->label_list_length (); ++j)
                 {
                   // Check if we are printing the default case.
-                  AST_UnionLabel::UnionLabel ulk = ub->label ()->label_kind ();
+                  AST_UnionLabel::UnionLabel ulk = ub->label (j)->label_kind ();
                   if (ulk == AST_UnionLabel::UL_default)
                     {
                       // Zero based indexing.
@@ -916,224 +939,28 @@ AST_Union::compute_default_index (void)
 
 // Redefinition of inherited virtual operations
 
-// Add this AST_UnionBranch node (a node representing one branch in a
-// union declaration) to this scope
 AST_UnionBranch *
 AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 {
-  AST_Decl *d = 0;
-
-  // If this is a malformed branch, don't do anything with it.
-  if (t == 0 || t->label() == 0)
-    {
-      return 0;
-    }
-
-  // If branch with that label already exists, complain.
-  if (lookup_branch (t) != 0)
-    {
-      idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
-                                  this,
-                                  t);
-      return 0;
-    }
-
-  // If branch with same field name exists, complain.
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // If we have an enum discriminator, add the label names to
-  // the name_referenced list before we add the union branch,
-  // so a branch name clash with a label name will be caught.
-  if (this->pd_udisc_type == AST_Expression::EV_enum)
-    {
-      t->add_labels (this);
-    }
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  AST_Type *ft = t->field_type ();
-  UTL_ScopedName *mru = ft->last_referenced_as ();
-
-  if (mru != 0)
-    {
-      this->add_to_referenced (ft,
-                               I_FALSE,
-                               mru->first_component ());
-    }
-    
-  this->fields_.enqueue_tail (t);
-
-  return t;
+  return dynamic_cast<AST_UnionBranch*> (this->fe_add_ref_decl (t));
 }
 
-// Add this AST_Union (manifest union type) to this scope.
 AST_Union *
 AST_Union::fe_add_union (AST_Union *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
-// Add this AST_Structure node (manifest struct type) to this scope.
 AST_Structure *
 AST_Union::fe_add_structure (AST_Structure *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
+  return this->fe_add_full_struct_type (t);
 }
 
-// Add this AST_Enum node (manifest enum type) to this scope.
 AST_Enum *
 AST_Union::fe_add_enum (AST_Enum *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 // Add this AST_EnumVal node (enumerator declaration) to this scope.
@@ -1143,46 +970,7 @@ AST_Union::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Union::fe_add_enum_val (AST_EnumVal *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 // Dump this AST_Union node to the ostream o.
@@ -1192,6 +980,14 @@ AST_Union::dump (ACE_OSTREAM_TYPE &o)
   o << "union ";
   this->local_name ()->dump (o);
   o << " switch (";
+  AST_Annotation_Appls::iterator i,
+    finished = disc_annotations ().end ();
+  for (i = disc_annotations ().begin (); i != finished; ++i)
+    {
+      AST_Annotation_Appl *a = i->get ();
+      a->dump (o);
+      dump_i (o, " ");
+    }
   this->pd_disc_type->local_name ()->dump (o);
   o << ") {\n";
   UTL_Scope::dump (o);
@@ -1201,7 +997,7 @@ AST_Union::dump (ACE_OSTREAM_TYPE &o)
 
 // Compute the size type of the node in question.
 int
-AST_Union::compute_size_type (void)
+AST_Union::compute_size_type ()
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -1215,9 +1011,9 @@ AST_Union::compute_size_type (void)
           continue;
         }
 
-      AST_Field *f = AST_Field::narrow_from_decl (d);
+      AST_Field *f = dynamic_cast<AST_Field*> (d);
 
-      if (f != 0)
+      if (f != nullptr)
         {
           AST_Type *t = f->field_type ();
           // Our sizetype depends on the sizetype of our members. Although
@@ -1230,7 +1026,7 @@ AST_Union::compute_size_type (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "WARNING (%N:%l) be_union::compute_size_type - "
-                      "narrow_from_decl returned 0\n"));
+                      "dynamic_cast returned 0\n"));
         }
     }
 
@@ -1246,18 +1042,25 @@ AST_Union::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_ConcreteType *
-AST_Union::disc_type (void)
+AST_Union::disc_type ()
 {
   return this->pd_disc_type;
 }
 
 AST_Expression::ExprType
-AST_Union::udisc_type (void)
+AST_Union::udisc_type ()
 {
   return this->pd_udisc_type;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_Union, AST_Structure)
-IMPL_NARROW_FROM_DECL(AST_Union)
-IMPL_NARROW_FROM_SCOPE(AST_Union)
+AST_Annotation_Appls &
+AST_Union::disc_annotations ()
+{
+  return disc_annotations_;
+}
+
+void
+AST_Union::disc_annotations (const AST_Annotation_Appls &annotations)
+{
+  disc_annotations_ = annotations;
+}

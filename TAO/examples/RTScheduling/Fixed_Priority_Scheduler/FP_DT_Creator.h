@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef FP_DT_CREATOR_H
 #define FP_DT_CREATOR_H
 
@@ -9,24 +7,23 @@
 class FP_DT_Creator: public DT_Creator
 {
 public:
-  FP_DT_Creator (void);
+  FP_DT_Creator ();
 
   virtual CORBA::Policy_ptr sched_param (int importance);
 
-  //virtual Task* task (void);
+  //virtual Task* task ();
   virtual Thread_Task* create_thr_task (int importance,
-					int start_time,
-					int load,
-					int iter,
-					int dist,
-					char *job_name);
-  
-  virtual void yield (int suspend_time,
-		      Thread_Task* task);
+                                        time_t start_time,
+                                        int load,
+                                        int iter,
+                                        int dist,
+                                        char *job_name);
 
-  virtual void wait (void);
-  virtual int total_load (void);
+  virtual void yield (time_t suspend_time,
+                      Thread_Task* task);
 
+  virtual void wait ();
+  virtual int total_load ();
 };
 
 

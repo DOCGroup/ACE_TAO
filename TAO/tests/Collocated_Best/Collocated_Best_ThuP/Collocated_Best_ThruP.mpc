@@ -1,0 +1,5 @@
+// -*- MPC -*-
+// Thru_Poa default enabled, Direct default disabled
+project(Collocated_Best_ThruP): taoserver {
+  exename = Collocated_Best_ThruP
+}

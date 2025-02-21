@@ -1,53 +1,43 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    helper.cpp
-//
-// = DESCRIPTION
-//    Defines a helper class that can generate values for the parameters used
-//    for the Param_Test example
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    helper.cpp
+ *
+ *  Defines a helper class that can generate values for the parameters used
+ *  for the Param_Test example
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 const CORBA::ULong TEST_BUFSIZE = 128;
 
-ACE_RCSID (Param_Test,
-           helper,
-           "$Id$")
-
-Generator::Generator (void)
+Generator::Generator ()
 {
 }
 
-Generator::~Generator (void)
+Generator::~Generator ()
 {
 }
 
 CORBA::Short
-Generator::gen_short (void)
+Generator::gen_short ()
 {
   return (CORBA::Short) (ACE_OS::rand () % TEST_BUFSIZE);
 }
 
 CORBA::Long
-Generator::gen_long (void)
+Generator::gen_long ()
 {
   return ::ACE_OS::rand () % TEST_BUFSIZE;
 }
 
 char *
-Generator::gen_string (void)
+Generator::gen_string ()
 {
   return gen_string (TEST_BUFSIZE);
 }
@@ -62,7 +52,7 @@ Generator::gen_string (int max_length)
   while (i < len)
     {
       int c = ACE_OS::rand () % 128;
-      if (isprint (c) && !isspace (c))
+      if (ACE_OS::ace_isprint (c) && !ACE_OS::ace_isspace (c))
         {
           buf [i] = c;
           i++;
@@ -74,7 +64,7 @@ Generator::gen_string (int max_length)
 }
 
 CORBA::WChar *
-Generator::gen_wstring (void)
+Generator::gen_wstring ()
 {
   return gen_wstring (TEST_BUFSIZE);
 }
@@ -102,7 +92,7 @@ Generator::gen_wstring (int max_length)
 }
 
 const Param_Test::Fixed_Struct
-Generator::gen_fixed_struct (void)
+Generator::gen_fixed_struct ()
 {
   this->fixed_struct_.l = ACE_OS::rand ();
   this->fixed_struct_.c = ACE_OS::rand () % 128;
@@ -115,7 +105,7 @@ Generator::gen_fixed_struct (void)
 }
 
 const Param_Test::Step
-Generator::gen_step (void)
+Generator::gen_step ()
 {
   this->step_.name.id = this->gen_string ();
   this->step_.name.kind = this->gen_string ();
@@ -123,10 +113,4 @@ Generator::gen_step (void)
   return this->step_;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Generator, TAO_SYNCH_RECURSIVE_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Generator, TAO_SYNCH_RECURSIVE_MUTEX>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Generator, ACE_Recursive_Thread_Mutex> *ACE_Singleton<Generator, ACE_Recursive_Thread_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Generator,  ACE_Recursive_Thread_Mutex);

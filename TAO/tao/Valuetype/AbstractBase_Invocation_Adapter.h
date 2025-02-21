@@ -4,8 +4,6 @@
 /**
  *  @file    AbstractBase_Invocation_Adapter.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -13,13 +11,15 @@
 #define TAO_ABSTRACTBASE_INVOCATION_ADAPTER_H
 
 #include /**/ "ace/pre.h"
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Invocation_Adapter.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -48,20 +48,23 @@ namespace TAO
         Argument **args,
         int arg_number,
         const char *operation,
-        int op_len,
-        Collocation_Proxy_Broker *cpb,
+        size_t op_len,
+        int collocation_opportunity,
         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
-        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
+        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
+        bool has_in_args = false);
 
   private:
-    /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (AbstractBase_Invocation_Adapter (void))
-
-    ACE_UNIMPLEMENTED_FUNC (AbstractBase_Invocation_Adapter & operator= (
-        const AbstractBase_Invocation_Adapter &))
+    AbstractBase_Invocation_Adapter () = delete;
+    AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &) = delete;
+    AbstractBase_Invocation_Adapter & operator= (const AbstractBase_Invocation_Adapter &) = delete;
+    AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter &&) = delete;
+    AbstractBase_Invocation_Adapter & operator= (AbstractBase_Invocation_Adapter &&) = delete;
   };
 } // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
-#endif /*TAO_INVOCATION_ADAPTER_H*/
+
+#endif  /* TAO_INVOCATION_ADAPTER_H */

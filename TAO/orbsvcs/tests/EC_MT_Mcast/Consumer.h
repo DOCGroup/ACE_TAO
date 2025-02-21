@@ -1,4 +1,3 @@
-// $Id$
 // Reused from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
 #ifndef CONSUMER_H
@@ -21,23 +20,19 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   It simply subscribes to one event type.
   //
 public:
-  Consumer (void);
+  Consumer ();
   // Constructor
 
-  void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
   // Connect to the Event Channel
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
   // Disconnect from the event channel
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:

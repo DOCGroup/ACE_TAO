@@ -1,0 +1,9 @@
+
+interface test
+{
+  long method (in long client_id,
+               in long iteration,
+               out long thread_count);
+
+  oneway void shutdown ();
+};

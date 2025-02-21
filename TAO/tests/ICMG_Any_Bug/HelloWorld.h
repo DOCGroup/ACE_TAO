@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef HELLOWORLD_H
 #define HELLOWORLD_H
@@ -14,13 +11,10 @@ class HelloWorld
   : public virtual POA_Test::HelloWorld
 {
 public:
-
-  HelloWorld (void);
+  HelloWorld ();
   /// Constructor
 
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  virtual char * get_string ();
 };
 
 #include /**/ "ace/post.h"

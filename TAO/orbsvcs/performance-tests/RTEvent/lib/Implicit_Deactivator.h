@@ -1,8 +1,6 @@
 /**
  * @file Implicit_Deactivator.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 #ifndef TAO_PERF_RTEC_IMPLICIT_DEACTIVATOR_H
@@ -23,19 +21,18 @@ public:
   /**
    * @param client The client
    */
-  explicit Implicit_Deactivator (PortableServer::Servant servant = 0
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  explicit Implicit_Deactivator (PortableServer::Servant servant = 0);
   Implicit_Deactivator (Implicit_Deactivator& rhs);
   Implicit_Deactivator& operator= (Implicit_Deactivator& rhs);
 
   /// Destructor
-  ~Implicit_Deactivator (void);
+  ~Implicit_Deactivator ();
 
   /// Assignment operator
   Implicit_Deactivator& operator= (PortableServer::Servant servant);
 
   /// Release the servant, i.e. the destructor does not deactivate anything
-  void release (void);
+  void release ();
 
 private:
   /// The POA

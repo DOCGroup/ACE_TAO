@@ -1,21 +1,20 @@
-// $Id$
-
-#include "ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_UDP_Out_Endpoint.i"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_UDP_Out_Endpoint, "$Id$")
 
-TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint ()
 {
   this->dgram_.close ();
 
-  delete[] this->ifs_;
-  this->ifs_ = 0;
+  delete [] this->ifs_;
 }
 
 CORBA::Boolean
@@ -26,7 +25,7 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
       // Cache the port number...
       ACE_INET_Addr local_addr;
       if (this->dgram ().get_local_addr (local_addr) == -1)
-        return 0;
+        return false;
       this->port_number_ = local_addr.get_port_number ();
     }
 
@@ -34,9 +33,9 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
   // message is remote, only when the local port number and the remote
   // port number match we have to look at the local ip addresses.
   if (from.get_port_number () != this->port_number_)
-    return 0;
+    return false;
 
-  if (this->ifs_ == 0)
+  if (this->ifs_ == nullptr)
     {
       ACE::get_ip_interfaces (this->if_count_, this->ifs_);
     }
@@ -45,12 +44,11 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
        i != this->ifs_ + this->if_count_;
        ++i)
     {
-      if ((*i).get_ip_address () == from.get_ip_address ())
-        return 1;
+      if (i->is_ip_equal(from))
+        return true;
     }
-  return 0;
+  return false;
 }
-
 
 TAO_ECG_UDP_Out_Endpoint&
 TAO_ECG_UDP_Out_Endpoint::operator= (const TAO_ECG_UDP_Out_Endpoint& rhs)
@@ -63,31 +61,19 @@ TAO_ECG_UDP_Out_Endpoint::operator= (const TAO_ECG_UDP_Out_Endpoint& rhs)
       this->if_count_ = rhs.if_count_;
 
       delete [] this->ifs_;
-      this->ifs_ = 0;
+      this->ifs_ = nullptr;
 
       if (this->if_count_ != 0)
         {
           ACE_NEW_RETURN (this->ifs_,
                           ACE_INET_Addr [this->if_count_],
                           *this);
-          for(size_t i = 0; i < this->if_count_; ++i)
-            {
-              this->ifs_[i] = rhs.ifs_[i];
-            }
+          for (size_t i = 0; i < this->if_count_; ++i)
+            this->ifs_[i] = rhs.ifs_[i];
         }
     }
 
   return *this;
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>;
-template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>;
-template class ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint,ACE_Null_Mutex>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
-#pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>
-#pragma instantiate ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint,ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

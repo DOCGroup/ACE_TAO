@@ -4,8 +4,6 @@
 /**
  * @file test_i.h
  *
- * $Id$
- *
  * Implementation header for the "test" IDL interface for the
  * PortableInterceptor ORB::shutdown() test.
  *
@@ -28,26 +26,21 @@
 class test_i : public virtual POA_test
 {
 public:
-
   /// Constructor.
   test_i (CORBA::ORB_ptr orb);
 
   /// Destructor.
-  ~test_i (void);
+  ~test_i ();
 
   /// Say hello.
-  virtual void hello (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void hello ();
 
   /// Shutdown the ORB.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;
-
 };
 
 #endif  /* TEST_I_H */

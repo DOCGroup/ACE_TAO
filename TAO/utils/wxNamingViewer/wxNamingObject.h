@@ -1,4 +1,3 @@
-// $Id$
 // wxNamingObject.h
 
 #ifndef i_wxNamingObject_h

@@ -1,4 +1,3 @@
-// $Id$
 #include "dynserver.h"
 
 #include "tao/IORTable/IORTable.h"
@@ -18,13 +17,15 @@ DynServer::DynServer()
 DynServer::~DynServer() {
 }
 
-Long DynServer::get() ACE_THROW_SPEC ((SystemException)) {
+Long DynServer::get()
+{
   ACE_DEBUG((LM_DEBUG, "dynserver: get() %d\n", ++n_));
   return n_;
 }
 
 namespace {
-  POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poaman) {
+  POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poaman)
+  {
     PolicyList policies (2);
     policies.length (2);
     policies[0] = root_poa->create_id_assignment_policy(USER_ID);
@@ -47,7 +48,7 @@ public:
   void end() {
     if (! is_nil(orb_.in())) {
       orb_->shutdown(1);
-      wait();
+      this->wait();
     }
   }
   virtual int svc()
@@ -58,15 +59,14 @@ public:
   }
 };
 
-DynServer_Loader::DynServer_Loader(void)
+DynServer_Loader::DynServer_Loader()
 {
 }
 
 int
-DynServer_Loader::init (int argc, ACE_TCHAR* argv[] ACE_ENV_ARG_DECL)
+DynServer_Loader::init (int argc, ACE_TCHAR* argv[])
 {
   try {
-
     orb_ = ORB_init(argc, argv, "DynServer");
 
     Object_var obj = orb_->resolve_initial_references("RootPOA");
@@ -109,19 +109,17 @@ DynServer_Loader::init (int argc, ACE_TCHAR* argv[] ACE_ENV_ARG_DECL)
     runner_->activate();
 
     ACE_DEBUG((LM_DEBUG, "dynserver: running.\n"));
-
   } catch (Exception& e) {
-    ACE_PRINT_EXCEPTION(e, "DynServer::init()");
+    e._tao_print_exception ("DynServer::init()");
   }
   return 0;
 }
 
 int
-DynServer_Loader::fini (void)
+DynServer_Loader::fini ()
 {
   ACE_ASSERT(runner_.get() != 0);
   try {
-
     ACE_DEBUG((LM_DEBUG, "dynserver: shutting down.\n"));
 
     runner_->end();
@@ -133,9 +131,8 @@ DynServer_Loader::fini (void)
     ACE_DEBUG((LM_DEBUG, "dynserver: shut down successfully.\n"));
 
     return 0;
-
   } catch (Exception& e) {
-    ACE_PRINT_EXCEPTION(e, "DynServer::fini()");
+    e._tao_print_exception ("DynServer::fini()");
   }
   return -1;
 }
@@ -143,11 +140,9 @@ DynServer_Loader::fini (void)
 Object_ptr
 DynServer_Loader::create_object (ORB_ptr,
                                  int,
-                                 ACE_TCHAR **
-                                 ACE_ENV_ARG_DECL)
-                                 ACE_THROW_SPEC ((SystemException))
+                                 ACE_TCHAR **)
 {
-  ACE_THROW_RETURN(NO_IMPLEMENT(), Object::_nil());
+  throw NO_IMPLEMENT();
 }
 
 ACE_FACTORY_DEFINE (DynServer, DynServer_Loader)

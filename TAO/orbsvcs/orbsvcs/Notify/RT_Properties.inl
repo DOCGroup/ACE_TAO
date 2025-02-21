@@ -1,8 +1,8 @@
-// $Id$
-
+// -*- C++ -*-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE RTCORBA::RTORB_ptr
-TAO_Notify_RT_Properties::rt_orb (void)
+TAO_Notify_RT_Properties::rt_orb ()
 {
   return RTCORBA::RTORB::_duplicate (rt_orb_.in ());
 }
@@ -14,7 +14,7 @@ TAO_Notify_RT_Properties::rt_orb (RTCORBA::RTORB_ptr rt_orb)
 }
 
 ACE_INLINE RTCORBA::Current_ptr
-TAO_Notify_RT_Properties::current (void)
+TAO_Notify_RT_Properties::current ()
 {
   return RTCORBA::Current::_duplicate (current_.in());
 }
@@ -24,3 +24,5 @@ TAO_Notify_RT_Properties::current (RTCORBA::Current_ptr current)
 {
   current_ = RTCORBA::Current::_duplicate (current);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

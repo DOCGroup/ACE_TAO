@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : portableserver, tao_etcl, ace_mc {
+  after    += TAO_Monitor
+  libs     += TAO_Monitor
+}

@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_ProxySupplier.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -19,11 +17,13 @@
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
-#include "EC_Filter.h"
+#include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
@@ -62,57 +62,47 @@ public:
   TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
   /// Destructor...
-  virtual ~TAO_EC_ProxyPushSupplier (void);
+  virtual ~TAO_EC_ProxyPushSupplier ();
 
   /// Activate in the POA
   virtual void activate (
-       RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy
-       ACE_ENV_ARG_DECL)
-   ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) = 0;
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC (());
+  virtual void deactivate () noexcept;
 
   /// Disconnect this from
-  virtual void disconnect_push_supplier (
-            ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void disconnect_push_supplier () = 0;
 
-  /// Return 0 if no consumer is connected...
-  CORBA::Boolean is_connected (void) const;
+  /// Return false if no consumer is connected...
+  CORBA::Boolean is_connected () const;
 
-  /// Return 1 if it is suspended.
-  CORBA::Boolean is_suspended (void) const;
+  /// Return true if it is suspended.
+  CORBA::Boolean is_suspended () const;
 
   /**
    * Return the consumer object reference. It returns nil() if it has
    * not connected yet.
    */
-  RtecEventComm::PushConsumer_ptr consumer (void) const;
+  RtecEventComm::PushConsumer_ptr consumer () const;
 
   /// The QoS (subscription) used to connect to the EC.
-  const RtecEventChannelAdmin::ConsumerQOS& subscriptions (void) const;
+  const RtecEventChannelAdmin::ConsumerQOS& subscriptions () const;
 
   /// Concrete implementations can use this methods to keep track of
   /// the suppliers that publish its events.
-  virtual void connected (TAO_EC_ProxyPushConsumer *consumer
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (TAO_EC_ProxyPushConsumer *consumer
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (TAO_EC_ProxyPushConsumer *consumer
-                            ACE_ENV_ARG_DECL);
+  virtual void connected (TAO_EC_ProxyPushConsumer *consumer);
+  virtual void reconnected (TAO_EC_ProxyPushConsumer *consumer);
+  virtual void disconnected (TAO_EC_ProxyPushConsumer *consumer);
 
   /// Usually implemented as no-ops, but some configurations may
   /// require this methods.
-  virtual void connected (TAO_EC_ProxyPushSupplier *supplier
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier
-                             ACE_ENV_ARG_DECL);
+  virtual void connected (TAO_EC_ProxyPushSupplier *supplier);
+  virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier);
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown ();
 
   /// Pushes to the consumer, verifies that it is connected and that it
   /// is not suspended.
@@ -122,43 +112,35 @@ public:
    * may have changed.
    */
   void push_to_consumer (RtecEventComm::PushConsumer_ptr consumer,
-                         const RtecEventComm::EventSet &event
-                         ACE_ENV_ARG_DECL);
+                         const RtecEventComm::EventSet &event);
   void reactive_push_to_consumer (RtecEventComm::PushConsumer_ptr consumer,
-                                  const RtecEventComm::EventSet &event
-                                  ACE_ENV_ARG_DECL);
+                                  const RtecEventComm::EventSet &event);
 
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
    * it is disconnected then it returns true and sets the
-   * <disconnected> flag.
+   * @a disconnected flag.
    */
-  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The TAO_EC_Filter methods, only push() is implemented...
   virtual int filter (const RtecEventComm::EventSet &event,
-                      TAO_EC_QOS_Info& qos_info
-                      ACE_ENV_ARG_DECL);
+                      TAO_EC_QOS_Info& qos_info);
   virtual int filter_nocopy (RtecEventComm::EventSet &event,
-                             TAO_EC_QOS_Info &qos_info
-                             ACE_ENV_ARG_DECL);
+                             TAO_EC_QOS_Info &qos_info);
   virtual void push (const RtecEventComm::EventSet &event,
-                     TAO_EC_QOS_Info& qos_info
-                     ACE_ENV_ARG_DECL);
+                     TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (RtecEventComm::EventSet &event,
-                            TAO_EC_QOS_Info &qos_info
-                            ACE_ENV_ARG_DECL);
-  virtual void clear (void);
-  virtual CORBA::ULong max_event_size (void) const;
+                            TAO_EC_QOS_Info &qos_info);
+  virtual void clear ();
+  virtual CORBA::ULong max_event_size () const;
   virtual int can_match (const RtecEventComm::EventHeader &header) const;
   virtual int add_dependencies (const RtecEventComm::EventHeader &header,
-                                const TAO_EC_QOS_Info &qos_info
-                                ACE_ENV_ARG_DECL);
+                                const TAO_EC_QOS_Info &qos_info);
 
 protected:
   /// Set the consumer, used by some implementations to change the
@@ -166,20 +148,16 @@ protected:
   void consumer (RtecEventComm::PushConsumer_ptr consumer);
   void consumer_i (RtecEventComm::PushConsumer_ptr consumer);
 
-  void suspend_connection_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void resume_connection_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void suspend_connection_locked (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void resume_connection_locked (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void suspend_connection_i ();
+  void resume_connection_i ();
+  void suspend_connection_locked ();
+  void resume_connection_locked ();
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Release the child and the consumer
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// The Event Channel that owns this object.
   TAO_EC_Event_Channel_Base* event_channel_;
@@ -208,18 +186,16 @@ protected:
   /// Validate the connection to consumer on connect
   int consumer_validate_connection_;
 private:
-
   /// Template method hooks.
-  virtual void refcount_zero_hook (void);
-  virtual void pre_dispatch_hook (RtecEventComm::EventSet&
-                                  ACE_ENV_ARG_DECL);
-  virtual PortableServer::ObjectId
-            object_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  virtual void refcount_zero_hook ();
+  virtual void pre_dispatch_hook (RtecEventComm::EventSet&);
+  virtual PortableServer::ObjectId object_id () = 0;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_ProxySupplier.i"
+#include "orbsvcs/Event/EC_ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

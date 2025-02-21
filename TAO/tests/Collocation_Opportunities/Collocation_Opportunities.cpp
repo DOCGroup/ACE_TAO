@@ -1,29 +1,21 @@
-// $Id$
-
 #include "testS.h"
 #include "ace/Task.h"
 #include "tao/PortableServer/Object_Adapter.h"
-#include "tao/PI_Server/PI_Server.h"
-#include "tao/PI_Server/POA_Current.h"
+#include "tao/PortableServer/POA_Current.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
-
-ACE_RCSID(Collocation_Opportunities, Collocation_Opportunities, "$Id$")
 
 class test_i :
   public POA_test
 {
 public:
-
   test_i (CORBA::ORB_ptr orb,
-          PortableServer::POA_ptr poa
-          ACE_ENV_ARG_DECL);
+          PortableServer::POA_ptr poa);
 
   void set_other (test_ptr test);
 
-  void method (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method ();
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA ();
 
   CORBA::ORB_var orb_;
 
@@ -35,22 +27,17 @@ public:
 };
 
 test_i::test_i (CORBA::ORB_ptr orb,
-                PortableServer::POA_ptr poa
-                ACE_ENV_ARG_DECL)
+                PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
   CORBA::Object_var object;
 
   object =
-    this->orb_->resolve_initial_references ("POACurrent"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("POACurrent");
 
   this->poa_current_ =
-    PortableServer::Current::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    PortableServer::Current::_narrow (object.in ());
 }
 
 void
@@ -60,13 +47,11 @@ test_i::set_other (test_ptr test)
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::method ()
 {
   if (this->other_.in () != test::_nil ())
     {
-      this->other_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->other_->method ();
     }
   else
     {
@@ -84,21 +69,20 @@ test_i::method (ACE_ENV_SINGLE_ARG_DECL)
         upcall = "remote";
 
       PortableServer::ObjectId_var id =
-        this->poa_current_->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->poa_current_->get_object_id ();
 
       CORBA::String_var id_string =
         PortableServer::ObjectId_to_string (id.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s method() invoked for %s servant in thread %t\n",
+                  "%C method() invoked for <%C> servant in thread %t\n",
                   upcall,
                   id_string.in ()));
     }
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -106,13 +90,11 @@ test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (CORBA::ORB_ptr orb)
@@ -121,49 +103,37 @@ Task::Task (CORBA::ORB_ptr orb)
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Task task (orb.in ());
 
@@ -176,22 +146,16 @@ main (int argc, char *argv[])
       policies.length (1);
 
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child_poa",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              policies);
 
       test_i *base_servant =
         new test_i (orb.in (),
-                    child_poa.in ()
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                    child_poa.in ());
 
       PortableServer::ServantBase_var safe_base_servant (base_servant);
 
@@ -199,19 +163,19 @@ main (int argc, char *argv[])
         PortableServer::string_to_ObjectId ("base");
 
       child_poa->activate_object_with_id (base_oid.in (),
-                                          base_servant
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                          base_servant);
+
+      PortableServer::ObjectId_var id_act =
+        root_poa->activate_object (base_servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id_act.in ());
 
       test_var base_test =
-        base_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object_act.in ());
 
       test_i *first_servant =
         new test_i (orb.in (),
-                    child_poa.in ()
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                    child_poa.in ());
 
       PortableServer::ServantBase_var safe_first_servant (first_servant);
 
@@ -219,109 +183,83 @@ main (int argc, char *argv[])
         PortableServer::string_to_ObjectId ("first");
 
       child_poa->activate_object_with_id (first_oid.in (),
-                                          first_servant
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                          first_servant);
+
+      PortableServer::ObjectId_var id_actu =
+        root_poa->activate_object (first_servant);
+
+      object_act = root_poa->id_to_reference (id_actu.in ());
 
       test_var first_test =
-        first_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object_act.in ());
 
       base_servant->set_other (first_test.in ());
 
-      base_test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      base_test->method ();
 
       PortableServer::ObjectId_var second_oid =
         PortableServer::string_to_ObjectId ("second");
 
       object =
         child_poa->create_reference_with_id (second_oid.in (),
-                                             "IDL:test:1.0"
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             "IDL:test:1.0");
 
       test_var second_test =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object.in ());
 
       test_i *second_servant =
         new test_i (orb.in (),
-                    child_poa.in ()
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                    child_poa.in ());
 
       PortableServer::ServantBase_var safe_second_servant (second_servant);
 
       child_poa->activate_object_with_id (second_oid.in (),
-                                          second_servant
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                          second_servant);
 
       base_servant->set_other (second_test.in ());
 
-      base_test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      base_test->method ();
 
       PortableServer::ObjectId_var third_oid =
         PortableServer::string_to_ObjectId ("third");
 
       object =
         child_poa->create_reference_with_id (third_oid.in (),
-                                             "IDL:test:1.0"
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             "IDL:test:1.0");
 
       CORBA::String_var third_ior =
-        orb->object_to_string (object.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (object.in ());
 
       object =
-        orb->string_to_object (third_ior.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (third_ior.in ());
 
       test_var third_test =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object.in ());
 
       test_i *third_servant =
         new test_i (orb.in (),
-                    child_poa.in ()
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                    child_poa.in ());
 
       PortableServer::ServantBase_var safe_third_servant (third_servant);
 
       child_poa->activate_object_with_id (third_oid.in (),
-                                          third_servant
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                          third_servant);
 
       base_servant->set_other (third_test.in ());
 
-      base_test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      base_test->method ();
 
-      orb->shutdown (1
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->shutdown (true);
 
-      result =
-        task.wait ();
+      result = task.wait ();
       ACE_ASSERT (result != -1);
       ACE_UNUSED_ARG (result);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

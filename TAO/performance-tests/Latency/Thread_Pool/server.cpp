@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Roundtrip.h"
 #include "Worker_Thread.h"
 #include "ace/Get_Opt.h"
@@ -8,14 +6,12 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Thread_Pool_Latency, server, "$Id$")
-
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -34,19 +30,19 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority);
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
@@ -63,15 +59,13 @@ main (int argc, char *argv[])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,12 +73,10 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -95,13 +87,16 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(roundtrip_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (roundtrip_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Roundtrip_var roundtrip =
-        roundtrip_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Roundtrip::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (roundtrip.in ());
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -113,8 +108,7 @@ main (int argc, char *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Worker_Thread worker (orb.in ());
 
@@ -123,18 +117,15 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

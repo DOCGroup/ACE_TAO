@@ -1,8 +1,6 @@
 /**
  * @file RTPortableServer_include.pidl
  *
- * $Id$
- *
  * @brief Include file for use in applications that need RTPortableServer.pidl.
  *
  * This file just includes RTPortableServer.pidl. The *C.h file generated from
@@ -15,7 +13,7 @@
  *   1. Run the tao_idl compiler on the pidl file.  The command used for
  *     this is:
  *
- *     tao_idl -o orig -St -Sc -Sp -Sci -SS
+ *     tao_idl -o orig -St -Sp -Sci -SS
  *          -Wb,export_macro=TAO_RTPortableServer_Export \
  *          -Wb,export_include="rtportableserver_export.h" \
  *          -Wb,pre_include="ace/pre.h"
@@ -34,7 +32,9 @@
 #ifndef _RTPORTABLESERVER_INCLUDE_IDL_
 #define _RTPORTABLESERVER_INCLUDE_IDL_
 
+#pragma prefix ""
+
 ///FUZZ: disable check_for_include/
-#include <tao/RTPortableServer/RTPortableServer.pidl>
+#include "tao/RTPortableServer/RTPortableServer.pidl"
 
 #endif /* _RTPORTABLESERVER_INCLUDE_IDL_ */

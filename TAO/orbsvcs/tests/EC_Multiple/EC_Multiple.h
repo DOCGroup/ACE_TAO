@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 //
 // ============================================================================
 //
@@ -28,6 +27,7 @@
 #include "orbsvcs/Channel_Clients_T.h"
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
 #include "orbsvcs/CosNamingC.h"
+#include <atomic>
 
 class Test_ECG;
 
@@ -50,29 +50,25 @@ public:
              int event_a, int event_b,
              int message_count,
              const RtecScheduler::Period_t& rate,
-             RtecEventChannelAdmin::EventChannel_ptr ec
-             ACE_ENV_ARG_DECL);
+             RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the supplier to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close ();
   // Disconnect from the EC.
 
   void activate (const char* name,
                  const RtecScheduler::Period_t& rate,
-                 RtecEventChannelAdmin::EventChannel_ptr ec
-                 ACE_ENV_ARG_DECL);
+                 RtecEventChannelAdmin::EventChannel_ptr ec);
 
-  void push (const RtecEventComm::EventSet& events
-             ACE_ENV_ARG_DECL);
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void push (const RtecEventComm::EventSet& events);
+  void disconnect_push_consumer ();
   // Implement the callbacks for our consumer personality.
 
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
   // The methods in the skeleton.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
 private:
@@ -100,7 +96,6 @@ private:
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
-
 };
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
@@ -120,18 +115,14 @@ public:
 
   void open (const char* name,
              int event_a, int event_b,
-             RtecEventChannelAdmin::EventChannel_ptr ec
-             ACE_ENV_ARG_DECL);
+             RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the consumer to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close ();
   // Disconnect from the EC.
 
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:
@@ -167,7 +158,7 @@ class Test_ECG
   //   and publications list.
   //
 public:
-  Test_ECG (void);
+  Test_ECG ();
 
   enum {
     MAX_EVENTS = 1024,
@@ -180,13 +171,12 @@ public:
     // Maximum number of suppliers.
   };
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Execute the test.
 
   void push_supplier (void* supplier_cookie,
                       RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-                      const RtecEventComm::EventSet &events
-                      ACE_ENV_ARG_DECL_NOT_USED);
+                      const RtecEventComm::EventSet &events);
   // Callback method for suppliers, we push for them to their
   // consumers and take statistics on the way.
   // It is possible that we ignore the <consumer> parameter when
@@ -194,59 +184,52 @@ public:
 
   void push_consumer (void* consumer_cookie,
                       ACE_hrtime_t arrival,
-                      const RtecEventComm::EventSet& events
-                      ACE_ENV_ARG_DECL_NOT_USED);
+                      const RtecEventComm::EventSet& events);
   // Callback method for consumers, if any of our consumers has
   // received events it will invoke this method.
 
   void shutdown_supplier (void* supplier_cookie,
-                          RtecEventComm::PushConsumer_ptr consumer
-                          ACE_ENV_ARG_DECL);
+                          RtecEventComm::PushConsumer_ptr consumer);
   // One of the suppliers has completed its work.
 
 private:
   RtecEventChannelAdmin::EventChannel_ptr
     get_ec (CosNaming::NamingContext_ptr naming_context,
-            const char* ec_name
-            ACE_ENV_ARG_DECL);
+            const char* ec_name);
   // Helper routine to obtain an EC given its name.
 
-  void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
-  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
+  void disconnect_suppliers ();
   // Connect the suppliers.
 
-  void activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
-                           ACE_ENV_ARG_DECL);
+  void activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
   // Activate the suppliers, i.e. they start generating events.
 
   void connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
                     RtecEventChannelAdmin::EventChannel_ptr remote_ec,
-                    RtecScheduler::Scheduler_ptr remote_sch
-                    ACE_ENV_ARG_DECL);
+                    RtecScheduler::Scheduler_ptr remote_sch);
   // Connect the EC gateway, it builds the Subscriptions and the
   // Publications list.
 
-  void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
-  void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
+  void disconnect_consumers ();
   // Connect and disconnect the consumers.
 
-  int shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int shutdown ();
   // Called when the main thread (i.e. not the scavenger thread) is
   // shutting down.
 
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
-  void dump_results (void);
+  void dump_results ();
   // Dump the results to the standard output.
 
-  void wait_until_ready (void);
+  void wait_until_ready ();
   // Block event delivery until all the consumers are ready.
 
   struct Stats;
-  void dump_results (const char* name, Stats& stats);
+  void dump_results (const ACE_TCHAR* name, Stats& stats);
   // Dump the results for a particular consumer.
 
   int local_source (RtecEventComm::EventSourceID id) const;
@@ -256,10 +239,10 @@ private:
   // One of the consumers has completed its work.
 
 private:
-  const char* lcl_name_;
+  ACE_CString lcl_name_;
   // The name of the "local" EC.
 
-  const char* rmt_name_;
+  ACE_CString rmt_name_;
   // The name of the "remote" EC.
 
   TAO_EC_Gateway_Sched ecg_;
@@ -342,11 +325,11 @@ private:
   // two other types. The types for high-priority clients can be
   // different from the types to low priority clients.
 
-  const char* schedule_file_;
+  const ACE_TCHAR* schedule_file_;
   // Ask the schedule to compute and dump its schedule after the test
   // execution.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 
   struct Stats {
@@ -370,11 +353,11 @@ private:
   // to setup all the consumers.
   // The suppliers wait on the condition variable.
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> running_suppliers_;
+  std::atomic<int> running_suppliers_;
   // keep track of how many suppliers are still running so we shutdown
   // at the right moment.
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> running_consumers_;
+  std::atomic<int> running_consumers_;
   // keep track of how many consumers are still running so we shutdown
   // at the right moment.
 

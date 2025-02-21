@@ -1,12 +1,6 @@
-// $Id$
-
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
-ACE_RCSID (RTCORBA,
-           RT_Thread_Lane_Resources_Manager,
-           "$Id$")
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
@@ -15,6 +9,8 @@ ACE_RCSID (RTCORBA,
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Thread_Lane_Resources_Manager::TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
@@ -28,10 +24,9 @@ TAO_RT_Thread_Lane_Resources_Manager::TAO_RT_Thread_Lane_Resources_Manager (TAO_
   // Create the thread-pool manager.
   ACE_NEW (this->tp_manager_,
            TAO_Thread_Pool_Manager (orb_core));
-
 }
 
-TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager (void)
+TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager ()
 {
   // Delete the default resources.
   delete this->default_lane_resources_;
@@ -41,39 +36,36 @@ TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager (voi
 }
 
 int
-TAO_RT_Thread_Lane_Resources_Manager::open_default_resources (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Thread_Lane_Resources_Manager::open_default_resources ()
 {
   TAO_ORB_Parameters *params =
     this->orb_core_->orb_params ();
 
   TAO_EndpointSet endpoint_set;
 
-  params->get_endpoint_set (TAO_DEFAULT_LANE,
-                            endpoint_set);
+  params->get_endpoint_set (TAO_DEFAULT_LANE, endpoint_set);
 
   bool ignore_address = false;
 
-  int result =
+  int const result =
     this->default_lane_resources_->open_acceptor_registry (endpoint_set,
-                                                           ignore_address
-                                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                                           ignore_address);
 
   return result;
 }
 
 void
-TAO_RT_Thread_Lane_Resources_Manager::finalize (void)
+TAO_RT_Thread_Lane_Resources_Manager::finalize ()
 {
-  // Finalize default resources.
-  this->default_lane_resources_->finalize ();
-
   // Finalize resources managed by the thread-pool manager.
   this->tp_manager_->finalize ();
+
+  // Finalize default resources.
+  this->default_lane_resources_->finalize ();
 }
 
 void
-TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor (void)
+TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor ()
 {
   // Shutdown default reactors.
   this->default_lane_resources_->shutdown_reactor ();
@@ -83,10 +75,10 @@ TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor (void)
 }
 
 void
-TAO_RT_Thread_Lane_Resources_Manager::cleanup_rw_transports (void)
+TAO_RT_Thread_Lane_Resources_Manager::close_all_transports ()
 {
   // Shutdown default reactors.
-  this->default_lane_resources_->cleanup_rw_transports ();
+  this->default_lane_resources_->close_all_transports ();
 }
 
 int
@@ -102,7 +94,7 @@ TAO_RT_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mprofil
 }
 
 TAO_Thread_Lane_Resources &
-TAO_RT_Thread_Lane_Resources_Manager::lane_resources (void)
+TAO_RT_Thread_Lane_Resources_Manager::lane_resources ()
 {
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources &tss =
@@ -110,7 +102,7 @@ TAO_RT_Thread_Lane_Resources_Manager::lane_resources (void)
 
   // Get the lane for this thread.
   TAO_Thread_Lane *lane =
-    (TAO_Thread_Lane *) tss.lane_;
+    static_cast <TAO_Thread_Lane *> (tss.lane_);
 
   // If we have a valid lane, use that lane's resources.
   if (lane)
@@ -121,13 +113,13 @@ TAO_RT_Thread_Lane_Resources_Manager::lane_resources (void)
 }
 
 TAO_Thread_Lane_Resources &
-TAO_RT_Thread_Lane_Resources_Manager::default_lane_resources (void)
+TAO_RT_Thread_Lane_Resources_Manager::default_lane_resources ()
 {
   return *this->default_lane_resources_;
 }
 
 TAO_Thread_Pool_Manager &
-TAO_RT_Thread_Lane_Resources_Manager::tp_manager (void)
+TAO_RT_Thread_Lane_Resources_Manager::tp_manager ()
 {
   return *this->tp_manager_;
 }
@@ -152,5 +144,7 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Thread_Lane_Resources_Manager_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_Thread_Lane_Resources_Manager_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -1,12 +1,10 @@
-//
-// $Id$
-//
 
 #ifndef ONEWAYS_INVOKING_TWOWAYS_CLIENT_TASK_H
 #define ONEWAYS_INVOKING_TWOWAYS_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
 
 #include "TestC.h"
+#include "Receiver_i.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -20,18 +18,20 @@ public:
   /// Constructor
   Client_Task (Test::Sender_ptr sender,
                Test::Receiver_ptr us,
-               ACE_Thread_Manager *thr_mgr);
+               ACE_Thread_Manager *thr_mgr,
+               Receiver_i * receiver_impl);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
-
   /// Reference to the test interface
   Test::Sender_var sender_;
 
   /// Reference to the test interface
   Test::Receiver_var us_;
+
+  Receiver_i* receiver_impl_;
 };
 
 #include /**/ "ace/post.h"

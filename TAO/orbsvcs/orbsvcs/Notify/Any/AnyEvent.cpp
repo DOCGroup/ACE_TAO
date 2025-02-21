@@ -1,11 +1,6 @@
-// $Id$
-
-#include "AnyEvent.h"
-
-ACE_RCSID (Notify, TAO_Notify_AnyEvent, "$Id$")
-
-#include "../Consumer.h"
-
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/Any/AnyEvent.h"
+#include "orbsvcs/Notify/Consumer.h"
 #include "tao/corba.h"
 #include "tao/debug.h"
 
@@ -13,6 +8,8 @@ ACE_RCSID (Notify, TAO_Notify_AnyEvent, "$Id$")
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_EventType TAO_Notify_AnyEvent_No_Copy::event_type_;
 
@@ -26,7 +23,7 @@ TAO_Notify_AnyEvent_No_Copy::~TAO_Notify_AnyEvent_No_Copy ()
 }
 
 const TAO_Notify_EventType&
-TAO_Notify_AnyEvent_No_Copy::type (void) const
+TAO_Notify_AnyEvent_No_Copy::type () const
 {
   return this->event_type_;
 }
@@ -38,61 +35,61 @@ TAO_Notify_AnyEvent_No_Copy::convert (CosNotification::StructuredEvent& notifica
 }
 
 CORBA::Boolean
-TAO_Notify_AnyEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL) const
+TAO_Notify_AnyEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter) const
 {
   if (DEBUG_LEVEL > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+    ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                 "TAO_Notify_AnyEvent::do_match ()\n"));
 
-  return filter->match(*this->event_ ACE_ENV_ARG_PARAMETER);
+  return filter->match(*this->event_);
 }
 
 void
-TAO_Notify_AnyEvent_No_Copy::push (TAO_Notify_Consumer* consumer ACE_ENV_ARG_DECL) const
+TAO_Notify_AnyEvent_No_Copy::push (TAO_Notify_Consumer* consumer) const
 {
   if (DEBUG_LEVEL > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
-                "TAO_Notify_AnyEvent::push \n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                "TAO_Notify_AnyEvent::push\n"));
 
-  consumer->push (*this->event_ ACE_ENV_ARG_PARAMETER);
+  consumer->push (*this->event_);
 }
 
 void
-TAO_Notify_AnyEvent_No_Copy::push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
+TAO_Notify_AnyEvent_No_Copy::push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const
 {
   CosNotification::StructuredEvent notification;
 
   TAO_Notify_Event::translate (*this->event_, notification);
 
-  forwarder->forward_structured (notification ACE_ENV_ARG_PARAMETER);
+  forwarder->forward_structured (notification);
 }
 
 void
-TAO_Notify_AnyEvent_No_Copy::push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
+TAO_Notify_AnyEvent_No_Copy::push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const
 {
   CosNotification::StructuredEvent notification;
 
   TAO_Notify_Event::translate (*this->event_, notification);
 
-  forwarder->forward_structured_no_filtering (notification ACE_ENV_ARG_PARAMETER);
+  forwarder->forward_structured_no_filtering (notification);
 }
 
 void
-TAO_Notify_AnyEvent_No_Copy::push (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
+TAO_Notify_AnyEvent_No_Copy::push (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const
 {
-  forwarder->forward_any (*this->event_ ACE_ENV_ARG_PARAMETER);
+  forwarder->forward_any (*this->event_);
 }
 
 void
-TAO_Notify_AnyEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
+TAO_Notify_AnyEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const
 {
-  forwarder->forward_any_no_filtering (*this->event_ ACE_ENV_ARG_PARAMETER);
+  forwarder->forward_any_no_filtering (*this->event_);
 }
 
 void
 TAO_Notify_AnyEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 {
-  static const ACE_CDR::Octet ANY_CODE = MARSHAL_ANY;
+  const ACE_CDR::Octet ANY_CODE = MARSHAL_ANY;
   cdr.write_octet (ANY_CODE);
   cdr << (*this->event_);
 }
@@ -111,18 +108,17 @@ TAO_Notify_AnyEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
 }
 
 TAO_Notify_Event *
-TAO_Notify_AnyEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Notify_AnyEvent_No_Copy::copy () const
 {
   TAO_Notify_Event * new_event;
   ACE_NEW_THROW_EX (new_event,
                     TAO_Notify_AnyEvent (*this->event_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
   return new_event;
 }
 
 
-/*****************************************************************************************************/
+/*****************************************************************************/
 
 TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
   : TAO_Notify_AnyEvent_No_Copy (event)
@@ -134,3 +130,5 @@ TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
 TAO_Notify_AnyEvent::~TAO_Notify_AnyEvent ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

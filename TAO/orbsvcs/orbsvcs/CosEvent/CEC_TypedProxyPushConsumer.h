@@ -1,9 +1,8 @@
-// $Id$
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_TypedProxyPushConsumer.h
- *
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  *
@@ -23,13 +22,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Worker.h"
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_TypedEvent;
 class TAO_CEC_TypedEventChannel;
 class TAO_CEC_DynamicImplementationServer;
 
-//Class TAO_CEC_TypedProxyPushConsumer
 class TAO_Event_Serv_Export TAO_CEC_TypedProxyPushConsumer
   : public virtual POA_CosTypedEventChannelAdmin::TypedProxyPushConsumer
 {
@@ -37,81 +37,73 @@ public:
   typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr _ptr_type;
   typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_var _var_type;
 
-  //Constructor
+  /// Constructor
   TAO_CEC_TypedProxyPushConsumer (
-      TAO_CEC_TypedEventChannel* typed_event_channel
-    );
+      TAO_CEC_TypedEventChannel* typed_event_channel,
+      const ACE_Time_Value &timeout);
 
-  //Destructor
-  virtual ~TAO_CEC_TypedProxyPushConsumer (void);
+  /// Destructor
+  virtual ~TAO_CEC_TypedProxyPushConsumer ();
 
   /// Activate in the POA
   virtual void activate (
-      CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr &activated_proxy
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr &activated_proxy);
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void deactivate ();
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
    * it is disconnected then it returns true and sets the
-   * <disconnected> flag.
+   * @a disconnected flag.
    */
-  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown ();
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods (abstract overloads)...
   virtual void connect_push_supplier (
-                CosEventComm::PushSupplier_ptr push_supplier
-                ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosEventChannelAdmin::AlreadyConnected));
+                CosEventComm::PushSupplier_ptr push_supplier);
 
-  virtual void push (const CORBA::Any& event
-                     ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const CORBA::Any& event);
 
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event
-                       ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer ();
 
   // = The CosTypedEventComm::TypedPushConsumer methods (abstract overloads)...
-  virtual CORBA::Object_ptr get_typed_consumer (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-    )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Object_ptr get_typed_consumer ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA ();
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
 protected:
-  // The guard needs access to the following protected methods.
+  /// The guard needs access to the following protected methods.
   friend class TAO_CEC_TypedProxyPushConsumer_Guard;
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Release the supplier
-  void cleanup_i (void);
+  void cleanup_i ();
+
+  /// Assigns the parameter to both supplier_ and nopolicy_supplier_, and
+  /// applies policies (when appropriate) to supplier_.
+  CosEventComm::PushSupplier_ptr apply_policy
+  (CosEventComm::PushSupplier_ptr pre);
 
 private:
-  /// The typed supplier admin, used for activation and memory managment.
+  /// The typed supplier admin, used for activation and memory management.
   TAO_CEC_TypedEventChannel* typed_event_channel_;
+
+  ACE_Time_Value timeout_;
 
   /// The locking strategy.
   ACE_Lock* lock_;
@@ -119,8 +111,13 @@ private:
   /// The reference count.
   CORBA::ULong refcount_;
 
-  /// The typed supplier....
+  /// The typed supplier -- use apply_policy() instead of assigning directly to
+  /// typed_supplier_.  This will keep typed_supplier_ and
+  /// nopolicy_typed_supplier_ in sync.
   CosEventComm::PushSupplier_var typed_supplier_;
+
+  /// The typed supplier without any policies applied
+  CosEventComm::PushSupplier_var nopolicy_typed_supplier_;
 
   /// The DSI impl
   TAO_CEC_DynamicImplementationServer* dsi_impl_;
@@ -144,7 +141,7 @@ private:
  * @brief A Guard for the TypedProxyPushConsumer reference count
  *
  * This is a helper class used in the implementation of
- * TypedProxyPushConumer.  It provides a Guard mechanism to increment
+ * TypedProxyPushConsumer.  It provides a Guard mechanism to increment
  * the reference count on the proxy, eliminating the need to hold
  * mutexes during long operations.
  */
@@ -156,14 +153,13 @@ public:
       ACE_Lock *lock,
       CORBA::ULong &refcount,
       TAO_CEC_TypedEventChannel *ec,
-      TAO_CEC_TypedProxyPushConsumer *proxy
-    );
+      TAO_CEC_TypedProxyPushConsumer *proxy);
 
   /// Destructor
-  ~TAO_CEC_TypedProxyPushConsumer_Guard (void);
+  ~TAO_CEC_TypedProxyPushConsumer_Guard ();
 
   /// Returns 1 if the reference count successfully acquired
-  int locked (void) const;
+  int locked () const;
 
 private:
   /// The lock used to protect the reference count
@@ -183,8 +179,10 @@ private:
   int locked_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_TypedProxyPushConsumer.i"
+#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,17 +1,20 @@
-// $Id$
-
 #include "Payload_Receiver.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(Big_Request_Muxing, server, "$Id$")
-
-const char *ior_output_file = "test.ior";
+namespace
+{
+  // defaults only
+  const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+  int expected   = 200;
+  int maybe_lost = 400;
+}
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:e:l:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -20,103 +23,170 @@ parse_args (int argc, char *argv[])
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
-      case '?':
+      case 'e':
+        expected = ACE_OS::atoi(get_opts.opt_arg());
+        break;
+      case 'l':
+        maybe_lost = ACE_OS::atoi(get_opts.opt_arg());
+        break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <iorfile>"
+                           "-o <iorfile> [-e <expected>] [-l <maybe_lost>]"
                            "\n",
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "Starting server\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P) Starting server\n"));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "(%P) Server: Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       Payload_Receiver *payload_receiver_impl;
       ACE_NEW_RETURN (payload_receiver_impl,
-                      Payload_Receiver,
+                      Payload_Receiver (),
                       1);
-      PortableServer::ServantBase_var receiver_owner_transfer(payload_receiver_impl);
+      PortableServer::ServantBase_var
+        receiver_owner_transfer (payload_receiver_impl);
+
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (payload_receiver_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
       Test::Payload_Receiver_var payload_receiver =
-        payload_receiver_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Payload_Receiver::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (payload_receiver.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (payload_receiver.in ());
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                              1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "(%P) Server: Cannot open output file for writing IOR: %s",
+                            ior_output_file),
+                            1);
+        }
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      ACE_Time_Value tv (180, 0);
-      orb->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG,
+                 "(%P) Server waiting for %d (+%d possible) messages...\n",
+                 expected, maybe_lost));
 
-      CORBA::Long count =
-        payload_receiver->get_message_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      const ACE_Time_Value start_time = ACE_OS::gettimeofday ();
+      ACE_Time_Value end_time = start_time + ACE_Time_Value (27);
+      ACE_Time_Value runtime;
+      int count = 0;
+      int maybe_lost_count = 0;
+      bool stalled = false;
+      while (payload_receiver_impl->count () < expected ||
+             payload_receiver_impl->count (true) < maybe_lost)
+      {
+        int prev_count = count;
+        int prev_maybe_lost_count = maybe_lost_count;
+        ACE_Time_Value tv (0, 100 * 1000);
+        orb->run (tv);
+        count = payload_receiver_impl->count ();
+        maybe_lost_count = payload_receiver_impl->count (true);
+        if ((count == prev_count) ||
+            (maybe_lost_count == prev_maybe_lost_count))
+          {
+            if (!stalled)
+              {
+                stalled = true;
+                end_time += ACE_Time_Value (3);
+                runtime = ACE_OS::gettimeofday () - start_time;
+              }
+            else if (ACE_OS::gettimeofday () > end_time)
+              {
+                if (count < expected)
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                               "(%P) Server: The clients stalled out after %d messages\n",
+                               count));
+                  }
+                break; // Abort waiting for more messages
+              }
+          }
+        else
+          {
+            stalled = false;
+          }
+      }
 
-      ACE_DEBUG ((LM_DEBUG, "(%P) - Payload_Receiver on server got %d messages\n",
-                  count));
+      if (!stalled)
+        {
+          runtime = ACE_OS::gettimeofday () - start_time;
+        }
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int result = 0;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (count != expected)
+      {
+          ACE_ERROR ((LM_ERROR,
+                     "(%P) Server did not receive all of the SYNC_WITH_TARGET messages\n"));
+          result = 1;
+      }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P) Server got %d of %d SYNC_WITH_TARGET messages\n"
+                  "        and %d of %d SYNC_WITH_TRANSPORT or SYNC_NONE messages\n"
+                  "        in %d.%06d sec\n",
+                  count, expected,
+                  maybe_lost_count, maybe_lost,
+                  runtime.sec(), runtime.usec()));
+
+      root_poa->destroy (true, true);
+
+      orb->destroy ();
+
+      ACE_DEBUG ((LM_DEBUG, "(%P) Ending server (result %d)\n", result));
+      return result;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
-      return 1;
+      ACE_DEBUG ((LM_DEBUG, "(%P) Server terminated by: "));
+      ex._tao_print_exception ("CORBA Exception:");
     }
-  ACE_ENDTRY;
+  catch (...)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P) Server terminated by unknown exception\n"));
+    }
 
-  ACE_DEBUG ((LM_DEBUG, "Ending server\n"));
-
-  return 0;
+  return 1;
 }

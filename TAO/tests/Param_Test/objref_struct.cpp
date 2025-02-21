@@ -1,33 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    objref_struct.cpp
-//
-// = DESCRIPTION
-//    test structures containing object references.
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    objref_struct.cpp
+ *
+ *  test structures containing object references.
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "objref_struct.h"
-
-ACE_RCSID (Param_Test,
-           objref_struct, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Objref_Struct
 // ************************************************************************
 
-Test_Objref_Struct::Test_Objref_Struct (void)
+Test_Objref_Struct::Test_Objref_Struct ()
   : opname_ (CORBA::string_dup ("test_objref_struct")),
     inout_ (new Param_Test::Objref_Struct),
     out_ (new Param_Test::Objref_Struct),
@@ -35,7 +25,7 @@ Test_Objref_Struct::Test_Objref_Struct (void)
 {
 }
 
-Test_Objref_Struct::~Test_Objref_Struct (void)
+Test_Objref_Struct::~Test_Objref_Struct ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -44,14 +34,13 @@ Test_Objref_Struct::~Test_Objref_Struct (void)
 }
 
 const char *
-Test_Objref_Struct::opname (void) const
+Test_Objref_Struct::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
-                                    ACE_ENV_ARG_DECL)
+Test_Objref_Struct::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -59,46 +48,39 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Objref_Struct);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  Param_Test::Objref_Struct *tmp;
+  const Param_Test::Objref_Struct *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Objref_Struct (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::Objref_Struct (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Objref_Struct (*tmp);
 }
 
 int
-Test_Objref_Struct::init_parameters (Param_Test_ptr objref
-                                     ACE_ENV_ARG_DECL)
+Test_Objref_Struct::init_parameters (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Generator *gen = GENERATOR::instance (); // value generator
 
       // Set the long member.
       this->in_.x = gen->gen_long ();
 
-      this->in_.y = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->in_.y = objref->make_coffee ();
 
       Coffee::Desc d;
       d.name = gen->gen_string ();
 
-      this->in_.y->description (d
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->in_.y->description (d);
 
             this->inout_->x = 0;
 
@@ -109,18 +91,15 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Objref_Struct::init_parameters\n");
-
+      ex._tao_print_exception ("Test_Objref_Struct::init_parameters\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 int
-Test_Objref_Struct::reset_parameters (void)
+Test_Objref_Struct::reset_parameters ()
 {
   this->inout_ = new Param_Test::Objref_Struct; // delete the previous ones
   this->out_ = new Param_Test::Objref_Struct;
@@ -137,42 +116,35 @@ Test_Objref_Struct::reset_parameters (void)
 }
 
 int
-Test_Objref_Struct::run_sii_test (Param_Test_ptr objref
-                                  ACE_ENV_ARG_DECL)
+Test_Objref_Struct::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Objref_Struct_out out (this->out_.out ());
 
       this->ret_ = objref->test_objref_struct (this->in_,
                                                this->inout_.inout (),
-                                               out
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                               out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Objref_Struct::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Objref_Struct::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Objref_Struct::check_validity (void)
+Test_Objref_Struct::check_validity ()
 {
   if (this->in_.x != this->inout_->x
       || this->in_.x != this->out_->x
       || this->in_.x != this->ret_->x)
     return 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       if (CORBA::is_nil (this->in_.y.in ())
           || CORBA::is_nil (this->out_->y.in ())
@@ -182,17 +154,13 @@ Test_Objref_Struct::check_validity (void)
           return 0;
         }
 
-      Coffee::Desc_var s_in = this->in_.y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_in = this->in_.y->description ();
 
-      Coffee::Desc_var s_out = this->out_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_out = this->out_->y->description ();
 
-      Coffee::Desc_var s_inout = this->inout_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_inout = this->inout_->y->description ();
 
-      Coffee::Desc_var s_ret = this->ret_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_ret = this->ret_->y->description ();
 
       if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
           || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
@@ -203,13 +171,10 @@ Test_Objref_Struct::check_validity (void)
 
       return 1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Objref_Struct::check_validity\n");
-
+      ex._tao_print_exception ("Test_Objref_Struct::check_validity\n");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -220,7 +185,7 @@ Test_Objref_Struct::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Objref_Struct::print_values (void)
+Test_Objref_Struct::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"
@@ -233,13 +198,11 @@ Test_Objref_Struct::print_values (void)
               this->out_->x,
               this->ret_->x ));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
-      Coffee::Desc_var s_in = 
-        this->in_.y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_in =
+        this->in_.y->description ();
 
       Coffee::Desc_var s_inout = new Coffee::Desc;
       Coffee::Desc_var s_out = new Coffee::Desc;
@@ -250,38 +213,32 @@ Test_Objref_Struct::print_values (void)
 
       if (!CORBA::is_nil (this->out_->y.in ()))
         {
-          s_out = this->out_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          s_out = this->out_->y->description ();
         }
 
       if (!CORBA::is_nil (this->inout_->y.in ()))
         {
-          s_inout = this->inout_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          s_inout = this->inout_->y->description ();
         }
 
       if (!CORBA::is_nil (this->ret_->y.in ()))
         {
-          s_ret = this->ret_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          s_ret = this->ret_->y->description ();
         }
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*=*=*=*=*=*=\n"
-                  "in_ name = %s\n"
-                  "inout_ name = %s\n"
-                  "out_ name = %s\n"
-                  "ret_ name = %s\n",
+                  "in_ name = %C\n"
+                  "inout_ name = %C\n"
+                  "out_ name = %C\n"
+                  "ret_ name = %C\n",
                   s_in->name.in (),
                   s_inout->name.in (),
                   s_out->name.in (),
                   s_ret->name.in () ));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Objref_Struct::print_values\n");
+      ex._tao_print_exception ("Test_Objref_Struct::print_values\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }

@@ -4,8 +4,6 @@
 /**
  *  @file   corbafwd.h
  *
- *  $Id$
- *
  * Forward declare the basic types used in the ORB
  * implementation. Regular users of the ORB should only include
  * tao/corba.h (generally through the stub/skeleton headers), but the
@@ -31,7 +29,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TC_Constants_Forward.h"
 #include "tao/CORBA_methods.h"
 
 #include /**/ "ace/post.h"

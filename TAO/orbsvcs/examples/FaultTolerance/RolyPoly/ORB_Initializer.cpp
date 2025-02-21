@@ -1,7 +1,6 @@
 // file      : RolyPoly/ORB_Initializer.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
+#include <memory>
 #include "tao/corba.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
@@ -10,16 +9,12 @@
 #include "ReplicaController.h"
 
 void
-ORB_Initializer::pre_init (PortableInterceptor::ORBInitInfo_ptr
-                           ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+ORB_Initializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
-ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
-                            ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Allocate slot id.
   //
@@ -44,12 +39,9 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
                           ENOMEM),
                       CORBA::COMPLETED_NO));
 
-    ACE_CHECK;
 
     interceptor = tmp_interceptor;
   }
 
-  info->add_server_request_interceptor (interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (interceptor.in ());
 }

@@ -2,11 +2,7 @@
 /**
  *  @file ORB_Objects.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ORB_OBJECTS_H
@@ -22,22 +18,21 @@
  * @class TAO_Notify_ORB_Objects
  *
  * @brief Handy Objects that we keep asking the ORB for.
- *
  */
 class TAO_Notify_ORB_Objects
 {
 public:
-  /// Constuctor
-  TAO_Notify_ORB_Objects (void);
+  /// Constructor
+  TAO_Notify_ORB_Objects ();
 
   /// Destructor
   ~TAO_Notify_ORB_Objects ();
 
   /// Resolves all the references.
-  void init (CORBA::ORB_var& orb ACE_ENV_ARG_DECL);
+  void init (CORBA::ORB_var& orb);
 
   /// Resolve Notification
-  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory ();
 
   ///= Public Data
   CORBA::ORB_var orb_;

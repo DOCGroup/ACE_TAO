@@ -1,0 +1,26 @@
+
+
+This test is intended to demonstrate the ORB-specific configuration
+feature. It excesses two basic scenarios, in which a client and a
+server ORB exchange a simple message. The twist is that both are
+implemented in a DLL of its own and each DLL is loaded through a svc
+conf file.
+
+1) If SSLIOP has been compiled, it creates an IIOP server and a
+   SSLIOP-capable client.
+
+2) In the absence of SSLIOP, the test uses a CSD dispatching strategy,
+   which is made available to the server only.
+
+The test automatically will select which scenario to run, based on the
+availability of a certain pre-processor macro. See Test.cpp for
+details. By default the scenario 2 is tested, as SSLIOP is not built
+by default.
+
+The significance of the SSLIOP scenario is in SSLIOP's implementation,
+which turned out precludes using SSLIOP in an ORB-specific
+configuration. SSLIOP creates a process-wide singleton, which is
+destroyed *before* the TAO SSLIOP service. At shutdown time, an
+attempt to access the ACE_SSL_Context results in a SEGV. That is why
+the test primary conf file loads the SSLIOP service first, so it ends
+up in the global service configuration.

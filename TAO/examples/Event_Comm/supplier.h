@@ -1,56 +1,47 @@
-// -*- C++ -*-
-// $Id$ 
+//=============================================================================
+/**
+ *  @file    supplier.h
+ *
+ *  This class implements  driver for the Publish/Subscribe example
+ */
+//=============================================================================
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/example/Event_Comm
-//
-// = FILENAME
-//    supplier.h
-//
-// = DESCRIPTION
-//    This class implements  driver for the Publish/Subscribe example
-//
-// = AUTHOR
-//
-// ============================================================================
-
-
+/**
+ * @class Supplier
+ *
+ * @brief Supplier driver for the TAO Publish/Subscribe example.
+ *
+ * This class starts up the <Supplier_Input_Handler> and
+ * <Notifier_Handler> objects.
+ */
 class Supplier : public ACE_Event_Handler, public ShutdownCallback
 {
-  // = TITLE
-  //   Supplier driver for the TAO Publish/Subscribe example.
-  //
-  // = DESCRIPTION
-  //    This class starts up the <Supplier_Input_Handler> and
-  //    <Notifier_Handler> objects.
 public:
   // Initialization and Termination methods.
-  Supplier (void);
-  // Constructor.
+  /// Constructor.
+  Supplier () = default;
 
-  ~Supplier (void);
-  // Destructor.
+  /// Destructor.
+  ~Supplier () = default;
 
-  int init (int argc, char *argv[]);
-  // Initialization method. returns 0 on success, -1 on error.
+  /// Initialization method. returns 0 on success, -1 on error.
+  int init (int argc, ACE_TCHAR *argv[]);
 
-  void run (void);
-  // Execute the supplier.
+  /// Execute the supplier.
+  void run ();
 
-  virtual void close (void);
-  // Shutdown the application.
+  /// Shutdown the application.
+  virtual void close ();
 
 private:
+  /// Handle shutdown signals.
   virtual int handle_signal (int signum,
-			     siginfo_t *,
-			     ucontext_t *);
-  // Handle shutdown signals.
+                             siginfo_t *,
+                             ucontext_t *);
 
+  /// Handler for keyboard input.
   Supplier_Input_Handler ih_;
-  // Handler for keyboard input.
 
+  /// The notifier handler.
   Notifier_Handler nh_;
-  // The notifier handler.
 };

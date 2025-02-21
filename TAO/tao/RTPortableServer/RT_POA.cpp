@@ -1,15 +1,12 @@
-// @(#) $Id$
-
-#include "RT_POA.h"
+#include "tao/RTPortableServer/RT_POA.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_Acceptor_Filters.h"
+#include "tao/RTPortableServer/RT_Acceptor_Filters.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/Environment.h"
 #include "tao/Exception.h"
 #include "tao/Stub.h"
 #include "tao/Policy_Manager.h"
@@ -25,25 +22,22 @@
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/RTPortableServer/RT_Policy_Validator.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
-# include "RT_POA.i"
+# include "tao/RTPortableServer/RT_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (RTPortableServer,
-           RT_POA,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
-                        TAO_POA_Manager &poa_manager,
+                        PortableServer::POAManager_ptr poa_manager,
                         const TAO_POA_Policy_Set &policies,
                         TAO_Root_POA *parent,
                         ACE_Lock &lock,
                         TAO_SYNCH_MUTEX &thread_lock,
                         TAO_ORB_Core &orb_core,
-                        TAO_Object_Adapter *object_adapter
-                        ACE_ENV_ARG_DECL)
+                        TAO_Object_Adapter *object_adapter)
   : TAO_Regular_POA (name,
                      poa_manager,
                      policies,
@@ -51,34 +45,23 @@ TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
                      lock,
                      thread_lock,
                      orb_core,
-                     object_adapter
-                     ACE_ENV_ARG_PARAMETER),
-  thread_pool_ (0)
+                     object_adapter)
 {
-  ACE_CHECK;
-
   // Parse the RT policies and update our policy cache.
-  this->parse_rt_policies (this->policies ()
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-TAO_RT_POA::~TAO_RT_POA (void)
-{
+  this->parse_rt_policies (this->policies ());
 }
 
 TAO_Root_POA *
 TAO_RT_POA::new_POA (const String &name,
-                     TAO_POA_Manager &poa_manager,
+                     PortableServer::POAManager_ptr poa_manager,
                      const TAO_POA_Policy_Set &policies,
                      TAO_Root_POA *parent,
                      ACE_Lock &lock,
                      TAO_SYNCH_MUTEX &thread_lock,
                      TAO_ORB_Core &orb_core,
-                     TAO_Object_Adapter *object_adapter
-                     ACE_ENV_ARG_DECL)
+                     TAO_Object_Adapter *object_adapter)
 {
-  TAO_RT_POA *poa;
+  TAO_RT_POA *poa = 0;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,
@@ -88,41 +71,32 @@ TAO_RT_POA::new_POA (const String &name,
                                 lock,
                                 thread_lock,
                                 orb_core,
-                                object_adapter
-                                ACE_ENV_ARG_PARAMETER),
+                                object_adapter),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return poa;
 }
 
 void
-TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies
-                               ACE_ENV_ARG_DECL)
+TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies)
 {
   {
     CORBA::Policy_var policy =
-      policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
-                                  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
     RTCORBA::PriorityModelPolicy_var priority_model =
-      RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
     if (!CORBA::is_nil (priority_model.in ()))
       {
         RTCORBA::PriorityModel rt_priority_model =
-          priority_model->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+          priority_model->priority_model ();
 
         this->cached_policies_.priority_model (
           TAO::Portable_Server::Cached_Policies::PriorityModel (rt_priority_model));
 
         RTCORBA::Priority priority =
-          priority_model->server_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+          priority_model->server_priority ();
 
         this->cached_policies_.server_priority (priority);
       }
@@ -130,14 +104,11 @@ TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies
 
   this->thread_pool_ =
     TAO_POA_RT_Policy_Validator::extract_thread_pool (this->orb_core_,
-                                                      policies.policies ()
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                      policies.policies ());
 }
 
 void
-TAO_RT_POA::validate_priority (RTCORBA::Priority priority
-                               ACE_ENV_ARG_DECL)
+TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
 {
   if (priority < RTCORBA::minPriority
            // The line below will always be false unless the value of
@@ -146,7 +117,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
 //      || priority > RTCORBA::maxPriority
      )
     {
-      ACE_THROW (CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
 
   // If this POA is using a thread pool with lanes, make sure the
@@ -154,11 +125,9 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
   // case, bands do not matter since matching the lanes priority is a
   // stricter condition than meeting the band ranges.  In addition,
   // when the POA was created, the bands had to match the lanes.
-  if (this->thread_pool_ != 0 &&
-      this->thread_pool_->with_lanes ())
+  if (this->thread_pool_ != 0 && this->thread_pool_->with_lanes ())
     {
-      TAO_Thread_Lane **lanes =
-        this->thread_pool_->lanes ();
+      TAO_Thread_Lane **lanes = this->thread_pool_->lanes ();
 
       for (CORBA::ULong i = 0;
            i != this->thread_pool_->number_of_lanes ();
@@ -168,7 +137,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
             return;
         }
 
-      ACE_THROW (CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
   else
     // Else we are dealing with a thread pool without lanes.
@@ -176,14 +145,10 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
       // Check if we have bands.
       CORBA::Policy_var bands =
         this->policies ().get_cached_policy (
-          TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION
-          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+          TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
       RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
-        = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in ()
-                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in ());
 
       TAO_PriorityBandedConnectionPolicy *priority_bands_i =
         dynamic_cast <TAO_PriorityBandedConnectionPolicy *>
@@ -205,13 +170,13 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
                 return;
             }
 
-          ACE_THROW (CORBA::BAD_PARAM ());
+          throw ::CORBA::BAD_PARAM ();
         }
     }
 }
 
 void
-TAO_RT_POA::validate_policies (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_POA::validate_policies ()
 {
   // For each of the above operations, if the POA supports the
   // IMPLICIT_ACTIVATION option for the ImplicitActivationPolicy then
@@ -222,7 +187,7 @@ TAO_RT_POA::validate_policies (ACE_ENV_SINGLE_ARG_DECL)
   if (this->cached_policies_.implicit_activation () ==
       PortableServer::IMPLICIT_ACTIVATION)
     {
-      ACE_THROW (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
   // For each of the above operations, if the POA does not support the
@@ -231,7 +196,7 @@ TAO_RT_POA::validate_policies (ACE_ENV_SINGLE_ARG_DECL)
   if (this->cached_policies_.priority_model () !=
       TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
     {
-      ACE_THROW (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
   // In all other respects the semantics of the corresponding
@@ -243,25 +208,18 @@ TAO_RT_POA::validate_policies (ACE_ENV_SINGLE_ARG_DECL)
 TAO_Stub *
 TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
                            const char *type_id,
-                           CORBA::Short priority
-                           ACE_ENV_ARG_DECL)
+                           CORBA::Short priority)
 {
   // Client exposed policies.
   CORBA::PolicyList_var client_exposed_policies =
-    this->client_exposed_policies (priority
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->client_exposed_policies (priority);
 
   // Server protocol policy.
   CORBA::Policy_var protocol =
-    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
   RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
-    RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ());
 
   TAO_ServerProtocolPolicy *server_protocol =
     dynamic_cast <TAO_ServerProtocolPolicy *> (server_protocol_policy.in ());
@@ -285,19 +243,15 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
           TAO_Thread_Lane_Resources &resources =
             thread_lane_resources_manager.default_lane_resources ();
 
-          acceptor_registry =
-            &resources.acceptor_registry ();
+          acceptor_registry = &resources.acceptor_registry ();
         }
       else
         {
-          TAO_Thread_Lane **lanes =
-            this->thread_pool_->lanes ();
+          TAO_Thread_Lane **lanes = this->thread_pool_->lanes ();
 
-          TAO_Thread_Lane_Resources &resources =
-            lanes[0]->resources ();
+          TAO_Thread_Lane_Resources &resources = lanes[0]->resources ();
 
-          acceptor_registry =
-            &resources.acceptor_registry ();
+          acceptor_registry = &resources.acceptor_registry ();
         }
 
       return
@@ -305,8 +259,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
                                            type_id,
                                            client_exposed_policies._retn (),
                                            &filter,
-                                           *acceptor_registry
-                                           ACE_ENV_ARG_PARAMETER);
+                                           *acceptor_registry);
     }
 
   // If this POA has the SERVER_DECLARED policy, create the IOR with
@@ -327,8 +280,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
                                                       type_id,
                                                       client_exposed_policies._retn (),
                                                       &filter,
-                                                      lanes[i]->resources ().acceptor_registry ()
-                                                      ACE_ENV_ARG_PARAMETER);
+                                                      lanes[i]->resources ().acceptor_registry ());
         }
 
       ACE_ASSERT (0);
@@ -339,14 +291,10 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   // POA.  If there are no bands, all the thread lanes are used.
   CORBA::Policy_var bands =
     this->policies ().get_cached_policy (
-      TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+      TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
   RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
-    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in ()
-                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in ());
 
   TAO_PriorityBandedConnectionPolicy *priority_bands_i =
     dynamic_cast <TAO_PriorityBandedConnectionPolicy *> (priority_bands.in ());
@@ -355,8 +303,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
                                    type_id,
                                    client_exposed_policies._retn (),
                                    &filter,
-                                   priority_bands_i
-                                   ACE_ENV_ARG_PARAMETER);
+                                   priority_bands_i);
 }
 
 TAO_Stub *
@@ -364,14 +311,12 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
-                                TAO_PriorityBandedConnectionPolicy *priority_bands
-                                ACE_ENV_ARG_DECL)
+                                TAO_PriorityBandedConnectionPolicy *priority_bands)
 {
-  int error = 0;
+  bool error = false;
 
   // Count the number of endpoints.
-  size_t profile_count =
-    this->endpoint_count ();
+  size_t const profile_count = this->endpoint_count ();
 
   // Create a profile container and have acceptor registries populate
   // it with profiles as appropriate.
@@ -383,7 +328,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
   int result =
     mprofile.set (static_cast <CORBA::ULong> (profile_count));
   if (result == -1)
-    error = 1;
+    error = true;
 
   TAO_Thread_Lane **lanes =
     this->thread_pool_->lanes ();
@@ -408,7 +353,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                   acceptor_registry.end (),
                                   lanes[i]->lane_priority ());
           if (result == -1)
-            error = 1;
+            error = true;
         }
     }
 
@@ -418,33 +363,28 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
     error = 1;
 
   if (error)
-    ACE_THROW_RETURN (CORBA::INTERNAL (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_MPROFILE_CREATION_ERROR,
-                          0),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw ::CORBA::INTERNAL (
+      CORBA::SystemException::_tao_minor_code (
+        TAO_MPROFILE_CREATION_ERROR,
+        0),
+      CORBA::COMPLETED_NO);
 
   // Make sure we have at least one profile.  <mp> may end up being
   // empty if none of the acceptor endpoints have the right priority
   // for this object, for example.
   if (mprofile.profile_count () == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_MPROFILE_CREATION_ERROR,
-                          0),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw ::CORBA::BAD_PARAM (
+      CORBA::SystemException::_tao_minor_code (
+        TAO_MPROFILE_CREATION_ERROR,
+        0),
+      CORBA::COMPLETED_NO);
 
   return
-    this->orb_core_.create_stub_object (mprofile,
-                                        type_id,
-                                        policy_list
-                                        ACE_ENV_ARG_PARAMETER);
+    this->orb_core_.create_stub_object (mprofile, type_id, policy_list);
 }
 
 size_t
-TAO_RT_POA::endpoint_count (void)
+TAO_RT_POA::endpoint_count ()
 {
   size_t profile_count = 0;
 
@@ -483,22 +423,18 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
 }
 
 CORBA::PolicyList *
-TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
-                                     ACE_ENV_ARG_DECL)
+TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
 {
   CORBA::PolicyList *client_exposed_policies = 0;
   ACE_NEW_THROW_EX (client_exposed_policies,
                     CORBA::PolicyList (),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   CORBA::PolicyList_var safe_client_exposed_policies = client_exposed_policies;
 
   // Add in all of the client exposed policies.
-  this->policies_.add_client_exposed_fixed_policies (client_exposed_policies
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->policies_.add_client_exposed_fixed_policies (client_exposed_policies);
 
   // Check if the priority model policy has been set, and if so, let
   // the client know about it.
@@ -530,7 +466,6 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
                                                  priority),
                         CORBA::NO_MEMORY (TAO::VMCID,
                                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (0);
 
       (*client_exposed_policies)[current_length] = priority_model_policy;
     }
@@ -543,412 +478,228 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
 PortableServer::POA_ptr
 TAO_RT_POA::create_POA (const char *adapter_name,
                         PortableServer::POAManager_ptr poa_manager,
-                        const CORBA::PolicyList &policies
-                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::AdapterAlreadyExists,
-                   PortableServer::POA::InvalidPolicy))
+                        const CORBA::PolicyList &policies)
 {
-  PortableServer::POA_ptr poa = this->TAO_Regular_POA::create_POA (adapter_name,
-                                                           poa_manager,
-                                                           policies
-                                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (poa);
-  return poa;
+  return this->TAO_Regular_POA::create_POA (adapter_name, poa_manager, policies);
 }
 
 PortableServer::POA_ptr
-TAO_RT_POA::find_POA (const char *adapter_name,
-                      CORBA::Boolean activate_it
-                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::AdapterNonExistent))
+TAO_RT_POA::find_POA (const char *adapter_name, CORBA::Boolean activate_it)
 {
-  PortableServer::POA_ptr poa = this->TAO_Regular_POA::find_POA (adapter_name,
-                                                         activate_it
-                                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (poa);
-  return poa;
+  return this->TAO_Regular_POA::find_POA (adapter_name, activate_it);
 }
 
 void
 TAO_RT_POA::destroy (CORBA::Boolean etherealize_objects,
-                     CORBA::Boolean wait_for_completion
-                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                     CORBA::Boolean wait_for_completion)
 {
-  this->TAO_Regular_POA::destroy (etherealize_objects,
-                          wait_for_completion
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->TAO_Regular_POA::destroy (etherealize_objects, wait_for_completion);
 }
 
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 PortableServer::ThreadPolicy_ptr
-TAO_RT_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
-                                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::create_thread_policy (PortableServer::ThreadPolicyValue value)
 {
-  PortableServer::ThreadPolicy_ptr policy =
-    this->TAO_Regular_POA::create_thread_policy (value
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (policy);
-  return policy;
+  return this->TAO_Regular_POA::create_thread_policy (value);
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if !defined (CORBA_E_MICRO)
 PortableServer::LifespanPolicy_ptr
-TAO_RT_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
-                                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value)
 {
-  PortableServer::LifespanPolicy_ptr policy =
-    this->TAO_Regular_POA::create_lifespan_policy (value
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (policy);
-  return policy;
+  return this->TAO_Regular_POA::create_lifespan_policy (value);
 }
+#endif
 
+#if !defined (CORBA_E_MICRO)
 PortableServer::IdUniquenessPolicy_ptr
-TAO_RT_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value
-                                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value)
 {
-  PortableServer::IdUniquenessPolicy_ptr policy =
-    this->TAO_Regular_POA::create_id_uniqueness_policy (value
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (policy);
-  return policy;
+  return this->TAO_Regular_POA::create_id_uniqueness_policy (value);
 }
+#endif
 
-
+#if !defined (CORBA_E_MICRO)
 PortableServer::IdAssignmentPolicy_ptr
-TAO_RT_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value
-                                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value)
 {
-  PortableServer::IdAssignmentPolicy_ptr policy =
-    this->TAO_Regular_POA::create_id_assignment_policy (value
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (policy);
-  return policy;
+  return this->TAO_Regular_POA::create_id_assignment_policy (value);
 }
+#endif
 
-
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 PortableServer::ImplicitActivationPolicy_ptr
-TAO_RT_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value
-                                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::create_implicit_activation_policy (
+  PortableServer::ImplicitActivationPolicyValue value)
 {
-  PortableServer::ImplicitActivationPolicy_ptr policy =
-    this->TAO_Regular_POA::create_implicit_activation_policy (value
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (policy);
-  return policy;
+  return this->TAO_Regular_POA::create_implicit_activation_policy (value);
 }
 
 PortableServer::ServantRetentionPolicy_ptr
-TAO_RT_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value
-                                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::create_servant_retention_policy (
+  PortableServer::ServantRetentionPolicyValue value)
 {
-  PortableServer::ServantRetentionPolicy_ptr policy =
-    this->TAO_Regular_POA::create_servant_retention_policy (value
-                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (policy);
-  return policy;
+  return this->TAO_Regular_POA::create_servant_retention_policy (value);
 }
 
 
 PortableServer::RequestProcessingPolicy_ptr
-TAO_RT_POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value
-                                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::create_request_processing_policy (
+  PortableServer::RequestProcessingPolicyValue value)
 {
-  PortableServer::RequestProcessingPolicy_ptr policy =
-    this->TAO_Regular_POA::create_request_processing_policy (value
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (policy);
-  return policy;
+  return this->TAO_Regular_POA::create_request_processing_policy (value);
 }
 
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 char *
-TAO_RT_POA::the_name (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::the_name ()
 {
-  char * name =
-    this->TAO_Regular_POA::the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (name);
-  return name;
+  return this->TAO_Regular_POA::the_name ();
 }
 
 PortableServer::POA_ptr
-TAO_RT_POA::the_parent (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::the_parent ()
 {
-  PortableServer::POA_ptr parent =
-    this->TAO_Regular_POA::the_parent (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (parent);
-  return parent;
+  return this->TAO_Regular_POA::the_parent ();
 }
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::POAList *
-TAO_RT_POA::the_children (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::the_children ()
 {
-  PortableServer::POAList *children =
-    this->TAO_Regular_POA::the_children (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (children);
-  return children;
+  return this->TAO_Regular_POA::the_children ();
 }
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::POAManager_ptr
-TAO_RT_POA::the_POAManager (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::the_POAManager ()
 {
-  PortableServer::POAManager_ptr poa_manager =
-    this->TAO_Regular_POA::the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (poa_manager);
-  return poa_manager;
+  return this->TAO_Regular_POA::the_POAManager ();
 }
 
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::AdapterActivator_ptr
-TAO_RT_POA::the_activator (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::the_activator ()
 {
-  PortableServer::AdapterActivator_ptr activator =
-    this->TAO_Regular_POA::the_activator (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (activator);
-  return activator;
+  return this->TAO_Regular_POA::the_activator ();
 }
 
 void
-TAO_RT_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator)
 {
-  this->TAO_Regular_POA::the_activator (adapter_activator
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->TAO_Regular_POA::the_activator (adapter_activator);
 }
 
 PortableServer::ServantManager_ptr
-TAO_RT_POA::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::get_servant_manager ()
 {
-  PortableServer::ServantManager_ptr servant_manager =
-    this->TAO_Regular_POA::get_servant_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (servant_manager);
-  return servant_manager;
+  return this->TAO_Regular_POA::get_servant_manager ();
 }
 
 void
-TAO_RT_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr
-                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr)
 {
-  this->TAO_Regular_POA::set_servant_manager (imgr
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->TAO_Regular_POA::set_servant_manager (imgr);
 }
 
 PortableServer::Servant
-TAO_RT_POA::get_servant (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::NoServant,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::get_servant ()
 {
-  PortableServer::Servant servant =
-    this->TAO_Regular_POA::get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (servant);
-  return servant;
+  return this->TAO_Regular_POA::get_servant ();
 }
 
 void
-TAO_RT_POA::set_servant (PortableServer::Servant servant
-                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::set_servant (PortableServer::Servant servant)
 {
-  this->TAO_Regular_POA::set_servant (servant
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->TAO_Regular_POA::set_servant (servant);
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::ObjectId *
-TAO_RT_POA::activate_object (PortableServer::Servant p_servant
-                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::activate_object (PortableServer::Servant p_servant)
 {
-  PortableServer::ObjectId *object_id =
-    this->TAO_Regular_POA::activate_object (p_servant
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (object_id);
-  return object_id;
+  return this->TAO_Regular_POA::activate_object (p_servant);
 }
 
+#if !defined (CORBA_E_MICRO)
 void
 TAO_RT_POA::activate_object_with_id (const PortableServer::ObjectId &id,
-                                     PortableServer::Servant p_servant
-                                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::ObjectAlreadyActive,
-                   PortableServer::POA::WrongPolicy))
+                                     PortableServer::Servant p_servant)
 {
-  this->TAO_Regular_POA::activate_object_with_id (id,
-                                          p_servant
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->TAO_Regular_POA::activate_object_with_id (id, p_servant);
 }
+#endif
 
 void
-TAO_RT_POA::deactivate_object (const PortableServer::ObjectId &oid
-                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::deactivate_object (const PortableServer::ObjectId &oid)
 {
-  this->TAO_Regular_POA::deactivate_object (oid
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->TAO_Regular_POA::deactivate_object (oid);
 }
 
 CORBA::Object_ptr
-TAO_RT_POA::create_reference (const char *intf
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::create_reference (const char *intf)
 {
-  CORBA::Object_ptr obj =
-    this->TAO_Regular_POA::create_reference (intf
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (obj);
-  return obj;
+  return this->TAO_Regular_POA::create_reference (intf);
 }
 
+#if !defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_RT_POA::create_reference_with_id (const PortableServer::ObjectId &oid,
-                                      const char *intf
-                                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                                      const char *intf)
 {
-  CORBA::Object_ptr obj =
-    this->TAO_Regular_POA::create_reference_with_id (oid,
-                                             intf
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (obj);
-  return obj;
+  return this->TAO_Regular_POA::create_reference_with_id (oid, intf);
 }
+#endif
 
 PortableServer::ObjectId *
-TAO_RT_POA::servant_to_id (PortableServer::Servant p_servant
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::servant_to_id (PortableServer::Servant p_servant)
 {
-  PortableServer::ObjectId *object_id =
-    this->TAO_Regular_POA::servant_to_id (p_servant
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (object_id);
-  return object_id;
+  return this->TAO_Regular_POA::servant_to_id (p_servant);
 }
 
 CORBA::Object_ptr
-TAO_RT_POA::servant_to_reference (PortableServer::Servant p_servant
-                                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::servant_to_reference (PortableServer::Servant p_servant)
 {
-  CORBA::Object_ptr obj =
-    this->TAO_Regular_POA::servant_to_reference (p_servant
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (obj);
-  return obj;
+  return this->TAO_Regular_POA::servant_to_reference (p_servant);
 }
 
-
 PortableServer::Servant
-TAO_RT_POA::reference_to_servant (CORBA::Object_ptr reference
-                                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongAdapter,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::reference_to_servant (CORBA::Object_ptr reference)
 {
-  PortableServer::Servant servant =
-    this->TAO_Regular_POA::reference_to_servant (reference
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (servant);
-  return servant;
+  return this->TAO_Regular_POA::reference_to_servant (reference);
 }
 
 PortableServer::ObjectId *
-TAO_RT_POA::reference_to_id (CORBA::Object_ptr reference
-                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongAdapter,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::reference_to_id (CORBA::Object_ptr reference)
 {
-  PortableServer::ObjectId *object_id =
-    this->TAO_Regular_POA::reference_to_id (reference
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (object_id);
-  return object_id;
+  return this->TAO_Regular_POA::reference_to_id (reference);
 }
 
 PortableServer::Servant
-TAO_RT_POA::id_to_servant (const PortableServer::ObjectId &oid
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::id_to_servant (const PortableServer::ObjectId &oid)
 {
-  PortableServer::Servant servant =
-    this->TAO_Regular_POA::id_to_servant (oid
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (servant);
-  return servant;
+  return this->TAO_Regular_POA::id_to_servant (oid);
 }
 
 CORBA::Object_ptr
-TAO_RT_POA::id_to_reference (const PortableServer::ObjectId &oid
-                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy))
+TAO_RT_POA::id_to_reference (const PortableServer::ObjectId &oid)
 {
-  CORBA::Object_ptr obj =
-    this->TAO_Regular_POA::id_to_reference (oid
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (obj);
-  return obj;
+  return this->TAO_Regular_POA::id_to_reference (oid);
 }
 
 CORBA::OctetSeq *
-TAO_RT_POA::id (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_RT_POA::id ()
 {
-  return this->TAO_Regular_POA::id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->TAO_Regular_POA::id ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

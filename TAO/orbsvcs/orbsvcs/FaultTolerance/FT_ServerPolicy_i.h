@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   FT_ServerPolicy_i.h
- *
- *  $Id$
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
@@ -15,15 +14,10 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/FT_CORBA_ORBC.h"
-
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#include "FT_ServerORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ServerORB_export.h"
 #include "tao/LocalObject.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_FT_Heart_Beat_Enabled_Policy
@@ -34,12 +28,11 @@
  * the TAG_FT_HEARTBEAT_ENABLED component in the IOP profile of
  * the IOR that it exposes
  */
-class TAO_FT_ServerORB_Export TAO_FT_Heart_Beat_Enabled_Policy
-  : public FT::HeartbeatEnabledPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_FT_Heart_Beat_Enabled_Policy
+  : public FT::HeartbeatEnabledPolicy
+  , public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_FT_Heart_Beat_Enabled_Policy (const CORBA::Boolean boolean);
 
@@ -47,44 +40,32 @@ public:
   TAO_FT_Heart_Beat_Enabled_Policy (
       const TAO_FT_Heart_Beat_Enabled_Policy &rhs);
 
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
 
   /// Returns a copy of <this>.
-  virtual TAO_FT_Heart_Beat_Enabled_Policy *clone (void) const;
+  virtual TAO_FT_Heart_Beat_Enabled_Policy *clone () const;
 
   // = The FT::HeartBeatPolicy methods
-  virtual CORBA::Boolean heartbeat_enabled_policy_value (
-      ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean heartbeat_enabled_policy_value ();
 
-  virtual CORBA::PolicyType policy_type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
 private:
-
   /// indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_enabled_value_;
 };
 
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "FT_ServerPolicy_i.inl"
+#include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

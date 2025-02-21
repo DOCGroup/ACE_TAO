@@ -1,0 +1,4 @@
+// -*- MPC -*-
+project(MC_Test_Utilities) : acelib, avoids_ace_for_tao {
+  dynamicflags += MC_TEST_UTILITIES_BUILD_DLL
+}

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
@@ -7,13 +5,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Barrier.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(Latency, client, "$Id$")
 
 class Client : public ACE_Task_Base
 {
@@ -24,7 +21,7 @@ class Client : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run the client threads.
   //
 public:
-  Client (void);
+  Client ();
   // ctor
 
   void set (int niterations,
@@ -37,11 +34,12 @@ public:
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
   // Accumulate the throughput statistics into <throughput>
 
-  void dump_stats (const char* msg, ACE_UINT32 gsf);
+  void dump_stats (const ACE_TCHAR* msg,
+                   ACE_High_Res_Timer::global_scale_factor_type gsf);
   // Accumulate the throughput statistics into <throughput>
 
   // = The ACE_Task_Base methods....
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   CORBA::ORB_ptr orb_;
@@ -64,7 +62,7 @@ private:
 
 // ****************************************************************
 
-const char *ior_base = "file://test.ior";
+const ACE_TCHAR *ior_base = ACE_TEXT("file://test.ior");
 int nthreads = 0;
 int niterations = 1000;
 int period = -1;
@@ -73,9 +71,9 @@ Client client[MAX_THREADS];
 int priorities[MAX_THREADS];
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:t:n:p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:t:n:p:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -109,19 +107,19 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int policy = ACE_SCHED_FIFO;
   int flags  = THR_SCHED_FIFO|THR_NEW_LWP|THR_JOINABLE|THR_BOUND;
   int priority =
     ACE_Sched_Params::priority_max (policy);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (policy,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -139,27 +137,23 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Obtain Priority Mapping used by the ORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("PriorityMappingManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("PriorityMappingManager");
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
       if (CORBA::is_nil (mapping_manager.in ()))
         {
@@ -201,27 +195,25 @@ main (int argc, char *argv[])
         {
           client[j].accumulate_into (throughput);
 
-          char buf[64];
-          ACE_OS::sprintf (buf, "Thread[index= %d]", j);
+          ACE_TCHAR buf[64];
+          ACE_OS::sprintf (buf, ACE_TEXT("Thread[index= %d]"), j);
           client[j].dump_stats (buf, gsf);
         }
 
-      throughput.dump_results ("Aggregated", gsf);
+      throughput.dump_results (ACE_TEXT("Aggregated"), gsf);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Orb per priority client: exception raised");
+      ex._tao_print_exception ("Orb per priority client: exception raised");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 // ****************************************************************
 
-Client::Client (void)
+Client::Client ()
 {
 }
 
@@ -240,7 +232,7 @@ Client::set (int niterations,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   ACE_hthread_t current;
   ACE_Thread::self (current);
@@ -254,26 +246,24 @@ Client::svc (void)
               native_priority));
 
   int i = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       char ior[100];
       ACE_OS::sprintf (ior,
                        "%s_%d",
-                       ior_base,
+                       ACE_TEXT_ALWAYS_CHAR (ior_base),
                        priorities[this->id_]);
 
       CORBA::Object_var object =
-        orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb_->string_to_object (ior);
 
       Test_var server =
-        Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%C> is nil.\n",
                              ior),
                             1);
         }
@@ -284,13 +274,10 @@ Client::svc (void)
       for (int j = 0; j < 100; ++j)
         {
           /* CORBA::PolicyList_var pols;
-          server->_validate_connection (pols.out ()
-                                        ACE_ENV_ARG_PARAMETER);
+          server->_validate_connection (pols.out ());
           */
 
-          server->test_method (this->id_
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->test_method (this->id_);
         }
 
       this->after_connection_->wait ();
@@ -303,9 +290,7 @@ Client::svc (void)
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
           // Invoke method.
-          server->test_method (this->id_
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->test_method (this->id_);
 
           // Grab timestamp again.
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -323,19 +308,18 @@ Client::svc (void)
 
       /* char orb_name[50];
       ACE_OS::sprintf (orb_name, "%d", priorities[this->id_]);
-      server->shutdown (orb_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;*/
+      server->shutdown (orb_name);
+      */
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       char message[100];
       ACE_OS::sprintf (message,
                        "ORB_per_Priority::client: Exception in thread with native priority = %d, on iteration = %d",
                        this->id_,
                        i);
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, message);
+      ex._tao_print_exception (message);
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -346,7 +330,9 @@ Client::accumulate_into (ACE_Throughput_Stats &throughput) const
 }
 
 void
-Client::dump_stats (const char* msg, ACE_UINT32 gsf)
+Client::dump_stats (
+  const ACE_TCHAR* msg,
+  ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (msg, gsf);
 }

@@ -1,7 +1,4 @@
 #!/bin/sh
-#
-# $Id$
-#
 
 HP_SUPPLIERS="1 2 10"
 HP_CONSUMERS="1 5 10 20"

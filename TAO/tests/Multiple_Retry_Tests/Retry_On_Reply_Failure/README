@@ -1,0 +1,23 @@
+/**
+
+
+
+@page Retry_On_Reply_Failure Test README File
+
+	This is test for the invocation retry feature when a client
+	receives OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT or INV_OBJREF
+	exceptions from server as a reply to a request.
+	This feature can be enabled and disabled by -ORBForwardOnObjectNotExistLimit
+	-ORBForwardOnCommFailureLimit, -ORBForwardOnOnTransientLimit and
+	-ORBForwardOnInvObjLimit options with value 0(disable) and 1(enable).
+
+	The starting point for this test implementation was the
+	ForwardOnceUponException test.
+
+	To execute the test simply run:
+
+$ ./run_test.pl
+
+	the script returns 0 on success and non-zero on failures.
+
+*/

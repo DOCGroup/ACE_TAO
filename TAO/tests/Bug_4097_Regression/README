@@ -1,0 +1,121 @@
+
+
+This is Prismtech Jira TAO-69 and Bugzilla_4097
+
+Typecodes for UNIONs with multiple labels per individual case are
+generated incorrectly.
+
+
+
+For example the following legal IDL union declarion:
+
+union MultiLabelUnion switch (long) {
+ case 0:
+ case 1:
+   char mlu_char;
+ case 2:
+   long mlu_long;
+};
+
+Currently TAO (and a few other orbs including JacOrb and eOrb'C' eORB'C++') do
+not handle the typecode generation correctly for this. Only one of the above
+cases for the mlu_char member are dealt with in the typecode information, even
+though the generated (de)marshaling code correctly handles all case labels.
+This means that such unions sent inside anys are impossiable to decode at the
+receiving end if the missing case label is being used for the union it holds.
+
+When using the typecode interface functions for the above it incorrectly gives:
+tc->member_count () returns 2 (for the two types)
+tc->member_label(0), tc->member_name(0) and tc->member_type(0)
+  returns 0, "mlu_char", and char
+tc->member_label(1), tc->member_name(1) and tc->member_type(1)
+  returns 2, "mlu_long", and long
+
+The exact handling for the above is not actually dealt with in the CORBA spec
+as far as I can see excepting that multiple case labels for a type are
+perfectly valid for unions. BUT I've found a little passage detailing this in
+the Henning and Vinoski "Advanced CORBA Programming with C++" bilble. See
+page 700. (of the 16.3.2 Chapter "Type Code Parameters" page 698-700
+covering "Type Code Parameters for Unions"). This states that the
+member_count for unions should actually be the number of case labels NOT the
+number of types. This would make the typecode information that needs to be
+generated for the above type produce:
+
+tc->member_count () returns 3 (for the the number of labels)
+tc->member_label(0), tc->member_name(0) and tc->member_type(0)
+  returns 0, "mlu_char", and char
+tc->member_label(1), tc->member_name(1) and tc->member_type(1)
+  returns 1, "mlu_char", and char
+tc->member_label(2), tc->member_name(2) and tc->member_type(2)
+  returns 2, "mlu_long", and long
+
+This was found by a Prismtech customer who noted that inter-op with TIDorb
+wasn't working correctly when extracting such a union from an any as generated
+by TAO. As a work-a-round, if they modified the IDL for the type to:
+
+union MultiLabelUnion switch (long) {
+ case 0:
+   char mlu_char;
+ case 1:
+   char mlu_char;
+ case 2:
+   long mlu_long;
+};
+
+everything started working again, but that the normal IDL (that doesn't work)
+should also work.
+
+----------------
+Failing test run:
+----------------
+
+Starting
+Creating union using default descriminant of mlu_char type
+. Extracted descriminant is correct (0)
+. Extracted value is correct (x)
+Encode->Decode any with union using default descriminant of mlu_char type
+. Size of encoding is 129
+. Extracted descriminant is correct (0)
+. Extracted value is correct (x)
+Creating union using case 0
+. Extracted descriminant is correct (0)
+. Extracted value is correct (y)
+Encode->Decode any with union using case 0
+. Size of encoding is 129
+. Extracted descriminant is correct (0)
+. Extracted value is correct (y)
+Creating union using case 1
+. Extracted descriminant is correct (1)
+. Extracted value is correct (z)
+Encode->Decode any with union using case 1
+. Size of encoding is 129
+. DID NOT Extract from any (Test Failure)
+Test FAILED.
+
+----------------
+Passing test run:
+----------------
+
+Starting
+Creating union using default descriminant of mlu_char type
+. Extracted descriminant is correct (0)
+. Extracted value is correct (x)
+Encode->Decode any with union using default descriminant of mlu_char type
+. Size of encoding is 129
+. Extracted descriminant is correct (0)
+. Extracted value is correct (x)
+Creating union using case 0
+. Extracted descriminant is correct (0)
+. Extracted value is correct (y)
+Encode->Decode any with union using case 0
+. Size of encoding is 129
+. Extracted descriminant is correct (0)
+. Extracted value is correct (y)
+Creating union using case 1
+. Extracted descriminant is correct (1)
+. Extracted value is correct (z)
+Encode->Decode any with union using case 1
+. Size of encoding is 129
+. Extracted descriminant is correct (1)
+. Extracted value is correct (z)
+Test SUCCEEDED.

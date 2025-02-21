@@ -4,8 +4,6 @@
 /**
  * @file ClientORBInitializer.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -27,7 +25,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 // Test's SlotId made global for ease of implementation.
 // It is initialized to a large number to make it obvious when the
 // SlotId is invalid.
@@ -35,7 +32,6 @@
 // Don't do this if you have more than one ORB in your application or
 // if thread-safety is an issue!!!
 extern PortableInterceptor::SlotId slot_id;
-
 
 /**
  * @class ClientORBInitializer
@@ -47,10 +43,9 @@ extern PortableInterceptor::SlotId slot_id;
  */
 class ClientORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the ORBInitializer Interface
    *
@@ -61,17 +56,12 @@ public:
   //@{
   /// The pre-initialization hook.
   virtual void pre_init (
-      PortableInterceptor::ORBInitInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ORBInitInfo_ptr info);
 
   /// The post-initialization hook.
   virtual void post_init (
-      PortableInterceptor::ORBInitInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ORBInitInfo_ptr info);
   //@}
-
 };
 
 #if defined(_MSC_VER)

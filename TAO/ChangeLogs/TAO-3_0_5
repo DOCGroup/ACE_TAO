@@ -1,0 +1,297 @@
+commit 71e4e963553d379b9744e9357267b65a0dec8cde
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 16 13:05:02 2021 +0100
+
+    Fixed g++ warning, use override/default
+    
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Random.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Random.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:
+
+commit 120b0f9b0aaf5771581dfa27229297d68e91cf2b
+Author: caoxiaolins <caoxiaolin_s@163.com>
+Date:   Sun Nov 14 21:28:56 2021 +0800
+
+    Removed redundant base project of project TAO_Notify_Service
+    
+    Fixes https://github.com/DOCGroup/ACE_TAO/issues/1705
+
+commit bf06d65f6dd1780bde5fcfc8fba852fb17234603
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 12 09:22:06 2021 +0100
+
+    Installed tree doesn't have double orbsvcs path
+    
+        * TAO/orbsvcs/Notify_Service/Notify_Server.cpp:
+        * TAO/orbsvcs/Notify_Service/Notify_Service.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControl/Control.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.h:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControl/Timestamp_Monitor.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControl/Timestamp_Monitor.h:
+
+commit 3152281734753a2cd4e508f9244fade5a1e2dca1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 12 09:09:16 2021 +0100
+
+    Removed redundant whitelines
+    
+        * TAO/orbsvcs/Logging_Service/Basic_Logging_Service/README:
+        * TAO/orbsvcs/Logging_Service/Event_Logging_Service/README:
+        * TAO/orbsvcs/Logging_Service/Notify_Logging_Service/README:
+        * TAO/orbsvcs/Logging_Service/README:
+        * TAO/orbsvcs/Logging_Service/RTEvent_Logging_Service/README:
+        * TAO/orbsvcs/tests/AVStreams/README:
+        * TAO/orbsvcs/tests/Event/Mcast/Complex/README:
+        * TAO/orbsvcs/tests/Event/Mcast/Simple/README:
+        * TAO/orbsvcs/tests/Event/Mcast/Two_Way/README:
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/README:
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/README:
+        * TAO/orbsvcs/tests/InterfaceRepo/Union_Forward_Test/README.txt:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/README:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/README:
+
+commit 026a87c8d9d1ce03c09d77e8c1fb99eb7d6af666
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Nov 11 11:27:50 2021 -0600
+
+    Notify svc: Fixed include
+    
+    The "make install" tree doesn't have two orbsvcs directories
+
+commit 0f879fd3f8a6e4d0b1762bd6c1424af735813ccc
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Nov 10 11:42:07 2021 -0600
+
+    SystemExceptions shouldn't use a different export
+    
+    All classes defined in libTAO should use the same export macro.
+    This avoids MSVC creating import libs for all executables that use
+    libTAO -- see https://github.com/DOCGroup/MPC/issues/130 and
+    https://github.com/microsoft/vcpkg/issues/16551
+
+commit 576421723fad21844f94f2cbf8a55fa43ab1e7bf
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Nov 9 12:54:22 2021 -0600
+
+    Update TAO/NEWS
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 05c690e4196f4830a25d2e45a758b4f714d34bf6
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 9 12:34:31 2021 -0600
+
+    Remove Mod for Booleans
+    
+    To address warnings on windows.
+
+commit cf10eef4b9a6dde7fa63edd77c482d75bc1ae51f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 9 00:47:32 2021 -0600
+
+    `TAO/NEWS`: Correct Spelling
+
+commit e5854ea627173c0a83ab4cb2a5c17f9966038237
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 5 13:34:50 2021 -0500
+
+    Fix More Parentheses Spacing
+
+commit b549b44c8a4c8474a076f28d55997cc543af0b3c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 5 13:32:26 2021 -0500
+
+    Update TAO NEWS File
+
+commit 75fd738cbe9153802def7dc3d593edd51a4a1834
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 5 13:26:45 2021 -0500
+
+    Respond to Review of #1715
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/1715#discussion_r743241981
+
+commit bffb55e36cf752988ce5cd3f55b37515601a8d06
+Merge: b79f031d852 15e4737ddce
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Nov 4 17:09:29 2021 -0500
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit b79f031d852433b939bf19fc88b208955e4d4c55
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Nov 4 15:38:15 2021 -0500
+
+    Fix Broken Floating Point Expressions
+    
+    Fixes https://github.com/DOCGroup/ACE_TAO/issues/1713 and adds a test.
+    
+    Also makes some other minor fixes and improvments to AST_Expression.
+
+commit 15e4737ddce6b0a73451e5f9856f7e5641b6173b
+Merge: 0bfb484a363 e891d972409
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Nov 3 16:48:01 2021 -0500
+
+    Merge pull request #1709 from mitza-oci/msvc-langstd
+    
+    Port to MSVC with /std:c++17 and 20
+
+commit 257660f8cb9bb5e1cd989e82295d70a4296bc92f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 3 09:49:53 2021 +0100
+
+    Reduce amount of empty lines in union generation
+    
+        * TAO/TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+
+commit c53ed6fa6a20b529b507379ebdf6efa8c26e7166
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Nov 1 15:28:00 2021 -0500
+
+    tao_idl updates for /std:c++20
+    
+    std::ostream doesn't work with wchar_t
+
+commit 67e622e4639dbf478df2c009e10e5226e0eaaf45
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Nov 1 12:03:17 2021 -0500
+
+    TAO updates for /std:c++20
+    
+    Note that the C++20 standard library disallows using
+    wide (wchar_t) strings with narrow iostreams
+
+commit 58754472d3be09f540e6e3632a7175539aa25dba
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sun Oct 31 21:38:48 2021 -0500
+
+    tao_idl updates for /std:c++20
+    
+    resolved ambiguous call to operator<< by refactoring to avoid
+    repetition of the same statement 300 times
+
+commit f63fd23cdbaafd7a8c17095198193421476ee9f2
+Merge: 713b686b403 affc714b380
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 09:58:09 2021 +0200
+
+    Merge pull request #1700 from jwillemsen/jwi-taoidl2
+    
+    Don't use strncpy in native_ch.cpp to fix compiler warning
+
+commit affc714b3808507eb0c5f451292c8fd56da032f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 22 16:55:21 2021 +0200
+
+    Don't use strncpy in native_ch.cpp to fix compiler warning
+    Use override/default
+    
+        * ACE/ace/Event_Handler.h:
+        * TAO/TAO_IDL/be/be_array.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_native/native_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO/TAO_IDL/be_include/be_array.h:
+        * TAO/TAO_IDL/be_include/be_visitor_argument/invoke_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_argument/marshal_ss.h:
+        * TAO/TAO_IDL/be_include/be_visitor_argument/upcall_ss.h:
+        * TAO/TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/any_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/any_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/array.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/array_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/array_ci.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/array_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/cdr_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/cdr_op_ci.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/cdr_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_component/executor_exs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_component/servant_svh.h:
+        * TAO/TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_enum/any_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_enum/cdr_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_enum/enum_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_enum/enum_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_native/native_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_sequence/cdr_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_structure/any_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_structure/any_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_structure/cdr_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_structure/structure.h:
+        * TAO/TAO_IDL/include/ast_concrete_type.h:
+        * TAO/TAO_IDL/include/ast_type.h:
+        * TAO/TAO_IDL/util/utl_exceptlist.cpp:
+
+commit 713b686b4039ad41033296c6b23a7ad1a62c69b8
+Merge: 8a289d150ee a1665e92f0b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 13 08:55:24 2021 +0200
+
+    Merge pull request #1699 from jwillemsen/jwi-defaultdestructor
+    
+    Make use of default destructor
+
+commit 9084da95c561f11fc84e449e4e19324eecddda1e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 12 15:56:08 2021 +0200
+
+    Use default destructor
+    
+        * ACE/ASNMP/asnmp/oid.cpp:
+        * ACE/ace/ATM_Addr.cpp:
+        * ACE/ace/ATM_Addr.h:
+        * ACE/ace/Asynch_IO.cpp:
+        * ACE/ace/Asynch_IO.h:
+        * ACE/ace/MEM_Addr.cpp:
+        * ACE/ace/MEM_Addr.h:
+        * TAO/tests/OctetSeq/README:
+
+commit dbd98a476910b9c1a6745db560f57b02525dddeb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 1 09:38:36 2021 +0200
+
+    Make x.0.4 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+<!-- Converted from ./orbsvcs/tests/Security/Bug_1107_Regression/client.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <dynamic id="SSLIOP_Factory" type="Service_Object">
+   <initializer path="TAO_SSLIOP" init="_make_TAO_SSLIOP_Protocol_Factory" params="-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:client_key.pem -SSLCertificate PEM:client_cert.pem"/>
+ </dynamic>
+ <static id="Resource_Factory" params="-ORBProtocolFactory SSLIOP_Factory"/>
+</ACE_Svc_Conf>

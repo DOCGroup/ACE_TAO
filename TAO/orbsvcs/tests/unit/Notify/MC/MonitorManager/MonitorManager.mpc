@@ -1,0 +1,13 @@
+project(*server): aceexe {
+  exename = MonitorManager
+  Source_Files {
+    MonitorManager.cpp
+  }
+}
+
+project(*client): notification_mc {
+  exename = MonitorClient
+  Source_Files {
+    MonitorClient.cpp
+  }
+}

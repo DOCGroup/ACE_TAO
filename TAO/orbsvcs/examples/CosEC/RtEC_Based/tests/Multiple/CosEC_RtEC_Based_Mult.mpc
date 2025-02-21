@@ -1,22 +1,23 @@
 // -*- MPC -*-
-// $Id$
-
-project(*Cons) : orbsvcsexe, event, event_skel, rtevent, rtsched {
-  after += CosEC_RtEC_Based_lib
-  includes += ../../lib
-  libs += CosEC_RtEC_Based
+project(*Cons) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
+  after    += CosEC_RtEC_Based_lib
+  exename   = Consumer
+  libs     += CosEC_RtEC_Based
   libpaths += ../../lib
+  includes += ../../lib
+
   source_files {
     Consumer.cpp
     Multiple.cpp
   }
 }
 
-project(*Supp) : orbsvcsexe, event, event_skel, rtevent, rtsched {
-  after += CosEC_RtEC_Based_lib
-  includes += ../../lib
-  libs += CosEC_RtEC_Based
+project(*Supp) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
+  after    += CosEC_RtEC_Based_lib *Cons
+  exename   = Supplier
+  libs     += CosEC_RtEC_Based
   libpaths += ../../lib
+
   source_files {
     Supplier.cpp
     Multiple.cpp

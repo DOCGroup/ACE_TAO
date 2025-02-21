@@ -1,12 +1,10 @@
-#include "ObjectReferenceTemplate_i.h"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
 #include "tao/PortableServer/Root_POA.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (ORT,
-           ObjectReferenceTemplate_i,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -22,27 +20,41 @@ namespace TAO
   {
   }
 
-  ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
+  ObjectReferenceTemplate::~ObjectReferenceTemplate ()
   {
   }
 
+  ::CORBA::ValueBase *
+  ObjectReferenceTemplate::_copy_value ()
+  {
+    ::CORBA::ValueBase *ret_val= 0;
+    ACE_NEW_THROW_EX (
+      ret_val,
+      ObjectReferenceTemplate (
+        server_id_,
+        orb_id_,
+        adapter_name_,
+        poa_.in ()
+      ),
+      ::CORBA::NO_MEMORY ()
+    );
+    return ret_val;
+  }
+
   char *
-  ObjectReferenceTemplate::server_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ObjectReferenceTemplate::server_id ()
   {
     return CORBA::string_dup (this->server_id_);
   }
 
   char *
-  ObjectReferenceTemplate::orb_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ObjectReferenceTemplate::orb_id ()
   {
     return CORBA::string_dup (this->orb_id_);
   }
 
   PortableInterceptor::AdapterName *
-  ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ObjectReferenceTemplate::adapter_name ()
   {
     PortableInterceptor::AdapterName *adapter_name = 0;
 
@@ -54,7 +66,6 @@ namespace TAO
                               TAO::VMCID,
                               ENOMEM),
                           CORBA::COMPLETED_NO));
-    ACE_CHECK_RETURN (0);
 
     return adapter_name;
   }
@@ -62,15 +73,19 @@ namespace TAO
   CORBA::Object_ptr
   ObjectReferenceTemplate::make_object (
       const char *,
-      const PortableInterceptor::ObjectId &
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+      const PortableInterceptor::ObjectId &)
   {
-    if (CORBA::is_nil(poa_.in()))
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
+    if (CORBA::is_nil (this->poa_.in ()))
+      throw ::CORBA::BAD_INV_ORDER ();
 
-    TAO_Root_POA* tao_poa = dynamic_cast<TAO_Root_POA*>(poa_.in());
+    TAO_Root_POA* const tao_poa =
+      dynamic_cast<TAO_Root_POA*> (this->poa_.in());
 
-    return tao_poa->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+    if (!tao_poa)
+      throw ::CORBA::INTERNAL ();
+
+    return tao_poa->invoke_key_to_object ();
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

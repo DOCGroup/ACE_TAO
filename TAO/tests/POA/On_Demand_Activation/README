@@ -1,0 +1,91 @@
+
+
+On_Demand_Activation Tests:
+==========================
+
+Description:
+===========
+
+ServantManagers:
+===============
+
+Servant managers are associated with POAs. A servant manager supplies
+a POA with the ability to objects on demand when the POA receives a
+request targeted at an inactive object. A servant manager is
+registered with a POA as a callback object, to be invoked by the POA
+when necessary.  An application server that activates all its needed
+objects at the beginning of execution does not need to use a servant
+manager; it is used only for the case in which an object must be
+activated during request processing.
+
+When the POA has the RETAIN policy it uses servant managers that are
+ServantActivators. When the POA has the NON_RETAIN policy it uses
+servant managers that are ServantLocators.
+
+server:
+======
+
+        The test program server creates 2 POAs firstPOA and secondPOA.
+firstPOA is created with a RETAIN,USER_ID,USE_SERVANT_MANAGER policy
+and test_i_Activator is registered as its servant Manager.
+secondPOA is created with a NON_RETAIN,USER_ID,USE_SERVANT_MANAGER
+policy and ServantLocator is registered as it servant Manager.
+
+It then creates an object reference from the string "first test" in
+firstPOA and prints its IOR.Similarly it creates an object reference
+from the string "second test" in secondPOA and prints its IOR. Finally
+it changes the state of the POA_Manager to 'active' and runs the ORB.
+
+USAGE:
+======
+
+You can use the run_test.pl perl script or follow these directions:
+
+%server [-ORBobjrefstyle URL] [-f IOR file]
+
+client:
+======
+        The client program is in the path
+
+        TAO/tests/POA/Generic_Servant/client
+        i.e ../Generic_Servant/client
+
+% client [-k IOR] [-f IOR file]
+
+where IOR is got from the server output to the screen or to the IOR file.
+
+To Test:
+=======
+
+1. Run the server
+
+Servant Activator:
+===================
+
+2. Get the IOR for "first test"  from the server output .
+
+3. Run client -k IOR
+
+4. You should get an output
+
+        27
+
+along with some diagnostic messages.
+
+Servant Locator:
+=================
+
+2. Get the IOR for "second test" from the server output
+
+3. Run client -k IOR
+
+4. The first time a client is run you should get an output
+
+        2 (or 1)
+
+along with some diagnostic messages.
+
+5. Subsequent runs of the client program results in the output
+   incremented by 2 (or 1).
+
+6. Thus, the second run of client should give you an output 4 (or 2).

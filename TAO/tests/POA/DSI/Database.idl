@@ -1,0 +1,73 @@
+module Database
+{
+  typedef unsigned long Flags;
+
+  typedef string Identifier;
+
+  exception Unknown_Type
+    {
+      string type;
+    };
+
+  exception Unknown_Key
+    {
+      string key;
+    };
+
+  exception Duplicate_Key
+    {
+      string key;
+    };
+
+  exception Not_Found
+    {
+      string key;
+    };
+
+  interface Entry
+    {
+      readonly attribute string name;
+    };
+
+  interface Employee : Entry
+    {
+      attribute long id;
+    };
+
+  /*
+  interface Machine : Entry
+    {
+      attribute string make;
+    };
+  */
+
+  struct NamedValue
+    {
+      Identifier name;
+      any value;
+      Flags options;
+    };
+
+  typedef sequence<NamedValue> NVPairSequence;
+
+  interface Agent
+    {
+      Entry create_entry (in string key,
+                          in Identifier entry_type,
+                          in NVPairSequence initial_attributes)
+        raises (Unknown_Type,
+                Duplicate_Key);
+
+      Entry find_entry (in string key,
+                        in Identifier entry_type)
+        raises (Unknown_Type,
+                Not_Found);
+
+      void destroy_entry (in string key,
+                          in Identifier entry_type)
+        raises (Unknown_Type,
+                Unknown_Key);
+
+      oneway void shutdown ();
+    };
+};

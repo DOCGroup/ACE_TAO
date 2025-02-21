@@ -1,7 +1,4 @@
 // -*- IDL -*-
-//
-// $Id$
-
 
 #ifndef _SECURITY_LEVEL_2_IDL_
 #define _SECURITY_LEVEL_2_IDL_
@@ -189,7 +186,6 @@ module SecurityLevel2 {
     );
   };
 
-
   // Policy interfaces to control bindings
 
   local interface QOPPolicy : CORBA::Policy {
@@ -270,5 +266,45 @@ module SecurityLevel2 {
 };
 
 #pragma prefix ""
+
+module TAO {
+  module SL2 {
+    local interface AccessDecision : SecurityLevel2::AccessDecision
+    {
+      /* TAO-specific access_allowed that works around deficiencies in
+         the SecurityLevel2::AccessDecision::access_allowed() operation. */
+      // Parameter object_id should be PortableInterceptor::ObjectId, but
+      // using that type would require including the PI_Forward.pidl file.
+      // By using the real type, we can avoid that dependency.
+      boolean access_allowed_ex (
+         in ::CORBA::ORBid orb_id,
+         in ::CORBA::OctetSeq adapter_id,
+         in ::CORBA::OctetSeq object_id,
+         in ::SecurityLevel2::CredentialsList cred_list,
+         in ::CORBA::Identifier operation_name,
+         in boolean collocation_invocation);
+
+      /*! Default value returned when a reference is not in the list. */
+      attribute boolean default_decision;
+
+      /*! Default value returned when a reference is not in the list and we
+          are handling a collocated invocation. At the moment default_decision
+          is already true the value of this attribute doesn't matter anymore. */
+      attribute boolean default_collocated_decision;
+
+      /*! Establish whether a particular object can be accessed via insecure
+          means. */
+      void add_object (in ::CORBA::ORBid orb_id,
+                       in ::CORBA::OctetSeq adapter_id,
+                       in ::CORBA::OctetSeq object_id,
+                       in boolean allow_insecure_access);
+      void remove_object (in ::CORBA::ORBid orb_id,
+                          in ::CORBA::OctetSeq adapter_id,
+                          in ::CORBA::OctetSeq object_id);
+
+      // Should there be some kind of "find" interface?
+    };
+  };
+};
 
 #endif /* _SECURITY_LEVEL_2_IDL_ */

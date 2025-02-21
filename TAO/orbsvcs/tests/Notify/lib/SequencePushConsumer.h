@@ -2,11 +2,7 @@
 /**
  *  @file SequencePushConsumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_SEQUENCEPUSHCONSUMER_H
@@ -36,7 +32,7 @@ public:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer_Traits
 {
 public:
-  TAO_Notify_Tests_SequencePushConsumer_Traits (void);
+  TAO_Notify_Tests_SequencePushConsumer_Traits ();
 
   typedef CosNotifyComm::SequencePushConsumer INTERFACE;
   typedef CosNotifyComm::SequencePushConsumer_ptr PTR;
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_SequencePushConsumer_Traits
  * @class TAO_Notify_Tests_SequencePushConsumer
  *
  * @brief SequencePushConsumer Implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer : public TAO_Notify_Tests_SequencePushConsumer_Base
 {
@@ -66,34 +61,25 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer : public TAO_
   typedef Peer_Traits::Proxy_Traits Proxy_Traits;
 
 public:
-  /// Constuctor
-  TAO_Notify_Tests_SequencePushConsumer (void);
+  /// Constructor
+  TAO_Notify_Tests_SequencePushConsumer ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_SequencePushConsumer ();
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL);
+  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_from_proxy ();
 
   // = SequencePushConsumer methods
-  virtual void disconnect_sequence_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void disconnect_sequence_push_consumer ();
 
  /// Default does nothing.
   virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+        const CosNotification::EventBatch & notifications);
 };
 
 #if defined (__ACE_INLINE__)

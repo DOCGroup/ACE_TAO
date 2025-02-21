@@ -3,28 +3,15 @@
 /**
  * @file ServerRequestInfo.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled RequestInfo
- *
- * This file was used to generate the code in ServerRequestInfoC.*
- * The command used to generate code is:
- *
- *  tao_idl
- *     -o orig -Gp -Gd -Ge 1 -GA -Sc -SS -Sci
- *          -Wb,export_include="tao/TAO_Export.h"
- *          -Wb,export_macro=TAO_Export
- *          -Wb,pre_include="ace/pre.h"
- *          -Wb,post_include="ace/post.h"
- *          ServerRequestInfo.pidl
  */
 
 #ifndef _SERVER_REQUESTINFO_PIDL_
 #define _SERVER_REQUESTINFO_PIDL_
 
-#include "tao/PI/RequestInfo.pidl"
-#include <orb_types.pidl>
-#include <Policy_Forward.pidl>
+#include "tao/PI/PI_include.pidl"
+#include "tao/orb_types.pidl"
+#include "tao/Policy_Forward.pidl"
 
 module PortableInterceptor {
 

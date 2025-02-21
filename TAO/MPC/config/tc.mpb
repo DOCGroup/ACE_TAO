@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project: taolib_with_idl, interceptors, pi {
+  requires += transport_current
+  after    += TC
+  libs     += TAO_TC
+}

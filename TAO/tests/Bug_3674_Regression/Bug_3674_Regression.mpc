@@ -1,0 +1,11 @@
+// -*- MPC -*-
+
+project(*): taoserver, pi_server, iorinterceptor {
+  requires += interceptors
+  exename  = *
+  Source_Files {
+    test.cpp
+    testS.cpp
+    testC.cpp
+  }
+}

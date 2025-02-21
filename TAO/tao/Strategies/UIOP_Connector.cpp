@@ -1,11 +1,11 @@
-#include "UIOP_Connector.h"
+#include "tao/Strategies/UIOP_Connector.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "UIOP_Profile.h"
+#include "tao/Strategies/UIOP_Profile.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
@@ -15,47 +15,18 @@
 
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID(Strategies,
-          UIOP_Connector,
-          "$Id$")
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
-template class ACE_Connector_Base<TAO_UIOP_Connection_Handler>;
-template class ACE_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
-template class ACE_NonBlocking_Connect_Handler<TAO_UIOP_Connection_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<ACE_UNIX_Addr>
-#pragma instantiate ACE_Unbounded_Stack<ACE_UNIX_Addr>
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>
-#pragma instantiate ACE_Connector_Base<TAO_UIOP_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_UIOP_Connection_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-TAO_UIOP_Connector::TAO_UIOP_Connector (CORBA::Boolean flag)
+TAO_UIOP_Connector::TAO_UIOP_Connector ()
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
     connect_strategy_ (),
-    base_connector_ (),
-    lite_flag_ (flag)
+    base_connector_ (0)
 {
 }
 
-TAO_UIOP_Connector::~TAO_UIOP_Connector (void)
+TAO_UIOP_Connector::~TAO_UIOP_Connector ()
 {
 }
 
@@ -74,8 +45,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_UIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
-                       orb_core,
-                       this->lite_flag_),
+                       orb_core),
                   -1);
 
   /// Our activation strategy
@@ -92,7 +62,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_UIOP_Connector::close (void)
+TAO_UIOP_Connector::close ()
 {
   // Zap the creation strategy that we created earlier.
   delete this->base_connector_.creation_strategy ();
@@ -102,33 +72,23 @@ TAO_UIOP_Connector::close (void)
 }
 
 TAO_Profile *
-TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
-                                   ACE_ENV_ARG_DECL)
+TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
     return 0;
 
-  const char *separator = ACE_OS::strchr (str,'|');
+  const char *separator = std::strchr (str,'|');
   if (separator == 0)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan error: "
-                    "explicit terminating charactor '|' is missing from <%s>",
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - TAO_UIOP_CONNECTOR::corbaloc_scan error: "
+                    "explicit terminating charactor '|' is missing from <%C>",
                     str));
       return 0;
     }
-  if (*(separator+1) != ',' && *(separator+1) != '/')
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan warning: "
-                    "terminating charactor '|' should be followed by a ','"
-                    "or a '/' in <%s>",
-                    str));
-    }
-  len = (separator - str) + 1;
-  return this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
+  len = separator - str;
+  return this->make_profile ();
 }
 
 
@@ -150,9 +110,9 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
      {
        if (TAO_debug_level > 0)
          {
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO (%P|%t) UIOP failure.\n")
-                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
+           TAOLIB_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO (%P|%t) - UIOP failure.\n")
+                       ACE_TEXT ("TAO (%P|%t) - This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
                        ACE_TEXT ("failure.\n")));
          }
@@ -169,8 +129,8 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) UIUP_Connector::make_connection, ")
+    TAOLIB_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
                 ACE_TEXT ("looking for UIOP connection.\n")));
 
   TAO_UIOP_Endpoint *uiop_endpoint =
@@ -183,9 +143,9 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     uiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) UIUP_Connector::make_connection, ")
-                ACE_TEXT ("making a new connection \n")));
+    TAOLIB_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
+                ACE_TEXT ("making a new connection\n")));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -193,14 +153,9 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   this->active_connect_strategy_->synch_options (max_wait_time,
                                                  synch_options);
 
-  // If we don't need to block for a transport just set the timeout to
-  // be zero.
-  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked_connect ())
-    {
-      synch_options.timeout (ACE_Time_Value::zero);
-      max_wait_time = &tmp_zero;
-    }
+  // The code used to set the timeout to zero, with the intent of
+  // polling the reactor for connection completion. However, the side-effect
+  // was to cause the connection to timeout immediately.
 
   TAO_UIOP_Connection_Handler *svc_handler = 0;
 
@@ -209,23 +164,6 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     this->base_connector_.connect (svc_handler,
                                    remote_address,
                                    synch_options);
-
-  // This call creates the service handler and bumps the #REFCOUNT# up
-  // one extra.  There are three possibilities: (a) connection
-  // succeeds immediately - in this case, the #REFCOUNT# on the
-  // handler is two; (b) connection completion is pending - in this
-  // case, the #REFCOUNT# on the handler is also two; (c) connection
-  // fails immediately - in this case, the #REFCOUNT# on the handler
-  // is one since close() gets called on the handler.
-  //
-  // The extra reference count in
-  // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
-  // the case when connection completion is pending and we are going
-  // to wait on a variable in the handler to changes, signifying
-  // success or failure.  Note, that this increment cannot be done
-  // once the connect() returns since this might be too late if
-  // another thread pick up the completion and potentially deletes the
-  // handler before we get a chance to increment the reference count.
 
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
@@ -242,11 +180,12 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
           // get a connected transport or not. In case of non block we get
           // a connected or not connected transport
           if (!this->wait_for_connection_completion (r,
+                                                     desc,
                                                      transport,
                                                      max_wait_time))
             {
               if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - UIOP_Connector::"
+                TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - UIOP_Connector::"
                                       "make_connection, "
                                       "wait for completion failed\n"));
             }
@@ -263,22 +202,33 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     {
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
-          ACE_DEBUG ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - UIOP_Connector::make_connection, "
-                      "connection to <%s> failed (%p)\n",
+                      "connection to <%C> failed (%p)\n",
                       uiop_endpoint->rendezvous_point (),
                       ACE_TEXT("errno")));
 
       return 0;
     }
 
+  TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
+
+  if (svc_handler->keep_waiting (leader_follower))
+    {
+      svc_handler->connection_pending ();
+    }
+
+  if (svc_handler->error_detected (leader_follower))
+    {
+      svc_handler->cancel_pending_connection ();
+    }
 
   // At this point, the connection has be successfully created
   // connected or not connected, but we have a connection.
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - UIOP_Connector::make_connection, "
-                "new %s connection to <%s> on Transport[%d]\n",
+                "new %C connection to <%C> on Transport[%d]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 uiop_endpoint->rendezvous_point (),
                 svc_handler->peer ().get_handle ()));
@@ -288,18 +238,25 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
                                                                              transport);
   // Failure in adding to cache.
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler.
       svc_handler->close ();
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) UIOP_Connector::make_connection, ")
-                      ACE_TEXT ("could not add the new connection to Cache \n")));
+          TAOLIB_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - UIOP_Connector::make_connection, ")
+                      ACE_TEXT ("could not add the new connection to Cache\n")));
         }
 
+      return 0;
+    }
+
+  if (svc_handler->error_detected (leader_follower))
+    {
+      svc_handler->cancel_pending_connection ();
+      transport->purge_entry();
       return 0;
     }
 
@@ -316,7 +273,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - UIOP_Connector [%d]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",
@@ -325,6 +282,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
+  svc_handler_auto_ptr.release ();
   return transport;
 }
 
@@ -348,7 +306,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_UIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO_UIOP_Connector::make_profile ()
 {
   TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
@@ -359,7 +317,6 @@ TAO_UIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  ACE_CHECK_RETURN (0);
 
   return profile;
 }
@@ -373,10 +330,10 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 
   static const char *protocol[] = { "uiop", "uioploc" };
 
-  const size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t const slot = std::strchr (endpoint, ':') - endpoint;
 
-  const size_t len0 = ACE_OS::strlen (protocol[0]);
-  const size_t len1 = ACE_OS::strlen (protocol[1]);
+  size_t const len0 = std::strlen (protocol[0]);
+  size_t const len1 = std::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
@@ -396,7 +353,7 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_UIOP_Connector::object_key_delimiter (void) const
+TAO_UIOP_Connector::object_key_delimiter () const
 {
   return TAO_UIOP_Profile::object_key_delimiter_;
 }
@@ -421,7 +378,7 @@ TAO_UIOP_Connector::cancel_svc_handler (
   TAO_Connection_Handler * svc_handler)
 {
   TAO_UIOP_Connection_Handler* handler=
-    dynamic_cast<TAO_UIOP_Connection_Handler*>(svc_handler);
+    dynamic_cast<TAO_UIOP_Connection_Handler*> (svc_handler);
 
   if (handler)
     // Cancel from the connector
@@ -429,5 +386,7 @@ TAO_UIOP_Connector::cancel_svc_handler (
 
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_UIOP == 1 */

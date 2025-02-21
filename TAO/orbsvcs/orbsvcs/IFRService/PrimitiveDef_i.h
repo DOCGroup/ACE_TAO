@@ -1,27 +1,22 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    PrimitiveDef_i.h
-//
-// = DESCRIPTION
-//    PrimitiveDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    PrimitiveDef_i.h
+ *
+ *  PrimitiveDef servant class.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_PRIMITIVEDEF_I_H
 #define TAO_PRIMITIVEDEF_I_H
 
-#include "IDLType_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,65 +27,48 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class TAO_PrimitiveDef_i
+ *
+ * @brief TAO_PrimitiveDef_i
+ *
+ * Represents any of the OMG IDL primitive types
+ */
 class TAO_IFRService_Export TAO_PrimitiveDef_i : public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_PrimitiveDef_i
-  //
-  // = DESCRIPTION
-  //    Represents any of the OMG IDL primitive types
-  //
 public:
+  /// Constructor.
   TAO_PrimitiveDef_i (TAO_Repository_i *repo);
-  // Constructor.
 
-  virtual ~TAO_PrimitiveDef_i (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~TAO_PrimitiveDef_i ();
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  /// Return our definition kind.
+  virtual CORBA::DefinitionKind def_kind ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Return our definition kind.
+  /// May not be called on a primitive kind - raises BAD_INV_ORDER.
+  virtual void destroy ();
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  /// Must implement this here because it's pure virtual in the
+  /// base class.
+  virtual void destroy_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // May not be called on a primitive kind - raises BAD_INV_ORDER.
+  /// From IDLType_i's pure virtual function.
+  virtual CORBA::TypeCode_ptr type ();
 
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::TypeCode_ptr type_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Must implement this here because it's pure virtual in the
-  // base class.
+  virtual CORBA::PrimitiveKind kind ();
 
-  virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From IDLType_i's pure virtual function.
-
-  virtual CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual CORBA::PrimitiveKind kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::PrimitiveKind kind_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::PrimitiveKind kind_i ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_PRIMITIVEDEF_I_H */
-
-

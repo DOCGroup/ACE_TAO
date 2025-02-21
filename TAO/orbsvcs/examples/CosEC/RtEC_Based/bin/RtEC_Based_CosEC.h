@@ -1,17 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-// ============================================================================
-//
-// = FILENAME
-//   RtEC_Based_CosEC.h
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// = DESCRIPTION
-//   The COS Event Channel service.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RtEC_Based_CosEC.h
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *
+ * The COS Event Channel service.
+ */
+//=============================================================================
+
 
 #ifndef RTEC_BASED_COSEC_H
 #define RTEC_BASED_COSEC_H
@@ -24,79 +21,77 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class RtEC_Based_CosEC
+ *
+ * @brief RtEC_Based_CosEC
+ *
+ * Implementation of the COS Event Service.
+ */
 class RtEC_Based_CosEC : public CosEC_ServantBase
 {
-  // = TITLE
-  //   RtEC_Based_CosEC
-  //
-  // = DESCRIPTION
-  //   Implementation of the COS Event Service.
-
  public:
-  // = Initialization and termination methods.
-  RtEC_Based_CosEC (void);
-  // Constructor.
+  /// Constructor.
+  RtEC_Based_CosEC ();
 
-  virtual ~RtEC_Based_CosEC (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~RtEC_Based_CosEC ();
 
-  int parse_args (int argc, char *argv []);
-  // Parses the command line arguments.
+  /// Parses the command line arguments.
+  int parse_args (int argc, ACE_TCHAR *argv []);
 
-  void startup (int argc, char *argv[]
-               ACE_ENV_ARG_DECL);
-  // Initializes the COS Event Service.
-  // Returns 0 on success, -1 on error.
+  /// Initializes the COS Event Service.
+  /// Returns 0 on success, -1 on error.
+  void startup (int argc, ACE_TCHAR *argv[]);
 
-  int run (void);
-  // run the COS Event Service.
-  // Returns 0 on success, -1 on error.
+  /// run the COS Event Service.
+  /// Returns 0 on success, -1 on error.
+  int run ();
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // Shutdown the COS Event Service.
-  // Returns 0 on success, -1 on error.
+  /// Shutdown the COS Event Service.
+  /// Returns 0 on success, -1 on error.
+  void shutdown ();
 
 protected:
   // = Methods from CosEC_ServantBase
+  /// Create a local rtec.
   virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec (ACE_ENV_SINGLE_ARG_DECL);
-  // Create a local rtec.
+  create_rtec ();
 
-  virtual void activate_rtec (ACE_ENV_SINGLE_ARG_DECL);
-  // Activates the rtec.
+  /// Activates the rtec.
+  virtual void activate_rtec ();
 
-  virtual void deactivate_rtec (ACE_ENV_SINGLE_ARG_DECL);
-  // Deactivates the rtec.
+  /// Deactivates the rtec.
+  virtual void deactivate_rtec ();
 
-  void init_ORB (int& argc, char *argv []
-                 ACE_ENV_ARG_DECL);
-  // initialize the ORB.
+  /// initialize the ORB.
+  void init_ORB (int& argc, ACE_TCHAR *argv []);
 
-  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
-  // Resolve the naming service.
+  /// Resolve the naming service.
+  void resolve_naming_service ();
 
-  void locate_rtec (ACE_ENV_SINGLE_ARG_DECL);
-  // Locate a rtec.
+  /// Locate a rtec.
+  void locate_rtec ();
 
   // = Data members
-  const char* service_name;
-  // The name we use to register with the Naming Service.
+  /// The name we use to register with the Naming Service.
+  const ACE_TCHAR *service_name;
 
-  const char* rt_service_name;
-  // The name of the Real Time Event Service.
+  /// The name of the Real Time Event Service.
+  const ACE_TCHAR *rt_service_name;
 
+  /// The ORB that we use.
   CORBA::ORB_var orb_;
-  // The ORB that we use.
 
+  /// Reference to the root poa.
   PortableServer::POA_var poa_;
-  // Reference to the root poa.
 
+  /// A naming context.
   CosNaming::NamingContext_var naming_;
-  // A naming context.
 
+  /// Flag to indicate if the RtEC is local/remote,
+  /// 0 => local, 1 => remote, default is local.
   CORBA::Boolean remote_rtec_;
-  // Flag to indicate if the RtEC is local/remote,
-  // 0 => local, 1 => remote, default is local.
 };
 
 #if defined (_MSC_VER)

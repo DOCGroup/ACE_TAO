@@ -1,40 +1,68 @@
-//$Id$
+#include "orbsvcs/Log_Macros.h"
 #include "Notify_Logging_Service.h"
 #include "ace/OS_main.h"
+#include "orbsvcs/Shutdown_Utilities.h"
+#include "tao/debug.h"
 
-ACE_RCSID (Notify_Logging_Service,
-           Notify_Logging_Server,
-           "$Id$")
+class Logging_Svc_Shutdown
+  : public Shutdown_Functor
+{
+public:
+  Logging_Svc_Shutdown (Notify_Logging_Service& svc);
 
-// Driver function for the TAO Notify Service.
+  void operator() (int which_signal);
+
+private:
+  Notify_Logging_Service&       svc_;
+};
+
+Logging_Svc_Shutdown::Logging_Svc_Shutdown (Notify_Logging_Service& svc)
+  : svc_ (svc)
+{
+}
+
+void
+Logging_Svc_Shutdown::operator() (int which_signal)
+{
+  if (TAO_debug_level > 0)
+    ORBSVCS_DEBUG ((LM_DEBUG,
+                "Notify_Logging_Service: shutting down on signal %d\n",
+                which_signal));
+
+  (void) this->svc_.shutdown ();
+}
+
+// Driver function for the Notify_Logging_Service.
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Notify_Logging_Service notify_logging_service;
+  Notify_Logging_Service service;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  Logging_Svc_Shutdown killer (service);
+  Service_Shutdown kill_contractor (killer);
 
-  if (notify_logging_service.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failed to start the Notification Logging Service.\n"),
-                      1);
-
-  ACE_TRY
+  try
     {
-      notify_logging_service.run ();
-      notify_logging_service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int rc;
+
+      rc = service.init (argc, argv);
+      if (rc == -1)
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                           "Failed to initialize the Telecom Log Service.\n"),
+                          1);
+
+      rc = service.run ();
+      if (rc == -1)
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                           "Failed to start the Telecom Log Service.\n"),
+                          1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      notify_logging_service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Failed to start the Notification Logging Service\n");
+      ex._tao_print_exception ("Failed to start the Telecom Log Service.\n");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   return 0;
 }

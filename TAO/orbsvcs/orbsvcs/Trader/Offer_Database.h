@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Offer_Database.h
- *
- *  $Id$
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
@@ -15,9 +13,11 @@
 #define TAO_OFFER_DATABASE_H
 #include /**/ "ace/pre.h"
 
-#include "Trader.h"
-#include "Offer_Iterators.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Offer_Iterators.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class LOCK_TYPE> class TAO_Service_Offer_Iterator;
 
@@ -50,46 +50,36 @@ class TAO_Offer_Database
 {
   friend class TAO_Service_Offer_Iterator<LOCK_TYPE>;
 public:
-
   // Traits
   typedef TAO_Service_Offer_Iterator<LOCK_TYPE> offer_iterator;
 
   /// No arg constructor.
-  TAO_Offer_Database (void);
+  TAO_Offer_Database ();
 
-  ~TAO_Offer_Database (void);
+  ~TAO_Offer_Database ();
 
-  /// Add an offer of type <type> and generate a CosTrading::OfferId
+  /// Add an offer of type @ type and generate a CosTrading::OfferId
   /// for it. Returns 0 on failure.
   CosTrading::OfferId insert_offer (const char* type,
                                     CosTrading::Offer* offer);
 
-  int remove_offer (const CosTrading::OfferId offer_id
-                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
-                    CosTrading::UnknownOfferId));
+  int remove_offer (const CosTrading::OfferId offer_id);
 
-  /// Lookup an offer whose offer_id is <offer_id>, and return
+  /// Lookup an offer whose offer_id is @a offer_id, and return
   /// it. Otherwise, throw the appropriate exception.
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
-                    CosTrading::UnknownOfferId));
+  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id);
 
   /**
-   * Lookup an offer whose OfferId is <offer_id> and return in
-   * <type_name> the type name of the object. Type name is just a
+   * Lookup an offer whose OfferId is @a offer_id and return in
+   * @a type_name the type name of the object. Type name is just a
    * pointer to a location in offer_id, so DON'T DELETE IT.
    */
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
-                                   char*& type_name
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
-                    CosTrading::UnknownOfferId));
+                                   char*& type_name);
 
   /// Return an iterator that will traverse and return all the offer
   /// ids in the service type map.
-  TAO_Offer_Id_Iterator* retrieve_all_offer_ids (void);
+  TAO_Offer_Id_Iterator* retrieve_all_offer_ids ();
 
   struct Offer_Map_Entry
   {
@@ -100,28 +90,27 @@ public:
 
   typedef ACE_Hash_Map_Manager_Ex
     <
-    TAO_String_Hash_Key,
+    CORBA::String_var,
     Offer_Map_Entry*,
-    ACE_Hash<TAO_String_Hash_Key>,
-    ACE_Equal_To<TAO_String_Hash_Key>,
+    ACE_Hash<CORBA::String_var>,
+    ACE_Equal_To<CORBA::String_var>,
     ACE_Null_Mutex
     >
     Offer_Database;
 
 private:
-
   // The internal id is a pointer here, not only to avoid copying,
   // since we would only copy on insertion, and we only insert once
   // --- with an empty Offer_Map_Entry --- but also since most locks
   // have unimplemented copy constructors.
 
-  /// Lookup an offer whose type is <type> and id, <id>. Return 0 on
+  /// Lookup an offer whose type is @ type and id, @a id. Return 0 on
   /// failure.
   CosTrading::Offer* lookup_offer (const char* type,
                                    CORBA::ULong id);
 
   /**
-   * Remove an offers whose id is <offer_id>. Returns 0 on success, -1
+   * Remove an offers whose id is @id. Returns 0 on success, -1
    * on failure, and throws a CosTrading::IllegalOfferId if it can't
    * parse the CosTrading::OfferId.
    */
@@ -136,13 +125,11 @@ private:
   /// and id that were used to generate the offer id.
   static void parse_offer_id (const CosTrading::OfferId offer_id,
                               char* &service_type,
-                              CORBA::ULong& id
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::IllegalOfferId));
+                              CORBA::ULong& id);
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Offer_Database<LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &))
+  void operator= (const TAO_Offer_Database<LOCK_TYPE> &) = delete;
+  TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &) = delete;
 
   LOCK_TYPE db_lock_;
 
@@ -161,31 +148,28 @@ private:
 template <class LOCK_TYPE>
 class TAO_Service_Offer_Iterator
 {
- public:
-
+public:
   typedef TAO_Offer_Database<LOCK_TYPE> Offer_Database;
 
   TAO_Service_Offer_Iterator (const char* type,
                               TAO_Offer_Database<LOCK_TYPE>& offer_database);
 
   /// Release all the locks acquired.
-  ~TAO_Service_Offer_Iterator (void);
+  ~TAO_Service_Offer_Iterator ();
 
   /// Returns 1 if there are more offers, 0 otherwise.
-  int has_more_offers (void);
+  int has_more_offers ();
 
   /// Get the id for the current offer.
-  CosTrading::OfferId get_id (void);
+  CosTrading::OfferId get_id ();
 
   /// Returns the next offer in the series.
-  CosTrading::Offer* get_offer (void);
+  CosTrading::Offer* get_offer ();
 
   /// Advances the iterator 1.
-  void next_offer (void);
+  void next_offer ();
 
  private:
-  // Protected constructor.
-
   /// Lock the top_level map.
   TAO_Offer_Database<LOCK_TYPE>& stm_;
 
@@ -199,10 +183,9 @@ class TAO_Service_Offer_Iterator
   const char* type_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Offer_Database.cpp"
-#endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#include "orbsvcs/Trader/Offer_Database.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVICE_TYPE_MAP_H */

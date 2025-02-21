@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef BIG_TWOWAYS_SESSION_H
 #define BIG_TWOWAYS_SESSION_H
 
@@ -29,43 +26,33 @@ public:
            CORBA::ULong peer_count);
 
   /// Run one of the experiment threads
-  int svc (void);
+  int svc ();
 
   // = The skeleton methods
-  virtual void start (const Test::Session_List &other_sessions
-                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Test::Already_Running,
-                     Test::No_Peers));
+  virtual void start (const Test::Session_List &other_sessions);
 
-  virtual Test::Payload* echo_payload (const Test::Payload &the_payload
-                                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Test::Payload* echo_payload (const Test::Payload &the_payload);
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
 protected:
   /// Protected destructor, call _remove_ref() to delete
-  virtual ~Session (void);
+  virtual ~Session ();
 
 private:
   /// Helper function used to report any problems and destroy local
   /// resources
-  void terminate (CORBA::Boolean success
-                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+  void terminate (CORBA::Boolean success);
 
   /// Return 1 if all the work in this session has been completed
-  int more_work (void) const;
+  int more_work () const;
 
   /// Validate all the connections
-  void validate_connections (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC (());
+  void validate_connections ();
 
 private:
   /// Synchronize the internal state
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 
   /// Keep a reference to the Session_Control, this is used to report
   /// when the test finishes.

@@ -1,39 +1,25 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #include "ast_eventtype.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast, 
-           ast_eventtype, 
-           "$Id$")
-
-AST_EventType::AST_EventType (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    AST_ValueType ()
-{
-}
+AST_Decl::NodeType const
+AST_EventType::NT = AST_Decl::NT_eventtype;
 
 AST_EventType::AST_EventType (UTL_ScopedName *n,
-                              AST_Interface **inherits,
+                              AST_Type **inherits,
                               long n_inherits,
-                              AST_ValueType *inherits_concrete,
+                              AST_Type *inherits_concrete,
                               AST_Interface **inherits_flat,
                               long n_inherits_flat,
-                              AST_Interface **supports,
+                              AST_Type **supports,
                               long n_supports,
-                              AST_Interface *supports_concrete,
-                              idl_bool abstract,
-                              idl_bool truncatable,
-                              idl_bool custom)
-  : COMMON_Base (I_FALSE,
+                              AST_Type *supports_concrete,
+                              bool abstract,
+                              bool truncatable,
+                              bool custom)
+  : COMMON_Base (false,
                  abstract),
     AST_Decl (AST_Decl::NT_eventtype,
               n),
@@ -45,7 +31,7 @@ AST_EventType::AST_EventType (UTL_ScopedName *n,
                    n_inherits,
                    inherits_flat,
                    n_inherits_flat,
-                   I_FALSE,
+                   false,
                    abstract),
     AST_ValueType (n,
                    inherits,
@@ -62,12 +48,12 @@ AST_EventType::AST_EventType (UTL_ScopedName *n,
 {
 }
 
-AST_EventType::~AST_EventType (void)
+AST_EventType::~AST_EventType ()
 {
 }
 
 void
-AST_EventType::destroy (void)
+AST_EventType::destroy ()
 {
   this->AST_ValueType::destroy ();
 }
@@ -134,9 +120,3 @@ AST_EventType::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_eventtype (this);
 }
-
-  // Narrowing.
-IMPL_NARROW_METHODS1(AST_EventType, AST_ValueType)
-IMPL_NARROW_FROM_DECL(AST_EventType)
-IMPL_NARROW_FROM_SCOPE(AST_EventType)
-

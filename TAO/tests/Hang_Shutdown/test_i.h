@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #ifndef TAO_HANG_TEST_I_H
 #define TAO_HANG_TEST_I_H
 #include /**/ "ace/pre.h"
@@ -9,36 +6,31 @@
 
 #include "ace/OS_NS_unistd.h"
 
-namespace TAO
+namespace Test
 {
-  namespace Test
+  class test_i
+    : public virtual POA_Test::Hang
   {
-    class test_i
-      : public virtual POA_TAO::Test::Hang
+  public:
+    // = The skeleton methods
+    virtual void send_stuff (const char* str,
+                             CORBA::Boolean flag)
     {
-    public:
-      // = The skeleton methods
-      virtual void send_stuff (const char* str,
-                               CORBA::Boolean flag
-                               ACE_ENV_ARG_DECL_NOT_USED)
-        ACE_THROW_SPEC ((CORBA::SystemException))
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) - [%C]\n", str));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) - [%C]\n", str));
 
-        if (flag)
-          {
-            ACE_OS::sleep (10);
+      if (flag)
+        {
+          ACE_OS::sleep (10);
 
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Returning from send_stuff\n", str));
-          }
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Returning from send_stuff\n", str));
+        }
 
-        return;
-      }
-    private:
-    };
-  }
+      return;
+    }
+  private:
+  };
 }
 
 #include /**/ "ace/post.h"

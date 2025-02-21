@@ -1,24 +1,8 @@
-// $Id$
-
 #include "Notifier_Handler.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID(Supplier, Notifier_Handler, "$Id$")
-
-Notifier_Handler::Notifier_Handler (void)
-{
-  // No-Op.
-}
-
-// Destroy a Notifier target object.
-
-Notifier_Handler::~Notifier_Handler (void)
-{
-  // No-Op.
-}
-
 int
-Notifier_Handler::close (void)
+Notifier_Handler::close ()
 {
   if (this->notifier_ != 0)
     {
@@ -34,7 +18,7 @@ Notifier_Handler::close (void)
 }
 
 void
-Notifier_Handler::shutdown (void)
+Notifier_Handler::shutdown ()
 {
   ACE_ASSERT (this->shutdowncallback != 0);
 
@@ -42,7 +26,7 @@ Notifier_Handler::shutdown (void)
 }
 
 int
-Notifier_Handler::run (void)
+Notifier_Handler::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Running the Supplier...\n"));
@@ -52,7 +36,7 @@ Notifier_Handler::run (void)
 }
 
 ACE_Reactor*
-Notifier_Handler::reactor(void)
+Notifier_Handler::reactor()
 {
   // @@ Please see if there's a way to get to the Reactor without
   // using the TAO_ORB_Core_instance().
@@ -60,7 +44,7 @@ Notifier_Handler::reactor(void)
 }
 
 Event_Comm::Notifier *
-Notifier_Handler::notifier (void)
+Notifier_Handler::notifier ()
 {
   return this->notifier_;
 }
@@ -76,46 +60,35 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
 }
 
 // Init function.
-
 int
 Notifier_Handler::init (int argc,
-                        char *argv[],
+                        ACE_TCHAR *argv[],
                         ShutdownCallback* _shutdowncallback)
 {
   // set the callback
  shutdowncallback = _shutdowncallback;
 
- ACE_TRY_NEW_ENV
+ try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_ = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object  =
-        this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Initialization of the naming service.
       if (this->naming_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
 
       CosNaming::Name notifier_ref_name (1);
@@ -124,25 +97,19 @@ Notifier_Handler::init (int argc,
       CORBA::string_dup (NOTIFIER_BIND_NAME);
 
       CORBA::Object_var notifier_obj =
-       this->naming_client_->resolve (notifier_ref_name
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+       this->naming_client_->resolve (notifier_ref_name);
 
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
-         Event_Comm::Notifier::_narrow (notifier_obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+         Event_Comm::Notifier::_narrow (notifier_obj.in ());
   }
- ACE_CATCHANY
+ catch (const CORBA::Exception& ex)
    {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Notifier_Handler::init\n");
+     ex._tao_print_exception ("Notifier_Handler::init\n");
      return -1;
    }
- ACE_ENDTRY;
 
  return 0;
 }

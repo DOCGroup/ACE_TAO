@@ -1,19 +1,18 @@
-// $Id$
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Reactor.h"
 
-const char *host = "localhost";
+const ACE_TCHAR *host = ACE_TEXT("localhost");
 static int port = 10008;
-const int iter = 80;
+const int iter = 55;
 int purged_handles = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "h:p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h:p:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -37,7 +36,7 @@ parse_args (int argc, char *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -61,7 +60,7 @@ Purging_Handler::handle_close (ACE_HANDLE h,
 {
   if (purged_handles % 10 == 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) purging handle [%d] \n",
+                "(%P|%t) purging handle [%d]\n",
                 h));
 
   ++purged_handles;
@@ -70,7 +69,7 @@ Purging_Handler::handle_close (ACE_HANDLE h,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
     return -1;
@@ -99,7 +98,8 @@ main (int argc, char *argv[])
       if (connector[i].connect (stream[i],
                                 addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error while connecting: %p\n"),
+                           "Error while connecting: %p\n",
+                           "client"),
                           -1);
 
       if (stream[i].get_handle () == ACE_INVALID_HANDLE)
@@ -110,19 +110,35 @@ main (int argc, char *argv[])
                                        &ph[i],
                                        ACE_Event_Handler::READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Registration failed \n"),
+                           "Registration failed\n"),
                           -1);
 
-      ACE_Time_Value tv (1);
+      // ACE_Time_Value tv (1);
 
-      while (singleton->handle_events (&tv) >= 1);
+      // while (singleton->handle_events (&tv) >= 1);
     }
 
-  ACE_INET_Addr remote_addr;
+  // Handle events moved to here to prevent this test taking best part
+  // of a minute
+  ACE_Time_Value tv (3);
+
+  while (singleton->handle_events (&tv) >= 1)
+    {
+      // No action.
+    }
+
+  // Remove the handlers to avoid the possibility of the reactor
+  // using any of them after they leave the scope (those that haven't
+  // been closed and removed already, that is).
+  for (int j = 0; j != iter; ++j)
+    {
+      singleton->remove_handler (stream[j].get_handle (),
+                                 ACE_Event_Handler::READ_MASK);
+    }
 
   if ((iter - purged_handles) > 20)
     ACE_ERROR_RETURN ((LM_ERROR,
-                      "(%P|%t) Purging hasnt worked at all \n"),
+                      "(%P|%t) Purging hasnt worked at all\n"),
                        -1);
 
   return 0;

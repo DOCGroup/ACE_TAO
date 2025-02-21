@@ -2,8 +2,6 @@
 /**
  *  @file   Activator_NT_Service.cpp
  *
- *  $Id$
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  *  @author John Tucker <jtucker@infoglide.com>
@@ -13,7 +11,7 @@
 
 #include "Activator_NT_Service.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include "ImR_Activator_i.h"
 #include "Activator_Options.h"
@@ -21,6 +19,14 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Reactor.h"
+
+const ACE_TCHAR * IMR_ACTIVATOR_SERVICE_NAME =
+  ACE_TEXT("TAOImRActivator");
+const ACE_TCHAR * IMR_ACTIVATOR_DISPLAY_NAME =
+  ACE_TEXT("TAO Implementation Repository Activator");
+const ACE_TCHAR * IMR_ACTIVATOR_DESCRIPTION =
+  ACE_TEXT("Implementation Repository Activator service for TAO");
+
 /**
  * Handles the SERVICE_CONTROL_SHUTDOWN and SERVICE_CONTROL_STOP commands
  * by shutting down the ORB.  Otherwise ACE_NT_Service::handle_control
@@ -43,8 +49,6 @@ Activator_NT_Service::handle_control (DWORD control_code)
 }
 
 
-/**
- */
 int
 Activator_NT_Service::handle_exception (ACE_HANDLE)
 {
@@ -57,22 +61,20 @@ Activator_NT_Service::handle_exception (ACE_HANDLE)
  * we update the report_status after init.
  */
 int
-Activator_NT_Service::svc (void)
+Activator_NT_Service::svc ()
 {
   ImR_Activator_i server;
   Activator_Options opts;
 
   if (opts.init_from_registry() != 0)
-  {
-    report_status (SERVICE_STOPPED);
-    return -1;
-  }
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
     {
-      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      report_status (SERVICE_STOPPED);
+      return -1;
+    }
+
+  try
+    {
+      int status = server.init (opts);
 
       if (status == -1)
         {
@@ -82,34 +84,30 @@ Activator_NT_Service::svc (void)
       else
         {
           report_status (SERVICE_RUNNING);
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
 
-          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          status = server.fini ();
 
           report_status (SERVICE_STOPPED);
-
         }
         if (status != -1)
             return 0;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, IMR_ACTIVATOR_DISPLAY_NAME);
+      sysex._tao_print_exception (IMR_ACTIVATOR_DISPLAY_NAME);
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, IMR_ACTIVATOR_DISPLAY_NAME);
+      userex._tao_print_exception (IMR_ACTIVATOR_DISPLAY_NAME);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, IMR_ACTIVATOR_DISPLAY_NAME);
+      ex._tao_print_exception (IMR_ACTIVATOR_DISPLAY_NAME);
     }
-  ACE_ENDTRY;
 
   report_status (SERVICE_STOPPED);
   return -1;
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */

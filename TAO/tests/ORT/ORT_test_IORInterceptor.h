@@ -4,8 +4,6 @@
 /**
  * @file   ORT_test_IORInterceptor.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  * @author Priyanka Gontla <gontla_p@ociweb.com>
  */
@@ -31,12 +29,11 @@
 #endif /* _MSC_VER */
 
 class ORT_test_IORInterceptor
-  : public virtual PortableInterceptor::IORInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+  : public virtual PortableInterceptor::IORInterceptor_3_0,
+    public virtual ::CORBA::LocalObject
 {
 public:
-
-  ORT_test_IORInterceptor (void);
+  ORT_test_IORInterceptor ();
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -47,44 +44,32 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::IORInfo_ptr info);
 
   virtual void components_established (
-      PortableInterceptor::IORInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::IORInfo_ptr info);
 
   virtual void adapter_manager_state_changed (
-      PortableInterceptor::AdapterManagerId id,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const char * id,
+      PortableInterceptor::AdapterState state);
 
   virtual void adapter_state_changed (
       const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-     ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::AdapterState state);
 
   //@}
 
 private:
-
   CORBA::Long establish_count_;
 
   CORBA::Long components_establish_count_;
-
 };
 
 #if defined(_MSC_VER)

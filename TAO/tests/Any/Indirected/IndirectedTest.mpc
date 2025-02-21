@@ -1,0 +1,19 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults, valuetype {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Client): taoclient, valuetype, typecodefactory {
+  exename = client
+  after += *idl
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

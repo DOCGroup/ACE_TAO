@@ -1,0 +1,21 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  interface Hello
+  {
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+
+    // Lets make sure things are working
+    void ping ();
+
+    // The client calls this method which will generate
+    // a locate forward to the same IOGR on every invocation
+    // until well after the request expiration time when it will then succeed
+    void throw_location_forward ();
+  };
+};

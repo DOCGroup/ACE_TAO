@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "StubFaultNotifier.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
@@ -12,7 +9,7 @@
 StubFaultNotifier::StubFaultNotifier ()
   : ior_output_file_(0)
   , detector_ior_(0)
-  , ns_name_(0)
+  , ns_name_("")
 {
 }
 
@@ -22,7 +19,7 @@ StubFaultNotifier::~StubFaultNotifier ()
 }
 
 
-::PortableServer::POA_ptr StubFaultNotifier::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+::PortableServer::POA_ptr StubFaultNotifier::_default_POA ()
 {
   return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
@@ -32,10 +29,10 @@ PortableServer::ObjectId StubFaultNotifier::objectId()const
   return this->object_id_.in();
 }
 
-int StubFaultNotifier::parse_args (int argc, char * argv[])
+int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
 {
   int optionError = 0;
-  ACE_Get_Opt get_opts (argc, argv, "o:r:d:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:r:d:n:"));
   int c;
   while ((c = get_opts ()) != -1)
   {
@@ -43,7 +40,7 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
     {
       case 'r':
       {
-        this->iorReplicaFiles_.push_back( get_opts.opt_arg ());
+        this->iorReplicaFiles_.push_back( ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'd':
@@ -53,7 +50,7 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
       }
       case 'n':
       {
-        this->ns_name_ = get_opts.opt_arg ();
+        this->ns_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       }
       case 'o':
@@ -107,13 +104,12 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
 /**
  * Prepare to exit.
  */
-int StubFaultNotifier::fini (ACE_ENV_SINGLE_ARG_DECL)
+int StubFaultNotifier::fini ()
 {
-  if(this->ns_name_ != 0)
+  if(this->ns_name_.length () != 0)
   {
     CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      this->orb_->resolve_initial_references ("NameService");
 
     if (CORBA::is_nil(naming_obj.in ())){
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -122,16 +118,13 @@ int StubFaultNotifier::fini (ACE_ENV_SINGLE_ARG_DECL)
     }
 
     CosNaming::NamingContext_var naming_context =
-      CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(-1);
+      CosNaming::NamingContext::_narrow (naming_obj.in ());
 
     CosNaming::Name this_name (1);
     this_name.length (1);
-    this_name[0].id = CORBA::string_dup (this->ns_name_);
+    this_name[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
-    naming_context->unbind (this_name
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(-1);
+    naming_context->unbind (this_name);
   }
   return 0;
 }
@@ -140,16 +133,14 @@ int StubFaultNotifier::fini (ACE_ENV_SINGLE_ARG_DECL)
 /**
  * Publish this objects IOR.
  */
-int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+int StubFaultNotifier::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -158,10 +149,8 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   // Get the POA object.
   this->poa_ =
-    PortableServer::POA::_narrow (poa_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (poa_object.in ());
 
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -171,22 +160,17 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   }
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
   // Register with the POA.
 
-  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->object_id_ = this->poa_->activate_object (this);
 
   // find my identity as a corba object
   CORBA::Object_var this_obj =
-    this->poa_->id_to_reference (object_id_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->id_to_reference (object_id_.in ());
 
   //////////////////////////////////////////
   // resolve references to detector factory
@@ -195,7 +179,8 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj.in ());
   if (CORBA::is_nil(this->factory_.in ()))
   {
-    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n", this->detector_ior_);
+    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n",
+                     ACE_TEXT_ALWAYS_CHAR (this->detector_ior_));
     result = -1;
   }
   if (result == 0)
@@ -270,16 +255,14 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
           this->factory_->create_object (
             type_id.in(),
             criteria.in(),
-            factory_creation_id
-            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+            factory_creation_id);
         }
       }
     }
 
     if (this->ior_output_file_ != 0)
     {
-      this->identity_ = "file:";
+      this->identity_ = ACE_TEXT("file:");
       this->identity_ += this->ior_output_file_;
       result = write_ior_file();
     }
@@ -290,14 +273,13 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       this->ns_name_ = "FT_FaultNotifier";
     }
 
-    if(this->ns_name_ != 0)
+    if(this->ns_name_.length () != 0)
     {
-      this->identity_ = "name:";
-      this->identity_ += this->ns_name_;
+      this->identity_ = ACE_TEXT("name:");
+      this->identity_ += ACE_TEXT_CHAR_TO_TCHAR(this->ns_name_.c_str ());
 
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil(naming_obj.in ())){
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -306,16 +288,13 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       }
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       CosNaming::Name this_name (1);
       this_name.length (1);
-      this_name[0].id = CORBA::string_dup (this->ns_name_);
+      this_name[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
-      naming_context->rebind (this_name, this_obj.in()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      naming_context->rebind (this_name, this_obj.in());
     }
   }
   return result;
@@ -337,7 +316,7 @@ int StubFaultNotifier::write_ior_file()
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
-const char * StubFaultNotifier::identity () const
+const ACE_TCHAR * StubFaultNotifier::identity () const
 {
   return this->identity_.c_str();
 }
@@ -345,16 +324,14 @@ const char * StubFaultNotifier::identity () const
 /**
  * Clean house for process shut down.
  */
-void StubFaultNotifier::shutdown_i (ACE_ENV_SINGLE_ARG_DECL)
+void StubFaultNotifier::shutdown_i ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 void StubFaultNotifier::push_structured_fault (
     const CosNotification::StructuredEvent & event
-    ACE_ENV_ARG_DECL_NOT_USED
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ERROR ((LM_ERROR,
     "FaultNotifier: Received Fault notification:\n"
@@ -382,27 +359,18 @@ void StubFaultNotifier::push_structured_fault (
 
 void StubFaultNotifier::push_sequence_fault (
     const CosNotification::EventBatch & events
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   ACE_UNUSED_ARG (events);
-  ACE_THROW (CORBA::NO_IMPLEMENT());
+  throw CORBA::NO_IMPLEMENT();
 }
 
 ::CosNotifyFilter::Filter_ptr StubFaultNotifier::create_subscription_filter (
     const char * constraint_grammar
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , CosNotifyFilter::InvalidGrammar
-  ))
 {
   ACE_UNUSED_ARG (constraint_grammar);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  throw CORBA::NO_IMPLEMENT();
   return 0;
 }
 
@@ -410,16 +378,12 @@ void StubFaultNotifier::push_sequence_fault (
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  throw CORBA::NO_IMPLEMENT();
   return 0;
 }
 
@@ -427,67 +391,47 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  throw CORBA::NO_IMPLEMENT();
   return 0;
 }
 
 void StubFaultNotifier::disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , CosEventComm::Disconnected
-  ))
 {
   ACE_UNUSED_ARG(connection);
 
-  ACE_THROW (CORBA::NO_IMPLEMENT());
+  throw CORBA::NO_IMPLEMENT();
 }
 
-CORBA::Boolean StubFaultNotifier::is_alive (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+CORBA::Boolean StubFaultNotifier::is_alive ()
 {
   return 1;
 }
 
-int StubFaultNotifier::idle(int & result ACE_ENV_ARG_DECL_NOT_USED)
+int StubFaultNotifier::idle(int & result)
 {
   ACE_UNUSED_ARG(result);
   int quit = 0;
-  ACE_TRY_NEW_ENV
+  try
   {
     if(!CORBA::is_nil(this->factory_.in ()))
     {
-      int ok = this->factory_->is_alive( ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int ok = this->factory_->is_alive();
       if (!ok)
       {
         quit = 1;
       }
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     quit = 1;
   }
-  ACE_ENDTRY;
   return quit;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Vector < const char * >;
-  template class ACE_Vector < FT::PullMonitorable_var > ;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Vector < const char * >
-# pragma instantiate ACE_Vector < FT::PullMonitorable_var >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

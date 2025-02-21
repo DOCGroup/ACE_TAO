@@ -1,41 +1,11 @@
-#include "IIOP_SSL_Acceptor.h"
-
+#include "orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (SSLIOP,
-           IIOP_SSL_Acceptor,
-           "$Id$")
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Acceptor<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO::IIOP_SSL_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Acceptor<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor (CORBA::Boolean flag)
-  : TAO_IIOP_Acceptor (flag),
+TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor ()
+  : TAO_IIOP_Acceptor (),
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
@@ -43,7 +13,7 @@ TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor (CORBA::Boolean flag)
 {
 }
 
-TAO::IIOP_SSL_Acceptor::~IIOP_SSL_Acceptor (void)
+TAO::IIOP_SSL_Acceptor::~IIOP_SSL_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -55,7 +25,9 @@ TAO::IIOP_SSL_Acceptor::~IIOP_SSL_Acceptor (void)
 }
 
 int
-TAO::IIOP_SSL_Acceptor::close (void)
+TAO::IIOP_SSL_Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

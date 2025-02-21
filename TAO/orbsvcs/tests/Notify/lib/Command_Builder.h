@@ -2,11 +2,7 @@
 /**
  *  @file Command_Builder.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_COMMAND_BUILDER_H
@@ -34,26 +30,25 @@ class TAO_Notify_Tests_Command;
  * @class TAO_Notify_Tests_Command_Builder
  *
  * @brief Class for collating and serially executing command objects.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Builder : public ACE_Service_Object
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_Command_Builder (void);
+  /// Constructor
+  TAO_Notify_Tests_Command_Builder ();
 
   /// Destructor
   ~TAO_Notify_Tests_Command_Builder ();
 
   /// = Service_Object virtual method overloads.
-  virtual int init (int argc, char *argv[]);
-  virtual int fini (void);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int fini ();
 
   /// Register the factory against the name of the factory.
   void _register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory);
 
   /// Execute the <start_command_>.
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute ();
 
 protected:
   /// The starting command. each command executes the next one when done.

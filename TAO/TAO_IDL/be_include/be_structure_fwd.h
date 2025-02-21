@@ -1,22 +1,15 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_structure_fwd.h
-//
-// = DESCRIPTION
-//    Extension of class AST_StructureFwd that provides additional
-//    means for C++ mapping of a struct.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_structure_fwd.h
+ *
+ *  Extension of class AST_StructureFwd that provides additional
+ *  means for C++ mapping of a struct.
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
 
 #ifndef BE_STRUCTURE_FWD_H
 #define BE_STRUCTURE_FWD_H
@@ -36,25 +29,16 @@ class be_structure_fwd : public virtual AST_StructureFwd,
   // =DESCRIPTION
   //   Extensions to the AST_StructureFwd class
 public:
-  be_structure_fwd (void);
-  // Default constructor.
-
   be_structure_fwd (AST_Structure *dummy,
                     UTL_ScopedName *n);
-  // Constructor.
 
-  virtual ~be_structure_fwd (void);
-  // Destructor.
+  virtual ~be_structure_fwd ();
 
-  virtual void destroy (void);
-  // Cleanup function.
+  /// Cleanup function.
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor* visitor);
-
-  // Narrowing.
-  DEF_NARROW_METHODS2 (be_structure_fwd, AST_StructureFwd, be_type);
-  DEF_NARROW_FROM_DECL (be_structure_fwd);
 };
 
 #endif // if !defined

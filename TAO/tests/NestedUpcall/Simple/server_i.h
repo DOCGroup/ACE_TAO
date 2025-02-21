@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testS.h"
 
 class server_i : public POA_server
@@ -8,17 +6,12 @@ public:
   server_i (int quiet,
             CORBA::ORB_ptr orb);
 
-  void ping (CORBA::UShort time_to_live
-             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void ping (CORBA::UShort time_to_live);
 
   void start (client_ptr c,
-              CORBA::UShort time_to_live
-              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+              CORBA::UShort time_to_live);
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
 private:
   int quiet_;

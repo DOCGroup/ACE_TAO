@@ -1,53 +1,43 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_sh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the server header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_sh.cpp
+ *
+ *  Visitor generating code for Operation in the server header
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           operation_sh, 
-           "$Id$")
-
-// ************************************************************
-// Operation visitor for server header
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_sh::be_visitor_operation_sh (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_sh::~be_visitor_operation_sh (void)
+be_visitor_operation_sh::~be_visitor_operation_sh ()
 {
 }
 
 int
 be_visitor_operation_sh::visit_operation (be_operation *node)
 {
+  /// No server-side code generation for these implied IDL nodes.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "virtual ";
 
   // STEP I: generate the return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -92,7 +82,7 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
   // if there was no "native" type.
   if (!node->has_native ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "static void ";
 
       // Check if we are an attribute node in disguise.
@@ -111,11 +101,10 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
 
       *os << node->local_name ()
           << "_skel (" << be_idt << be_idt_nl
-          << "TAO_ServerRequest & server_request," << be_nl
-          << "void * servant_upcall," << be_nl
-          << "void * servant"<< be_nl
-          << "ACE_ENV_ARG_DECL" << be_uidt_nl
-          << ");" << be_uidt;
+          << "TAO_ServerRequest &server_request," << be_nl
+          << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
+          << "TAO_ServantBase *servant);" << be_uidt
+          << be_uidt;
     }
 
   return 0;

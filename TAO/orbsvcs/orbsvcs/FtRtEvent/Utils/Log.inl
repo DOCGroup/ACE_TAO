@@ -1,4 +1,9 @@
-// $Id$
+// -*- C++ -*-
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
 #ifndef NDEBUG
@@ -15,10 +20,10 @@ namespace TAO_FTRTEC {
   }
 
   ACE_INLINE
-  void Log::hexdump(unsigned int level, const char* buf, size_t len, const char* msg)
+  void Log::hexdump(unsigned int level, const char* buf, size_t len, const ACE_TCHAR* msg)
   {
     if (Log::log_level_ >= level)
-      ACE_HEX_DUMP((LM_DEBUG, buf, len, msg));
+      ORBSVCS_HEX_DUMP((LM_DEBUG, buf, len, msg));
   }
 #else // NDEBUG
   ACE_INLINE
@@ -38,8 +43,10 @@ namespace TAO_FTRTEC {
   }
 
   ACE_INLINE
-  void Log::hexdump(unsigned int, const char*, size_t, const char*)
+  void Log::hexdump(unsigned int, const char*, size_t, const ACE_TCHAR*)
   {
   }
 #endif
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

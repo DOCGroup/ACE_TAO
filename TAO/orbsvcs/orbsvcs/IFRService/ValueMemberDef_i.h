@@ -1,27 +1,22 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ValueMemberDef_i.h
-//
-// = DESCRIPTION
-//    ValueMemberDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    ValueMemberDef_i.h
+ *
+ *  ValueMemberDef servant class.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_VALUEMEMBERDEF_I_H
 #define TAO_VALUEMEMBERDEF_I_H
 
-#include "Contained_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Contained_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,93 +27,55 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class TAO_ValueMemberDef_i
+ *
+ * @brief TAO_ValeMemberDef_i
+ *
+ * Represents the definition of a valuemember structure.
+ */
 class TAO_IFRService_Export TAO_ValueMemberDef_i : public virtual TAO_Contained_i
 {
-  // = TITLE
-  //    TAO_ValeMemberDef_i
-  //
-  // = DESCRIPTION
-  //    Represents the definition of a valuemember structure.
-  //
 public:
+  /// Constructor
   TAO_ValueMemberDef_i (TAO_Repository_i *repoy);
-  // Constructor
 
-  virtual ~TAO_ValueMemberDef_i (void);
-  // Destructor
+  /// Destructor
+  virtual ~TAO_ValueMemberDef_i ();
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  /// Return our definition kind.
+  virtual CORBA::DefinitionKind def_kind ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Return our definition kind.
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe ();
 
-  virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From Contained_i's pure virtual function.
+  virtual CORBA::TypeCode_ptr type ();
 
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::TypeCode_ptr type_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From Contained_i's pure virtual function.
+  virtual CORBA::IDLType_ptr type_def ();
 
-  virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::IDLType_ptr type_def_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void type_def (CORBA::IDLType_ptr type_def);
 
-  CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void type_def_i (CORBA::IDLType_ptr type_def);
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Visibility access ();
 
-  virtual CORBA::IDLType_ptr type_def (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Visibility access_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void access (CORBA::Visibility access);
 
-  CORBA::IDLType_ptr type_def_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void type_def (
-      CORBA::IDLType_ptr type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void type_def_i (
-      CORBA::IDLType_ptr type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual CORBA::Visibility access (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Visibility access_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void access (
-      CORBA::Visibility access
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void access_i (
-      CORBA::Visibility access
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void access_i (CORBA::Visibility access);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

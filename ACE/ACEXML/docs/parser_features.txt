@@ -1,0 +1,25 @@
+/**  -*- HTML-Helper -*-
+@defgroup acexml_parser_features Configurable Special Features of ACEXML Parser
+@{
+
+There are special features in ACEXML Parser that can be
+activated/deactivated thru @c setFeature.  Likewise, whether a feature
+has been activated or not can be queried using @c getFeature.
+
+@sa ACEXML_XMLReader::setFeature
+@sa ACEXML_XMLReader::getFeature
+
+Here is a list of supported features:
+
+<OL>
+  <li> namespaces - When this feature is enabled, ACEXML parser allows
+  access by namespace qualified names.
+
+  <li> namespace_prefixes - Normally the list of attributes returned by the
+  parser will not contain attributes used as namespace declarations
+  (xmlns:foo="bar"). When this feature is enabled, the list of attributes
+  contains the namespace declarations also.
+</OL>
+
+@}
+*/

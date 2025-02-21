@@ -1,6 +1,18 @@
 // -*- C++ -*-
-//
-// $Id$
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_INLINE
+CORBA::UserException::UserException ()
+{
+}
+
+ACE_INLINE
+CORBA::UserException::UserException (char const * repository_id,
+                                     char const * local_name)
+  : CORBA::Exception (repository_id,
+                      local_name)
+{
+}
 
 ACE_INLINE
 CORBA::UserException::UserException (CORBA::UserException const & rhs)
@@ -19,3 +31,5 @@ CORBA::UserException::_downcast (CORBA::Exception const * exception)
 {
   return dynamic_cast<const CORBA::UserException *> (exception);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

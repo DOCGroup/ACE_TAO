@@ -1,0 +1,13 @@
+/**
+
+
+This is a clone of the Hello World test. The differences are that an out string
+argument is used rather than having ::get_string return string.
+
+The out string argument is placed directly into the 0th element of a string
+sequence of length 1 in the client.cpp.
+
+Like the Hello World test this should always work (and not leak). Any other
+results indicates a serious rabbit off situation.
+
+*/

@@ -1,21 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include /**/ "NT_Notify_Service.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include /**/ "Notify_Service.h"
 #include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
 #include "ace/Reactor.h"
+#include "orbsvcs/Log_Macros.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
-#define TAO_REGISTRY_SUBKEY "SOFTWARE\\ACE\\TAO"
-#define TAO_NOTIFY_SERVICE_OPTS_NAME "TaoNotifyServiceOptions"
-#define TAO_SERVICE_PARAM_COUNT "TaoServiceParameterCount"
+#define TAO_REGISTRY_SUBKEY ACE_TEXT ("SOFTWARE\\ACE\\TAO")
+#define TAO_NOTIFY_SERVICE_OPTS_NAME ACE_TEXT ("TaoNotifyServiceOptions")
+#define TAO_SERVICE_PARAM_COUNT ACE_TEXT ("TaoServiceParameterCount")
 
-TAO_NT_Notify_Service::TAO_NT_Notify_Service (void)
+TAO_NT_Notify_Service::TAO_NT_Notify_Service ()
   : argc_ (0),
     argc_save_ (0),
     argv_ (0),
@@ -23,7 +22,7 @@ TAO_NT_Notify_Service::TAO_NT_Notify_Service (void)
 {
 }
 
-TAO_NT_Notify_Service::~TAO_NT_Notify_Service (void)
+TAO_NT_Notify_Service::~TAO_NT_Notify_Service ()
 {
   if (argv_save_)
     {
@@ -55,6 +54,120 @@ TAO_NT_Notify_Service::handle_exception (ACE_HANDLE)
   return 0;
 }
 
+void
+TAO_NT_Notify_Service::report_error (const ACE_TCHAR *format,
+                                     const ACE_TCHAR *val,
+                                     LONG result)
+{
+  ACE_TCHAR msg[100];
+  ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
+                          0,
+                          result,
+                          LANG_SYSTEM_DEFAULT,
+                          msg,
+                          100,0);
+  ORBSVCS_DEBUG ((LM_DEBUG, format, val, msg));
+}
+
+void
+TAO_NT_Notify_Service::arg_manip (char *args, DWORD arglen, bool query)
+{
+  HKEY hkey = 0;
+
+  // It looks in the NT Registry under
+  // \\HKEY_LOCAL_MACHINE\SOFTWARE\ACE\TAO for the value of
+  // "TaoNotifyServiceOptions" for any Notify Service options such as
+  // "-ORBListenEndpoints".
+
+  // Get/Set Notify Service options from the NT Registry.
+
+  LONG result = ACE_TEXT_RegOpenKeyEx (REGISTRY_KEY_ROOT,
+                                       TAO_REGISTRY_SUBKEY,
+                                       0,
+                                       query ? KEY_READ : KEY_WRITE,
+                                       &hkey);
+
+  DWORD type = REG_EXPAND_SZ;
+
+  if (query)
+    {
+      *args = '\0';
+      if (result == ERROR_SUCCESS)
+        {
+          result = ACE_TEXT_RegQueryValueEx (hkey,
+                                             TAO_NOTIFY_SERVICE_OPTS_NAME,
+                                             0,
+                                             &type,
+                                             (BYTE *)args,
+                                             &arglen);
+          if (result != ERROR_SUCCESS)
+            {
+              this->report_error (ACE_TEXT ("Could not query %s, %s\n"),
+                                  TAO_NOTIFY_SERVICE_OPTS_NAME, result);
+            }
+        }
+      else
+        {
+          this->report_error (ACE_TEXT ("No key for %s, %s\n"),
+                              TAO_REGISTRY_SUBKEY, result);
+        }
+    }
+  else
+    {
+      if (result != ERROR_SUCCESS)
+        {
+          result = ACE_TEXT_RegCreateKeyEx (REGISTRY_KEY_ROOT,
+                                            TAO_REGISTRY_SUBKEY,
+                                            0,
+                                            0,
+                                            0,
+                                            KEY_WRITE,
+                                            0,
+                                            &hkey,
+                                            0);
+        }
+      DWORD bufSize = static_cast<DWORD>(ACE_OS::strlen (args) + 1);
+      if (result == ERROR_SUCCESS)
+        {
+          result = ACE_TEXT_RegSetValueEx (hkey,
+                                           TAO_NOTIFY_SERVICE_OPTS_NAME,
+                                           0,
+                                           type,
+                                           (BYTE *)args,
+                                           bufSize);
+          if (result != ERROR_SUCCESS)
+            {
+               this->report_error (ACE_TEXT ("Could not set %s, %s\n"),
+                                   TAO_NOTIFY_SERVICE_OPTS_NAME, result);
+            }
+        }
+      else
+        {
+          this->report_error (ACE_TEXT ("Could not create key %s, %s\n"),
+                              TAO_REGISTRY_SUBKEY, result);
+        }
+    }
+
+  RegCloseKey (hkey);
+}
+
+int
+TAO_NT_Notify_Service::set_args (const ACE_TCHAR *args)
+{
+  char argbuf[ACE_DEFAULT_ARGV_BUFSIZ];
+  if (args == 0)
+    {
+      this->arg_manip (argbuf, ACE_DEFAULT_ARGV_BUFSIZ, true);
+      ACE_OS::printf ("%s\n", argbuf);
+    }
+  else
+    {
+      ACE_OS::strcpy (argbuf, ACE_TEXT_ALWAYS_CHAR (args));
+      this->arg_manip (argbuf, 0, false);
+    }
+  return 0;
+}
+
 int
 TAO_NT_Notify_Service::init (int argc,
                              ACE_TCHAR *argv[])
@@ -82,7 +195,7 @@ TAO_NT_Notify_Service::init (int argc,
 
   ACE_TEXT_RegQueryValueEx (hkey,
                             TAO_NOTIFY_SERVICE_OPTS_NAME,
-                            NULL,
+                            0,
                             &type,
                             buf,
                             &bufSize);
@@ -99,7 +212,7 @@ TAO_NT_Notify_Service::init (int argc,
       // case we use a 'destructive' args list processor - this way we
       // maintain the correct argv and argc for memory freeing
       // operations in the destructor.
-      argv_save_ = (char **) ACE_OS::malloc (sizeof (char *) * (argc + args.argc ()));
+      argv_save_ = (ACE_TCHAR **) ACE_OS::malloc (sizeof (ACE_TCHAR *) * (argc + args.argc ()));
 
       // Copy the values into the internal args buffer.
       int i;
@@ -125,30 +238,25 @@ TAO_NT_Notify_Service::init (int argc,
 }
 
 int
-TAO_NT_Notify_Service::svc (void)
+TAO_NT_Notify_Service::svc ()
 {
   TAO_Notify_Service_Driver notify_service;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      if (notify_service.init (argc_, argv_ ACE_ENV_ARG_PARAMETER) == -1)
+      if (notify_service.init (argc_, argv_) == -1)
         return -1;
 
       report_status (SERVICE_RUNNING);
-      notify_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      notify_service.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO NT Notify Service");
+      ex._tao_print_exception (ACE_TEXT ("TAO NT Notify Service"));
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   return 0;
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */

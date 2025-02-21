@@ -1,28 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    server.cpp
-//
-// = AUTHOR
-//    Andy Gokhale,
-//    Sumedh Mungee,
-//    Sergio Flores-Gaitan, and
-//    Nagarajan Surendran
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  @author Andy Gokhale
+ *  @author Sumedh Mungee
+ *  @author Sergio Flores-Gaitan
+ *  @author and Nagarajan Surendran
+ */
+//=============================================================================
+
 
 #include "ace/config-all.h"
-#if defined (VXWORKS)
+
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 # undef ACE_MAIN
 # define ACE_MAIN server
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 
 #include "server.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Sched_Params.h"
 #include "tao/Strategies/advanced_resource.h"
 
@@ -35,9 +32,7 @@
 # include "quantify.h"
 #endif /* ACE_HAS_QUANTIFY */
 
-ACE_RCSID(MT_Cubit, server, "$Id$")
-
-Server::Server (void)
+Server::Server ()
   :argc_ (0),
    argv_ (0),
    cubits_ (0),
@@ -49,7 +44,7 @@ Server::Server (void)
 }
 
 int
-Server::init (int argc, char **argv)
+Server::init (int argc, ACE_TCHAR **argv)
 {
   int result;
 
@@ -69,7 +64,7 @@ Server::init (int argc, char **argv)
 }
 
 int
-Server::run (void)
+Server::run ()
 {
   STOP_QUANTIFY;
   CLEAR_QUANTIFY;
@@ -88,13 +83,13 @@ Server::run (void)
 }
 
 void
-Server::prelim_args_process (void)
+Server::prelim_args_process ()
 {
   int i;
 
   for (i = 0; i < this->argc_ ; i++)
     {
-      if (ACE_OS::strcmp (this->argv_[i], "-e") == 0 &&
+      if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT("-e")) == 0 &&
           i - 1 < this->argc_)
         ACE_OS::strcpy (GLOBALS::instance ()->endpoint,
                         this->argv_[i+1]);
@@ -102,7 +97,7 @@ Server::prelim_args_process (void)
 }
 
 void
-Server::init_low_priority (void)
+Server::init_low_priority ()
 {
   ACE_Sched_Priority prev_priority = this->high_priority_;
 
@@ -127,7 +122,7 @@ Server::init_low_priority (void)
 // Write the ior's to a file so the client can read them.
 
 int
-Server::write_iors (void)
+Server::write_iors ()
 {
   u_int j;
 
@@ -173,19 +168,19 @@ Server::write_iors (void)
 }
 
 int
-Server::activate_high_servant (void)
+Server::activate_high_servant ()
 {
-  char orbendpoint[BUFSIZ];
+  ACE_TCHAR orbendpoint[BUFSIZ];
 
-  ACE_OS::sprintf (orbendpoint,
-                   "-ORBEndpoint %s ",
-                   GLOBALS::instance ()->endpoint);
+  ACE_OS::strcpy (orbendpoint, ACE_TEXT ("-ORBEndpoint "));
+  ACE_OS::strcat (orbendpoint, GLOBALS::instance ()->endpoint);
 
-  char *high_second_argv[] =
-    {orbendpoint,
-     const_cast<char *> ("-ORBSndSock 32768 "),
-     const_cast<char *> ("-ORBRcvSock 32768 "),
-     0};
+  ACE_TCHAR *high_second_argv[] =
+    { orbendpoint,
+      const_cast<ACE_TCHAR *> (ACE_TEXT ("-ORBSndSock 32768 ")),
+      const_cast<ACE_TCHAR *> (ACE_TEXT ("-ORBRcvSock 32768 ")),
+      0
+    };
   ACE_NEW_RETURN (this->high_argv_,
                   ACE_ARGV (this->argv_, high_second_argv),
                   -1);
@@ -225,7 +220,7 @@ Server::activate_high_servant (void)
 }
 
 int
-Server::activate_low_servants (void)
+Server::activate_low_servants ()
 {
   if (static_cast<int> (this->num_low_priority_) > 0)
     {
@@ -247,19 +242,19 @@ Server::activate_low_servants (void)
   // e.g.: orignal endpoint:    iiop://foobar:10001
   //       random endpoint      iiop://
 
-  const char protocol_delimiter[] = "://";
+  const ACE_TCHAR protocol_delimiter[] = ACE_TEXT("://");
 
-  char *addr = ACE_OS::strstr (GLOBALS::instance ()->endpoint,
-                               protocol_delimiter);
+  ACE_TCHAR *addr = ACE_OS::strstr (GLOBALS::instance ()->endpoint,
+                                    protocol_delimiter);
 
   size_t random_endpoint_length =
     ACE_OS::strlen (GLOBALS::instance ()->endpoint) -
     ACE_OS::strlen (addr) +
     ACE_OS::strlen (protocol_delimiter);
 
-  char random_endpoint[BUFSIZ];
+  ACE_TCHAR random_endpoint[BUFSIZ];
 
-  ACE_OS::sprintf (random_endpoint, "-ORBEndpoint ");
+  ACE_OS::sprintf (random_endpoint, ACE_TEXT("-ORBEndpoint "));
 
   ACE_OS::strncat (random_endpoint,
                    GLOBALS::instance ()->endpoint,
@@ -269,10 +264,10 @@ Server::activate_low_servants (void)
        i > 0;
        i--)
     {
-      char *low_second_argv[] =
+      ACE_TCHAR *low_second_argv[] =
         {random_endpoint,
-         const_cast<char *> ("-ORBSndSock 32768 "),
-         const_cast<char *> ("-ORBRcvSock 32768 "),
+         const_cast<ACE_TCHAR *> (ACE_TEXT("-ORBSndSock 32768 ")),
+         const_cast<ACE_TCHAR *> (ACE_TEXT("-ORBRcvSock 32768 ")),
          0};
       ACE_NEW_RETURN (this->low_argv_,
                       ACE_ARGV (this->argv_,
@@ -328,7 +323,7 @@ Server::activate_low_servants (void)
 }
 
 int
-Server::start_servants (void)
+Server::start_servants ()
 {
   // Do the preliminary argument processing for options -p and -h.
   this->prelim_args_process ();
@@ -369,7 +364,7 @@ Server::start_servants (void)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result;
 
@@ -384,22 +379,10 @@ main (int argc, char *argv[])
   // run the server.
   result = server.run ();
   ACE_DEBUG ((LM_DEBUG,
-			  "%s:%d\n", __FILE__, __LINE__));
+              "%s:%d\n", __FILE__, __LINE__));
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error while running the servants\n"),
                       2);
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Globals,ACE_Null_Mutex>;
-template class ACE_Unbounded_Set<ACE_timer_t>;
-template class ACE_Unbounded_Set_Iterator<ACE_timer_t>;
-template class ACE_Node<ACE_timer_t>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Globals,ACE_Null_Mutex>
-#pragma instantiate ACE_Unbounded_Set<ACE_timer_t>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_timer_t>
-#pragma instantiate ACE_Node<ACE_timer_t>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

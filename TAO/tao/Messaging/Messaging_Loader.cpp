@@ -1,43 +1,50 @@
-
-// $Id$
-
-#include "Messaging_Loader.h"
-#include "Messaging_ORBInitializer.h"
+#include "tao/Messaging/Messaging_Loader.h"
+#include "tao/Messaging/Messaging_ORBInitializer.h"
+#include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (TAO, Messaging_Loader, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-TAO_Messaging_Loader::TAO_Messaging_Loader (void)
+TAO_Messaging_Loader::TAO_Messaging_Loader ()
+  : initialized_ (false)
 {
 }
 
-TAO_Messaging_Loader::~TAO_Messaging_Loader (void)
+TAO_Messaging_Loader::~TAO_Messaging_Loader ()
 {
-
 }
 
 int
-TAO_Messaging_Loader::init (int,
-                            ACE_TCHAR* [])
+TAO_Messaging_Loader::init (int, ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_Messaging_Loader::init");
 
-  static int called_once = 0;
-
-  if (called_once != 0)
+  if (this->initialized_)
     return 0;
-  called_once = 1;
+
+  this->initialized_ = true;
+
+  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+
+  ACE_Service_Object * const messaging_loader =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (
+      gestalt,
+      "Messaging_Loader",
+      true);
+
+  if (messaging_loader != 0 && messaging_loader != this)
+    {
+      return messaging_loader->init (0, 0);
+    }
 
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       /// Register the Messaging ORBInitializer.
 
@@ -48,27 +55,23 @@ TAO_Messaging_Loader::init (int,
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       orb_initializer = temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "(%P | %t) Caught exception:");
+          ex._tao_print_exception ("Caught exception:");
         }
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
+
 
 /////////////////////////////////////////////////////////////////////
 
@@ -80,3 +83,5 @@ ACE_STATIC_SVC_DEFINE (TAO_Messaging_Loader,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+
+TAO_END_VERSIONED_NAMESPACE_DECL

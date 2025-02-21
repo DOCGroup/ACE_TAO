@@ -1,15 +1,12 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Entries.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_ENTRIES_H
 #define TAO_ENTRIES_H
@@ -24,7 +21,9 @@
 #include "ace/SString.h"
 
 #include "orbsvcs/CosNamingC.h"
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_IntId
@@ -41,9 +40,8 @@
 class TAO_Naming_Serv_Export TAO_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_IntId (void);
+  TAO_IntId ();
 
   /// Constructor.
   TAO_IntId (CORBA::Object_ptr obj,
@@ -53,7 +51,7 @@ public:
   TAO_IntId (const TAO_IntId & rhs);
 
   /// Destructor.
-  ~TAO_IntId (void);
+  ~TAO_IntId ();
 
   /// Assignment operator (does copy memory).
   void operator= (const TAO_IntId & rhs);
@@ -82,10 +80,8 @@ public:
 class TAO_Naming_Serv_Export TAO_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
-  TAO_ExtId (void);
+  TAO_ExtId ();
 
   /// Constructor.
   TAO_ExtId (const char *id,
@@ -95,7 +91,7 @@ public:
   TAO_ExtId (const TAO_ExtId & rhs);
 
   /// Destructor.
-  ~TAO_ExtId (void);
+  ~TAO_ExtId ();
 
   // = Assignment and comparison operators.
 
@@ -110,7 +106,7 @@ public:
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data members.
 
@@ -124,12 +120,14 @@ public:
 
   // = Accessors
 
-  /// Return <id_> in a const char * format.
-  const char * id (void);
+  /// Return id_ in a const char * format.
+  const char * id ();
 
-  /// Return <kind_> in a const char * format.
-  const char * kind (void);
+  /// Return kind_ in a const char * format.
+  const char * kind ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ENTRIES_H */

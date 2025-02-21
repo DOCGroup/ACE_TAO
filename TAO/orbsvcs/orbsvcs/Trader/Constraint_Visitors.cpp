@@ -1,25 +1,20 @@
-// $Id$
-
-#include "Constraint_Visitors.h"
-#include "Constraint_Nodes.h"
-#include "Interpreter_Utils_T.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Interpreter_Utils_T.h"
+#include "orbsvcs/Trader/Constraint_Tokens.h"
 
 #include "tao/DynamicAny/DynSequence_i.h"
 
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (Trader,
-           Constraint_Visitors,
-           "$Id$")
-
-
-TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
+TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue ()
 {
 }
 
 TAO_Literal_Constraint&
-TAO_Constraint_Evaluator::Operand_Queue::get_left_operand (void)
+TAO_Constraint_Evaluator::Operand_Queue::get_left_operand ()
 {
   TAO_Literal_Constraint* left_operand = 0;
   this->get (left_operand, 1);
@@ -27,7 +22,7 @@ TAO_Constraint_Evaluator::Operand_Queue::get_left_operand (void)
 }
 
 TAO_Literal_Constraint&
-TAO_Constraint_Evaluator::Operand_Queue::get_right_operand (void)
+TAO_Constraint_Evaluator::Operand_Queue::get_right_operand ()
 {
   TAO_Literal_Constraint* right_operand = 0;
   this->get (right_operand);
@@ -35,7 +30,7 @@ TAO_Constraint_Evaluator::Operand_Queue::get_right_operand (void)
 }
 
 TAO_Literal_Constraint&
-TAO_Constraint_Evaluator::Operand_Queue::get_operand (void)
+TAO_Constraint_Evaluator::Operand_Queue::get_operand ()
 {
   TAO_Literal_Constraint* operand = 0;
   this->get (operand);
@@ -43,13 +38,13 @@ TAO_Constraint_Evaluator::Operand_Queue::get_operand (void)
 }
 
 void
-TAO_Constraint_Evaluator::Operand_Queue::dequeue_operand (void)
+TAO_Constraint_Evaluator::Operand_Queue::dequeue_operand ()
 {
   TAO_Literal_Constraint operand;
   this->dequeue_head (operand);
 }
 
-TAO_Constraint_Evaluator::TAO_Constraint_Evaluator (void)
+TAO_Constraint_Evaluator::TAO_Constraint_Evaluator ()
 {
   // No-Op.
 }
@@ -130,7 +125,7 @@ TAO_Constraint_Evaluator::visit_max (TAO_Unary_Constraint* unary_max)
 int
 TAO_Constraint_Evaluator::visit_random (TAO_Noop_Constraint *)
 {
-  TAO_Literal_Constraint random ((CORBA::Long) (ACE_OS::rand ()));
+  TAO_Literal_Constraint random (static_cast<CORBA::LongLong> (ACE_OS::rand ()));
   this->queue_.enqueue_head (random);
   return 0;
 }
@@ -138,7 +133,7 @@ TAO_Constraint_Evaluator::visit_random (TAO_Noop_Constraint *)
 int
 TAO_Constraint_Evaluator::visit_first (TAO_Noop_Constraint *)
 {
-  TAO_Literal_Constraint first ((CORBA::Long) 0);
+  TAO_Literal_Constraint first (static_cast<CORBA::LongLong> (0));
   this->queue_.enqueue_head (first);
   return 0;
 }
@@ -241,7 +236,7 @@ visit_exist (TAO_Unary_Constraint* unary_exist)
 {
   TAO_Property_Constraint* operand =
     (TAO_Property_Constraint*) unary_exist->operand ();
-  TAO_String_Hash_Key property_name ((const char*) operand->name ());
+  CORBA::String_var property_name ((const char*) operand->name ());
 
   // Determine if a property is defined on this offer.
 
@@ -514,22 +509,18 @@ sequence_does_contain (CORBA::Any* sequence,
   // wrapper uses the [] operator to locate the target element in the
   // sequence.
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::Boolean return_value = 0;
   CORBA::TypeCode_var type = sequence->type ();
   CORBA::TCKind sequence_type = CORBA::tk_void;
-  ACE_TRY
+  try
     {
       sequence_type =
-        TAO_Sequence_Extracter_Base::sequence_type (type.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        TAO_Sequence_Extracter_Base::sequence_type (type.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return return_value;
     }
-  ACE_ENDTRY;
-  //  ACE_CHECK_RETURN (return_value);
 
   if (sequence_type == CORBA::tk_void)
     return return_value;
@@ -538,25 +529,37 @@ sequence_does_contain (CORBA::Any* sequence,
     {
     case CORBA::tk_short:
       {
-        CORBA::Long value = element;
+        CORBA::LongLong value = element;
         return_value = ::TAO_find (*sequence, static_cast<CORBA::Short> (value));
       }
     break;
     case CORBA::tk_ushort:
       {
-        CORBA::ULong value = element;
+        CORBA::ULongLong value = element;
         return_value = ::TAO_find (*sequence, static_cast<CORBA::UShort> (value));
       }
       break;
     case CORBA::tk_long:
       {
-        CORBA::Long value = element;
-        return_value = ::TAO_find (*sequence, value);
+        CORBA::LongLong value = element;
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::Long> (value));
       }
       break;
     case CORBA::tk_ulong:
       {
-        CORBA::ULong value = element;
+        CORBA::ULongLong value = element;
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::ULong> (value));
+      }
+      break;
+    case CORBA::tk_longlong:
+      {
+        CORBA::LongLong value = element;
+        return_value = ::TAO_find (*sequence, value);
+      }
+      break;
+    case CORBA::tk_ulonglong:
+      {
+        CORBA::ULongLong value = element;
         return_value = ::TAO_find (*sequence, value);
       }
       break;
@@ -599,16 +602,14 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Short element) const
 {
   int return_value = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::Short value = dyn_any.get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Short value = dyn_any.get_short ();
       return_value = (value == element);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return return_value;
 }
 
@@ -618,16 +619,14 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::UShort element) const
 {
   int return_value = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::UShort value = dyn_any.get_ushort (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::UShort value = dyn_any.get_ushort ();
       return_value = (value == element);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return return_value;
 }
 
@@ -637,16 +636,14 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Long element) const
 {
   int return_value = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::Long value = dyn_any.get_long (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Long value = dyn_any.get_long ();
       return_value = (value == element);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return return_value;
 }
 
@@ -656,16 +653,48 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::ULong element) const
 {
   int return_value = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ULong value = dyn_any.get_ulong (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ULong value = dyn_any.get_ulong ();
       return_value = (value == element);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::LongLong>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::LongLong element) const
+{
+  int return_value = 0;
+  try
+    {
+      CORBA::LongLong value = dyn_any.get_longlong ();
+      return_value = (value == element);
+    }
+  catch (const CORBA::Exception&)
+    {
+    }
+  return return_value;
+}
+
+int
+TAO_Element_Equal<CORBA::ULongLong>::
+operator () (TAO_DynSequence_i& dyn_any,
+             CORBA::ULongLong element) const
+{
+  int return_value = 0;
+  try
+    {
+      CORBA::ULongLong value = dyn_any.get_ulonglong ();
+      return_value = (value == element);
+    }
+  catch (const CORBA::Exception&)
+    {
+    }
   return return_value;
 }
 
@@ -675,13 +704,12 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Float element) const
 {
   int return_value = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::Float value = dyn_any.get_float (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      return_value = (value == element);
+      CORBA::Float value = dyn_any.get_float ();
+      return_value = ACE::is_equal (value, element);
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception&){}
   return return_value;
 }
 
@@ -691,13 +719,12 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Double element) const
 {
   int return_value = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::Double value = dyn_any.get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      return_value = (value == element);
+      CORBA::Double value = dyn_any.get_double ();
+      return_value = ACE::is_equal (value, element);
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception&){}
   return return_value;
 }
 
@@ -707,13 +734,12 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Boolean element) const
 {
   int return_value = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
-    CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+    CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short ();
       return_value = (value == element);
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception&){}
   return return_value;
 }
 
@@ -723,23 +749,22 @@ operator () (TAO_DynSequence_i& dyn_any,
              const char* element) const
 {
   int return_value = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
-      const char* value = dyn_any.get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      return_value = (ACE_OS::strcmp (value, element) == 0);
+      CORBA::String_var value = dyn_any.get_string ();
+      return_value = (ACE_OS::strcmp (value.in(), element) == 0);
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception&){}
   return return_value;
 }
 
 TAO_Constraint_Validator::
-TAO_Constraint_Validator (void)
+TAO_Constraint_Validator ()
 {
   // No-Op.
 }
 
-TAO_Constraint_Validator::~TAO_Constraint_Validator (void)
+TAO_Constraint_Validator::~TAO_Constraint_Validator ()
 {
   for (TAO_Typecode_Table::iterator type_iter (this->type_map_);
        ! type_iter.done ();
@@ -942,15 +967,18 @@ visit_div (TAO_Binary_Constraint* boolean_div)
         {
         case TAO_UNSIGNED:
           right_isnt_zero =
-            ((CORBA::ULong) (*((TAO_Literal_Constraint*) right)) != 0);
+            (static_cast<CORBA::ULongLong>
+               (*dynamic_cast<TAO_Literal_Constraint*> (right)) != 0);
           break;
         case TAO_SIGNED:
           right_isnt_zero =
-            ((CORBA::Long) (*((TAO_Literal_Constraint*) right)) != 0);
+            (static_cast<CORBA::LongLong>
+               (*dynamic_cast<TAO_Literal_Constraint*> (right)) != 0);
           break;
         case TAO_DOUBLE:
           right_isnt_zero =
-            ((CORBA::Double) (*((TAO_Literal_Constraint*) right)) != 0.0);
+            ACE::is_inequal (static_cast<CORBA::Double>
+               (*dynamic_cast<TAO_Literal_Constraint*> (right)), 0.0);
           break;
         }
 
@@ -1006,20 +1034,17 @@ visit_in (TAO_Binary_Constraint* binary_in)
 
   if (right_type == TAO_SEQUENCE)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
       CORBA::Boolean types_match = 0;
       CORBA::TCKind seq_type = CORBA::tk_void;
-      ACE_TRY
+      try
         {
           seq_type =
-            TAO_Sequence_Extracter_Base::sequence_type (prop_type ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            TAO_Sequence_Extracter_Base::sequence_type (prop_type);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           return return_value;
         }
-      ACE_ENDTRY;
 
       if (seq_type != CORBA::tk_void)
         {
@@ -1029,6 +1054,8 @@ visit_in (TAO_Binary_Constraint* binary_in)
                              seq_type == CORBA::tk_ushort ||
                              seq_type == CORBA::tk_long ||
                              seq_type == CORBA::tk_ulong ||
+                             seq_type == CORBA::tk_longlong ||
+                             seq_type == CORBA::tk_ulonglong ||
                              seq_type == CORBA::tk_float ||
                              seq_type == CORBA::tk_double);
             }
@@ -1149,7 +1176,7 @@ TAO_Constraint_Validator::extract_type (TAO_Constraint* expr,
   if (type == TAO_IDENT)
     {
       TAO_Property_Constraint* prop = (TAO_Property_Constraint*) expr;
-      TAO_String_Hash_Key prop_name (prop->name ());
+      CORBA::String_var prop_name (prop->name ());
 
       if (this->type_map_.find (prop_name, return_value) == 0)
         type = TAO_Literal_Constraint::comparable_type (return_value);
@@ -1180,7 +1207,7 @@ TAO_Constraint_Validator::expr_returns_number (TAO_Expression_Type expr_type)
   int return_value = 0;
 
   if ((expr_type >= TAO_PLUS && expr_type <= TAO_NUMBER) ||
-      (expr_type >= TAO_UNSIGNED && expr_type <= TAO_DOUBLE))
+      (expr_type >= TAO_SIGNED && expr_type <= TAO_DOUBLE))
     return_value = 1;
 
   return return_value;
@@ -1199,42 +1226,4 @@ TAO_Constraint_Validator::expr_returns_string (TAO_Expression_Type expr_type)
   return return_value;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<TAO_Literal_Constraint>;
-template class ACE_Unbounded_Queue<TAO_Literal_Constraint>;
-template class ACE_Unbounded_Queue_Iterator<TAO_Literal_Constraint>;
-template CORBA::Boolean TAO_find (const CORBA::Any &, const int &);
-template CORBA::Boolean TAO_find (const CORBA::Any &, const unsigned char &);
-
-
-
-#if !defined (ACE_LACKS_FLOATING_POINT)
-template CORBA::Boolean TAO_find (const CORBA::Any &, const float &);
-template CORBA::Boolean TAO_find (const CORBA::Any &, const double &);
-#endif /* ACE_LACKS_FLOATING_POINT */
-template CORBA::Boolean TAO_find (const CORBA::Any &, const short &);
-template CORBA::Boolean TAO_find (const CORBA::Any &, const char * const &);
-template CORBA::Boolean TAO_find (const CORBA::Any &, const unsigned short &);
-template CORBA::Boolean TAO_find (const CORBA::Any &, const unsigned int &);
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<TAO_Literal_Constraint>
-#pragma instantiate ACE_Unbounded_Queue<TAO_Literal_Constraint>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Literal_Constraint>
-
-#pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const int &)
-#pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const unsigned char &)
-
-
-
-#if !defined (ACE_LACKS_FLOATING_POINT)
-#pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const float &)
-#pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const double &)
-#endif /* ACE_LACKS_FLOATING_POINT */
-#pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const short &)
-#pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const char * const &)
-#pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const unsigned short &)
-#pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const unsigned int &)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

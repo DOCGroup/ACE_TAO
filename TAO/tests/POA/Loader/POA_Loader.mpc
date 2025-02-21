@@ -1,0 +1,8 @@
+project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+   Source_Files {
+    server.cpp
+    Servant_Activator.cpp
+    Servant_Locator.cpp
+    Server_Manager.cpp
+  }
+}

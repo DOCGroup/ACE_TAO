@@ -1,8 +1,5 @@
-// $Id$
-
 #include "Counting_Consumer.h"
 
-ACE_RCSID(EC_Tests, EC_Count_Consumer, "$Id$")
 
 EC_Counting_Consumer::EC_Counting_Consumer (const char* name)
   : event_count (0),
@@ -13,53 +10,43 @@ EC_Counting_Consumer::EC_Counting_Consumer (const char* name)
 
 void
 EC_Counting_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                   const RtecEventChannelAdmin::ConsumerQOS &qos
-                   ACE_ENV_ARG_DECL)
+                   const RtecEventChannelAdmin::ConsumerQOS &qos)
 {
   // The canonical protocol to connect to the EC
 
   RtecEventComm::PushConsumer_var consumer =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     {
       this->supplier_proxy_ =
-        consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        consumer_admin->obtain_push_supplier ();
     }
 
   this->supplier_proxy_->connect_push_consumer (consumer.in (),
-                                                qos
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                qos);
 }
 
 void
-EC_Counting_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+EC_Counting_Consumer::disconnect ()
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
-      this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->supplier_proxy_->disconnect_push_supplier ();
       this->supplier_proxy_ =
         RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
     }
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->deactivate ();
 }
 
 void
-EC_Counting_Consumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+EC_Counting_Consumer::deactivate ()
 {
   PortableServer::POA_var consumer_poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  consumer_poa->deactivate_object (consumer_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
+    consumer_poa->servant_to_id (this);
+  consumer_poa->deactivate_object (consumer_id.in ());
 }
 
 void
@@ -69,23 +56,23 @@ EC_Counting_Consumer::dump_results (int expected_count, int tolerance)
   if (diff > tolerance || diff < -tolerance)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "ERROR - %s unexpected number of events  <%d>\n",
+                  "ERROR - %s unexpected number of events <%d> instead of <%d>\n",
                   this->name_,
-                  this->event_count));
+                  this->event_count,
+                  expected_count));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s - number of events <%d> within margins\n",
+                  "%s - number of events <%d> within margins expected <%d>\n",
                   this->name_,
-                  this->event_count));
+                  this->event_count,
+                  expected_count));
     }
 }
 
 void
-EC_Counting_Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
 {
   if (events.length () == 0)
     {
@@ -107,14 +94,9 @@ EC_Counting_Consumer::push (const RtecEventComm::EventSet& events
 }
 
 void
-EC_Counting_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+EC_Counting_Consumer::disconnect_push_consumer ()
 {
   this->disconnect_count++;
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

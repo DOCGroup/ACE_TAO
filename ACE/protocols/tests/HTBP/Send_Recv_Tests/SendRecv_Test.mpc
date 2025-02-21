@@ -1,0 +1,17 @@
+// -*- MPC -*-
+
+project(*server): aceexe, htbp {
+  exename = server
+
+  Source_Files {
+     server.cpp
+  }
+}
+
+project(*client): aceexe, htbp {
+  exename = client
+
+  Source_Files {
+     client.cpp
+  }
+}

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 /*-
  * Copyright (c) 1993-1994 The Regents of the University of California.
@@ -39,12 +39,9 @@
 /**
  *  @file   RTP.h
  *
- *  $Id$
- *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_AV_RTP_H
 #define TAO_AV_RTP_H
@@ -137,9 +134,11 @@
 
 #define MAXHDR 24
 
-#include "Policy.h"
-#include "FlowSpec_Entry.h"
-#include "MCast.h"
+#include "orbsvcs/AV/Policy.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/AV/MCast.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
 // TAO_AV_RTP
@@ -240,7 +239,6 @@ public:
     unsigned char ebit;
     ACE_UINT16 blkno;
   };
-
 };
 
 /**
@@ -269,50 +267,50 @@ public:
              ACE_UINT16 dataSize);
 
   /// Destructor
-  ~RTP_Packet(void);
+  ~RTP_Packet();
 
   /// Returns the size of the RTP packet in bytes.
-  ACE_UINT16 packet_size(void);
+  ACE_UINT16 packet_size();
 
   /// Returns the size of the payload in bytes.
-  ACE_UINT16 payload_size(void);
+  ACE_UINT16 payload_size();
 
   /// Populates the passed in frame_info.
   void get_frame_info (TAO_AV_frame_info *frame_info);
 
   /// Returns 1 if packet is valid and 0 if not.
-  int is_valid (void);
+  int is_valid ();
 
   /// Returns the RTP version of the packet.
-  unsigned int ver (void);
+  unsigned int ver ();
 
   /// Returns 1 if the padding bit is set, 0 if not.
-  unsigned int pad (void);
+  unsigned int pad ();
 
   /// Returns 1 if the header extension bit is set, 0 if not.
-  unsigned int ext (void);
+  unsigned int ext ();
 
   /// Returns the number of bytes in the header extension or 0 if no extension.
-  unsigned int ext_bytes (void);
+  unsigned int ext_bytes ();
 
   /// Returns the contributing source count.
   /// This should only be non-zero for mixers.
-  unsigned int cc  (void);
+  unsigned int cc  ();
 
   /// Returns 1 if the marker bit is set, 0 if not.
-  unsigned int mrk (void);
+  unsigned int mrk ();
 
   /// Returns the payload type of the packet.
-  unsigned int pt  (void);
+  unsigned int pt  ();
 
   /// Returns the sequence number of the packet.
-  ACE_UINT16   sn  (void);
+  ACE_UINT16   sn  ();
 
   /// Returns the timestamp of the packet.
-  ACE_UINT32   ts  (void);
+  ACE_UINT32   ts  ();
 
   /// Returns the synchronization source id of the packet.
-  ACE_UINT32  ssrc (void);
+  ACE_UINT32  ssrc ();
 
   /// Returns a pointer to the local contributing source list and its length.
   /// This should be empty except for mixers.
@@ -359,11 +357,11 @@ public:
   TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport);
 
-  virtual ~TAO_AV_RTP_Object (void);
+  virtual ~TAO_AV_RTP_Object ();
 
-  virtual int start (void);
-  virtual int stop (void);
-  virtual int handle_input (void);
+  virtual int start ();
+  virtual int stop ();
+  virtual int handle_input ();
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
 
@@ -374,7 +372,7 @@ public:
   virtual int send_frame (const char*buf,
                           size_t len);
 
-  virtual int destroy (void);
+  virtual int destroy ();
   virtual int set_policies (const TAO_AV_PolicyList &policy_list);
   virtual void control_object (TAO_AV_Protocol_Object *object);
 
@@ -392,7 +390,6 @@ protected:
 };
 
 
-
 /**
  * @class TAO_AV_RTP_Flow_Factory
  * @brief
@@ -401,16 +398,18 @@ class TAO_AV_Export TAO_AV_RTP_Flow_Factory : public TAO_AV_Flow_Protocol_Factor
 {
 public:
   /// Initialization hook.
-  TAO_AV_RTP_Flow_Factory (void);
-  virtual ~TAO_AV_RTP_Flow_Factory (void);
-  virtual int init (int argc, char *argv[]);
+  TAO_AV_RTP_Flow_Factory ();
+  virtual ~TAO_AV_RTP_Flow_Factory ();
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *flow_string);
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                         TAO_Base_StreamEndPoint *endpoint,
                                                         TAO_AV_Flow_Handler *handler,
                                                         TAO_AV_Transport *transport);
-  virtual const char*control_flow_factory (void);
+  virtual const char*control_flow_factory ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_RTP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_RTP_Flow_Factory)

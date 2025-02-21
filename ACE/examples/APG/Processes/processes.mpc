@@ -1,0 +1,28 @@
+// -*- MPC -*-
+project(Process Manager Death) : aceexe, avoids_ace_for_tao {
+  exename = Process_Manager_Death
+  Source_Files {
+    Process_Manager_Death.cpp
+  }
+}
+
+project(Process Manager Spawn) : aceexe, avoids_ace_for_tao {
+  exename = Process_Manager_Spawn
+  Source_Files {
+    Process_Manager_Spawn.cpp
+  }
+}
+
+project(Process Mutex) : aceexe, avoids_ace_for_tao {
+  exename = Process_Mutex
+  Source_Files {
+    Process_Mutex.cpp
+  }
+}
+
+project(Spawn) : aceexe, avoids_ace_for_tao {
+  exename = Spawn
+  Source_Files {
+    Spawn.cpp
+  }
+}

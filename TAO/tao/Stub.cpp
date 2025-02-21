@@ -1,5 +1,3 @@
-// $Id$
-
 // Portions Copyright 1995 by Sun Microsystems Inc.
 // Portions Copyright 1997-2002 by Washington University
 // All Rights Reserved
@@ -8,26 +6,26 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#include "Stub.h"
-#include "Profile.h"
-#include "ORB_Core.h"
-#include "Client_Strategy_Factory.h"
-#include "Sync_Strategies.h"
-#include "debug.h"
-#include "Policy_Manager.h"
-#include "SystemException.h"
+#include "tao/Stub.h"
+#include "tao/Profile.h"
+#include "tao/ORB_Core.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/Remote_Object_Proxy_Broker.h"
+#include "tao/Transport_Queueing_Strategies.h"
+#include "tao/debug.h"
+#include "tao/Policy_Manager.h"
+#include "tao/Policy_Set.h"
+#include "tao/SystemException.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Stub.i"
+# include "tao/Stub.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
+#include "ace/CORBA_macros.h"
 
-
-ACE_RCSID (tao,
-           TAO_Stub,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Stub::TAO_Stub (const char *repository_id,
                     const TAO_MProfile &profiles,
@@ -35,26 +33,29 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   : type_id (repository_id)
   , orb_core_ (orb_core)
   , orb_ ()
+  , is_collocated_ (false)
   , servant_orb_ ()
+  , collocated_servant_ (nullptr)
+  , object_proxy_broker_ (the_tao_remote_object_proxy_broker ())
   , base_profiles_ ((CORBA::ULong) 0)
-  , forward_profiles_ (0)
-  , profile_in_use_ (0)
-  , profile_lock_ptr_ (0)
-  , profile_success_ (0)
-  , refcount_lock_ ()
+  , forward_profiles_ (nullptr)
+  , forward_profiles_perm_ (nullptr)
+  , profile_in_use_ (nullptr)
+  , profile_success_ (false)
   , refcount_ (1)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-  , policies_ (0)
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-  , ior_info_ (0)
-  , forwarded_ior_info_ (0)
+  , policies_ (nullptr)
+#endif
+  , ior_info_ (nullptr)
+  , forwarded_ior_info_ (nullptr)
   , collocation_opt_ (orb_core->optimize_collocation_objects ())
+  , forwarded_on_exception_ (false)
 {
-  if (this->orb_core_.get() == 0)
+  if (this->orb_core_.get() == nullptr)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO: (%P|%t) TAO_Stub created with default ")
                       ACE_TEXT ("ORB core\n")));
         }
@@ -70,56 +71,77 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   // Cache the ORB pointer to respond faster to certain queries.
   this->orb_ = CORBA::ORB::_duplicate (this->orb_core_->orb ());
 
-  this->profile_lock_ptr_ =
-    this->orb_core_->client_factory ()->create_profile_lock ();
+  // Explicit trigger the loading of the client strategy factory at this moment.
+  // Not doing it here could lead to a problem loading it later on during
+  // an upcall
+  (void) this->orb_core_->client_factory ();
 
   this->base_profiles (profiles);
 }
 
-TAO_Stub::~TAO_Stub (void)
+TAO_Stub::~TAO_Stub ()
 {
   ACE_ASSERT (this->refcount_ == 0);
 
   if (this->forward_profiles_)
     reset_profiles ();
 
-  if (this->profile_in_use_ != 0)
+  // reset_profiles doesn't delete forward_profiles_perm_.
+  delete this->forward_profiles_perm_;
+
+  if (this->profile_in_use_ != nullptr)
     {
       // decrease reference count on profile
       this->profile_in_use_->_decr_refcnt ();
-      this->profile_in_use_ = 0;
+      this->profile_in_use_ = nullptr;
     }
 
-  delete this->profile_lock_ptr_;
-
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-
   delete this->policies_;
+#endif
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+  delete this->ior_info_;
 
-  if (this->ior_info_)
-    delete this->ior_info_;
-
-  if (this->forwarded_ior_info_)
-    delete this->forwarded_ior_info_;
+  delete this->forwarded_ior_info_;
 }
 
 void
-TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
+TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
+                                const CORBA::Boolean permanent_forward)
 {
   // we assume that the profile_in_use_ is being
   // forwarded!  Grab the lock so things don't change.
-  ACE_MT (ACE_GUARD (ACE_Lock,
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
-                     *this->profile_lock_ptr_));
+                     this->profile_lock_));
+  if (TAO_debug_level > 5)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::add_forward_profiles, ")
+                  ACE_TEXT ("acquired profile lock this = 0x%x\n"),
+                  this));
+    }
+
+  if (permanent_forward)
+    {
+      // paranoid, reset the bookmark, then clear the forward-stack
+      this->forward_profiles_perm_ = nullptr;
+
+      this->reset_forward ();
+    }
 
   TAO_MProfile *now_pfiles = this->forward_profiles_;
-  if (now_pfiles == 0)
+  if (now_pfiles == nullptr)
     now_pfiles = &this->base_profiles_;
 
   ACE_NEW (this->forward_profiles_,
            TAO_MProfile (mprofiles));
+
+  if (permanent_forward)
+    {
+      // bookmark the new element at bottom of stack
+      this->forward_profiles_perm_ = this->forward_profiles_;
+    }
 
   // forwarded profile points to the new IOR (profiles)
   this->profile_in_use_->forward_to (this->forward_profiles_);
@@ -130,37 +152,46 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
   // make sure we start at the beginning of mprofiles
   this->forward_profiles_->rewind ();
 
-  // Since we have been forwarded, we must set profile_success_ to 0
+  // Since we have been forwarded, we must set profile_success_ to false
   // since we are starting a new with a new set of profiles!
-  this->profile_success_ = 0;
+  this->profile_success_ = false;
 
-  // Reset any flags that may be appropriate in the services that
-  // selects profiles for invocation
-  this->orb_core_->reset_service_profile_flags ();
+  // Set the new forward profile.
+  if (this->next_profile_i () == nullptr)
+    {
+      throw ::CORBA::TRANSIENT (
+              CORBA::SystemException::_tao_minor_code (
+                  TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+                  0),
+              CORBA::COMPLETED_NO);
+    }
 }
 
 int
-TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
-                           CORBA::ULong &index
-                           ACE_ENV_ARG_DECL)
+TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
 {
   // We are creating the IOR info. Let us not be disturbed. So grab a
   // lock.
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
-                            *this->profile_lock_ptr_,
+                            this->profile_lock_,
                             -1));
-
-  IOP::IOR *tmp_info = 0;
-
-  if (this->forward_profiles_ != 0)
+  if (TAO_debug_level > 5)
     {
-      if (this->forwarded_ior_info_ == 0)
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::create_ior_info, acquired ")
+                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  this));
+    }
+
+
+  IOP::IOR *tmp_info = nullptr;
+
+  if (this->forward_profiles_ != nullptr)
+    {
+      if (this->forwarded_ior_info_ == nullptr)
         {
-          this->get_profile_ior_info (*this->forward_profiles_,
-                                      tmp_info
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          this->get_profile_ior_info (*this->forward_profiles_, tmp_info);
 
           this->forwarded_ior_info_ = tmp_info;
         }
@@ -182,12 +213,9 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
     }
 
   // Else we look at the base profiles
-  if (this->ior_info_ == 0)
+  if (this->ior_info_ == nullptr)
     {
-      this->get_profile_ior_info (this->base_profiles_,
-                                  tmp_info
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->get_profile_ior_info (this->base_profiles_, tmp_info);
 
       this->ior_info_ = tmp_info;
     }
@@ -197,8 +225,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
        ind < this->base_profiles_.profile_count ();
        ++ind)
     {
-      if (this->base_profiles_.get_profile (ind) ==
-          this->profile_in_use_)
+      if (this->base_profiles_.get_profile (ind) == this->profile_in_use_)
         {
           index = ind;
           ior_info = this->ior_info_;
@@ -211,7 +238,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
 }
 
 const TAO::ObjectKey &
-TAO_Stub::object_key (void) const
+TAO_Stub::object_key () const
 {
   // Return the profile in use's object key if you see one.
   if (this->profile_in_use_)
@@ -220,9 +247,12 @@ TAO_Stub::object_key (void) const
   if (this->forward_profiles_)
     {
       // Double-checked
-      ACE_Guard<ACE_Lock> obj (*this->profile_lock_ptr_);
+      // FUZZ: disable check_for_ACE_Guard
+      ACE_Guard<TAO_SYNCH_MUTEX> obj (
+        const_cast <TAO_SYNCH_MUTEX&>(this->profile_lock_));
+      // FUZZ: enable check_for_ACE_Guard
 
-      if (obj.locked () != 0 &&  this->forward_profiles_ != 0)
+      if (obj.locked () != 0 &&  this->forward_profiles_ != nullptr)
         return this->forward_profiles_->get_profile (0)->object_key ();
     }
 
@@ -231,20 +261,14 @@ TAO_Stub::object_key (void) const
 }
 
 int
-TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
-                                IOP::IOR *&ior_info
-                                ACE_ENV_ARG_DECL)
+TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
 {
-
-
   ACE_NEW_THROW_EX (ior_info,
                     IOP::IOR (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (-1);
-
 
   // Get the number of elements
-  CORBA::ULong count = profiles.profile_count ();
+  CORBA::ULong const count = profiles.profile_count ();
 
   // Set the number of elements in the sequence of tagged_profile
   ior_info->profiles.length (count);
@@ -255,19 +279,34 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
     {
       TAO_Profile *prof = profiles.get_profile (index);
 
-      IOP::TaggedProfile *tp =
-        prof->create_tagged_profile ();
+      IOP::TaggedProfile *tp = prof->create_tagged_profile ();
 
-      if (tp == 0)
-        ACE_THROW_RETURN (CORBA::NO_MEMORY (),
-                          -1);
+      if (tp == nullptr)
+        throw ::CORBA::NO_MEMORY ();
       ior_info->profiles[index] = *tp;
     }
 
   return 0;
 }
 
-
+void
+TAO_Stub::is_collocated (CORBA::Boolean collocated)
+{
+  if (this->is_collocated_ != collocated)
+    {
+      if (collocated &&
+          _TAO_Object_Proxy_Broker_Factory_function_pointer != nullptr)
+        {
+          this->object_proxy_broker_ =
+            _TAO_Object_Proxy_Broker_Factory_function_pointer ();
+        }
+      else
+        {
+          this->object_proxy_broker_ = the_tao_remote_object_proxy_broker ();
+        }
+      this->is_collocated_ = collocated;
+    }
+}
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
@@ -275,11 +314,10 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
 // NOTE that this must NOT go across the network!
 
 CORBA::ULong
-TAO_Stub::hash (CORBA::ULong max
-                ACE_ENV_ARG_DECL)
+TAO_Stub::hash (CORBA::ULong max)
 {
   // we rely on the profile objects that its address info
-  return this->base_profiles_.hash (max ACE_ENV_ARG_PARAMETER);
+  return this->base_profiles_.hash (max);
 }
 
 // Expensive comparison of objref data, to see if two objrefs
@@ -293,60 +331,31 @@ TAO_Stub::hash (CORBA::ULong max
 CORBA::Boolean
 TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 {
-  if (CORBA::is_nil (other_obj) == 1)
-    return 0;
+  if (CORBA::is_nil (other_obj))
+    return false;
 
-  TAO_Profile *other_profile = other_obj->_stubobj ()->profile_in_use_;
-  TAO_Profile *this_profile = this->profile_in_use_;
+  TAO_Profile * const other_profile = other_obj->_stubobj ()->profile_in_use_;
+  TAO_Profile * const this_profile = this->profile_in_use_;
 
-  if (other_profile == 0 || this_profile == 0)
-    return 0;
+  if (other_profile == nullptr || this_profile == nullptr)
+    return false;
 
   // Compare the profiles
   return this_profile->is_equivalent (other_profile);
 }
 
-// Memory managment
-
-CORBA::ULong
-TAO_Stub::_incr_refcnt (void)
-{
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    guard,
-                    this->refcount_lock_,
-                    0);
-
-  return this->refcount_++;
-}
-
-CORBA::ULong
-TAO_Stub::_decr_refcnt (void)
-{
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      mon,
-                      this->refcount_lock_,
-                      0);
-
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-
-  delete this;
-  return 0;
-}
+// Memory management
 
 TAO_Profile *
 TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 {
-  TAO_Profile *old = this->profile_in_use_;
+  TAO_Profile *const old = this->profile_in_use_;
 
   // Since we are actively using this profile we dont want
   // it to disappear, so increase the reference count by one!!
   if (pfile && (pfile->_incr_refcnt () == 0))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) unable to increment profile ref!\n")),
                         0);
     }
@@ -360,25 +369,26 @@ TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 }
 
 void
-TAO_Stub::forward_back_one (void)
+TAO_Stub::forward_back_one ()
 {
   TAO_MProfile *from = forward_profiles_->forward_from ();
 
-  delete this->forward_profiles_;
+  // Only delete the forward location if it is not permanent
+  if (this->forward_profiles_ != this->forward_profiles_perm_)
+    delete this->forward_profiles_;
 
   // the current profile in this profile list is no
   // longer being forwarded, so set the reference to zero.
   if (from == &this->base_profiles_)
     {
-      this->base_profiles_.get_current_profile ()->forward_to (0);
-      this->forward_profiles_ = 0;
+      this->base_profiles_.get_current_profile ()->forward_to (nullptr);
+      this->forward_profiles_ = nullptr;
     }
   else
     {
-      from->get_current_profile ()->forward_to (0);
+      from->get_current_profile ()->forward_to (nullptr);
       this->forward_profiles_ = from;
     }
-
 }
 
 
@@ -393,53 +403,6 @@ TAO_Stub::forward_back_one (void)
 // routines need only ensure that the data being passed in is not
 // being modified by any other thread.
 //
-// As an _experiment_ (to estimate the performance cost) remote calls
-// are currently deemed "cancel-safe".  That means that they can be
-// called by threads when they're in asynchronous cancellation mode.
-// The only effective way to do this is to disable async cancellation
-// for the duration of the call.  There are numerous rude interactions
-// with code generators for C++ ... cancellation handlers just do
-// normal stack unwinding like exceptions, but exceptions are purely
-// synchronous and sophisticated code generators rely on that to
-// generate better code, which in some cases may be very hard to
-// unwind.
-
-class TAO_Synchronous_Cancellation_Required
-// = TITLE
-//     Stick one of these at the beginning of a block that can't
-//     support asynchronous cancellation, and which must be
-//     cancel-safe.
-//
-// = EXAMPLE
-//     somefunc()
-//     {
-//       TAO_Synchronous_Cancellation_Required NOT_USED;
-//       ...
-//     }
-{
-public:
-  // These should probably be in a separate inline file, but they're
-  // only used within this one file right now, and we always want them
-  // inlined, so here they sit.
-  TAO_Synchronous_Cancellation_Required (void)
-    : old_type_ (0)
-  {
-#if !defined (VXWORKS) && !defined (INTEGRITY)
-    ACE_OS::thr_setcanceltype (THR_CANCEL_DEFERRED, &old_type_);
-#endif /* ! VXWORKS */
-  }
-
-  ~TAO_Synchronous_Cancellation_Required (void)
-  {
-#if !defined (VXWORKS) && !defined (INTEGRITY)
-    int dont_care;
-    ACE_OS::thr_setcanceltype(old_type_, &dont_care);
-#endif /* ! VXWORKS */
-  }
-private:
-  int old_type_;
-};
-
 // ****************************************************************
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -459,56 +422,40 @@ private:
 // specific reconciliation, etc.
 
 CORBA::Policy_ptr
-TAO_Stub::get_policy (CORBA::PolicyType type
-                      ACE_ENV_ARG_DECL)
+TAO_Stub::get_policy (CORBA::PolicyType type)
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
 
   CORBA::Policy_var result;
-  if (this->policies_ != 0)
+  if (this->policies_ != nullptr)
     {
-      result =
-        this->policies_->get_policy (type
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK (CORBA::Policy::_nil ());
+      result = this->policies_->get_policy (type);
     }
 
   if (CORBA::is_nil (result.in ()))
     {
-      result =
-        this->orb_core_->get_policy_including_current (type
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK (CORBA::Policy::_nil ());
+      result = this->orb_core_->get_policy_including_current (type);
     }
 
   return result._retn ();
 }
 
 CORBA::Policy_ptr
-TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
-                             ACE_ENV_ARG_DECL)
+TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
 
   CORBA::Policy_var result;
-  if (this->policies_ != 0)
+  if (this->policies_ != nullptr)
     {
-      result =
-        this->policies_->get_cached_policy (type
-                                            ACE_ENV_ARG_PARAMETER);
-
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
+      result = this->policies_->get_cached_policy (type);
     }
 
   if (CORBA::is_nil (result.in ()))
     {
-      result =
-        this->orb_core_->get_cached_policy_including_current (type
-                                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+      result = this->orb_core_->get_cached_policy_including_current (type);
     }
 
   return result._retn ();
@@ -516,43 +463,28 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
 
 TAO_Stub *
 TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
-                                CORBA::SetOverrideType set_add
-                                ACE_ENV_ARG_DECL)
+                                CORBA::SetOverrideType set_add)
 {
   // Notice the use of an explicit constructor....
-  auto_ptr<TAO_Policy_Set> policy_manager (
-    new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
+  std::unique_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
-      policy_manager->set_policy_overrides (policies,
-                                            set_add
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      policy_manager->set_policy_overrides (policies, set_add);
     }
-  else if (this->policies_ == 0)
+  else if (this->policies_ == nullptr)
     {
-      policy_manager->set_policy_overrides (policies,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      policy_manager->set_policy_overrides (policies, CORBA::SET_OVERRIDE);
     }
   else
     {
-      policy_manager->copy_from (this->policies_
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      policy_manager->copy_from (this->policies_);
 
-      policy_manager->set_policy_overrides (policies,
-                                            set_add
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      policy_manager->set_policy_overrides (policies, set_add);
     }
 
   TAO_Stub* stub = this->orb_core_->create_stub (this->type_id.in (),
-                                                 this->base_profiles_
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                                 this->base_profiles_);
 
   stub->policies_ = policy_manager.release ();
 
@@ -563,63 +495,91 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 }
 
 CORBA::PolicyList *
-TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
-                                ACE_ENV_ARG_DECL)
+TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
 {
-  if (this->policies_ == 0)
+  if (this->policies_ == nullptr)
+    {
+      CORBA::PolicyList *policy_list_ptr = nullptr;
+      ACE_NEW_THROW_EX (policy_list_ptr,
+                        CORBA::PolicyList (),
+                        CORBA::NO_MEMORY ());
+
+      return policy_list_ptr;
+    }
+  else
+    {
+      return this->policies_->get_policy_overrides (types);
+    }
+}
+#endif
+
+CORBA::Boolean
+TAO_Stub::marshal (TAO_OutputCDR &cdr)
+{
+  // do as many outside of locked else-branch as posssible
+
+  // STRING, a type ID hint
+  if ((cdr << this->type_id.in()) == 0)
     return 0;
 
-  return this->policies_->get_policy_overrides (types
-                                                ACE_ENV_ARG_PARAMETER);
+  if ( ! this->forward_profiles_perm_)
+    {
+      const TAO_MProfile& mprofile = this->base_profiles_;
+
+      CORBA::ULong const profile_count = mprofile.profile_count ();
+      if ((cdr << profile_count) == 0)
+        return 0;
+
+    // @@ The MProfile should be locked during this iteration, is there
+    // anyway to achieve that?
+    for (CORBA::ULong i = 0; i < profile_count; ++i)
+      {
+        const TAO_Profile* p = mprofile.get_profile (i);
+        if (p->encode (cdr) == 0)
+          return 0;
+      }
+    }
+  else
+    {
+      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                                guard,
+                                this->profile_lock_,
+                                0));
+  if (TAO_debug_level > 5)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::marshal, acquired ")
+                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  this));
+    }
+
+
+      ACE_ASSERT(this->forward_profiles_ !=nullptr);
+
+      // paranoid - in case of FT the basic_profiles_ would do, too,
+      // but might be dated
+      const TAO_MProfile& mprofile =
+          this->forward_profiles_perm_
+        ? *(this->forward_profiles_perm_)
+        : this->base_profiles_;
+
+      CORBA::ULong const profile_count = mprofile.profile_count ();
+      if ((cdr << profile_count) == 0)
+           return 0;
+
+      // @@ The MProfile should be locked during this iteration, is there
+      // anyway to achieve that?
+      for (CORBA::ULong i = 0; i < profile_count; ++i)
+        {
+          const TAO_Profile* p = mprofile.get_profile (i);
+          if (p->encode (cdr) == 0)
+            return 0;
+        }
+
+      // release ACE_Lock
+    }
+
+  return cdr.good_bit ();
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-TAO_Sync_Strategy &
-TAO_Stub::sync_strategy (void)
-{
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  bool has_synchronization;
-  Messaging::SyncScope scope;
-
-  this->orb_core_->call_sync_scope_hook (this,
-                                         has_synchronization,
-                                         scope);
-
-  if (has_synchronization == true)
-    return this->orb_core_->get_sync_strategy (this,
-                                               scope);
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-  return this->orb_core_->transport_sync_strategy ();
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-template class auto_ptr<TAO_Policy_Set>;
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<TAO_Policy_Set>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-#pragma instantiate auto_ptr<TAO_Policy_Set>
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Set>
-#  endif  /* ACE_LACKS_AUTO_PTR */
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

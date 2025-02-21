@@ -1,0 +1,14 @@
+// -*- MPC -*-
+feature(ec_typed_events) {
+  macros   += TAO_HAS_TYPED_EVENT_CHANNEL
+
+  idlflags += -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h
+
+  IDL_Files {
+    CosTypedEventComm.idl
+    CosTypedEventChannelAdmin.idl
+  }
+
+  idlflags -= -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h
+
+}

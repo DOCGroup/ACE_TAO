@@ -1,30 +1,36 @@
-// $Id$
-
 #include "ast_native.h"
 #include "ast_visitor.h"
 
-ACE_RCSID (ast, 
-           ast_native, 
-           "$Id$")
-
-AST_Native::AST_Native (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type ()
-{
-}
+AST_Decl::NodeType const
+AST_Native::NT = AST_Decl::NT_native;
 
 AST_Native::AST_Native (UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_native,
               n),
     AST_Type (AST_Decl::NT_native,
-              n)
+              n),
+    AST_ConcreteType (AST_Decl::NT_native,
+                      n),
+    UTL_Scope (AST_Decl::NT_native),
+    AST_Structure (AST_Decl::NT_native,
+                   n,
+                   true,
+                   false),
+    AST_Exception (n,
+                   true,
+                   false)
 {
 }
 
-AST_Native::~AST_Native (void)
+AST_Native::~AST_Native ()
 {
+}
+
+void
+AST_Native::destroy ()
+{
+  this->AST_Exception::destroy ();
 }
 
 // Dump this AST_Native node to the ostream o.
@@ -39,7 +45,3 @@ AST_Native::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_native (this);
 }
-
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_Native, AST_Type)
-IMPL_NARROW_FROM_DECL(AST_Native)

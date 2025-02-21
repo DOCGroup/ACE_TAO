@@ -2,11 +2,7 @@
 /**
  *  @file EventChannel_Command.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_EVENTCHANNEL_COMMAND_H
@@ -22,21 +18,21 @@
 #include "ace/SString.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "Command.h"
-//#include "../../../orbsvcs/Notify/CosNotify_Initializer.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_EventChannel_Command
  *
  * @brief Command object for event channels.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_EventChannel_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_EventChannel_Command (void);
+  /// Constructor
+  TAO_Notify_Tests_EventChannel_Command ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_EventChannel_Command ();
@@ -45,18 +41,14 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_i ();
 
   /// Name of object
-  virtual const char* get_name (void);
-  static const char* name (void);
+  virtual const char* get_name ();
+  static const char* name ();
 
 protected:
   ///= Data Members
-#ifdef HPUX_11
-   // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h
-#undef COMMAND
-#endif
   enum COMMAND
   {
     CREATE,
@@ -80,13 +72,13 @@ protected:
   CORBA::Boolean collocated_;
 
   /// Helper method to create a collocated ECF.
-  void create_collocated_ecf (ACE_ENV_SINGLE_ARG_DECL);
+  void create_collocated_ecf ();
 
   /// = Handlers
-  void handle_create (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_destroy (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_set_qos (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_status (ACE_ENV_SINGLE_ARG_DECL);
+  void handle_create ();
+  void handle_destroy ();
+  void handle_set_qos ();
+  void handle_status ();
 };
 
 #include /**/ "ace/post.h"

@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : orbsvcslib, trading_skel, dynamicany, svc_utils, utils, iortable {
+  after     += CosTrading_Serv
+  libs      += TAO_CosTrading_Serv
+}

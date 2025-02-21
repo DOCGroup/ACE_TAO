@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -69,59 +67,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 
+#include "ast_typedef.h"
+
 class UTL_NameList;
 class AST_Interface;
-class AST_ValueType;
-class AST_Component;
-class AST_Home;
 
-// FE_interfade_header
+// FE_InterfaceHeader
 // Internal class for FE to describe interface headers
-//
-// FE_obv_header
-// Internal class for FE to describe valuetype headers.
-//
-// FE_component_header
-// Internal class for FE to describe component headers.
 
 class TAO_IDL_FE_Export FE_InterfaceHeader
 {
 public:
   FE_InterfaceHeader (UTL_ScopedName *n,
                       UTL_NameList *inherits,
-                      idl_bool is_local,
-                      idl_bool is_abstract,
-                      idl_bool compile_now);
+                      bool is_local,
+                      bool is_abstract,
+                      bool compile_now);
 
-  virtual ~FE_InterfaceHeader (void);
+  virtual ~FE_InterfaceHeader ();
 
   // Data Accessors.
-  UTL_ScopedName *name (void) const;
-  AST_Interface **inherits (void) const;
-  long n_inherits (void) const;
-  AST_Interface **inherits_flat (void) const;
-  long n_inherits_flat (void) const;
+  UTL_ScopedName *name () const;
+  AST_Type **inherits () const;
+  long n_inherits () const;
+  AST_Interface **inherits_flat () const;
+  long n_inherits_flat () const;
 
-  idl_bool is_local (void) const;
+  bool is_local () const;
   // See if we are a local interface.
 
-  idl_bool is_abstract (void) const;
+  bool is_abstract () const;
   // See if we are an abstract interface.
 
-  // Data.
-protected:
-  UTL_ScopedName *pd_interface_name;
-
-  // Inherited interfaces.
-  AST_Interface **pd_inherits;
-  long pd_n_inherits;
-
-  // Used for name clash checking.
-  AST_Interface  **pd_inherits_flat;
-  long pd_n_inherits_flat;
-
-  idl_bool pd_is_local;
-  idl_bool pd_is_abstract;
+  virtual void destroy ();
+  // Destroy anything allocated for this class.
 
   // Operations.
 
@@ -129,121 +108,45 @@ protected:
   // interface inherits from.
 protected:
   void compile_inheritance (UTL_NameList *ifaces,
-                            idl_bool for_valuetype);
+                            bool for_valuetype);
 
-  void compile_one_inheritance (AST_Interface *i);
+  void compile_one_inheritance (AST_Type *i);
 
   // Called from compile_inheritance().
   int check_inherit (AST_Interface *i,
-                     idl_bool for_valuetype);
-};
+                     bool for_valuetype);
 
-class TAO_IDL_FE_Export FE_OBVHeader : public FE_InterfaceHeader
-{
-public:
+  void add_inheritance (AST_Type *i);
+  void add_inheritance_flat (AST_Interface *i);
+  bool already_seen (AST_Type *ip);
+  bool already_seen_flat (AST_Interface *ip);
 
-  FE_OBVHeader (UTL_ScopedName *n, 
-                UTL_NameList *inherits, 
-                UTL_NameList *supports,
-                idl_bool truncatable,
-                idl_bool is_eventtype = I_FALSE);
-  virtual ~FE_OBVHeader (void);
+  void install_in_header ();
 
-  // Data Accessors.
-  AST_Interface **supports (void) const;
-  long n_supports (void) const;
-  AST_ValueType *inherits_concrete (void) const;
-  AST_Interface *supports_concrete (void) const;
-  idl_bool truncatable (void) const;
+  void destroy_flat_arrays ();
 
+  // Data.
 protected:
-  // Supported interfaces.
-  AST_Interface **pd_supports;
-  long pd_n_supports;
+  UTL_ScopedName *interface_name_;
+  bool has_template_parent_;
 
-  AST_ValueType *pd_inherits_concrete;
-  AST_Interface *pd_supports_concrete;
+  // Inherited interfaces.
+  AST_Type **inherits_;
+  long n_inherits_;
 
-  // Currently ignored.
-  idl_bool pd_truncatable;
+  // Used for name clash checking.
+  AST_Interface  **inherits_flat_;
+  long n_inherits_flat_;
 
-protected:
-  void compile_inheritance (UTL_NameList *vtypes,
-                            idl_bool is_eventtype);
-  void compile_supports (UTL_NameList *supports);
-  idl_bool check_concrete_supported_inheritance (AST_Interface *d);
-};
+  bool is_local_;
+  bool is_abstract_;
 
-class TAO_IDL_FE_Export FE_EventHeader : public FE_OBVHeader
-{
-public:
-
-  FE_EventHeader (UTL_ScopedName *n, 
-                  UTL_NameList *inherits, 
-                  UTL_NameList *supports,
-                  idl_bool truncatable);
-  virtual ~FE_EventHeader (void);
-};
-
-// Unlike value types, a component's supported interfaces are simply
-// added to the inheritance list in generated code, so we use the
-// existing base class mechanism for managing the inheritance list 
-// to manage the derived class's supported interface list.
-class TAO_IDL_FE_Export FE_ComponentHeader : public FE_InterfaceHeader
-{
-public:
-
-  FE_ComponentHeader (UTL_ScopedName *n, 
-                      UTL_ScopedName *base_component, 
-                      UTL_NameList *supports,
-                      idl_bool compile_now);
-  virtual ~FE_ComponentHeader (void);
-
-  // Data Accessors.
-  AST_Component *base_component (void) const;
-  AST_Interface **supports (void) const;
-  long n_supports (void) const;
-  AST_Interface **supports_flat (void) const;
-  long n_supports_flat (void) const;
-  
-protected:
-  void compile_inheritance (UTL_ScopedName *base_component);
-  void compile_supports (UTL_NameList *supports);
-
-protected:
-  AST_Component *pd_base_component;
-};
-
-// We use the 'base_component' member of the base class to
-// store the 'managed_component' member of the derived class.
-// By inheriting from FE_ComponentHeader, we also get the
-// reuse of the mechanism described in the comment above
-// for handling the supported interface list.
-class TAO_IDL_FE_Export FE_HomeHeader : public FE_ComponentHeader
-{
-public:
-
-  FE_HomeHeader (UTL_ScopedName *n, 
-                 UTL_ScopedName *base_home, 
-                 UTL_NameList *supports,
-                 UTL_ScopedName *managed_component,
-                 UTL_ScopedName *primary_key);
-  virtual ~FE_HomeHeader (void);
-
-  // Data Accessors.
-  AST_Home *base_home (void) const;
-  AST_Component *managed_component (void) const;
-  AST_ValueType *primary_key (void) const;
-
-protected:
-  AST_Home *pd_base_home;
-  AST_Component *pd_managed_component;
-  AST_ValueType *pd_primary_key;
-
-protected:
-  void compile_inheritance (UTL_ScopedName *base_home);
-  void compile_managed_component (UTL_ScopedName *managed_compoent);
-  void compile_primary_key (UTL_ScopedName *primary_key);
+  AST_Type **iseen_;
+  AST_Interface **iseen_flat_;
+  long iallocated_;
+  long iused_;
+  long iallocated_flat_;
+  long iused_flat_;
 };
 
 #endif           // _FE_INTERFACE_HEADER_FE_INTERFACE_HH

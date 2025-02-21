@@ -1,10 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
-#include "HTIOP_Acceptor.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Environment.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
+#include "ace/os_include/os_netdb.h"
 
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
@@ -13,15 +13,13 @@
 #include "tao/CDR.h"
 #include "tao/Codeset_Manager.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
-#include "HTIOP_Acceptor.i"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(HTIOP,
-          TAO_HTIOP_Acceptor,
-          "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
                                 int is_inside)
@@ -32,7 +30,7 @@ TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
     hostname_in_ior_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    base_acceptor_ (),
+    base_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
@@ -41,7 +39,7 @@ TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
 {
 }
 
-TAO::HTIOP::Acceptor::~Acceptor (void)
+TAO::HTIOP::Acceptor::~Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -227,22 +225,27 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       // this code by comparing the IP address instead.  That would
       // trigger the following bug:
       //
-      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+      // http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1220
       //
       if (endp->port() == this->addrs_[i].get_port_number())
-        if (endp->port() == 0)
-          return (ACE_OS::strcmp (endp->htid(),
-                                  this->addrs_[i].get_htid()) == 0);
-        else
-          return (ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0);
-      //        return 1;
+        {
+          if (endp->port() == 0)
+            {
+              return (ACE_OS::strcmp (endp->htid(),
+                                      this->addrs_[i].get_htid()) == 0);
+            }
+          else
+            {
+              return (ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0);
+            }
+        }
     }
 
   return 0;
 }
 
 int
-TAO::HTIOP::Acceptor::close (void)
+TAO::HTIOP::Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
@@ -261,7 +264,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
                          ACE_TEXT ("TAO::HTIOP::Acceptor::open - ")
                          ACE_TEXT ("hostname already set\n\n")),
@@ -273,7 +276,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
   int rp = this->ht_env_->get_proxy_port(proxy_port);
   if (rp == 0 && proxy_port != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO (%P|%t) ")
                        ACE_TEXT ("TAO::HTIOP::Acceptor::open - ")
                        ACE_TEXT ("explicit endpoint inside proxy, port %d\n"),
@@ -329,10 +332,9 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                                    1) != 0)
         return -1;
       else
-	{
-	  return this->open_i (addr,
-			       reactor);
-	}
+        {
+          return this->open_i (addr, reactor);
+        }
     }
   else if (port_separator_loc == 0)
     {
@@ -373,7 +375,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level > 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Overriding address in IOR with %s\n"),
                       this->hostname_in_ior_));
         }
@@ -404,10 +406,10 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
 int
 TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
-                                  ACE_Reactor *reactor,
-                                  int major,
-                                  int minor,
-                                  const char *options)
+                                    ACE_Reactor *reactor,
+                                    int major,
+                                    int minor,
+                                    const char *options)
 {
   this->orb_core_ = orb_core;
 
@@ -415,7 +417,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
                          ACE_TEXT ("TAO::HTIOP::Acceptor::open_default - ")
                          ACE_TEXT ("hostname already set\n\n")),
@@ -450,9 +452,10 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
                       sizeof (char*) * this->endpoint_count_);
 
       ACE::HTBP::ID_Requestor req(ht_env_);
-      this->addrs_[0] = req.get_HTID();
+      ACE_TCHAR *htid = req.get_HTID ();
+      std::unique_ptr<ACE_TCHAR[]> guard (htid);
+      this->addrs_[0] = ACE_TEXT_ALWAYS_CHAR (htid);
       return 0;
-
     }
 
   // Check for multiple network interfaces.
@@ -478,11 +481,11 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
                             ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
-                  CREATION_STRATEGY (this->orb_core_,0),
+                  CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
-                  CONCURRENCY_STRATEGY (),
+                  CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->accept_strategy_,
@@ -496,7 +499,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
                                  this->concurrency_strategy_) == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i ")
                     ACE_TEXT ("- %p"),
                     ACE_TEXT ("cannot open acceptor")));
@@ -511,7 +514,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
     {
       // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i ")
                     ACE_TEXT ("- %p\n\n"),
                     ACE_TEXT ("cannot get local addr")));
@@ -537,10 +540,10 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
     {
       for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i - ")
-                      ACE_LIB_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i - ")
+                      ACE_TEXT ("listening on: <%C:%u>\n"),
+                      this->hosts_[i],
                       this->addrs_[i].get_port_number ()));
         }
     }
@@ -597,11 +600,13 @@ TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   // INET_Addr with the hostname from the original one.  If that fails
   // then something is seriously wrong with the systems networking
   // setup.
-  if (addr.get_ip_address () == INADDR_ANY)
+  if (addr.is_any())
     {
       ACE::HTBP::Addr new_addr;
       result = new_addr.ACE_INET_Addr::set (addr.get_port_number (),
-                                            addr.get_host_name ());
+                                            addr.get_host_name (),
+                                            1,
+                                            addr.get_type());
       tmp = new_addr.get_host_addr ();
     }
   else
@@ -610,7 +615,7 @@ TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   if (tmp == 0 || result != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("\n\nTAO (%P|%t) ")
                     ACE_TEXT ("TAO::HTIOP::Acceptor::dotted_decimal_address ")
                     ACE_TEXT ("- %p\n\n"),
@@ -648,7 +653,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_WARNING,
+          ORBSVCS_DEBUG ((LM_WARNING,
                       ACE_TEXT ("TAO (%P|%t) Unable to probe network ")
                       ACE_TEXT ("interfaces.  Using default.\n")));
         }
@@ -664,12 +669,12 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // the list of cached hostnames unless it is the only interface.
   size_t lo_cnt = 0;  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
-    if (inet_addrs[j].get_ip_address () == INADDR_LOOPBACK)
+    if (inet_addrs[j].is_loopback ())
       lo_cnt++;
 
   // The instantiation for this template is in
   // HTIOP/HTIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (inet_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (inet_addrs);
 
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -699,14 +704,14 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
       if (if_cnt != lo_cnt &&
-          inet_addrs[i].get_ip_address() == INADDR_LOOPBACK)
+          inet_addrs[i].is_loopback ())
         continue;
 
       if (this->hostname_in_ior_ != 0)
         {
           if (TAO_debug_level > 2)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Overriding address in IOR with %s\n"),
                           this->hostname_in_ior_));
             }
@@ -736,7 +741,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
 }
 
 CORBA::ULong
-TAO::HTIOP::Acceptor::endpoint_count (void)
+TAO::HTIOP::Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }
@@ -753,7 +758,8 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major, minor;
+  CORBA::Octet major;
+  CORBA::Octet minor = CORBA::Octet();
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -762,7 +768,7 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::object_key")
                       ACE_TEXT (" - v%d.%d\n"),
                       major,
@@ -780,9 +786,9 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("TAO (%P|%t) TAO::HTIOP::Acceptor::object_key - ")
-                      ACE_LIB_TEXT ("error while decoding host/port")));
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) TAO::HTIOP::Acceptor::object_key - ")
+                      ACE_TEXT ("error while decoding host/port")));
         }
       return -1;
     }
@@ -829,32 +835,29 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  int begin = 0;
-  int end = -1;
+  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type end = 0;
 
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
-      begin += end + 1;
-
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast<CORBA::ULong> (len)
-          - begin;  // Handle last endpoint differently
+        end = len;
 
       if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) Zero length HTIOP option.\n")),
                           -1);
       else if (end != ACE_CString::npos)
         {
           ACE_CString opt = options.substring (begin, end);
 
-          int slot = opt.find ("=");
+          ACE_CString::size_type const slot = opt.find ("=");
 
-          if (slot == static_cast<int> (len - 1)
+          if (slot == len - 1
               || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) HTIOP option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
@@ -864,7 +867,7 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
           ACE_CString value = opt.substring (slot + 1);
 
           if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("(%P|%t) Zero length HTIOP ")
                                ACE_TEXT ("option name.\n")),
                               -1);
@@ -873,44 +876,17 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
               this->hostname_in_ior_ = value.rep ();
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("(%P|%t) Invalid HTIOP option: <%s>\n"),
                                name.c_str ()),
                               -1);
+
+          begin = end + 1;
         }
+      else
+        break;  // No other options.
     }
   return 0;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Auto_Basic_Array_Ptr<ACE::HTBP::Addr>;
-
-template class TAO::HTIOP::Creation_Strategy<TAO::HTIOP::Completion_Handler>;
-template class TAO_Creation_Strategy<TAO::HTIOP::Completion_Handler>;
-template class TAO_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO::HTIOP::Completion_Handler>;
-template class TAO::HTIOP::Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class ACE_Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class TAO_Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class ACE_Strategy_Acceptor<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class ACE_Acceptor<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class ACE_Scheduling_Strategy<TAO::HTIOP::Completion_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE::HTBP::Addr>
-
-#pragma instantiate TAO::HTIOP::Creation_Strategy<TAO::HTIOP::Completion_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO::HTIOP::Completion_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO::HTIOP::Completion_Handler>
-#pragma instantiate TAO::HTIOP::Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate ACE_Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate TAO_Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate ACE_Strategy_Acceptor<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate ACE_Acceptor<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate ACE_Scheduling_Strategy<TAO::HTIOP::Completion_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

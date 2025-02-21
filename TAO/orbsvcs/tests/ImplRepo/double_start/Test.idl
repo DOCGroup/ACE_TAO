@@ -1,0 +1,10 @@
+interface Test
+{
+
+  // for testing the crash recovery scenario
+  void arm ();
+
+  void trigger ();
+
+};
+

@@ -1,12 +1,17 @@
 // -*- MPC -*-
-// $Id$
-
-project(*server): taoserver, utils {
-  avoids += repo
-
+project(*IDL): taoidldefaults {
   IDL_Files {
     Identity.idl
     Load_Balancer.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, utils {
+  avoids += repo
+  after += *IDL
+
+  IDL_Files {
   }
 
   Source_Files {
@@ -20,10 +25,9 @@ project(*server): taoserver, utils {
 
 project(*Client): taoclient, utils, portableserver {
   avoids += repo
+  after += *IDL
 
   IDL_Files {
-    Identity.idl
-    Load_Balancer.idl
   }
 
   Source_Files {
@@ -33,12 +37,12 @@ project(*Client): taoclient, utils, portableserver {
   }
 }
 
-project(*Balancer): taoexe, utils, portableserver {
+project(*Balancer): taoserver, utils  {
   exename = load_balancer
-  avoids += repo
+  avoids += repo ace_for_tao
+  after += *IDL
 
   IDL_Files {
-    Load_Balancer.idl
   }
 
   Source_Files {

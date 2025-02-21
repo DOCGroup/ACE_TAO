@@ -1,0 +1,4 @@
+// -*- MPC -*-
+project : valuetype, portableserver, pi, corba_messaging, messaging_optional {
+  after    += Messaging
+}

@@ -1,9 +1,4 @@
-//
-// $Id$
-//
 #include "Server_Task.h"
-
-ACE_RCSID(AMI_Latency, Server_Task, "$Id$")
 
 Server_Task::Server_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -11,14 +6,12 @@ Server_Task::Server_Task (CORBA::ORB_ptr orb)
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception&){}
   return 0;
 }

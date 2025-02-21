@@ -3,8 +3,6 @@
  *
  * @brief Define the RtecBase module
  *
- * $Id$
- *
  * TAO's Real-time Event Service is described in:
  *
  * http://doc.ece.uci.edu/~coryan/EC/
@@ -15,10 +13,12 @@
 #ifndef TAO_RTEC_DEFAULTEVENTDATA_IDL
 #define TAO_RTEC_DEFAULTEVENTDATA_IDL
 
+#include <OctetSeq.pidl>
+
 #pragma prefix ""
 
 /// Define one of the common event payloads
-typedef sequence<octet> EventPayload;
+typedef CORBA::OctetSeq EventPayload;
 
 /**
  * @brief User defined Event Data

@@ -1,0 +1,1550 @@
+Sun Dec 04 11:51:30 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.0.6 released.
+
+Fri Dec  2 10:07:48 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Countdown_Time.h:
+        * ace/Countdown_Time.inl:
+        * ace/Countdown_Time.cpp:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.inl:
+        
+          Reverting timer changes to be replaced by better and more
+          flexible changes after the coming release.
+
+Tue Nov 29 19:28:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Countdown_Time.h:
+        * ace/Countdown_Time.cpp:
+          Use default value for constructor reducing the number of constructors
+
+Tue Nov 29 15:50:06 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.inl:
+
+          Added get_timer_method() to be able reuse timer method
+          setting.
+
+        * ace/Countdown_Time.h:
+        * ace/Countdown_Time.inl:
+        * ace/Countdown_Time.cpp:
+
+          Added option to use application defined timer like
+          timer queue.
+
+Mon Nov 28 14:29:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.h:
+          Doxygen change
+
+        * include/makeinclude/wrapper_macros.GNU:
+          S.inl files are not generated anymore
+
+Wed Nov 23 07:39:56 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/Time_Value.inl:
+          Added a workaround for GCC 3.4 'internal compiler error' issue.
+
+Fri Nov 18 03:54:50 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Fixed fuzz errors.
+
+Mon Nov 14 06:02:05 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Bug fix where the script failed it File::Which is not installed
+          on the target machine. The script will search the PATH if File::Which
+          is installed on the host machine.
+
+Wed Nov  9 23:30:30 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * bin/ChangeLogEditor/FileLocatorFactory.pm:
+        * bin/PerlACE/Process_Win32.pm:
+
+          Fixed fuzz errors related to trailing whitespaces.
+
+Tue Nov  8 18:58:36 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * bin/ChangeLogEditor/FileLocatorFactory.pm:
+
+          Implemented a utility function that searches the parent
+          directory for the specified directory. This is necessary
+          because the SVN 1.7.x client does not store .svn directories
+          in the child directory anymore. Instead, the root directory
+          of the checkout contains the .svn directory. Now, the SVN
+          locator will search all parent directories to determine if
+          it the SCM is a SVN sandbox.
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Updated the Executable() subroutine such that if the full
+          or relative path of the executable is not specified, then
+          it will try to resolve the location of the executable using
+          the PATH.
+
+Sat Oct 22 02:06:37 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_common.GNU:
+
+          Added missing:
+          DCCFLAGS += -g
+
+          From the file. Thanks to William R. Otte  <wotte@dre.vanderbilt.edu>
+          for pointing this out.
+
+Fri Oct 21 23:35:30 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/Time_Value.inl:
+
+          Changed the operator comparing __builtin_constant_p to be a
+          bitwise (&) instead oflogical and (&&) to address a warning from the
+          LLVM compiler.  In this case, the result of the two operators is
+          logically equivalent.  Thanks to Abdullah Sowayan <sowayan@gmail.com>
+          for reporting the issue.
+
+Fri Oct 21 11:26:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Misc/test_trace.cpp:
+          Fixed compile issue in case all logging is turned off.
+
+Thu Oct 20 10:41:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Added links to the OBS projects, thanks to John Fletcher for providing
+          this update
+
+Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Tue Oct 18 09:23:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * bin/MakeProjectCreator/config/global.features:
+                Add ccm_direct_collocation
+
+        Wed Oct 12 13:08:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/MakeProjectCreator/config/crosscompile.mpb:
+                  Fixed install issues.
+
+                * bin/mwc.pl:
+                  Removed unnecessary STDERR.
+
+        === end changelog ===
+
+Thu Oct 20 06:57:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * *.*:
+          Removed autoconf support due to lack of resources/funding to
+          get autoconf really working. It now only causes confusions and
+          not working configurations for users.
+
+Wed Oct 19 19:13:38 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/global.features:
+          disable openmp by default.
+
+        * include/makeinclude/platform_clang_common.GNU:
+        * include/makeinclude/platform_g++_common.GNU:
+          add flags for openmp.
+
+Wed Oct 19 09:56:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed not needed setting of inline
+
+Mon Oct 17 20:40:35 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iOS.GNU:
+
+          Minor enhancements to this file to make ACE/TAO compile again.
+
+Sat Oct 15 00:57:11 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-lion.h:
+        * include/makeinclude/platform_macosx_lion.GNU:
+
+          Minor enhancements to the files above.
+
+Mon Oct 10 12:13:52 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+          Always export, should solve SLE9 issues
+
+Mon Oct 10 11:16:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Make x.0.5 public
+
+Mon Oct 10 11:16:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Updated for next release
+
+        * bin/make_release.py:
+          Next time we don't ship vc8 anymore
+
+        * docs/bczar/bczar.html:
+          Make x.0.5 public
+
+        * etc/index.html:
+          Make x.0.5 public
+
+Mon Oct 10 08:48:51 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.0.5 released.
+
+Sat Oct  8 09:00:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/examples/SAXPrint/namespaces.xml:
+        * ACEXML/examples/SAXPrint/ns.svc.conf.xml:
+        * ACEXML/examples/SAXPrint/simple.svcconf.xml:
+        * ACEXML/examples/SAXPrint/svc.conf.xml:
+          XML does not allow anything before the xml-tag.
+
+Fri Oct  7 09:45:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/docs/TODO.txt:
+        * ACEXML/docs/bugs.txt:
+        * ASNMP/tests/run_tests.sh:
+          Fuzz
+
+Fri Oct  7 09:10:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/docs/readme.txt:
+        * ASNMP/README:
+        * Kokyu/README:
+        * bin/LabVIEW_RT/README:
+        * bin/PerlACE/README:
+        * contrib/FaCE/README:
+        * examples/C++NPv1/README:
+        * examples/C++NPv2/README:
+        * examples/IPC_SAP/SSL_SAP/README:
+        * examples/Semaphores/README:
+        * html/README:
+        * netsvcs/lib/README:
+        * performance-tests/README:
+        * performance-tests/RPC/README:
+        * performance-tests/Synch-Benchmarks/Perf_Test/README:
+        * performance-tests/Synch-Benchmarks/README:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/README:
+        * performance-tests/TCP/README:
+        * performance-tests/TTCP/C/README:
+        * performance-tests/UDP/README:
+        * protocols/ace/HTBP/README:
+        * websvcs/README:
+          Fuzz: No id-tags. Also uniform way of declaring the Id-tags
+
+Fri Oct  7 07:48:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/examples/SAXPrint/broken.xml:
+        * ACEXML/examples/SAXPrint/namespaces.xml:
+        * ACEXML/examples/SAXPrint/ns.svc.conf.xml:
+        * ACEXML/examples/SAXPrint/simple.svcconf.xml:
+        * ACEXML/examples/SAXPrint/svc.conf.xml:
+        * Kokyu/tests/DSRT_MIF/svc.conf.xml:
+        * examples/ASX/CCM_App/svc.conf.xml:
+        * netsvcs/servers/svc.conf.xml:
+        * tests/Service_Config_Test.conf.xml:
+          Fuzz: No Id-tags.
+
+Thu Oct  6 12:01:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * netsvcs/README:
+        * netsvcs/clients/Logger/README:
+        * netsvcs/clients/README:
+        * netsvcs/clients/Tokens/README:
+        * netsvcs/clients/Tokens/collection/README:
+        * netsvcs/clients/Tokens/deadlock/README:
+        * netsvcs/clients/Tokens/invariant/README:
+        * netsvcs/clients/Tokens/manual/README:
+        * netsvcs/clients/Tokens/mutex/README:
+        * netsvcs/lib/README:
+        * netsvcs/servers/README:
+          Fuzz: trailing whitespaces, tab characters and ID strings
+
+Thu Oct  6 11:56:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * README:
+        * examples/Connection/non_blocking/README:
+        * examples/IPC_SAP/DEV_SAP/README:
+        * examples/IPC_SAP/SOCK_SAP/README:
+        * examples/IPC_SAP/SSL_SAP/README:
+        * examples/Log_Msg/Log_Msg_MFC/README:
+        * examples/Log_Msg/README:
+        * examples/Logger/README:
+        * examples/README:
+        * examples/Reactor/Ntalker/README:
+        * examples/Reactor/README:
+        * examples/Reactor/TP_Reactor/README:
+        * examples/Service_Configurator/Misc/README:
+        * examples/Synch/README:
+        * examples/System_V_IPC/README:
+        * examples/Timer_Queue/README:
+          Fuzz: trailing whitespaces, tab characters and ID strings
+
+Mon Oct  3 06:30:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.h:
+          Doxygen improvements
+
+Fri Sep 30 14:03:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check more filetypes for id tag
+
+        * docs/bczar/bczar.html:
+          Added some more packages
+
+Thu Sep 29 01:58:23 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_lion.GNU:
+
+          LLVM is the default compiler on Lion for now on.
+
+Fri Sep 23 12:45:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+          Created a special method for the ADB timeout environment
+          variable.
+
+Fri Sep 23 09:25:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/PerlACE/TestTarget_Android.pm:
+          Stop the script when an emulator times out.
+
+Wed Sep 14 07:54:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_Android.pm:
+          Adding of libpath is only needed for non static builds
+
+Tue Sep 13 08:12:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/TestTarget.pm:
+          Added DOC_TEST_DEFAULT, this controls the default platform
+          for all platform instead of defaulting to localhost
+
+Tue Sep 13 08:12:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+          Don't delete executable after each run
+
+Mon Sep 12 12:55:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Made some minor modification to the Android section.
+
+Mon Sep 12 11:16:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-android.h:
+          Android doesn't have icmp support
+
+        * docs/bczar/bczar.html:
+          Added telnet
+
+Sun Sep 11 18:11:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+          Don't copy any log files here, that has to be done in the test
+          script
+
+        * tests/run_test.pl:
+          Get the log file from the target before analyzing it
+
+Sun Sep 11 18:02:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+          Fixed executable method
+
+Fri Sep  9 21:34:26 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Fixed a bug introduced in the previous commit to this file:
+          Thu Sep  8 08:14:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          The bug prevented any tests from running on Win32.
+
+Fri Sep  9 19:31:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+          Added PutFile for the TestTarget
+
+Fri Sep  9 19:19:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+          Don't copy all config files, if we need files on a target, the test
+          script should copy them
+
+Fri Sep  9 19:15:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_Android.pm:
+          Try to kill emulator and emulator-arm
+
+Fri Sep  9 11:26:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_android.GNU:
+          Android doesn't have rwho
+
+Fri Sep  9 07:19:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.h:
+          Doxygen changes
+
+        * include/makeinclude/platform_android.GNU:
+          Prevent flags being listed twice
+
+Thu Sep  8 17:48:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdlib.cpp:
+          Fixed compile warnings
+
+        * ace/OS_NS_Thread.inl:
+          Added check for ACE_LACKS_CONDATTR
+
+        * ace/Mem_Map.cpp:
+          When ACE_MMAP_NO_ZERO is defined, when the length if zero we
+          default to the pagesize
+
+Thu Sep  8 17:46:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-android.h:
+          Further cleanup and improvements
+
+Thu Sep  8 17:32:48 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TP_Reactor.h:
+          Typo fixed
+
+        * ace/Process_Manager.cpp:
+          Layout changes
+
+        * ace/config-sunos5.5.h:
+          Removed old comment
+
+        * ace/Signal.h:
+          Doxygen cleanup
+
+        * ace/OS_NS_errno.inl:
+          Const changes
+
+        * ace/OS_NS_errno.h:
+          Only define ACE_ERRNO_TYPE when it is not defined yet, that way we
+          can just set it in config-android.h
+
+        * ace/config-android.h:
+          Cleanup and set various defines needed to get correct runtime
+          behavior
+
+        * bin/PerlACE/Process_VMS.pm:
+          Chorus support removal
+
+        * bin/PerlACE/README:
+          Layout changes
+
+        * include/makeinclude/platform_android.GNU:
+          Further cleanup
+
+Thu Sep  8 17:20:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_android.GNU:
+          Fixed warning about not recognized --version
+
+Thu Sep  8 17:16:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * docs/bczar/bczar.html:
+          Another 32bit package for android
+
+        * include/makeinclude/platform_android.GNU:
+        * include/makeinclude/platform_android_linux.GNU:
+          Renamed to platform_android.GNU
+
+Thu Sep  8 13:20:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Added another 32bit package for Android
+
+        * docs/bczar/bczar.html:
+          Added some packages
+
+Thu Sep  8 13:20:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Documented which 32bit packages need to be installed on a 64bit
+          linux host for the Android port
+
+        * docs/bczar/bczar.html:
+          Added some packages
+
+Thu Sep  8 08:16:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Lib_Find.cpp:
+          Add support for ACE_DEFAULT_TEMP_DIR
+
+        * ace/MEM_Stream.h:
+          Added missing export include
+
+        * ace/OS_NS_unistd.cpp:
+          Added ACE_HAS_NONCONST_PWRITE
+
+        * ace/Select_Reactor_Base.cpp:
+          Layout change
+
+        * include/makeinclude/platform_android_linux.GNU:
+          Use ?= to make an override possible from platform_macros.GNU
+
+Thu Sep  8 08:14:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ConfigList.pm:
+        * bin/PerlACE/Process.pm:
+        * bin/PerlACE/ProcessAndroid.pm:
+        * bin/PerlACE/ProcessLVRT.pm:
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/ProcessWinCE.pm:
+        * bin/PerlACE/ProcessWinCE_Unix.pm:
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_VMS.pm:
+        * bin/PerlACE/Process_Win32.pm:
+        * bin/PerlACE/Run_Test.pm:
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+        * bin/PerlACE/TestTarget_LVRT.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Extensions to run automatically tests on an Android emulator
+
+Tue Sep  6 09:36:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed rnq option, that is now default, added versioned namespace
+          support
+
+Wed Aug 31 11:43:13 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iOS.GNU:
+
+          Minor updates to this file to work with Mac OSX Lion (10.7)
+
+Wed Aug 31 11:33:39 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-iOS-hardware.h:
+        * ace/config-macosx-iOS-simulator.h:
+        * include/makeinclude/platform_macosx_iOS.GNU:
+
+          Renamed the files from iphone to iOS since this is what apple
+          calls the platform these days.
+
+        * ace/config-macosx-iphone-hardware.h:
+        * ace/config-macosx-iphone-simulator.h:
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Removed these files.
+
+Tue Aug 30 14:40:01 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Allow the user to specify the location of XCode. This is helpful
+          when there are multiple versions of XCode installed on the machine.
+          To specify the location of XCode, use XCODE_ROOT environment variable.
+          If XCODE_ROOT is not specified, the location of XCode is assumed to be
+          located at the default installation directory (which is /Developer).
+
+Fri Aug 26 16:02:13 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Switch the default compiler from GCC to Clang
+
+Fri Aug 26 15:59:19 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-iphone-hardware.h:
+        * ace/config-macosx-iphone-simulator.h:
+
+          Updated these files to use Mac OS-X Lion as the build host. Also, fixed
+          some minor typos.
+
+Wed Aug 24 13:06:17 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Message_Block.cpp: Replaced the recursive version of
+          ACE_Message_Block::clone() with a non-recursive version to avoid
+          problems when there are large numbers of message blocks.  Thanks
+          to Andrew Metcalfe <andrew dot metcalfe at ccur dot com> for
+          reporting this and suggesting the fix, which was provided by
+          Eric Frias <efrias at syncad dot com>.
+
+Tue Aug 23 18:20:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepared for next release
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Updated to make the new release public
+
+Tue Aug 23 19:01:44 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.0.4 released.
+
+Thu Aug 18 01:31:48 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Message_Block.cpp:
+
+          Reverted the change from Mon Aug 15 14:41:24 UTC 2011 Douglas
+          C. Schmidt <schmidt@dre.vanderbilt.edu>. This change caused a
+          regression failure that showed up on some of the TAO tests. We
+          can try reintroducing this patch after the upcoming release.
+
+Wed Aug 17 15:01:28 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ACE-INSTALL.html:
+
+          Fix typo in SYSROOT default example.
+
+Wed Aug 17 13:54:12 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Message_Block.cpp:
+
+          Unfuzz.
+
+Mon Aug 15 14:41:24 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Message_Block.cpp: Replaced the recursive version of
+          ACE_Message_Block::clone() with a non-recursive version to avoid
+          problems when there are large numbers of message blocks.  Thanks
+          to Andrew Metcalfe <andrew dot metcalfe at ccur dot com> for
+          reporting this and suggesting the fix, which was provided by
+          Eric Frias <efrias at syncad dot com>.
+
+Sun Aug 14 10:44:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Added support for inline, thanks to Thomas Lockhart for providing
+          the patch
+
+Wed Aug 10 20:15:40 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ACE-INSTALL.html:
+        * NEWS:
+
+          Add a note about support for Android in the news, and add more
+          detail to the installation steps.
+
+Wed Aug 10 19:02:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ACE-INSTALL.html:
+
+          Updated the text related to installing for Android.
+
+        * include/makeinclude/platform_android_linux.GNU:
+
+          Added this file.
+
+        * include/makeinclude/platform_linux_android.GNU:
+
+          Removed this file.
+
+          Renamed the file to be consistent with others, now the name is
+          target platform first followed by the build-specific name. The
+          settings for cross compilation are now configured inside this
+          platform file, using some assumptions for architecture.
+
+          The build for the arm architecture works, but it looks like x86
+          still needs work by the NDK team, it was just added in their r6
+          release. I've submitted a bug report to the android team with a
+          suggested patch.
+
+Wed Aug 10 17:14:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32.h:
+          Removed one include too much
+
+Wed Aug 10 12:41:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          Enable ACE_HAS_REACTOR_NOTIFICATION_QUEUE by default, it gives
+          much better performance and also doesn't suffer the issue that them
+          reactor queue can get full
+
+Wed Aug 10 12:18:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Notification_Queue.inl:
+        * ace/Service_Config.h:
+          Layout changes
+
+Wed Aug 10 11:45:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+        * ace/config-win32.h:
+          Moved define to the common file
+
+        * ace/config-win32-borland.h:
+          Removed support for C++ Builder, the port is broken and not maintained
+          for years.
+
+Tue Aug  9 17:28:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/patches/series:
+          Updated because of removed files
+
+        * debian/patches/16-ace-inet-pkgconfig-files.diff:
+        * debian/patches/prevent_doxygen_ace_manpages.diff:
+          Removed these files, integrated into trunk
+
+Tue Aug  9 17:17:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_dlfcn.h:
+          Added if !defined checks around all defines in this file
+
+Mon Aug  8 21:46:01 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/OS_NS_time.inl:
+
+          Fix some inconsistencies in the new android-specific wrappers.
+
+        * ace/config-android.h:
+
+          Android does not supply std::wstring
+
+        * include/makeinclude/platform_linux_android.GNU:
+
+          The android supplied compiler gives a preemptive warning about
+          va_args mangling change, but I cannot find anything to change
+          in the ACE code, so I added the recommended warning suppressor.
+
+Thu Aug  4 22:11:26 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/config-android.h:
+
+          unfuzz.
+
+Thu Aug  4 15:03:16 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ACE-INSTALL.html:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_errno.h:
+        * ace/OS_NS_time.h:
+        * ace/OS_NS_time.inl:
+        * ace/config-linux.h:
+        * ace/config-android.h:
+        * include/makeinclude/platform_linux_android.GNU:
+
+          Added configuration files and minor changes to allow building
+          for Android using the Android Native Development Kit's standalone
+          tool chain. http://developer.android.com/sdk/ndk/index.html
+          Android is not a completely tested platform and automated testing
+          does not work for it currently. Thanks to Trevor Fields of OCI
+          for doing the heavy lifting on preparing these changes.
+
+        * examples/APG/ThreadManagement/Async_Cancel.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+
+          Add wrappers necessary to get them working with Android.
+
+        * tests/Thread_Attrs_Test.cpp:
+        * tests/test_config.h:
+
+          Minor changes for running tests on Android.
+
+Sun Jul 31 11:14:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+          Don't generate man pages, not used
+
+        * debian/*:
+          Pull in latest version from debian packaging
+
+        * protocols/ace/INet/ACE_INet.pc.in:
+        * protocols/ace/INet/ACE_INet_SSL.pc.in:
+        * protocols/ace/INet/inet.mpc:
+        * protocols/ace/INet/inet_ssl.mpc:
+          Added pc.in files
+
+        * etc/ace_man.doxygen:
+          Removed this file.
+
+Sat Jul 30 13:11:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-windows.h:
+        * ace/config-win64.h:
+          Renamed win64.h to windows.h
+
+Sun Jul 24 04:27:10 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * examples/APG/Streams/Answerer.cpp:
+
+          Fuzz fixes.
+
+Sat Jul 23 22:37:24 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/config-win64.h:
+        * examples/APG/Timers/PCB.cpp:
+
+          Fuzz fixes.
+
+        * bin/fuzz.pl:
+
+          Enhanced the check for ACE_TRACE messages so that it works
+          correctly with class definitions such as those found in
+          examples/APG/ThreadPools/Futures.cpp.
+
+Fri Jul 22 12:29:59 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Malloc_T.cpp: Fixed ACE_Dynamic_Cached_Allocator so that it
+          doesn't overflow.  Thanks to Qiao Zhiqiang <qiaozhiqiang at
+          leadcoretech dot com> for this fix.
+
+Fri Jul 22 12:27:16 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Cached_Allocator_Test.cpp (run_main): Updated this test to
+          check that ACE_Dynamic_Cached_Allocator works properly.
+
+Wed Jul 20 23:52:46 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/config-win64.h: Added this file to make it more clear how to
+          build ACE on a 64-bit Windows platform.  Thanks to Thomas Pauli
+          <thomas dot pauli at tu-dortmund dot de> for contributing this
+          fix.
+
+Mon Jul 18 11:44:16 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Happy Birthday to me ;-)
+
+Mon Jul 11 00:39:05 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/APG/ThreadPools/Futures.cpp (class Manager):
+        * examples/APG/Containers/Stacks.cpp (StackExample::run):
+        * examples/APG/Containers/Allocator.cpp (StackExample::run):
+        * examples/APG/Timers/PCB.cpp (PCB::handleClose): Fixed a mismatch in ACE_TRACE.
+
+Sat Jul  9 19:07:20 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/RB_Tree.inl,
+          ace/Svc_Handler.cpp,
+          examples/APG/Active_Objects/AO.cpp,
+          examples/APG/Active_Objects/AO2.cpp,
+          examples/APG/Containers/Allocator.cpp,
+          examples/APG/Containers/DLList.cpp,
+          examples/APG/Containers/Hash_Map.cpp,
+          examples/APG/Containers/Hash_Map_Hash.cpp,
+          examples/APG/Containers/Map_Manager.cpp,
+          examples/APG/Containers/Map_Manager_Specialization.cpp,
+          examples/APG/Containers/Queues.cpp,
+          examples/APG/Containers/RB_Tree.cpp,
+          examples/APG/Containers/RB_Tree_Functors.cpp,
+          examples/APG/Containers/Sets.cpp,
+          examples/APG/Containers/Stacks.cpp,
+          examples/APG/Processes/Process_Manager_Death.cpp,
+          examples/APG/Processes/Process_Mutex.cpp,
+          examples/APG/Signals/SigAction.cpp,
+          examples/APG/Signals/SigHandler.cpp,
+          examples/APG/Signals/SigHandlers.cpp,
+          examples/APG/Streams/Answerer.cpp,
+          examples/APG/Streams/CommandStream.cpp,
+          examples/APG/Streams/CommandTask.cpp,
+          examples/APG/Streams/EndTask.h,
+          examples/APG/ThreadPools/Futures.cpp,
+          examples/APG/ThreadPools/LF_ThreadPool.cpp,
+          examples/APG/ThreadPools/Task_ThreadPool.cpp,
+          examples/APG/ThreadPools/ThreadPool.cpp,
+          examples/APG/Timers/Alarm.cpp,
+          examples/APG/Timers/CB.cpp,
+          examples/APG/Timers/PCB.cpp,
+          examples/APG/Timers/PTimerDispatcher.cpp,
+          examples/APG/Timers/Task.cpp,
+          examples/APG/Timers/TimerDispatcher.cpp,
+          examples/APG/Timers/Upcall.cpp,
+          examples/Reactor/TP_Reactor/ReadHandler.cpp,
+          examples/Timer_Queue/Custom_Handler.cpp,
+          netsvcs/lib/Name_Handler.cpp,
+          netsvcs/lib/Server_Logging_Handler_T.cpp,
+          netsvcs/lib/TS_Clerk_Handler.cpp,
+          netsvcs/lib/TS_Server_Handler.cpp,
+          tests/Bug_3878_Regression_Test.cpp,
+          tests/Thread_Timer_Queue_Adapter_Test.cpp: Fixed all the
+          ACE_TRACE statements similar to
+
+          ACE_TRACE( ACE_TEXT( "sometext" ) );
+
+          and
+
+          ACE_TRACE( "some"
+                     "text" );
+
+          to
+
+          ACE_TRACE( "sometext" );
+
+          Thanks to Espen Harlinn <espen at harlinn dot no> for this fix,
+          which fixes bugid 3976.
+
+Thu Jul  7 15:24:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Unbounded_Set_Ex.cpp:
+          Fixed compile error when ACE_HAS_DUMP is defined. This fixes bugzilla
+          3977, thanks to Ben Bronk <benjamin dot j dot bronk at lmco dot com>
+          for reporting this
+
+        * docs/bczar/bczar.html:
+          Added git
+
+Tue Jul  5 10:30:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Removed cidlc, that got removed years ago
+
+Fri Jul  1 11:08:06 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * tests/bug_3974_Regression_Test.cpp: Return the correct value from
+          the test. Thanks to Johnny for picking this up.
+
+Fri Jul  1 10:28:10 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-freebsd.h:
+          Added missing ACE_HAS_XPG4_MULTIBYTE_CHAR. Should also resolve
+          CDR stream op compile problems.
+
+Fri Jul  1 10:01:54 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux.h:
+          Reverted __ACE_INLINE__ removal.
+
+Fri Jul  1 09:31:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h:
+          Readded OpenVMS socket buffer size limit
+
+Fri Jul  1 08:46:30 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-qnx.h:
+        * ace/config-sunos5.5.h:
+          Added ACE_LACKS_STD_WSTRING to remedy compile problems with new
+          CDR stream ops in TAO.
+
+Wed Jun 29 20:47:33 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/Select_Reactor_T.cpp:
+        * ace/TP_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/WFMO_Reactor.cpp:
+          In handle_events(), if returning -1 because the reactor isn't
+          ready to handle events, also set errno to ESHUTDOWN to tell the
+          caller why. Fixes Bugzilla #3974.
+
+        * tests/Bug_3974_Regression_Test.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          New test for the above problem/fix.
+
+Wed Jun 29 10:38:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Manager.cpp:
+          Fixed compile error in some environments
+
+Wed Jun 29 07:56:54 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_STD_WSTRING to remedy compile problems with new
+          CDR stream ops in TAO.
+
+Thu Jun 23 14:51:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CE_Screen_Output.h:
+        * ace/Log_Msg.cpp:
+        * netsvcs/clients/Logger/direct_logging.cpp:
+        * netsvcs/clients/Logger/indirect_logging.cpp:
+        * netsvcs/lib/Base_Optimizer.h:
+        * netsvcs/lib/Base_Optimizer.cpp:
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Log_Message_Receiver.h:
+        * netsvcs/lib/Log_Message_Receiver.cpp:
+        * netsvcs/lib/Server_Logging_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * netsvcs/lib/TS_Server_Handler.cpp:
+        * netsvcs/lib/Time_Request_Reply.cpp:
+        * netsvcs/lib/lib.mpc:
+        * netsvcs/servers/README:
+        * netsvcs/servers/main.cpp:
+          Layout and typo fixes
+
+Thu Jun 23 14:29:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          libtool
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+          Make x.0.3 available
+
+Thu Jun 23 12:39:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen
+          Disable html help, seems doxygen now disables the search option
+          when html help is enabled
+
+Thu Jun 23 13:46:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.0.3 released.
+
+Wed Jun 22 18:01:15 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * Basic_Types.h:
+        * CDR_Base.cpp:
+        * CDR_Base.h:
+        * config-win32-mingw.h:
+
+          Reverted all changes made related to support for long double
+          constants in IDL.
+
+Tue Jun 21 18:14:46 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Fixed typo in ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+          decision tree. Thanks to Phil Mesnier <mesnier_p@ociweb.com>
+          for his help in connecting it to scoreboard warnings.
+
+Mon Jun 20 17:39:01 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Another tweak to ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII's
+          logic aimed at warnings on FC6, FC8, FC12, and FC15.
+
+Mon Jun 20 17:17:26 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/config-win32-mingw.h:
+        * ace/Basic_Types.h:
+
+          - Moved the definition of ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+            to the MinGW config file.
+
+          - Added #define ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE 1 to
+            the MinGW config file, so that, for generated IDL long
+            double constants, the argument will agree with the
+            print format string. MinGW doesn't support long double
+            in the print format.
+
+Fri Jun 17 16:48:29 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Another tweak to ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII's
+          conditional definition to eliminate warnings on FC12
+          and FC15.
+
+Fri Jun 17 12:48:31 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Removed the 'L' from the version of
+          ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII targeted at MinGW
+          platforms. That platform apparently doesn't support that
+          part of the C print format spec.
+
+Thu Jun 16 13:31:16 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Changed the logic of what ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+          expands to in order to eliminate warnings on FC6 and FC8.
+
+Wed Jun 15 13:10:40 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Added a special version of ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+          for MinGW32, which seems to diverge from other platforms in how
+          it conforms to the printf print format.
+
+Fri Jun 10 19:05:30 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Added #define of ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+          to make generation of a long double literal by the TAO IDL
+          compiler more portable.
+
+Fri Jun 10 12:58:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ChangeLog:
+          Fuzz. Removed tab.
+
+Thu Jun  9 01:16:23 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/RB_Tree.cpp: Fixed overly long ACE_TRACE string literals
+          that were split across lines.  Thanks to Espen Harlinn <espen at
+          harlinn dot no> for reporting this.
+
+Wed Jun  8 21:05:56 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Switch from cvs to svn for the -m option that checks only modified
+          files.  We haven't used cvs for some time now.
+
+Tue Jun  7 20:45:56 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/CDR_Base.h:
+
+          The inline function needs to be static to match the semantics of
+          a struct constructor when the environment has native long
+          doubles.
+
+Tue Jun  7 18:20:36 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Base.h:
+
+          Added an inline function called LongDoubleAssign tha works
+          as an alternative to the struct constructor of the same
+          name when a 16-byte native long double exists and the struct
+          is not defined. Thanks again to Adam Mitz <mitza at ociweb dot com>
+          for the idea.
+
+Mon Jun  6 22:17:26 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/CDR_Base.h:
+
+          The struct just added by Jeff also needs the export macro.
+
+Mon Jun  6 19:51:27 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Base.h:
+
+          Added a struct LongDoubleAssign which inherits from LongDouble,
+          and contains the assignment operator and constructors, as well
+          as a cast operator to LongDouble. This scheme allows generated
+          code to use the LongDouble struct (when no 16-byte native long
+          double exists) as a member in C++ unions, and to be initialized
+          (when it appears as a constant) with the default copy constructor
+          from LongDouble, converted from the supplied LongDoubleAssign,
+          which is in turn initialized from the rhs literal. Thanks to
+          Adam Mitz <mitza at ociweb dot com> for the LongDoubleAssign
+          suggestion to work around the C++ union restriction.
+
+Mon Jun  6 16:59:29 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Fixed typo
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added support for c++0x, adding this to your platform_macros.GNU
+          enables the g++ c++0x extensions
+
+Mon Jun  6 13:44:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+          Fixed gcc 4.6 warning.
+
+Fri Jun  3 18:46:50 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Base.h:
+
+          Made the ACE_CDR::LongDouble struct constructor from native
+          long double explicit, which eliminates compiler ambiguities
+          when the struct's '==' and '!=' operators are used with
+          a native long double rhs.
+
+Wed Jun  1 19:30:44 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Base.h:
+
+          To the struct ACE_CDR::LongDouble, used for platforms with
+          a native long double that isn't 16 bytes, added an
+          assignment operator and a constructor. The former is for
+          internal use by the IDL compiler, and the latter is for
+          code generation for long double constants. For types
+          using the non-native struct, a const declaration is
+          impossible to initialize by assignment to a literal,
+          so a constructor is generated instead.
+
+Wed Jun  1 10:17:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed typo.
+
+Wed Jun  1 05:53:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/APG/Naming/Temperature_Monitor2.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+        * tests/Bug_3943_Regression_Test.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+          Resolved gcc 4.6 warning: variable was set but not used.
+
+Tue May 31 09:16:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          OBS now stands for Open Build Service
+
+Tue May 31 07:13:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/examples/SAXPrint/main.cpp:
+          Fixed compile error.
+
+Mon May 30 18:44:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/examples/SAXPrint/main.cpp:
+          Fixed gcc 4.6 warning
+
+        * docs/bczar/bczar.html:
+          Added some more packages
+
+Fri May 27 14:44:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_2653_Regression_Test.cpp:
+        * tests/Compiler_Features_12_Test.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+          Resolved gcc 4.6 warning: variable was set but not used.
+
+Fri May 27 09:49:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
+          Made changes to satisfy Coverity and the GNU 4.6 gcc compiler.
+          fgets returns a void*. This is stored in dummy. We use
+          ACE_UNUSED_ARG to fool the 4.6 gcc compiler.
+
+Thu May 26 14:27:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
+          Resolved gcc 4.6 warning: variable was set but not used.
+
+Thu May 26 14:11:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
+          Resolved gcc 4.6 warning: variable was set but not used.
+
+Thu May 26 11:39:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Added a yum install with all packages you could need on FC
+
+Thu May 26 13:09:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Compiler_Features_10_Test.cpp:
+          Resolved coverity warnings.
+
+Mon May 23 07:55:41 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/QtReactor_Test.h:
+        * tests/QtReactor_Test.cpp:
+        Changed deprecated qt4 functions and includes.
+
+Mon May 23 07:10:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Naming/Name_Binding.h:
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+          Fixed incorrect delete
+
+Mon May 23 06:55:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Streams/MessageInfo.h:
+          Pass argument as const& to fix Coverity error
+
+        * protocols/ace/INet/BidirStreamBuffer.h:
+        * protocols/ace/INet/BufferedStreamBuffer.h:
+        * protocols/ace/INet/HTTP_BasicAuthentication.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+          Fixed memory leaks, thanks to Max Zhou <earthdog at 126 dot com>
+          for creating the patch, this fixes bugzilla 3959
+
+Fri May 20 22:17:29 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ace_qt4reactor.mpb:
+
+          Assignment to "after" must match the target MPC project name.
+
+Thu May 12 18:08:47 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU: Added command settings for
+          preprocessing C and C++ source files.
+
+        * include/makeinclude/rules.local.GNU: Added rules to preprocess
+          C and C++ files when directed.
+
+          These allow one to now quickly produce a preprocessed version of
+          a source file. Ala... make -f GNUmakefile.ACE ACE.i
+          would preprocess ACE.cpp and put the result in ACE.i.
+
+Thu May 12 01:04:19 UTC 2011   Chad Beaulac  <chad.beaulac@objectivesolutions.com>
+        * tests/Bug_3912_Regression_Test.cpp:
+          Integrated changes from Phil Mesnier.
+          Added static_cast and const_cast instead of C-style casts.
+
+Wed May 11 18:26:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Control.h:
+        * ace/Thread_Control.cpp:
+        * ace/Thread_Hook.h:
+        * ace/Thread_Hook.cpp:
+        * apps/gperf/src/Options.cpp:
+          Doxygen changes
+
+Wed May 11 13:41:28 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * ace/QtReactor/QtReactor.h:
+          Changed for QT4 deprecated include QT/..
+
+Wed May 11 12:45:21 UTC 2011  Chad Beaulac  <chad.beaulac@objectivesolutions.com>
+
+        * tests/Bug_3912_Regression_Test.cpp:
+          Returning a value from close now.
+
+        * tests/tests.mpc:
+          Removed libs Stream_Config_Stream_DLL.
+          It's dynamically loaded by the ASR.
+
+Tue May 10 11:59:32 UTC 2011  Chad Beaulac  <chad.beaulac@objectivesolutions.com>
+
+        * ace/Stream.cpp:
+        * tests/Bug_3912_Regression_Test.cpp:
+        * tests/Bug_3912_Regression_Test.conf:
+          Fixed FUZZ whitespace and Id
+
+Mon May  9 19:09:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dump.h:
+        * ace/FIFO.cpp:
+        * ace/Filecache.cpp:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
+          Fixed coverity errors
+
+Sun May  8 17:57:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ETCL/ETCL_Constraint.h:
+        * ace/ETCL/ETCL_Constraint.inl:
+          Fixed coverity errors
+
+Thu May  5 21:38:45 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Select_Reactor_T.cpp:
+
+          Added a reset of errno during the ctor in case there was an
+          error during the first attempt at opening the reactor. Turns out
+          that in this case on at least on Linux, the errno leaks through
+          the second, good call to open. This can happen for example, when
+          ACE::max_handles() is less than the select reactor's DEFAULT_SIZE.
+          Since all this happens in a ctor, there's no result value for
+          application code to check, apart from errno.
+
+Wed May  4 15:07:46 UTC 2011  Chad Beaulac <chad.beaulac@objectivesolutions.com>
+
+          * ace/Stream.cpp:
+          Modified ACE_Stream::remove(name,flags) so close
+          is always called on the module that's removed regardless of the
+          flags. Close needs to be called to ensure proper lifecycle
+          management when the ACE_Service_Repository shuts down in its
+          fini method.  Bugzilla #3912
+
+        * tests/Bug_3912_Regression_Test.conf:
+        * tests/Bug_3912_Regression_Test.cpp:
+        * tests/run_test.lst
+        * tests/test.mpc
+          Added test to assert that close is called.
+
+Fri Apr 29 14:01:29 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * tests/tests.mpc: For Message_Queue_Test add -bmaxdata:0x20000000 to
+          linker options to extend the available data space at run time.
+          Avoids the heap smashing the stacks.
+
+Fri Apr 29 06:39:06 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/fuzz.pl:
+          Exclude *.WCHAR_T.conf and *.UTF-16.conf files from $Id check.
+          These files are not UTF-8 format and cannot be read by perl.
+
+Thu Apr 28 06:39:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Disable inlining
+
+Wed Apr 27 13:33:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-visualage.h:
+          Removed this file, includes only non existent files
+
+Wed Apr 27 11:02:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.inl:
+        * ace/Time_Value.cpp:
+          Corrected some casts to use time_t
+
+Wed Apr 27 09:01:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Improved this file
+
+Tue Apr 26 09:38:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Improved this file
+
+Tue Apr 26 08:17:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Improved this file
+
+Sat Apr 23 12:31:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Stream.cpp:
+          Fixed incorrect ACE_NEW_RETURN macro
+
+Fri Apr 22 19:05:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp (strnew):
+          Removed null check, ACE_NEW_RETURN already does that
+
+Fri Apr 22 15:19:29 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Add support for XL C++ 11.
+
+Fri Apr 22 12:43:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * protocols/tests/HTBP/HTBP_Config.conf:
+        * protocols/tests/HTBP/Reactor_Tests/inside.conf:
+        * tests/Service_Config_Test.WCHAR_T.conf:
+          Fuzz: Added $Id string
+
+Fri Apr 22 11:16:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed autoconf support
+
+Fri Apr 22 07:25:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/OS_NS_stdlib.cpp:
+          Layout changes
+
+        * Kokyu/tests/DSRT_MIF/svc.conf:
+        * apps/Gateway/Gateway/svc.conf:
+        * apps/Gateway/Peer/svc.conf:
+        * apps/JAWS/server/svc.conf:
+        * apps/JAWS3/jaws3/jaws.conf:
+        * apps/JAWS3/small/jaws.conf:
+        * apps/JAWS3/small/svc.conf:
+        * examples/APG/Logging/client.conf:
+        * examples/APG/Logging/logging_strategy.conf:
+        * examples/APG/Logging/server.conf:
+        * examples/APG/Naming/svc.conf:
+        * examples/APG/Svc_Config/svc.conf.dynamic:
+        * examples/APG/Svc_Config/svc.conf.static:
+        * examples/ASX/CCM_App/svc.conf:
+        * examples/C++NPv2/svc.conf:
+        * examples/Service_Configurator/IPC-tests/server/svc.conf:
+        * examples/Service_Configurator/Misc/svc.conf1:
+        * examples/Service_Configurator/Misc/svc.conf2:
+        * netsvcs/clients/Naming/Client/svc.conf:
+        * netsvcs/clients/Naming/Client/svc2.conf:
+        * netsvcs/servers/svc.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t1.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t16.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t2.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t32.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t4.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t64.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t8.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/svc.conf:
+        * protocols/tests/HTBP/HTBP_Config.conf:
+        * protocols/tests/HTBP/Reactor_Tests/inside.conf:
+        * rpmbuild/etc/tao/tao-cosconcurrency.conf:
+        * rpmbuild/etc/tao/tao-cosevent.conf:
+        * rpmbuild/etc/tao/tao-cosnaming.conf:
+        * rpmbuild/etc/tao/tao-cosnotification.conf:
+        * rpmbuild/etc/tao/tao-costrading.conf:
+        * rpmbuild/etc/tao/tao-rtevent.conf:
+        * tests/Bug_3334_Regression_Test.conf:
+        * tests/Service_Config_Stream_Test.conf:
+        * tests/Service_Config_Test.UTF-16.conf:
+        * tests/Service_Config_Test.conf:
+        * tests/Service_Config_Test.conf.xml:
+        * tests/UNIXclerk.conf:
+        * tests/UNIXserver.conf:
+        * tests/UNIXtokens.conf:
+        * tests/Win32clerk.conf:
+        * tests/Win32server.conf:
+        * tests/Win32tokens.conf:
+          Fuzz: Added $Id string.
+
+Thu Apr 21 12:25:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check *.conf files for an Id tag
+
+Thu Apr 21 08:16:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+          Cleanup
+
+        * include/makeinclude/platform_macosx_lion.GNU:
+          Fixed comment
+
+Wed Apr 20 11:29:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/gnuace.features:
+          Don't set ndds default to 1, reduced size of release and makes it
+          possible to support more dds vendors
+
+Wed Apr 20 10:27:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * etc/index.html:
+          Make x.0.2 available
+
+        * html/Stats/index.shtml:
+          Removed cell xampler
+
+Wed Apr 20 08:53:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/src/Gen_Perf.cpp:
+          Fixed coverity errors
+
+        * bin/fuzz.pl:
+          Extended fuzz
+
+        * bin/generate_rel_manpages:
+          Removed obsolete make steps
+
+        * docs/bczar/bczar.html:
+          zip should also be available
+
+        * tests/Env_Value_Test.cpp:
+        * tests/Reactor_Fairness_Test.cpp:
+          Layout changes
+
+Wed Apr 20 09:52:52 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.0.2 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

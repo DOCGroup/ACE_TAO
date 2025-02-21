@@ -1,0 +1,27 @@
+
+
+This test has two parts, which run automatically:
+
+Part 1:
+
+IIOP_Transport_Current test: Demonstrates how in the application the
+user can resolve the IIOP_Transport_Current and use it to obtain
+IIOP-related transport properties for the current Transport.
+
+Part 2:
+
+Multi threading test: In this test the server has a Thread Pool. Using
+Interceptors, the test tracks the transports that are used in the
+individual invocations at various stage of the up-call. This validates
+that the TC framework accurately tracks the correct transport for an
+invocation, no matter what stage of the up-call in a multi-threaded
+environment.
+
+We force creation of multiple transport by using the: static
+Client_Strategy_Factory "-ORBTransportMuxStrategy exclusive"
+directive. While this isn't 100% guaranteed, having multiple client
+threads and making simultaneous invocations should trigger new transport
+creation (as it did in lab conditions).
+
+See ../Framework/README for more detail on how and what contexts are
+tested.

@@ -4,8 +4,6 @@
 /**
  *  @file LF_Connect_Strategy.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
@@ -15,47 +13,50 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Connect_Strategy.h"
+#include "tao/Connect_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Connector;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
 class ACE_Synch_Options;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_LF_Event;
 
 /**
  * @class TAO_LF_Connect_Strategy
  *
  * @brief Concrete implementation of a connect strategy that waits on
- *  the leader-follower during asynch connects
+ *  the leader-follower during asynchronous connects
  */
 
 class TAO_Export TAO_LF_Connect_Strategy : public TAO_Connect_Strategy
 {
 public:
   /// Constructor
-  TAO_LF_Connect_Strategy (TAO_ORB_Core *orb);
+  TAO_LF_Connect_Strategy (TAO_ORB_Core *orb, bool no_upcall);
 
   /// Destructor
-  ~TAO_LF_Connect_Strategy (void);
+  ~TAO_LF_Connect_Strategy ();
 
-  /*
+  /**
    * Concrete implementation for this class. Please see
    * Connect_Strategy.h for details
    */
-  virtual void synch_options (ACE_Time_Value *val,
-                              ACE_Synch_Options &opt);
+  virtual void synch_options (ACE_Time_Value *val, ACE_Synch_Options &opt);
 
-  virtual int wait (TAO_Connection_Handler *ch,
-                    ACE_Time_Value *val);
+protected:
+  virtual int wait_i (TAO_LF_Event *ev, TAO_Transport *t, ACE_Time_Value *val);
 
-  virtual int wait (TAO_Transport *ch,
-                    ACE_Time_Value *val);
-
-
+  bool no_upcall_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

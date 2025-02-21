@@ -1,17 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Filter.h
-//
-// = DESCRIPTION
-//   Filter test any supplier to any consumer.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Filter.h
+ *
+ * Filter test any supplier to any consumer.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_TESTS_FILTER_H
 #define NOTIFY_TESTS_FILTER_H
@@ -31,56 +28,55 @@ class Filter : public Notify_Test_Client
 {
 public:
   // Initialization and termination code
-  Filter (void);
-  virtual ~Filter (void);
+  Filter ();
+  virtual ~Filter ();
 
+  /// initialization.
   int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
-  // initialization.
+            ACE_TCHAR *argv []);
 
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the test.
+  /// Run the test.
+  void run_test ();
 
 protected:
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
-  // Create EC
+  /// Create EC
+  void create_EC ();
 
   /// Run some tests to check the filters.
-  void run_filter_test (CosNotifyFilter::FilterAdmin_ptr ACE_ENV_ARG_DECL);
+  void run_filter_test (CosNotifyFilter::FilterAdmin_ptr);
 
   /// Print the filter ids.
-  void print_filters (CosNotifyFilter::FilterAdmin_ptr filter_seq ACE_ENV_ARG_DECL);
+  void print_filters (CosNotifyFilter::FilterAdmin_ptr filter_seq);
 
   /// Verify filter count.
-  void verify_filter_count (CosNotifyFilter::FilterAdmin_ptr filter_admin, CORBA::ULong expected_count ACE_ENV_ARG_DECL);
+  void verify_filter_count (CosNotifyFilter::FilterAdmin_ptr filter_admin, CORBA::ULong expected_count);
 
   /// Add a filter.
-  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_ARG_DECL);
+  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin);
 
   /// The default filter factory.
   CosNotifyFilter::FilterFactory_var ffact_;
 
+  /// Number of events received so far.
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
-  // Number of events received so far.
 
+  /// Number of events to send
   int event_count_;
-  // Number of events to send
 
+  /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
-  // The one channel that we create using the factory.
 
+  /// The consumer admin used by consumers.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The consumer admin used by consumers.
 
+  /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The supplier admin used by suppliers.
 
+  /// Consumer.
   TAO_Notify_Tests_PushConsumer* consumer_;
-  // Consumer.
 
+  /// Supplier.
   TAO_Notify_Tests_PushSupplier* supplier_;
-  // Supplier.
 };
 
 /***************************************************************************/

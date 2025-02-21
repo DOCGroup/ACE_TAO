@@ -1,7 +1,5 @@
 // -*- C++ -*-
 
-// $Id$
-
 //
 // ============================================================================
 //
@@ -88,16 +86,16 @@ public:
   // Constructor, it assumes ownership of the buffers, strings must be
   // allocated using CORBA::string_alloc(), buffers using operator new.
 
-  ~ECM_Federation (void);
+  ~ECM_Federation ();
   // Dtor
 
-  const char* name (void) const;
+  const char* name () const;
   // The name of the federation....
 
-  CORBA::UShort mcast_port (void) const;
+  CORBA::UShort mcast_port () const;
   // The port used by this federation to receive mcast messages.
 
-  int supplier_types (void) const;
+  int supplier_types () const;
   // The number of different event types published by this federation.
 
   const char* supplier_name (CORBA::ULong i) const;
@@ -106,7 +104,7 @@ public:
   CORBA::ULong supplier_ipaddr (CORBA::ULong i) const;
   // The ipaddr (in host byte order) of the event type <i>
 
-  int consumer_types (void) const;
+  int consumer_types () const;
   // The number of different event types consumed by this federation.
 
   const char* consumer_name (CORBA::ULong i) const;
@@ -116,17 +114,16 @@ public:
   // The ipaddr (in host byte order) of the event type <i>
 
   void open (TAO_ECG_UDP_Out_Endpoint *endoint,
-             RtecEventChannelAdmin::EventChannel_ptr ec
-             ACE_ENV_ARG_DECL);
+             RtecEventChannelAdmin::EventChannel_ptr ec);
   // Connect the UDP sender to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close ();
   // Close the UDP sender, disconnect from the EC
 
   int sender_local_addr (ACE_INET_Addr& addr);
   // Return the sender local address
 
-  RtecUDPAdmin::AddrServer_ptr addr_server (ACE_ENV_SINGLE_ARG_DECL);
+  RtecUDPAdmin::AddrServer_ptr addr_server ();
   // This address server can be used to convert event headers
   // (type,source) to UDP addresses (ipaddr,port)
 
@@ -142,7 +139,7 @@ private:
   char** consumer_names_;
   CORBA::ULong* consumer_ipaddr_;
 
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender_;
+  PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender_;
   // The sender
 
   TAO_EC_Simple_AddrServer addr_server_;
@@ -169,29 +166,25 @@ public:
   ECM_Supplier (ECM_Local_Federation* federation);
 
   void open (const char* name,
-             RtecEventChannelAdmin::EventChannel_ptr event_channel
-             ACE_ENV_ARG_DECL);
+             RtecEventChannelAdmin::EventChannel_ptr event_channel);
   // This method connects the supplier to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close ();
   // Disconnect from the EC.
 
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
-                 RtecEventComm::Time interval
-                 ACE_ENV_ARG_DECL);
+                 RtecEventComm::Time interval);
   // Connect as a consumer to start receiving events.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
-  void push (const RtecEventComm::EventSet& events
-             ACE_ENV_ARG_DECL);
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void push (const RtecEventComm::EventSet& events);
+  void disconnect_push_consumer ();
   // Implement the callbacks for our consumer personality.
 
   // = The POA_RtecEventComm::PushSupplier methods.
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
 
 private:
   ECM_Local_Federation* federation_;
@@ -226,25 +219,20 @@ public:
 
   void open (const char* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             ACE_RANDR_TYPE &seed
-             ACE_ENV_ARG_DECL);
+             unsigned int *seed);
   // This method connects the consumer to the EC.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close ();
   // Disconnect from the EC.
 
-  void connect (ACE_RANDR_TYPE& seed
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (unsigned int *seed);
+  void disconnect ();
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
   // = The POA_RtecEventComm::PushComsumer methods.
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
 
 private:
   ECM_Local_Federation* federation_;
@@ -267,43 +255,38 @@ public:
   ECM_Local_Federation (ECM_Federation *federation,
                         ECM_Driver *driver);
   // Constructor.
-  ~ECM_Local_Federation (void);
+  ~ECM_Local_Federation ();
   // Destructor
 
   void open (int event_count,
-             RtecEventChannelAdmin::EventChannel_ptr event_channel
-             ACE_ENV_ARG_DECL);
+             RtecEventChannelAdmin::EventChannel_ptr event_channel);
   // Connect both the supplier and the consumer.
 
-  void close (ACE_ENV_SINGLE_ARG_DECL);
+  void close ();
   // Disconnect everybody from the EC
 
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
-                 RtecEventComm::Time interval
-                 ACE_ENV_ARG_DECL);
+                 RtecEventComm::Time interval);
   // Activate the supplier
 
-  void supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
-                         ACE_ENV_ARG_DECL);
+  void supplier_timeout (RtecEventComm::PushConsumer_ptr consumer);
   // The supplier is ready to send a new event.
 
   void consumer_push (ACE_hrtime_t arrival,
-                      const RtecEventComm::EventSet& event
-                      ACE_ENV_ARG_DECL);
+                      const RtecEventComm::EventSet& event);
   // The consumer just received an event.
 
-  const ECM_Federation *federation (void) const;
+  const ECM_Federation *federation () const;
   // The federation description.
 
   void open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
-                      TAO_ECG_Refcounted_Endpoint ignore_from
-                      ACE_ENV_ARG_DECL);
+                      TAO_ECG_Refcounted_Endpoint ignore_from);
   // Connect the UDP receiver to the EC.
 
-  void close_receiver (ACE_ENV_SINGLE_ARG_DECL);
+  void close_receiver ();
   // Close the UDP receiver, disconnect from the EC
 
-  void dump_results (void) const;
+  void dump_results () const;
   // Report the results back to the user...
 
   void subscribed_bit (int i, CORBA::Boolean x);
@@ -312,12 +295,12 @@ public:
   // that we actually publish.
 
   // = Delegate on the federation description
-  const char* name (void) const;
-  CORBA::UShort mcast_port (void) const;
-  int supplier_types (void) const;
+  const char* name () const;
+  CORBA::UShort mcast_port () const;
+  int supplier_types () const;
   const char* supplier_name (CORBA::ULong i) const;
   CORBA::ULong supplier_ipaddr (CORBA::ULong i) const;
-  int consumer_types (void) const;
+  int consumer_types () const;
   const char* consumer_name (CORBA::ULong i) const;
   CORBA::ULong consumer_ipaddr (CORBA::ULong i) const;
 
@@ -360,7 +343,7 @@ private:
   // The last time we changed our publication, so we don't change too
   // often.
 
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver_;
+  PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver_;
   // This object reads the events and pushes them into the EC. Notice
   // that it can receive events from multiple Event Handlers.
 
@@ -372,7 +355,7 @@ private:
   // @@ TODO Eventually we may need several of this objects to handle
   // OS limitations on the number of multicast groups per socket.
 
-  ACE_RANDR_TYPE seed_;
+  unsigned int seed_;
   // The seed for a random number generator.
 
   CORBA::ULong subscription_change_period_;
@@ -403,7 +386,7 @@ class ECM_Driver
   //   receive and send multicast messages, etc.
   //
 public:
-  ECM_Driver (void);
+  ECM_Driver ();
 
   enum {
     MAX_EVENTS = 1024,
@@ -416,50 +399,45 @@ public:
     // Maximum number of federations in the simulation
   };
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test, read all the configuration files, etc.
 
-  void federation_has_shutdown (ECM_Local_Federation *federation
-                                ACE_ENV_ARG_DECL);
+  void federation_has_shutdown (ECM_Local_Federation *federation);
   // One of the federations has completed its simulation, once all of
   // them finish the test exists.
 
 
 private:
-  void open_federations (RtecEventChannelAdmin::EventChannel_ptr ec
-                         ACE_ENV_ARG_DECL);
+  void open_federations (RtecEventChannelAdmin::EventChannel_ptr ec);
   // Connect the federations to the EC.
 
-  void activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec
-                             ACE_ENV_ARG_DECL);
+  void activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec);
   // Activate all the federations
 
-  void close_federations (ACE_ENV_SINGLE_ARG_DECL);
+  void close_federations ();
   // Close the federations, i.e. disconnect from the EC, deactivate
   // the objects, etc.
 
-  void open_senders (RtecEventChannelAdmin::EventChannel_ptr ec
-                     ACE_ENV_ARG_DECL);
+  void open_senders (RtecEventChannelAdmin::EventChannel_ptr ec);
   // Connect all the senders, so we can start multicasting events.
 
-  void open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec
-                       ACE_ENV_ARG_DECL);
+  void open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec);
   // Connect all the receivers, thus we accept events arriving through
   // multicast.
 
-  void close_senders (ACE_ENV_SINGLE_ARG_DECL);
+  void close_senders ();
   // Close all the senders to cleanup resources.
 
-  void close_receivers (ACE_ENV_SINGLE_ARG_DECL);
+  void close_receivers ();
   // Close all the receivers to cleanup resources.
 
-  int shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int shutdown ();
   // Called when the main thread.
 
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line arguments
 
-  int parse_config_file (void);
+  int parse_config_file ();
   // parse the command line arguments
 
   int parse_name_list (FILE* file, int n, char** names,
@@ -470,7 +448,7 @@ private:
                    const char* error_msg);
   // skip the blanks in the file.
 
-  void dump_results (void);
+  void dump_results ();
   // Dump the results to the standard output.
 
 private:
@@ -480,10 +458,10 @@ private:
   int event_count_;
   // How many events will the suppliers send
 
-  char* config_filename_;
+  ACE_TCHAR* config_filename_;
   // The name of the file where we read the configuration.
 
-  const char* pid_filename_;
+  const ACE_TCHAR* pid_filename_;
   // The name of a file where the process stores its pid
 
   int local_federations_count_;
@@ -520,7 +498,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_Mcast.i"
+#include "EC_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* EC_MCAST_H */

@@ -4,8 +4,6 @@
 /**
  * @file FOO_ClientRequestInterceptor.h
  *
- * $Id$
- *
  * Implementation header for the "FOO" client request test
  * interceptor.
  *
@@ -43,10 +41,9 @@
  */
 class FOO_ClientRequestInterceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   FOO_ClientRequestInterceptor (IOP::Codec_ptr codec);
 
@@ -60,47 +57,30 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestInterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
   //@}
 
 private:
-
   /// The CDR encapsulation coder/decoder used to retrieve data
   /// from the CDR encapsulation in the tagged component.
   IOP::Codec_var codec_;
-
 };
 
 #if defined(_MSC_VER)

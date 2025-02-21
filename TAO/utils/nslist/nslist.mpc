@@ -1,27 +1,31 @@
 // -*- MPC -*-
-// $Id$
-
-project(nsadd): namingexe, core {
+project(nsadd): namingexe, install {
   install = $(ACE_ROOT)/bin
-  exename = nsadd
+  exename = tao_nsadd
   Source_Files {
     nsadd.cpp
   }
 }
 
-project(nsdel): namingexe, core {
+project(nsdel): namingexe, install, svc_utils, messaging {
   install = $(ACE_ROOT)/bin
-  exename = nsdel
+  exename = tao_nsdel
   Source_Files {
     nsdel.cpp
   }
 }
 
-project(nslist): namingexe, core {
+project(nslist): namingexe, install, svc_utils, messaging, strategies {
   install = $(ACE_ROOT)/bin
-  exename = nslist
+  exename = tao_nslist
   Source_Files {
     nslist.cpp
+  }
+  InstallData_Files {
+    README.nslist
+  }
+  specific {
+    install_dir = tao
   }
 }
 

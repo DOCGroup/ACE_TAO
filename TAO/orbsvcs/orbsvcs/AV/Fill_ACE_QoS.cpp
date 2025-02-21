@@ -1,15 +1,13 @@
-// Fill_ACE_QoS.cpp
-// $Id$
-
-#include "Fill_ACE_QoS.h"
+#include "orbsvcs/AV/Fill_ACE_QoS.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
-ACE_RCSID(QOS, Fill_ACE_QoS,"$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const iovec Fill_ACE_QoS::iov_ = {0,0};
 
-Fill_ACE_QoS::Fill_ACE_QoS (void)
+Fill_ACE_QoS::Fill_ACE_QoS ()
 {
   ACE_NEW (this->default_traffic_,
            ACE_Flow_Spec  (ACE_QOS_NOT_SPECIFIED,
@@ -25,7 +23,7 @@ Fill_ACE_QoS::Fill_ACE_QoS (void)
 }
 
 // destructor.
-Fill_ACE_QoS::~Fill_ACE_QoS (void)
+Fill_ACE_QoS::~Fill_ACE_QoS ()
 {}
 
 int
@@ -64,27 +62,11 @@ Fill_ACE_QoS::fill_duplex_qos (ACE_QoS &ace_qos,
 }
 
 Fill_ACE_QoS::FLOW_SPEC_HASH_MAP&
-Fill_ACE_QoS::map (void)
+Fill_ACE_QoS::map ()
 {
   return this->flow_spec_map_;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<ACE_CString,ACE_Flow_Spec *,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_CString, ACE_Flow_Spec *>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,ACE_Flow_Spec *,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_Flow_Spec *>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */

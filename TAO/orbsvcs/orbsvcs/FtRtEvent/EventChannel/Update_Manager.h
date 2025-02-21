@@ -4,8 +4,6 @@
 /**
  *  @file   Update_Manager.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -13,15 +11,17 @@
 #ifndef UPDATE_MANAGER_H
 #define UPDATE_MANAGER_H
 
-#include "ace/Synch_T.h"
-#include "Dynamic_Bitset.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
+#include "tao/orbconf.h"
+#include "ace/Auto_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-typedef Dynamic_Bitset bit_vector;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+typedef Dynamic_Bitset bit_vector;
 
 class Update_Manager
 {
@@ -43,7 +43,9 @@ private:
   int num_backups_;
   int transaction_level_;
   bool& success_;
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

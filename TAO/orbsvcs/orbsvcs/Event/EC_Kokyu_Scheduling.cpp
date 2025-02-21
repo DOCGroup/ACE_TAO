@@ -1,26 +1,23 @@
-// $Id$
-
-#include "EC_Kokyu_Scheduling.h"
-#include "EC_QOS_Info.h"
-#include "EC_ProxyConsumer.h"
-#include "EC_ProxySupplier.h"
-#include "EC_Supplier_Filter.h"
+#include "orbsvcs/Event/EC_Kokyu_Scheduling.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_ProxyConsumer.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Supplier_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Kokyu_Scheduling.i"
+#include "orbsvcs/Event/EC_Kokyu_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Kokyu_Scheduling, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Kokyu_Scheduling::~TAO_EC_Kokyu_Scheduling (void)
+TAO_EC_Kokyu_Scheduling::~TAO_EC_Kokyu_Scheduling ()
 {
 }
 
 void
 TAO_EC_Kokyu_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
-      TAO_EC_ProxyPushConsumer *consumer
-      ACE_ENV_ARG_DECL)
+      TAO_EC_ProxyPushConsumer *consumer)
 {
   const RtecEventChannelAdmin::SupplierQOS& qos =
     consumer->publications ();
@@ -38,21 +35,17 @@ TAO_EC_Kokyu_Scheduling::add_proxy_supplier_dependencies (
       this->scheduler_->priority (qos_info.rt_info,
                                   os_priority,
                                   p_subpriority,
-                                  p_priority
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                  p_priority);
       qos_info.preemption_priority = p_priority;
 
-      supplier->add_dependencies (header, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      supplier->add_dependencies (header, qos_info);
     }
 }
 
 void
 TAO_EC_Kokyu_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
                                             TAO_EC_ProxyPushConsumer *consumer,
-                                            TAO_EC_Supplier_Filter *filter
-                                            ACE_ENV_ARG_DECL)
+                                            TAO_EC_Supplier_Filter *filter)
 {
   RtecEventChannelAdmin::SupplierQOS qos =
     consumer->publications ();
@@ -82,14 +75,12 @@ TAO_EC_Kokyu_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
           this->scheduler_->priority (qos_info.rt_info,
                                       os_priority,
                                       p_subpriority,
-                                      p_priority
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                      p_priority);
           qos_info.preemption_priority = p_priority;
         }
 
-      filter->push_scheduled_event (single_event, qos_info
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      filter->push_scheduled_event (single_event, qos_info);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

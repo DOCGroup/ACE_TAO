@@ -4,8 +4,6 @@
 /**
  *  @file    Var_Array_Argument_T.h
  *
- *  $Id$
- *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
 //=============================================================================
@@ -21,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -29,20 +29,42 @@ namespace TAO
    * @brief IN stub argument of variable size element array.
    *
    */
-  template<typename S, typename S_slice, typename S_forany>
-  class In_Var_Array_Argument_T : public Argument
+  template<typename S_forany,
+           template <typename> class Insert_Policy>
+  class In_Var_Array_Argument_T : public InArgument
   {
   public:
-    In_Var_Array_Argument_T (const S_slice * x);
+    In_Var_Array_Argument_T (const typename S_forany::_slice_type * x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_slice const * arg (void) const;
+    typename S_forany::_slice_type const * arg () const;
+
+  protected:
+    S_forany x_;
+  };
+
+  /**
+   * @class In_Var_Array_Clonable_Argument_T
+   *
+   * @brief IN stub argument of variable size element array.
+   *
+   */
+  template<typename S_forany,
+           template <typename> class Insert_Policy>
+  class In_Var_Array_Clonable_Argument_T :
+          public In_Var_Array_Argument_T<S_forany, Insert_Policy>
+  {
+  public:
+    In_Var_Array_Clonable_Argument_T (const typename S_forany::_slice_type * x);
+    virtual ~In_Var_Array_Clonable_Argument_T ();
+
+    virtual Argument* clone ();
 
   private:
-    S_forany x_;
+    bool is_clone_;
   };
 
   /**
@@ -51,18 +73,19 @@ namespace TAO
    * @brief INOUT stub argument of variable size element array.
    *
    */
-  template<typename S, typename S_slice, typename S_forany>
-  class Inout_Var_Array_Argument_T : public Argument
+  template<typename S_forany,
+           template <typename> class Insert_Policy>
+  class Inout_Var_Array_Argument_T : public InoutArgument
   {
   public:
-    Inout_Var_Array_Argument_T (S_slice *&x);
+    Inout_Var_Array_Argument_T (typename S_forany::_slice_type *&x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_slice * arg (void);
+    typename S_forany::_slice_type * arg ();
 
   private:
     S_forany x_;
@@ -74,25 +97,22 @@ namespace TAO
    * @brief OUT stub argument of variable size element array.
    *
    */
-  template<typename S,
-           typename S_slice,
-           typename S_var,
-           typename S_out,
+  template<typename S_out,
            typename S_forany,
-           typename S_tag>
-  class Out_Var_Array_Argument_T : public Argument
+           template <typename> class Insert_Policy>
+  class Out_Var_Array_Argument_T : public OutArgument
   {
   public:
     Out_Var_Array_Argument_T (S_out x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_slice *& arg (void);
+    typename S_forany::_slice_type *& arg ();
 
   private:
-    S_slice *& x_;
+    typename S_forany::_slice_type *& x_;
   };
 
   /**
@@ -101,36 +121,26 @@ namespace TAO
    * @brief Return stub value of variable size element array.
    *
    */
-  template<typename S,
-           typename S_slice,
-           typename S_var,
+  template<typename S_var,
            typename S_forany,
-           typename S_tag>
-  class Ret_Var_Array_Argument_T : public Argument
+           template <typename> class Insert_Policy>
+  class Ret_Var_Array_Argument_T : public RetArgument
   {
   public:
-    Ret_Var_Array_Argument_T (void);
+    Ret_Var_Array_Argument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_slice *& arg (void);
+    typename S_forany::_slice_type *& arg ();
 
-    S_slice * excp (void);
-    S_slice * retn (void);
+    typename S_forany::_slice_type * excp ();
+    typename S_forany::_slice_type * retn ();
 
   private:
     S_var x_;
   };
-
-  /**
-   * @struct Var_Array_Tag
-   *
-   * @brief Struct for variable size element array argument id tag.
-   *
-   */
-  struct TAO_Export Var_Array_Tag {};
 
   /**
    * @struct Var_Array_Arg_Traits_T
@@ -138,52 +148,39 @@ namespace TAO
    * @brief Argument traits of variable size element array.
    *
    */
-  template<typename T,
-           typename T_slice,
-           typename T_var,
-           typename T_out,
+  template<typename T_out,
            typename T_forany,
-           typename T_tag>
+           template <typename> class Insert_Policy>
   struct Var_Array_Arg_Traits_T
   {
-    typedef T_slice *                                   ret_type;
-    typedef const T                                     in_type;
-    typedef T                                           inout_type;
+    typedef typename T_forany::_slice_type *            ret_type;
+    typedef const typename T_forany::_array_type        in_type;
+    typedef typename T_forany::_array_type              inout_type;
     typedef T_out                                       out_type;
 
-    typedef In_Var_Array_Argument_T<T,
-                                    T_slice,
-                                    T_forany>           in_arg_val;
-    typedef Inout_Var_Array_Argument_T<T,
-                                       T_slice,
-                                       T_forany>        inout_arg_val;
-    typedef Out_Var_Array_Argument_T<T,
-                                     T_slice,
-                                     T_var,
-                                     T_out,
+    typedef In_Var_Array_Argument_T<T_forany,
+                                    Insert_Policy>      in_arg_val;
+    typedef In_Var_Array_Clonable_Argument_T<T_forany,
+                                             Insert_Policy>
+                                                        in_clonable_arg_val;
+    typedef Inout_Var_Array_Argument_T<T_forany,
+                                       Insert_Policy>   inout_arg_val;
+    typedef Out_Var_Array_Argument_T<T_out,
                                      T_forany,
-                                     T_tag>             out_arg_val;
-    typedef Ret_Var_Array_Argument_T<T,
-                                     T_slice,
-                                     T_var,
+                                     Insert_Policy>     out_arg_val;
+    typedef Ret_Var_Array_Argument_T<typename T_out::_var_type,
                                      T_forany,
-                                     T_tag>             ret_val;
-
-    typedef Var_Array_Tag                               idl_tag;
+                                     Insert_Policy>     ret_val;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Var_Array_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Var_Array_Argument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Var_Array_Argument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

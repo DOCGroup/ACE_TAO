@@ -1,14 +1,5 @@
-// $Id$
-
 #include "Stopwatch_display.h"
-
-
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (Xt_Stopwatch,
-           Stopwatch_display,
-           "$Id$")
-
 
 Stopwatch_display::Stopwatch_display (Widget &parent)
 {
@@ -26,13 +17,13 @@ Stopwatch_display::Stopwatch_display (Widget &parent)
                                  0);
 }
 
-Stopwatch_display::~Stopwatch_display (void)
+Stopwatch_display::~Stopwatch_display ()
 {
   //No-op
 }
 
 void
-Stopwatch_display::manage (void)
+Stopwatch_display::manage ()
 {
   XtManageChild (this->frame_);
   XtManageChild (this->label_);
@@ -50,7 +41,7 @@ Stopwatch_display::set_time (CORBA::Float time)
   XmString xmstr = XmStringCreateSimple (buf);
 
   // Display the string in the Label widget
-  XtVaSetValues (this->label_, XmNlabelString, xmstr, NULL);
+  XtVaSetValues (this->label_, XmNlabelString, xmstr, static_cast<void *>(0));
   //??Can use XtSetValues with ac and al values..
 
   // The compound string can be freed once passed to the widget

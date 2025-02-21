@@ -1,28 +1,16 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    marshal_ch.cpp
-//
-// = DESCRIPTION
-//    Concrete visitor for valuetypes.
-//    This one provides code generation for marshalling.
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    based on code from Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    marshal_ch.cpp
+ *
+ *  Concrete visitor for valuetypes.
+ *  This one provides code generation for marshalling.
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           marshal_ch, 
-           "$Id$")
+#include "valuetype.h"
 
 // ***************************************************************************
 // Structure visitor for generating  declarations
@@ -35,7 +23,7 @@ be_visitor_valuetype_marshal_ch::be_visitor_valuetype_marshal_ch (
 {
 }
 
-be_visitor_valuetype_marshal_ch::~be_visitor_valuetype_marshal_ch (void)
+be_visitor_valuetype_marshal_ch::~be_visitor_valuetype_marshal_ch ()
 {
 }
 
@@ -56,10 +44,9 @@ be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
                              "(%N:%l) be_visitor_scope::visit_scope - "
                              "bad node in this scope\n"),
                             -1);
-
         }
 
-      be_field *field = be_field::narrow_from_decl (d);
+      be_field *field = dynamic_cast<be_field*> (d);
 
       if (field)
         {

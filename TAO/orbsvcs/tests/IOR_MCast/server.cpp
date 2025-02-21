@@ -1,28 +1,20 @@
-// $Id$
-
 #include "server_i.h"
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       Server_i svr_i;
 
-      const int init_result = svr_i.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      const int init_result = svr_i.init (argc, argv);
 
       if (init_result != 0)
         return 1;
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CORBA exception raised in server!");
+      ex._tao_print_exception ("CORBA exception raised in server!");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

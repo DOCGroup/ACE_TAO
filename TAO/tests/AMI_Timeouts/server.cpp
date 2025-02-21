@@ -3,10 +3,7 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Implementation of the server running the Timeout object.
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
@@ -17,16 +14,12 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (AMI,
-           server,
-           "$Id$")
-
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:d");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -36,7 +29,7 @@ parse_args (int argc, char *argv[])
         ior_output_file = get_opts.opt_arg ();
         break;
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case '?':
       default:
@@ -47,23 +40,20 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -71,27 +61,28 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       Timeout_i timeout_i (orb.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&timeout_i);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       TimeoutObj_var timeout_var =
-        timeout_i._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        TimeoutObj::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (timeout_var.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (timeout_var.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -106,15 +97,18 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
+      PortableServer::ObjectId_var idu =
+        root_poa->activate_object (&timeoutHandler_i);
+
+      CORBA::Object_var objectu = root_poa->id_to_reference (idu.in ());
+
       AMI_TimeoutObjHandler_var timeoutHandler_var =
-        timeoutHandler_i._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        AMI_TimeoutObjHandler::_narrow (objectu.in ());
 
       // Instantiate client
       /*
@@ -126,29 +120,22 @@ main (int argc, char *argv[])
       client->activate ();
       */
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0  // wait for completion
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true,  // ethernalize objects
+                         false);  // wait for completion
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       //delete client;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

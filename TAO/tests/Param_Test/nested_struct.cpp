@@ -1,33 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    nested_struct.cpp
-//
-// = DESCRIPTION
-//    tests nested structs
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    nested_struct.cpp
+ *
+ *  tests nested structs
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "nested_struct.h"
-
-ACE_RCSID (Param_Test,
-           nested_struct, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Nested_Struct
 // ************************************************************************
 
-Test_Nested_Struct::Test_Nested_Struct (void)
+Test_Nested_Struct::Test_Nested_Struct ()
   : opname_ (CORBA::string_dup ("test_nested_struct")),
     inout_ (new Param_Test::Nested_Struct),
     out_ (new Param_Test::Nested_Struct),
@@ -35,7 +25,7 @@ Test_Nested_Struct::Test_Nested_Struct (void)
 {
 }
 
-Test_Nested_Struct::~Test_Nested_Struct (void)
+Test_Nested_Struct::~Test_Nested_Struct ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -44,42 +34,38 @@ Test_Nested_Struct::~Test_Nested_Struct (void)
 }
 
 const char *
-Test_Nested_Struct::opname (void) const
+Test_Nested_Struct::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Nested_Struct::dii_req_invoke (CORBA::Request *req ACE_ENV_ARG_DECL)
+Test_Nested_Struct::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
   req->set_return_type (Param_Test::_tc_Nested_Struct);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  Param_Test::Nested_Struct *tmp;
+  const Param_Test::Nested_Struct *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Nested_Struct (*tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Nested_Struct (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Nested_Struct (*tmp);
 }
 
 int
-Test_Nested_Struct::init_parameters (Param_Test_ptr
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+Test_Nested_Struct::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -114,7 +100,7 @@ Test_Nested_Struct::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Nested_Struct::reset_parameters (void)
+Test_Nested_Struct::reset_parameters ()
 {
   this->inout_ = new Param_Test::Nested_Struct; // delete the previous ones
   this->out_ = new Param_Test::Nested_Struct;
@@ -132,32 +118,26 @@ Test_Nested_Struct::reset_parameters (void)
 }
 
 int
-Test_Nested_Struct::run_sii_test (Param_Test_ptr objref
-                                  ACE_ENV_ARG_DECL)
+Test_Nested_Struct::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Nested_Struct_out out (this->out_.out ());
       this->ret_ = objref->test_nested_struct (this->in_,
                                                this->inout_.inout (),
-                                               out
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                               out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Nested_Struct::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Nested_Struct::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Nested_Struct::check_validity (void)
+Test_Nested_Struct::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_.vs.seq.length () == this->inout_->vs.seq.length ()) &&
@@ -186,17 +166,17 @@ Test_Nested_Struct::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Nested_Struct::print_values (void)
+Test_Nested_Struct::print_values ()
 {
   for (CORBA::ULong i=0; i < this->in_.vs.seq.length (); i++)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*=*=*=*=*=*=\n"
                   "Element # %d\n"
-                  "in (len = %d): %s\n"
-                  "inout (len = %d): %s\n"
-                  "out (len = %d): %s\n"
-                  "ret (len = %d): %s\n",
+                  "in (len = %d): %C\n"
+                  "inout (len = %d): %C\n"
+                  "out (len = %d): %C\n"
+                  "ret (len = %d): %C\n",
                   i,
                   this->in_.vs.seq.length (),
                   (this->in_.vs.seq.length ()? (const char *)this->in_.vs.seq[i]:"<nul>"),

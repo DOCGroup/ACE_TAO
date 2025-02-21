@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   RT_Endpoint_Selector_Factory.h
- *
- *  $Id$
  *
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
@@ -18,18 +16,19 @@
 #define RT_ENDPOINT_SELECTOR_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Endpoint_Selector_Factory.h"
-#include "tao/orbconf.h"
-
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
+#include "tao/RTCORBA/rtcorba_export.h"
+#include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RT_Invocation_Endpoint_Selector;
 
@@ -53,13 +52,16 @@ class TAO_RTCORBA_Export RT_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  RT_Endpoint_Selector_Factory (void);
+  RT_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~RT_Endpoint_Selector_Factory (void);
+  virtual ~RT_Endpoint_Selector_Factory ();
 
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (
-              ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
+
+private:
+  void operator= (const RT_Endpoint_Selector_Factory &);
+  RT_Endpoint_Selector_Factory (const RT_Endpoint_Selector_Factory &);
 
 private:
   TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_;
@@ -67,6 +69,9 @@ private:
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

@@ -4,10 +4,7 @@
 /**
  *  @file    SSLIOP_Acceptor.h
  *
- *  $Id$
- *
  *  IIOP/SSL specific acceptor processing
- *
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
@@ -26,36 +23,37 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IIOP_SSL_Acceptor.h"
-#include "SSLIOP_Connection_Handler.h"
-#include "SSLIOP_Accept_Strategy.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
 
 #include "orbsvcs/SSLIOPC.h"  /* CSIv1 */
 #include "orbsvcs/CSIIOPC.h"  /* CSIv2 */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Acceptor
      *
      * @brief The SSLIOP-specific bridge class for the concrete acceptor.
      */
-    class TAO_SSLIOP_Export Acceptor
+    class Acceptor
       : public IIOP_SSL_Acceptor
     {
     public:
-
       /// Constructor.
       Acceptor (::Security::QOP qop,
-                const ACE_Time_Value & timeout);
+                const ACE_Time_Value & timeout,
+                bool check_host);
 
       /// Destructor.
-      ~Acceptor (void);
+      ~Acceptor ();
 
-      typedef ACE_Strategy_Acceptor<Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> BASE_ACCEPTOR;
+      typedef TAO_Strategy_Acceptor<Connection_Handler, ACE_SSL_SOCK_Acceptor> BASE_ACCEPTOR;
       typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY;
       typedef TAO_Concurrency_Strategy<Connection_Handler> CONCURRENCY_STRATEGY;
       typedef Accept_Strategy ACCEPT_STRATEGY;
@@ -77,7 +75,7 @@ namespace TAO
                                 int version_major,
                                 int version_minor,
                                 const char *options = 0);
-      virtual int close (void);
+      virtual int close ();
       virtual int create_profile (const TAO::ObjectKey &object_key,
                                   TAO_MProfile &mprofile,
                                   CORBA::Short priority);
@@ -86,10 +84,9 @@ namespace TAO
 
       /// Retrieve the CSIv1 SSLIOP::SSL component associated with the
       /// endpoints set up by this acceptor.
-      const ::SSLIOP::SSL &ssl_component (void) const;
+      const ::SSLIOP::SSL &ssl_component () const;
 
     private:
-
       /// Implement the common part of the open*() methods.
       int ssliop_open_i (TAO_ORB_Core *orb_core,
                          const ACE_INET_Addr& addr,
@@ -117,7 +114,6 @@ namespace TAO
                                  CORBA::Short priority);
 
     private:
-
       /// The concrete acceptor, as a pointer to it's base class.
       BASE_ACCEPTOR ssl_acceptor_;
 
@@ -149,15 +145,17 @@ namespace TAO
        * handshake.  This includes both the TCP handshake and the SSL
        * handshake.
        */
-      const ACE_Time_Value timeout_;
+      ACE_Time_Value const timeout_;
 
+      bool check_host_;
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "SSLIOP_Acceptor.i"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

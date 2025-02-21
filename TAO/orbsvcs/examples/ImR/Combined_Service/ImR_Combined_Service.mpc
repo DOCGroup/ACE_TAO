@@ -1,42 +1,52 @@
-// $Id$
-project : orbsvcsexe, portableserver, exceptions {
+project(*IDL): taoidldefaults {
+  idl_files {
+    service_config.idl
+    test.idl
+  }
+  custom_only = 1
+}
+
+project : orbsvcsexe, portableserver {
   exename   = combined_service
+  after += *IDL
   source_files {
     combined.cpp
     service_configC.cpp
     service_configS.cpp
   }
   idl_files {
-    service_config.idl
   }
 }
 
-project(*Controller) : orbsvcsexe, exceptions {
+project(*Controller) : orbsvcsexe {
   exename   = controller
+  after += *IDL
   source_files {
     controller.cpp
     service_configC.cpp
   }
   idl_files {
-    service_config.idl
   }
 }
 
 // A client that uses corba to test out basic imr functionality
-project(*Test) : orbsvcsexe, exceptions {
+project(*Test) : orbsvcsexe {
+  exename = test
+  after += *IDL
   source_files {
     test.cpp
     testC.cpp
   }
   idl_files {
-    test.idl
   }
 }
 
 // A server to use with the imr
-// The gnuace specific portion is to prevent the test.idl from being compiled
-// multiple times and causing invalid object files to be created.
-project(*TestServer) : orbsvcsexe, portableserver, iortable, exceptions {
+project(*TestServer) : orbsvcsexe, portableserver, iortable, avoids_corba_e_micro {
+  exename = test_server
+  after += *IDL
+  // The gnuace specific portion is to prevent invalid object files from
+  // IDL generated files being compiled simultaneously with parallel builds.
   specific(gnuace) {
     after += *Test
   }
@@ -46,22 +56,19 @@ project(*TestServer) : orbsvcsexe, portableserver, iortable, exceptions {
     testS.cpp
   }
   idl_files {
-    test.idl
   }
 }
 
 // Another simple server that can be loaded dynamically into the
 // combined_service.
-// The gnuace specific portion is to prevent the test.idl from being compiled
-// multiple times and causing invalid object files to be created.
-project(*DynamicServer) : taolib_with_idl, portableserver, iortable, exceptions {
-  dynamicflags = DYNSERVER_BUILD_DLL
+project(*DynamicServer) : taolib, portableserver, iortable, avoids_corba_e_micro {
+  dynamicflags += DYNSERVER_BUILD_DLL
   sharedname   = DynServer
+  after += *IDL
+  // The gnuace specific portion is to prevent invalid object files from
+  // IDL-generated files being compiled simultaneously with parallel builds.
   specific(gnuace) {
     after += *TestServer
-  }
-  idl_files {
-    test.idl
   }
   source_files {
     testC.cpp
@@ -71,5 +78,7 @@ project(*DynamicServer) : taolib_with_idl, portableserver, iortable, exceptions 
   header_files {
     dynserver.h
     dynserver_export.h
+  }
+  idl_files {
   }
 }

@@ -1,13 +1,9 @@
-#include "SSLIOP_Profile.h"
-#include "ssl_endpointsC.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
+#include "orbsvcs/SSLIOP/ssl_endpointsC.h"
 #include "tao/CDR.h"
-#include "tao/Environment.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Profile,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr & addr,
                                const TAO::ObjectKey & object_key,
@@ -60,7 +56,7 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, int ssl_only)
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
 
-TAO_SSLIOP_Profile::~TAO_SSLIOP_Profile (void)
+TAO_SSLIOP_Profile::~TAO_SSLIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -136,9 +132,11 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
         {
           // IIOP profile - doesn't have ssl endpoints encoded.  We
           // must create 'dummy' ssl endpoint list anyways, in order to
-          // make iiop endpoints accessable and usable.
+          // make iiop endpoints accessable and usable. Since we've
+          // already got one ssliop endpoint, only add the extra
+          // endpoints (count_ - 1).
           for (size_t i = 0;
-               i < this->count_;
+               i < this->count_ -1;
                ++i)
             {
               TAO_SSLIOP_Endpoint *endpoint = 0;
@@ -192,7 +190,7 @@ TAO_SSLIOP_Profile::do_is_equivalent (const TAO_Profile * other_profile)
 }
 
 TAO_Endpoint*
-TAO_SSLIOP_Profile::endpoint (void)
+TAO_SSLIOP_Profile::endpoint ()
 {
   return &this->ssl_endpoint_;
 }
@@ -211,7 +209,7 @@ TAO_SSLIOP_Profile::add_endpoint (TAO_SSLIOP_Endpoint * endp)
 }
 
 int
-TAO_SSLIOP_Profile::encode_endpoints (void)
+TAO_SSLIOP_Profile::encode_endpoints ()
 {
   // If we have more than one endpoint, we encode info about others
   // into a tagged component for wire transfer.
@@ -236,7 +234,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
 
       // Encode the data structure.
       TAO_OutputCDR out_cdr;
-      if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+      if (((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
            == 0)
           || (out_cdr << endpoints) == 0)
         return -1;
@@ -268,7 +266,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_SSLIOP_Profile::decode_tagged_endpoints (void)
+TAO_SSLIOP_Profile::decode_tagged_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO::TAG_SSL_ENDPOINTS;
@@ -331,12 +329,9 @@ TAO_SSLIOP_Profile::decode_tagged_endpoints (void)
 }
 
 void
-TAO_SSLIOP_Profile::parse_string (const char * ior
-                                  ACE_ENV_ARG_DECL)
+TAO_SSLIOP_Profile::parse_string (const char * ior)
 {
-   TAO_IIOP_Profile::parse_string (ior
-                                   ACE_ENV_ARG_PARAMETER);
-   ACE_CHECK;
+   TAO_IIOP_Profile::parse_string (ior);
 
    this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 
@@ -350,3 +345,59 @@ TAO_SSLIOP_Profile::parse_string (const char * ior
             Security::NoProtection);
    }
 }
+
+
+void
+TAO_SSLIOP_Profile::remove_endpoint (TAO_SSLIOP_Endpoint *endp)
+{
+  if (endp == 0)
+    return;
+
+  // special handling for the target matching the base endpoint
+  if (endp == &this->ssl_endpoint_)
+    {
+      if (--this->count_ > 0)
+        {
+          TAO_SSLIOP_Endpoint* ssl_n = this->ssl_endpoint_.next_;
+          this->ssl_endpoint_ = *ssl_n;
+          // since the assignment operator does not copy the next_
+          // pointer, we must do it by hand
+          this->ssl_endpoint_.next_ = ssl_n->next_;
+          delete ssl_n;
+          TAO_IIOP_Endpoint *n = this->endpoint_.next_;
+          this->endpoint_ = *n;
+          this->endpoint_.next_ = n->next_;
+          delete n;
+        }
+      return;
+    }
+
+  TAO_SSLIOP_Endpoint* last = &this->ssl_endpoint_;
+  TAO_SSLIOP_Endpoint* cur = this->ssl_endpoint_.next_;
+
+  while (cur != 0)
+  {
+    if (cur == endp)
+      break;
+    last = cur;
+    cur = cur->next_;
+  }
+
+  if (cur != 0)
+  {
+    TAO_IIOP_Endpoint *base = cur->iiop_endpoint();
+    last->iiop_endpoint(base->next_, true);
+    last->next_ = cur->next_;
+    cur->next_ = 0;
+    --this->count_;
+    delete cur;
+  }
+}
+
+void
+TAO_SSLIOP_Profile::remove_generic_endpoint (TAO_Endpoint *ep)
+{
+  this->remove_endpoint(dynamic_cast<TAO_SSLIOP_Endpoint *>(ep));
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

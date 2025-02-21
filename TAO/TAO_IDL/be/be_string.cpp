@@ -1,45 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_string.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_String that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_string.cpp
+ *
+ *  Extension of class AST_String that provides additional means for C++
+ *  mapping.
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
 
 #include "be_string.h"
 #include "be_visitor.h"
+#include "be_helper.h"
 
 #include "utl_identifier.h"
 #include "global_extern.h"
-
-ACE_RCSID (be,
-           be_string,
-           "$Id$")
-
-be_string::be_string (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_String (),
-    be_decl (),
-    be_type ()
-{
-  // Always the case.
-  this->size_type (AST_Type::VARIABLE);
-}
 
 be_string::be_string (AST_Decl::NodeType nt,
                       UTL_ScopedName * n,
@@ -48,9 +25,11 @@ be_string::be_string (AST_Decl::NodeType nt,
   : COMMON_Base (),
     AST_Decl (nt,
               n,
-              I_TRUE),
+              true),
     AST_Type (nt,
               n),
+    AST_ConcreteType (nt,
+                      n),
     AST_String (nt,
                 n,
                 v,
@@ -60,16 +39,67 @@ be_string::be_string (AST_Decl::NodeType nt,
     be_type (nt,
              n)
 {
-  idl_global->string_seen_ = true;
+  if (!this->imported ())
+    {
+      idl_global->string_seen_ = true;
+
+      if (v->ev ()->u.ulval != 0)
+        {
+          idl_global->bd_string_seen_ = true;
+        }
+      else
+        {
+          idl_global->ub_string_seen_ = true;
+        }
+    }
+}
+
+// Overridden method.
+void
+be_string::gen_member_ostream_operator (TAO_OutStream *os,
+                                        const char *instance_name,
+                                        bool use_underscore,
+                                        bool accessor)
+{
+  // For wide strings, generate code that outputs the hex values of
+  // the individual wchars inside square brackets, otherwise generate
+  // code that outputs the string literal bracketed with quotes.
+  if (this->width () == 1)
+    {
+      *os << "\"\\\"\" << ";
+
+      this->be_type::gen_member_ostream_operator (os,
+                                                  instance_name,
+                                                  use_underscore,
+                                                  accessor);
+
+      *os << " << \"\\\"\"";
+    }
+  else
+    {
+      *os << "\"[\";" << be_nl_2
+          << "for (size_t i = 0; i < " << "ACE_OS::strlen ("
+          << instance_name
+          << (accessor ? " ()" : ".in ()") << "); ++i)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "if (i != 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "strm << \", \";" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "strm << ACE_OutputCDR::from_wchar (" << instance_name
+          << (accessor ? " ()" : "") << "[i]);" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "strm << \"]\"";
+    }
 }
 
 // Overriden method.
 void
-be_string::compute_tc_name (void)
+be_string::compute_tc_name ()
 {
-  Identifier * id = 0;
-
-  AST_Expression zero (static_cast<unsigned long> (0));
+  Identifier * id = nullptr;
+  ACE_CDR::ULong val = 0UL;
+  AST_Expression zero (val);
 
   if (*this->max_size () == &zero)
     {
@@ -77,13 +107,13 @@ be_string::compute_tc_name (void)
       // constants.
 
       // Start with the head as the CORBA namespace.
-      Identifier * corba_id = 0;
+      Identifier * corba_id = nullptr;
       ACE_NEW (corba_id,
                Identifier ("CORBA"));
 
       ACE_NEW (this->tc_name_,
                UTL_ScopedName (corba_id,
-                               0));
+                               nullptr));
 
       ACE_NEW (id,
                Identifier (this->width () == 1
@@ -95,36 +125,26 @@ be_string::compute_tc_name (void)
       // We have a bounded string.  Generate a TypeCode name that is
       // meant for internal use alone.
 
-      Identifier * tao_id = 0;
+      Identifier * tao_id = nullptr;
       ACE_NEW (tao_id,
                Identifier ("TAO"));
 
-      //   ACE_NEW (tao_id,
-      //            Identifier (""));
-
       ACE_NEW (this->tc_name_,
                UTL_ScopedName (tao_id,
-                               0));
-
-//       char bound[30] = { 0 };
-
-//       ACE_OS::sprintf (bound,
-//                        "_%lu",
-//                        this->max_size ()->ev ()->u.ulval);
+                               nullptr));
 
       ACE_CString local_tc_name =
         ACE_CString ("tc_")
         + ACE_CString (this->flat_name ());
-//         + ACE_CString (bound);
 
-      Identifier * typecode_scope = 0;
+      Identifier * typecode_scope = nullptr;
       ACE_NEW (typecode_scope,
                Identifier ("TypeCode"));
 
-      UTL_ScopedName * tc_scope_conc_name = 0;
+      UTL_ScopedName * tc_scope_conc_name = nullptr;
       ACE_NEW (tc_scope_conc_name,
                UTL_ScopedName (typecode_scope,
-                               0));
+                               nullptr));
 
       this->tc_name_->nconc (tc_scope_conc_name);
 
@@ -132,10 +152,12 @@ be_string::compute_tc_name (void)
                Identifier (local_tc_name.c_str ()));
     }
 
-  UTL_ScopedName *conc_name = 0;
+  zero.destroy ();
+
+  UTL_ScopedName *conc_name = nullptr;
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
-                           0));
+                           nullptr));
 
   this->tc_name_->nconc (conc_name);
 }
@@ -147,12 +169,8 @@ be_string::accept (be_visitor * visitor)
 }
 
 void
-be_string::destroy (void)
+be_string::destroy ()
 {
   this->be_type::destroy ();
   this->AST_String::destroy ();
 }
-
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_string, AST_String, be_type)
-IMPL_NARROW_FROM_DECL (be_string)

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
 #ifndef STUBBATCHCONSUMER_H
 #define STUBBATCHCONSUMER_H
 #include /**/ <ace/pre.h>
@@ -38,18 +36,18 @@ public:
    */
   virtual ~StubBatchConsumer ();
 
-  ::PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  ::PortableServer::POA_ptr _default_POA ();
   ::PortableServer::ObjectId objectId()const;
 
   /**
    * Parse command line arguments.
    */
-  int parse_args (int argc, char * argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
 
   /**
    * Publish this objects IOR.
    */
-  int init (CORBA::ORB_ptr orbManager, ::FT::FaultNotifier_var & notifier ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orbManager, ::FT::FaultNotifier_var & notifier);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -66,38 +64,21 @@ public:
   /**
    * Clean house for process shut down.
    */
-  void fini (ACE_ENV_SINGLE_ARG_DECL);
+  void fini ();
 
 
 public:
-
     ////////////////
     // CORBA methods
 
     virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , CosEventComm::Disconnected
-      ));
+        const CosNotification::EventBatch & notifications);
 
-    virtual void disconnect_sequence_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+    virtual void disconnect_sequence_push_consumer ();
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-     ACE_THROW_SPEC ((
-       CORBA::SystemException, CosNotifyComm::InvalidEventType
-     ));
+        const CosNotification::EventTypeSeq & removed);
 
   ////////////////////
   // Forbidden methods
@@ -108,7 +89,6 @@ private:
   /////////////////////////
   // Implementation methods
 private:
-
   ///////////////
   // Data Members
 private:

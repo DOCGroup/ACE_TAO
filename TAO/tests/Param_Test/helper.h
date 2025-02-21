@@ -1,21 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    helper.h
-//
-// = DESCRIPTION
-//    Defines a helper class that can generate values for the parameters used
-//    for the Param_Test example
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    helper.h
+ *
+ *  Defines a helper class that can generate values for the parameters used
+ *  for the Param_Test example
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef HELPER_H
 #define HELPER_H
@@ -27,20 +21,20 @@
 class Generator
 {
 public:
-  Generator (void);
-  // constructor
+  /// constructor
+  Generator ();
 
-  ~Generator (void);
-  // destructor
+  /// destructor
+  ~Generator ();
 
-  CORBA::Short gen_short (void);
-  CORBA::Long gen_long (void);
-  char* gen_string (void);
+  CORBA::Short gen_short ();
+  CORBA::Long gen_long ();
+  char* gen_string ();
   char* gen_string (int maxlength);
-  CORBA::WChar* gen_wstring (void);
+  CORBA::WChar* gen_wstring ();
   CORBA::WChar* gen_wstring (int maxlength);
-  const Param_Test::Fixed_Struct gen_fixed_struct (void);
-  const Param_Test::Step gen_step (void);
+  const Param_Test::Fixed_Struct gen_fixed_struct ();
+  const Param_Test::Step gen_step ();
  private:
   Param_Test::Fixed_Struct fixed_struct_;
   Param_Test::Step step_;

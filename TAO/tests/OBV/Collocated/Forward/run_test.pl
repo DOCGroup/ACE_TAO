@@ -2,38 +2,40 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib '../../../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-unlink $iorfile;
+my $collocated = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-if (PerlACE::is_vxworks_test()) {
-    $CO = new PerlACE::ProcessVX ("collocated");
-}
-else {
-    $CO = new PerlACE::Process ("collocated");
-}
+$iorbase = "test.ior";
+$iorfile = $collocated->LocalFile ("test.ior");
+$collocated->DeleteFile ($iorbase);
 
-$CO->Spawn ();
+$CO = $collocated->CreateProcess ("collocated");
 
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+$collocated_status = $CO->Spawn ();
+
+if ($collocated_status != 0) {
+    print STDERR "ERROR: server returned $collocated_status\n";
     exit 1;
-} 
-
-$result = $CO->WaitKill (10);
-
-if ($result != 0) {
-    print STDERR "ERROR: server returned $result\n";
-    $result = 1;
 }
 
-unlink $iorfile;
+if ($collocated->WaitForFileTimed ($iorbase,
+                                   $collocated->ProcessStartWaitInterval ()) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $CO->Kill (); $CO->TimedWait (1);
+    exit 1;
+}
 
-exit $status;
+$collocated_status = $CO->WaitKill ($collocated->ProcessStopWaitInterval ());
+
+if ($collocated_status != 0) {
+    print STDERR "ERROR: collocated returned $collocated_status\n";
+    $collocated_status = 1;
+}
+
+$collocated->DeleteFile ($iorbase);
+
+exit $collocated_status;

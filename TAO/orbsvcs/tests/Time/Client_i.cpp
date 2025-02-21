@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Client_i.h"
 
 #include "tao/debug.h"
@@ -11,11 +9,10 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID(Time_Service, Client_i, "$Id$")
 
 // Constructor.
 
-Client_i::Client_i (void)
+Client_i::Client_i ()
   : ior_ (0),
     loop_count_ (10),
     shutdown_ (0),
@@ -28,45 +25,37 @@ Client_i::Client_i (void)
 // given server.
 
 void
-Client_i::test_for_secure_universal_time (void)
+Client_i::test_for_secure_universal_time ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing secure_time()\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CosTime::UTO_var UTO_server =
-           this->clerk_->secure_universal_time (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-      ACE_TRY_CHECK;
+           this->clerk_->secure_universal_time ();
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) test_for_secure_universal_time() successful !!\n"));
         }
-  ACE_ENDTRY;
 }
 
 // The following test retrieves the current universal time as a UTO
 // from the clerk_ and prints out the various attributes of the UTO.
 
 void
-Client_i::test_for_universal_time (void)
+Client_i::test_for_universal_time ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing universal_time()\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CosTime::UTO_var UTO_server =
-        this->clerk_->universal_time (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->clerk_->universal_time ();
 
-      ACE_TRY_CHECK;
-
-#ifndef ACE_LACKS_LONGLONG_T
       ACE_DEBUG ((LM_DEBUG,
                   "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q"
                   "\nstruct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
@@ -77,32 +66,17 @@ Client_i::test_for_universal_time (void)
                   (UTO_server->utc_time ()).inacclo,
                   (UTO_server->utc_time ()).inacchi,
                   (UTO_server->utc_time ()).tdf));
-#else
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nTime = %u\nInaccuracy = %u\nTimeDiff = %d\nstruct.time = %u"
-                  "\nstruct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
-                  UTO_server->time ().lo(),
-                  UTO_server->inaccuracy ().lo(),
-                  UTO_server->tdf (),
-                  (UTO_server->utc_time ()).time.lo(),
-                  (UTO_server->utc_time ()).inacclo,
-                  (UTO_server->utc_time ()).inacchi,
-                  (UTO_server->utc_time ()).tdf));
-#endif
-
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error:");
+      ex._tao_print_exception ("Error:");
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) test_for_universal_time()\n"));
     }
-  ACE_ENDTRY;
 }
 
 void
-Client_i::test_for_new_universal_time (void)
+Client_i::test_for_new_universal_time ()
 {
   TimeBase::TimeT time = 999999999;
   TimeBase::InaccuracyT inaccuracy = 9999;
@@ -111,35 +85,30 @@ Client_i::test_for_new_universal_time (void)
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing new_universal_time()\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CosTime::UTO_var UTO_server = this->clerk_->new_universal_time (time,
                                                                       inaccuracy,
-                                                                      tdf
-                                                                      ACE_ENV_ARG_PARAMETER);
+                                                                      tdf);
 
-      ACE_ASSERT (UTO_server->time (ACE_ENV_SINGLE_ARG_PARAMETER) == 999999999);
-      ACE_ASSERT (UTO_server->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER) == 9999);
-      ACE_ASSERT (UTO_server->tdf (ACE_ENV_SINGLE_ARG_PARAMETER) == 99);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).time == 999999999);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).inacchi == 0);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).inacclo == 9999);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).tdf == 99);
-
-      ACE_TRY_CHECK;
+      ACE_ASSERT (UTO_server->time () == 999999999);
+      ACE_ASSERT (UTO_server->inaccuracy () == 9999);
+      ACE_ASSERT (UTO_server->tdf () == 99);
+      ACE_ASSERT ((UTO_server->utc_time ()).time == 999999999);
+      ACE_ASSERT ((UTO_server->utc_time ()).inacchi == 0);
+      ACE_ASSERT ((UTO_server->utc_time ()).inacclo == 9999);
+      ACE_ASSERT ((UTO_server->utc_time ()).tdf == 99);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) Test new_universal_time () fails.\n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception :\n");
+      ex._tao_print_exception ("Exception :\n");
     }
-  ACE_ENDTRY;
 }
 
 void
-Client_i::test_for_uto_from_utc (void)
+Client_i::test_for_uto_from_utc ()
 {
   TimeBase::UtcT utc_struct;
 
@@ -151,37 +120,32 @@ Client_i::test_for_uto_from_utc (void)
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing uto_from_utc ()\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      CosTime::UTO_var UTO_server = this->clerk_->uto_from_utc (utc_struct
-                                                                ACE_ENV_ARG_PARAMETER);
+      CosTime::UTO_var UTO_server = this->clerk_->uto_from_utc (utc_struct);
 
       TimeBase::InaccuracyT inaccuracy = utc_struct.inacchi;
       inaccuracy <<= 32;
       inaccuracy |= utc_struct.inacclo;
 
-      ACE_ASSERT (UTO_server->time (ACE_ENV_SINGLE_ARG_PARAMETER) == 999999999);
-      ACE_ASSERT (UTO_server->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER) == inaccuracy);
-      ACE_ASSERT (UTO_server->tdf (ACE_ENV_SINGLE_ARG_PARAMETER) == 99);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).time == 999999999);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).inacclo == 50);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).inacchi == 50);
-      ACE_ASSERT ((UTO_server->utc_time (ACE_ENV_SINGLE_ARG_PARAMETER)).tdf == 99);
-
-      ACE_TRY_CHECK;
+      ACE_ASSERT (UTO_server->time () == 999999999);
+      ACE_ASSERT (UTO_server->inaccuracy () == inaccuracy);
+      ACE_ASSERT (UTO_server->tdf () == 99);
+      ACE_ASSERT ((UTO_server->utc_time ()).time == 999999999);
+      ACE_ASSERT ((UTO_server->utc_time ()).inacclo == 50);
+      ACE_ASSERT ((UTO_server->utc_time ()).inacchi == 50);
+      ACE_ASSERT ((UTO_server->utc_time ()).tdf == 99);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) Test uto_from_utc () fails.\n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception :\n");
+      ex._tao_print_exception ("Exception :\n");
     }
-  ACE_ENDTRY;
 }
 
 void
-Client_i::test_for_new_interval (void)
+Client_i::test_for_new_interval ()
 {
   TimeBase::TimeT lower = 666666666;
   TimeBase::TimeT upper = 999999999;
@@ -189,25 +153,20 @@ Client_i::test_for_new_interval (void)
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing new_interval ()\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CosTime::TIO_var TIO_server = this->clerk_->new_interval (lower,
-                                                                upper
-                                                                ACE_ENV_ARG_PARAMETER);
+                                                                upper);
 
-      ACE_ASSERT ((TIO_server->time_interval (ACE_ENV_SINGLE_ARG_PARAMETER)).lower_bound == 666666666);
-      ACE_ASSERT ((TIO_server->time_interval (ACE_ENV_SINGLE_ARG_PARAMETER)).upper_bound == 999999999);
-
-      ACE_TRY_CHECK;
+      ACE_ASSERT ((TIO_server->time_interval ()).lower_bound == 666666666);
+      ACE_ASSERT ((TIO_server->time_interval ()).upper_bound == 999999999);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) Test new_interval () fails.\n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception :\n");
+      ex._tao_print_exception ("Exception :\n");
     }
-  ACE_ENDTRY;
 
   return;
 }
@@ -215,7 +174,7 @@ Client_i::test_for_new_interval (void)
 // Reads the Time Service Server ior from a file
 
 int
-Client_i::read_ior (char *filename)
+Client_i::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -245,9 +204,9 @@ Client_i::read_ior (char *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-Client_i::parse_args (void)
+Client_i::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:xk:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:f:xk:"));
   int c;
   int result;
 
@@ -263,7 +222,7 @@ Client_i::parse_args (void)
          this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
          break;
        case 'k':  // ior provide on command line
-         this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
+         this->ior_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
          break;
        case 'f': // read the IOR from the file.
          result = this->read_ior (get_opts.opt_arg ());
@@ -297,7 +256,7 @@ Client_i::parse_args (void)
 // Execute client example code.
 
 int
-Client_i::run (void)
+Client_i::run ()
 {
   // Retrieves the current universal time.
   test_for_universal_time ();
@@ -319,23 +278,21 @@ Client_i::run (void)
   return 0;
 }
 
-Client_i::~Client_i (void)
+Client_i::~Client_i ()
 {
   ACE_OS::free (this->ior_);
 }
 
 int
-Client_i::obtain_initial_references (void)
+Client_i::obtain_initial_references ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Initialize the naming services.
       if (my_name_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -354,17 +311,13 @@ Client_i::obtain_initial_references (void)
       clerk_name[1].id = CORBA::string_dup (name);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s|\n",
+                  "%C|\n",
                   name));
 
       CORBA::Object_var temp_object =
-        my_name_client_->resolve (clerk_name
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        my_name_client_->resolve (clerk_name);
 
-      clerk_ = CosTime::TimeService::_narrow (temp_object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      clerk_ = CosTime::TimeService::_narrow (temp_object.in ());
 
       if (CORBA::is_nil (clerk_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -372,12 +325,12 @@ Client_i::obtain_initial_references (void)
                            "Clerk Reference\n"),
                            -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client :: obtain_initial_references\n");
+      ex._tao_print_exception (
+        "Client :: obtain_initial_references\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -386,21 +339,15 @@ Client_i::obtain_initial_references (void)
 // file, else it uses the Naming Service
 
 int
-Client_i::init (int argc, char **argv)
+Client_i::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -412,22 +359,18 @@ Client_i::init (int argc, char **argv)
           // option or a file.
 
           CORBA::Object_var server_object =
-          this->orb_->string_to_object (this->ior_
-                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->orb_->string_to_object (this->ior_);
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid ior <%s>\n",
+                               "invalid ior <%C>\n",
                                this->ior_),
                               -1);
           this->clerk_ =
-            CosTime::TimeService::_narrow (server_object.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+            CosTime::TimeService::_narrow (server_object.in ());
 
           ACE_DEBUG ((LM_DEBUG,
                       "[CLIENT] Process/Thread Id : (%P/%t) Using the IOR provided\n"));
-          ACE_TRY_CHECK;
         }
       else
         { // No IOR specified. Use the Naming Service
@@ -436,16 +379,13 @@ Client_i::init (int argc, char **argv)
 
           if (this->obtain_initial_references () == -1)
             return -1;
-
-          ACE_TRY_CHECK;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init\n");
+      ex._tao_print_exception ("Client_i::init\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

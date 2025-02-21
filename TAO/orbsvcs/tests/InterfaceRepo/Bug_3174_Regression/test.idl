@@ -1,0 +1,7 @@
+// TAO579
+
+module m1
+{
+  enum e1 {e1_1, e1_2};
+  const e1 c2 = e1_2;
+};

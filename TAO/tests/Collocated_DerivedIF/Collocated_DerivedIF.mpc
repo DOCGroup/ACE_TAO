@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// Thru_Pu is disabled, enable direct
+project(Collocated_DIF): taoserver {
+  exename = Collocated_DerivedIF
+  idlflags += -Sp -Gd
+}

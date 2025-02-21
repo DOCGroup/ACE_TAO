@@ -1,5 +1,3 @@
-// $Id$
-
 module Web_Server
 // = TITLE
 // IDL schema definition for Web server interface.
@@ -11,7 +9,7 @@ module Web_Server
     // This operation returns the next <chunk> of the
     // file starting at <offset>.  If there are
     // no more bindings, false is returned.
-    boolean next_chunk (in unsigned long offset,
+    boolean next_chunk (in unsigned long long offset,
                         out Chunk_Type chunk);
 
     // This operation destroys the iterator.

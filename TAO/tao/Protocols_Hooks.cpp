@@ -1,29 +1,26 @@
-// $Id$
-
-#include "Protocols_Hooks.h"
+#include "tao/Protocols_Hooks.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao,
-           Protocols_Hooks,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties (void)
+TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties ()
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
     keep_alive_ (0),
     dont_route_ (0),
     no_delay_ (0),
-    enable_network_priority_ (0)
+    enable_network_priority_ (0),
+    hop_limit_ (-1)
 {
 }
 
-TAO_UIOP_Protocol_Properties::TAO_UIOP_Protocol_Properties (void)
+TAO_UIOP_Protocol_Properties::TAO_UIOP_Protocol_Properties ()
   : send_buffer_size_ (0),
     recv_buffer_size_ (0)
 {
 }
 
-TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties (void)
+TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties ()
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
     keep_alive_ (0),
@@ -35,23 +32,28 @@ TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties (void)
 {
 }
 
-TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties (void)
-  : enable_network_priority_ (0)
+TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties ()
+  : send_buffer_size_ (0),
+    recv_buffer_size_ (0),
+    enable_network_priority_ (0),
+    hop_limit_ (-1),
+    enable_multicast_loop_ (1)
 {
 }
 
-TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties (void)
+TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties ()
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
     keep_alive_ (0),
     dont_route_ (0),
     no_delay_ (0),
-    enable_network_priority_ (0)
+    enable_network_priority_ (0),
+    hop_limit_ (-1)
 {
 }
 
-/// destructor
-TAO_Protocols_Hooks::~TAO_Protocols_Hooks (void)
+TAO_Protocols_Hooks::~TAO_Protocols_Hooks ()
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

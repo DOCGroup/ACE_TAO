@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -71,24 +69,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Class for all concrete types.
 // This is useful to group together IDL types other than objects.
-
 class TAO_IDL_FE_Export AST_ConcreteType : public virtual AST_Type
 {
 public:
-  // Operations.
-
-  // Constructor(s).
-  AST_ConcreteType (void);
-
   AST_ConcreteType (AST_Decl::NodeType nt,
                     UTL_ScopedName *n);
 
-  // Destructor.
-  virtual ~AST_ConcreteType (void);
+  virtual ~AST_ConcreteType ();
 
-  // Narrowing.
-  DEF_NARROW_METHODS1(AST_ConcreteType, AST_Type);
-  DEF_NARROW_FROM_DECL(AST_ConcreteType);
+  // Cleanup.
+  virtual void destroy ();
+
+  virtual bool annotatable () const { return true; }
 };
 
 #endif           // _AST_CONCRETE_TYPE_AST_CONCRETE_TYPE_HH

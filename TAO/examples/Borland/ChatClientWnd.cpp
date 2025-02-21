@@ -1,4 +1,3 @@
-// $Id$
 //---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
@@ -23,7 +22,7 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
       ior_file_name_ = OpenDialog->FileName;
 
       // Retrieve the ORB.
-      orb_ = CORBA::ORB_init (_argc, _argv, 0);
+      orb_ = CORBA::ORB_init (_argc, _argv);
 
       // Get reference to the Root POA
       CORBA::Object_var obj =
@@ -56,7 +55,7 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
       // Register ourselves with the server.
       server_->add (receiver_var_, nickname_.c_str ());
     }
-  catch (CORBA::Exception &e)
+  catch (const CORBA::Exception &e)
     {
       ShowMessage ("CORBA Exception in TChatClientWindow constructor: "
                    + String (e._rep_id ()));
@@ -66,7 +65,7 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TChatClientWindow::ReadIOR (String filename)
 {
-  auto_ptr<TStringList> ior (new TStringList);
+  std::unique_ptr<TStringList> ior (new TStringList);
   ior->LoadFromFile (filename);
   ior_ = ior->Text;
 }
@@ -75,14 +74,14 @@ void __fastcall TChatClientWindow::WMMessageReceived (TMessage& Message)
 {
   String* str = (String*)Message.WParam;
   for (int i = 1; i <= str->Length (); i++)
-    if (isspace ((*str)[i]))
+    if (ACE_OS::ace_isspace ((*str)[i]))
       (*str)[i] = ' ';
   OutputMemo->Lines->Append (str->Trim ());
   delete str;
 }
 //---------------------------------------------------------------------------
-void __fastcall TChatClientWindow::FormClose (TObject *Sender,
-      TCloseAction &Action)
+void __fastcall TChatClientWindow::FormClose (TObject *,
+      TCloseAction &)
 {
   try
     {
@@ -90,13 +89,13 @@ void __fastcall TChatClientWindow::FormClose (TObject *Sender,
       server_->remove (receiver_var_);
       receiver_i_.shutdown ();
     }
-  catch (CORBA::Exception &e)
+  catch (const CORBA::Exception &e)
     {
       ShowMessage ("CORBA Exception in FormClose: " + String (e._rep_id ()));
     }
 }
 //---------------------------------------------------------------------------
-void __fastcall TChatClientWindow::InputMemoKeyPress (TObject *Sender, char &Key)
+void __fastcall TChatClientWindow::InputMemoKeyPress (TObject *, char &Key)
 {
   if (Key == '\n' || Key == '\r')
     {
@@ -106,7 +105,7 @@ void __fastcall TChatClientWindow::InputMemoKeyPress (TObject *Sender, char &Key
           // the server.
           server_->say (receiver_var_, InputMemo->Text.c_str ());
         }
-      catch (CORBA::Exception &e)
+      catch (const CORBA::Exception &e)
         {
           ShowMessage ("CORBA Exception in InputMemoKeyPress: " + String (e._rep_id ()));
         }

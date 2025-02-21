@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project(*Server): taoserver {
+  exename = RootPOA
+}
+

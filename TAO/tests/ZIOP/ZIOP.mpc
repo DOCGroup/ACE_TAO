@@ -1,0 +1,70 @@
+// -*- MPC -*-
+project(TestCompressor) : taolib, compression, taoidldefaults {
+  sharedname   = TAO_TestCompressor
+  dynamicflags += TAO_TESTCOMPRESSOR_BUILD_DLL
+
+  Source_Files {
+    TestCompressor
+  }
+
+  Header_Files {
+    TestCompressor
+  }
+
+  Inline_Files {
+    TestCompressor
+  }
+
+  Template_Files {
+    TestCompressor
+  }
+
+  Resource_Files {
+    TestCompressor
+  }
+
+  PIDL_Files {
+    TestCompressor
+  }
+
+  IDL_Files {
+    TestCompressor
+  }
+
+  Pkgconfig_Files {
+    TestCompressor/TAO_TestCompressor.pc.in
+  }
+}
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, compression, ziop, codecfactory, zlibcompressor, bzip2compressor, testcompressor {
+  after += *idl
+  Source_Files {
+    Hello.cpp
+    server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, compression, ziop, codecfactory, zlibcompressor, bzip2compressor, testcompressor, tc {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}

@@ -1,12 +1,10 @@
-// $Id$
-
 #include "Globals.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/Null_Mutex.h"
 
-Globals::Globals (void)
+Globals::Globals ()
   : thr_create_flags (0),
     default_priority (0),
     ior_file (0),
@@ -17,16 +15,16 @@ Globals::Globals (void)
     ready_cnd_ (ready_mtx_),
     barrier_ (0)
 {
-  const char default_endpoint[] = "iiop://";
+  const ACE_TCHAR default_endpoint[] = ACE_TEXT("iiop://");
   // Default to iiop
 
   ACE_OS::strcpy (endpoint, default_endpoint);
 }
 
 int
-Globals::parse_args (int argc, char *argv[])
+Globals::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "e:t:f:rm");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("e:t:f:rm"));
   int c;
 
   while ((c = opts ()) != -1)
@@ -41,7 +39,7 @@ Globals::parse_args (int argc, char *argv[])
         break;
       case 'f':
         ACE_NEW_RETURN (ior_file,
-                        char[BUFSIZ],
+                        ACE_TCHAR[BUFSIZ],
                         -1);
         ACE_OS::strcpy (ior_file,
                         opts.opt_arg ());
@@ -61,7 +59,7 @@ Globals::parse_args (int argc, char *argv[])
                            "[-t <number_of_servants>]      // # of servant threads to create     \n\t\t\t"
                            "[-f <ior_file> ]               // specify a file to output all ior's \n\t\t\t"
                            "[-m ]                          // Use multiple priorities for threads\n\t\t\t"
-                           "[-r ]                          // Run the thread-per-rate test       \n"
+                           "[-r ]                          // Run the thread-per-rate test      \n"
                            ,argv [0]),
                           -1);
       }
@@ -75,15 +73,15 @@ Globals::parse_args (int argc, char *argv[])
 }
 
 int
-Globals::sched_fifo_init (void)
+Globals::sched_fifo_init ()
 {
 #if defined (ACE_HAS_THREADS)
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-# if defined (_AIX) || defined (__APPLE__)
+  // Enable FIFO scheduling
+# if defined (__APPLE__) || defined (BSD)
   int scope = ACE_SCOPE_THREAD;
 # else
   int scope = ACE_SCOPE_PROCESS;
-# endif /* _AIX */
+# endif /* __APPLE__ || BSD */
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               SCHED_PRIORITY,
@@ -117,18 +115,18 @@ Globals::sched_fifo_init (void)
 #endif /* ACE_HAS_THREADS */
 }
 
-MT_Priority::MT_Priority (void)
+MT_Priority::MT_Priority ()
   : num_priorities_ (0),
     grain_ (0)
 {
 }
 
-MT_Priority::~MT_Priority (void)
+MT_Priority::~MT_Priority ()
 {
 }
 
 ACE_Sched_Priority
-MT_Priority::get_high_priority (void)
+MT_Priority::get_high_priority ()
 {
   ACE_Sched_Priority high_priority;
 
@@ -210,20 +208,16 @@ MT_Priority::get_low_priority (u_int num_low_priority,
 }
 
 u_int
-MT_Priority::number_of_priorities (void)
+MT_Priority::number_of_priorities ()
 {
   return this->num_priorities_;
 }
 
 u_int
-MT_Priority::grain (void)
+MT_Priority::grain ()
 {
   return this->grain_;
 }
 
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Globals, ACE_Null_Mutex> *ACE_Singleton<Globals, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Globals,  ACE_Null_Mutex);

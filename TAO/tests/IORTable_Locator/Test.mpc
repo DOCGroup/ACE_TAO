@@ -1,0 +1,50 @@
+// -*- MPC -*-
+project(*IORTable_Locator_idl): taoidldefaults {
+  idlflags += -Sp
+  IDL_Files {
+    simple_test.idl
+  }
+  custom_only = 1
+}
+
+project(*IORTable_Locator_Server): taoserver, iortable {
+  after += *IORTable_Locator_idl
+  Source_Files {
+    simple_test_i.cpp
+    server.cpp
+  }
+  Source_Files {
+    simple_testS.cpp
+    simple_testC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Async_IORTable_Locator_Server): taoserver, async_iortable {
+  exename = async_server
+  after += *IORTable_Locator_idl
+  Source_Files {
+    simple_test_i.cpp
+    async_server.cpp
+  }
+  Source_Files {
+    simple_testS.cpp
+    simple_testC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*IORTable_Locator_Client): taoclient {
+  after += *IORTable_Locator_idl
+  exename = client
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    simple_testC.cpp
+  }
+  IDL_Files {
+  }
+}

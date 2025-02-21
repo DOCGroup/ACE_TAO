@@ -4,8 +4,6 @@
 /**
  *  @file   Fault_Detector_Loader.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -15,18 +13,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ftrtec_export.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 
 #include "tao/orbconf.h"
 
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class Fault_Detector;
 
@@ -35,23 +34,24 @@ namespace FTRTEC {
   {
   public:
     /// Constructor.
-    Fault_Detector_Loader (void);
+    Fault_Detector_Loader ();
 
     /// Destructor.
-    virtual ~Fault_Detector_Loader (void);
+    virtual ~Fault_Detector_Loader ();
 
     virtual int init (int argc,
       ACE_TCHAR* []);
     Fault_Detector* detector();
   private:
-    auto_ptr<Fault_Detector> detector_;
+    std::unique_ptr<Fault_Detector> detector_;
   };
-
-
-  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Fault_Detector_Loader)
-  ACE_STATIC_SVC_REQUIRE(Fault_Detector_Loader)
-  ACE_FACTORY_DECLARE (TAO_FTRTEC, Fault_Detector_Loader)
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Fault_Detector_Loader)
+ACE_STATIC_SVC_REQUIRE(Fault_Detector_Loader)
+ACE_FACTORY_DECLARE (TAO_FTRTEC, Fault_Detector_Loader)
 
 #include /**/ "ace/post.h"
 #endif //FAULT_DETECTOR_LOADER_H

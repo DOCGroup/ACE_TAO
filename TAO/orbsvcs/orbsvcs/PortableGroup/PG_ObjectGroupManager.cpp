@@ -1,20 +1,18 @@
-#include "PG_ObjectGroupManager.h"
-#include "PG_GenericFactory.h"
-#include "PG_conf.h"
-#include "PG_Operators.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "orbsvcs/PortableGroup/PG_GenericFactory.h"
+#include "orbsvcs/PortableGroup/PG_conf.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Reverse_Lock_T.h"
 
-ACE_RCSID (PortableGroup,
-           PG_ObjectGroupManager,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
+TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager ()
   : poa_ (),
     object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
     location_map_ (TAO_PG_MAX_LOCATIONS),
@@ -23,7 +21,7 @@ TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
 {
 }
 
-TAO_PG_ObjectGroupManager::~TAO_PG_ObjectGroupManager (void)
+TAO_PG_ObjectGroupManager::~TAO_PG_ObjectGroupManager ()
 {
   for (TAO_PG_Location_Map::iterator i = this->location_map_.begin ();
        i != this->location_map_.end ();
@@ -49,34 +47,19 @@ TAO_PG_ObjectGroupManager::create_member (
     PortableGroup::ObjectGroup_ptr /* object_group */,
     const PortableGroup::Location & /* the_location */,
     const char * /* type_id */,
-    const PortableGroup::Criteria & /* the_criteria */
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberAlreadyPresent,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::CannotMeetCriteria))
+    const PortableGroup::Criteria & /* the_criteria */)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    PortableGroup::ObjectGroup::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
-    CORBA::Object_ptr member
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberAlreadyPresent,
-                   PortableGroup::ObjectNotAdded))
+    CORBA::Object_ptr member)
 {
   if (CORBA::is_nil (member))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      PortableGroup::ObjectGroup::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -90,9 +73,7 @@ TAO_PG_ObjectGroupManager::add_member (
   return this->add_member_i (object_group,
                              the_location,
                              member,
-                             check_type_id
-                             ACE_ENV_ARG_PARAMETER);
-
+                             check_type_id);
 }
 
 
@@ -102,15 +83,10 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member,
     const char * type_id,
-    const CORBA::Boolean propagate_member_already_present
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::MemberAlreadyPresent,
-                   PortableGroup::NoFactory))
+    const CORBA::Boolean propagate_member_already_present)
 {
   if (CORBA::is_nil (member))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      PortableGroup::ObjectGroup::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -119,7 +95,7 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
 
   PortableGroup::ObjectGroup_var new_group;
 
-  ACE_TRY
+  try
     {
       // TypeId already checked by GenericFactory.
       const CORBA::Boolean check_type_id = 0;
@@ -127,28 +103,23 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
       new_group = this->add_member_i (object_group,
                                       the_location,
                                       member,
-                                      check_type_id
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      check_type_id);
     }
-  ACE_CATCH (PortableGroup::ObjectGroupNotFound, ex)
+  catch (const PortableGroup::ObjectGroupNotFound&)
     {
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_CATCH (PortableGroup::MemberAlreadyPresent, ex)
+  catch (const PortableGroup::MemberAlreadyPresent&)
     {
       if (propagate_member_already_present)
-        ACE_RE_THROW;
+        throw;
       else
-        ACE_TRY_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
     }
-  ACE_CATCH (PortableGroup::ObjectNotAdded, ex)
+  catch (const PortableGroup::ObjectNotAdded&)
     {
-      ACE_TRY_THROW (PortableGroup::NoFactory (the_location,
-                                               type_id));
+      throw PortableGroup::NoFactory (the_location, type_id);
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
   return new_group._retn ();
 }
@@ -158,45 +129,36 @@ TAO_PG_ObjectGroupManager::add_member_i (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member,
-    const CORBA::Boolean check_type_id
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberAlreadyPresent,
-                   PortableGroup::ObjectNotAdded))
+    const CORBA::Boolean check_type_id)
 {
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
-    this->get_group_entry (object_group
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+    this->get_group_entry (object_group);
 
   if (check_type_id)
     {
       CORBA::Boolean right_type_id =
         this->valid_type_id (object_group,
                              group_entry,
-                             member
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+                             member);
 
       if (!right_type_id)
         {
           // The member's type_id does not match the object group's
           // type_id.
-          ACE_THROW_RETURN (PortableGroup::ObjectNotAdded (),
-                            PortableGroup::ObjectGroup::_nil ());
+          throw PortableGroup::ObjectNotAdded ();
         }
     }
 
   TAO_PG_ObjectGroup_Array * groups = 0;
   if (this->location_map_.find (the_location, groups) == 0
       && this->member_already_present (*groups, group_entry))
-    ACE_THROW_RETURN (PortableGroup::MemberAlreadyPresent (),
-                      PortableGroup::ObjectGroup::_nil ());
+    throw PortableGroup::MemberAlreadyPresent ();
 
   TAO_PG_MemberInfo member_info;
+  member_info.group    = PortableGroup::ObjectGroup::_duplicate (object_group);
   member_info.member   = CORBA::Object::_duplicate (member);
   member_info.location = the_location;
+  member_info.is_alive = true;
 
   if (groups == 0)
     {
@@ -207,15 +169,13 @@ TAO_PG_ObjectGroupManager::add_member_i (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (0);
 
-      auto_ptr<TAO_PG_ObjectGroup_Array> safe_groups (groups);
+      std::unique_ptr<TAO_PG_ObjectGroup_Array> safe_groups (groups);
 
       // This should not fail!
       if (this->location_map_.bind (the_location, groups) != 0)
         {
-          ACE_THROW_RETURN (PortableGroup::ObjectNotAdded (),
-                            PortableGroup::ObjectGroup::_nil ());
+          throw PortableGroup::ObjectNotAdded ();
         }
 
       (void) safe_groups.release ();
@@ -231,8 +191,7 @@ TAO_PG_ObjectGroupManager::add_member_i (
   // Don't bother checking for duplicates since a check is already
   // performed when binding to the location map above.
   if (group_entry->member_infos.insert_tail (member_info) != 0)
-    ACE_THROW_RETURN (PortableGroup::ObjectNotAdded (),
-                      PortableGroup::ObjectGroup::_nil ());
+    throw PortableGroup::ObjectNotAdded ();
 
   return PortableGroup::ObjectGroup::_duplicate (object_group);
 }
@@ -240,42 +199,27 @@ TAO_PG_ObjectGroupManager::add_member_i (
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
+    const PortableGroup::Location & the_location)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
-    this->get_group_entry (object_group
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+    this->get_group_entry (object_group);
 
   TAO_PG_ObjectGroup_Array * groups = 0;
   if (this->location_map_.find (the_location, groups) != 0)
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
-                      PortableGroup::ObjectGroup::_nil ());
+    throw PortableGroup::ObjectGroupNotFound ();
 
   // Multiple members from different object groups may reside at the
   // same location.  Iterate through the list to attempt to find a
-  // match for the exact object group.
-  size_t to_be_removed = 0;
+  // match for the exact object group. If no match, -1 is returned.
+  int to_be_removed = this->get_object_group_position (*groups, group_entry);
 
-  // get the position of the object group in the object_group_array
-  to_be_removed = this->get_object_group_position (*groups, group_entry);
+  if (to_be_removed == -1)
+    throw PortableGroup::ObjectGroupNotFound ();
 
   // remove the element from the array and resize the array.
-  const size_t groups_len = groups->size ();
-  size_t j;
-  for (size_t i = to_be_removed; i < groups_len - 1; ++i)
-    {
-      j = i + 1;
-      (*groups)[i] = (*groups)[j];
-    }
-
-  groups->size (groups_len - 1);
+  this->remove_entry_from_groups (to_be_removed, groups);
 
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
@@ -291,19 +235,32 @@ TAO_PG_ObjectGroupManager::remove_member (
         {
           // Give the GenericFactory a chance to delete a member if
           // its membership is under infrastructure control.
-          this->generic_factory_->delete_member (group_entry->group_id,
-                                                 the_location
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+          if (this->generic_factory_)
+            {
+              CORBA::ULong group_id = group_entry->group_id;
+              // Release the lock during the factory delete_member()
+              // which may invoke delete_object()on registered factory.
+              // No need to block other threads during the invocation.
+              ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (this->lock_);
+
+              ACE_GUARD_RETURN (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
+                                reverse_guard,
+                                reverse_lock,
+                                PortableGroup::ObjectGroup::_nil ());
+
+              this->generic_factory_->delete_member (group_id,
+                                                     the_location);
+            }
 
           if (member_infos.remove (info) == 0)
             {
-              this->generic_factory_->check_minimum_number_members (
-                object_group,
-                group_entry->group_id,
-                group_entry->type_id.in ()
-                ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+              if (this->generic_factory_)
+                {
+                  this->generic_factory_->check_minimum_number_members (
+                    object_group,
+                    group_entry->group_id,
+                    group_entry->type_id.in ());
+                }
 
               return PortableGroup::ObjectGroup::_duplicate (object_group);
             }
@@ -312,23 +269,18 @@ TAO_PG_ObjectGroupManager::remove_member (
         }
     }
 
-  ACE_THROW_RETURN (PortableGroup::MemberNotFound (),
-                    PortableGroup::ObjectGroup::_nil ());
+  throw PortableGroup::MemberNotFound ();
 }
+
 
 PortableGroup::Locations *
 TAO_PG_ObjectGroupManager::locations_of_members (
-    PortableGroup::ObjectGroup_ptr object_group
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
+    PortableGroup::ObjectGroup_ptr object_group)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
-    this->get_group_entry (object_group
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->get_group_entry (object_group);
 
   PortableGroup::Locations *temp = 0;
   ACE_NEW_THROW_EX (temp,
@@ -338,13 +290,10 @@ TAO_PG_ObjectGroupManager::locations_of_members (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::Locations_var locations = temp;
 
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
-
-  locations->length (static_cast<CORBA::ULong> (member_infos.size ()));
 
   CORBA::ULong loc = 0;
   TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
@@ -352,28 +301,35 @@ TAO_PG_ObjectGroupManager::locations_of_members (
   for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
        i != end;
        ++i)
-    locations[loc++] = (*i).location;
-
+  {
+    // This flag is only set to false and used by TAO_LB_LoadManager
+    // which uses this flag to help avoid same member be returned by
+    // next member multiple times.
+    // The flag is always true for any other non-LB services.
+    if ((*i).is_alive)
+    {
+      locations->length (loc + 1);
+      locations[loc++] = (*i).location;
+    }
+  }
   return locations._retn ();
 }
 
+
 PortableGroup::ObjectGroups *
 TAO_PG_ObjectGroupManager::groups_at_location (
-    const PortableGroup::Location & the_location
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    const PortableGroup::Location & the_location)
 {
   PortableGroup::ObjectGroups * ogs;
   ACE_NEW_THROW_EX (ogs,
                     PortableGroup::ObjectGroups,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::ObjectGroups_var object_groups = ogs;
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
-  TAO_PG_ObjectGroup_Array * groups;
+  TAO_PG_ObjectGroup_Array * groups = 0;
   if (this->location_map_.find (the_location, groups) == 0)
     {
       CORBA::ULong len = static_cast<CORBA::ULong> (groups->size ());
@@ -393,10 +349,7 @@ TAO_PG_ObjectGroupManager::groups_at_location (
 
 PortableGroup::ObjectGroupId
 TAO_PG_ObjectGroupManager::get_object_group_id (
-    PortableGroup::ObjectGroup_ptr object_group
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
+    PortableGroup::ObjectGroup_ptr object_group)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -404,12 +357,10 @@ TAO_PG_ObjectGroupManager::get_object_group_id (
                     0);
 
   TAO_PG_ObjectGroup_Map_Entry * entry =
-    this->get_group_entry (object_group
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->get_group_entry (object_group);
 
   if (entry == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    throw CORBA::INTERNAL ();
 
   // Only the lower 32 bits of the 64 bit PortableGroup::ObjectGroupId
   // are ever used.
@@ -418,10 +369,7 @@ TAO_PG_ObjectGroupManager::get_object_group_id (
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::get_object_group_ref (
-    PortableGroup::ObjectGroup_ptr object_group
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
+    PortableGroup::ObjectGroup_ptr object_group)
 {
   TAO_PG_ObjectGroup_Map_Entry * entry = 0;
 
@@ -432,27 +380,20 @@ TAO_PG_ObjectGroupManager::get_object_group_ref (
                       PortableGroup::ObjectGroup::_nil ());
 
 
-    entry = this->get_group_entry (object_group
-                                   ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+    entry = this->get_group_entry (object_group);
   }
 
   if (entry == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      PortableGroup::ObjectGroup::_nil ());
+    throw CORBA::INTERNAL ();
 
-  // This implemenation does not change the object group reference.
+  // This implementation does not change the object group reference.
   return PortableGroup::ObjectGroup::_duplicate (object_group);
 }
 
 CORBA::Object_ptr
 TAO_PG_ObjectGroupManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & loc
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
+    const PortableGroup::Location & loc)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -460,9 +401,7 @@ TAO_PG_ObjectGroupManager::get_member_ref (
                     CORBA::Object::_nil ());
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
-    this->get_group_entry (object_group
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+    this->get_group_entry (object_group);
 
   // This method assumes that it is faster to check for non-existence
   // of an object group (and hence the member) at a given location,
@@ -489,19 +428,13 @@ TAO_PG_ObjectGroupManager::get_member_ref (
 
   // No member of the given object group is present at the given
   // location.
-  ACE_THROW_RETURN (PortableGroup::MemberNotFound (),
-                    CORBA::Object::_nil ());
+  throw PortableGroup::MemberNotFound ();
 }
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
         PortableGroup::ObjectGroupId group_id
-        ACE_ENV_ARG_DECL
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::ObjectGroupNotFound
-      ))
 {
   //@@ If we change the PG's concept of ObjectGroupId from
   // PortableServer::ObjectId to PortableGroup::ObjectGroupId, can
@@ -518,15 +451,13 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
                                       group_entry)
          != 0)
       {
-        ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
-                          PortableGroup::ObjectGroup::_nil ());
+        throw PortableGroup::ObjectGroupNotFound ();
       }
   }
 
   if (group_entry == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        PortableGroup::ObjectGroup::_nil ());
+      throw CORBA::INTERNAL ();
     }
 
   return
@@ -538,16 +469,16 @@ TAO_PG_ObjectGroupManager::create_object_group (
   CORBA::ULong group_id,
   const PortableServer::ObjectId &oid,
   const char * type_id,
-  const PortableGroup::Criteria & the_criteria
-  ACE_ENV_ARG_DECL)
+  const PortableGroup::Criteria & the_criteria)
 {
+  if (CORBA::is_nil (this->poa_.in ()))
+    throw CORBA::INTERNAL ();
+
   // Create a reference for the ObjectGroup corresponding to the
   // RepositoryId of the object being created.
   CORBA::Object_var object_group =
     this->poa_->create_reference_with_id (oid,
-                                          type_id
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                          type_id);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   ACE_NEW_THROW_EX (group_entry,
@@ -557,9 +488,8 @@ TAO_PG_ObjectGroupManager::create_object_group (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  auto_ptr<TAO_PG_ObjectGroup_Map_Entry> safe_group_entry (group_entry);
+  std::unique_ptr<TAO_PG_ObjectGroup_Map_Entry> safe_group_entry (group_entry);
 
   // Set the RepositoryId associated with the created ObjectGroup_Map
   // entry.
@@ -581,8 +511,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
                       0);
 
     if (this->object_group_map_.bind (oid, group_entry) != 0)
-      ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
-                        PortableGroup::ObjectGroup::_nil ());
+      throw PortableGroup::ObjectNotCreated ();
   }
 
   (void) safe_group_entry.release ();
@@ -592,22 +521,25 @@ TAO_PG_ObjectGroupManager::create_object_group (
 
 void
 TAO_PG_ObjectGroupManager::destroy_object_group (
-  const PortableServer::ObjectId & oid
-  ACE_ENV_ARG_DECL)
+  const PortableServer::ObjectId & oid)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.unbind (oid, group_entry) != 0)
-    ACE_THROW (PortableGroup::ObjectNotFound ());
+    throw PortableGroup::ObjectNotFound ();
 
+  // Must remove entries for group in location_map_ or they
+  // will be accessed in later lookups.
+  this->remove_group_from_location_map (group_entry);
+
+  // The entry can now be destroyed.
   delete group_entry;
 }
 
 char *
 TAO_PG_ObjectGroupManager::type_id (
-  PortableGroup::ObjectGroup_ptr object_group
-  ACE_ENV_ARG_DECL)
+  PortableGroup::ObjectGroup_ptr object_group)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -615,9 +547,7 @@ TAO_PG_ObjectGroupManager::type_id (
                     0);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
-    this->get_group_entry (object_group
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->get_group_entry (object_group);
 
   return CORBA::string_dup (group_entry->type_id.in ());
 }
@@ -640,10 +570,7 @@ TAO_PG_ObjectGroupManager::object_group (const PortableServer::ObjectId & oid)
 
 CORBA::ULong
 TAO_PG_ObjectGroupManager::member_count (
-    PortableGroup::ObjectGroup_ptr group
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
+    PortableGroup::ObjectGroup_ptr group)
 {
 //   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
 //                     guard,
@@ -651,9 +578,7 @@ TAO_PG_ObjectGroupManager::member_count (
 //                     0);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
-    this->get_group_entry (group
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->get_group_entry (group);
 
   return static_cast<CORBA::ULong> (group_entry->member_infos.size ());
 }
@@ -661,19 +586,13 @@ TAO_PG_ObjectGroupManager::member_count (
 void
 TAO_PG_ObjectGroupManager::poa (PortableServer::POA_ptr p)
 {
-  ACE_ASSERT (CORBA::is_nil (this->poa_.in ())
-              && !CORBA::is_nil (p));
-
   this->poa_ = PortableServer::POA::_duplicate (p);
 }
 
 
 PortableGroup::Properties *
 TAO_PG_ObjectGroupManager::get_properties (
-    PortableGroup::ObjectGroup_ptr object_group
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
+    PortableGroup::ObjectGroup_ptr object_group)
 {
   PortableGroup::Properties * properties = 0;
   ACE_NEW_THROW_EX (properties,
@@ -683,7 +602,6 @@ TAO_PG_ObjectGroupManager::get_properties (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::Properties_var safe_properties = properties;
 
@@ -694,9 +612,7 @@ TAO_PG_ObjectGroupManager::get_properties (
                       0);
 
     TAO_PG_ObjectGroup_Map_Entry * group_entry =
-      this->get_group_entry (object_group
-                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      this->get_group_entry (object_group);
 
     *properties = group_entry->properties;
   }
@@ -706,42 +622,34 @@ TAO_PG_ObjectGroupManager::get_properties (
 
 TAO_PG_ObjectGroup_Map_Entry *
 TAO_PG_ObjectGroupManager::get_group_entry (
-    CORBA::Object_ptr object_group
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
+    CORBA::Object_ptr object_group)
 {
   if (CORBA::is_nil (this->poa_.in ()))
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    throw CORBA::INTERNAL ();
 
   PortableServer::ObjectId_var oid;
-  ACE_TRY
+  try
     {
-      oid = this->poa_->reference_to_id (object_group
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      oid = this->poa_->reference_to_id (object_group);
     }
-  ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
+  catch (const PortableServer::POA::WrongAdapter& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex, "TAO_PG (%P|%t) Unexpected exception\n");
+        ex._tao_print_exception ("TAO_PG (%P|%t) Unexpected exception\n");
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
+  catch (const PortableServer::POA::WrongPolicy& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex, "TAO_PG (%P|%t) Unexpected exception\n");
+        ex._tao_print_exception ("TAO_PG (%P|%t) Unexpected exception\n");
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.find (oid.in (), group_entry) != 0)
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
-                      0);
+    throw PortableGroup::ObjectGroupNotFound ();
 
   return group_entry;
 }
@@ -772,7 +680,8 @@ TAO_PG_ObjectGroupManager::member_already_present (
   return 0;
 }
 
-size_t
+
+int
 TAO_PG_ObjectGroupManager::get_object_group_position (
   const TAO_PG_ObjectGroup_Array &groups,
   TAO_PG_ObjectGroup_Map_Entry * group_entry)
@@ -790,25 +699,24 @@ TAO_PG_ObjectGroupManager::get_object_group_position (
         {
           // Member with given type ID exists at the given
           // location.
-          return i;
+          return (int)i;
         }
     }
 
   // No member with given type ID present at the given location.
-  return 0;
+  return -1;
 }
 
 CORBA::Boolean
 TAO_PG_ObjectGroupManager::valid_type_id (
   PortableGroup::ObjectGroup_ptr object_group,
   TAO_PG_ObjectGroup_Map_Entry * group_entry,
-  CORBA::Object_ptr member
-  ACE_ENV_ARG_DECL)
+  CORBA::Object_ptr member)
 {
   // @todo Strategize this -- e.g. strict type checking.
 
-  ACE_ASSERT (!CORBA::is_nil (member));  // This assertion should
-                                         // never be tripped.
+  if (CORBA::is_nil (member))
+    throw CORBA::BAD_PARAM ();
 
   // Before we can use this code, i.e. the reverse lock, the
   // TAO_PG_ObjectGroup_Entry should be made so that it is reference
@@ -839,52 +747,314 @@ TAO_PG_ObjectGroupManager::valid_type_id (
     // type_id parameter does not match the type of object the
     // GenericFactory creates.
     right_type_id =
-      member->_is_a (type_id.in ()
-                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (right_type_id);
+      member->_is_a (type_id.in ());
   }
 
   // Make sure the group entry still exists.  It may have been
-  // destroyed by another thread.
-  group_entry = this->get_group_entry (object_group
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (right_type_id);
+  // destroyed by another thread. (Call throws if problem.)
+  static_cast<void> (this->get_group_entry (object_group));
 
   return right_type_id;
+}
+
+int
+TAO_PG_ObjectGroupManager::remove_group_from_location_map (
+   TAO_PG_ObjectGroup_Map_Entry * group_entry)
+{
+  // Get the locations from this group entry and for each location
+  // remove that group from the location_map_ entry for that location.
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
+
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
+
+  for (TAO_PG_MemberInfo_Set::iterator info = member_infos.begin ();
+       info != end;
+       ++info)
+  {
+    PortableGroup::Location& loc = (*info).location;
+
+    // Now that we have a location, we must find the groups at that
+    // location and remove this group from them
+    TAO_PG_ObjectGroup_Array * groups = 0;
+    if (this->location_map_.find (loc, groups) == 0)
+      {
+        int to_be_removed = this->get_object_group_position (*groups,
+                                                             group_entry);
+        if (TAO_debug_level > 8)
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::")
+                      ACE_TEXT ("remove_group_from_location_map -")
+                      ACE_TEXT ("Found group at location: %s, position %i, size = %i\n"),
+                      loc[0].id.in (), to_be_removed, groups->size ()));
+        // Dont need to destroy the entry. Just need to remove it from the
+        // Groups Array.
+        this->remove_entry_from_groups (to_be_removed, groups);
+      }
+    else
+      {
+        ORBSVCS_ERROR ((LM_ERROR,
+                    ACE_TEXT ("ERROR: (%P|%t) TAO_PG_ObjectGroupManager::remove_group_from_location_map -")
+                    ACE_TEXT ("Group not at expected location: \n"),
+                    loc[0].id.in ()));
+        return -1;  // The group was not at the location it should have been.
+      }
+  }
+
+  return 0;
+}
+
+size_t
+TAO_PG_ObjectGroupManager::remove_entry_from_groups (int to_be_removed,
+                                                     TAO_PG_ObjectGroup_Array * groups)
+{
+  if (TAO_debug_level > 8)
+    ORBSVCS_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::remove_entry_from_groups -")
+                ACE_TEXT ("Found group at position %i, size = %i\n"),
+                to_be_removed, groups->size ()));
+  // remove the element from the array and resize the array.
+  const size_t groups_len = groups->size ();
+  size_t j;
+  for (size_t i = to_be_removed; i < groups_len - 1; ++i)
+    {
+      j = i + 1;
+      (*groups)[i] = (*groups)[j];
+    }
+
+  size_t new_len = groups_len - 1;
+  groups->size (new_len);
+  return new_len;
 }
 
 void
 TAO_PG_ObjectGroupManager::generic_factory (
   TAO_PG_GenericFactory * generic_factory)
 {
-  ACE_ASSERT (generic_factory != 0);
-
   this->generic_factory_ = generic_factory;
 }
 
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+size_t
+TAO_PG_ObjectGroupManager::member_count (
+    const PortableServer::ObjectId & oid,
+    bool is_alive)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
-template class auto_ptr<TAO_PG_ObjectGroup_Array>;
-template class auto_ptr<TAO_PG_ObjectGroup_Map_Entry>;
+  TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
+  if (this->object_group_map_.find (oid, group_entry) != 0)
+    throw PortableGroup::ObjectGroupNotFound ();
 
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<TAO_PG_ObjectGroup_Array>;
-template class ACE_Auto_Basic_Ptr<TAO_PG_ObjectGroup_Map_Entry>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
+  int count = 0;
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
-#pragma instantiate auto_ptr<TAO_PG_ObjectGroup_Array>
-#pragma instantiate auto_ptr<TAO_PG_ObjectGroup_Map_Entry>
+  for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
+       i != end;
+       ++i)
+  {
+    if ((*i).is_alive == is_alive)
+    {
+      ++count;
+    }
+  }
 
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_PG_ObjectGroup_Array>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_PG_ObjectGroup_Map_Entry>
-#  endif  /* ACE_LACKS_AUTO_PTR */
+  return count;
+}
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+bool
+TAO_PG_ObjectGroupManager::is_alive (
+    const PortableServer::ObjectId & oid,
+    CORBA::Object_ptr member)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+
+  TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
+  if (this->object_group_map_.find (oid, group_entry) != 0)
+    throw PortableGroup::ObjectGroupNotFound ();
+
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
+
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
+
+  for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
+       i != end;
+       ++i)
+  {
+    if ((*i).member->_is_equivalent (member))
+    {
+      return (*i).is_alive;
+    }
+  }
+
+  throw PortableGroup::MemberNotFound ();
+}
+
+
+void TAO_PG_ObjectGroupManager::remove_inactive_members ()
+{
+  TAO_PG_MemberInfo_Set inactive_members;
+
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
+    inactive_members = this->inactive_members_;
+    this->inactive_members_.reset ();
+  }
+
+  TAO_PG_MemberInfo_Set::iterator end = inactive_members.end ();
+  for (TAO_PG_MemberInfo_Set::iterator i = inactive_members.begin ();
+    i != end;
+    ++i)
+  {
+    this->remove_member ((*i).group.in (), (*i).location);
+  }
+}
+
+TAO_PG_MemberInfo_Set
+TAO_PG_ObjectGroupManager::get_members (bool is_alive)
+{
+  TAO_PG_MemberInfo_Set members;
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, TAO_PG_MemberInfo_Set());
+
+    for (TAO_PG_ObjectGroup_Map::iterator j = this->object_group_map_.begin ();
+      j != this->object_group_map_.end ();
+      ++j)
+    {
+      TAO_PG_MemberInfo_Set & member_infos = j->int_id_->member_infos;
+      TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
+
+      for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
+        i != end;
+        ++i)
+      {
+        if ((*i).is_alive == is_alive)
+        {
+          if (members.insert_tail (*i) !=0)
+          {
+            throw CORBA::INTERNAL ();
+          }
+        }
+      }
+    }
+  }
+
+  return members;
+}
+
+void
+TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
+                                             const TimeBase::TimeT& timeout)
+{
+  if (TAO_debug_level > 0)
+    ORBSVCS_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members start\n")));
+
+  /// Get list of active member info.
+  TAO_PG_MemberInfo_Set active_members = this->get_members (true);
+
+  /// Ping each member in the list and add ping failed member to
+  /// inactive member list.
+  TAO_PG_MemberInfo_Set inactive_members;
+  for (TAO_PG_MemberInfo_Set::iterator j = active_members.begin ();
+      j != active_members.end ();
+      ++j)
+  {
+    if (! this->ping (orb, (*j).member, timeout))
+    {
+      if (inactive_members.insert_tail (*j) !=0)
+      {
+        throw CORBA::INTERNAL ();
+      }
+    }
+  }
+  /// Mark the members as inactive in internal group maps.
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
+    for (TAO_PG_MemberInfo_Set::iterator i = inactive_members.begin ();
+      i != inactive_members.end ();
+      ++i)
+    {
+      TAO_PG_ObjectGroup_Map_Entry * group_entry =
+        this->get_group_entry ((*i).group.in ());
+
+      TAO_PG_MemberInfo_Set & members = group_entry->member_infos;
+      for (TAO_PG_MemberInfo_Set::iterator j = members.begin ();
+        j != members.end ();
+        ++j)
+      {
+        if ((*j) == (*i))
+          (*j).is_alive = false;
+      }
+    }
+
+    /// keep a copy of inactive member for removing.
+    this->inactive_members_ = inactive_members;
+  }
+
+  if (TAO_debug_level > 0)
+    ORBSVCS_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members end\n")));
+}
+
+bool
+TAO_PG_ObjectGroupManager::ping (CORBA::ORB_ptr orb,
+                                 CORBA::Object_var& obj,
+                                 const TimeBase::TimeT& tt)
+{
+  bool status = true;
+  if (CORBA::is_nil (obj.in ()))
+    throw CORBA::OBJECT_NOT_EXIST ();
+
+  // The ping() is used by LoadBalancer which may use RW strategy.
+  // The validate thread invokes the _non_existent call to members
+  // sequencially. We have to put a timeout on the call in case
+  // the client side is not processing ORB requests at this time.
+  // In the event that the timeout exception occurs, we will assume
+  // that the peer is still around.  If we get any other exception
+  // we will say that the member is not available anymore.
+  TimeBase::TimeT timeout = tt;
+  CORBA::Any timeout_any;
+  timeout_any <<= timeout;
+
+  CORBA::PolicyList policy_list (1);
+  policy_list.length (1);
+  policy_list[0] = orb->
+                    create_policy (
+                          Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                          timeout_any);
+  CORBA::Object_var rtt_obj =
+    obj->_set_policy_overrides (policy_list,
+                                CORBA::ADD_OVERRIDE);
+
+  // Clean up the policy that was allocated in the try/catch
+  for (CORBA::ULong i = 0; i < policy_list.length (); i++)
+    policy_list[i]->destroy ();
+
+  try {
+    status = ! rtt_obj->_non_existent ();
+  }
+  catch (const CORBA::TIMEOUT& ex)
+  {
+    if (TAO_debug_level > 8)
+    {
+      ex._tao_print_exception ("TAO_PG_ObjectGroupManager::ping");
+    }
+  }
+  catch (const CORBA::Exception& ex)
+  {
+    if (TAO_debug_level > 8)
+    {
+      ex._tao_print_exception ("TAO_PG_ObjectGroupManager::ping");
+    }
+
+    status = false;
+  }
+
+  return status;
+}
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 //
 // ============================================================================
 //
@@ -23,15 +22,10 @@
 
 class ECT_Throughput : public ECT_Driver
 {
-  //
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
 public:
-  ECT_Throughput (void);
+  ECT_Throughput ();
 
-  virtual ~ECT_Throughput (void);
+  virtual ~ECT_Throughput ();
 
   enum {
     MAX_CONSUMERS = 16,
@@ -40,35 +34,32 @@ public:
     // Maximum number of suppliers.
   };
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Execute the test.
 
-  virtual void shutdown_consumer (void* consumer_cookie
-                                  ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void shutdown_consumer (void* consumer_cookie);
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.
 
 private:
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
-                          RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
-  void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec);
+  void disconnect_consumers ();
   // Connect and disconnect the consumers.
 
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
-                          RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
-  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec);
+  void disconnect_suppliers ();
   // Connect the suppliers.
 
-  void activate_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_suppliers ();
   // Activate the suppliers, i.e. they start generating events.
 
-  void dump_results (void);
+  void dump_results ();
   // Dump the results for each supplier.
 
 private:
@@ -114,7 +105,7 @@ private:
   // Supplier2: [start + 2*shift, start + 2*shift + count)
   // And so on.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 
   CORBA::ORB_var orb_;

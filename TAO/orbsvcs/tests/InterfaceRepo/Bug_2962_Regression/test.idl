@@ -1,0 +1,12 @@
+#ifndef __IFR_NESTING_ARRAY_TEST_DEFINED
+#define __IFR_NESTING_ARRAY_TEST_DEFINED
+
+typedef short ShortArray_1[1];
+struct MyStruct
+{
+  ShortArray_1 innerArray;             // Must NOT be [2] to show up the problem.
+};
+
+typedef MyStruct arrayOfStruct[2]; // Must be arrayOfStruct[2] to pass client.cpp test
+
+#endif

@@ -4,8 +4,6 @@
 /**
  * @file PG_conf.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -23,6 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/PortableGroupC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifndef TAO_PG_MAX_OBJECT_GROUPS  // @@ why create arbitrary limits?
 /// The maximum number of object groups to be managed by the
@@ -54,6 +54,8 @@ const PortableGroup::InitialNumberMembersValue TAO_PG_INITIAL_NUMBER_MEMBERS =
 const PortableGroup::MinimumNumberMembersValue TAO_PG_MINIMUM_NUMBER_MEMBERS =
   TAO_PG_INITIAL_NUMBER_MEMBERS;
 #endif  /* TAO_PG_MINIMUM_NUMBER_MEMBERS */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

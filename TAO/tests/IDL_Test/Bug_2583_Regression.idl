@@ -1,0 +1,10 @@
+// Test Bug 2583
+
+module Test {
+  local interface DynAny {};
+  struct NameDynAnyPair {
+    string   id;
+    DynAny      value;
+  };
+  typedef sequence<NameDynAnyPair> NameDynAnyPairSeq;
+};

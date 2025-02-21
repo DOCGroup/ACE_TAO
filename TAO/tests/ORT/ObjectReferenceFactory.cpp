@@ -1,13 +1,5 @@
 #include "ObjectReferenceFactory.h"
-
-
-ACE_RCSID (ORT,
-           ObjectReferenceFactory,
-           "$Id$")
-
-
 #include "tao/debug.h"
-
 
 ObjectReferenceFactory::ObjectReferenceFactory (
   PortableInterceptor::ObjectReferenceFactory * old_orf)
@@ -17,7 +9,18 @@ ObjectReferenceFactory::ObjectReferenceFactory (
   CORBA::add_ref (old_orf);
 }
 
-ObjectReferenceFactory::~ObjectReferenceFactory (void)
+::CORBA::ValueBase *
+ObjectReferenceFactory::_copy_value ()
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  ACE_NEW_THROW_EX (
+    ret_val,
+    ObjectReferenceFactory (old_orf_.inout ()),
+    ::CORBA::NO_MEMORY ());
+  return ret_val;
+}
+
+ObjectReferenceFactory::~ObjectReferenceFactory ()
 {
   // No need to call CORBA::remove_ref() on this->old_orf_.  It is a
   // "_var" object, meaning that will be done automatically.
@@ -26,8 +29,7 @@ ObjectReferenceFactory::~ObjectReferenceFactory (void)
 CORBA::Object_ptr
 ObjectReferenceFactory::make_object (
     const char *repository_id,
-    const PortableInterceptor::ObjectId & id
-    ACE_ENV_ARG_DECL)
+    const PortableInterceptor::ObjectId & id)
 {
   ACE_ASSERT (repository_id != 0);
 
@@ -35,6 +37,5 @@ ObjectReferenceFactory::make_object (
               "Invoked custom ObjectReferenceFactory::make_object()\n"));
 
   return this->old_orf_->make_object (repository_id,
-                                      id
-                                      ACE_ENV_ARG_PARAMETER);
+                                      id);
 }

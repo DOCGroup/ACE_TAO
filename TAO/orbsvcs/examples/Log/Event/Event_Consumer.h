@@ -4,11 +4,8 @@
 /**
  *  @file   Event_Consumer.h
  *
- *  $Id$
- *
  *  An example of using the Event_Logging_Service.
  *  The Event_Consumer consumes log-generated events.
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
@@ -34,24 +31,20 @@ class Consumer : public POA_CosEventComm::PushConsumer
   //   This class is a consumer of log generated events.
   //
 public:
-  Consumer (void);
+  Consumer ();
   // Constructor
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
   // = The CosEventComm::PushConsumer methods
 
-  virtual void push (const CORBA::Any &event
-                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const CORBA::Any &event);
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:
-
   // = Data Members
   CORBA::ULong event_count_;
   // Keep track of the number of events received.
@@ -68,7 +61,6 @@ private:
 
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_;
   // The proxy that we are connected to.
-
 };
 
 #endif /* EVENT_CONSUMER_H */

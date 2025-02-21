@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Stock_i.h"
 #include <orbsvcs/Event_Utilities.h>
 
@@ -16,12 +14,12 @@ protected:
       ref_count_(0) {}
 
 public:
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void _add_ref ()
   {
     ++this->ref_count_;
   }
 
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void _remove_ref ()
   {
     CORBA::ULong new_count = --this->ref_count_;
 
@@ -40,33 +38,32 @@ Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
   this->data_.price = price;
 }
 
-Quoter_Stock_i::~Quoter_Stock_i (void)
+Quoter_Stock_i::~Quoter_Stock_i ()
 {
   if (consumer_proxy_.in ())
     consumer_proxy_->disconnect_push_consumer ();
 }
 
 char *
-Quoter_Stock_i::symbol () throw (CORBA::SystemException)
+Quoter_Stock_i::symbol ()
 {
   return CORBA::string_dup (this->data_.symbol.in ());
 }
 
 char *
-Quoter_Stock_i::full_name () throw (CORBA::SystemException)
+Quoter_Stock_i::full_name ()
 {
   return CORBA::string_dup (this->data_.full_name.in ());
 }
 
 CORBA::Double
-Quoter_Stock_i::price () throw (CORBA::SystemException)
+Quoter_Stock_i::price ()
 {
   return this->data_.price;
 }
 
 void
 Quoter_Stock_i::set_price (CORBA::Double new_price)
-  throw (CORBA::SystemException)
 {
   this->data_.price = new_price;
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
@@ -93,8 +90,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 }
 
 void
-Quoter_Stock_i::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  throw (CORBA::SystemException)
+Quoter_Stock_i::disconnect_push_supplier ()
 {
   // Forget about the consumer it is not there anymore
   this->consumer_proxy_ =
@@ -123,12 +119,3 @@ Quoter_Stock_i::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
                                                  publications.get_SupplierQOS ());
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

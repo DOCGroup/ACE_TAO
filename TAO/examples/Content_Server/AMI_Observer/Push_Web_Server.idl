@@ -1,5 +1,3 @@
-// $Id$
-
 module Web_Server
 // = TITLE
 //   IDL schema definition for Web server interface.
@@ -15,7 +13,7 @@ module Web_Server
                        in boolean last_chunk);
     };
 
-  exception Error_Result 
+  exception Error_Result
     {
       // Status of the <register_callback> operation.  These
       // values should map onto the normal HTTP

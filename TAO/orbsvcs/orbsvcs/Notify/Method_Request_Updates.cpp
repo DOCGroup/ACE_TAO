@@ -1,12 +1,9 @@
-// $Id$
-
-#include "Method_Request_Updates.h"
-
-ACE_RCSID(Notify, TAO_Notify_Method_Request_Updates, "$Id$")
-
+#include "orbsvcs/Notify/Method_Request_Updates.h"
 #include "tao/debug.h"
-#include "Proxy.h"
-#include "Peer.h"
+#include "orbsvcs/Notify/Proxy.h"
+#include "orbsvcs/Notify/Peer.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Updates::TAO_Notify_Method_Request_Updates (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy)
   : TAO_Notify_Method_Request_Updates_Base (added, removed, proxy)
@@ -18,12 +15,12 @@ TAO_Notify_Method_Request_Updates::~TAO_Notify_Method_Request_Updates ()
 }
 
 int
-TAO_Notify_Method_Request_Updates::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Updates::execute ()
 {
-  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->execute_i ();
 }
 
-/********************************************************************************************************/
+/*****************************************************************************/
 
 TAO_Notify_Method_Request_Updates_No_Copy::TAO_Notify_Method_Request_Updates_No_Copy (const TAO_Notify_EventTypeSeq& added
                                                                               , const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy)
@@ -36,49 +33,21 @@ TAO_Notify_Method_Request_Updates_No_Copy::~TAO_Notify_Method_Request_Updates_No
 }
 
 TAO_Notify_Method_Request_Queueable*
-TAO_Notify_Method_Request_Updates_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Updates_No_Copy::copy ()
 {
-  TAO_Notify_Method_Request_Queueable* request;
+  TAO_Notify_Method_Request_Queueable* request = 0;
 
   ACE_NEW_THROW_EX (request,
                     TAO_Notify_Method_Request_Updates (this->added_, this->removed_, this->proxy_),
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
 
   return request;
 }
 
 int
-TAO_Notify_Method_Request_Updates_No_Copy::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Updates_No_Copy::execute ()
 {
-  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->execute_i ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
-, TAO_Notify_Proxy::Ptr
-, const TAO_Notify_EventTypeSeq&
-, TAO_Notify_Proxy*
->;
-
-template class TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&
-, TAO_Notify_Proxy*
-, const TAO_Notify_EventTypeSeq&
-, TAO_Notify_Proxy*
->;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
-, TAO_Notify_Proxy::Ptr
-, const TAO_Notify_EventTypeSeq&
-, TAO_Notify_Proxy*
->
-
-#pragma instantiate TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&
-, TAO_Notify_Proxy*
-, const TAO_Notify_EventTypeSeq&
-, TAO_Notify_Proxy*
->
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Tagged_Profile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Acceptor_Registry.h"
@@ -10,12 +8,10 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Tagged_Profile.i"
+# include "tao/Tagged_Profile.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Tagged_Profile,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
@@ -25,32 +21,28 @@ TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
     this->orb_core_->lane_resources ().acceptor_registry ();
 
   // Get the right acceptor for the tag in the TaggedProfile
-  TAO_Acceptor *acceptor =
-    acceptor_registry.get_acceptor (profile.tag);
+  TAO_Acceptor *acceptor = acceptor_registry.get_acceptor (profile.tag);
 
   if (acceptor)
     {
       // Get the object key
-      int retval =
-        acceptor->object_key (profile,
-                              this->object_key_);
-      if (retval == -1)
+      if (acceptor->object_key (profile, this->object_key_) == -1)
         {
-          return 0;
+          return false;
         }
     }
   else
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t)TAO_Tagged_Profile \n")));
+          TAOLIB_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t)TAO_Tagged_Profile\n")));
         }
 
-      return 0;
+      return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -75,7 +67,7 @@ TAO_Tagged_Profile::unmarshall_target_address (TAO_InputCDR &cdr)
           break;
 
         default:
-          hdr_status = 0;
+          hdr_status = false;
           break;
         }
     }
@@ -84,8 +76,7 @@ TAO_Tagged_Profile::unmarshall_target_address (TAO_InputCDR &cdr)
 }
 
 CORBA::Boolean
-TAO_Tagged_Profile::unmarshall_object_key (
-    TAO_InputCDR &input)
+TAO_Tagged_Profile::unmarshall_object_key (TAO_InputCDR &input)
 {
   this->discriminator_ = TAO_Target_Specification::Key_Addr;
 
@@ -94,11 +85,9 @@ TAO_Tagged_Profile::unmarshall_object_key (
 
 
 CORBA::Boolean
-TAO_Tagged_Profile::unmarshall_object_key_i (
-    TAO_InputCDR &input)
+TAO_Tagged_Profile::unmarshall_object_key_i (TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status =
-    (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   CORBA::Long key_length = 0;
   hdr_status = hdr_status && input.read_long (key_length);
@@ -111,7 +100,7 @@ TAO_Tagged_Profile::unmarshall_object_key_i (
                                  0);
       input.skip_bytes (key_length);
 
-      this->object_key_extracted_ = 1;
+      this->object_key_extracted_ = true;
     }
 
   return hdr_status;
@@ -119,11 +108,9 @@ TAO_Tagged_Profile::unmarshall_object_key_i (
 
 
 CORBA::Boolean
-TAO_Tagged_Profile::unmarshall_iop_profile_i (
-    TAO_InputCDR &input)
+TAO_Tagged_Profile::unmarshall_iop_profile_i (TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status =
-    (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   // Extract into the IOP::Tagged profile.
   hdr_status &= input >> this->profile_;
@@ -132,11 +119,9 @@ TAO_Tagged_Profile::unmarshall_iop_profile_i (
 }
 
 CORBA::Boolean
-TAO_Tagged_Profile::unmarshall_ref_addr_i (
-    TAO_InputCDR &input)
+TAO_Tagged_Profile::unmarshall_ref_addr_i (TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status =
-    (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   /*
    * The GIOP::IORAddressingInfo is defined as follows
@@ -157,8 +142,7 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (
   // First read the profile index
   CORBA::ULong prof_index =  0;
 
-  hdr_status =
-    hdr_status && input.read_ulong (prof_index);
+  hdr_status = hdr_status && input.read_ulong (prof_index);
 
   // Set the value in TAO_Tagged_Profile
   if (hdr_status)
@@ -172,14 +156,13 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (
 
   if (hdr_status)
     {
-      // Set the type_id
-      this->type_id_.set (input.rd_ptr (),
-                          0);
+      // Set the type_id (it is not owned by this object)
+      this->type_id_ = input.rd_ptr ();
 
       input.skip_bytes (id_length);
     }
 
-  // Unmarshall the sequnce of TaggedProfiles
+  // Unmarshall the sequence of TaggedProfiles
   IOP::TaggedProfileSeq ior_profiles;
 
   hdr_status &= input >> ior_profiles;
@@ -192,3 +175,5 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (
 
   return hdr_status;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

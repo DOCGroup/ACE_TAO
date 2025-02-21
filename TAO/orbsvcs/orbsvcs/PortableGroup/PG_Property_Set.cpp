@@ -1,9 +1,6 @@
-/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    PG_Property_Set.cpp
- *
- *  $Id$
  *
  *  This file implements classes to help manage the Properties
  *  defined in the Portable Object Group.
@@ -14,8 +11,11 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#include "PG_Property_Set.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "tao/debug.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
 // PG_Property_Set
@@ -25,29 +25,21 @@ TAO::PG_Property_Set::PG_Property_Set()
 {
 }
 
-
-TAO::PG_Property_Set::PG_Property_Set (
-  const PortableGroup::Properties & property_set
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::PG_Property_Set::PG_Property_Set (const PortableGroup::Properties & ps)
   : defaults_ (0)
 {
-  this->decode (property_set ACE_ENV_ARG_PARAMETER);
+  this->decode (ps);
 }
 
-TAO::PG_Property_Set::PG_Property_Set (
-    const PortableGroup::Properties & property_set,
-    PG_Property_Set * defaults
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::PG_Property_Set::PG_Property_Set (const PortableGroup::Properties & ps,
+                                       const PG_Property_Set_var & defaults)
   : defaults_ (defaults)
 {
-  this->decode (property_set ACE_ENV_ARG_PARAMETER);
+  this->decode (ps);
 }
 
 
-TAO::PG_Property_Set::PG_Property_Set (
-    PG_Property_Set * defaults)
+TAO::PG_Property_Set::PG_Property_Set (const PG_Property_Set_var & defaults)
   : defaults_ (defaults)
 {
 }
@@ -58,14 +50,12 @@ TAO::PG_Property_Set::~PG_Property_Set ()
 }
 
 void
-TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  size_t count = property_set.length ();
-  for (size_t nItem = 0; nItem < count; ++nItem)
+  CORBA::ULong const count = property_set.length ();
+  for (CORBA::ULong nItem = 0; nItem < count; ++nItem)
   {
     const PortableGroup::Property & property = property_set[nItem];
     const CosNaming::Name & nsName = property.nam;
@@ -74,9 +64,7 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
     const CosNaming::NameComponent & nc = nsName[0];
 
     this->set_property (static_cast<const char *> (nc.id),
-                        property.val
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                        property.val);
 
 #if 0
     ACE_CString name = static_cast<const char *> (nc.id);
@@ -85,7 +73,6 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
     ACE_NEW_THROW_EX (value_copy,
                       PortableGroup::Value (property.val),
                       CORBA::NO_MEMORY ());
-    ACE_CHECK;
 
     const PortableGroup::Value * replaced_value = 0;
     if (0 == this->values_.rebind (name, value_copy, replaced_value))
@@ -99,12 +86,12 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
     {
       if (TAO_debug_level > 3)
       {
-        ACE_ERROR ( (LM_ERROR,
+        ORBSVCS_ERROR ( (LM_ERROR,
           "%n\n%T: Property_set: rebind failed.\n"
           ));
       }
       // @@ should throw something here
-      ACE_THROW (CORBA::NO_MEMORY ());
+      throw CORBA::NO_MEMORY ();
     }
 #endif
   }
@@ -123,11 +110,10 @@ void TAO::PG_Property_Set::clear ()
 }
 
 void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_set)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
-  size_t count = property_set.length ();
-  for (size_t nItem = 0; nItem < count; ++nItem)
+  CORBA::ULong const count = property_set.length ();
+  for (CORBA::ULong nItem = 0; nItem < count; ++nItem)
   {
     const PortableGroup::Property & property = property_set[nItem];
     const CosNaming::Name & nsName = property.nam;
@@ -150,37 +136,32 @@ void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_se
 
 void TAO::PG_Property_Set::set_property (
   const char * name,
-  const PortableGroup::Value & value
-  ACE_ENV_ARG_DECL)
+  const PortableGroup::Value & value)
 {
   ACE_CString key (name);
   PortableGroup::Value * value_copy;
   ACE_NEW_THROW_EX (
     value_copy, PortableGroup::Value (value),
     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   const PortableGroup::Value * replaced_value = 0;
-  if (0 == this->values_.rebind (name, value_copy, replaced_value))
-  {
-    if (0 != replaced_value)
-    {
+  int rebind_result = this->values_.rebind (name, value_copy, replaced_value);
+  if (1 == rebind_result)
+    { // Existing value was replaced
       delete replaced_value;
     }
-  }
-  else
-  {
-    if (TAO_debug_level > 3)
-    {
-      ACE_ERROR ( (LM_ERROR,
-        "%n\n%T: Property_set: rebind failed.\n"
-        ));
+  else if (-1 == rebind_result)
+    { // Value was not rebound.
+      if (TAO_debug_level > 3)
+        {
+          ORBSVCS_ERROR ( (LM_ERROR,
+                       "%n\n%T: Property_set: rebind failed.\n"
+                       ));
+        }
+      // @@ should throw something here
+      throw CORBA::NO_MEMORY ();
     }
-    // @@ should throw something here
-    ACE_THROW (CORBA::NO_MEMORY ());
-  }
 }
-
 
 
 void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & property_set) const
@@ -188,9 +169,9 @@ void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & propert
   ValueMap merged_values;
   this->merge_properties (merged_values);
 
-  property_set.length (merged_values.current_size ());
+  property_set.length (static_cast<CORBA::ULong> (merged_values.current_size ()));
 
-  size_t pos = 0;
+  CORBA::ULong pos = 0;
   for (ValueMapIterator it = merged_values.begin ();
         it != merged_values.end ();
         ++it)
@@ -229,7 +210,6 @@ void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
 }
 
 
-
 int TAO::PG_Property_Set::find (
   const ACE_CString & key,
   const PortableGroup::Value *& pValue) const
@@ -246,9 +226,13 @@ int TAO::PG_Property_Set::find (
   return found;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 //#define PG_PS_UNIT_TEST
 #ifdef PG_PS_UNIT_TEST
-#include "PG_Properties_Encoder.h"
+#include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int TAO_PG::test_encode_decode ()
 {
@@ -286,7 +270,7 @@ int TAO_PG::test_encode_decode ()
   {
     if (longResult != testLong)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         "%n\n%T: %s = %d expecting %d\n",
           testLongKey,
           (int)longResult,
@@ -297,7 +281,7 @@ int TAO_PG::test_encode_decode ()
   }
   else
   {
-    ACE_ERROR ( (LM_ERROR,
+    ORBSVCS_ERROR ( (LM_ERROR,
       "%n\n%T: Can't find value for %s\n", testLongKey
       ));
     result = 0;
@@ -308,7 +292,7 @@ int TAO_PG::test_encode_decode ()
   {
     if (0 != ACE_OS::strcmp (testString, stringResult))
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         "%n\n%T: %s = \"%s\" expecting \"%s\"\n",
           testStringKey,
           (int)stringResult,
@@ -319,7 +303,7 @@ int TAO_PG::test_encode_decode ()
   }
   else
   {
-    ACE_ERROR ( (LM_ERROR,
+    ORBSVCS_ERROR ( (LM_ERROR,
       "%n\n%T: Can't find value for %s\n", testStringKey
       ));
     result = 0;
@@ -331,7 +315,7 @@ int TAO_PG::test_encode_decode ()
   {
     if (doubleResult != testDouble)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         "%n\n%T: %s = \"%f\" expecting \"%f\"\n",
           testDoubleKey,
           doubleResult,
@@ -342,7 +326,7 @@ int TAO_PG::test_encode_decode ()
   }
   else
   {
-    ACE_ERROR ( (LM_ERROR,
+    ORBSVCS_ERROR ( (LM_ERROR,
       "%n\n%T: Can't find value for %s\n", testDoubleKey
       ));
     result = 0;
@@ -350,28 +334,7 @@ int TAO_PG::test_encode_decode ()
 
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif // PG_PS_UNIT_TEST
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Hash_Map_Manager<
-    ACE_CString,
-    const PortableGroup::Value *,
-    ACE_SYNCH_NULL_MUTEX>;
-
-   template class ACE_Hash_Map_Iterator<
-      ACE_CString,
-      const PortableGroup::Value *,
-      ACE_SYNCH_NULL_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate ACE_Hash_Map_Manager<  \
-    ACE_CString,                            \
-    const PortableGroup::Value *,           \
-    ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<  \
-      ACE_CString,                          \
-      const PortableGroup::Value *,         \
-      ACE_SYNCH_NULL_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

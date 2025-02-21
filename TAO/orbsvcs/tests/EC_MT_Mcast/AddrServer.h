@@ -1,4 +1,4 @@
-// $Id$
+// -*- C++ -*-
 // Reused from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
 #ifndef ADDRSERVER_H
@@ -6,6 +6,10 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_INET_Addr;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class AddrServer : public POA_RtecUDPAdmin::AddrServer
 {
@@ -22,17 +26,18 @@ class AddrServer : public POA_RtecUDPAdmin::AddrServer
   //   provided at initialization time.
   //
 public:
-  AddrServer (const RtecUDPAdmin::UDP_Addr& addr);
+  AddrServer (const ACE_INET_Addr &addr);
   // Constructor
 
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr
-                         ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                         RtecUDPAdmin::UDP_Addr_out addr);
+
+  virtual void get_address (const RtecEventComm::EventHeader& header,
+                            RtecUDPAdmin::UDP_Address_out addr);
 
 private:
-  RtecUDPAdmin::UDP_Addr addr_;
+  RtecUDPAdmin::UDP_Address addr_;
   // The address
 };
 

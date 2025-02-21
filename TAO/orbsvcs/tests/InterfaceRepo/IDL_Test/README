@@ -1,0 +1,41 @@
+
+
+This directory runs the IFR compiler on the various IDL compiler
+stress tests found in $TAO_ROOT/tests/IDL_Test.  It will automatically
+pick up new IDL files as they are added.
+
+The testing goes in three phases:
+
+1. Test general parsing, IFR info generation and IFR info removal,
+   ignoring any issues which may arise due to duplicate symbols/RIDs.
+
+   For each IDL file {
+     run the IFR
+     tao_ifr on the IDL file
+     tao_ifr on the IDL file to remove from the IFR
+     terminate the IFR
+   }
+
+   FAILURE CONDITIONS:
+   (a) IFR crashes
+   (b) IFR does not get the correct information
+   (c) IFR does not remove the correct information
+   (d) tao_ifr crashes
+   (e) tao_ifr fails
+
+2. Test general parsing, IFR info generation and IFR info removal
+   across the entire set of IDL files, allowing issues which may arise
+   due to duplicate symbols/RIDs to come to light.
+
+   Run the IFR
+   For each IDL file {
+     skip the IDL file if the IDL file is known to fail in #1
+     tao_ifr on the IDL file
+   }
+
+   For each IDL file {
+     skip the IDL file if the IDL file is known to fail in #1
+     tao_ifr on the IDL file to remove from the IFR
+   }
+
+3. Repeat #2, but using the "-Si" option.

@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : notification_serv, rtcorba {
+  after     += RT_Notification
+  libs      += TAO_RT_Notification
+  tagchecks += RT_Notify
+}

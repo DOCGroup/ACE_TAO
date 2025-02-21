@@ -1,0 +1,26 @@
+
+
+	This directory contains a very simple example of a
+multicast-based federation of event services.
+
+	The example is a single process that contains:
+
+1) An event service
+2) A supplier
+3) A consumer
+4) The gateways required to send and receive data through the
+   multicast group.
+
+	The tests should be executed as follows:
+
+$ MCast
+
+	If you need to set the multicast group and port you can use
+the -m option:
+
+$ MCast -m 224.100.2.1:12345
+
+	Run the test in multiple machines on the same network.  If
+there is only one process you should only receive 1000 events in the
+local consumer.  If there is more than one machine you should receive
+more events.

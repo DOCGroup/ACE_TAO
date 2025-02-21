@@ -1,22 +1,104 @@
 // -*- IDL -*-
-
-// $Id$
-
 #include "ImR_Activator.idl"
 
 module ImplementationRepository
 {
-  interface Locator : Administration
+
+  interface Locator : AdministrationExt
   {
-    // returns a token that can be used (along with activator name) to unregister the activator.
+    /// Register an activator
+    /// @return Returns a token that can be used (along with activator name) to
+    /// unregister the activator.
     long register_activator (in string name, in Activator act);
- 
-    // You must pass in the token returned from register_activator.
+
+    /// Unregister an activator. You must pass in the token
+    /// returned from register_activator.
     void unregister_activator (in string name, in long token);
 
-    // The ImR_Activator calls this method to notify death of child
-    // process that it had started.
-    void notify_child_death (in string name);
+    /// Activators call this method to notify death of child
+    /// process including pid to disambiguate child instances
+    void child_death_pid (in string name, in long pid);
+
+    /// Activators call this method to notify spawn of child
+    /// process to supply pid for reference
+    void spawn_pid (in string name, in long pid);
+  };
+
+  enum UpdateType
+  {
+    repo_update,
+    repo_remove,
+    access
+  };
+
+  enum EntityType
+  {
+    repo_activator,
+    repo_server
+  };
+
+  struct RepoIdent
+  {
+    long repo_id;
+    long repo_type;
+  };
+
+  enum AAM_Status
+  {
+    AAM_INIT,
+    AAM_SERVER_STARTED_RUNNING,
+    AAM_WAIT_FOR_RUNNING,
+    AAM_WAIT_FOR_PING,
+    AAM_WAIT_FOR_ALIVE,
+    AAM_WAIT_FOR_DEATH,
+    AAM_SERVER_READY,
+    AAM_SERVER_DEAD,
+    AAM_NOT_MANUAL,
+    AAM_NO_ACTIVATOR,
+    AAM_NO_COMMANDLINE,
+    AAM_RETRIES_EXCEEDED,
+    AAM_UPDATE_FAILED,
+    AAM_ACTIVE_TERMINATE
+  };
+
+  struct RepoInfo
+  {
+    EntityType kind;
+    RepoIdent repo;
+  };
+
+  union UpdateAction switch (UpdateType)
+  {
+  case repo_update:
+    RepoInfo info;
+  case repo_remove:
+    EntityType kind;
+  case access:
+    AAM_Status state;
+  };
+
+  struct UpdateInfo
+  {
+    string name;
+    UpdateAction action;
+  };
+
+  typedef sequence<UpdateInfo> UpdateInfoSeq;
+
+  exception InvalidPeer
+  {
+    string reason;
+  };
+
+  interface UpdatePushNotification
+  {
+    /// indicate existing server with name was updated
+    oneway void notify_update (in unsigned long long seq_num, in UpdateInfoSeq info);
+
+    /// register peer as replica and indicate sequence number
+    void register_replica (in UpdatePushNotification peer,
+                           inout string ft_imr_ior,
+                           out unsigned long long seq_num)
+      raises (InvalidPeer);
   };
 };
-

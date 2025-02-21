@@ -1,0 +1,727 @@
+commit 419b7060685fe7df63f0a91bc64bcaf9848a84fb
+Merge: 1a0d76d1c62 adb7bcc177d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 27 12:14:49 2023 +0100
+
+    Merge pull request #2056 from jwillemsen/jwi-osmmanredef
+    
+    Fix redefinition warnings when using mingw64 with ucrt
+
+commit 1a0d76d1c6251067df8a2c18816b2316b6950dfa
+Merge: 7b119e54bbb 26ed33ba535
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 27 11:07:53 2023 +0100
+
+    Merge pull request #2055 from jwillemsen/jwi-curtfix
+    
+    Ruby 3.1 ships ucrt which has a 3 param wcstok
+
+commit adb7bcc177df26ef326fa00148d64aac810abe32
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 27 10:08:04 2023 +0100
+
+    Fix redefinition warnings when using mingw64 with ucrt
+    
+        * ACE/ace/os_include/sys/os_mman.h:
+
+commit 26ed33ba535cc904c88c4405f58e7e67343096eb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 27 08:05:05 2023 +0100
+
+    Ruby 3.1 ships ucrt which has a 3 param wcstok
+    
+        * ACE/ace/config-win32-mingw64.h:
+
+commit 7b119e54bbbcaeeec03cf2e6e7a3ff889e08fd12
+Merge: c0ef1f6daad 3827363c2df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 23 09:26:26 2023 +0100
+
+    Merge pull request #2053 from ffontaine/master
+    
+    ACE/ace/SSL/SSL_Asynch_BIO.cpp: fix build with libressl >= 3.5.0
+
+commit 017929ad88287a15cf7733bc5bacc1782e647a22
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 22 14:57:09 2023 +0100
+
+    Set ACE_HAS_CPP20 when C++20 is supported
+    
+        * ACE/ace/config-win32-msvc-141.h:
+
+commit 3827363c2dfe94345cab759b5b968eeec89205b4
+Merge: c5b4f7009b4 4ea44f59178
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 22 13:32:52 2023 +0100
+
+    Merge branch 'master' into master
+
+commit 606a42cd58a161c971723d10713699d922530a28
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 22 09:10:40 2023 +0100
+
+    Add define of ACE_WIN32_VC14, before dropping Visual Studio 2015 this was also set for newer Visual Studio versions
+    
+        * ACE/ace/config-win32-msvc-141.h:
+
+commit c5b4f7009b47eac331fb5d20d53366fc99abecf0
+Author: Fabrice Fontaine <fontaine.fabrice@gmail.com>
+Date:   Tue Feb 21 14:20:11 2023 +0100
+
+    ACE/ace/SSL/SSL_Asynch_BIO.cpp: fix build with libressl >= 3.5.0
+    
+    Fix the following build failure with libressl >= 3.5.0:
+    
+    /tmp/instance-17/output-1/build/ace-7.0.6/ace/SSL/SSL_Asynch_BIO.cpp:45:19: error: variable 'BIO_METHOD methods_ACE' has initializer but incomplete type
+       45 | static BIO_METHOD methods_ACE =
+          |                   ^~~~~~~~~~~
+    
+    Fixes:
+     - http://autobuild.buildroot.org/results/7f40d6dde03134238151c248fbbd66e4713546cb
+    
+    Signed-off-by: Fabrice Fontaine <fontaine.fabrice@gmail.com>
+
+commit 06974e568d233fcf8f0550a5ebb9987588928ce3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 21 13:23:32 2023 +0100
+
+    List Visual Studio 2015 EOL
+    
+        * ACE/NEWS:
+
+commit 7ff7378063fb7a2cda02c096a55ec8319a9e7854
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 21 07:09:31 2023 +0100
+
+    Update ACE/ace/Global_Macros.h
+    
+    Co-authored-by: Fred Hornsey <fred@hornsey.us>
+
+commit fd5c368d5c7b26ff2a44446bd215e28ffc07b033
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 20 16:35:04 2023 +0100
+
+    Remove clang5
+    
+        * .github/workflows/linux.yml:
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit 9740e05c8e2f2c906444bf6b4ae01dd24e39cf39
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 20 16:28:53 2023 +0100
+
+    Enable C++14 for clang 5/6/7/8
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit 46e095cc536cb302af7bef33c79f3c93977df343
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 20 15:48:34 2023 +0100
+
+    Removed Visual Studio 2015 support, lacks C++14
+    
+        * ACE/ace/config-win32-msvc-14.h:
+          Deleted.
+    
+        * ACE/ace/config-win32-msvc-141.h:
+        * ACE/ace/config-win32-msvc.h:
+
+commit 7a7f6db56d3a136c765558ace03eda3845d9f3a3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 20 15:44:04 2023 +0100
+
+    ACE/TAO now require C++14 or newer
+    
+        * ACE/NEWS:
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/config-win32-msvc-141.h:
+        * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+        * ACE/include/makeinclude/platform_macosx_common.GNU:
+
+commit d19030946af88f57a4b2b29af9228cbbf0386a71
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 18:08:58 2023 +0100
+
+    Revert one constexpr change
+    
+        * ACE/apps/gperf/src/Key_List.cpp:
+
+commit 90371aba592ff8153762036e2b0d5bd723af4a7d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 17:04:25 2023 +0100
+
+    Generate some parts as constexpr
+    
+        * ACE/apps/gperf/src/Key_List.cpp:
+
+commit 4db6c4351dfd785f59a9b16122e52eeec44520c0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 12:30:59 2023 +0100
+
+    Fixed unresolved exports, more override
+    
+        * ACE/protocols/ace/HTBP/HTBP_Addr.cpp:
+        * ACE/protocols/ace/HTBP/HTBP_Addr.h:
+        * TAO/tao/PortableServer/Active_Object_Map.cpp:
+        * TAO/tao/PortableServer/Active_Object_Map.h:
+        * TAO/tao/PortableServer/Active_Policy_Strategies.h:
+        * TAO/tao/PortableServer/Active_Policy_Strategies.inl:
+        * TAO/tao/PortableServer/IdUniquenessStrategy.h:
+        * TAO/tao/PortableServer/Operation_Table_Binary_Search.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Binary_Search.h:
+        * TAO/tao/PortableServer/Operation_Table_Dynamic_Hash.h:
+        * TAO/tao/PortableServer/Operation_Table_Linear_Search.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Linear_Search.h:
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.h:
+        * TAO/tao/PortableServer/POA_Current_Factory.cpp:
+        * TAO/tao/PortableServer/POA_Current_Impl.cpp:
+        * TAO/tao/PortableServer/POA_Current_Impl.h:
+        * TAO/tao/PortableServer/POA_Policy_Set.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategy.h:
+
+commit 69fbec6c475060cf01a710a3d7ed6e756538858c
+Merge: 7e8b94b728b 89a05c65fd6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 6 09:21:37 2023 +0100
+
+    Merge pull request #2046 from jwillemsen/jwinullptrexce
+    
+    Use nullptr and make destructor of TAO SystemException default
+
+commit 89a05c65fd627673f0bcc260b990257dcf30150c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 3 19:49:52 2023 +0100
+
+    Use nullptr
+    
+        * ACE/ace/Time_Policy.h:
+        * ACE/ace/Time_Policy.inl:
+
+commit 7e8b94b728b886d14fc17b6af789e9ba0c50a050
+Merge: 4961b8026b5 ec19b2725b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 2 09:13:03 2023 +0100
+
+    Merge pull request #2042 from jwillemsen/jwi-cleanupmacros
+    
+    Cleanup unused macros
+
+commit 4961b8026b5c90e2517f27f9d9d5584be6f94ab0
+Merge: 757fd0a5eef 007bcf039e9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 2 09:10:49 2023 +0100
+
+    Merge pull request #2044 from jmccabe/Indent-endif-by-an-extra-space
+    
+    Align one endif with its associated if
+
+commit 757fd0a5eef53e1c9e1a8327eb5d4b34e81d7cb9
+Merge: 107d2bfea7c 7f4365e6544
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 2 09:09:17 2023 +0100
+
+    Merge pull request #2043 from jwillemsen/jwi-pharlapcleanup
+    
+    Removed pharlap support
+
+commit 007bcf039e9226a746bffbc0dcffa892c091adbe
+Author: John McCabe <jmccabe@kirintec.com>
+Date:   Wed Feb 1 16:51:54 2023 +0000
+
+    Align one endif with its associated if
+
+commit d90c1cb3964f254cb5e9a0de2d7f620b79750e16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 16:01:29 2023 +0100
+
+    Removed left over sun file
+
+commit 7f4365e65442e6c9d482fa64f808303f1546fe68
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 15:52:25 2023 +0100
+
+    Fixed cleanup mistake
+    
+        * ACE/ace/OS_NS_unistd.inl:
+
+commit 6198126ce20cc418252f461621c81d19ee2b36e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 15:44:33 2023 +0100
+
+    Removed pharlap support
+
+commit 1eb5c6564e45cce7980f6bbac7b4b073b806788c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 14:48:42 2023 +0100
+
+    Removed include
+    
+        * ACE/ace/OS_NS_unistd.cpp:
+
+commit 281078a59a44ca971675b90616f5e35a998bf077
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 14:41:51 2023 +0100
+
+    Removed os_include headers which don't include any file anymore
+
+commit 9d3475584970e20117a7a99d3a75fecb521a0da9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 14:38:17 2023 +0100
+
+    Further cleanup not used macros
+    
+        * ACE/ace/IOStream.h:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/OS_NS_Thread.inl:
+        * ACE/ace/Profile_Timer.cpp:
+        * ACE/ace/README:
+        * ACE/ace/os_include/os_netdb.h:
+        * ACE/ace/os_include/sys/os_loadavg.h:
+        * ACE/ace/os_include/sys/os_pstat.h:
+
+commit 01cb9ff254befab9c674e957a9e063b3c09bcc26
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 10:56:12 2023 +0100
+
+    Fix
+    
+        * ACE/ace/CDR_Stream.inl:
+
+commit c3e71f69e85deb48d5f3cdba355679da4deffdb3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 10:51:23 2023 +0100
+
+    good_bit is a bool and removed some uncessary c-style casts
+
+commit 980b4296358a1b3f0f3ffde85c2826eeeb240637
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 18 13:21:32 2023 +0100
+
+    Fixed warning
+    
+        * ACE/ace/OS_NS_Thread.inl:
+
+commit dfc5c60f27c6ea1f566b1819ebbc3d979c19ffad
+Merge: 956dcabf4bd d97b6edbeeb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 18 10:14:13 2023 +0100
+
+    Merge pull request #2035 from jwillemsen/jwi-cleanupsolaris
+    
+    Cleanup Solaris support
+
+commit d97b6edbeeb9a007f65e10e069a753bc087e998f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 16:38:01 2023 +0100
+
+    Updated for release
+    
+        * ACE/NEWS:
+
+commit 956dcabf4bdd4fb3ec1be53c392398b495af27cf
+Merge: 016eb1b3caa 461fcfe1d09
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 15:41:34 2023 +0100
+
+    Merge pull request #2030 from lockhart/rpm_extras_7_0_11
+    
+    Add headers and other source files to the list of files to be installed.
+
+commit ffbcea5aea4d73a2cb04c4c128662c4672f95d0d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 15:26:19 2023 +0100
+
+    More cleanup
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/OS_NS_Thread.inl:
+        * ACE/ace/config-hurd.h:
+        * ACE/ace/os_include/os_unistd.h:
+        * ACE/ace/os_include/sys/os_mman.h:
+
+commit 94724143a88b7ad5b10194690d9d73db3a3b6c54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 12:43:59 2023 +0100
+
+    More Sun OS/compiler cleanup
+
+commit a7f809c172f0a2578ab584920dc02f1e45c06e6d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 12:40:30 2023 +0100
+
+    More Sun OS/compiler cleanup
+
+commit 83567bb4eb3abc1133a10a8cd3a97e4dfd1f23f8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 12:35:36 2023 +0100
+
+    Removed some unused defines
+
+commit 5a45b0554cf1649e5f1eddebde2aa22df6c69719
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 12:33:05 2023 +0100
+
+    More Sun OS/compiler cleanup
+
+commit e5391a0076f5e370f929b111a8a6ed52ee4cb5da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 12:32:56 2023 +0100
+
+    More Sun OS/compiler cleanup
+
+commit 654bdcf1600bc5f2ada5790cb0a6a3418a8cc8d3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 09:46:42 2023 +0100
+
+    Fixed cleanup issues
+    
+        * ACE/ace/OS_NS_Thread.h:
+        * ACE/ace/POSIX_Proactor.cpp:
+
+commit 73bdf800479e53a11143735e48348bb88c527c24
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 09:44:30 2023 +0100
+
+    Cleanup Solaris support
+
+commit 016eb1b3caa7b8ba0ff4c479895151eca984c82b
+Merge: cf4d1e0117b 3f2b66203cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 08:30:27 2023 +0100
+
+    Merge pull request #2034 from jwillemsen/jwi-macrocleanup
+    
+    Cleanup several macros which are not set by any config file
+
+commit 461fcfe1d099e9dc4e10b38ce7b19d922a368869
+Author: lockhart <tlockhart1976@gmail.com>
+Date:   Mon Jan 16 22:22:39 2023 -0800
+
+    Update ace-tao.spec
+    
+    Need yet more .cpp files from ACE and TAO subsystems to enable a clean build of an external project.
+
+commit d6c603febcd87d749e3babb7cbe3386cd76a3c18
+Author: lockhart <tlockhart1976@gmail.com>
+Date:   Mon Jan 16 11:09:08 2023 -0800
+
+    Update ace-tao.spec
+    
+    Tailor previous updates to the list of installed files to remove most duplicates and commented-out lines.
+    This includes one explicit line for the ESF/ subdirectory since at least one .cpp is needed but does not match the other patterns.
+    Updates are based on feedback from Johnny W.
+
+commit 3f2b66203cbef9985486a6e9ce4ef33feb5cfb20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 18:49:33 2023 +0100
+
+    Cleanup several macros which are not set by any config file
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/OS_NS_dirent.inl:
+        * ACE/ace/OS_NS_sys_stat.inl:
+        * ACE/ace/OS_NS_time.cpp:
+        * ACE/ace/OS_NS_time.h:
+        * ACE/ace/OS_NS_time.inl:
+        * ACE/ace/OS_NS_unistd.inl:
+        * ACE/ace/README:
+        * ACE/ace/TLI.cpp:
+        * ACE/ace/os_include/os_stropts.h:
+        * ACE/ace/os_include/sys/os_mman.h:
+
+commit dcb4692364d4a9175db59b9280dbbd54524bb3ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 16:45:00 2023 +0100
+
+    Removed checks for ACE_TEMPLATES_REQUIRE_SOURCE
+
+commit f25410e018ff6b65ec24df5ba249447f74eb0198
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 15:47:01 2023 +0100
+
+    Removed AIX support
+
+commit fd9764555ac1865589fe02dcd8201ab3d91e7030
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 15:46:41 2023 +0100
+
+    Removed AIX support
+
+commit a1a1a43595697bb82a040368286340f94b24c122
+Author: Thomas Lockhart <tlockhart1976@gmail.com>
+Date:   Sun Jan 15 19:45:57 2023 -0800
+
+    Add headers and other source files to the list of files to be installed.
+    This includes stubs and skeletons for IDL interfaces and files required to extend interfaces.
+    This is a superset of files which are known to be required to build external packages.
+
+commit b2b2abd13518168f2b2930d4dd157d5311dccbe5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 16:51:22 2023 +0100
+
+    Removed RTEMS support
+
+commit 61cab1e92cb345f27ddde5aa78787b9565b81121
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 16:51:08 2023 +0100
+
+    Removed RTEMS support
+
+commit d645bf461a41039dda402e1674ed7a6d40620957
+Merge: c9c577ffbe6 098b5aa5257
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 16:14:12 2023 +0100
+
+    Merge pull request #2028 from jwillemsen/jwi-removehpux
+    
+    Remove HPUX support
+
+commit c9c577ffbe64efca48e6a05add0e0070add7da6d
+Merge: 6f36dbed40c 0a572bec884
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 14:04:11 2023 +0100
+
+    Merge pull request #2027 from jwillemsen/jwi-openvmscleanup
+    
+    Removed some OpenVMS code
+
+commit 098b5aa525738b909ba9bca915cc53c8a5573c20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 13:53:46 2023 +0100
+
+    Update FIFO_Test.cpp
+
+commit b5aeaf20ef9d15d09acb52b4c8ac77762937ae26
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 12:28:28 2023 +0100
+
+    More cleanup
+    
+        * ACE/ace/config-linux-common.h:
+        * ACE/ace/config-macros.h:
+        * TAO/TAO_IDL/fe/idl.yy.cpp:
+
+commit aceac7234ef1ef995de5ade1e4daa27220960fb3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 11:17:04 2023 +0100
+
+    More cleanup
+    
+        * ACE/ace/README:
+        * ACE/ace/os_include/sys/os_socket.h:
+
+commit 041537498bf9bc6cd673518b79b56c152579ac13
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 11:16:01 2023 +0100
+
+    Fixed cleanup mistakes
+    
+        * ACE/ace/os_include/os_pthread.h:
+        * ACE/ace/os_include/sys/os_socket.h:
+
+commit da66efe89c66a7997f6728759c196643c3910018
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 11:02:36 2023 +0100
+
+    Updated NEWS files
+
+commit b30753f1a1b18c831e89223ec01db66231b5a64a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 11:01:49 2023 +0100
+
+    Removed HPUX support
+
+commit 0a572bec8848eabb70c652fffa043ec335f45454
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 10:34:15 2023 +0100
+
+    Removed some OpenVMS code
+    
+        * ACE/ace/SSL/SSL_Context.cpp:
+        * ACE/ace/Sock_Connect.cpp:
+        * TAO/TAO-INSTALL.html:
+
+commit 6f36dbed40cbedb60f2c40376d360c704d7db93b
+Merge: f06824b2d9f b488f1ab871
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 10:33:43 2023 +0100
+
+    Merge pull request #2023 from esohns/issue_2016_move_make_qword
+    
+    move ACE_Make_QWORD to OS_NS_macros.h
+
+commit 54ee4626edad4d98513a330beb2acf4a3a0596b7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 14 16:26:19 2023 +0100
+
+    Removed openvms config files
+
+commit 9f5b645ee9d959b538c3b26d2b42c20ec0c227be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 14 12:55:48 2023 +0100
+
+    Update Process_Manager_Test.cpp
+
+commit 3a1440fc22d845cc46125af05c5fec96a8090674
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 14 11:46:06 2023 +0100
+
+    Update Process_Manager_Test.cpp
+
+commit 1996ba72caf059aaddc4cc3883fff329cf22dcf9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 14 11:37:31 2023 +0100
+
+    Update os_types.h
+
+commit 2916b2fa78bc0fdcae44b590af9543245d481e15
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 14 10:09:54 2023 +0100
+
+    Removed OpenVMS support
+
+commit 20da1c5dcbed95befc08ccf258f62c91a16762f4
+Merge: 158938dceab cc5865a9582
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 14 09:53:44 2023 +0100
+
+    Merge pull request #2014 from jwillemsen/jwi-doxygen196
+    
+    Upgrade doxygen configuration files to latest doxygen release
+
+commit b488f1ab8719835737d42ba4658cd18f352d0ad4
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Fri Jan 13 17:37:00 2023 +0100
+
+    move ACE_Make_QWORD to OS_NS_macros.h
+
+commit f59d4713c14113a6889656296896e9042468ced0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 16:13:13 2023 +0100
+
+    Cleanup another not used define
+    
+        * ACE/ace/OS_NS_unistd.inl:
+
+commit a5662cef58b5c9377120dfa4b3a8098113be2594
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 14:27:50 2023 +0100
+
+    Cleanup workarounds which we don't need anymore
+    
+        * ACE/ace/OS_NS_stdlib.cpp:
+        * ACE/ace/OS_NS_sys_resource.inl:
+        * ACE/ace/OS_NS_sys_time.inl:
+        * ACE/ace/OS_NS_unistd.cpp:
+        * ACE/ace/OS_NS_unistd.inl:
+        * ACE/ace/os_include/os_errno.h:
+        * ACE/ace/os_include/os_signal.h:
+        * ACE/ace/os_include/sys/os_types.h:
+
+commit cde8fd193652205cf84a9ef5f74775000f0c9807
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 13:53:24 2023 +0100
+
+    Fixed cleanup error
+    
+        * ACE/tests/Proactor_Test_IPV6.cpp:
+
+commit 3f7247d33935f6451bd13835015cf7bf53b50969
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 13:08:57 2023 +0100
+
+    Fixed cleanup error
+    
+        * ACE/ace/config-win32-common.h:
+        * ACE/ace/config-win32-msvc.h:
+
+commit bbb975d6dee09baaad4e2b0425a0afb20b784005
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 12:52:36 2023 +0100
+
+    Fixed cleanup error
+    
+        * ACE/ace/OS_NS_Thread.inl:
+
+commit d1921e1511f65cd42503e8eeecfd301f5c3358b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 12:40:18 2023 +0100
+
+    Fixed cleanup error
+    
+        * ACE/ace/config-macros.h:
+
+commit 22359d30f11aa48abba5a3ad7bad7bed7489ff5b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 12:36:49 2023 +0100
+
+    Fixed cleanup mistakes
+    
+        * ACE/ace/OS_NS_Thread.inl:
+        * ACE/ace/OS_NS_stdio.inl:
+        * ACE/tests/Bug_3943_Regression_Test.cpp:
+
+commit 8f0f05f51c0cf595654a35f9dc47d82809c2268d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 09:58:03 2023 +0100
+
+    More Windows CE cleanup
+
+commit 378fbc350bc7d7d940523ac194b646e94caf312d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 09:41:15 2023 +0100
+
+    Removed Windows CE support
+
+commit cc5865a958281cb7706a1421a4b96d3becd39c93
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 12 11:46:29 2023 +0100
+
+    Upgrade doxygen configuration files to latest doxygen release
+
+commit 6d4a282d86f0145004ac0cab58371d261abca19b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 12 11:43:53 2023 +0100
+
+    Make use of nullptr and delete
+    
+        * ACE/ace/ace_wchar.h:
+        * ACE/ace/ace_wchar.inl:
+
+commit 6c8071c2b785655696c93a71b9a240705508026f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 9 16:43:26 2023 +0100
+
+    Updated OpenDDS url
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit 36c558c30b842c6b6f70b62a8736c35077b2f093
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Jan 5 09:55:27 2023 -0600
+
+    Adds the ability to build ACE core libraries, gperf, and possibly others using CMake.
+
+commit 6756ee16851ac1daa006f1b30b8987bd03a9c42e
+Merge: ec326c77c9a 44d0b213860
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 19 12:19:34 2022 +0100
+
+    Merge pull request #2005 from jwillemsen/jwi-x711
+    
+    Make ACE 7.0.11 and TAO 3.0.11 public available
+
+commit 44d0b213860be8801160f0519c77b648a0316033
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 19 12:18:46 2022 +0100
+
+    Make ACE 7.0.11 and TAO 3.0.11 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

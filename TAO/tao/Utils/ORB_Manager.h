@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   ORB_Manager.h
- *
- *  $Id$
  *
  *  @author Chris Cleeland <cleeland@cs.wustl.edu>
  */
@@ -14,7 +12,7 @@
 #define TAO_ORB_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "utils_export.h"
+#include "tao/Utils/utils_export.h"
 #include "tao/PortableServer/PortableServer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -22,6 +20,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ORB_Manager
@@ -36,7 +36,6 @@
 class TAO_UTILS_Export TAO_ORB_Manager
 {
 public:
-  // = Initialization and termination methods.
   /** Constructor.
    *
    *  @param orb  pointer to an ORB which is duplicated an stored
@@ -53,9 +52,10 @@ public:
    *                     If pointer is 0, a new POAManager is created
    *                     internally in the init() call.
    */
-  TAO_ORB_Manager (CORBA::ORB_ptr orb = 0,
-                   PortableServer::POA_ptr poa = 0,
-                   PortableServer::POAManager_ptr poa_manager = 0);
+  TAO_ORB_Manager (CORBA::ORB_ptr orb = CORBA::ORB::_nil(),
+                   PortableServer::POA_ptr poa = PortableServer::POA::_nil(),
+                   PortableServer::POAManager_ptr poa_manager =
+                      PortableServer::POAManager::_nil());
 
   /**
    * Initialize the ORB/root POA, using the supplied command line
@@ -65,34 +65,10 @@ public:
    * @retval 0 Success
    */
   int init (int &argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+            ACE_TCHAR *argv[],
+            const char *orb_name = 0);
 
-  /**
-   * Initialize the ORB/root POA, using the supplied command line
-   * arguments or the default ORB components.
-   *
-   * @retval -1 Failure
-   * @retval 0 Success
-   */
-  int init (int &argc,
-            char *argv[],
-            const char *orb_name
-            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  /**
-   * Creates a child poa under the root poa with PERSISTENT and
-   * USER_ID policies.  Call this if you want a @c child_poa with the
-   * above policies, otherwise call init.
-   *
-   * @retval -1 Failure
-   * @retval 0 Success
-   */
-  int init_child_poa (int &argc,
-                      char *argv[],
-                      const char *poa_name
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+#if !defined (CORBA_E_MICRO)
   /**
    * Creates a child poa under the root poa with PERSISTENT and
    * USER_ID policies.  Call this if you want a @a child_poa with the
@@ -102,10 +78,10 @@ public:
    * @retval 0 Success
    */
   int init_child_poa (int &argc,
-                      char *argv[],
+                      ACE_TCHAR *argv[],
                       const char *poa_name,
-                      const char *orb_name
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                      const char *orb_name = 0);
+#endif /* CORBA_E_MICRO */
 
   /**
    * Shut down.  Invoke the destroy() methods on the orb and poa.
@@ -113,10 +89,10 @@ public:
    * @retval -1 Failure
    * @retval 0 Success
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini ();
 
   /// Destructor.
-  ~TAO_ORB_Manager (void);
+  ~TAO_ORB_Manager ();
 
   // = Accessor methods.
 
@@ -130,7 +106,7 @@ public:
    * @retval -1 Failure
    * @retval 0 Success
    */
-  int activate_poa_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int activate_poa_manager ();
 
   /**
    * Activate <servant>, using the POA <activate_object> call.  Users
@@ -140,17 +116,16 @@ public:
    *         successful.  Caller of this method is responsible for
    *         memory deallocation of the string.
    */
-  char *activate (PortableServer::Servant servant
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  char *activate (PortableServer::Servant servant);
 
   /** Deactivate object in RootPOA.
    *
    *  @param id  A string representation of the Object ID
    *             of the servant to deactivate in the POA
    */
-  void deactivate (const char *id
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void deactivate (const char *id);
 
+#if !defined (CORBA_E_MICRO)
   /**
    * Precondition: init_child_poa has been called.  Activate <servant>
    * using the POA <activate_object_with_id> created from the string
@@ -166,8 +141,7 @@ public:
    *           memory deallocation of the string.
    */
   char *activate_under_child_poa (const char *object_name,
-                                  PortableServer::Servant servant
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  PortableServer::Servant servant);
 
   /**
    * Deactivate object in child POA.
@@ -175,8 +149,8 @@ public:
    * @param id  string representation of the object ID, which represents
    *            the object to deactivate in the POA
    */
-  void deactivate_under_child_poa (const char *id
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void deactivate_under_child_poa (const char *id);
+#endif /* CORBA_E_MICRO */
 
   /**
    * Run the ORB event loop with the specified @a tv time value.
@@ -185,13 +159,12 @@ public:
    * @retval -1 Failure
    * @retval 0 Success
    */
-  int run (ACE_Time_Value &tv
-           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int run (ACE_Time_Value &tv);
 
   /**
    * Run the ORB event loop.
    */
-  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run ();
 
   /**
    * Accessor which returns the ORB pointer.  Following the normal
@@ -202,7 +175,7 @@ public:
    * @return ORB pointer which has been duplicated, so caller
    *         must release pointer when done.
    */
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   /**
    * Accessor which returns the root poa. Following the normal CORBA
@@ -212,7 +185,7 @@ public:
    * @return Root POA pointer which has been duplicated.  Caller
    *         must release pointer when done.
    */
-  PortableServer::POA_ptr root_poa (void);
+  PortableServer::POA_ptr root_poa ();
 
   /**
    * Accessor which returns the child poa. Following the normal CORBA
@@ -222,7 +195,7 @@ public:
    * @return Child POA pointer which has been duplicated.  Caller
    *         must release pointer when done.
    */
-  PortableServer::POA_ptr child_poa (void);
+  PortableServer::POA_ptr child_poa ();
 
   /**
    * Accessor which returns the poa manager. Following the normal
@@ -233,7 +206,7 @@ public:
    * @return POAManager pointer which has been duplicated.  Caller
    *         must release pointer when done.
    */
-  PortableServer::POAManager_ptr poa_manager (void);
+  PortableServer::POAManager_ptr poa_manager ();
 
 protected:
   /// The ORB.
@@ -249,6 +222,7 @@ protected:
   PortableServer::POAManager_var poa_manager_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ORB_MANAGER_H */

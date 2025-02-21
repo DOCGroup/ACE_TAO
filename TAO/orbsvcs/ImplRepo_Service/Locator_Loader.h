@@ -1,4 +1,4 @@
-// $Id$
+// -*- C++ -*-
 #ifndef TAO_IMR_LOCATOR_LOADER_H
 #define TAO_IMR_LOCATOR_LOADER_H
 
@@ -6,7 +6,7 @@
 
 #include "tao/Object_Loader.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,24 +21,24 @@ public:
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  virtual int fini (void);
+  virtual int fini ();
 
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv[]
-                                           ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException));
+                                           ACE_TCHAR *argv[]);
 
- // Unlike other service objects, we have our own orb. 
- int run(void);
+ // Unlike other service objects, we have our own orb.
+ int run();
 
 private:
   ImR_Locator_i service_;
   Options opts_;
-  ACE_Auto_Ptr<ImR_Locator_ORB_Runner> runner_;
+  std::unique_ptr<ImR_Locator_ORB_Runner> runner_;
 private:
-  ACE_UNIMPLEMENTED_FUNC (ImR_Locator_Loader (const ImR_Locator_Loader &))
-  ACE_UNIMPLEMENTED_FUNC (ImR_Locator_Loader &operator = (const ImR_Locator_Loader &))
+  ImR_Locator_Loader (const ImR_Locator_Loader &) = delete;
+  ImR_Locator_Loader &operator = (const ImR_Locator_Loader &) = delete;
+  ImR_Locator_Loader (ImR_Locator_Loader &&) = delete;
+  ImR_Locator_Loader &operator = (ImR_Locator_Loader &&) = delete;
 };
 
 ACE_FACTORY_DECLARE (Locator, ImR_Locator_Loader)

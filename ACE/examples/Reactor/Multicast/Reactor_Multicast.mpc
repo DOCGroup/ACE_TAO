@@ -1,0 +1,15 @@
+// -*- MPC -*-
+project(*client) : aceexe {
+  exename = client
+  Source_Files {
+    client.cpp
+    Log_Wrapper.cpp
+  }
+}
+project(*server) : aceexe {
+  exename = server
+  Source_Files {
+    server.cpp
+    Log_Wrapper.cpp
+  }
+}

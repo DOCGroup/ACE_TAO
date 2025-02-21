@@ -1,0 +1,13 @@
+// -*- MPC -*-
+project(*Sender) : aceexe, rmcast {
+  exename = sender
+  Source_Files {
+    Sender.cpp
+  }
+}
+project(*Receiver) : aceexe, rmcast {
+  exename = receiver
+  Source_Files {
+    Receiver.cpp
+  }
+}

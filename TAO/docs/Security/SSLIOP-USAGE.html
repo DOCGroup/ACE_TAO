@@ -1,6 +1,6 @@
 
 <html>
-<!-- $Id$ -->
+<!--  -->
 <!-- #BeginTemplate "/Templates/TAO_Security.dwt" -->
 <head>
 <!-- #BeginEditable "doctitle" -->
@@ -72,7 +72,7 @@ function MM_nbGroup(event, grpName) { //v3.0
   <h3><a name="loading"></a>Loading and Configuring the SSLIOP Pluggable Protocol</h3>
   <p>TAO implements SSL as a pluggable protocol. As such, it must be dynamically
     loaded into the ORB. You must use a service configurator file to do this.
-    The service configurator options for the ORB are described in detail in <a href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/docs/components.html?rev=HEAD&content-type=text/html">
+    The service configurator options for the ORB are described in detail in <a href="../docs/components.html?rev=HEAD&content-type=text/html">
     Options for TAO Components</a>. In this case you have to create a <code>svc.conf</code>
     file that includes: </p>
   <pre>
@@ -136,21 +136,60 @@ function MM_nbGroup(event, grpName) { //v3.0
     <tr>
       <td><code>-SSLAcceptTimeout</code> <em>which</em></td>
       <td>Set the maximum amount of time to allow for establishing a
-	    SSL/TLS passive connection, <em>i.e.</em> for accepting a
-	    SSL/TLS connection.  The default value is <code>10</code>
-	    seconds.
-	    <p>See the discussion in <a
-	      href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1348">Bug 1348</a> in our <a href="http://deuce.doc.wustl.edu/bugzilla/index.cgi">bug
-	    tracking system</a> for the rationale behind this option.</td>
+      SSL/TLS passive connection, <em>i.e.</em> for accepting a
+      SSL/TLS connection.  The default value is <code>10</code>
+      seconds.
+      <p>See the discussion in <a
+        href="http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1348">Bug 1348</a> in our <a href="http://bugzilla.dre.vanderbilt.edu/index.cgi">bug
+      tracking system</a> for the rationale behind this option.</td>
     </tr>
     <tr>
       <td><code>-SSLDHParams</code> <em>filename</em></td>
       <td>Set the filename containing the Diffie-Hellman parameters to
-	  be used when using DSS-based certificates.  The specified
-	    file may be a file containing only Diffie-Hellman
-	    parameters created by "<code>openssl dhparam</code>", or
-	    it can be a certificate containing a PEM encoded set of
-	    Diffie-Hellman parameters.</td>
+    be used when using DSS-based certificates.  The specified
+      file may be a file containing only Diffie-Hellman
+      parameters created by "<code>openssl dhparam</code>", or
+      it can be a certificate containing a PEM encoded set of
+      Diffie-Hellman parameters.</td>
+    </tr>
+    <tr>
+      <td><code>-SSLCipherList</code> <em>cipher-spec</em></td>
+      <td>Sets the list of available ciphers.  The cipher specification string
+          should be formatted per the openssl ciphers(1) man page.</td>
+    </tr>
+    <tr>
+      <td><code>-SSLServerCipherOrder</code></td>
+      <td>When choosing a cipher, use the server's preferences instead of
+           the client preferences. When not set, the SSL server will always
+           follow the clients preferences.</td>
+    </tr>
+    <tr>
+      <td><code>-SSLCAfile</code> <em>filename</em></td>
+      <td>Provide a file containing a trusted certificate, overriding the file named by SSL_CERT_FILE environment variable.</td>
+    </tr>
+    <tr>
+      <td><code>-SSLCApath</code> <em>directory</em></td>
+      <td>Provide a directory from which all files are read for trusted certificates overriding the directory named by SSL_CERT_DIR environment variable.<</td>
+    </tr>
+    <tr>
+      <td><code>-SSLrand</code> <em>filelist</em></td>
+      <td>Provide additional entropy from the named sources. Works in conjuction with any value supplied via SSL_RAND_FILE environment variable.</td>
+    </tr>
+    <tr>
+      <td><code>-SSLVersionList</code> <em>versions</em></td>
+      <td>Unlike the cipher list option, this takes a list of SSL versions to support. List is a comma separated string containing SSLv23. If <code>-SSLVersionList</code> is not supplied, SSL will support all of these versions. </td>
+    </tr>
+    <tr>
+      <td><code>-SSLPassword</code> <em>specifier</em></td>
+      <td>if the supplied <code>-SSLPrivateKey</code> is password protected, this option enables overriding the default password entry. The supplied specifier can be <code>prompt:</code><em>message</em> to prompt a user for entry, <code>file:</code><em>filename</em> reads a plain text file, <code>env:</code><em>envvarname</em>, or simply <em>thepassword</em>. Clearly using any option apart from prompt: weakens the protection. </td>
+    </tr>
+    <tr>
+      <td><code>-SSLCheckHost</code></td>
+      <td>Adds a verification of the peer address to the connection completion process. This feature requires OpenSSL 1.0.2 or newer and performs a reverse DNS lookup to find the originating hostname. If the version of ssl used does not support <code>X509_check_host()</code>, the peer address does not map to a cannonical host name, or the peer did not provide an X.509 certificate, the connection will fail. </td>
+    </tr>
+    <tr>
+      <td><code>-SSLEcName</code> <em>curve_name</em></td>
+      <td>Provide the name of the Elliptic Curve to use for ECDH cipher.  To see a list of the available curve names use the command <em>openssl ecparam -list_curves</em> </td>
     </tr>
 
   </table>
@@ -343,7 +382,7 @@ $ ln -s cacert.pem `openssl x509 -noout -hash < cacert.pem`.0
       <td><img src="/fireworks/shim.gif" width="1" height="5" border="0" name="undefined_2"></td>
     </tr>
     <tr valign="top"><!-- row 6 -->
-      <td><a href="http://www.cs.wustl.edu/~schmidt/TAO.html" onMouseOut="MM_nbGroup('out');"  onMouseOver="MM_nbGroup('over','TAO','fireworks/nav_bar_r06_c2_f2.gif','fireworks/nav_bar_r06_c2_f4.gif',1)"  onClick="MM_nbGroup('down','navbar1','TAO','fireworks/nav_bar_r06_c2_f3.gif',1)" ><img name="TAO" src="fireworks/nav_bar_r06_c2.gif" width="141" height="36" border="0" onLoad=""></a></td>
+      <td><a href="http://www.dre.vanderbilt.edu/~schmidt/TAO.html" onMouseOut="MM_nbGroup('out');"  onMouseOver="MM_nbGroup('over','TAO','fireworks/nav_bar_r06_c2_f2.gif','fireworks/nav_bar_r06_c2_f4.gif',1)"  onClick="MM_nbGroup('down','navbar1','TAO','fireworks/nav_bar_r06_c2_f3.gif',1)" ><img name="TAO" src="fireworks/nav_bar_r06_c2.gif" width="141" height="36" border="0" onLoad=""></a></td>
       <td><img src="/fireworks/shim.gif" width="1" height="36" border="0" name="undefined_2"></td>
     </tr>
     <tr valign="top"><!-- row 7 -->

@@ -1,41 +1,33 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/Smart_Proxy/On_Demand
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is the client program that tests TAO's Smart Proxy extension.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *   This is the client program that tests TAO's Smart Proxy extension.
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Smart_Proxy, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'i':
-        ior = ACE_OS::strdup (get_opts.opt_arg ());
+        ior = get_opts.opt_arg ();
       break;
       case '?':
       default:
@@ -49,54 +41,44 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
        CORBA::Object_var object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       // To use the smart proxy just enter it as a svc.conf
       // entry.
 
       Test_var server =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil\n",
+                           "Object reference <%s> is nil.\n",
                            ior),
                           1);
 
       server->method (0);
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      server->shutdown ();
 
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client-side exception:");
+      ex._tao_print_exception ("Client-side exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

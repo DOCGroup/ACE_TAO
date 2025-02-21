@@ -1,0 +1,28 @@
+//  -*- MPC -*-
+project(Transcoder_Test): aceexe, acexml {
+  exename = Transcoder_Test
+  Source_Files {
+    Transcoder_Test.cpp
+  }
+}
+
+project(NamespaceSupport_Test): aceexe, acexml {
+  exename = NamespaceSupport_Test
+  Source_Files {
+    NamespaceSupport_Test.cpp
+  }
+}
+
+project(HttpCharStream_Test): aceexe, acexml {
+  exename = HttpCharStream_Test
+  Source_Files {
+    HttpCharStream_Test.cpp
+  }
+}
+
+project(ContentHandler_Test): aceexe, acexml {
+  exename = ContentHandler_Test
+  Source_Files {
+    ContentHandler_Test.cpp
+  }
+}

@@ -1,35 +1,23 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    structure_fwd_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for be_structure_fwd node in the client header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    structure_fwd_ch.cpp
+ *
+ *  Visitor generating code for be_structure_fwd node in the client header.
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_structure_fwd, 
-           structure_fwd_ch, 
-           "$Id$")
+#include "structure_fwd.h"
 
 be_visitor_structure_fwd_ch::be_visitor_structure_fwd_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_structure_fwd_ch::~be_visitor_structure_fwd_ch (void)
+be_visitor_structure_fwd_ch::~be_visitor_structure_fwd_ch ()
 {
 }
 
@@ -44,12 +32,12 @@ be_visitor_structure_fwd_ch::visit_structure_fwd (be_structure_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_structure *fd = 
-    be_structure::narrow_from_decl (node->full_definition ());
+  be_structure *fd =
+    dynamic_cast<be_structure*> (node->full_definition ());
 
   // This will be a no-op if it has already been done for this node.
   fd->gen_common_varout (os);
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

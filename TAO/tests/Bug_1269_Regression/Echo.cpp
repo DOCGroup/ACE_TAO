@@ -1,15 +1,10 @@
 /**
  * @file Echo.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Echo.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(Bug_1269_Regression, Echo, "$Id$")
 
 Echo::Echo(CORBA::ORB_ptr orb,
            int abort_counter)
@@ -19,9 +14,7 @@ Echo::Echo(CORBA::ORB_ptr orb,
 }
 
 void
-Echo::echo_payload(Test::Payload const &
-                   ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC((CORBA::SystemException))
+Echo::echo_payload(Test::Payload const &)
 {
   this->abort_counter_--;
 

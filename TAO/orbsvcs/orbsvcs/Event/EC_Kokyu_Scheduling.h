@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Kokyu_Scheduling.h
- *
- *  $Id$
  *
  *  @author Bryan Thrall (thrall@cs.wustl.edu)
  *
@@ -17,14 +16,16 @@
 #define TAO_EC_KOKYU_SCHEDULING_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Scheduling_Strategy.h"
+#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "rtkokyu_event_export.h"
+#include "orbsvcs/Event/rtkokyu_event_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Kokyu_Scheduling
@@ -41,33 +42,31 @@ public:
   TAO_EC_Kokyu_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
 
   /// Destructor
-  virtual ~TAO_EC_Kokyu_Scheduling (void);
+  virtual ~TAO_EC_Kokyu_Scheduling ();
 
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
-      TAO_EC_ProxyPushConsumer *consumer
-      ACE_ENV_ARG_DECL);
+      TAO_EC_ProxyPushConsumer *consumer);
   virtual void schedule_event (const RtecEventComm::EventSet &event,
                                TAO_EC_ProxyPushConsumer *consumer,
-                               TAO_EC_Supplier_Filter *filter
-                               ACE_ENV_ARG_DECL);
+                               TAO_EC_Supplier_Filter *filter);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Scheduling
-                              (const TAO_EC_Kokyu_Scheduling&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Scheduling& operator=
-                              (const TAO_EC_Kokyu_Scheduling&))
+  TAO_EC_Kokyu_Scheduling (const TAO_EC_Kokyu_Scheduling&);
+  TAO_EC_Kokyu_Scheduling& operator= (const TAO_EC_Kokyu_Scheduling&);
 
   /// Initialize our RT_Info handle and dependencies
-  void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);
+  void init_rt_info ();
 
 private:
   /// The scheduler we are going to use
   RtecScheduler::Scheduler_var scheduler_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Kokyu_Scheduling.i"
+#include "orbsvcs/Event/EC_Kokyu_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

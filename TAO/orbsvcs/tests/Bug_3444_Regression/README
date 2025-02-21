@@ -1,0 +1,47 @@
+
+
+Client in this test tries to set TTL / hop limit to 1. It's done in IIOP, DIOP,
+and MIOP. When testing MIOP we also test for support of -ORBIPMulticastLoop.
+
+_Expected successful result_:
+
+$>run_test.pl
+Starting IIOP test
+  server -o /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/server.ior
+  client -k file:///home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/server.ior   -ORBIPHopLimit 1 -ORBDebugLevel 1 -ORBLogFile /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/test.log
+Client's log:
+TAO (22932|140355161454320) Default_Resource_Factory - codeset manager=0x61b7e0
+TAO (22932|140355161454320) Loaded default protocol <IIOP_Factory>
+TAO (22932|140355161454320) - Transport_Cache_Manager::fill_set_i, current_size = 0, cache_maximum = 512
+TAO (22932|140355161454320) - IIOP_Connection_Handler::open, IIOP connection to peer <192.168.1.133:57544> on 6
+TAO (22932|140355161454320) - Transport_Cache_Manager::bind_i, Transport[6]; hash -1062673843
+TAO (22932|140355161454320) - Connection_Handler[6]::close_connection_eh, purging entry from cache
+TAO (22932|140355161454320) - Connection_Handler[6]::close_connection_eh, removing from the reactor
+TAO (22932|140355161454320) - Connection_Handler[6]::close_connection_eh, cancel all timers
+TAO (22932|140355161454320) - Connection_Handler[6]::close_connection_eh
+Starting UIPMC test
+  server -o /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/server.ior -u corbaloc:miop:1.0@1.0-cdmwftdomain-1/225.1.1.8:23453 -ORBSvcConf /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/miop_svc.conf
+  client -k file:///home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/server.ior -ORBIPMulticastLoop 1 -ORBSvcConf /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/miop_svc.conf -ORBIPHopLimit 1 -ORBDebugLevel 1 -ORBLogFile /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/test.log
+Client's log:
+TAO (22934|140638795380464) Default_Resource_Factory - codeset manager=0x6335a0
+TAO (22934|140638795380464) Loaded protocol <IIOP_Factory>
+TAO (22934|140638795380464) Loaded protocol <UIPMC_Factory>
+TAO (22934|140638795380464) - Transport_Cache_Manager::fill_set_i, current_size = 0, cache_maximum = 512
+TAO (22934|140638795380464) - Transport_Cache_Manager::bind_i, Transport[6]; hash -520004443
+TAO_UIPMC_Transport::send: sent 172 bytes to 225.1.1.8:23453
+TAO (22934|140638795380464) - Connection_Handler[6]::close_connection_eh, purging entry from cache
+TAO (22934|140638795380464) - Connection_Handler[6]::close_connection_eh
+Starting DIOP test
+  server -o /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/server.ior -ORBListenEndpoints diop:// -ORBSvcConf /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/diop_svc.conf
+  client -k file:///home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/server.ior  -ORBSvcConf /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/diop_svc.conf -ORBIPHopLimit 1 -ORBDebugLevel 1 -ORBLogFile /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/test.log
+Client's log:
+TAO (22936|140171242768112) Default_Resource_Factory - codeset manager=0x614f70
+TAO (22936|140171242768112) Loaded protocol <DIOP_Factory>
+TAO (22936|140171242768112) - Transport_Cache_Manager::fill_set_i, current_size = 0, cache_maximum = 512
+TAO (22936|140171242768112) - Transport_Cache_Manager::bind_i, Transport[6]; hash 147238721
+TAO (22936|140171242768112) - Connection_Handler[6]::close_connection_eh, purging entry from cache
+TAO (22936|140171242768112) - Connection_Handler[6]::close_connection_eh
+
+_Expected regression result_:
+
+In case there is an error it must be evident from the log.

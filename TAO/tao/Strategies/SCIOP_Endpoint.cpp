@@ -1,10 +1,11 @@
-#include "SCIOP_Endpoint.h"
+#include "tao/Strategies/SCIOP_Endpoint.h"
 
 #if TAO_HAS_SCIOP == 1
 
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 
+#include "ace/os_include/os_netdb.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/OS_NS_string.h"
@@ -12,19 +13,16 @@
 #include "ace/Synch.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/ORB_Core.h"
-
-ACE_RCSID (Strategies,
-           SCIOP_Endpoint,
-           "$Id$")
-
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
-# include "SCIOP_Endpoint.i"
+# include "tao/Strategies/SCIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const ACE_INET_Addr &addr,
-                                      int use_dotted_decimal_addresses)
+                                        int use_dotted_decimal_addresses)
   : TAO_Endpoint (TAO_TAG_SCIOP_PROFILE)
   , host_ ()
   , port_ (683)  // default port (IANA assigned)
@@ -53,7 +51,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
 {
 }
 
-TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (void)
+TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_SCIOP_PROFILE)
   , host_ ()
   , port_ (683)  // default port (IANA assigned)
@@ -78,10 +76,6 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
   , next_ (0)
 {
   this->priority (priority);
-}
-
-TAO_SCIOP_Endpoint::~TAO_SCIOP_Endpoint (void)
-{
 }
 
 TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const TAO_SCIOP_Endpoint &rhs)
@@ -110,7 +104,7 @@ TAO_SCIOP_Endpoint::set (const ACE_INET_Addr &addr,
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SCIOP_Endpoint::set ")
                         ACE_TEXT ("- %p\n\n"),
@@ -134,7 +128,7 @@ TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   size_t actual_len =
     ACE_OS::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
+    + std::strlen ("65536")         // max port
     + sizeof ('\0');
 
   if (length < actual_len)
@@ -155,13 +149,13 @@ TAO_SCIOP_Endpoint::host (const char *h)
 }
 
 TAO_Endpoint *
-TAO_SCIOP_Endpoint::next (void)
+TAO_SCIOP_Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO_SCIOP_Endpoint::duplicate (void)
+TAO_SCIOP_Endpoint::duplicate ()
 {
   TAO_SCIOP_Endpoint *endpoint = 0;
 
@@ -189,7 +183,7 @@ TAO_SCIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_SCIOP_Endpoint::hash (void)
+TAO_SCIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;
@@ -220,7 +214,7 @@ TAO_SCIOP_Endpoint::hash (void)
 }
 
 const ACE_INET_Addr &
-TAO_SCIOP_Endpoint::object_addr (void) const
+TAO_SCIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -246,10 +240,9 @@ TAO_SCIOP_Endpoint::object_addr (void) const
 }
 
 void
-TAO_SCIOP_Endpoint::object_addr_i (void) const
+TAO_SCIOP_Endpoint::object_addr_i () const
 {
-  if (this->object_addr_.set (this->port_,
-                              this->host_.in ()) == -1)
+  if (this->object_addr_.set (this->port_, this->host_.in ()) == -1)
     {
       // If this call fails, it most likely due a hostname
       // lookup failure caused by a DNS misconfiguration.  If
@@ -273,7 +266,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
   ACE_CString tmp (
     oc->orb_params ()->preferred_interfaces ());
 
-  ssize_t pos = 0;
+  ACE_CString::size_type pos = 0;
 
   pos = tmp.find (this->host_.in ());
 
@@ -284,11 +277,10 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
   while (pos != ACE_CString::npos)
     {
       // Do we have a "," or an '\0'?
-      ssize_t new_pos = tmp.find (",",
-                                  pos + 1);
+      ACE_CString::size_type new_pos = tmp.find (",", pos + 1);
 
       // Length of the preferred path
-      int length = 0;
+      ACE_CString::size_type length = 0;
 
       if (new_pos == ACE_CString::npos)
         length = tmp.length () - pos;
@@ -298,7 +290,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       ACE_CString rem_tmp = tmp.substr (pos, length);
 
       // Search for the ":"
-      ssize_t col_pos = rem_tmp.find (":");
+      ACE_CString::size_type col_pos = rem_tmp.find (":");
 
       if (col_pos == ACE_CString::npos)
         {
@@ -313,9 +305,9 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
         CORBA::string_dup (path.c_str ());
 
       if (TAO_debug_level > 3)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Adding path [%s] "
-                    " as preferred path for [%s] \n",
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Adding path [%C] "
+                    " as preferred path for [%C]\n",
                     path.c_str (), this->host_.in ()));
 
       pos = tmp.find (latest->host_.in (),
@@ -353,15 +345,17 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 }
 
 bool
-TAO_SCIOP_Endpoint::is_preferred_network (void) const
+TAO_SCIOP_Endpoint::is_preferred_network () const
 {
   return (this->preferred_path_.host.in () != 0);
 }
 
 const char *
-TAO_SCIOP_Endpoint::preferred_network (void) const
+TAO_SCIOP_Endpoint::preferred_network () const
 {
   return this->preferred_path_.host.in ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

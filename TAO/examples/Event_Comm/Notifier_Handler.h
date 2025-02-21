@@ -1,19 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    EventComm
-//
-// = FILENAME
-//    Notifier_Handler.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and
-//    Pradeep Gore (pradeep@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Notifier_Handler.h
+ *
+ *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef _NOTIFIER_HANDLER_H
 #define _NOTIFIER_HANDLER_H
@@ -27,52 +21,54 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/CosNamingC.h"
 
+/**
+ * @class Notifier_Handler
+ *
+ * @brief Holds the <Event_Comm::Notifier> object which is obtained from
+ * the naming service.
+ */
 class Notifier_Handler
 {
-  // = TITLE
-  //  Holds the <Event_Comm::Notifier> object which is obtained from
-  //  the naming service.
 public:
-  // = Initialization and termination methods.
-  Notifier_Handler (void);
-  // This constructor gets the notifier object from the Naming
-  // Service.
+  /// This constructor gets the notifier object from the Naming
+  /// Service.
+  Notifier_Handler () = default;
 
-  virtual ~Notifier_Handler (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~Notifier_Handler () = default;
 
-  int init (int argc, char *argv[], ShutdownCallback* _shutdowncallback);
-  // Initialize the client communication endpoint with server.
+  /// Initialize the client communication endpoint with server.
+  int init (int argc, ACE_TCHAR *argv[], ShutdownCallback* _shutdowncallback);
 
   // = Accessors.
-  Event_Comm::Notifier *notifier (void);
+  Event_Comm::Notifier *notifier ();
   void notifier (Event_Comm::Notifier *);
 
-  int run (void);
-  // runs the ORB.
+  /// runs the ORB.
+  int run ();
 
-  int close (void);
-  // Close down the handler.
+  /// Close down the handler.
+  int close ();
 
-  void shutdown (void);
-  // called to request application shutdown.
+  /// called to request application shutdown.
+  void shutdown ();
 
-  ACE_Reactor *reactor (void);
-  // returns the ORB's reactor.
+  /// returns the ORB's reactor.
+  ACE_Reactor *reactor ();
 
 private:
+  /// Remember our orb.
   CORBA::ORB_var orb_;
-  // Remember our orb.
 
+  /// Pointer to an <Event_Comm::Notifier> object.
   Event_Comm::Notifier *notifier_;
-  // Pointer to an <Event_Comm::Notifier> object.
 
+  /// An instance of the name client used for resolving the factory
+  /// objects.
  TAO_Naming_Client naming_client_;
-  // An instance of the name client used for resolving the factory
-  // objects.
 
+  /// The handler to shutdown the app.
   ShutdownCallback *shutdowncallback;
-  // The handler to shutdown the app.
 };
 
 #define NOTIFIER_BIND_NAME "Notifier"

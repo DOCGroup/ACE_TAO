@@ -1,67 +1,62 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/tests/Simple/chat
-//
-// = FILENAME
-//    Server_i.h
-//
-// = DESCRIPTION
-//    Definition of the Chat Server_i class.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Server_i.h
+ *
+ *  Definition of the Chat Server_i class.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef SERVER_I_H
 #define SERVER_I_H
 
 #include "Broadcaster_i.h"
 #include "tao/Utils/ORB_Manager.h"
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
 
+/**
+ * @class Server_i
+ *
+ * @brief The class defines the server for the chat. It sets up the Orb
+ * manager and registers the Broadcaster servant object.
+ */
 class Server_i
 {
-  // = TITLE
-  //    The class defines the server for the chat. It sets up the Orb
-  //    manager and registers the Broadcaster servant object.
-
 public:
-  // = Initialization and termination methods.
- Server_i (void);
- // Constructor.
+  /// Constructor.
+  Server_i ();
 
- ~Server_i (void);
- // Destructor.
+  /// Destructor.
+  ~Server_i ();
 
- int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
- // Initialize the server.
+  /// Initialize the server.
+  int init (int argc,
+            ACE_TCHAR *argv[]);
 
- int run (ACE_ENV_SINGLE_ARG_DECL);
- // Run the ORB.
+  /// Run the ORB.
+  int run ();
 
 private:
-  int parse_args (int argc, char *argv[]);
-  // Parses the command line arguments.
+  /// Parses the command line arguments.
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
+  /// Writes the server ior to a file, for the clients to pick up
+  /// later.
   int write_IOR (const char *ior);
-  // Writes the server ior to a file, for the clients to pick up
-  // later.
 
-  const char *ior_file_name_;
-  // The file name to save the ior to.
+  /// The file name to save the ior to.
+  const ACE_TCHAR *ior_file_name_;
 
+  /// The tao orb manager object.
   TAO_ORB_Manager orb_manager_;
-  // The tao orb manager object.
 
-  Broadcaster_i broadcaster_i_;
-  // The servant object registered with the orb.
+  /// The servant object registered with the orb.
+  typedef TAO_Intrusive_Ref_Count_Handle<Broadcaster_i> Broadcaster_i_var;
+  Broadcaster_i_var broadcaster_i_;
 };
 
 #endif /* SERVER_I_H */

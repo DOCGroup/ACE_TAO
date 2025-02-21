@@ -1,0 +1,54 @@
+/**
+ * @file TC_IIOP.idl
+ *
+ * @brief Defines the TAO::Transport::IIOP::Current interface
+ *
+ * @author Iliyan Jeliazkov <iliyan@ociweb.com>
+ */
+
+#ifndef TAO_TRANSPORT_IIOP_CURRENT_IDL
+#define TAO_TRANSPORT_IIOP_CURRENT_IDL
+
+#include "tao/TransportCurrent/TC.idl"
+
+/// Provide a forward reference for the SSLIOP::Current
+module SSLIOP
+{
+  interface Current;
+};
+
+
+module TAO
+{
+  module Transport
+  {
+    module IIOP
+    {
+      // The primary interface, providing access to IIOP-specific
+      // transport information, if it is indeed an IIOP (-like) transport
+      // that has been selected.
+
+      local interface Current : TAO::Transport::Current
+      {
+        /// Remote host
+        readonly attribute string remote_host raises (NoContext);
+
+        /// Remote port Using long (signed) type to better accomodate
+        /// the Java mapping, which has no support for unsigned values
+        readonly attribute long remote_port raises (NoContext);
+
+        /// Local host
+        readonly attribute string local_host raises (NoContext);
+
+        /// Local port
+        readonly attribute long local_port raises (NoContext);
+
+        /// If this is a "secure" transport, this method will give you
+        /// the corresponding SSLIOP::Current
+        readonly attribute ::SSLIOP::Current ssliop_current raises (NoContext);
+      };
+    };
+  };
+};
+
+#endif /* TAO_TRANSPORT_IIOP_CURRENT_IDL */

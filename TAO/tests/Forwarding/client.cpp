@@ -1,20 +1,16 @@
-// $Id$
-
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Forwarding, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 10;
 int nthreads = 1;
 int do_shutdown = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xk:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -42,7 +38,7 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -52,11 +48,11 @@ public:
   Worker (CORBA::ORB_ptr orb);
   // Constructor
 
-  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void run_test ();
   // The actual implementation of the test
 
   // = The Task_Base methods
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;
@@ -64,13 +60,12 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -85,40 +80,32 @@ main (int argc, char *argv[])
 
       ACE_Time_Value tv (5, 0);
 
-      orb->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run (tv);
 
       // Now run a test in the main thread, just to confuse matters a
       // little more.
-      worker.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      worker.run_test ();
 
       worker.thr_mgr ()->wait ();
 
       if (do_shutdown)
         {
           CORBA::Object_var object =
-            orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->string_to_object (ior);
 
           Simple_Server_var server =
-            Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            Simple_Server::_narrow (object.in ());
 
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in main:");
+      ex._tao_print_exception ("Exception caught in main:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -131,52 +118,45 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->run_test ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in thread (%t)\n");
+      ex._tao_print_exception ("Exception caught in thread (%t)\n");
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 void
-Worker::run_test (ACE_ENV_SINGLE_ARG_DECL)
+Worker::run_test ()
 {
   for (int j = 0; j != niterations; ++j)
     {
       CORBA::Object_var object =
-        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->orb_->string_to_object (ior);
 
       CORBA::Boolean is_simple_server =
-        object->_is_a ("IDL:Simple_Server:1.0" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        object->_is_a ("IDL:Simple_Server:1.0");
       if (!is_simple_server)
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) unexpected result from _is_a()\n"));
     }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->string_to_object (ior);
 
   Simple_Server_var server =
-    Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    Simple_Server::_narrow (object.in ());
 
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "Object reference <%s> is nil\n",
+                  "Object reference <%s> is nil.\n",
                   ior));
       return;
     }
@@ -184,8 +164,7 @@ Worker::run_test (ACE_ENV_SINGLE_ARG_DECL)
   for (int i = 0; i != niterations; ++i)
     {
       CORBA::Boolean r =
-        server->test_is_a ("IDL:Foo:1.0" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        server->test_is_a ("IDL:Foo:1.0");
 
       if (r != 0)
         ACE_DEBUG ((LM_DEBUG,

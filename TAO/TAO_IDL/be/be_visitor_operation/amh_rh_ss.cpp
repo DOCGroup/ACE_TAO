@@ -2,26 +2,21 @@
 /**
  *  @file   amh_rh_ss.cpp
  *
- *  $Id$
- *
  *  Creates code for AMH-RH operations.
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
  */
 //=============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           amh_rh_ss,
-           "$Id$")
+#include "operation.h"
 
 be_visitor_amh_rh_operation_ss::be_visitor_amh_rh_operation_ss (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_amh_rh_operation_ss::~be_visitor_amh_rh_operation_ss (void)
+be_visitor_amh_rh_operation_ss::~be_visitor_amh_rh_operation_ss ()
 {
 }
 
@@ -34,40 +29,51 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       return 0;
     }
 
+  /// These are not for the server side.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
+  UTL_Scope *s =
+    this->ctx_->attribute ()
+      ? this->ctx_->attribute ()->defined_in ()
+      : node->defined_in ();
 
-  if (this->ctx_->attribute () != 0)
+  be_interface *intf = dynamic_cast<be_interface*> (s);
+
+  if (intf == nullptr)
     {
-      intf = be_interface::narrow_from_scope (
-                 this->ctx_->attribute()->defined_in ()
-               );
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
+
+      if (pt == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_amh_rh_operation_sh::")
+                             ACE_TEXT ("visit_operation - ")
+                             ACE_TEXT ("bad scope\n")),
+                            -1);
+        }
+      else
+        {
+          intf = this->ctx_->interface ();
+        }
     }
 
-  if (!intf)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_amh_rh_operation_ss::"
-                         "visit_operation - "
-                         "bad interface scope\n"),
-                        -1);
-    }
-
-  char *buf;
+  char *buf = nullptr;
   intf->compute_full_name ("TAO_", "", buf);
   ACE_CString response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
   // buf was allocated by ACE_OS::strdup, so we need to use free instead
   // of delete.
   ACE_OS::free (buf);
-  buf = 0;
+  buf = nullptr;
 
   // Step 1 : Generate return type: always void
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl 
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << response_handler_implementation_name.c_str () << "::";
@@ -86,7 +92,8 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << node->local_name ();
+  *os << this->ctx_->port_prefix ().c_str ()
+      << node->local_name ();
 
   // Step 2 : Generate the params of the method
   be_visitor_context ctx (*this->ctx_);
@@ -117,7 +124,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // 4) The implied valuetype ends in ExceptionHolder
   const char *last_underbar = ACE_OS::strrchr (node->full_name (), '_');
 
-  if (last_underbar != 0
+  if (last_underbar != nullptr
       && ACE_OS::strcmp (last_underbar, "_excep") == 0)
     {
       if (node->nmembers () == 1)
@@ -128,17 +135,17 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
           if (!i.is_done ())
             {
               be_argument *argument =
-                be_argument::narrow_from_decl (i.item ());
+                dynamic_cast<be_argument*> (i.item ());
               be_valuetype *vt =
-                be_valuetype::narrow_from_decl (argument->field_type ());
+                dynamic_cast<be_valuetype*> (argument->field_type ());
 
-              if (vt != 0
+              if (vt != nullptr
                   && vt->original_interface () == intf->original_interface ())
                 {
                   const char *last_E =
                     ACE_OS::strrchr (vt->full_name (), 'E');
 
-                  if (last_E != 0
+                  if (last_E != nullptr
                       && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
                     {
                       is_an_exception_reply = 1;
@@ -152,40 +159,34 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
     {
       // Remove the trailing '_excep' from the operation name, we know
       // there is one from the checks above...
-      ACE_CString operation_name (node->full_name ());
-      int idx = operation_name.rfind ('_');
-      ACE_ASSERT (idx != ACE_String_Base_Const::npos);
+      ACE_CString operation_name (node->local_name ()->get_string ());
+      ACE_CString::size_type const idx = operation_name.rfind ('_');
+      ACE_ASSERT (idx != ACE_CString::npos);
       operation_name[idx] = '\0';
 
       *os << be_nl << "{" << be_idt_nl
-          << "ACE_TRY" << be_nl
+          << "try" << be_nl
           << "{" << be_idt_nl
           << "holder->raise_" << operation_name.c_str ()
-          << " (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl
-          << "ACE_TRY_CHECK;" << be_uidt_nl
+          << " ();" << be_uidt_nl
           << "}" << be_nl
-          << "ACE_CATCH (CORBA::Exception, ex)" << be_nl
-          << "{" << be_nl
-          << "  this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);" 
+          << "catch (const ::CORBA::Exception& ex)"
           << be_nl
-          << "  ACE_CHECK;" << be_nl
-          << "}" << be_nl
-          << "ACE_ENDTRY;" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "this->_tao_rh_send_exception (ex);" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}";
     }
   else
     {
       // Step 3: Generate actual code for the method
       *os << be_nl << "{" << be_idt_nl
-          << "this->_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_PARAMETER);" 
-          << be_nl
-          << "ACE_CHECK;" << be_nl << be_nl;
+          << "this->_tao_rh_init_reply ();" << be_nl_2;
 
       this->marshal_params (node);
 
       *os << be_nl
-          << "this->_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_PARAMETER);" 
-          << be_uidt_nl
+          << "this->_tao_rh_send_reply ();" << be_uidt_nl
           << "}";
     }
 
@@ -226,8 +227,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
           << "{" << be_idt_nl;
 
       // If marshaling fails, raise exception.
-      if (this->gen_raise_exception (0,
-                                     "CORBA::MARSHAL",
+      if (this->gen_raise_exception ("::CORBA::MARSHAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

@@ -2,10 +2,7 @@
 /**
  *  @file    timeout_client.cpp
  *
- *  $Id$
- *
  *  Tests for proper handling of timeouts with AMI
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
@@ -14,6 +11,7 @@
 #include "timeout_client.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/PolicyC.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_unistd.h"
 
 TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
@@ -30,26 +28,19 @@ TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
   , INVOKE_ASYNCH (1)
   , timeToWait_ (timeToWait)
 {
-
 }
-
 
 TimeoutClient::~TimeoutClient ()
 {
-
 }
-
-
 
 int
 TimeoutClient::svc ()
 {
   this->initialize ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-
       // Tests timeouts for synchronous
       this->synch_test ();
 
@@ -63,22 +54,19 @@ TimeoutClient::svc ()
       this->none_test ();
 
       // shut down remote ORB
-      timeoutObject_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      timeoutObject_->shutdown ();
 
-      ACE_Time_Value tv (0, 20); // wait for the ORB to deliver the shutdonw
+      ACE_Time_Value tv (0, 20); // wait for the ORB to deliver the shutdown
       ACE_OS::sleep (tv);
 
       // shut down local ORB
-      orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_->shutdown (false);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "TimeoutClient::svc: Done\n\n"));
@@ -89,24 +77,19 @@ TimeoutClient::svc ()
 int
 TimeoutClient::initialize ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::Object_var object =
-        orb_->resolve_initial_references ("ORBPolicyManager"
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb_->resolve_initial_references ("ORBPolicyManager");
 
       policy_manager_ =
-        CORBA::PolicyManager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyManager::_narrow (object.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -133,8 +116,7 @@ TimeoutClient::send (CORBA::Boolean async,
 
   CORBA::PolicyList policy_list (1);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY_EX (normal)
+  try
     {
       if (local_timeout != 0)
         {
@@ -146,22 +128,16 @@ TimeoutClient::send (CORBA::Boolean async,
           policy_list.length (1);
           policy_list[0] =
             orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                                 any_orb
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (normal);
+                                 any_orb);
 
           policy_manager_->set_policy_overrides (policy_list,
-                                                 CORBA::SET_OVERRIDE
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (normal);
+                                                 CORBA::SET_OVERRIDE);
         }
       else
         {
           policy_list.length (0);
           policy_manager_->set_policy_overrides (policy_list,
-                                                 CORBA::SET_OVERRIDE
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (normal);
+                                                 CORBA::SET_OVERRIDE);
         }
 
 
@@ -171,44 +147,35 @@ TimeoutClient::send (CORBA::Boolean async,
       if (async)
         {
           timeoutObject_->sendc_sendTimeToWait (replyHandlerObject_.in (),
-                                                remote_sleep
-                                                ACE_ENV_ARG_PARAMETER);
+                                                remote_sleep);
         }
       else // synch
         {
-          timeoutObject_->sendTimeToWait (remote_sleep
-                                          ACE_ENV_ARG_PARAMETER);
+          timeoutObject_->sendTimeToWait (remote_sleep);
         }
-      ACE_TRY_CHECK_EX (normal);
     }
-  ACE_CATCH (CORBA::TIMEOUT, timeout)
+  catch (const CORBA::TIMEOUT& )
     {
       local_reply_excep_counter_++;
 
       // Trap this exception and continue...
       ACE_DEBUG ((LM_DEBUG,
                   " timeout "));
-
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   // get rid of the policy, you created before.
-  ACE_TRY_EX (cleanup)
+  try
     {
       if (local_timeout != 0)
         {
-          policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (cleanup);
+          policy_list[0]->destroy ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Error: Unexpected exception\n\n"));
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   // wait for responses
   ACE_Time_Value tv (0, (local_timeout + remote_sleep)*2000 + 4000);

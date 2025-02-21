@@ -1,0 +1,9 @@
+// -*- MPC -*-
+project(websvcs): ace_output, acelib {
+  sharedname    = websvcs
+  dynamicflags += ACE_WEBSVCS_BUILD_DLL
+  Source_Files {
+    URL_Addr.cpp
+  }
+
+}

@@ -1,42 +1,31 @@
-// -*- C++ -*-
-// $Id$
+#include "tao/Queued_Message.h"
 
-#include "Queued_Message.h"
+#if !defined (__ACE_INLINE__)
+# include "tao/Queued_Message.inl"
+#endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Queued_Message,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Queued_Message::TAO_Queued_Message (ACE_Allocator *alloc,
-                                        int is_heap_allocated)
+TAO_Queued_Message::TAO_Queued_Message (TAO_ORB_Core *oc,
+                                        ACE_Allocator *alloc,
+                                        bool is_heap_allocated)
   : allocator_ (alloc)
   , is_heap_created_ (is_heap_allocated)
-  , next_ (0)
-  , prev_ (0)
+  , orb_core_ (oc)
+  , next_ (nullptr)
+  , prev_ (nullptr)
 {
 }
 
-TAO_Queued_Message::~TAO_Queued_Message (void)
+TAO_Queued_Message::~TAO_Queued_Message ()
 {
-}
-
-TAO_Queued_Message *
-TAO_Queued_Message::next (void) const
-{
-  return this->next_;
-}
-
-TAO_Queued_Message *
-TAO_Queued_Message::prev (void) const
-{
-  return this->prev_;
 }
 
 void
 TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,
                                       TAO_Queued_Message *&tail)
 {
-  if (this->prev_ != 0)
+  if (this->prev_ != nullptr)
     {
       this->prev_->next_ = this->next_;
     }
@@ -45,7 +34,7 @@ TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,
       head = this->next_;
     }
 
-  if (this->next_ != 0)
+  if (this->next_ != nullptr)
     {
       this->next_->prev_ = this->prev_;
     }
@@ -54,44 +43,54 @@ TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,
       tail = this->prev_;
     }
 
-  this->next_ = 0;
-  this->prev_ = 0;
+  this->next_ = nullptr;
+  this->prev_ = nullptr;
 }
 
 void
 TAO_Queued_Message::push_back (TAO_Queued_Message *&head,
                                TAO_Queued_Message *&tail)
 {
-  if (tail == 0)
+  if (tail == nullptr)
     {
       tail = this;
       head = this;
-      this->next_ = 0;
-      this->prev_ = 0;
-      return;
+      this->next_ = nullptr;
+      this->prev_ = nullptr;
     }
-
-  tail->next_ = this;
-  this->prev_ = tail;
-  this->next_ = 0;
-  tail = this;
+  else
+    {
+      tail->next_ = this;
+      this->prev_ = tail;
+      this->next_ = nullptr;
+      tail = this;
+    }
 }
 
 void
 TAO_Queued_Message::push_front (TAO_Queued_Message *&head,
                                 TAO_Queued_Message *&tail)
 {
-  if (head == 0)
+  if (head == nullptr)
     {
       tail = this;
       head = this;
-      this->next_ = 0;
-      this->prev_ = 0;
-      return;
+      this->next_ = nullptr;
+      this->prev_ = nullptr;
     }
-
-  head->prev_ = this;
-  this->next_ = head;
-  this->prev_ = 0;
-  head = this;
+  else
+    {
+      head->prev_ = this;
+      this->next_ = head;
+      this->prev_ = nullptr;
+      head = this;
+    }
 }
+
+bool
+TAO_Queued_Message::is_expired (const ACE_Time_Value &) const
+{
+  return false;
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

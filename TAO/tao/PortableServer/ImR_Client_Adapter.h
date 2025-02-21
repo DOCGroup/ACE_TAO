@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    ImR_Client_Adapter.h
- *
- *  $Id$
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
@@ -16,21 +14,29 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
 #include "tao/orbconf.h"
-#include "tao/Environment.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Root_POA;
 
+namespace CORBA
+{
+  class Object;
+  typedef Object* Object_ptr;
+}
+
 namespace TAO
 {
+  class ObjectKey;
+
   namespace Portable_Server
   {
     /**
@@ -46,16 +52,25 @@ namespace TAO
       public ACE_Service_Object
     {
     public:
-      virtual ~ImR_Client_Adapter (void);
+      virtual ~ImR_Client_Adapter ();
 
       /// ImplRepo helper method, notify the ImplRepo on startup
-      virtual void imr_notify_startup (TAO_Root_POA* poa ACE_ENV_ARG_DECL) = 0;
+      virtual void imr_notify_startup (TAO_Root_POA* poa ) = 0;
 
       /// ImplRepo helper method, notify the ImplRepo on shutdown
-      virtual void imr_notify_shutdown (TAO_Root_POA* poa ACE_ENV_ARG_DECL) = 0;
+      virtual void imr_notify_shutdown (TAO_Root_POA* poa ) = 0;
+
+      /// ImplRepo helper method, create an IMR-ified object for a
+      /// key with a given type
+      virtual CORBA::Object_ptr imr_key_to_object(
+        TAO_Root_POA* poa,
+        const TAO::ObjectKey &key,
+        const char *type_id) const = 0;
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IMR_CLIENT_ADAPTER_H */

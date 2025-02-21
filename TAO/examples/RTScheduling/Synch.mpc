@@ -1,0 +1,29 @@
+// -*- MPC -*-
+project(RTSchedSynch): portableserver {
+  idlflags += -St \
+              -Wb,export_macro=SYNCH_Export \
+              -Wb,export_include=synch_export.h
+  dynamicflags += SYNCH_BUILD_DLL
+  sharedname   = RTSchedSynch
+
+  IDL_Files {
+    Synch.idl
+  }
+
+  Source_Files {
+    SynchC.cpp
+    SynchS.cpp
+    Synch_i.cpp
+  }
+
+  Header_Files {
+    SynchC.h
+    SynchS.h
+    synch_export.h
+    Synch_i.h
+  }
+
+  Inline_Files {
+    SynchC.inl
+  }
+}

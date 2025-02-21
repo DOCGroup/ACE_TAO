@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -72,33 +70,31 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union_branch.h"
 #include "ast_union_label.h"
 #include "ast_union.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
 #include "ast_visitor.h"
+#include "utl_indenter.h"
+
 #include "utl_labellist.h"
+#include "fe_extern.h"
 
-ACE_RCSID(ast, ast_union_branch, "$Id$")
-
-AST_UnionBranch::AST_UnionBranch (void)
-  : COMMON_Base (),
-    AST_Decl (),
-	  AST_Field (),
-	  pd_ll (0)
-{
-}
+AST_Decl::NodeType const
+AST_UnionBranch::NT = AST_Decl::NT_union_branch;
 
 AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
                                   AST_Type *ft,
-				                          UTL_ScopedName *n)
+                                  UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_union_branch,
               n),
-	  AST_Field (AST_Decl::NT_union_branch,
+    AST_Field (AST_Decl::NT_union_branch,
                ft,
                n),
-	  pd_ll (ll)
+    pd_ll (ll)
 {
 }
 
-AST_UnionBranch::~AST_UnionBranch (void)
+AST_UnionBranch::~AST_UnionBranch ()
 {
 }
 
@@ -108,17 +104,23 @@ AST_UnionBranch::~AST_UnionBranch (void)
 void
 AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
 {
-  for (unsigned long i = 0; i < this->label_list_length (); ++i)
+  unsigned long l = this->label_list_length ();
+  for (unsigned long i = 0; i < l; ++i)
     {
       this->dump_i (o, "case ");
 
       AST_UnionLabel *ul = this->label (i);
       ul->dump (o);
 
-      this->dump_i (o, ": \n");
+      this->dump_i (o, ":\n");
+      if (i != l - 1) idl_global->indent ()->skip_to (o);
     }
 
+  idl_global->indent ()->increase ();
+  idl_global->indent ()->skip_to (o);
+  AST_Field::dump_annotations (o, true /* print inline */);
   AST_Field::dump (o);
+  idl_global->indent ()->decrease ();
 }
 
 int
@@ -127,15 +129,29 @@ AST_UnionBranch::ast_accept (ast_visitor *visitor)
   return visitor->visit_union_branch (this);
 }
 
-// Data accessors.
+void
+AST_UnionBranch::destroy ()
+{
+  this->pd_ll->destroy ();
+  delete this->pd_ll;
+  this->pd_ll = nullptr;
+
+  this->AST_Field::destroy ();
+}
+
+UTL_LabelList *
+AST_UnionBranch::labels () const
+{
+  return this->pd_ll;
+}
 
 AST_UnionLabel *
 AST_UnionBranch::label (unsigned long index)
 {
   unsigned long i = 0;
 
-  for (UTL_LabellistActiveIterator iter (this->pd_ll); 
-       !iter.is_done (); 
+  for (UTL_LabellistActiveIterator iter (this->pd_ll);
+       !iter.is_done ();
        iter.next ())
     {
       if (i == index)
@@ -146,11 +162,11 @@ AST_UnionBranch::label (unsigned long index)
       ++i;
     }
 
-  return 0;
+  return nullptr;
 }
 
 unsigned long
-AST_UnionBranch::label_list_length (void)
+AST_UnionBranch::label_list_length ()
 {
   if (this->pd_ll)
     {
@@ -165,25 +181,63 @@ AST_UnionBranch::label_list_length (void)
 void
 AST_UnionBranch::add_labels (AST_Union *u)
 {
-  AST_UnionLabel *ul = 0;
-  AST_Expression *ex = 0;
-
+  const bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
   for (UTL_LabellistActiveIterator i (this->pd_ll);
        !i.is_done ();
        i.next ())
     {
-      ul = i.item ();
-      
-      if (ul->label_kind () == AST_UnionLabel::UL_default)
+      if (AST_UnionLabel::UL_default == i.item ()->label_kind ())
         {
-          return;
+          continue;
         }
-        
-      ex = ul->label_val ();
-      u->add_to_name_referenced (ex->n ()->first_component ());
+
+      AST_Expression *ex = i.item ()->label_val ();
+      UTL_ScopedName *n = ex->n ();
+
+      if (n)
+        {
+          u->add_to_name_referenced (n->first_component ());
+        }
+
+      // If we have enum val labels, we need to set the type and
+      // evaluate here, so the value will be available when the
+      // default index in calculated.
+      if (enum_labels)
+        {
+          ex->ev ()->et = AST_Expression::EV_enum;
+          AST_Enum *disc = dynamic_cast<AST_Enum*> (u->disc_type ());
+          if (disc == nullptr)
+            {
+              // this is strictly to mollycoddle the Coverity null pointer
+              // dereference check. The enum labels ensures consistency here.
+              return;
+            }
+          AST_EnumVal *dval = disc->lookup_by_value (ex);
+
+          if (dval == nullptr)
+            {
+              idl_global->err ()->incompatible_disc_error (disc, ex);
+              throw Bailout ();
+            }
+
+          ex->ev ()->u.eval = dval->constant_value ()->ev ()->u.ulval;
+        }
     }
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_UnionBranch, AST_Field)
-IMPL_NARROW_FROM_DECL(AST_UnionBranch)
+void
+AST_UnionBranch::coerce_labels (AST_Union *u)
+{
+  for (unsigned long i = 0; i < this->label_list_length (); ++i)
+    {
+      AST_UnionLabel *ul = this->label (i);
+
+      if (ul->label_kind () == AST_UnionLabel::UL_default)
+        {
+          continue;
+        }
+
+      AST_Expression *lv = ul->label_val ();
+      lv->set_ev (lv->coerce (u->udisc_type ()));
+    }
+}

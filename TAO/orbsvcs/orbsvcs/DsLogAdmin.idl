@@ -1,15 +1,13 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    DsLogAdmin.idl
-//
-// = DESCRIPTION
-//    This module defines the Log, Iterator, LogMgr and LogFactory
-//    interfaces for the OMG's Telecom Event Log Service
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DsLogAdmin.idl
+ *
+ *  This module defines the Log, Iterator, LogMgr and LogFactory
+ *  interfaces for the OMG's Telecom Event Log Service
+ */
+//=============================================================================
+
 
 #ifndef DS_LOG_ADMIN_IDL
 #define DS_LOG_ADMIN_IDL
@@ -64,17 +62,19 @@ module DsLogAdmin
     TimeT stop;
   };
 
+  typedef sequence<TimeInterval> TimeIntervalSeq;
+
   struct LogRecord
   {
+    /// Unique number assigned by the log
     RecordId id;
-    // Unique number assigned by the log
+    /// Time when the event is logged
     TimeT time;
-    // Time when the event is logged
+    /// List of user defined name/value pairs. Not part of the event
+    /// received by the log. Optional.
     NVList attr_list;
-    // List of user defined name/value pairs. Not part of the event
-    // received by the log. Optional.
+    /// Event content
     any info;
-    // Event content
   };
 
   typedef sequence<LogRecord> RecordList;

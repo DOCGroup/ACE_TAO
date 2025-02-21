@@ -4,9 +4,7 @@
 /**
  *  @file   SSLIOP_EVP_PKEY.h
  *
- *  $Id$
- *
- *  @author Ossama Othman <ossama@dre,vanderbilt.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
@@ -21,11 +19,12 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_OpenSSL_st_T.h"
+#include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h"
 
 #include <openssl/evp.h>
 #include <openssl/crypto.h>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -35,10 +34,6 @@ namespace TAO
     template <>
     struct OpenSSL_traits< ::EVP_PKEY >
     {
-      /// OpenSSL lock ID for use in OpenSSL CRYPTO_add() reference
-      /// count manipulation function.
-      enum { LOCK_ID = CRYPTO_LOCK_EVP_PKEY };
-
       /// Increase the reference count on the given OpenSSL structure.
       /**
        * @note This used to be in a function template but MSVC++ 6
@@ -48,9 +43,15 @@ namespace TAO
       static ::EVP_PKEY * _duplicate (::EVP_PKEY * st)
       {
         if (st != 0)
+        {
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+          ::EVP_PKEY_up_ref(st);
+#else
           CRYPTO_add (&(st->references),
                       1,
-                      LOCK_ID);
+                      CRYPTO_LOCK_EVP_PKEY);
+#endif
+        }
 
         return st;
       }
@@ -67,10 +68,10 @@ namespace TAO
     };
 
     typedef OpenSSL_st_var< ::EVP_PKEY > EVP_PKEY_var;
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

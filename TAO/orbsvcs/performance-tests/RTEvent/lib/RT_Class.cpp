@@ -1,8 +1,6 @@
 /**
  * @file RT_Class.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -15,11 +13,7 @@
 #include "RT_Class.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           RT_Class, 
-           "$Id$")
-
-RT_Class::RT_Class (void)
+RT_Class::RT_Class ()
   : prc_sched_class_ (ACE_SCHED_FIFO)
   , thr_sched_class_ (THR_SCHED_FIFO)
 {

@@ -1,7 +1,4 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
 #ifndef TAO_BE_VISITOR_SEQUENCE_H
 #define TAO_BE_VISITOR_SEQUENCE_H
@@ -17,7 +14,5 @@
 #include "be_visitor_sequence/any_op_cs.h"
 #include "be_visitor_sequence/cdr_op_ch.h"
 #include "be_visitor_sequence/cdr_op_cs.h"
-#include "be_visitor_sequence/serializer_op_ch.h"
-#include "be_visitor_sequence/serializer_op_cs.h"
 
 #endif /* TAO_BE_VISITOR_SEQUENCE_H */

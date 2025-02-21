@@ -1,0 +1,316 @@
+// The next include is TAO specific.
+#include "orbsvcs/FT_CORBA_ORB.idl"
+
+#include "orbsvcs/CosNotification.idl"
+#include "orbsvcs/PortableGroup.idl"
+
+#pragma prefix "omg.org"
+
+/**
+* This module describes interfaces and data types of the CORBA
+* Fault Tolerance service.
+*/
+
+module FT
+{
+  /// Specification for the Common Types and Exceptions for
+  /// ReplicationManager
+
+  /// Forward declarations
+  interface GenericFactory;
+  interface FaultNotifier;
+
+  /// Useful typedefs.
+  typedef CORBA::RepositoryId _TypeId;
+  typedef Object ObjectGroup;
+
+  typedef any Value;
+
+  /**
+   * @struct Property
+   *
+   * @brief A property name and a value association.
+   */
+  struct Property {
+    Value val;
+  };
+
+  /// Some mor euseful typedefs.
+  typedef sequence<Property> Properties;
+  typedef Properties Criteria;
+
+  /**
+   * @struct FactoryInfo
+   *
+   * @brief <@todo>
+   *
+   */
+  struct FactoryInfo {
+    GenericFactory the_factory;
+    Criteria the_criteria;
+  };
+
+  typedef sequence<FactoryInfo> FactoryInfos;
+
+  typedef long ReplicationStyleValue;
+  const ReplicationStyleValue STATELESS = 0;
+  const ReplicationStyleValue COLD_PASSIVE = 1;
+  const ReplicationStyleValue WARM_PASSIVE = 2;
+  const ReplicationStyleValue ACTIVE = 3;
+  const ReplicationStyleValue ACTIVE_WITH_VOTING = 4;
+  typedef long MembershipStyleValue;
+  const MembershipStyleValue MEMB_APP_CTRL = 0;
+  const MembershipStyleValue MEMB_INF_CTRL = 1;
+  typedef long ConsistencyStyleValue;
+  const ConsistencyStyleValue CONS_APP_CTRL = 0;
+  const ConsistencyStyleValue CONS_INF_CTRL = 1;
+  typedef long FaultMonitoringStyleValue;
+  const FaultMonitoringStyleValue PULL = 0;
+  const FaultMonitoringStyleValue PUSH = 1;
+  const FaultMonitoringStyleValue NOT_MONITORED = 2;
+  typedef long FaultMonitoringGranularityValue;
+  const FaultMonitoringGranularityValue MEMB = 0;
+  const FaultMonitoringGranularityValue LOC = 1;
+  const FaultMonitoringGranularityValue LOC_AND_TYPE = 2;
+  typedef FactoryInfos FactoriesValue;
+  typedef unsigned short InitialNumberReplicasValue;
+  typedef unsigned short MinimumNumberReplicasValue;
+
+  typedef TimeBase::TimeT CheckpointIntervalValue;
+  exception InterfaceNotFound {};
+  exception ObjectGroupNotFound {};
+  exception MemberNotFound {};
+  exception MemberAlreadyPresent {};
+  exception BadReplicationStyle {};
+  exception ObjectNotCreated {};
+  exception ObjectNotAdded {};
+  exception PrimaryNotSet {};
+  exception UnsupportedProperty {
+    Value val;
+  };
+
+  exception InvalidProperty {
+    Value val; };
+
+  exception NoFactory {
+    _TypeId type_id; };
+
+  exception InvalidCriteria {
+    Criteria invalid_criteria; };
+
+  exception CannotMeetCriteria {
+    Criteria unmet_criteria; };
+
+  // Specification of PropertyManager Interface
+  // which ReplicationManager Inherits
+
+  interface PropertyManager {
+
+    void set_default_properties(in Properties props)
+      raises (InvalidProperty, UnsupportedProperty);
+    Properties get_default_properties();
+
+    void remove_default_properties(in Properties props)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    void set_type_properties(in _TypeId type_id,
+                             in Properties overrides)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    Properties get_type_properties(in _TypeId type_id);
+
+    void remove_type_properties(in _TypeId type_id,
+                                in Properties props)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    void set_properties_dynamically(in ObjectGroup object_group,
+                                    in Properties overrides)
+      raises(ObjectGroupNotFound, InvalidProperty, UnsupportedProperty);
+
+    Properties get_properties(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound); };
+
+  // Specification of ObjectGroupManager Interface
+  // which ReplicationManager Inherits
+  /**
+    * This interface provides operations that allow an application to add, remove
+    * and locate members of an object group and to obtain the current reference and
+    * identifier for an object group.
+    *
+    */
+
+  interface ObjectGroupManager {
+     /**
+      * This operation allows the application to exercise explicit control over the
+      * creation of a member of an object group, and to determine where the member
+      * is created.
+      *
+      * @param object_group Reference for the object group to which the member is
+      * to be added.
+      * @param the_location The physical location.
+      * @param type_id The repository identifier for the type of the object.
+      * @param the_criteria Parameters to be passed to the factory, which the factory
+      * evaluates before creating the object.
+      *
+      * @return The object group reference of the object group with the member added.
+      */
+    ObjectGroup create_member(in ObjectGroup object_group,
+                              in _TypeId type_id,
+                              in Criteria the_criteria)
+      raises(ObjectGroupNotFound,
+             MemberAlreadyPresent,
+             NoFactory,
+             ObjectNotCreated,
+             InvalidCriteria,
+             CannotMeetCriteria);
+
+     /**
+      * This operation allows an application to add an existing object to an object
+      * group at a particular location.
+      *
+      * @param object_group Reference for the object group to which the existing object
+      * is to be added.
+      * @param the_location The physical location of the object to be added.
+      * @param member The reference of the object to be added.
+      *
+      * @return The object group reference of the object group with the object added.
+      */
+    ObjectGroup add_member(in ObjectGroup object_group,
+                           in Object member)
+      raises(ObjectGroupNotFound,
+             MemberAlreadyPresent,
+             ObjectNotAdded);
+
+     /**
+      * This operation allows an application to remove a member from an object
+      * group at a particular location.
+      *
+      * @param object_group Reference for the object group to which the member
+      * is to be removed.
+      * @param the_location The physical location of the member to be removed.
+      *
+      * @return The object group reference of the member removed.
+      */
+    ObjectGroup remove_member(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound,
+             MemberNotFound);
+
+     /**
+      * This operation allows the application to select the member of the object group
+      * that is to be the primary.
+      *
+      * @param object_group Reference for the object group whose primary is to be
+      * determined.
+      * @param the_location The physical location of the member that is to become
+      * the primary.
+      *
+      * @return The object group reference with the primary member at the given
+      * location.
+      */
+    ObjectGroup set_primary_member(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound,
+             MemberNotFound,
+             PrimaryNotSet,
+             BadReplicationStyle);
+
+    ObjectGroupId get_object_group_id(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound);
+
+    ObjectGroup get_object_group_ref(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound);
+
+    Object get_member_ref(in ObjectGroup object_group)
+      raises(ObjectGroupNotFound, MemberNotFound); };
+
+
+  // Specification of GenericFactory Interface
+  // which ReplicationManager Inherits and Application Objects Implement
+  /**
+    * This interface allows the creation/deletion of replicated objects (object groups),
+    * replicas (members of object groups), and unreplicated objects.
+    */
+  interface GenericFactory {
+    typedef any FactoryCreationId;
+
+     /**
+      * This operation creates an object or an object group, using the type_id
+      * parameter to determine which type of object to create and the_criteria
+      * parameter to determine restrictions on how and where to create the object.
+      *
+      * @param type_id The repository identifier of the object to be created by
+      * the factory.
+      *
+      * @param the_criteria Information passed to the factory, which the factory
+      * evaluates before creating the object. Examples of criteria are initialization
+      * values, constraints on the object, preferred location of the object, fault
+      * tolerance properties for an object group, etc.
+      *
+      * @param factory_creation_id An identifier that allows the factory to delete
+      * the object subsequently.
+      *
+      * @return The reference to the object created by the GenericFactory. When the
+      * GenericFactory interface is implemented by the application’s local factory
+      * object, the create_object() operation returns an object reference as a result.
+      * When the GenericFactory interface is inherited by the Replication Manager, the
+      * create_object() operation returns an object group reference as a result.
+      *
+      * @exception NoFactory Raised if the factory cannot create an individual object
+      * of the type_id at the location.
+      * @exception ObjectNotCreated Raised if the factory cannot create the object.
+      * @exception InvalidCriteria Raised if the factory does not understand the criteria.
+      * @exception InvalidProperty Raised if a property passed in as criteria is invalid.
+      * @exception CannotMeetCriteria Raised if the factory understands the criteria but
+      * cannot satisfy it.
+      */
+    Object create_object(in _TypeId type_id,
+                         in Criteria the_criteria,
+                         out FactoryCreationId factory_creation_id)
+      raises (NoFactory,
+              ObjectNotCreated,
+              InvalidCriteria,
+              InvalidProperty,
+              CannotMeetCriteria); };
+
+  // Specification of ReplicationManager Interface
+  interface ReplicationManager : PropertyManager,
+    ObjectGroupManager,
+    GenericFactory {
+    void register_fault_notifier(in FaultNotifier fault_notifier);
+    FaultNotifier get_fault_notifier()
+      raises (InterfaceNotFound); };
+
+    // Specification of FaultNotifier Interface
+    interface FaultNotifier {
+    typedef unsigned long long ConsumerId;
+
+    void push_structured_fault(
+        in CosNotification::StructuredEvent event);
+
+    void push_sequence_fault(
+        in CosNotification::EventBatch events);
+
+    };
+
+  // Specifications for Logging and Recovery
+  typedef sequence<octet> State;
+
+  exception NoStateAvailable {};
+  exception InvalidState {};
+
+  exception NoUpdateAvailable {};
+  exception InvalidUpdate {};
+
+  // Specification of Checkpointable Interface
+  // which Updateable and Application Objects Inherit
+  interface Checkpointable { State get_state()
+                               raises(NoStateAvailable);
+  void set_state(in State s) raises(InvalidState); };
+
+  // Specification of Updateable Interface
+  // which Application Objects Inherit
+  interface Updateable : Checkpointable { State get_update()
+                                            raises(NoUpdateAvailable);
+  void set_update(in State s) raises(InvalidUpdate);
+  };
+
+};

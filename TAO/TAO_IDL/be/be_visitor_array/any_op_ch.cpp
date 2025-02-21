@@ -1,40 +1,20 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor for code generation of Arrays for the Any operators in the client
-//    header.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_ch.cpp
+ *
+ *  Visitor for code generation of Arrays for the Any operators in the client
+ *  header.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_array, 
-           any_op_ch, 
-           "$Id$")
-
-// ***************************************************************************
-// Array visitor for generating Any operator declarations in the client header
-// ***************************************************************************
+#include "array.h"
 
 be_visitor_array_any_op_ch::be_visitor_array_any_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
-{
-}
-
-be_visitor_array_any_op_ch::~be_visitor_array_any_op_ch (void)
 {
 }
 
@@ -47,17 +27,19 @@ be_visitor_array_any_op_ch::visit_array (be_array *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
-  *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, const " << node->name ()
+  *os << be_global->anyops_versioning_begin () << be_nl;
+
+  *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
       << "_forany &);" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, "
+  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << "_forany &);";
 
-  node->cli_hdr_any_op_gen (1);
+  *os << be_global->anyops_versioning_end () << be_nl;
+
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }

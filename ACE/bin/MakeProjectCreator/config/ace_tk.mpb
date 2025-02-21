@@ -1,0 +1,11 @@
+// -*- MPC -*-
+project {
+  requires += tk
+  // Depends on configuration from include/makeinclude/platform_*.GNU
+
+  verbatim(gnuace,local) {
+    CPPFLAGS += $(PLATFORM_TCL_CPPFLAGS) $(PLATFORM_TK_CPPFLAGS)
+    LIBS += $(PLATFORM_TCL_LIBS) $(PLATFORM_TK_LIBS)
+    LDFLAGS += $(PLATFORM_TCL_LDFLAGS) $(PLATFORM_TK_LDFLAGS)
+  }
+}

@@ -1,27 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    small_union.cpp
-//
-// = DESCRIPTION
-//    tests Small_Unions
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    small_union.cpp
+ *
+ *  tests Small_Unions
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "small_union.h"
-
-ACE_RCSID (Param_Test,
-           small_union, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Small_Union
@@ -29,26 +19,25 @@ ACE_RCSID (Param_Test,
 
 size_t Test_Small_Union::counter = 0;
 
-Test_Small_Union::Test_Small_Union (void)
+Test_Small_Union::Test_Small_Union ()
   : opname_ (CORBA::string_dup ("test_small_union"))
 {
 }
 
-Test_Small_Union::~Test_Small_Union (void)
+Test_Small_Union::~Test_Small_Union ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Small_Union::opname (void) const
+Test_Small_Union::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Small_Union::dii_req_invoke (CORBA::Request *req
-                                  ACE_ENV_ARG_DECL)
+Test_Small_Union::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -56,53 +45,48 @@ Test_Small_Union::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Small_Union);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  Param_Test::Small_Union *tmp;
+  const Param_Test::Small_Union *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Small_Union (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = *tmp;
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Small_Union (*tmp);
 }
 
 int
-Test_Small_Union::init_parameters (Param_Test_ptr objref
-                                   ACE_ENV_ARG_DECL)
+Test_Small_Union::init_parameters (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       // get access to a Coffee Object
-      this->cobj_ = objref->make_coffee (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->cobj_ = objref->make_coffee ();
 
       this->reset_parameters ();
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex,"System Exception doing make_coffee");
+      sysex._tao_print_exception ("System Exception doing make_coffee");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "An exception caught in make_coffee");
+      ex._tao_print_exception (
+        "An exception caught in make_coffee");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 int
-Test_Small_Union::reset_parameters (void)
+Test_Small_Union::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
   CORBA::ULong index = (counter++ % 2);
@@ -131,31 +115,25 @@ Test_Small_Union::reset_parameters (void)
 }
 
 int
-Test_Small_Union::run_sii_test (Param_Test_ptr objref
-                                ACE_ENV_ARG_DECL)
+Test_Small_Union::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_small_union (this->in_,
                                            this->inout_,
-                                           this->out_
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                           this->out_);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Small_Union::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Small_Union::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Small_Union::check_validity (void)
+Test_Small_Union::check_validity ()
 {
   if (this->in_._d () != this->inout_._d ()
       || this->in_._d () != this->out_->_d ()
@@ -205,6 +183,6 @@ Test_Small_Union::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Small_Union::print_values (void)
+Test_Small_Union::print_values ()
 {
 }

@@ -1,82 +1,59 @@
-//
-// $Id$
-//
 #include "Reply_Handler.h"
 
-ACE_RCSID(AMI_Buffering, Reply_Handler, "$Id$")
-
-Reply_Handler::Reply_Handler (void)
+Reply_Handler::Reply_Handler ()
 {
 }
 
 void
-Reply_Handler::receive_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Reply_Handler::receive_data ()
 {
 }
 
 void
-Reply_Handler::receive_data_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                                   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Reply_Handler::receive_data_excep (::Messaging::ExceptionHolder *holder)
 {
-  ACE_TRY
+  try
     {
-      holder->raise_receive_data (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "receive_data: ");
+      ex._tao_print_exception ("receive_data: ");
     }
-  ACE_ENDTRY;
 }
 
 void
-Reply_Handler::sync (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Reply_Handler::sync ()
 {
 }
 
 void
-Reply_Handler::sync_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Reply_Handler::sync_excep (::Messaging::ExceptionHolder *holder)
 {
-  ACE_TRY
+  try
     {
-      holder->raise_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "sync: ");
+      ex._tao_print_exception ("sync: ");
     }
-  ACE_ENDTRY;
 }
 
 void
-Reply_Handler::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Reply_Handler::shutdown ()
 {
 }
 
 void
-Reply_Handler::shutdown_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Reply_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder)
 {
-  ACE_TRY
+  try
     {
-      holder->raise_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "shutdown: ");
+      ex._tao_print_exception ("shutdown: ");
     }
-  ACE_ENDTRY;
 }

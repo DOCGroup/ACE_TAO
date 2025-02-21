@@ -1,22 +1,18 @@
-// $Id$
-
 #include "testC.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(MT_Client, client, "client.cpp,v 1.16 2002/01/29 20:21:08 okellogg Exp")
-
-const char *ior = "file://test.ior";
-const char *corbaloc_arg = "corbaloc:iiop:1.0@localhost:12000/ObjectName";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+const ACE_TCHAR *corbaloc_arg = ACE_TEXT("corbaloc:iiop:1.0@localhost:12000/ObjectName");
 int nthreads = 5;
 int niterations = 5;
 int server_shutdown = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "l:k:n:i:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("l:k:n:i:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -48,7 +44,7 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -64,11 +60,11 @@ public:
   Client (Simple_Server_ptr server, int niterations);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void validate_connection ();
   // Validate the connection
 
 private:
@@ -80,29 +76,26 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
@@ -120,18 +113,16 @@ main (int argc, char *argv[])
       if (!server_shutdown)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "starting string_to_object %s \n",
+                      "starting string_to_object %s\n",
                       corbaloc_arg));
 
           for (int c = 0; c < (niterations * 2); c++)
             {
-              ACE_TRY_EX (CORBALOC)
+              try
                 {
                   CORBA::Object_var probably_not_exist =
-                    orb->string_to_object(corbaloc_arg
-                                          ACE_ENV_ARG_PARAMETER);
+                    orb->string_to_object(corbaloc_arg);
 
-                  ACE_TRY_CHECK_EX (CORBALOC);
 
                   if (CORBA::is_nil(probably_not_exist.in()))
                     {
@@ -140,9 +131,7 @@ main (int argc, char *argv[])
                   else
                     {
                       Simple_Server_var newserver =
-                        Simple_Server::_narrow (probably_not_exist.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK_EX (CORBALOC);
+                        Simple_Server::_narrow (probably_not_exist.in ());
 
                       // should throw an exception
                       if (CORBA::is_nil(newserver.in()))
@@ -155,11 +144,10 @@ main (int argc, char *argv[])
                         }
                     }
                 }
-              ACE_CATCHANY
+              catch (const CORBA::Exception&)
                 {
                   // ACE_DEBUG ((LM_DEBUG, "caught exception\n", corbaloc_arg));
                 }
-              ACE_ENDTRY;
             }
         }
       ACE_DEBUG ((LM_DEBUG,
@@ -172,20 +160,16 @@ main (int argc, char *argv[])
 
       if (server_shutdown)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -200,45 +184,40 @@ Client::Client (Simple_Server_ptr server,
 }
 
 void
-Client::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client::validate_connection ()
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
   // run on minimum CORBA builds too!
   for (int j = 0; j != 100; ++j)
     {
-      ACE_TRY
+      try
         {
-          this->server_->test_method (j ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_->test_method (j);
         }
-      ACE_CATCHANY {} ACE_ENDTRY;
+      catch (const CORBA::Exception&){}
     }
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       for (int i = 0; i < this->niterations_; ++i)
         {
-          this->server_->test_method (i ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_->test_method (i);
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n",
                         i));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_Client: exception raised");
+      ex._tao_print_exception ("MT_Client: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }

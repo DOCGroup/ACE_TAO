@@ -4,8 +4,6 @@
 /**
  *  @file     ORB_Table.h
  *
- *  $Id$
- *
  *  @author Ossama Othman
  *  @author Carlos O'Ryan
  */
@@ -17,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,6 +27,8 @@
 #include "ace/Array_Map.h"
 #include "ace/Thread_Mutex.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_ORB_Core;
@@ -55,19 +55,18 @@ namespace TAO
    *       containing a template type (TAO_Singleton) with a static
    *       member to be introduced.  In turn, this potentially
    *       introduces problems in MS Windows DLL environments due to
-   *       the occurance of multiple singleton instances.  There
+   *       the occurrence of multiple singleton instances.  There
    *       should only be one!
    */
   class TAO_Export ORB_Table
   {
   public:
-
     /// Constructor
     /**
      * @note See the note in the class description for an explanation
      *       of why this constructor is not protected.
      */
-    ORB_Table (void);
+    ORB_Table ();
 
     typedef ACE_Array_Map<CORBA::String_var,
                           ORB_Core_Ref_Counter,
@@ -78,11 +77,13 @@ namespace TAO
     typedef Table::size_type  size_type;
     typedef Table::iterator   iterator;
 
-    /// The canonical ACE_Map methods.
+    /**
+     * @name The canonical ACE_Map methods.
+     */
     //@{
-    iterator begin (void);
-    iterator end (void);
-    int bind (const char *orb_id, TAO_ORB_Core *orb_core);
+    iterator begin ();
+    iterator end ();
+    int bind (const char *orb_id, ::TAO_ORB_Core *orb_core);
 
     /// Return @c TAO_ORB_Core corresponding to ORB with given @a
     /// orb_id.
@@ -90,19 +91,17 @@ namespace TAO
      * @note The caller must decrease the reference count on the
      *       returned ORB_Core, i.e. the callers "owns" it.
      */
-    TAO_ORB_Core* find (const char *orb_id);
+    ::TAO_ORB_Core* find (const char *orb_id);
 
     int unbind (const char *orb_id);
     //@}
 
-    TAO_ORB_Core * const * get_orbs (size_t& num_orbs);
-
     /// Obtain the first ORB for the @c ORB_Core_instance()
     /// implementation.
-    TAO_ORB_Core * first_orb (void);
+    ::TAO_ORB_Core * first_orb ();
 
     /// Return a unique instance
-    static ORB_Table * instance (void);
+    static ORB_Table * instance ();
 
     /// Set the ORB related to the orb_id as the default ORB and not the
     /// ORB that is first binded.
@@ -113,28 +112,23 @@ namespace TAO
     void not_default (char const * orb_id);
 
     /// Accessor to the underlying table_
-    Table * table (void);
+    Table * table ();
+
+    /// Return reference to underlying lock.
+    TAO_SYNCH_MUTEX & lock ();
 
   private:
-
     // Prevent copying
     ORB_Table (const ORB_Table &);
     void operator= (const ORB_Table &);
 
     /// Return @c TAO_ORB_Core corresponding to ORB with given @a
     /// orb_id.  (underlying unlocked implementation).
-    TAO_ORB_Core * find_i (char const * orb_id);
-
-    /// Update our list of orbs
-    /**
-     * @todo Where the implementation for ORB_Table::update_orbs?
-     */
-    void update_orbs (void);
+    ::TAO_ORB_Core * find_i (char const * orb_id);
 
   private:
-
     /// Lock used to synchronize access to the internal state.
-    TAO_SYNCH_MUTEX lock_;
+    ::TAO_SYNCH_MUTEX lock_;
 
     /// Variable to check if the first ORB decides not to be the
     /// default.
@@ -144,17 +138,7 @@ namespace TAO
     Table table_;
 
     /// The first ORB created by the user
-    TAO_ORB_Core * first_orb_;
-
-    /// List of orbs for get_orbs call
-    /**
-     * @todo ORB_Table::orbs_ appears to be unused.  Remove it?
-     */
-    TAO_ORB_Core ** orbs_;
-
-    /// Number of ORBs in the table.
-    size_t num_orbs_;
-
+    ::TAO_ORB_Core * first_orb_;
   };
 
   // -----------------------------------------------
@@ -169,15 +153,14 @@ namespace TAO
   class ORB_Core_Ref_Counter
   {
   public:
+    /// Constructor.
+    ORB_Core_Ref_Counter ();
 
     /// Constructor.
-    ORB_Core_Ref_Counter (void);
-
-    /// Constructor.
-    ORB_Core_Ref_Counter (TAO_ORB_Core * core);
+    ORB_Core_Ref_Counter (::TAO_ORB_Core * core);
 
     /// Destructor.
-    ~ORB_Core_Ref_Counter (void);
+    ~ORB_Core_Ref_Counter ();
 
     /// Copy constructor.
     ORB_Core_Ref_Counter (ORB_Core_Ref_Counter const & rhs);
@@ -186,15 +169,14 @@ namespace TAO
     void operator= (ORB_Core_Ref_Counter const & rhs);
 
     /// ORB_Core pointer accessor.
-    TAO_ORB_Core * core (void) const { return this->core_; }
+    ::TAO_ORB_Core * core () const { return this->core_; }
 
   private:
-
-    TAO_ORB_Core * core_;
-
+    ::TAO_ORB_Core * core_;
   };
-
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Table.inl"

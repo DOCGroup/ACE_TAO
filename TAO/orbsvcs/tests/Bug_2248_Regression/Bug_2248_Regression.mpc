@@ -1,0 +1,39 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+    tests.idl
+  }
+
+  custom_only = 1
+}
+
+project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+
+  Source_Files {
+    test_i.cpp
+    testC.cpp
+    testS.cpp
+    testsC.cpp
+    testsS.cpp
+    Server_ORBInitializer.cpp
+    Server_Request_Interceptor.cpp
+    server.cpp
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, orbsvcsexe, iormanip, pi_server, ftorb, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+
+  IDL_Files {
+  }
+}

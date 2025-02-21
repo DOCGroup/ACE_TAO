@@ -1,0 +1,18 @@
+#ifndef _LOADER_CONST_IDL_
+#define _LOADER_CONST_IDL_
+
+// This include caused a crash when another IDL file is processed after
+// this one in one pass. The node in the AST corresponding to the CORBA
+// module where the basic types are declared contained garbage due to
+// subsequent openings in the included file, which are destroyed between
+// files in the list (unlike the one containing the basic types).
+#include <orb.idl>
+
+#pragma prefix ""
+
+module Plesk
+{
+  const unsigned long PLESK_VENDOR_ID = 40000;
+}; /* module Plesk */
+
+#endif /* _LOADER_CONST_IDL_ */

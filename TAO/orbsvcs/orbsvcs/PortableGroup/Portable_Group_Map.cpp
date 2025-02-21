@@ -1,22 +1,12 @@
-// $Id$
-
-#include "Portable_Group_Map.h"
+#include "orbsvcs/PortableGroup/Portable_Group_Map.h"
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (PortableGroup,
-           Portable_Group_Map,
-           "$Id$")
-
-
-/// Constructor.
-TAO_Portable_Group_Map::TAO_Portable_Group_Map ()
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Destructor.
-TAO_Portable_Group_Map::~TAO_Portable_Group_Map (void)
+TAO_Portable_Group_Map::~TAO_Portable_Group_Map ()
 {
   for (Iterator i = this->map_.begin ();
        i != this->map_.end ();
@@ -33,23 +23,19 @@ TAO_Portable_Group_Map::~TAO_Portable_Group_Map (void)
           delete entry;
           entry = next;
         }
-
     }
 
   this->map_.close ();
 }
 
-
 void
 TAO_Portable_Group_Map::add_groupid_objectkey_pair (
     PortableGroup::TagGroupTaggedComponent *group_id,
-    const TAO::ObjectKey &key
-    ACE_ENV_ARG_DECL
-  )
+    const TAO::ObjectKey &key)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->lock_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX,
+                   guard,
+                   this->lock_);
 
   Map_Entry *new_entry;
 
@@ -64,15 +50,13 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
                                                                                TAO::VMCID,
                                                                                ENOMEM),
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   // Fill out the entry.
   new_entry->key = key;
 
   // First, check if the GroupId is already in the map.
-  Map_Entry *entry;
-  if (this->map_.find (group_id,
-                       entry) == 0)
+  Map_Entry *entry = 0;
+  if (this->map_.find (group_id, entry) == 0)
     {
       // Add the object key to the list of object keys serviced by this GroupId.
       new_entry->next = entry->next;
@@ -84,13 +68,12 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
 
       // Add the
       int result =
-        this->map_.bind (group_id,
-                         new_entry);
+        this->map_.bind (group_id, new_entry);
 
       if (result != 0)
         {
           delete new_entry;
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       // Transfer ownership of group_id to the map.
@@ -100,30 +83,24 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
 
 void
 TAO_Portable_Group_Map::remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* /*group_id*/,
-                                                       const TAO::ObjectKey &/*key*/
-                                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                                       const TAO::ObjectKey &/*key*/)
 {
-
 }
-
 
 void
 TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_id,
                                   TAO_ORB_Core *orb_core,
                                   TAO_ServerRequest &request,
-                                  CORBA::Object_out forward_to
-                                  ACE_ENV_ARG_DECL)
+                                  CORBA::Object_out forward_to)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->lock_);
+  ACE_READ_GUARD (TAO_SYNCH_RW_MUTEX,
+                  guard,
+                  this->lock_);
 
   // Look up the GroupId.
   Map_Entry *entry = 0;
-  if (this->map_.find (group_id,
-                       entry) == 0)
+  if (this->map_.find (group_id, entry) == 0)
     {
-
       // Save the read pointer in the message block since
       // every time we dispatch the request, we need to
       // reset it so that the request demarshals correctly.
@@ -135,11 +112,9 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
       // Iterate through the list of ObjectKeys.
       while (entry)
         {
-          orb_core->adapter_registry ()->dispatch (entry->key,
-                                                   request,
-                                                   forward_to
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          orb_core->adapter_registry ().dispatch (entry->key,
+                                                  request,
+                                                  forward_to);
 
           // Reset the read pointer in the message block.
           msgblk->rd_ptr (read_ptr);
@@ -156,10 +131,7 @@ TAO_GroupId_Hash::operator () (const PortableGroup::TagGroupTaggedComponent *id)
                    ACE_OS::strlen ((const char *) id->group_domain_id));
 
   // Truncate the object_group_id in half for the has.
-  // Divide by one so that the ACE_U_LongLong representation
-  // will automatically cast down to a u_long
   hash += (u_long) (id->object_group_id / 1);
-
   hash += id->object_group_ref_version;
 
   return hash;
@@ -176,20 +148,4 @@ TAO_GroupId_Equal_To::operator () (
     && lhs->object_group_ref_version == rhs->object_group_ref_version;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *>;
-template class ACE_Hash_Map_Manager_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

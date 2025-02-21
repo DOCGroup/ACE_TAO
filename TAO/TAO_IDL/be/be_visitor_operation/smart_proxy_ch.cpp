@@ -1,48 +1,33 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_smart_proxy_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation node in the client header.
-//
-// = AUTHOR
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    smart_proxy_ch.cpp
+ *
+ *  Visitor generating code for Operation node in the client header.
+ *
+ *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           smart_proxy_ch, 
-           "$Id$")
+#include "operation.h"
 
 // ******************************************************
 // Primary visitor for "operation" in client header.
 // ******************************************************
 
 be_visitor_operation_smart_proxy_ch::be_visitor_operation_smart_proxy_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch (
-    void
-  )
+be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch ()
 {
 }
 
 int
 be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
 {
-
   if (be_global->gen_smart_proxies ())
     {
       TAO_OutStream *os = this->ctx_->stream ();
@@ -52,7 +37,7 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
       *os << "virtual ";
 
       // STEP I: generate the return type.
-      be_type *bt = be_type::narrow_from_decl (node->return_type ());
+      be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
       if (!bt)
         {
@@ -76,7 +61,8 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
         }
 
       // STEP 2: generate the operation name.
-      *os << " " << node->local_name ();
+      *os << " " << this->ctx_->port_prefix ().c_str ()
+          << node->local_name ();
 
       // STEP 3: generate the argument list with the appropriate mapping. For these
       // we grab a visitor that generates the parameter listing

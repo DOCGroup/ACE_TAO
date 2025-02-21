@@ -1,32 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tao/Codeset
-//
-// = FILENAME
-//    Codeset_Translator_Factory.cpp
-//
-// = DESCRIPTION
-//    The base for all the translator factories. Translator factories are
-//    responsible for supplying the proper translator on demand.
-//
-// = AUTHORS
-//      Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Codeset_Descriptor.cpp
+ *
+ *  The base for all the translator factories. Translator factories are
+ *  responsible for supplying the proper translator on demand.
+ *
+ *  @author   Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
 
-#include "Codeset_Descriptor.h"
-#include "Codeset_Translator_Factory.h"
+
+#include "tao/Codeset/Codeset_Descriptor.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
 
 #include "ace/Codeset_Registry.h"
 #include "ace/Log_Msg.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Codeset,
-           Codeset_Manager_i,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Descriptor::TAO_Codeset_Descriptor ()
   :ncs_ (0),
@@ -57,9 +49,9 @@ TAO_Codeset_Descriptor::ncs (const ACE_TCHAR *name)
   if (ACE_Codeset_Registry::locale_to_registry
       (ACE_TEXT_ALWAYS_CHAR(name), n) == 0)
     {
-      char **endPtr =0;
-      n = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(name),
-                                   endPtr, 0);
+      char **endPtr = 0;
+      n = static_cast<ACE_CDR::ULong> (
+            ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(name), endPtr, 0));
     }
   this->ncs(n);
 }
@@ -73,7 +65,7 @@ TAO_Codeset_Descriptor::ncs (ACE_CDR::ULong n)
   if (this->max_bytes_ == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR((LM_ERROR,
+        TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) TAO_Codeset_Descriptor::ncs, ")
                    ACE_TEXT("unknown codeset id 0x%x\n"),
                    n));
@@ -82,19 +74,19 @@ TAO_Codeset_Descriptor::ncs (ACE_CDR::ULong n)
 }
 
 ACE_CDR::ULong
-TAO_Codeset_Descriptor::ncs (void) const
+TAO_Codeset_Descriptor::ncs () const
 {
   return this->ncs_;
 }
 
 int
-TAO_Codeset_Descriptor::num_translators (void) const
+TAO_Codeset_Descriptor::num_translators () const
 {
   return this->num_translators_;
 }
 
 int
-TAO_Codeset_Descriptor::max_bytes (void) const
+TAO_Codeset_Descriptor::max_bytes () const
 {
   return this->max_bytes_;
 }
@@ -125,7 +117,9 @@ TAO_Codeset_Descriptor::add_translator (const ACE_TCHAR *name)
 }
 
 TAO_Codeset_Descriptor::Translator_Node *
-TAO_Codeset_Descriptor::translators (void)
+TAO_Codeset_Descriptor::translators ()
 {
   return this->trans_base_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

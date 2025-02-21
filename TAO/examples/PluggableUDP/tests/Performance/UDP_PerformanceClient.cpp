@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/High_Res_Timer.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
@@ -12,20 +10,17 @@
 UDP_PerformanceClient::UDP_PerformanceClient (CORBA::ORB_ptr orb,
                                               UDP_ptr udp,
                                               UDP_i *udpHandler,
-                                              ACE_UINT32 burst_messages,
-                                              ACE_UINT32 final_delta_micro_seconds)
-: orb_ (CORBA::ORB::_duplicate (orb))
-, udp_ (UDP::_duplicate (udp))
-, udpHandler_ (udpHandler)
-, last_wrong_messages_ (0)
-, burst_messages_ (burst_messages)
-, final_delta_micro_seconds_ (final_delta_micro_seconds)
+                                              ACE_UINT32 burst_messages)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , udp_ (UDP::_duplicate (udp))
+  , udpHandler_ (udpHandler)
+  , last_wrong_messages_ (0)
+  , burst_messages_ (burst_messages)
 {
-
 }
 
 //Destructor.
-UDP_PerformanceClient::~UDP_PerformanceClient (void)
+UDP_PerformanceClient::~UDP_PerformanceClient ()
 {
   //no-op
 }
@@ -35,7 +30,7 @@ UDP_PerformanceClient::svc ()
 {
   ACE_CString client_name ("UDP");
 
-  ACE_TCHAR pid[256];
+  char pid[256];
   ACE_OS::sprintf (pid,
                    "%u",
                    static_cast<u_int> (ACE_OS::getpid ()));
@@ -45,25 +40,24 @@ UDP_PerformanceClient::svc ()
   ACE_UINT32 micro_seconds = 0;
   ACE_UINT32 delta_micro_seconds = 1;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::String_var corba_client_name =
         CORBA::string_dup (client_name.c_str ());
 
-      UDP_var udpHandler_var = udpHandler_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      UDP_var udpHandler_var = udpHandler_->_this ();
 
-      udp_->setResponseHandler (udpHandler_var.in ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      udp_->setResponseHandler (udpHandler_var.in ());
 
       ACE_High_Res_Timer timer;
       while (1)
         {
+          //FUZZ: disable check_for_lack_ACE_OS
           ACE_DEBUG ((LM_DEBUG,
                       "\nTesting with %u us sleep (delta = %u us)\n",
                       micro_seconds,
                       delta_micro_seconds));
+          //FUZZ: enable check_for_lack_ACE_OS
 
           ACE_Time_Value tv (0, micro_seconds);
           timer.start ();
@@ -72,19 +66,16 @@ UDP_PerformanceClient::svc ()
                j++)
             {
               udp_->invoke (corba_client_name.in (),
-                            j
-                            ACE_ENV_ARG_PARAMETER);
-
-              ACE_TRY_CHECK;
+                            j);
 
               if (micro_seconds)
                 {
                   ACE_OS::sleep (tv);
                 }
             }
-           timer.stop ();
+          timer.stop ();
 
-          ACE_Time_Value tv1 (1,0); // 1 s
+          ACE_Time_Value tv1 (1, 0); // 1 s
           ACE_OS::sleep (tv1);
 
           ACE_UINT32 current_wrong_messages =
@@ -94,13 +85,10 @@ UDP_PerformanceClient::svc ()
             udpHandler_->getMessagesCount ();
 
           // Reset expected request ID
-          udp_->reset (corba_client_name.in ()
-                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          udp_->reset (corba_client_name.in ());
 
           // Give the reset a chance to propagate back to us
           ACE_OS::sleep (tv);
-
 
           if (current_wrong_messages == 0)
             {
@@ -125,56 +113,52 @@ UDP_PerformanceClient::svc ()
             }
           last_wrong_messages_ = current_wrong_messages;
 
-
           if (current_message_count == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "\nError: No callbacks received!\n\n"));
             }
 
+          {
+            ACE_Time_Value tv;
+            timer.elapsed_time (tv);
 
-            {
-              ACE_Time_Value tv;
-              timer.elapsed_time (tv);
+            time_t elapsed_sec = tv.sec ();
+            suseconds_t elapsed_usec = tv.usec ();
+            unsigned long elapsed_msec = tv.msec ();
 
-              ACE_UINT32 calls_per_second = (1000L * burst_messages_) / tv.msec ();
+            ACE_UINT32 calls_per_second = (1000L * burst_messages_) / tv.msec ();
 
-              ACE_DEBUG ((LM_DEBUG,
-                          "\n  Time needed %d s %d us  (%d ms) for %d messages"
-                          "\n  Performance = %d asynch calls per second\n\n",
-                          tv.sec (),
-                          tv.usec (),
-                          tv.msec (),
-                          burst_messages_,
-                          calls_per_second));
-            }
+            ACE_DEBUG ((LM_DEBUG,
+                        "\n  Time needed %: s %d us  (%u ms) for %d messages"
+                        "\n  Performance = %d asynch calls per second\n\n",
+                        elapsed_sec,
+                        elapsed_usec,
+                        elapsed_msec,
+                        burst_messages_,
+                        calls_per_second));
+          }
 
-          if (delta_micro_seconds <= final_delta_micro_seconds_
-              && current_wrong_messages == 0)
-            {
-              break;
-            }
+          if (current_wrong_messages == 0)
+            break;
         }
 
       // shut down remote ORB
-      udp_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      for (int c = 0; c < 10; ++c)
+        udp_->shutdown ();
 
       ACE_Time_Value tv (0, 50); // 50ms
       ACE_OS::sleep (tv);  // let the previous request go through
 
       // Shut down local ORB, trigger the end of the ORB event loop
-            // in the main thread.
-      orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // in the main thread.
+      orb_->shutdown (false);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "\tException");
+      ex._tao_print_exception ("\tException");
       return -1;
     }
-  ACE_ENDTRY;
-
 
   return 0;
 }

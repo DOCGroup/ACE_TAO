@@ -1,12 +1,12 @@
-#include "SCIOP_Connector.h"
-#include "SCIOP_Profile.h"
+#include "tao/Strategies/SCIOP_Connector.h"
+#include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Transport_Cache_Manager.h"
@@ -18,63 +18,25 @@
 
 #include "ace/OS_NS_strings.h"
 #include "ace/Strategies_T.h"
+#include <cstring>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (TAO,
-           SCIOP_Connector,
-           "$Id$")
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO_SCIOP_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>;
-template class ACE_Connector_Base<TAO_SCIOP_Connection_Handler>;
-template class ACE_Connector<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>;
-template class ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>;
-
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>*>;
-template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO_SCIOP_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>
-#pragma instantiate ACE_Connector_Base<TAO_SCIOP_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>
-
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>*>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
-TAO_SCIOP_Connector::TAO_SCIOP_Connector (CORBA::Boolean flag)
+TAO_SCIOP_Connector::TAO_SCIOP_Connector ()
   : TAO_Connector (TAO_TAG_SCIOP_PROFILE),
-    lite_flag_ (flag),
     connect_strategy_ (),
-    base_connector_ ()
+    base_connector_ (0)
 {
 }
 
-TAO_SCIOP_Connector::~TAO_SCIOP_Connector (void)
+TAO_SCIOP_Connector::~TAO_SCIOP_Connector ()
 {
 }
 
 int
 TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
-  // @@todo: The functionality of the following two statements could
+  // @todo: The functionality of the following two statements could
   // be  done in the constructor, but that involves changing the
   // interface of the pluggable transport factory.
 
@@ -91,8 +53,7 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SCIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
-                       orb_core,
-                       this->lite_flag_),
+                       orb_core),
                   -1);
 
   /// Our activation strategy
@@ -109,7 +70,7 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_SCIOP_Connector::close (void)
+TAO_SCIOP_Connector::close ()
 {
   delete this->base_connector_.concurrency_strategy ();
   delete this->base_connector_.creation_strategy ();
@@ -135,7 +96,7 @@ TAO_SCIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
      {
        if (TAO_debug_level > 0)
          {
-           ACE_DEBUG ((LM_DEBUG,
+           TAOLIB_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("TAO (%P|%t) SCIOP connection failed.\n")
                        ACE_TEXT ("TAO (%P|%t) This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
@@ -162,8 +123,7 @@ TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // loop.
   while (tao_endpoint != 0)
     {
-      TAO_SCIOP_Endpoint *sciop_endpoint =
-        this->remote_endpoint (tao_endpoint);
+      TAO_SCIOP_Endpoint *sciop_endpoint = this->remote_endpoint (tao_endpoint);
 
       if (sciop_endpoint != 0)
         {
@@ -191,27 +151,21 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
     sciop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
-                  "to <%s:%d> which should %s\n",
-                  ACE_TEXT_CHAR_TO_TCHAR(sciop_endpoint->host()),
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - SCIOP_Connector::make_connection_i, ")
+                  ACE_TEXT("to <%C:%d> which should %s\n"),
+                  sciop_endpoint->host(),
                   sciop_endpoint->port(),
                   r->blocked_connect () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
-  this->active_connect_strategy_->synch_options (timeout,
-                                                 synch_options);
+  this->active_connect_strategy_->synch_options (timeout, synch_options);
 
-  // If we don't need to block for a transport just set the timeout to
-  // be zero.
-  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked_connect())
-    {
-      synch_options.timeout (ACE_Time_Value::zero);
-      timeout = &tmp_zero;
-    }
+  // The code used to set the timeout to zero, with the intent of
+  // polling the reactor for connection completion. However, the side-effect
+  // was to cause the connection to timeout immediately.
 
   TAO_SCIOP_Connection_Handler *svc_handler = 0;
 
@@ -236,28 +190,10 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                                    synch_options,
                                    local_address);
 
-  // This call creates the service handler and bumps the #REFCOUNT# up
-  // one extra.  There are three possibilities: (a) connection
-  // succeeds immediately - in this case, the #REFCOUNT# on the
-  // handler is two; (b) connection completion is pending - in this
-  // case, the #REFCOUNT# on the handler is also two; (c) connection
-  // fails immediately - in this case, the #REFCOUNT# on the handler
-  // is one since close() gets called on the handler.
-  //
-  // The extra reference count in
-  // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
-  // the case when connection completion is pending and we are going
-  // to wait on a variable in the handler to changes, signifying
-  // success or failure.  Note, that this increment cannot be done
-  // once the connect() returns since this might be too late if
-  // another thread pick up the completion and potentially deletes the
-  // handler before we get a chance to increment the reference count.
-
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
-  TAO_Transport *transport =
-    svc_handler->transport ();
+  TAO_Transport *transport = svc_handler->transport ();
 
   if (result == -1)
     {
@@ -268,11 +204,12 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
           // get a connected transport or not. In case of non block we get
           // a connected or not connected transport
           if (!this->wait_for_connection_completion (r,
+                                                     desc,
                                                      transport,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - SCIOP_Connector::"
+                TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - SCIOP_Connector::"
                                       "make_connection_i, "
                                       "wait for completion failed\n"));
             }
@@ -290,22 +227,35 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       // Give users a clue to the problem.
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_ERROR,
-                      "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
-                      "connection to <%s:%d> failed (%p)\n",
+          TAOLIB_ERROR ((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - SCIOP_Connector::make_connection_i, ")
+                      ACE_TEXT("connection to <%C:%d> failed (%p)\n"),
                       sciop_endpoint->host (), sciop_endpoint->port (),
-                      "errno"));
+                      ACE_TEXT("errno")));
         }
 
+      return 0;
+    }
+
+  TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
+
+  if (svc_handler->keep_waiting (leader_follower))
+    {
+      svc_handler->connection_pending ();
+    }
+
+  if (svc_handler->error_detected (leader_follower))
+    {
+      svc_handler->cancel_pending_connection ();
       return 0;
     }
 
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
-                "new %s connection to <%s:%d> on Transport[%d]\n",
+                "new %C connection to <%C:%d> on Transport[%d]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 sciop_endpoint->host (), sciop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
@@ -316,18 +266,25 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                                                                              transport);
 
   // Failure in adding to cache.
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler.
       svc_handler->close ();
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                       "could not add the new connection to cache\n"));
         }
 
+      return 0;
+    }
+
+  if (svc_handler->error_detected (leader_follower))
+    {
+      svc_handler->cancel_pending_connection ();
+      transport->purge_entry();
       return 0;
     }
 
@@ -344,7 +301,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - SCIOP_Connector [%d]::make_connection_i, "
                     "could not register the transport "
                     "in the reactor.\n",
@@ -353,18 +310,19 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
+  svc_handler_auto_ptr.release ();
   return transport;
 }
 
 TAO_Profile *
 TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile;
+  TAO_Profile *pfile = 0;
   ACE_NEW_RETURN (pfile,
                   TAO_SCIOP_Profile (this->orb_core ()),
                   0);
 
-  int r = pfile->decode (cdr);
+  int const r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();
@@ -375,7 +333,7 @@ TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_SCIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO_SCIOP_Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -390,7 +348,6 @@ TAO_SCIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return profile;
 }
@@ -404,10 +361,9 @@ TAO_SCIOP_Connector::check_prefix (const char *endpoint)
 
   const char *protocol[] = { "sciop", "scioploc" };
 
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
-
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
+  size_t const slot = std::strchr (endpoint, ':') - endpoint;
+  size_t const len0 = std::strlen (protocol[0]);
+  size_t const len1 = std::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
@@ -424,7 +380,7 @@ TAO_SCIOP_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_SCIOP_Connector::object_key_delimiter (void) const
+TAO_SCIOP_Connector::object_key_delimiter () const
 {
   return TAO_SCIOP_Profile::object_key_delimiter_;
 }
@@ -457,5 +413,6 @@ TAO_SCIOP_Connector::cancel_svc_handler (
   return -1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

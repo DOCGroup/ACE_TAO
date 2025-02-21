@@ -1,5 +1,4 @@
-// $Id$
-// 
+//
 // = FILENAME
 //    VisComp.java
 //

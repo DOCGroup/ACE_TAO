@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "INSC.h"
 
@@ -9,19 +7,14 @@
 #include "ace/OS_NS_string.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int i = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Retrieve a reference to the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (argc < 2)
         {
@@ -34,12 +27,11 @@ main (int argc, char *argv[])
 
       for (i = 1; i < argc; ++i)
         {
-          if (ACE_OS::strcmp (argv[i], "-l") == 0)
+          if (ACE_OS::strcmp (argv[i], ACE_TEXT("-l")) == 0)
             {
               // List initial services
               CORBA::ORB::ObjectIdList_var list =
-                orb->list_initial_services (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                orb->list_initial_services ();
 
               size_t length = list->length ();
 
@@ -48,12 +40,12 @@ main (int argc, char *argv[])
                   ACE_DEBUG ((LM_INFO,
                               "Listing initial references...\n"));
 
-                  for (size_t n = 0; n < length; ++n)
+                  for (CORBA::ULong n = 0; n < length; ++n)
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  "  Reference %u: %s\n",
+                                  "  Reference %u: %C\n",
                                   n,
-                                  list[n].in ()));
+                                  static_cast<char const*>(list[n])));
                     }
                 }
               else
@@ -69,8 +61,7 @@ main (int argc, char *argv[])
             }
           else
             {
-              objref = orb->resolve_initial_references (argv[i] ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              objref = orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR(argv[i]));
 
               if (CORBA::is_nil (objref.in ()))
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -78,36 +69,33 @@ main (int argc, char *argv[])
                                    "given name.\n"),
                                   -1);
 
-              INS_var server = INS::_narrow (objref.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              INS_var server = INS::_narrow (objref.in ());
 
+              CORBA::String_var iorstr =
+                orb->object_to_string (server.in ());
               ACE_DEBUG ((LM_DEBUG,
-                          "Resolved IOR for %s : %s\n",
+                          "Resolved IOR for %s : %C\n",
                           argv[i],
-                          orb->object_to_string (server.in ())));
+                          iorstr.in()));
 
               CORBA::String_var test_ins_result =
-                server->test_ins (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                server->test_ins ();
 
               ACE_DEBUG ((LM_DEBUG,
-                          "\nResult of Remote Call : %s\n",
+                          "\nResult of Remote Call : %C\n",
                           test_ins_result.in ()));
             }
         }
     }
-  ACE_CATCH (CORBA::ORB::InvalidName, name)
+  catch (const CORBA::ORB::InvalidName& )
     {
       ACE_DEBUG ((LM_DEBUG, "Cannot resolve <%s>\n", argv[i]));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      ex._tao_print_exception ("Exception:");
     }
 
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -2,20 +2,24 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib "../../../bin";
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+my $server = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target(2) || die "Create target 2 failed\n";
+
+$iorbase = "server.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 $invocation = "sii";
 $num = 5;
 $debug = "";
 $status = 0;
-
-unlink $iorfile;
 
 # Parse the arguments
 
@@ -36,14 +40,13 @@ unlink $iorfile;
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
       print "Run_Test Perl script for TAO Param Test\n\n";
-      print "run_test [-n num] [-d] [-onewin] [-h] [-t type] [-i (dii|sii)] [-chorus <target>]\n";
+      print "run_test [-n num] [-d] [-h] [-t type] [-i (dii|sii)]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-d                  -- runs each in debug mode\n";
       print "-h                  -- prints this information\n";
       print "-t type             -- runs only one type of param test\n";
       print "-i (dii|sii)        -- Changes the type of invocation\n";
-      print "-chorus <target>    -- Run tests on chorus target\n";
       exit 0;
     }
     elsif ($ARGV[$i] eq "-n") {
@@ -63,48 +66,63 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "$debug -o server.ior");
-}
-else {
-    $SV = new PerlACE::Process ("server", "$debug -o $iorfile");
-}
-$CL = new PerlACE::Process ("client");
+$SV = $server->CreateProcess ("server", "$debug -o $server_iorfile");
+$CL = $client->CreateProcess ("client");
 
 foreach $type (@types) {
-    unlink $iorfile; # Ignore errors
+    $server->DeleteFile($iorbase); # Ignore errors
+    $client->DeleteFile($iorbase);
 
     print STDERR "==== Testing $type === wait....\n";
 
-    $SV->Spawn ();
-    
-    if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-        print STDERR "ERROR: cannot find file <$iorfile>\n";
-        $SV->Kill (); 
-        exit 1;
-    }
+    $server_status = $SV->Spawn ();
 
-    $CL->Arguments ("$debug -f $iorfile  -i $invocation -t $type -n $num -x");
-
-    $client = $CL->SpawnWaitKill (60);
-    
-    if ($client != 0) {
-        print STDERR "ERROR: client returned $client\n";
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
+    } else {
+        if ($server->WaitForFileTimed ($iorbase,
+                                       $server->ProcessStartWaitInterval()) == -1) {
+            print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+            $SV->Kill ();
+            exit 1;
+        }
+
+        if ($server->GetFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+            $SV->Kill (); $SV->TimedWait (1);
+            exit 1;
+        }
+        if ($client->PutFile ($iorbase) == -1) {
+            print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+            $SV->Kill (); $SV->TimedWait (1);
+            exit 1;
+        }
+
+        $CL->Arguments ("$debug -f $client_iorfile  -i $invocation -t $type -n $num -x");
+        $client_status = $CL->SpawnWaitKill ($server->ProcessStartWaitInterval() + 45);
+
+        if ($client_status != 0) {
+            print STDERR "ERROR: client returned $client_status\n";
+            $status = 1;
+        }
+
+        $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+
+        if ($server_status != 0) {
+            print STDERR "ERROR: server returned $server_status\n";
+            $status = 1;
+        }
+
+        $server->GetStderrLog();
     }
 
-    $server = $SV->WaitKill (10);
-    
-    if ($server != 0) {
-        print STDERR "ERROR: server returned $server\n";
-        $status = 1;
-    }
-    
-    unlink $iorfile;
+    $server->DeleteFile($iorbase);
+    $client->DeleteFile($iorbase);
 
     print STDERR "==== Test for $type finished ===\n";
 }
 
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 exit $status;

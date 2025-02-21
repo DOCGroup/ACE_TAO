@@ -1,0 +1,3 @@
+
+
+This is a compile only test. If it compiles, it's passed. It tests that you can have a union with long long or unsigned long long discriminant.

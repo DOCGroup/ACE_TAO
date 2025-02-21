@@ -1,0 +1,37 @@
+project : taolib_with_idl, csd_threadpool, avoids_corba_e_micro {
+  sharedname   = CSD_PT_TestInf
+  dynamicflags += CSD_PT_TESTINF_BUILD_DLL
+  idlflags  += -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=TestInf/CSD_PT_TestInf_Export.h
+  includes += ..
+
+  IDL_Files {
+    FooException.idl
+    TestAppException.idl
+    CancelledException.idl
+    CustomException.idl
+  }
+
+  Source_Files {
+    AppHelper.cpp
+    AppShutdown.cpp
+    ClientEngine.cpp
+    ClientTask.cpp
+    OrbRunner.cpp
+    OrbShutdownTask.cpp
+    OrbTask.cpp
+    TestAppBase.cpp
+    FooExceptionC.cpp
+    FooExceptionS.cpp
+    TestAppExceptionC.cpp
+    TestAppExceptionS.cpp
+    CancelledExceptionC.cpp
+    CancelledExceptionS.cpp
+    CustomExceptionC.cpp
+    CustomExceptionS.cpp
+  }
+
+  Template_Files {
+    ServantList_T.cpp
+  }
+
+}

@@ -4,8 +4,6 @@
 /**
  * @file SL3_PolicyFactory.h
  *
- * $Id$
- *
  * PolicyFactory implementation for the SecurityLevel3 policies.
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
@@ -29,11 +27,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SL3
     {
-
       /**
        * @class olicyFactory
        *
@@ -43,10 +42,9 @@ namespace TAO
        */
       class PolicyFactory
         : public virtual PortableInterceptor::PolicyFactory,
-          public virtual TAO_Local_RefCounted_Object
+          public virtual ::CORBA::LocalObject
       {
       public:
-
         /**
          * @name Methods Required by the PolicyFactory Interface
          *
@@ -56,21 +54,17 @@ namespace TAO
          * sub-classes.
          */
         //@{
-
         /// Construct a Test::Policy object as a test.
         virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                                 const CORBA::Any & value
-                                                 ACE_ENV_ARG_DECL)
-          ACE_THROW_SPEC ((CORBA::SystemException,
-                           CORBA::PolicyError));
+                                                 const CORBA::Any & value);
 
         //@}
 
       };
-
   }  // End SL3 namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

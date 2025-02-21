@@ -1,5 +1,3 @@
-// $Id$
-
 // IDL schema definition for Web server interface.
 module Web_Server
 {
@@ -7,7 +5,7 @@ module Web_Server
 
   interface Content_Iterator
   {
-    boolean next_chunk (in unsigned long offset,
+    boolean next_chunk (in unsigned long long offset,
                         out Chunk_Type chunk);
     // This operation returns the next <chunk> of the
     // file starting at <offset>.  If there are

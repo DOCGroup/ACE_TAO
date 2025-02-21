@@ -1,13 +1,10 @@
-// $Id$
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file RTCORBA.h
  *
- *  $Id$
- *
  *   Takes care of the RT ORB loading on static build.
- *
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
@@ -19,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,20 +26,27 @@
 
 #if TAO_HAS_CORBA_MESSAGING == 1
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_RTCORBA_Export TAO_RTCORBA_Initializer
 {
 public:
   // Constructor.
-  TAO_RTCORBA_Initializer (void);
+  TAO_RTCORBA_Initializer ();
 };
 
 static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
 
-#define TAO_RTCORBA_SAFE_INCLUDE
-#include "RTCORBAC.h"
-#undef TAO_RTCORBA_SAFE_INCLUDE
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING != 0 */
+
+#define TAO_RTCORBA_SAFE_INCLUDE
+#include "tao/RTCORBA/RTCORBAC.h"
+#include "tao/RTCORBA/RT_ProtocolPropertiesC.h"
+#undef TAO_RTCORBA_SAFE_INCLUDE
+
+#include "tao/RTCORBA/rtcorba_typedefs.h"
 
 #include /**/ "ace/post.h"
 

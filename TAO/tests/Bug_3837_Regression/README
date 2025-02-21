@@ -1,0 +1,18 @@
+
+
+This test is a tweaked version of Hello test. It checks whether
+ACE_Logging_Strategy and -ORBHandleLoggingStrategyEvents provide log
+file rotation.
+
+__Test Regression Result__
+
+<Any output that indicate an error or something like>
+ERROR: log files are not rotated. Missing log.out.3
+
+__Test - Successful result__
+
+(25840|3086907072) - string returned <Hello there!>
+(25840|3086907072) - string returned <Hello there!>
+(25840|3086907072) - string returned <Hello there!>
+(25840|3086907072) - string returned <Hello there!>
+(25840|3086907072) - string returned <Hello there!>

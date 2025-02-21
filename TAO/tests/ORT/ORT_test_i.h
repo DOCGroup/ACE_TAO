@@ -4,8 +4,6 @@
 /**
  * @file ORT_test_i.h
  *
- * $Id$
- *
  * Implementation header for the "server" IDL interface for the
  * ORT example.
  *
@@ -23,19 +21,14 @@
 class ORT_test_i : public virtual POA_ObjectReferenceTemplate::ORT_test
 {
 public:
-
   ORT_test_i (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Boolean request_server (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean request_server ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-
   CORBA::ORB_var orb_;
-
 };
 
 

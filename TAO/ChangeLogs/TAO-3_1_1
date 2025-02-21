@@ -1,0 +1,73 @@
+commit 90c46e2c3bee9494dd6b9082720ef29ca2cacc55
+Merge: a5c5e60e6cf 8640c0bc3e6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 23 12:40:29 2023 +0200
+
+    Merge pull request #2084 from jwillemsen/jwi-taoidlcast
+    
+    Removed redundant c-style cast
+
+commit 8640c0bc3e68c56b1e06b0691a4971256dc25af2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 23 11:58:33 2023 +0200
+
+    Removed redundant c-style cast
+    
+        * TAO/TAO_IDL/be/be_scope.cpp:
+
+commit ab6ab4798afb654de5fea605334a0436742c9ec7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 21 09:15:54 2023 +0200
+
+    Update NEWS
+
+commit ab8e94dd74ad29a9f927fc177f99a2e0b6497ad7
+Merge: 09e9d76103a 1369b3773ff
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 14 13:54:00 2023 +0100
+
+    Merge pull request #2063 from jwillemsen/jwi-amiargtypo
+    
+    Fixed typo in comment
+
+commit 1369b3773ffa4e9b2acdacb68c27050f359f0b8e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 14 11:10:20 2023 +0100
+
+    Fixed typo in comment
+    
+        * TAO/tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
+
+commit 09e9d76103a637f8ce9ee49b24292317e33e2d77
+Merge: 1de7aa9a7e1 71bf5816be5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 13 18:44:05 2023 +0100
+
+    Merge pull request #2062 from jwillemsen/jwi-orbresources
+    
+    Removed deprecated -ORBResources
+
+commit 71bf5816be5e2a83653887648f9cff03eef0655d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 13 10:47:11 2023 +0100
+
+    Removed redundant whitespace
+    
+        * TAO/tao/operation_details.h:
+
+commit 1ceebf2e295dfd342b8d9e725057350c894e230d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 13 10:46:59 2023 +0100
+
+    Removed deprecated -ORBResources
+    
+        * TAO/orbsvcs/tests/AVStreams/Multicast/components_svc.conf:
+        * TAO/tao/ORB_Core.cpp:
+
+commit 5f7f5729b3123c2f1c2874c6d560fba46a1749f1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 3 16:12:20 2023 +0100
+
+    Prepare news file for next release
+    
+        * TAO/NEWS:

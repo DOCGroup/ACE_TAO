@@ -1,22 +1,20 @@
-// $Id$
-
+// -*- C++ -*-
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "testC.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(OctetSeq, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
-ACE_RANDR_TYPE seed = 0;
+unsigned int seed = 0;
 int verbose = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "vk:i:s:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vk:i:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -50,47 +48,43 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test::Database_var server =
-        Test::Database::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Database::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
       CORBA::String_var repository_id =
-        server->_repository_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server->_repository_id ();
 
       if (ACE_OS::strcmp (repository_id.in (), "IDL:Test/Database:1.0") != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Repository id is wrong <%s>\n",
+                             "Repository id is wrong <%C>\n",
                              repository_id.in ()),
                             1);
         }
@@ -98,7 +92,7 @@ main (int argc, char *argv[])
 
       if (seed == 0)
         {
-          seed = ACE_OS::time (0);
+          seed = static_cast<unsigned int> (ACE_OS::time (0));
           ACE_DEBUG ((LM_DEBUG, "Seed value is %d\n", seed));
         }
 
@@ -108,20 +102,20 @@ main (int argc, char *argv[])
 
       for (int i = 0; i != niterations; ++i)
         {
-          CORBA::ULong r = ACE_OS::rand_r (seed);
+          CORBA::ULong r = ACE_OS::rand_r (&seed);
           Test::Index idx = (r % nelements);
 
           if (i % 100 == 0)
             {
               for (int j = 0; j != nelements; ++j)
                 {
-                  CORBA::ULong r = ACE_OS::rand_r (seed);
+                  CORBA::ULong r = ACE_OS::rand_r (&seed);
                   CORBA::ULong l = r % maxsize;
                   elements[j].length (l);
                   CORBA::Double token = 0;
                   for (CORBA::ULong k = 0; k != l; ++k)
                     {
-                      r = ACE_OS::rand_r (seed);
+                      r = ACE_OS::rand_r (&seed);
                       elements[j][k] = (r % 128);
                       token += r;
                     }
@@ -129,11 +123,9 @@ main (int argc, char *argv[])
                   server->set (Test::Index (j),
                                elements[j],
                                token,
-                               returned_token
-                               ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                               returned_token);
 
-                  if (token != returned_token)
+                  if (!ACE::is_equal (token, returned_token))
                     {
                       ACE_ERROR ((LM_ERROR,
                                   "ERROR - invalid token <%f> returned,"
@@ -144,8 +136,7 @@ main (int argc, char *argv[])
             }
 
           CORBA::ULong crc_remote =
-            server->get_crc (idx ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            server->get_crc (idx);
 
           CORBA::ULong crc_local =
             ACE::crc32 (elements[idx].get_buffer (),
@@ -165,19 +156,15 @@ main (int argc, char *argv[])
 
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
+      ACE_OS::sleep(1);
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

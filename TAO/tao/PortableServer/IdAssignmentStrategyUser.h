@@ -4,8 +4,6 @@
 /**
  *  @fileIdAssignmentStrategyUser.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -14,32 +12,29 @@
 #define TAO_IDASSIGNMENTSTRATEGYUSER_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/IdAssignmentStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IdAssignmentStrategy.h"
-#include "ace/Service_Config.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    class IdAssignmentStrategyUser
-      : public IdAssignmentStrategy
+    class IdAssignmentStrategyUser : public IdAssignmentStrategy
     {
     public:
-      virtual char id_assignment_key_type (void) const;
+      char id_assignment_key_type () const override;
 
-      virtual bool has_system_id (void) const;
+      bool has_system_id () const override;
     };
-
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdAssignmentStrategyUser)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, IdAssignmentStrategyUser)
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IDASSIGNMENTSTRATEGYUSER_H */

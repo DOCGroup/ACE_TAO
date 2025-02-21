@@ -1,9 +1,9 @@
-#include "SHMIOP_Profile.h"
+#include "tao/Strategies/SHMIOP_Profile.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/CDR.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -11,19 +11,18 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (Strategies,
-           SHMIOP_Profile,
-           "$Id$")
-
 #include "ace/os_include/os_netdb.h"
+#include "ace/Truncate.h"
+#include <cstring>
 
 static const char prefix_[] = "shmiop";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char TAO_SHMIOP_Profile::object_key_delimiter_ = '/';
 
 char
-TAO_SHMIOP_Profile::object_key_delimiter (void) const
+TAO_SHMIOP_Profile::object_key_delimiter () const
 {
   return TAO_SHMIOP_Profile::object_key_delimiter_;
 }
@@ -66,7 +65,7 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile (void)
+TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -82,13 +81,13 @@ TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile (void)
 }
 
 TAO_Endpoint*
-TAO_SHMIOP_Profile::endpoint (void)
+TAO_SHMIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO_SHMIOP_Profile::endpoint_count (void) const
+TAO_SHMIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -106,7 +105,7 @@ TAO_SHMIOP_Profile::decode_profile (TAO_InputCDR& cdr)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - ")
                       ACE_TEXT ("error while decoding host/port")));
         }
@@ -125,42 +124,41 @@ TAO_SHMIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_SHMIOP_Profile::parse_string_i (const char *string
-                                    ACE_ENV_ARG_DECL)
+TAO_SHMIOP_Profile::parse_string_i (const char *string)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, ':');  // Look for a port
+  char *cp = std::strchr (start, ':');  // Look for a port
 
   if (cp == 0)
     {
       // No host/port delimiter!
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
-  char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
+  char *okd = std::strchr (start, this->object_key_delimiter_);
 
   if (okd == 0)
     {
       // No object key delimiter!
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Don't increment the pointer 'cp' directly since we still need
   // to use it immediately after this block.
 
-  CORBA::ULong length = okd - (cp + 1);
+  CORBA::ULong length = ACE_Utils::truncate_cast<CORBA::ULong> (okd - (cp + 1));
   // Don't allocate space for the colon ':'.
 
   CORBA::String_var tmp = CORBA::string_alloc (length);
@@ -178,11 +176,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
       ACE_INET_Addr ia;
       if (ia.string_to_addr (tmp.in ()) == -1)
         {
-          ACE_THROW (CORBA::INV_OBJREF (
+          throw ::CORBA::INV_OBJREF (
               CORBA::SystemException::_tao_minor_code (
                   TAO::VMCID,
                   EINVAL),
-              CORBA::COMPLETED_NO));
+              CORBA::COMPLETED_NO);
         }
       else
         {
@@ -190,7 +188,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
         }
     }
 
-  length = cp - start;
+  length = ACE_Utils::truncate_cast<CORBA::ULong> (cp - start);
 
   tmp = CORBA::string_alloc (length);
 
@@ -213,18 +211,18 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
         if (tmp == 0)
           {
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("\n\nTAO (%P|%t) ")
                           ACE_TEXT ("SHMIOP_Profile::parse_string ")
                           ACE_TEXT ("- %p\n\n"),
                           ACE_TEXT ("cannot determine hostname")));
 
             // @@ What's the right exception to throw here?
-            ACE_THROW (CORBA::INV_OBJREF (
+            throw ::CORBA::INV_OBJREF (
                          CORBA::SystemException::_tao_minor_code (
                            TAO::VMCID,
                            EINVAL),
-                         CORBA::COMPLETED_NO));
+                         CORBA::COMPLETED_NO);
           }
         else
           this->endpoint_.host_ = tmp;
@@ -240,24 +238,22 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::parse_string () - \n")
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::parse_string () -\n")
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
 
       // @@ What's the right exception to throw here?
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
-
-  start = ++okd;  // increment past the object key separator
 
   TAO::ObjectKey ok;
   TAO::ObjectKey::decode_string_to_sequence (ok,
-                                             okd + 1);
+                                             okd + 1);  // increment past the object key separator
 
   (void) this->orb_core ()->object_key_table ().bind (ok,
                                                       this->ref_object_key_);
@@ -288,8 +284,7 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_SHMIOP_Profile::hash (CORBA::ULong max
-                          ACE_ENV_ARG_DECL_NOT_USED)
+TAO_SHMIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
@@ -327,7 +322,7 @@ TAO_SHMIOP_Profile::add_endpoint (TAO_SHMIOP_Endpoint *endp)
 }
 
 char *
-TAO_SHMIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SHMIOP_Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
@@ -364,7 +359,7 @@ TAO_SHMIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 const char *
-TAO_SHMIOP_Profile::prefix (void)
+TAO_SHMIOP_Profile::prefix ()
 {
   return ::prefix_;
 }
@@ -389,9 +384,9 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     encap << this->ref_object_key_->object_key ();
   else
     {
-      ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) TAO - UIOP_Profile::create_profile_body "
-                  "no object key marshalled \n"));
+      TAOLIB_ERROR ((LM_ERROR,
+                  "(%P|%t) TAO - SHMIOP_Profile::create_profile_body "
+                  "no object key marshalled\n"));
     }
 
   if (this->version_.major > 1
@@ -400,7 +395,7 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_SHMIOP_Profile::encode_endpoints (void)
+TAO_SHMIOP_Profile::encode_endpoints ()
 {
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
@@ -425,8 +420,7 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
 
   // Encode the data structure.
   TAO_OutputCDR out_cdr;
-  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-       == 0)
+  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
     return -1;
   size_t length = out_cdr.total_length ();
@@ -455,7 +449,7 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_SHMIOP_Profile::decode_endpoints (void)
+TAO_SHMIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -508,5 +502,7 @@ TAO_SHMIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

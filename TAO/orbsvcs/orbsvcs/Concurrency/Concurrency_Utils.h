@@ -1,16 +1,13 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Concurrency_Utils.h
  *
- *  $Id$
- *
  *    This class implements a Concurrency Server wrapper class which
  *    holds a number of lock sets.  The server must run in the
  *    thread per request concurrency model in order to let the
  *    clients block on the semaphores.
- *
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
@@ -23,8 +20,11 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosConcurrencyControlC.h"
-#include "CC_LockSetFactory.h"
-#include "concurrency_export.h"
+#include "orbsvcs/Concurrency/CC_LockSetFactory.h"
+#include "orbsvcs/Concurrency/concurrency_serv_export.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Concurrency_Server
@@ -35,12 +35,11 @@
  * This class takes an orb and Poa reference and activates the
  * concurrency service lock set factory object under them.
  */
-class TAO_Concurrency_Export TAO_Concurrency_Server
+class TAO_Concurrency_Serv_Export TAO_Concurrency_Server
 {
 public:
-  // = Initialization and termination methods.
   ///Default constructor.
-  TAO_Concurrency_Server (void);
+  TAO_Concurrency_Server ();
 
   /// Takes the POA under which to register the Concurrency Service
   /// implementation object.
@@ -48,17 +47,17 @@ public:
                           PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~TAO_Concurrency_Server (void);
+  ~TAO_Concurrency_Server ();
 
   /// Initialize the concurrency server under the given ORB and POA.
   CORBA::Object_ptr init (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa);
 
   /// Cleanup resources.
-  int fini (void);
+  int fini ();
 
   /// Get the lock set factory.
-  CC_LockSetFactory *GetLockSetFactory (void);
+  CC_LockSetFactory *GetLockSetFactory ();
 
 private:
   /// This is the lock set factory activated under the POA.
@@ -67,6 +66,8 @@ private:
   /// The POA which the lock set factory servant was registered.
   PortableServer::POA_var poa_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* _CONCURRENCY_SERVER_H */

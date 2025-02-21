@@ -1,0 +1,23 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    sequence.idl
+  }
+  custom_only = 1
+}
+
+
+project(*Test): taoexe {
+  after += *idl
+  exename = test
+
+  Source_Files {
+    test.cpp
+  }
+  Source_Files {
+    sequenceC.cpp
+  }
+  IDL_Files {
+  }
+}
+

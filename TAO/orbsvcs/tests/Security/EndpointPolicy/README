@@ -1,0 +1,28 @@
+/**
+
+
+
+@page EndpointPolicy+SSLIOP Test README File
+
+  This test validates a fix for the use of SSLIOP with the endpoint policy.
+  The problem is ducumented in bugzilla #2868, an is manifest when the TAO
+  EndpointPolicy is used to filter endpoints on a POA when the ORB is using
+  SSLIOP. This test prepares a server that starts with 2 SSLIOP enabled
+  listen endpoints. Then endpoint are generated, you do not need to pass
+  them in the command.  then uses the Endpoint Policy to constrain a POA to
+  use only one of those. The test only requires a server. When successful,
+  the program will exit right away. On failure, the program will be stuck
+  in an infinite loop and must be killed by the run_test script. The server
+  outputs its IOR so that manual inspection using catior can confirm that
+  the generated IOR indeed contains only a single endpoint but that is not
+  necessary for determining correctness of the test.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+  or start the test executable manually:
+
+$ ./test -o <iorfile> -p <port>
+
+*/

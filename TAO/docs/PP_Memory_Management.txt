@@ -1,0 +1,138 @@
+/**
+
+
+
+@page PP_Memory_Management Memory Management Rules for TAO's Pluggable Protocol Framework
+
+@section background Background
+
+    This document proposes a clearer set of memory management rules
+    for the pluggable protocols framework.
+    To understand this proposal some basic background on how does the
+    pluggable protocol framework works, and how each abstraction
+    relates to the other components in the ORB.
+
+    The pluggable protocol framework uses the Acceptor and Connector
+    patterns, unlike ACE, however, it must treat all of them
+    homogenously.
+    The basic abstraction in TAO's pluggable protocol framework is the
+    <CODE>TAO_Transport</CODE>,
+    an instance of this class represents a single connection, for
+    example, the IIOP plugin uses one instance of TAO_Transport for
+    each socket.
+    To integrate this abstraction with the ACE_Reactor framework,
+    all the protocols implemented so far use
+    specializations of the ACE_Svc_Handler class.
+    However, the original design considered the possibility of using
+    protocols without any ACE abstractions, though in practice this
+    hasn't happened so far,
+    all changes to the framework should keep this possibility open.
+
+    This is the main source of memory management problems in the
+    pluggable protocol framework:
+    a single entity (a connection) is represented by two instances of
+    two separate classes.  On one side the ORB uses an instance of the
+    TAO_Transport abstraction, on the other the Reactor uses an
+    instance of an ACE_Svc_Handler.
+
+    To complicate matters even further the ORB caches both passively
+    accepted and actively established connections.
+    The actively established connections are cached by the client-side
+    to minimize or amortize the cost of connection establishment.
+    The passively accepted connections are kept in the same cache
+    mainly to support bi-directional GIOP, however, they also allow us
+    to close both accepted and established idle connections using a
+    single component, this is useful when the ORB shutdowns, but it is
+    crucial in the implementation of connection recycling strategies,
+    where the total number of connections kept by the ORB must be
+    known.
+
+    The design must also support multithreaded clients and servers, in
+    both cases multiple threads may be using a connection
+    simultaneously, for example, multiple client threads can be
+    waiting for replys over the same connection, or multiple server
+    threads can be servicing requests received on the same connection,
+    or, if bi-dir GIOP is enabled, maybe a mix of both.
+
+    Some aspects of the GIOP protocol require special treatment of
+    connections with pending requests, both on the server and client
+    side.
+    On the server side connections that have pending requests cannot
+    be closed (section 15.5.1.1 in the CORBA/IIOP 2.4 specification),
+    therefore, the ORB needs to know how many requests are pending, at
+    all times.
+    Despite this, it is possible that the underlying connection is
+    broken, for example, because the client crashed.  In such cases,
+    the ORB should be able to reclaim the OS resources, but the
+    TAO_Transport must remain valid until the upcall threads finish.
+    Similarly, the client side should be able to distinguish between
+    orderly and abortive disconnects, essentially the ORB needs to
+    know if a <CODE>CloseConnection</CODE> message has been received.
+
+    Finally we must never forget that the ORB can be used in
+    thread-per-connection mode.  In this concurrency model there is no
+    reactor used to detect when the connection can accept more input,
+    though normally this is a global setting, it is possible for a
+    pluggable protocol to *always* work in thread-per-connection and
+    no other architecture.
+    Similarly, the ORB can be configured to wait for replys using
+    read() operations, instead of the more generic wait-on-reactor or
+    wait-on-leader-follower strategies.
+    Therefore, we cannot always rely on the Reactor framework to
+    perform all the memory management for us.
+
+@section requirements Requirements
+
+    To summarize, the TAO_Transport class should:
+
+    - Not be deleted until all threads using it is released by all the
+      threads using it.
+    - As many OS and ORB resources must be released when the ORB
+      detects that the connection has been terminated.  For example,
+      the socket should be closed and the ACE_Svc_Handler, if any,
+      should be destroyed.
+    - Not be deleted until it is removed from the connection cache.
+    - Support a mechanism to proactively close the connection.
+    - Keep track of the number of pending requests in a connection.
+
+@section rules Memory Management Rules
+
+    Instances of TAO_Transport are reference counted,
+    this is a simple way to share it among the threads using it to
+    send or receive invocations, the cache, and the potential
+    connection handler using it.
+    However, the service handler should follow the standard rules for
+    the Reactor, i.e. the Reactor owns it, and is destroyed as soon as
+    the connection is closed.
+
+    The underlying connection can be closed by the remote peer,
+    in this case, either the Reactor or the thread blocked on
+    <CODE>read()</CODE> will detect the problem.
+    Following the normal conventions, the ACE_Svc_Handler would be
+    closed as soon as this is detected.
+    The corresponding TAO_Transport must be informed, otherwise it
+    could attempt to use a connection already closed.
+
+    Finally if the connection is proactively closed, the TAO_Transport
+    informs the ACE_Svc_Handler, at this point the ACE_Svc_Handler
+    commits suicide by removing itself from the reactor.
+    Notice that it must still callback the TAO_Transport in this
+    case.
+
+@section data Processing Incoming and Outgoing Data
+
+    The final aspect to consider is the processing of incoming and
+    outgoing data.  We are still working on this problem, but the
+    current approach is more complex than it has to be.
+    The usual path is as follows: the Reactor signals (via
+    handle_input) that there is some data available in the socket.
+    The message is forwarded from the ACE_Svc_Handler to the
+    TAO_Transport, then to several helper classes in the pluggable
+    protocol framework.  Eventually a method is invoked on the
+    TAO_Tranport to read the actual data, this forwards on the
+    ACE_Svc_Handler (again), and eventually returns.
+
+    A much simpler approach would be to read the data on the
+    handle_input() method itself, and forward the data up the stream.
+
+*/

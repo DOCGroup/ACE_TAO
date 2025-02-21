@@ -3,8 +3,6 @@
 /**
  *  @file   Atomic_Reconnect.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -23,7 +21,6 @@
  * @class Consumer
  *
  * @brief Simple consumer object
- *
  */
 class Consumer : public EC_Counting_Consumer
 {
@@ -40,9 +37,7 @@ public:
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
 
   /// Number of events of type <event_base_type_> received.
   CORBA::ULong event_base_count;

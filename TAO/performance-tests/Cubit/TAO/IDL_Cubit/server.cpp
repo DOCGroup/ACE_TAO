@@ -1,10 +1,9 @@
-// $Id$
-
 #include "ace/config-all.h"
-#if defined (VXWORKS)
+
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 # undef ACE_MAIN
 # define ACE_MAIN server
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS && !__RTP__ */
 
 #include "Cubit_Server.h"
 #include "tao/Timeprobe.h"
@@ -18,19 +17,15 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-
-ACE_RCSID(IDL_Cubit, server, "$Id$")
-
 // This runs the server test.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int priority = ACE_THR_PRI_FIFO_DEF;
-  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                              priority);
+  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -50,30 +45,25 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\tIDL_Cubit: server\n\n"));
-  ACE_TRY_NEW_ENV
+  try
     {
-      int ret = cubit_server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (ret == -1)
+      if (cubit_server.init (argc, argv)== -1)
         return -1;
 
-      cubit_server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      cubit_server.run ();
 
       ACE_OS::sleep (5);
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
   ACE_TIMEPROBE_PRINT;
 
   return 0;

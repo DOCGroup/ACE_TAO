@@ -2,11 +2,7 @@
 /**
  *  @file Periodic_Consumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_PERIODIC_CONSUMER_H
@@ -21,22 +17,24 @@
 
 #include "Task_Stats.h"
 #include "Notify_StructuredPushConsumer.h"
+#include "ace/Arg_Shifter.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Barrier;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Tests_Task_Callback;
-class ACE_Barrier;
-class ACE_Arg_Shifter;
 
 /**
  * @class TAO_Notify_Tests_Periodic_Consumer
  *
  * @brief Receives Structured events periodically.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Consumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_Periodic_Consumer (void);
+  /// Constructor
+  TAO_Notify_Tests_Periodic_Consumer ();
 
   /// Destructor
   ~TAO_Notify_Tests_Periodic_Consumer ();
@@ -51,15 +49,8 @@ public:
   void dump_stats (ACE_TCHAR* msg, int dump_samples);
 
 protected:
-
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+        const CosNotification::StructuredEvent & notification);
 
   void handle_start_event (const CosNotification::PropertySeq& prop_seq);
   void check_priority (const CosNotification::PropertySeq& prop_seq);

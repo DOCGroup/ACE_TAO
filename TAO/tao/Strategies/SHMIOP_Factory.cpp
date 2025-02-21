@@ -1,9 +1,9 @@
-#include "SHMIOP_Factory.h"
+#include "tao/Strategies/SHMIOP_Factory.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "SHMIOP_Acceptor.h"
-#include "SHMIOP_Connector.h"
+#include "tao/Strategies/SHMIOP_Acceptor.h"
+#include "tao/Strategies/SHMIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 
@@ -11,24 +11,18 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_strings.h"
 
-
-ACE_RCSID (Strategies,
-           SHMIOP_Factory,
-           "$Id$")
-
-
 static const char prefix_[] = "shmiop";
 
-TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory ()
   : TAO_Protocol_Factory (TAO_TAG_SHMEM_PROFILE),
-    major_ (TAO_DEF_GIOP_MAJOR),
-    minor_ (TAO_DEF_GIOP_MINOR),
     mmap_prefix_ (0),
     min_bytes_ (10*1024)        // @@ Nanbor, remove this magic number!!
 {
 }
 
-TAO_SHMIOP_Protocol_Factory::~TAO_SHMIOP_Protocol_Factory (void)
+TAO_SHMIOP_Protocol_Factory::~TAO_SHMIOP_Protocol_Factory ()
 {
   delete [] this->mmap_prefix_;
 }
@@ -41,19 +35,19 @@ TAO_SHMIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 }
 
 const char *
-TAO_SHMIOP_Protocol_Factory::prefix (void) const
+TAO_SHMIOP_Protocol_Factory::prefix () const
 {
   return ::prefix_;
 }
 
 char
-TAO_SHMIOP_Protocol_Factory::options_delimiter (void) const
+TAO_SHMIOP_Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO_SHMIOP_Protocol_Factory::make_acceptor (void)
+TAO_SHMIOP_Protocol_Factory::make_acceptor ()
 {
   TAO_SHMIOP_Acceptor *acceptor = 0;
 
@@ -80,12 +74,12 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
     {
       const ACE_TCHAR *current_arg = 0;
 
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFileSize"))))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFileSize"))))
         {
           this->min_bytes_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFilePrefix"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFilePrefix"))))
         {
           this->mmap_prefix_ = ACE::strnew (current_arg);
           arg_shifter.consume_arg ();
@@ -100,7 +94,7 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
 }
 
 TAO_Connector *
-TAO_SHMIOP_Protocol_Factory::make_connector (void)
+TAO_SHMIOP_Protocol_Factory::make_connector ()
 {
   TAO_Connector *connector = 0;
 
@@ -111,10 +105,11 @@ TAO_SHMIOP_Protocol_Factory::make_connector (void)
 }
 
 int
-TAO_SHMIOP_Protocol_Factory::requires_explicit_endpoint (void) const
+TAO_SHMIOP_Protocol_Factory::requires_explicit_endpoint () const
 {
   return 1;
 }
+
 
 ACE_STATIC_SVC_DEFINE (TAO_SHMIOP_Protocol_Factory,
                        ACE_TEXT ("SHMIOP_Factory"),
@@ -125,5 +120,7 @@ ACE_STATIC_SVC_DEFINE (TAO_SHMIOP_Protocol_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO_Strategies, TAO_SHMIOP_Protocol_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

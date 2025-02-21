@@ -4,8 +4,6 @@
 /**
  * @file   Monitor_Signal_Handler.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -34,7 +32,6 @@
 class TAO_LB_Monitor_Signal_Handler : public TAO_LB_Signal_Handler
 {
 public:
-
   /// Constructor.
   TAO_LB_Monitor_Signal_Handler (
     CORBA::ORB_ptr orb,
@@ -43,19 +40,16 @@ public:
     const PortableGroup::Location & location);
 
 protected:
-
   /// Template method that initiates the cleanup process.
   virtual int perform_cleanup (int signum);
 
 private:
-
   /// Reference to the LoadManager with which the LoadMonitor is
   /// registered.
   CosLoadBalancing::LoadManager_var load_manager_;
 
   /// Reference to the location the LoadMonitor resides at.
   const PortableGroup::Location & location_;
-
 };
 
 

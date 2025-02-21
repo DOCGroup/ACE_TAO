@@ -1,0 +1,523 @@
+commit dd57db6e68ad00c0e93d7c04128d952e8bd611a4
+Merge: 3257caff5c6 a2298c55b6b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 11 09:53:14 2017 +0200
+
+    Merge pull request #481 from jwillemsen/master
+    
+    List change for new release
+
+commit a2298c55b6b1b575d2329d11e080a52d4370be72
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 11 09:52:36 2017 +0200
+
+    List change for new release
+    
+        * TAO/NEWS:
+
+commit 4c27956835b8d7aee75a34191765d5714009ced6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 21:40:05 2017 +0200
+
+    Small change generated code
+    
+        * TAO/TAO_IDL/be/be_visitor_array/array_ch.cpp:
+
+commit 95700db3c5cb69a738d8b23b63f20d3dc56ec161
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 21:37:46 2017 +0200
+
+    Generate stub export macro directly instead of TAO_EXPORT_MACRO, simplifies the code we generate
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO/tao/AnyTypeCode/AnyTypeCode_methods.h:
+        * TAO/tao/AnyTypeCode/TypeCode.h:
+        * TAO/tao/AnyTypeCode/WrongTransactionA.h:
+        * TAO/tao/CORBA_methods.h:
+        * TAO/tao/DynamicInterface/Context.h:
+        * TAO/tao/DynamicInterface/DII_CORBA_methods.h:
+        * TAO/tao/DynamicInterface/ExceptionList.h:
+        * TAO/tao/DynamicInterface/Request.h:
+        * TAO/tao/DynamicInterface/Server_Request.h:
+        * TAO/tao/DynamicInterface/Unknown_User_Exception.h:
+        * TAO/tao/Object_KeyC.h:
+        * TAO/tao/PI/PolicyFactoryC.h:
+        * TAO/tao/PI_Server/ServerRequestInterceptorC.h:
+        * TAO/tao/PortableServer/PS_ForwardC.h:
+        * TAO/tao/PortableServer/PortableServer_Functions.h:
+        * TAO/tao/PortableServer/PortableServer_WFunctions.h:
+        * TAO/tao/RTCORBA/RT_ProtocolPropertiesC.h:
+        * TAO/tao/Typecode_typesC.h:
+        * TAO/tao/Valuetype/AbstractBase.h:
+        * TAO/tao/Valuetype/ValueBase.h:
+        * TAO/tao/Valuetype/Value_CORBA_methods.h:
+        * TAO/tao/WrongTransactionC.h:
+
+commit a98a116dfafc65f58eb0d64b1c1bdbf72a46a048
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 19:00:08 2017 +0200
+
+    Remove TAO_EXPORT_MACRO usage
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+        * TAO/TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_root/root_ch.cpp:
+
+commit 1194c8bf488a01fa6023c78c78e6470741f97cdc
+Merge: 3a8418963de dc2986dc12d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 16:45:51 2017 +0200
+
+    Merge pull request #478 from jwillemsen/jwi-obvgiopflagsinline
+    
+    Use new TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION so that we can remove TAO_…
+
+commit dc2986dc12daef7392a8e2f4b277fba68391c9c0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 13:43:59 2017 +0200
+
+    Use new TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION so that we can remove TAO_NAMESPACE_INLINE_FUNCTION
+    
+        * TAO/tao/Valuetype/ValueBase.h:
+        * TAO/tao/orbconf.h:
+
+commit 95a65d274f4a7fad79b00babe813336d3516e5e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 13:00:22 2017 +0200
+
+    Remove left over $Id tags
+    
+        * ACE/bin/msvc_static_order.lst:
+        * ACE/tests/run_test.lst:
+        * TAO/TAO_IDL/fe/idl.ypp:
+        * TAO/bin/tao_orb_tests.lst:
+        * TAO/bin/tao_other_tests.lst:
+        * TAO/tests/Bug_3755_Ext_Regression/all.lst:
+        * TAO/tests/COIOP/COIOP.lst:
+
+commit 63b80f7a836166a4c4ecded280ffd9e8545b3ce2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 9 10:19:08 2017 +0200
+
+    Correctly determine the location of tao_idl, fixes the failure of IDL_Test on windows, other tests probably failed silently on Windows because the test couldn't spawn tao_idl
+    
+        * TAO/orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        * TAO/tests/Bug_1628_Regression/run_test.pl:
+        * TAO/tests/Bug_3154_Regression/run_test.pl:
+        * TAO/tests/Bug_3743_Regression/run_test.pl:
+        * TAO/tests/Bug_3845_Regression/run_test.pl:
+        * TAO/tests/IDL_Test/run_test.pl:
+
+commit cb2bea59ab06ed4e1887c2bb86b04653dd0fee05
+Merge: ce3a3daedf3 559c94d52e7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 20:45:48 2017 +0200
+
+    Merge pull request #473 from jwillemsen/jwi-automakecleanup
+    
+    Cleanup old automake support
+
+commit 559c94d52e76a334dc90f082f4bce256d82811da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 20:43:15 2017 +0200
+
+    Cleanup old automake support
+    
+        * ACE/ACE.mwc:
+        * TAO/tests/TransportCurrent/IIOP/IIOP.mpc:
+
+commit ce3a3daedf345bb04bc474ff7ae0cbe6abd8820e
+Merge: 61850ca09b5 a8c3aef792d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 18:13:07 2017 +0200
+
+    Merge pull request #472 from jwillemsen/jwi-bcc32rtfactory
+    
+    Suppress warning 8022 with bcc32
+
+commit a8c3aef792d4a3c0780202425f84af3e72f68ff6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 18:06:18 2017 +0200
+
+    Suppress warning 8022 with bcc32
+    
+        * TAO/orbsvcs/orbsvcs/Notify/RT_Factory.h:
+
+commit 4f1d4d2e0ad8015593467ed1b61afa2478621b96
+Merge: 16331fdef3c be046950dc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 15:34:32 2017 +0200
+
+    Merge branch 'master' into jwi-exportnestedclasses-cleanup
+
+commit be046950dc232d1b5415dbd6cd1a88396ae14508
+Merge: d7b8cb74370 b46fe98ac1d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 15:34:10 2017 +0200
+
+    Merge pull request #469 from jwillemsen/jwi-rtcorba-activity
+    
+    Fixed linking of RTCORBA Activity example with bcc32
+
+commit d7b8cb7437084a23ce3bdfeff02f134b4d657f71
+Merge: 95cb1855ec9 b4e893e860e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 15:33:45 2017 +0200
+
+    Merge pull request #468 from jwillemsen/jwi-docufixes
+    
+    Documentation fixes
+
+commit 16331fdef3c47555b31acedf44835663da1e4efd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 15:32:22 2017 +0200
+
+    Don't use TAO_NAMESPACE_STORAGE_CLASS anymore
+    
+        * TAO/TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
+
+commit 977272ed230d444c9eb1c27901ccee3df3ab9515
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 10:48:36 2017 +0200
+
+    Cleanup TAO_EXPORT_NESTED_CLASSES and simplified the portableserver files. At the moment we are using inlining we also use inlining at the TAO level with all compilers, not only with msvc
+    
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.h:
+        * TAO/tao/DynamicInterface/Unknown_User_Exception.h:
+        * TAO/tao/PortableServer/PortableServer_Functions.h:
+        * TAO/tao/PortableServer/PortableServer_WFunctions.h:
+        * TAO/tao/orbconf.h:
+
+commit 63ce9eed24b56d7893ad7d353e354cc6f815b9f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 10:08:34 2017 +0200
+
+    Add pragma to disable warning 8022 with bcc32
+    
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+
+commit ceca71212a2c3b98442bdfc16b0169531a8abd89
+Merge: 36e066d32c9 f90c929c25a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 10:03:09 2017 +0200
+
+    Merge pull request #466 from jwillemsen/master
+    
+    Fix getversionex deprecated warnings with clang
+
+commit b46fe98ac1db8f15fb86b8070d497b103c885051
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 09:52:40 2017 +0200
+
+    This test only compiles an executable with a local service so no export macros should be used
+    
+        * TAO/examples/RTCORBA/Activity/activity_export.h:
+          Deleted.
+    
+        * TAO/examples/RTCORBA/Activity/Activity.h:
+        * TAO/examples/RTCORBA/Activity/Activity.mpc:
+        * TAO/examples/RTCORBA/Activity/Builder.cpp:
+        * TAO/examples/RTCORBA/Activity/Builder.h:
+        * TAO/examples/RTCORBA/Activity/Job_i.h:
+        * TAO/examples/RTCORBA/Activity/POA_Holder.h:
+        * TAO/examples/RTCORBA/Activity/Periodic_Task.h:
+        * TAO/examples/RTCORBA/Activity/Task_Stats.h:
+        * TAO/examples/RTCORBA/Activity/Thread_Task.h:
+
+commit b4e893e860e2349e880f5b14ecc03622a3ab320f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 09:44:28 2017 +0200
+
+    Fix typos in documentation
+    
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl:
+
+commit a49c5b7627b7ca4e27ddb6f2757fcaf125021fb2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 09:16:35 2017 +0200
+
+    Remove setting of bcc32 compiler flags
+    
+        * TAO/orbsvcs/orbsvcs/CosNotification.mpc:
+        * TAO/orbsvcs/orbsvcs/RT_Notification.mpc:
+
+commit df5e559b7fb1c76379f317d4ece7a4aa7035d593
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 8 09:08:15 2017 +0200
+
+    Fixed typo
+    
+        * TAO/examples/RTCORBA/Activity/README:
+
+commit d7a328f47e1719297253fb402236d514efcc0088
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 7 14:11:34 2017 +0200
+
+    Remove bcc32 flags from here
+    
+        * TAO/orbsvcs/orbsvcs/CosNotification.mpc:
+
+commit df99790f37bbdc9b034d13373cfc958cd762c883
+Author: Andreas L <avlplus42@gmail.com>
+Date:   Sat Aug 5 23:08:35 2017 +0200
+
+    Just remove unused RND_Timer::push altogether.
+
+commit 6cb15b7a1bed404167bde2e7c4d3b98fd061455d
+Author: Andreas L <avlplus42@gmail.com>
+Date:   Fri Aug 4 20:02:19 2017 +0200
+
+    exclude "union foo" from up to SunCC 5.14
+    
+    For C++ 5.14, the SunCC preprocessor still separates a negative sign
+    from a number and tao_idl segfaults on such a pre-processed .idl .
+    Update check from (__SUNPRO_CC > 0x5120) to (__SUNPRO_CC > 0x5140)
+
+commit 50e505f55764936e8a9d6789ed984212f231e60d
+Author: Andreas L <avlplus42@gmail.com>
+Date:   Fri Aug 4 19:48:39 2017 +0200
+
+    Add an implementation for RND_Timer::push despite not used,
+    
+    because it is the "first non-inline non-pure-virtual" method,
+    and Solaris Studio Compilers automatically add some internal
+    symbols to whereever that one gets implemented.
+    Without an implementation of RND_Timer::push(), the linker
+    complains about lack of symbol "RND_Timer::__descr".
+
+commit 376fa5cdfd8d569ad750b4ef2662b0cdfeac4c10
+Merge: 193e94a03ba be42cde599d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 4 10:28:34 2017 +0200
+
+    Merge pull request #459 from jwillemsen/jwi-ftnaming-bcc32
+    
+    Fix problem with bcc32
+
+commit 193e94a03baa2e97aec56471845bc07015d45af2
+Merge: a797ab9623c c18c4180582
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 4 10:28:04 2017 +0200
+
+    Merge pull request #453 from jwillemsen/jwi-idltest-450
+    
+    Extend this test to reproduce issue #450
+
+commit c18c418058280eefb31aeba9f750e11c62281d55
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 3 16:12:17 2017 +0200
+
+    Further refine sequence generation
+    
+        * TAO/TAO_IDL/be/be_visitor_typedef/typedef_cs.cpp:
+        * TAO/TAO_IDL/be_include/be_visitor_typedef/typedef_cs.h:
+        * TAO/tests/IDL_Test/typedef.idl:
+
+commit ab60a083ce8d429fbf1ccfbf33f8da66ea816137
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 3 12:21:43 2017 +0200
+
+    Updated bcc32 version checks
+    
+        * TAO/tests/Bug_3574_Regression/test.cpp:
+
+commit be42cde599da8bf0dd361f7e84bd055ead95582b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 3 11:56:13 2017 +0200
+
+    Fix problem with bcc32
+    
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Utils.h:
+
+commit 119ac6ba29235ce9bec326474d32d0196e409f7f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 3 11:43:17 2017 +0200
+
+    Fixed missing code generation for a typedef of multiple sequence types
+    
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+commit b76b32a0491290620f3ab7463b37ee6076bee795
+Merge: 0640b579cb4 b6989e89d16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 3 11:23:45 2017 +0200
+
+    Merge branch 'master' into jwi-idltest-450
+
+commit b1ccc1e2b2596ab7d40302814e765398c1663f9f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 20:52:27 2017 +0200
+
+    Updated bcc32 version check
+    
+        * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+
+commit 2268dd58cccd721f455251ce177d8c3574ec90ae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 20:45:07 2017 +0200
+
+    Updated bcc32 version check to suppress warnings
+    
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+
+commit 425f0544f45335d3da8165a2ee2fd8cfec71295f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 20:43:42 2017 +0200
+
+    Use true/false
+    
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
+
+commit 28c25159e2e5843300e0048312824a927acb38ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 1 10:54:12 2017 +0200
+
+    Fixed typos in documentation
+    
+        * ACE/ace/config-win32-common.h:
+        * TAO/docs/exceptions.html:
+
+commit 0640b579cb4fe0cc13b2a00c94a1747edba804ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 29 11:58:32 2017 +0200
+
+    Extend this test to reproduce issue #450
+    
+        * TAO/tests/IDL_Test/main.cpp:
+
+commit 57a259145f618ab392b70b444aadb2d475fc9e26
+Merge: 7c369015bc6 de9a4ae2da5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 22 10:58:56 2017 +0200
+
+    Merge branch 'master' into jwi-transportselectionguard
+
+commit 7c369015bc6ed328e15fe0aac76831574cf452a1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 22 10:56:08 2017 +0200
+
+    Added missing exports
+    
+        * TAO/tao/Transport_Selection_Guard.h:
+
+commit 8faf40f09376888f16ebcca1f8900d39b6806c8e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 21 20:38:10 2017 +0200
+
+    Add missing exports
+    
+        * TAO/tao/Transport_Selection_Guard.h:
+
+commit 890c64e220551a85d7f65f3403cfebc71e47c564
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 21 16:22:04 2017 +0200
+
+    Fix unresolved externals with Embarcadero C++ 10.2
+    
+        * TAO/tao/Transport_Selection_Guard.cpp:
+        * TAO/tao/Transport_Selection_Guard.h:
+
+commit de9a4ae2da509511f8df97c22cc1317021adeb4f
+Merge: 2daef2e7f05 47b531e0d2b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 21:31:59 2017 +0200
+
+    Merge pull request #448 from jwillemsen/jwi-taoidlciaoroot
+    
+    Only add the CIAO includes when CIAO_ROOT has been explicitly defined
+
+commit 47b531e0d2bd699c55321252e66cf25bfe579f7b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 15:02:26 2017 +0200
+
+    Only add the CIAO includes when CIAO_ROOT has been explicitly defined
+    
+        * TAO/TAO_IDL/driver/drv_preproc.cpp:
+        * TAO/TAO_IDL/tao_idl.cpp:
+
+commit b58ee29052139a2032a94ded7ee7e589d1b9ce0c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 13:35:22 2017 +0200
+
+    Some more cleanup
+    
+        * TAO/tao/orbconf.h:
+
+commit 2d51ee5608628d0a9c607340ae158859f7330787
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 20 11:22:43 2017 +0200
+
+    Use ACE_WIN32 and bcc32c doesn't set __WIN32__ but uses _WIN32
+    
+        * ACE/ASNMP/asnmp/octet.cpp:
+        * ACE/ASNMP/tests/Counter64_Test.cpp:
+        * ACE/ace/Configuration_Import_Export.cpp:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/examples/Mem_Map/IO-tests/IO_Test.cpp:
+        * ACE/examples/Mem_Map/IO-tests/test_io.cpp:
+        * TAO/tao/orbconf.h:
+
+commit 1e4ccb031516c5530cb18f54c025135a06a11e66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 14 09:20:45 2017 +0200
+
+    Fixed typo
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+        * TAO/docs/implrepo/paper.html:
+
+commit cc2c628525a329073f488839e05f9fa323c095fa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 26 16:43:59 2017 +0200
+
+    Remove some more occurences of register
+    
+        * ACE/ace/ETCL/ETCL_l.cpp:
+        * TAO/TAO_IDL/fe/idl.yy.cpp:
+
+commit 247ef819c09c78d5bd11ce03d61a658ff105d581
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 21 10:55:40 2017 +0200
+
+    Fix gcc7.1 warnings
+    
+        * ACE/ace/Name_Proxy.cpp:
+        * TAO/TAO_IDL/be/be_visitor_module/module.cpp:
+
+commit 89e54e999c4100f49accc0d36d204f9c8400c714
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 13 14:34:00 2017 +0200
+
+    Fix gcc7 warning
+    
+        * TAO/TAO_IDL/narrow/narrow.cpp:
+
+commit 7a838170151fb1a1e13f468e5d885c46e9502e9c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Apr 30 21:33:31 2017 +0200
+
+    Fixed gcc warnings
+    
+        * ACE/examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * TAO/tests/DII_AMI_Forward/server.cpp:
+        * TAO/tests/ForwardOnceUponException/client.cpp:
+        * TAO/tests/ForwardUponObjectNotExist/client.cpp:
+
+commit fd74599c612a1319800dadf865a0cb40748ceca9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 20 11:20:51 2017 +0200
+
+    Make ACE/TAO 6.4.3/2.4.3 public available
+    
+        * ACE/NEWS:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

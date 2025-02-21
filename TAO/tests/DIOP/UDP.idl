@@ -1,0 +1,16 @@
+/* -*- C++ -*- */
+// UDP.idl
+interface UDP
+{
+  // = TITLE
+  //    Defines an interface that encapsulates operations that
+  //    return the current time of day and shuts down the server.
+
+  oneway void invoke (in string client_name,
+                      in UDP udpHandler,
+                      in long request_id);
+  // Returns the current time of day on another machine.
+
+  oneway void shutdown ();
+  // Shutdown the application.
+};

@@ -1,11 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
-#include "SHMIOP_Acceptor.h"
+#include "tao/Strategies/SHMIOP_Acceptor.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "SHMIOP_Profile.h"
+#include "tao/Strategies/SHMIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -14,53 +11,24 @@
 #include "tao/CDR.h"
 
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (Strategies,
-           SHMIOP_Acceptor,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_SHMIOP_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_SHMIOP_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO_SHMIOP_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_SHMIOP_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_SHMIOP_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_SHMIOP_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (CORBA::Boolean flag)
+TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_SHMEM_PROFILE),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    base_acceptor_ (),
+    base_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
     mmap_file_prefix_ (0),
-    mmap_size_ (1024 * 1024),
-    lite_flag_ (flag)
+    mmap_size_ (1024 * 1024)
 {
 }
 
-TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor (void)
+TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -84,13 +52,9 @@ TAO_SHMIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY)
-    return this->create_new_profile (object_key,
-                                     mprofile,
-                                     priority);
+    return this->create_new_profile (object_key, mprofile, priority);
   else
-    return this->create_shared_profile (object_key,
-                                        mprofile,
-                                        priority);
+    return this->create_shared_profile (object_key, mprofile, priority);
 }
 
 int
@@ -160,9 +124,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     {
       // If <mprofile> doesn't contain SHMIOP_Profile, we need to create
       // one.
-      return create_new_profile (object_key,
-                                 mprofile,
-                                 priority);
+      return create_new_profile (object_key, mprofile, priority);
     }
   else
     {
@@ -191,23 +153,14 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
   if (endp == 0)
     return 0;
 
-      // @@ TODO The following code looks funky, why only the host
-      //    name is compared?  What if there are multiple SHMIOP
-      //    servers in the same address?  Why do SHMIOP_Endpoints keep
-      //    a INET_Addr but not a MEM_Addr?  And why is there no lazy
-      //    evaluation of IP-addresses for SHMIOP endpoints?  Is it
-      //    because it is always 'localhost'?  We need answers to
-      //    these questions to solve:
-      //
-      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
-      //
-  // The following code is suspec
-  // compare the port and sin_addr (numeric host address)
+  if (endp->port () != this->address_.get_port_number ())
+    return 0;
+
   return this->address_.same_host (endp->object_addr ());
 }
 
 int
-TAO_SHMIOP_Acceptor::close (void)
+TAO_SHMIOP_Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
@@ -227,14 +180,15 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  if (isdigit (*port) == 0)
-    return -1;                  // Port number must consist of digits
-
   if (port)
-    this->address_.set (ACE_TEXT_CHAR_TO_TCHAR(port));
+    {
+      if (ACE_OS::ace_isdigit (*port) == 0)
+        return -1;                  // Port number must consist of digits
 
-  return this->open_i (orb_core,
-                       reactor);
+      this->address_.set (ACE_TEXT_CHAR_TO_TCHAR(port));
+    }
+
+  return this->open_i (orb_core, reactor);
 }
 
 int
@@ -257,13 +211,11 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   //    address.
   this->host_ = this->address_.get_host_name ();
 
-  return this->open_i (orb_core,
-                       reactor);
+  return this->open_i (orb_core, reactor);
 }
 
 int
-TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix,
-                                       off_t size)
+TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix, ACE_OFF_T size)
 {
   this->mmap_file_prefix_ = prefix;
   this->mmap_size_ = size;
@@ -272,14 +224,12 @@ TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix,
 }
 
 int
-TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
-                             ACE_Reactor *reactor)
+TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
 
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_SHMIOP_CREATION_STRATEGY (this->orb_core_,
-                                                this->lite_flag_),
+                  TAO_SHMIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
@@ -298,7 +248,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                                  this->concurrency_strategy_) == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, %p\n\n"),
                     ACE_TEXT ("cannot open acceptor")));
       return -1;
@@ -314,7 +264,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, %p\n\n"),
                     ACE_TEXT ("cannot get local addr\n")));
       return -1;
@@ -332,7 +282,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("SHMIOP_Acceptor::open_i, ")
                         ACE_TEXT ("- %p, "),
@@ -347,11 +297,10 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       // This will be the actualy host name of the original endpoint.
       ACE_TCHAR tmp_host[MAXHOSTNAMELEN+1];
 
-      if (this->address_.get_host_name (tmp_host,
-                                        sizeof tmp_host) != 0)
+      if (this->address_.get_host_name (tmp_host, sizeof tmp_host) != 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, - %p\n"),
                         ACE_TEXT ("cannot cache hostname\n")));
           return -1;
@@ -366,12 +315,20 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 
   if (TAO_debug_level > 5)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, ")
-                  ACE_TEXT ("listening on : <%s:%u>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(this->host_.c_str ()),
+                  ACE_TEXT ("listening on : <%C:%u>\n"),
+                  this->host_.c_str (),
                   this->address_.get_port_number ()));
     }
+
+  // In the event that an accept() fails, we can examine the reason.  If
+  // the reason warrants it, we can try accepting again at a later time.
+  // The amount of time we wait to accept again is governed by this orb
+  // parameter.
+  this->set_error_retry_delay (
+    this->orb_core_->orb_params ()->accept_error_delay());
+
   return 0;
 }
 
@@ -388,16 +345,16 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major, minor;
+  CORBA::Octet major = 0;
+  CORBA::Octet minor = 0;
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
-  if (!(cdr.read_octet (major)
-        && cdr.read_octet (minor)))
+  if (!(cdr.read_octet (major) && cdr.read_octet (minor)))
   {
     if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - SHMIOP_Profile::decode, v%d.%d\n"),
                     major,
                     minor));
@@ -414,7 +371,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::object_key, ")
                       ACE_TEXT ("error while decoding host/port\n")));
         }
@@ -432,7 +389,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
 
 CORBA::ULong
-TAO_SHMIOP_Acceptor::endpoint_count (void)
+TAO_SHMIOP_Acceptor::endpoint_count ()
 {
   // @@ for now just assume one!
   // we should take a look at the local address, if it is zero then
@@ -465,7 +422,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i = 0; i < len; ++i)
     if (options[i] == option_delimiter)
-      option_count++;
+      ++option_count;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -475,60 +432,64 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  int begin = 0;
-  int end = -1;
+  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type end = 0;
 
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
-      begin += end + 1;
-
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast <int>(len - begin); // Handle last endpoint differently
+        end = len;
 
       if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP option.\n")),
                           -1);
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt = options.substring (begin, end);
+          ACE_CString opt = options.substring (begin, end - begin);
 
-          int slot = opt.find ("=");
+          ACE_CString::size_type const slot = opt.find ("=");
 
-          if (slot == static_cast <int> (len - 1)
+          if (slot == len - 1
               || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) SHMIOP option <%s> is ")
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("TAO (%P|%t) SHMIOP option <%C> is ")
                                ACE_TEXT ("missing a value.\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR(opt.c_str ())),
+                               opt.c_str ()),
                               -1);
 
           ACE_CString name = opt.substring (0, slot);
           ACE_CString value = opt.substring (slot + 1);
 
+          begin = end + 1;
+
           if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP ")
                                ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%s>\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())),
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%C>\n"),
+                               name.c_str ()),
                               -1);
         }
+      else
+        break;  // No other options.
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

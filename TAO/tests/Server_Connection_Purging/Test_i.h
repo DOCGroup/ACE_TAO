@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef TEST_I_H
 #define TEST_I_H
@@ -12,12 +9,15 @@ class test_i
   : public virtual POA_test
 {
 public:
+  test_i (CORBA::ORB_ptr orb);
+
   // = The skeleton methods
-  virtual void send_stuff (const char* string
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_stuff (const char* string);
+
+  virtual void shutdown ();
 
 private:
+  CORBA::ORB_var orb_;
 };
 
 #include /**/ "ace/post.h"

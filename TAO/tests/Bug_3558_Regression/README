@@ -1,0 +1,28 @@
+/**
+
+
+
+@page Bug_3558_Regression Test README File
+
+	Test written for Bugzilla #3558
+
+  This test is based on the Hello TAO test.
+
+  The goal of writing this test is:
+
+- Provide a way to test whether transport cache behaves correctly.
+  ORBConnectionCacheMax is programmatically set to 1. When a second
+  connection is esthablished, we expect an exception. However, it seems that
+  the transport cache adjusts itself (no exception is thrown).
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+or, with debug information:
+
+$ ./run_test.pl -debug
+
+	the script returns 0 if the test was successful.
+
+*/

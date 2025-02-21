@@ -1,31 +1,25 @@
-// ============================================================================
-//
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Reconfig_Sched_Utils.cpp
-//
-// = AUTHOR
-//     Chris Gill <cdgill@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reconfig_Sched_Utils.cpp
+ *
+ *  @author  Chris Gill <cdgill@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_C
 #define TAO_RECONFIG_SCHED_UTILS_C
 
-#include "Reconfig_Sched_Utils_T.h"
-#include "Reconfig_Sched_Utils.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Sched/Reconfig_Sched_Utils_T.h"
+#include "orbsvcs/Sched/Reconfig_Sched_Utils.h"
 
 
 #include "orbsvcs/Time_Utilities.h"
 
 
-ACE_RCSID (Sched, Reconfig_Sched_Utils, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ///////////////////////////
 // struct TAO_RT_Info_Ex //
@@ -138,14 +132,14 @@ TAO_RT_Info_Ex::reset (u_long reset_flags)
       ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                            volatile_token);
 
-  //ACE_DEBUG((LM_DEBUG, "Removing Entries for RT_Info: %d, entry_ptr: %x\n", handle, entry_ptr));
+  //ORBSVCS_DEBUG((LM_DEBUG, "Removing Entries for RT_Info: %d, entry_ptr: %x\n", handle, entry_ptr));
   if (entry_ptr)
     {
       entry_ptr->remove_tuples (reset_flags);
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "Pointer to associated entry is zero."));
+      ORBSVCS_ERROR ((LM_ERROR, "Pointer to associated entry is zero."));
     }
 }
 
@@ -162,7 +156,7 @@ TAO_RT_Info_Ex::enabled_state (RtecScheduler::RT_Info_Enabled_Type_t enabled_in)
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "Pointer to associated entry is zero."));
+      ORBSVCS_ERROR ((LM_ERROR, "Pointer to associated entry is zero."));
     }
 }
 
@@ -171,7 +165,6 @@ TAO_RT_Info_Ex::enabled_state ()
 {
   return this->enabled;
 }
-
 
 
 //////////////////////////////
@@ -277,7 +270,7 @@ remove_tuples (u_long tuple_flags)
           if (orig_tuple_iter.next (tuple_ptr_ptr) == 0
               || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           "Failed to access tuple under iterator"));
               return;
             }
@@ -327,7 +320,7 @@ insert_tuple (TAO_RT_Info_Tuple &tuple,
       if (tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
         }
 
       // Update existing tuples
@@ -392,7 +385,7 @@ update_tuple (TAO_RT_Info_Ex &info,
       if (tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
         }
       else if ((*tuple_ptr_ptr)->period < info.period)
         {
@@ -433,7 +426,7 @@ register_tuples (TAO_RT_Info_Tuple ** tuple_ptr_array,
       if (tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
         }
       else
         {
@@ -446,7 +439,6 @@ register_tuples (TAO_RT_Info_Tuple ** tuple_ptr_array,
 
   return 0;
 }
-
 
 
 
@@ -490,8 +482,7 @@ actual_rt_info ()
 // Mutator for actual RT_Info pointer.
 
 void
-TAO_Reconfig_Scheduler_Entry::
-actual_rt_info (TAO_RT_Info_Ex *rt_info)
+TAO_Reconfig_Scheduler_Entry::actual_rt_info (TAO_RT_Info_Ex *rt_info)
 {
   this->actual_rt_info_ = rt_info;
 }
@@ -500,8 +491,7 @@ actual_rt_info (TAO_RT_Info_Ex *rt_info)
 // Accessor for when the node was discovered in forward DFS traversal.
 
 long
-TAO_Reconfig_Scheduler_Entry::
-fwd_discovered () const
+TAO_Reconfig_Scheduler_Entry::fwd_discovered () const
 {
   return this->fwd_discovered_;
 }
@@ -510,8 +500,7 @@ fwd_discovered () const
 // Mutator for when the node was discovered in forward DFS traversal.
 
 void
-TAO_Reconfig_Scheduler_Entry::
-fwd_discovered (long l)
+TAO_Reconfig_Scheduler_Entry::fwd_discovered (long l)
 {
   this->fwd_discovered_ = l;
 }
@@ -520,8 +509,7 @@ fwd_discovered (long l)
 // Accessor for when the node was discovered in reverse DFS traversal.
 
 long
-TAO_Reconfig_Scheduler_Entry::
-rev_discovered () const
+TAO_Reconfig_Scheduler_Entry::rev_discovered () const
 {
   return this->rev_discovered_;
 }
@@ -530,8 +518,7 @@ rev_discovered () const
 // Mutator for when the node was discovered in reverse DFS traversal.
 
 void
-TAO_Reconfig_Scheduler_Entry::
-rev_discovered (long l)
+TAO_Reconfig_Scheduler_Entry::rev_discovered (long l)
 {
   this->rev_discovered_ = l;
 }
@@ -540,8 +527,7 @@ rev_discovered (long l)
 // Accessor for when the node was finished in forward DFS traversal.
 
 long
-TAO_Reconfig_Scheduler_Entry::
-fwd_finished () const
+TAO_Reconfig_Scheduler_Entry::fwd_finished () const
 {
   return this->fwd_finished_;
 }
@@ -550,8 +536,7 @@ fwd_finished () const
 // Mutator for when the node was finished in forward DFS traversal.
 
 void
-TAO_Reconfig_Scheduler_Entry::
-fwd_finished (long l)
+TAO_Reconfig_Scheduler_Entry::fwd_finished (long l)
 {
   this->fwd_finished_ = l;
 }
@@ -560,8 +545,7 @@ fwd_finished (long l)
 // Accessor for when the node was finished in reverse DFS traversal.
 
 long
-TAO_Reconfig_Scheduler_Entry::
-rev_finished () const
+TAO_Reconfig_Scheduler_Entry::rev_finished () const
 {
   return this->rev_finished_;
 }
@@ -570,8 +554,7 @@ rev_finished () const
 // Mutator for when the node was finished in reverse DFS traversal.
 
 void
-TAO_Reconfig_Scheduler_Entry::
-rev_finished (long l)
+TAO_Reconfig_Scheduler_Entry::rev_finished (long l)
 {
   this->rev_finished_ = l;
 }
@@ -580,8 +563,7 @@ rev_finished (long l)
 // Accessor for forward DFS traversal status of the node.
 
 TAO_Reconfig_Scheduler_Entry::DFS_Status
-TAO_Reconfig_Scheduler_Entry::
-fwd_dfs_status () const
+TAO_Reconfig_Scheduler_Entry::fwd_dfs_status () const
 {
   return this->fwd_dfs_status_;
 }
@@ -597,12 +579,10 @@ fwd_dfs_status (TAO_Reconfig_Scheduler_Entry::DFS_Status ds)
 }
 
 
-
 // Accessor for DFS traversal status of the node.
 
 TAO_Reconfig_Scheduler_Entry::DFS_Status
-TAO_Reconfig_Scheduler_Entry::
-rev_dfs_status () const
+TAO_Reconfig_Scheduler_Entry::rev_dfs_status () const
 {
   return this->rev_dfs_status_;
 }
@@ -622,8 +602,7 @@ rev_dfs_status (TAO_Reconfig_Scheduler_Entry::DFS_Status ds)
 // delineator.
 
 int
-TAO_Reconfig_Scheduler_Entry::
-is_thread_delineator () const
+TAO_Reconfig_Scheduler_Entry::is_thread_delineator () const
 {
   return this->is_thread_delineator_;
 }
@@ -633,8 +612,7 @@ is_thread_delineator () const
 // delineator.
 
 void
-TAO_Reconfig_Scheduler_Entry::
-is_thread_delineator (int i)
+TAO_Reconfig_Scheduler_Entry::is_thread_delineator (int i)
 {
   this->is_thread_delineator_ = i;
 }
@@ -655,8 +633,7 @@ has_unresolved_remote_dependencies () const
 // dependencies.
 
 void
-TAO_Reconfig_Scheduler_Entry::
-has_unresolved_remote_dependencies (int i)
+TAO_Reconfig_Scheduler_Entry::has_unresolved_remote_dependencies (int i)
 {
   this->has_unresolved_remote_dependencies_ = i;
 }
@@ -666,8 +643,7 @@ has_unresolved_remote_dependencies (int i)
 // dependencies.
 
 int
-TAO_Reconfig_Scheduler_Entry::
-has_unresolved_local_dependencies () const
+TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies () const
 {
   return this->has_unresolved_local_dependencies_;
 }
@@ -677,8 +653,7 @@ has_unresolved_local_dependencies () const
 // dependencies.
 
 void
-TAO_Reconfig_Scheduler_Entry::
-has_unresolved_local_dependencies (int i)
+TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies (int i)
 {
   this->has_unresolved_local_dependencies_ = i;
 }
@@ -726,7 +701,7 @@ effective_exec_multiplier (CORBA::Long l)
 
 ///////////////////////////
 
-TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor (void)
+TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor ()
 {
 }
 
@@ -793,8 +768,7 @@ TAO_RSE_Reset_Visitor::visit (TAO_Reconfig_Scheduler_Entry &rse)
 // Accessor for effective execution time of corresponding RT_Info.
 
 RtecScheduler::Time
-TAO_Reconfig_Scheduler_Entry::
-aggregate_exec_time ()
+TAO_Reconfig_Scheduler_Entry::aggregate_exec_time ()
 {
   return this->aggregate_exec_time_;
 }
@@ -803,8 +777,7 @@ aggregate_exec_time ()
 // Mutator for effective execution time of corresponding RT_Info.
 
 void
-TAO_Reconfig_Scheduler_Entry::
-aggregate_exec_time (RtecScheduler::Time t)
+TAO_Reconfig_Scheduler_Entry::aggregate_exec_time (RtecScheduler::Time t)
 {
   this->aggregate_exec_time_ = t;
 }
@@ -812,8 +785,7 @@ aggregate_exec_time (RtecScheduler::Time t)
 // Accessor for the sum of periods for tuples directly associated
 // with the entry.
 RtecScheduler::Period_t
-TAO_Reconfig_Scheduler_Entry::
-orig_tuple_period_sum ()
+TAO_Reconfig_Scheduler_Entry::orig_tuple_period_sum ()
 {
   return orig_tuple_period_sum_;
 }
@@ -822,8 +794,7 @@ orig_tuple_period_sum ()
 // Mutator for the sum of periods for tuples directly associated
 // with the entry.
 void
-TAO_Reconfig_Scheduler_Entry::
-orig_tuple_period_sum (RtecScheduler::Period_t p)
+TAO_Reconfig_Scheduler_Entry::orig_tuple_period_sum (RtecScheduler::Period_t p)
 {
   orig_tuple_period_sum_ = p;
 }
@@ -832,8 +803,7 @@ orig_tuple_period_sum (RtecScheduler::Period_t p)
 // Accessor for the sum of periods for tuples propagated via
 // dependencies on other entries.
 RtecScheduler::Period_t
-TAO_Reconfig_Scheduler_Entry::
-prop_tuple_period_sum ()
+TAO_Reconfig_Scheduler_Entry::prop_tuple_period_sum ()
 {
   return prop_tuple_period_sum_;
 }
@@ -842,8 +812,7 @@ prop_tuple_period_sum ()
 // Mutator for the sum of periods for tuples propagated via
 // dependencies on other entries.
 void
-TAO_Reconfig_Scheduler_Entry::
-prop_tuple_period_sum (RtecScheduler::Period_t p)
+TAO_Reconfig_Scheduler_Entry::prop_tuple_period_sum (RtecScheduler::Period_t p)
 {
   prop_tuple_period_sum_ = p;
 }
@@ -852,8 +821,7 @@ prop_tuple_period_sum (RtecScheduler::Period_t p)
 //  Accessor for the number of tuples directly associated with the
 //  entry.
 u_int
-TAO_Reconfig_Scheduler_Entry::
-orig_tuple_count ()
+TAO_Reconfig_Scheduler_Entry::orig_tuple_count ()
 {
   return orig_tuple_count_;
 }
@@ -862,8 +830,7 @@ orig_tuple_count ()
 //  Mutator for the number of tuples directly associated with the
 //  entry.
 void
-TAO_Reconfig_Scheduler_Entry::
-orig_tuple_count (u_int c)
+TAO_Reconfig_Scheduler_Entry::orig_tuple_count (u_int c)
 {
   orig_tuple_count_ = c;
 }
@@ -872,8 +839,7 @@ orig_tuple_count (u_int c)
 // Accessor for the number of tuples propagated via dependencies on
 // other entries.
 u_int
-TAO_Reconfig_Scheduler_Entry::
-prop_tuple_count ()
+TAO_Reconfig_Scheduler_Entry::prop_tuple_count ()
 {
   return prop_tuple_count_;
 }
@@ -882,8 +848,7 @@ prop_tuple_count ()
 // Mutator for the number of tuples propagated via dependencies on
 // other entries.
 void
-TAO_Reconfig_Scheduler_Entry::
-prop_tuple_count (u_int c)
+TAO_Reconfig_Scheduler_Entry::prop_tuple_count (u_int c)
 {
   prop_tuple_count_ = c;
 }
@@ -892,8 +857,7 @@ prop_tuple_count (u_int c)
 // Accessor for the set of tuples directly associated with the
 // entry.
 TUPLE_SET &
-TAO_Reconfig_Scheduler_Entry::
-orig_tuple_subset ()
+TAO_Reconfig_Scheduler_Entry::orig_tuple_subset ()
 {
   return orig_tuple_subset_;
 }
@@ -902,24 +866,21 @@ orig_tuple_subset ()
 // Accessor for the set of tuples propagated via dependencies on
 // other entries.
 TUPLE_SET &
-TAO_Reconfig_Scheduler_Entry::
-prop_tuple_subset ()
+TAO_Reconfig_Scheduler_Entry::prop_tuple_subset ()
 {
   return prop_tuple_subset_;
 }
 
 
 TAO_RT_Info_Tuple *
-TAO_Reconfig_Scheduler_Entry::
-current_admitted_tuple ()
+TAO_Reconfig_Scheduler_Entry::current_admitted_tuple ()
 {
   return current_admitted_tuple_;
 }
 
 
 void
-TAO_Reconfig_Scheduler_Entry::
-current_admitted_tuple (TAO_RT_Info_Tuple * t)
+TAO_Reconfig_Scheduler_Entry::current_admitted_tuple (TAO_RT_Info_Tuple * t)
 {
   current_admitted_tuple_ = t;
 }
@@ -927,8 +888,7 @@ current_admitted_tuple (TAO_RT_Info_Tuple * t)
 // Accessor for flag indicating whether or not node is enabled.
 
 RtecScheduler::RT_Info_Enabled_Type_t
-TAO_Reconfig_Scheduler_Entry::
-enabled_state () const
+TAO_Reconfig_Scheduler_Entry::enabled_state () const
 {
   return this->enabled_;
 }
@@ -946,7 +906,7 @@ enabled_state (RtecScheduler::RT_Info_Enabled_Type_t et)
 
 ////////////////////////////////////////////
 
-TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor (void)
+TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor ()
 {
 }
 
@@ -1232,7 +1192,6 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
 }
 
 
-
 // Compares two RT_Info entries by priority alone.  Returns -1 if the
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
@@ -1452,11 +1411,9 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler
 // Compares two RT_Info entries by criticality alone.  Returns -1 if the
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &lhs,
-                                                     TAO_RT_Info_Tuple &rhs)
+TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &,
+                                                     TAO_RT_Info_Tuple &)
 {
-  ACE_UNUSED_ARG (lhs);
-  ACE_UNUSED_ARG (rhs);
   // In plain RMS, no consideration of criticalities
   return 0;
 }
@@ -1802,3 +1759,5 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &
 
 
 #endif /* TAO_RECONFIG_SCHED_UTILS_C */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

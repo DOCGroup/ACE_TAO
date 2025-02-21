@@ -1,25 +1,21 @@
-// $Id$
-
 #ifndef TAO_ESF_PROXY_RB_TREE_CPP
 #define TAO_ESF_PROXY_RB_TREE_CPP
 
-#include "ESF_Proxy_RB_Tree.h"
+#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Proxy_RB_Tree.i"
+#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ESF, ESF_Proxy_RB_Tree, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY>
-TAO_ESF_Proxy_RB_Tree<PROXY>::
-      TAO_ESF_Proxy_RB_Tree (void)
+TAO_ESF_Proxy_RB_Tree<PROXY>::TAO_ESF_Proxy_RB_Tree ()
 {
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy)
 {
   int r = this->impl_.bind (proxy, 1);
   if (r == 0)
@@ -39,8 +35,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy)
 {
   int r = this->impl_.rebind (proxy, 1);
   if (r == 0)
@@ -62,8 +57,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy)
 {
   int r = this->impl_.unbind (proxy);
   if (r != 0)
@@ -76,7 +70,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown ()
 {
   Iterator end = this->impl_.end ();
   for (Iterator i = this->impl_.begin (); i != end; ++i)
@@ -86,5 +80,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     }
   this->impl_.clear ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_PROXY_RB_TREE_CPP */

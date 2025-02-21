@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    UB_String_Arguments.h
- *
- *  $Id$
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
@@ -22,6 +20,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Arg_Traits_T.h"
+#include "tao/Any_Insert_Policy_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -33,20 +34,20 @@ namespace TAO
 
   template<>
   class TAO_Export Arg_Traits<CORBA::Char *>
-    : public UB_String_Arg_Traits_T<CORBA::Char,
-                                    CORBA::String_var,
-                                    CORBA::String_out>
+    : public UB_String_Arg_Traits_T<CORBA::String_var,
+                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::WChar *>
-    : public UB_String_Arg_Traits_T<CORBA::WChar,
-                                    CORBA::WString_var,
-                                    CORBA::WString_out>
+    : public UB_String_Arg_Traits_T<CORBA::WString_var,
+                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
   {
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_UB_STRING_ARGUMENTS_H */

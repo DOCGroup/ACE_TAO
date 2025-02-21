@@ -1,8 +1,6 @@
 /**
  * @file Send_Task_Stopper.inl
  *
-` * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

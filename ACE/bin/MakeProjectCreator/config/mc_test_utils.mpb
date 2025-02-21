@@ -1,0 +1,6 @@
+project {
+  includes += ../../.. //TODO: support for ^(HERE) variable expansion
+  libpaths += ..
+  after    += MC_Test_Utilities
+  libs     += MC_Test_Utilities
+}

@@ -1,0 +1,82 @@
+<!--  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Stock Database definition for the Stock Quoter Publisher/Subscriber Real-time CORBA Service</title>
+</head>
+
+<body
+ text = "#000000"
+ link = "#000fff"
+ vLink= "#ff0f0f"
+ aLink = "#0000ff"
+ bgColor = "#ffffff">
+
+<hr><h2>Stock Database definition for the Stock Quoter Publisher/Subscriber Real-time CORBA Service</h2><hr>
+
+<P> The Stock Database class is used to install, update and publish the information of all the stocks. It uses the
+singleton design pattern.<P>
+
+<PRE>
+    typedef ACE_Singleton<Stock_Database, ACE_Thread_Mutex> Stock_Database_Singleton;
+    #define STOCK_DATABASE Stock_Database_Singleton::instance()
+</PRE>
+
+ACE_Singleton simply ensures that we create one single instance of the Stock_Database class at runtime, 
+even if multiple threads all try to create one at the same time.
+
+<h3>Implementing the Constructor</h3>
+
+The main steps of this function are described as follows: <P>
+
+<li>Create an array of stock names.</li> <P>
+
+<li>Create a StockInfo object for each stock with the corresponding stock name and initialize
+its high, low and last values randomly.</li> <P>
+
+<li>Insert the StockInfo objects into stock map, using the stock name as the key.</li> <P>
+
+<hr><h3>Implementing the get_stock_info () function</h3>
+
+The main steps of this function are described as follows: <P>
+
+<li>Get the read thread mutex of the stock map.</li> <P>
+
+<li>Locate the stock in the stock database with the same stock name given in the argument.</li> <P>
+
+<li>Create a StockInfo object of the former stock and return it.</li> <P>
+
+<hr><h3>Implementing the publish_stock_info () function</h3>
+
+This function is called by the Stock Distributor server's thread function to notify the Stock Broker client 
+the state change of the stock it interested in. <P>
+
+<li>Get the read thread mutex of the stock map.</li> <P>
+
+For each stock in the stock database, do the following steps: <P>
+
+<li>Initialze the StockName object with the name of the stock.</li> <P>
+
+<li>Call the push_StockName () function of StockNameConsumer object (given in the argument),
+using the former StockName object.</li> <P>
+
+<hr><h3>Implementing the svc () function</h3>
+
+This function will be run when the stock database is started. This function is used to 
+calculate the new high, low and last values of each stock in the stock database. <P>
+
+<li>Get the write thread mutex of the stock map.</li> <P>
+
+<li>Calculate the new values for the stock.</li> <P>
+
+<li>Sleep for a while.</li> <P>
+
+<P> Note: The get_stock_info (), publish_stock_info (), and svc () functions should have mutual exclusion of 
+the stock map. <P>
+
+<hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>
+
+</body>
+
+</html>

@@ -1,33 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    bd_long_seq.cpp
-//
-// = DESCRIPTION
-//    tests bounded long sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    bd_long_seq.cpp
+ *
+ *  tests bounded long sequences
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "bd_long_seq.h"
-
-ACE_RCSID (Param_Test, 
-           bd_long_seq, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Bounded_Long_Sequence
 // ************************************************************************
 
-Test_Bounded_Long_Sequence::Test_Bounded_Long_Sequence (void)
+Test_Bounded_Long_Sequence::Test_Bounded_Long_Sequence ()
   : opname_ (CORBA::string_dup ("test_bounded_long_sequence")),
     in_ (new Param_Test::Bounded_Long_Seq),
     inout_ (new Param_Test::Bounded_Long_Seq),
@@ -36,50 +26,45 @@ Test_Bounded_Long_Sequence::Test_Bounded_Long_Sequence (void)
 {
 }
 
-Test_Bounded_Long_Sequence::~Test_Bounded_Long_Sequence (void)
+Test_Bounded_Long_Sequence::~Test_Bounded_Long_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Bounded_Long_Sequence::opname (void) const
+Test_Bounded_Long_Sequence::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Bounded_Long_Sequence::dii_req_invoke (CORBA::Request *req
-                                            ACE_ENV_ARG_DECL)
+Test_Bounded_Long_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
   req->set_return_type (Param_Test::_tc_Bounded_Long_Seq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   const Param_Test::Bounded_Long_Seq *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_Long_Seq (*tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Bounded_Long_Seq (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Bounded_Long_Seq (*tmp);
 }
 
 int
-Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr)
 {
   // get some sequence length (32 in this case)
   CORBA::ULong len = this->in_->maximum ();
@@ -102,7 +87,7 @@ Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Bounded_Long_Sequence::reset_parameters (void)
+Test_Bounded_Long_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::Bounded_Long_Seq; // delete the previous ones
   this->out_ = new Param_Test::Bounded_Long_Seq;
@@ -116,32 +101,26 @@ Test_Bounded_Long_Sequence::reset_parameters (void)
 }
 
 int
-Test_Bounded_Long_Sequence::run_sii_test (Param_Test_ptr objref
-                                          ACE_ENV_ARG_DECL)
+Test_Bounded_Long_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Bounded_Long_Seq_out out (this->out_.out ());
       this->ret_ = objref->test_bounded_long_sequence (this->in_.in (),
                                                        this->inout_.inout (),
-                                                       out
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                       out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Bounded_Long_Sequence::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Bounded_Long_Sequence::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Bounded_Long_Sequence::check_validity (void)
+Test_Bounded_Long_Sequence::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_->length () == this->inout_->length ()) &&
@@ -170,7 +149,7 @@ Test_Bounded_Long_Sequence::check_validity (CORBA::Request_ptr req)
 }
 
 void
-Test_Bounded_Long_Sequence::print_values (void)
+Test_Bounded_Long_Sequence::print_values ()
 {
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));

@@ -1,0 +1,1256 @@
+Tue Feb 28 03:03:38 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * parser/parser/Parser.cpp (ACEXML_Parser::parse_reference_name):
+          Expression 'ch != '_' || ch != ':'' is always true. Used the
+          '&&' operator instead.  Thanks to Andrey Karpov <karpov at
+          viva64 dot com> for reporting this.
+
+Fri Oct 21 09:50:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * parser/parser/Parser.cpp:
+          Initialise variable with 0
+
+Fri Oct 21 09:48:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/Attributes.h:
+        * common/AttributesImpl.h:
+        * common/Attributes_Def_Builder.h:
+        * common/CharStream.h:
+        * common/ContentHandler.h:
+        * common/DTDHandler.h:
+        * common/DTD_Manager.h:
+        * common/DefaultHandler.h:
+        * common/Element_Def_Builder.h:
+        * common/Encoding.h:
+        * common/EntityResolver.h:
+        * common/ErrorHandler.h:
+        * common/Exception.h:
+        * common/HttpCharStream.h:
+        * common/InputSource.h:
+        * common/Locator.h:
+        * common/LocatorImpl.h:
+        * common/Mem_Map_Stream.h:
+        * common/NamespaceSupport.h:
+        * common/SAXExceptions.h:
+        * common/StrCharStream.h:
+        * common/StreamFactory.h:
+        * common/Transcode.h:
+        * common/URL_Addr.h:
+        * common/Validator.h:
+        * common/XMLFilterImpl.h:
+        * common/XMLReader.h:
+          Doxygen changes, fix some Klocwork reports
+
+Tue Aug  3 16:50:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/DTD_Manager.h:
+          Fixed compile error
+
+        * common/SAXExceptions.inl:
+          Fixed fuzz
+
+Tue Aug  3 11:58:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/Makefile.am:
+        * common/common.mpc:
+          Updated because of the removed files
+
+Tue Aug  3 11:52:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Svcconf.cpp:
+        * apps/svcconf/Svcconf_Handler.h:
+        * apps/svcconf/Svcconf_Handler.cpp:
+        * common/Attributes_Def_Builder.h:
+        * common/CharStream.h:
+        * common/ContentHandler.h:
+        * common/DTDHandler.h:
+        * common/DTD_Manager.h:
+        * common/DefaultHandler.h:
+        * common/DefaultHandler.cpp:
+        * common/Element_Def_Builder.h:
+        * common/EntityResolver.h:
+        * common/ErrorHandler.h:
+        * common/Exception.h:
+        * common/SAXExceptions.inl:
+        * common/Validator.h:
+        * common/XMLFilterImpl.h:
+        * common/XMLFilterImpl.cpp:
+        * common/XMLReader.h:
+        * examples/SAXPrint/Print_Handler.h:
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.h:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * examples/SAXPrint/main.cpp:
+        * parser/debug_validator/Debug_Attributes_Builder.h:
+        * parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * parser/debug_validator/Debug_DTD_Manager.h:
+        * parser/debug_validator/Debug_DTD_Manager.cpp:
+        * parser/debug_validator/Debug_Element_Builder.h:
+        * parser/debug_validator/Debug_Element_Builder.cpp:
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.cpp:
+        * tests/ContentHandler_Test.cpp:
+        * tests/Transcoder_Test.cpp:
+          Removed support for emulated exceptions
+
+        * common/Env.h:
+        * common/Env.inl:
+        * common/Env.cpp:
+        * common/XML_Macros.h:
+          Removed these files.
+
+Thu Mar 25 19:41:57 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * parser/parser/Parser.cpp (ACEXML_Parser::parse_encoding_decl):
+          Changed ACE_OS::strcmp() to ACE_OS::strcasecmp().  Thanks to Tim
+          Pinkawa <tpinkawa at eagleseven dot com> for reporting this.
+
+Tue Oct 13 09:37:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Svcconf_Handler.cpp:
+          Fixed compile problems with unicode enabled. Thanks to
+          Christian Freund <freund at wrz dot de> for reporting this. This
+          fixes bugzilla 3745.
+
+Mon Jul 30 08:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Svcconf_Handler.cpp:
+          Layout changes
+
+Mon Jul 16 10:19:51 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/svcconf/Svcconf_Handler.h:
+        * apps/svcconf/Svcconf_Handler.cpp:
+        * common/Attributes_Def_Builder.h:
+        * common/ContentHandler.h:
+        * common/DTDHandler.h:
+        * common/DefaultHandler.h:
+        * common/DefaultHandler.cpp:
+        * common/Element_Def_Builder.h:
+        * common/EntityResolver.h:
+        * common/ErrorHandler.h:
+        * common/Validator.h:
+        * common/XMLFilterImpl.h:
+        * common/XMLFilterImpl.cpp:
+        * common/XMLReader.h:
+        * examples/SAXPrint/Print_Handler.h:
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.h:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * parser/debug_validator/Debug_Attributes_Builder.h:
+        * parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * parser/debug_validator/Debug_Element_Builder.h:
+        * parser/debug_validator/Debug_Element_Builder.cpp:
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.cpp:
+        * tests/ContentHandler_Test.cpp:
+
+          Fixed Fuzz warnings. Zap the usage of exception specification.
+
+Sun Jun  3 20:02:32 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * common/FileCharStream.cpp:
+          Replaced ungetc with ACE_OS::ungetc.
+
+Fri May 18 02:50:42 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * common/Mem_Map_Stream.cpp:
+
+          It makes no sense to have code after a return statement
+          (such as ACE_ERROR_RETURN). It causes some builds to have
+          "statement is unreachable" warning.
+
+        * examples/SAXPrint/main.cpp:
+
+          Enhanced the "#ifndef" macros used to avoid "statement is
+          unreachable" warning.
+
+Tue May 15 17:36:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * parser/parser/ParserInternals.h:
+          Removed msg_ member, it is not used at all. Thanks to Rajiv K. Shukla
+          <rajiv_shukla at yahoo dot com> for reporting this
+
+Tue Feb 27 21:15:23 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * common/FileCharStream.cpp (open):
+
+          s/ACE_Utils::Truncate/ACE_Utils::truncate_cast/g.  The former is
+          deprecated.
+
+Tue Feb 20 17:26:28 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * common/InputSource.cpp:
+        * parser/parser/ParserContext.h:
+        * parser/parser/ParserContext.inl:
+          Use std::swap instead of ACE_Swap
+
+Tue Feb 13 20:17:28 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * apps/svcconf/Svcconf_Handler.cpp:  Fixed a problem with
+          ACE_Module getting unloaded prematurely due to
+          ACEXML_Svcconf_Handler failing to register it with the service
+          repository.  Thanks to gzeleniy@gmail.com for providing the fix.
+
+Wed Jan 03 14:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * common/XML_Macros.h:
+          With MFC, must delete any caught and eaten "out of memory" exceptions.
+
+Fri Oct 28 02:29:57 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        From Russell Mora <russell_mora at symantec dot com>
+        * common/ContentHandler.h:
+        * common/DefaultHandler.h:
+        * common/DefaultHandler.cpp:
+        * common/FileCharStream.cpp:
+        * common/FileCharStream.h:
+        * common/HttpCharStream.cpp:
+        * common/HttpCharStream.h:
+        * common/Mem_Map_Stream.cpp:
+        * common/Mem_Map_Stream.h:
+        * common/XMLFilterImpl.cpp:
+        * common/XMLFilterImpl.h:
+        * common/ZipCharStream.cpp:
+        * common/ZipCharStream.h:
+        * common/StrCharStream.cpp:
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/Print_Handler.h:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.h:
+        * parser/parser/Parser.cpp:
+        * parser/parser/Parser.h:
+        * tests/ContentHandler_Test.cpp:
+
+          Added support for 64-bit file offsets.
+
+          Addressed 64-bit conversion warnings.
+
+Tue Oct 24 18:00:15 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * common/common.mpc:
+        * parser/parser/parser.mpc:
+
+          Re-disabled ACEXML when ace_for_tao is enabled.  ACEXML needs
+          the ACE_Configuration and memory map classes that are not found
+          in the ace_for_tao subset.
+
+Mon Oct 24 02:26:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * common/common.mpc:
+        * parser/parser/parser.mpc:
+
+          No longer any need to explicitly disable ACEXML in the
+          ace_for_tao configuration.
+
+        * common/HttpCharStream.cpp:
+
+          Fixed Coverity OVERRUN_STATIC and FORWARD_NULL errors.
+
+          Improved const-correctness.
+
+        * common/codecs.mpb:
+
+          Disable ACEXML codecs support if ace_for_tao is enabled.
+
+        * common/Mem_Map_Stream.cpp:
+
+          Fixed Coverity NEGATIVE_RETURNS error.
+
+        * common/SAXExceptions.cpp (_downcast):
+
+          Removed redundant type checking code.
+
+          (~ACEXML_SAXNotSupportedException):
+          (~ACEXML_SAXNotRecognizedException):
+
+          Addressed Coverity USE_AFTER_FREE errors.
+
+          (exception_name_):
+        * common/SAXExceptions.h (exception_name_):
+
+          Declare this static constant as an array rather than a pointer.
+          Allows the compiler to perform additional optimizations.
+
+Tue Jun 20 08:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * parser/parser/Parser.cpp:
+          64bit fix
+
+Thu Mar 30 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/NamespaceSupport.cpp:
+          Fixed value might be unitialized warnings
+
+Tue Mar 14 20:58:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * common/FileCharStream.cpp
+        * common/HttpCharStream.cpp
+        * common/Transcode.cpp
+        * common/XML_Macros.h
+        * parser/parser/Parser.cpp
+        * parser/parser/Parser.i
+
+          Updated these files to solve the warnings when setting up "VC
+          level 4 warnings" on Windows. These warnings include
+          "unreachable code", "assignment within conditional expression",
+          "conversion from some type to another type, possible loss of
+          data", "local variable may be used without having been
+          initialized" and so on.  Thanks to Lukas Gruetzmacher
+          <gruetzmacher at ais-dresden dot de> for motivating the fix to
+        these "VC level 4 warnings".
+
+Fri Feb 10 23:45:14 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * common/NamespaceSupport.cpp: Add missing template instantiations to
+          match change below.
+
+Fri Feb 10 12:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/NamespaceSupport.cpp:
+          Fixed compile error in unicode build
+
+Thu Feb  9 22:49:18 UTC 2006  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * common/NamespaceSupport.h:
+        * common/NamespaceSupport.cpp:  Use a normal ACE_Unbounded_Stack
+          instead of yet another custom stack.
+
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.cpp:
+
+          Fixed a mismatched push/pop of the namespace context due to
+          popping namespace contexts without matching the end of the
+          element that caused a push.  This resulted in more pops that
+          push and corrupting the memory.  Also fixed an indirection into
+          a pointer that might have been corrupt when calling
+          startNamespacePrefix().
+
+Tue Jan 24 23:09:08 UTC 2006  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * apps/svcconf/Svcconf.cpp:
+        * apps/svcconf/Svcconf.h:
+
+          Removed the overridden operator new/delete.  I don't think that
+          they serve any purpose, and end up hiding the default variations.
+
+Mon Jan 23 14:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/ZipCharStream.h:
+          Updated include of zziplib.h to zzip/zzip.h to get rid of deprecated
+          warnings
+
+Wed Jan  4 22:44:38 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+
+          Untabify.
+          Delete-trailing-whitespace.
+
+          Changed "add-log-time-format" to a really ugly lambda expression
+          that formats changelog timestamps in UTC and works with both GNU
+          Emacs and XEmacs.
+
+Thu May 26 07:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/XML_Util.h:
+          Fixed pragma once warning
+
+Tue May 24 18:39:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * common/Makefile.am:
+
+          Regenerate.
+
+        * common/common.mpc:
+
+          Added XML_Util.h to Header_Files section.
+
+Tue May 24 09:18:34 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * tests/util/test.cpp:
+
+          Fixed for loop scoping problem for non-standard compilers.
+
+Mon May 23 14:52:19 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * tests/util/util.mpc:
+
+          Add missing $ Id tag.
+
+Mon May 23 13:02:25 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * common/XML_Util.h:
+        * common/XML_Util.cpp:
+
+          Added new ACEXML_escape_string() functions to allow replacement of
+          illegal characters, (', ", &, <, >, etc.) with the escaped versions.
+          (&quot;, &lt;, etc.)
+
+        * tests/util/test.cpp:
+        * tests/util/util.mpc:
+
+          This is a performance test used while making the above functions, and
+          testing performance with ACE_String_Base.
+
+Fri Apr 22 21:34:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * parser/parser/Parser.cpp (parse_entity_decl):
+
+          Fixed "variable may be used uninitialized" warning.
+
+Fri Apr 22 11:09:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * parser/parser/Makefile.am:
+        * common/Makefile.am:
+
+          Regenerated.
+
+        * parser/parser/parser.mpc:
+        * common/common.mpc:
+
+          Add Pkgconfig_Files section.
+
+Wed Apr 20 12:20:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * common/Attributes.h:
+        * common/ContentHandler.h:
+        * common/DTDHandler.h:
+        * common/EntityResolver.h:
+        * common/ErrorHandler.h:
+        * common/Locator.h:
+        * common/XMLReader.h:
+
+          Added virtual destructors to address g++ 4.0 warnings.
+
+        * common/Attributes.cpp:
+        * common/ContentHandler.cpp:
+        * common/DTDHandler.cpp:
+        * common/EntityResolver.cpp:
+        * common/ErrorHandler.cpp:
+        * common/Locator.cpp:
+        * common/XMLReader.cpp:
+
+          New files containing destructors.
+
+        * common/NamespaceSupport.cpp (getURI):
+
+          Fixed "variable may be used uninitialized" warning.
+
+Mon Apr 18 14:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * parser/parser/Entity_Manager.cpp:
+          Removed not uses static const
+
+        * parser/parser/Entity_Manager.i:
+          Initialise pointer with 0
+
+Sun Feb 13 23:54:25 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        From Lothar Werzinger <lothar at xcerla dot com>
+        * apps/svcconf/Svcconf_Handler.cpp:
+
+          Enhanced error messages.
+
+Wed Jan  5 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/DefaultHandler.{h,cpp,i}:
+        * common/NamespaceSupport.{h,cpp,i}:
+        * common/Transcode.{h,cpp,i}:
+        * examples/SAXPrint/Print_Handler.{cpp,i}:
+          Removed .i file and updated h/cpp file
+
+        * common/Makefile.am:
+          Updated
+
+Tue Aug 17 19:07:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * common/NamespaceSupport.cpp:
+
+          Changed ACE_NEW_RETURN to use "NS_Node_T" instead of "struct
+          NS_Node_T" --- the latter triggers a gcc 3.3 parser bug when
+          used with the "new (std::nothrow)" version of ACE_NEW_RETURN.
+          Fortunately, the "struct" is unnecessary.
+
+Sat Feb 21 23:51:25 2004  Krishnakumar B  <kitty@isis.vanderbilt.edu>
+
+        * common/Exception.h:
+        * common/Exception.cpp:
+        * common/SAXExceptions.h:
+        * common/SAXExceptions.cpp:
+
+          Fixed a few bugs in the way the exceptions were set-up in the
+          case when exceptions=0. Provided implementations for operator
+          assignment and duplicate(). This should fix problems with
+          throwing and catching exceptions when exceptions=0.
+
+Sat Jan 31 20:06:57 2004  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * parser/parser/Parser.cpp (parse_PE_reference): Added ACE_TEXT
+          to satisfy WCHAR windows builds. Thanks to Johnny for reporting
+          these errors.
+
+Fri Jan 30 16:04:43 2004  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * parser/parser/Parser.cpp: Rewrote a simple string manipulation
+          involving ACE_String_Base<char>::operator +() to use const char*
+          instead of char, so that we don't need an explicit template
+          instantiation for it.
+
+        * examples/SAXPrint/main.cpp: Added missing explicit template
+          instantiations for ACE_Auto_Basic_Ptr.
+
+          Thanks to Olli Savia <ops@iki.fi> for reporting problems with
+          explicit template instantiation on LynxOS.
+
+Thu Jan  8 18:40:34 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+
+        * common/CharStream.h: Added a new rewind() method so that we can
+          reuse the same parser instance to parse the same file multiple
+          times.
+
+        * common/FileCharStream.cpp:
+        * common/HttpCharStream.h:
+        * common/HttpCharStream.cpp:
+        * common/StrCharStream.cpp:
+        * common/ZipCharStream.cpp:
+
+          Fixed implementation of rewind().
+
+        * common/Mem_Map_Stream.cpp:
+
+          Fixed memory leak caused by the Svc_Handler not getting deleted.
+
+        * apps/svcconf/Makefile.ACEXML_XML_Svc_Conf_Parser:
+        * parser/parser/Makefile.ACEXML_Parser:
+        * examples/SAXPrint/Makefile.SAXPrint:
+        * common/Makefile.ACEXML:
+        * tests/Makefile.ContentHandler_Test:
+        * tests/Makefile.HttpCharStream_Test:
+        * tests/Makefile.NamespaceSupport_Test:
+        * tests/Makefile.Transcoder_Test:
+
+          Updated dependencies.
+
+        * examples/SAXPrint/main.cpp:
+
+          Added code to test the parser to parse the same file multiple
+          times. This still needs some cleaning.
+
+        * parser/parser/Entity_Manager.h:
+        * parser/parser/Entity_Manager.i:
+        * parser/parser/Entity_Manager.cpp:
+
+          Use a pointer to ACE_Hash_Map_Manager_Ex and delete it on every
+          reset() of the Entity_Manager. This should fix all the problems
+          with SIGFPE's when we try to recover from a parse error.
+
+        * parser/parser/Parser.cpp:
+        * parser/parser/ParserContext.h:
+        * parser/parser/ParserContext.inl:
+
+          Fixed memory leaks reported by Ken Sedgewick <ken@bonsai.com>.
+          This should fix Bugzill bug 1694. While at it, fix bugs in
+          handling of entity references in INCLUDE/IGNORE sections,
+          ATTLIST sections.
+
+
+Thu Dec 18 13:13:57 2003  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * common/Transcode.h (ACEXML_Transcoder):
+        * common/Transcode.cpp (ACEXML_Transcoder):
+
+          Renamed the ACEXML_Transcoder::STATUS enum to use ACEXML
+          prefixes. Thanks to Johnny Willemsen  <jwillemsen@remedy.nl> for
+          reporting the clash with native #defines on Tru64.
+
+Sat Jul 19 18:38:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * apps/svcconf/Svcconf.h:
+        * common/*.h:
+        * parser/*.h:
+        * parser/parser/*.h:
+          Added "/**/" between the #include and filename for pre.h and
+          post.h so Doxygen won't include them in the file reference tree
+          graphs.
+
+Fri Jul 18 10:29:55 2003  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * tests/NamespaceSupport_Test.cpp (ACE_TMAIN): Added
+          initialization of ACEXML_NamespaceSupport so that we don't
+          crash.
+
+        * tests/ContentHandler_Test.cpp: Removed "</xml>" at the end of
+          the ACEXML_StrCharStream. XML is not HTML. Added a print
+          statement to the catch clause so that we know what is happening
+          when exception occurs.
+
+Mon Jul 14 18:49:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Makefile:
+        * common/Makefile:
+        * examples/SAXPrint/Makefile:
+        * parser/parser/Makefile:
+        * tests/Makefile:
+          Removed windows specific rules. They are not needed and only
+          cause problems when using a different command shell then cmd
+          like msys. This solves errors in the MinGW build.
+Sat Jul 5 13:33:36 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Makefile:
+          Removed windows specific rules. They are not needed and only
+          cause problems when using a different command shell then cmd
+          like msys. This solves errors in the MinGW build.
+
+Fri Jun 27 12:55:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * parser/parser/Entity_Manager.h:
+        * parser/parser/Entity_Manager.i:
+          Removed not useful const return qualifier to resolve intel
+          compiler warnings.
+
+Thu Jun 26 01:47:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * parser/parser/Parser.i:
+          Added (int) cast to table index to get rid of a warning.
+
+Tue Jun 24 23:31:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * apps/svcconf/Svcconf.cpp: Turned off validation temporarily when
+          handling svc.conf files.  All of the converted svc.conf.xml
+          files do not have associate doctype at the moment.
+
+Tue Jun 24 15:38:49 UTC 2003  Don Hinton  <dhinton@dresystems.h>
+
+        * common/NamespaceSupport.i:
+          Added include of ACE.h.
+
+Sun Jun  1 09:09:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * parser/parser/Parser.cpp:
+        * parser/parser/Entity_Manager.cpp: Added explicit template
+          instantiations.
+
+Fri May 30 14:16:33 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * examples/svcconf/.depend.Makefile.Svcconf:
+        * examples/svcconf/Makefile:
+        * examples/svcconf/Makefile.Svcconf:
+        * examples/svcconf/Makefile.Svcconf.bor:
+        * examples/svcconf/Makefile.bor:
+        * examples/svcconf/README:
+        * examples/svcconf/Svcconf.dsp:
+        * examples/svcconf/Svcconf.dsw:
+        * examples/svcconf/Svcconf.mpc:
+        * examples/svcconf/Svcconf_Handler.cpp:
+        * examples/svcconf/Svcconf_Handler.h:
+        * examples/svcconf/Svcconf_Handler.i:
+        * examples/svcconf/main.cpp:
+
+          Removed directories causing problems with Win XP release.
+
+        * ACEXML.dsw:
+        * Makefile:
+        * Makefile.bor:
+        * apps/svcconf/Makefile:
+        * apps/svcconf/Makefile.ACEXML_XML_Svc_Conf_Parser.bor:
+        * apps/svcconf/Makefile.bor:
+        * common/Makefile:
+        * common/Makefile.ACEXML.bor:
+        * common/Makefile.bor:
+        * examples/SAXPrint/Makefile:
+        * examples/SAXPrint/Makefile.SAXPrint.bor:
+        * examples/SAXPrint/Makefile.bor:
+        * parser/parser/Makefile:
+        * parser/parser/Makefile.ACEXML_Parser.bor:
+        * parser/parser/Makefile.bor:
+        * tests/.depend.Makefile.ContentHandler_Test:
+        * tests/.depend.Makefile.HttpCharStream_Test:
+        * tests/.depend.Makefile.NamespaceSupport_Test:
+        * tests/.depend.Makefile.Transcoder_Test::
+        * tests/Makefile:
+        * tests/Makefile.ContentHandler_Test:
+        * tests/Makefile.ContentHandler_Test.bor:
+        * tests/Makefile.HttpCharStream_Test.bor:
+        * tests/Makefile.NamespaceSupport_Test.bor:
+        * tests/Makefile.Transcoder_Test.bor:
+        * tests/Makefile.bor:
+
+          More build related delicacies needed updating because of the
+          previous change.
+
+Fri May 30 13:56:40 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * common/XML_Common.dsp: Removed old dsp left over from previous
+          merge.
+
+Fri May 30 13:54:57 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * parser/parser/Parser.dsp: Removed this erroneous dsp file left
+          over from the merge.
+
+Fri May 30 13:50:11 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * common/ZipCharStream.h: Removed broken logic to undefine macro
+          version of read. We don't want read to be a macro in ACEXML.
+          Present because of brokenness in ZZIPLIB.
+
+Fri May 30 13:36:39 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * parser/parser/Parser.cpp (parse_ignoresect): Fixed a couple of
+          warnings. Break out of infinite loop.
+
+        * apps/svcconf/.depend.Makefile.ACEXML_XML_Svc_Conf_Parser:
+        * common/.depend.Makefile.ACEXML:
+        * examples/SAXPrint/.depend.Makefile.SAXPrint:
+        * examples/svcconf/.depend.Makefile.Svcconf:
+        * parser/parser/.depend.Makefile.ACEXML_Parser:
+
+          Added missing dependency files. This should clear out the red.
+
+        * examples/svcconf/main.cpp:
+        * common/HttpCharStream.cpp:
+        * parser/parser/Parser.i:
+
+          Fixed warnings with BCB. Thanks to Johnny for reporting these.
+
+Thu May 29 23:13:40 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * examples/SAXPrint/SAXPrint_Handler.cpp: Fixed some minor
+          warnings.
+
+Thu May 29 23:09:27 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * parser/parser/Makefile.Parser:
+
+          Removed extra file left over by mistake.
+
+Thu May 29 23:00:24 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * tests/Makefile.ContentHandler_Test:
+        * tests/Makefile:
+
+          This file got left out by mistake during the big merge.
+
+Thu May 29 22:03:40 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * ACEXML.mwc:
+        * ChangeLog:
+        * apps/svcconf/ACEXML_XML_Svc_Conf_Parser.dsp:
+        * apps/svcconf/Makefile.ACEXML_XML_Svc_Conf_Parser:
+        * apps/svcconf/Makefile.ACEXML_XML_Svc_Conf_Parser.bor:
+        * common/ACEXML.dsp:
+        * common/Makefile.ACEXML:
+        * common/Makefile.ACEXML.bor:
+        * examples/SAXPrint/Makefile.SAXPrint:
+        * examples/SAXPrint/Makefile.SAXPrint.bor:
+        * examples/svcconf/Makefile:
+        * examples/svcconf/Makefile.Svcconf:
+        * examples/svcconf/Makefile.Svcconf.bor:
+        * examples/svcconf/Svcconf.mpc:
+        * parser/parser/ACEXML_Parser.dsp:
+        * parser/parser/Makefile.ACEXML_Parser:
+        * parser/parser/Makefile.ACEXML_Parser.bor:
+        * parser/parser/Makefile.Parser:
+        * tests/Makefile.ContentHandler_Test.bor:
+        * tests/Makefile.HttpCharStream_Test:
+        * tests/Makefile.HttpCharStream_Test.bor:
+        * tests/Makefile.NamespaceSupport_Test:
+        * tests/Makefile.NamespaceSupport_Test.bor:
+        * tests/Makefile.Transcoder_Test:
+        * tests/Makefile.Transcoder_Test.bor:
+
+          New files to build ACEXML generated using MPC.
+
+        * apps/svcconf/svcconf.dtd:
+
+          Moved the DTD from a hidden location to a prominent one.
+
+        * examples/SAXPrint/namespaces.xml:
+
+          New file to test namespace support.
+
+        * common/ZipCharStream.cpp:
+        * common/ZipCharStream.h:
+
+          New files to support reading files from within a ZIP archive as
+          a stream.
+
+        * parser/parser/ParserContext.cpp:
+        * parser/parser/ParserContext.h:
+        * parser/parser/ParserContext.inl:
+
+          New files to support a per stream context encountered when
+          parsing references.
+
+        * parser/parser/ParserInternals.cpp:
+        * parser/parser/ParserInternals.h:
+
+          Move some common functions from Parser.cpp to these files.
+
+        * ACEXML.dsw:
+        * Makefile:
+        * Makefile.bor:
+        * apps/svcconf/Makefile:
+        * apps/svcconf/Makefile.bor:
+        * common/Makefile:
+        * common/Makefile.bor:
+        * examples/SAXPrint/Makefile:
+        * examples/SAXPrint/Makefile.bor:
+        * examples/SAXPrint/SAXPrint.dsp:
+        * examples/SAXPrint/SAXPrint.mpc:
+        * examples/svcconf/Makefile.bor:
+        * examples/svcconf/Svcconf.dsp:
+        * parser/parser/Makefile:
+        * parser/parser/Makefile.bor:
+        * tests/ContentHandler_Test.cpp:
+        * tests/ContentHandler_Test.dsp:
+        * tests/HttpCharStream_Test.cpp:
+        * tests/HttpCharStream_Test.dsp:
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/NamespaceSupport_Test.dsp:
+        * tests/Transcoder_Test.dsp:
+
+          Build related files changed with the introduction of MPC to
+          build ACEXML.
+
+        * examples/SAXPrint/ns.svc.conf.xml:
+        * examples/SAXPrint/svc.conf.xml:
+
+          New files to test specific features of the parser.
+
+        * apps/svcconf/Svcconf.cpp:
+        * common/Attributes.h:
+        * common/Attributes_Def_Builder.h:
+        * common/CharStream.h:
+        * common/DefaultHandler.cpp:
+        * common/Encoding.cpp:
+        * common/Encoding.h:
+        * common/Exception.cpp:
+        * common/FileCharStream.cpp:
+        * common/FileCharStream.h:
+        * common/HttpCharStream.cpp:
+        * common/HttpCharStream.h:
+        * common/InputSource.cpp:
+        * common/InputSource.h:
+        * common/LocatorImpl.cpp:
+        * common/LocatorImpl.h:
+        * common/Mem_Map_Stream.cpp:
+        * common/NamespaceSupport.cpp:
+        * common/NamespaceSupport.h:
+        * common/SAXExceptions.cpp:
+        * common/StrCharStream.cpp:
+        * common/StrCharStream.h:
+        * common/StreamFactory.cpp:
+        * common/Transcode.cpp:
+        * common/Transcode.h:
+        * common/Transcode.i:
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * examples/SAXPrint/main.cpp:
+        * examples/svcconf/main.cpp:
+        * parser/parser/Parser.cpp:
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.i:
+        * parser/parser/Entity_Manager.cpp:
+        * parser/parser/Entity_Manager.h:
+        * parser/parser/Entity_Manager.i:
+
+          Merge from the Validator branch. It is not close to conformance
+          related to Validation but is quite stable as a parser which
+          recognizes the complete XML grammar.
+
+Fri Jan 24 20:28:22 2003  Krishnakumar B  <kitty@insanely.long.id.truncated>
+
+        * parser/parser/Parser.cpp (pop_context): Bail out if there is
+          only one element on the context stack. Bad things [TM] will happen
+          if we pop the only context available.
+
+Mon Nov 25 04:25:15 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/Parser.cpp (reset):
+        * parser/parser/Parser.h:
+
+          Fixed a bunch of compilation errors. Removed unnecessary
+          creation and destroyal of ACEXML_Strings which seems to speed up
+          the parser quite a bit.
+
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * examples/SAXPrint/main.cpp:
+
+          Don't report startPrefixMapping() and endPrefixMapping() as they
+          obstruct the pretty-printing of SAXPrint. They are bogus anyway.
+
+Wed Nov 20 22:58:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/Parser.cpp (parse_char_reference):
+
+          Fixed stupid thinko in conditional parsing of a hex character
+          reference.
+
+        * common/Mem_Map_Stream.cpp:
+
+          We can use the old way of fetching on-demand and don't need to
+          use a while loop.
+
+        * common/NamespaceSupport.cpp:
+
+          Fixed a long-standing bug with core dumping. With these changes,
+          we are able to parse the XML specification itself. Is this
+          called Meta or what ?
+
+Wed Nov 20 20:44:56 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * common/Mem_Map_Stream.cpp (grow_file_and_remap):
+
+          Fixed bug where we were trying to remap two different files at
+          the same location without closing the first.
+
+        * common/HttpCharStream.cpp (get_url):
+
+          Don't try to parse an empty file. Removes a nasty SIGSEGV.
+
+Wed Nov 20 01:06:26 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * common/Mem_Map_Stream.cpp:
+
+          Minor indenting changes.
+
+        * tests/HttpCharStream_Test.cpp:
+
+          Modified test to show bug in ACE_File_Addr.
+
+Tue Nov 19 20:46:35 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * examples/SAXPrint/Print_Handler.cpp (warning):
+
+          Missed syncing the function prototypes last time.
+
+Tue Nov 19 20:18:09 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.cpp (normalize_systemid):
+
+          Fix an off-by-one error in normalization. The document's base
+          URI is never empty. Now we parse relative document URI
+          correctly.
+
+          Implement the previously unimplemented parsing from a systemId.
+
+        * common/InputSource.cpp:
+        * common/InputSource.h:
+
+          Implement creating an InputSource from a systemId.
+
+        * common/CharStream.h:
+
+          Added a new method getSystemId().
+
+        * common/FileCharStream.cpp:
+        * common/FileCharStream.h:
+        * common/HttpCharStream.cpp:
+        * common/HttpCharStream.h:
+        * common/ZipCharStream.cpp:
+        * common/ZipCharStream.h:
+        * common/StrCharStream.cpp:
+        * common/StrCharStream.h:
+
+          Added implementation for getSystemId().
+
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+
+          Synched up the printing of exception messages.
+
+        * examples/SAXPrint/main.cpp:
+
+          Fixed broken internal string version of a sample XML file.
+
+Tue Nov 19 15:02:06 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * apps/svcconf/XML_Svc_Conf_Parser.dsp:
+        * common/XML_Common.dsp:
+        * examples/SAXPrint/SAXPrint.dsp:
+        * parser/debug_validator/Debug_Validator.dsp:
+        * parser/parser/Parser.dsp:
+
+          Modified to accomodate zlib and zziplig. Will probably change
+          before the merge.
+
+        * parser/parser/Parser.cpp:
+
+          Try to parse external DTD only if validation is required.
+
+Mon Nov 18 22:29:39 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * Makefile:
+
+          Deleted this file in the previous check-in. Re-add it.
+
+Mon Nov 18 22:19:47 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * common/common.mpc:
+        * parser/parser/parser.mpc:
+        * parser/debug_validator/validator.mpc:
+        * apps/svcconf/svcconf.mpc:
+        * examples/svcconf/Svcconf.mpc:
+        * examples/SAXPrint/saxprint.mpc:
+        * tests/tests.mpc:
+        * ACEXML.mwc:
+
+          New MPC files and Workspace file.
+
+        * common/Makefile.XML_Common:
+        * apps/svcconf/Makefile.XML_Svc_Conf_Parser:
+        * parser/parser/Makefile.Parser:
+        * parser/debug_validator/Makefile.Validator:
+        * examples/SAXPrint/Makefile.SAXPrint:
+        * examples/svcconf/Makefile.Svcconf:
+        * tests/Makefile.HttpCharStream_Test:
+        * tests/Makefile.NamespaceSupport_Test:
+        * tests/Makefile.Transcoder_Test:
+
+          New Makefiles generated by MPC.
+
+        * common/Makefile:
+        * parser/parser/Makefile:
+        * parser/Makefile:
+        * examples/Makefile:
+        * apps/Makefile:
+        * apps/svcconf/Makefile:
+        * examples/SAXPrint/Makefile:
+        * tests/Makefile:
+
+          Removed old Makefiles.
+
+        * parser/parser/Parser.cpp:
+        * common/StreamFactory.cpp:
+        * common/ZipCharStream.cpp:
+        * common/ZipCharStream.h:
+
+          Fixed compilation errors.
+
+Mon Nov 18 20:30:30 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * common/CharStream.h:
+        * common/Encoding.cpp:
+        * common/FileCharStream.cpp:
+        * common/FileCharStream.h:
+        * common/StrCharStream.cpp:
+        * common/StrCharStream.h:
+        * common/HttpCharStream.cpp:
+        * common/HttpCharStream.h:
+
+          Fixed a number of minor typos and debugging statements.
+
+        * common/LocatorImpl.cpp: Check for a valid string before
+          assigning it to the new Locator.
+
+        * common/NamespaceSupport.cpp:
+
+          Make sure that we don't have a null prefix before trying to
+          dereference the prefix.
+
+        * common/ZipCharStream.cpp:
+        * common/ZipCharStream.h:
+
+          New stream which reads files from a ZIP archive.
+
+        * common/StreamFactory.cpp:
+
+          Modified to accomodate ZipCharStream.
+
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * examples/SAXPrint/main.cpp:
+
+          Commented out a lot of unnecessary debug statements.
+
+        * parser/parser/Parser.cpp:
+        * parser/parser/Parser.h:
+
+          Lots of bugfixes. Finally we parse the XML version of XHTML
+          specification without dumping core.
+
+Sat Nov 16 21:18:55 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/Parser.cpp:
+        * parser/parser/Parser.h:
+
+          More bugs fixed. Add support for parsing PE references within
+          attribute list declarations and clean up the same. Add support
+          for parsing PE references within element declarations.
+
+Tue Nov 12 19:48:34 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/ParserContext.cpp:
+        * parser/parser/ParserContext.h:
+        * parser/parser/ParserContext.inl:
+
+          New files which hold the ParserContext needed to handle the
+          switching of input streams on the fly.
+
+        * parser/parser/ParserInternals.cpp:
+        * parser/parser/ParserInternals.h:
+
+          Moved some generic code from Parser.cpp to here.
+
+        * apps/svcconf/Makefile:
+        * common/Makefile:
+        * parser/parser/Makefile:
+
+          Updated dependencies.
+
+        * common/Attributes_Def_Builder.h:
+
+          No need to typedef in C++.
+
+        * common/DefaultHandler.cpp:
+
+          Minor typos.
+
+        * common/Encoding.cpp:
+
+          If auto-detection of encoding fails, assume that it is UTF-8.
+
+        * common/Exception.cpp:
+
+          Change the error message from ACE_DEBUG to ACE_ERROR.
+
+        * common/FileCharStream.cpp: Handle BOM of UTF-8 in
+          addition to UTF-16. Cleanup unnecessary parens.
+
+        * common/HttpCharStream.cpp:
+        * common/HttpCharStream.h:
+
+          Add support for auto-detection of encoding.
+
+        * common/InputSource.cpp:
+        * common/InputSource.h:
+
+          Fixes for use with ACEXML_Parser_Context.
+
+        * common/LocatorImpl.cpp:
+        * common/LocatorImpl.h:
+
+          Fixed bug in copy constructor which resulted in locator
+          information not getting set properly.
+
+        * common/NamespaceSupport.cpp:
+        * common/NamespaceSupport.h:
+
+          Implement reset() method.
+
+        * common/SAXExceptions.cpp:
+
+        Change the error message from ACE_DEBUG to ACE_ERROR.
+
+        * common/StrCharStream.cpp:
+
+          Handle copying of bytes according to sizeof (ACE_WCHAR).
+
+        * common/StreamFactory.cpp: Create the appropriate stream
+          given an URI. We don't try to normalize the URI here. It is done
+          in the Parser.
+
+        * common/Transcode.cpp:
+        * common/Transcode.i:
+
+          Moved some very big functions from .i to .cpp.
+
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * examples/SAXPrint/main.cpp:
+
+          Updates to reflect the new calling convention in the Parser.
+
+        * parser/parser/Entity_Manager.cpp:
+        * parser/parser/Entity_Manager.h:
+        * parser/parser/Entity_Manager.i:
+
+          Implemented support for resolving SYSTEM and PUBLIC ids  from
+          the Entity_Manager.
+
+        * parser/parser/Parser.cpp:
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.i:
+
+          Implemented support for external parameter and entity
+          references. Rewrote a lot of the basic parsing functionality to
+          adhere to the standard. Implment partial support for validation
+          of XML files.
+
+
+Fri Oct 25 15:44:04 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/Parser.i: Handle end-of-line as required by
+          the spec. Specifically any sequence of 0x0D or 0x0D 0x0A should
+          be normalized to a 0x0A before passing to the XML processor.
+
+        * parser/parser/Parser.cpp: Remove checks for 0x0D as it is
+          handled tranparently now.
+
+Thu Oct 24 21:06:44 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * common/NamespaceSupport.cpp: Define strings normally and
+          not as an array.
+
+        * common/Attributes_Def_Builder.h: No need to typedef in C++.
+
+Thu Oct 24 01:52:46 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML\parser\parser\Parser.cpp: Moved out the declaration of
+          variables outside case labels. MSVC doesn't like it.
+
+Wed Oct 23 22:24:59 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/Parser.cpp: Fixed a stupid thinko in array
+          initialization.
+
+Wed Oct 23 17:27:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * common/Encoding.cpp:
+        * common/Encoding.h:
+
+          Use UTF-16 instead of UTF-16LE/UTF-16BE as the specification
+          doesn't require mentioning the endianness of the input.
+
+        * common/Transcode.h: Fixed some minor typos.
+
+        * examples/SAXPrint/namespaces.xml: New file which tests
+          out the namespaces feature much better.
+
+        * apps/svcconf/Makefile:
+        * parser/parser/Makefile:
+
+          Updated dependencies.
+
+        * parser/parser/ParserErrors.h: New file which contains the
+          error codes of all the error spit out by the parser.
+
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+
+          Make sure that the characters() function describes the arguments
+          as start and length instead of start and end.
+
+        * parser/parser/Parser.dsp: Added ParserErrors.h to the
+          project file.
+
+        * parser/parser/Parser.cpp:
+        * parser/parser/Parser.h:
+
+          Use minor codes when reporting error in the parser. This cleans
+          up a lot of repeated error messages and indenting so that we
+          don't need to spill over 80 columns and have a standardized way
+          of reporting errors. Rewrote parse_cdata() so that is is much
+          simpler. Removed try_grow_cdata() as it is no longer needed.
+          Handle the case when the parser was accepting invalid character
+          references().
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

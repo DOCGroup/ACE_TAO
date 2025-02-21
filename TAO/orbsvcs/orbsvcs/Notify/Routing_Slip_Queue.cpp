@@ -1,6 +1,4 @@
-// $Id$
-
-#include "Routing_Slip_Queue.h"
+#include "orbsvcs/Notify/Routing_Slip_Queue.h"
 
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
@@ -9,6 +7,9 @@
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -25,14 +26,12 @@ namespace TAO_Notify
   void
   Routing_Slip_Queue::add (const Routing_Slip_Ptr & routing_slip)
   {
-    Guard guard (internals_);
-    ACE_ASSERT (guard.locked()); // check recursion
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
     if (this->allowed_ == 0)
     {
       ++this->active_;
       guard.release ();
       routing_slip->at_front_of_persist_queue ();
-//      guard.acquire ();
     }
     else
     {
@@ -43,8 +42,7 @@ namespace TAO_Notify
 
   void Routing_Slip_Queue::complete ()
   {
-    Guard guard (internals_);
-    ACE_ASSERT (guard.locked()); // check recursion
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
     ACE_ASSERT (this->active_ > 0);
     --this->active_;
     dispatch (guard);
@@ -89,8 +87,8 @@ namespace TAO_Notify
   void
   Routing_Slip_Queue::set_allowed (size_t allowed)
   {
-    Guard guard (internals_);
-    size_t allowed_was = this->allowed_;
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
+    size_t const allowed_was = this->allowed_;
     this->allowed_ = allowed;
     if (allowed == 0 && allowed_was != 0)
     {
@@ -106,13 +104,4 @@ namespace TAO_Notify
   }
 } // namespace
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<TAO_Notify::Routing_Slip_Ptr>;
-template class ACE_Unbounded_Queue<TAO_Notify::Routing_Slip_Ptr>;
-template class ACE_Unbounded_Queue_Iterator<TAO_Notify::Routing_Slip_Ptr>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<TAO_Notify::Routing_Slip_Ptr>
-#pragma instantiate ACE_Unbounded_Queue<TAO_Notify::Routing_Slip_Ptr>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Notify::Routing_Slip_Ptr>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+TAO_END_VERSIONED_NAMESPACE_DECL

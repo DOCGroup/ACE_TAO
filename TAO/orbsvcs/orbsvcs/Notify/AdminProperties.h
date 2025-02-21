@@ -2,11 +2,7 @@
 /**
  *  @file AdminProperties.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ADMINPROPERTIES_H
@@ -14,16 +10,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PropertySeq.h"
-#include "Property_T.h"
-#include "Property.h"
-#include "Property_Boolean.h"
+#include "orbsvcs/Notify/PropertySeq.h"
+#include "orbsvcs/Notify/Property_T.h"
+#include "orbsvcs/Notify/Property.h"
+#include "orbsvcs/Notify/Property_Boolean.h"
 
 #include "tao/orbconf.h"
 
@@ -31,51 +27,52 @@
 #include "ace/Bound_Ptr.h"
 #include "ace/Condition_Thread_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_AdminProperties
  *
  * @brief The AdminProperties per EventChannel.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_AdminProperties
   : public TAO_Notify_PropertySeq
 {
 public:
   typedef ACE_Strong_Bound_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX> Ptr;
-  /// Constuctor
-  TAO_Notify_AdminProperties (void);
+  /// Constructor
+  TAO_Notify_AdminProperties ();
 
   /// Destructor
   virtual ~TAO_Notify_AdminProperties ();
 
-  // Init
+  /// Init
   int init (const CosNotification::PropertySeq& prop_seq);
 
-  // finish initialization after values are set by topology load
+  /// finish initialization after values are set by topology load
   void init ();
 
   // = Const Accessors
-  const TAO_Notify_Property_Long& max_global_queue_length (void) const;
-  const TAO_Notify_Property_Long& max_consumers (void) const;
-  const TAO_Notify_Property_Long& max_suppliers (void) const;
-  const TAO_Notify_Property_Boolean& reject_new_events (void) const;
+  const TAO_Notify_Property_Long& max_global_queue_length () const;
+  const TAO_Notify_Property_Long& max_consumers () const;
+  const TAO_Notify_Property_Long& max_suppliers () const;
+  const TAO_Notify_Property_Boolean& reject_new_events () const;
 
   // = Non-const accessors
-  TAO_Notify_Property_Long & max_global_queue_length (void);
-  TAO_Notify_Property_Long & max_consumers (void);
-  TAO_Notify_Property_Long & max_suppliers (void);
-  TAO_Notify_Property_Boolean & reject_new_events (void);
+  TAO_Notify_Property_Long & max_global_queue_length ();
+  TAO_Notify_Property_Long & max_consumers ();
+  TAO_Notify_Property_Long & max_suppliers ();
+  TAO_Notify_Property_Boolean & reject_new_events ();
 
-  CORBA::Long& global_queue_length (void);
-  TAO_SYNCH_MUTEX& global_queue_lock (void);
-  TAO_SYNCH_CONDITION& global_queue_not_full (void);
+  CORBA::Long& global_queue_length ();
+  TAO_SYNCH_MUTEX& global_queue_lock ();
+  TAO_SYNCH_CONDITION& global_queue_not_full ();
 
-  TAO_Notify_Atomic_Property_Long& consumers (void);
-  TAO_Notify_Atomic_Property_Long& suppliers (void);
+  TAO_Notify_Atomic_Property_Long& consumers ();
+  TAO_Notify_Atomic_Property_Long& suppliers ();
 
   // = Helper method
   /// Returns true if Queue is full
-  CORBA::Boolean queue_full (void);
+  CORBA::Boolean queue_full ();
 
 protected:
   // @@ Pradeep can you explain why there is any maximum for these
@@ -120,8 +117,10 @@ protected:
 };
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "AdminProperties.inl"
+#include "orbsvcs/Notify/AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
 

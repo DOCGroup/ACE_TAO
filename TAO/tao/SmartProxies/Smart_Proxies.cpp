@@ -1,16 +1,14 @@
-// $Id$
-
-#include "Smart_Proxies.h"
-
-ACE_RCSID(SmartProxies, Smart_Proxies, "$Id$")
+// -*- C++ -*-
+#include "tao/SmartProxies/Smart_Proxies.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Smart_Proxies.inl"
+#include "tao/SmartProxies/Smart_Proxies.inl"
 #endif /* defined INLINE */
 
-// Add this line to please the AIX linker, otherwise it complains
-// "ld: 0711-244 ERROR: No csects or exported symbols have been saved."
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_NDEBUG) && defined (AIX)
-int the_bogus_value_to_please_linker_to_export_symbol;
-#endif
+TAO_Smart_Proxy_Base::~TAO_Smart_Proxy_Base ()
+{
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

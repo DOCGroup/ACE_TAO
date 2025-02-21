@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   UDP.h
- *
- *  $Id$
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
@@ -13,11 +11,14 @@
 
 #ifndef TAO_AV_UDP_H
 #define TAO_AV_UDP_H
+
 #include /**/ "ace/pre.h"
 
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_AV_UDP_Factory
@@ -27,12 +28,12 @@ class TAO_AV_Export TAO_AV_UDP_Factory : public TAO_AV_Transport_Factory
 {
 public:
   /// Initialization hook.
-  TAO_AV_UDP_Factory (void);
-  virtual ~TAO_AV_UDP_Factory (void);
-  virtual int init (int argc, char *argv[]);
+  TAO_AV_UDP_Factory ();
+  virtual ~TAO_AV_UDP_Factory ();
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *protocol_string);
-  virtual TAO_AV_Acceptor *make_acceptor (void);
-  virtual TAO_AV_Connector *make_connector (void);
+  virtual TAO_AV_Acceptor *make_acceptor ();
+  virtual TAO_AV_Connector *make_connector ();
 };
 
 class TAO_AV_UDP_Flow_Handler;
@@ -45,20 +46,19 @@ class TAO_AV_UDP_Flow_Handler;
 class TAO_AV_Export TAO_AV_UDP_Transport
   :public TAO_AV_Transport
 {
-
 public:
-  TAO_AV_UDP_Transport (void);
+  TAO_AV_UDP_Transport ();
 
   TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler);
 
-  virtual  ~TAO_AV_UDP_Transport (void);
+  virtual  ~TAO_AV_UDP_Transport ();
   virtual int open (ACE_Addr *addr);
 
-  virtual int close (void);
+  virtual int close ();
 
-  virtual int mtu (void);
+  virtual int mtu ();
 
-  virtual ACE_Addr *get_peer_addr (void);
+  virtual ACE_Addr *get_peer_addr ();
 
   virtual int set_remote_address (const ACE_INET_Addr &address);
 
@@ -92,7 +92,7 @@ public:
                         int iovcnt,
                         ACE_Time_Value *s = 0);
 
-  TAO_AV_UDP_Flow_Handler *handler (void) { return this->handler_; }
+  TAO_AV_UDP_Flow_Handler *handler () { return this->handler_; }
 
 protected:
   TAO_AV_UDP_Flow_Handler *handler_;
@@ -111,17 +111,17 @@ class TAO_AV_Export TAO_AV_UDP_Flow_Handler
 public:
   ///Ctor
   /// Dtor
-  TAO_AV_UDP_Flow_Handler (void);
-  virtual ~TAO_AV_UDP_Flow_Handler (void);
+  TAO_AV_UDP_Flow_Handler ();
+  virtual ~TAO_AV_UDP_Flow_Handler ();
   int open (ACE_Addr &address);
-  int close (void);
-  virtual TAO_AV_Transport *transport (void);
+  int close ();
+  virtual TAO_AV_Transport *transport ();
   virtual int set_remote_address (ACE_Addr *address);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  const ACE_SOCK_Dgram *get_socket (void) const;
-  virtual ACE_Event_Handler* event_handler (void){ return this; }
+  const ACE_SOCK_Dgram *get_socket () const;
+  virtual ACE_Event_Handler* event_handler () { return this; }
   /// Change the QoS
   virtual int change_qos (AVStreams::QoS);
 
@@ -139,8 +139,8 @@ class TAO_AV_Export TAO_AV_UDP_Acceptor
   :public TAO_AV_Acceptor
 {
 public:
-  TAO_AV_UDP_Acceptor (void);
-  virtual ~TAO_AV_UDP_Acceptor (void);
+  TAO_AV_UDP_Acceptor ();
+  virtual ~TAO_AV_UDP_Acceptor ();
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry,
@@ -157,9 +157,8 @@ public:
 
   virtual int open_i (ACE_INET_Addr *address, int is_default_open);
 
-  virtual int close (void);
+  virtual int close ();
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
-
 
 protected:
   ACE_INET_Addr *address_;
@@ -168,8 +167,6 @@ protected:
   TAO_FlowSpec_Entry *entry_;
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
   TAO_AV_Core::Flow_Component flow_component_;
-
-
 };
 
 /**
@@ -180,8 +177,8 @@ class TAO_AV_Export TAO_AV_UDP_Connector
   :public TAO_AV_Connector
 {
 public:
-  TAO_AV_UDP_Connector (void);
-  ~TAO_AV_UDP_Connector (void);
+  TAO_AV_UDP_Connector ();
+  ~TAO_AV_UDP_Connector ();
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_AV_Flow_Protocol_Factory *factory);
@@ -191,15 +188,15 @@ public:
                        TAO_AV_Core::Flow_Component flow_comp =
                            TAO_AV_Core::TAO_AV_DATA);
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
-  virtual int close (void);
+  virtual int close ();
 protected:
   ACE_INET_Addr *control_inet_address_;
+  bool delete_control_inet_address_;
   TAO_Base_StreamEndPoint *endpoint_;
   TAO_AV_Core *av_core_;
   TAO_FlowSpec_Entry *entry_;
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
   TAO_AV_Core::Flow_Component flow_component_;
-
 };
 
 /**
@@ -234,9 +231,9 @@ public:
                      TAO_AV_Transport *transport = 0);
 
   /// Dtor
-  virtual ~TAO_AV_UDP_Object (void);
+  virtual ~TAO_AV_UDP_Object ();
 
-  virtual int handle_input (void);
+  virtual int handle_input ();
 
   /// send a data frame.
   virtual int send_frame (ACE_Message_Block *frame,
@@ -250,7 +247,7 @@ public:
                           size_t len);
 
   /// end the stream.
-  virtual int destroy (void);
+  virtual int destroy ();
 
 private:
   /// Pre-allocated memory to receive the data...
@@ -265,15 +262,17 @@ class TAO_AV_Export TAO_AV_UDP_Flow_Factory : public TAO_AV_Flow_Protocol_Factor
 {
 public:
   /// Initialization hook.
-  TAO_AV_UDP_Flow_Factory (void);
-  virtual ~TAO_AV_UDP_Flow_Factory (void);
-  virtual int init (int argc, char *argv[]);
+  TAO_AV_UDP_Flow_Factory ();
+  virtual ~TAO_AV_UDP_Flow_Factory ();
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *flow_string);
   TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,
                                                 TAO_AV_Flow_Handler *handler,
                                                 TAO_AV_Transport *transport);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_UDP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_Flow_Factory)
@@ -283,8 +282,9 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_Factory)
 
 
 #if defined(__ACE_INLINE__)
-#include "UDP.i"
+#include "orbsvcs/AV/UDP.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_AV_UDP_H */

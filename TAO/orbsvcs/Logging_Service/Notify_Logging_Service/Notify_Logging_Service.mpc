@@ -1,5 +1,3 @@
-// $Id$
-project: namingexe, iortable, core, dsnotifylogadmin_serv {
-  exename   = Notify_Logging_Service
-  includes += $(TAO_ROOT)/orbsvcs
+project: namingexe, iortable, install, dsnotifylogadmin_serv, valuetype {
+  exename   = tao_tls_notify
 }

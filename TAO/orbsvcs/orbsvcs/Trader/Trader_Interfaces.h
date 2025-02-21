@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Trader_Interfaces.h
- *
- *  $Id$
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
@@ -17,14 +15,16 @@
 #define TAO_TRADER_INTERFACES_H
 #include /**/ "ace/pre.h"
 
-#include "Trader_Utils.h"
-#include "Constraint_Interpreter.h"
-#include "Offer_Iterators_T.h"
+#include "orbsvcs/Trader/Trader_Utils.h"
+#include "orbsvcs/Trader/Constraint_Interpreter.h"
+#include "orbsvcs/Trader/Offer_Iterators_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Hack because g++ forced this inane circular dependecy!
 
@@ -39,7 +39,11 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Admin;
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Proxy;
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Link;
 
-#include "Trader_T.h"
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "orbsvcs/Trader/Trader_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Lookup
@@ -53,10 +57,9 @@ class TAO_Lookup :
   public TAO_Import_Attributes<POA_CosTrading::Lookup>
 {
 public:
-
   TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Lookup (void);
+  ~TAO_Lookup ();
 
   virtual void
     query (const char *type,
@@ -67,19 +70,7 @@ public:
            CORBA::ULong how_many,
            CosTrading::OfferSeq_out offers,
            CosTrading::OfferIterator_out offer_itr,
-           CosTrading::PolicyNameSeq_out limits_applied
-           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    CosTrading::IllegalServiceType,
-                    CosTrading::UnknownServiceType,
-                    CosTrading::IllegalConstraint,
-                    CosTrading::Lookup::IllegalPreference,
-                    CosTrading::Lookup::IllegalPolicyName,
-                    CosTrading::Lookup::PolicyTypeMismatch,
-                    CosTrading::Lookup::InvalidPolicyValue,
-                    CosTrading::IllegalPropertyName,
-                    CosTrading::DuplicatePropertyName,
-                    CosTrading::DuplicatePolicyName));
+           CosTrading::PolicyNameSeq_out limits_applied);
 
   // BEGIN SPEC
   // The query operation is the means by which an object can obtain
@@ -143,7 +134,7 @@ public:
   // constraint.
 
   // The returned offers are passed back in one of two ways (or a
-  // combination of both). °The "offers" return result conveys a list
+  // combination of both). The "offers" return result conveys a list
   // of offers and the "offer_itr" is a reference to an interface at
   // which offers can be obtained. The "how_many" parameter states
   // how many offers are to be returned via the "offers" result, any
@@ -161,7 +152,6 @@ public:
   // END SPEC
 
 private:
-
   /// Factory method for creating an appropriate Offer Iterator based
   /// on the presence of the Register Interface.
   TAO_Offer_Iterator* create_offer_iterator (const TAO_Property_Filter&);
@@ -174,8 +164,7 @@ private:
                             CosTradingRepos::ServiceTypeRepository_ptr rep,
                             TAO_Constraint_Interpreter& constr_inter,
                             TAO_Preference_Interpreter& pref_inter,
-                            TAO_Offer_Filter& offer_filter
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                            TAO_Offer_Filter& offer_filter);
 
   /// Check if offers of a type fit the constraints and order them
   /// according to the preferences submitted.
@@ -198,10 +187,7 @@ private:
                         TAO_Policies& policies,
                         TAO_Preference_Interpreter& pref_inter,
                         CosTrading::OfferSeq& offers,
-                        CosTrading::OfferIterator_ptr& offer_itr
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
-                    CosTrading::DuplicatePropertyName));
+                        CosTrading::OfferIterator_ptr& offer_itr);
 
   /// If a starting_trader policy was specfied, foward the query to the
   /// next link in the sequence.
@@ -214,19 +200,7 @@ private:
                       CORBA::ULong how_many,
                       CosTrading::OfferSeq_out offers,
                       CosTrading::OfferIterator_out offer_itr,
-                      CosTrading::PolicyNameSeq_out limits_applied
-                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTrading::IllegalConstraint,
-                     CosTrading::Lookup::IllegalPreference,
-                     CosTrading::Lookup::IllegalPolicyName,
-                     CosTrading::Lookup::PolicyTypeMismatch,
-                     CosTrading::Lookup::InvalidPolicyValue,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::DuplicatePropertyName,
-                     CosTrading::DuplicatePolicyName));
+                      CosTrading::PolicyNameSeq_out limits_applied);
 
   /**
    * Assemble a sequence of links that the federate_query method
@@ -236,10 +210,7 @@ private:
    */
   CORBA::Boolean retrieve_links (TAO_Policies& policies,
                                  CORBA::ULong offer_returned,
-                                 CosTrading::LinkNameSeq_out links
-                                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::Lookup::PolicyTypeMismatch));
+                                 CosTrading::LinkNameSeq_out links);
 
   /**
    * Perform and pass on a query over a set of links. Merge the
@@ -257,40 +228,24 @@ private:
                         CORBA::ULong how_many,
                         CosTrading::OfferSeq& offers,
                         CosTrading::OfferIterator_ptr& offer_itr,
-                        CosTrading::PolicyNameSeq& limits_applied
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTrading::IllegalConstraint,
-                     CosTrading::Lookup::IllegalPreference,
-                     CosTrading::Lookup::IllegalPolicyName,
-                     CosTrading::Lookup::PolicyTypeMismatch,
-                     CosTrading::Lookup::InvalidPolicyValue,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::DuplicatePropertyName,
-                     CosTrading::DuplicatePolicyName));
+                        CosTrading::PolicyNameSeq& limits_applied);
 
   /// Merge the results from a federated query into the collected results.
   void order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
                               CosTrading::OfferSeq& offers);
 
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
-                                  CosTrading::Admin::OctetSeq*& seq
-                                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::Lookup::PolicyTypeMismatch));
+                                  const CosTrading::Admin::OctetSeq*& seq);
 
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Lookup (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Lookup (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
   const unsigned int IDS_SAVED;
 
   /// A reference to the trader for obtaining offer maps.
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
-  typedef ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq*> Request_Ids;
+  typedef ACE_Unbounded_Queue<const CosTrading::Admin::OctetSeq*> Request_Ids;
 
   /// A list of recent request_id_stems
   Request_Ids request_ids_;
@@ -310,25 +265,13 @@ class TAO_Register :
   public TAO_Support_Attributes<POA_CosTrading::Register>
 {
 public:
-
   TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  virtual ~TAO_Register (void);
+  virtual ~TAO_Register ();
 
   virtual CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
                                            const char *type,
-                                           const CosTrading::PropertySeq& properties
-                                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    CosTrading::Register::InvalidObjectRef,
-                    CosTrading::IllegalServiceType,
-                    CosTrading::UnknownServiceType,
-                    CosTrading::Register::InterfaceTypeMismatch,
-                    CosTrading::IllegalPropertyName,
-                    CosTrading::PropertyTypeMismatch,
-                    CosTrading::ReadonlyDynamicProperty,
-                    CosTrading::MissingMandatoryProperty,
-                    CosTrading::DuplicatePropertyName));
+                                           const CosTrading::PropertySeq& properties);
 
   // BEGIN SPEC
   // The export operation is the means by which a service is
@@ -348,14 +291,14 @@ public:
   // identifies the service type, which contains the interface type of
   // the "reference" and a set of named property types that may be
   // used in further describing this offer (i.e., it restricts what is
-  // acceptable in the properties parameter). °
+  // acceptable in the properties parameter).
 
   // If the string
   // representation of the "type" does not obey the rules for
-  // identifiers, then an IllegalServiceType exception is raised. ° If
+  // identifiers, then an IllegalServiceType exception is raised. If
   // the "type" is correct syntactically but a trader is able to
   // unambiguously determine that it is not a recognized service type,
-  // then an UnknownServiceType exception is raised. °
+  // then an UnknownServiceType exception is raised.
 
   // If the trader
   // can determine that the interface type of the "reference"
@@ -365,51 +308,42 @@ public:
   // the property value types defined for those names. They describe
   // the service being offered. This description typically covers
   // behavioral, non-functional, and non-computational aspects of the
-  // service. °
+  // service.
 
   // If any of the property names do not obey the syntax
   // rules for PropertyNames, then an IllegalPropertyName exception is
-  // raised. °
+  // raised.
 
   // If the type of any of the property values is not the
   // same as the declared type (declared in the service type), then a
   // PropertyTypeMismatch exception is raised.
 
-  // ° If an attempt is made to assign a dynamic property value to a
+  // If an attempt is made to assign a dynamic property value to a
   // readonly property, then the ReadonlyDynamicProperty exception is
-  // raised. ° If the "properties" parameter omits any property
+  // raised. If the "properties" parameter omits any property
   // declared in the service type with a mode of mandatory, then a
-  // MissingMandatoryProperty exception is raised. ° If two or more
+  // MissingMandatoryProperty exception is raised. If two or more
   // properties with the same property name are included in this
   // parameter, the DuplicatePropertyName exception is raised.
   // END SPEC
 
-  virtual void withdraw (const char *id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalOfferId,
-                     CosTrading::UnknownOfferId,
-                     CosTrading::Register::ProxyOfferId));
+  virtual void withdraw (const char *id);
 
   // BEGIN SPEC
   // The withdraw operation removes the service offer from the trader
   // (i.e., after withdraw the offer can no longer be returned as the
   // result of a query). The offer is identified by the "id" parameter
-  // which was originally returned by export. ° If the string
+  // which was originally returned by export. If the string
   // representation of "id" does not obey the rules for offer
-  // identifiers, then an IllegalOfferId exception is raised. ° If the
+  // identifiers, then an IllegalOfferId exception is raised. If the
   // "id" is legal but there is no offer within the trader with that
-  // "id," then an UnknownOfferId exception is raised. ° If the "id"
+  // "id," then an UnknownOfferId exception is raised. If the "id"
   // identifies a proxy offer rather than an ordinary offer, then a
   // ProxyOfferId exception is raised.
   // END SPEC
 
   virtual CosTrading::Register::OfferInfo*
-    describe (const char * id
-              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalOfferId,
-                     CosTrading::UnknownOfferId,
-                     CosTrading::Register::ProxyOfferId));
+    describe (const char * id);
 
   // BEGIN SPEC
   // The describe operation returns the information about an offered
@@ -417,59 +351,46 @@ public:
   // of the offered service, the "type" of the service offer, and the
   // "properties" that describe this offer of service. The offer is
   // identified by the "id" parameter which was originally returned by
-  // export. ° If the string representation of "id" does not obey the
+  // export. If the string representation of "id" does not obey the
   // rules for object identifiers, then an IllegalOfferId exception is
-  // raised. ° If the "id" is legal but there is no offer within the
+  // raised. If the "id" is legal but there is no offer within the
   // trader with that "id," then an UnknownOfferId exception is
-  // raised. ° If the "id" identifies a proxy offer rather than an
+  // raised. If the "id" identifies a proxy offer rather than an
   // ordinary offer, then a ProxyOfferId exception is raised.
   // END SPEC
 
   virtual void modify (const char * id,
                        const CosTrading::PropertyNameSeq& del_list,
-                       const CosTrading::PropertySeq& modify_list
-                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::NotImplemented,
-                     CosTrading::IllegalOfferId,
-                     CosTrading::UnknownOfferId,
-                     CosTrading::Register::ProxyOfferId,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::Register::UnknownPropertyName,
-                     CosTrading::PropertyTypeMismatch,
-                     CosTrading::ReadonlyDynamicProperty,
-                     CosTrading::Register::MandatoryProperty,
-                     CosTrading::Register::ReadonlyProperty,
-                     CosTrading::DuplicatePropertyName));
+                       const CosTrading::PropertySeq& modify_list);
 
   // BEGIN SPEC
   // The modify operation is used to change the description of a
   // service as held within a service offer. The object reference and
   // the service type associated with the offer cannot be
-  // changed. This operation may: ° add new (non-mandatory) properties
-  // to describe an offer, ° change the values of some existing (not
-  // readonly) properties, or ° delete existing (neither mandatory nor
+  // changed. This operation may: add new (non-mandatory) properties
+  // to describe an offer, change the values of some existing (not
+  // readonly) properties, or delete existing (neither mandatory nor
   // readonly) properties.
 
   // The modify operation either succeeds completely or it fails
   // completely. The offer is identified by the "id" parameter which
-  // was originally returned by export. ° If the string representation
+  // was originally returned by export. If the string representation
   // of "id" does not obey the rules for offer identifiers, then an
-  // IllegalOfferId exception is raised. ° If the "id" is legal but
+  // IllegalOfferId exception is raised. If the "id" is legal but
   // there is no offer within the trader with that "id," then an
-  // UnknownOfferId exception is raised. ° If the "id" identifies a
+  // UnknownOfferId exception is raised. If the "id" identifies a
   // proxy offer rather than an ordinary offer, then a ProxyOfferId
   // exception is raised.
 
   // The "del_list" parameter gives the names of the properties that
   // are no longer to be recorded for the identified offer. Future
-  // query and describe operations will not see these properties. ° If
+  // query and describe operations will not see these properties. If
   // any of the names within the "del_list" do not obey the rules for
   // PropertyName's, then an IllegalPropertyName exception is
-  // raised. ° If a "name" is legal but there is no property for the
+  // raised. If a "name" is legal but there is no property for the
   // offer with that "name," then an UnknownPropertyName exception is
-  // raised. ° If the list includes a property that has a mandatory
-  // mode, then the MandatoryProperty exception is raised. ° If the
+  // raised. If the list includes a property that has a mandatory
+  // mode, then the MandatoryProperty exception is raised. If the
   // same property name is included two or more times in this
   // parameter, the DuplicatePropertyName exception is raised.
 
@@ -477,17 +398,17 @@ public:
   // properties to be changed. If the property is not in the offer,
   // then the modify operation adds it. The modified (or added)
   // property values are returned in future query and describe
-  // operations in place of the original values. ° If any of the names
+  // operations in place of the original values. If any of the names
   // within the "modify_list" do not obey the rules for
   // PropertyName's, then an IllegalPropertyName exception is
-  // raised. ° If the list includes a property that has a readonly
+  // raised. If the list includes a property that has a readonly
   // mode, then the ReadonlyProperty exception is raised unless that
   // readonly property is not currently recorded for the offer. The
   // ReadonlyDynamicProperty exception is raised if an attempt is made
-  // to assign a dynamic property value to a readonly property. ° If
+  // to assign a dynamic property value to a readonly property. If
   // the value of any modified property is of a type that is not the
   // same as the type expected, then the PropertyTypeMismatch
-  // exception is raised. ° If two or more properties with the same
+  // exception is raised. If two or more properties with the same
   // property name are included in this argument, the
   // DuplicatePropertyName exception is raised.
 
@@ -496,13 +417,7 @@ public:
   // END SPEC
 
   virtual void withdraw_using_constraint (const char *type,
-                                          const char *constr
-                                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTrading::IllegalConstraint,
-                     CosTrading::Register::NoMatchingOffers));
+                                          const char *constr);
 
   // BEGIN SPEC
   // The withdraw_using_constraint operation withdraws a set of offers
@@ -513,40 +428,35 @@ public:
   // The "type" parameter conveys the required service type. Each
   // offer of the specified type will have the constraint expression
   // applied to it. If it matches the constraint expression, then the
-  // offer will be withdrawn.° If "type" does not obey the rules for
-  // service types, then an IllegalServiceType exception is raised. °
+  // offer will be withdrawn. If "type" does not obey the rules for
+  // service types, then an IllegalServiceType exception is raised.
   // If the "type" is correct syntactically but is not recognized as a
   // service type by the trader, then an UnknownServiceType exception
   // is raised.
 
   // The constraint "constr" is the means by which the client
   // restricts the set of offers to those that are intended for
-  // withdrawal. ° If "constr" does not obey the syntax rules for a
-  // constraint then an IllegalConstraint exception is raised. ° If
+  // withdrawal. If "constr" does not obey the syntax rules for a
+  // constraint then an IllegalConstraint exception is raised. If
   // the constraint fails to match with any offer of the specified
   // service type, then a NoMatchingOffers exception is raised.
   // END SPEC
 
   virtual CosTrading::Register_ptr
-    resolve (const CosTrading::TraderName &name
-             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::Register::IllegalTraderName,
-                     CosTrading::Register::UnknownTraderName,
-                     CosTrading::Register::RegisterNotSupported));
+    resolve (const CosTrading::TraderName &name);
 
   // BEGIN SPEC
   // This operation is used to resolve a context relative name for
   // another trader. In particular, it is used when exporting to a
   // trader that is known by a name rather than by an object
   // reference. The client provides the name, which will be a sequence
-  // of name components. ° If the content of the parameter cannot
+  // of name components. If the content of the parameter cannot
   // yield legal syntax for the first component, then the
   // IllegalTraderName exception is raised. Otherwise, the first name
-  // component is compared against the name held in each link. ° If no
+  // component is compared against the name held in each link. If no
   // match is found, or the trader does not support links, the
   // UnknownTraderName exception is raised. Otherwise, the trader
-  // obtains the register_if held as part of the matched link. ° If
+  // obtains the register_if held as part of the matched link. If
   // the Register interface is not nil, then the trader binds to the
   // Register interface and invokes resolve but passes the TraderName
   // with the first component removed; if it is nil, then the
@@ -559,23 +469,14 @@ public:
   // END SPEC
 
  protected:
-
   void validate_properties (const char* type,
                             const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
-                            const CosTrading::PropertySeq& properties
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
-                     CosTrading::PropertyTypeMismatch,
-                     CosTrading::ReadonlyDynamicProperty,
-                     CosTrading::MissingMandatoryProperty,
-                     CosTrading::DuplicatePropertyName));
+                            const CosTrading::PropertySeq& properties);
 
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Register (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Register (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
  private:
-
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 };
 
@@ -608,103 +509,64 @@ class TAO_Admin :
   public TAO_Link_Attributes <POA_CosTrading::Admin>
 {
 public:
-
   TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Admin (void);
+  ~TAO_Admin ();
 
   // = Importing Parameters (used by the Lookup Interface)
 
   /// Search card is the cardinality of the offers searched for
   /// constraint compliance.
-  virtual CORBA::ULong set_def_search_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::ULong set_max_search_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong set_def_search_card (CORBA::ULong value);
+  virtual CORBA::ULong set_max_search_card (CORBA::ULong value);
 
 
   /// Match card is the cardinality of offers found compliant with the
   /// constraints.
-  virtual CORBA::ULong set_def_match_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::ULong set_max_match_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong set_def_match_card (CORBA::ULong value);
+  virtual CORBA::ULong set_max_match_card (CORBA::ULong value);
 
   /// Return card is the cardinality of the offers returned from
   /// Lookup.
-  virtual CORBA::ULong set_def_return_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::ULong set_max_return_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong set_def_return_card (CORBA::ULong value);
+  virtual CORBA::ULong set_max_return_card (CORBA::ULong value);
 
   /// Types of offers available for consideration. Ween out those
   /// offers with modifiable properties
-  virtual CORBA::ULong set_max_list (CORBA::ULong value
-                                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong set_max_list (CORBA::ULong value);
   virtual CORBA::Boolean
-    set_supports_modifiable_properties (CORBA::Boolean value
-                                        ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_supports_modifiable_properties (CORBA::Boolean value);
   virtual CORBA::Boolean
-    set_supports_dynamic_properties (CORBA::Boolean value
-                                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_supports_dynamic_properties (CORBA::Boolean value);
   virtual CORBA::Boolean
-    set_supports_proxy_offers (CORBA::Boolean value
-                               ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_supports_proxy_offers (CORBA::Boolean value);
 
   // = Link Interface parameters
 
-  virtual CORBA::ULong set_def_hop_count (CORBA::ULong value
-                                          ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::ULong set_max_hop_count (CORBA::ULong value
-                                          ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong set_def_hop_count (CORBA::ULong value);
+  virtual CORBA::ULong set_max_hop_count (CORBA::ULong value);
 
   virtual CosTrading::FollowOption
-    set_def_follow_policy (CosTrading::FollowOption policy
-                           ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_def_follow_policy (CosTrading::FollowOption policy);
   virtual CosTrading::FollowOption
-    set_max_follow_policy (CosTrading::FollowOption policy
-                           ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_max_follow_policy (CosTrading::FollowOption policy);
   virtual CosTrading::FollowOption
-    set_max_link_follow_policy (CosTrading::FollowOption policy
-                                ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_max_link_follow_policy (CosTrading::FollowOption policy);
 
   // = Set Type Repository
 
   virtual CosTrading::TypeRepository_ptr
-    set_type_repos (CosTrading::TypeRepository_ptr repository
-                    ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_type_repos (CosTrading::TypeRepository_ptr repository);
 
   virtual CosTrading::Admin::OctetSeq*
-    request_id_stem (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    request_id_stem ();
 
   virtual CosTrading::Admin::OctetSeq*
-    set_request_id_stem (const CosTrading::Admin::OctetSeq& stem
-                         ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_request_id_stem (const CosTrading::Admin::OctetSeq& stem);
 
   virtual void list_offers (CORBA::ULong how_many,
                             CosTrading::OfferIdSeq_out ids,
-                            CosTrading::OfferIdIterator_out id_itr
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::NotImplemented));
+                            CosTrading::OfferIdIterator_out id_itr);
 
 
   // BEGIN SPEC
@@ -715,10 +577,10 @@ public:
   // offers are not returned via this operation. If the trader does
   // not support the Register interface, the NotImplemented exception
   // is raised. The returned identifiers are passed back in one of two
-  // ways (or a combination of both). ° The "ids" return result
+  // ways (or a combination of both). The "ids" return result
   // conveys a list of offer identifiers and the "id_itr" is a
   // reference to an interface at which additional offer identities
-  // can be obtained. ° The "how_many" parameter states how many
+  // can be obtained. The "how_many" parameter states how many
   // identifiers are to be returned via the "ids" result; any
   // remaining are available via the iterator interface. If the
   // "how_many" exceeds the number of offers held in the trader, then
@@ -727,16 +589,11 @@ public:
 
   virtual void list_proxies (CORBA::ULong,
                              CosTrading::OfferIdSeq_out,
-                             CosTrading::OfferIdIterator_out
-                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::NotImplemented));
+                             CosTrading::OfferIdIterator_out);
 
 private:
-
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Admin (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Admin (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
@@ -760,10 +617,9 @@ class TAO_Link :
   public TAO_Link_Attributes <POA_CosTrading::Link>
 {
 public:
-
   TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Link (void);
+  ~TAO_Link ();
 
   /**
    * BEGIN SPEC
@@ -774,14 +630,7 @@ public:
   virtual void add_link (const char *name,
                          CosTrading::Lookup_ptr target,
                          CosTrading::FollowOption def_pass_on_follow_rule,
-                         CosTrading::FollowOption limiting_follow_rule
-                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    CosTrading::Link::IllegalLinkName,
-                    CosTrading::Link::DuplicateLinkName,
-                    CosTrading::InvalidLookupRef,
-                    CosTrading::Link::DefaultFollowTooPermissive,
-                    CosTrading::Link::LimitingFollowTooPermissive));
+                         CosTrading::FollowOption limiting_follow_rule);
 
   // The "name" parameter is used in subsequent link management
   // operations to identify the intended link. If the parameter is not
@@ -819,11 +668,7 @@ public:
   // creation of the link.
   // END SPEC
 
-  virtual void remove_link (const char *name
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    CosTrading::Link::IllegalLinkName,
-                    CosTrading::Link::UnknownLinkName));
+  virtual void remove_link (const char *name);
 
   // BEGIN SPEC
   // The remove_link operation removes all knowledge of the target
@@ -836,11 +681,7 @@ public:
   // not in the trader.
   // END SPEC
 
-  virtual CosTrading::Link::LinkInfo* describe_link (const char *name
-                                                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    CosTrading::Link::IllegalLinkName,
-                    CosTrading::Link::UnknownLinkName));
+  virtual CosTrading::Link::LinkInfo* describe_link (const char *name);
 
   // BEGIN SPEC
   // The describe_link operation returns information on a link held in
@@ -851,9 +692,9 @@ public:
   // IllegalLinkName is raised. An UnknownLinkName exception is raised
   // if the named link is not found in the trader.
 
-  // The operation returns a LinkInfo structure comprising: ° the
-  // Lookup interface of the target trading service, ° the Register
-  // interface of the target trading service, and ° the default, as
+  // The operation returns a LinkInfo structure comprising: the
+  // Lookup interface of the target trading service, the Register
+  // interface of the target trading service, and the default, as
   // well as the limiting follow behavior of the named link.
 
   // If the target service does not support the Register interface,
@@ -865,8 +706,7 @@ public:
   // state.
   // END SPEC
 
-  virtual CosTrading::LinkNameSeq* list_links (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTrading::LinkNameSeq* list_links ();
 
   // BEGIN SPEC
   // The list_links operation returns a list of the names of all
@@ -877,12 +717,7 @@ public:
 
   virtual void modify_link (const char *name,
                             CosTrading::FollowOption def_pass_on_follow_rule,
-                            CosTrading::FollowOption limiting_follow_rule
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CosTrading::Link::IllegalLinkName,
-                    CosTrading::Link::UnknownLinkName,
-                    CosTrading::Link::DefaultFollowTooPermissive,
-                    CosTrading::Link::LimitingFollowTooPermissive));
+                            CosTrading::FollowOption limiting_follow_rule);
 
   // BEGIN SPEC
   // The modify_link operation is used to change the existing link
@@ -908,17 +743,15 @@ public:
   // END SPEC
 
 private:
-
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Link (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Link (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
   typedef ACE_Hash_Map_Manager_Ex
   <
-  TAO_String_Hash_Key,
+  CORBA::String_var,
   CosTrading::Link::LinkInfo,
-  ACE_Hash<TAO_String_Hash_Key>,
-  ACE_Equal_To<TAO_String_Hash_Key>,
+  ACE_Hash<CORBA::String_var>,
+  ACE_Equal_To<CORBA::String_var>,
   MAP_LOCK_TYPE
   >
   Links;
@@ -930,20 +763,18 @@ private:
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 };
 
-  // *************************************************************
-  // TAO_Proxy
-  // *************************************************************
-
+// *************************************************************
+// TAO_Proxy
+// *************************************************************
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Proxy :
   public TAO_Trader_Components <POA_CosTrading::Proxy>,
   public TAO_Support_Attributes <POA_CosTrading::Proxy>
 {
 public:
-
   TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Proxy (void);
+  ~TAO_Proxy ();
 
   virtual CosTrading::OfferId
     export_proxy (CosTrading::Lookup_ptr,
@@ -951,57 +782,29 @@ public:
                   const CosTrading::PropertySeq &,
                   CORBA::Boolean if_match_all,
                   const char *,
-                  const CosTrading::PolicySeq &
-                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    CosTrading::IllegalServiceType,
-                    CosTrading::UnknownServiceType,
-                    CosTrading::InvalidLookupRef,
-                    CosTrading::IllegalPropertyName,
-                    CosTrading::PropertyTypeMismatch,
-                    CosTrading::ReadonlyDynamicProperty,
-                    CosTrading::MissingMandatoryProperty,
-                    CosTrading::Proxy::IllegalRecipe,
-                    CosTrading::DuplicatePropertyName,
-                    CosTrading::DuplicatePolicyName));
+                  const CosTrading::PolicySeq &);
 
-  virtual void withdraw_proxy (const char *
-                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    CosTrading::IllegalOfferId,
-                    CosTrading::UnknownOfferId,
-                    CosTrading::Proxy::NotProxyOfferId));
+  virtual void withdraw_proxy (const char *);
 
   virtual CosTrading::Proxy::ProxyInfo *
-  describe_proxy (const char *
-                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    CosTrading::IllegalOfferId,
-                    CosTrading::UnknownOfferId,
-                    CosTrading::Proxy::NotProxyOfferId));
+  describe_proxy (const char *);
 
    // = CosTrading::TraderComponents methods.
 
   virtual void list_proxies (CORBA::ULong,
                              CosTrading::OfferIdSeq *&,
-                             CosTrading::OfferIdIterator_ptr &
-                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    CosTrading::NotImplemented));
+                             CosTrading::OfferIdIterator_ptr &);
 
 private:
-
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Proxy (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-
+  void operator= (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Proxy (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>& trader_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Trader_Interfaces.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "orbsvcs/Trader/Trader_Interfaces.cpp"
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

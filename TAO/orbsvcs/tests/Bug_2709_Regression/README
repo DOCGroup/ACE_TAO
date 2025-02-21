@@ -1,0 +1,22 @@
+
+
+This test checks that the IOGRs are works correctly if non-primary profile is process-local.
+
+_Expected Success Output_
+
+d:\tao151\prism\tests\tao449_regression>run_test.pl
+event loop finished
+event loop finished
+
+_Expected Regression Output_
+
+(2140|2664) EXCEPTION, Exception caught in client task:
+system exception, ID 'IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0'
+Unknown vendor minor code id (0), minor code = 0, completed = NO
+
+ERROR: client timedout
+ERROR: client returned -1
+ERROR: server timedout
+ERROR: server returned -1
+
+All other output is an unexpected problem.

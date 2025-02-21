@@ -1,10 +1,6 @@
-// $Id$
-
 //=============================================================================
 /**
  * @file Object_Factory_i.h
- *
- * $Id$
  *
  * Implementation header for the "Gateway" IDL interface for the
  * ORT example.
@@ -25,19 +21,15 @@
 class Object_Factory_i : public virtual POA_Gateway::Object_Factory
 {
  public:
-
   /// Constructor
   Object_Factory_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr gateway_poa);
 
   CORBA::Object_ptr
     create_object (const char *interface_repository_id,
-                   CORBA::Object_ptr gatewayed_object
-                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                   CORBA::Object_ptr gatewayed_object);
 
  private:
-
   CORBA::ORB_ptr orb_;
   PortableServer::POA_ptr gateway_poa_;
 };

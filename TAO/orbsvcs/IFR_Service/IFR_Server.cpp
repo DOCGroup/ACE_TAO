@@ -1,35 +1,54 @@
 /* -*- C++ -*- */
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
 #include "IFR_Service.h"
 #include "tao/Environment.h"
+#include "orbsvcs/Shutdown_Utilities.h"
 
-ACE_RCSID (IFR_Service, 
-           IFR_Server,
-           "$Id$")
+class IFR_Service_Shutdown_Functor : public Shutdown_Functor
+{
+public:
+  IFR_Service_Shutdown_Functor (IFR_Service& ifr);
+
+  void operator() (int which_signal);
+private:
+  IFR_Service& ifr_;
+};
+
+IFR_Service_Shutdown_Functor::IFR_Service_Shutdown_Functor (IFR_Service &ifr)
+  : ifr_(ifr)
+{
+}
+
+void
+IFR_Service_Shutdown_Functor::operator() (int which_signal)
+{
+  if (TAO_debug_level > 0)
+    ORBSVCS_DEBUG ((LM_DEBUG,
+                "shutting down on signal %d\n", which_signal));
+  (void) this->ifr_.shutdown ();
+}
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   IFR_Service server;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      int status = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  IFR_Service_Shutdown_Functor killer (server);
+  Service_Shutdown kill_contractor (killer);
 
-      if (status == -1)
+  try
+    {
+      int status = server.init (argc, argv);
+
+      if (status != 0)
         {
           return 1;
         }
       else
         {
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
 
-          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          status = server.fini ();
 
           if (status == -1)
             {
@@ -37,16 +56,15 @@ main (int argc, char *argv[])
             }
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unknown Exception");
+      ex._tao_print_exception ("Unknown Exception");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

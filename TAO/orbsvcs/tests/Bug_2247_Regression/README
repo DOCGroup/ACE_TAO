@@ -1,0 +1,31 @@
+
+
+This program tests the behavior of FT aware client when there
+is a fault in the server.
+
+First, you can test the behavior of client when it works with
+a simple single profile IOR (not IOGR).
+
+To test server crashing down (aborting) in the middle of the RPC:
+$./server -o file1.ior -k KEY1
+$./Manager -a file://file1.ior -k KEY1 -c g.ior
+
+To test server gracefully shutting down in the middle of the RPC:
+$./server -o file1.ior -k KEY1
+$./Manager -a file://file1.ior -k KEY1 -c g.ior -s
+
+You can also test behavior of client when using IOGR with two servers
+by supplying -g as the option to Manager.
+
+To test servers crashing down (aborting) in the middle of the RPC:
+$./server -o file1.ior -k KEY1
+$./server -o file2.ior -k KEY2
+$./Manager -a file://file1.ior -k KEY1 -b file://file2.ior -l KEY2 -c g.ior -g
+
+To test one of two serversshutting down in the middle of the RPC:
+$./server -o file1.ior -k KEY1
+$./server -o file2.ior -k KEY2
+$./Manager -a file://file1.ior -k KEY1 -b file://file2.ior -l KEY2 -c g.ior -g -s
+
+The complete test can be run by run_test.pl.
+The script exits with error code != 0 in case of error.

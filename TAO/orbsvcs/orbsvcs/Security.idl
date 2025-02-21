@@ -1,7 +1,4 @@
 // -*- IDL -*-
-//
-// $Id$
-
 
 #ifndef _SECURITY_IDL_
 #define _SECURITY_IDL_
@@ -119,7 +116,7 @@ module Security {
 
     struct Right {
         ExtensibleFamily        rights_family;
-	string                  the_right;
+  string                  the_right;
     };
 
     typedef sequence <Right> RightsList;

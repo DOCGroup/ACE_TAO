@@ -1,0 +1,22 @@
+/**
+
+
+
+@page OBV/Any Test README File
+
+        This test shows and verifies truncatable inheritence functionality.
+
+	To run the test either use the run_test.pl script:
+
+$ ./run_test.pl
+
+        or start the client and the server manually:
+
+$ server -o ior&
+$ client -k file://ior
+
+To get a detailed test report, run the server manually and then run the client as:
+$ client -v -k file://ior
+
+
+*/

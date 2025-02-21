@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Acceptor_Filter.h
- *
- *  $Id$
  *
  *  @author Marina Spivak (marina@cs.wustl.edu)
  *  @author Carlos O'Ryan (coryan@uci.edu)
@@ -17,12 +15,14 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -44,12 +44,12 @@ class TAO_Acceptor;
 class TAO_Export TAO_Acceptor_Filter
 {
 public:
-  virtual ~TAO_Acceptor_Filter (void);
+  virtual ~TAO_Acceptor_Filter ();
 
   /**
-   * Populate <mprofile> with profiles. Profiles are created for
+   * Populate @a mprofile with profiles. Profiles are created for
    * selected acceptors (endpoints) from the array delimited by
-   * <acceptors_begin> and <acceptors_end>.
+   * @a acceptors_begin and @a acceptors_end.
    */
   virtual int fill_profile (const TAO::ObjectKey &object_key,
                             TAO_MProfile &mprofile,
@@ -61,6 +61,8 @@ public:
   /// tag component of profiles.
   virtual int encode_endpoints (TAO_MProfile &mprofile) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ACCEPTOR_FILTER_H */

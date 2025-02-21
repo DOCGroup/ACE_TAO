@@ -1,34 +1,28 @@
 #ifndef TAO_DEMUX_TEST_CLIENT_H
 #define TAO_DEMUX_TEST_CLIENT_H
 
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/Demux
-//
-// = FILENAME
-//    demux_test_client.h
-//
-//    Definition of the client-side demux_test class
-//
-// = AUTHOR
-//
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    demux_test_client.h
+ *
+ *  Definition of the client-side demux_test class
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // FUZZ: disable check_for_math_include
 
 #include "ace/Get_Opt.h"
+#include "ace/Vector_T.h"
 #include "demux_testC.h"
 #include "demux_test_macros.h"
-#include <math.h>
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
 
 class Demux_Test_Client
 {
 public:
-
   // Request invocation strategies
   enum INVOKE_STRATEGY
   {
@@ -38,89 +32,91 @@ public:
     WORST
   };
 
-  typedef void (*OP_PTR) (Demux_Test_ptr ACE_ENV_ARG_DECL_NOT_USED);
+  typedef void (*OP_PTR) (Demux_Test_ptr);
 
   struct Operation_DB_Entry
   {
     OP_PTR op_;
   };
 
-  Demux_Test_Client (void);
-  // CTOR
+  /// CTOR
+  Demux_Test_Client ();
 
-  ~Demux_Test_Client (void);
-  // DTOR
+  /// DTOR
+  ~Demux_Test_Client ();
 
-  int init (int argc, char *argv [] ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  // initialize the client test bed
+  /// initialize the client test bed
+  int init (int argc, ACE_TCHAR *argv []);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // run the tests
+  /// run the tests
+  int run ();
 
 private:
+  /// parse command line arguments
+  int parse_args ();
 
-  int parse_args (void);
-  // parse command line arguments
+  /// initialize the operation database
+  int init_operation_db ();
 
-  int init_operation_db (void);
-  // initialize the operation database
+  /// run linear strategy
+  int run_linear_test ();
 
-  int run_linear_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // run linear strategy
+  /// run random strategy
+  int run_random_test ();
 
-  int run_random_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // run random strategy
+  /// run best strategy (w.r.t to linear)
+  int run_best_test ();
 
-  int run_best_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // run best strategy (w.r.t to linear)
+  /// run worst strategy (w.r.t to linear)
+  int run_worst_test ();
 
-  int run_worst_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // run worst strategy (w.r.t to linear)
+  /// print results
+  int print_results ();
 
-  int print_results (void);
-  // print results
-
+  /// number of command line arguments
   int argc_;
-  // number of command line arguments
 
-  char **argv_;
-  // the actual command line arguments
+  /// the actual command line arguments
+  ACE_TCHAR **argv_;
 
+  /// The underlying ORB
   CORBA::ORB_var orb_;
-  // The underlying ORB
 
+  /// invocation strategy (default linear)
   INVOKE_STRATEGY is_;
-  // invocation strategy (default linear)
 
+  /// number of POAs
   CORBA::ULong num_POAs_;
-  // number of POAs
 
+  /// number of objects
   CORBA::ULong num_objs_;
-  // number of objects
 
+  /// number of operations
   CORBA::ULong num_ops_;
-  // number of operations
 
-  Demux_Test_var demux_test_[TAO_DEMUX_TEST_MAX_POAS][TAO_DEMUX_TEST_MAX_OBJS];
-  // object references to the Demux_Test objects
+  /// object references to the Demux_Test objects
+  typedef TAO_Intrusive_Ref_Count_Handle<Demux_Test> Demux_Test_Var;
+  typedef ACE_Vector<Demux_Test_Var> Demux_Test_Container;
+  Demux_Test_Container demux_test_;
 
+  /// number of times to invoke the request
   CORBA::ULong loop_count_;
-  // number of times to invoke the request
 
+  /// IOR database
   FILE *ior_fp_;
-  // IOR database
 
+  /// temporary results file
   FILE *result_fp_;
-  // temporary results file
 
+  /**
+   * Step for the no. of objects to be skipped while making remote calls
+   * on the given no. of objects.
+   * If the step is 100, a call will be made to every 100th Object.
+   */
   CORBA::ULong step_;
-  // Step for the no. of objects to be skipped while making remote calls
-  // on the given no. of objects.
-  // If the step is 100, a call will be made to every 100th Object.
 
+  /// database of operations
   Operation_DB_Entry op_db_[TAO_DEMUX_TEST_MAX_OPS];
-  // database of operations
-
 };
 
 

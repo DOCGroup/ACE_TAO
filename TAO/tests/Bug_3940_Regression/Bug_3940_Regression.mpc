@@ -1,0 +1,4 @@
+// -*- MPC -*-
+project (test3940) : taolib_with_idl {
+  idlflags += --idl-version 4
+}

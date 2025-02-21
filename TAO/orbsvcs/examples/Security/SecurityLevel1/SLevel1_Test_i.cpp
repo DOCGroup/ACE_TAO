@@ -1,27 +1,18 @@
-// $Id$
-
 #include "SLevel1_Test_i.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (SecurityLevel1,
-           SLevel1_Test_i,
-           "$Id$")
-
 static int authorize_1 = 1;
 static int authorize_2 = 1;
 
 CORBA::Boolean
-SLevel1_Server_i::authorize_level1 (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+SLevel1_Server_i::authorize_level1 ()
 {
-
   /// Get a reference to the SecurityCurrent object.
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("SecurityCurrent" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    orb->resolve_initial_references ("SecurityCurrent");
 
     /// Narrow it down correctly.
   SecurityLevel1::Current_var current =
@@ -110,8 +101,7 @@ SLevel1_Server_i::authorize_level1 (ACE_ENV_SINGLE_ARG_DECL)
 
 
 CORBA::Boolean
-SLevel1_Server_i::authorize_level2 (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+SLevel1_Server_i::authorize_level2 ()
 {
   /// If the owner of this invocation is authorized to invoke this
   /// method, return 0 else return 1.

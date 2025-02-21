@@ -4,8 +4,6 @@
 /**
  *  @file  sfp.h
  *
- *  $Id$
- *
  *  @author  Nagarajan Surendran <naga@cs.wustl.edu>
  */
 // ============================================================================
@@ -15,21 +13,27 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/AV/AV_export.h"
+
+#include "orbsvcs/AV/Policy.h"
+#include "orbsvcs/AV/MCast.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/UDP.h"
+
 #include "orbsvcs/sfpC.h"
+
+#include "tao/CDR.h"
+
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
-#include "tao/CDR.h"
-#include "Policy.h"
-#include "MCast.h"
-#include "AVStreams_i.h"
-#include "UDP.h"
 
 #define TAO_SFP_MAGIC_NUMBER_LEN 4
 #define TAO_SFP_MESSAGE_TYPE_OFFSET 5
 #define TAO_SFP_WRITEV_MAX 128
 
 #define TAO_SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_SFP_Fragment_Node
@@ -38,9 +42,7 @@
 class TAO_SFP_Fragment_Node
 {
 public:
-  TAO_SFP_Fragment_Node (void)
-    :data_ (0)
-    {}
+  TAO_SFP_Fragment_Node () : data_ (0) {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
   friend bool operator< (const TAO_SFP_Fragment_Node& left,
@@ -54,7 +56,7 @@ public:
 class TAO_SFP_Fragment_Table_Entry
 {
 public:
-  TAO_SFP_Fragment_Table_Entry (void)
+  TAO_SFP_Fragment_Table_Entry ()
     :last_received_ (0),
      num_fragments_ (0)
     {}
@@ -75,10 +77,10 @@ typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table*,ACE_Null_Mutex
 class TAO_AV_Export TAO_SFP_Frame_State
 {
 public:
-  TAO_SFP_Frame_State (void);
-  CORBA::Boolean is_complete (void);
+  TAO_SFP_Frame_State ();
+  CORBA::Boolean is_complete ();
 
-  int reset (void);
+  int reset ();
 
   TAO_InputCDR cdr;
   // This is the InputCDR that will be used to decode the message.
@@ -103,14 +105,14 @@ class TAO_AV_Export TAO_SFP_Base
 {
 public:
   // default arguments to pass to use for the ORB
-  static const char *TAO_SFP_ORB_ARGUMENTS;
+  static const char TAO_SFP_ORB_ARGUMENTS[];
 
   // SFP magic numbers
-  static const char *TAO_SFP_MAGIC_NUMBER;
-  static const char *TAO_SFP_FRAGMENT_MAGIC_NUMBER;
-  static const char *TAO_SFP_START_MAGIC_NUMBER;
-  static const char *TAO_SFP_CREDIT_MAGIC_NUMBER;
-  static const char *TAO_SFP_STARTREPLY_MAGIC_NUMBER;
+  static const char TAO_SFP_MAGIC_NUMBER[];
+  static const char TAO_SFP_FRAGMENT_MAGIC_NUMBER[];
+  static const char TAO_SFP_START_MAGIC_NUMBER[];
+  static const char TAO_SFP_CREDIT_MAGIC_NUMBER[];
+  static const char TAO_SFP_STARTREPLY_MAGIC_NUMBER[];
 
   // SFP version 1.0
   static const unsigned char TAO_SFP_MAJOR_VERSION;
@@ -136,7 +138,7 @@ public:
     START_RECEIVED
   };
 
-  TAO_SFP_Base (void);
+  TAO_SFP_Base ();
   static CORBA::Boolean start_frame (CORBA::Octet flags,
                                      flowProtocol::MsgType type,
                                      TAO_OutputCDR &msg);
@@ -204,9 +206,6 @@ protected:
   // dumps the buffer to the screen.
 };
 
-// Beware the SFP_Base code relies on the Singleton being initialized.
-typedef ACE_Singleton <TAO_SFP_Base,TAO_SYNCH_MUTEX> TAO_SFP_BASE;
-
 /**
  * @class TAO_SFP_Object
  * @brief
@@ -218,10 +217,10 @@ public:
                   TAO_AV_Transport *transport);
   // We should add a sfp options parameter.
 
-  virtual ~TAO_SFP_Object (void);
+  virtual ~TAO_SFP_Object ();
   // Dtor
 
-  virtual int handle_input (void) = 0;
+  virtual int handle_input () = 0;
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
 
@@ -232,7 +231,7 @@ public:
   virtual int send_frame (const char*buf,
                           size_t len);
 
-  virtual int destroy (void);
+  virtual int destroy ();
   virtual int set_policies (const TAO_AV_PolicyList &policies);
 
 protected:
@@ -257,7 +256,7 @@ public:
   TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
                            const char *flow_options);
-  virtual int handle_input (void);
+  virtual int handle_input ();
 protected:
   CORBA::ULong credit_sequence_num_;
 };
@@ -272,7 +271,7 @@ public:
   TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
                            ACE_CString& flow_options);
-  virtual int handle_input (void);
+  virtual int handle_input ();
 };
 
 /**
@@ -282,9 +281,9 @@ public:
 class TAO_AV_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
-  TAO_AV_SFP_Factory (void);
-  virtual ~TAO_AV_SFP_Factory (void);
-  virtual int init (int argc, char *argv[]);
+  TAO_AV_SFP_Factory ();
+  virtual ~TAO_AV_SFP_Factory ();
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialization hook.
   virtual int match_protocol (const char *flow_string);
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
@@ -292,6 +291,8 @@ public:
                                                         TAO_AV_Flow_Handler *handler,
                                                         TAO_AV_Transport *transport);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_SFP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_SFP_Flow_Factory)

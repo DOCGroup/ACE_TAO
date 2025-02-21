@@ -1,4 +1,3 @@
-//$Id$
 #include "Thread_Task.h"
 
 #include "ace/High_Res_Timer.h"
@@ -10,7 +9,7 @@
 #include "Task_Stats.h"
 #include "ace/Barrier.h"
 
-Thread_Task::Thread_Task (void)
+Thread_Task::Thread_Task ()
 {
 }
 
@@ -54,17 +53,14 @@ Thread_Task::activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *prio
 }
 
 int
-Thread_Task::svc (void)
+Thread_Task::svc ()
 {
   // if debugging, dump the priority that we're actually at.
   if (TAO_debug_level > 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-
       // Get the priority of the current thread.
       RTCORBA::Priority prio =
-        ACTIVITY::instance()->current ()->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        ACTIVITY::instance()->current ()->the_priority ();
 
       if (prio == this->task_priority_)
         ACE_DEBUG ((LM_DEBUG,
@@ -91,7 +87,8 @@ Thread_Task::svc (void)
   // now wait till the phase_ period expires.
   ACE_OS::sleep (ACE_Time_Value (0, phase_));
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_hrtime_t before, after;
 
@@ -108,15 +105,7 @@ Thread_Task::svc (void)
       if (period_ != 0) // blast mode, no sleep.
         {
           // convert to microseconds
-#if !defined ACE_LACKS_LONGLONG_T
-
           ACE_UINT32 elapsed_microseconds = ACE_UINT32((after - before) / gsf);
-
-#else  /* ! ACE_LACKS_LONGLONG_T */
-
-          ACE_UINT32 elapsed_microseconds = (after - before) / gsf;
-
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
 #if defined (ACE_WIN32)
           elapsed_microseconds*=1000; // convert to uSec on Win32
@@ -124,7 +113,7 @@ Thread_Task::svc (void)
 
           // did we miss any deadlines?
 
-          int missed =
+          int const missed =
             elapsed_microseconds > period_ ? elapsed_microseconds/period_ : 0;
 
           long sleep_time = (missed + 1)*period_ ;

@@ -1,12 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Refcountable_Guard_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_REFCOUNTABLE_GUARD_T_H
@@ -14,40 +11,43 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Refcountable_Guard_T
  *
  * @brief Increments the reference count in the constructor, the count is decremented in the destructor.
  *        See Refcountable.h for further notes on usage.
- *
  */
 template <class T>
 class TAO_Notify_Refcountable_Guard_T
 {
 public:
-  /// Constuctor
+  /// Constructor
   explicit TAO_Notify_Refcountable_Guard_T (T* t = 0);
 
   /// Copy constructor
-  explicit TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T>& rhs);
+  TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T>& rhs);
 
   /// Destructor
   ~TAO_Notify_Refcountable_Guard_T ();
 
   /// Redirection operator
-  T* get (void) const;
+  T* get () const;
 
   /// Boolean test
-  bool isSet (void) const;
+  bool isSet () const;
 
   /// Redirection operator
-  T* operator -> (void) const;
+  T* operator -> () const;
 
   /// Dereference operator
   T& operator * () const;
@@ -67,17 +67,13 @@ private:
   T* t_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Refcountable_Guard_T.inl"
+#include "orbsvcs/Notify/Refcountable_Guard_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Refcountable_Guard_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Refcountable_Guard_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/Notify/Refcountable_Guard_T.cpp"
 
 #include /**/ "ace/post.h"
 

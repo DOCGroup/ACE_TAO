@@ -1,0 +1,31 @@
+// -*- MPC -*-
+project(RTSchedTestLib): naming, rtscheduling, negotiate_codesets, rtportableserver, rtcorba {
+  after += Job
+  libs += Job RTSchedSynch
+  dynamicflags += RTSCHEDTESTLIB_BUILD_DLL
+  sharedname   = RTSchedTestLib
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Job_i.cpp
+    DT_Creator.cpp
+    Thread_Task.cpp
+    POA_Holder.cpp
+    Task_Stats.cpp
+  }
+
+  Header_Files {
+    DT_Creator.h
+    Thread_Task.h
+    POA_Holder.h
+    Task_Stats.h
+    Job_i.h
+    rtschedtestlib_export.h
+  }
+
+  Inline_Files {
+    Task_Stats.inl
+  }
+}

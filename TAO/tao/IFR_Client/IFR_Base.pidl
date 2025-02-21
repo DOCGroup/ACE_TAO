@@ -3,55 +3,18 @@
 /**
  * @file IFR_Base.pidl
  *
- * $Id$
- *
- * This file was used to generate the code in IFR_BaseC.{h,i,cpp}.
+ * This file is used to generate the code in IFR_BaseC.{h,i,cpp}.
  * The original file Interface.idl was split into four pieces, to
  * keep the generated files to a manageable size and reduce build
  * time. This IDL file contains the abstract base interfaces of
  * the IFR as well as many of the non-interface data types used
  * by all other IFR interfaces.
- *
- * The command used to generate code from this IDL file is:
- *
- *   tao_idl -GA -Ge 1 -Sc -I../.. \
- *        -Wb,export_macro=TAO_IFR_Client_Export \
- *        -Wb,export_include=ifr_client_export.h \
- *        -Wb,pre_include="ace/pre.h" \
- *        -Wb,post_include="ace/post.h" \
- *        IFR_Base.pidl
- *
- * Only the stub files are used in the TAO_IFR_Client library. The
- * skeleton files can be deleted from this directory.
- *
- * No patching of the generated stub files is necessary.
- *
- * To generate the skeleton files for the IFR Service, the command is:
- *
- *   tao_idl -o ../../orbsvcs/orbsvcs/IFRService -Ge 1 \
- *        -Wb,pre_include="ace/pre.h" \
- *        -Wb,post_include="ace/post.h" \
- *        IFR_Base.pidl
- *
- * The only modification necessary to the skelton files is to
- * change
- *
- * #include "IFR_BaseC.h"
- *
- * to
- *
- * #include "tao/IFR_Client/IFR_BaseC.h"
- *
- * in IFR_BaseS.h. The stub files may be deleted from the IFRService
- * directory.
- *
  */
 
 #ifndef _IFR_BASE_IDL_
 #define _IFR_BASE_IDL_
 
-#include <orb_types.pidl>
-#include <Typecode_types.pidl>
+#include "tao/orb.idl"
 
 module CORBA
 {
@@ -138,8 +101,7 @@ module CORBA
     void move (
         in Container new_container,
         in Identifier new_name,
-        in VersionSpec new_version
-      );
+        in VersionSpec new_version);
   };
 
   interface ModuleDef;
@@ -236,18 +198,15 @@ module CORBA
   {
     // read interface
     Contained lookup (
-        in ScopedName search_name
-      );
+        in ScopedName search_name);
     ContainedSeq contents (
         in DefinitionKind limit_type,
-        in boolean exclude_inherited
-      );
+        in boolean exclude_inherited);
     ContainedSeq lookup_name (
         in Identifier search_name,
         in long levels_to_search,
         in DefinitionKind limit_type,
-        in boolean exclude_inherited
-      );
+        in boolean exclude_inherited);
     struct Description
     {
       Contained contained_object;
@@ -268,52 +227,45 @@ module CORBA
     ModuleDef create_module (
         in RepositoryId id,
         in Identifier name,
-        in VersionSpec version
-      );
+        in VersionSpec version);
 
     ConstantDef create_constant (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in IDLType type,
-        in any value
-      );
+        in any value);
 
     StructDef create_struct (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in StructMemberSeq members
-      );
+        in StructMemberSeq members);
 
     UnionDef create_union (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in IDLType discriminator_type,
-        in UnionMemberSeq members
-      );
+        in UnionMemberSeq members);
 
     EnumDef create_enum (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in EnumMemberSeq members
-      );
+        in EnumMemberSeq members);
 
     AliasDef create_alias (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in IDLType original_type
-      );
+        in IDLType original_type);
 
     InterfaceDef create_interface (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in InterfaceDefSeq base_interfaces
-      );
+        in InterfaceDefSeq base_interfaces);
 
     ValueDef create_value (
         in RepositoryId id,
@@ -325,55 +277,47 @@ module CORBA
         in boolean is_truncatable,
         in ValueDefSeq abstract_base_values,
         in InterfaceDefSeq supported_interfaces,
-        in InitializerSeq initializers
-      );
+        in InitializerSeq initializers);
 
     ValueBoxDef create_value_box(
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in IDLType original_type_def
-      );
+        in IDLType original_type_def);
 
     ExceptionDef create_exception(
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in StructMemberSeq members
-      );
+        in StructMemberSeq members);
 
     NativeDef create_native(
         in RepositoryId id,
         in Identifier name,
-        in VersionSpec version
-      );
+        in VersionSpec version);
 
     AbstractInterfaceDef create_abstract_interface (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in AbstractInterfaceDefSeq base_interfaces
-      );
+        in AbstractInterfaceDefSeq base_interfaces);
 
     LocalInterfaceDef create_local_interface (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in InterfaceDefSeq base_interfaces
-      );
+        in InterfaceDefSeq base_interfaces);
 
-    ExtValueDef create_ext_value (
-	in RepositoryId id,
-	in Identifier name,
-	in VersionSpec version,
-	in boolean is_custom,
-	in boolean is_abstract,
-	in ValueDef base_value,
-	in boolean is_truncatable,
-	in ValueDefSeq abstract_base_values,
-	in InterfaceDefSeq supported_interfaces,
-	in ExtInitializerSeq initializers
-      );
+    ExtValueDef create_ext_value ( in RepositoryId id,
+                                   in Identifier name,
+                                   in VersionSpec version,
+                                   in boolean is_custom,
+                                   in boolean is_abstract,
+                                   in ValueDef base_value,
+                                   in boolean is_truncatable,
+                                   in ValueDefSeq abstract_base_values,
+                                   in InterfaceDefSeq supported_interfaces,
+                                   in ExtInitializerSeq initializers );
   };
 
   interface IDLType : IRObject

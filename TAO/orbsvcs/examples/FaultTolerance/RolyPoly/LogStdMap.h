@@ -1,7 +1,5 @@
 // file      : RolyPoly/LogStdMap.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef LOG_STD_MAP_H
 #define LOG_STD_MAP_H
 
@@ -25,7 +23,6 @@ public:
 
   void
   insert (RecordIdType const& ri, RecordValueType const& rv)
-    throw (Duplicate)
   {
     if (!map_.insert (std::make_pair (ri, rv)).second)
     {
@@ -41,7 +38,7 @@ public:
 
 
   RecordValueType const&
-  lookup (RecordIdType const& ri) const throw (NotFound)
+  lookup (RecordIdType const& ri) const
   {
     typename Map_::const_iterator i = map_.find (ri);
 

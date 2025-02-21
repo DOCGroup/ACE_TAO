@@ -2,8 +2,6 @@
 /**
  *  @file   EC_Defaults.h
  *
- *  $Id$
- *
  * In this file we set the compile time defaults for the event
  * channel.
  *
@@ -122,6 +120,10 @@
 #ifndef TAO_EC_DEFAULT_SUPPLIER_CONTROL_PERIOD
 # define TAO_EC_DEFAULT_SUPPLIER_CONTROL_PERIOD 5000000 /* usecs */
 #endif /* TAO_EC_DEFAULT_SUPPLIER_CONTROL_PERIOD */
+
+#ifndef TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME
+# define TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME ACE_TEXT("EC_QueueFullSimpleActions")
+#endif /* TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME */
 
 #ifndef TAO_EC_DEFAULT_CONSUMER_CONTROL_TIMEOUT
 # define TAO_EC_DEFAULT_CONSUMER_CONTROL_TIMEOUT 10000 /* usecs */

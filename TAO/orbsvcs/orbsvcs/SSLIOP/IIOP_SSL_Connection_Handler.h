@@ -4,8 +4,6 @@
 /**
  *  @file   IIOP_SSL_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -16,21 +14,21 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 
 #include "orbsvcs/SSLIOPC.h"
 #include "tao/IIOP_Connection_Handler.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class IIOP_SSL_Connection_Handler
    *
@@ -48,15 +46,12 @@ namespace TAO
   class IIOP_SSL_Connection_Handler : public TAO_IIOP_Connection_Handler
   {
   public:
-
     /// Constructor.
     IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = 0);
-    IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
-                                 CORBA::Boolean flag);
+    IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core);
 
     /// Destructor.
-    ~IIOP_SSL_Connection_Handler (void);
-
+    ~IIOP_SSL_Connection_Handler ();
   };
 
   // ****************************************************************
@@ -80,16 +75,14 @@ namespace TAO
   class Null_SSL_State_Guard
   {
   public:
-
     /// Constructor that sets up the null TSS SSL state.
     Null_SSL_State_Guard (TAO::SSLIOP::Current_ptr current,
                           int &result);
 
     /// Destructor that restores the previous TSS SSL state.
-    ~Null_SSL_State_Guard (void);
+    ~Null_SSL_State_Guard ();
 
   private:
-
     /// The SSLIOP::Current implementation that was previously
     /// associated with the current thread and invocation.
     /**
@@ -104,14 +97,13 @@ namespace TAO
     /// Flag that specifies whether or not setup of the SSLIOP::Current
     /// object completed for the current thread and invocation.
     bool setup_done_;
-
   };
-
 } // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "IIOP_SSL_Connection_Handler.inl"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 

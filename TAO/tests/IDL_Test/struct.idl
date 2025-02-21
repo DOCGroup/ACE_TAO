@@ -1,0 +1,59 @@
+// Double forward declared struct test, created by Martin Corino <mcorino@remedy.nl>
+
+module Test
+{
+  struct S3;
+
+  struct S1
+  {
+    string hello;
+  };
+
+  struct S3;
+
+  typedef sequence<S3> TS3Seq;
+
+  struct S3
+  {
+    TS3Seq m_seq;
+    boolean m_has_more;
+  };
+
+  struct S4;
+  typedef sequence<S4> TS4Seq;
+
+  struct S5;
+  typedef sequence<S5> TS5Seq;
+
+  struct S4
+  {
+    boolean a;
+  };
+  struct S5
+  {
+    boolean b;
+  };
+
+  typedef long FooType;
+  struct FooStruct  {
+    FooType Foo1;
+    FooType Foo2;
+  };
+
+  enum S90
+  {
+    S90_1,
+    S90_2
+  };
+  typedef S90 S90Array[2];
+  typedef long S42[2];
+  typedef string SString43[2];
+  typedef S4 S4Array[2];
+  struct S10
+  {
+    S90 s10_1;
+    S42 s10_2;
+    SString43 s10_3;
+    S4 s10_4;
+  };
+};

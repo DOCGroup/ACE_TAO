@@ -1,0 +1,33 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file test.idl
+ *
+ * Simple IDL file to test  PortableInterceptor / ServantLocator
+ * support.
+ *
+ * @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef TEST_IDL
+#define TEST_IDL
+
+/**
+ * @interface test
+ *
+ * @brief PortableInterceptor/ServantLocator test interface.
+ *
+ * Simple interface that provides an operation to invoke.
+ */
+interface test
+{
+  /// Dummy operation.
+  void op ();
+
+  /// Shutdown the server.
+  oneway void shutdown ();
+};
+
+#endif  /* TEST_IDL */

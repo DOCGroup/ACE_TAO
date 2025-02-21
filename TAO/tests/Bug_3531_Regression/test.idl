@@ -1,0 +1,9 @@
+
+interface Simple_Server
+{
+  string test_method (in Simple_Server objref);
+
+  void client_done ();
+
+  oneway void shutdown ();
+};

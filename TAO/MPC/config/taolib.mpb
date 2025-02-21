@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : acelib, ace_for_tao, taodefaults, pidl, corba_e_micro, corba_e_compact, core_minimum_corba, link_codecfactory {
+  after += TAO Codeset
+  libs  += TAO
+}

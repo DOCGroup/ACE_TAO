@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ECT_Supplier.h"
 
 #include "orbsvcs/Event_Utilities.h"
@@ -10,21 +8,11 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID (EC_Throughput,
-           ECT_Supplier,
-           "$Id$")
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_PushSupplier_Adapter<Test_Supplier>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_PushSupplier_Adapter<Test_Supplier>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 Test_Supplier::Test_Supplier (ECT_Driver *driver)
   :  driver_ (driver),
@@ -47,8 +35,7 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
                         int burst_pause,
                         int type_start,
                         int type_count,
-                        RtecEventChannelAdmin::EventChannel_ptr ec
-                        ACE_ENV_ARG_DECL)
+                        RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   this->burst_count_ = burst_count;
   this->burst_size_ = burst_size;
@@ -58,8 +45,7 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
   this->type_count_ = type_count;
 
   RtecScheduler::handle_t rt_info =
-    scheduler->create (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    scheduler->create (name);
 
   ACE_Time_Value tv (0, burst_pause);
   RtecScheduler::Period_t rate = tv.usec () * 10;
@@ -78,9 +64,7 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
                   RtecScheduler::VERY_LOW_IMPORTANCE,
                   time,
                   1,
-                  RtecScheduler::OPERATION
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                  RtecScheduler::OPERATION);
 
   this->supplier_id_ = ACE::crc32 (name);
   ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
@@ -98,51 +82,49 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
               rt_info, 1);
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_suppliers ();
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_admin->obtain_push_consumer ();
 
   RtecEventComm::PushSupplier_var objref =
-    this->supplier_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->supplier_._this ();
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
-                                                qos.get_SupplierQOS ()
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                qos.get_SupplierQOS ());
 }
 
 void
-Test_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Test_Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  try
+    {
+      this->consumer_proxy_->disconnect_push_consumer ();
+    }
+  catch (const CORBA::Exception&)
+    {
+      // The consumer may be gone already, so we
+      // will ignore this exception
+    }
 
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
   // Deactivate the servant
   PortableServer::POA_var poa =
-    this->supplier_._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->supplier_._default_POA ();
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (&this->supplier_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (&this->supplier_);
+  poa->deactivate_object (id.in ());
 }
 
 int
 Test_Supplier::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize a time value to pace the test
       ACE_Time_Value tv (0, this->burst_pause_);
@@ -190,9 +172,8 @@ Test_Supplier::svc ()
               ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                              request_start);
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
-              this->consumer_proxy ()->push (event ACE_ENV_ARG_PARAMETER);
+              this->consumer_proxy ()->push (event);
 
-              ACE_TRY_CHECK;
               ACE_hrtime_t end = ACE_OS::gethrtime ();
               this->throughput_.sample (end - test_start,
                                         end - request_start);
@@ -214,21 +195,19 @@ Test_Supplier::svc ()
       ACE_hrtime_t request_start = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      request_start);
-      this->consumer_proxy ()->push(event ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->consumer_proxy ()->push(event);
       ACE_hrtime_t end = ACE_OS::gethrtime ();
       this->throughput_.sample (end - test_start,
                                 end - request_start);
     }
-  ACE_CATCH (CORBA::SystemException, sys_ex)
+  catch (const CORBA::SystemException& sys_ex)
     {
-      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
+      sys_ex._tao_print_exception ("SYS_EX");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX");
+      ex._tao_print_exception ("NON SYS EX");
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "Supplier %4.4x completed\n",
@@ -237,24 +216,24 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Test_Supplier::disconnect_push_supplier ()
 {
 }
 
-int Test_Supplier::supplier_id (void) const
+int Test_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-Test_Supplier::consumer_proxy (void)
+Test_Supplier::consumer_proxy ()
 {
   return this->consumer_proxy_.in ();
 }
 
 void
-Test_Supplier::dump_results (const char* name,
-                             ACE_UINT32 gsf)
+Test_Supplier::dump_results (const ACE_TCHAR* name,
+                             ACE_Basic_Stats::scale_factor_type gsf)
 {
   this->throughput_.dump_results (name, gsf);
 }

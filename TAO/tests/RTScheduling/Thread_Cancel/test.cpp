@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Thread_Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "../Scheduler.h"
@@ -7,24 +5,17 @@
 #include "tao/ORB_Core.h"
 
 int
-main (int argc, char* argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-	CORBA::ORB_init (argc,
-			 argv,
-			 ""
-			 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      CORBA::ORB_init (argc,
+                       argv);
 
-      CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
-								       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager");
 
-      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
-									      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
       TAO_Scheduler scheduler (orb.in ());
 
@@ -35,44 +26,36 @@ main (int argc, char* argv [])
       task.activate_task (orb.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Waiting for Threads to Activate...\n"));
-      ACE_OS::sleep (10);
+                  "Waiting for Threads to Activate...\n"));
+      ACE_OS::sleep (5);
       ACE_DEBUG ((LM_DEBUG,
-		  "Threads Activated\n"));
-
+                  "Threads Activated\n"));
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Cancelling Threads.....\n"));
+                  "Cancelling Threads.....\n"));
 
-      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current"
-								       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current");
 
-      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
-									  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ());
 
       for (int i = 0; i < 4; i++)
-	{
-	  RTScheduling::DistributableThread_var DT = current->lookup ((task.guids ())[i]
-								      ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
+        {
+          RTScheduling::DistributableThread_var DT = current->lookup ((task.guids ())[i]);
 
-	  DT->cancel (ACE_ENV_SINGLE_ARG_PARAMETER);
-	}
+          DT->cancel ();
+        }
 
       orb->run ();
 
       ACE_Thread_Manager::instance ()->wait ();
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
-

@@ -1,17 +1,12 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/OBV/Collocated/Forward
-//
-// = FILENAME
-//   Test_impl.h
-//
-// = AUTHOR
-//   Boris Kolpackov <bosk@ipmce.ru>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Test_impl.h
+ *
+ *  @author Boris Kolpackov <bosk@ipmce.ru>
+ */
+//=============================================================================
+
 
 #ifndef TAO_TEST_IMPL_H
 #define TAO_TEST_IMPL_H
@@ -20,30 +15,28 @@
 #include "TreeBaseS.h"
 #include "TreeNodeS.h"
 
+/**
+ * @class Test_impl
+ *
+ * @brief Implementation of Test interface
+ *
+ * This interface is provided to produce valuetypes and test
+ * marshaling
+ */
 class Test_impl : public POA_Test
 {
-  // = TITLE
-  //   Implementation of Test interface
-  //
-  // = DESCRIPTION
-  //   This interface is provided to produce valuetypes and test
-  //   marshaling
-  //
 public:
+  /// ctor
   Test_impl (CORBA::ORB_ptr orb);
-  // ctor
 
   virtual TreeController * reflect (
-      TreeController * tc
-      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      TreeController * tc);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 };
 
 #endif /* TAO_TEST_IMPL_H */

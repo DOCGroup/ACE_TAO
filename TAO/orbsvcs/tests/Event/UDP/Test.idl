@@ -1,0 +1,19 @@
+//:
+
+#ifndef TAO_RTEC_MCAST_TEST_IDL
+#define TAO_RTEC_MCAST_TEST_IDL
+
+module Components
+{
+  abstract valuetype EventBase {};
+};
+
+module Hello
+{
+  valuetype ValueTypeData : Components::EventBase
+  {
+    public string data;
+  };
+};
+
+#endif /* TAO_RTEC_MCAST_TEST_IDL */

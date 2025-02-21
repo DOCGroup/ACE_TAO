@@ -3,27 +3,20 @@
 
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (ORT,
-           ORT_test_IORInterceptor,
-           "$Id$")
-
-
-ORT_test_IORInterceptor::ORT_test_IORInterceptor (void)
+ORT_test_IORInterceptor::ORT_test_IORInterceptor ()
   : establish_count_ (0),
     components_establish_count_ (0)
 {
 }
 
 char *
-ORT_test_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+ORT_test_IORInterceptor::name ()
 {
   return CORBA::string_dup ("ORT_IORInterceptor");
 }
 
 void
-ORT_test_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+ORT_test_IORInterceptor::destroy ()
 {
   ACE_ASSERT (this->establish_count_ > 0
               && this->components_establish_count_ > 0
@@ -32,9 +25,7 @@ ORT_test_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 ORT_test_IORInterceptor::establish_components (
-    PortableInterceptor::IORInfo_ptr /* info */
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::IORInfo_ptr /* info */)
 {
   ++this->establish_count_;
 
@@ -45,9 +36,7 @@ ORT_test_IORInterceptor::establish_components (
 
 void
 ORT_test_IORInterceptor::components_established (
-    PortableInterceptor::IORInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::IORInfo_ptr info)
 {
   ++this->components_establish_count_;
 
@@ -60,8 +49,7 @@ ORT_test_IORInterceptor::components_established (
 
   // Save a copy of the current ObjectReferenceFactory.
   PortableInterceptor::ObjectReferenceFactory_var old_orf =
-    info->current_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    info->current_factory ();
 
   PortableInterceptor::ObjectReferenceFactory * tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -71,31 +59,24 @@ ORT_test_IORInterceptor::components_established (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ObjectReferenceFactory_var orf = tmp;
 
-  info->current_factory (orf.in ()
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->current_factory (orf.in ());
 }
 
 void
 ORT_test_IORInterceptor::adapter_manager_state_changed (
-    PortableInterceptor::AdapterManagerId,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    const char * id,
+    PortableInterceptor::AdapterState)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "The AdapterManager state has changed.\n"));
+              "The AdapterManager [id=%C] state has changed.\n", id));
 }
 
 void
 ORT_test_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::AdapterState)
 {
 }

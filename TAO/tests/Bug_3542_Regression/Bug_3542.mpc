@@ -1,0 +1,16 @@
+// -*- MPC -*-
+project(*server) : taoserver, threads {
+  after += *lib
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*lib): taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  libout = .
+  sharedname = Bug_3542
+  dynamicflags += BUG_3542_REGRESSION_BUILD_DLL
+  Source_Files {
+    DllOrb.cpp
+  }
+}

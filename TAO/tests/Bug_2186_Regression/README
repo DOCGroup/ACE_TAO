@@ -1,0 +1,60 @@
+
+
+This test is the old fave TAO/tests/Hello with some minor(ish) differences.
+
+1/ A ::request_callback method has been added that takes a Hello ref and which prompts a callback to the ::get_string method on that ref.
+2/ The server (only) uses a server.conf file which specifies the wait on read client policy (RW).
+3/ The client now hosts a transient Hello servant too.
+4/ The client calls the servers ::request_callback method passing the reference to the client servant.
+5/ The server will call the client back.
+6/ The client will exit when its ::request_callback call returns.
+
+The script runs the server as:
+
+server -ORBSvcConf server.conf
+
+And then runs the client *TWICE* as:
+
+client -ORBEndpoint iiop://:23232
+
+The regression error output looks like:
+
+[sm@beatrice Bug_2186_Regression]$ ./run_test.pl
+(1310|3077687968) - Sending client obj ref to the server and requesting a callback.
+(1309|3077687968) - Making call back !!!
+(1310|3077687968) - Received call back !!!
+(1309|3077687968) - Call back succeeded !!!
+(1310|3077687968) - Test (client) Succeeded !!!
+(1315|3077687968) - Sending client obj ref to the server and requesting a callback.
+(1309|3077687968) - Making call back !!!
+(1309|3077687968) EXCEPTION, Exception attempting to callback client obj ref:
+
+system exception, ID 'IDL:omg.org/CORBA/COMM_FAILURE:1.0'
+TAO exception, minor code = 6 (failed to recv request response; ENOENT), completed = MAYBE
+
+(1315|3077687968) - Test (client) Failed !!!
+(1315|3077687968) EXCEPTION, Exception caught:
+system exception, ID 'IDL:omg.org/CORBA/COMM_FAILURE:1.0'
+TAO exception, minor code = 6 (failed to recv request response; ENOENT), completed = MAYBE
+
+ERROR: REGRESSION - Second client spawn returned 1
+INFO: server being killed.
+
+This demonstrates that dropped connections are written to blindly even after the peer has gone when the RW policy is in effect. If the 'server' is started without the -ORBSvcConf argument then the default client connection handler is used and the test runs suceesfully.
+
+This successful output looks like:
+
+[sm@beatrice Bug_2186_Regression]$ ./run_test.pl
+(1906|3077687968) - Sending client obj ref to the server and requesting a callback.
+(1901|3077687968) - Making call back !!!
+(1906|3077687968) - Received call back !!!
+(1901|3077687968) - Call back succeeded !!!
+(1906|3077687968) - Test (client) Succeeded !!!
+(1911|3077687968) - Sending client obj ref to the server and requesting a callback.
+(1901|3077687968) - Making call back !!!
+(1911|3077687968) - Received call back !!!
+(1901|3077687968) - Call back succeeded !!!
+(1911|3077687968) - Test (client) Succeeded !!!
+INFO: server being killed.
+
+

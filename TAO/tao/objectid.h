@@ -4,8 +4,6 @@
 /**
  *  @file     objectid.h
  *
- *  $Id$
- *
  *  ObjectIds redefined for TAO and recognized by CORBA
  *
  *  @author  Chris Cleeland
@@ -22,6 +20,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include /**/ "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*
  *
@@ -48,6 +50,7 @@
 #define TAO_OBJID_POLICYCURRENT       "PolicyCurrent"
 #define TAO_OBJID_IORMANIPULATION     "IORManipulation"
 #define TAO_OBJID_IORTABLE            "IORTable"
+#define TAO_OBJID_ASYNCIORTABLE       "AsyncIORTable"
 #define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
 #define TAO_OBJID_TYPECODEFACTORY     "TypeCodeFactory"
 #define TAO_OBJID_RTORB               "RTORB"
@@ -64,6 +67,8 @@
 #define TAO_OBJID_CODECFACTORY        "CodecFactory"
 #define TAO_OBJID_PICurrent           "PICurrent"
 #define TAO_OBJID_POAMANAGERFACTORY   "POAManagerFactory"
+#define TAO_OBJID_COMPRESSIONMANAGER  "CompressionManager"
+#define TAO_OBJID_MONITOR             "Monitor"
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
@@ -81,7 +86,9 @@
         TAO_OBJID_IORMANIPULATION, \
         TAO_OBJID_IORTABLE, \
         TAO_OBJID_DYNANYFACTORY, \
-        TAO_OBJID_TYPECODEFACTORY
+        TAO_OBJID_TYPECODEFACTORY, \
+        TAO_OBJID_COMPRESSIONMANAGER, \
+        TAO_OBJID_MONITOR
 // @@ Some initial references are added via other means, such as
 //    ORBInitInfo::register_initial_references().  Those should not be
 //    placed in the above list.  Ideally, we should no longer need the
@@ -89,16 +96,21 @@
 //    dynamically.
 
 /// Service IDs for the services that are located through Multicast.
-enum TAO_MCAST_SERVICEID
+namespace TAO
 {
-  NAMESERVICE,
-  TRADINGSERVICE,
-  IMPLREPOSERVICE,
-  INTERFACEREPOSERVICE
-};
+  enum MCAST_SERVICEID
+    {
+      MCAST_NAMESERVICE,
+      MCAST_TRADINGSERVICE,
+      MCAST_IMPLREPOSERVICE,
+      MCAST_INTERFACEREPOSERVICE
+    };
+}
 
 /// No. of services locatable through multicast.
 #define TAO_NO_OF_MCAST_SERVICES 4
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_OBJECTID_H*/

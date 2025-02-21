@@ -1,0 +1,24 @@
+// -*- MPC -*-
+project(*Consumer) : orbsvcsexe, notification, notification_skel, naming {
+  exename = consumer
+  Source_Files {
+    consumer.cpp
+  }
+}
+
+
+project(*Supplier) : orbsvcsexe, notification, notification_skel, naming {
+  exename = supplier
+
+  Source_Files {
+    supplier.cpp
+  }
+}
+
+project(*Filter) : orbsvcsexe, notification, notification_skel, naming {
+  exename = filter
+
+  Source_Files {
+    filter.cpp
+  }
+}

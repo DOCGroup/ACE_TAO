@@ -1,0 +1,8 @@
+project(Dynamic_TP) : taolib, tao_output, install, pi, csd_framework, csd_threadpool {
+  sharedname   = TAO_Dynamic_TP
+  dynamicflags += TAO_DYNAMIC_TP_BUILD_DLL
+
+  specific {
+    install_dir = tao/Dynamic_TP
+  }
+}

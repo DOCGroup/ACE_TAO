@@ -1,0 +1,16 @@
+module taoimrtest
+{
+  module reconnectserver
+  {
+    interface Dummy
+    {
+      string getMessage ();
+    };
+
+    interface TimeSrv
+    {
+      long current_time ();
+      oneway void shutdown ();
+    };
+  };
+};

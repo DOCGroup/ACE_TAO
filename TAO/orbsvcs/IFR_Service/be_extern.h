@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -76,10 +74,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 extern TAO_IFR_BE_Export BE_GlobalData *be_global;
 
-extern TAO_IFR_BE_Export int BE_init (int &, char*[]);
-extern TAO_IFR_BE_Export void BE_post_init (const char *[], long);
-extern TAO_IFR_BE_Export void BE_version (void);
-extern TAO_IFR_BE_Export void BE_produce (void);
-extern TAO_IFR_BE_Export void BE_abort (void);
+extern TAO_IFR_BE_Export int BE_init (int &, ACE_TCHAR*[]);
+extern TAO_IFR_BE_Export void BE_post_init (char *[], long);
+extern TAO_IFR_BE_Export void BE_version ();
+extern TAO_IFR_BE_Export void BE_produce ();
+extern TAO_IFR_BE_Export void BE_cleanup ();
+extern TAO_IFR_BE_Export void BE_abort ();
 
 #endif /* TAO_IFR_BE_EXTERN_H */

@@ -1,0 +1,11 @@
+valuetype Base
+{
+      public long l;
+};
+
+typedef sequence<Base> BaseSeq;
+
+valuetype Value : Base
+{
+      public string s;
+};

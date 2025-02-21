@@ -1,5 +1,3 @@
-// $Id$
-
 interface test
 {
   void method ();

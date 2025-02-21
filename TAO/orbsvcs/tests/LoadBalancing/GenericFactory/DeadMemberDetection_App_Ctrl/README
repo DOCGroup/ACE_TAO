@@ -1,0 +1,83 @@
+
+
+This program tests dead member detection feature on Load Balancer.
+The group uses application controlled membership. Three servers
+are created and added to the object group. The client use the group
+object reference to make invocations.
+
+The test covers 4 test cases.
+
+1) Dead Member Detection with Round Robin Strategy
+
+   a. Invoke get_string(), the server 1 is active and picked to
+      handle request.
+      Invoke exit () to crash server 1.
+   b. Invoke exit () on crash server 2.
+   c. Invoke get_string(), the server 3 is picked to handle request.
+      Invoke exit () to crash server 3.
+   d. Invoke get_string(), no active member so client gets OBJECT_NOT_EXIST
+      exception.
+
+2) Hang Member Detection with Round Robin Strategy
+
+   a. Invoke get_string(), the server 1 is active and picked to
+      handle request.
+      Invoke exit () to crash server 1.
+   b. Invoke get_string(), liveliness check on server 2 and it timed
+      out on RECV because _non_existent implementation on server side
+      has a delay to similate a hang server. The server 2 is still
+      picked. The client request may be delayed but it should still
+      get reply. Invoke exit on the server 2 and the LB may detect
+      it's lost.
+   c. Invoke get_string(), the server 3 is active and picked to
+      handle request.
+      Invoke exit () to crash server 3.
+   c. Invoke get_string(), if LB has detected server 2 lost then
+      client should get OBJECT_NOT_EXIST exception. If not detected
+      it will return server 2 reference and the client invocation
+      may get COMM_FAILURE or TRANSIENT exception.
+
+3) Dead Member Detection with Random Strategy
+
+   a. Invoke get_string(), a random server (e.g. 2) is active and picked to
+      handle request.
+      Invoke exit () to crash the server.
+   b. Invoke get_string(), a random server (e.g. 1) except server picked in
+      step a) is picked to handle request.
+      Invoke exit () to crash the server.
+   c. Invoke get_string(), the last server (e.g. 3) is active and picked to
+      handle request.
+      Invoke exit () to crash the server.
+   d. Invoke get_string(), no active member so client gets OBJECT_NOT_EXIST
+      exception.
+
+4) Hang Member Detection with Random Strategy
+
+   a. Invoke get_string(), a random server (e.g. 1) is active and picked to
+      handle request.
+      Invoke exit () to crash the server.
+   b. Invoke get_string(), a random server (e.g. 2) except server picked in
+      step a) is picked. Even the server 2 times out on liveliness check
+      because of the delay in _non_existent implementation, it can still be
+      picked. The client request may be delayed but it should finally
+      complete.
+      Invoke exit () to crash the server.
+   c. Invoke get_string(), the server not picked (e.g. 3) will be picked
+      and client get reply from the server.
+      Invoke exit () to crash the server.
+   c. Invoke get_string(), if LB has detected server 2 lost then
+      client should get OBJECT_NOT_EXIST exception. If not detected
+      it will return server 2 reference and the client invocation
+      may get COMM_FAILURE or TRANSIENT exception.
+
+
+To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	The script returns 0 if the test was successful and each test case
+	should print out "test passed.".
+
+
+
+

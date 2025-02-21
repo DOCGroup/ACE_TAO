@@ -1,79 +1,13 @@
-// $Id$
-
 #include "tao/Wait_On_LF_No_Upcall.h"
+#include "tao/Nested_Upcall_Guard.h"
+#include "tao/Leader_Follower.h"
 
-#include "tao/Transport.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Core_TSS_Resources.h"
-#include "debug.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID(tao,
-          Wait_On_LF_No_Upcall,
-          "$Id$")
-
-class TAO_Transport;
 namespace TAO
 {
-  /**
-   * @class Nested_Upcall_Guard
-   *
-   * @brief: Magic class that sets the status of the thread in the
-   * TSS.
-   *
-   */
-  class Nested_Upcall_Guard
-  {
-  public:
-    // Maybe we should instead just take in a ptr to
-    // TAO_ORB_Core_TSS_Resources?  Or at least ORB_Core*?
-    Nested_Upcall_Guard (TAO_Transport* t)
-      : t_ (t)
-    {
-      TAO_ORB_Core_TSS_Resources *tss =
-        t_->orb_core()->get_tss_resources ();
-
-      tss->upcalls_temporarily_suspended_on_this_thread_ = true;
-
-      if (TAO_debug_level > 6)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait "
-                    "disabling upcalls on thread %t\n"));
-    }
-
-    ~Nested_Upcall_Guard (void)
-    {
-      TAO_ORB_Core_TSS_Resources *tss =
-        t_->orb_core()->get_tss_resources ();
-
-      tss->upcalls_temporarily_suspended_on_this_thread_ =
-        false;
-
-      if (TAO_debug_level > 6)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait "
-                    "re-enabling upcalls on thread %t\n"));
-    }
-
-  private:
-
-    ACE_UNIMPLEMENTED_FUNC (Nested_Upcall_Guard (void))
-
-    ACE_UNIMPLEMENTED_FUNC (Nested_Upcall_Guard (
-                              const Nested_Upcall_Guard&))
-
-    /// Pointer to the transport that we plan to use.
-    TAO_Transport* t_;
-  };
-
-
-  //=================================================================
-
   Wait_On_LF_No_Upcall::Wait_On_LF_No_Upcall (TAO_Transport *t)
-    : base (t)
-  {
-  }
-
-  Wait_On_LF_No_Upcall::~Wait_On_LF_No_Upcall (void)
+    : TAO_Wait_On_Leader_Follower (t)
   {
   }
 
@@ -83,20 +17,39 @@ namespace TAO
   {
     Nested_Upcall_Guard upcall_guard (this->transport_);
 
-    return base::wait (max_wait_time, rd);
+    return TAO_Wait_On_Leader_Follower::wait (max_wait_time, rd);
   }
 
   bool
-  Wait_On_LF_No_Upcall::can_process_upcalls (void) const
+  Wait_On_LF_No_Upcall::can_process_upcalls () const
   {
-    TAO_ORB_Core_TSS_Resources *tss =
-      this->transport_->orb_core()->get_tss_resources ();
+    if ((this->transport_->opened_as () == TAO::TAO_SERVER_ROLE) &&
+        (this->transport_->bidirectional_flag () == -1))
+      {
+        TAO_ORB_Core_TSS_Resources *tss =
+          this->transport_->orb_core ()->get_tss_resources ();
 
-    if ((this->transport_->opened_as () == TAO::TAO_CLIENT_ROLE) &&
-        (this->transport_->bidirectional_flag () == 0) &&
-        (tss->upcalls_temporarily_suspended_on_this_thread_ == true))
-      return false;
+        if (tss->upcalls_temporarily_suspended_on_this_thread_)
+          {
+            return false;
+          }
+      }
 
     return true;
   }
+
+  int
+  Wait_On_LF_No_Upcall::defer_upcall (ACE_Event_Handler* eh)
+  {
+    if (TAO_debug_level > 6)
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::defer_upcall, "
+                  "deferring upcall on transport "
+                  "because upcalls temporarily suspended on this thread\n",
+                  this->transport_->id()));
+    return this->transport_->orb_core ()->leader_follower ().defer_event (eh);
+  }
+
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

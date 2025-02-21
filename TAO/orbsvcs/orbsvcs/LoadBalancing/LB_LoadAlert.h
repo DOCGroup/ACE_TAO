@@ -4,8 +4,6 @@
 /**
  * @file   LB_LoadAlert.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -24,14 +22,14 @@
 
 #include "orbsvcs/PortableGroupC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LoadBalancing_Export TAO_LB_LoadAlert
   : public virtual POA_CosLoadBalancing::LoadAlert
 {
 public:
-
   /// Constructor.
-  TAO_LB_LoadAlert (void);
+  TAO_LB_LoadAlert ();
 
   /**
    * @name CosLoadBalancing::LoadAlert Methods
@@ -39,46 +37,40 @@ public:
    * Methods required by the CosLoadBalancing::LoadAlert interface.
    */
   //@{
-
   /// Forward requests back to the load manager via the object group
   /// reference.
-  virtual void enable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void enable_alert ();
 
   /// Stop forwarding requests, and begin accepting them again.
-  virtual void disable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disable_alert ();
 
   //@}
 
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager.
-  CORBA::Boolean alerted (void) const;
+  CORBA::Boolean alerted () const;
 
-protected:
-
-
+// protected:
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  //~TAO_LB_LoadAlert (void);
+  virtual ~TAO_LB_LoadAlert ();
 
 private:
-
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager?
   CORBA::Boolean alerted_;
 
   /// Lock used to synchronized access to the LoadAlert state.
   mutable TAO_SYNCH_MUTEX lock_;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "LB_LoadAlert.inl"
+# include "orbsvcs/LoadBalancing/LB_LoadAlert.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

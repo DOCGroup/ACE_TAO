@@ -1,0 +1,25 @@
+
+//=============================================================================
+/**
+ *  @file    array_only.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
+
+// The IDL compiler used to generated code that would not compile if
+// an IDL file contained nothing but an array definition, but only if
+// the Any insertion/extraction operators were generated.  They
+// depended upon the definition of CORBA::SystemException (in
+// particular, CORBA::MARSHAL), but the array impl template file in
+// TAO (tao/AnyTypeCode/Any_Array_Impl_T.cpp) did not have an #include
+// for "tao/SystemException.h".  Now it does.
+
+typedef char TEST_TYPE[10];

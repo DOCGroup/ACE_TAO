@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Reactive_ConsumerControl.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -19,7 +18,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_ConsumerControl.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 
@@ -27,9 +30,8 @@
 
 #include "ace/Event_Handler.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 
@@ -70,7 +72,7 @@ private:
  *
  * Defines the interface for the consumer control strategy.
  * This strategy handles misbehaving or failing consumers.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * = LOCKING
  * = TODO
  */
@@ -78,7 +80,7 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_ConsumerControl
   : public TAO_CEC_ConsumerControl
 {
 public:
-  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
   TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
                                     const ACE_Time_Value &timeout,
@@ -93,27 +95,23 @@ public:
       const ACE_Time_Value &timeout,
       unsigned int retries,
       TAO_CEC_TypedEventChannel *typed_event_channel,
-      CORBA::ORB_ptr orb
-    );
+      CORBA::ORB_ptr orb);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  virtual ~TAO_CEC_Reactive_ConsumerControl (void);
+  virtual ~TAO_CEC_Reactive_ConsumerControl () = default;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_CEC_ConsumerControl
-  virtual int activate (void);
-  virtual int shutdown (void);
-  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual int activate ();
+  virtual int shutdown ();
+  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy);
+  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy);
   virtual void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
   /// Do we need to disconnect this supplier?  The parameter type for
   /// proxy is PortableServer::ServantBase* due to the fact that this
@@ -127,7 +125,7 @@ public:
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void query_consumers ();
 
 private:
   /// The polling rate
@@ -176,8 +174,7 @@ class TAO_CEC_Ping_Push_Consumer
 public:
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPushSupplier *supplier
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_ProxyPushSupplier *supplier);
 
 private:
   TAO_CEC_ConsumerControl *control_;
@@ -191,15 +188,16 @@ class TAO_CEC_Ping_Pull_Consumer
 public:
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPullSupplier *supplier
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_ProxyPullSupplier *supplier);
 
 private:
   TAO_CEC_ConsumerControl *control_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_Reactive_ConsumerControl.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

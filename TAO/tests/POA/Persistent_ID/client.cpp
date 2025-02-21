@@ -1,39 +1,33 @@
-// $Id$
 
-// ================================================================
-//
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is a client implementation.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *   This is a client implementation.
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Generic_Servant, client, "$Id$")
-
-static const char *IOR = "file://ior";
+static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 static int shutdown_server = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        IOR = ACE_OS::strdup (get_opts.opt_arg ());
+        IOR = get_opts.opt_arg ();
         break;
 
       case 'x':
@@ -43,34 +37,28 @@ parse_args (int argc, char **argv)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k IOR "
-                           "-x shutdown server "
-                           "\n",
+                           ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("-k IOR ")
+                           ACE_TEXT ("-x shutdown server ")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
 
   if (IOR == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR\n"), -1);
+                       ACE_TEXT ("Please specify the IOR\n")), -1);
 
   return 0;
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -78,51 +66,50 @@ main (int argc, char **argv)
         return parse_args_result;
 
       CORBA::Object_var object =
-        orb->string_to_object (IOR
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (IOR);
 
       test_var test1 =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object.in ());
 
-      test1->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test1->method ();
 
       test_var test2 =
-        test1->create_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test1->create_POA ();
 
-      test2->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test2->method ();
 
-      test1->destroy_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test1->destroy_POA ();
+
+      try
+        {
+          test2->method ();
+        }
+      catch (const CORBA::Exception &ex)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("caught expected %s\n"),
+                      ex._name()));
+        }
 
       test_var test3 =
-        test1->create_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test1->create_POA ();
 
-      test2->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test2->method ();
 
-      test3->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test3->method ();
 
       if (shutdown_server)
         {
-          test1->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test1->shutdown ();
         }
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error!");
+      ex._tao_print_exception (ACE_TEXT ("Error!"));
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

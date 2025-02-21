@@ -2,9 +2,7 @@
 /**
  *  @file   amh_rh_ss.h
  *
- *  $Id$
- *
- *  Specialized visitor for AMH-ResponseHandler that generates code for the 
+ *  Specialized visitor for AMH-ResponseHandler that generates code for the
  *  RH in the skeleton source file
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
@@ -24,7 +22,7 @@ public:
 
   int visit_operation (be_operation *node);
 
-  ~be_visitor_amh_rh_interface_ss (void);
+  ~be_visitor_amh_rh_interface_ss ();
 };
 
 #endif /* AMH_RH_INTERFACE_SS_H */

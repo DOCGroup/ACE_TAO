@@ -4,8 +4,6 @@
 /**
  * @file LB_ObjectReferenceFactory.h
  *
- * $Id$
-
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -33,6 +31,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_LB_ObjectReferenceFactory
  *
@@ -49,7 +49,6 @@ class TAO_LB_ObjectReferenceFactory
   , public virtual OBV_TAO_LB::ObjectReferenceFactory
 {
  public:
-
   /// Constructor
   TAO_LB_ObjectReferenceFactory (
     PortableInterceptor::ObjectReferenceFactory * old_orf,
@@ -58,6 +57,8 @@ class TAO_LB_ObjectReferenceFactory
     const char * location,
     CORBA::ORB_ptr orb,
     CosLoadBalancing::LoadManager_ptr lm);
+
+  virtual ::CORBA::ValueBase *_copy_value ();
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -68,11 +69,8 @@ class TAO_LB_ObjectReferenceFactory
   //@{
   virtual CORBA::Object_ptr make_object (
       const char * repository_id,
-      const PortableInterceptor::ObjectId & id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const PortableInterceptor::ObjectId & id);
   //@}
-
 
   typedef ACE_Hash_Map_Manager_Ex<
     ACE_CString,
@@ -85,34 +83,29 @@ class TAO_LB_ObjectReferenceFactory
     PortableGroup::GenericFactory::FactoryCreationId_var> fcid_list;
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management via
    * reference counting.
    */
-  ~TAO_LB_ObjectReferenceFactory (void);
+  ~TAO_LB_ObjectReferenceFactory ();
 
   /// Retrieve the object group reference for objects with the given
   /// RepositoryId.
   CORBA::Boolean find_object_group (const char * repository_id,
                                     CORBA::ULong & index,
-                                    PortableGroup::ObjectGroup_out object_group
-                                    ACE_ENV_ARG_DECL);
+                                    PortableGroup::ObjectGroup_out object_group);
 
   /// Determine if object with given RepositoryId is load managed.
   CORBA::Boolean load_managed_object (const char * repository_id,
                                       CORBA::ULong & i);
-
 private:
-
   /// The old ObjectReferenceFactory used to create object references.
   /**
    * This ObjectReferenceFactory will be used when creating object
    * references for non-load balanced objects.
    */
   PortableInterceptor::ObjectReferenceFactory_var old_orf_;
-
 
   /// List of stringified object group references.
   /**
@@ -162,9 +155,9 @@ private:
    * which can be costly.
    */
   CORBA::Boolean * registered_members_;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (_MSC_VER)
 #pragma warning(pop)

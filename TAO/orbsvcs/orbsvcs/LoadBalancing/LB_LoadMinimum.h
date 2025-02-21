@@ -4,8 +4,6 @@
 /**
  *  @file LB_LoadMinimum.h
  *
- *  $Id$
- *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Ossama Othman <ossama@uci.edu>
  */
@@ -17,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "LB_LoadMap.h"
+#include "orbsvcs/LoadBalancing/LB_LoadMap.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
@@ -27,6 +25,9 @@
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_LB
 {
@@ -75,7 +76,6 @@ class TAO_LB_LoadMinimum
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-
   /// Constructor.
   TAO_LB_LoadMinimum (PortableServer::POA_ptr poa);
 
@@ -85,61 +85,42 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual CosLoadBalancing::Properties * get_properties (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosLoadBalancing::Properties * get_properties ();
 
   virtual void push_loads (
       const PortableGroup::Location & the_location,
-      const CosLoadBalancing::LoadList & loads
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CosLoadBalancing::LoadList & loads);
 
   virtual CosLoadBalancing::LoadList * get_loads (
       CosLoadBalancing::LoadManager_ptr load_manager,
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::LocationNotFound));
+      const PortableGroup::Location & the_location);
 
   virtual CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberNotFound));
+      CosLoadBalancing::LoadManager_ptr load_manager);
 
   virtual void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CosLoadBalancing::LoadManager_ptr load_manager);
   //@}
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    );
+  virtual PortableServer::POA_ptr _default_POA ();
 
   /// Initialize the LoadMinimum instance with the given properties.
-  void init (const PortableGroup::Properties & props
-             ACE_ENV_ARG_DECL);
+  void init (const PortableGroup::Properties & props);
 
 protected:
-
   /// Destructor.
-  ~TAO_LB_LoadMinimum (void);
+  ~TAO_LB_LoadMinimum ();
 
   /// Retrieve the least loaded location from the given list of
   /// locations.
   CORBA::Boolean get_location (CosLoadBalancing::LoadManager_ptr load_manager,
                                const PortableGroup::Locations & locations,
-                               PortableGroup::Location & location
-                               ACE_ENV_ARG_DECL);
+                               PortableGroup::Location & location);
 
   /// Return the effective load.
   CORBA::Float effective_load (CORBA::Float previous_load,
@@ -150,17 +131,14 @@ protected:
   void push_loads (
       const PortableGroup::Location & the_location,
       const CosLoadBalancing::LoadList & loads,
-      CosLoadBalancing::Load & effective_load
-      ACE_ENV_ARG_DECL);
+      CosLoadBalancing::Load & effective_load);
 
   /// Utility method to extract a CORBA::Float value from the given
   /// property.
   void extract_float_property (const PortableGroup::Property & property,
-                               CORBA::Float & value
-                               ACE_ENV_ARG_DECL);
+                               CORBA::Float & value);
 
 private:
-
   /// This servant's default POA.
   PortableServer::POA_var poa_;
 
@@ -180,7 +158,6 @@ private:
    * Cached LoadMinimum load balancing strategy property values.
    */
   //@{
-
   ///
   CORBA::Float tolerance_;
 
@@ -191,12 +168,12 @@ private:
   CORBA::Float per_balance_load_;
 
   //@}
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "LB_LoadMinimum.inl"
+#include "orbsvcs/LoadBalancing/LB_LoadMinimum.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

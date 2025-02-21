@@ -1,0 +1,10 @@
+#ifdef LOCAL
+local
+#endif
+interface X {
+  void op();
+};
+struct Y {
+  X theX;
+};
+typedef sequence<X> XSeq;

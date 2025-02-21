@@ -4,8 +4,6 @@
 /**
  *  @file RequestProcessingStrategyServantManager.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -14,16 +12,18 @@
 #define TAO_REQUESTPROCESSINGSTRATEGYSERVANTMANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "RequestProcessingStrategy.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Servant_Location.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/PortableServer.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -33,42 +33,25 @@ namespace TAO
       : public RequestProcessingStrategy
     {
     public:
-      RequestProcessingStrategyServantManager (void);
+      RequestProcessingStrategyServantManager () = default;
 
-      PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+      PortableServer::Servant get_servant () override;
 
-      void set_servant (PortableServer::Servant servant ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+      void set_servant (PortableServer::Servant servant) override;
 
-      void validate_servant_manager (
-        PortableServer::ServantManager_ptr servant_manager
-        ACE_ENV_ARG_DECL);
+      virtual void validate_servant_manager (
+        PortableServer::ServantManager_ptr servant_manager);
 
-      virtual PortableServer::Servant system_id_to_servant (
-        const PortableServer::ObjectId &system_id
-        ACE_ENV_ARG_DECL);
+      PortableServer::Servant system_id_to_servant (const PortableServer::ObjectId &system_id) override;
 
-      virtual PortableServer::Servant id_to_servant (
-        const PortableServer::ObjectId &id
-        ACE_ENV_ARG_DECL)
-          ACE_THROW_SPEC ((CORBA::SystemException,
-                           PortableServer::POA::ObjectNotActive,
-                           PortableServer::POA::WrongPolicy));
+      PortableServer::Servant id_to_servant (const PortableServer::ObjectId &id) override;
 
-      virtual PortableServer::ObjectId *servant_to_id (
-        PortableServer::Servant servant
-        ACE_ENV_ARG_DECL)
-          ACE_THROW_SPEC ((CORBA::SystemException,
-                           PortableServer::POA::ServantNotActive,
-                           PortableServer::POA::WrongPolicy));
-
-      virtual ::PortableServer::RequestProcessingPolicyValue type() const;
+      PortableServer::ObjectId *servant_to_id (PortableServer::Servant servant) override;
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

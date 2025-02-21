@@ -1,0 +1,22 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    idlflags += -Gd -Sorb
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, iormanip, pi_server, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  Source_Files {
+    test_i.cpp
+    testC.cpp
+    testS.cpp
+    Server_ORBInitializer.cpp
+    Server_Request_Interceptor.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}

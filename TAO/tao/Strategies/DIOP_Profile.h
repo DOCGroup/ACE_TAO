@@ -1,14 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file     DIOP_Profile.h
  *
- *  $Id$
- *
  *   DIOP profile specific processing
- *
  *
  *  @author  Michael Kircher
  */
@@ -22,14 +18,16 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-
-#include "tao/Profile.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "DIOP_Endpoint.h"
 
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
+#include "tao/Strategies/DIOP_Endpoint.h"
+#include "tao/Profile.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO DIOP_Profile concrete Profile definitions
 /**
@@ -46,10 +44,10 @@ class TAO_Strategies_Export TAO_DIOP_Profile : public TAO_Profile
 public:
   /// The object key delimiter that DIOP uses or expects.
   static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
   /// Return the char string prefix.
-  static const char *prefix (void);
+  static const char *prefix ();
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.
@@ -72,16 +70,15 @@ public:
   TAO_DIOP_Profile (TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.
-  ~TAO_DIOP_Profile (void);
+  ~TAO_DIOP_Profile ();
 
 
   /// Template methods. Please tao/Profile.h for documentation.
-  virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
-  virtual int encode_endpoints (void);
-  virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL);
+  virtual char * to_string () const;
+  virtual int encode_endpoints ();
+  virtual TAO_Endpoint *endpoint ();
+  virtual CORBA::ULong endpoint_count () const;
+  virtual CORBA::ULong hash (CORBA::ULong max);
   /**
    * Add <endp> to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
@@ -90,17 +87,14 @@ public:
   void add_endpoint (TAO_DIOP_Endpoint *endp);
 
 protected:
-
   /// Template methods. Please see tao/Profile.h for documentation.
   virtual int decode_profile (TAO_InputCDR& cdr);
-  virtual void parse_string_i (const char *string
-                               ACE_ENV_ARG_DECL);
+  virtual void parse_string_i (const char *string);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
-  virtual int decode_endpoints (void);
+  virtual int decode_endpoints ();
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 protected:
-
   /**
    * Head of this profile's list of endpoints.  This endpoint is not
    * dynamically allocated because a profile always contains at least
@@ -121,6 +115,8 @@ protected:
   /// Number of endpoints in the list headed by <endpoint_>.
   CORBA::ULong count_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 

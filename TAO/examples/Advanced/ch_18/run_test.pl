@@ -2,10 +2,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib "../../../../bin";
+use lib "$ENV{ACE_ROOT}/bin";
 
 require ACEutils;
 require Process;
@@ -13,7 +12,7 @@ require Process;
 $status = 0;
 
 # amount of delay between starting servers and client
-$sleeptime = 5;
+$sleeptime = 15;
 
 
 
@@ -24,7 +23,7 @@ sub name_server
              "..$DIR_SEPARATOR".
              "orbsvcs$DIR_SEPARATOR".
              "Naming_Service$DIR_SEPARATOR".
-             "Naming_Service$EXE_EXT";
+             "tao_cosnaming$EXE_EXT";
   $NS = Process::Create ($prog,"");
 }
 
@@ -50,7 +49,7 @@ if ($client->TimedWait (60) == -1) {
 
 
 # gracefully kill the server
-$server->Terminate (); 
+$server->Terminate ();
 if ($server->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate the server\n";
   $server->Kill (); $server->TimedWait (1);
@@ -58,7 +57,7 @@ if ($server->TimedWait (5) == -1) {
 }
 
 # gracefully kill the Naming Service
-$NS->Terminate (); 
+$NS->Terminate ();
 if ($NS->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate the server\n";
   $NS->Kill (); $server->TimedWait (1);

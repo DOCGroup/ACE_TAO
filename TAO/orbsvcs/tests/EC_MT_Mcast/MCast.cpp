@@ -1,4 +1,3 @@
-// $Id$
 // Adapted from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
 #include "Consumer.h"
@@ -11,16 +10,13 @@
 #include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "tao/Strategies/advanced_resource.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_MT_Mcast,
-           MCast,
-           "$Id$")
-
-const char *udp_mcast_address =
-    ACE_DEFAULT_MULTICAST_ADDR ":10001";
+const ACE_TCHAR *udp_mcast_address =
+    ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
 
 static CORBA::ORB_var orb = CORBA::ORB::_nil ();
 static bool terminate_threads = false;
@@ -30,15 +26,12 @@ static const int data_items = 60000;
 void *
 run_orb_within_thread (void *)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
   while (! terminate_threads)
     {
-      ACE_TRY
+      try
         {
           CORBA::Boolean there_is_work =
-            orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->work_pending ();
           if (there_is_work)
             {
               // We use a TAO extension. The CORBA mechanism does not
@@ -46,28 +39,24 @@ run_orb_within_thread (void *)
               // perform_work() or work_pending(), so just calling
               // them results in a spin loop.
               ACE_Time_Value tv (0, 50000);
-              orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              orb->perform_work (tv);
             }
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "perform work");
+          ex._tao_print_exception ("perform work");
 
           return 0;
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
     }
 
   return 0;
 }
 
-int parse_args (int argc, char *argv[]);
+int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Register the default factory in the Service Configurator.
   // If your platform supports static constructors then you can
@@ -76,14 +65,12 @@ main (int argc, char* argv[])
   // so we have to explicitly invoke this function.
   TAO_EC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // **************** HERE IS THE ORB SETUP
 
       // Create the ORB, pass the argv list for parsing.
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb = CORBA::ORB_init (argc, argv);
 
       // Parse the arguments, you usually want to do this after
       // invoking ORB_init() because ORB_init() will remove all the
@@ -100,16 +87,12 @@ main (int argc, char* argv[])
       // The POA starts in the holding state, if it is not activated
       // it will not process any requests.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // **************** THAT COMPLETES THE ORB SETUP
 
@@ -131,15 +114,13 @@ main (int argc, char* argv[])
       // that may involve creating some threads.
       // But it should always be invoked because several internal data
       // structures are initialized at that point.
-      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl.activate ();
 
       // The event channel is activated as any other CORBA servant.
       // In this case we use the simple implicit activation with the
       // RootPOA
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl._this ();
 
       // **************** THAT COMPLETES THE LOCAL EVENT CHANNEL SETUP
 
@@ -164,19 +145,15 @@ main (int argc, char* argv[])
 
       // First we convert the string into an INET address, then we
       // convert that into the right IDL structure:
-      ACE_INET_Addr udp_addr (udp_mcast_address);
+      ACE_INET_Addr udp_addr (ACE_TEXT_ALWAYS_CHAR(udp_mcast_address));
       ACE_DEBUG ((LM_DEBUG,
                   "Multicast address is: %s\n",
                   udp_mcast_address));
-      RtecUDPAdmin::UDP_Addr addr;
-      addr.ipaddr = udp_addr.get_ip_address ();
-      addr.port   = udp_addr.get_port_number ();
 
       // Now we create and activate the servant
-      AddrServer as_impl (addr);
+      AddrServer as_impl (udp_addr);
       RtecUDPAdmin::AddrServer_var address_server =
-        as_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        as_impl._this ();
 
       // We need a local socket to send the data, open it and check
       // that everything is OK:
@@ -185,21 +162,20 @@ main (int argc, char* argv[])
       ACE_NEW_RETURN (endpointptr, TAO_ECG_UDP_Out_Endpoint, 0);
 
       TAO_ECG_Refcounted_Endpoint endpoint (endpointptr);
-      if (endpoint->dgram ().open (ACE_Addr::sap_any) == -1)
+      if (endpoint->dgram ().open (ACE_Addr::sap_any,
+                                   udp_addr.get_type()) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "Cannot open send endpoint\n"),
                             1);
         }
 
       // Now we setup the sender:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender;
+      PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender;
       sender = TAO_ECG_UDP_Sender::create();
 
       sender->init (event_channel.in (),
                     address_server.in (),
-                    endpoint
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                    endpoint);
 
       // Now we connect the sender as a consumer of events, it will
       // receive any event from any source and send it to the "right"
@@ -213,11 +189,10 @@ main (int argc, char* argv[])
       sub.dependencies[0].event.header.source =
         ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
-      sender->connect (sub ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sender->connect (sub);
 
       // To receive events we need to setup an event handler:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver;
+      PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver;
       receiver = TAO_ECG_UDP_Receiver::create();
 
       TAO_ECG_Mcast_EH mcast_eh (&*receiver);
@@ -232,18 +207,14 @@ main (int argc, char* argv[])
       // required by all the local consumer.
       // Then it register for the multicast groups that carry those
       // events:
-      mcast_eh.open (event_channel.in ()
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mcast_eh.open (event_channel.in ());
 
       // Again the receiver connects to the event channel as a
       // supplier of events, using the Observer features to detect
       // local consumers and their interests:
       receiver->init (event_channel.in (),
                       endpoint,
-                      address_server.in ()
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                      address_server.in ());
 
       // The Receiver is also a supplier of events.  The exact type of
       // events is only known to the application, because it depends
@@ -262,8 +233,7 @@ main (int argc, char* argv[])
       pub.publications[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
       pub.is_gateway = 1;
 
-      receiver->connect (pub ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      receiver->connect (pub);
 
       // **************** THAT COMPLETES THE FEDERATION SETUP
 
@@ -274,21 +244,15 @@ main (int argc, char* argv[])
       Consumer consumer1;
       Consumer consumer2;
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer1.connect (consumer_admin.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer2.connect (consumer_admin.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_consumers ();
+      consumer1.connect (consumer_admin.in ());
+      consumer2.connect (consumer_admin.in ());
 
       // And now create a supplier
       Supplier supplier;
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      supplier.connect (supplier_admin.in ()
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_suppliers ();
+      supplier.connect (supplier_admin.in ());
 
       // **************** THAT COMPLETES THE CLIENT SETUP
 
@@ -306,8 +270,7 @@ main (int argc, char* argv[])
 
       for (int i = 0; i < data_items; i++)
         {
-          supplier.perform_push (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          supplier.perform_push ();
         }
 
       ACE_OS::sleep (2); // simple solution ensures ready receivers
@@ -322,16 +285,12 @@ main (int argc, char* argv[])
       // **************** HERE IS THE CLEANUP CODE
 
       // First the easy ones
-      supplier.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer1.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer2.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier.disconnect ();
+      consumer1.disconnect ();
+      consumer2.disconnect ();
 
       // Now let us disconnect the Receiver
-      receiver->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      receiver->shutdown ();
 
       int r = mcast_eh.shutdown ();
 
@@ -342,14 +301,12 @@ main (int argc, char* argv[])
         }
 
       // And also disconnect the sender of events
-      sender->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sender->shutdown ();
 
       // The event channel must be destroyed, so it can release its
       // resources, and inform all the clients that are still
       // connected that it is going away.
-      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel->destroy ();
 
       // Deactivating the event channel implementation is not strictly
       // required, the POA will do it for us, but it is good manners:
@@ -360,45 +317,39 @@ main (int argc, char* argv[])
         // is the root POA, but the code is more robust if we don't
         // rely on that.
         PortableServer::POA_var poa =
-          ec_impl._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          ec_impl._default_POA ();
         // Get the Object Id used for the servant..
         PortableServer::ObjectId_var oid =
-          poa->servant_to_id (&ec_impl ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          poa->servant_to_id (&ec_impl);
         // Deactivate the object
-        poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        poa->deactivate_object (oid.in ());
       }
 
       // Now we can destroy the POA, the flags mean that we want to
       // wait until the POA is really destroyed
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa->destroy (true, true);
 
       // Finally destroy the ORB
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       // **************** THAT COMPLETES THE CLEANUP CODE
 
       ACE_DEBUG ((LM_DEBUG,
                   "MCast example finished\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 // ****************************************************************
 
-int parse_args (int argc, char *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "m:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("m:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -417,7 +368,6 @@ int parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
-

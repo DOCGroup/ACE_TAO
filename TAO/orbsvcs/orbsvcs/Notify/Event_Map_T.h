@@ -2,18 +2,14 @@
 /**
  *  @file Event_Map_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_EVENT_MAP_T_H
 #define TAO_Notify_EVENT_MAP_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,66 +18,66 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/CORBA_macros.h"
 
-#include "EventType.h"
-#include "Event_Map_Entry_T.h"
-#include "EventTypeSeq.h"
+#include "orbsvcs/Notify/EventType.h"
+#include "orbsvcs/Notify/Event_Map_Entry_T.h"
+#include "orbsvcs/Notify/EventTypeSeq.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Event_Map_T
  *
  * @brief Template class for storing the collection of Proxys.
- *
  */
 template <class PROXY, class ACE_LOCK>
 class TAO_Notify_Event_Map_T
 {
-
 public:
   typedef  TAO_Notify_Event_Map_Entry_T<PROXY> ENTRY;
 
-  /// Constuctor
-  TAO_Notify_Event_Map_T (void);
+  /// Constructor
+  TAO_Notify_Event_Map_T ();
 
   /// Destructor
   ~TAO_Notify_Event_Map_T ();
 
   /// Init
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void init ();
 
   /// Connect a PROXY
-  void connect (PROXY* proxy ACE_ENV_ARG_DECL);
+  void connect (PROXY* proxy);
 
   /// Disconnect a PROXY
-  void disconnect (PROXY* proxy ACE_ENV_ARG_DECL);
+  void disconnect (PROXY* proxy);
 
   /// Associate PROXY and event_type.
   /// Returns 1 if <event_type> is being seem for the 1st time otherwise returns 0.
   /// Returns -1 on error.
-  int insert (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
+  int insert (PROXY* proxy, const TAO_Notify_EventType& event_type);
 
   /// Remove association of PROXY and event_type.
   /// Returns 1 if <event_type> is being seem for the last time otherwise returns 0.
   /// Returns -1 on error.
-  int remove (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
+  int remove (PROXY* proxy, const TAO_Notify_EventType& event_type);
 
   /// Find the collection mapped to the <event_type>
   /// The usage_count on the entry returned is incremented.
-  ENTRY* find (const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
+  ENTRY* find (const TAO_Notify_EventType& event_type);
 
   /// Find the default broadcast list.
-  ACE_TYPENAME ENTRY::COLLECTION* broadcast_collection (void);
+  typename ENTRY::COLLECTION* broadcast_collection ();
 
   /// Find the update list. This is all the PROXYS connected to this Map.
-  ACE_TYPENAME ENTRY::COLLECTION* updates_collection (void);
+  typename ENTRY::COLLECTION* updates_collection ();
 
   /// Release the usage count on this entry.
   void release (ENTRY* entry);
 
   /// Access all the event types available
-  const TAO_Notify_EventTypeSeq& event_types (void);
+  const TAO_Notify_EventTypeSeq& event_types ();
 
   /// Access number of proxys connected in all.
-  int proxy_count (void);
+  int proxy_count ();
 
 protected:
   /// The Map that stores eventtype to entry mapping.
@@ -103,17 +99,13 @@ protected:
   TAO_Notify_EventTypeSeq event_types_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Event_Map_T.inl"
+#include "orbsvcs/Notify/Event_Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Event_Map_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Event_Map_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/Notify/Event_Map_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_EVENT_MAP_T_H */

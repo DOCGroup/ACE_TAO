@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 
 # test.dat test.png test
 #gnuplot <<_EOF_ >/dev/null 2>&1

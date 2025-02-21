@@ -1,116 +1,119 @@
-//$Id$
-
-#include "Invocation_Adapter.h"
-#include "Profile_Transport_Resolver.h"
-#include "operation_details.h"
-#include "Stub.h"
-#include "ORB_Core.h"
-#include "Synch_Invocation.h"
-#include "debug.h"
-#include "Collocated_Invocation.h"
-#include "Transport.h"
-#include "Transport_Mux_Strategy.h"
-#include "Collocation_Proxy_Broker.h"
+// -*- C++ -*-
+#include "tao/Invocation_Adapter.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/operation_details.h"
+#include "tao/Stub.h"
+#include "tao/ORB_Core.h"
+#include "tao/Synch_Invocation.h"
+#include "tao/debug.h"
+#include "tao/Collocated_Invocation.h"
+#include "tao/Transport.h"
+#include "tao/Transport_Mux_Strategy.h"
+#include "tao/GIOP_Utils.h"
+#include "tao/TAOC.h"
+#include "tao/SystemException.h"
+#include "tao/Collocation_Resolver.h"
+#include "tao/Invocation_Retry_State.h"
+#include "ace/Service_Config.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Invocation_Adapter,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  Invocation_Adapter::~Invocation_Adapter (void)
+  Invocation_Adapter::~Invocation_Adapter ()
   {
   }
 
   void
-  Invocation_Adapter::invoke (TAO::Exception_Data *ex_data,
-                              unsigned long ex_count
-                              ACE_ENV_ARG_DECL)
+  Invocation_Adapter::invoke (const TAO::Exception_Data *ex_data,
+                              unsigned long ex_count)
   {
     // Should stub object be refcounted here?
-    TAO_Stub *stub =
-      this->get_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    TAO_Stub *stub = this->get_stub ();
 
     TAO_Operation_Details op_details (this->operation_,
-                                      this->op_len_,
-                                      this->number_args_ != 0,
+                                      ACE_Utils::truncate_cast<CORBA::ULong> (this->op_len_),
                                       this->args_,
                                       this->number_args_,
+                                      this->has_in_args_,
                                       ex_data,
                                       ex_count);
 
-    this->invoke_i (stub,
-                    op_details
-                    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->invoke_i (stub, op_details);
   }
 
   void
-  Invocation_Adapter::invoke_i (TAO_Stub *stub,
-                                TAO_Operation_Details &details
-                                ACE_ENV_ARG_DECL)
+  Invocation_Adapter::invoke_i (TAO_Stub *stub, TAO_Operation_Details &details)
   {
+    // The invocation has got to be within the context of the
+    // corresponding ORB's configuration. Otherwise things like
+    // timeout hooks, etc may not work as expected. Especially if
+    // there are multiple ORB instances in the process, each with its
+    // own, local configuration.
+    ACE_Service_Config_Guard scg (stub->orb_core ()->configuration ());
+
     // Cache the target to a local variable.
     CORBA::Object_var effective_target =
       CORBA::Object::_duplicate (this->target_);
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
+    ACE_Time_Value *max_wait_time = nullptr;
+    ACE_Time_Value tmp_wait_time = ACE_Time_Value::zero;
+    if (this->get_timeout (stub, tmp_wait_time))
+      {
+        max_wait_time= &tmp_wait_time;
+      }
 
-    ACE_Time_Value *max_wait_time = 0;
+    TAO::Invocation_Retry_State retry_state (*stub);
 
-    while (status == TAO_INVOKE_START ||
-           status == TAO_INVOKE_RESTART)
+    while (status == TAO_INVOKE_START || status == TAO_INVOKE_RESTART)
       {
         // Default we go to remote
         Collocation_Strategy strat = TAO_CS_REMOTE_STRATEGY;
 
-        // If we have a collocated proxy broker we look if we maybe
+        // If we have the opportunity for collocation we maybe
         // can use a collocated invocation.  Similarly, if the
         // target object reference contains a pointer to a servant,
         // the object reference also refers to a collocated object.
-        if (cpb_ != 0 || effective_target->_servant () != 0)
+        // get the ORBStrategy
+        strat = this->collocation_strategy (effective_target.in ());
+
+        if (TAO_debug_level > 2)
           {
-            strat =
-              TAO_ORB_Core::collocation_strategy (effective_target.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
+            TAOLIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT("TAO (%P|%t) - Invocation_Adapter::invoke_i, ")
+              ACE_TEXT("making a %C invocation\n"),
+              TAO::translate_collocation_strategy(strat)));
           }
 
-        if (strat == TAO_CS_REMOTE_STRATEGY ||
-            strat == TAO_CS_LAST)
+        if (strat == TAO_CS_REMOTE_STRATEGY || strat == TAO_CS_LAST)
           {
             status =
               this->invoke_remote_i (stub,
                                      details,
                                      effective_target,
-                                     max_wait_time
-                                     ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
+                                     max_wait_time,
+                                     &retry_state);
           }
         else
           {
             if (strat == TAO_CS_THRU_POA_STRATEGY)
               {
-                (void) this->set_response_flags (stub,
-                                                 details);
+                (void) this->set_response_flags (stub, details);
               }
 
             status =
               this->invoke_collocated_i (stub,
                                          details,
                                          effective_target,
-                                         strat
-                                         ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
+                                         strat);
           }
-
         if (status == TAO_INVOKE_RESTART)
           {
             details.reset_request_service_info ();
@@ -118,39 +121,43 @@ namespace TAO
 
             if (TAO_debug_level > 2)
               {
-                ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Invocation_Adapter::invoke_i, "
-                  "handling forwarded locations \n"));
+                TAOLIB_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - Invocation_Adapter::invoke_i, ")
+                  ACE_TEXT("handling forwarded locations\n")));
               }
           }
       }
   }
 
   bool
-  Invocation_Adapter::get_timeout (TAO_Stub *stub,
-                                   ACE_Time_Value &timeout)
+  Invocation_Adapter::get_timeout (TAO_Stub *stub, ACE_Time_Value &timeout)
   {
     bool has_timeout = false;
-    this->target_->orb_core ()->call_timeout_hook (stub,
-                                                   has_timeout,
-                                                   timeout);
+    this->target_->orb_core ()->call_timeout_hook (stub, has_timeout, timeout);
 
     return has_timeout;
   }
 
   TAO_Stub *
-  Invocation_Adapter::get_stub (ACE_ENV_SINGLE_ARG_DECL) const
+  Invocation_Adapter::get_stub () const
   {
-    TAO_Stub * const stub =
-      this->target_->_stubobj ();
+    TAO_Stub * const stub = this->target_->_stubobj ();
 
-    if (stub == 0)
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        stub);
+    if (stub == nullptr)
+      {
+        if (TAO_debug_level > 0)
+          {
+            TAOLIB_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Invocation_Adapter::get_stub, ")
+                        ACE_TEXT ("raising CORBA::INTERNAL because of nil ")
+                        ACE_TEXT ("stub.\n")));
+          }
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
+      }
 
     return stub;
   }
@@ -159,15 +166,8 @@ namespace TAO
   Invocation_Adapter::invoke_collocated_i (TAO_Stub *stub,
                                            TAO_Operation_Details &details,
                                            CORBA::Object_var &effective_target,
-                                           Collocation_Strategy strat
-                                           ACE_ENV_ARG_DECL)
+                                           Collocation_Strategy strat)
   {
-    // To make a collocated call we must have a collocated proxy broker, the
-    // invoke_i() will make sure that we only come here when we have one
-    ACE_ASSERT (cpb_ != 0
-                || (strat == TAO_CS_THRU_POA_STRATEGY
-                    && effective_target->_servant () != 0));
-
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
 
@@ -177,22 +177,18 @@ namespace TAO
                                     details,
                                     this->type_ == TAO_TWOWAY_INVOCATION);
 
-    status =
-      coll_inv.invoke (this->cpb_,
-                       strat
-                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    status = coll_inv.invoke (strat);
 
     if (status == TAO_INVOKE_RESTART &&
-        coll_inv.is_forwarded ())
+        (coll_inv.reply_status () == GIOP::LOCATION_FORWARD ||
+         coll_inv.reply_status () == GIOP::LOCATION_FORWARD_PERM))
       {
-        effective_target =
-            coll_inv.steal_forwarded_reference ();
+        CORBA::Boolean const is_permanent_forward =
+          (coll_inv.reply_status () == GIOP::LOCATION_FORWARD_PERM);
 
-        (void) this->object_forwarded (effective_target,
-                                       stub
-                                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+        effective_target = coll_inv.steal_forwarded_reference ();
+
+        this->object_forwarded (effective_target, stub, is_permanent_forward);
       }
 
     return status;
@@ -230,102 +226,102 @@ namespace TAO
           break;
         }
       }
-
-    return;
   }
 
   Invocation_Status
   Invocation_Adapter::invoke_remote_i (TAO_Stub *stub,
                                        TAO_Operation_Details &details,
                                        CORBA::Object_var &effective_target,
-                                       ACE_Time_Value *&max_wait_time
-                                       ACE_ENV_ARG_DECL)
+                                       ACE_Time_Value *&max_wait_time,
+                                       Invocation_Retry_State *retry_state)
   {
-    ACE_Time_Value tmp_wait_time;
-    bool is_timeout  =
-      this->get_timeout (stub,
-                         tmp_wait_time);
+    (void) this->set_response_flags (stub, details);
 
-    if (is_timeout)
-      max_wait_time = &tmp_wait_time;
-
-    (void) this->set_response_flags (stub,
-                                     details);
-
+    CORBA::Octet const rflags = details.response_flags ();
+    bool const block_connect =
+      rflags != static_cast<CORBA::Octet> (Messaging::SYNC_NONE)
+      && rflags != static_cast<CORBA::Octet> (TAO::SYNC_DELAYED_BUFFERING);
     // Create the resolver which will pick (or create) for us a
     // transport and a profile from the effective_target.
     Profile_Transport_Resolver resolver (
       effective_target.in (),
       stub,
-      (details.response_flags () != Messaging::SYNC_NONE));
+      block_connect);
+    resolver.resolve (max_wait_time);
 
-    resolver.resolve (max_wait_time
-                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
+    if (TAO_debug_level)
+      {
+        if (max_wait_time && *max_wait_time == ACE_Time_Value::zero)
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_remote_i, ")
+                      ACE_TEXT ("max wait time consumed during transport resolution\n")));
+      }
     // Update the request id now that we have a transport
-    details.request_id (resolver.transport ()->tms ()->request_id ());
-
-    Invocation_Status s = TAO_INVOKE_FAILURE;
-
-    if (this->type_ == TAO_ONEWAY_INVOCATION)
+    if (resolver.transport ())
       {
-        return this->invoke_oneway (details,
-                                    effective_target,
-                                    resolver,
-                                    max_wait_time
-                                    ACE_ENV_ARG_PARAMETER);
+        details.request_id (resolver.transport ()->tms ()->request_id ());
       }
-    else if (this->type_ == TAO_TWOWAY_INVOCATION)
+    switch (this->type_)
       {
-        return this->invoke_twoway (details,
-                                    effective_target,
-                                    resolver,
-                                    max_wait_time
-                                    ACE_ENV_ARG_PARAMETER);
+        case TAO_ONEWAY_INVOCATION:
+          {
+            return this->invoke_oneway (details,
+                                        effective_target,
+                                        resolver,
+                                        max_wait_time);
+          }
+        case TAO_TWOWAY_INVOCATION:
+          {
+            return this->invoke_twoway (details,
+                                        effective_target,
+                                        resolver,
+                                        max_wait_time,
+                                        retry_state);
+          }
       }
-
-    return s;
+    return TAO_INVOKE_FAILURE;
   }
 
   Invocation_Status
   Invocation_Adapter::invoke_twoway (TAO_Operation_Details &details,
                                      CORBA::Object_var &effective_target,
                                      Profile_Transport_Resolver &r,
-                                     ACE_Time_Value *&max_wait_time
-                                     ACE_ENV_ARG_DECL)
+                                     ACE_Time_Value *&max_wait_time,
+                                     Invocation_Retry_State *retry_state)
   {
     // Simple sanity check
     if (this->mode_ != TAO_SYNCHRONOUS_INVOCATION ||
         this->type_ != TAO_TWOWAY_INVOCATION)
       {
-        ACE_THROW_RETURN (CORBA::INTERNAL (
-            CORBA::SystemException::_tao_minor_code (
-                TAO::VMCID,
-                EINVAL),
-            CORBA::COMPLETED_NO),
-                          TAO_INVOKE_FAILURE);
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
       }
 
-    TAO::Synch_Twoway_Invocation synch (this->target_,
-                                        r,
-                                        details);
+    TAO::Synch_Twoway_Invocation synch (this->target_,  r, details,
+                                        true);
 
-    Invocation_Status status =
-      synch.remote_twoway (max_wait_time
-                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    // forward requested byte order
+    synch._tao_byte_order (this->byte_order_);
+
+    synch.set_retry_state (retry_state);
+
+    Invocation_Status const status = synch.remote_twoway (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART &&
-        synch.is_forwarded ())
+        (synch.reply_status () == GIOP::LOCATION_FORWARD ||
+         synch.reply_status () == GIOP::LOCATION_FORWARD_PERM))
       {
-        effective_target =
-          synch.steal_forwarded_reference ();
+        CORBA::Boolean const is_permanent_forward =
+          (synch.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
+        effective_target = synch.steal_forwarded_reference ();
 
         this->object_forwarded (effective_target,
-                                r.stub ()
-                                ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                                r.stub (),
+                                is_permanent_forward);
       }
 
     return status;
@@ -335,28 +331,27 @@ namespace TAO
   Invocation_Adapter::invoke_oneway (TAO_Operation_Details &details,
                                      CORBA::Object_var &effective_target,
                                      Profile_Transport_Resolver &r,
-                                     ACE_Time_Value *&max_wait_time
-                                     ACE_ENV_ARG_DECL)
+                                     ACE_Time_Value *&max_wait_time)
   {
-    TAO::Synch_Oneway_Invocation synch (this->target_,
-                                        r,
-                                        details);
+    TAO::Synch_Oneway_Invocation synch (this->target_, r, details);
 
-    Invocation_Status s =
-      synch.remote_oneway (max_wait_time
-                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    // forward requested byte order
+    synch._tao_byte_order (this->byte_order_);
+
+    Invocation_Status const s = synch.remote_oneway (max_wait_time);
 
     if (s == TAO_INVOKE_RESTART &&
-        synch.is_forwarded ())
+        (synch.reply_status () == GIOP::LOCATION_FORWARD ||
+         synch.reply_status () == GIOP::LOCATION_FORWARD_PERM))
       {
-        effective_target =
-          synch.steal_forwarded_reference ();
+        CORBA::Boolean const is_permanent_forward =
+          (synch.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
+        effective_target = synch.steal_forwarded_reference ();
 
         this->object_forwarded (effective_target,
-                                r.stub ()
-                                ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                                r.stub (),
+                                is_permanent_forward);
       }
 
     return s;
@@ -364,32 +359,135 @@ namespace TAO
 
   void
   Invocation_Adapter::object_forwarded (CORBA::Object_var &effective_target,
-                                        TAO_Stub *stub
-                                        ACE_ENV_ARG_DECL)
+                                        TAO_Stub *stub,
+                                        CORBA::Boolean permanent_forward)
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj =
-      effective_target->_stubobj ();
+    TAO_Stub *stubobj = nullptr;
 
-    if (stubobj == 0)
-      ACE_THROW (CORBA::INTERNAL (
+    bool nil_forward_ref = false;
+    if (CORBA::is_nil (effective_target.in ()))
+      nil_forward_ref = true;
+    else
+      {
+        stubobj = effective_target->_stubobj ();
+
+        if (stubobj && stubobj->base_profiles ().size () == 0)
+          nil_forward_ref = true;
+      }
+
+    if (nil_forward_ref)
+      throw ::CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          errno),
-        CORBA::COMPLETED_NO));
+          0),
+        CORBA::COMPLETED_NO);
 
+    if (stubobj == nullptr)
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+          EINVAL),
+        CORBA::COMPLETED_NO);
 
     // Reset the profile in the stubs
-    stub->add_forward_profiles (stubobj->base_profiles ());
-
-    if (stub->next_profile () == 0)
-      ACE_THROW (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          errno),
-        CORBA::COMPLETED_NO));
-
-    return;
+    stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);
   }
+
+  TAO::Collocation_Strategy
+  Invocation_Adapter::collocation_strategy (CORBA::Object_ptr object)
+  {
+    TAO::Collocation_Strategy strategy = TAO::TAO_CS_REMOTE_STRATEGY;
+    TAO_Stub *stub = object->_stubobj ();
+    if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
+        stub->servant_orb_var ()->orb_core () != nullptr)
+      {
+        TAO_ORB_Core *orb_core = stub->servant_orb_var ()->orb_core ();
+
+        if (orb_core->collocation_resolver ().is_collocated (object))
+          {
+            switch (orb_core->get_collocation_strategy ())
+              {
+              case TAO_ORB_Core::TAO_COLLOCATION_THRU_POA:
+                {
+                  // check opportunity
+                  if (ACE_BIT_ENABLED (this->collocation_opportunity_,
+                                      TAO::TAO_CO_THRU_POA_STRATEGY))
+                    {
+                      strategy = TAO::TAO_CS_THRU_POA_STRATEGY;
+                    }
+                  else
+                    {
+                      if (TAO_debug_level > 0)
+                        {
+                          TAOLIB_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("Invocation_Adapter::collocation_strategy, ")
+                                      ACE_TEXT ("request for through poa collocation ")
+                                      ACE_TEXT ("without needed collocation opportunity.\n")));
+                        }
+                      // collocation object, but no collocation_opportunity for Thru_poa
+                      throw ::CORBA::INTERNAL (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO::VMCID,
+                          EINVAL),
+                        CORBA::COMPLETED_NO);
+                    }
+                  break;
+                }
+              case TAO_ORB_Core::TAO_COLLOCATION_DIRECT:
+                {
+                  if (ACE_BIT_ENABLED (this->collocation_opportunity_,
+                                      TAO::TAO_CO_DIRECT_STRATEGY)
+                                      && (object->_servant () != nullptr))
+                    {
+                      strategy = TAO::TAO_CS_DIRECT_STRATEGY;
+                    }
+                  else
+                    {
+                      if (TAO_debug_level > 0)
+                        {
+                          TAOLIB_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("Invocation_Adapter::collocation_strategy, ")
+                                      ACE_TEXT ("request for direct collocation ")
+                                      ACE_TEXT ("without needed collocation opportunity.\n")));
+                        }
+                      // collocation object, but no collocation_opportunity for Direct
+                      // or servant() == 0
+                      throw ::CORBA::INTERNAL (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO::VMCID,
+                        EINVAL),
+                      CORBA::COMPLETED_NO);
+                    }
+                  break;
+                }
+              case TAO_ORB_Core::TAO_COLLOCATION_BEST:
+                {
+                  if (ACE_BIT_ENABLED (this->collocation_opportunity_,
+                                      TAO::TAO_CO_DIRECT_STRATEGY)
+                      && (object->_servant () != nullptr))
+                    {
+                      strategy = TAO::TAO_CS_DIRECT_STRATEGY;
+                    }
+                  else if (ACE_BIT_ENABLED (this->collocation_opportunity_,
+                                            TAO::TAO_CO_THRU_POA_STRATEGY))
+                    {
+                      strategy = TAO::TAO_CS_THRU_POA_STRATEGY;
+                    }
+                  else
+                    {
+                      strategy = TAO::TAO_CS_REMOTE_STRATEGY;
+                    }
+                  break;
+                }
+              }
+          }
+      }
+
+    return strategy;
+  }
+
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

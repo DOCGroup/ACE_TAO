@@ -1,7 +1,5 @@
 #include "Sender_i.h"
 
-ACE_RCSID(Oneways_Invoking_Twoways, Sender_i, "$Id$")
-
 Sender_i::Sender_i (CORBA::ORB_ptr orb,
                     CORBA::ULong no)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -10,23 +8,20 @@ Sender_i::Sender_i (CORBA::ORB_ptr orb,
 {
 }
 
-Sender_i::~Sender_i (void)
+Sender_i::~Sender_i ()
 {
 }
 
 void
 Sender_i::active_objects (CORBA::Short no_threads
-                          ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER */ )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+ /* */ )
 {
   this->active_objects_ = no_threads;
 }
 
 
 void
-Sender_i::send_ready_message (Test::Receiver_ptr receiver
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Sender_i::send_ready_message (Test::Receiver_ptr receiver)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Received a call ...\n"));
@@ -38,15 +33,20 @@ Sender_i::send_ready_message (Test::Receiver_ptr receiver
        i < this->number_;
        ++i)
     {
-      receiver->receive_call (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      receiver->receive_call ();
     }
 
 }
 
 void
-Sender_i::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Sender_i::ping ()
 {
-  return;
+}
+
+void
+Sender_i::shutdown ()
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) About to invoke shutdown...\n"));
+  this->orb_->shutdown (false);
 }

@@ -4,8 +4,6 @@
 /**
  *  @file Transport_Timer.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -20,7 +18,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
+#include /**/ "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
 
@@ -31,9 +32,8 @@ class TAO_Transport;
  *        notifications from the Reactor.  In other words, implements
  *        the Adapter Role, of the Adapter Pattern, where the Adaptee
  *        is a TAO_Transport and the client is the Reactor.
- *
  */
-class TAO_Export TAO_Transport_Timer : public ACE_Event_Handler
+class TAO_Transport_Timer : public ACE_Event_Handler
 {
 public:
   /// Constructor
@@ -50,6 +50,8 @@ private:
   /// The Adaptee
   TAO_Transport *transport_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

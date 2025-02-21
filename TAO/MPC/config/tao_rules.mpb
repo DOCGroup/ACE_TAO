@@ -1,0 +1,5 @@
+project {
+  verbatim(gnuace, deferred-extension, 1) {
+    include $(TAO_ROOT)/rules.tao.GNU
+  }
+}

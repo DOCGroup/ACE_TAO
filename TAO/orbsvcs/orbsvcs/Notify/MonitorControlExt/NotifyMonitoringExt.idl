@@ -1,0 +1,142 @@
+/**
+ * @file NotifyMonitoringExt.idl
+ *
+ * @brief Define the CosNotification extension interfaces
+ *
+ * @author Chad Elliott <elliott_c@ociweb.com>
+ */
+
+#ifndef MONITORINGEXTENSION_IDL
+#define MONITORINGEXTENSION_IDL
+
+#include "orbsvcs/NotifyExt.idl"
+
+#pragma prefix "sandia.gov"
+
+module NotifyMonitoringExt
+{
+  /// This corresponds to the EventChannelFactory active event channel count
+  const string ActiveEventChannelCount = "ActiveEventChannelCount";
+
+  /// This corresponds to the EventChannelFactory inactive event channel count
+  const string InactiveEventChannelCount = "InactiveEventChannelCount";
+
+  /// This corresponds to the EventChannelFactory active event channel names
+  const string ActiveEventChannelNames = "ActiveEventChannelNames";
+
+  /// This corresponds to the EventChannelFactory inactive event channel names
+  const string InactiveEventChannelNames = "InactiveEventChannelNames";
+
+  /// This corresponds to the EventChannelFactory or EventChannel creation time
+  const string EventChannelCreationTime = "CreationTime";
+
+  /// This corresponds to the EventChannel consumer count
+  const string EventChannelConsumerCount = "ConsumerCount";
+
+  /// This corresponds to the EventChannel supplier count
+  const string EventChannelSupplierCount = "SupplierCount";
+
+  /// This corresponds to the EventChannel consumer names
+  const string EventChannelConsumerNames = "ConsumerNames";
+
+  /// This corresponds to the EventChannel supplier names
+  const string EventChannelSupplierNames = "SupplierNames";
+
+  /// This corresponds to the timed out EventChannel consumer names
+  const string EventChannelTimedoutConsumerNames = "TimedoutConsumerNames";
+
+  /// This corresponds to the EventChannel consumer admin count
+  const string EventChannelConsumerAdminCount = "ConsumerAdminCount";
+
+  /// This corresponds to the EventChannel supplier admin count
+  const string EventChannelSupplierAdminCount = "SupplierAdminCount";
+
+  /// This corresponds to the EventChannel consumer admin names
+  const string EventChannelConsumerAdminNames = "ConsumerAdminNames";
+
+  /// This corresponds to the EventChannel supplier admin names
+  const string EventChannelSupplierAdminNames = "SupplierAdminNames";
+
+  /// This corresponds to the queue size: Deprecated. Use QueueElementCount
+  const string EventChannelQueueSize = "QueueSize";
+
+  /// This corresponds to the queue count
+  /// Available at both the ConsumerAdmin level and the individual consumer level
+  const string EventChannelQueueElementCount = "QueueElementCount";
+
+  /// This corresponds to the EventChannel's oldest event
+  const string EventChannelOldestEvent = "OldestEvent";
+
+  /// This corresponds to the EventChannel's slowest consumers
+  const string EventChannelSlowestConsumers = "SlowestConsumers";
+
+  /// This corresponds to the EventChannelFactory names
+  const string EventChannelFactoryNames = "FactoryNames";
+
+  /// This corresponds to the EventChannelQueueOverflows names
+  /// Events were discarded because QoS limits were exceeded
+  /// Available at both the ConsumerAdmin level and the individual consumer level
+  const string EventChannelQueueOverflows = "QueueOverflows";
+
+  exception NameAlreadyUsed {};
+  exception NameMapError {};
+
+  interface SupplierAdmin: NotifyExt::SupplierAdmin
+  {
+    CosNotifyChannelAdmin::ProxyConsumer
+      obtain_named_notification_push_consumer (
+                           in CosNotifyChannelAdmin::ClientType ctype,
+                           out CosNotifyChannelAdmin::ProxyID proxy_id,
+                           in string name)
+      raises (CosNotifyChannelAdmin::AdminLimitExceeded,
+              NameAlreadyUsed,
+              NameMapError);
+  };
+
+  interface ConsumerAdmin: NotifyExt::ConsumerAdmin
+  {
+    CosNotifyChannelAdmin::ProxySupplier
+      obtain_named_notification_push_supplier (
+                           in CosNotifyChannelAdmin::ClientType ctype,
+                           out CosNotifyChannelAdmin::ProxyID proxy_id,
+                           in string name)
+      raises (CosNotifyChannelAdmin::AdminLimitExceeded,
+              NameAlreadyUsed,
+              NameMapError);
+  };
+
+  interface EventChannel: CosNotifyChannelAdmin::EventChannel
+  {
+    CosNotifyChannelAdmin::ConsumerAdmin
+      named_new_for_consumers(
+                    in CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                    out CosNotifyChannelAdmin::AdminID id,
+                    in string name)
+      raises (NameAlreadyUsed,
+              NameMapError);
+
+    CosNotifyChannelAdmin::SupplierAdmin
+      named_new_for_suppliers(
+                    in CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                    out CosNotifyChannelAdmin::AdminID id,
+                    in string name)
+      raises (NameAlreadyUsed,
+              NameMapError);
+  };
+
+  interface EventChannelFactory: NotifyExt::EventChannelFactory
+  {
+    CosNotifyChannelAdmin::EventChannel
+      create_named_channel (
+                   in CosNotification::QoSProperties initial_qos,
+                   in CosNotification::AdminProperties initial_admin,
+                   out CosNotifyChannelAdmin::ChannelID id,
+                   in string name)
+      raises(CosNotification::UnsupportedQoS,
+             CosNotification::UnsupportedAdmin,
+             NameAlreadyUsed,
+             NameMapError);
+  };
+};
+
+#endif /* NOTIFICATIONSERVICEMC_IDL */

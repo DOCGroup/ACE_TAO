@@ -2,10 +2,7 @@
 /**
  *  @file    test_wrapper.cpp
  *
- *  $Id$
- *
  *  This file contains the implementation of the DynAny basic test manager
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
@@ -16,7 +13,6 @@
 #define TEST_WRAPPER_CPP
 
 #include "test_wrapper.h"
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
 // Constructor
@@ -28,32 +24,22 @@ Test_Wrapper<T>::Test_Wrapper (T* t)
 
 // Destructor
 template <class T>
-Test_Wrapper<T>::~Test_Wrapper (void)
+Test_Wrapper<T>::~Test_Wrapper ()
 {
   delete this->test_object_;
 }
 
 template <class T>
 int
-Test_Wrapper<T>::run_test (void)
+Test_Wrapper<T>::run_test ()
 {
   const char* test_name = this->test_object_->test_name ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "********************* %s *******************\n\n",
+              "********************* %C *******************\n\n",
               test_name));
 
-  if (this->test_object_->run_test () == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) test_wrapper.cpp - run_test:"
-                  "run_test exception in %s",
-                  test_name));
-
-      return -1;
-    }
-
-  return 0;
+  return this->test_object_->run_test ();
 }
 
 #endif /* TEST_WRAPPER_CPP */

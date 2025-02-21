@@ -1,7 +1,6 @@
 // -*- IDL -*-
-//$Id$
 #include "tao/PortableInterceptor.pidl"
-#include "tao/PI_Server/ServerRequestInterceptor.pidl"
+#include "tao/PI_Server/PI_Server_include.pidl"
 
 module ForwardRequestTest
 {
@@ -24,6 +23,7 @@ module ForwardRequestTest
     void forward_references (in Object obj1,
                              in Object obj2);
 
+    void reset ();
   };
 
 };

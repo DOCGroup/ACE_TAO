@@ -1,21 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    initiator.cpp
-//
-// = DESCRIPTION
-//    This class implements a simple server for the
-//    Nested Upcalls - Triangle test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    initiator.cpp
+ *
+ *  This class implements a simple server for the
+ *  Nested Upcalls - Triangle test.
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "initiator.h"
 #include "tao/debug.h"
@@ -23,14 +17,14 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Triangle_Test, initiator, "$Id$")
-
-Initiator_Server::Initiator_Server (void)
+Initiator_Server::Initiator_Server ()
   : object_A_key_ (0),
     object_B_key_ (0),
     object_A_var_ (0),
     object_B_var_ (0),
-    initiator_i_ptr_ (0)
+    initiator_i_ptr_ (0),
+    argc_ (0),
+    argv_ (0)
 {
 }
 
@@ -39,7 +33,7 @@ Initiator_Server::Initiator_Server (void)
 // A_B == 1, means read Object B's IOR
 
 int
-Initiator_Server::read_ior (char *filename, unsigned int A_B)
+Initiator_Server::read_ior (ACE_TCHAR *filename, unsigned int A_B)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename,0);
@@ -74,9 +68,9 @@ Initiator_Server::read_ior (char *filename, unsigned int A_B)
 
 
 int
-Initiator_Server::parse_args (void)
+Initiator_Server::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:g:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:g:"));
   int c, result;
 
   while ((c = get_opts ()) != -1)
@@ -121,16 +115,13 @@ Initiator_Server::parse_args (void)
 
 int
 Initiator_Server::init (int argc,
-                       char** argv
-                       ACE_ENV_ARG_DECL)
+                        ACE_TCHAR** argv)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   this->orb_manager_.init_child_poa (argc,
                                      argv,
-                                     "child_poa"
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                     "child_poa");
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -144,18 +135,16 @@ Initiator_Server::init (int argc,
                       this->argv_[0]),
                       -1);
 
-  ACE_TRY
+  try
     {
+      CORBA::ORB_var orb = this->orb_manager_.orb();
       // Get Object A
 
       CORBA::Object_var object_A_obj_var =
-        this->orb_manager_.orb()->string_to_object (this->object_A_key_
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (this->object_A_key_);
 
       this->object_A_var_ =
-        Object_A::_narrow (object_A_obj_var.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Object_A::_narrow (object_A_obj_var.in());
 
       if (CORBA::is_nil (this->object_A_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -174,13 +163,10 @@ Initiator_Server::init (int argc,
       // Get Object B
 
       CORBA::Object_var object_B_obj_var =
-        this->orb_manager_.orb()->string_to_object (this->object_B_key_
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (this->object_B_key_);
 
       this->object_B_var_ =
-        Object_B::_narrow (object_B_obj_var.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Object_B::_narrow (object_B_obj_var.in());
 
       if (CORBA::is_nil (this->object_B_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -196,20 +182,18 @@ Initiator_Server::init (int argc,
 
       ACE_DEBUG ((LM_DEBUG, "Object B received OK\n"));
 
-      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.activate_poa_manager ();
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_NEW_RETURN (this->initiator_i_ptr_,
                   Initiator_i(this->object_A_var_.in(),
@@ -217,9 +201,7 @@ Initiator_Server::init (int argc,
                   -1);
 
   this->str_ =
-    this->orb_manager_.activate (this->initiator_i_ptr_
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_manager_.activate (this->initiator_i_ptr_);
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
@@ -232,95 +214,87 @@ Initiator_Server::init (int argc,
 
 
 int
-Initiator_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Initiator_Server::run ()
 {
-  ACE_TRY
+  try
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Initiator_Server::run: Trying to invoke "
                   "foo on Object A\n"));
 
-      Initiator_var initiator =
-        this->initiator_i_ptr_->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Initiator_var initiator = this->initiator_i_ptr_->_this ();
 
-      this->object_A_var_->foo (initiator.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->object_A_var_->foo (initiator.in ());
       ACE_DEBUG ((LM_DEBUG,
                   "Initiator_Server::run: Returned from invoke "
                   "foo on Object A\n"));
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
-Initiator_Server::~Initiator_Server (void)
+Initiator_Server::~Initiator_Server ()
 {
   if (this->object_A_key_ != 0)
-    ACE_OS::free (this->object_A_key_);
+    ACE_Allocator::instance ()->free (this->object_A_key_);
   if (this->object_B_key_ != 0)
-    ACE_OS::free (this->object_B_key_);
+    ACE_Allocator::instance ()->free (this->object_B_key_);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  this->object_A_var_->shutdown ();
+  this->object_B_var_->shutdown ();
+
+  try
     {
-      this->orb_manager_.deactivate (this->str_.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.deactivate (this->str_.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Initiator_Server::~Initiator_Server");
+      ex._tao_print_exception (
+        "Initiator_Server::~Initiator_Server");
     }
-  ACE_ENDTRY;
 
   delete this->initiator_i_ptr_;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n \t NestedUpCalls.Triangle_Test: Initiator Server \n \n"));
+              "\n \t NestedUpCalls.Triangle_Test: Initiator Server \n\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       Initiator_Server initiator_Server;
 
       int retval =
-        initiator_Server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        initiator_Server.init (argc, argv);
 
       if (retval == -1)
         return 1;
       else
         {
-          initiator_Server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          initiator_Server.run ();
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

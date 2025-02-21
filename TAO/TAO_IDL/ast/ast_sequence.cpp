@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -73,121 +71,137 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_sequence.h"
 #include "ast_typedef.h"
 #include "ast_expression.h"
+#include "ast_param_holder.h"
 #include "ast_visitor.h"
+#include "ast_annotation_appl.h"
+
 #include "utl_identifier.h"
+#include "utl_err.h"
+
 #include "global_extern.h"
+#include "fe_extern.h"
+
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (ast, 
-           ast_sequence, 
-           "$Id$")
-
-AST_Sequence::AST_Sequence (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    pd_max_size (0),
-    pd_base_type (0)
-{
-  // A sequence data type is always VARIABLE.
-  this->size_type (AST_Type::VARIABLE);
-}
+AST_Decl::NodeType const
+AST_Sequence::NT = AST_Decl::NT_sequence;
 
 AST_Sequence::AST_Sequence (AST_Expression *ms,
                             AST_Type *bt,
                             UTL_ScopedName *n,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool local,
+                            bool abstract)
   : COMMON_Base (bt->is_local () || local,
                  abstract),
     AST_Decl (AST_Decl::NT_sequence,
               n,
-              I_TRUE),
+              true),
     AST_Type (AST_Decl::NT_sequence,
               n),
     AST_ConcreteType (AST_Decl::NT_sequence,
                       n),
     pd_max_size (ms),
-    pd_base_type (bt)
+    pd_base_type (bt),
+    unbounded_ (true),
+    owns_base_type_ (false)
 {
-  // Check if we are bounded or unbounded. An expression value of 0 means
-  // unbounded.
-  if (ms->ev ()->u.ulval == 0)
+  FE_Utils::tmpl_mod_ref_check (this, bt);
+
+  AST_Decl::NodeType bnt = bt->node_type ();
+
+  if (bnt == AST_Decl::NT_param_holder)
     {
-      this->unbounded_ = I_TRUE;
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (bt);
+
+      if (ph->info ()->type_ == AST_Decl::NT_const)
+        {
+          idl_global->err ()->not_a_type (bt);
+          bt->destroy ();
+          delete bt;
+          bt = nullptr;
+          throw Bailout ();
+        }
     }
-  else
+
+  // Check if we are bounded or unbounded. An expression value of 0 means
+  // unbounded. If our bound is a template parameter, skip the
+  // check altogether, this node will trigger no code generation.
+  if (ms->param_holder () == nullptr)
     {
-      this->unbounded_ = I_FALSE;
+      this->unbounded_ = (ms->ev ()->u.ulval == 0);
     }
 
   // A sequence data type is always VARIABLE.
   this->size_type (AST_Type::VARIABLE);
+
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  this->owns_base_type_ =
+    nt == AST_Decl::NT_array
+    || nt == AST_Decl::NT_sequence
+    || nt == AST_Decl::NT_param_holder;
 }
 
-AST_Sequence::~AST_Sequence (void)
+AST_Sequence::~AST_Sequence ()
 {
 }
 
 // Public operations.
 
-idl_bool
+bool
 AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
-  // We should calculate this only once. If it has already been
-  // done, just return it.
-  if (this->in_recursion_ != -1)
-    {
-      return this->in_recursion_;
-    }
+  if (list.size () == 0) // only structs, unions and valuetypes can be recursive
+    return false;
 
-  AST_Type *type = AST_Type::narrow_from_decl (this->base_type ());
+  list.enqueue_tail(this);
 
-  if (!type)
+  AST_Type *type = dynamic_cast<AST_Type*> (this->base_type ());
+
+  if (type == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) AST_Sequence::")
-                         ACE_TEXT ("in_recursion - ")
+                         ACE_TEXT ("AST_Sequence::in_recursion - ")
                          ACE_TEXT ("bad base type\n")),
-                        0);
-    }
-    
-  if (type->node_type () == AST_Decl::NT_typedef)
-    {
-      AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
-      type = td->primitive_base_type ();
-      AST_Decl::NodeType nt = type->node_type ();
-      
-      if (nt != AST_Decl::NT_struct && nt != AST_Decl::NT_union)
-        {
-          return I_FALSE;
-        }
+                        false);
     }
 
-  if (this->match_names (this, list))
+  AST_Decl::NodeType nt = type->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
+      type = td->primitive_base_type ();
+      nt = type->node_type ();
+    }
+
+  if (nt != AST_Decl::NT_struct
+      && nt != AST_Decl::NT_union
+      && nt != AST_Decl::NT_valuetype
+      && nt != AST_Decl::NT_sequence)
+    {
+      return false;
+    }
+
+  bool recursion_found = false;
+  AST_Type** recursable_type = nullptr;
+  list.get (recursable_type, 0);
+  if (!ACE_OS::strcmp (type->full_name (),
+                           (*recursable_type)->full_name ()))
     {
       // They match.
-      this->in_recursion_ = 1;
+      recursion_found = true;
       idl_global->recursive_type_seen_ = true;
-      return this->in_recursion_;
     }
   else
     {
       // Check the element type.
-      ACE_Unbounded_Queue<AST_Type *> scope_list = list;
-      scope_list.enqueue_tail (this);
-      this->in_recursion_ = type->in_recursion (scope_list);
-      
-      if (this->in_recursion_ == 1)
-        {
-          idl_global->recursive_type_seen_ = true;
-        }
-      
-      return this->in_recursion_;
+      recursion_found = type->in_recursion (list);
     }
+
+  return recursion_found;
 }
 
 // Redefinition of inherited virtual operations.
@@ -197,6 +211,14 @@ void
 AST_Sequence::dump (ACE_OSTREAM_TYPE &o)
 {
   this->dump_i (o, "sequence <");
+  AST_Annotation_Appls::iterator i,
+    finished = base_type_annotations ().end ();
+  for (i = base_type_annotations ().begin (); i != finished; ++i)
+    {
+      AST_Annotation_Appl *a = i->get ();
+      a->dump (o);
+      dump_i (o, " ");
+    }
   this->pd_base_type->dump (o);
   this->dump_i (o, ", ");
   this->pd_max_size->dump (o);
@@ -212,23 +234,73 @@ AST_Sequence::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Expression *
-AST_Sequence::max_size (void)
+AST_Sequence::max_size ()
 {
   return this->pd_max_size;
 }
 
 AST_Type *
-AST_Sequence::base_type (void)
+AST_Sequence::base_type () const
 {
   return this->pd_base_type;
 }
 
-idl_bool
-AST_Sequence::unbounded (void) const
+AST_Type *
+AST_Sequence::primitive_base_type () const
+{
+  AST_Type *type_node = base_type ();
+  if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
+    {
+      AST_Typedef *const typedef_node = dynamic_cast<AST_Typedef *> (type_node);
+      if (!typedef_node) return nullptr;
+      type_node = typedef_node->primitive_base_type ();
+    }
+  return type_node;
+}
+
+bool
+AST_Sequence::unbounded () const
 {
   return this->unbounded_;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_Sequence, AST_ConcreteType)
-IMPL_NARROW_FROM_DECL(AST_Sequence)
+bool
+AST_Sequence::legal_for_primary_key () const
+{
+  return this->base_type ()->legal_for_primary_key ();
+}
+
+bool
+AST_Sequence::is_defined ()
+{
+  return this->pd_base_type->is_defined ();
+}
+
+void
+AST_Sequence::destroy ()
+{
+  if (this->owns_base_type_)
+    {
+      this->pd_base_type->destroy ();
+      delete this->pd_base_type;
+      this->pd_base_type = nullptr;
+    }
+
+  this->pd_max_size->destroy ();
+  delete this->pd_max_size;
+  this->pd_max_size = nullptr;
+
+  this->AST_ConcreteType::destroy ();
+}
+
+AST_Annotation_Appls &
+AST_Sequence::base_type_annotations ()
+{
+  return base_type_annotations_;
+}
+
+void
+AST_Sequence::base_type_annotations (const AST_Annotation_Appls &annotations)
+{
+  base_type_annotations_ = annotations;
+}

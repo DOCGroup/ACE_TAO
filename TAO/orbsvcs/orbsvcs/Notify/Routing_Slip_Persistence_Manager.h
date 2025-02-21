@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Routing_Slip_Persistence_Manager.h
- *
- *  $Id$
  *
  *  A Routing_Slip_Persistence manager controls the actual allocation of
  *  blocks through a Persistent_Storage_Allocator and can persist an
@@ -17,16 +15,19 @@
 #ifndef ROUTING_SLIP_PERSISTENCE_MANAGER_H
 #define ROUTING_SLIP_PERSISTENCE_MANAGER_H
 #include /**/ "ace/pre.h"
-#include /**/ "ace/config-all.h"
+
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_serv_export.h"
+#include "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 #include "ace/Message_Block.h"
-#include "ace/Synch_T.h"
 #include "ace/Containers_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -63,7 +64,6 @@ public:
 
   /// Set up callbacks
   void set_callback(Persistent_Callback* callback);
-
 
   /// Store an event + routing slip.
   bool store(const ACE_Message_Block& event,
@@ -130,7 +130,7 @@ private:
       };
 
     Block_Header(Header_Type type);
-    virtual ~Block_Header (void);
+    virtual ~Block_Header ();
     virtual size_t extract_header(Persistent_Storage_Block& psb,
       size_t offset = 0);
     virtual size_t put_header(Persistent_Storage_Block& psb,
@@ -235,7 +235,7 @@ private:
   void remove_from_dllist();
 
 private:
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   bool removed_;
   ACE_UINT64 serial_number_;
   Persistent_File_Allocator* allocator_;
@@ -251,12 +251,13 @@ private:
   ACE_Unbounded_Stack<size_t> allocated_routing_slip_blocks_;
   Persistent_Callback* callback_;
 
-  /// if these are non-zero we own 'em
+  /// If these are non-zero we own 'em
   ACE_Message_Block * event_mb_;
   ACE_Message_Block * routing_slip_mb_;
 };
-
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ROUTING_SLIP_PERSISTENCE_MANAGER_H */

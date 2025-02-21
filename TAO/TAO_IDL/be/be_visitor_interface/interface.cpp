@@ -1,37 +1,22 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    interface.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces. This is a generic visitor.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    interface.cpp
+ *
+ *  Visitor generating code for Interfaces. This is a generic visitor.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_interface,
-           interface,
-           "$Id$")
-
-// ******************************************************
-// Generic Interface visitor
-// ******************************************************
+#include "interface.h"
 
 be_visitor_interface::be_visitor_interface (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_interface::~be_visitor_interface (void)
+be_visitor_interface::~be_visitor_interface ()
 {
 }
 
@@ -50,9 +35,9 @@ be_visitor_interface::visit_scope (be_scope *node)
       return -1;
     }
 
-  be_interface *intf = be_interface::narrow_from_scope (node);
+  be_interface *intf = dynamic_cast<be_interface*> (node);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
       return 0;
     }
@@ -67,7 +52,7 @@ be_visitor_interface::visit_scope (be_scope *node)
       return 0;
     }
 
-  be_interface::tao_code_emitter helper = 0;
+  be_interface::tao_code_emitter helper = nullptr;
 
   switch (this->ctx_->state ())
     {
@@ -99,7 +84,7 @@ be_visitor_interface::visit_scope (be_scope *node)
         break;
     }
 
-  if (helper == 0)
+  if (helper == nullptr)
     {
       return 0;
     }
@@ -110,7 +95,7 @@ be_visitor_interface::visit_scope (be_scope *node)
   int status =
     intf->traverse_inheritance_graph (helper,
                                       this->ctx_->stream (),
-                                      I_FALSE);
+                                      false);
 
   if (status == -1)
     {
@@ -128,7 +113,7 @@ int
 be_visitor_interface::is_amh_rh_node (be_interface *node)
 {
    //If, is implied-IDL
-  if (node->original_interface () != 0)
+  if (node->original_interface () != nullptr)
     {
       // and the name starts with AMH
       if (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0)
@@ -145,7 +130,7 @@ void
 be_visitor_interface::add_abstract_op_args (AST_Operation *old_op,
                                             be_operation &new_op)
 {
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
   for (UTL_ScopeActiveIterator si (old_op, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -155,7 +140,12 @@ be_visitor_interface::add_abstract_op_args (AST_Operation *old_op,
       new_op.add_to_scope (d);
     }
 
-  new_op.be_add_exceptions (old_op->exceptions ());
+  UTL_ExceptList *excep_list = old_op->exceptions ();
+
+  if (nullptr != excep_list)
+    {
+      new_op.be_add_exceptions (excep_list->copy ());
+    }
 }
 
 // All common visit methods for interface visitor.
@@ -207,7 +197,7 @@ be_visitor_interface::visit_constant (be_constant *node)
         break;
       }
     default:
-                  return 0; // nothing to be done
+      return 0; // nothing to be done
     }
 
   if (status == -1)
@@ -215,6 +205,39 @@ be_visitor_interface::visit_constant (be_constant *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface::"
                          "visit_constant - "
+                         "failed to accept visitor\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_interface::visit_native (be_native *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_INTERFACE_CH:
+      {
+        be_visitor_native_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    default:
+      return 0; // nothing to be done
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::"
+                         "visit_native - "
                          "failed to accept visitor\n"),
                         -1);
     }
@@ -370,10 +393,26 @@ be_visitor_interface::visit_operation (be_operation *node)
     // These first two cases may have the context state changed
     // by a strategy, so we use the visitor factory below.
     case TAO_CodeGen::TAO_INTERFACE_CH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
+        be_visitor_operation_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
+
+      if (node->is_sendc_ami ())
+        {
+          be_visitor_operation_ami_cs visitor (&ctx);
+          status = node->accept (&visitor);
+        }
+      else
+        {
+          be_visitor_operation_cs visitor (&ctx);
+          status = node->accept (&visitor);
+        }
+
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
       {
@@ -381,6 +420,7 @@ be_visitor_interface::visit_operation (be_operation *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_IH:
       {
         be_visitor_operation_ih visitor (&ctx);
@@ -405,9 +445,9 @@ be_visitor_interface::visit_operation (be_operation *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_TIE_SI:
+    case TAO_CodeGen::TAO_ROOT_TIE_SS:
       {
-        be_visitor_operation_tie_si visitor (&ctx);
+        be_visitor_operation_tie_ss visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -452,7 +492,6 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
-    case TAO_CodeGen::TAO_ROOT_SI:
       return 0; // nothing to be done
     default:
       {
@@ -475,67 +514,6 @@ be_visitor_interface::visit_operation (be_operation *node)
                          "visit_operation - "
                          "failed to accept visitor\n"),
                         -1);
-    }
-
-  // Change the state depending on the kind of node strategy.
-  ctx.state (node->next_state (ctx.state ()));
-
-
-  // Grab the appropriate visitor.
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface::"
-                         "visit_operation - "
-                         "NUL visitor\n"),
-                         -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface::"
-                         "visit_operation - "
-                         "failed to accept visitor\n"),
-                        -1);
-    }
-
-  delete visitor;
-  visitor = 0;
-
-  // Do additional code generation is necessary.
-  // Note, this call is delegated to the strategy connected to
-  // the node.
-  if (node->has_extra_code_generation (ctx.state ()))
-    {
-      // Change the state depending on the kind of node strategy.
-      ctx.state (node->next_state (ctx.state (), 1));
-
-      // Grab the appropriate visitor.
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface::"
-                             "visit_operation - "
-                             "NUL visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface::"
-                             "visit_operation - "
-                             "failed to accept visitor\n"),
-                            -1);
-        }
-
-      delete visitor;
-      visitor = 0;
     }
 
   return 0;

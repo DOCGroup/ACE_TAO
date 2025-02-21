@@ -1,0 +1,28 @@
+#ifndef FOO_IDL
+#define FOO_IDL
+
+#include "TestInf/FooException.idl"
+
+interface Foo
+{
+  /// void return-type, no arguments
+  void op1();
+
+  /// void return-type, 1 "in" argument
+  void op2(in long value);
+
+  /// long return-type, 1 "in" argument
+  long op3(in long value);
+
+  /// one-way version of op2
+  oneway void op4(in long value);
+
+  /// Operation that always raises an exception.
+  void op5() raises (FooException);
+
+  /// Client calls this last.  The last client to claim that it is
+  /// done will cause the server to shutdown.
+  void done();
+};
+
+#endif

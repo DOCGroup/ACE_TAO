@@ -2,11 +2,7 @@
 /**
  *  @file ORB_Run_Task.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ORB_RUN_TASK_H
@@ -20,20 +16,19 @@
 /**
  * @class TAO_Notify_ORB_Run_Task
  *
- * @brief Run the ORB::run method in a seperate thread.
- *
+ * @brief Run the ORB::run method in a separate thread.
  */
 class TAO_Notify_ORB_Run_Task : public ACE_Task_Base
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Destructor
   ~TAO_Notify_ORB_Run_Task ();
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// ORB Objects.

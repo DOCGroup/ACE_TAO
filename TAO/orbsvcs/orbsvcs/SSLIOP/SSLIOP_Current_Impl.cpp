@@ -1,36 +1,32 @@
-#include "SSLIOP_Current_Impl.h"
-
-#include "ace/OS_String.h"
-
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Current_Impl,
-           "$Id$")
-
+#include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.h"
 
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Current_Impl.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "SSLIOP_X509.h"
-#include "SSLIOP_ClientCredentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_X509.h"
+#include "orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h"
+
+#include "tao/ORB_Constants.h"
 
 #include <openssl/x509.h>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::SSLIOP::Current_Impl::~Current_Impl (void)
+TAO::SSLIOP::Current_Impl::~Current_Impl ()
 {
 }
 
 SecurityLevel3::ClientCredentials_ptr
-TAO::SSLIOP::Current_Impl::client_credentials (
-    ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SSLIOP::Current_Impl::client_credentials ()
 {
-  TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate (this->ssl_);
+#if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
+  TAO::SSLIOP::X509_var cert = ::SSL_get1_peer_certificate(this->ssl_);
+#else
+  TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate(this->ssl_);
+#endif
   if (cert.ptr () == 0)
-    ACE_THROW_RETURN (CORBA::BAD_OPERATION (),
-                      SecurityLevel3::ClientCredentials::_nil ());
+    throw CORBA::BAD_OPERATION ();
 
   SecurityLevel3::ClientCredentials_ptr creds;
   ACE_NEW_THROW_EX (creds,
@@ -42,16 +38,14 @@ TAO::SSLIOP::Current_Impl::client_credentials (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (SecurityLevel3::ClientCredentials::_nil ());
 
   return creds;
 }
 
 CORBA::Boolean
-TAO::SSLIOP::Current_Impl::request_is_local (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SSLIOP::Current_Impl::request_is_local ()
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -61,12 +55,16 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate (
   if (this->ssl_ == 0)
     return;
 
-  TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate (this->ssl_);
+#if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
+  TAO::SSLIOP::X509_var cert = ::SSL_get1_peer_certificate(this->ssl_);
+#else
+  TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate(this->ssl_);
+#endif
   if (cert.ptr () == 0)
     return;
 
   // Get the size of the ASN.1 encoding.
-  const int cert_length = ::i2d_X509 (cert.in (), 0);
+  int const cert_length = ::i2d_X509 (cert.in (), 0);
   if (cert_length <= 0)
     return;
 
@@ -90,7 +88,7 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate_chain (
   if (certs == 0)
     return;
 
-  const int chain_length = sk_X509_num (certs);
+  int const chain_length = sk_X509_num (certs);
   cert_chain->length (chain_length);
 
   // Copy the peer certificate chain to the SSLIOP::SSL_Cert
@@ -101,7 +99,7 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate_chain (
       ::X509 *x = sk_X509_value (certs, i);
 
       // Get the size of the ASN.1 encoding.
-      const int cert_length = ::i2d_X509 (x, 0);
+      int const cert_length = ::i2d_X509 (x, 0);
       if (cert_length <= 0)
         continue;  // @@ What do we do if there is an error?
 
@@ -117,7 +115,9 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate_chain (
 }
 
 CORBA::ULong
-TAO::SSLIOP::Current_Impl::tag (void) const
+TAO::SSLIOP::Current_Impl::tag () const
 {
   return ::SSLIOP::TAG_SSL_SEC_TRANS;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

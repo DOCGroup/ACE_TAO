@@ -1,14 +1,11 @@
-// $Id$
-
 #include "RT_POA_Command.h"
 
-ACE_RCSID(lib, TAO_RT_POA_Command, "$Id$")
 
 #include "tao/debug.h"
 #include "../lib/LookupManager.h"
 #include "../lib/Name.h"
 
-TAO_Notify_Tests_RT_POA_Command::TAO_Notify_Tests_RT_POA_Command (void)
+TAO_Notify_Tests_RT_POA_Command::TAO_Notify_Tests_RT_POA_Command ()
   :priority_model_ (RTCORBA::CLIENT_PROPAGATED)
   , server_priority_ (0)
   , thread_pool_static_threads_ (0)
@@ -21,13 +18,13 @@ TAO_Notify_Tests_RT_POA_Command::~TAO_Notify_Tests_RT_POA_Command ()
 }
 
 const char*
-TAO_Notify_Tests_RT_POA_Command::get_name (void)
+TAO_Notify_Tests_RT_POA_Command::get_name ()
 {
   return TAO_Notify_Tests_RT_POA_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_RT_POA_Command::name (void)
+TAO_Notify_Tests_RT_POA_Command::name ()
 {
   return TAO_Notify_Tests_Name::poa_command;
 }
@@ -39,21 +36,21 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 
   if (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Create")) == 0)
         {
           this->command_ = CREATE;
 
           arg_shifter.consume_arg ();
 
-          this->POA_name_ = arg_shifter.get_current ();
+          this->POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
 
           while (arg_shifter.is_anything_left ())
             {
-              if ((current_arg = arg_shifter.get_the_parameter ("-PriorityModel")))
+              if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))))
                 {
-                  if (arg_shifter.cur_arg_strncasecmp ("CLIENT") == 0)
+                  if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
                     priority_model_ = RTCORBA::CLIENT_PROPAGATED;
                   else
                     priority_model_ = RTCORBA::SERVER_DECLARED;
@@ -65,7 +62,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   continue;
                 }
               // -Lanes lane-count -Lane prio statc_thr dyn_thr
-              if ((current_arg = arg_shifter.get_the_parameter ("-Lanes")))
+              if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Lanes"))))
                 {
                   int lanecount = ACE_OS::atoi (current_arg);
                   lanes_.length (lanecount);
@@ -75,7 +72,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   //parse lane values ...
                   while (arg_shifter.is_anything_left ())
                     {
-                      if (arg_shifter.cur_arg_strncasecmp ("-Lane") == 0)
+                      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Lane")) == 0)
                         {
                           arg_shifter.consume_arg ();
 
@@ -103,7 +100,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   continue;
                 } /* if -Lanes */
 
-              if ((current_arg = arg_shifter.get_the_parameter ("-Bands")))
+              if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"))))
                 {
                   int bandcount = ACE_OS::atoi (current_arg);
                   bands_.length (bandcount);
@@ -113,7 +110,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   //parse band values ...
                   while (arg_shifter.is_anything_left ())
                     {
-                      if (arg_shifter.cur_arg_strncasecmp ("-Band") == 0)
+                      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Band")) == 0)
                         {
                           arg_shifter.consume_arg ();
 
@@ -126,7 +123,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                           arg_shifter.consume_arg ();
 
                           if (TAO_debug_level > 0)
-                            ACE_DEBUG ((LM_DEBUG, "POA Create: band parsed - %d, %d \n",
+                            ACE_DEBUG ((LM_DEBUG, "POA Create: band parsed - %d, %d\n",
                                         bands_[b_index].low, bands_[b_index].high));
                           b_index++;
                         }
@@ -138,7 +135,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                 } /* if -Bands */
 
               // -ThreadPool thread_pool_count thread_pool_default_priority
-              if (arg_shifter.cur_arg_strncasecmp ("-ThreadPool") == 0)
+              if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadPool")) == 0)
                 {
                   arg_shifter.consume_arg ();
 
@@ -153,7 +150,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   arg_shifter.consume_arg ();
 
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG, "ThreadPool parsed - static threads = %d, prio = %d \n",
+                    ACE_DEBUG ((LM_DEBUG, "ThreadPool parsed - static threads = %d, prio = %d\n",
                                 this->thread_pool_static_threads_, this->thread_pool_default_priority_));
 
                   continue;
@@ -163,13 +160,13 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
               break;
             } /* while */
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Destroy") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Destroy")) == 0)
         {
           this->command_ = DESTROY;
 
           arg_shifter.consume_arg ();
 
-          this->POA_name_ = arg_shifter.get_current ();
+          this->POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
         }
@@ -177,7 +174,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_RT_POA_Command::execute_i ()
 {
   if (this->command_ == CREATE)
     {
@@ -188,14 +185,10 @@ TAO_Notify_Tests_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 
       // Resolve RTORB
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB"
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        orb->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        RTCORBA::RTORB::_narrow (object.in ());
 
       // Resolve parent poa.
       PortableServer::POA_var parent_poa;
@@ -203,8 +196,7 @@ TAO_Notify_Tests_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
       LOOKUP_MANAGER->resolve (parent_poa);
 
       // Create the POA.
-      this->create (rt_orb.in (), parent_poa.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->create (rt_orb.in (), parent_poa.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Created RT POA %s\n", this->POA_name_.c_str ()));
     }
@@ -212,18 +204,16 @@ TAO_Notify_Tests_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       PortableServer::POA_var poa;
 
-      LOOKUP_MANAGER->resolve (poa, this->POA_name_.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      LOOKUP_MANAGER->resolve (poa, this->POA_name_.c_str ());
 
-      poa->destroy (1,0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      poa->destroy (1,0);
 
       ACE_DEBUG ((LM_DEBUG, "Destroyed RT POA %s\n", this->POA_name_.c_str ()));
     }
 }
 
 void
-TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa)
 {
   /*
     lanes bands priomodel
@@ -253,9 +243,7 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
   // Create a priority model policy.
   priority_model_policy =
     rt_orb->create_priority_model_policy (priority_model_,
-                                          server_priority_
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                          server_priority_);
 
   if (lanes_.length () != 0)
     {
@@ -275,17 +263,12 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
                                               allow_borrowing,
                                               allow_request_buffering,
                                               max_buffered_requests,
-                                              max_request_buffer_size
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                              max_request_buffer_size);
 
 
       // Create a thread-pool policy.
       lanes_policy =
-        rt_orb->create_threadpool_policy (threadpool_id
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
+        rt_orb->create_threadpool_policy (threadpool_id);
     }
   else if (thread_pool_static_threads_ > 0)
     {
@@ -305,30 +288,23 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
                                  default_priority,
                                  allow_request_buffering,
                                  max_buffered_requests,
-                                 max_request_buffer_size
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                 max_request_buffer_size);
 
       thread_pool_policy =
-                rt_orb->create_threadpool_policy (threadpool_id
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                rt_orb->create_threadpool_policy (threadpool_id);
     }
 
   if (bands_.length () != 0)
     {
       // Create a bands policy.
       bands_policy =
-        rt_orb->create_priority_banded_connection_policy (this->bands_
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        rt_orb->create_priority_banded_connection_policy (this->bands_);
     }
 
   CORBA::PolicyList poa_policy_list;
 
   CORBA::Policy_var activation_policy =
-    parent_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    parent_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
   if (lanes_.length () == 0 && thread_pool_static_threads_ == 0 && bands_.length () == 0)
     {
@@ -375,16 +351,13 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
   poa_policy_list[act_index] = activation_policy;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "creating POA %s\n", POA_name_.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, "creating POA %C\n", POA_name_.c_str ()));
 
   // Get the POA Manager.
   PortableServer::POAManager_var poa_manager =
-    parent_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    parent_poa->the_POAManager ();
 
   parent_poa->create_POA (POA_name_.c_str (),
                           poa_manager.in (),
-                          poa_policy_list
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                          poa_policy_list);
 }

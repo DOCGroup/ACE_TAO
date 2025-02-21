@@ -3,8 +3,6 @@
 /**
  *  @file Task_Stats.h
  *
- *  $Id$
- *
  *  Utility Stats class that maintains the readings.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -17,18 +15,17 @@
 #include "ace/Singleton.h"
 #include "tao/orbconf.h"
 #include "tao/debug.h"
-#include "activity_export.h"
+#include "ace/High_Res_Timer.h"
 
 /**
  * @class Base_Time
  *
  * @brief maintains readings recorded by tasks.
- *
  */
-class activity_Export Base_Time
+class Base_Time
 {
  public:
-  Base_Time (void);
+  Base_Time ();
   ACE_hrtime_t base_time_;
 };
 
@@ -38,19 +35,18 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
  * @class Task_Stats
  *
  * @brief maintains readings recorded by tasks.
- *
  */
-class activity_Export Task_Stats
+class Task_Stats
 {
  public:
   /// Constructor
   Task_Stats (size_t max_samples);
 
   /// Destructor
-  ~Task_Stats (void);
+  ~Task_Stats ();
 
   /// Init
-  int init (void);
+  int init ();
 
   /// Set the base time value.
   void base_time (ACE_hrtime_t time);
@@ -62,9 +58,10 @@ class activity_Export Task_Stats
   int sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time);
 
   void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
-                     ACE_UINT32 scale_factor);
+                     ACE_High_Res_Timer::global_scale_factor_type scale_factor);
  protected:
-  void dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf);
+  void dump_latency_stats (ACE_TCHAR *out_msg,
+                           ACE_High_Res_Timer::global_scale_factor_type sf);
 
   /// Base and end times
   ACE_hrtime_t base_time_;

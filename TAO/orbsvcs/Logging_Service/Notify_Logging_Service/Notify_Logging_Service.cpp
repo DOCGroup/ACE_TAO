@@ -1,79 +1,63 @@
+#include "orbsvcs/Log_Macros.h"
 #include "Notify_Logging_Service.h"
 #include "ace/Get_Opt.h"
-#include "ace/Dynamic_Service.h"
-//#include "ace/Arg_Shifter.h"
 #include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
 #include "orbsvcs/Notify/Service.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (Notify_Logging_Service,
-           Notify_Logging_Service,
-           "$Id$")
-
-
-Notify_Logging_Service::Notify_Logging_Service (void)
+Notify_Logging_Service::Notify_Logging_Service ()
   : service_name_ (NOTIFY_KEY),
     ior_file_name_ (0),
     pid_file_name_ (0),
-    bind_to_naming_service_ (1)
+    bind_to_naming_service_ (true),
+    nthreads_ (0)
 {
   // No-Op.
 }
 
-Notify_Logging_Service::~Notify_Logging_Service (void)
+Notify_Logging_Service::~Notify_Logging_Service ()
 {
   // No-Op.
 }
 
 int
-Notify_Logging_Service::init_ORB (int& argc, char *argv []
-                              ACE_ENV_ARG_DECL)
+Notify_Logging_Service::init_ORB (int& argc, ACE_TCHAR *argv [])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
-  this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
+  this->notify_service_ = TAO_Notify_Service::load_default ();
 
   if (this->notify_service_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Notify Service not found! check conf. file\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "Notify Service not found! check conf. file\n"));
       return -1;
     }
 
-  CORBA::Object_var poa_obj  =
-    this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
 
-  if (CORBA::is_nil (poa_obj.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
+  if (CORBA::is_nil (poa_object.in ()))
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to resolve the RootPOA.\n"),
                       -1);
 
   this->poa_ =
-    PortableServer::POA::_narrow (poa_obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
   return 0;
 }
 
 int
-Notify_Logging_Service::parse_args (int argc, char *argv[])
+Notify_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:x"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -81,28 +65,33 @@ Notify_Logging_Service::parse_args (int argc, char *argv[])
       switch (opt)
         {
         case 'n':
-          service_name_ = get_opt.opt_arg();
+          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'o':
-          ior_file_name_ = get_opt.opt_arg();
+          this->ior_file_name_ = get_opt.opt_arg ();
           break;
 
         case 'p':
-          pid_file_name_ = get_opt.opt_arg();
+          this->pid_file_name_ = get_opt.opt_arg ();
+          break;
+
+        case 't':
+          this->nthreads_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'x':
-          bind_to_naming_service_ = 0;
+          this->bind_to_naming_service_ = false;
           break;
 
         case '?':
         default:
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "-n service_name "
                       "-o ior_file_name "
                       "-p pid_file_name "
+                      "-t threads "
                       "-x [disable naming service bind] "
                       "\n",
                       argv[0]));
@@ -114,24 +103,20 @@ Notify_Logging_Service::parse_args (int argc, char *argv[])
 }
 
 int
-Notify_Logging_Service::init (int argc, char *argv[]
-                          ACE_ENV_ARG_DECL)
+Notify_Logging_Service::init (int argc, ACE_TCHAR *argv[])
 {
-  // initalize the ORB.
-  if (this->init_ORB (argc, argv
-                      ACE_ENV_ARG_PARAMETER) != 0)
-  return -1;
+  // initialize the ORB.
+  if (this->init_ORB (argc, argv) != 0)
+    return -1;
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  this->notify_service_->init_service (this->orb_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->notify_service_->init_service (this->orb_.in ());
 
   // Activate the factory
   this->notify_factory_ =
-    notify_service_->create (this->poa_.in ()
-                            ACE_ENV_ARG_PARAMETER);
+    notify_service_->create (this->poa_.in ());
 
   ACE_NEW_THROW_EX (this->notify_log_factory_,
                       TAO_NotifyLogFactory_i (this->notify_factory_.in ()),
@@ -139,38 +124,31 @@ Notify_Logging_Service::init (int argc, char *argv[]
 
   DsNotifyLogAdmin::NotifyLogFactory_var obj =
     notify_log_factory_->activate (this->orb_.in (),
-                                   this->poa_.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   this->poa_.in ());
 
-  ACE_CHECK_RETURN (-1);
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->object_to_string (obj.in ());
 
   if (true)
     {
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->orb_->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in ());
-      ACE_CHECK_RETURN (-1);
 
       adapter->bind("NotifyLogService", ior.in ());
-      ACE_CHECK_RETURN (-1);
     }
 
-  if (ior_file_name_ != 0)
+  if (this->ior_file_name_ != 0)
     {
-      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_LIB_TEXT("w"));
+      FILE* iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
       if (iorf == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
-                             ior_file_name_),
+                             this->ior_file_name_),
                             -1);
         }
 
@@ -178,9 +156,9 @@ Notify_Logging_Service::init (int argc, char *argv[]
       ACE_OS::fclose (iorf);
     }
 
-  if (pid_file_name_ != 0)
+  if (this->pid_file_name_ != 0)
     {
-      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_LIB_TEXT("w"));
+      FILE* pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
       if (pidf != 0)
         {
           ACE_OS::fprintf (pidf,
@@ -190,93 +168,81 @@ Notify_Logging_Service::init (int argc, char *argv[]
         }
     }
 
-  if (bind_to_naming_service_)
+  if (this->bind_to_naming_service_)
     {
       // Resolve the naming service.
-      resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-
-      // Register the Factory
-      ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
+      this->resolve_naming_service ();
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (this->service_name_);
-      ACE_CHECK_RETURN (-1);
+      name[0].id = CORBA::string_dup (this->service_name_.c_str ());
 
       this->naming_->rebind (name,
-                             obj.in ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                             obj.in ());
     }
 
   return 0;
 }
 
 void
-Notify_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Notify_Logging_Service::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_THROW (CORBA::UNKNOWN ());
+    throw CORBA::UNKNOWN ();
 
   this->naming_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CosNaming::NamingContext::_narrow (naming_obj.in ());
 }
 
 int
 Notify_Logging_Service::run ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  if (this->nthreads_ > 0)
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (this->activate ((THR_NEW_LWP | THR_JOINABLE), this->nthreads_) != 0)
+        return -1;
+
+      this->thr_mgr ()->wait ();
+      return 0;
     }
-  ACE_CATCHANY
+
+  this->orb_->run ();
+
+  return 0;
+}
+
+int
+Notify_Logging_Service::svc ()
+{
+  try
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+      this->orb_->run ();
     }
-  ACE_ENDTRY;
+  catch (const CORBA::Exception&)
+    {
+      return -1;
+    }
 
   return 0;
 }
 
 void
-Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Notify_Logging_Service::shutdown ()
 {
-  // Deactivate.
-  PortableServer::ObjectId_var oid =
-    this->poa_->reference_to_id (this->notify_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // deactivate from the poa.
-  this->poa_->deactivate_object (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (bind_to_naming_service_)
+  if (this->bind_to_naming_service_)
     {
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (this->service_name_);
-      ACE_CHECK;
+      name[0].id = CORBA::string_dup (this->service_name_.c_str ());
 
-      this->naming_->unbind (name
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->naming_->unbind (name);
     }
 
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
     this->orb_->shutdown ();
-
 }

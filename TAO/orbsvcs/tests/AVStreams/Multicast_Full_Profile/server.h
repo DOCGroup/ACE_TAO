@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -14,18 +12,18 @@ class FTP_Server_Callback
   :public TAO_AV_Callback
 {
 public:
-  virtual int handle_stop (void);
+  virtual int handle_stop ();
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *frame_info,
                              const ACE_Addr &);
-  virtual int handle_end_stream (void);
+  virtual int handle_end_stream ();
 };
 
 class FTP_Server_FlowEndPoint
   :public TAO_FlowConsumer
 {
 public:
-  FTP_Server_FlowEndPoint (void);
+  FTP_Server_FlowEndPoint ();
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
 };
@@ -34,12 +32,12 @@ public:
 //   :public TAO_FDev
 // {
 // public:
-//   FTP_Server_FDev (void);
+//   FTP_Server_FDev ();
 //   virtual AVStreams::FlowConsumer_ptr make_consumer (AVStreams::FlowConnection_ptr the_requester,
 //                                                        AVStreams::QoS & the_qos,
 //                                                        CORBA::Boolean_out met_qos,
 //                                                        char *& named_fdev,
-//                                                        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+//);
 //   // bridge method for the application to override the consumer object
 //   // creation. Default implementation creates a TAO_FlowConsumer.
 
@@ -50,15 +48,15 @@ typedef TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint> FTP_Server_FDev;
 class Server
 {
 public:
-  Server (void);
+  Server ();
   int init (int argc,
-            char **argv);
-  int run (void);
-  FILE *file (void);
-  AVStreams::protocolSpec protocols (void);
-  const char *format (void);
+            ACE_TCHAR *argv[]);
+  int run ();
+  FILE *file ();
+  AVStreams::protocolSpec protocols ();
+  const char *format ();
 protected:
-  int parse_args (int argc,char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   TAO_Naming_Client my_naming_client_;
   TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   TAO_MMDevice *mmdevice_;

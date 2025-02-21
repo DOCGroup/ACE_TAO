@@ -1,0 +1,6 @@
+
+
+Please note, to actually test Bug 2677, ACE and TAO must be built with the
+following in your config.h:
+
+#define ACE_USES_CLASSIC_SVC_CONF 0

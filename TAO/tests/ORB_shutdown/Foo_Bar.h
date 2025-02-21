@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef HELLO_H
 #define HELLO_H
@@ -17,11 +14,11 @@ public:
   Foo_Bar (CORBA::ORB_ptr orb);
 
   /// Dtor
-  ~Foo_Bar (void);
+  ~Foo_Bar ();
 
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };

@@ -4,10 +4,7 @@
 /**
  *  @file  AMH_Servant.h
  *
- *  $Id$
- *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
- *
  */
 // =========================================================================
 
@@ -27,24 +24,18 @@ class AMH_Servant
 public:
   AMH_Servant (CORBA::ORB_ptr orb);
 
-  virtual ~AMH_Servant (void);
+  virtual ~AMH_Servant ();
 
   /// parse arguments from command line for sleep time
-  virtual int parse_args (int& argc, char **argv);
+  virtual int parse_args (int &argc, ACE_TCHAR **argv);
 
   // = The skeleton methods
-  virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
 
-  virtual void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
 
   virtual void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                            Test::Timestamp send_time
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                            Test::Timestamp send_time);
 
 protected:
   ACE_Reactor *reactor_;

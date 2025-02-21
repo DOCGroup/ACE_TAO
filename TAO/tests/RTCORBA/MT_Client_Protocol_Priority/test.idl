@@ -1,12 +1,9 @@
-//
-// $Id$
-//
 
 interface Test
 {
-  void test_method ();
   // no-op.
+  void test_method ();
 
-  oneway void shutdown ();
   // Shut down the ORB.
+  oneway void shutdown ();
 };

@@ -1,23 +1,18 @@
-// $Id$
+// -*- C++ -*-
 
-// ========================================================================
-//
-// = BINARY
-//    trader
-//
-// = FILENAME
-//    Trading_Service.h
-//
-// = AUTHOR
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// =======================================================================
+//=============================================================================
+/**
+ *  @file    Trading_Service.h
+ *
+ *  @author Seth Widoff <sbw1@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _TRADING_SERVICE_H
 #define _TRADING_SERVICE_H
 
-#include "ace/Auto_Ptr.h"
-#include "ace/Signal.h"
+#include "ace/Sig_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,53 +25,51 @@
 
 class Trading_Service;
 
+/**
+ * @class Trading_Shutdown
+ *
+ * @brief A class that shutsdown a Trading Service instance.
+ */
 class Trading_Shutdown : public ACE_Event_Handler
 {
-  // = TITLE
-  //   A class that shutsdown a Trading Service instance.
 public:
+  /// Constructor.
   Trading_Shutdown (Trading_Service& trader);
-  // Constructor.
 
+  /// Signal handler.
   virtual int handle_signal (int,
                              siginfo_t *,
                              ucontext_t *);
-  // Signal handler.
 
 protected:
   Trading_Service &trader_;
   ACE_Sig_Handler shutdown_;
 };
 
+/**
+ * @class Trading_Service
+ *
+ * @brief A class that initializes a Trading Service instance.
+ */
 class Trading_Service
 {
-  // = TITLE
-  //   A class that initializes a Trading Service instance.
 public:
+  Trading_Service () = default;
 
-  Trading_Service (void);
-  // Default constructor.
+  ~Trading_Service ();
 
-  ~Trading_Service (void);
-  // Destructor
-
+  /// Initialize the Trading Service with arguments.
   int init (int argc,
-            ACE_TCHAR *argv[]
-            ACE_ENV_ARG_DECL);
-  // Initialize the Trading Service with arguments.
+            ACE_TCHAR *argv[]);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the Trading Service.
+  /// Run the Trading Service.
+  int run ();
 
-  int shutdown (void);
+  int shutdown ();
 
 protected:
-
-  auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader_;
-  // Pointer to the linked trader.
-
+  /// Instance of TAO_Trading_Laoder
   TAO_Trading_Loader trading_loader_;
-  // Instance of TAO_Trading_Laoder
 };
 
 #endif /* _TRADING_SERVICE_H */

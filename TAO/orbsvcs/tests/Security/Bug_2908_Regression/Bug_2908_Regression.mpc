@@ -1,0 +1,35 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): orbsvcslib, security, ssliop, taoserver {
+  after += *idl
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+    Client_Task.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): orbsvcslib, security, ssliop, taoclient {
+  after += *idl
+  Source_Files {
+    MessengerClient.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}
+

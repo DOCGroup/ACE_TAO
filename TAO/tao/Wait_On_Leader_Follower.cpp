@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Wait_On_Leader_Follower.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
@@ -7,23 +5,18 @@
 #include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (tao,
-           Wait_On_Leader_Follower,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (TAO_Transport *transport)
+TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower
+  (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
 {
 }
 
-TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
-{
-}
-
 int
-TAO_Wait_On_Leader_Follower::register_handler (void)
+TAO_Wait_On_Leader_Follower::register_handler ()
 {
-  if (this->is_registered_ == 0)
+  if (!this->is_registered_)
     {
       return this->transport_->register_handler ();
     }
@@ -32,39 +25,37 @@ TAO_Wait_On_Leader_Follower::register_handler (void)
 }
 
 bool
-TAO_Wait_On_Leader_Follower::non_blocking (void) const
+TAO_Wait_On_Leader_Follower::non_blocking () const
 {
   return true;
 }
 
 int
 TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
-                                              int two_way)
+                                              TAO_Message_Semantics msg_semantics)
 {
   // Register the handler.
-  if (this->is_registered_ == 0)
+  if (!this->is_registered_)
     {
       this->transport_->register_handler ();
     }
 
-  // Send the request.
-  return this->TAO_Wait_Strategy::sending_request (orb_core,
-                                                   two_way);
+  return this->TAO_Wait_Strategy::sending_request (orb_core, msg_semantics);
 }
 
 int
 TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                                    TAO_Synch_Reply_Dispatcher &rd)
 {
-  TAO_Leader_Follower& leader_follower =
+  TAO_Leader_Follower &leader_follower =
     this->transport_->orb_core ()->leader_follower ();
-  return leader_follower.wait_for_event (&rd,
-                                         this->transport_,
-                                         max_wait_time);
+  return leader_follower.wait_for_event (&rd, this->transport_, max_wait_time);
 }
 
 bool
-TAO_Wait_On_Leader_Follower::can_process_upcalls (void) const
+TAO_Wait_On_Leader_Follower::can_process_upcalls () const
 {
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

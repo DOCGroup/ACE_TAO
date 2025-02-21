@@ -1,0 +1,7 @@
+# List to run all the subtests locally with 'auto_run_tests.pl -Config ZLIB -Config ZIOP -l all.lst'
+
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl : !STATIC
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl -bidir: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !GIOP10 !DISABLE_BIDIR
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl -messaging: !STATIC !NO_MESSAGING !CORBA_E_MICRO
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl -csd: !STATIC !ST !CORBA_E_MICRO
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl -ziop: !STATIC ZIOP ZLIB

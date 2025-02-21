@@ -1,0 +1,22 @@
+module Test
+{
+  typedef long FooType;
+  struct FooStruct  {
+    FooType Foo1;
+    FooType Foo2;
+  };
+
+  exception Demarshaling_From_Any_Failed {};
+  exception Repeated_Type_In_Any_Test_Failed {};
+
+  /// Simple test interface.
+  interface Hello
+  {
+    /// Return the any provided as the "in" argument.
+    any get_any (in any the_any);
+
+    /// Shutdown the server ORB.
+    oneway void shutdown ();
+  };
+
+};

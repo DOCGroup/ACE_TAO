@@ -1,13 +1,10 @@
-// $Id$
-#include "tao/FlResource_Loader.h"
+#include "tao/FlResource/FlResource_Loader.h"
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(FL_Cube, client, "$Id$")
-
-#include <FL/Fl.h>
-#include <FL/Fl_Window.h>
-#include <FL/Fl_Roller.h>
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Roller.H>
 
 class Client
 {
@@ -22,21 +19,20 @@ public:
           Fl_Window* parent);
   // ctor
 
-  ~Client (void);
+  ~Client ();
 
-  void show (void);
+  void show ();
   // Call show on all the window objects
 
-  void parse_args (int argc, char *argv[]
-                   ACE_ENV_ARG_DECL);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
   static void x_cb (Fl_Widget *widget, void* cookie);
   static void y_cb (Fl_Widget *widget, void* cookie);
   // The callbacks
 
-  void x_changed (void);
-  void y_changed (void);
+  void x_changed ();
+  void y_changed ();
   // The methods for the callbacks
 
 private:
@@ -51,15 +47,14 @@ private:
   // The server.
 };
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   TAO::FlResource_Loader fl_loader;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       Fl_Window window (300, 100);
 
@@ -71,17 +66,15 @@ int main (int argc, char* argv[])
 
       client.show ();
 
-      client.parse_args (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.parse_args (argc, argv);
 
       Fl::run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -106,14 +99,14 @@ Client::Client (CORBA::ORB_ptr orb,
   this->y_roller_->step (1);
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
   delete x_roller_;
   delete y_roller_;
 }
 
 void
-Client::show (void)
+Client::show ()
 {
   this->x_roller_->show ();
   this->y_roller_->show ();
@@ -134,44 +127,39 @@ Client::y_cb (Fl_Widget*, void* cookie)
 }
 
 void
-Client::x_changed (void)
+Client::x_changed ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Long x = CORBA::Long (this->x_roller_->value ());
-      this->server_->set_x_angle (x ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->server_->set_x_angle (x);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client::x_changed");
+      ex._tao_print_exception ("Client::x_changed");
     }
-  ACE_ENDTRY;
 }
 
 void
-Client::y_changed (void)
+Client::y_changed ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Long y = CORBA::Long (this->y_roller_->value ());
-      this->server_->set_y_angle (y ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->server_->set_y_angle (y);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client::x_changed");
+      ex._tao_print_exception ("Client::x_changed");
     }
-  ACE_ENDTRY;
 }
 
 void
-Client::parse_args (int argc, char *argv[]
-                    ACE_ENV_ARG_DECL)
+Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  const char *ior = "file://test.ior";
+  const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -190,10 +178,8 @@ Client::parse_args (int argc, char *argv[]
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->string_to_object (ior);
 
   this->server_ =
-    Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    Simple_Server::_narrow (object.in ());
 }

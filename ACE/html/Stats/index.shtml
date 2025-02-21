@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                      "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+  <HEAD>
+    <TITLE>ACE+TAO+CIAO+DAnCE Metrics</TITLE>
+    <LINK href="Stats.css" rel="stylesheet" type="text/css">
+  </HEAD>
+  <CENTER>
+  <TABLE>
+  <h1>Continuous Metrics for ACE+TAO+CIAO+DAnCE</h1>
+  </TABLE>
+  </CENTER>
+  <!--#include file="img.html"-->
+  <BODY>
+    <HR>
+    <LEFT>
+    <P>These pages track <A HREF="footprint.shtml">footprint</A>,
+       and <A HREF="performance.shtml"> performance</A> metrics for ACE+TAO+CIAO+DAnCE.
+      The results are collected from our <A
+      href="http://www.dre.vanderbilt.edu/scoreboard"> nightly</A>
+      regression tests. The complete source for the tests is
+      available as part of the ACE+TAO+CIAO+DAnCE <A
+      HREF="http://download.dre.vanderbilt.edu">distribution</A>.
+      The hardware and software configuration used for these
+      tests is described <A
+      HREF="configuration.shtml">here</A>. Notice, however, that the
+      results contained here may be different from what you will
+      obtain using a TAO release or micro kit, since the experiments
+      are based on our current source tree. </P>
+
+    <P>More information about ACE+TAO+CIAO+DAnCE footprints, and the continuing
+      effort to reduce the library and application's code size can be
+      found in the
+      <A HREF="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/ACE-subsets.html?revision=HEAD">
+	ACE+TAO+CIAO subsetting
+      </A>
+      page.
+    </P>
+
+<h3>Additional Development Process Related Pages</h3>
+<p>
+In addition to the statistics described above, a number of other ACE/TAO/CIAO/DAnCE development process related web pages we use are the following:
+<ul>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Scoreboard/">Automated Builds</a>
+</li>
+<li>
+  <a href="http://scoreboard.theaceorb.nl/">Graphical scoreboard</a>
+</li>
+<li>
+  Xampler Performance benchmarks for <a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/isislab/emulab/FC6xampler/Template-Display/_Report/">x86</a>
+</li>
+<li>
+  <a href="CORBAecompact/index.html">Footprint CORBA/e compact</a>
+</li>
+<li>
+  <a href="CORBAemicro/index.html">Footprint CORBA/e micro</a>
+</li>
+<li>
+  <a href="CORBAemicros/index.html">Footprint CORBA/e micro single threaded</a>
+</li>
+<li>
+  <a href="CORBAminimum/index.html">Footprint Minimum CORBA</a>
+</li>
+<li>
+  <a href="regular/index.html">Footprint Regular CORBA</a>
+</li>
+<li>
+  <a href="versioned/index.html">Footprint versioned namespaces CORBA</a>
+</li>
+<li>
+  <a href="performance.shtml">Performance metrics Regular CORBA</a>
+</li>
+</ul>
+The <i>Scoreboard</i>
+pages contain compile- and link-time build results of recent snapshots
+of our main development branch.
+</p>
+
+
+<!--#include file="navigation.html"-->
+<!--#include file="footer.html"-->
+
+  </BODY>
+</HTML>
+

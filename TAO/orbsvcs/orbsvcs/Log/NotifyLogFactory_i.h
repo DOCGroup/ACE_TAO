@@ -4,10 +4,7 @@
 /**
  *  @file   NotifyLogFactory_i.h
  *
- *  $Id$
- *
  *  Implements the Factory for NotifyLog Objects.
- *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
@@ -26,12 +23,14 @@
 
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/LogMgr_i.h"
-#include "NotifyLog_i.h"
+#include "orbsvcs/Log/NotifyLog_i.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_NotifyLog_i;
 class TAO_NotifyLogNotification;
@@ -49,7 +48,7 @@ public:
   //= Initialization and termination code.
 
   /// Constructor - default.
-  TAO_NotifyLogFactory_i (void);
+  TAO_NotifyLogFactory_i ();
 
   /// Constructor.
   TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
@@ -59,9 +58,7 @@ public:
 
   /// Activate this servant with the ORB and POA passed in.
   DsNotifyLogAdmin::NotifyLogFactory_ptr
-    activate (CORBA::ORB_ptr orb,
-              PortableServer::POA_ptr poa
-              ACE_ENV_ARG_DECL);
+    activate (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Used to create an NotifyLog.
   DsNotifyLogAdmin::NotifyLog_ptr create (
@@ -70,16 +67,7 @@ public:
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         const CosNotification::QoSProperties & initial_qos,
         const CosNotification::AdminProperties & initial_admin,
-        DsLogAdmin::LogId_out id
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DsLogAdmin::InvalidLogFullAction,
-        DsLogAdmin::InvalidThreshold,
-        CosNotification::UnsupportedQoS,
-        CosNotification::UnsupportedAdmin
-      ));
+        DsLogAdmin::LogId_out id);
 
   /// Same as create (), but allows clients to specify the id.
   DsNotifyLogAdmin::NotifyLog_ptr create_with_id (
@@ -89,161 +77,65 @@ public:
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         const CosNotification::QoSProperties & initial_qos,
         const CosNotification::AdminProperties & initial_admin
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DsLogAdmin::LogIdAlreadyExists,
-        DsLogAdmin::InvalidLogFullAction,
-        DsLogAdmin::InvalidThreshold,
-        CosNotification::UnsupportedQoS,
-        CosNotification::UnsupportedAdmin
-      ));
+      );
 
 
   // = Methods from CosNotifyChannelAdmin::ConsumerAdmin.
-  CosNotifyChannelAdmin::AdminID MyID (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  CosNotifyChannelAdmin::AdminID MyID ();
 
-  CosNotifyChannelAdmin::EventChannel_ptr MyChannel (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  CosNotifyChannelAdmin::EventChannel_ptr MyChannel ();
 
-  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator ();
 
-  CosNotifyFilter::MappingFilter_ptr priority_filter (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-  void priority_filter (CosNotifyFilter::MappingFilter_ptr ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  CosNotifyFilter::MappingFilter_ptr priority_filter ();
+  void priority_filter (CosNotifyFilter::MappingFilter_ptr);
 
-  CosNotifyFilter::MappingFilter_ptr lifetime_filter (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-  void lifetime_filter (CosNotifyFilter::MappingFilter_ptr ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  CosNotifyFilter::MappingFilter_ptr lifetime_filter ();
+  void lifetime_filter (CosNotifyFilter::MappingFilter_ptr);
 
-  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers ();
+  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers ();
 
   CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (
-    CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::ProxyNotFound,
-      CORBA::SystemException
-    ));
+    CosNotifyChannelAdmin::ProxyID proxy_id);
 
   CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_pull_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
-    CosNotifyChannelAdmin::ProxyID& proxy_id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::AdminLimitExceeded,
-      CORBA::SystemException
-    ));
+    CosNotifyChannelAdmin::ProxyID& proxy_id);
 
   CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_push_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
-    CosNotifyChannelAdmin::ProxyID& id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::AdminLimitExceeded,
-      CORBA::SystemException
-    ));
+    CosNotifyChannelAdmin::ProxyID& id);
 
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-          ACE_ENV_SINGLE_ARG_DECL
-        )
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        ));
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier ();
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
-          ACE_ENV_SINGLE_ARG_DECL
-        )
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        ));
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier ();
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        ));
+  void destroy ();
 
   /// CosNotifyComm::NotifySubscribe.
   void subscription_change (const CosNotification::EventTypeSeq& added,
-                            const CosNotification::EventTypeSeq& removed
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotifyComm::InvalidEventType,
-      CORBA::SystemException
-    ));
+                            const CosNotification::EventTypeSeq& removed);
 
   /// CosNotification::QoSAdmin.
-  CosNotification::QoSProperties* get_qos (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        ));
-  void set_qos (const CosNotification::QoSProperties& ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotification::UnsupportedQoS,
-      CORBA::SystemException
-    ));
+  CosNotification::QoSProperties* get_qos ();
+  void set_qos (const CosNotification::QoSProperties&);
   void validate_qos (const CosNotification::QoSProperties&,
-                     CosNotification::NamedPropertyRangeSeq_out
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotification::UnsupportedQoS,
-      CORBA::SystemException
-    ));
+                     CosNotification::NamedPropertyRangeSeq_out);
 
   /// CosNotifyFilter::FilterAdmin.
-  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        ));
-  void remove_filter (CosNotifyFilter::FilterID ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        ));
-  CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotifyFilter::FilterNotFound,
-      CORBA::SystemException
-    ));
-  CosNotifyFilter::FilterIDSeq* get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        ));
-  void remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((
-          CORBA::SystemException
-        ));
+  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr);
+  void remove_filter (CosNotifyFilter::FilterID);
+  CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID);
+  CosNotifyFilter::FilterIDSeq* get_all_filters ();
+  void remove_all_filters ();
 
 protected:
-  virtual PortableServer::ObjectId* create_objectid (DsLogAdmin::LogId id);
+  virtual CORBA::RepositoryId
+    create_repositoryid ();
 
-  virtual DsLogAdmin::Log_ptr create_log_object (DsLogAdmin::LogId id
-						 ACE_ENV_ARG_DECL);
-
-  virtual DsLogAdmin::Log_ptr create_log_reference (DsLogAdmin::LogId id
-						    ACE_ENV_ARG_DECL);
+  virtual PortableServer::ServantBase*
+    create_log_servant (DsLogAdmin::LogId id);
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
@@ -269,6 +161,8 @@ protected:
   /// The EventChannelFactory used to create an EventChannel.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

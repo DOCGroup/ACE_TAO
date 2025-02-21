@@ -1,20 +1,15 @@
 /**
  * @file Clock_Ticks.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Clock_Ticks.h"
 
-ACE_RCSID(Nested_Upcall_Crash, Clock_Ticks, "$Id$")
-
-int
-Clock_Ticks::get_hz (void)
+long
+Clock_Ticks::get_hz ()
 {
 #if defined(_SC_CLK_TCK)
-  int r = ACE_OS::sysconf(_SC_CLK_TCK);
+  long r = ACE_OS::sysconf(_SC_CLK_TCK);
   if(r != -1)
     return r;
 #endif /* _SC_CLK_TCK */
@@ -29,7 +24,7 @@ Clock_Ticks::get_hz (void)
 }
 
 int
-Clock_Ticks::get_usecs_per_tick (void)
+Clock_Ticks::get_usecs_per_tick ()
 {
   return 1000000 / get_hz ();
 }

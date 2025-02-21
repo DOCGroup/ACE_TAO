@@ -2,8 +2,6 @@
 /**
  *  @file   test_i.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali
  */
 // ===================================================================
@@ -22,24 +20,20 @@ public:
           RTCORBA::Priority high_priority);
 
   /// Initialize the server.
-  void initialize (CORBA::ULong total_iterations
-                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void initialize (CORBA::ULong total_iterations);
 
   /// Test method.
   void method (CORBA::ULong work,
-               const char *iteration
-               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+               const char *iteration);
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA ();
 
   /// Work (burn CPU).
   void work (CORBA::ULong work);
 
   /// Estimates work iterations performed per second.
-  int estimate_iterations (void);
+  int estimate_iterations ();
 
 private:
   /// ORB.

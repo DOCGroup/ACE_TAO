@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -80,22 +78,25 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export UTL_NameList : public UTL_List
 {
 public:
-  UTL_NameList (UTL_ScopedName *s, 
+  UTL_NameList (UTL_ScopedName *s,
                 UTL_NameList *cdr);
 
   // Get list item.
-  UTL_ScopedName *head (void);
+  UTL_ScopedName *head ();
 
   // Accessors.
-  idl_bool truncatable (void) const;
-  void truncatable (idl_bool val);
+  bool truncatable () const;
+  void truncatable (bool val);
+
+  // Cleanup.
+  virtual void destroy ();
 
 private:
   // List item.
   UTL_ScopedName *pd_car_data;
 
-  // Used only with valuetye inheritance list. Defualts to 0.
-  idl_bool pd_truncatable;
+  // Used only with valuetye inheritance list. Defualts to false.
+  bool pd_truncatable;
 };
 
 // Active iterator for UTL_NameList.
@@ -105,7 +106,7 @@ public:
   UTL_NamelistActiveIterator (UTL_NameList *source);
 
   // Get current item.
-  UTL_ScopedName *item (void);
+  UTL_ScopedName *item ();
 };
 
 #endif           // _UTL_NAMELIST_UTL_NAMELIST_HH

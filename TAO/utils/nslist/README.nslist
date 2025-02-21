@@ -1,0 +1,36 @@
+This utility lists the current entries in the Naming Service in a
+nicely formatted manner.  To run it, just type
+
+% nslist [[ --ior ][ --ctxior ] | --nsior ]
+
+and it'll print the contents of the default "NameService" returned by
+resolve_initial_references().  You can select the IOR of this
+NameService via the options described in
+
+$TAO_ROOT/docs/Options.html
+
+If invoked as:
+
+% nslist
+
+The contents of the default NameService will be displayed,
+including the protocol and endpoint of each object reference.
+
+
+nslist accepts three other options:
+
+% nslist --ior
+
+will print the contents of the NameService, including the IOR of each
+reference entry and the IOR of the NameService itself.
+
+% nslist --ctxior
+
+will additionally print the IORs of any subcontexts found within NameService.
+
+% nslist --nsior
+
+will print *only* the IOR of the NameService itself, with no other text.
+This can be used to locate the TAO NameService for non-TAO applications.
+
+

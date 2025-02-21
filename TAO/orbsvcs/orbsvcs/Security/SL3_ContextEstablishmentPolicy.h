@@ -4,8 +4,6 @@
 /**
  * @file SL3_ContextEstablishmentPolicy.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -30,6 +28,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SL3
@@ -41,12 +41,11 @@ namespace TAO
      *
      *
      */
-    class TAO_Security_Export ContextEstablishmentPolicy
+    class ContextEstablishmentPolicy
       : public virtual SecurityLevel3::ContextEstablishmentPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       ContextEstablishmentPolicy (
         SecurityLevel3::CredsDirective             creds_directive,
@@ -63,64 +62,46 @@ namespace TAO
        * SecurityLevel3::ContextEstablishmentPolicy interface.
        */
       //@{
-      virtual SecurityLevel3::CredsDirective creds_directive (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredsDirective creds_directive ();
 
-      virtual SecurityLevel3::OwnCredentialsList * creds_list (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::OwnCredentialsList * creds_list ();
 
-      virtual SecurityLevel3::FeatureDirective use_client_auth (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::FeatureDirective use_client_auth ();
 
-      virtual SecurityLevel3::FeatureDirective use_target_auth (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::FeatureDirective use_target_auth ();
 
-      virtual SecurityLevel3::FeatureDirective use_confidentiality (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::FeatureDirective use_confidentiality ();
 
-      virtual SecurityLevel3::FeatureDirective use_integrity (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::FeatureDirective use_integrity ();
 
-      virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::PolicyType policy_type ();
 
-      virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Policy_ptr copy ();
 
-      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void destroy ();
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ContextEstablishmentPolicy (void);
+      ~ContextEstablishmentPolicy ();
 
     private:
-
       SecurityLevel3::CredsDirective     creds_directive_;
       SecurityLevel3::OwnCredentialsList creds_list_;
       SecurityLevel3::FeatureDirective   use_client_auth_;
       SecurityLevel3::FeatureDirective   use_target_auth_;
       SecurityLevel3::FeatureDirective   use_confidentiality_;
       SecurityLevel3::FeatureDirective   use_integrity_;
-
     };
-
   } // End SL3 namespace
 
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

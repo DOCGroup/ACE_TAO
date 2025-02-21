@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Smart_Proxy_Impl.h"
 
 Smart_Test_Factory::Smart_Test_Factory (int one_shot_factory)
@@ -10,17 +8,15 @@ Smart_Test_Factory::Smart_Test_Factory (int one_shot_factory)
 }
 
 Test_ptr
-Smart_Test_Factory::create_proxy (Test_ptr proxy
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+Smart_Test_Factory::create_proxy (Test_ptr proxy)
  {
    ACE_DEBUG ((LM_DEBUG,
                "create_smart_proxy\n"));
 
-   if (CORBA::is_nil (proxy) == 0)
+   if (CORBA::is_nil (proxy))
        ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
 
    return proxy;
-
  }
 
 Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
@@ -29,28 +25,21 @@ Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
 }
 
 CORBA::Short
-Smart_Test_Proxy::method (CORBA::Short boo
-                          ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Test::Oops))
+Smart_Test_Proxy::method (CORBA::Short boo)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Yahoo, I am smart\n"));
 
   CORBA::Short retval = 0;
-  ACE_TRY
+  try
     {
-      retval = TAO_Test_Smart_Proxy_Base::method (boo
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = TAO_Test_Smart_Proxy_Base::method (boo);
     }
-  ACE_CATCH (Test::Oops, reason)
+  catch (const Test::Oops& reason)
     {
-      ACE_PRINT_EXCEPTION (reason,
-                           "User Exception");
+      reason._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   return retval;
 }

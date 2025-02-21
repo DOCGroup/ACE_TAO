@@ -1,0 +1,278 @@
+commit d8ee3a8f8d68fc938e2026edd8072246efc4fdf7
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Nov 15 11:19:33 2019 +0100
+
+    Prevent crash
+
+commit c597e4db31f89e55e5fd50be318123c2d97b0e4b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Nov 6 17:46:05 2019 -0600
+
+    tao_idl: Update fe_lookup.cpp for gperf
+
+commit 22f69106176b2c93590bdfd78caba97ffd6d66a7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 1 14:11:50 2019 -0500
+
+    Update NEWS Files
+
+commit 233aaa55d4c2f1fd26bdc0d80b99ac49f4baa787
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 1 14:05:20 2019 -0500
+
+    TAO_IDL: Fix Memory Leak of Wide String Literal
+    
+    This also fixes the "invalid" part of the orginal invalid free issue in
+    https://github.com/DOCGroup/ACE_TAO/pull/984
+
+commit 4530cfc7e627a6804faad49d9e10ac349a84f981
+Author: Justin Boss <30599409+wkbrd@users.noreply.github.com>
+Date:   Fri Nov 1 08:20:53 2019 -0400
+
+    Update to correct test case.
+
+commit 7092fadf9b9bbf4933b805d61169404644c0ec19
+Author: Justin Boss <30599409+wkbrd@users.noreply.github.com>
+Date:   Thu Oct 31 18:37:05 2019 -0400
+
+    Switch shallow copy to a deep copy.
+
+commit f60d209703ac4e1d375a9670d2a655edd57185a8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 29 12:34:40 2019 +0100
+
+    Fixed typos
+    
+        * ACE/ace/Service_Gestalt.h:
+        * TAO/docs/notification/reliability.html:
+        * TAO/orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        * TAO/orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/README:
+
+commit e12d23326b610d6aca94cab94b317575a7f9d5b4
+Merge: 8672cb25027 0d7a2f0ba3b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 19 12:04:50 2019 +0200
+
+    Merge pull request #970 from knutpett/fix_run_test
+    
+    tao_idl: robustness in run_test.pl
+
+commit e269576148c3c4b864077e1cbc44123eccd22bb4
+Merge: aafe990a77f 6d9787af10e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 11 13:21:31 2019 -0500
+
+    Merge branch 'igtd/iterface_annotations' of github.com:iguessthislldo/ACE_TAO into igtd/iterface_annotations
+
+commit aafe990a77f8a42871d1b1af11a6374de6d427b7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 11 13:20:39 2019 -0500
+
+    annotest_idl: split up be_init.cpp
+
+commit 0d7a2f0ba3b021c6b08d20936837bb553b1e1f1e
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Oct 11 10:41:02 2019 +0200
+
+    tao_idl: rewrote run_test.pl to align with other test scripts
+
+commit 6d9787af10e3da038afd6b14ca31b7d505b8949e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 10 18:03:30 2019 -0500
+
+    Update TAO/TAO_IDL/docs/annotations.md
+    
+    Co-Authored-By: Adam Mitz <mitza@objectcomputing.com>
+
+commit 699b24bf2910c1bbc77f05841feb8ce1b45b6520
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 10 16:35:29 2019 -0500
+
+    annotest_idl: be_init.cpp: /[<>]/"/
+
+commit da63b0916c6da12a38c4e30f1c4f76f46d92ec1e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 10 16:33:15 2019 -0500
+
+    tao_idl: Respond to Review
+
+commit cea22592afbf9060c914723aa09b33c70b8624de
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 10 11:25:33 2019 -0500
+
+    tao_idl: make arg const&
+
+commit eb60837204ad2b40e73af2086713d90370cec218
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Thu Oct 10 13:59:11 2019 +0200
+
+    tao_idl: robustness in run_test.pl
+    
+    Fail the test if process could not be spawned.
+
+commit c2a3d774e72ed5f7a73ac74086db7063bc69af42
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 7 18:46:50 2019 -0500
+
+    Update TAO NEWS file
+
+commit a265b98a8a71aa77eed096919883674447534d59
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 7 18:35:51 2019 -0500
+
+    tao_idl: reenable eval error/warn msgs
+
+commit 1909d8f86b80ad5b16b8bad4d008b38a150d5b7a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 7 18:29:08 2019 -0500
+
+    tao_idl: Add Direct Error Reporting
+
+commit 0636873b67b36e8c89109cc4bd557111f45f3c67
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 7 16:55:55 2019 -0500
+
+    tao_idl: fix annotations.md
+
+commit ff963e1ab38760b92450e95826afdb021a266291
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 4 21:08:49 2019 -0500
+
+    tao_idl: annotations on interfaces and operations
+    
+    Used bison 3.4, but the generated code doesn't look very different.
+    
+    Also Updated annotations.md with:
+    - a list of what can be annotated
+    - how to extend annotation support in the future
+    - other minor fixes
+
+commit 240b6dd0563ea9f04b464157165eb8009fa1bfa3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 26 12:43:03 2019 +0200
+
+    Use https links
+    
+        * TAO/PROBLEM-REPORT-FORM:
+        * TAO/README:
+        * TAO/TAO-INSTALL.html:
+        * TAO/VERSION:
+
+commit 27d7d88a44d3fd14d9c137447c05b120ec342d55
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 26 12:42:49 2019 +0200
+
+    Document changes
+    
+        * TAO/NEWS:
+
+commit 0f08d18e295a91caa31047b762756af6792cefba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 13 13:40:51 2019 +0200
+
+    Updated file header
+    
+        * TAO/tao/Object_KeyC.h:
+
+commit 8f4e07f9ce98ef3001b63cabf88812b5f4562170
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 13 13:36:39 2019 +0200
+
+    No need to generate a copy constructor, the compile will generate one, fixes warnings with gcc9. When we have C++11 we can use the =default to indicate that the compiler generates one
+    
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO/tao/Object_KeyC.cpp:
+        * TAO/tao/Object_KeyC.h:
+
+commit 627ee0993462666dd30ea47cde6359faff8d007b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 22 20:26:38 2019 +0200
+
+    Link to https instead of http
+    
+        * TAO/TAO_IDL/be/be_helper.cpp:
+
+commit 301db9b9fa108339c74dc3936fbeaa779963ae24
+Author: mgrojo <mgrojo@gmail.com>
+Date:   Wed Aug 21 18:04:57 2019 +0200
+
+    Optimization: avoid invoking gettimeofday in each loop cycle
+    
+    Constants can be moved outside the loop so delay is calculated just one and
+    gettimeofday is only called once for each invocation to cleanup (it is
+    assumed that the difference in time for each loop cycle is irrelevant for
+    the cleanup strategy).
+
+commit 2e5328d878460fa5ef444afdb400293c49a4abcb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 19 20:14:02 2019 +0200
+
+    Put constructor back
+
+commit 396cfea6b04e75b44bdea3511e078201ee40196e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 19 19:14:41 2019 +0200
+
+    Layout changes
+
+commit cdc108a61cb7e4a26932f5f4073c556260935c27
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 19 19:06:27 2019 +0200
+
+    Removed old style documentation which was just about mentioning where constructors/destructors are
+
+commit 814e79122b919520b7a337408d8b66f9f30d38bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 19 17:25:34 2019 +0200
+
+    Removed old comments before constructor/destructor
+
+commit 061d421dd9af1e2b614766149e7535563d9197ca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 2 08:38:14 2019 +0200
+
+    Layout change
+    
+        * TAO/tao/DynamicInterface/DII_Invocation.cpp:
+
+commit 23aab229d11d58f9a17e32bd0ffc4e0f56a3654c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 2 08:38:04 2019 +0200
+
+    Add missing include for ACE_OS::sleep
+    
+        * TAO/tests/DII_Discard_Deferred/Hello.cpp:
+
+commit b07b44090bca7f9acac585b64a0346ff7ba3aa3a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 1 18:52:58 2019 +0200
+
+    Fixed CodeFactor issue
+
+commit c0a2f9aaabe9b93d1054cd29ce0a8010b36317aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 1 18:52:15 2019 +0200
+
+    Fixed fuzz
+
+commit 2a9158649ed71916b0ce53186b2cc3c4b4712b88
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Thu Aug 1 16:06:32 2019 +0200
+
+    Fix lifecycle management of Request in DII deferred calls and add
+    regression test.
+
+commit ee392af47bd4f83401676de666e839668910fcb3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 30 10:11:24 2019 +0200
+
+    Prepare for x.5.7 and make x.5.6 public
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : taolib, anytypecode {
+  after   += IORManipulation
+  libs    += TAO_IORManip
+}

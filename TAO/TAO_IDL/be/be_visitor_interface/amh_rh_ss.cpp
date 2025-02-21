@@ -2,8 +2,6 @@
 /**
 *  @file   amh_rh_ss.cpp
 *
-*  $Id$
-*
 *  Specialized interface visitor for AMH-ResponseHandler that generates code for
 *  RH in the skeleton source files.
 *
@@ -11,18 +9,15 @@
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface,
-           amh_rh_ss,
-           "$Id$")
+#include "interface.h"
 
 be_visitor_amh_rh_interface_ss::be_visitor_amh_rh_interface_ss (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface_ss (ctx)
 {
 }
 
-be_visitor_amh_rh_interface_ss::~be_visitor_amh_rh_interface_ss (void)
+be_visitor_amh_rh_interface_ss::~be_visitor_amh_rh_interface_ss ()
 {
 }
 
@@ -69,22 +64,7 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   ACE_CString rh_skel_class_name (rh_skel_class_name_prefix);
   rh_skel_class_name += node->local_name ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  *os << rh_skel_full_scope_name.c_str ()
-      << "::" << rh_skel_class_name.c_str () << " (void)" << be_nl
-      << ": TAO_AMH_Response_Handler ()," << be_idt_nl
-      << "::" << node->full_name () << " ()" << be_uidt << be_uidt_nl
-      << "{" << be_nl
-      << "}" << be_nl << be_nl;
-
-  *os << rh_skel_full_scope_name.c_str ()
-      << "::~" << rh_skel_class_name.c_str ()
-      << " (void)" << be_nl;
-  *os << "{" << be_nl;
-  *os << "}";
-
+  TAO_INSERT_COMMENT (os);
 
   // Generate code for elements in the scope (e.g., operations)
   // We'll rely on the base class (be_visitor_scope) to do the

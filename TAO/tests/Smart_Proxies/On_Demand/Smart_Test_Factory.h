@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Smart_Proxy_Impl.h"
 #include "ace/Service_Object.h"
 #include "ace/svc_export.h"
@@ -10,12 +8,10 @@ class ACE_Svc_Export Smart_Test_Factory
 
 {
 public:
-
-  Smart_Test_Factory (void);
+  Smart_Test_Factory ();
 
   // This method will create the smart_proxy.
-  virtual Test_ptr create_proxy (Test_ptr proxy
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual Test_ptr create_proxy (Test_ptr proxy);
 };
 
 // The following Factory is used by the ACE_Service_Config to

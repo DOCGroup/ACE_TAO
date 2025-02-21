@@ -1,24 +1,22 @@
-// $Id$
+// -*- C++ -*-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Policy_Current_Impl::TAO_Policy_Current_Impl (void)
+TAO_Policy_Current_Impl::TAO_Policy_Current_Impl ()
   : manager_impl_ (TAO_POLICY_THREAD_SCOPE)
 {
 }
 
 ACE_INLINE CORBA::Policy_ptr
-TAO_Policy_Current_Impl::get_policy (
-      CORBA::PolicyType policy
-      ACE_ENV_ARG_DECL)
+TAO_Policy_Current_Impl::get_policy (CORBA::PolicyType policy)
 {
-  return this->manager_impl_.get_policy (policy ACE_ENV_ARG_PARAMETER);
+  return this->manager_impl_.get_policy (policy);
 }
 
 ACE_INLINE CORBA::Policy_ptr
-TAO_Policy_Current_Impl::get_cached_policy (TAO_Cached_Policy_Type type
-                                            ACE_ENV_ARG_DECL)
+TAO_Policy_Current_Impl::get_cached_policy (TAO_Cached_Policy_Type type)
 {
-  return this->manager_impl_.get_cached_policy (type
-                                                ACE_ENV_ARG_PARAMETER);
+  return this->manager_impl_.get_cached_policy (type);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

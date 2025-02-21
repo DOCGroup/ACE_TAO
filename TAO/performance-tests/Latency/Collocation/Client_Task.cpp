@@ -1,9 +1,7 @@
-//
-// $Id$
-//
 
 #include "Client_Task.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/SString.h"
@@ -19,9 +17,9 @@ Client_Task::Client_Task (Test::Roundtrip_ptr reference,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (CORBA::is_nil (this->remote_ref_.in ()))
       {
@@ -45,8 +43,7 @@ Client_Task::svc (void)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          (void) this->remote_ref_->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) this->remote_ref_->test_method (start);
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
@@ -57,30 +54,27 @@ Client_Task::svc (void)
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
+      stats.dump_results (ACE_TEXT("Total"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              test_end - test_start,
                                              stats.samples_count ());
 
       //shutdown the server ORB
-      this->remote_ref_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->remote_ref_->shutdown ();
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
-
 }

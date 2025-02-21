@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Proxy_RB_Tree.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -16,7 +15,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
 #include "ace/RB_Tree.h"
+#include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Iterator class for a ACE_ESF_RB_Tree
 template<class PROXY>
@@ -33,9 +37,9 @@ public:
 
   bool operator == (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
   bool operator != (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
-  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>& operator++ (void);
+  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>& operator++ ();
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> operator++ (int);
-  PROXY *operator *(void);
+  PROXY *operator *();
 
 private:
   Implementation impl_;
@@ -62,48 +66,41 @@ public:
   typedef TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> Iterator;
 
   /// Constructor
-  TAO_ESF_Proxy_RB_Tree (void);
+  TAO_ESF_Proxy_RB_Tree ();
 
   /// Return the first element in the collection, or end() if there
   /// are none
-  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> begin (void);
+  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> begin ();
 
   /// Return one past the last element in the collection
-  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> end (void);
+  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> end ();
 
   /// Return the number of elements in the collection
-  size_t size (void) const;
+  size_t size () const;
 
   /// Insert a new element to the collection
-  void connected (PROXY *
-                  ACE_ENV_ARG_DECL_NOT_USED);
+  void connected (PROXY *);
 
   /// Insert a new element that could be there already.
-  void reconnected (PROXY *
-                    ACE_ENV_ARG_DECL_NOT_USED);
+  void reconnected (PROXY *);
   /// Remove an element from the collection
-  void disconnected (PROXY *
-                     ACE_ENV_ARG_DECL_NOT_USED);
+  void disconnected (PROXY *);
 
   /// Shutdown the collection, i.e. remove all elements and release
   /// resources
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shutdown ();
 
 private:
   /// The underlying implementation object
   Implementation impl_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ESF_Proxy_RB_Tree.i"
+#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Proxy_RB_Tree.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Proxy_RB_Tree.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.cpp"
 
 #endif /* TAO_ESF_PROXY_RB_TREE_H */

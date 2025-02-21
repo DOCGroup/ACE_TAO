@@ -1,21 +1,17 @@
-// $Id$
-
 #include "PP_Test_Server.h"
 #include "tao/TAO_Internal.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(IDL_Cubit, Cubit_Server, "$Id$")
-
-PP_Test_Server::PP_Test_Server (void)
+PP_Test_Server::PP_Test_Server ()
   : ior_output_file_ (0)
 {
 }
 
 int
-PP_Test_Server::parse_args (void)
+PP_Test_Server::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "do:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("do:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -49,20 +45,17 @@ PP_Test_Server::parse_args (void)
 
 int
 PP_Test_Server::init (int argc,
-                      char** argv
-                      ACE_ENV_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
+                      ACE_TCHAR** argv)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+                                         "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-  ACE_CHECK_RETURN (-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -79,9 +72,7 @@ PP_Test_Server::init (int argc,
 
   this->factory_id_ =
     this->orb_manager_.activate_under_child_poa ("factory",
-                                                 this->factory_impl_
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                                 this->factory_impl_);
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
@@ -100,11 +91,10 @@ PP_Test_Server::init (int argc,
 }
 
 int
-PP_Test_Server::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
+PP_Test_Server::run ()
 {
-  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  int result = this->orb_manager_.run ();
 
-  ACE_CHECK_RETURN (-1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -113,7 +103,7 @@ PP_Test_Server::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMET
   return 0;
 }
 
-PP_Test_Server::~PP_Test_Server (void)
+PP_Test_Server::~PP_Test_Server ()
 {
   if (this->factory_id_.in ())
     this->orb_manager_.deactivate_under_child_poa (this->factory_id_.in ());

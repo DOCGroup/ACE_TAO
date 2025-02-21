@@ -2,10 +2,7 @@
 /**
  * @file Echo.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef TAO_TESTS_BUG1270_ECHO_H
 #define TAO_TESTS_BUG1270_ECHO_H
@@ -18,9 +15,7 @@ public:
   Echo(CORBA::ORB_ptr orb,
        int abort_counter);
 
-  virtual void echo_payload (Test::Payload const & data
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC((CORBA::SystemException));
+  virtual void echo_payload (Test::Payload const & data);
 
 private:
   CORBA::ORB_var orb_;

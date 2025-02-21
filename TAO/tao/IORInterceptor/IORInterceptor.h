@@ -4,8 +4,6 @@
 /**
  *  @file    IORInterceptor.h
  *
- *  $Id$
- *
  *  @author Bala Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

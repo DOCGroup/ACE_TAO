@@ -1,0 +1,30 @@
+// -*- IDL -*-
+
+/**
+ *  @file   Dynamic.pidl
+ */
+
+// File: Dynamic.idl
+// Used primarily for Interceptors
+
+#include "tao/AnyTypeCode/Dynamic_Parameter.pidl"
+#include "tao/Typecode_types.pidl"
+#include "tao/StringSeq.pidl"
+
+#ifndef _DYNAMIC_IDL_
+#define _DYNAMIC_IDL_
+
+module Dynamic
+{
+  typeprefix Dynamic "omg.org";
+
+  typedef sequence<Parameter> ParameterList;
+
+  typedef CORBA::StringSeq ContextList;
+
+  typedef sequence<CORBA::TypeCode> ExceptionList;
+
+  typedef CORBA::StringSeq RequestContext;
+};
+
+#endif // _DYNAMIC_IDL_

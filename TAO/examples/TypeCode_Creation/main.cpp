@@ -1,26 +1,17 @@
-// $Id$
-
 #include "testC.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
 
-ACE_RCSID(TypeCode_Creation, main, "$Id$")
 
-int main(int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::TypeCode_var iface_tc =
         orb->create_interface_tc (CORBA::string_dup ("IDL:iface:1.0"),
-                                  CORBA::string_dup ("iface")
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                  CORBA::string_dup ("iface"));
 
       CORBA::ULong length = 5;
 
@@ -39,7 +30,7 @@ int main(int argc, char *argv[])
       // Not needed for ORB-created typecodes
       // (see CORBA 2.4.2 section 10.7.3).
       foo_members[0].type_def = CORBA::IDLType::_nil ();
-      CORBA::Short label_value = -3;
+      CORBA::Short label_value = 3;
       foo_members[0].label <<= label_value;
 
       foo_members[1].name = CORBA::string_dup ("foo_str_member");
@@ -51,7 +42,7 @@ int main(int argc, char *argv[])
       foo_members[2].name = CORBA::string_dup ("foo_str_member");
       foo_members[2].type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
       foo_members[2].type_def = CORBA::IDLType::_nil ();
-      label_value = -1;
+      label_value = 1;
       foo_members[2].label <<= label_value;
 
       // The default member.
@@ -72,9 +63,7 @@ int main(int argc, char *argv[])
       CORBA::TypeCode_ptr foo_tc = orb->create_union_tc ("IDL:foo:1.0",
                                                           "foo",
                                                           CORBA::_tc_short,
-                                                          foo_members
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                          foo_members);
 
       length = 2;
 
@@ -94,30 +83,23 @@ int main(int argc, char *argv[])
 
       CORBA::TypeCode_var bar_tc = orb->create_struct_tc ("IDL:bar:1.0",
                                                           "bar",
-                                                          bar_members
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                          bar_members);
 
       // Check for equality with the typecode created by the IDL compiler.
-      CORBA::Boolean eq = bar_tc->equal (_tc_bar
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Boolean eq = bar_tc->equal (_tc_bar);
 
       if (!eq)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ORB-created typecode not correct!\n"),
                              -1);
-
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "exception:");
+      ex._tao_print_exception ("exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

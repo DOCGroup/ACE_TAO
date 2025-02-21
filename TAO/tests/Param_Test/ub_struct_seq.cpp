@@ -1,33 +1,24 @@
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_struct_seq.cpp
-//
-// = DESCRIPTION
-//    tests unbounded struct sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_struct_seq.cpp
+ *
+ *  tests unbounded struct sequences
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_struct_seq.h"
-
-ACE_RCSID (Param_Test,
-           ub_struct_seq, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Struct_Sequence
 // ************************************************************************
 
-Test_Struct_Sequence::Test_Struct_Sequence (void)
+Test_Struct_Sequence::Test_Struct_Sequence ()
   : opname_ (CORBA::string_dup ("test_struct_sequence")),
     inout_ (new Param_Test::StructSeq),
     out_ (new Param_Test::StructSeq),
@@ -35,7 +26,7 @@ Test_Struct_Sequence::Test_Struct_Sequence (void)
 {
 }
 
-Test_Struct_Sequence::~Test_Struct_Sequence (void)
+Test_Struct_Sequence::~Test_Struct_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -44,14 +35,13 @@ Test_Struct_Sequence::~Test_Struct_Sequence (void)
 }
 
 const char *
-Test_Struct_Sequence::opname (void) const
+Test_Struct_Sequence::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req
-                                      ACE_ENV_ARG_DECL)
+Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -59,29 +49,25 @@ Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_StructSeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  Param_Test::StructSeq *tmp;
+  const Param_Test::StructSeq *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::StructSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::StructSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::StructSeq (*tmp);
 }
 
 int
-Test_Struct_Sequence::init_parameters (Param_Test_ptr
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+Test_Struct_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -103,7 +89,7 @@ Test_Struct_Sequence::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Struct_Sequence::reset_parameters (void)
+Test_Struct_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::StructSeq; // delete the previous one
   this->out_ = new Param_Test::StructSeq;
@@ -112,33 +98,27 @@ Test_Struct_Sequence::reset_parameters (void)
 }
 
 int
-Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref
-                                    ACE_ENV_ARG_DECL)
+Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::StructSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_struct_sequence (this->in_,
                                                  this->inout_.inout (),
-                                                 out
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                 out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Struct_Sequence::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Struct_Sequence::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Struct_Sequence::check_validity (void)
+Test_Struct_Sequence::check_validity ()
 {
   if (this->compare (this->in_, this->inout_.in ()) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -155,7 +135,7 @@ Test_Struct_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Struct_Sequence::print_values (void)
+Test_Struct_Sequence::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
@@ -193,9 +173,9 @@ Test_Struct_Sequence::compare (const Param_Test::StructSeq &s1,
           || vs1.c != vs2.c
           || vs1.s != vs2.s
           || vs1.o != vs2.o
-          || vs1.f != vs2.f
+          || !ACE::is_equal (vs1.f, vs2.f)
           || vs1.b != vs2.b
-          || vs1.d != vs2.d )
+          || !ACE::is_equal (vs1.d, vs2.d))
         return 0;
     }
 
@@ -234,7 +214,7 @@ Test_Struct_Sequence::print_sequence (const Param_Test::StructSeq &s)
 //               Test_Unbounded_Struct_Sequence
 // ************************************************************************
 
-Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence (void)
+Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence ()
   : opname_ (CORBA::string_dup ("test_unbounded_struct_sequence")),
     inout_ (new Param_Test::PathSpec),
     out_ (new Param_Test::PathSpec),
@@ -242,7 +222,7 @@ Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence (void)
 {
 }
 
-Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence (void)
+Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -251,14 +231,13 @@ Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence (void)
 }
 
 const char *
-Test_Unbounded_Struct_Sequence::opname (void) const
+Test_Unbounded_Struct_Sequence::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req
-                                                ACE_ENV_ARG_DECL)
+Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -266,29 +245,25 @@ Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_PathSpec);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  Param_Test::PathSpec *tmp;
+  const Param_Test::PathSpec *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::PathSpec (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::PathSpec (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::PathSpec (*tmp);
 }
 
 int
-Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr
-                                                 ACE_ENV_ARG_DECL_NOT_USED)
+Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -311,7 +286,7 @@ Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Unbounded_Struct_Sequence::reset_parameters (void)
+Test_Unbounded_Struct_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::PathSpec; // delete the previous one
   this->out_ = new Param_Test::PathSpec;
@@ -320,21 +295,18 @@ Test_Unbounded_Struct_Sequence::reset_parameters (void)
 }
 
 int
-Test_Unbounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref
-                                              ACE_ENV_ARG_DECL)
+Test_Unbounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   Param_Test::PathSpec_out out (this->out_.out ());
   this->ret_ = objref->test_unbounded_struct_sequence (this->in_,
                                                        this->inout_.inout (),
-                                                       out
-                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                                       out);
 
   return 0;
 }
 
 CORBA::Boolean
-Test_Unbounded_Struct_Sequence::check_validity (void)
+Test_Unbounded_Struct_Sequence::check_validity ()
 {
   if (this->compare (this->in_, this->inout_.in ()) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -351,7 +323,7 @@ Test_Unbounded_Struct_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Unbounded_Struct_Sequence::print_values (void)
+Test_Unbounded_Struct_Sequence::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
@@ -386,7 +358,7 @@ Test_Unbounded_Struct_Sequence::compare (const Param_Test::PathSpec &s1,
       const Param_Test::Step& vs2 = s2[i];
 
       if (ACE_OS::strcmp (vs1.name.id.in (), vs2.name.id.in ())
-          || ACE_OS:: strcmp (vs1.name.kind.in (), vs2.name.kind.in ())
+          || ACE_OS::strcmp (vs1.name.kind.in (), vs2.name.kind.in ())
           || vs1.process != vs2.process)
         return 0;
     }
@@ -408,8 +380,8 @@ Test_Unbounded_Struct_Sequence::print_sequence (const Param_Test::PathSpec &s)
 
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "\tname.id = %s\n"
-                  "\tname.kind = %s\n"
+                  "\tname.id = %C\n"
+                  "\tname.kind = %C\n"
                   "\tprocess = %d\n",
                   i,
                   vs.name.id.in (), vs.name.kind.in (), vs.process));

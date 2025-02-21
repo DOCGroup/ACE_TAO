@@ -1,13 +1,6 @@
-//
-// $Id$
-//
 #include "Roundtrip.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"
-
-ACE_RCSID(LoadBalancing,
-          Roundtrip,
-          "$Id$")
 
 Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -17,11 +10,8 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 
 Test::Timestamp
 Roundtrip::test_method (Test::Timestamp send_time,
-                        Test::number  cl_number 
-                        ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                        Test::number  cl_number)
 {
-
   if (cl_number % 2 == 0)
   {
     for (int i = 1; i < 10000; i++)
@@ -34,8 +24,7 @@ Roundtrip::test_method (Test::Timestamp send_time,
 }
 
 void
-Roundtrip::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Roundtrip::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

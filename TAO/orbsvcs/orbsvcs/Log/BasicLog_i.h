@@ -4,10 +4,7 @@
 /**
  *  @file   BasicLog_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::BasicLog interface.
- *
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -28,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Log/Log_i.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -37,6 +34,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_LogMgr_i;
 
 /**
@@ -44,52 +43,43 @@ class TAO_LogMgr_i;
  *
  * @brief It allows clients to write, query and delete records from the log.
  *
- * The class supports the @c destroy> method to destroy the Log.
+ * The class supports the @c destroy method to destroy the Log.
  */
 class TAO_Log_Serv_Export TAO_BasicLog_i :
   public TAO_Log_i,
   public POA_DsLogAdmin::BasicLog
 {
 public:
-
   /// Constructor.
   TAO_BasicLog_i (CORBA::ORB_ptr orb,
-		  PortableServer::POA_ptr poa,
+                  PortableServer::POA_ptr poa,
                   TAO_LogMgr_i &logmgr_i,
                   DsLogAdmin::LogMgr_ptr factory,
                   DsLogAdmin::LogId id);
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id
-                                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id
-                                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
 
   /// Destroy the log object and all contained records.
-  void destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy ();
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_BasicLog_i (void);
+  ~TAO_BasicLog_i ();
 
-protected:
-
-  /// Used to access the hash map that holds all the Logs created.
-  TAO_LogMgr_i&			logmgr_i_;
-
-  /// POA.a
-  PortableServer::POA_var	poa_;
+private:
+  /// POA.
+  PortableServer::POA_var poa_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

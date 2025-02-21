@@ -1,17 +1,15 @@
-// $Id$
-
-#include "CosEC_ProxyPushConsumer.h"
-
-ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushConsumer, "$Id$")
-
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h"
 #include "tao/debug.h"
-#include "../AdminProperties.h"
-#include "../Method_Request_Lookup.h"
-#include "../Worker_Task.h"
-#include "AnyEvent.h"
-#include "PushSupplier.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+#include "orbsvcs/Notify/Method_Request_Lookup.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/Any/AnyEvent.h"
+#include "orbsvcs/Notify/Any/PushSupplier.h"
 
-TAO_Notify_CosEC_ProxyPushConsumer::TAO_Notify_CosEC_ProxyPushConsumer (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Notify_CosEC_ProxyPushConsumer::TAO_Notify_CosEC_ProxyPushConsumer ()
 {
 }
 
@@ -20,42 +18,34 @@ TAO_Notify_CosEC_ProxyPushConsumer::~TAO_Notify_CosEC_ProxyPushConsumer ()
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::release (void)
+TAO_Notify_CosEC_ProxyPushConsumer::release ()
 {
   delete this;
   //@@ inform factory
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosEventComm::Disconnected
-                   ))
+TAO_Notify_CosEC_ProxyPushConsumer::push (const CORBA::Any& any)
 {
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1
       && this->admin_properties().queue_full ())
-    ACE_THROW (CORBA::IMP_LIMIT ());
+    throw CORBA::IMP_LIMIT ();
 
   if (this->is_connected () == 0)
     {
-      ACE_THROW (CosEventComm::Disconnected ());
+      throw CosEventComm::Disconnected ();
     }
 
   TAO_Notify_AnyEvent_No_Copy event (any);
 
   TAO_Notify_Method_Request_Lookup_No_Copy request (&event, this);
 
-  this->execute_task (request ACE_ENV_ARG_PARAMETER);
+  this->execute_task (request);
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosEventChannelAdmin::AlreadyConnected
-                   ))
+TAO_Notify_CosEC_ProxyPushConsumer::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
 {
   // Convert Supplier to Base Type
   TAO_Notify_PushSupplier *supplier;
@@ -63,24 +53,49 @@ TAO_Notify_CosEC_ProxyPushConsumer::connect_push_supplier (CosEventComm::PushSup
                     TAO_Notify_PushSupplier (this),
                     CORBA::NO_MEMORY ());
 
-  supplier->init (push_supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier->init (push_supplier);
 
-  this->connect (supplier ACE_ENV_ARG_PARAMETER);
+  this->connect (supplier);
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
+TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer ()
 {
   TAO_Notify_CosEC_ProxyPushConsumer::Ptr guard( this );
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy ();
 }
 
 const char *
-TAO_Notify_CosEC_ProxyPushConsumer::get_proxy_type_name (void) const
+TAO_Notify_CosEC_ProxyPushConsumer::get_proxy_type_name () const
 {
   return "ec_proxy_push_consumer";
 }
+
+void
+TAO_Notify_CosEC_ProxyPushConsumer::validate ()
+{
+  TAO_Notify_Supplier* sup = this->supplier ();
+  if (sup != 0 && ! sup->is_alive (true))
+  {
+    if (TAO_debug_level > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) TAO_Notify_CosEC_ProxyPushConsumer::validate(%d)")
+                  ACE_TEXT ("disconnecting \n"), this->id ()));
+    }
+
+    this->disconnect_push_consumer ();
+  }
+}
+
+void
+TAO_Notify_CosEC_ProxyPushConsumer::configure(
+  TAO_Notify_SupplierAdmin & /*admin*/,
+  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
+{
+  // Nothing to do.
+  // This virtual method was added to support Notification MC
+}
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,4 @@
+// -*- MPC -*-
+feature (!optimize_collocated_invocations) : taobaseidldefaults {
+  idlflags += -Sp -Sd
+}

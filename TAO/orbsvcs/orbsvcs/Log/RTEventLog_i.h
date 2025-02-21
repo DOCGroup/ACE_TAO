@@ -4,10 +4,7 @@
 /**
  *  @file   RTEventLog_i.h
  *
- *  $Id$
- *
  *  Implementation of the RTEventLogAdmin::NotifyLog interface.
- *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
@@ -31,12 +28,14 @@
 #include "orbsvcs/Event/EC_Defaults.h"
 #include "orbsvcs/Log/RTEventLogConsumer.h"
 
-#include "rteventlog_export.h"
+#include "orbsvcs/Log/rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_RTEventLog_i;
@@ -50,16 +49,15 @@ class TAO_RTEventLogFactory_i;
  * It is used to log events that pass through the EventChannel.
  * The class supports the @c destroy> method to destroy the Log.
  */
-class TAO_RTEventLog_Export TAO_RTEventLog_i :
+class TAO_RTEventLog_Serv_Export TAO_RTEventLog_i :
   public TAO_Log_i,
   public POA_RTEventLogAdmin::EventLog
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_RTEventLog_i (CORBA::ORB_ptr orb,
-		    PortableServer::POA_ptr poa,
+                    PortableServer::POA_ptr poa,
+                    PortableServer::POA_ptr log_poa,
                     TAO_LogMgr_i &logmgr_i,
                     DsLogAdmin::LogMgr_ptr factory,
                     TAO_LogNotification *log_notifier,
@@ -69,49 +67,26 @@ public:
   ~TAO_RTEventLog_i ();
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((DsLogAdmin::LogIdAlreadyExists, CORBA::SystemException));
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
 
   /// Destroy the log object and all contained records.
-  void
-  destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy ();
 
   /// Activate the RTEventLog.
-  void
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  void activate ();
 
   // = The RtecEventChannelAdmin::EventChannel interface methods.
-  RtecEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
 
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr
-                       ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+      append_observer (RtecEventChannelAdmin::Observer_ptr);
   virtual void
-      remove_observer (RtecEventChannelAdmin::Observer_Handle
-                       ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
-
- protected:
-  /// Used to access the hash map that holds all the Logs created.
-  TAO_LogMgr_i &logmgr_i_;
+      remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
  private:
   /// The EventChannel used.
@@ -124,8 +99,12 @@ public:
   /// The observer strategy
   TAO_EC_ObserverStrategy *observer_strategy_;
 
-  PortableServer::POA_var	poa_;
+  PortableServer::POA_var poa_;
+
+  PortableServer::POA_var log_poa_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,0 +1,15 @@
+= Misc =
+ * see current bugs:
+   o package websvcs library?
+   o create man pages for ace/tao binaries
+ * install .mpc files?
+ * What about REACTOR_NOTIFICATION_QUEUE?
+ * fltk and gl
+ * subj using PROBLEM-REPORT-FORM for reportbug?
+
+= Hurd =
+ * Test programs
+
+= Documentation =
+ * Build location leaks in generated documentation.
+ * ACEXML doc is not packaged.

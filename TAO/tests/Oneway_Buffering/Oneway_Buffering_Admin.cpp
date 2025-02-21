@@ -1,9 +1,10 @@
-//
-// $Id$
-//
 #include "Oneway_Buffering_Admin.h"
+#include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Oneway_Buffering, Oneway_Buffering_Admin, "$Id$")
+namespace
+{
+  const unsigned int timeout_in_sec= 2u;
+}
 
 Oneway_Buffering_Admin::Oneway_Buffering_Admin (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -13,37 +14,43 @@ Oneway_Buffering_Admin::Oneway_Buffering_Admin (CORBA::ORB_ptr orb)
 }
 
 CORBA::ULong
-Oneway_Buffering_Admin::request_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Oneway_Buffering_Admin::request_count (CORBA::ULong expected_request_count)
 {
+  ACE_Time_Value timeout (timeout_in_sec);
+  while ((this->request_count_ < expected_request_count)
+        && (ACE_Time_Value::zero < timeout) )
+    {
+      orb_->perform_work (timeout); // Do some work, decreases timeout for amount done.
+    }
   return this->request_count_;
 }
 
 CORBA::ULong
-Oneway_Buffering_Admin::bytes_received_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Oneway_Buffering_Admin::bytes_received_count (CORBA::ULong expected_bytes_received_count)
 {
+  ACE_Time_Value timeout (timeout_in_sec);
+  while ((this->bytes_received_count_ < expected_bytes_received_count)
+        && (ACE_Time_Value::zero < timeout) )
+    {
+      orb_->perform_work (timeout); // Do some work, decreases timeout for amount done.
+    }
   return this->bytes_received_count_;
 }
 
 void
-Oneway_Buffering_Admin::request_received (CORBA::ULong payload_length
-                                          ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Oneway_Buffering_Admin::request_received (CORBA::ULong payload_length)
 {
   this->request_count_++;
   this->bytes_received_count_ += payload_length;
 }
 
 void
-Oneway_Buffering_Admin::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Oneway_Buffering_Admin::flush ()
 {
 }
 
 void
-Oneway_Buffering_Admin::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Oneway_Buffering_Admin::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

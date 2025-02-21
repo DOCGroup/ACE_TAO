@@ -1,4 +1,4 @@
-$Id$
+
 
 This example illustrates how to dynamically link an ORB and servants
 into an application via the ACE Service Configurator.  It also

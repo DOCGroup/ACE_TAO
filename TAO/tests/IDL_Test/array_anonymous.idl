@@ -1,0 +1,47 @@
+
+//=============================================================================
+/**
+ *  @file    array_anonymous.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
+// Once a problem with expressions in the brackets,
+// as well as the typedef'd/anonymous thing.
+interface tdef
+{
+  const short byteslen = 12;
+  typedef octet Bytes[byteslen + 1];
+
+  struct bytes_or_longs
+    {
+      Bytes the_bytes;            // typedef'd
+      long Longs[byteslen];       // anonymous
+    };
+};
+
+// To test that all the octet arrays build and link as
+// unique types.
+module ABCModule
+{
+  struct RmtPhysicalInfo
+  {
+    octet rmtNodeId[22];
+    octet rmtDetails[22];
+  };
+
+  struct bbbBubBubBubBaby
+  {
+    octet rmtNodeId[22];
+    octet rmtDetails[22];
+  };
+};
+
+
+

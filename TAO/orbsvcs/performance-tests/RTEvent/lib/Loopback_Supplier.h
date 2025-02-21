@@ -1,8 +1,6 @@
 /**
  * @file Loopback_Supplier.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -21,7 +19,6 @@
  * @class Loopback_Supplier
  *
  * @brief Implement a simple supplier to keep track of the latency
- *
  */
 class TAO_RTEC_Perf_Export Loopback_Supplier
   : public virtual POA_RtecEventComm::PushSupplier
@@ -37,23 +34,18 @@ public:
                      PortableServer::POA_ptr poa);
 
   /// Connect to the event channel
-  void connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
 
-  void push (const RtecEventComm::EventSet &events
-             ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push (const RtecEventComm::EventSet &events);
 
   //@{
   /** @name The RtecEventComm::PushSupplier methods
    */
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
+  virtual PortableServer::POA_ptr _default_POA ();
   //@}
 
 private:

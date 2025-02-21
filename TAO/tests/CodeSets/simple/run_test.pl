@@ -2,74 +2,113 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
-unlink $iorfile;
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+$server->AddLibPath ('../libs/IBM1047_ISO8859/.');
+$client->AddLibPath ('../libs/IBM1047_ISO8859/.');
+$server->AddLibPath ('../libs/UCS4_UTF16/.');
+$client->AddLibPath ('../libs/UCS4_UTF16/.');
+
+my $iorbase = "server.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+
+my $svc_conf = "svc" . $PerlACE::svcconf_ext;
+my $base_conf = "cs_test" . $PerlACE::svcconf_ext;
+my $client_conf = $client->LocalFile ($base_conf);
+my $server_conf = $server->LocalFile ($base_conf);
+my $client_svc_conf = $client->LocalFile ($svc_conf);
+my $server_svc_conf = $server->LocalFile ($svc_conf);
+
+if ($server->PutFile ($base_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_conf>\n";
+    exit 1;
+}
+if ($client->PutFile ($base_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf>\n";
+    exit 1;
+}
+if ($server->PutFile ($svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svc_conf>\n";
+    exit 1;
+}
+if ($client->PutFile ($svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_svc_conf>\n";
+    exit 1;
+}
+
+$SV = $server->CreateProcess ("server", "-o $server_iorfile -ORBDottedDecimalAddresses 1");
+$CL = $client->CreateProcess ("client", "-k file://$client_iorfile -ORBSvcConf $client_conf");
+
 $status = 0;
 
 print STDOUT "Client using char translator\n\n";
 
-$SV = new PerlACE::Process ("server", " -ORBDottedDecimalAddresses 1");
-$CL = new PerlACE::Process ("client", " -ORBSvcConf cs_test.conf");
-
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+$server_status = $SV->Spawn ();
+if ($server_status != 0) {
+    print STDERR "ERROR: Starting server returned $server_status\n";
+    exit 1;
+}
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
-$client = $CL->SpawnWaitKill (300);
-
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 print STDOUT "\nServer using char translator\n\n";
 
-$SV2 = new PerlACE::Process ("server", " -ORBDottedDecimalAddresses 1 -ORBSvcConf cs_test.conf");
-$CL2 = new PerlACE::Process ("client");
+$SV->Arguments ("-o $server_iorfile -ORBDottedDecimalAddresses 1 -ORBSvcConf $server_conf");
+$CL->Arguments ("-k file://$client_iorfile");
 
-$SV2->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV2->Kill (); $SV2->TimedWait (1);
+$server_status = $SV->Spawn ();
+if ($server_status != 0) {
+    print STDERR "ERROR: Starting server 2 returned $server_status\n";
     exit 1;
-} 
+}
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
-$client2 = $CL2->SpawnWaitKill (300);
-
-if ($client2 != 0) {
-    print STDERR "ERROR: client returned $client2\n";
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+if ($client_status != 0) {
+    print STDERR "ERROR: client 2 returned $client_status\n";
     $status = 1;
 }
 
-$server2 = $SV2->TerminateWaitKill (5);
-
-if ($server2 != 0) {
-    print STDERR "ERROR: server returned $server2\n";
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
+if ($server_status != 0) {
+    print STDERR "ERROR: server 2 returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;

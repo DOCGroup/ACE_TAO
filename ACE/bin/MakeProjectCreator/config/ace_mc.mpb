@@ -1,0 +1,15 @@
+// -*- MPC -*-
+project : ace_etcl_parser {
+  after += Monitor_Control
+  libs += ACE_Monitor_Control
+
+  specific (prop:microsoft) {
+    lit_libs += pdh
+  }
+  verbatim (gnuace, local) {
+    "ifeq (1,$(winnt))"
+    "  ACE_SHLIBS += pdh.lib"
+    "  LDLIBS += pdh.lib"
+    "endif"
+  }
+}

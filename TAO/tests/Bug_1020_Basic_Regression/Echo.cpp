@@ -1,8 +1,6 @@
 #include "Echo.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Bug_1269_Regression, Echo, "$Id$")
-
 Echo::Echo(CORBA::ORB_ptr orb,
            int abort_counter)
   : orb_(CORBA::ORB::_duplicate(orb))
@@ -12,11 +10,9 @@ Echo::Echo(CORBA::ORB_ptr orb,
 }
 
 void
-Echo::echo_payload (Test::Payload &
-                    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Echo::echo_payload (Test::Payload &)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      ace_mon,
                      this->mutex_));
 

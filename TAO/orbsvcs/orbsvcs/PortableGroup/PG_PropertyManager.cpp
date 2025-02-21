@@ -1,16 +1,13 @@
 // -*- C++ -*-
-
-#include "PG_PropertyManager.h"
-#include "PG_ObjectGroupManager.h"
-#include "PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_PropertyManager.h"
+#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 
 #include "tao/ORB_Constants.h"
 
 #include "ace/SString.h"
 
-ACE_RCSID (PortableGroup,
-           PG_PropertyManager,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_PropertyManager::TAO_PG_PropertyManager (
   TAO_PG_ObjectGroupManager & object_group_manager)
@@ -25,11 +22,7 @@ TAO_PG_PropertyManager::TAO_PG_PropertyManager (
 
 void
 TAO_PG_PropertyManager::set_default_properties (
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
+    const PortableGroup::Properties & props)
 {
   // First verify that the "Factories" property is not in the
   // Properties sequence.  According to the spec, it is not allowed to
@@ -44,13 +37,10 @@ TAO_PG_PropertyManager::set_default_properties (
       PortableGroup::Property property = props[i];
 
       if (property.nam == factories)
-        ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                   property.val));
+        throw PortableGroup::InvalidProperty (property.nam, property.val);
     }
 
-  this->property_validator_.validate_property (props
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->property_validator_.validate_property (props);
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
@@ -59,9 +49,7 @@ TAO_PG_PropertyManager::set_default_properties (
 
 
 PortableGroup::Properties *
-TAO_PG_PropertyManager::get_default_properties (
-    ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PG_PropertyManager::get_default_properties ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
@@ -73,7 +61,6 @@ TAO_PG_PropertyManager::get_default_properties (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return props;
 }
@@ -81,11 +68,7 @@ TAO_PG_PropertyManager::get_default_properties (
 
 void
 TAO_PG_PropertyManager::remove_default_properties (
-    const PortableGroup::Properties &props
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
+    const PortableGroup::Properties &props)
 {
   if (props.length () == 0)
     return;  // @@ Throw CORBA::BAD_PARAM instead?
@@ -93,24 +76,16 @@ TAO_PG_PropertyManager::remove_default_properties (
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   this->remove_properties (props,
-                           this->default_properties_
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                           this->default_properties_);
 }
 
 
 void
 TAO_PG_PropertyManager::set_type_properties (
     const char * type_id,
-    const PortableGroup::Properties & overrides
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
+    const PortableGroup::Properties & overrides)
 {
-  this->property_validator_.validate_property (overrides
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->property_validator_.validate_property (overrides);
 
   CORBA::ULong num_overrides = overrides.length ();
 
@@ -121,7 +96,7 @@ TAO_PG_PropertyManager::set_type_properties (
 
   Type_Prop_Table::ENTRY * entry = 0;
   if (this->type_properties_.find (type_id, entry) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   PortableGroup::Properties & props = entry->int_id_;
   props = overrides;
@@ -130,9 +105,7 @@ TAO_PG_PropertyManager::set_type_properties (
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_type_properties (
-    const char * type_id
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    const char * type_id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
@@ -157,7 +130,6 @@ TAO_PG_PropertyManager::get_type_properties (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::Properties_var properties = tmp_properties;
 
@@ -179,11 +151,7 @@ TAO_PG_PropertyManager::get_type_properties (
 void
 TAO_PG_PropertyManager::remove_type_properties (
     const char * type_id,
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
+    const PortableGroup::Properties & props)
 {
   if (props.length () == 0)
     return;  // @@ Throw CORBA::BAD_PARAM instead?
@@ -192,26 +160,19 @@ TAO_PG_PropertyManager::remove_type_properties (
 
   Type_Prop_Table::ENTRY * entry = 0;
   if (this->type_properties_.find (type_id, entry) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   PortableGroup::Properties & type_properties = entry->int_id_;
 
   this->remove_properties (props,
-                           type_properties
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                           type_properties);
 }
 
 
 void
 TAO_PG_PropertyManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr /* object_group */,
-    const PortableGroup::Properties & /* overrides */
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
+    const PortableGroup::Properties & /* overrides */)
 {
 #if 0
   // First verify that the "InitialNumberMembers" property is not in
@@ -228,27 +189,21 @@ TAO_PG_PropertyManager::set_properties_dynamically (
       PortableGroup::Property property = props[i];
 
       if (property.nam == factories)
-        ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                   property.val));
+        throw PortableGroup::InvalidProperty (property.nam, property.val);
     }
 
-  this->property_validator_.validate_property (overrides
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->property_validator_.validate_property (overrides);
 
   // @todo Set the properties in the object group map entry.
 #endif  /* 0 */
 
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_properties (
-    PortableGroup::ObjectGroup_ptr object_group
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
+    PortableGroup::ObjectGroup_ptr object_group)
 {
   CORBA::ULong properties_len = 0;
 
@@ -256,18 +211,14 @@ TAO_PG_PropertyManager::get_properties (
 
   // @@ Race condition here!
   PortableGroup::Properties_var dynamic_properties =
-    this->object_group_manager_.get_properties (object_group
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->object_group_manager_.get_properties (object_group);
 
   CORBA::ULong dyn_props_len = dynamic_properties->length ();
   if (dyn_props_len > properties_len)
     properties_len = dyn_props_len;
 
   CORBA::String_var type_id =
-    this->object_group_manager_.type_id (object_group
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->object_group_manager_.type_id (object_group);
 
   CORBA::ULong type_props_len = 0;
   PortableGroup::Properties * type_properties = 0;
@@ -293,7 +244,6 @@ TAO_PG_PropertyManager::get_properties (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   PortableGroup::Properties_var properties = tmp_properties;
 
@@ -320,11 +270,7 @@ TAO_PG_PropertyManager::get_properties (
 void
 TAO_PG_PropertyManager::remove_properties (
     const PortableGroup::Properties & to_be_removed,
-    PortableGroup::Properties &properties
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
+    PortableGroup::Properties &properties)
 {
   const CORBA::ULong num_removed = to_be_removed.length ();
   if (num_removed == 0)
@@ -353,8 +299,7 @@ TAO_PG_PropertyManager::remove_properties (
       // The property to be removed doesn't exist in the current list
       // of default properties.
       if (n == old_n)
-        ACE_THROW (PortableGroup::InvalidProperty (remove.nam,
-                                                   remove.val));
+        throw PortableGroup::InvalidProperty (remove.nam, remove.val);
     }
 
   // All properties were successfully removed, and the remaining ones
@@ -363,23 +308,4 @@ TAO_PG_PropertyManager::remove_properties (
   properties = new_properties;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-// Type-specific property hash map template instantiations
-template class ACE_Hash_Map_Entry<ACE_CString, PortableGroup::Properties>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-// Type-specific property hash map template instantiations
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, PortableGroup::Properties>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, PortableGroup::Properties, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

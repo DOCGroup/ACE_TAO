@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -73,28 +71,24 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (util,
-           utl_indenter,
-           "$Id$")
-
 /*
  * Constructors
  */
-UTL_Indenter::UTL_Indenter (void)
+UTL_Indenter::UTL_Indenter ()
   : pd_indent_level (0)
 {
 }
 
 // Reset indentation level.
 void
-UTL_Indenter::reset (void)
+UTL_Indenter::reset ()
 {
   this->pd_indent_level = 0;
 }
 
 // Increase indentation level.
 void
-UTL_Indenter::increase (void)
+UTL_Indenter::increase ()
 {
   ++this->pd_indent_level;
 }

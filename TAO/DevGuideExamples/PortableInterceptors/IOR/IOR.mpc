@@ -1,0 +1,39 @@
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, pi_server, avoids_minimum_corba, iorinterceptor {
+  exename = MessengerServer
+  after += *idl
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+    ServerInitializer.cpp
+    ServerInterceptor.cpp
+    ServerIORInterceptor.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, pi, avoids_minimum_corba, interceptors {
+  exename = MessengerClient
+  after += *idl
+  Source_Files {
+    MessengerClient.cpp
+    ClientInitializer.cpp
+    ClientInterceptor.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}

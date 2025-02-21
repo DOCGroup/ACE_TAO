@@ -1,54 +1,75 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
-# $Id$
 # -*- perl -*-
 
-# This is a perl script that runs the NamingContextExt test. It starts 
-# the Naming service, server and the client as necessary
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+$status = 0;
+$debug_level = '0';
 
-# Amount of delay (in seconds) between starting a server and a client 
-# to allow proper server initialization.
-$sleeptime = 8;
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
-# Variables for command-line arguments to client and server
-# executables
-$iorfile = PerlACE::LocalFile ("ns.ior");
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-# Run the server and client for the test. 
+my $iorbase = "ns.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
-$NS = new PerlACE::Process ("../../Naming_Service/Naming_Service", "-o $iorfile");
-$CL = new PerlACE::Process ("client", "-s -ORBInitRef NameService=file://$iorfile");
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
+                              "-ORBdebuglevel $debug_level " .
+                              "-o $server_iorfile");
+$CL = $client->CreateProcess ("client", "-s -ORBInitRef NameService=file://$client_iorfile");
 
-# Make sure the files are gone, so we can wait on them.
-unlink $iorfile;
+$server_status = $SV->Spawn ();
 
-$NS->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
-    print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
-    $NS->Kill ();
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
-   
-$client = $CL->SpawnWaitKill (60);
+if ($server->WaitForFileTimed ($iorbase,
 
-if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+if ($server->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (5);
+$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
 
-if ($nserver != 0) {
-    print STDERR "ERROR: server returned $nserver\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
 
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 exit $status;

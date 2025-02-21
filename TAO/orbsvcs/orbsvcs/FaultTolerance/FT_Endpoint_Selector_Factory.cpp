@@ -1,31 +1,22 @@
-// $Id$
-
-#include "FT_Endpoint_Selector_Factory.h"
-#include "FT_Invocation_Endpoint_Selectors.h"
+#include "orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h"
+#include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
 #include "tao/SystemException.h"
-#include "tao/Environment.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (FaultTolerance,
-           FT_Endpoint_Selector_Factory,
-           "$Id$")
-
-
-TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory (void)
-  :ft_endpoint_selector_ (0)
+TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory ()
+  : ft_endpoint_selector_ (0)
 {
 }
 
-TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory (void)
+TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory ()
 {
-  if (this->ft_endpoint_selector_)
-    delete this->ft_endpoint_selector_;
+  delete this->ft_endpoint_selector_;
 }
 
 
 TAO_Invocation_Endpoint_Selector *
-TAO_FT_Endpoint_Selector_Factory::get_selector (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO_FT_Endpoint_Selector_Factory::get_selector ()
 {
     if (this->ft_endpoint_selector_ == 0)
     {
@@ -40,12 +31,13 @@ TAO_FT_Endpoint_Selector_Factory::get_selector (
           ACE_NEW_THROW_EX (ft_endpoint_selector_,
                             TAO_FT_Invocation_Endpoint_Selector (),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK_RETURN (0);
         }
     }
 
   return this->ft_endpoint_selector_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

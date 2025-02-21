@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -74,13 +72,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class AST_Decl;
 class AST_Interface;
 class AST_Enum;
+class AST_Fixed;
 class AST_Union;
 class AST_UnionLabel;
 class UTL_String;
+class AST_Annotation_Decl;
+class AST_Annotation_Member;
 
 class TAO_IDL_FE_Export UTL_Error
 {
 public:
+  UTL_Error();
+
   enum ErrorCode {
     EIDL_SYNTAX_ERROR,          // Syntax error in IDL input
                                 // More details will be gleaned from examining
@@ -117,14 +120,21 @@ public:
     EIDL_CONCRETE_VT_EXPECTED,  // We got something else..
     EIDL_ABSTRACT_EXPECTED,     // We got something else..
     EIDL_EVENTTYPE_EXPECTED,    // We got something else..
+    EIDL_TMPL_MODULE_EXPECTED,  // We got something else..
+    EIDL_PORTTYPE_EXPECTED,     // We got something else..
+    EIDL_CONNECTOR_EXPECTED,    // We got something else..
+    EIDL_TYPEDEF_EXPECTED,      // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword
     EIDL_KEYWORD_WARNING,       // Same as above, but only a warning
+    EIDL_ANONYMOUS_ERROR,       // Anonymous types are deprecated by spec
+    EIDL_ANONYMOUS_WARNING,     // Same as above, but only a warning
+    EIDL_ANONYMOUS_EXPLICIT_ERROR, // Anonymous types have been explicitly disabled
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression
-    EIDL_INCOMPATIBLE_TYPE,     // Assign floating pt. to integer or vice versa
+    EIDL_INCOMPATIBLE_TYPE,     // Assign floating pt. to int or vice versa
     EIDL_AMBIGUOUS,             // Ambiguous name definition
     EIDL_DECL_NOT_DEFINED,      // Forward declared but never defined
     EIDL_FWD_DECL_LOOKUP,       // Tried to lookup in fwd declared intf
@@ -138,9 +148,25 @@ public:
     EIDL_LOCAL_REMOTE_MISMATCH, // Local type used in remote operation
     EIDL_IGNORE_IDL3_ERROR,     // -Sm option used with component or home decl
     EIDL_TC_SUPPRESSION_WARNING,// -St option used with exception decl
-    EIDL_ILLEGAL_VALUETYPE,     // Valuetype not allowed for box value type
+    EIDL_ILLEGAL_BOXED_TYPE,    // Valuetype not allowed for box value type
+    EIDL_ILLEGAL_PRIMARY_KEY,   // Primary key doesn't meet spec constraints
+    EIDL_MISMATCHED_T_PARAM,    // Between def'd & ref'd template interfaces
+    EIDL_DUPLICATE_T_PARAM,     // A tmpl module's param ids must be unique
+    EIDL_T_ARG_LENGTH,          // Wrong # of template args
+    EIDL_MISMATCHED_SEQ_PARAM,  // 'sequence<T>' must match a previous param
+    EIDL_TEMPLATE_NOT_ALIASED,  // ref to tmpl module scope must be via alias
+    EIDL_FIXED_UNSUPPORTED,     // fixed data type is not supported
+    EIDL_IDL_VERSION_ERROR,     // An error related to differences in IDL version
+    EIDL_UNSUPPORTED,           // Unsupported feature was used in input IDL
+    EIDL_ANNOTATION_PARAM_ERROR, // Error in Annotation Parameters
+    EIDL_MISC,                  // Very Specific Error or Warning
     EIDL_OK                     // No error
   };
+
+  ErrorCode last_error;
+  long last_error_lineno;
+  ErrorCode last_warning;
+  long last_warning_lineno;
 
   // Operations
 
@@ -168,12 +194,25 @@ public:
                  AST_Decl *t2,
                  AST_Decl *t3);
 
+  /**
+   * Report an error that can be out of context of IDL parsing.
+   */
+  void direct_error (
+    const char *reason, const ACE_CString &filename, long lineno,
+    ErrorCode error_code = EIDL_MISC);
+
+  /**
+   * Report an warning that can be out of context of IDL parsing.
+   */
+  void direct_warning (
+    const char *reason, const ACE_CString &filename, long lineno,
+    ErrorCode error_code = EIDL_MISC);
+
   // Report a syntax error in IDL input
   void syntax_error (IDL_GlobalData::ParseState ps);
 
-  // Report clash of declared and referenced indentifiers
-  void redef_error (char *n,
-                    char *t);
+  // Report clash of declared and referenced identifiers
+  void redef_error (const char *n, const char *t);
 
   // Report a name being used with different spellings
   void name_case_error (char *n,
@@ -189,18 +228,24 @@ public:
   // Same as above, but doesn't increment the error count.
   void idl_keyword_warning (char *n);
 
-  // Report an unsuccesful coercion attempt
+  // Report an unsuccessful coercion attempt
   void coercion_error (AST_Expression *v,
                        AST_Expression::ExprType t);
 
   // Report a failed name lookup attempt.
   void lookup_error (UTL_ScopedName *n);
 
+  /// Report a failed name lookup attempt as a warning.
+  void lookup_warning (UTL_ScopedName *n);
+
   // Report an illegal #pragma version.
   void version_number_error (char *n);
 
+  // Report an illegal #pragma version syntax
+  void version_syntax_error (const char *msg);
+
   // Repost an attempt to reset the version.
-  void version_reset_error (void);
+  void version_reset_error ();
 
   // Report an attempt to change the id once set.
   void id_reset_error (const char *o,
@@ -224,9 +269,6 @@ public:
   void supports_error (UTL_ScopedName *n,
                        AST_Decl *d);
 
-  // Report an attempt to have a derived component or home support something.
-  void derived_supports_error (UTL_ScopedName *n);
-
   // Report an attempt to illegally inherit from an abstract type.
   void abstract_inheritance_error (UTL_ScopedName *v,
                                    UTL_ScopedName *i);
@@ -243,7 +285,7 @@ public:
 
   // A concrete supported interface must inherit from all concrete
   // interfaces supported by the valuetype's ancestors, and all of
-  // those conrete interfaces' ancestors.
+  // those concrete interfaces' ancestors.
   void concrete_supported_inheritance_error (UTL_ScopedName *v,
                                              UTL_ScopedName *i);
 
@@ -252,6 +294,10 @@ public:
 
   // Report incompatible types in constant assignment
   void incompatible_type_error (AST_Expression *d);
+
+  // Report incompatible types in discriminator vs label.
+  void incompatible_disc_error (AST_Decl *d,
+                                AST_Expression *e);
 
   // Report a situation where a constant was expected but we got
   // something else instead. This most likely is a case where a union
@@ -263,6 +309,11 @@ public:
   // something else instead. This most likely is a case in a supports
   // or inheritance list.
   void interface_expected (AST_Decl *d);
+
+  // Report a situation where a template module was expected but we got
+  // something else instead. This most likely is a case in a template
+  // module instantiation or alias.
+  void template_module_expected (AST_Decl *d);
 
   // Report a situation where a value type was expected but we got
   // something else instead. This most likely is a case in a primary
@@ -321,23 +372,103 @@ public:
   // Report not a type error
   void not_a_type (AST_Decl *d);
 
+  // Fixed data type is not supported
+  void fixed_unsupported (AST_Fixed *f);
+
   // Report back-end error
   void back_end (long lineno,
                  UTL_String *s);
-                 
+
   // Report illegal infix operator error (they can be used
   // only with integer, floating point or fixed point expressions.
-  void illegal_infix (void);
-  
+  void illegal_infix ();
+
   // Report local type used in remote operation.
   void local_remote_mismatch (AST_Decl *l,
                               UTL_Scope *s);
-                              
+
   // Improper use of -Sm option.
   void ignore_idl3_error (AST_Decl *d);
-  
-  // Improper use of -St option.
-  void tc_suppression_warning (AST_Decl *d);
+
+  // Valuetype violates a spec-defined constraint on a
+  // valuetype used as a primary key.
+  void illegal_primary_key (AST_Decl *d);
+
+  // Template parameter was repeated.
+  void duplicate_param_id (UTL_ScopedName *n);
+
+  // Referenced template parameter not matched in param list.
+  void mismatched_template_param (const char *name);
+
+  // Given a template param of the form 'sequence<T>', the
+  // 'T' must match a previous param in the list.
+  void mismatch_seq_of_param (const char *param_id);
+
+  // Informative message when a lookup fails because a
+  // masking scope has not been correctly differentiated
+  // in the scoped name from the scope it masks.
+  void scope_masking_error (AST_Decl *masked,
+                            AST_Decl *loc);
+
+  // Error (default) or warning (set by command line option).
+  void anonymous_type_diagnostic ();
+
+  // Reference to an item in the scope of a template
+  // module was not via an alias.
+  void template_scope_ref_not_aliased (AST_Decl *d);
+
+  /**
+   * Report IDL version error, with a given reason.
+   */
+  void idl_version_error (const char *reason);
+
+  /**
+   * Warn about an unsupported feature in the input IDL that can be ignored for
+   * the most part.
+   */
+  void unsupported_warning (const char *reason);
+
+  /**
+   * Report an unsupported feature in the input IDL that can't be ignored.
+   */
+  void unsupported_error (const char *reason);
+
+  /**
+   * Report a error for a specific situation
+   *
+   * If node is not defined the current file and line are reported.
+   */
+  void misc_error (const char *reason, AST_Decl *node = 0);
+
+  /**
+   * Report a warning for a specific situation
+   *
+   * If node is not defined the current file and line are reported.
+   */
+  void misc_warning (const char *reason, AST_Decl *node = 0);
+
+  /**
+   * Report that an invalid annotation parameter was passed
+   */
+  void invalid_annotation_param_error (
+    AST_Annotation_Appl *appl, AST_Annotation_Decl *decl,
+    Identifier *invalid_id);
+
+  /**
+   * Report that an annotation parameter has an invalid type
+   */
+  void invalid_annotation_param_type (
+    AST_Annotation_Appl *appl, AST_Annotation_Member *member,
+    AST_Expression *offending_value);
+
+  /**
+   * Report that an annotation parameter needs to be defined
+   */
+  void annotation_param_missing_error (
+    AST_Annotation_Appl *appl, AST_Annotation_Member *member);
+
+  /// Reset recent warning and error information
+  void reset_last_error_and_warning ();
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

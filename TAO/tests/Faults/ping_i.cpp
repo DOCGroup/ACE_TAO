@@ -1,37 +1,28 @@
-// $Id$
-
 #include "ping_i.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ping_i.i"
+#include "ping_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Faults, test_i, "$Id$")
-
 void
-PingObject_i::ping (PingObject_ptr callback
-      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+PingObject_i::ping (PingObject_ptr callback)
 {
-  callback->pong (ACE_ENV_SINGLE_ARG_PARAMETER);
+  callback->pong ();
 }
 
 void
-PingObject_i::pong (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+PingObject_i::pong ()
 {
 }
 
 void
-PingObject_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+PingObject_i::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-PingObject_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+PingObject_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

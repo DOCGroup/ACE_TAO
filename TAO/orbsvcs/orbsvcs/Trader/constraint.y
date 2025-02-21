@@ -1,6 +1,5 @@
 %{
-  // $Id$
-// ========================================================================
+  // ========================================================================
 //
 // = LIBRARY
 //    orbsvcs
@@ -13,9 +12,12 @@
 //
 // ========================================================================
 
-#include "ace/OS.h"
-#include "Constraint_Interpreter.h"           
-#include "Constraint_Nodes.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
+#include "orbsvcs/Trader/Constraint_Interpreter.h"           
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //#define YYDEBUG 1
 %}
@@ -24,7 +26,7 @@
 %token TAO_AND TAO_OR TAO_NOT TAO_IN TAO_TWIDDLE TAO_BOOLEAN
 %token TAO_PLUS TAO_MINUS TAO_MULT TAO_DIV TAO_UMINUS TAO_NUMBER 
 %token TAO_RPAREN TAO_LPAREN TAO_IDENT TAO_STRING TAO_UNKNOWN
-%token TAO_UNSIGNED TAO_SIGNED TAO_DOUBLE TAO_CONSTRAINT TAO_SEQUENCE 
+%token TAO_SIGNED TAO_UNSIGNED TAO_DOUBLE TAO_CONSTRAINT TAO_SEQUENCE 
 %token TAO_WITH TAO_MAX TAO_MIN TAO_FIRST TAO_RANDOM
 
 %start constraint

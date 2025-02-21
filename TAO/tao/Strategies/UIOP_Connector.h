@@ -4,10 +4,7 @@
 /**
  *  @file    UIOP_Connector.h
  *
- *  $Id$
- *
  *  UIOP specific connector processing
- *
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
@@ -31,9 +28,11 @@
 #include "ace/LSOCK_Connector.h"
 #include "ace/Connector.h"
 #include "tao/Transport_Connector.h"
-#include "UIOP_Connection_Handler.h"
+#include "tao/Strategies/UIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_UIOP_Endpoint;
 class TAO_Endpoint;
@@ -42,21 +41,19 @@ class TAO_Endpoint;
  * @class TAO_UIOP_Connector
  *
  * @brief UIOP-specific Connector bridge for pluggable protocols.
- *
  */
 class TAO_Strategies_Export TAO_UIOP_Connector : public TAO_Connector
 {
 public:
-
   /**
    * Constructor.
    * @@ Do we want to pass in the tag here or should it be statically
    * defined?
    */
-  TAO_UIOP_Connector (CORBA::Boolean flag = 0);
+  TAO_UIOP_Connector ();
 
   /// Destructor
-  ~TAO_UIOP_Connector (void);
+  ~TAO_UIOP_Connector ();
 
   /**
    * @name The TAO_Connector Methods
@@ -65,23 +62,21 @@ public:
    */
   //@{
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
 
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual TAO_Profile *corbaloc_scan (const char *str, size_t &len
-                                      ACE_ENV_ARG_DECL);
-  
-  virtual char object_key_delimiter (void) const;
+  virtual TAO_Profile *corbaloc_scan (const char *str, size_t &len);
+
+  virtual char object_key_delimiter () const;
 
   /// Cancel the passed cvs handler from the connector
   virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
   //@}
 
 public:
-
   typedef TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
           TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -90,14 +85,13 @@ public:
 
   typedef ACE_Connect_Strategy<TAO_UIOP_Connection_Handler,
                                ACE_LSOCK_CONNECTOR>
-          TAO_UIOP_CONNECT_STRATEGY ;
+          TAO_UIOP_CONNECT_STRATEGY;
 
   typedef ACE_Strategy_Connector<TAO_UIOP_Connection_Handler,
                                  ACE_LSOCK_CONNECTOR>
           TAO_UIOP_BASE_CONNECTOR;
 
 protected:
-
   /**
    * @name More TAO_Connector methods
    *
@@ -110,26 +104,23 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
-  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Profile *make_profile ();
 
   //@}
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_UIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
-
   /// Our connect strategy
   TAO_UIOP_CONNECT_STRATEGY connect_strategy_;
 
   /// The connector initiating connection requests for UIOP.
   TAO_UIOP_BASE_CONNECTOR base_connector_;
-
-  /// Do we need to use a GIOP_Lite for sending messages?
-  const bool lite_flag_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 # endif  /* TAO_HAS_UIOP == 1 */
 

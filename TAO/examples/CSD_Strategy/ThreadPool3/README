@@ -1,0 +1,58 @@
+
+
+Description:
+
+This is another test showing the use of a Custom Servant Dispatching
+(CSD) Strategy.  This test uses the reference implementation, known as the
+Thread Pool CSD Strategy.  This tests some simple remote two-way CORBA
+requests and a simple remote one-way request.
+
+The server application creates 1 servant object, runs the ORB event
+loop using 4 threads (one being the main thread), and uses 10 worker
+threads for the Thread Pool CSD Strategy.
+
+The client application invokes simple two-way calls on the object
+reference.  There is also a simple one-way call that is also made on
+the object reference.
+
+The run_test.pl script will launch 1 sever process, and 40 client processes.
+
+
+Executables:
+
+  * client_main
+
+      This is the client test executable.
+
+      Command-line arguments:
+
+        -? : Prints the executable's available command-line options, and
+             then exits.
+
+        -i <ior string> : Provide the IOR to the client (ie, file://some.ior).
+
+  * server_main
+
+      This is the server test executable.
+
+      Command-line arguments:
+
+        -? : Prints the executable's available command-line options, and
+             then exits.
+
+        -o <ior filename> : Name of file to which IOR will be written.
+
+        -n <num clients> : The number of clients that will use the server.
+
+        -t <num ORB threads> : Number of threads running the ORB event loop.
+
+  * run_test.pl
+
+      This perl script will run an automated test using 40 client processes
+      and 1 server process.  The script returns 0 if the test was successful.
+
+      No command-line options are supported.  Simply execute the perl script
+      as follows:
+
+          $ ./run_test.pl
+

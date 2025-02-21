@@ -4,8 +4,6 @@
 /**
  * @file SSLIOP_OwnCredentials.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -16,18 +14,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Credentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Credentials.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -36,7 +36,7 @@ namespace TAO
     class OwnCredentials;
     typedef OwnCredentials* OwnCredentials_ptr;
     typedef TAO_Pseudo_Var_T<OwnCredentials> OwnCredentials_var;
-    typedef TAO_Pseudo_Out_T<OwnCredentials, OwnCredentials_var> OwnCredentials_out;
+    typedef TAO_Pseudo_Out_T<OwnCredentials> OwnCredentials_out;
 
     /**
      * @class OwnCredentials
@@ -47,19 +47,21 @@ namespace TAO
      * @c OwnCredentials are a representation of our identity, not our
      * peer's identity.
      */
-    class TAO_SSLIOP_Export OwnCredentials
+    class OwnCredentials
       : public virtual SecurityLevel3::OwnCredentials,
         public virtual SSLIOP_Credentials
     {
     public:
+      typedef OwnCredentials_ptr _ptr_type;
+      typedef OwnCredentials_var _var_type;
+      typedef OwnCredentials_out _out_type;
 
       /// Constructor
       OwnCredentials (::X509 *cert, ::EVP_PKEY *evp);
 
       static OwnCredentials_ptr _duplicate (OwnCredentials_ptr obj);
-      static OwnCredentials_ptr _nil (void);
-      static OwnCredentials_ptr _narrow (CORBA::Object_ptr obj
-                                         ACE_ENV_ARG_DECL);
+      static OwnCredentials_ptr _nil ();
+      static OwnCredentials_ptr _narrow (CORBA::Object_ptr obj);
 
       /**
        * @name SecurityLevel3::TargetCredentials Methods
@@ -68,8 +70,7 @@ namespace TAO
        * interface.
        */
       //@{
-      SecurityLevel3::CredentialsType creds_type (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      SecurityLevel3::CredentialsType creds_type ();
       //@}
 
       /**
@@ -79,32 +80,26 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::CredsInitiator_ptr creds_initiator (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredsInitiator_ptr creds_initiator ();
 
-      virtual SecurityLevel3::CredsAcceptor_ptr creds_acceptor (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredsAcceptor_ptr creds_acceptor ();
 
-      virtual void release_credentials (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void release_credentials ();
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~OwnCredentials (void);
-
+      ~OwnCredentials ();
     };
-
   } // End SSLIOP namespace
 }  // End TAO namespace
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

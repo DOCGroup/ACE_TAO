@@ -1,4 +1,3 @@
-// $Id$
 // Reused from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
 #ifndef SUPPLIER_H
@@ -22,23 +21,21 @@ class Supplier : public POA_RtecEventComm::PushSupplier
   //   method is invoked it pushes the event through the event service
   //
 public:
-  Supplier (void);
+  Supplier ();
   // Constructor
 
-  void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   // Connect to the event channel
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
   // Disconnect from the event channel
 
-  void perform_push (ACE_ENV_SINGLE_ARG_DECL);
+  void perform_push ();
   // Push a single event
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
   // The skeleton methods.
 
 private:

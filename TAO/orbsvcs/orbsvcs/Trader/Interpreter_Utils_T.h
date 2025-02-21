@@ -1,4 +1,4 @@
-// $Id$
+// -*- C++ -*-
 
 #ifndef TAO_INTERPRETER_UTILS_T_H
 #define TAO_INTERPRETER_UTILS_T_H
@@ -6,12 +6,14 @@
 
 #include "tao/Basic_Types.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class OPERAND_TYPE>
 CORBA::Boolean TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& operand);
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Interpreter_Utils_T.cpp"
-#endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "orbsvcs/Trader/Interpreter_Utils_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_INTERPRETER_UTILS_T_H */

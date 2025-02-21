@@ -1,26 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Simple/grid
-//
-// = FILENAME
-//    Grid_i.h
-//
-// = DESCRIPTION
-//    This class implements the Grid IDL interface.
-//
-// = AUTHOR
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Grid_i.h
+ *
+ *  This class implements the Grid IDL interface.
+ */
+//=============================================================================
+
 
 #ifndef GRID_I_H
 #define GRID_I_H
 
 #include "GridS.h"
-#include "ace/OS.h"
 #include "ace/Memory_Pool.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Malloc_T.h"
@@ -29,127 +21,108 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> pool_t;
 // Memory pool for the persistent stuff
 
 //class Grid_Factory_i;
+/**
+ * @class Grid_Factory_i
+ *
+ * Create a <Grid>.
+ */
 class Grid_Factory_i : public POA_Grid_Factory
 {
-  // =TITLE
-  //   Create a <Grid>.
 public:
-  // = Initialization and termination methods.
-  Grid_Factory_i (void);
-  // Constructor.
+  /// Constructor.
+  Grid_Factory_i ();
 
-  ~Grid_Factory_i (void);
-  // Destructor.
+  /// Destructor.
+  ~Grid_Factory_i ();
 
+  /// This function creates and returns a <Grid>.
   virtual Grid_ptr make_grid (CORBA::Short,
-                              CORBA::Short
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // This function creates and returns a <Grid>.
+                              CORBA::Short);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Shutdown the server.
+  /// Shutdown the server.
+  virtual void shutdown ();
 
-  virtual void cleanup (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Do a clean up of the memory map
+  /// Do a clean up of the memory map
+  virtual void cleanup ( );
 
+  /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
 
-  void pool_name (const char *name);
-  // Set the pool pointer
+  /// Set the pool pointer
+  void pool_name (const ACE_TCHAR *name);
 
 private:
+  /// ORB pointer.
   CORBA::ORB_var orb_;
-  // ORB pointer.
 
-  char *pool_name_;
-  // Name of the pool
+  /// Name of the pool
+  ACE_TCHAR *pool_name_;
 
+  /// Hold the pool of name pool_name_
   pool_t *pool_t_;
-  // Hold the pool of name pool_name_
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Grid_Factory_i &))
-  // Keeping g++2.7.2
+  void operator= (const Grid_Factory_i &);
 };
 
 
+/**
+ * @class Grid_i:
+ *
+ * @brief Grid object implementation.
+ *
+ * Grid object implementation
+ */
 class Grid_i: public POA_Grid
 {
-  // = TITLE
-  //    Grid object implementation.
-  //
-  // = DESCRIPTION
-  //    Grid object implementation
 public:
-  // = Initialization and termination methods.
+  /// Constructor
+  Grid_i ();
 
-  Grid_i (void);
-  // Constructor
+  /// Constructor.
+  Grid_i (CORBA::Short, CORBA::Short, pool_t *);
 
-  Grid_i (CORBA::Short,
-          CORBA::Short,
-          pool_t *);
+  /// Destructor
+  ~Grid_i ();
 
-  // Constructor.
+  /// Returns the width of the grid
+  virtual CORBA::Short width ();
 
-  ~Grid_i (void);
-  // Destructor
+  /// Returns the height of the grid
+  virtual CORBA::Short height ();
 
-  virtual CORBA::Short width (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Returns the width of the grid
+  /// Sets the width of the grid.
+  virtual void width (CORBA::Short);
 
-  virtual CORBA::Short height (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Returns the height of the grid
+  /// Sets the height of the grid.
+  virtual void height (CORBA::Short);
 
-  virtual void width (CORBA::Short
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Sets the width of the grid.
-
-  virtual void height (CORBA::Short
-                       ACE_ENV_ARG_DECL_NOT_USED)
-     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Sets the height of the grid.
-
+  /// Sets the grid value.
   virtual void set (CORBA::Short,
                     CORBA::Short,
-                    CORBA::Long
-                    ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Grid::RANGE_ERROR));
-  // Sets the grid value.
+                    CORBA::Long);
 
+  /// Gets the grid value.
   virtual CORBA::Long get (CORBA::Short,
-                           CORBA::Short
-                           ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Grid::RANGE_ERROR));
-  // Gets the grid value.
+                           CORBA::Short);
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Destroy the grid.
+  /// Destroy the grid.
+  virtual void destroy ();
 
+  /// Set a pointer to the pool
   void set_pool (pool_t *);
-  // Set a pointer to the pool
 
 private:
+  /// Width of the grid.
   CORBA::Short width_;
-  // Width of the grid.
 
+  /// Height of the grid.
   CORBA::Short height_;
-  // Height of the grid.
 
+  /// Pointer to the matrix.  This is organized as an "array of arrays."
   CORBA::Long **array_;
-  // Pointer to the matrix.  This is organized as an "array of arrays."
 
+  ///Pointer to the memory pool..
   pool_t *pool_t_;
-  //Pointer to the memory pool..
 };
 
 

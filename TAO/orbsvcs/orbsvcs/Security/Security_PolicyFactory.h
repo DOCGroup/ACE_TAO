@@ -4,8 +4,6 @@
 /**
  * @file Security_PolicyFactory.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -16,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "security_export.h"
+#include "orbsvcs/Security/security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,11 +30,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Security
   {
-
     /**
      * @class PolicyFactory
      *
@@ -44,22 +43,18 @@ namespace TAO
      *
      * Policy factory for all security related policies.
      */
-    class TAO_Security_Export PolicyFactory
+    class PolicyFactory
       : public PortableInterceptor::PolicyFactory,
-        public CORBA::LocalObject
+        public ::CORBA::LocalObject
     {
     public:
-
       virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                               const CORBA::Any & value
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         CORBA::PolicyError));
+                                               const CORBA::Any & value);
     };
-
   } // End Security namespace
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

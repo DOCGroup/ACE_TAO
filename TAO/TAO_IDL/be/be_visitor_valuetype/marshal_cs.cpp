@@ -1,27 +1,16 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    marshal_cs.cpp
-//
-// = DESCRIPTION
-//    Concrete visitor for valuetypes.
-//    This one provides code generation for marshalling.
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    marshal_cs.cpp
+ *
+ *  Concrete visitor for valuetypes.
+ *  This one provides code generation for marshalling.
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuetype,
-           marshal_cs,
-           "$Id$")
+#include "valuetype.h"
 
 be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
     be_visitor_context *ctx
@@ -30,46 +19,35 @@ be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
 {
 }
 
-be_visitor_valuetype_marshal_cs::~be_visitor_valuetype_marshal_cs (void)
+be_visitor_valuetype_marshal_cs::~be_visitor_valuetype_marshal_cs ()
 {
 }
 
 int
-be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
+be_visitor_valuetype_marshal_cs::marshal_state (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
+  TAO_OutStream *const os = this->ctx_->stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  *os << "CORBA::Boolean" << be_nl;
-
-  this->class_name (node, os);
-
-  *os << "::_tao_marshal_state (TAO_OutputCDR &";
-
-  be_valuetype *inh = node->statefull_inherit ();
-
-  // If the valuetype has no fields, and no stateful inherit,
-  // the stream arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (!be_global->cdr_support ())
     {
-      *os << "strm";
+      *os << "return false;" << be_uidt_nl << be_nl;
+      return 0;
     }
 
-  *os << ") const" << be_nl
-      << "{" << be_idt_nl;
+  be_valuetype *const inh = node->statefull_inherit ();
 
   if (inh)
     {
+      *os << "if (! ci.start_chunk (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+
       if (inh->opt_accessor ())
         {
           *os << "if (!this->";
 
           this->class_name (inh, os);
 
-          *os << "::_tao_marshal_state (strm))" << be_idt_nl
+          *os << "::_tao_marshal_state (strm, ci))" << be_idt_nl
               << "{" << be_idt_nl
               << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
@@ -79,7 +57,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
         {
           *os << "if (! this->_tao_marshal__"
               <<       inh->flat_name ()
-              << " (strm))" << be_idt_nl
+              << " (strm, ci))" << be_idt_nl
               << "{" << be_idt_nl
               << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
@@ -88,73 +66,208 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   be_visitor_context new_ctx = *this->ctx_;
   be_visitor_valuetype_field_cdr_decl field_out_cdr (&new_ctx);
-  field_out_cdr.visit_scope (node);
 
-  *os << "return (" << be_idt << be_idt_nl;
-
-  // All we have to do is to visit the scope and generate code.
-  this->gen_fields (node,
-                    *this->ctx_);
-
-  *os << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  // Set the substate as generating code for the input operator.
-  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-
-  *os << "CORBA::Boolean" << be_nl;
-
-  this->class_name (node, os);
-
-  *os << "::_tao_unmarshal_state (TAO_InputCDR &";
-
-  // If the valuetype has no fields, and no stateful inherit,
-  // the stream arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (field_out_cdr.visit_scope (node) == -1)
     {
-      *os << "strm";
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_valuetype_marshal_cs::")
+                         ACE_TEXT ("visit_valuetype - ")
+                         ACE_TEXT ("codegen for field out ")
+                         ACE_TEXT ("cdr scope failed\n")),
+                        -1);
     }
 
-  *os << ")" << be_nl
-      << "{" << be_idt_nl;
+  if (node->data_members_count () > 0)
+    {
+      *os << "if (! ci.start_chunk (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+      *os << "CORBA::Boolean const ret = " << be_idt << be_idt_nl;
+
+      // All we have to do is to visit the scope and generate code.
+      this->gen_fields (node, *this->ctx_);
+
+      *os << ";" << be_uidt << be_uidt_nl;
+
+      *os << "if ( ! ret) " << be_idt_nl;
+      *os << "return false; " << be_uidt_nl << be_nl;
+      *os << "if (! ci.end_chunk (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+    }
 
   if (inh)
     {
+      *os << "if (! ci.end_chunk (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+    }
+
+  *os << "return true;" << be_uidt_nl;
+  return 0;
+}
+
+int
+be_visitor_valuetype_marshal_cs::unmarshal_state (be_valuetype *node)
+{
+  TAO_OutStream *const os = this->ctx_->stream ();
+
+  if (!be_global->cdr_support ())
+    {
+      *os << "return false;" << be_uidt_nl << be_nl;
+      return 0;
+    }
+
+  be_valuetype *const inh = node->statefull_inherit ();
+
+  if (inh)
+    {
+      *os << "if (!ci.handle_chunking (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+
       if (inh->opt_accessor ())
         {
           *os << "if (!this->";
 
           this->class_name (inh, os);
 
-          *os << "::_tao_unmarshal_state (strm))" << be_idt_nl
+          *os << "::_tao_unmarshal_state (strm, ci))" << be_idt_nl
               << "{" << be_idt_nl
               << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
         }
       else // only can access base class via virtual function
         {
-          *os << "if (! this->_tao_unmarshal__"
+          *os << "if (!this->_tao_unmarshal__"
               <<       inh->flat_name ()
-              << " (strm))" << be_idt_nl
+              << " (strm, ci))" << be_idt_nl
               << "{" << be_idt_nl
               << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
         }
     }
 
+  be_visitor_context new_ctx = *this->ctx_;
   be_visitor_valuetype_field_cdr_decl field_in_cdr (&new_ctx);
-  field_in_cdr.visit_scope (node);
 
-  *os << "return (" << be_idt_nl;
+  if (field_in_cdr.visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_valuetype_marshal_cs::")
+                         ACE_TEXT ("visit_valuetype - ")
+                         ACE_TEXT ("codegen for field in ")
+                         ACE_TEXT ("cdr scope failed\n")),
+                        -1);
+    }
 
-  // All we have to do is to visit the scope and generate code.
-  this->gen_fields (node,
-                    *this->ctx_);
+  if (node->data_members_count () > 0)
+    {
+      *os << "if (!ci.handle_chunking (strm))" << be_idt_nl;
+      *os << "return false;" << be_uidt_nl << be_nl;
+      *os << "CORBA::Boolean const ret = " << be_idt << be_idt_nl;
 
-  *os << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}";
+      // All we have to do is to visit the scope and generate code.
+      this->gen_fields (node, *this->ctx_);
+
+      *os << ";" << be_uidt << be_uidt_nl;
+
+      *os << "if (!ret) " << be_idt_nl;
+      *os << "return false; " << be_uidt_nl << be_nl;
+      *os << "if (this->require_truncation_)" << be_idt_nl;
+      *os << "return ci.skip_chunks (strm);" << be_uidt_nl << be_nl;
+      *os << "else" << be_idt_nl;
+      *os << "return ci.handle_chunking (strm);" << be_uidt_nl << be_nl;
+    }
+    else
+      *os << "return true;";
+  return 0;
+}
+
+int
+be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
+
+  TAO_INSERT_COMMENT (os);
+
+  *os << "::CORBA::Boolean" << be_nl;
+
+  this->class_name (node, os);
+
+  *os << "::_tao_marshal_state (TAO_OutputCDR &";
+
+  be_valuetype *inh = node->statefull_inherit ();
+
+  // If the valuetype has no fields, and no stateful inherit,
+  // the stream arg is unused.
+  bool const named_args = be_global->cdr_support () && (inh != nullptr || node->data_members_count () > 0);
+
+  if (named_args)
+    {
+      *os << "strm";
+    }
+
+  *os << ", TAO_ChunkInfo &";
+
+  if (named_args)
+    {
+      *os << "ci";
+    }
+
+  *os << ") const" << be_nl
+      << "{" << be_idt_nl;
+
+  int const marshal_error = this->marshal_state (node);
+  if (marshal_error)
+    {
+      return marshal_error;
+    }
+
+  *os << "}" << be_nl_2;
+
+  // Set the substate as generating code for the input operator.
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+
+  *os << "::CORBA::Boolean" << be_nl;
+
+  this->class_name (node, os);
+
+  *os << "::_tao_unmarshal_state (TAO_InputCDR &";
+
+  if (named_args)
+    {
+      *os << "strm";
+    }
+
+  *os << ", TAO_ChunkInfo &";
+
+  if (named_args)
+    {
+      *os << "ci";
+    }
+
+  *os << ")" << be_nl
+      << "{" << be_idt_nl;
+
+  int const unmarshal_error = this->unmarshal_state (node);
+  if (unmarshal_error)
+    {
+      return unmarshal_error;
+    }
+
+  *os << be_uidt_nl << "}" << be_nl_2;
+
+  if (!be_global->cdr_support ())
+    {
+      return 0;
+    }
+
+  *os << "void" << be_nl;
+
+  this->class_name (node, os);
+
+  *os << "::truncation_hook ()" << be_nl
+      << "{" << be_idt_nl
+      << "this->require_truncation_ = true;" << be_uidt_nl
+      << "}" << be_nl_2;
 
   return 0;
 }
@@ -172,11 +285,10 @@ be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
   if (node->opt_accessor ())
     {
       be_decl *scope =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
-      *os << "ACE_NESTED_CLASS ("
-          << scope->name () << ","
-          << node->local_name () << ")";
+      *os << scope->name () << "::"
+          << node->local_name ();
     }
   else
     {
@@ -203,14 +315,18 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
       if (!d)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"),
+                             ACE_TEXT ("be_visitor_scope::visit_scope - ")
+                             ACE_TEXT ("bad node in this scope\n")),
                             -1);
         }
 
-      be_field *field = be_field::narrow_from_decl (d);
+      // (JP) 2010-10-21
+      // be_attribute now inherits from be_field, so we need this check.
+      be_attribute *attr = dynamic_cast<be_attribute*> (d);
 
-      if (field)
+      be_field *field = dynamic_cast<be_field*> (d);
+
+      if (field != nullptr && attr == nullptr)
         {
           if (n_processed > 0)
             {
@@ -225,9 +341,9 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
           if (visitor.visit_field (field) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_valuetype_marshal_cs::"
-                                 "visit_valuetype - "
-                                 "codegen for scope failed\n"),
+                                 ACE_TEXT ("be_visitor_valuetype_marshal_cs::")
+                                 ACE_TEXT ("visit_valuetype - ")
+                                 ACE_TEXT ("codegen for scope failed\n")),
                                 -1);
             }
         }

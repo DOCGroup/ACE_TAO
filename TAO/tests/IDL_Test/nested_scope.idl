@@ -1,23 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    nested_scope.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has 
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    nested_scope.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 // Tests all the problem datatypes for repeating a scope
 // name after skipping one nesting level.
@@ -26,7 +21,7 @@ module skip
 {
   module hump
   {
-    struct skip {short s;};      
+    struct skip {short s;};
   };
 };
 
@@ -142,11 +137,11 @@ module bug_1985_c
 // This one caused several problems - in the stub declaration of
 // the operation, and in the skeleton body's allocation of return type.
 module Negotiator
-{ 
+{
   interface UAV_Negotiator {};
 
   interface UAV_Negotiator_Factory : ::Negotiator::UAV_Negotiator
-  { 
+  {
     ::Negotiator::UAV_Negotiator make_negotiator (in string bitrate_sc);
   };
 };
@@ -154,22 +149,47 @@ module Negotiator
 // Caught some generation of arg helper template parameters not using
 // the qualifying '::' on scoped names.
 
-module bug_2125 
+module bug_2125
 {
-  module Bar 
+  module Bar
   {
     enum Stuff {ONE, TWO};
   };
 };
 
-module Wow 
+module Wow
 {
-  module bug_2125 
+  module bug_2125
   {
-    interface MyInterface 
+    interface MyInterface
     {
-      void op1 (in bug_2125::Bar::Stuff fbs);
+// @@ (JP 06/04/07) I'm commenting out the line below, since
+// according to IDL scoping rules (CORBA 3.0.3, sections
+// 3.20.1 and 3.20.2), the module Wow::bug_2125 hides the
+// global module bug_2125 and so the lookup should fail.
+// Not removing the line completely in case someday we
+// extend IDL_Test to check for rejection of illegal IDL.
+//      void op1 (in bug_2125::Bar::Stuff fbs);
       void op2 (in ::bug_2125::Bar::Stuff fbs);
     };
   };
 };
+
+// This will ensure that we always put the '::'
+// before the 'CORBA' on predefined types.
+module Company
+{
+  module CORBA
+  {
+    typedef unsigned long LongU;
+
+    module Inner
+    {
+      struct Foo
+      {
+        boolean x;
+      };
+    };
+  };
+};
+

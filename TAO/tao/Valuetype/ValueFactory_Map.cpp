@@ -1,20 +1,16 @@
-#include "ValueFactory_Map.h"
-#include "ValueFactory.h"
+// -*- C++ -*-
+#include "tao/Valuetype/ValueFactory_Map.h"
+#include "tao/Valuetype/ValueFactory.h"
 #include "tao/CORBA_String.h"
-#include "tao/TAO_Singleton.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (Valuetype,
-           ValueFactory_Map,
-           "$Id$")
-
-
-TAO_ValueFactory_Map::TAO_ValueFactory_Map (void)
+TAO_ValueFactory_Map::TAO_ValueFactory_Map ()
   : map_ (TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE)
 {
 }
 
-TAO_ValueFactory_Map::~TAO_ValueFactory_Map (void)
+TAO_ValueFactory_Map::~TAO_ValueFactory_Map ()
 {
   // Initialize an iterator.  We need to go thru each entry and free
   // up storage allocated to hold the external ids and invoke
@@ -34,21 +30,18 @@ TAO_ValueFactory_Map::~TAO_ValueFactory_Map (void)
     }
 }
 
-// %! Thread issues
-
 int
 TAO_ValueFactory_Map::rebind (const char *repo_id,
                               CORBA::ValueFactory &factory)
 {
-//  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, map_->mutex(),-1);
-//   --- but must be recursive
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
+
   const char *prev_repo_id = 0;
   CORBA::ValueFactory prev_factory = 0;
-  int ret = 0;
-  ret = this->map_.rebind (CORBA::string_dup (repo_id),
-                           factory,
-                           prev_repo_id,
-                           prev_factory);
+  int const ret = this->map_.rebind (CORBA::string_dup (repo_id),
+                                     factory,
+                                     prev_repo_id,
+                                     prev_factory);
 
   if (ret > -1)   // ok, no error
     {
@@ -68,10 +61,11 @@ int
 TAO_ValueFactory_Map::unbind (const char *repo_id,
                               CORBA::ValueFactory &factory)
 {
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
+
   FACTORY_MAP_MANAGER::ENTRY *prev_entry = 0;
-  int ret = 0;
-  ret = this->map_.find (repo_id,
-                         prev_entry);
+  int ret = this->map_.find (repo_id, prev_entry);
+
   if (ret == 0)    // there was a matching factory
     {
       // set factory to the previous factory,
@@ -93,10 +87,9 @@ int
 TAO_ValueFactory_Map::find (const char *repo_id,
                             CORBA::ValueFactory &factory)
 {
-  int ret = 0;
-  ret = this->map_.find (repo_id,
-                         factory);
-  // %! this must be guarded to be atomic  !!!!!!!!!!!!!!!!!!
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
+
+  int const ret = this->map_.find (repo_id, factory);
   if (ret > -1)
     {
       factory->_add_ref ();    // The caller gets one reference as gift.
@@ -105,35 +98,5 @@ TAO_ValueFactory_Map::find (const char *repo_id,
   return ret;
 }
 
-TAO_ValueFactory_Map *
-TAO_ValueFactory_Map::instance (void)
-{
-  // Hide the template instantiation to prevent multiple instances
-  // from being created.
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-  return
-    TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::instance ();
-}
-
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Entry<const char *, CORBA::ValueFactoryBase *>;
-template class TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<const char *, CORBA::ValueFactoryBase *>
-#pragma instantiate TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::singleton_;
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

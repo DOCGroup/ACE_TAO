@@ -1,0 +1,33 @@
+// -*- MPC -*-
+project(*IDL): orbsvcsexe, portablegroup, diffservpolicy {
+  IDL_Files {
+    Hello.idl
+  }
+  custom_only = 1
+}
+
+project(*Server) : orbsvcsexe, portablegroup, diffservpolicy {
+  after += *IDL
+  exename = server
+
+  Source_Files {
+    Hello_Impl.cpp
+    server.cpp
+    HelloS.cpp
+    HelloC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client) : orbsvcsexe, portablegroup, diffservpolicy {
+  after += *IDL
+  exename = client
+
+  Source_Files {
+    client.cpp
+    HelloC.cpp
+  }
+  IDL_Files {
+  }
+}

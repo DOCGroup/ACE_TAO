@@ -1,19 +1,16 @@
-#include "FTEC_Gateway.h"
-#include "activate_with_id.h"
-#include "UUID.h"
-#include "resolve_init.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
+#include "orbsvcs/FtRtEvent/Utils/activate_with_id.h"
+#include "orbsvcs/FtRtEvent/Utils/UUID.h"
+#include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtecEventCommS.h"
 #include "tao/ORB_Core.h"
-#include "tao/PI_Server/PI_Server.h"
-
-ACE_RCSID (Utils,
-           FTEC_Gateway,
-           "$Id$")
 
 #if !defined(__ACE_INLINE__)
-#include "FTEC_Gateway.inl"
+#include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
 class FTEC_Gateway_ConsumerAdmin
@@ -24,8 +21,7 @@ public:
   ~FTEC_Gateway_ConsumerAdmin();
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-          ACE_THROW_SPEC ((CORBA::SystemException));
+      obtain_push_supplier ();
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -37,8 +33,7 @@ public:
   ~FTEC_Gateway_SupplierAdmin();
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-          ACE_THROW_SPEC ((CORBA::SystemException));
+      obtain_push_consumer ();
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -51,17 +46,10 @@ public:
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       RtecEventChannelAdmin::AlreadyConnected,
-                       RtecEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void suspend_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void resume_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                const RtecEventChannelAdmin::ConsumerQOS &qos);
+  virtual void disconnect_push_supplier ();
+  virtual void suspend_connection ();
+  virtual void resume_connection ();
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -72,18 +60,12 @@ public:
   FTEC_Gateway_ProxyPushConsumer(FTEC_Gateway_Impl* impl);
   ~FTEC_Gateway_ProxyPushConsumer();
 
-  virtual void push (const RtecEventComm::EventSet & data
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet & data);
       // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos
-                ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       RtecEventChannelAdmin::AlreadyConnected));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                const RtecEventChannelAdmin::SupplierQOS& qos);
+  virtual void disconnect_push_consumer ();
 
   FTEC_Gateway_Impl* impl_;
 };
@@ -93,11 +75,9 @@ class PushConsumerHandler : public POA_FtRtecEventComm::AMI_PushConsumerHandler
 public:
   PushConsumerHandler();
   ~PushConsumerHandler();
-  virtual void push (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push ();
 
-  virtual void push_excep (FtRtecEventComm::AMI_PushConsumerExceptionHolder * excep_holder ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push_excep (::Messaging::ExceptionHolder * excep_holder);
 };
 
 /**
@@ -106,14 +86,14 @@ public:
 class Interceptor_Destoryer : public TAO_ORB_Core
 {
 public:
-  inline static void execute(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL) {
-    static_cast<Interceptor_Destoryer*> (orb->orb_core())->do_it(ACE_ENV_SINGLE_ARG_PARAMETER);
+  inline static void execute(CORBA::ORB_ptr orb) {
+    static_cast<Interceptor_Destoryer*> (orb->orb_core())->do_it();
   }
 private:
   Interceptor_Destoryer();
-  inline void do_it(ACE_ENV_SINGLE_ARG_DECL) {
-    destroy_interceptors(ACE_ENV_SINGLE_ARG_PARAMETER);
-  };
+  inline void do_it() {
+    destroy_interceptors();
+  }
 };
 
 struct FTEC_Gateway_Impl
@@ -158,7 +138,7 @@ FTEC_Gateway::~FTEC_Gateway()
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
-FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
+FTEC_Gateway::activate(PortableServer::POA_ptr root_poa)
 {
   PortableServer::POA_var poa;
   PortableServer::POAManager_var mgr;
@@ -166,42 +146,30 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
   if (impl_->local_orb) {
     int argc = 0;
     char** argv = 0;
-    impl_->orb = CORBA::ORB_init(argc, argv, "FTEC_GatewayORB"
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    impl_->orb = CORBA::ORB_init(argc, argv, "FTEC_GatewayORB");
 
-    Interceptor_Destoryer::execute(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
+    Interceptor_Destoryer::execute(impl_->orb.in());
 
-    poa = resolve_init<PortableServer::POA>(impl_->orb.in(), "RootPOA"
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    poa = resolve_init<PortableServer::POA>(impl_->orb.in(), "RootPOA");
 
-    mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    mgr = poa->the_POAManager();
 
-    mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
+    mgr->activate();
   }
   else {
     poa = PortableServer::POA::_duplicate(root_poa);
-    mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
+    mgr = poa->the_POAManager();
   }
-  ACE_CHECK_RETURN(0);
 
   PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
-    poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID);
 
   PortableServer::LifespanPolicy_var lifespan =
-    poa->create_lifespan_policy(PortableServer::PERSISTENT
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    poa->create_lifespan_policy(PortableServer::PERSISTENT);
 
   // create a USER_ID IdAssignmentPolicy object
   PortableServer::IdAssignmentPolicy_var assign =
-    poa->create_id_assignment_policy(PortableServer::USER_ID
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    poa->create_id_assignment_policy(PortableServer::USER_ID);
 
   CORBA::PolicyList policy_list;
   policy_list.length(3);
@@ -213,9 +181,7 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
   policy_list[2]=
     PortableServer::IdAssignmentPolicy::_duplicate(assign.in());
 
-  impl_->poa = poa->create_POA("gateway_poa", mgr.in(), policy_list
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+  impl_->poa = poa->create_POA("gateway_poa", mgr.in(), policy_list);
 
   id_uniqueness_policy->destroy();
   lifespan->destroy();
@@ -223,83 +189,64 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
 
   FtRtecEventComm::ObjectId oid;
   oid.length(16);
-  UUID::create(oid.get_buffer());
+  TAO_FtRt::UUID::create(oid.get_buffer());
 
   RtecEventChannelAdmin::EventChannel_var gateway;
 
-  activate_object_with_id(gateway.out(), impl_->poa.in(), this, oid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+  activate_object_with_id(gateway.out(), impl_->poa.in(), this, oid);
   ++oid[9];
   activate_object_with_id(impl_->consumer_admin.out(),
     impl_->poa.in(),
     &impl_->consumer_admin_servant,
-    oid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    oid);
   ++oid[9];
   activate_object_with_id(impl_->supplier_admin.out(),
     impl_->poa.in(),
     &impl_->supplier_admin_servant,
-    oid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    oid);
 
   return gateway._retn();
 }
 
 //= The RtecEventChannelAdmin::EventChannel methods
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-FTEC_Gateway::for_consumers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-ACE_THROW_SPEC ((CORBA::SystemException))
+FTEC_Gateway::for_consumers ()
 {
   return RtecEventChannelAdmin::ConsumerAdmin::_duplicate(impl_->consumer_admin.in());
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-FTEC_Gateway::for_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-ACE_THROW_SPEC ((CORBA::SystemException))
+FTEC_Gateway::for_suppliers ()
 {
-  ACE_DEBUG((LM_DEBUG, "FTEC_Gateway::for_suppliers\n"));
+  ORBSVCS_DEBUG((LM_DEBUG, "FTEC_Gateway::for_suppliers\n"));
   return RtecEventChannelAdmin::SupplierAdmin::_duplicate(impl_->supplier_admin.in());
 }
 
-void FTEC_Gateway::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-ACE_THROW_SPEC ((CORBA::SystemException))
+void FTEC_Gateway::destroy ()
 {
   impl_->ftec->destroy();
 }
 
 RtecEventChannelAdmin::Observer_Handle
-FTEC_Gateway::append_observer (RtecEventChannelAdmin::Observer_ptr observer
-                               ACE_ENV_ARG_DECL)
-                               ACE_THROW_SPEC ((
-                               CORBA::SystemException,
-                               RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-                               RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
+FTEC_Gateway::append_observer (RtecEventChannelAdmin::Observer_ptr observer)
 {
-  return impl_->ftec->append_observer(observer ACE_ENV_ARG_PARAMETER);
+  return impl_->ftec->append_observer(observer);
 }
 
-void FTEC_Gateway::remove_observer (RtecEventChannelAdmin::Observer_Handle handle
-                                    ACE_ENV_ARG_DECL)
-                                    ACE_THROW_SPEC ((
-                                    CORBA::SystemException,
-                                    RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-                                    RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
+void FTEC_Gateway::remove_observer (RtecEventChannelAdmin::Observer_Handle handle)
 {
-  impl_->ftec->remove_observer(handle ACE_ENV_ARG_PARAMETER);
+  impl_->ftec->remove_observer(handle);
 }
 
 void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
-                        const RtecEventComm::EventSet & data
-                        ACE_ENV_ARG_DECL)
+                        const RtecEventComm::EventSet & data)
 {
-  PortableServer::ObjectId_var object_id =
-    impl_->poa->reference_to_id(proxy_consumer  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  const PortableServer::ObjectId_var object_id =
+    impl_->poa->reference_to_id(proxy_consumer);
   FtRtecEventComm::ObjectId** result;
-  memcpy(&result, &object_id[0], sizeof(FtRtecEventComm::ObjectId**));
+  ACE_OS::memcpy(&result, &object_id[0], sizeof(FtRtecEventComm::ObjectId**));
 
-  impl_->ftec->push(**result, data ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  impl_->ftec->push(**result, data);
 }
 
 
@@ -315,21 +262,19 @@ FTEC_Gateway_ConsumerAdmin::~FTEC_Gateway_ConsumerAdmin()
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
-FTEC_Gateway_ConsumerAdmin::obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-ACE_THROW_SPEC ((CORBA::SystemException))
+FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
 {
-
   FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
   ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
-  memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
+  ACE_OS::memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushSupplier_ptr result;
   activate_object_with_id(result, impl_->poa.in(),
                          &impl_->proxy_supplier_servant,
-                         local_oid ACE_ENV_ARG_PARAMETER);
+                         local_oid);
   return result;
 }
 
@@ -346,39 +291,35 @@ FTEC_Gateway_SupplierAdmin::~FTEC_Gateway_SupplierAdmin()
 
 // = The RtecEventChannelAdmin::SupplierAdmin methods...
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-FTEC_Gateway_SupplierAdmin::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-ACE_THROW_SPEC ((CORBA::SystemException))
+FTEC_Gateway_SupplierAdmin::obtain_push_consumer ()
 {
   FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
   ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
-  memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
+  ACE_OS::memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushConsumer_ptr result;
   activate_object_with_id(result, impl_->poa.in(),
                           &impl_->proxy_consumer_servant,
-                          local_oid ACE_ENV_ARG_PARAMETER);
+                          local_oid);
   return result;
 }
 
 
 FtRtecEventComm::ObjectId**
-get_remote_oid_ptr(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+get_remote_oid_ptr(CORBA::ORB_ptr orb)
 {
   PortableServer::Current_var current =
     resolve_init<PortableServer::Current>(orb,
-    "POACurrent"
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+                                          "POACurrent");
 
-  PortableServer::ObjectId_var object_id =
-    current->get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+  const PortableServer::ObjectId_var object_id =
+    current->get_object_id();
 
   FtRtecEventComm::ObjectId** result;
-  memcpy(&result, &object_id[0], sizeof(FtRtecEventComm::ObjectId**));
+  ACE_OS::memcpy(&result, &object_id[0], sizeof(FtRtecEventComm::ObjectId**));
   return result;
 }
 
@@ -397,47 +338,31 @@ FTEC_Gateway_ProxyPushSupplier::~FTEC_Gateway_ProxyPushSupplier()
 // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
 void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
   RtecEventComm::PushConsumer_ptr push_consumer,
-  const RtecEventChannelAdmin::ConsumerQOS &qos
-  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    RtecEventChannelAdmin::AlreadyConnected,
-    RtecEventChannelAdmin::TypeError))
+  const RtecEventChannelAdmin::ConsumerQOS &qos)
 {
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
 
-  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  *oid_ptr = impl_->ftec->connect_push_consumer(push_consumer, qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  *oid_ptr = impl_->ftec->connect_push_consumer(push_consumer, qos);
 }
 
-void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier ()
 {
-  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  impl_->ftec->disconnect_push_supplier(**oid_ptr ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
+  impl_->ftec->disconnect_push_supplier(**oid_ptr);
   delete *oid_ptr;
   delete oid_ptr;
 }
 
-void FTEC_Gateway_ProxyPushSupplier::suspend_connection (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void FTEC_Gateway_ProxyPushSupplier::suspend_connection ()
 {
-  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  impl_->ftec->suspend_push_supplier(**oid_ptr ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
+  impl_->ftec->suspend_push_supplier(**oid_ptr);
 }
 
-void FTEC_Gateway_ProxyPushSupplier::resume_connection (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void FTEC_Gateway_ProxyPushSupplier::resume_connection ()
 {
-  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  impl_->ftec->resume_push_supplier(**oid_ptr ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
+  impl_->ftec->resume_push_supplier(**oid_ptr);
 }
 
 /// FTEC_Gateway_ProxyPushConsumer
@@ -454,47 +379,34 @@ FTEC_Gateway_ProxyPushConsumer::~FTEC_Gateway_ProxyPushConsumer()
 
 // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
 
-void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data
-                         ACE_ENV_ARG_DECL)
-                         ACE_THROW_SPEC ((CORBA::SystemException))
+void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data)
 {
-  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
 
   /*
   if (CORBA::is_nil(impl_->push_handler.in())) {
-    impl_->push_handler = impl_->push_handler_servant._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    impl_->push_handler = impl_->push_handler_servant._this();
   }
 
   impl_->ftec->sendc_push (impl_->push_handler.in(),
                            **oid_ptr,
-                           data ACE_ENV_ARG_PARAMETER);
+                           data);
  */
-  impl_->ftec->push(**oid_ptr, data ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  impl_->ftec->push(**oid_ptr, data);
 }
 
 void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
   RtecEventComm::PushSupplier_ptr push_supplier,
-  const RtecEventChannelAdmin::SupplierQOS& qos
-  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    RtecEventChannelAdmin::AlreadyConnected))
+  const RtecEventChannelAdmin::SupplierQOS& qos)
 {
-  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  *oid_ptr = impl_->ftec->connect_push_supplier(push_supplier, qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
+  *oid_ptr = impl_->ftec->connect_push_supplier(push_supplier, qos);
 }
 
-void FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer ()
 {
-  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  impl_->ftec->disconnect_push_consumer(**oid_ptr ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
+  impl_->ftec->disconnect_push_consumer(**oid_ptr);
   delete *oid_ptr;
   delete oid_ptr;
 }
@@ -507,14 +419,14 @@ PushConsumerHandler::~PushConsumerHandler()
 {
 }
 
-void PushConsumerHandler::push (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+void PushConsumerHandler::push ()
 {
 }
 
-void PushConsumerHandler::push_excep (FtRtecEventComm::AMI_PushConsumerExceptionHolder * excep_holder ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+void PushConsumerHandler::push_excep (::Messaging::ExceptionHolder *)
 {
-  ACE_UNUSED_ARG(excep_holder);
 }
-}
+
+}  // TAO_FTRTEC
+
+TAO_END_VERSIONED_NAMESPACE_DECL

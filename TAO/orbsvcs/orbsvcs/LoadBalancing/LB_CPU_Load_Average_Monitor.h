@@ -4,8 +4,6 @@
 /**
  *  @file LB_CPU_Load_Average_Monitor.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -24,6 +22,7 @@
 
 #include "orbsvcs/CosLoadBalancingS.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LB_CPU_Load_Average_Monitor
@@ -42,14 +41,13 @@ class TAO_LoadBalancing_Export TAO_LB_CPU_Load_Average_Monitor
   : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
-
   /// Constructor
   /**
    * If no location is supplied the hostname or IP address is used by
    * default.
    */
-  TAO_LB_CPU_Load_Average_Monitor (const char * location_id = 0,
-                                   const char * location_kind = 0);
+  TAO_LB_CPU_Load_Average_Monitor (const ACE_TCHAR * location_id = 0,
+                                   const ACE_TCHAR * location_kind = 0);
 
   /**
    * @name CosLoadBalancing::LoadMonitor Methods
@@ -57,14 +55,11 @@ public:
    * Methods required by the CosLoadBalancing::LoadMonitor interface.
    */
   //@{
-
   /// Return the location at which the LoadMonitor resides.
   /**
    * The returned "Location" is a sequence of length 1.
    */
-  virtual CosLoadBalancing::Location * the_location (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosLoadBalancing::Location * the_location ();
 
   /// Return the average CPU load at the location which this
   /// LoadMonitor resides.
@@ -73,27 +68,24 @@ public:
    *         equal to CosLoadBalancing::LoadAverage, and the average CPU
    *         load.
    */
-  virtual CosLoadBalancing::LoadList * loads (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosLoadBalancing::LoadList * loads ();
 
   //@}
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_LB_CPU_Load_Average_Monitor (void);
+  ~TAO_LB_CPU_Load_Average_Monitor ();
 
 private:
-
   /// The name of the location at which this LoadMonitor resides.
   CosLoadBalancing::Location location_;
-
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,40 +1,24 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Any operators for a forward declared 
-//    component in the client header.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_ch.cpp
+ *
+ *  Visitor generating code for Any operators for a forward declared
+ *  component in the client header.
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_component_fwd, 
-           any_op_ch, 
-           "$Id$")
-
-// ***************************************************************************
-// Generates Any operator declarations in the client header
-// ***************************************************************************
+#include "component_fwd.h"
 
 be_visitor_component_fwd_any_op_ch::be_visitor_component_fwd_any_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_component_fwd_any_op_ch::~be_visitor_component_fwd_any_op_ch (void)
+be_visitor_component_fwd_any_op_ch::~be_visitor_component_fwd_any_op_ch ()
 {
 }
 

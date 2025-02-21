@@ -1,18 +1,25 @@
 // -*- IDL -*-
 
-// $Id$
-
-#include "tao/ImR_Client/ImplRepo.pidl"
+#include "ImplRepo.idl"
 
 module ImplementationRepository
 {
   interface Activator
   {
-    // Tells the activator to launch a server with the given information.
-    void start_server(in string name, in string cmdline,
+    /// Tells the activator to launch a server with the given information.
+    void start_server (in string name, in string cmdline,
       in string dir, in EnvironmentList env) raises(CannotActivate);
 
-    oneway void shutdown();
+    oneway void shutdown ();
+  };
+
+  interface ActivatorExt : Activator
+  {
+    /// Tells the activator to send a signal to a child process
+    boolean kill_server (in string name, in long pid, in short signum);
+
+    /// Check if the pid is still alive
+    boolean still_alive (in long pid);
   };
 };
 

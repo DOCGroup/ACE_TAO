@@ -1,96 +1,65 @@
-// $Id$
+#include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 
-#include "IFR_Client_Adapter_Impl.h"
-#include "IFR_ExtendedC.h"
+#include "tao/AnyTypeCode/NVList.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
-#include "tao/NVList.h"
-#include "tao/Any_Unknown_IDL_Type.h"
 
-ACE_RCSID (IFR_Client,
-           IFR_Client_Adapter_Impl,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  template<>
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::InterfaceDef>
-    : public
-        Object_Arg_Traits_T<
-            CORBA::InterfaceDef_ptr,
-            CORBA::InterfaceDef_var,
-            CORBA::InterfaceDef_out,
-            TAO::Objref_Traits<CORBA::InterfaceDef>
-          >
-  {
-  };
-}
-
-TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl (void)
+TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl ()
 {
 }
 
 CORBA::Boolean
 TAO_IFR_Client_Adapter_Impl::interfacedef_cdr_insert (
     TAO_OutputCDR &cdr,
-    CORBA::InterfaceDef_ptr object_type
-  )
+    CORBA::InterfaceDef_ptr object_type)
 {
   return cdr << object_type;
 }
 
 void
 TAO_IFR_Client_Adapter_Impl::interfacedef_any_insert (
-    CORBA::Any &any,
-    CORBA::InterfaceDef_ptr object_type
-  )
+    CORBA::Any *any,
+    CORBA::InterfaceDef_ptr object_type)
 {
-  any <<= object_type;
+  (*any) <<= object_type;
 }
 
 void
-TAO_IFR_Client_Adapter_Impl::dispose (
-    CORBA::InterfaceDef_ptr orphan
-  )
+TAO_IFR_Client_Adapter_Impl::dispose (CORBA::InterfaceDef_ptr orphan)
 {
-  CORBA::release (orphan);
+  ::CORBA::release (orphan);
 }
 
 CORBA::InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface (
     CORBA::ORB_ptr orb,
-    const char *repo_id
-    ACE_ENV_ARG_DECL
-  )
+    const char *repo_id)
 {
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("InterfaceRepository"
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
+    orb->resolve_initial_references ("InterfaceRepository");
 
   if (CORBA::is_nil (obj.in ()))
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        CORBA::InterfaceDef::_nil ());
+      throw ::CORBA::INTF_REPOS ();
     }
 
   CORBA::Repository_var repo =
     CORBA::Repository::_narrow (obj.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
+                               );
 
   if (CORBA::is_nil (repo.in ()))
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        CORBA::InterfaceDef::_nil ());
+      throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::Contained_var result = repo->lookup_id (repo_id
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
+  CORBA::Contained_var result = repo->lookup_id (repo_id);
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -98,16 +67,13 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
     }
   else
     {
-      return CORBA::InterfaceDef::_narrow (result.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+      return CORBA::InterfaceDef::_narrow (result.in ());
     }
 }
 
 CORBA::InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface_remote (
-    CORBA::Object_ptr target
-    ACE_ENV_ARG_DECL
-  )
+    CORBA::Object_ptr target)
 {
   TAO::Arg_Traits<CORBA::InterfaceDef>::ret_val _tao_retval;
 
@@ -122,47 +88,33 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
       1,
       "_interface",
       10,
-      0
-    );
+      0);
 
-  ACE_TRY
+  try
     {
-      _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK (_tao_retval.excp ());
+      _tao_call.invoke (0, 0);
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+  catch (const ::CORBA::OBJECT_NOT_EXIST&)
     {
       return CORBA::InterfaceDef::_nil ();
     }
-  ACE_CATCHANY
-    {
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
 
   return _tao_retval.retn ();
 }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 TAO_IFR_Client_Adapter_Impl::create_operation_list (
     CORBA::ORB_ptr orb,
     CORBA::OperationDef_ptr opDef,
-    CORBA::NVList_ptr &result
-    ACE_ENV_ARG_DECL
-  )
+    CORBA::NVList_ptr &result)
 {
   // Create an empty NVList.
-  orb->create_list (0,
-                    result
-                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  orb->create_list (0, result);
 
   // Get the parameters (if any) from the OperationDef, and for each
   // parameter add a corresponding entry to the result.
-  CORBA::ParDescriptionSeq_var params =
-    opDef->params (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::ParDescriptionSeq_var params = opDef->params ();
 
   CORBA::ULong paramCount = params->length ();
 
@@ -189,13 +141,11 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
           break;
         default:
           // Shouldn't happen
-          ACE_THROW (CORBA::INTERNAL());
+          throw ::CORBA::INTERNAL();
         }
 
       // Add an argument to the NVList.
-      result->add_value (params[i].name.in (),
-                         value,
-                         flags);
+      result->add_value (params[i].name.in (), value, flags);
    }
 }
 
@@ -205,12 +155,13 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
 // Initialization and registration of dynamic service object.
 
 int
-TAO_IFR_Client_Adapter_Impl::Initializer (void)
+TAO_IFR_Client_Adapter_Impl::Initializer ()
 {
   TAO_ORB_Core::ifr_client_adapter_name ("Concrete_IFR_Client_Adapter");
 
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_IFR_Client_Adapter_Impl);
 }
+
 
 ACE_STATIC_SVC_DEFINE (
     TAO_IFR_Client_Adapter_Impl,
@@ -221,4 +172,5 @@ ACE_STATIC_SVC_DEFINE (
     0
   )
 
-ACE_FACTORY_DEFINE (TAO_IFR_Client, TAO_IFR_Client_Adapter_Impl)
+ACE_FACTORY_DEFINE (TAO_IFR_CLIENT, TAO_IFR_Client_Adapter_Impl)
+TAO_END_VERSIONED_NAMESPACE_DECL

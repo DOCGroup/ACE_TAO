@@ -1,28 +1,38 @@
-//
-// $Id$
-//
 #include "Payload_Receiver.h"
 
-ACE_RCSID(Big_Request_Muxing, Payload_Receiver, "$Id$")
-
-Payload_Receiver::Payload_Receiver (void)
-  :  message_count_ (0)
-  ,  byte_count_ (0)
+Payload_Receiver::Payload_Receiver ()
+  : message_count_ (0)
+  , maybe_lost_count_ (0)
 {
 }
 
 void
-Payload_Receiver::more_data (const Test::Payload &payload
-                             ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Payload_Receiver::more_data (
+  const Test::Payload& payload,
+  CORBA::Boolean maybe_lost)
 {
-  this->message_count_++;
-  this->byte_count_ += payload.length ();
+  if (payload.length() > 0)
+    {
+      if (maybe_lost)
+        {
+          ++this->maybe_lost_count_;
+        }
+      else
+        {
+          ++this->message_count_;
+        }
+    }
 }
 
-CORBA::Long
-Payload_Receiver::get_message_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void
+Payload_Receiver::ping ()
 {
-  return this->message_count_;
+}
+
+int
+Payload_Receiver::count (bool maybe_lost) const
+{
+  return (maybe_lost) ?
+         maybe_lost_count_.value ()
+       : message_count_.value ();
 }

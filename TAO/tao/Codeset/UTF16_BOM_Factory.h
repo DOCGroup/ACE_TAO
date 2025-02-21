@@ -1,37 +1,33 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    UTF16_BOM_Factory.h
-//
-// = DESCRIPTION
-//    Loader for an instance of the UTF16_BOM_Translator.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UTF16_BOM_Factory.h
+ *
+ *  Loader for an instance of the UTF16_BOM_Translator.
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef UTF16_BOM_FACTORY_H
 #define UTF16_BOM_FACTORY_H
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
-#include "Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
 
-#include "UTF16_BOM_Translator.h"
-#include "codeset_export.h"
+#include "tao/Codeset/UTF16_BOM_Translator.h"
+#include "tao/Codeset/codeset_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Export TAO_UTF16_BOM_Factory
   : public  TAO_Codeset_Translator_Factory
 {
 public:
-  TAO_UTF16_BOM_Factory ();
+  TAO_UTF16_BOM_Factory () = default;
   virtual ~TAO_UTF16_BOM_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
@@ -56,12 +52,15 @@ private:
   int parse_one_arg (int argc, ACE_TCHAR *argv[]);
 
 private:
-  TAO_UTF16_BOM_Translator *translator_;
-  bool forceBE_;    // force big endian wchar, warray, & wstring
+  TAO_UTF16_BOM_Translator *translator_ {};
+  /// Force big endian wchar, warray, & wstring
+  bool forceBE_ {false};
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF16_BOM_Factory)
 ACE_FACTORY_DECLARE (TAO_Codeset, TAO_UTF16_BOM_Factory)
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #include /**/ "ace/post.h"
 #endif /* UTF16_BOM_FACTORY_H */

@@ -4,8 +4,6 @@
 /**
  *  @file ImplicitActivationStrategy.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -14,28 +12,30 @@
 #define TAO_ACTIVATION_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "Policy_Strategy.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace Portable_Server
   {
     class ImplicitActivationStrategy
-      : public Policy_Strategy
     {
     public:
-      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
+      ImplicitActivationStrategy () = default;
+      virtual ~ImplicitActivationStrategy () = default;
 
-      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
-
-      virtual bool allow_implicit_activation (void) const = 0;
+      virtual bool allow_implicit_activation () const = 0;
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ACTIVATION_STRATEGY_H */

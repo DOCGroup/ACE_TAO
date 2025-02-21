@@ -4,8 +4,6 @@
 /**
  *  @file BiDir_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
@@ -14,7 +12,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "bidirgiop_export.h"
+#include "tao/BiDir_GIOP/bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,29 +28,24 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-/// Messaging ORB initializer.
-class TAO_BiDirGIOP_Export TAO_BiDir_ORBInitializer :
-  public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/// BiDIR ORB initializer.
+class TAO_BiDir_ORBInitializer
+  : public virtual PortableInterceptor::ORBInitializer
+  , public virtual ::CORBA::LocalObject
 {
 public:
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
-
-  ///< Register BiDir policy factories.
-  void register_policy_factories (
-         PortableInterceptor::ORBInitInfo_ptr info
-         ACE_ENV_ARG_DECL);
-
+  /// Register BiDir policy factories.
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

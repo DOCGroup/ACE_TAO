@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Persistent_Entries.h
- *
- *  $Id$
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
@@ -17,11 +15,13 @@
 
 #include "ace/Hash_Map_With_Allocator_T.h"
 #include "orbsvcs/CosNamingC.h"
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Persistent_IntId
@@ -40,9 +40,8 @@
 class TAO_Naming_Serv_Export TAO_Persistent_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_Persistent_IntId (void);
+  TAO_Persistent_IntId ();
 
   /// Constructor.
   TAO_Persistent_IntId (char * obj_ref,
@@ -52,7 +51,7 @@ public:
   TAO_Persistent_IntId (const TAO_Persistent_IntId & rhs);
 
   /// Destructor.
-  ~TAO_Persistent_IntId (void);
+  ~TAO_Persistent_IntId ();
 
   /// Assignment operator.
   void operator= (const TAO_Persistent_IntId & rhs);
@@ -70,7 +69,7 @@ public:
  * @class TAO_Persistent_ExtId
  *
  * @brief Helper class for TAO_Persistent_Bindings_Map: unifies several
- * data items, so they can be stored together as a  <key>
+ * data items, so they can be stored together as a <key>
  * for a <value> in a hash table holding the state of a Persistent
  * Naming Context.
  *
@@ -83,10 +82,8 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
-  TAO_Persistent_ExtId (void);
+  TAO_Persistent_ExtId ();
 
   /// Constructor.
   TAO_Persistent_ExtId (const char *id,
@@ -96,7 +93,7 @@ public:
   TAO_Persistent_ExtId (const TAO_Persistent_ExtId & rhs);
 
   /// Destructor.
-  ~TAO_Persistent_ExtId (void);
+  ~TAO_Persistent_ExtId ();
 
   // = Assignment and comparison methods.
 
@@ -109,24 +106,24 @@ public:
   /// Inequality comparison operator.
   bool operator!= (const TAO_Persistent_ExtId &rhs) const;
 
-  /// <hash> function is required in order for this class to be usable by
+  /// hash() function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data members.
 
-  /// <id> portion of the name to be associated with some object
+  /// id portion of the name to be associated with some object
   /// reference in a Persistent Naming Context.
   const char * id_;
 
-  /// <kind> portion of the name to be associated with some object
+  /// kind portion of the name to be associated with some object
   /// reference in a Persistent Naming Context.
   const char * kind_;
 
   // Accessors.
 
-  const char * id (void);
-  const char * kind (void);
+  const char * id ();
+  const char * kind ();
 };
 
 /**
@@ -145,9 +142,8 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_Index_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_Persistent_Index_IntId (void);
+  TAO_Persistent_Index_IntId ();
 
   /// Constructor.
   TAO_Persistent_Index_IntId (ACE_UINT32 *counter,
@@ -158,7 +154,7 @@ public:
   TAO_Persistent_Index_IntId (const TAO_Persistent_Index_IntId & rhs);
 
   /// Destructor.
-  ~TAO_Persistent_Index_IntId (void);
+  ~TAO_Persistent_Index_IntId ();
 
   /// Assignment operator (does copy memory).
   void operator= (const TAO_Persistent_Index_IntId & rhs);
@@ -189,10 +185,8 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_Index_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
-  TAO_Persistent_Index_ExtId (void);
+  TAO_Persistent_Index_ExtId ();
 
   /// Constructor.
   TAO_Persistent_Index_ExtId (const char *poa_id);
@@ -201,7 +195,7 @@ public:
   TAO_Persistent_Index_ExtId (const TAO_Persistent_Index_ExtId & rhs);
 
   /// Destructor.
-  ~TAO_Persistent_Index_ExtId (void);
+  ~TAO_Persistent_Index_ExtId ();
 
   // = Assignment and comparison methods.
 
@@ -216,7 +210,7 @@ public:
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data member.
 
@@ -224,6 +218,8 @@ public:
   /// Persistent Naming Context in the Persistent Context Index.
   const char * poa_id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PERSISTENT_ENTRIES_H */

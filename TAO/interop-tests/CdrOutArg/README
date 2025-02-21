@@ -1,0 +1,16 @@
+
+This test validates that TAO does not add unneeded CDR alignment bytes as pad when the
+only arguments to an operation are out args. The interceptors are necessary to add some
+service conotext data that would otherwise require padding. Prior to the fix, and Orbix
+server would throw a MARSHAL exception even though the extra bytes are counted in the
+message length.
+
+To build, use MPC to compile a client in the tao directory, then use Orbix defined tools
+to build the server in the orbix directory.
+
+Tu run, issue the following commands, a successful test will have no exceptions and will
+terminate the server upon completion.
+
+  orbix/server -o test.ior
+
+  tao/client -k file://test.ior

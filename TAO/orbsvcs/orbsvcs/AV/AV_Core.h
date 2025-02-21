@@ -4,8 +4,6 @@
 /**
  *  @file   AV_Core.h
  *
- *  $Id$
- *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================
@@ -14,13 +12,20 @@
 #define TAO_AV_CORE_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/AVStreamsC.h"
 #include "orbsvcs/AV/AV_export.h"
+#include "orbsvcs/AVStreamsC.h"
+
+#include "tao/PortableServer/PortableServer.h"
 
 #include "ace/Singleton.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/Null_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Base_StreamEndPoint;
 class TAO_AV_Connector_Registry;
@@ -32,7 +37,6 @@ class TAO_AV_Transport_Item;
 class TAO_AV_Transport_Factory;
 class TAO_AV_Flow_Protocol_Item;
 class TAO_AV_Flow_Protocol_Factory;
-class ACE_Reactor;
 
 typedef ACE_Unbounded_Set <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSet;
 typedef ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSetItor;
@@ -83,16 +87,15 @@ public:
   };
 
   /// Default constructor.
-  TAO_AV_Core (void);
+  TAO_AV_Core ();
 
   /// Destructor.
-  ~TAO_AV_Core (void);
+  ~TAO_AV_Core ();
 
   int init (CORBA::ORB_ptr orb,
-            PortableServer::POA_ptr poa
-            ACE_ENV_ARG_DECL);
-  int run (void);
-  int stop_run (void);
+            PortableServer::POA_ptr poa);
+  int run ();
+  int stop_run ();
   int init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                           TAO_AV_FlowSpecSet &flow_spec_set,
                           EndPoint direction,
@@ -101,33 +104,33 @@ public:
                           TAO_AV_FlowSpecSet &forward_flow_spec_set,
                           TAO_AV_FlowSpecSet &reverse_flow_spec_set,
                           EndPoint direction);
-  int init_transport_factories (void);
-  int init_flow_protocol_factories (void);
+  int init_transport_factories ();
+  int init_flow_protocol_factories ();
 
-  int load_default_transport_factories (void);
-  int load_default_flow_protocol_factories (void);
+  int load_default_transport_factories ();
+  int load_default_flow_protocol_factories ();
 
   /// = Get the acceptor registry
   TAO_AV_Acceptor *get_acceptor (const char *flowname);
   TAO_AV_Connector *get_connector (const char *flowname);
   int remove_acceptor (const char *flowname);
   int remove_connector (const char *flowname);
-  TAO_AV_Connector_Registry *connector_registry (void);
+  TAO_AV_Connector_Registry *connector_registry ();
   TAO_FlowSpec_Entry *get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
                                            const char *flowname);
-  TAO_AV_Acceptor_Registry  *acceptor_registry  (void);
+  TAO_AV_Acceptor_Registry  *acceptor_registry  ();
 
   // = Get the protocol factories
   /// = Set/get the <ACE_Reactor>.
   TAO_AV_Flow_Protocol_Factory *get_flow_protocol_factory(const char *flow_protocol);
   TAO_AV_Transport_Factory *get_transport_factory(const char *transport_protocol);
-  TAO_AV_Flow_ProtocolFactorySet *flow_protocol_factories (void);
-  TAO_AV_TransportFactorySet *transport_factories (void);
+  TAO_AV_Flow_ProtocolFactorySet *flow_protocol_factories ();
+  TAO_AV_TransportFactorySet *transport_factories ();
   void reactor (ACE_Reactor *r);
-  ACE_Reactor *reactor (void);
-  CORBA::ORB_ptr orb (void);
+  ACE_Reactor *reactor ();
+  CORBA::ORB_ptr orb ();
   void orb (CORBA::ORB_ptr orb_);
-  PortableServer::POA_ptr poa (void);
+  PortableServer::POA_ptr poa ();
   void poa (PortableServer::POA_ptr poa_);
 
   static int deactivate_servant (PortableServer::Servant servant);
@@ -155,19 +158,15 @@ protected:
   CORBA::Boolean stop_run_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
+
 typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
 
-#if defined (__BORLANDC__)
-# if !defined (TAO_AV_BUILD_DLL)
-#   pragma option push -Jgx
-# endif
-#endif
-TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
-#if defined (__BORLANDC__)
-# if !defined(TAO_AV_BUILD_DLL)
-#   pragma option pop
-# endif
-#endif
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_CORE_H */

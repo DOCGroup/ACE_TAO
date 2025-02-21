@@ -1,36 +1,26 @@
-#include "Environment.h"
-#include "ORB_Core.h"
-#include "SystemException.h"
-#include "default_environment.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
+#include "tao/default_environment.h"
 
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Environment.i"
+# include "tao/Environment.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Environment,
-           "$Id$")
-
-
-CORBA::Environment::Environment (void)
-  : exception_ (0)
-  , previous_ (0)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Environment::Environment (const CORBA::Environment& rhs)
-  : exception_ (0)
-  , previous_ (0)
+  : exception_ (nullptr)
+  , previous_ (nullptr)
 {
   if (rhs.exception_)
     this->exception_ = rhs.exception_->_tao_duplicate ();
 }
 
 CORBA::Environment::Environment (TAO_ORB_Core* orb_core)
-  : exception_ (0)
+  : exception_ (nullptr)
   , previous_ (orb_core->default_environment ())
 {
   orb_core->default_environment (this);
@@ -53,14 +43,14 @@ CORBA::Environment::operator= (const CORBA::Environment& rhs)
   return *this;
 }
 
-CORBA::Environment::~Environment (void)
+CORBA::Environment::~Environment ()
 {
   this->clear ();
 
   // If previous is 0 then this is the first Environment, allocated
-  // with the ORB, it shouldn't try to pop because the ORB is beign
+  // with the ORB, it shouldn't try to pop because the ORB is being
   // destroyed also.
-  if (this->previous_ != 0)
+  if (this->previous_ != nullptr)
     TAO_ORB_Core_instance ()->default_environment (this->previous_);
 }
 
@@ -88,24 +78,20 @@ CORBA::Environment::exception (CORBA::Exception *ex)
 
   this->exception_ = ex;
 
-#if defined (TAO_HAS_EXCEPTIONS)
-  if (this->exception_ != 0)
+  if (this->exception_ != nullptr)
     this->exception_->_raise ();
-#endif /* TAO_HAS_EXCEPTIONS */
 }
 
 void
-CORBA::Environment::clear (void)
+CORBA::Environment::clear ()
 {
   delete this->exception_;
-  this->exception_ = 0;
+  this->exception_ = nullptr;
 }
 
 CORBA::Environment&
 CORBA::Environment::default_environment ()
 {
-#if defined (TAO_HAS_EXCEPTIONS)
-  //
   // If we are using native C++ exceptions the user is *not* supposed
   // to clear the environment every time she calls into TAO.  In fact
   // the user is not supposed to use the environment at all!
@@ -118,17 +104,15 @@ CORBA::Environment::default_environment ()
   // This is not an issue when using the alternative C++ mapping (with
   // the Environment argument) because then the user is supposed to
   // clear the environment before calling into the ORB.
-  //
   TAO_ORB_Core_instance ()->default_environment ()->clear ();
-#endif /* TAO_HAS_EXCEPTIONS */
 
-  return TAO_default_environment ();;
+  return TAO_default_environment ();
 }
 
 // Convenience -- say if the exception is a system exception or not.
 
 int
-CORBA::Environment::exception_type (void) const
+CORBA::Environment::exception_type () const
 {
   // @@ Carlos, is this stuff that's properly "transformed" for EBCDIC
   //    platforms?!
@@ -166,10 +150,10 @@ CORBA::Environment::exception_type (void) const
 }
 
 const char*
-CORBA::Environment::exception_id (void) const
+CORBA::Environment::exception_id () const
 {
-  if (this->exception_ == 0)
-    return 0;
+  if (this->exception_ == nullptr)
+    return nullptr;
 
   return this->exception_->_rep_id ();
 }
@@ -185,36 +169,26 @@ CORBA::Environment::print_exception (const char *info,
     {
       const char *id = this->exception_->_rep_id ();
 
-      ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("TAO: (%P|%t) EXCEPTION, %s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (info)));
+      TAOLIB_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO: (%P|%t) EXCEPTION, %C\n"),
+                  info));
 
       CORBA::SystemException *x2 =
         CORBA::SystemException::_downcast (this->exception_);
 
-      if (x2 != 0)
+      if (x2 != nullptr)
         x2->_tao_print_system_exception ();
       else
         // @@ we can use the exception's typecode to dump all the data
         // held within it ...
 
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("TAO: (%P|%t) user exception, ID '%s'\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (id)));
+        TAOLIB_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO: (%P|%t) user exception, ID '%C'\n"),
+                    id));
     }
   else
-    ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("TAO: (%P|%t) no exception, %s\n"), ACE_TEXT_CHAR_TO_TCHAR (info)));
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO: (%P|%t) no exception, %C\n"), info));
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class TAO_Pseudo_Var_T<CORBA::Environment>;
-  template class TAO_Pseudo_Out_T<CORBA::Environment, CORBA::Environment_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO_Pseudo_Var_T<CORBA::Environment>
-# pragma instantiate TAO_Pseudo_Out_T<CORBA::Environment, CORBA::Environment_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

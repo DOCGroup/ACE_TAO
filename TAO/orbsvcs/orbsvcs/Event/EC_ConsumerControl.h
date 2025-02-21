@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_ConsumerControl.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -18,11 +17,15 @@
 #include /**/ "ace/pre.h"
 #include "ace/CORBA_macros.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/orbconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
@@ -45,15 +48,15 @@ class TAO_RTEvent_Serv_Export TAO_EC_ConsumerControl
 {
 public:
   /// Constructor.
-  TAO_EC_ConsumerControl (void);
+  TAO_EC_ConsumerControl ();
 
   /// Destructor.
-  virtual ~TAO_EC_ConsumerControl (void);
+  virtual ~TAO_EC_ConsumerControl ();
 
   /// Activate any internal threads or timers used to poll the state of
   /// the consumers
-  virtual int activate (void);
-  virtual int shutdown (void);
+  virtual int activate ();
+  virtual int shutdown ();
 
   /**
    * When pushing an event to the consumer a CORBA::OBJECT_NOT_EXIST
@@ -61,15 +64,15 @@ public:
    * has been destroyed.  The strategy has to (at the very least),
    * reclaim all the resources attached to that object.
    */
-  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy);
 
   /// Some system exception was raised while trying to contact the
   /// consumer
   virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

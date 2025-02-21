@@ -4,8 +4,6 @@
 /**
  *  @file   Codeset_Descriptor.h
  *
- *  $Id$
- *
  *  @author Phil Mesnier
  */
 //=============================================================================
@@ -15,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "codeset_export.h"
+#include "tao/Codeset/codeset_export.h"
 #include "ace/CDR_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,6 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Codeset_Descriptor_Base.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Translator_Factory;
 
@@ -42,12 +42,12 @@ public:
 
   void ncs (ACE_CDR::ULong ncs);
   void ncs (const ACE_TCHAR *name);
-  ACE_CDR::ULong ncs (void) const;
-  int max_bytes (void) const;
-  int num_translators (void) const;
+  ACE_CDR::ULong ncs () const;
+  int max_bytes () const;
+  int num_translators () const;
 
   void add_translator (const ACE_TCHAR *name);
-  Translator_Node *translators (void);
+  Translator_Node *translators ();
 
 private:
   ACE_CDR::ULong ncs_;
@@ -55,6 +55,8 @@ private:
   int num_translators_;
   Translator_Node *trans_base_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

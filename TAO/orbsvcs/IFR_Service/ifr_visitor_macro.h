@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef TAO_IFR_VISITOR_MACRO_H
 #define TAO_IFR_VISITOR_MACRO_H
 
@@ -18,7 +16,6 @@
                                 TAO_GUARD_FAILURE, \
                                 0), \
                               CORBA::COMPLETED_NO)); \
-  ACE_TRY_CHECK
 
 #include /**/ "ace/post.h"
 

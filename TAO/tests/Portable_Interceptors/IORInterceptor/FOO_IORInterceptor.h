@@ -4,8 +4,6 @@
 /**
  * @file FOO_IORInterceptor.h
  *
- * $Id$
- *
  * Implementation header for the "FOO" IOR test interceptor.
  *
  * @author Ossama Othman <ossama@uci.edu>
@@ -42,11 +40,10 @@
  * properly.
  */
 class FOO_IORInterceptor
-  : public virtual PortableInterceptor::IORInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+  : public virtual PortableInterceptor::IORInterceptor_3_0,
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   FOO_IORInterceptor (IOP::Codec_ptr codec);
 
@@ -59,48 +56,32 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::IORInfo_ptr info);
 
   virtual void components_established (
-      PortableInterceptor::IORInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::IORInfo_ptr info);
 
   virtual void adapter_manager_state_changed (
-      PortableInterceptor::AdapterManagerId id,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+      const char * id,
+      PortableInterceptor::AdapterState state);
 
   virtual void adapter_state_changed (
       const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-      PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+      PortableInterceptor::AdapterState state);
 
   //@}
 
 private:
-
   /// The CDR encapsulation coder/decoder used to encapsulate data
   /// into a CDR encapsulation.
   IOP::Codec_var codec_;
-
 };
 
 #if defined(_MSC_VER)

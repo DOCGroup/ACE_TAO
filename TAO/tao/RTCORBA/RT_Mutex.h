@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   RT_Mutex.h
- *
- *  $Id$
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
@@ -22,10 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#define TAO_RTCORBA_SAFE_INCLUDE
-#include "RTCORBAC.h"
-#undef TAO_RTCORBA_SAFE_INCLUDE
-
+#include "tao/RTCORBA/RTCORBA_includeC.h"
 #include "tao/LocalObject.h"
 
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
@@ -37,6 +33,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_RT_Mutex
  *
@@ -45,27 +43,18 @@
  * This class just serves as a base class for any of the TAO
  * RT Mutex implementations.  Instances of these classes should
  * be created using the RTCORBA::create_mutex() method.
- *
  */
 
 class TAO_RTCORBA_Export TAO_RT_Mutex
   : public RTCORBA::Mutex,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO_RT_Mutex (void);
-
-  /// Destructor.
-  virtual ~TAO_RT_Mutex (void);
-
   /// Acquire the lock.
-  virtual void lock (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void lock ();
 
   /// Release the lock.
-  virtual void unlock (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void unlock ();
 
   /**
    * Acquire the lock, but only wait up to @a max_wait time.  Note
@@ -73,12 +62,13 @@ public:
    * if you're interested in writing maximally portable programs avoid
    * using this operation in your program designs.
    */
-  virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait);
 
   /// Returns the name of the mutex.
-  virtual const char *name (void) const;
+  virtual const char *name () const;
+
+  /// Destructor.
+  virtual ~TAO_RT_Mutex ();
 
 protected:
   /// Synchronization lock.
@@ -90,7 +80,6 @@ protected:
  * @class TAO_Named_RT_Mutex
  *
  * @brief Extension to TAO_RT_Mutex to support named mutexes.
- *
  */
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {
@@ -99,14 +88,15 @@ public:
   TAO_Named_RT_Mutex (const char *name);
 
   /// Returns the name of the mutex.
-  virtual const char *name (void) const;
+  virtual const char *name () const;
 
 protected:
-
   /// My name.
   ACE_CString name_;
 };
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,0 +1,13 @@
+#ifndef __A_IDL__
+#define __A_IDL__
+module wtk {
+
+interface test {
+// const string SDO_SERVICE_NAME     = "IDL:FMK_ItJobMgr";
+ void mytest();
+
+
+};
+
+};
+#endif

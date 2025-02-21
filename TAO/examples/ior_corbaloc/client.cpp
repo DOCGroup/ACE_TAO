@@ -1,54 +1,41 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/ior_corbaloc/
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//     This implements a simple CORBA client for the
-//     corbaloc: style IOR parser
-//
-// = AUTHOR
-//     Priyanka Gontla <pgontla@ece.uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *   This implements a simple CORBA client for the
+ *   corbaloc: style IOR parser
+ *
+ *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #include "ior_corbaloc_client_i.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
-
       IOR_corbaloc_Client_i client;
 
       int init_result;
-      init_result = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      init_result = client.init (argc, argv);
 
         if (init_result == 0)
           {
-            client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            client.run ();
           }
         return 0;
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException&)
     {
       //
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

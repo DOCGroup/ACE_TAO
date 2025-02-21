@@ -1,12 +1,5 @@
 // file      : SpaceCraft.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
-#include <iostream>
-#include <sstream>
-
-#include "ace/OS.h"
-
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNotificationC.h"
@@ -16,12 +9,14 @@
 
 // For in-process Notification Service.
 //
-#include "ace/Dynamic_Service.h"
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Notify/CosNotify_Initializer.h" // NS static link helper.
 
 
 #include "Gate/Gate.h"
+
+#include <iostream>
+#include <sstream>
 
 using std::cerr;
 using std::endl;
@@ -33,9 +28,9 @@ using namespace CosNotification;
 using namespace CosNotifyChannelAdmin;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     ORB_var orb (ORB_init (argc, argv));
 
@@ -50,9 +45,7 @@ main (int argc, char* argv[])
     // Activate the root POA.
     //
     CORBA::Object_var obj (
-      orb->resolve_initial_references ("RootPOA"
-                                       ACE_ENV_ARG_PARAMETER));
-    ACE_TRY_CHECK;
+      orb->resolve_initial_references ("RootPOA"));
 
     PortableServer::POA_var root_poa (PortableServer::POA::_narrow (obj.in ()));
 
@@ -63,16 +56,7 @@ main (int argc, char* argv[])
 
     // Initialize Notification Service.
     //
-    TAO_Notify_Service* ns =
-      ACE_Dynamic_Service<TAO_Notify_Service>::instance (
-        TAO_NOTIFICATION_SERVICE_NAME);
-
-    if (ns == 0)
-    {
-      ns =
-        ACE_Dynamic_Service<TAO_Notify_Service>::instance (
-          TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
-    }
+    TAO_Notify_Service* ns = TAO_Notify_Service::load_default ();
 
     if (ns == 0)
     {
@@ -82,14 +66,11 @@ main (int argc, char* argv[])
     }
 
 
-    ns->init_service (orb.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ns->init_service (orb.in ());
 
     // Create the channel factory.
     //
-    EventChannelFactory_var factory (ns->create (root_poa.in ()
-                                                 ACE_ENV_ARG_PARAMETER));
-    ACE_TRY_CHECK;
+    EventChannelFactory_var factory (ns->create (root_poa.in ()));
 
     if (is_nil (factory.in ()))
     {
@@ -132,9 +113,7 @@ main (int argc, char* argv[])
     // Find which space craft we are.
     //
     ACE_INET_Addr space_craft_addr;
-    char const* space_craft_name = 0;
-
-    space_craft_name = argv[1];
+    const ACE_TCHAR *space_craft_name = argv[1];
 
     // Do a quick mapping to mcast addresses.
     //
@@ -179,19 +158,16 @@ main (int argc, char* argv[])
 
     return 0;
   }
-  ACE_CATCH (CORBA::UserException, ue)
+  catch (const CORBA::UserException& ue)
   {
-    ACE_PRINT_EXCEPTION (ue,
-                         "User exception: ");
+    ue._tao_print_exception ("User exception: ");
     return 1;
   }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
   {
-    ACE_PRINT_EXCEPTION (se,
-                         "System exception: ");
+    se._tao_print_exception ("System exception: ");
     return 1;
   }
-  ACE_ENDTRY;
 
   return 1;
 }

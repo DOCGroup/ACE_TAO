@@ -4,8 +4,6 @@
 /**
  *  @file   SSLIOP_Transport.h
  *
- *  $Id$
- *
  *  SSLIOP Transport specific processing.
  *
  *  @author Carlos O'Ryan <coryan@ece.uci.edu>
@@ -19,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,16 +33,17 @@
 
 #include "ace/Svc_Handler.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decls.
 class TAO_ORB_Core;
-class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
 
 namespace TAO
 {
   namespace SSLIOP
   {
-    typedef ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
+    typedef ACE_Svc_Handler<ACE_SSL_SOCK_Stream, ACE_NULL_SYNCH> SVC_HANDLER;
 
     class Handler_Base;
     class Connection_Handler;
@@ -59,22 +58,19 @@ namespace TAO
     class TAO_SSLIOP_Export Transport : public TAO_Transport
     {
     public:
-
       /// Constructor.
       Transport (Connection_Handler *handler,
-                 TAO_ORB_Core *orb_core,
-                 CORBA::Boolean flag);
+                 TAO_ORB_Core *orb_core);
 
       /// Default destructor.
-      ~Transport (void);
+      ~Transport ();
 
       /// Overload of the handle_input () in the TAO_Transport
       /// class. This is required to set up the state guard. The
       /// thread-per-connection and wait on RW strategies call this
       /// handle_input ().
       virtual int handle_input (TAO_Resume_Handle &rh,
-                                ACE_Time_Value *max_wait_time = 0,
-                                int block = 0);
+                                ACE_Time_Value *max_wait_time = 0);
 
     protected:
       /** @name Overridden Template Methods
@@ -83,10 +79,8 @@ namespace TAO
        * TAO_Transport.
        */
       //@{
-      virtual ACE_Event_Handler * event_handler_i (void);
-      virtual TAO_Connection_Handler *connection_handler_i (void);
-
-      virtual TAO_Pluggable_Messaging *messaging_object (void);
+      virtual ACE_Event_Handler * event_handler_i ();
+      virtual TAO_Connection_Handler *connection_handler_i ();
 
       /// Write the complete Message_Block chain to the connection.
       virtual ssize_t send (iovec *iov, int iovcnt,
@@ -104,29 +98,21 @@ namespace TAO
       virtual int send_request (TAO_Stub *stub,
                                 TAO_ORB_Core *orb_core,
                                 TAO_OutputCDR &stream,
-                                int message_semantics,
+                                TAO_Message_Semantics message_semantics,
                                 ACE_Time_Value *max_wait_time);
 
       virtual int send_message (TAO_OutputCDR &stream,
                                 TAO_Stub *stub = 0,
-                                int message_semantics =
-                                  TAO_Transport::TAO_TWOWAY_REQUEST,
+                                TAO_ServerRequest *request = 0,
+                                TAO_Message_Semantics message_semantics =
+                                  TAO_Message_Semantics (),
                                 ACE_Time_Value *max_time_wait = 0);
 
-      virtual int generate_request_header (TAO_Operation_Details &opdetails,
-                                           TAO_Target_Specification &spec,
-                                           TAO_OutputCDR &msg);
-
-      /// Initialising the messaging object
-      virtual int messaging_init (CORBA::Octet major,
-                                  CORBA::Octet minor);
-
-      /// Open teh service context list and process it.
+      /// Open the service context list and process it.
       virtual int tear_listen_point_list (TAO_InputCDR &cdr);
       //@}
 
     private:
-
       /// Set the Bidirectional context info in the service context
       /// list.
       void set_bidir_context_info (TAO_Operation_Details &opdetails);
@@ -138,17 +124,14 @@ namespace TAO
                             TAO_Acceptor *acceptor);
 
     private:
-
       /// The connection service handler used for accessing lower layer
       /// communication protocols.
       Connection_Handler *connection_handler_;
-
-      /// Our messaging object.
-      TAO_Pluggable_Messaging *messaging_object_;
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_SSLIOP_TRANSPORT_H */

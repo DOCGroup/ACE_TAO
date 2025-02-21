@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : taolib_with_idl, core_anytypecode {
+  after   += PortableServer
+  libs    += TAO_PortableServer
+}

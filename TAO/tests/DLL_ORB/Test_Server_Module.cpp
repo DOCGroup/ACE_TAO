@@ -1,24 +1,19 @@
 // -*- C++ -*-
-
 #include "Test_Server_Module.h"
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/StringSeqC.h"
 
 #include "ace/Service_Config.h"
-
-ACE_RCSID (DLL_ORB,
-           Test_Server_Module,
-           "$Id$")
-
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Get_Opt.h"
 
 
-const char *ior_file = "test.ior";
+const ACE_TCHAR *ior_file = ACE_TEXT("test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -36,6 +31,10 @@ parse_args (int argc, char *argv[])
       }
 
   return 0;
+}
+
+Test_Server_Module::~Test_Server_Module ()
+{
 }
 
 int
@@ -66,8 +65,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
   // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO server-side ORB initialization code.
   // -----------------------------------------------------------------
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Add one to the new argc since "dummy" is being added to the
       // argv vector.
@@ -85,21 +83,18 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       for (int i = new_argc - argc, j = 0;
            j < argc;
            ++i, ++j)
-        new_argv[i] = CORBA::string_dup (argv[j]);
+        new_argv[i] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[j]));
 
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.get_buffer (),
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    "SERVER");
 
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -107,27 +102,26 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                           1);
 
       this->poa_ =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
-      this->poa_manager_ = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_manager_ = this->poa_->the_POAManager ();
 
-      this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_manager_->activate ();
 
-      if (::parse_args (new_argc, new_argv.get_buffer ()) != 0)
+      ACE_Argv_Type_Converter converter (new_argc, new_argv.get_buffer ());
+      if (::parse_args (new_argc, converter.get_TCHAR_argv ()) != 0)
         return -1;
 
-      CORBA::Object_var obj = this->servant_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var id =
+        this->poa_->activate_object (&servant_);
+
+      CORBA::Object_var obj = this->poa_->id_to_reference (id.in ());
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Servant:\n<%s>\n",
+                  "Servant:\n<%C>\n",
                   ior.in ()));
 
       // Write IOR to a file.
@@ -143,14 +137,11 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 
       this->servant_.orb (this->orb_.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Server_Module::init"));
+      ex._tao_print_exception (ACE_TEXT ("Test_Server_Module::init"));
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
 #if defined (ACE_HAS_THREADS)
 
@@ -166,26 +157,10 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Test_Server_Module::fini (void)
+Test_Server_Module::fini ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Make sure the ORB is destroyed.
-      if (!CORBA::is_nil (this->orb_.in ()))
-        {
-          this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Server_Module::fini"));
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_DEBUG ((LM_INFO,
+              "Server is being finalized.\n"));
 
   // ------------------------------------------------------------
   // Pre-Test_Server_Module termination steps.
@@ -202,23 +177,35 @@ Test_Server_Module::fini (void)
 }
 
 int
-Test_Server_Module::svc (void)
+Test_Server_Module::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Run the ORB event loop in its own thread.
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
+
+      ACE_DEBUG ((LM_INFO,
+                  "Server is being destroyed.\n"));
+
+      // Make sure the ORB is destroyed here - before the thread
+      // exits, because it may be holding global resources, owned by
+      // the Object Manager (thru its core, which is in turn owned by
+      // the ORB table; which is owned by the Object Manager).
+      // Otherwise the Object Manager will have clobbered them by the
+      // time it gets to destroy the ORB Table, which calls our
+      // fini(). Had we destroyed the ORB in our fini(), its core
+      // fininalization would have required access to those already
+      // deleted resources.
+      if (!CORBA::is_nil (this->orb_.in ()))
+        {
+          this->orb_->destroy ();
+        }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Server_Module::svc"));
+      ex._tao_print_exception (ACE_TEXT ("Test_Server_Module::svc"));
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

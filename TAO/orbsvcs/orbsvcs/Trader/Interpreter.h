@@ -1,23 +1,22 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Interpreter.h
  *
- *  $Id$
- *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_TCL_INTERPRETER_H
 #define TAO_TCL_INTERPRETER_H
 #include /**/ "ace/pre.h"
 
-#include "Constraint_Nodes.h"
-#include "Constraint_Visitors.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/Trader/trading_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
@@ -32,12 +31,11 @@ class TAO_Constraint_Validator;
 class TAO_Trading_Serv_Export TAO_Interpreter
 {
 protected:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_Interpreter (void);
+  TAO_Interpreter ();
 
   /// Destructor.
-  ~TAO_Interpreter (void);
+  ~TAO_Interpreter ();
 
   /// Using the Yacc generated parser, construct an expression tree
   /// representing <constraints> from the tokens returned by it.
@@ -53,11 +51,10 @@ private:
   static TAO_SYNCH_MUTEX parserMutex__;
 };
 
-
 // Functions we need for parsing.
-extern int yyparse (void);
+extern int yyparse ();
 extern void yyrestart (FILE*);
-extern int yylex (void);
+extern int yylex ();
 
 // Have yylex read from the constraint string, not from stdin.
 #undef YY_INPUT
@@ -84,7 +81,6 @@ public:
   static int copy_into (char* buf, int max_size);
 
 private:
-
   /// Pointers to keep track of the input string.
   static char* string_;
   static char* current_;
@@ -92,6 +88,7 @@ private:
 };
 
 // The union used by lex and yacc to build the Abstract Syntax Tree.
+#define YYSTYPE_IS_DECLARED
 typedef union
 {
   TAO_Constraint* constraint_;
@@ -99,6 +96,8 @@ typedef union
 
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TCL_INTERPRETER_H */

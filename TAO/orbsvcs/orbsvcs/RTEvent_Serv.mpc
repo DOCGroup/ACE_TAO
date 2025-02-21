@@ -1,9 +1,8 @@
 // -*- MPC -*-
-// $Id$
-
-project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
+project(RTEvent_Serv) : orbsvcslib, orbsvcs_output, install, rtevent_skel, svc_utils, messaging {
+  avoids      += ace_for_tao  // Requires ACE_crc32
   sharedname   = TAO_RTEvent_Serv
-  dynamicflags = TAO_RTEVENT_SERV_BUILD_DLL
+  dynamicflags += TAO_RTEVENT_SERV_BUILD_DLL
   tagchecks   += RTEvent
 
   IDL_Files {
@@ -11,7 +10,6 @@ project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
 
   Source_Files {
     Event/ECG_Adapters.cpp
-    Event/ECG_Address_Server_Base.cpp
     Event/ECG_CDR_Message_Receiver.cpp
     Event/ECG_CDR_Message_Sender.cpp
     Event/ECG_Complex_Address_Server.cpp
@@ -76,6 +74,16 @@ project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
     Event/EC_Trivial_Supplier_Filter.cpp
     Event/EC_Type_Filter.cpp
     Event/EC_UDP_Admin.cpp
+    Event/EC_TPC_Dispatching.cpp
+    Event/EC_TPC_Dispatching_Task.cpp
+    Event/EC_TPC_Factory.cpp
+    Event/EC_TPC_ProxyConsumer.cpp
+    Event/EC_TPC_ProxySupplier.cpp
+    Event/EC_Thread_Flags.cpp
+  }
+
+  Header_Files {
+    Event
   }
 
   Template_Files {
@@ -86,5 +94,9 @@ project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
 
   Resource_Files{
     RTEvent_Serv.rc
+  }
+
+  Pkgconfig_Files {
+    TAO_RTEvent_Serv.pc.in
   }
 }

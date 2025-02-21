@@ -1,16 +1,14 @@
-// $Id$
-
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const char *ior = "server.ior";
+const ACE_TCHAR *ior = ACE_TEXT("server.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -29,18 +27,17 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -49,22 +46,20 @@ main (int argc, char *argv[])
       test_var holder;
       for(int i = 0; !done; i++)
         {
-          char number[64];
-          ACE_CString iorfile(ior);
+          ACE_TCHAR number[64];
+          ACE_TString iorfile(ior);
 
-          ACE_OS::sprintf (number, ".%d", i);
+          ACE_OS::sprintf (number, ACE_TEXT(".%d"), i);
           iorfile += number;
 
           if (ACE_OS::access(iorfile.c_str (), R_OK) == 0)
             {
-              iorfile = "file://" + iorfile;
+              iorfile = ACE_TEXT("file://") + iorfile;
               CORBA::Object_var tmp =
-                orb->string_to_object(iorfile.c_str () ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                orb->string_to_object(iorfile.c_str ());
 
               test_var test =
-                test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                test::_narrow(tmp.in ());
 
               if (CORBA::is_nil (test.in ()))
                 {
@@ -74,15 +69,13 @@ main (int argc, char *argv[])
                                     1);
                 }
 
-              test->send_stuff ("Some stuff to send" ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK
+              test->send_stuff ("Some stuff to send");
 
               // Test for LFU strategy.  The transport to any other
               // server should be removed before the first one.
               if (i == 0)
                 {
-                  test->send_stuff ("Some stuff to send" ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK
+                  test->send_stuff ("Some stuff to send");
 
                   holder = test;
                 }
@@ -92,8 +85,7 @@ main (int argc, char *argv[])
                                 // removed.
                   if (!CORBA::is_nil(holder.in ()))
                     {
-                      holder->send_stuff ("Some stuff to send" ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK
+                      holder->send_stuff ("Some stuff to send");
                     }
                 }
             }
@@ -103,19 +95,15 @@ main (int argc, char *argv[])
             }
         }
 
-      orb->shutdown (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->shutdown (true);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

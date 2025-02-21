@@ -1,61 +1,36 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the server skeleton
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_ss.cpp
+ *
+ *  Visitor generating code for Operation in the server skeleton
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-
-ACE_RCSID (be_visitor_operation,
-           operation_ss,
-           "$Id$")
-
-// ************************************************************
-// Operation visitor for server skeletons
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_ss::~be_visitor_operation_ss (void)
+be_visitor_operation_ss::~be_visitor_operation_ss ()
 {
 }
-
-// // Processing to be done after every element in the scope is processed.
-// int
-// be_visitor_operation_ss::post_process (be_decl *bd)
-// {
-//   // All we do here is to insert a comma and a newline.
-//   TAO_OutStream *os = this->ctx_->stream ();
-
-//   if (!this->last_node (bd))
-//     {
-//       *os << ",\n";
-//     }
-
-//   return 0;
-// }
 
 int
 be_visitor_operation_ss::visit_operation (be_operation * node)
 {
+  /// No server-side code generation for these implied IDL nodes.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   this->ctx_->node (node);
 
@@ -68,14 +43,14 @@ be_visitor_operation_ss::visit_operation (be_operation * node)
     }
 
   // Retrieve the operation return type.
-  bt = be_type::narrow_from_decl (node->return_type ());
+  bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ss::"
-                         "visit_operation - "
-                         "Bad return type\n"),
+                         ACE_TEXT ("be_visitor_operation_ss::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("Bad return type\n")),
                         -1);
     }
 
@@ -90,7 +65,7 @@ be_visitor_operation_ss::visit_argument (be_argument *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the type for this argument.
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -106,13 +81,13 @@ be_visitor_operation_ss::visit_argument (be_argument *node)
   switch (node->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "CORBA::ARG_IN, ";
+      *os << "::CORBA::ARG_IN, ";
       break;
     case AST_Argument::dir_INOUT:
-      *os << "CORBA::ARG_INOUT, ";
+      *os << "::CORBA::ARG_INOUT, ";
       break;
     case AST_Argument::dir_OUT:
-      *os << "CORBA::ARG_OUT, ";
+      *os << "::CORBA::ARG_OUT, ";
       break;
     }
   *os << "0}";
@@ -147,25 +122,26 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   // We need the interface node in which this operation was
   // defined.  However, if this operation node was an attribute node
-  // in disguise, we get this information from the context
-  be_interface * const intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+  // in disguise, we get this information from the context.
+  UTL_Scope *s = this->ctx_->attribute ()
+                 ? this->ctx_->attribute ()->defined_in ()
+                 : node->defined_in ();
 
-  if (!intf)
+  be_interface *intf = dynamic_cast<be_interface*> (s);
+
+  if (intf == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ss::"
-                         "visit_operation - "
-                         "bad interface scope\n"),
+                         ACE_TEXT ("be_visitor_operation_ss::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("bad interface scope\n")),
                         -1);
     }
 
-  *os << be_nl;
-
   ACE_CString upcall_command_name =
-    ACE_CString (node->local_name ()->get_string()) + "_"  +
-    ACE_CString (intf->local_name());
+    this->ctx_->port_prefix ()
+    + ACE_CString (node->local_name ()->get_string ()) + "_"
+    + ACE_CString (intf->local_name ());
 
   // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
@@ -188,8 +164,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                                 intf->full_skel_name (),
                                 upcall_command_name.c_str ());
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void " << intf->full_skel_name () << "::";
 
@@ -207,18 +182,16 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
         }
     }
 
-  *os << node->local_name ()
-      << "_skel (" << be_idt << be_idt_nl
+  *os << this->ctx_->port_prefix ().c_str () << node->local_name ()
+      << "_skel (" << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
-      << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-      << "void * servant" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")" << be_uidt_nl;
+      << "TAO::Portable_Server::Servant_Upcall *TAO_INTERCEPTOR (servant_upcall)," << be_nl
+      << "TAO_ServantBase *servant)" << be_uidt_nl;
 
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_idt;
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -243,36 +216,37 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Declare the argument helper classes.
   this->gen_skel_body_arglist (node, os);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "TAO::Argument * const args[] =" << be_idt_nl
       << "{" << be_idt_nl
-      << "&retval";
+      << "std::addressof(retval)";
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
        arg_list_iter.next ())
     {
       AST_Argument * const arg =
-        AST_Argument::narrow_from_decl (arg_list_iter.item ());
+        dynamic_cast<AST_Argument*> (arg_list_iter.item ());
 
       *os << "," << be_nl
-          << "&_tao_" << arg->local_name ();
+          << "std::addressof(_tao_" << arg->local_name () << ")";
     }
 
   *os << be_uidt_nl
       << "};" << be_uidt_nl << be_nl;
 
-  *os << "static size_t const nargs = "
-      << (node->argument_count () + 1) << ";" << be_nl << be_nl;
-
   // Get the right object implementation.
   *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
-      << "static_cast<"
-      << intf->full_skel_name () << " *> (servant);" << be_uidt << be_uidt_nl;
+      << "dynamic_cast<"
+      << intf->full_skel_name () << " *> (servant);" << be_uidt << be_nl_2;
+
+  *os << "if (!impl)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
+      << "}" << be_uidt << be_nl_2;
 
   // Upcall_Command instantiation.
-  *os << be_idt_nl
-      << upcall_command_name.c_str()
+  *os << upcall_command_name.c_str()
       << " command (" << be_idt_nl
       << "impl";
 
@@ -290,23 +264,28 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   *os << ");" << be_uidt_nl << be_nl;
 
-
   *os << "TAO::Upcall_Wrapper upcall_wrapper;" << be_nl
       << "upcall_wrapper.upcall (server_request" << be_nl
       << "                       , args" << be_nl
-      << "                       , nargs" << be_nl
+      << "                       , " << (node->argument_count () + 1) << be_nl
       << "                       , command"
       << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
-      << "                       , servant_upcall" << be_nl
-      << "                       , exceptions" << be_nl
-      << "                       , nexceptions"
-      << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
-      << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
-      << "ACE_CHECK;" << be_nl;
+      << "                       , servant_upcall" << be_nl;
 
+  if (node->exceptions () && be_global->tc_support ())
+    {
+      *os << "                       , exceptions" << be_nl
+          << "                       , " << node->exceptions ()->length ();
+    }
+  else
+    {
+      *os << "                       , nullptr" << be_nl
+          << "                       , 0";
+    }
 
-  *os << be_uidt_nl
-      << "}";
+  *os << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
+      << "                       );" << be_uidt_nl
+      << "}" << be_nl_2;
 
   return 0;
 }
@@ -320,7 +299,7 @@ be_visitor_operation_ss::gen_skel_body_arglist (be_operation * node,
        arg_decl_iter.next ())
     {
       AST_Argument * const arg =
-        AST_Argument::narrow_from_decl (arg_decl_iter.item ());
+        dynamic_cast<AST_Argument*> (arg_decl_iter.item ());
 
       *os << be_nl
           << "TAO::SArg_Traits< ";

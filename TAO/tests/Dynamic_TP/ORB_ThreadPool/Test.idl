@@ -1,0 +1,25 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// A very simple interface
+  interface Sleeper
+  {
+    void delay (in short seconds);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+
+  /// The client calls on middle which will then perform an upcall to sleeper
+  interface Middle
+  {
+    void call_delay (in short seconds);
+
+    oneway void shutdown ();
+  };
+
+};

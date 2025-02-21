@@ -1,18 +1,10 @@
-//
-// $Id$
-//
-
 #ifndef ROUNDTRIP_HANDLER_H
 #define ROUNDTRIP_HANDLER_H
 #include /**/ "ace/pre.h"
 
 #include "TestS.h"
 #include "ace/Basic_Stats.h"
-
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
+#include "ace/High_Res_Timer.h"
 
 /// Implement the Test::Roundtrip interface
 class Roundtrip_Handler
@@ -23,24 +15,17 @@ public:
   Roundtrip_Handler (int expected_callbacks);
 
   /// Return the number of pending callbacks
-  int pending_callbacks (void) const;
+  int pending_callbacks () const;
 
   /// Dump the results
-  void dump_results (ACE_UINT32 gsf);
+  void dump_results (ACE_High_Res_Timer::global_scale_factor_type gsf);
 
   // = The skeleton methods
-  virtual void test_method (Test::Timestamp send_time
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_method_excep (Test::AMI_RoundtripExceptionHolder *holder
-                                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void test_method (Test::Timestamp send_time);
+  virtual void test_method_excep (::Messaging::ExceptionHolder *holder);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown_excep (Test::AMI_RoundtripExceptionHolder *holder
-                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
+  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder);
 
 private:
   /// The number of callbacks not received yet
@@ -49,10 +34,6 @@ private:
   /// Collect the latency results
   ACE_Basic_Stats latency_stats_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ROUNDTRIP_H */

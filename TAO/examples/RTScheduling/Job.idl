@@ -1,11 +1,8 @@
-//
-// $Id$
-//
 
 interface Job
 {
   void work (in unsigned long work,
-	     in short importance);
-  
+             in short importance);
+
   void shutdown ();
 };

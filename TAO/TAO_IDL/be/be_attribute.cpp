@@ -1,57 +1,28 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_attribute.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Attribute that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_attribute.cpp
+ *
+ *  Extension of class AST_Attribute that provides additional means for C++
+ *  mapping.
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
 
 #include "be_attribute.h"
 #include "be_type.h"
 #include "be_visitor.h"
+#include "be_util.h"
 
 #include "global_extern.h"
 
-ACE_RCSID (be,
-           be_attribute,
-           "$Id$")
-
-be_attribute::be_attribute (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Field (),
-    AST_Attribute (),
-    be_decl ()
-{
-  be_operation_default_strategy *bods = 0;
-
-  ACE_NEW (bods,
-           be_operation_default_strategy (0));
-  this->get_strategy_ = bods;
-
-  ACE_NEW (bods,
-           be_operation_default_strategy (0));
-  this->set_strategy_ = bods;
-}
-
-be_attribute::be_attribute (idl_bool ro,
+be_attribute::be_attribute (bool ro,
                             AST_Type *ft,
                             UTL_ScopedName *n,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool local,
+                            bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_attr,
@@ -65,33 +36,23 @@ be_attribute::be_attribute (idl_bool ro,
                    local,
                    abstract),
     be_decl (AST_Decl::NT_attr,
-             n)
+             n),
+    be_field (ft,
+              n)
 {
-  be_operation_default_strategy *bods = 0;
-
-  ACE_NEW (bods,
-           be_operation_default_strategy (0));
-  this->get_strategy_ = bods;
-
-  ACE_NEW (bods,
-           be_operation_default_strategy (0));
-  this->set_strategy_ = bods;
-
-  // TAO_IDL generated attribute methods currently have an exception
-  // specification containing CORBA::SystemException.  Make sure we
-  // generate a "tao/SystemException.h" include directive.
-  idl_global->operation_seen_ = true;
-
   if (!this->imported () && !this->is_local ())
     {
       // For the return types of the two operations
       // generated from this attribute.
-      this->set_arg_seen_bit (be_type::narrow_from_decl (ft));
-      idl_global->basic_arg_seen_ = true;
+      be_util::set_arg_seen_bit (dynamic_cast<be_type*> (ft));
     }
 }
 
-
+be_type *
+be_attribute::field_type () const
+{
+  return dynamic_cast<be_type*>  (this->AST_Attribute::field_type ());
+}
 
 int
 be_attribute::accept (be_visitor *visitor)
@@ -99,45 +60,9 @@ be_attribute::accept (be_visitor *visitor)
   return visitor->visit_attribute (this);
 }
 
-
-be_operation_strategy *
-be_attribute::set_set_strategy (be_operation_strategy *new_strategy)
+void
+be_attribute::destroy ()
 {
-  be_operation_strategy *old = this->set_strategy_;
-
-  if (new_strategy != 0)
-    {
-      this->set_strategy_ = new_strategy;
-    }
-
-  return old;
+  this->be_decl::destroy ();
+  this->AST_Attribute::destroy ();
 }
-
-be_operation_strategy *
-be_attribute::set_get_strategy (be_operation_strategy *new_strategy)
-{
-  be_operation_strategy *old = this->get_strategy_;
-
-  if (new_strategy != 0)
-    {
-      this->get_strategy_ = new_strategy;
-    }
-
-  return old;
-}
-
-be_operation_strategy *
-be_attribute::get_set_strategy ()
-{
-  return this->set_strategy_;
-}
-
-be_operation_strategy *
-be_attribute::get_get_strategy ()
-{
-  return this->get_strategy_;
-}
-
-// Narrowing
-IMPL_NARROW_METHODS2 (be_attribute, AST_Attribute, be_decl)
-IMPL_NARROW_FROM_DECL (be_attribute)

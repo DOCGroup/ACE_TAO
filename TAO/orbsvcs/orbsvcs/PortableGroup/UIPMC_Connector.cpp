@@ -1,75 +1,23 @@
-// This may look like C, but it's really -*- C++ -*-
-//
-// $Id$
-
-#include "UIPMC_Connector.h"
-
-#include "ace/Connector.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connector.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "tao/Environment.h"
-#include "tao/Base_Transport_Property.h"
-#include "tao/Protocols_Hooks.h"
+#include "tao/Transport_Descriptor_Interface.h"
+#include "tao/Transport.h"
+#include "tao/Thread_Lane_Resources.h"
 
-#include "UIPMC_Profile.h"
+#include "ace/Connector.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/os_include/os_netdb.h"
+#include "ace/OS_NS_sys_socket.h"
 
-ACE_RCSID (tao,
-           UIPMC_Connector, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_NonBlocking_Connect_Handler<TAO_UIPMC_Connection_Handler>;
-
-template class ACE_Map_Entry<ACE_INET_Addr,
-                             TAO_UIPMC_Connection_Handler *>;
-template class ACE_Hash_Map_Iterator_Base_Ex <ACE_INET_Addr,
-                                              TAO_UIPMC_Connection_Handler *,
-                                              ACE_Hash<ACE_INET_Addr>,
-                                              ACE_Equal_To <ACE_INET_Addr>,
-                                              ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr,
-                                        TAO_UIPMC_Connection_Handler *,
-                                        ACE_Hash<ACE_INET_Addr>,
-                                        ACE_Equal_To<ACE_INET_Addr>,
-                                        ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr,
-                                                TAO_UIPMC_Connection_Handler *,
-                                                ACE_Hash<ACE_INET_Addr>,
-                                                ACE_Equal_To<ACE_INET_Addr>,
-                                                ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_UIPMC_Connection_Handler>
-
-#pragma instantiate ACE_Map_Entry<ACE_INET_Addr, \
-                                  TAO_UIPMC_Connection_Handler *>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex <ACE_INET_Addr, \
-                                                   TAO_UIPMC_Connection_Handler *, \
-                                                   ACE_Hash<ACE_INET_Addr>, \
-                                                   ACE_Equal_To<ACE_INET_Addr>, \
-                                                   ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, \
-                                             TAO_UIPMC_Connection_Handler *, \
-                                             ACE_Hash<ACE_INET_Addr>, \
-                                             ACE_Equal_To<ACE_INET_Addr>, \
-                                             ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, \
-                                                     TAO_UIPMC_Connection_Handler *, \
-                                                     ACE_Hash<ACE_INET_Addr>, \
-                                                     ACE_Equal_To<ACE_INET_Addr>, \
-                                                     ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-TAO_UIPMC_Connector::TAO_UIPMC_Connector (CORBA::Boolean)
-  : TAO_Connector (TAO_TAG_UIPMC_PROFILE)
-{
-}
-
-TAO_UIPMC_Connector::~TAO_UIPMC_Connector (void)
+TAO_UIPMC_Connector::TAO_UIPMC_Connector ()
+  : TAO_Connector (IOP::TAG_UIPMC)
 {
 }
 
@@ -82,33 +30,23 @@ TAO_UIPMC_Connector::open (TAO_ORB_Core *orb_core)
   if (this->create_connect_strategy () == -1)
     return -1;
 
-  // @@ Michael: We do not use traditional connection management.
-
   return 0;
 }
 
 int
-TAO_UIPMC_Connector::close (void)
+TAO_UIPMC_Connector::close ()
 {
-  SvcHandlerIterator iter (svc_handler_table_);
-
-  while (!iter.done ())
-    {
-      (*iter).int_id_->remove_reference ();
-      iter++;
-    }
-
   return 0;
 }
 
 int
 TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  if (endpoint->tag () != TAO_TAG_UIPMC_PROFILE)
+  if (endpoint->tag () != IOP::TAG_UIPMC)
     return -1;
 
   TAO_UIPMC_Endpoint *uipmc_endpoint =
-    dynamic_cast<TAO_UIPMC_Endpoint *> (endpoint );
+    dynamic_cast<TAO_UIPMC_Endpoint *> (endpoint);
 
   if (uipmc_endpoint == 0)
     return -1;
@@ -119,11 +57,16 @@ TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
   // remote ACE_INET_Addr.
+#if defined (ACE_HAS_IPV6)
+  if (remote_address.get_type () != AF_INET &&
+      remote_address.get_type () != AF_INET6)
+#else /* ACE_HAS_IPV6 */
   if (remote_address.get_type () != AF_INET)
+#endif /* !ACE_HAS_IPV6 */
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) UIPMC connection failed.\n")
                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
                       ACE_TEXT ("due to a hostname lookup ")
@@ -150,37 +93,182 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   const ACE_INET_Addr &remote_address =
     uipmc_endpoint->object_addr ();
 
+#if defined (ACE_HAS_IPV6) && !defined (ACE_HAS_IPV6_V6ONLY)
+  // Check if we need to invalidate accepted connections
+  // from IPv4 mapped IPv6 addresses
+  if (this->orb_core ()->orb_params ()->connect_ipv6_only () &&
+      remote_address.is_ipv4_mapped_ipv6 ())
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_TCHAR remote_as_string[MAXHOSTNAMELEN + 16];
+
+          (void) remote_address.addr_to_string (remote_as_string,
+                                                sizeof remote_as_string);
+
+          ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::open, ")
+                      ACE_TEXT ("invalid connection to IPv4 mapped IPv6 ")
+                      ACE_TEXT ("interface <%s>!\n"),
+                      remote_as_string));
+        }
+      return 0;
+    }
+#endif /* ACE_HAS_IPV6 && ACE_HAS_IPV6_V6ONLY */
+
   TAO_UIPMC_Connection_Handler *svc_handler = 0;
 
-  if (this->svc_handler_table_.find (remote_address, svc_handler) == -1)
+  ACE_NEW_RETURN (svc_handler,
+                  TAO_UIPMC_Connection_Handler (this->orb_core ()),
+                  0);
+
+  // Make sure that we always do a remove_reference
+  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
+
+  u_short port = 0;
+  const ACE_UINT32 ia_any = INADDR_ANY;
+  ACE_INET_Addr any_addr(port, ia_any);
+
+#if defined (ACE_HAS_IPV6)
+  if (remote_address.get_type () == AF_INET6)
+    any_addr.set (port,
+                  ACE_IPV6_ANY);
+#endif /* ACE_HAS_IPV6 */
+  ACE_INET_Addr local_addr(any_addr);
+  svc_handler->addr (remote_address);
+
+  int retval= 0;
+  while (uipmc_endpoint != 0)
     {
-      TAO_UIPMC_Connection_Handler *svc_handler_i = 0;
-      ACE_NEW_RETURN (svc_handler_i,
-                      TAO_UIPMC_Connection_Handler (this->orb_core ()),
-                      0);
+      if (uipmc_endpoint->is_preferred_network ())
+        {
+          local_addr.set(port, uipmc_endpoint->preferred_network ());
+        }
+      else
+        {
+           local_addr.set(any_addr);
+        }
+      svc_handler->local_addr (local_addr);
+      retval = svc_handler->open (0);
+      if (retval == 0)
+        {
+#if defined (ACE_HAS_IPV6)
+          const ACE_TCHAR* prefer_if =
+            ACE_TEXT_CHAR_TO_TCHAR (uipmc_endpoint->preferred_if());
+          if (prefer_if && ACE_OS::strlen(prefer_if))
+            {
+              if (svc_handler->peer ().set_nic(prefer_if, AF_INET6))
+                {
+                  if (TAO_debug_level > 0)
+                        ORBSVCS_ERROR ((LM_ERROR,
+                            "TAO (%P|%t) - UIPMC_Connector::make_connection, "
+                            "connection to <%C:%u> - failed to set requested local network interface <%s>\n",
+                             uipmc_endpoint->host (),
+                             uipmc_endpoint->port (),
+                             prefer_if));
+                  retval = -1;
+                }
+            }
+#endif /* ACE_HAS_IPV6 */
+          break;
+        }
+      else
+       {
+           if (TAO_debug_level > 3)
+                ORBSVCS_ERROR ((LM_ERROR,
+                            "TAO (%P|%t) - UIPMC_Connector::make_connection, "
+                            "connection to <%C:%u> from interface <%s> failed (%p)\n",
+                             uipmc_endpoint->host (),
+                             uipmc_endpoint->port (),
+                             uipmc_endpoint->is_preferred_network () ? uipmc_endpoint->preferred_network () : "ANY",
+                             ACE_TEXT ("errno")));
+       }
+      uipmc_endpoint = dynamic_cast<TAO_UIPMC_Endpoint *> (uipmc_endpoint->next());
+    }
 
-      svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
-      svc_handler_i->addr (remote_address);
+  // Failure to open a connection.
+  if (retval != 0)
+    {
+      svc_handler->close ();
 
-      svc_handler_i->open (0);
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - UIPMC_Connector::make_connection, "
+                      "failed to open the connection to <%C:%u>\n",
+                      remote_address.get_host_addr (),
+                      remote_address.get_port_number ()));
+        }
 
-      svc_handler_table_.bind (remote_address,
-                               svc_handler_i);
-      svc_handler = svc_handler_i;
+      return 0;
+    }
 
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) UIPMC_Connector::make_connection, ")
-                    ACE_TEXT ("new connection on HANDLE %d\n"),
-                    svc_handler->get_handle ()));
-   }
+  // After the handler is opened we can try to obtain the real local address.
+  svc_handler->peer ().get_local_addr (local_addr);
+  svc_handler->local_addr (local_addr);
 
-  // @@ Michael: We do not use traditional connection management.
-  svc_handler->add_reference ();
+  if (TAO_debug_level > 2)
+    {
+      char local_hostaddr[INET6_ADDRSTRLEN];
+      local_addr.get_host_addr (local_hostaddr, sizeof local_hostaddr);
+      char remote_hostaddr[INET6_ADDRSTRLEN];
+      remote_address.get_host_addr (remote_hostaddr, sizeof remote_hostaddr);
 
-  return svc_handler->transport ();
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::make_connection, ")
+                  ACE_TEXT ("new connection from <%C:%u> to <%C:%u> on ")
+                  ACE_TEXT ("HANDLE %d\n"),
+                  local_hostaddr,
+                  local_addr.get_port_number (),
+                  remote_hostaddr,
+                  remote_address.get_port_number (),
+                  svc_handler->get_handle ()));
+    }
+
+  TAO_Transport *transport = svc_handler->transport ();
+
+  // In case of errors transport is zero
+  if (transport == 0)
+    {
+      svc_handler->close ();
+
+      // Give users a clue to the problem.
+      if (TAO_debug_level)
+          ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector:")
+                      ACE_TEXT (":make_connection, connection to ")
+                      ACE_TEXT ("<%C:%u> failed (%p)\n"),
+                      uipmc_endpoint->host (),
+                      uipmc_endpoint->port (),
+                      ACE_TEXT ("errno")));
+
+      return 0;
+    }
+
+  // Add the handler to Cache
+  retval =
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+                                                                             transport);
+
+  // Failure in adding to cache.
+  if (retval == -1)
+    {
+      svc_handler->close ();
+
+      if (TAO_debug_level)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::")
+                      ACE_TEXT ("make_connection, could not add the ")
+                      ACE_TEXT ("new connection to cache\n")));
+        }
+
+      return 0;
+    }
+
+  svc_handler_auto_ptr.release ();
+  return transport;
 }
-
 
 TAO_Profile *
 TAO_UIPMC_Connector::create_profile (TAO_InputCDR& cdr)
@@ -201,7 +289,7 @@ TAO_UIPMC_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_UIPMC_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO_UIPMC_Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -216,7 +304,6 @@ TAO_UIPMC_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return profile;
 }
@@ -228,15 +315,15 @@ TAO_UIPMC_Connector::check_prefix (const char *endpoint)
   if (!endpoint || !*endpoint)
     return -1;  // Failure
 
-  const char *protocol[] = { "miop" };
+  static const char protocol[] = "miop";
+  static size_t const len = sizeof (protocol) - 1;
 
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
-  size_t len0 = ACE_OS::strlen (protocol[0]);
+  size_t const slot = ACE_OS::strchr (endpoint, ':') - endpoint;
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
-  if (slot == len0
-      && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
+  if (slot == len
+      && ACE_OS::strncasecmp (endpoint, protocol, len) == 0)
     return 0;
 
   return -1;
@@ -245,41 +332,17 @@ TAO_UIPMC_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_UIPMC_Connector::object_key_delimiter (void) const
+TAO_UIPMC_Connector::object_key_delimiter () const
 {
   return TAO_UIPMC_Profile::object_key_delimiter_;
 }
 
 int
 TAO_UIPMC_Connector::cancel_svc_handler (
-  TAO_Connection_Handler * svc_handler)
+  TAO_Connection_Handler * /* svc_handler */)
 {
-  ACE_UNUSED_ARG(svc_handler);
-
   // Noop
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash <ACE_INET_Addr>;
-template class ACE_Equal_To <ACE_INET_Addr>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr,
-                                       TAO_UIPMC_Connection_Handler *,
-                                       ACE_Hash <ACE_INET_Addr>,
-                                       ACE_Equal_To <ACE_INET_Addr>,
-                                       ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr,
-                                  TAO_UIPMC_Connection_Handler *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash <ACE_INET_Addr>
-#pragma instantiate ACE_Equal_To <ACE_INET_Addr>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, \
-                                            TAO_UIPMC_Connection_Handler *, \
-                                            ACE_Hash <ACE_INET_Addr>, \
-                                            ACE_Equal_To <ACE_INET_Addr>,
-                                            ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, \
-                                       TAO_UIPMC_Connection_Handler *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

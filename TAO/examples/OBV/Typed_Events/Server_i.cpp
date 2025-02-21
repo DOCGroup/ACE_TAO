@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_i.h"
 #include "Event_Types_impl.h"
 #include "tao/ORB_Core.h"
@@ -9,7 +7,6 @@ Event_List_var alarms;
 
 Criterion_List_var criterions;
 // Arriving events are tested against the list members.
-
 
 
 // Set the ORB pointer, register OBV factories and init the
@@ -103,9 +100,7 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
 
 
 void
-Checkpoint_i::put_event (Event *event
-                        ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+Checkpoint_i::put_event (Event *event)
 {
   // In general this function would be a dispatcher which looks at the
   // origin id and finds an event handler object for the event. The
@@ -124,7 +119,6 @@ Checkpoint_i::put_event (Event *event
     }
 
 
-
   // If we want to return the event (e.g. return type is Event *)
   // return (DUP_REF (event));
   // should be right.
@@ -134,13 +128,12 @@ Checkpoint_i::put_event (Event *event
 
 
 Event_List *
-Checkpoint_i::get_critical_events (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+Checkpoint_i::get_critical_events ()
 {
   // The skeleton should not steal our list by decrementing
   // the reference counter.
 
-  CORBA::add_ref (alarms.ptr ());
+  CORBA::add_ref (alarms.in ());
 
   // alarms._retn () would reset and destroy our alarms.
 
@@ -151,12 +144,10 @@ Checkpoint_i::get_critical_events (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Shutdown the server application.
 
 void
-Checkpoint_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+Checkpoint_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n%s\n",
-              "The Checkpoint server is shutting down"));
+              "\nThe Checkpoint server is shutting down\n"));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
@@ -165,12 +156,12 @@ Checkpoint_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 // Constructor.
 
-Checkpoint_i::Checkpoint_i (void)
+Checkpoint_i::Checkpoint_i ()
 {
 }
 
 // Destructor.
 
-Checkpoint_i::~Checkpoint_i (void)
+Checkpoint_i::~Checkpoint_i ()
 {
 }

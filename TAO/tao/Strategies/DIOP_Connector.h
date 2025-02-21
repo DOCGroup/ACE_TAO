@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    DIOP_Connector.h
- *
- *  $Id$
  *
  *  DIOP specific connector processing
  *
@@ -19,14 +17,16 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-
-#include "tao/Transport_Connector.h"
-#include "DIOP_Connection_Handler.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
+#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "tao/Transport_Connector.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Endpoint;
 class TAO_DIOP_Endpoint;
@@ -45,12 +45,11 @@ class TAO_DIOP_Endpoint;
 class TAO_Strategies_Export TAO_DIOP_Connector : public TAO_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_DIOP_Connector (CORBA::Boolean flag = 0);
+  TAO_DIOP_Connector ();
 
   /// Destructor.
-  ~TAO_DIOP_Connector (void);
+  ~TAO_DIOP_Connector () = default;
 
   /**
    * @name The TAO_Connector Methods
@@ -59,17 +58,16 @@ public:
    */
   //@{
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
 
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
   //@}
 
 protected:
-
   /**
    * @name More TAO_Connector Methods
    *
@@ -82,36 +80,18 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
-  virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Profile * make_profile ();
   //@}
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
-protected:
-
-  /// Do we need to use a GIOP_Lite for sending messages?
-  CORBA::Boolean lite_flag_;
-
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_DIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
-
-private:
-  // @@ Michael: UDP Addition
-  ACE_Hash_Map_Manager_Ex < ACE_INET_Addr,
-                            TAO_DIOP_Connection_Handler *,
-                            ACE_Hash < ACE_INET_Addr >,
-                            ACE_Equal_To < ACE_INET_Addr >,
-                            ACE_Null_Mutex > svc_handler_table_;
-
-  typedef ACE_Hash_Map_Iterator_Ex < ACE_INET_Addr,
-                                     TAO_DIOP_Connection_Handler *,
-                                     ACE_Hash < ACE_INET_Addr >,
-                                     ACE_Equal_To < ACE_INET_Addr >,
-                                     ACE_Null_Mutex > SvcHandlerIterator;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 

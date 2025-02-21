@@ -1,0 +1,19 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// A very simple interface
+  interface Hello
+  {
+    /// Return a simple string
+    string get_string ();
+
+    /// A oneway operation takes a
+    /// different path to get to a TRANSIENT
+    /// exception.
+    oneway void set_string (in string s);
+
+    /// Shutdown the ORB
+    oneway void shutdown ();
+  };
+};

@@ -1,12 +1,6 @@
-// $Id$
-
-#include "Operation_Table_Perfect_Hash.h"
+#include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID(PortableServer,
-          Operation_Table_Perfect_Hash,
-          "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -29,15 +23,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-// Do nothing constructor.
-TAO_Perfect_Hash_OpTable::TAO_Perfect_Hash_OpTable (void)
-{
-}
-
-// Do nothing destrctor.
-TAO_Perfect_Hash_OpTable::~TAO_Perfect_Hash_OpTable (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Perfect_Hash_OpTable::find (const char *opname,
@@ -48,13 +34,13 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 
   TAO_operation_db_entry const * const entry = lookup (opname,
                                                        length);
-  if (entry == 0)
+  if (entry == nullptr)
     {
-      skelfunc = 0; // insure that somebody can't call a wrong function!
-      ACE_ERROR_RETURN ((LM_ERROR,
+      skelfunc = nullptr; // insure that somebody can't call a wrong function!
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
-                         ACE_TEXT ("operation '%s' (length=%d) failed\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (opname ? opname : "<null string>"), length),
+                         ACE_TEXT ("operation '%C' (length=%d) failed\n"),
+                         opname ? opname : "<null string>", length),
                         -1);
     }
 
@@ -72,15 +58,14 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
-  TAO_operation_db_entry const * const entry = lookup (opname,
-                                                       length);
-  if (entry == 0)
+  TAO_operation_db_entry const * const entry = lookup (opname, length);
+  if (entry == nullptr)
     {
-      skelfunc = 0; // insure that somebody can't call a wrong function!
-      ACE_ERROR_RETURN ((LM_ERROR,
+      skelfunc = nullptr; // insure that somebody can't call a wrong function!
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
-                         ACE_TEXT ("operation '%s' (length=%d) failed\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (opname ? opname : "<null string>"), length),
+                         ACE_TEXT ("operation '%C' (length=%d) failed\n"),
+                         opname ? opname : "<null string>", length),
                         -1);
     }
 
@@ -97,9 +82,9 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 }
 
 int
-TAO_Perfect_Hash_OpTable::bind (const char *,
-                                const TAO::Operation_Skeletons)
+TAO_Perfect_Hash_OpTable::bind (const char *, const TAO::Operation_Skeletons)
 {
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

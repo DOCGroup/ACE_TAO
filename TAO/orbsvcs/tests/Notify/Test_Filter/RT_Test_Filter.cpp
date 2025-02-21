@@ -1,15 +1,11 @@
-// $Id$
-
 #include "RT_Test_Filter.h"
-
-ACE_RCSID(Notify, TAO_RT_Test_Filter, "$Id$")
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/PortableServer/Root_POA.h"
 
-TAO_Notify_Tests_RT_Test_Filter::TAO_Notify_Tests_RT_Test_Filter (void)
+TAO_Notify_Tests_RT_Test_Filter::TAO_Notify_Tests_RT_Test_Filter ()
   : expected_pool_id_ (0)
     , expected_lane_id_ (0)
 {
@@ -17,27 +13,17 @@ TAO_Notify_Tests_RT_Test_Filter::TAO_Notify_Tests_RT_Test_Filter (void)
 
 TAO_Notify_Tests_RT_Test_Filter::~TAO_Notify_Tests_RT_Test_Filter ()
 {
-
 }
 
 char*
-TAO_Notify_Tests_RT_Test_Filter::constraint_grammar (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
+TAO_Notify_Tests_RT_Test_Filter::constraint_grammar ()
 {
   return CORBA::string_dup ("ETCL");
 }
 
 
 CosNotifyFilter::ConstraintInfoSeq*
-TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq& constraint_list
-                                ACE_ENV_ARG_DECL
-                                )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::InvalidConstraint
-                   ))
+TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq& constraint_list)
 {
   const char* PoolId_prefix = "PoolId = ";
   size_t poolId_index = ACE_OS::strlen (PoolId_prefix);
@@ -79,56 +65,38 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::Constra
   ACE_NEW_THROW_EX (infoseq_ptr,
                     CosNotifyFilter::ConstraintInfoSeq (0),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return infoseq_ptr;
 }
 
 void
 TAO_Notify_Tests_RT_Test_Filter::modify_constraints (const CosNotifyFilter::ConstraintIDSeq & /*del_list*/,
-                                   const CosNotifyFilter::ConstraintInfoSeq & /*modify_list*/
-                                   ACE_ENV_ARG_DECL_NOT_USED
-                                   )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::InvalidConstraint,
-                   CosNotifyFilter::ConstraintNotFound
-                   ))
+                                   const CosNotifyFilter::ConstraintInfoSeq & /*modify_list*/)
 {
-
 }
 
 CosNotifyFilter::ConstraintInfoSeq*
-TAO_Notify_Tests_RT_Test_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & /*id_list*/
-                                ACE_ENV_ARG_DECL_NOT_USED
-                                )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosNotifyFilter::ConstraintNotFound))
+TAO_Notify_Tests_RT_Test_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & /*id_list*/)
 {
   return 0;
 }
 
 CosNotifyFilter::ConstraintInfoSeq *
-TAO_Notify_Tests_RT_Test_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Notify_Tests_RT_Test_Filter::get_all_constraints ()
 {
-        return 0;
+  return 0;
 }
 
 void
-TAO_Notify_Tests_RT_Test_Filter::remove_all_constraints (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Notify_Tests_RT_Test_Filter::remove_all_constraints ()
 {
-
 }
 
 void
-TAO_Notify_Tests_RT_Test_Filter::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Notify_Tests_RT_Test_Filter::destroy ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   PortableServer::POA_var my_POA = _default_POA ();
 
@@ -139,24 +107,16 @@ TAO_Notify_Tests_RT_Test_Filter::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match (const CORBA::Any & /*filterable_data */
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosNotifyFilter::UnsupportedFilterableData))
+                          )
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::StructuredEvent & notification
-                                 ACE_ENV_ARG_DECL
-                                 )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosNotifyFilter::UnsupportedFilterableData))
+TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::StructuredEvent & notification)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_RT_Test_Filter (%x) ::match_structured (%t)\n", this));
@@ -168,14 +128,10 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::Struct
   CORBA::ORB_ptr orb = poa->orb_core ().orb ();
 
   CORBA::Object_var object =
-    orb->resolve_initial_references ("RTCurrent"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    orb->resolve_initial_references ("RTCurrent");
 
   RTCORBA::Current_var current =
-    RTCORBA::Current::_narrow (object.in ()
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    RTCORBA::Current::_narrow (object.in ());
 
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -251,48 +207,29 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::Struct
 
 CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match_typed (
-                            const CosNotification::PropertySeq & /* filterable_data */
-                            ACE_ENV_ARG_DECL
-                            )
-  ACE_THROW_SPEC (( CORBA::SystemException,
-                    CosNotifyFilter::UnsupportedFilterableData))
+                            const CosNotification::PropertySeq & /* filterable_data */)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyFilter::CallbackID
 TAO_Notify_Tests_RT_Test_Filter::attach_callback (
                                 CosNotifyComm::NotifySubscribe_ptr /* callback */
-                                ACE_ENV_ARG_DECL
                                 )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 TAO_Notify_Tests_RT_Test_Filter::detach_callback (
                                 CosNotifyFilter::CallbackID /* callback */
-                                ACE_ENV_ARG_DECL
                                 )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosNotifyFilter::CallbackNotFound))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyFilter::CallbackIDSeq *
-TAO_Notify_Tests_RT_Test_Filter::get_callbacks (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Notify_Tests_RT_Test_Filter::get_callbacks ()
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,0 +1,27 @@
+/**
+  @page POAManagerFactory Test README
+
+  This test validates the POAManagerFactory implementation. The PMF is
+  described in section 11.3 of the CORBA 3.0.2 specification. The PMF is used
+  to create POAManagers that are not associated with any particular POA. This
+  is useful when creating POAs on demand and need to disassociate the creation
+  of the POAManager. The POAManagerFactory also enables the assignment of
+  policies to the POAManager.
+
+  This test validates
+   - that a reference to the PMF may be obtained,
+   - that the PMF can be used to create POAManager instances,
+   - that the PMF correctly creates only one POAManager for a given name,
+   - that created POAManagers can be supplied to POAs,
+   - that a list of current POAManagers may be obtained from the PMF,
+   - that a specific POAManager may be located.
+
+  This test does not evaluate any policies that may be applied to a POAManager
+  via the PMF. Currently TAO supports only one POAManager policy, the
+  Endpoint Policy. See TAO/tests/POA/EndpointPolicy for information regarding
+  that policy.
+
+  Run this test with the supplied run_test.pl, or directly by running
+  ./POAManagerFactory
+
+*/

@@ -4,8 +4,6 @@
 /**
  *  @file TAO_Ext.pidl
  *
- *  $Id$
- *
  *  This file contains extensions to the TAO-specific idl interfaces
  *  (not part of CORBA  2.6) defined in $TAO_ROOT/tao
  *
@@ -15,7 +13,7 @@
  *   this is:
  *
  *   tao_idl
- *       -o orig -Gp -Gd -Ge 1 -Sc -GA -Sci
+ *       -o orig -Gp -Gd -GA -Sci -SS
  *       -Wb,export_macro=TAO_Messaging_Export
  *       -Wb,export_include=messaging_export.h
  *       -Wb,pre_include="ace/pre.h"
@@ -41,6 +39,32 @@ module TAO
   local interface ConnectionTimeoutPolicy : CORBA::Policy {
     readonly attribute TimeBase::TimeT relative_expiry;
   };
+
+  //
+  // Buffering constraint.
+  //
+  typedef unsigned short BufferingConstraintMode;
+  const BufferingConstraintMode BUFFER_FLUSH         = 0x00;
+
+  // Note that timeout, message_count, and message_bytes can be or'd.
+  const BufferingConstraintMode BUFFER_TIMEOUT       = 0x01;
+  const BufferingConstraintMode BUFFER_MESSAGE_COUNT = 0x02;
+  const BufferingConstraintMode BUFFER_MESSAGE_BYTES = 0x04;
+
+  struct BufferingConstraint
+  {
+    BufferingConstraintMode mode;
+    TimeBase::TimeT timeout;
+    unsigned long message_count;
+    unsigned long message_bytes;
+  };
+
+  const CORBA::PolicyType BUFFERING_CONSTRAINT_POLICY_TYPE = 0x54410001;
+
+  local interface BufferingConstraintPolicy : CORBA::Policy
+    {
+      readonly attribute BufferingConstraint buffering_constraint;
+    };
 };
 
 #endif /* TAO_TAO_EXT_IDL */

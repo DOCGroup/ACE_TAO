@@ -1,0 +1,57 @@
+This note documents results of my attempts to very carefully examine
+behaviour of Timeouts in TAO on real-time OS (such as Linux with RT
+patches) and to obtain a precise understand of behavior of timeouts.
+
+
+I would like to document expected  behavior precisely for each types of
+timeouts.
+
+I tested with min_timeout = 20msec  and max_timout = 40 msec.  This gives:
+
+
+      TimeBase::TimeT mid_value =
+        // convert from msec to "TimeT" (0.1 usec units)
+        10000 * (min_timeout + max_timeout) / 2;
+      CORBA::Any any_orb;
+      any_orb <<= mid_value;            // 30 msec
+      CORBA::Any any_thread;
+      any_thread <<= mid_value + 10000; // midvalue + 1 msec = 31 msec
+      CORBA::Any any_object;
+      any_object <<= mid_value + 20000; // midvalue + 2 msec = 32 msec
+
+Given this, exactly how many timeout at the ORB, thread, and object
+level should I expect to observe?
+
+If we assume communications to take some small delta_t value as compared
+to 20-40msec intervals, I am expecting:
+
+ 0 out of 21 timeouts with no     TIMEOUT policy
+10 out of 20 timeouts with ORB    TIMEOUT policy = 30 msec
+ 9 out of 20 timeouts with Thread TIMEOUT policy = 31 msec
+ 8 out of 20 timeouts with object TIMEOUT policy = 32 msec
+
+There are 21 calls with "no timeout" rather than 20 due to the extra
+call to the server at the end just before the call to "shutdown" method.
+
+This results in a total of 27 timeouts and 54 w/o timeouts.
+
+Running this on Linux kernel 2.6.14Uniproc PREEMPT (Ingo Molnar patches)
+the actual values match precisely. (The client.cpp is modified to track
+each type of invocation separately.)
+
+in_time_count[none]=    21  timeout_count[none]=    0
+in_time_count[orb]=     10  timeout_count[orb]=     10
+in_time_count[thread]=  11  timeout_count[thread]=  9
+in_time_count[object]=  12  timeout_count[object]=  8
+
+For a total of 27 timeouts and 54 w/o timeouts.
+
+However, when I run the test of Linux 2.4.21-37.EL I observe
+
+12 timeouts and 69 w/o timeout, since this is a non RT kernel. Thus,
+please be aware of this issue when this test is run.
+
+Gautam H. Thaker
+Lockheed Martin Advanced Technology Labs
+gthaker@atl.lmco.com
+May 2006

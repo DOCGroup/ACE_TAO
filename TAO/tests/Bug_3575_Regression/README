@@ -1,0 +1,5 @@
+
+
+Description: Before bug#3575 was fixed string_sequence_element::_retn() was
+returning a pointer to a newly initialized element in a sequence loosing
+the old pointer.

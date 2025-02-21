@@ -1,0 +1,31 @@
+// -*- MPC -*-
+project(INet_SSL) : acelib, ace_output, install, inet, ssl {
+  sharedname   = ACE_INet_SSL
+  dynamicflags += ACE_INET_SSL_BUILD_DLL
+  includes += $(ACE_ROOT)/protocols
+  Source_Files {
+    SSL_X509Cert.cpp
+    SSL_CertificateCallback.cpp
+    SSL_PasswordCallback.cpp
+    SSL_CallbackManager.cpp
+    HTTPS_Context.cpp
+    HTTPS_URL.cpp
+    HTTPS_SessionFactory.cpp
+    SSL_Proxy_Connector.cpp
+  }
+  Template_Files {
+    SSLSock_IOStream.cpp
+    HTTPS_Session.cpp
+  }
+  Header_Files {
+    INet_SSL_Export.h
+  }
+  specific {
+    install_dir = ace/INet
+  }
+
+  Pkgconfig_Files {
+    ACE_INet_SSL.pc.in
+  }
+
+}

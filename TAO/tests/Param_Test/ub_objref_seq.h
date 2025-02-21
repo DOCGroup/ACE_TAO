@@ -1,20 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_objref_seq.h
-//
-// = DESCRIPTION
-//     Tests unbounded sequences of object references
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_objref_seq.h
+ *
+ *   Tests unbounded sequences of object references
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_UNBOUNDED_OBJREF_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_OBJREF_SEQUENCE_H
@@ -28,62 +22,59 @@
 class Test_ObjRef_Sequence
 {
 public:
-  Test_ObjRef_Sequence (void);
-  // ctor
+  /// ctor
+  Test_ObjRef_Sequence ();
 
-  ~Test_ObjRef_Sequence (void);
-  // dtor
+  /// dtor
+  ~Test_ObjRef_Sequence ();
 
-  int run_sii_test (Param_Test_ptr objref
-                    ACE_ENV_ARG_DECL);
-  // run the SII test
+  /// run the SII test
+  int run_sii_test (Param_Test_ptr objref);
 
-  const char *opname (void) const;
-  // return operation name
+  /// return operation name
+  const char *opname () const;
 
-  int init_parameters (Param_Test_ptr objref
-                        ACE_ENV_ARG_DECL);
-  // set values for parameters
+  /// set values for parameters
+  int init_parameters (Param_Test_ptr objref);
 
-  int reset_parameters (void);
-  // reset values for CORBA
+  /// reset values for CORBA
+  int reset_parameters ();
 
-  CORBA::Boolean check_validity (void);
-  // check if results are valid
+  /// check if results are valid
+  CORBA::Boolean check_validity ();
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
-  void print_values (void);
-  // print all the values
+  /// print all the values
+  void print_values ();
 
-  void dii_req_invoke (CORBA::Request * ACE_ENV_ARG_DECL_NOT_USED);
-  // invoke DII request with appropriate exception handling.
+  /// invoke DII request with appropriate exception handling.
+  void dii_req_invoke (CORBA::Request *);
 
 protected:
+  /// compare
   CORBA::Boolean compare (const Param_Test::Coffee_Mix &s1,
-                          const Param_Test::Coffee_Mix &s2
-                          ACE_ENV_ARG_DECL);
-  // compare
+                          const Param_Test::Coffee_Mix &s2);
 
+  /// print individual sequence
   void print_sequence (const Param_Test::Coffee_Mix &s);
-  // print individual sequence
 private:
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// in parameter
   Param_Test::Coffee_Mix in_;
-  // in parameter
 
   // these need memory management
+  /// inout parameter
   Param_Test::Coffee_Mix_var inout_;
-  // inout parameter
 
+  /// out parameter
   Param_Test::Coffee_Mix_var out_;
-  // out parameter
 
+  /// return value
   Param_Test::Coffee_Mix_var ret_;
-  // return value
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_OBJREF_SEQUENCE_H */

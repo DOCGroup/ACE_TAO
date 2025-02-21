@@ -1,0 +1,16 @@
+project (*lib): taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  sharedname = bug3646b
+  dynamicflags += BUG3646b_BUILD_DLL
+
+  Source_Files {
+    DllORB.cpp
+  }
+}
+
+project (*Server): taoserver, tao_notify_service, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  libs += bug3646b
+  after += *lib
+  Source_Files {
+    server.cpp
+  }
+}

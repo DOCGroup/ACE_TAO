@@ -1,0 +1,59 @@
+#ifndef _PEM_NAMING_IDL_
+#define _PEM_NAMING_IDL_
+
+module Plesk
+{
+  typedef long TObjectID;
+
+  enum TBool
+  {
+    TB_NO,
+    TB_YES,
+    TB_MAYBE
+  };
+
+  struct TProperty
+  {
+    string name;
+    string value;
+  };
+
+  typedef sequence<TProperty> TPropertyList;
+
+  exception ExSystem
+  {
+    string        module_id;
+    long          extype_id;
+    long          errcode;
+    long          errcode_minor;
+    string        errmsg;
+    TPropertyList props;
+    TBool         transient;
+  };
+
+  module Naming
+  {
+    struct NamingContext
+    {
+      string kernel_resolver_ior;
+    };
+
+    const long ERR_NO_SUCH_OBJ = 6; // don't change it
+                                    // reserved for Naming
+
+    interface ObjectResolver
+    {
+#     pragma version ObjectResolver 1.2
+
+      Object
+      resolve (in string service_type, inout TObjectID sc_id)
+        raises (ExSystem);
+
+      Object
+      resolve_sc (in string service_type, in string version, inout TObjectID sc_id)
+        raises (ExSystem);
+    };
+  }; // module Naming
+}; // module Plesk
+
+#endif // _PEM_NAMING_IDL_

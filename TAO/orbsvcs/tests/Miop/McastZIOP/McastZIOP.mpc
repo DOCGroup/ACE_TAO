@@ -1,0 +1,32 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*server): orbsvcsexe, portablegroup, portableserver, compression, zlibcompressor, ziop  {
+  after += *idl
+  exename = server
+  Source_Files {
+    McastHello.cpp
+    TestS.cpp
+    TestC.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*client): orbsvcsexe, portablegroup, portableserver, compression, zlibcompressor, ziop {
+  after += *idl
+  exename = client
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}
+

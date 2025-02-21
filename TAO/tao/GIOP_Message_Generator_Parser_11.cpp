@@ -1,11 +1,12 @@
+// -*- C++ -*-
 #include "tao/GIOP_Message_Generator_Parser_11.h"
 
-ACE_RCSID (tao, 
-           GIOP_Message_Gen_Parser_11, 
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_11::minor_version (void)
+TAO_GIOP_Message_Generator_Parser_11::minor_version () const
 {
-  return (CORBA::Octet) 1;
+  return static_cast<CORBA::Octet> (1);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

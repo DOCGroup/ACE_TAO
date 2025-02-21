@@ -1,23 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Explicit_Event_Loop
-//
-// = FILENAME
-//    client.cpp
-//
-// = AUTHORS
-//   Source code used in TAO has been modified and adapted from the
-//   code provided in the book, "Advanced CORBA Programming with C++"
-//   by Michi Henning and Steve Vinoski. Copyright
-//   1999. Addison-Wesley, Reading, MA.  Used with permission of
-//   Addison-Wesley.
-//
-//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  @author Source code used in TAO has been modified and adapted from thecode provided in the book
+ *  @author "Advanced CORBA Programming with C++"by Michi Henning and Steve Vinoski. Copyright1999. Addison-Wesley
+ *  @author Reading
+ *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "timeC.h"
 
@@ -29,17 +21,13 @@
 //#include <iomanip.h>
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            argv);
 
       // Check arguments.
       if  (argc != 2)
@@ -50,9 +38,7 @@ main (int argc, char *argv[])
         }
 
       // Destringify argv[1].
-      CORBA::Object_var obj = orb->string_to_object (argv[1]
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var obj = orb->string_to_object (argv[1]);
 
       if  (CORBA::is_nil (obj.in ()))
         {
@@ -62,9 +48,7 @@ main (int argc, char *argv[])
         }
 
       // Narrow.
-      Time_var tm = Time::_narrow (obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Time_var tm = Time::_narrow (obj.in ());
 
       if  (CORBA::is_nil (tm.in ()))
         {
@@ -74,8 +58,7 @@ main (int argc, char *argv[])
         }
 
       // Get time.
-      TimeOfDay tod = tm->get_gmt (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TimeOfDay tod = tm->get_gmt ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s%s%d:%s%d:%d\n",
@@ -87,20 +70,17 @@ main (int argc, char *argv[])
                   tod.second));
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "client: a CORBA exception occured");
+      ex._tao_print_exception ("client: a CORBA exception occurred");
       return 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "client: an unknown exception was caught\n"),
                         1);
     }
-  ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
   return 0;
 }

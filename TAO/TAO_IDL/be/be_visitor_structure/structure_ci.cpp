@@ -1,26 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    structure_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Structure in the inline file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    structure_ci.cpp
+ *
+ *  Visitor generating code for Structure in the inline file.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_structure,
-           structure_ci,
-           "$Id$")
+#include "structure.h"
 
 // ******************************************************
 // for client inline
@@ -31,7 +20,7 @@ be_visitor_structure_ci::be_visitor_structure_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure_ci::~be_visitor_structure_ci (void)
+be_visitor_structure_ci::~be_visitor_structure_ci ()
 {
 }
 
@@ -53,6 +42,6 @@ int be_visitor_structure_ci::visit_structure (be_structure *node)
                         -1);
     }
 
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
   return 0;
 }

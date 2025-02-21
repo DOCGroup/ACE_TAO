@@ -1,8 +1,5 @@
 /**
  * @file Consumer.h
- *
- * $Id$
- *
  */
 
 #ifndef TAO_PERF_RTEC_CONSUMER_H
@@ -13,6 +10,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
 #include "ace/Sample_History.h"
+#include "ace/High_Res_Timer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +20,6 @@
  * @class Consumer
  *
  * @brief Implement a simple consumer to keep track of the latency
- *
  */
 class TAO_RTEC_Perf_Export Consumer
   : public virtual POA_RtecEventComm::PushConsumer
@@ -34,29 +31,24 @@ public:
             CORBA::Long event_type,
             CORBA::ULong iterations,
             CORBA::Long workload_in_usecs,
-            ACE_UINT32 gsf,
+            ACE_High_Res_Timer::global_scale_factor_type gsf,
             PortableServer::POA_ptr poa);
 
   /// Connect to the event channel
-  void connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
 
   /// Access the history of samples
-  ACE_Sample_History &sample_history (void);
+  ACE_Sample_History &sample_history ();
 
   //@{
   /** @name The RtecEventComm::PushConsumer methods
    */
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
+  virtual PortableServer::POA_ptr _default_POA ();
   //@}
 
 private:
@@ -79,7 +71,7 @@ private:
   CORBA::ULong workload_in_usecs_;
 
   /// The global scale factor for the high resolution timers
-  ACE_UINT32 gsf_;
+  ACE_High_Res_Timer::global_scale_factor_type gsf_;
 
   /// The default poa
   PortableServer::POA_var default_POA_;

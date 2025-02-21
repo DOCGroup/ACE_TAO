@@ -1,0 +1,18 @@
+
+module Test
+{
+  struct RecursiveStruct3;
+  typedef sequence<RecursiveStruct3> RecursiveStructSeq3;
+
+  union RecursiveUnion3 switch(short)
+  {
+          case 0: short a;
+          case 1: RecursiveStructSeq3 b;
+          case 2: RecursiveStructSeq3 c;
+  };
+  struct RecursiveStruct3
+  {
+          RecursiveUnion3 uni;
+  };
+
+};

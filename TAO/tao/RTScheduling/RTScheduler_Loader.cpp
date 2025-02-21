@@ -1,45 +1,51 @@
-
-// $Id$
-
-#include "RTScheduler_Loader.h"
-#include "RTScheduler_Initializer.h"
+#include "tao/RTScheduling/RTScheduler_Loader.h"
+#include "tao/RTScheduling/RTScheduler_Initializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (TAO, RTScheduler_Loader, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-TAO_RTScheduler_Loader::TAO_RTScheduler_Loader (void)
+TAO_RTScheduler_Loader::TAO_RTScheduler_Loader ()
+  : initialized_ (false)
 {
 }
 
-TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader (void)
+TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader ()
 {
-
 }
 
 int
-TAO_RTScheduler_Loader::init (int,
-			      ACE_TCHAR* [])
+TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_RTScheduler_Loader::init");
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"In RTScheduler_Loader::init\n"));
-
-  static int initialized = 0;
+    TAOLIB_DEBUG ((LM_DEBUG,
+                "In RTScheduler_Loader::init\n"));
 
   // Only allow initialization once.
-  if (initialized)
+  if (this->initialized_)
     return 0;
 
-  initialized = 1;
+  this->initialized_ = true;
+
+  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+
+  ACE_Service_Object * const rts_loader =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (
+      gestalt,
+      "RTScheduler_Loader",
+      true);
+
+  if (rts_loader != 0 && rts_loader != this)
+    {
+      return rts_loader->init (0, 0);
+    }
 
   // Register the ORB initializer.
-  ACE_TRY_NEW_ENV
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -51,23 +57,19 @@ TAO_RTScheduler_Loader::init (int,
                           CORBA::SystemException::_tao_minor_code (
                           TAO::VMCID,
                           ENOMEM),
-					  CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
+                          CORBA::COMPLETED_NO));
 
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception caught while initializing the RTScheduler:");
+      ex._tao_print_exception (
+        "Unexpected exception caught while initializing the RTScheduler:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -82,3 +84,4 @@ ACE_STATIC_SVC_DEFINE (TAO_RTScheduler_Loader,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+TAO_END_VERSIONED_NAMESPACE_DECL

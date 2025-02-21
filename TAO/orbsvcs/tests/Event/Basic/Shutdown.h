@@ -3,8 +3,6 @@
 /**
  *  @file   Shutdown.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -32,22 +30,20 @@ class EC_Shutdown : public EC_Driver
 {
 public:
   /// Constructor
-  EC_Shutdown (void);
+  EC_Shutdown ();
 
   // = The EC_Driver methods
   /// Don't run the suppliers just create the EC and then destroy it.
-  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
+  void execute_test ();
 
   /// Don't dump the EC_Driver results, they are meaningless.
-  void dump_results (void);
+  void dump_results ();
 
   /// One of the consumers in the test has been disconnected from the EC
-  virtual void consumer_disconnect (void* consumer_cookie
-                                    ACE_ENV_ARG_DECL);
+  virtual void consumer_disconnect (void* consumer_cookie);
 
   /// One of the suppliers in the test has been disconnected from the EC
-  virtual void supplier_disconnect (void* supplier_cookie
-                                    ACE_ENV_ARG_DECL);
+  virtual void supplier_disconnect (void* supplier_cookie);
 
 
 private:

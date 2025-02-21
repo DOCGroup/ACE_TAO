@@ -1,39 +1,23 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    discriminant_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for discriminant of the Union
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    discriminant_ch.cpp
+ *
+ *  Visitor generating code for discriminant of the Union
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           discriminant_ch, 
-           "$Id$")
-
-// *************************************************************************
-// Visitor for discriminant in client header file.
-// *************************************************************************
+#include "union.h"
 
 be_visitor_union_discriminant_ch::be_visitor_union_discriminant_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_union_discriminant_ch::~be_visitor_union_discriminant_ch (void)
+be_visitor_union_discriminant_ch::~be_visitor_union_discriminant_ch ()
 {
 }
 
@@ -41,8 +25,9 @@ int
 be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
 {
   // Get the enclosing union backend.
-  be_union *bu = this->ctx_->be_node_as_union ();
-  be_type *bt;
+  be_union *bu =
+    dynamic_cast<be_union*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -73,19 +58,18 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_discriminant_ch::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // The set method.
-  *os << be_nl << be_nl 
+  *os << be_nl_2
       << "void _d (" << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
-  *os << bt->nested_type_name (bu) << " _d (void) const;";
+  *os << bt->nested_type_name (bu) << " _d () const;";
 
   return 0;
 }
@@ -95,8 +79,9 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
                                                          *node)
 {
   // get the enclosing union backend.
-  be_union *bu = this->ctx_->be_node_as_union ();
-  be_type *bt;
+  be_union *bu =
+    dynamic_cast<be_union*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -110,14 +95,13 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // The set method.
-  *os << be_nl << be_nl 
-      << "void _d (" << bt->nested_type_name (bu) << ");" << be_nl;
+  *os << be_nl_2
+      << "void _d ( " << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
-  *os << bt->nested_type_name (bu) << " _d (void) const;";
+  *os << bt->nested_type_name (bu) << " _d () const;";
 
   return 0;
 }
@@ -135,10 +119,10 @@ be_visitor_union_discriminant_ch::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_discriminant_ch::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

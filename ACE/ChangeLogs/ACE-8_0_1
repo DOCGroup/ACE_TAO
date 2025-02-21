@@ -1,0 +1,260 @@
+commit 6cff7aa772f5ee8927f501a8128e4f8b401c570a
+Merge: 489a3a7f19f 32c3400cca2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 31 15:57:02 2024 +0200
+
+    Merge pull request #2267 from jwillemsen/jwi-explicitop
+    
+    Mark operator bool as explicit
+
+commit 32c3400cca2881aa553634e56297ac9d8a1ca1b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 31 10:56:38 2024 +0200
+
+    Removed explicit
+    
+        * ACE/protocols/ace/INet/URLBase.cpp:
+
+commit d115e01b18e54064908b800674d96cc14bcd23d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 31 10:49:17 2024 +0200
+
+    Partial revert
+    
+        * ACE/protocols/ace/INet/HTTPS_Context.h:
+        * ACE/protocols/ace/INet/HTTP_Status.h:
+        * ACE/protocols/ace/INet/URLBase.h:
+
+commit 9b4704f45687c4bc1ed8a48570306600bbd8616f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 31 10:41:46 2024 +0200
+
+    Mark operator bool as explicit
+    
+        * ACE/protocols/ace/INet/HTTPS_Context.h:
+        * ACE/protocols/ace/INet/HTTP_Status.h:
+        * ACE/protocols/ace/INet/URLBase.cpp:
+        * ACE/protocols/ace/INet/URLBase.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h:
+
+commit 3e4d621c508af5efbb899dbde9e5cab277fd7a49
+Merge: 07ce856de82 b2770e674f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 29 11:13:14 2024 +0200
+
+    Merge branch 'master' into jwi-restarttestwmain
+
+commit 07ce856de82067da7a9e8a2504e037b892ffdd3e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 29 10:51:35 2024 +0200
+
+    Add wmain for unicode builds on windows
+    
+        * ACE/tests/Singleton_Restart_Test.cpp:
+
+commit 1e38fc4f1c4a13a466dc6540fd06426d79a3e40c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 12:13:58 2024 +0200
+
+    Removed MPC_LIB_MODIFIER here, it is something from MPC, so let MPC handle this
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+
+commit 61b8c8c5c6d407cbe3d723633b0af5a7ab1d73e1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 11:49:51 2024 +0200
+
+    Back to unicode
+    
+        * ACE/ACE-INSTALL.html:
+
+commit 5cd8c7cfadb7b94bdf56b5e44a41ececdb0c6e53
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 11:45:03 2024 +0200
+
+    Renamed UNICODE to ACE_UNICODE for bmake
+    
+        * ACE/ACE-INSTALL.html:
+
+commit 87414e90f51e7d74b74ebe1ecb83e2ac457556b6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 11:31:53 2024 +0200
+
+    Revert
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+
+commit b47e9ceda45b41aadfe49ec2ef7aab7174e81ce3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 11:26:32 2024 +0200
+
+    Need double escape
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+
+commit da14e283f777be221f90b5c16dae057bb3d8ae7b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 11:12:52 2024 +0200
+
+    Revert double escape
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+
+commit 08e76e8cafab06c41be4af4abde290c119de9f34
+Merge: 5c4819232d0 25b9be3a869
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 10:54:59 2024 +0200
+
+    Merge branch 'jwi-bcc64xunicode' of https://github.com/jwillemsen/ATCD into jwi-bcc64xunicode
+
+commit 5c4819232d0db92295965dcc8b91a2c1cf2e4778
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 10:54:50 2024 +0200
+
+    Double escape string
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+
+commit 25b9be3a869a37c89811d1a1fc17d66466dd9b53
+Merge: f00ef447901 e69db0c847f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 10:18:58 2024 +0200
+
+    Merge branch 'master' into jwi-bcc64xunicode
+
+commit f00ef447901c46f64de6b6fdc7349871079b0ab9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 10:15:20 2024 +0200
+
+    Use nullptr
+    
+        * ACE/ace/OS_NS_time.inl:
+
+commit 5389133d2707d740c8878f92e7a4e3d11b0bcea6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 10:00:38 2024 +0200
+
+    bcc64x has different dirent support in unicode
+    
+        * ACE/ace/OS_NS_dirent.h:
+        * ACE/ace/OS_NS_dirent.inl:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/os_include/os_dirent.h:
+
+commit e69db0c847fb97a553b4c156a59ac3ae7dc70745
+Merge: 56e176993ca ae21138946e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 25 09:31:03 2024 +0200
+
+    Merge pull request #2260 from ryandesign/patch-1
+    
+    Fix detection of MacOSX SDKs older than 10.10
+
+commit 56e176993ca02286d5e807b188fcd9d278a5b065
+Merge: 9565633414a d89f6928aa1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 25 09:29:31 2024 +0200
+
+    Merge pull request #2255 from likema/log-msg-ctors
+    
+    Default Log_Msg_* dtors
+
+commit ae21138946e7b3eaa4e1e16d1c7b57a5e2c52dad
+Author: Ryan Carsten Schmidt <git@ryandesign.com>
+Date:   Sun Jul 21 23:42:57 2024 -0500
+
+    Fix detection of MacOSX SDKs older than 10.10
+
+commit 9565633414a52bc5eb1cf4294a88cb8425e7d366
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 17 14:00:57 2024 +0200
+
+    Update NEWS
+
+commit d89f6928aa1ecd9da65989a170b2a808206a455a
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sun Jul 14 13:13:37 2024 +0800
+
+    Default Log_Msg_* dtors
+
+commit 9be41577ed2fb86d6bfbc758fdb757ffb3ce61b7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 14 09:56:56 2024 +0200
+
+    Return error when platform doesn't have 64bit time_t
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit edd8fa7b611df55dd523a2b1da6631e62246dd23
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 13 10:56:24 2024 +0200
+
+    Test that time_t is at least 8 bytes, if not, give an error message in the log
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit 6d2c85b1ad5a44856f3a982e89d8a6b68569e79b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 2 09:18:03 2024 +0200
+
+    Remove BCC32, that compiler doesn't support C++17
+    
+        * ACE/ACE-INSTALL.html:
+
+commit 85da8c9b6c02c9ef197d79ef862258ef051b3852
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 2 09:12:28 2024 +0200
+
+    Revert change
+    
+        * ACE/ACE-INSTALL.html:
+
+commit e1dafb26356fb94bcb0b7def1121de9c9da68dca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 2 09:11:09 2024 +0200
+
+    Document BCC64X environment variable
+    
+        * ACE/ACE-INSTALL.html:
+
+commit 3b5f334604c5a0001cf0083278ba0b74a2c17f25
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 23 08:54:21 2024 +0200
+
+    Fix formatting
+    
+        * ACE/ACE-INSTALL.html:
+
+commit efb9819ab5e7edbb991f73ebfc2f911fe242563a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 16 13:04:29 2024 +0200
+
+    Update NEWS
+
+commit 57af57fbe1bc1818aa3f645d0bdeca1a2eb3ea81
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 16 12:56:34 2024 +0200
+
+    Update Download.html
+
+commit 7aa195eb9f3efd7355800daa6dd4cb9475413016
+Merge: c38c77843f2 f86851ff7c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 16 12:52:45 2024 +0200
+
+    Merge pull request #2235 from jwillemsen/jwi-ace800
+    
+    Make ACE 8.0.0 and TAO 4.0.0 public
+
+commit f86851ff7c84059dd009d12c2c27c4415a6d9be0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 16 12:51:57 2024 +0200
+
+    Make ACE 8.0.0 and TAO 4.0.0 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

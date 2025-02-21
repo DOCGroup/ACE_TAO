@@ -1,12 +1,9 @@
-//
-// $Id$
-//
 
 #include "Client_Task.h"
 
-Client_Task::Client_Task (const char *ior,
-			  CORBA::ORB_ptr corb,
-			  ACE_Thread_Manager *thr_mgr)
+Client_Task::Client_Task (const ACE_TCHAR *ior,
+                          CORBA::ORB_ptr corb,
+                          ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
     , input_ (ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
@@ -15,9 +12,10 @@ Client_Task::Client_Task (const char *ior,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  int result = 0;
+  try
     {
       // All factories are kindly provided by
       // compiler so we just to put everything in a right order.
@@ -29,9 +27,7 @@ Client_Task::svc (void)
                       1);
 
       this->corb_->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   bn_factory);
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
@@ -41,9 +37,7 @@ Client_Task::svc (void)
                       1);
 
       this->corb_->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   tc_factory);
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
@@ -53,20 +47,16 @@ Client_Task::svc (void)
                       1);
 
       this->corb_->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   sn_factory);
       sn_factory->_remove_ref (); // release ownership
 
       //Well, done with factories.
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        this->corb_->string_to_object(this->input_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->corb_->string_to_object(this->input_);
 
-      Test_var test = Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Test_var test = Test::_narrow(tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
       {
@@ -79,14 +69,14 @@ Client_Task::svc (void)
       // Now build simple graph (tree in our case).
 
       TreeController_var tc;
-      ACE_NEW_RETURN (tc,
+      ACE_NEW_RETURN (tc.inout (),
                       OBV_TreeController,
                       1);
 
       // Create the root node.
       {
         StringNode_var sn;
-        ACE_NEW_RETURN (sn,
+        ACE_NEW_RETURN (sn.inout (),
                         OBV_StringNode,
                         1);
         sn->name ((const char*)("RootNode"));
@@ -95,7 +85,7 @@ Client_Task::svc (void)
         // Create the left leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("LeftNode"));
@@ -105,7 +95,7 @@ Client_Task::svc (void)
         // Create the right leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("RightNode"));
@@ -118,14 +108,14 @@ Client_Task::svc (void)
       // Make copy
 
       TreeController_var tc_copy;
-      ACE_NEW_RETURN (tc_copy,
+      ACE_NEW_RETURN (tc_copy.inout (),
                       OBV_TreeController,
                       1);
 
       // Create the root node.
       {
         StringNode_var sn;
-        ACE_NEW_RETURN (sn,
+        ACE_NEW_RETURN (sn.inout (),
                         OBV_StringNode,
                         1);
         sn->name ((const char*)("RootNode"));
@@ -134,7 +124,7 @@ Client_Task::svc (void)
         // Create the left leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("LeftNode"));
@@ -144,7 +134,7 @@ Client_Task::svc (void)
         // Create the right leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("RightNode"));
@@ -154,31 +144,41 @@ Client_Task::svc (void)
         }
       }
 
-      ACE_ASSERT (is_equal_tree (tc.in (), tc_copy.in ()));
+      if (!is_equal_tree (tc.in (), tc_copy.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: tc != tc_copy\n"));
+          result = 1;
+        }
 
       TreeController_var tc_result =
-        test->reflect (tc.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      // The following two assertions will fail until bug 1390 is fixed.
-      ACE_ASSERT (!is_equal_tree (tc.in (), tc_result.in ()));
-      ACE_ASSERT (is_equal_tree (tc.in (), tc_copy.in ()));
+        test->reflect (tc.in ());
 
-      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // The following two ifs will fail until bug 1390 is fixed.
+      if (is_equal_tree (tc.in (), tc_result.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: tc == tc_result\n"));
+          result = 1;
+        }
+      if (result == 0 && !is_equal_tree (tc.in (), tc_copy.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: tc != tc_copy\n"));
+          result = 1;
+        }
+
+      test->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
-  return 0;
-
+  return result;
 }
 
 int
@@ -186,7 +186,7 @@ Client_Task::is_equal_tree (TreeController * tree1, TreeController * tree2)
 {
   return is_equal_node (tree1->root (), tree2->root ());
 }
-  
+
 
 int
 Client_Task::is_equal_node (BaseNode * node1, BaseNode * node2)
@@ -230,7 +230,7 @@ Client_Task::dump_node (BaseNode *bn, int indent)
   else
   {
     ACE_DEBUG ((LM_DEBUG,
-                "%x <BaseNode> \n",
+                "%x <BaseNode>\n",
                 bn));
   }
 

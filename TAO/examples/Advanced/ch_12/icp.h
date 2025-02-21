@@ -1,28 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Advanced/ch_12
-//
-// = FILENAME
-//    icp.h
-//
-// = AUTHORS
-//   Source code used in TAO has been modified and adapted from the
-//   code provided in the book, "Advanced CORBA Programming with C++"
-//   by Michi Henning and Steve Vinoski. Copyright
-//   1999. Addison-Wesley, Reading, MA.  Used with permission of
-//   Addison-Wesley.
-//
-//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    icp.h
+ *
+ *  @author Source code used in TAO has been modified and adapted from thecode provided in the book
+ *  @author "Advanced CORBA Programming with C++"by Michi Henning and Steve Vinoski. Copyright1999. Addison-Wesley
+ *  @author Reading
+ *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _ICP_H
 #define _ICP_H
 
-extern "C" 
+extern "C"
 {
   int ICP_online (unsigned long id);   // Add device
   int ICP_offline (unsigned long id);  // Remove device
@@ -33,11 +25,9 @@ extern "C"
                void *value,
                size_t len);
   // Set attribute
-  int ICP_set (unsigned long id, 
+  int ICP_set (unsigned long id,
                const char *attr,
                const void *value);
 }
-
-size_t min(const size_t len1, const size_t len2);
 
 #endif /* _ICP_H */

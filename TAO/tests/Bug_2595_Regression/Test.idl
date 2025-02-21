@@ -1,0 +1,35 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file Test.idl
+ */
+//=============================================================================
+
+
+module Test
+{
+  struct Fls
+  {
+    long l_mem;
+    double d_mem;
+  };
+
+  struct Vls
+  {
+    double d_mem;
+    string s_mem;
+  };
+
+  /// A very simple interface
+  interface Hello
+  {
+    void op(out Fls fstruct, out Vls vstruct);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};

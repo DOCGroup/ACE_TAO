@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef TAO_TUTORIAL_QUOTER_RT_EVENT_SERVICE_STOCK_I_H
 #define TAO_TUTORIAL_QUOTER_RT_EVENT_SERVICE_STOCK_I_H
@@ -16,15 +13,14 @@ public:
   Quoter_Stock_i (const char *symbol,
                   const char *full_name,
                   CORBA::Double price);
-  ~Quoter_Stock_i (void);
+  ~Quoter_Stock_i ();
 
-  char *symbol () throw (CORBA::SystemException);
-  char *full_name () throw (CORBA::SystemException);
-  CORBA::Double price () throw (CORBA::SystemException);
-  void set_price (CORBA::Double new_price) throw (CORBA::SystemException);
+  char *symbol ();
+  char *full_name ();
+  CORBA::Double price ();
+  void set_price (CORBA::Double new_price);
 
-  void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    throw (CORBA::SystemException);
+  void disconnect_push_supplier ();
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
 

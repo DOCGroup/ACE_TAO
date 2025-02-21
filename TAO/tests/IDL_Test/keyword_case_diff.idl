@@ -1,0 +1,24 @@
+
+//=============================================================================
+/**
+ *  @file    keyword_case_diff.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ */
+//=============================================================================
+
+
+module MyModule {
+  interface PortType { // This type differs from an IDL keyword only in case
+    exception MyException {
+      string myString;
+    };
+
+    void myMethod ()
+      raises (MyModule::PortType::MyException);
+  };
+};
+

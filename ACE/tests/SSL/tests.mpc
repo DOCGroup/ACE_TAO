@@ -1,0 +1,24 @@
+//  -*- MPC -*-
+project(Bug_2912_Regression_Test) : acetest, ssl {
+  avoids += ace_for_tao
+  exename = Bug_2912_Regression_Test
+  Source_Files {
+    Bug_2912_Regression_Test.cpp
+  }
+}
+
+project(SSL Asynch_Stream Test) : acetest, ssl {
+  avoids += ace_for_tao
+  exename = SSL_Asynch_Stream_Test
+  Source_Files {
+    SSL_Asynch_Stream_Test.cpp
+  }
+}
+
+project(Thread Pool Reactor SSL Test) : acetest, ssl {
+  exename = Thread_Pool_Reactor_SSL_Test
+  Source_Files {
+    Thread_Pool_Reactor_SSL_Test.cpp
+  }
+}
+

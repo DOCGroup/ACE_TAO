@@ -4,8 +4,6 @@
 /**
  *  @file Queued_Message.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -23,8 +21,16 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 struct iovec;
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
 class ACE_Allocator;
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_ORB_Core;
 
 /**
  * @class TAO_Queued_Message
@@ -45,10 +51,10 @@ class ACE_Allocator;
  *
  * In many cases the message corresponds to some application request,
  * the application may be blocked waiting for the request to be sent,
- * even more importantlyl, the ORB can be configured to use the
+ * even more importantly, the ORB can be configured to use the
  * Leader/Followers strategy, in which case one of the waiting threads
- * can be required to wake up before its message completes
- * each message may contain a 'Sent_Notifier'
+ * can be required to wake up before its message completes.
+ * Each message may contain a 'Sent_Notifier'
  *
  * <H4>NOTE:</H4> The contents of the ACE_Message_Block may have been
  * allocated from TSS storage, in that case we cannot steal them.
@@ -62,17 +68,17 @@ class ACE_Allocator;
  *       memory, to avoid the data copy in this path.  What happens
  *       if the there is no queueing?  Can we check that before
  *       allocating the memory?
- *
  */
 class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
 {
 public:
   /// Constructor
-  TAO_Queued_Message (ACE_Allocator *alloc = 0,
-                      int is_heap_allocated = 0);
+  TAO_Queued_Message (TAO_ORB_Core *oc,
+                      ACE_Allocator *alloc = 0,
+                      bool is_heap_allocated = false);
 
   /// Destructor
-  virtual ~TAO_Queued_Message (void);
+  virtual ~TAO_Queued_Message ();
 
   /** @name Intrusive list manipulation
    *
@@ -100,37 +106,36 @@ public:
    */
   //@{
   /// Set/get the next element in the list
-  virtual TAO_Queued_Message *next (void) const;
+  TAO_Queued_Message *next () const;
 
   /// Set/get the previous element in the list
-  virtual TAO_Queued_Message *prev (void) const;
+  TAO_Queued_Message *prev () const;
 
   /// Remove this element from the list
-  virtual void remove_from_list (TAO_Queued_Message *&head,
-                                 TAO_Queued_Message *&tail);
+  void remove_from_list (TAO_Queued_Message *&head,
+                         TAO_Queued_Message *&tail);
 
   /// Insert the current element at the tail of the queue.
-  virtual void push_back (TAO_Queued_Message *&head,
-                          TAO_Queued_Message *&tail);
+  void push_back (TAO_Queued_Message *&head,
+                  TAO_Queued_Message *&tail);
 
   /// Insert the current element at the head of the queue.
-  virtual void push_front (TAO_Queued_Message *&head,
-                           TAO_Queued_Message *&tail);
+  void push_front (TAO_Queued_Message *&head,
+                   TAO_Queued_Message *&tail);
   //@}
 
   /** @name Template Methods
    */
   //@{
-
   /// Return the length of the message
   /**
    * If the message has been partially sent it returns the number of
    * bytes that are still not sent.
    */
-  virtual size_t message_length (void) const = 0;
+  virtual size_t message_length () const = 0;
 
   /// Return 1 if all the data has been sent
-  virtual int all_data_sent (void) const = 0;
+  virtual int all_data_sent () const = 0;
 
   /// Fill up an io vector using the connects of the message
   /**
@@ -158,7 +163,7 @@ public:
    * message to update its state and determine if all the data has
    * been sent already.
    *
-   * @param byte_count The number of bytes succesfully sent.  The
+   * @param byte_count The number of bytes successfully sent.  The
    *                   TAO_Queued_Message should decrement this value
    *                   by the number of bytes that must still be sent.
    * @return Returns 1 if the TAO_Queued_Message has any more data to
@@ -185,7 +190,24 @@ public:
    * Asynchronous (SYNC_NONE) messages are allocated from the heap (or
    * a pool), they need to be reclaimed explicitly.
    */
-  virtual void destroy (void) = 0;
+  virtual void destroy () = 0;
+
+  /// Check for timeout
+  /**
+   * @param now Pass in the current time using
+   *  ACE_High_Res_Timer::gettimeofday_hr().
+   *  This is a parameter in order to avoid calling gettimeofday_hr() inside
+   *  of this method (which will be called in a tight loop).
+   * @return true if the relative roundtrip timeout has expired.
+   */
+  virtual bool is_expired (const ACE_Time_Value &now) const;
+
+  /// Provide a hook for copying the underlying data
+  /**
+   * @param chain For use in determining origin of underlying data.
+   * This parameter must not be modified (through const_cast).
+   */
+  virtual void copy_if_necessary (const ACE_Message_Block* chain) = 0;
   //@}
 
 protected:
@@ -196,17 +218,26 @@ protected:
   ACE_Allocator *allocator_;
 
   /*
-   * A flag that acts as a boolean to indicate whether @a this is on
-   * stack or heap. A non-zero value indicates that @a this was created
-   * on  heap.
+   * A flag to indicate whether @a this is on stack or heap. A true value
+   * indicates that @a this was created on  heap.
    */
-  int is_heap_created_;
+  bool const is_heap_created_;
+
+  /// Cached copy of ORB_Core pointer
+  TAO_ORB_Core *orb_core_;
 
 private:
   /// Implement an intrusive double-linked list for the message queue
   TAO_Queued_Message *next_;
   TAO_Queued_Message *prev_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+# include "tao/Queued_Message.inl"
+#endif /* __ACE_INLINE__ */
+
 
 #include /**/ "ace/post.h"
 

@@ -1,15 +1,9 @@
-// $Id$
-
 #include "Test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Task.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 class MT_Task : public ACE_Task_Base
 {
@@ -25,7 +19,7 @@ public:
   {
   }
 
-  int svc (void);
+  int svc ();
 
 private:
   PortableServer::POA_var p_;
@@ -35,47 +29,36 @@ private:
 };
 
 int
-MT_Task::svc (void)
+MT_Task::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       for (CORBA::Long i = 0;
            i != 2000;
            ++i)
         {
           CORBA::Object_var one_ref =
-            this->p_->servant_to_reference (this->one_
-                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->p_->servant_to_reference (this->one_);
 
           CORBA::Object_var two_ref =
-            this->p_->servant_to_reference (this->two_
-                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->p_->servant_to_reference (this->two_);
 
           CORBA::Object_var three_ref =
-            this->p_->servant_to_reference (this->three_
-                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->p_->servant_to_reference (this->three_);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Caugh exception \n");
+      ex._tao_print_exception ("(%P|%t) Caugh exception\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -94,26 +77,23 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -121,26 +101,24 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      One_Impl *one_impl;
+      One_Impl *one_impl = 0;
       ACE_NEW_RETURN (one_impl,
                       One_Impl (orb.in ()),
                       1);
-      Two_Impl *two_impl;
+      Two_Impl *two_impl = 0;
       ACE_NEW_RETURN (two_impl,
                       Two_Impl (orb.in ()),
                       1);
 
-      Three_Impl *three_impl;
+      Three_Impl *three_impl = 0;
       ACE_NEW_RETURN (three_impl,
                       Three_Impl (orb.in ()),
                       1);
-
 
       PortableServer::ServantBase_var owner_transfer1 (one_impl);
       PortableServer::ServantBase_var owner_transfer2 (two_impl);
@@ -151,26 +129,26 @@ main (int argc, char *argv[])
       PortableServer::POA_var first_poa =
         root_poa->create_POA ("first POA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+                              policies);
 
       PortableServer::ObjectId_var oid1 =
-        first_poa->activate_object (one_impl
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        first_poa->activate_object (one_impl);
 
       PortableServer::ObjectId_var oid2 =
-        first_poa->activate_object (two_impl
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        first_poa->activate_object (two_impl);
 
       PortableServer::ObjectId_var oid3 =
-        first_poa->activate_object (three_impl
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        first_poa->activate_object (three_impl);
 
+      // Output the IOR to the <ior_output_file>
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s\n",
+                           ior_output_file),
+                           1);
+      ACE_OS::fprintf (output_file, "%s", "started");
+      ACE_OS::fclose (output_file);
 
       MT_Task task (first_poa.in (),
                     one_impl,
@@ -185,24 +163,19 @@ main (int argc, char *argv[])
 
       task.thr_mgr ()->wait ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - test finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

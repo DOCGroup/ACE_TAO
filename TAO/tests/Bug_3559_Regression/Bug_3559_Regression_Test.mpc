@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project(*Server): taoserver {
+  Source_Files {
+    Bug_3559_Regression_Test.cpp
+  }
+}

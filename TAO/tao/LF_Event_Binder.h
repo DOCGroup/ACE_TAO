@@ -4,8 +4,6 @@
 /**
  *  @file LF_Event_Binder.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -21,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_LF_Follower;
 
 /**
@@ -33,16 +33,22 @@ class TAO_Export TAO_LF_Event_Binder
 {
 public:
   /// Constructor
-  TAO_LF_Event_Binder (TAO_LF_Event *event,
-                       TAO_LF_Follower *folloer);
+  TAO_LF_Event_Binder (TAO_LF_Event *event, TAO_LF_Follower *folloer);
 
   /// Destructor
-  ~TAO_LF_Event_Binder (void);
+  ~TAO_LF_Event_Binder ();
+
+private:
+  void operator= (const TAO_LF_Event_Binder &);
+  TAO_LF_Event_Binder (const TAO_LF_Event_Binder &);
 
 private:
   /// Keep a reference to the leader follower
-  TAO_LF_Event *event_;
+  TAO_LF_Event * const event_;
+  TAO_LF_Follower * const follower_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/LF_Event_Binder.inl"

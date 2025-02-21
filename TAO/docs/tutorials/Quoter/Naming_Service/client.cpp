@@ -1,18 +1,14 @@
-//
-// $Id$
-//
 
 #include "QuoterC.h"
 #include <orbsvcs/CosNamingC.h>
 #include "ace/streams.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try {
     // First initialize the ORB, that will remove some arguments...
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv,
-                       "" /* the ORB name, it can be anything! */);
+      CORBA::ORB_init (argc, argv);
 
     // There must be at least two arguments, the first is the factory
     // name, the rest are the names of the stock symbols we want to
@@ -44,7 +40,7 @@ int main (int argc, char* argv[])
       try {
         // Get the stock object
         Quoter::Stock_var stock =
-          factory->get_stock (argv[i]);
+          factory->get_stock (ACE_TEXT_ALWAYS_CHAR (argv[i]));
 
         // Get its name, put it on a _var so it is automatically
         // released!
@@ -66,7 +62,7 @@ int main (int argc, char* argv[])
     // Finally destroy the ORB
     orb->destroy ();
   }
-  catch (CORBA::Exception &) {
+  catch (const CORBA::Exception &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;

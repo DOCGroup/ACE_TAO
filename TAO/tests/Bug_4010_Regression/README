@@ -1,0 +1,44 @@
+/**
+
+
+
+@page Bug 4010 Regression Test
+
+This test demonstrates bug 4010.
+
+The IDL and server code are unchanged from the basic Hello test.
+
+The client is modified to perform the Hello test periodically for
+different instances of the server.
+
+The server is run twice to demonstrate the client's attempt to reuse a stale
+connection from the first instance to contact an object reference from the second.
+The endpoint is assigned for the server to demonstrate the COMM_FAILURE exception on
+a stale transport.
+
+
+  To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+  the script returns 0 if the test was successful.
+
+The expected output would look something like this -
+
+(7715|3072272080) - string returned <Hello there!>
+(7714|3070171360) server - event loop finished
+(7715|3072272080) - shutdown requested
+(7715|3072272080) - string returned <Hello there!>
+(7715|3072272080) - shutdown requested
+(7716|3071477984) server - event loop finished
+
+With the bug, the output looks like this -
+(7731|3072239312) - string returned <Hello there!>
+(7724|3072022752) server - event loop finished
+(7731|3072239312) - shutdown requested
+(7731|3072239312) EXCEPTION, Exception caught:
+system exception, ID 'IDL:omg.org/CORBA/COMM_FAILURE:1.0'
+TAO exception, minor code = 0 (failed to recv request response; unspecified errno), completed = MAYBE
+
+*/
+

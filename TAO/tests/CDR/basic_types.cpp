@@ -1,40 +1,30 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//    basic_types.cpp
-//
-// = DESCRIPTION
-//   Test the basic funcionality of a CDR stream by encoding some
-//   basic types and then decoding them again.
-//
-// = AUTHORS
-//    Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    basic_types.cpp
+ *
+ * Test the basic funcionality of a CDR stream by encoding some
+ * basic types and then decoding them again.
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "tao/ORB.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (CDR,
-           basic_types,
-           "$Id$")
 
 static int n = 4096;
 static int nloops = 100;
 
 struct CDR_Test_Types
 {
-  CDR_Test_Types (void);
+  CDR_Test_Types ();
 
   CORBA::Octet o;
   CORBA::Short s;
@@ -50,7 +40,7 @@ struct CDR_Test_Types
   CORBA::Short a[ARRAY_SIZE];
 };
 
-CDR_Test_Types::CDR_Test_Types (void)
+CDR_Test_Types::CDR_Test_Types ()
   : o (1), s (2), l (4),
     str ("abc"), d (8)
 {
@@ -197,13 +187,13 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Any did not receive a short [%d] \n",
+                               "Any did not receive a short [%d]\n",
                                i),
                               1);
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Any decode failed [%d] \n",
+                           "Any decode failed [%d]\n",
                            i),
                           1);
     }
@@ -212,17 +202,13 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      ACE_Get_Opt get_opt (argc, argv, "dn:l:");
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:l:"));
       int opt;
 
       while ((opt = get_opt ()) != EOF)
@@ -263,9 +249,9 @@ main (int argc, char *argv[])
                 TAO_InputCDR input (output);
                 if (TAO_debug_level > 0)
                   {
-                    ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
+                    ACE_DEBUG ((LM_DEBUG, "Output CDR:\n"));
                     ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-                    ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
+                    ACE_DEBUG ((LM_DEBUG, "Input CDR:\n"));
                     ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
                   }
 
@@ -276,12 +262,11 @@ main (int argc, char *argv[])
               }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Basic_Types");
+      ex._tao_print_exception ("Basic_Types");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -1,0 +1,71 @@
+! Application linker command file for ACE tests.
+
+! Visual C++ Compiler with PC-Compatible Target
+@vc.emb
+
+! PC-Compatible Screen Driver
+!@pcat_sc.emb
+
+! PC-Compatible Keyboard Driver
+!@pcat_kb.emb
+
+! Multithread Support, Debug version
+@vcmtd.emb
+
+! Structured Exception Handling
+@strucexc.emb
+
+! Floating Point Emulator
+!@fpem.emb
+
+! MS-DOS Compatible File System
+!@lfs.emb
+
+! DLL Loader
+!@ldr.emb
+
+! TCP/IP Support
+@winsock.emb
+
+! TCP/IP Driver
+!@eth-smc.emb      ! SMC 8003/8216/8416
+!@eth-smc9.emb     ! SMC 91C92/91C94
+@eth-3com.emb     ! 3Com 3C509
+!@eth-ne2k.emb     ! NE2000
+!@eth-dec.emb      ! Digital 2114x
+!@ppp16550.emb     ! PPP 8250/16450/16550
+!@slp16550.emb     ! SLIP/CSLIP  8250/16450/16550
+
+! MicroWeb Server
+!@microweb.emb
+
+! FTP Server
+!@ftpserve.emb
+
+! Event Logging
+!@log.emb
+
+! PC Card Support
+!@pccard.emb
+
+! PC Card Enablers
+!@cs-ser.emb   ! Serial Ports
+!@cs-ide.emb   ! ATA Disk Drives
+!@cs-3com.emb  ! 3Com Ethernet
+!@cs-ne2k.emb  ! NE2000 Ethernet
+
+! M-Systems Flash Support
+!@pcfd.emb         ! PC-FD
+!@dochip2.emb      ! DiskOnChip 2000
+
+! The section below contains the user-specified switches from the
+! Extra Application Link File Switches section of the Extra Linker Switches
+! property sheet.
+!
+
+! 32K stack works well. The 8K default is way too small
+-stack 32767
+
+! Many of the ACE tests are too large to load in the default space without
+! running over the ROM area at some point, so go up.
+-offset 10_0000h

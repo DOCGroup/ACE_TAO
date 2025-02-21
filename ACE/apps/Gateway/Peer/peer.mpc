@@ -1,0 +1,18 @@
+// -*- MPC -*-
+project(Gateway_Peer) :  ace_output, acelib {
+  sharedname = Gateway_Peer
+  Source_Files {
+    Options.cpp
+    Peer.cpp
+  }
+}
+
+project(gateway_peerd) : aceexe {
+  exename = peerd
+  after += Gateway_Peer
+  libs += Gateway_Peer
+
+  Source_Files {
+    peerd.cpp
+  }
+}

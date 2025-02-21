@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$ */
+/* -*- C++ -*-  */
 // generate_export_file.pl,v 1.8 2001/03/04 09:16:29 nanbor Exp
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl

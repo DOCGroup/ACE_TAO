@@ -1,0 +1,14 @@
+// -*- MPC -*-
+project (*Handler) : aceexe {
+  exename = handler
+  Source_Files {
+    Connection_Handler.cpp
+  }
+}
+
+project (*test_upipe) : aceexe, avoids_ace_for_tao {
+  exename = test_upipe
+  Source_Files {
+    test_upipe.cpp
+  }
+}

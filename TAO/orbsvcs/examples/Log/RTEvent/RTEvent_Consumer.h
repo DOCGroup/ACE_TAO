@@ -4,11 +4,8 @@
 /**
  *  @file   RTEvent_Consumer.h
  *
- *  $Id$
- *
  *  An example of using the RTEvent_Logging_Service.
  *  The RTEvent_Consumer consumes log-generated events.
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
@@ -35,19 +32,16 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   It simply registers for one event type.
   //
 public:
-  Consumer (void);
+  Consumer ();
   // Constructor
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:
@@ -66,7 +60,6 @@ private:
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_;
   // The proxy that we are connected to.
-
 };
 
 #endif /* RTEVENT_CONSUMER_H */

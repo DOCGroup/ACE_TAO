@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : orbsvcslib, event {
+  after     += CosNotification
+  libs      += TAO_CosNotification
+  tagchecks += Notify
+}

@@ -1,10 +1,7 @@
-//
-// $Id$
-//
 
 interface Job
 {
   void work (in unsigned long work);
 
- oneway void shutdown ();
+  oneway void shutdown ();
 };

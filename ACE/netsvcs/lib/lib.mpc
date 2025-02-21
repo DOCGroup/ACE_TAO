@@ -1,0 +1,20 @@
+// -*- MPC -*-
+project(netsvcs): ace_output, acelib {
+  avoids       += ace_for_tao
+  sharedname    = netsvcs
+  dynamicflags += ACE_BUILD_SVC_DLL
+  Source_Files {
+    Time_Request_Reply.cpp
+    TS_Server_Handler.cpp
+    TS_Clerk_Handler.cpp
+    Client_Logging_Handler.cpp
+    Name_Handler.cpp
+    Log_Message_Receiver.cpp
+    Server_Logging_Handler.cpp
+    Token_Handler.cpp
+  }
+  Template_Files {
+    Base_Optimizer.cpp
+    Server_Logging_Handler_T.cpp
+  }
+}

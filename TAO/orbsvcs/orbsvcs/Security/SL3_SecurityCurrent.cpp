@@ -1,17 +1,10 @@
-// $Id$
-
-#include "SL3_SecurityCurrent.h"
-
-
-ACE_RCSID (Security,
-           SL3_SecurityCurrent,
-           "$Id$")
-
+#include "orbsvcs/Security/SL3_SecurityCurrent.h"
 
 #if !defined (__ACE_INLINE__)
-# include "SL3_SecurityCurrent.inl"
+# include "orbsvcs/Security/SL3_SecurityCurrent.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::SecurityCurrent::SecurityCurrent (size_t tss_slot,
                                             TAO_ORB_Core * oc)
@@ -21,13 +14,12 @@ TAO::SL3::SecurityCurrent::SecurityCurrent (size_t tss_slot,
 }
 
 
-TAO::SL3::SecurityCurrent::~SecurityCurrent (void)
+TAO::SL3::SecurityCurrent::~SecurityCurrent ()
 {
 }
 
 SecurityLevel3::ClientCredentials_ptr
-TAO::SL3::SecurityCurrent::client_credentials (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::SecurityCurrent::client_credentials ()
 {
   TAO::SL3::SecurityCurrent_Impl * impl = this->implementation ();
 
@@ -35,15 +27,13 @@ TAO::SL3::SecurityCurrent::client_credentials (ACE_ENV_SINGLE_ARG_DECL)
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
-                      SecurityLevel3::ClientCredentials::_nil ());
+    throw CORBA::BAD_INV_ORDER ();
 
-  return impl->client_credentials (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return impl->client_credentials ();
 }
 
 CORBA::Boolean
-TAO::SL3::SecurityCurrent::request_is_local (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SL3::SecurityCurrent::request_is_local ()
 {
   TAO::SL3::SecurityCurrent_Impl * impl = this->implementation ();
 
@@ -51,7 +41,9 @@ TAO::SL3::SecurityCurrent::request_is_local (ACE_ENV_SINGLE_ARG_DECL)
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), false);
+    throw CORBA::BAD_INV_ORDER ();
 
-  return impl->request_is_local (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return impl->request_is_local ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

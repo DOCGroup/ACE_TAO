@@ -1,33 +1,22 @@
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    interface_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Interfaces in the client inline file
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
 
-ACE_RCSID (be_visitor_interface,
-           interface_ci,
-           "$Id$")
+//=============================================================================
+/**
+ *  @file    interface_ci.cpp
+ *
+ *  Visitor generating code for Interfaces in the client inline file
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-// **************************************************
-// Interface visitor for client inline
-// **************************************************
+#include "interface.h"
 
 be_visitor_interface_ci::be_visitor_interface_ci (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_ci::~be_visitor_interface_ci (void)
+be_visitor_interface_ci::~be_visitor_interface_ci ()
 {
 }
 
@@ -54,7 +43,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   // Nothing to generate for a local interface except from it scope.
   if (node->is_local ())
     {
-      node->cli_inline_gen (I_TRUE);
+      node->cli_inline_gen (true);
       return 0;
     }
 
@@ -66,23 +55,20 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  os->gen_ifdef_macro (node->flat_name (), "");
+  TAO_INSERT_COMMENT (os);
 
   if (node->is_abstract ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name ()
-          << " (void)" << be_nl
-          << "{}" << be_nl << be_nl;
+          << " ()" << be_nl
+          << "{}" << be_nl_2;
 
       *os << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name ()
           << " (const " << node->local_name () << " &rhs)" << be_idt_nl
-          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (rhs)" << be_uidt_nl
+          << ": ::CORBA::AbstractBase (rhs)" << be_uidt_nl
           << "{}";
     }
 
@@ -91,22 +77,33 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   if (!node->is_local () && !node->is_abstract ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "ACE_INLINE" << be_nl;
       *os << node->name () << "::"
           << node->local_name () << " ("
           << be_idt << be_idt_nl
-          << "IOP::IOR *ior," << be_nl
-          << "TAO_ORB_Core *oc" << be_uidt_nl
-          << ")" << be_nl;
-      *os << ": ACE_NESTED_CLASS (CORBA, Object) (ior, oc)," << be_idt_nl
-          << "the"<< node->base_proxy_broker_name () << "_ (0)" 
-          << be_uidt << be_uidt_nl
+          << "::IOP::IOR *ior," << be_nl
+          << "TAO_ORB_Core *oc)" << be_uidt_nl;
+      *os << ": ::CORBA::Object (ior, oc)";
+
+      *os << be_uidt_nl
           << "{" << be_nl
           << "}" ;
     }
 
-  os->gen_endif ();
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
   return 0;
 }
+
+int
+be_visitor_interface_ci::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_ci::visit_connector (be_connector *node)
+{
+  return this->visit_interface (node);
+}
+

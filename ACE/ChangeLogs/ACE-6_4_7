@@ -1,0 +1,427 @@
+commit 99f855f9f3ab5102ce07424fd2968f8e330462a6
+Author: Steve Huston <shuston@riverace.com>
+Date:   Tue Mar 13 17:03:33 2018 -0400
+
+    Fix IPv4 case
+
+commit ba891f62e7f7d1d5255cbff26bf31f19d299a028
+Merge: 5a4a08e1606 2ea8eaff34b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 12 21:26:07 2018 +0100
+
+    Merge pull request #593 from jwillemsen/jwi-comp38
+    
+    Sun Studio 5.13 and older can't handle this
+
+commit 2ea8eaff34b62be1b38c3291779bae72a3dd3e56
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 12 18:19:20 2018 +0100
+
+    Sun Studio 5.13 and older can't handle this
+    
+        * ACE/tests/Compiler_Features_38_Test.cpp:
+
+commit 4cbfbc87e403652de1493685778392309524a095
+Merge: 1879d43292c 168208dfd6b
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Mar 9 17:16:58 2018 -0500
+
+    Merge pull request #592 from DOCGroup/fix-ipv6only-handling
+    
+    Remove preproc checks - if ACE_HAS_IPV6 is set, the IPV6 defs should be there too.
+
+commit 168208dfd6bb859a48a7470730127de8cc22c639
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Mar 9 16:02:04 2018 -0500
+
+    Remove preproc checks - if ACE_HAS_IPV6 is set, the IPV^ defs should be there too.
+
+commit 8ebc1623b063e89a2e3e3b225af7c54dc2c5de2f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 9 08:52:30 2018 +0100
+
+    Check if __GNUC__ is defined and only log that C++ support is ok when the test code has been compiled
+    
+        * ACE/tests/Compiler_Features_38_Test.cpp:
+
+commit 4cfd0f26bde05974b3c4152463f92eb91f8ff6ad
+Merge: 2018a59b318 643658368ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 6 18:52:35 2018 +0100
+
+    Merge pull request #589 from jwillemsen/jwi-oldidtag
+    
+    Remove old left over version commit message
+
+commit 643658368ad9c4db6ee41aa22036a8e7c9994708
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 6 18:43:59 2018 +0100
+
+    Remove old left over version commit message
+    
+        * ACE/bin/MakeProjectCreator/config/bmake.features:
+
+commit 4fa7cca17c3ff0c07f4c1b7b1bda71b6e131092b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 6 11:41:04 2018 +0100
+
+    Any bcc32 version doesn't support inlined assembly
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 45df27f3869f66d895964f18a582136bb44333af
+Author: shuai.lou <shuai.lou@greatopensource.com>
+Date:   Fri Mar 2 22:34:46 2018 +0800
+
+    Bugfix: ACE abort when use %l and the msg len exceed ACE_MAXLOGMSGLEN
+
+commit 8e034deb5cee9701aa396f10cfc16c01be0acd08
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Mar 1 09:16:13 2018 -0500
+
+    Remove $Id$ to resolve fuzz error
+
+commit 1fee8620f369c4699a3ab44144a9d19a1e510303
+Merge: 296d82b7a2f 71a517bfb38
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Feb 28 19:02:06 2018 -0500
+
+    Merge out from master
+
+commit 296d82b7a2fcff3d9cc704039a25fb0189669c17
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Feb 28 18:54:05 2018 -0500
+
+    Add UDP changes and test program
+
+commit 222b5db197187810b1fd1b54aad9fc8dc0ffd774
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Feb 28 18:30:19 2018 -0500
+
+    Added description of changes
+
+commit d4c520ce4cf5fc14aa296936e6c80cccbc12757e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Feb 26 11:24:58 2018 -0600
+
+    NEWS for upcoming release
+
+commit 386d660e8d4f805190f0afcc68e3b3a8b0827da7
+Merge: 7675cb72f6b 63265355d6c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 26 09:59:19 2018 +0100
+
+    Merge pull request #580 from jwillemsen/jwi-wfmo-versioned
+    
+    List major changes
+
+commit 63265355d6c8d9677f048ee0dd628a82608b904e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 26 09:58:37 2018 +0100
+
+    List major changes
+    
+        * ACE/NEWS:
+
+commit 7675cb72f6b415ae19a278ac6364089eb57b4fff
+Merge: 61beb04ce03 7ff4828b1d6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Feb 25 10:20:43 2018 +0100
+
+    Merge pull request #579 from DOCGroup/jwillemsen-patch-2
+    
+    Fixed mingw error
+
+commit 7ff4828b1d6fd976240a3aa15401f8a907f8119e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Feb 25 08:40:13 2018 +0100
+
+    Fixed mingw error
+
+commit fee85964688d1ac7da3cb792906d857440f6c072
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Feb 25 08:17:33 2018 +0100
+
+    Fixed error
+
+commit 250aef2e14bc22a9faffefb1999bc71646105d1c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 24 15:12:38 2018 +0100
+
+    Fixed errors with versioned namespace builds
+    
+        * ACE/examples/Reactor/WFMO_Reactor/Exceptions.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
+
+commit b3a525bcc9a7e575b8e17e0abb9dd7d8f39cb5a7
+Merge: cb29bd46571 e46f45e6a00
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 17 22:32:19 2018 +0100
+
+    Merge pull request #574 from jwillemsen/jwi-taoidlleak
+    
+    msvc7.1 and gcc 4.1.1 can't handle this test so disable this test for…
+
+commit e46f45e6a00228722f3694152fcb02e79a9c1bc9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 17 20:05:27 2018 +0100
+
+    msvc7.1 and gcc 4.1.1 can't handle this test so disable this test for those compilers
+
+commit cb29bd46571e428d1d71c860ec9010d29a3a1fe4
+Merge: 4665969af11 d14029823bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 16 16:05:33 2018 +0100
+
+    Merge pull request #573 from jwillemsen/jwi-taoidlleak
+    
+    Add new C++ compiler test for testing a feature TAO is using
+
+commit d14029823bf4be658affed6c0a413b45534e5cfe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 16 12:39:02 2018 +0100
+
+    Initialise member to solve Codacy warning
+    
+        * ACE/tests/Compiler_Features_38_Test.cpp:
+
+commit 785cca646211feed9c238cf8d219687b85552546
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 16 12:09:57 2018 +0100
+
+    Add constructor to make codacy happy
+    
+        * ACE/tests/Compiler_Features_38_Test.cpp:
+
+commit 56cba7ad62f51463ddaf89894db16cabc2193b9c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 16 11:36:35 2018 +0100
+
+    Add new compiler test for a C++ feature TAO is using
+    
+        * ACE/tests/Compiler_Features_38_Test.cpp:
+          Added.
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit eb04d4bc9c163aed6f509d2c9888c65b3f1f622f
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Jan 29 19:34:50 2018 -0500
+
+    Fix typos, compile errors
+
+commit a13ddfc5371ca69a38c7d66906bd357a8ca87830
+Merge: c5d68d4ed60 220e906922b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 27 14:17:58 2018 +0100
+
+    Merge pull request #569 from jwillemsen/master
+    
+    Performance improvements
+
+commit 220e906922bcfd91013611a19923094f5c95f96b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 27 11:11:06 2018 +0100
+
+    Fixed compile error
+    
+        * ACE/ace/XML_Utils/XMLSchema/id_map.hpp:
+
+commit 6bd80e559a75a00ca328997d7e54acc6d6030c79
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 27 11:08:01 2018 +0100
+
+    Pass strings as const&
+    
+        * ACE/ace/XML_Utils/XMLSchema/id_map.hpp:
+
+commit d5ba9d4e65ade6cc83a76c5cc47eab41ed3ad941
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 27 10:26:34 2018 +0100
+
+    Check trailing whitespaces also for .py files
+    
+        * ACE/bin/fuzz.pl:
+
+commit c5d68d4ed60d031445356d670fa293d78f04c505
+Merge: 6639d53a99c fb5c132cda3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 26 18:57:16 2018 +0100
+
+    Merge pull request #568 from jwillemsen/master
+    
+    Update XML_Utils file with the latest from xsc
+
+commit fb5c132cda315cf72f7ba0873c2f06b60ca8b952
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 26 16:18:10 2018 +0100
+
+    Mark constructor explicit
+    
+        * ACE/ace/XML_Utils/XMLSchema/id_map.hpp:
+
+commit d32216e0244b969acfffa4776073637519ceaa02
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 26 15:53:25 2018 +0100
+
+    Pull in latest version from XSC which adds a new operation and provides some more information when an error occurs
+    
+        * ACE/ace/XML_Utils/XMLSchema/id_map.hpp:
+
+commit 1a055d24a37d709ff78364ccf0b84fae594107e6
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Jan 22 18:55:00 2018 -0500
+
+    Add Howard's changes to allow ipv6-only on SOCK_Acceptor
+
+commit 29a39ca0376d04d1675b1642d9a06d509bca49d2
+Merge: 98ccf5cd1c7 6f09295375e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 19 08:59:51 2018 -0600
+
+    Merge pull request #566 from iguessthislldo/master
+    
+    MPC global.features wireshark2 renamed to wireshark_cmake
+
+commit 9da59f9347aca3bd71a291b0a4b0b24666a82004
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 19 11:04:26 2018 +0100
+
+    Removed old left over cvs id tag
+
+commit 6f09295375e7dbe65ad6087c4be02c93dd84d2ac
+Author: Frederick Hornsey <fred@hornsey.us>
+Date:   Wed Jan 17 18:22:19 2018 -0600
+
+    MPC global.features wireshark2 renamed to wireshark_cmake
+
+commit 41018b2be93ea1f5ef30d74ca9a0b9233e86630a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Sat Jan 13 12:10:40 2018 -0600
+
+    Compiler Features 32 Test: need to check Apple clang version numbers which use a different scheme than real clang version numbers
+
+commit 26a9a5469899f66eb5816d9d585b296cf49df28a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Jan 12 15:23:17 2018 -0600
+
+    Compiler Features 24 Test: skip older clang versions
+
+commit 7d0117c30506099a968a0dc0d9229330217ec9ed
+Merge: b0ef5cf1876 484dcbf6f2e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 11 13:54:45 2018 -0600
+
+    Merge pull request #557 from iguessthislldo/master
+    
+    Match MPC for Wireshark 2 Support
+
+commit e5d6c55227f9ee795d2e8ff8473296848a7e0190
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Jan 11 13:54:08 2018 -0600
+
+    check clang version number for compiler test workaround
+
+commit 90adcc25acb454ce3de98443fb76e9a6d52de871
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Jan 11 12:13:06 2018 -0600
+
+    clang workarounds for Compiler_Features_32_Test
+
+commit db6ca5ccdcb52899ce9571ff24897d50529de13b
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Jan 11 11:10:39 2018 -0600
+
+    clang: set ACE_HAS_CPP11 based on predefined macros
+
+commit 484dcbf6f2e089757a1fe38cd3638da1482f03df
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Fri Jan 5 13:16:29 2018 -0600
+
+    Match MPC for Wireshark 2 Support
+    
+    Added wireshark_any and wireshark2 to global.features for Wireshark2 Support  Windows to match the global.features file in MPC.
+
+commit 6fbf5788f0589ae7cde5448baeda0d6e9b1bfc79
+Merge: ac9ffb65e75 4ac686684c6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jan 2 09:36:50 2018 -0600
+
+    Merge pull request #555 from mitza-oci/singleton-restart
+    
+    ACE_Singleton should work after ACE::fini, ACE::init (fixes issue #554)
+
+commit ac9ffb65e75c37283e3d238ba7ec86ffb35fd147
+Merge: 8e4d9ab2ae8 dff4439b183
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 2 12:26:30 2018 +0100
+
+    Merge pull request #556 from jwillemsen/master
+    
+    Updated copyright to 2018
+
+commit dff4439b18379b9008ee696303be492d84d794dd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 1 11:24:13 2018 +0100
+
+    Updated copyright to 2018
+    
+        * ACE/tests/ACE.bsp:
+          Deleted, not used anymore
+    
+        * ACE/COPYING:
+        * TAO/COPYING:
+
+commit 4ac686684c6dff57c295fd5c28f929613be5aefa
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Dec 21 10:20:15 2017 -0600
+
+    updated test list now that test should pass
+
+commit 5bbbaacd283951886642a5113300f0c0543e51c0
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Dec 21 10:18:10 2017 -0600
+
+    fixed issue #554 ACE_Singleton use after ACE::fini, ACE::init
+
+commit a68721afec17c9ac51077591bf12159645ef0756
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Dec 21 10:10:52 2017 -0600
+
+    Updated MPC project for new ACE test
+
+commit 7233cf588e327e1c9ff4121ece63b8c0a63878d8
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Dec 19 17:36:03 2017 -0600
+
+    New ACE test: check if ACE_Singleton works after ACE::fini, ACE::init
+    
+    Some lock types work, others don't, due to different logic per lock type
+    in ACE_Object_Manager::get_singleton_lock and how ACE_Singleton uses it.
+
+commit f0067177b0a0aa227b503f9b20cfd623143372cf
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Dec 12 12:09:46 2017 -0600
+
+    Added support for FreeBSD 11
+
+commit 98c5adf44b718a26304d89619f993dc5725b0790
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Dec 11 17:14:28 2017 -0600
+
+    Added support for cross compiling using MinGW on a Linux host.
+
+commit 52618c6f2a83446eb15ecd95e98e9d178a013d47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 8 09:38:58 2017 +0100
+
+    Make ACE 6.4.6 and TAO 2.4.6 public
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/debian/debian.control:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

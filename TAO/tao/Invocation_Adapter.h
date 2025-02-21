@@ -4,8 +4,6 @@
 /**
  *  @file    Invocation_Adapter.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -20,37 +18,34 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @NOTE: Do not include any headers unessarily here.
-#include "ace/CORBA_macros.h"
-
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/Collocation_Strategy.h"
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
-struct TAO_Exception_Data;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Operation_Details;
 class TAO_Stub;
-class ACE_Time_Value;
-
 
 namespace  CORBA
 {
   class Object;
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
-
-  class Environment;
 }
 
 namespace TAO
 {
   class Argument;
   struct Exception_Data;
-  class Collocation_Proxy_Broker;
   class Profile_Transport_Resolver;
+  class Invocation_Retry_State;
 
   /**
    * @class Invocation_Adapter
@@ -66,7 +61,7 @@ namespace TAO
    *
    * This adapter class serves as the base class for various types of
    * invocations like AMI, DII, DSI etc. Adapter classes for AMI, DII,
-   * DSI inherit from this class and their local behavioural
+   * DSI inherit from this class and their local behavioral
    * information before kicking off an invocation.
    *
    * @@ More info..
@@ -85,7 +80,7 @@ namespace TAO
      * being invoked.
      *
      * @param args Array of pointers to the argument list in the
-     * operation declaration. this includes the return, inout and out
+     * operation declaration. This includes the return, inout and out
      * arguments.
      *
      * @param arg_number Number of arguments in the above array. This
@@ -93,13 +88,12 @@ namespace TAO
      *
      * @param operation The name of the operation being invoked.
      *
-     * @param op_len Number of charecters in the operation name. This
+     * @param op_len Number of characters in the operation name. This
      * is an optimization which helps us to avoid calling strlen ()
      * while creating a message format.
      *
-     * @param cpb The collocation proxy broker for the target if one
-     * exists. This is useful especially to route the call to the
-     * collocated target.
+     * @param collocation_opportunity Indicate which collocation optimizations
+     * should be possible
      *
      * @param type The operation type which could be a oneway or two
      * way operation. This information is available in the IDL file.
@@ -111,12 +105,13 @@ namespace TAO
                         Argument **args,
                         int arg_number,
                         const char *operation,
-                        int op_len,
-                        Collocation_Proxy_Broker *cpb,
+                        size_t op_len,
+                        int collocation_opportunity,
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
-                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
+                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
+                        bool has_in_args = true);
 
-    virtual ~Invocation_Adapter (void);
+    virtual ~Invocation_Adapter ();
 
     /// Invoke the target, and used by the generated code.
     /**
@@ -128,9 +123,22 @@ namespace TAO
      *
      * @param ex_count Number of elements in the array.
      */
-    virtual void invoke (TAO::Exception_Data *ex,
-                         unsigned long ex_count
-                         ACE_ENV_ARG_DECL);
+    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
+
+    /**
+     * @param byte_order The intended byte order for the message output
+     * stream. For use in message gateways that forward messages from
+     * sources with different byte order than the native order.
+     */
+    void _tao_byte_order (int byte_order);
+
+    /**
+     * Get the intended byte order for the message output stream.
+     * In case of gateway messages this could divert from the native
+     * byte order.
+     */
+    int _tao_byte_order ();
+
   protected:
     /**
      * The stub pointer passed to this call has all the details about
@@ -140,23 +148,20 @@ namespace TAO
      * forwarding information or if the first invocation fails
      * for some reason, like a loss of connection during send () etc.
      */
-    virtual void invoke_i (TAO_Stub *stub,
-                           TAO_Operation_Details &details
-                           ACE_ENV_ARG_DECL);
+    virtual void invoke_i (TAO_Stub *stub, TAO_Operation_Details &details);
 
     /**
      * @name Helper methods for making different types of invocations.
      *
      * These methods useful for various types of invocations like
      * SII, AMI, DII and DSI. All the subclasses implement these
-     * methods to get the right behaviour at their level.
+     * methods to get the right behavior at their level.
      */
     //@{
-
     /// Helper method that prepares the necessary stuff for a remote
     /// invocation.
 
-    /*
+    /**
      * This method does the following essential activities needed for
      * a remote invocation.
      *
@@ -172,8 +177,8 @@ namespace TAO
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+        ACE_Time_Value *&max_wait_time,
+        Invocation_Retry_State *retry_state = 0);
 
     /// Make a collocated call.
     /**
@@ -190,8 +195,7 @@ namespace TAO
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        Collocation_Strategy strat
-        ACE_ENV_ARG_DECL);
+        Collocation_Strategy strat);
 
     /// Helper method to make a two way invocation.
     /**
@@ -204,8 +208,8 @@ namespace TAO
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+        ACE_Time_Value *&max_wait_time,
+        Invocation_Retry_State *retry_state = 0);
 
     /// Helper method to make a one way invocation.
     /**
@@ -218,38 +222,42 @@ namespace TAO
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+        ACE_Time_Value *&max_wait_time);
     //@}
 
     /// Helper function that extracts the roundtrip timeout policies
     /// set in the ORB.
-    bool get_timeout (TAO_Stub *stub,
-                      ACE_Time_Value &val);
+    bool get_timeout (TAO_Stub *stub, ACE_Time_Value &val);
 
     /// Helper method that extracts TAO_Stub from the target object.
-    TAO_Stub *get_stub (ACE_ENV_SINGLE_ARG_DECL) const;
+    TAO_Stub *get_stub () const;
 
     /// Helper method that takes care of setting the profiles within
     /// the stub object if the target gets forwarded
     void object_forwarded (CORBA::Object_var &effective_target,
-                           TAO_Stub *stub
-                           ACE_ENV_ARG_DECL);
+                           TAO_Stub *stub,
+                           CORBA::Boolean permanent_forward);
 
     /// Helper method to set the response flags within @a details
     void set_response_flags (TAO_Stub *stub,
                              TAO_Operation_Details &details);
 
   private:
-    /// Dont allow default initializations
-    Invocation_Adapter (void);
+    Invocation_Adapter () = delete;
+    Invocation_Adapter (Invocation_Adapter const &) = delete;
+    Invocation_Adapter & operator= (const Invocation_Adapter &) = delete;
 
-    // Prevent copying
-    Invocation_Adapter (Invocation_Adapter const &);
-    Invocation_Adapter & operator= (const Invocation_Adapter &);
+    /**
+    * This method returns the right collocation strategy, if any,
+    * to be used to perform a method invocation on the given object.
+    *
+    * @note
+    * No-Collocation is a special case of collocation.
+    */
+    TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object);
+    //@}
 
   protected:
-
     /// The target object on which this invocation is carried out.
     CORBA::Object_ptr target_;
 
@@ -262,14 +270,16 @@ namespace TAO
      */
     int const number_args_;
 
+    bool has_in_args_;
+
     /// Name of the operation.
     char const * operation_;
 
     /// String length of the operation name.
-    int const op_len_;
-    
-    /// Collocation proxy broker for this operation.
-    Collocation_Proxy_Broker * const cpb_;
+    size_t const op_len_;
+
+    /// Collocation opportunity for this operation.
+    int const collocation_opportunity_;
 
     /// The invocation type
     Invocation_Type const type_;
@@ -277,9 +287,12 @@ namespace TAO
     /// The invocation mode
     Invocation_Mode const mode_;
 
+    /// Intended byte order for message output stream
+    int byte_order_;
   };
 } // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"

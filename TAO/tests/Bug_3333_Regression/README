@@ -1,0 +1,26 @@
+/**
+
+
+
+This test checks that any transparent reinvocations in response to
+LOCATION_FORWARD responses to GIOP::Requests are still bounded by the
+Relative Roundtrip timeout set by the user for the entire request.
+
+The server is configured to run in the test script with -ORBCollocation NO
+and -ORBObjRefStyle URL. Both are required for it to work.
+
+It exports two IORs. One is used for control - to shut the server down.
+The other will cause a client narrowing it to enter an endless
+LOCATION_FORWARD loop.
+
+The client sets a Relative Roundtrip Timeout that should end this loop for
+the test to succeed.
+
+Success looks like this:
+
+Test OK - RELATIVE_RT_TIMEOUT ends location forward loop.
+(4232|3077606096) server - event loop finished
+
+... anything else is probably a regression.
+
+*/

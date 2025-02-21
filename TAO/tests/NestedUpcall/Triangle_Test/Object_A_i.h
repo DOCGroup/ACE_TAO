@@ -1,45 +1,40 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    Object_A_i.h
-//
-// = DESCRIPTION
-//    This class implements the Object A of the
-//    Nested Upcalls - Triangle test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Object_A_i.h
+ *
+ *  This class implements the Object A of the
+ *  Nested Upcalls - Triangle test.
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #ifndef OBJECT_B_IMPL_H
 #  define OBJECT_B_IMPL_H
 
 #include "Triangle_TestS.h"
 
+/**
+ * @class Object_A_i
+ *
+ * @brief Implement the <Object_A> IDL interface.
+ */
 class Object_A_i : public POA_Object_A
 {
-  // = TITLE
-  //     Implement the <Object_A> IDL interface.
 public:
-  Object_A_i (void);
-  // Constructor.
+  /// Constructor.
+  Object_A_i ();
 
-  virtual ~Object_A_i (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~Object_A_i ();
 
-  virtual void foo (Initiator_ptr theInitiator_ptr
-                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void foo (Initiator_ptr theInitiator_ptr);
 
-  virtual void finish (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void finish ();
+
+  virtual void shutdown ();
 
   unsigned long finish_two_way_call_;
 };

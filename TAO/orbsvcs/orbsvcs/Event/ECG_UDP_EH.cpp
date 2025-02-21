@@ -1,14 +1,14 @@
-// $Id$
-
-#include "ECG_UDP_EH.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Event/ECG_UDP_EH.h"
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_UDP_EH.i"
+#include "orbsvcs/Event/ECG_UDP_EH.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_UDP_EH, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv)
   :  receiver_ (recv)
@@ -16,7 +16,7 @@ TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv)
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_UDP_EH::~TAO_ECG_UDP_EH (void)
+TAO_ECG_UDP_EH::~TAO_ECG_UDP_EH ()
 {
 }
 
@@ -29,7 +29,7 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
     return -1;
 
   if (this->dgram_.open (ipaddr, PF_INET, 0, reuse_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Unable to open udp handler: "
                        "error opening receiving dgram.\n"),
                        -1);
@@ -40,7 +40,7 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
                                                   ACE_Event_Handler::READ_MASK))
     {
       this->dgram_.close ();
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "Cannot register handler with reactor.\n"),
                         -1);
     }
@@ -49,7 +49,7 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
 }
 
 int
-TAO_ECG_UDP_EH::shutdown (void)
+TAO_ECG_UDP_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)
@@ -62,16 +62,16 @@ TAO_ECG_UDP_EH::shutdown (void)
                                                  ACE_Event_Handler::READ_MASK);
     }
   if (result != 0)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "Unable to deregister handler from reactor "
                 "on shutdown.\n"));
 
   result = this->dgram_.close ();
   if (result != 0)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "Unable to close receiving dgram on shutdown.\n"));
 
-  this->receiver_ = 0;
+  this->receiver_ = nullptr;
 
   return result;
 }
@@ -81,5 +81,7 @@ TAO_ECG_UDP_EH::handle_input (ACE_HANDLE)
 {
   return this->receiver_->handle_input (this->dgram_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************

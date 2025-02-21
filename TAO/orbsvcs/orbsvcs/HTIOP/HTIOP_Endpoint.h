@@ -1,14 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file     HTIOP_Endpoint.h
  *
- *  $Id$
- *
  *   HTIOP implementation of PP Framework Endpoint interface.
- *
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  */
@@ -19,7 +15,7 @@
 #define HTIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
 
-#include "HTIOP_Export.h"
+#include "orbsvcs/HTIOP/HTIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,11 +26,12 @@
 #include "tao/Endpoint.h"
 #include "tao/ORB.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace HTIOP
   {
-
     class Connection_Handler;
 
     /**
@@ -47,14 +44,11 @@ namespace TAO
     class HTIOP_Export Endpoint : public TAO_Endpoint
     {
     public:
-
       friend class Profile;
       friend class TAO_SSLIOP_Profile;
 
-      // = Initialization and termination methods.
-
       /// Default constructor.
-      Endpoint (void);
+      Endpoint ();
 
       /// Constructor.  This is the most efficient constructor since it
       /// does not require any address resolution processing.
@@ -73,59 +67,58 @@ namespace TAO
                 const char *htid);
 
       /// Destructor.
-      ~Endpoint (void);
+      ~Endpoint ();
 
       // = Implementation of abstract TAO_Endpoint methods.  See
       // Endpoint.h for their documentation.
 
-      virtual TAO_Endpoint *next (void);
+      virtual TAO_Endpoint *next ();
       virtual int addr_to_string (char *buffer, size_t length);
-      virtual void reset_hint (void);
+      virtual void reset_hint ();
 
       /// Makes a copy of <this>
-      virtual TAO_Endpoint *duplicate (void);
+      virtual TAO_Endpoint *duplicate ();
 
-      /// Return true if this endpoint is equivalent to <other_endpoint>.  Two
-      /// endpoints are equivalent iff their port and host are the same.
+      /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
+      /// endpoints are equivalent if their port and host are the same.
       CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
       /// Return a hash value for this object.
-      CORBA::ULong hash (void);
+      CORBA::ULong hash ();
 
       // Allocates memory and returns a copy of <this>
 
       // = HTIOP_Endpoint-specific methods.
 
       /// Return a reference to the <object_addr>.
-      const ACE::HTBP::Addr &object_addr (void) const;
+      const ACE::HTBP::Addr &object_addr () const;
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
-      const char *host (void) const;
+      const char *host () const;
 
-      /// Copy the string <h> into <host_> and return the resulting pointer.
+      /// Copy the string @a h into <host_> and return the resulting pointer.
       /// This object maintains ownership of this string.
       const char *host (const char *h);
 
       /// Return the port number.
-      CORBA::UShort port (void) const;
+      CORBA::UShort port () const;
 
       /// Set the port number.
       CORBA::UShort port (CORBA::UShort p);
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
-      const char *htid (void) const;
+      const char *htid () const;
 
-      /// Copy the string <h> into <host_> and return the resulting pointer.
+      /// Copy the string @a h into <host_> and return the resulting pointer.
       /// This object maintains ownership of this string.
       const char *htid (const char *h);
 
-      //Connection_Handler *&hint (void);
+      //Connection_Handler *&hint ();
       // Access to our <hint_>.
 
     private:
-
       /// Helper method for setting INET_Addr.
       int set (const ACE::HTBP::Addr &addr,
                int use_dotted_decimal_addresses);
@@ -145,15 +138,17 @@ namespace TAO
       /// Flag to indicate if the address has been resolved and set.
       int object_addr_set_;
 
-      /// HTIOP Endpoints can be stringed into a list.  Return the next
+      /// HTIOP Endpoints can be strung into a list.  Return the next
       /// endpoint in the list, if any.
       Endpoint *next_;
     };
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "HTIOP_Endpoint.i"
+# include "orbsvcs/HTIOP/HTIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

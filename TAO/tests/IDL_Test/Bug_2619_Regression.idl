@@ -1,0 +1,17 @@
+// Test Bug 2619
+
+struct Type_T
+{
+   string  id;
+};
+
+valuetype T_Data_T
+{
+   public Type_T type;
+};
+
+interface Test
+{
+   typedef Type_T Group;
+   Group getGroup();
+};

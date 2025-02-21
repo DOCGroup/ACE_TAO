@@ -4,10 +4,7 @@
 /**
  *  @file    SHMIOP_Connector.h
  *
- *  $Id$
- *
  *  SHMIOP specific connector processing
- *
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
@@ -30,9 +27,11 @@
 #include "ace/MEM_Connector.h"
 #include "ace/Connector.h"
 #include "tao/Transport_Connector.h"
-#include "SHMIOP_Connection_Handler.h"
+#include "tao/Strategies/SHMIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_SHMIOP_Endpoint;
 
@@ -51,10 +50,10 @@ class TAO_Strategies_Export TAO_SHMIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_SHMIOP_Connector (CORBA::Boolean flag = 0);
+  TAO_SHMIOP_Connector ();
 
   /// Default destructor
-  ~TAO_SHMIOP_Connector (void);
+  ~TAO_SHMIOP_Connector () = default;
 
   /**
    * @name The TAO_Connector Methods
@@ -63,17 +62,16 @@ public:
    */
   //@{
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
 
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
   //@}
 
 public:
-
   typedef TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
           TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -82,7 +80,7 @@ public:
 
   typedef ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler,
                                ACE_MEM_CONNECTOR>
-          TAO_SHMIOP_CONNECT_STRATEGY ;
+          TAO_SHMIOP_CONNECT_STRATEGY;
 
   typedef ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler,
                                  ACE_MEM_CONNECTOR>
@@ -101,19 +99,17 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
-  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Profile *make_profile ();
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
   //@}
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_SHMIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
-
   /// Local address.
   ACE_MEM_Addr address_;
 
@@ -122,10 +118,9 @@ private:
 
   /// The connector initiating connection requests for SHMIOP.
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
-
-  /// Are we using GIOP lite?
-  CORBA::Boolean lite_flag_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

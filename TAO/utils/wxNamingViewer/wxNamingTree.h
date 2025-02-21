@@ -1,4 +1,3 @@
-// $Id$
 // wxNamingTree.h
 
 #ifndef i_wxNamingTree_h
@@ -35,9 +34,9 @@ private:
   enum {
     listQuantum = 40,
   };
-  void clearChildren (void);
+  void clearChildren ();
   void clearChildren (wxTreeItemId& item);
-  WxNamingObject* getTreeObject(void) const;
+  WxNamingObject* getTreeObject() const;
   WxNamingObject* getTreeObject(wxTreeItemId& item) const;
   void listBindingList(
       wxTreeItemId& item,

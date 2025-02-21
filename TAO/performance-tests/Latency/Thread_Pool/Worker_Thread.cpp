@@ -1,9 +1,4 @@
-//
-// $Id$
-//
 #include "Worker_Thread.h"
-
-ACE_RCSID(Thread_Pool_Latency, Worker_Thread, "$Id$")
 
 Worker_Thread::Worker_Thread (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -11,14 +6,12 @@ Worker_Thread::Worker_Thread (CORBA::ORB_ptr orb)
 }
 
 int
-Worker_Thread::svc (void)
+Worker_Thread::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception&){}
   return 0;
 }

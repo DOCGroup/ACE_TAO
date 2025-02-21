@@ -1,20 +1,9 @@
-// $Id$
-
 #include "tao/IOR_Parser.h"
-#include "ace/Dynamic_Service.h"
 
-ACE_RCSID(tao, IOR_Parser, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IOR_Parser::~TAO_IOR_Parser (void)
+TAO_IOR_Parser::~TAO_IOR_Parser ()
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_IOR_Parser>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_IOR_Parser>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

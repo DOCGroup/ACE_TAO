@@ -1,0 +1,20 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  typedef sequence <Object> ObjectSeq;
+
+  /// A very simple interface
+  interface Hello
+  {
+    ObjectSeq get_objects ();
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+
+
+};

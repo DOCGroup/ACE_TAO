@@ -1,26 +1,20 @@
-// ============================================================================
-//
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Reconfig_Scheduler_T.cpp
-//
-// = AUTHOR
-//     Chris Gill <cdgill@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reconfig_Scheduler_T.cpp
+ *
+ *  @author  Chris Gill <cdgill@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_RECONFIG_SCHEDULER_T_C
 #define TAO_RECONFIG_SCHEDULER_T_C
 
-#include "Reconfig_Scheduler_T.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Sched/Reconfig_Scheduler_T.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +24,7 @@
 //#define SCHEDULER_LOGGING 1
 //#endif
 
-ACE_RCSID(Sched, Reconfig_Scheduler_T, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////////
 // Helper function type definition for sort //
@@ -68,7 +62,7 @@ TAO_Reconfig_Scheduler (int enforce_schedule_stability,
     critical_utilization_threshold_ (critical_utilization_threshold)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler default ctor.\n"));
 #endif /* SCHEDULER_LOGGING */
 }
@@ -102,7 +96,7 @@ TAO_Reconfig_Scheduler (int config_count,
     critical_utilization_threshold_ (critical_utilization_threshold)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler alternative ctor.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -112,21 +106,19 @@ TAO_Reconfig_Scheduler (int config_count,
   // The init method can throw an exception, which must be caught
   // *inside* the constructor to be portable between compilers that
   // differ in whether they support native C++ exceptions.
-  ACE_TRY_NEW_ENV
+  try
     {
       this->init (config_count, config_infos,
                   rt_info_count, rt_infos,
                   dependency_count, dependency_infos,
-                  stability_flags ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                  stability_flags);
     }
-  ACE_CATCH (CORBA::SystemException, corba_sysex)
+  catch (const CORBA::SystemException& )
     {
-       ACE_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
+       ORBSVCS_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
                              "ACE_LOCK>::TAO_Reconfig_Scheduler "
                              "system exception: cannot init scheduler.\n"));
     }
-  ACE_ENDTRY;
 }
 
 
@@ -137,22 +129,20 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 ~TAO_Reconfig_Scheduler ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler dtor.\n"));
 #endif /* SCHEDULER_LOGGING */
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->close ();
     }
-  ACE_CATCH (CORBA::SystemException, corba_sysex)
+  catch (const CORBA::SystemException& )
     {
-      ACE_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
+      ORBSVCS_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
                             "ACE_LOCK>::~TAO_Reconfig_Scheduler "
                             "exception: cannot close scheduler.\n"));
     }
-  ACE_ENDTRY;
 
   // Delete the entry and tuple pointer arrays.
   delete [] entry_ptr_array_;
@@ -170,30 +160,22 @@ init (int config_count,
       ACE_Scheduler_Factory::POD_RT_Info rt_info[],
       int dependency_count,
       ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
-      u_long stability_flags
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::DUPLICATE_NAME,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::INTERNAL))
+      u_long stability_flags)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::init.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK_RETURN (-1);
 
   int result = 0;
   int i = 0;
 
 /* WSOA merge - commented out
   // Clear out the previous entries, if any.
-  this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->close ();
 */
 
   // Re-map the RT_Info and dependency handle values if necessary.
@@ -218,17 +200,16 @@ init (int config_count,
   // (Re)initialize using the new settings.
 
   // Add the passed config infos to the scheduler
-  auto_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
+  std::unique_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
   for (i = 0; i < config_count; ++i)
     {
       RtecScheduler::Config_Info* new_config_info;
       ACE_NEW_THROW_EX (new_config_info,
                         RtecScheduler::Config_Info,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (-1);
 
       // Make sure the new config info is cleaned up if we exit abruptly.
-      ACE_AUTO_PTR_RESET (new_config_info_ptr, new_config_info, RtecScheduler::Config_Info);
+      new_config_info_ptr.reset (new_config_info);
 
       result = config_info_map_.bind (config_info [i].preemption_priority,
                                       new_config_info);
@@ -236,11 +217,11 @@ init (int config_count,
         {
           case -1:
             // Something bad but unknown occurred while trying to bind in map.
-            ACE_THROW_RETURN (RtecScheduler::INTERNAL (), -1);
+            throw RtecScheduler::INTERNAL ();
 
           case 1:
             // Tried to bind an operation that was already in the map.
-            ACE_THROW_RETURN (RtecScheduler::DUPLICATE_NAME (), -1);
+            throw RtecScheduler::DUPLICATE_NAME ();
 
           default:
             break;
@@ -260,8 +241,8 @@ init (int config_count,
             new_config_info->preemption_priority;
         }
 
-      // Release the auto_ptr so it does not clean
-      // up the sucessfully bound config info.
+      // Release the unique_ptr so it does not clean
+      // up the successfully bound config info.
       new_config_info_ptr.release ();
 
       // Increase the count of successfully bound config infos.
@@ -273,13 +254,11 @@ init (int config_count,
   for (int num_rt_infos = 0; num_rt_infos < rt_info_count; ++num_rt_infos)
     {
       new_rt_info = create_i (rt_info [num_rt_infos].entry_point,
-                              rt_info [num_rt_infos].handle, 1
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                              rt_info [num_rt_infos].handle, 1);
 
       if (new_rt_info == 0)
         {
-          ACE_THROW_RETURN (RtecScheduler::INTERNAL (), -1);
+          throw RtecScheduler::INTERNAL ();
         }
 
       // Set the new info's enabled state
@@ -295,9 +274,7 @@ init (int config_count,
              RtecScheduler::Importance_t (rt_info [num_rt_infos].importance),
              rt_info [num_rt_infos].quantum,
              rt_info [num_rt_infos].threads,
-             RtecScheduler::Info_Type_t (rt_info [num_rt_infos].info_type)
-             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+             RtecScheduler::Info_Type_t (rt_info [num_rt_infos].info_type));
 
       // Fill in the scheduler managed portions.
       new_rt_info->priority =
@@ -315,9 +292,7 @@ init (int config_count,
                             dependency_info [dependency_count_].info_depended_on,
                             dependency_info [dependency_count_].number_of_calls,
                             dependency_info [dependency_count_].dependency_type,
-                            dependency_info [dependency_count_].enabled
-                            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+                            dependency_info [dependency_count_].enabled);
 
           ++this->dependency_count_;
         }
@@ -333,20 +308,15 @@ init (int config_count,
 
 // Closes the scheduler, releasing all current resources.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
-TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::INTERNAL,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE))
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::close.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Unbind and delete each RT_Info in the map: this also cleans up
   // all the entries and tuples associated with each RT_Info.
@@ -367,12 +337,12 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (ACE_ENV_SINGLE
             }
           else
             {
-              ACE_THROW (RtecScheduler::INTERNAL ());
+              throw RtecScheduler::INTERNAL ();
             }
          }
       else
         {
-          ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+          throw RtecScheduler::UNKNOWN_TASK ();
         }
     }
 
@@ -388,7 +358,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (ACE_ENV_SINGLE
         }
       else
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
@@ -403,7 +373,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (ACE_ENV_SINGLE
         }
       else
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
@@ -417,7 +387,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (ACE_ENV_SINGLE
         }
       else
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
@@ -453,25 +423,18 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (ACE_ENV_SINGLE
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-create (const char *entry_point
-        ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::DUPLICATE_NAME,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE))
+create (const char *entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::create.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK_RETURN (0);
 
   RtecScheduler::handle_t handle = next_handle_;
-  create_i (entry_point, handle, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (handle);
+  create_i (entry_point, handle, 0);
 
   // Set affected stability flags.
   this->stability_flags_ |=
@@ -487,24 +450,18 @@ create (const char *entry_point
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-lookup (const char * entry_point
-        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE))
+lookup (const char * entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::lookup.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK_RETURN (0);
 
   RtecScheduler::handle_t handle;
-  handle = this->lookup_i (entry_point ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (handle);
+  handle = this->lookup_i (entry_point);
 
   return handle;
 }
@@ -515,26 +472,21 @@ lookup (const char * entry_point
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::RT_Info *
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-get (RtecScheduler::handle_t handle
-     ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE))
+get (RtecScheduler::handle_t handle)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::get.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK_RETURN (0);
 
   // Find the RT_Info in the hash map.
   TAO_RT_Info_Ex *rt_info = 0;
   if (rt_info_map_.find (handle, rt_info) != 0)
     {
-      ACE_THROW_RETURN (RtecScheduler::UNKNOWN_TASK (), 0);
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 
   // Allocate a new RT_Info
@@ -542,7 +494,6 @@ get (RtecScheduler::handle_t handle
   ACE_NEW_THROW_EX (new_info,
                     RtecScheduler::RT_Info,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   *new_info = *rt_info;
 
@@ -555,41 +506,35 @@ get (RtecScheduler::handle_t handle
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-set (RtecScheduler::handle_t handle,
-     RtecScheduler::Criticality_t criticality,
-     RtecScheduler::Time time,
-     RtecScheduler::Time typical_time,
-     RtecScheduler::Time cached_time,
-     RtecScheduler::Period_t period,
-     RtecScheduler::Importance_t importance,
-     RtecScheduler::Quantum_t quantum,
-     CORBA::Long threads,
-     RtecScheduler::Info_Type_t info_type
-     ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE))
+set (::RtecScheduler::handle_t handle,
+     ::RtecScheduler::Criticality_t criticality,
+     ::RtecScheduler::Time time,
+     ::RtecScheduler::Time typical_time,
+     ::RtecScheduler::Time cached_time,
+     ::RtecScheduler::Period_t period,
+     ::RtecScheduler::Importance_t importance,
+     ::RtecScheduler::Quantum_t quantum,
+     ::RtecScheduler::Threads_t threads,
+     ::RtecScheduler::Info_Type_t info_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Look up the RT_Info by its handle, throw an exception if it's not there.
   TAO_RT_Info_Ex *rt_info_ptr = 0;
   if (rt_info_map_.find (handle, rt_info_ptr) != 0)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 
   if (rt_info_ptr == 0)
     {
-      ACE_THROW (RtecScheduler::INTERNAL ());
+      throw RtecScheduler::INTERNAL ();
     }
 
   // Enable the RT_Info if it was disabled.  Does not modify NON_VOLATILE ops.
@@ -601,8 +546,7 @@ set (RtecScheduler::handle_t handle,
   // Call the internal set method.
   this->set_i (rt_info_ptr, criticality, time, typical_time,
                cached_time, period, importance, quantum,
-               threads, info_type ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+               threads, info_type);
 
 
   // Update stability flags.  For now, just mark everything as unstable.
@@ -627,37 +571,31 @@ reset (RtecScheduler::handle_t handle,
        RtecScheduler::Importance_t importance,
        RtecScheduler::Quantum_t quantum,
        CORBA::Long threads,
-       RtecScheduler::Info_Type_t info_type
-       ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE))
+       RtecScheduler::Info_Type_t info_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::reset.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Look up the RT_Info by its handle, throw an exception if it's not there.
   TAO_RT_Info_Ex *rt_info_ptr = 0;
   if (rt_info_map_.find (handle, rt_info_ptr) != 0)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
   if (rt_info_ptr == 0)
     {
-      ACE_THROW (RtecScheduler::INTERNAL ());
+      throw RtecScheduler::INTERNAL ();
     }
 
   // Enable the RT_Info if it was disabled.  Does not modify NON_VOLATILE ops.
   if (rt_info_ptr->enabled_state () == RtecScheduler::RT_INFO_NON_VOLATILE)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
   else
     {
@@ -669,14 +607,12 @@ reset (RtecScheduler::handle_t handle,
     }
 
   // Refresh the internal tuple pointer array.
-  this->refresh_tuple_ptr_array_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->refresh_tuple_ptr_array_i ();
 
   // Then call the internal set method.
   this->set_i (rt_info_ptr, criticality, time, typical_time,
                cached_time, period, importance, quantum,
-               threads, info_type ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+               threads, info_type);
 
 
   // Update stability flags.  For now, just mark everything as unstable.
@@ -690,25 +626,18 @@ reset (RtecScheduler::handle_t handle,
 }
 
 
-
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-set_seq (const RtecScheduler::RT_Info_Set& infos
-         ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE))
+set_seq (const RtecScheduler::RT_Info_Set& infos)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   for (u_int i = 0; i < infos.length (); ++i)
     {
@@ -716,12 +645,12 @@ set_seq (const RtecScheduler::RT_Info_Set& infos
       TAO_RT_Info_Ex *rt_info_ptr = 0;
       if (rt_info_map_.find (infos[i].handle, rt_info_ptr) != 0)
         {
-          ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+          throw RtecScheduler::UNKNOWN_TASK ();
         }
 
       if (rt_info_ptr == 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
 
       // Enable the RT_Info if it was disabled.  Does not modify NON_VOLATILE ops.
@@ -730,7 +659,6 @@ set_seq (const RtecScheduler::RT_Info_Set& infos
           rt_info_ptr->enabled_state (RtecScheduler::RT_INFO_ENABLED);
         }
 
-      // Call the internal set method.
       this->set_i (rt_info_ptr,
                    infos[i].criticality,
                    infos[i].worst_case_execution_time,
@@ -740,9 +668,7 @@ set_seq (const RtecScheduler::RT_Info_Set& infos
                    infos[i].importance,
                    infos[i].quantum,
                    infos[i].threads,
-                   infos[i].info_type
-                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                   infos[i].info_type);
     }
 
   // Update stability flags.  For now, just mark everything as unstable.
@@ -759,21 +685,15 @@ set_seq (const RtecScheduler::RT_Info_Set& infos
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-reset_seq (const RtecScheduler::RT_Info_Set& infos
-           ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE))
+reset_seq (const RtecScheduler::RT_Info_Set& infos)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::reset_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   TAO_RT_Info_Ex *rt_info_ptr = 0;
   u_int i;
@@ -783,13 +703,13 @@ reset_seq (const RtecScheduler::RT_Info_Set& infos
       // Look up the RT_Info by its handle, throw an exception if it's not there.
       if (rt_info_map_.find (infos[i].handle, rt_info_ptr) != 0)
         {
-          ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+          throw RtecScheduler::UNKNOWN_TASK ();
         }
 
       // Enable the RT_Info.  Does not modify NON_VOLATILE ops.
       if (rt_info_ptr->enabled_state () == RtecScheduler::RT_INFO_NON_VOLATILE)
         {
-          ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+          throw RtecScheduler::UNKNOWN_TASK ();
         }
       else
         {
@@ -802,20 +722,19 @@ reset_seq (const RtecScheduler::RT_Info_Set& infos
     }
 
   // Refresh the internal tuple pointer array.
-  this->refresh_tuple_ptr_array_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->refresh_tuple_ptr_array_i ();
 
   for (i = 0; i < infos.length (); ++i)
     {
       // Look up the RT_Info by its handle, throw an exception if it's not there.
       if (rt_info_map_.find (infos[i].handle, rt_info_ptr) != 0)
         {
-          ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+          throw RtecScheduler::UNKNOWN_TASK ();
         }
 
       if (rt_info_ptr == 0)
     {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
 
       // Call the internal set method.
@@ -828,9 +747,7 @@ reset_seq (const RtecScheduler::RT_Info_Set& infos
                    infos[i].importance,
                    infos[i].quantum,
                    infos[i].threads,
-                   infos[i].info_type
-                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                   infos[i].info_type);
     }
 
   // Update stability flags.  For now, just mark everything as unstable.
@@ -846,25 +763,19 @@ reset_seq (const RtecScheduler::RT_Info_Set& infos
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-replace_seq (const RtecScheduler::RT_Info_Set& infos
-             ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE))
+replace_seq (const RtecScheduler::RT_Info_Set& infos)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::replace_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   TAO_RT_Info_Ex *rt_info_ptr = 0;
 
-  for (ACE_TYPENAME RT_INFO_MAP::iterator info_iter (this->rt_info_map_);
+  for (typename RT_INFO_MAP::iterator info_iter (this->rt_info_map_);
        info_iter.done () == 0;
        ++info_iter)
     {
@@ -872,7 +783,7 @@ replace_seq (const RtecScheduler::RT_Info_Set& infos
       rt_info_ptr = (*info_iter).int_id_;
       if (! rt_info_ptr)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
 
       switch (rt_info_ptr->enabled_state ())
@@ -906,12 +817,12 @@ replace_seq (const RtecScheduler::RT_Info_Set& infos
       // Look up the RT_Info by its handle, throw an exception if it's not there.
       if (rt_info_map_.find (infos[i].handle, rt_info_ptr) != 0)
         {
-          ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+          throw RtecScheduler::UNKNOWN_TASK ();
     }
 
       if (rt_info_ptr == 0)
     {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
 
       // Enable the RT_Info if it was disabled.  Does not modify NON_VOLATILE ops.
@@ -930,9 +841,7 @@ replace_seq (const RtecScheduler::RT_Info_Set& infos
                    infos[i].importance,
                    infos[i].quantum,
                    infos[i].threads,
-                   infos[i].info_type
-                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                   infos[i].info_type);
     }
 
   // Update stability flags.  For now, just mark everything as unstable.
@@ -955,22 +864,16 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 priority (RtecScheduler::handle_t handle,
           RtecScheduler::OS_Priority& o_priority,
           RtecScheduler::Preemption_Subpriority_t& subpriority,
-          RtecScheduler::Preemption_Priority_t& p_priority
-          ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::NOT_SCHEDULED))
+          RtecScheduler::Preemption_Priority_t& p_priority)
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Check stability flags.
   if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
       && this->enforce_schedule_stability_)
     {
-      ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
+      throw RtecScheduler::NOT_SCHEDULED ();
     }
 
   // CDG - TBD - address priority "generations" i.e., after an
@@ -980,7 +883,7 @@ priority (RtecScheduler::handle_t handle,
   TAO_RT_Info_Ex *rt_info = 0;
   if (rt_info_map_.find (handle, rt_info) != 0)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 
   o_priority = rt_info->priority;
@@ -998,32 +901,23 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 entry_point_priority (const char * entry_point,
                       RtecScheduler::OS_Priority& priority,
                       RtecScheduler::Preemption_Subpriority_t& subpriority,
-                      RtecScheduler::Preemption_Priority_t& p_priority
-                      ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::NOT_SCHEDULED))
+                      RtecScheduler::Preemption_Priority_t& p_priority)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::entry_point_priority.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   RtecScheduler::handle_t handle =
-    this->lookup_i (entry_point ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->lookup_i (entry_point);
 
   this->priority_i (handle,
                   priority,
                   subpriority,
-                  p_priority
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                  p_priority);
 }
 
 
@@ -1035,25 +929,19 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 add_dependency (RtecScheduler::handle_t handle /* RT_Info that has the dependency */,
                 RtecScheduler::handle_t dependency /* RT_Info on which it depends */,
                 CORBA::Long number_of_calls,
-                RtecScheduler::Dependency_Type_t dependency_type
-                ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::UNKNOWN_TASK))
+                RtecScheduler::Dependency_Type_t dependency_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::add_dependency.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Delegate to the internal method.
   add_dependency_i (handle, dependency, number_of_calls, dependency_type,
-                    RtecBase::DEPENDENCY_ENABLED ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                    RtecBase::DEPENDENCY_ENABLED);
 
   // Since the call graph topology has changed, set *all*
   // stability flags before incrementing the dependency count.
@@ -1070,25 +958,19 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 remove_dependency (RtecScheduler::handle_t handle,
                    RtecScheduler::handle_t dependency,
                    CORBA::Long number_of_calls,
-                   RtecScheduler::Dependency_Type_t dependency_type
-                   ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::UNKNOWN_TASK))
+                   RtecScheduler::Dependency_Type_t dependency_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::remove_dependency.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Delegate to the internal method.
   remove_dependency_i (handle, dependency, number_of_calls,
-                       dependency_type ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                       dependency_type);
 
   // Since the call graph topology has changed, set *all*
   // stability flags before incrementing the dependency count.
@@ -1105,25 +987,19 @@ set_dependency_enable_state (RtecScheduler::handle_t handle,
                              RtecScheduler::handle_t dependency,
                              CORBA::Long number_of_calls,
                              RtecScheduler::Dependency_Type_t dependency_type,
-                             RtecScheduler::Dependency_Enabled_Type_t enabled
-                             ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::UNKNOWN_TASK))
+                             RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_dependency_enable_state.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Delegate to the internal method.
   set_dependency_enable_state_i (handle, dependency, number_of_calls,
-                                 dependency_type, enabled ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 dependency_type, enabled);
 }
 
 
@@ -1132,20 +1008,15 @@ set_dependency_enable_state (RtecScheduler::handle_t handle,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies
-                                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::UNKNOWN_TASK))
+set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_dependency_enable_state_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Delegate to the internal method for each dependency in the sequence.
   for (u_int i = 0; i < dependencies.length (); ++i)
@@ -1154,9 +1025,7 @@ set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependenc
                                      dependencies[i].rt_info_depended_on,
                                      dependencies[i].number_of_calls,
                                      dependencies[i].dependency_type,
-                                     dependencies[i].enabled
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                     dependencies[i].enabled);
     }
 }
 
@@ -1167,32 +1036,26 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 set_rt_info_enable_state (RtecScheduler::handle_t handle,
-                          RtecScheduler::RT_Info_Enabled_Type_t enabled
-                          ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::UNKNOWN_TASK))
+                          RtecScheduler::RT_Info_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_rt_info_enable_state.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Look up the RT_Info by its handle, throw an exception if it's not there.
   TAO_RT_Info_Ex *rt_info_ptr = 0;
   if (rt_info_map_.find (handle, rt_info_ptr) != 0)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 
   if (rt_info_ptr == 0)
     {
-      ACE_THROW (RtecScheduler::INTERNAL ());
+      throw RtecScheduler::INTERNAL ();
     }
 
   // Enable the RT_Info.
@@ -1205,21 +1068,15 @@ set_rt_info_enable_state (RtecScheduler::handle_t handle,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::INTERNAL,
-                     RtecScheduler::UNKNOWN_TASK))
+set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_rt_info_enable_state_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   for (u_int i = 0; i < pair_set.length (); ++i)
     {
@@ -1227,12 +1084,12 @@ set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set
       TAO_RT_Info_Ex *rt_info_ptr = 0;
       if (rt_info_map_.find (pair_set[i].handle, rt_info_ptr) != 0)
         {
-          ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+          throw RtecScheduler::UNKNOWN_TASK ();
         }
 
       if (rt_info_ptr == 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
 
       // Enable the RT_Info.
@@ -1254,36 +1111,24 @@ compute_scheduling (CORBA::Long minimum_priority,
                     RtecScheduler::RT_Info_Set_out infos,
                     RtecScheduler::Dependency_Set_out dependencies,
                     RtecScheduler::Config_Info_Set_out configs,
-                    RtecScheduler::Scheduling_Anomaly_Set_out anomalies
-                    ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-                      RtecScheduler::TASK_COUNT_MISMATCH,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::DUPLICATE_NAME))
+                    RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
 {
   // Delegates to recompute_scheduling and the respective accessors.
   this->recompute_scheduling (minimum_priority, maximum_priority,
-                              anomalies ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                              anomalies);
 
-  this->get_rt_info_set (infos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->get_rt_info_set (infos);
 
-  this->get_dependency_set (dependencies ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->get_dependency_set (dependencies);
 
-  this->get_config_info_set (configs ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->get_config_info_set (configs);
 
 #if defined (SCHEDULER_DUMP)
-  ACE_DEBUG ((LM_TRACE, "Schedule prepared.\n"));
-  ACE_DEBUG ((LM_TRACE, "Dumping to stdout.\n"));
+  ORBSVCS_DEBUG ((LM_TRACE, "Schedule prepared.\n"));
+  ORBSVCS_DEBUG ((LM_TRACE, "Dumping to stdout.\n"));
   ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), *(dependencies.ptr()), *(configs.ptr()),
                                             *(anomalies.ptr()), 0);
-  ACE_DEBUG ((LM_TRACE, "Dump done.\n"));
+  ORBSVCS_DEBUG ((LM_TRACE, "Dump done.\n"));
 #endif // SCHEDULER_DUMP
 
   return;
@@ -1294,40 +1139,29 @@ compute_scheduling (CORBA::Long minimum_priority,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-recompute_scheduling (CORBA::Long minimum_priority,
-                      CORBA::Long maximum_priority,
-                      RtecScheduler::Scheduling_Anomaly_Set_out anomalies
-                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-                     RtecScheduler::TASK_COUNT_MISMATCH,
-                     RtecScheduler::INTERNAL,
-                     RtecScheduler::DUPLICATE_NAME))
+recompute_scheduling (CORBA::Long /* minimum_priority */,
+                      CORBA::Long /* maximum_priority */,
+                      RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
 {
 #if defined (SCHEDULER_LOGGING)
-   ACE_DEBUG ((LM_TRACE,
+   ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::compute_scheduling.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // @@ TO DO - use these to establish the bounds of priority assignment.
-  ACE_UNUSED_ARG (minimum_priority);
-  ACE_UNUSED_ARG (maximum_priority);
+  //      minimum_priority
+  //      maximum_priority
 
   // If everything is already up to date, we're done.
   if (SCHED_ALL_STABLE == stability_flags_)
     {
-
       // Must always provide a value for an out parameter
       ACE_NEW_THROW_EX (anomalies,
          RtecScheduler::Scheduling_Anomaly_Set (0),
          CORBA::NO_MEMORY ());
-      ACE_CHECK;
       return;
     }
 
@@ -1337,7 +1171,6 @@ recompute_scheduling (CORBA::Long minimum_priority,
   if ((this->stability_flags_ & SCHED_PROPAGATION_NOT_STABLE)
       || (this->stability_flags_ & SCHED_UTILIZATION_NOT_STABLE))
     {
-
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
@@ -1346,8 +1179,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
 
       // Traverse criticality dependency graph, assigning a
       // topological ordering and identifying threads.
-      crit_dfs_traverse_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      crit_dfs_traverse_i ();
 
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
@@ -1356,8 +1188,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
 #endif
 
       // Propagate criticalities.
-      propagate_criticalities_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      propagate_criticalities_i ();
 
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
@@ -1372,8 +1203,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
 #endif
 
       // Traverse dependency graph, assigning a topological ordering and identifying threads.
-      dfs_traverse_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      dfs_traverse_i ();
 
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
@@ -1383,8 +1213,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
 
       // Sort an array of RT_info handles in topological order, check
       // for loops using the strongly connected components algorithm.
-      detect_cycles_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      detect_cycles_i ();
 
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
@@ -1393,8 +1222,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
 #endif
 
       // Perform admission control for task delineator rate tuples.
-      perform_admission_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      perform_admission_i ();
 
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
@@ -1403,8 +1231,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
 #endif
 
       // Propagate effective execution time and period, set total frame size.
-      propagate_characteristics_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      propagate_characteristics_i ();
 
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
@@ -1419,8 +1246,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
       // Sort operations by urgency, then assign priorities and
       // subpriorities in one pass.  Sets last scheduled priority and
       // last feasible priority.
-      assign_priorities_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      assign_priorities_i ();
 
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
@@ -1437,10 +1263,9 @@ recompute_scheduling (CORBA::Long minimum_priority,
       ACE_NEW_THROW_EX (anomalies,
                         RtecScheduler::Scheduling_Anomaly_Set (0),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "cutil = %f, ncutil = %f\n",
               this->critical_utilization_,
               this->noncritical_utilization_));
@@ -1466,11 +1291,7 @@ recompute_scheduling (CORBA::Long minimum_priority,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-get_rt_info_set (RtecScheduler::RT_Info_Set_out infos
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::INTERNAL))
+get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
 {
   // return the set of scheduled RT_Infos
 
@@ -1479,12 +1300,11 @@ get_rt_info_set (RtecScheduler::RT_Info_Set_out infos
       ACE_NEW_THROW_EX (infos,
                         RtecScheduler::RT_Info_Set (this->rt_info_count_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
   infos->length (this->rt_info_count_);
   TAO_RT_Info_Ex* rt_info = 0;
-  for (ACE_TYPENAME RT_INFO_MAP::iterator info_iter (this->rt_info_map_);
+  for (typename RT_INFO_MAP::iterator info_iter (this->rt_info_map_);
        info_iter.done () == 0;
        ++info_iter)
     {
@@ -1503,11 +1323,7 @@ get_rt_info_set (RtecScheduler::RT_Info_Set_out infos
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-get_dependency_set (RtecScheduler::Dependency_Set_out dependencies
-                    ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::INTERNAL))
+get_dependency_set (RtecScheduler::Dependency_Set_out dependencies)
 {
   // Return the set of dependencies: just need to iterate over one of the maps.
 
@@ -1518,7 +1334,7 @@ get_dependency_set (RtecScheduler::Dependency_Set_out dependencies
   dependencies->length (this->dependency_count_);
   RtecScheduler::Dependency_Set *dependency_set = 0;
   int i = 0;
-  for (ACE_TYPENAME DEPENDENCY_SET_MAP::iterator
+  for (typename DEPENDENCY_SET_MAP::iterator
          dependency_iter (this->called_dependency_set_map_);
        dependency_iter.done () == 0 && i < this->dependency_count_;
        ++dependency_iter)
@@ -1548,11 +1364,7 @@ get_dependency_set (RtecScheduler::Dependency_Set_out dependencies
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-get_config_info_set (RtecScheduler::Config_Info_Set_out configs
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::INTERNAL))
+get_config_info_set (RtecScheduler::Config_Info_Set_out configs)
 {
   // Return the set of scheduled Config_Infos.
 
@@ -1562,12 +1374,11 @@ get_config_info_set (RtecScheduler::Config_Info_Set_out configs
                         RtecScheduler::Config_Info_Set(this->
                                                          config_info_count_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
   configs->length (this->config_info_count_);
   RtecScheduler::Config_Info* config_info = 0;
-  for (ACE_TYPENAME CONFIG_INFO_MAP::iterator config_iter (this->config_info_map_);
+  for (typename CONFIG_INFO_MAP::iterator config_iter (this->config_info_map_);
        config_iter.done () == 0;
        ++config_iter)
     {
@@ -1587,33 +1398,27 @@ void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                         RtecScheduler::OS_Priority& t_priority,
-                        RtecScheduler::Dispatching_Type_t & d_type
-                        ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::NOT_SCHEDULED,
-                      RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::UNKNOWN_PRIORITY_LEVEL))
+                        RtecScheduler::Dispatching_Type_t & d_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::dispatch_configuration.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Check stability flags
   if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
       && this->enforce_schedule_stability_)
     {
-      ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
+      throw RtecScheduler::NOT_SCHEDULED ();
     }
 
   RtecScheduler::Config_Info *config_info = 0;
   if (config_info_map_.find (p_priority, config_info) != 0)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_PRIORITY_LEVEL());
+      throw RtecScheduler::UNKNOWN_PRIORITY_LEVEL();
     }
 
   t_priority = config_info->thread_priority;
@@ -1629,26 +1434,21 @@ dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::Preemption_Priority_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::NOT_SCHEDULED))
+last_scheduled_priority ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::last_scheduled_priority.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK_RETURN (0);
 
   // Check schedule stability flags.
   if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
       && this->enforce_schedule_stability_)
     {
-      ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED (),
-                        (RtecScheduler::Preemption_Priority_t) -1);
+      throw RtecScheduler::NOT_SCHEDULED ();
     }
 
   return last_scheduled_priority_;
@@ -1659,35 +1459,28 @@ last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-get_config_infos (RtecScheduler::Config_Info_Set_out configs
-		  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-		   RtecScheduler::SYNCHRONIZATION_FAILURE,
-		   RtecScheduler::NOT_SCHEDULED))
+get_config_infos (RtecScheduler::Config_Info_Set_out configs)
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
 
   // Check schedule stability flags.
   if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
       && this->enforce_schedule_stability_)
     {
-      ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
+      throw RtecScheduler::NOT_SCHEDULED ();
     }
 
   // return the set of Config_Infos
   if (configs.ptr () == 0)
     {
       ACE_NEW_THROW_EX (configs,
-			RtecScheduler::Config_Info_Set(this->
-						       config_info_count_),
-			CORBA::NO_MEMORY ());
-      ACE_CHECK;
+                        RtecScheduler::Config_Info_Set(this->config_info_count_),
+                        CORBA::NO_MEMORY ());
     }
   configs->length (this->config_info_count_);
   RtecScheduler::Config_Info* config_info = 0;
-  for (ACE_TYPENAME CONFIG_INFO_MAP::iterator config_iter (this->config_info_map_);
+  for (typename CONFIG_INFO_MAP::iterator config_iter (this->config_info_map_);
        config_iter.done () == 0;
        ++config_iter)
     {
@@ -1708,14 +1501,10 @@ TAO_RT_Info_Ex *
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 create_i (const char *entry_point,
           RtecScheduler::handle_t handle,
-          int ignore_duplicates
-          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::DUPLICATE_NAME,
-                     RtecScheduler::INTERNAL))
+          int ignore_duplicates)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::create_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1735,10 +1524,9 @@ create_i (const char *entry_point,
   ACE_NEW_THROW_EX (new_rt_info,
                     TAO_RT_Info_Ex,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   // Make sure the new scheduling entry is cleaned up if we exit abruptly.
-  auto_ptr<TAO_RT_Info_Ex> new_rt_info_ptr (new_rt_info);
+  std::unique_ptr<TAO_RT_Info_Ex> new_rt_info_ptr (new_rt_info);
 
   // Set some reasonable default values, and store the passed ones.
   new_rt_info->entry_point = CORBA::string_dup (entry_point);
@@ -1750,19 +1538,19 @@ create_i (const char *entry_point,
     {
       case -1:
         // Something bad but unknown occurred while trying to bind in map.
-        ACE_THROW_RETURN (RtecScheduler::INTERNAL (), 0);
+        throw RtecScheduler::INTERNAL ();
 
       case 1:
         // Tried to bind an operation that was already in the map.
         if (ignore_duplicates)
           {
             // Should never get here unless something is badly awry.
-            ACE_THROW_RETURN (RtecScheduler::INTERNAL (), 0);
+            throw RtecScheduler::INTERNAL ();
           }
         else
           {
             // Already bound, and we're not ignoring duplicates.
-        ACE_THROW_RETURN (RtecScheduler::DUPLICATE_NAME (), 0);
+        throw RtecScheduler::DUPLICATE_NAME ();
           }
 
       default:
@@ -1776,12 +1564,12 @@ create_i (const char *entry_point,
       case -1:
         // Something bad but unknown occurred while trying to bind in tree.
         rt_info_map_.unbind (handle);
-        ACE_THROW_RETURN (RtecScheduler::INTERNAL (), 0);
+        throw RtecScheduler::INTERNAL ();
 
       case 1:
         // Tried to bind an operation that was already in the tree.
         rt_info_map_.unbind (handle);
-        ACE_THROW_RETURN (RtecScheduler::DUPLICATE_NAME (), 0);
+        throw RtecScheduler::DUPLICATE_NAME ();
 
       default:
         break;
@@ -1791,21 +1579,19 @@ create_i (const char *entry_point,
   ACE_NEW_THROW_EX (new_sched_entry,
                     TAO_Reconfig_Scheduler_Entry (*new_rt_info),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   // Make sure the new scheduling entry is cleaned up if we exit abruptly.
-  auto_ptr<TAO_Reconfig_Scheduler_Entry> new_sched_entry_ptr (new_sched_entry);
+  std::unique_ptr<TAO_Reconfig_Scheduler_Entry> new_sched_entry_ptr (new_sched_entry);
 
   // Maintain the size of the entry pointer array.
-  ::maintain_scheduling_array (entry_ptr_array_, entry_ptr_array_size_,
-                               handle ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  maintain_scheduling_array (entry_ptr_array_, entry_ptr_array_size_,
+                             handle);
 
 
   // Store the new entry in the scheduling entry pointer array.
   entry_ptr_array_ [handle - 1] = new_sched_entry;
 
-  // Release the auto pointers, so their destruction does not
+  // Release the unique pointers, so their destruction does not
   // remove the new rt_info that is now in the map and tree,
   // or the scheduling entry attached to the rt_info.
   new_rt_info_ptr.release ();
@@ -1842,22 +1628,19 @@ set_i (TAO_RT_Info_Ex *rt_info,
        RtecScheduler::Importance_t importance,
        RtecScheduler::Quantum_t quantum,
        CORBA::Long threads,
-       RtecScheduler::Info_Type_t info_type
-       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::INTERNAL))
+       RtecScheduler::Info_Type_t info_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   // Do not allow conjunction nodes for now.
   if (info_type == RtecScheduler::CONJUNCTION)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT("Conjunction Nodes are not supported currently.")));
-      ACE_THROW (RtecScheduler::INTERNAL ());
+      throw RtecScheduler::INTERNAL ();
     }
 
 
@@ -1878,16 +1661,16 @@ set_i (TAO_RT_Info_Ex *rt_info,
       TAO_Reconfig_Scheduler_Entry * rse_ptr =
         ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                              rt_info->volatile_token);
-//      ACE_DEBUG((LM_DEBUG, "Updating or inserting tuple for RT_Info: %d, entry_ptr: %x\n", rt_info->handle, rse_ptr));
+//      ORBSVCS_DEBUG((LM_DEBUG, "Updating or inserting tuple for RT_Info: %d, entry_ptr: %x\n", rt_info->handle, rse_ptr));
       if (rse_ptr == 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
 
       int result = rse_ptr->update_tuple (*rt_info);
       if (result < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
       else if (result == 0)  // We did not find an existing tuple.
         {
@@ -1896,13 +1679,12 @@ set_i (TAO_RT_Info_Ex *rt_info,
           ACE_NEW_THROW_EX (tuple_ptr,
                             TAO_RT_Info_Tuple (*rt_info),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
 
 
           // Make sure the new tuple is cleaned up if we exit abruptly.
-          auto_ptr<TAO_RT_Info_Tuple> tuple_auto_ptr (tuple_ptr);
+          std::unique_ptr<TAO_RT_Info_Tuple> tuple_auto_ptr (tuple_ptr);
 
-//          ACE_DEBUG((LM_DEBUG, "Tuple not found.  Inserting new tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
+//          ORBSVCS_DEBUG((LM_DEBUG, "Tuple not found.  Inserting new tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
 //                     rt_info->handle,
 //                     rse_ptr,
 //                     tuple_ptr));
@@ -1910,28 +1692,24 @@ set_i (TAO_RT_Info_Ex *rt_info,
           result = rse_ptr->insert_tuple (*tuple_ptr);
           if (result < 0)
             {
-              ACE_THROW (RtecScheduler::INTERNAL ());
+              throw RtecScheduler::INTERNAL ();
             }
 
           // Maintain the size of the entry pointer array.
-          ::maintain_scheduling_array (tuple_ptr_array_,
-                                       tuple_ptr_array_size_,
-                                       rt_info_tuple_count_
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          maintain_scheduling_array (tuple_ptr_array_,
+                                     tuple_ptr_array_size_,
+                                     rt_info_tuple_count_);
 
           // Store the new tuple in the tuple pointer array.
           tuple_ptr_array_ [this->rt_info_tuple_count_] = tuple_ptr;
 
           ++this->rt_info_tuple_count_;
 
-          // All is well: release the auto pointer's hold on the tuple.
+          // All is well: release the unique pointer's hold on the tuple.
           tuple_auto_ptr.release ();
         }
     }
 }
-
-
 
 // Internal method to lookup a handle for an RT_Info, and return its
 // handle, or an error value if it's not present.
@@ -1939,20 +1717,17 @@ set_i (TAO_RT_Info_Ex *rt_info,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-lookup_i (const char * entry_point
-          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK))
+lookup_i (const char * entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::lookup_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   TAO_RT_Info_Ex *rt_info = 0;
   if (rt_info_tree_.find (entry_point, rt_info) != 0)
     {
-      ACE_THROW_RETURN (RtecScheduler::UNKNOWN_TASK (), 0);
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 
   return rt_info->handle;
@@ -1967,23 +1742,19 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 priority_i (RtecScheduler::handle_t handle,
             RtecScheduler::OS_Priority& o_priority,
             RtecScheduler::Preemption_Subpriority_t& subpriority,
-            RtecScheduler::Preemption_Priority_t& p_priority
-            ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK,
-                      RtecScheduler::NOT_SCHEDULED))
+            RtecScheduler::Preemption_Priority_t& p_priority)
 {
   // Check stability flags.
   if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
       && this->enforce_schedule_stability_)
     {
-      ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
+      throw RtecScheduler::NOT_SCHEDULED ();
     }
 
   TAO_RT_Info_Ex *rt_info = 0;
   if (rt_info_map_.find (handle, rt_info) != 0)
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 
   o_priority = rt_info->priority;
@@ -2000,14 +1771,10 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                   RtecScheduler::handle_t dependency /* RT_Info on which it depends */,
                   CORBA::Long number_of_calls,
                   RtecScheduler::Dependency_Type_t dependency_type,
-                  RtecScheduler::Dependency_Enabled_Type_t enabled
-                  ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::UNKNOWN_TASK))
+                  RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::add_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2030,9 +1797,7 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                         calling_dependency_set_map_,   // calling map
                         number_of_calls,
                         dependency_type,
-                        enabled
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                        enabled);
 
       // Add the called dependency map entry
       map_dependency_i (dependency,                    // called handle
@@ -2040,9 +1805,7 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                         called_dependency_set_map_,    // called map
                         number_of_calls,
                         dependency_type,
-                        enabled
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                        enabled);
 
       break;
 
@@ -2056,9 +1819,7 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                         calling_dependency_set_map_,   // calling map
                         number_of_calls,
                         dependency_type,
-                        enabled
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                        enabled);
 
       // Add the called dependency map entry
       map_dependency_i (handle,                        // called handle
@@ -2066,15 +1827,13 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                         called_dependency_set_map_,    // called map
                         number_of_calls,
                         dependency_type,
-                        enabled
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                        enabled);
       break;
 
     default:
 
       // There should not be any other kinds of dependencies.
-      ACE_THROW (RtecScheduler::INTERNAL ());
+      throw RtecScheduler::INTERNAL ();
   }
 
  // Add the criticality dependency map entry.
@@ -2094,10 +1853,7 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                    crit_dependency_set_map_,// crit dependency map
                    number_of_calls,
                    dependency_type,
-                   enabled
-                   ACE_ENV_ARG_PARAMETER);
- ACE_CHECK;
-
+                   enabled);
 }
 
 
@@ -2108,15 +1864,10 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 remove_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the dependency */,
                      RtecScheduler::handle_t dependency /* RT_Info on which it depends */,
                      CORBA::Long number_of_calls,
-                     RtecScheduler::Dependency_Type_t dependency_type
-                     ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::UNKNOWN_TASK))
+                     RtecScheduler::Dependency_Type_t dependency_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::remove_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2138,18 +1889,14 @@ remove_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depe
                           dependency,                    // called handle
                           calling_dependency_set_map_,   // calling map
                           number_of_calls,
-                          dependency_type
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                          dependency_type);
 
       // Remove the called dependency map entry
       unmap_dependency_i (dependency,                    // called handle
                           handle,                        // calling handle
                           called_dependency_set_map_,    // called map
                           number_of_calls,
-                          dependency_type
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                          dependency_type);
       break;
 
     // In a one-way call, the called operation depends on the
@@ -2161,24 +1908,20 @@ remove_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depe
                           handle,                        // called handle
                           calling_dependency_set_map_,   // calling map
                           number_of_calls,
-                          dependency_type
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                          dependency_type);
 
       // Remove the called dependency map entry
       unmap_dependency_i (handle,                        // called handle
                           dependency,                    // calling handle
                           called_dependency_set_map_,    // called map
                           number_of_calls,
-                          dependency_type
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                          dependency_type);
       break;
 
     default:
 
       // There should not be any other kinds of dependencies.
-      ACE_THROW (RtecScheduler::INTERNAL ());
+      throw RtecScheduler::INTERNAL ();
   }
 }
 
@@ -2192,15 +1935,10 @@ set_dependency_enable_state_i (RtecScheduler::handle_t handle,
                                RtecScheduler::handle_t dependency,
                                CORBA::Long number_of_calls,
                                RtecScheduler::Dependency_Type_t dependency_type,
-                               RtecScheduler::Dependency_Enabled_Type_t enabled
-                               ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::UNKNOWN_TASK))
+                               RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_dependency_enable_state_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2223,9 +1961,7 @@ set_dependency_enable_state_i (RtecScheduler::handle_t handle,
                                      calling_dependency_set_map_,   // calling map
                                      number_of_calls,
                                      dependency_type,
-                                     enabled
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                     enabled);
 
       // Update the called dependency map entry
       map_dependency_enable_state_i (dependency,                    // called handle
@@ -2233,9 +1969,7 @@ set_dependency_enable_state_i (RtecScheduler::handle_t handle,
                                      called_dependency_set_map_,    // called map
                                      number_of_calls,
                                      dependency_type,
-                                     enabled
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                     enabled);
       break;
 
     // In a one-way call, the called operation depends on the
@@ -2248,9 +1982,7 @@ set_dependency_enable_state_i (RtecScheduler::handle_t handle,
                                      calling_dependency_set_map_,   // calling map
                                      number_of_calls,
                                      dependency_type,
-                                     enabled
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                     enabled);
 
       // Update the called dependency map entry
       map_dependency_enable_state_i (handle,                        // called handle
@@ -2258,15 +1990,13 @@ set_dependency_enable_state_i (RtecScheduler::handle_t handle,
                                      called_dependency_set_map_,    // called map
                                      number_of_calls,
                                      dependency_type,
-                                     enabled
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                     enabled);
       break;
 
     default:
 
       // There should not be any other kinds of dependencies.
-      ACE_THROW (RtecScheduler::INTERNAL ());
+      throw RtecScheduler::INTERNAL ();
   }
 }
 
@@ -2276,21 +2006,17 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 map_dependency_i (RtecScheduler::handle_t key,
                   RtecScheduler::handle_t handle,
-                  ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
+                  typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                   CORBA::Long number_of_calls,
                   RtecScheduler::Dependency_Type_t dependency_type,
-                  RtecScheduler::Dependency_Enabled_Type_t enabled
-                  ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::UNKNOWN_TASK))
+                  RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::map_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
-  RtecScheduler::Dependency_Set *dependency_set;
+  RtecScheduler::Dependency_Set *dependency_set = 0;
 
   // Look up the dependency set in the passed map
   if (dependency_map.find (key, dependency_set) != 0)
@@ -2299,12 +2025,11 @@ map_dependency_i (RtecScheduler::handle_t key,
       ACE_NEW_THROW_EX (dependency_set,
                         RtecScheduler::Dependency_Set,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       if (dependency_map.bind (key, dependency_set) != 0)
         {
           delete dependency_set;
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
@@ -2326,16 +2051,12 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 unmap_dependency_i (RtecScheduler::handle_t key,
                     RtecScheduler::handle_t handle,
-                    ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
+                    typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                     CORBA::Long number_of_calls,
-                    RtecScheduler::Dependency_Type_t dependency_type
-                    ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::UNKNOWN_TASK))
+                    RtecScheduler::Dependency_Type_t dependency_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::unmap_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2372,17 +2093,17 @@ unmap_dependency_i (RtecScheduler::handle_t key,
 
           if (!found)
             {
-              ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+              throw RtecScheduler::UNKNOWN_TASK ();
             }
         }
       else
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
   else
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 }
 
@@ -2394,18 +2115,14 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 map_dependency_enable_state_i (RtecScheduler::handle_t key,
                                RtecScheduler::handle_t handle,
-                               ACE_TYPENAME
+                               typename
                                  TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                                CORBA::Long number_of_calls,
                                RtecScheduler::Dependency_Type_t dependency_type,
-                               RtecScheduler::Dependency_Enabled_Type_t enabled
-                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::INTERNAL,
-                     RtecScheduler::UNKNOWN_TASK))
+                               RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::map_dependency_enable_state_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2434,17 +2151,17 @@ map_dependency_enable_state_i (RtecScheduler::handle_t key,
 
           if (!found)
             {
-              ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+              throw RtecScheduler::UNKNOWN_TASK ();
             }
         }
       else
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
   else
     {
-      ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 }
 
@@ -2455,12 +2172,10 @@ map_dependency_enable_state_i (RtecScheduler::handle_t key,
 // has_unresolved_remote_dependencies_, has_unresolved_local_dependencies_,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-dfs_traverse_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL))
+dfs_traverse_i ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::dfs_traverse_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2472,7 +2187,7 @@ dfs_traverse_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (reset_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
@@ -2484,24 +2199,20 @@ dfs_traverse_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (dfs_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 }
-
 
 
 // Sorts an array of RT_info handles in topological order, then
 // checks for loops, marks unresolved remote dependencies.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-detect_cycles_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::CYCLIC_DEPENDENCIES))
+detect_cycles_i ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::detect_cycles_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2525,14 +2236,14 @@ detect_cycles_i (ACE_ENV_SINGLE_ARG_DECL)
 
       if (scc_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
   // Check whether any cycles were detected.
   if (scc_visitor.number_of_cycles () > 0)
     {
-      ACE_THROW (RtecScheduler::CYCLIC_DEPENDENCIES ());
+      throw RtecScheduler::CYCLIC_DEPENDENCIES ();
     }
 }
 
@@ -2542,13 +2253,10 @@ detect_cycles_i (ACE_ENV_SINGLE_ARG_DECL)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
-                      CORBA::SystemException,
-                      RtecScheduler::INTERNAL))
+perform_admission_i ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::perform_admission_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2564,7 +2272,7 @@ perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (prop_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
@@ -2591,7 +2299,7 @@ perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (admit_visitor.visit (* (tuple_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
@@ -2605,12 +2313,10 @@ perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-crit_dfs_traverse_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL))
+crit_dfs_traverse_i ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::crit_dfs_traverse_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2622,7 +2328,7 @@ crit_dfs_traverse_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (reset_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
@@ -2634,19 +2340,17 @@ crit_dfs_traverse_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (dfs_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 }
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-propagate_criticalities_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL))
+propagate_criticalities_i ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::propagate_criticalities_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2670,14 +2374,14 @@ propagate_criticalities_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (crit_prop_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
   for (i = this->rt_info_count_-1; i>=0; --i)
     {
       if (crit_prop_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 }
@@ -2685,14 +2389,10 @@ propagate_criticalities_i (ACE_ENV_SINGLE_ARG_DECL)
 // Propagates periods, sets total frame size.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-propagate_characteristics_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::UNRESOLVED_LOCAL_DEPENDENCIES,
-                      RtecScheduler::THREAD_SPECIFICATION))
+propagate_characteristics_i ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::propagate_characteristics_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2706,20 +2406,20 @@ propagate_characteristics_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (prop_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
   // Check whether any unresolved local dependencies were detected.
   if (prop_visitor.unresolved_locals () > 0)
     {
-      ACE_THROW (RtecScheduler::UNRESOLVED_LOCAL_DEPENDENCIES ());
+      throw RtecScheduler::UNRESOLVED_LOCAL_DEPENDENCIES ();
     }
 
   // Check whether any thread specification errors were detected.
   if (prop_visitor.thread_specification_errors () > 0)
     {
-      ACE_THROW (RtecScheduler::THREAD_SPECIFICATION ());
+      throw RtecScheduler::THREAD_SPECIFICATION ();
     }
 }
 
@@ -2728,23 +2428,20 @@ propagate_characteristics_i (ACE_ENV_SINGLE_ARG_DECL)
 // Sets last scheduled priority.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL,
-                      RtecScheduler::DUPLICATE_NAME))
+assign_priorities_i ()
 {
   int i;
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::assign_priorities_i.\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "Scheduler::entry ptr array before sorting is\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Scheduler::entry ptr array before sorting is\n"));
   for (i = 0; i < this->rt_info_count_; ++i)
     {
       RtecScheduler::RT_Info* rt_info_ptr =
         this->entry_ptr_array_[i]->actual_rt_info ();
-      ACE_DEBUG ((LM_DEBUG,
-                  " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n ",
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n",
                   rt_info_ptr->entry_point.in (),
                   rt_info_ptr->handle,
                   rt_info_ptr->criticality,
@@ -2763,13 +2460,13 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
                  reinterpret_cast<COMP_FUNC> (RECONFIG_SCHED_STRATEGY::total_priority_comp));
 
 #ifdef SCHEDULER_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "Scheduler::qsorted array is\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Scheduler::qsorted array is\n"));
   for (i = 0; i < this->rt_info_count_; ++i)
     {
       RtecScheduler::RT_Info* rt_info_ptr =
         this->entry_ptr_array_[i]->actual_rt_info ();
-      ACE_DEBUG ((LM_DEBUG,
-                  " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n ",
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n",
                   rt_info_ptr->entry_point.in (),
                   rt_info_ptr->handle,
                   rt_info_ptr->criticality,
@@ -2791,7 +2488,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
         }
       else
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
   this->config_info_count_ = 0;
@@ -2800,7 +2497,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
   // strategy to decide when a new priority or subpriority is reached.
   TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
     prio_visitor (this->rt_info_count_, this->entry_ptr_array_);
-  auto_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
+  std::unique_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
   for (i = 0; i <= this->rt_info_count_; ++i)
     {
       int result;
@@ -2819,25 +2516,24 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
       if (result < 0)
         {
           // Something bad happened with the internal data structures.
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
       else if (result == 1)
         {
-          RtecScheduler::Config_Info* new_config_info;
+          RtecScheduler::Config_Info* new_config_info {};
           ACE_NEW_THROW_EX (new_config_info,
                             RtecScheduler::Config_Info,
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
 
           // Make sure the new config info is cleaned up if we exit abruptly.
-          ACE_AUTO_PTR_RESET (new_config_info_ptr, new_config_info, RtecScheduler::Config_Info);
+          new_config_info_ptr.reset (new_config_info);
 
           // Have the strategy fill in the new config info for that
           // priority level, using the representative scheduling entry.
           if  (RECONFIG_SCHED_STRATEGY::assign_config (*new_config_info,
                                                        *(entry_ptr_array_ [i])) < 0)
             {
-              ACE_THROW (RtecScheduler::INTERNAL ());
+              throw RtecScheduler::INTERNAL ();
             }
 
           if (new_config_info->preemption_priority >
@@ -2853,19 +2549,19 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
             {
               case -1:
                 // Something bad but unknown occurred while trying to bind in map.
-                ACE_THROW (RtecScheduler::INTERNAL ());
+                throw RtecScheduler::INTERNAL ();
 
               case 1:
                 // Tried to bind an operation that was already in the map.
-                ACE_THROW (RtecScheduler::DUPLICATE_NAME ());
+                throw RtecScheduler::DUPLICATE_NAME ();
 
               default:
                 ++this->config_info_count_;
                 break;
             }
 
-          // Release the auto_ptr so it does not clean
-          // up the sucessfully bound config info.
+          // Release the unique_ptr so it does not clean
+          // up the successfully bound config info.
           new_config_info_ptr.release ();
         }
     }
@@ -2876,12 +2572,10 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-refresh_tuple_ptr_array_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL))
+refresh_tuple_ptr_array_i ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::refresh_tuple_ptr_array_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2896,7 +2590,7 @@ refresh_tuple_ptr_array_i (ACE_ENV_SINGLE_ARG_DECL)
       if (entry_ptr_array_ [i]->register_tuples (this->tuple_ptr_array_,
                                                  this->rt_info_tuple_count_) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 }
@@ -2913,7 +2607,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::sched_strategy ()
 // Accesses map for O(1) lookup of Config_Infos by priority level.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::CONFIG_INFO_MAP &
+typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::CONFIG_INFO_MAP &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::config_info_map ()
 {
   return this->config_info_map_;
@@ -2933,7 +2627,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::config_info_count ()
 // Accesses map for O(1) lookup of RT_Infos by handle.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP &
+typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_map ()
 {
   return this->rt_info_map_;
@@ -2960,7 +2654,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_tuple_count (
 // Accesses tree for O(log n) lookup of RT_Infos by name.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_TREE &
+typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_TREE &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_tree ()
 {
   return this->rt_info_tree_;
@@ -2971,7 +2665,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_tree ()
 // set by the caller operation's handle.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &
+typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::calling_dependency_set_map ()
 {
   return this->calling_dependency_set_map_;
@@ -2982,7 +2676,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::calling_dependency_se
 // set by the called operation's handle.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &
+typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::called_dependency_set_map ()
 {
   return this->called_dependency_set_map_;
@@ -3060,21 +2754,22 @@ critical_utilization_threshold (const CORBA::Double &d)
 template <class ARRAY_ELEMENT_TYPE> void
 maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
                            long & current_ptr_array_size,
-                           RtecScheduler::handle_t handle
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                           RtecScheduler::handle_t handle)
 {
   if (current_ptr_array_size <= handle)
     {
       long new_size = handle + 1;
-      ARRAY_ELEMENT_TYPE ** new_array;
+      ARRAY_ELEMENT_TYPE ** new_array = 0;
 
       if (current_ptr_array_size > 0)
         {
           // Store previous array size.
           for (new_size = 2 * current_ptr_array_size;
                new_size <= handle;
-               new_size *= 2);
+               new_size *= 2)
+            {
+              // No action at this time.
+            }
         }
 
       // Allocate the new array of the proper size, zero it out.
@@ -3108,16 +2803,14 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-compute_utilization_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::INTERNAL))
+compute_utilization_i ()
 {
   TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY> util_visitor;
   for (int i = 0; i < this->rt_info_count_; ++i)
     {
       if (util_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
-          ACE_THROW (RtecScheduler::INTERNAL ());
+          throw RtecScheduler::INTERNAL ();
         }
     }
 
@@ -3133,7 +2826,6 @@ compute_utilization_i (ACE_ENV_SINGLE_ARG_DECL)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecScheduler::RT_Info &rt_info)
-     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Set some reasonable default values.
   rt_info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
@@ -3153,5 +2845,6 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecSch
 
 */
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_RECONFIG_SCHEDULER_T_C */

@@ -1,0 +1,27 @@
+
+//=============================================================================
+/**
+ *  @file    ami_test.idl
+ *
+ *  IDL description of the AMI Test interface
+ *
+ *
+ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
+ */
+
+module A
+  {
+    /// The message type, just used to send a lot of data on each
+    /// request
+    typedef sequence<octet> Payload;
+
+    interface AMI_Test
+      {
+        long foo (out long out_l,
+                  in long in_l,
+                  in string in_str,
+                  in Payload the_payload);
+
+        oneway void shutdown ();
+      };
+  };

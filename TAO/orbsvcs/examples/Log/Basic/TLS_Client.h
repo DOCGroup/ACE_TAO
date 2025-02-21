@@ -4,11 +4,7 @@
 /**
  *  @file   TLS_Client.h
  *
- *  $Id$
- *
  *  An example of using the Basic_Logging_Service
- *
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
@@ -27,24 +23,23 @@ class TLS_Client
   // = DESCRIPTION
   //   This client demonstates how to use the log service.
  public:
-  // = Initialization and Termination
-  TLS_Client (void);
+  TLS_Client ();
   ~TLS_Client ();
 
-  void init (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init (int argc, ACE_TCHAR *argv []);
   // Init the Client.
 
-  void run_tests (ACE_ENV_SINGLE_ARG_DECL);
+  void run_tests ();
   // Run the tests..
 
  protected:
-  void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, ACE_TCHAR *argv []);
   // Initializes the ORB.
 
-  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service ();
   // Try to get hold of a running naming service.
 
-  void resolve_TLS_Basic_factory (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_TLS_Basic_factory ();
   // Try to resolve the TLS factory from the Naming service.
 
   // = Data Members
@@ -58,6 +53,5 @@ class TLS_Client
   // The basic log factory from the Log Service.
 
 
- 
 };
 #endif /* TLS_CLIENT_H */

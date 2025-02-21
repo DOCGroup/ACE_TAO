@@ -1,0 +1,490 @@
+commit e4fd21292b8e6a14e19ecc26d008c0d847ea7ef1
+Merge: de9f905104e 98c20bb9fbf
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Mon Apr 17 19:14:14 2017 -0500
+
+    Merge pull request #403 from huangminghuang/inet_addr-revert
+    
+    Fix PR #400 incorrect revert
+
+commit 98c20bb9fbf0b474f1addc519e43168a50dc9fa8
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Mon Apr 17 13:28:32 2017 -0500
+
+    Fix PR #400 incorrect revert
+
+commit 99c5ffc878b29d810aaadb7e171cae1ae06c0693
+Merge: 4553fa0246c 44c422e3d40
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 14 08:32:51 2017 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 4553fa0246c89e56cd36dde3f4534be7f04a7b3a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 14 08:32:43 2017 +0200
+
+    Add another dlopen suppression which is needed on newer linux distros
+    
+        * ACE/bin/valgrind.supp:
+
+commit 13fb5d25bc7c0b3036ab2bb2cacea048914135ae
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Tue Apr 11 09:20:56 2017 -0500
+
+    Revert PR #394 #385 #382 #397
+    
+    This revert commits 020cfd8d8ffa71ec6169287dc2e98cc0d4f7e815 db516618eee937974d9e902864ad0165320d85d8 76dcc3fed2faf5c2148df8adb09ef3bc7b11b440 6dd56850da60fde290f39d313397d11cbae47df2 8eb07a10571eb342755f4036424b0724f9eb407c f5c4d13041422d8f713c150d480e09fadccecf70
+
+commit 468ec2564585dfe2f3ff4490b7ffc218a56d4210
+Merge: 020cfd8d8ff a4d9ea706f6
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Mon Apr 10 10:13:40 2017 -0500
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit 020cfd8d8ffa71ec6169287dc2e98cc0d4f7e815
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Mon Apr 10 10:04:05 2017 -0500
+
+    Fix PR #394 compile error on some platform
+
+commit db516618eee937974d9e902864ad0165320d85d8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 8 09:11:40 2017 +0200
+
+    Revert "Fix getaddrinfo() inconsistent behavior on windows machines"
+
+commit 76dcc3fed2faf5c2148df8adb09ef3bc7b11b440
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Fri Apr 7 12:26:19 2017 -0500
+
+    Fix getaddrinfo() inconsistent behavior on windows machines
+
+commit 07d232e86543b58f090eb46daebe1a335fb52a0a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 6 17:14:09 2017 +0200
+
+    Fixed compile warning at the moment ACE_HAS_IPV6 is not defined
+    
+        * ACE/tests/INET_Addr_Test_IPV6.cpp:
+
+commit 97602b478aa7f6310cccd3a351dc8c0fb132da7a
+Merge: 174494fc4b0 d5cfdb41caf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 5 15:48:51 2017 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 4fe9f9a0e1af75b17dc9a5372a437b1f1dedfda7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 5 15:41:25 2017 +0200
+
+    Fixed typo
+    
+        * ACE/examples/IPC_SAP/DEV_SAP/README:
+
+commit 4b9603ac960b65e96e9ee4c9ed4fe7c1117f75cd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 5 15:41:11 2017 +0200
+
+    No autoconf support anymore
+    
+        * ACE/debian/TODO:
+
+commit d5cfdb41caf7feffc320fd53836905012dce1b55
+Merge: 4c0bebe61b4 4cf75309137
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 3 17:18:10 2017 +0200
+
+    Merge pull request #334 from ops/TTY-fix
+    
+    Fix for TTY_IO parity settings
+
+commit 21017ce12a93b2f0cb6059217e18bbf25e2abf35
+Merge: 6264b243c8f d0f1eadba9a
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Sat Apr 1 12:37:51 2017 -0500
+
+    Merge pull request #387 from huangminghuang/master
+    
+    Another attempt to fix PR #382 #385
+
+commit 6264b243c8f9d601efd99e1b61ba7a996431d650
+Merge: b48973b3dea 09ac8a3f7ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 1 08:27:34 2017 +0200
+
+    Merge pull request #386 from jwillemsen/master
+    
+    Fixed typos
+
+commit b48973b3dead89edc84a52dd44c72da3bdbc058a
+Merge: a65d9ccf57f 30998b2627c
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Mar 31 17:15:20 2017 -0400
+
+    Merge pull request #384 from DOCGroup/case2063
+    
+    Fix ability to request IPv4 address from ACE_INET_Addr::set
+
+commit d0f1eadba9ae7c6b2f789eab7eb7543e94652670
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Fri Mar 31 13:35:24 2017 -0500
+
+    Another attempt to fix PR #382 #385
+
+commit 09ac8a3f7ac83cac488913546187a8180e138db1
+Merge: bb4a031ea9f a65d9ccf57f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 31 14:16:51 2017 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit bb4a031ea9f1373dfd65ea52339608d09d9f588c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 31 14:14:03 2017 +0200
+
+    Fixed typos
+    
+        * ACE/ACEXML/parser/parser/Parser.cpp:
+        * ACE/ACEXML/parser/parser/Parser.h:
+        * ACE/ASNMP/asnmp/sagent.h:
+        * ACE/ASNMP/asnmp/snmp.h:
+        * ACE/ace/Service_Config.cpp:
+        * ACE/apps/gperf/src/Options.cpp:
+        * ACE/tests/Malloc_Test.cpp:
+        * TAO/TAO_IDL/be/be_interface.cpp:
+        * TAO/TAO_IDL/be_include/be_interface.h:
+        * TAO/examples/OBV/Simple_util.h:
+        * TAO/examples/Persistent_Grid/Simple_util.h:
+        * TAO/examples/Simple/Simple_util.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * TAO/tests/Bug_3683_Regression/Simple_util.h:
+        * TAO/tests/OBV/Simple/Simple_util.h:
+
+commit 60bd8694944713e5d11c0dc8ba8d387ff0c2004b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 31 14:13:25 2017 +0200
+
+    Don't generate Id tag anymore
+    
+        * ACE/bin/generate_export_file.pl:
+
+commit 30998b2627c5694749bcfb5ff4dceb2d413c7ac1
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Mar 30 16:17:57 2017 -0400
+
+    Removed tabs flagged by fuzz
+
+commit 6dd56850da60fde290f39d313397d11cbae47df2
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Thu Mar 30 13:13:17 2017 -0500
+
+    Fix INET_Addr test case
+
+commit 6fa996c9cd813e4be1c2baffb26c002d3b3cc3b7
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Mar 30 13:18:10 2017 -0400
+
+    Fix ability to request IPv4 address from ACE_INET_Addr::set
+
+commit 0318992095a5635752553814811ad92e500e968f
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Mar 29 19:01:09 2017 -0400
+
+    Add new test case for selecting protocol by name
+
+commit 8eb07a10571eb342755f4036424b0724f9eb407c
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Sat Mar 25 12:06:17 2017 -0500
+
+    Add test for INET_Addr.set() with IPV6 enabled
+
+commit f5c4d13041422d8f713c150d480e09fadccecf70
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Sun Feb 26 18:11:23 2017 -0600
+
+    Fix INET_Addr::set() incorrectly reset inet_addr_.in6_.sin6_family to 0
+
+commit 1a8e284fa20a3cfb52ee75b7e3de2b6b01d9f11d
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Mar 23 14:20:44 2017 -0500
+
+    ACE config file updates for VS2017
+
+commit 274d67cbdac1d696d8924d97f81ff27e88202dbf
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Mar 23 13:37:03 2017 -0500
+
+    MPC's "-type vc15" is now vs2017
+
+commit 56cc64165945705890440d322139cb59efaf9005
+Merge: d06ef232b8e 6dad6f745bd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 14 20:33:52 2017 +0100
+
+    Merge pull request #377 from jwillemsen/master
+    
+    Remove link to orbzone
+
+commit 6dad6f745bd524a9c7ffc7e1243977d73c4b5074
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 14 20:33:21 2017 +0100
+
+    Remove link to orbzone
+    
+        * ACE/docs/Download.html:
+
+commit 0271049e60c76562344c759347165eb2a3f76e8f
+Merge: 78ccb95e03e 15f4fc5f3b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 13 16:33:02 2017 +0100
+
+    Merge pull request #373 from jwillemsen/master
+    
+    Use uniq for source files and grouped_source_files to not list any so…
+
+commit c8f7e44a49c8596dbb925922a6f448676a15e5c7
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Mar 13 14:38:01 2017 +0100
+
+    Improvements for remote/avd target testing
+
+commit 15f4fc5f3b490e886c5599fe3db95495a968f246
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 13 14:33:15 2017 +0100
+
+    Use uniq for source files and grouped_source_files to not list any source twice
+
+commit 1bc46b5eaa1f51aa82bd9bdbdbdb304042e1ee9d
+Merge: 41e7b92b828 dc75284421f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 10 13:15:05 2017 +0100
+
+    Merge pull request #372 from jwillemsen/master
+    
+    Added separate configuration file for Visual Studio 2017, no special …
+
+commit 8769426c6c91dbf87330da25ed4c65e6c6d3fd16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 10 10:08:50 2017 +0100
+
+    Generate vc15 solutions as part of the release
+    
+        * ACE/bin/make_release.py:
+
+commit 24ac735b2fd4079788bde84ce900e42815c23d46
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 10 08:55:46 2017 +0100
+
+    List some enhancements done
+
+commit 1468a5f0d32b46609e282bb7b7bfec13592c855f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 10 08:23:04 2017 +0100
+
+    Added separate configuration file for Visual Studio 2017, no special settings yet
+    
+        * ACE/ace/config-win32-msvc-15.h:
+          Added.
+    
+        * ACE/ace/config-win32-msvc.h:
+
+commit 3d3ceac4f98f441df13a5d8b15a4bdd6da419ca6
+Merge: 890d76b1116 eb630912667
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Wed Mar 8 13:18:18 2017 +0100
+
+    Merge pull request #370 from jwillemsen/master
+    
+    Android improvements, Fuzz fixes and features file for Visual Studio 2017
+
+commit eb630912667440063d1d71e2eed96479926c8a4e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 8 11:17:42 2017 +0100
+
+    Layout change
+    
+        * ACE/bin/MakeProjectCreator/config/global.features:
+
+commit abf6609903c05fa042feb6b6380dda7200750cc1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 8 11:17:23 2017 +0100
+
+    Fixed fuzz
+    
+        * ACE/bin/MakeProjectCreator/config/em3.features:
+        * ACE/bin/MakeProjectCreator/config/global.features:
+        * ACE/bin/MakeProjectCreator/config/gnuace.features:
+        * ACE/bin/MakeProjectCreator/config/nmake.features:
+        * ACE/bin/MakeProjectCreator/config/wb26.features:
+
+commit 61c633c33f7d0a58c6d239e9527631783abc26d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 8 09:43:56 2017 +0100
+
+    Fixed fuzz by removing id tag
+    
+        * ACE/bin/MakeProjectCreator/config/vc10.features:
+        * ACE/bin/MakeProjectCreator/config/vc11.features:
+        * ACE/bin/MakeProjectCreator/config/vc12.features:
+        * ACE/bin/MakeProjectCreator/config/vc14.features:
+        * ACE/bin/MakeProjectCreator/config/vc71.features:
+        * ACE/bin/MakeProjectCreator/config/vc8.features:
+        * ACE/bin/MakeProjectCreator/config/vc9.features:
+
+commit caf20d29f0c28f3cf5b855e9f2694b14ff538bb7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 8 09:43:40 2017 +0100
+
+    Check *.features for old Id tag
+    
+        * ACE/bin/fuzz.pl:
+
+commit 6175b93927ffff03b1d6331f9f1351e04d8a5327
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 8 09:43:24 2017 +0100
+
+    Added Visual Studio 2017 files
+    
+        * ACE/bin/MakeProjectCreator/config/vc15.features:
+        * ACE/bin/MakeProjectCreator/config/vc15nmake.mpb:
+          Added.
+
+commit 0910e766c93bbf361cc7166b353d6d0444bdf1ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 6 16:03:19 2017 +0100
+
+    Doxygen changes
+    
+        * ACE/ace/ACE.cpp:
+
+commit 47ae0bf988dd53b76d431e7724f393e062937d64
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 6 13:29:32 2017 +0100
+
+    Android API level 21 and higher have clock_settime
+    
+        * ACE/ace/config-android.h:
+
+commit 199f91b086c6bb4dc9f881301bd09800304e2842
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 6 13:29:05 2017 +0100
+
+    Doxygen improvements
+    
+        * ACE/ace/Reactor_Impl.h:
+
+commit 6f1199fe6abf7669b9c3552503a4701686488c01
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Sun Mar 5 16:45:28 2017 +0100
+
+    Improvements for Android AVD testing.
+
+commit bfdd9ee8c0cab97c5bf46c682fc46f8dc22a21c6
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Sun Mar 5 16:22:46 2017 +0100
+
+    Added PIE support by default as needed by supported Android API levels
+
+commit be36a3510f3157c731819296a2217d4ff72477a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 1 16:50:15 2017 +0100
+
+    Removed double part
+
+commit 620ad9a5b2a995da4999e7c6d9b960080b839016
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 1 15:25:40 2017 +0100
+
+    Fixed typo
+
+commit 4bce4a2f8a9b184298725e86528219d607071823
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 1 15:24:40 2017 +0100
+
+    Fixed typo
+
+commit e22f28112b80808a51f169fd9adc65c84a0273fa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 1 15:24:00 2017 +0100
+
+    Fixed typo
+
+commit 373fedb1dce3891c9727dcf4fea3384d7a90972d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 1 15:08:37 2017 +0100
+
+    Fixed typo
+
+commit b2c32d7e397e796e3f6acf2a9281be37c51eb316
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 1 15:07:53 2017 +0100
+
+    Fixed typo
+
+commit ac3e75337ed0da12b0fe779e4aebf0d902f224d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 1 14:53:24 2017 +0100
+
+    Fixed typo
+    
+        * ACE/bin/add_rel_link.sh:
+
+commit 3ee15c6abfd1204cc5fdd14aae360939f243ed71
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 1 13:46:31 2017 +0100
+
+    Fixed android version checks for cpu_set_t and ucontext_t
+    
+        * ACE/ace/config-android.h:
+
+commit b1281973f2992fcf231c8194c1f65ac69688966e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 22 14:52:03 2017 +0100
+
+    Fixed typo
+    
+        * ACE/ace/Ping_Socket.cpp:
+
+commit 8cd29a94bfe71a5cc846f4e7ff098dad44fe0953
+Merge: c29aa9215a2 912c2853b6f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 3 12:19:24 2017 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit c29aa9215a2375cb949040d8606806bc2b799fd7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 3 12:19:16 2017 +0100
+
+    Make the ACE_Thread_Descriptor do_at_exit and terminate protected instead of private
+    
+        * ACE/ace/Thread_Manager.h:
+
+commit cc3028b8b1f27a3393217a9749e2fe365aae2e11
+Author: Marek Beleščiak <marek.belesciak@websupport.sk>
+Date:   Tue Jan 24 12:38:50 2017 +0100
+
+    ACE_HAS_GCC_ATOMIC_BUILTINS should be defined for clang
+
+commit d959a2af160f8321642c734a15de342111efcae1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 10:09:28 2017 +0100
+
+    Make x.4.2 public and prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 4cf7530913730ecbfafa5aa7bfa426216b14503f
+Author: Olli Savia <ops@iki.fi>
+Date:   Sun Nov 20 19:52:10 2016 +0200
+
+    Fixed parity settings

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef SERVER_TASK_H
 #define SERVER_TASK_H
@@ -20,7 +17,7 @@ public:
   Server_Task (CORBA::ORB_ptr orb);
 
   /// The thread entry point
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Keep a reference to the ORB

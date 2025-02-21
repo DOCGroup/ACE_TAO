@@ -1,14 +1,8 @@
-// $Id$
-
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #include "orbsvcs/Time_Utilities.h"
 #if defined (ACE_HAS_QUANTIFY)
 # include <quantify.h>
 #endif /* ACE_HAS_QUANTIFY */
-
-ACE_RCSID (Sched, 
-           DynSched_Test, 
-           "$Id$")
 
 // period times, in 100 nanoseconds
 #define ONE_HZ    10000000
@@ -23,7 +17,6 @@ class DynSched_Test
   //    Wraps static functions for test
 {
 public:
-
   static void setup_rt_info (RtecScheduler::RT_Info &info,
                              const char *entry_point,
                              u_long period,
@@ -53,7 +46,6 @@ public:
                            const char *output_filename,
                            const char *heading);
   // Creates the schedule, runs timelines.
-
 };
 
 
@@ -101,7 +93,7 @@ DynSched_Test::register_rt_info (ACE_DynScheduler &scheduler,
       ACE_DynScheduler::SUCCEEDED)
   {
      result = 1;
-     printf ("Could not register info for \"%s\"\n", info.entry_point.in ());
+     ACE_OS::printf ("Could not register info for \"%s\"\n", info.entry_point.in ());
   }
 
   return result;
@@ -258,7 +250,7 @@ DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   int result = 0;
 
@@ -277,9 +269,9 @@ main (int, char *[])
                                  "RMS Scheduling Strategy");
   if (result < 0)
   {
-    printf ("run_schedule (rms_strategy, \"RMS_Timelines\", "
-            "\"RMS Scheduling Strategy\") returned %d\n",
-            result);
+    ACE_OS::printf ("run_schedule (rms_strategy, \"RMS_Timelines\", "
+                    "\"RMS Scheduling Strategy\") returned %d\n",
+                    result);
     return 1;
   }
 
@@ -288,9 +280,9 @@ main (int, char *[])
                                  "MLF Scheduling Strategy");
   if (result < 0)
   {
-    printf ("run_schedule (mlf_strategy, \"MLF_Timelines\", "
-            "\"MLF Scheduling Strategy\") returned %d\n",
-            result);
+    ACE_OS::printf ("run_schedule (mlf_strategy, \"MLF_Timelines\", "
+                    "\"MLF Scheduling Strategy\") returned %d\n",
+                    result);
     return 1;
   }
 
@@ -299,9 +291,9 @@ main (int, char *[])
                                  "EDF Scheduling Strategy");
   if (result < 0)
   {
-    printf ("run_schedule (edf_strategy, \"EDF_Timelines\", "
-            "\"EDF Scheduling Strategy\") returned %d\n",
-            result);
+    ACE_OS::printf ("run_schedule (edf_strategy, \"EDF_Timelines\", "
+                    "\"EDF Scheduling Strategy\") returned %d\n",
+                    result);
     return 1;
   }
 
@@ -310,9 +302,9 @@ main (int, char *[])
                                  "MUF Scheduling Strategy");
   if (result < 0)
   {
-    printf ("run_schedule (muf_strategy, \"MUF_Timelines\", "
-            "\"MUF Scheduling Strategy\") returned %d\n",
-            result);
+    ACE_OS::printf ("run_schedule (muf_strategy, \"MUF_Timelines\", "
+                    "\"MUF Scheduling Strategy\") returned %d\n",
+                    result);
     return 1;
   }
 

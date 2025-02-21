@@ -1,27 +1,24 @@
-// $Id$
-
 #include "test_i.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID (QtTests, server, "$Id$")
+#include "ace/Argv_Type_Converter.h"
 
 // who defines index macro?
 #ifdef index
 #undef index
 #endif
-#include "tao/QtResource_Loader.h"
-#include <qlcdnumber.h>
-#include <qvbox.h>
-#include <qslider.h>
+#include "tao/QtResource/QtResource_Loader.h"
+#include <QtGui/qlcdnumber.h>
+#include <QtGui/qboxlayout.h>
+#include <QtGui/qslider.h>
 #include "ace/OS_NS_stdio.h"
 
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -42,31 +39,29 @@ parse_args (int argc, char *argv[])
 //                            argv [0]),
 //                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // We do the command line parsing first
   if (parse_args (argc, argv) != 0)
     return 1;
 
   // Qt specific stuff for running with TAO...
-  QApplication app (argc, argv);
+  ACE_Argv_Type_Converter ct (argc, argv);
+  QApplication app (argc,  ct.get_ASCII_argv());
   TAO::QtResource_Loader qt_resources (&app);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -74,26 +69,31 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Create the Qt stuff..
       // Instantiate the LCD_Display implementation class
       LCD_Display_imp display_impl (orb.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&display_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       LCD_Display_var server =
-        display_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        LCD_Display::_narrow (object.in ());
 
       // Create the LCD after the QVbox is created.
-      QVBox box;
+      QWidget mainwindow_;
+      mainwindow_.resize (145, 100);
+      mainwindow_.setWindowTitle("QtServer");
 
-      box.resize (145, 100);
-      QLCDNumber lcd (2, &box, "lcd_display");
+      QVBoxLayout *box = new QVBoxLayout();
+      QLCDNumber lcd (2);
+      box->addWidget(&lcd);
 
       // Connect the signal from the hosted servant with the public
       // SLOT method display () for the LCD Widget.
@@ -103,16 +103,16 @@ main (int argc, char *argv[])
                         &lcd,
                         SLOT (display (int)));
 
-      app.setMainWidget(&box);
-      box.show ();
+      mainwindow_.setLayout(box);
+      app.setActiveWindow(&(mainwindow_));
+      mainwindow_.show ();
 
       // End of QT specific stuff..
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -127,19 +127,15 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
       }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // We choose to run the main Qt event loop..
       app.exec ();
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

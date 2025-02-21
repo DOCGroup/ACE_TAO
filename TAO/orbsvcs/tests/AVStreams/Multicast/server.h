@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "orbsvcs/CosNamingC.h"
@@ -16,7 +14,7 @@ class FTP_Server_StreamEndPoint
   :public TAO_Server_StreamEndPoint
 {
 public:
-  FTP_Server_StreamEndPoint (void);
+  FTP_Server_StreamEndPoint ();
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
 };
@@ -25,23 +23,23 @@ class FTP_Server_Callback
   :public TAO_AV_Callback
 {
 public:
-  virtual int handle_stop (void);
+  virtual int handle_stop ();
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *,
                              const ACE_Addr &);
-  virtual int handle_end_stream (void);
+  virtual int handle_end_stream ();
 };
 
 class Server
 {
 public:
-  Server (void);
+  Server ();
   int init (int argc,
-            char **argv);
-  int run (void);
-  FILE *file (void);
+            ACE_TCHAR *argv[]);
+  int run ();
+  FILE *file ();
 protected:
-  int parse_args (int argc,char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   TAO_Naming_Client my_naming_client_;
   TAO_AV_Endpoint_Reactive_Strategy_B <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   TAO_MMDevice *mmdevice_;

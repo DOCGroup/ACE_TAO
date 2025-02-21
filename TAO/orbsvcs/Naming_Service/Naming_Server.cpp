@@ -1,10 +1,11 @@
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
 #include "Naming_Service.h"
 #include "ace/OS_main.h"
 
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "tao/debug.h"
+
+#include "tao/ImR_Client/ImR_Client.h"
 
 class Naming_Svc_Shutdown : public Shutdown_Functor
 {
@@ -25,7 +26,7 @@ void
 Naming_Svc_Shutdown::operator() (int which_signal)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "Name Service: shutting down on signal %d\n",
                 which_signal));
   (void) this->ns_.shutdown ();
@@ -43,23 +44,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Service_Shutdown kill_contractor(killer);
 
   if (naming_service.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("Failed to start the Naming Service.\n")),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("Failed to start the Naming Service.\n")),
                       1);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      naming_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      naming_service.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NamingService");
+      ex._tao_print_exception ("NamingService");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   naming_service.fini ();
 

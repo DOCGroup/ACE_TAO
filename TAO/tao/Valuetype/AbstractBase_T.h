@@ -4,8 +4,6 @@
 /**
  *  @file     AbstractBase_T.h
  *
- *  $Id$
- *
  *  @author  Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -19,6 +17,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -35,27 +35,15 @@ namespace TAO
     typedef T *T_ptr;
 
     static T_ptr narrow (CORBA::AbstractBase_ptr,
-                         const char *repo_id,
-                         Proxy_Broker_Factory
-                         ACE_ENV_ARG_DECL);
+                         const char *repo_id);
 
-    static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
-                                   Proxy_Broker_Factory);
-
-    static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
-                                   const char *repo_id,
-                                   Proxy_Broker_Factory
-                                   ACE_ENV_ARG_DECL);
+    static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr);
   };
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "AbstractBase_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("AbstractBase_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/Valuetype/AbstractBase_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /*TAO_ABSTRACTBASE_T_H*/

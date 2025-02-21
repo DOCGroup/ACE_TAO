@@ -1,0 +1,78 @@
+This document provides general information about the SCTP protocol.
+
+Introduction
+=============
+SCTP (Stream Control Transmission Protocol) is a new transport layer protocol
+developed by the IETF and defined by RFC2960.  Originally designed for the
+transmission of message-oriented applications such as the transportation of
+signaling data for PSTNs (Public Switched Telephone Networks), SCTP can be used
+in any application that uses TCP.
+
+        Major Features
+        --------------
+
+        - Direct support for multi-homing
+        - Support for multiple streams per connection (known as associations)
+          to reduce "head of line" blocking problems.
+        - Four way handshake reducing the possibility for blind denial of
+          service attacks.
+        - Adjustment of congestion control parameters
+        - Cookie mechanism to protect against "SYN" attacks
+
+API's
+========
+
+The SCTP drafts have defined several different API's.  The first reference
+implementation was a user level library.  This allowed an application to use
+SCTP through several functions and callbacks.  As of this writing a
+transition from the user level libraries to the kernel is underway.
+
+The IETF TSVWG (Transport Area Working Group) has published a draft
+(draft-ietf-tsvwg-sctpsocket-06.txt) that defines a mapping between SCTP and
+the BSD sockets interface.  This interface has made porting TCP applications to
+SCTP as simple as changing one socket call.
+
+        OpenSS7
+        --------
+        OpenSS7 has defined, a similar BSD style sockets interface.  It is
+        slightly different from the one defined by the IETF, however, at the
+        time of our evaluation it was the most stable implementation.
+
+        Please see README.OpenSS7 for details and build instructions.
+
+        LKSCTP
+        ------
+        The LKSCTP implementation is based on the TSVWG's sockets draft.
+        It is included with the Linux 2.6 series test kernels. Backported
+        (Linux 2.4) patches are also available from the LKSCTP website.
+
+        Please see README.LKSCTP for more details and build instructions.
+
+Resources
+===========
+
+        RFCs
+        -----
+        RFC2960: Stream Control Transmission Protocol
+        RFC3309: Stream Control Transmission Protocol Checksum Change
+
+        Internet-Drafts
+        ----------------
+
+        draft-ietf-tsvwg-sctpsocket-07.txt:
+                Sockets API Extensions for Stream Control Transmission Protocol
+
+        draft-ietf-tsvwg-sctpimpguide-08.txt
+                Stream Control Transmission Protocol Implementer's Guide
+
+        Internet Links
+        ---------------
+        IETF: Transport Area Working Group (tsvwg):
+                http://www.ietf.org/html.charters/tsvwg-charter.html
+
+        The OpenSS7 Project: http://www.openss7.org/sctp.html
+
+        The LKSCTP Project: http://lksctp.sourceforge.net/
+
+--
+

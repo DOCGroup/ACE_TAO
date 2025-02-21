@@ -1,9 +1,12 @@
-// $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "ace/INET_Addr.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_PEER_STREAM_1>
 int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
 {
-
   ACE_TRACE("ConnectionAcceptHandler::open\n");
   ACE_INET_Addr addr;
 
@@ -14,11 +17,11 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
 
   if (reactor_->register_handler (this,
     ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
     "(%P|%t) can't register with reactor\n"),
     -1);
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
     "(%P|%t) connected with %s\n",
     addr.get_host_name ()));
 
@@ -26,7 +29,7 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
 }
 
 template <ACE_PEER_STREAM_1>
-void ConnectionAcceptHandler<ACE_PEER_STREAM_2>::destroy (void)
+void ConnectionAcceptHandler<ACE_PEER_STREAM_2>::destroy ()
 {
   // Remove ourselves from the reactor
   reactor_->remove_handler
@@ -78,7 +81,7 @@ int ConnectionDetectHandler<ACE_PEER_STREAM_2>::handle_close (ACE_HANDLE,
                                                         ACE_Reactor_Mask)
 {
   ACE_TRACE("ConnectionDetectHandler::handle_close\n");
-  close();
+  this->close();
   return 0;
 }
 
@@ -91,3 +94,4 @@ int ConnectionDetectHandler<ACE_PEER_STREAM_2>::close (u_long )
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

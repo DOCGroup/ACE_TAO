@@ -1,0 +1,8 @@
+// -*- MPC -*-
+project (*Test) : taoclient {
+    Source_Files {
+        test.cpp
+        TestCaseC.cpp
+        TestTypeC.cpp
+    }
+}

@@ -1,55 +1,14 @@
-//
-// $Id$
-//
-// ================================================================
-//
-// = LIBRARY
-//   TAO_IFR_Client
-//
-// = FILENAME
-//   IFR_Components.pidl
-//
-// = DESCRIPTION
-//   This file was used to generate the code in IFR_ComponentsC.{h,i,cpp}.
-//   The original file Interface.idl was split into four pieces, to
-//   keep the generated files to a manageable size and reduce build
-//   time. This IDL file contains all the interfaces and other data
-//   types related to CORBA components.
-//
-//   The command used to generate code from this IDL file is:
-//
-//     tao_idl -Ge 1 -Sc -GA -I../.. \
-//          -Wb,export_macro=TAO_IFR_Client_Export \
-//          -Wb,export_include=ifr_client_export.h \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
-//          IFR_Components.pidl
-//
-//   Only the stub files are used in the TAO_IFR_Client library. The
-//   skeleton files can be deleted from this directory.
-//
-//   No patching of the generated stub files is necessary.
-//
-//   To generate the skeleton files for the IFR Service, the command is:
-//
-//     tao_idl -o ../../orbsvcs/orbsvcs/IFRService -Ge 1 \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
-//          IFR_Components.pidl
-//
-//   The only modification necessary to the skeleton files is to
-//   change
-//
-//   #include "IFR_ComponentsC.h"
-//
-//   to
-//
-//   #include "tao/IFR_Client/IFR_ComponentsC.h"
-//
-//   in IFR_ComponentsS.h. The stub files may be deleted from the IFRService
-//   directory.
-//
-// ================================================================
+// -*- IDL -*-
+
+/**
+ * @file IFR_Components.pidl
+ *
+ *   This file is used to generate the code in IFR_ComponentsC.{h,inl,cpp}.
+ *   The original file Interface.idl was split into four pieces, to
+ *   keep the generated files to a manageable size and reduce build
+ *   time. This IDL file contains all the interfaces and other data
+ *   types related to CORBA components.
+ */
 
 #ifndef _IFR_COMPONENTS_IDL_
 #define _IFR_COMPONENTS_IDL_
@@ -71,45 +30,37 @@ module CORBA
 
     interface Container : CORBA::Container
     {
-      ComponentDef create_component (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in ComponentDef base_component,
-	  in InterfaceDefSeq supports_interfaces
-	);
+      ComponentDef create_component ( in RepositoryId id,
+                                      in Identifier name,
+                                      in VersionSpec version,
+                                      in ComponentDef base_component,
+                                      in InterfaceDefSeq supports_interfaces );
 
-      HomeDef create_home (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in HomeDef base_home,
-	  in ComponentDef managed_component,
-	  in InterfaceDefSeq supports_interfaces,
-	  in ValueDef primary_key
-	);
+      HomeDef create_home ( in RepositoryId id,
+                            in Identifier name,
+                            in VersionSpec version,
+                            in HomeDef base_home,
+                            in ComponentDef managed_component,
+                            in InterfaceDefSeq supports_interfaces,
+                            in ValueDef primary_key );
 
-      EventDef create_event (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in boolean is_custom,
-	  in boolean is_abstract,
-	  in ValueDef base_value,
-	  in boolean is_truncatable,
-	  in ValueDefSeq abstract_base_values,
-	  in InterfaceDefSeq supported_interfaces,
-	  in ExtInitializerSeq initializers
-	);
+      EventDef create_event ( in RepositoryId id,
+                              in Identifier name,
+                              in VersionSpec version,
+                              in boolean is_custom,
+                              in boolean is_abstract,
+                              in ValueDef base_value,
+                              in boolean is_truncatable,
+                              in ValueDefSeq abstract_base_values,
+                              in InterfaceDefSeq supported_interfaces,
+                              in ExtInitializerSeq initializers );
     };
 
-    interface ModuleDef : CORBA::ModuleDef,
-			  Container
+    interface ModuleDef : CORBA::ModuleDef, Container
     {
     };
 
-    interface Repository : CORBA::Repository,
-			   Container
+    interface Repository : CORBA::Repository, Container
     {
     };
 
@@ -179,41 +130,31 @@ module CORBA
       attribute InterfaceDefSeq supported_interfaces;
 
       // write interface
-      ProvidesDef create_provides (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in InterfaceDef interface_type
-	);
+      ProvidesDef create_provides ( in RepositoryId id,
+                                    in Identifier name,
+                                    in VersionSpec version,
+                                    in InterfaceDef interface_type );
 
-      UsesDef create_uses (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in InterfaceDef interface_type,
-	  in boolean is_multiple
-	);
+      UsesDef create_uses ( in RepositoryId id,
+                            in Identifier name,
+                            in VersionSpec version,
+                            in InterfaceDef interface_type,
+                            in boolean is_multiple );
 
-      EmitsDef create_emits (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in EventDef event
-	);
+      EmitsDef create_emits ( in RepositoryId id,
+                              in Identifier name,
+                              in VersionSpec version,
+                              in EventDef event );
 
-      PublishesDef create_publishes (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in EventDef event
-	);
+      PublishesDef create_publishes ( in RepositoryId id,
+                                      in Identifier name,
+                                      in VersionSpec version,
+                                      in EventDef event );
 
-      ConsumesDef create_consumes (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in EventDef event
-	);
+      ConsumesDef create_consumes ( in RepositoryId id,
+                                    in Identifier name,
+                                    in VersionSpec version,
+                                    in EventDef event );
     };
 
     typedef sequence<ProvidesDescription> ProvidesDescriptionSeq;
@@ -254,21 +195,17 @@ module CORBA
       attribute ValueDef primary_key;
 
       // write interface
-      FactoryDef create_factory (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in ParDescriptionSeq params,
-	  in ExceptionDefSeq exceptions
-	);
+      FactoryDef create_factory ( in RepositoryId id,
+                                  in Identifier name,
+                                  in VersionSpec version,
+                                  in ParDescriptionSeq params,
+                                  in ExceptionDefSeq exceptions );
 
-      FinderDef create_finder (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in ParDescriptionSeq params,
-	  in ExceptionDefSeq exceptions
-	);
+      FinderDef create_finder ( in RepositoryId id,
+                                in Identifier name,
+                                in VersionSpec version,
+                                in ParDescriptionSeq params,
+                                in ExceptionDefSeq exceptions );
     };
 
     struct HomeDescription

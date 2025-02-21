@@ -1,21 +1,20 @@
-//$Id$
-
 #include "Task_Stats.h"
-#include "ace/OS.h"
+#include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_UINT32 Task_Stats::gsf_ = ACE_High_Res_Timer::global_scale_factor ();
+ACE_High_Res_Timer::global_scale_factor_type Task_Stats::gsf_ =
+  ACE_High_Res_Timer::global_scale_factor ();
 
-Base_Time::Base_Time (void)
+Base_Time::Base_Time ()
 {
   base_time_ = ACE_OS::gethrtime ();
 }
 
-Task_Stats::Task_Stats (void)
+Task_Stats::Task_Stats ()
   : base_time_(0),
     end_time_ (0),
     max_samples_ (0),
@@ -27,7 +26,7 @@ Task_Stats::Task_Stats (void)
 {
 }
 
-Task_Stats::~Task_Stats (void)
+Task_Stats::~Task_Stats ()
 {
   delete[] this->time_inv_;
   delete[] this->time_exec_;
@@ -61,7 +60,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
   FILE* output_file = ACE_OS::fopen (file_name, "w");
 
   // first dump what the caller has to say.
-  ACE_OS::fprintf (output_file, "%s\n",msg);
+  ACE_OS::fprintf (output_file, "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
 
   // next, compose and dump what we want to say.
 
@@ -70,7 +69,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
 
   char out_msg[BUFSIZ];
 
-  if (seconds == 0 || samples_count_ == 0)
+  if (ACE::is_equal (seconds, 0.0) || samples_count_ == 0)
   {
         ACE_OS::sprintf (out_msg,
                    "# No samples recorded\n");
@@ -83,7 +82,9 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
   double t_avg = samples_count_ / seconds;
 
   ACE_OS::sprintf (out_msg,
-                   "# Throughput: %.2f (events/second) [%u samples in %.2f seconds]\n",
+                   "# Throughput: %.2f (events/second) ["
+                   ACE_SIZE_T_FORMAT_SPECIFIER_ASCII
+                   " samples in %.2f seconds]\n",
                    t_avg, samples_count_, seconds);
   ACE_OS::fprintf (output_file, "%s",out_msg);
 
@@ -109,13 +110,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
   for (i = 0; i != this->samples_count_; ++i)
     {
       ACE_UINT64 diff = this->time_exec_[i] - this->mean_;
-
-      ACE_UINT64 diff_sq =
-#if defined ACE_LACKS_LONGLONG_T
-        diff * ACE_U64_TO_U32(diff);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-      diff * diff;
-#endif /* ! ACE_LACKS_LONGLONG_T */
+      ACE_UINT64 diff_sq = diff * diff;
 
       this->var_2_ += diff_sq;
     }
@@ -147,13 +142,3 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
 
   ACE_OS::fclose (output_file);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

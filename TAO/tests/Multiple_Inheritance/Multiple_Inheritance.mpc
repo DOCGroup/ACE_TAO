@@ -1,16 +1,32 @@
 // -*- MPC -*-
-// $Id$
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Multiple_Inheritance.idl
+  }
+  custom_only = 1
+}
 
-project(*Server): taoserver,utils {
+project(*Server): taoserver, utils, avoids_corba_e_micro {
+  after += *idl
   Source_Files {
     server.cpp
   }
-}
-
-project(*Client): taoclient {
   Source_Files {
     Multiple_InheritanceC.cpp
-    client.cpp
+    Multiple_InheritanceS.cpp
+  }
+  IDL_Files {
   }
 }
 
+project(*Client): taoclient, anytypecode {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    Multiple_InheritanceC.cpp
+  }
+  IDL_Files {
+  }
+}

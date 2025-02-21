@@ -3,8 +3,6 @@
 /**
  *  @file    FT_ReplicaFactory_i.h
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  It declares the implementation of ReplicaFactory which
  *  creates and manages replicas as an agent for
@@ -67,29 +65,29 @@ public:
    * @param argv traditional C argv
    * @return zero for success; nonzero is process return code for failure.
    */
-  int parse_args (int argc, char * argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
 
   /**
    * Initialize this object.
    * @param orb our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orb);
 
   /**
    * Prepare to exit.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini ();
 
-  int idle(int & result ACE_ENV_ARG_DECL);
+  int idle(int & result);
 
 
   /**
    * Identify this replica factory.
    * @return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  const ACE_TCHAR * identity () const;
 
   const char * location () const;
 
@@ -99,48 +97,28 @@ public:
    * @param id the numerical id assigned to this replica.
    * @param replica a pointer to the Replica object (redundant for safety.)
    */
-  void remove_replica (CORBA::ULong id, FT_TestReplica_i * replica ACE_ENV_ARG_DECL);
+  void remove_replica (CORBA::ULong id, FT_TestReplica_i * replica);
 
   //////////////////
   // CORBA interface
   // See IDL for documentation
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  virtual void shutdown ();
 
   /////////////////////////////////////////
   // CORBA interface GenericFactory methods
   virtual CORBA::Object_ptr create_object (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , PortableGroup::NoFactory
-    , PortableGroup::ObjectNotCreated
-    , PortableGroup::InvalidCriteria
-    , PortableGroup::InvalidProperty
-    , PortableGroup::CannotMeetCriteria
-  ));
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id);
 
   virtual void delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , PortableGroup::ObjectNotFound
-  ));
+    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id);
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
 
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean is_alive ();
 
   /////////////////////////
   // Implementation methods
@@ -149,7 +127,7 @@ private:
    * Actual replica creation happens in this method.
    * @param name becomes part of the objects identity.
    */
-  FT_TestReplica_i * create_replica(const char * name ACE_ENV_ARG_DECL);
+  FT_TestReplica_i * create_replica(const char * name);
 
   /**
    * Find or allocate an ID for a new replica
@@ -159,7 +137,7 @@ private:
   /**
    * Write this factory's IOR to a file
    */
-  int write_ior (const char * outputFile, const char * ior);
+  int write_ior (const ACE_TCHAR * outputFile, const char * ior);
 
   /**
    * Clean house for factory shut down.
@@ -169,7 +147,6 @@ private:
   ///////////////
   // Data Members
 private:
-
   /**
    * Protect internal state.
    * Mutex should be locked by corba methods, or by
@@ -178,8 +155,7 @@ private:
    * Implementation methods should assume the mutex is
    * locked if necessary.
    */
-  ACE_SYNCH_MUTEX internals_;
-  typedef ACE_Guard<ACE_SYNCH_MUTEX> InternalGuard;
+  TAO_SYNCH_MUTEX internals_;
 
   /**
    * The orb
@@ -204,12 +180,12 @@ private:
   /**
    * A file to which the factory's IOR should be written.
    */
-  const char * ior_output_file_;
+  const ACE_TCHAR * ior_output_file_;
 
   /**
    * A human-readable string to distinguish this from other Notifiers.
    */
-  ACE_CString identity_;
+  ACE_TString identity_;
 
   /**
    * bool: true if we found a replication manager
@@ -226,7 +202,7 @@ private:
   /**
    * The factory registry IOR
    */
-  const char * factory_registry_ior_;
+  const ACE_TCHAR * factory_registry_ior_;
 
   /**
    * The factory registry with which to register.
@@ -241,12 +217,12 @@ private:
   /**
    * A file to which the test replica's IOR will be written
    */
-  const char * test_output_file_;
+  const ACE_TCHAR * test_output_file_;
 
   /**
    * A name to be used to register the factory with the name service.
    */
-  const char * ns_name_;
+  ACE_CString ns_name_;
 
   CosNaming::NamingContext_var naming_context_;
 
@@ -259,7 +235,7 @@ private:
   /**
    * the PortableGroup::Location within the domain
    */
-  const char * location_;
+  ACE_CString location_;
 
   /**
    * bool: quit on idle flag.
@@ -289,6 +265,10 @@ private:
    */
   int quit_requested_;
 
+  /**
+  * A file that use by FT_TestReplica_i object
+  */
+  const ACE_TCHAR* name_persistent_file_;
 };
 
 #endif /* FT_REPLICAFACTORY_H_  */

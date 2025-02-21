@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -68,9 +66,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	     It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	     will cease to operate correctly if you use either multiple or
-//	     public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
 #include "utl_strlist.h"
 #include "utl_string.h"
@@ -81,24 +79,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (util, 
-           utl_strlist, 
-           "$Id$")
-
-UTL_StrList::UTL_StrList (UTL_String *s, 
+UTL_StrList::UTL_StrList (UTL_String *s,
                           UTL_StrList *cdr)
   : UTL_List(cdr),
     pd_car_data(s)
 {
 }
 
-UTL_StrList::~UTL_StrList (void)
+UTL_StrList::~UTL_StrList ()
 {
 }
 
 // Get list item.
 UTL_String *
-UTL_StrList::head (void)
+UTL_StrList::head ()
 {
   return this->pd_car_data;
 }
@@ -112,9 +106,9 @@ UTL_StrList::set_head (UTL_String *s)
 
 // Get last item of this list
 UTL_String *
-UTL_StrList::last_component (void)
+UTL_StrList::last_component ()
 {
-  if (this->tail () == 0)
+  if (this->tail () == nullptr)
     {
       return pd_car_data;
     }
@@ -124,39 +118,39 @@ UTL_StrList::last_component (void)
 
 // Copy a list.
 UTL_List *
-UTL_StrList::copy (void)
+UTL_StrList::copy ()
 {
-  UTL_List *retval = 0;
+  UTL_List *retval = nullptr;
 
-  if (this->tail () == 0)
+  if (this->tail () == nullptr)
     {
       ACE_NEW_RETURN (retval,
-                      UTL_StrList (head (), 
-                                   0),
-                      0);
+                      UTL_StrList (head (),
+                                   nullptr),
+                      nullptr);
     }
   else
     {
       ACE_NEW_RETURN (retval,
-                      UTL_StrList (head (), 
+                      UTL_StrList (head (),
                                    (UTL_StrList *) this->tail ()->copy ()),
-                      0);
+                      nullptr);
     }
 
   return retval;
 }
 
 void
-UTL_StrList::destroy (void)
+UTL_StrList::destroy ()
 {
-  UTL_String *str = 0;
+  UTL_String *str = nullptr;
 
   for (UTL_StrlistActiveIterator i (this); !i.is_done (); i.next ())
     {
       str = i.item ();
       str->destroy ();
       delete str;
-      str = 0;
+      str = nullptr;
     }
 }
 
@@ -164,11 +158,11 @@ UTL_StrList::destroy (void)
 void
 UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
 {
-  char *s = 0;
-  idl_bool first = I_TRUE;
-  idl_bool second = I_FALSE;
+  char *s = nullptr;
+  bool first = true;
+  bool second = false;
 
-  for (UTL_StrlistActiveIterator i (this); !i.is_done(); i.next ()) 
+  for (UTL_StrlistActiveIterator i (this); !i.is_done(); i.next ())
     {
       if (!first)
         {
@@ -176,21 +170,21 @@ UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
         }
       else if (second)
         {
-          first = second = I_FALSE;
+          first = second = false;
         }
 
       s = i.item ()->get_string ();
       o << s;
 
-      if (first) 
+      if (first)
         {
           if (ACE_OS::strcmp (s, "::") != 0)
             {
-              first = I_FALSE;
+              first = false;
             }
           else
             {
-              second = I_TRUE;
+              second = true;
             }
         }
     }
@@ -221,11 +215,11 @@ UTL_StrlistActiveIterator::UTL_StrlistActiveIterator (UTL_StrList *s)
 
 // Get current item
 UTL_String *
-UTL_StrlistActiveIterator::item (void)
+UTL_StrlistActiveIterator::item ()
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_StrList *) source)->head ();

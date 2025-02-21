@@ -1,21 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/Performance
-//
-// = FILENAME
-//    UDP_PerformanceClient.h
-//
-// = DESCRIPTION
-//    This class implements the client functionality of the UDP test.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UDP_PerformanceClient.h
+ *
+ *  This class implements the client functionality of the UDP test.
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #ifndef UDP_PERFORMANCECLIENT_H
 #define UDP_PERFORMANCECLIENT_H
@@ -26,8 +20,8 @@
 #include "UDP_i.h"
 #include "UDPC.h"
 
-class UDP_PerformanceClient 
-: public ACE_Task_Base
+class UDP_PerformanceClient
+  : public ACE_Task_Base
 {
   // = TITLE
   //    UDP Client interface subclass.
@@ -36,20 +30,18 @@ class UDP_PerformanceClient
   //    This class wrapps the client functionality into one class
   //
 public:
-  // = Initialization and termination methods.
+  /// Constructor
   UDP_PerformanceClient (CORBA::ORB_ptr orb,
                          UDP_ptr udp,
                          UDP_i *udpHandler,
-                         ACE_UINT32 burst_messages,
-                         ACE_UINT32 final_delta_micro_seconds);
-  // Constructor
+                         ACE_UINT32 burst_messages);
 
-  virtual ~UDP_PerformanceClient (void);
-  // Destructor
+  /// Destructor
+  virtual ~UDP_PerformanceClient ();
 
 private:
   // Runs in a separate thread.
-  virtual int svc (void );
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;
@@ -61,9 +53,6 @@ private:
   ACE_UINT32 last_wrong_messages_;
 
   ACE_UINT32 burst_messages_;
-
-  ACE_UINT32 final_delta_micro_seconds_;
 };
-
 
 #endif /* UDP_PERFORMANCECLIENT_H */

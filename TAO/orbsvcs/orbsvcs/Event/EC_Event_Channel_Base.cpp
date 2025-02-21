@@ -1,20 +1,18 @@
-// $Id$
-
-#include "EC_Event_Channel_Base.h"
-#include "EC_Dispatching.h"
-#include "EC_ConsumerAdmin.h"
-#include "EC_SupplierAdmin.h"
-#include "EC_Timeout_Generator.h"
-#include "EC_ObserverStrategy.h"
-#include "EC_ConsumerControl.h"
-#include "EC_SupplierControl.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
+#include "orbsvcs/Event/EC_ConsumerAdmin.h"
+#include "orbsvcs/Event/EC_SupplierAdmin.h"
+#include "orbsvcs/Event/EC_Timeout_Generator.h"
+#include "orbsvcs/Event/EC_ObserverStrategy.h"
+#include "orbsvcs/Event/EC_ConsumerControl.h"
+#include "orbsvcs/Event/EC_SupplierControl.h"
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Event_Channel_Base.i"
+#include "orbsvcs/Event/EC_Event_Channel_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Event_Channel_Base, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Event_Channel_Base::
 TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
@@ -24,63 +22,63 @@ TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
     consumer_poa_ (PortableServer::POA::_duplicate (attr.consumer_poa)),
     factory_ (factory),
     own_factory_ (own_factory),
-    dispatching_ (0),
-    filter_builder_ (0),
-    supplier_filter_builder_ (0),
-    consumer_admin_ (0),
-    supplier_admin_ (0),
-    timeout_generator_ (0),
-    observer_strategy_ (0),
-    scheduling_strategy_(0),
+    dispatching_ (nullptr),
+    filter_builder_ (nullptr),
+    supplier_filter_builder_ (nullptr),
+    consumer_admin_ (nullptr),
+    supplier_admin_ (nullptr),
+    timeout_generator_ (nullptr),
+    observer_strategy_ (nullptr),
+    scheduling_strategy_(nullptr),
     consumer_reconnect_ (attr.consumer_reconnect),
     supplier_reconnect_ (attr.supplier_reconnect),
     disconnect_callbacks_ (attr.disconnect_callbacks),
-    consumer_control_ (0),
-    supplier_control_ (0),
+    consumer_control_ (nullptr),
+    supplier_control_ (nullptr),
     status_ (EC_S_IDLE)
 {
   this->scheduler_ =
     CORBA::Object::_duplicate (attr.scheduler);
 }
 
-TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base (void)
+TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base ()
 {
   // Destroy Strategies in the reverse order of creation, they
-  // refere to each other during destruction and thus need to be
+  // reference to each other during destruction and thus need to be
   // cleaned up properly.
   this->factory_->destroy_supplier_control (this->supplier_control_);
-  this->supplier_control_ = 0;
+  this->supplier_control_ = nullptr;
   this->factory_->destroy_consumer_control (this->consumer_control_);
-  this->consumer_control_ = 0;
+  this->consumer_control_ = nullptr;
 
   this->factory_->destroy_scheduling_strategy (this->scheduling_strategy_);
-  this->scheduling_strategy_ = 0;
+  this->scheduling_strategy_ = nullptr;
 
   this->factory_->destroy_observer_strategy (this->observer_strategy_);
-  this->observer_strategy_ = 0;
+  this->observer_strategy_ = nullptr;
 
   this->factory_->destroy_timeout_generator (this->timeout_generator_);
-  this->timeout_generator_ = 0;
+  this->timeout_generator_ = nullptr;
 
   this->factory_->destroy_supplier_admin (this->supplier_admin_);
-  this->supplier_admin_ = 0;
+  this->supplier_admin_ = nullptr;
   this->factory_->destroy_consumer_admin (this->consumer_admin_);
-  this->consumer_admin_ = 0;
+  this->consumer_admin_ = nullptr;
 
   this->factory_->destroy_supplier_filter_builder (this->supplier_filter_builder_);
-  this->supplier_filter_builder_ = 0;
+  this->supplier_filter_builder_ = nullptr;
 
   this->factory_->destroy_filter_builder (this->filter_builder_);
-  this->filter_builder_ = 0;
+  this->filter_builder_ = nullptr;
 
   this->factory_->destroy_dispatching (this->dispatching_);
-  this->dispatching_ = 0;
+  this->dispatching_ = nullptr;
 
-  this->factory (0, 0);
+  this->factory (nullptr, this->own_factory_);
 }
 
 void
-TAO_EC_Event_Channel_Base::create_strategies (void)
+TAO_EC_Event_Channel_Base::create_strategies ()
 {
   this->dispatching_ =
     this->factory_->create_dispatching (this);
@@ -107,7 +105,7 @@ TAO_EC_Event_Channel_Base::create_strategies (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Event_Channel_Base::activate ()
 {
   {
     // First check if the EC is idle, if it is not then we need to
@@ -131,7 +129,7 @@ TAO_EC_Event_Channel_Base::activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_EC_Event_Channel_Base::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Event_Channel_Base::shutdown ()
 {
   {
     // First check if the EC is already active, if it is not then we
@@ -149,11 +147,9 @@ TAO_EC_Event_Channel_Base::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   this->deactivate_supplier_admin ();
   this->deactivate_consumer_admin ();
 
-  this->supplier_admin_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_admin_->shutdown ();
 
-  this->consumer_admin_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_admin_->shutdown ();
 
   {
     // Wait until all the shutdown() operations return before marking
@@ -165,185 +161,131 @@ TAO_EC_Event_Channel_Base::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_EC_Event_Channel_Base::deactivate_supplier_admin (void)
+TAO_EC_Event_Channel_Base::deactivate_supplier_admin ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableServer::POA_var supplier_poa =
-        this->supplier_admin_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->supplier_admin_->_default_POA ();
       PortableServer::ObjectId_var supplier_id =
-        supplier_poa->servant_to_id (this->supplier_admin_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      supplier_poa->deactivate_object (supplier_id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        supplier_poa->servant_to_id (this->supplier_admin_);
+      supplier_poa->deactivate_object (supplier_id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
             // The deactivation can throw...
     }
-  ACE_ENDTRY;
 }
 
 void
-TAO_EC_Event_Channel_Base::deactivate_consumer_admin (void)
+TAO_EC_Event_Channel_Base::deactivate_consumer_admin ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       PortableServer::POA_var consumer_poa =
-        this->consumer_admin_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->consumer_admin_->_default_POA ();
       PortableServer::ObjectId_var consumer_id =
-        consumer_poa->servant_to_id (this->consumer_admin_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      consumer_poa->deactivate_object (consumer_id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        consumer_poa->servant_to_id (this->consumer_admin_);
+      consumer_poa->deactivate_object (consumer_id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
             // The deactivation can throw...
     }
-  ACE_ENDTRY;
 }
 
 void
-TAO_EC_Event_Channel_Base::connected (TAO_EC_ProxyPushConsumer* consumer
-                                      ACE_ENV_ARG_DECL)
+TAO_EC_Event_Channel_Base::connected (TAO_EC_ProxyPushConsumer* consumer)
 {
-  this->consumer_admin_->peer_connected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->supplier_admin_->connected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->observer_strategy_->connected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_admin_->peer_connected (consumer);
+  this->supplier_admin_->connected (consumer);
+  this->observer_strategy_->connected (consumer);
 }
 
 void
-TAO_EC_Event_Channel_Base::reconnected (TAO_EC_ProxyPushConsumer* consumer
-                                        ACE_ENV_ARG_DECL)
+TAO_EC_Event_Channel_Base::reconnected (TAO_EC_ProxyPushConsumer* consumer)
 {
-  this->consumer_admin_->peer_reconnected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->supplier_admin_->reconnected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->observer_strategy_->connected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_admin_->peer_reconnected (consumer);
+  this->supplier_admin_->reconnected (consumer);
+  this->observer_strategy_->connected (consumer);
 }
 
 void
-TAO_EC_Event_Channel_Base::disconnected (TAO_EC_ProxyPushConsumer* consumer
-                                         ACE_ENV_ARG_DECL)
+TAO_EC_Event_Channel_Base::disconnected (TAO_EC_ProxyPushConsumer* consumer)
 {
-  this->consumer_admin_->peer_disconnected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->supplier_admin_->disconnected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->observer_strategy_->disconnected (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_admin_->peer_disconnected (consumer);
+  this->supplier_admin_->disconnected (consumer);
+  this->observer_strategy_->disconnected (consumer);
 }
 
 void
-TAO_EC_Event_Channel_Base::connected (TAO_EC_ProxyPushSupplier* supplier
-                                      ACE_ENV_ARG_DECL)
+TAO_EC_Event_Channel_Base::connected (TAO_EC_ProxyPushSupplier* supplier)
 {
-  this->supplier_admin_->peer_connected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->consumer_admin_->connected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->observer_strategy_->connected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_admin_->peer_connected (supplier);
+  this->consumer_admin_->connected (supplier);
+  this->observer_strategy_->connected (supplier);
 }
 
 void
-TAO_EC_Event_Channel_Base::reconnected (TAO_EC_ProxyPushSupplier* supplier
-                                        ACE_ENV_ARG_DECL)
+TAO_EC_Event_Channel_Base::reconnected (TAO_EC_ProxyPushSupplier* supplier)
 {
-  this->supplier_admin_->peer_reconnected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->consumer_admin_->reconnected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->observer_strategy_->connected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_admin_->peer_reconnected (supplier);
+  this->consumer_admin_->reconnected (supplier);
+  this->observer_strategy_->connected (supplier);
 }
 
 void
-TAO_EC_Event_Channel_Base::disconnected (TAO_EC_ProxyPushSupplier* supplier
-                                         ACE_ENV_ARG_DECL)
+TAO_EC_Event_Channel_Base::disconnected (TAO_EC_ProxyPushSupplier* supplier)
 {
-  this->supplier_admin_->peer_disconnected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->consumer_admin_->disconnected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->observer_strategy_->disconnected (supplier ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_admin_->peer_disconnected (supplier);
+  this->consumer_admin_->disconnected (supplier);
+  this->observer_strategy_->disconnected (supplier);
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_EC_Event_Channel_Base::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EC_Event_Channel_Base::for_consumers ()
 {
-  return this->consumer_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->consumer_admin_->_this ();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_EC_Event_Channel_Base::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EC_Event_Channel_Base::for_suppliers ()
 {
-  return this->supplier_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->supplier_admin_->_this ();
 }
 
 void
-TAO_EC_Event_Channel_Base::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_EC_Event_Channel_Base::destroy ()
 {
-  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown ();
 }
 
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Event_Channel_Base::append_observer (
-       RtecEventChannelAdmin::Observer_ptr observer
-       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
+       RtecEventChannelAdmin::Observer_ptr observer)
 {
-  return this->observer_strategy_->append_observer (observer
-                                                    ACE_ENV_ARG_PARAMETER);
+  return this->observer_strategy_->append_observer (observer);
 }
 
 void
 TAO_EC_Event_Channel_Base::remove_observer (
-       RtecEventChannelAdmin::Observer_Handle handle
-       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
+       RtecEventChannelAdmin::Observer_Handle handle)
 {
-  this->observer_strategy_->remove_observer (handle
-                                             ACE_ENV_ARG_PARAMETER);
+  this->observer_strategy_->remove_observer (handle);
 }
 
 void
 TAO_EC_Event_Channel_Base::for_each_consumer (
-                    TAO_ESF_Worker<TAO_EC_ProxyPushSupplier> *worker
-                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                    TAO_ESF_Worker<TAO_EC_ProxyPushSupplier> *worker)
 {
-  this->consumer_admin_->for_each (worker
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_admin_->for_each (worker);
 }
 
 void
 TAO_EC_Event_Channel_Base::for_each_supplier (
-                    TAO_ESF_Worker<TAO_EC_ProxyPushConsumer> *worker
-                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                    TAO_ESF_Worker<TAO_EC_ProxyPushConsumer> *worker)
 {
-  this->supplier_admin_->for_each (worker
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_admin_->for_each (worker);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

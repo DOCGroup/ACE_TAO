@@ -1,0 +1,85 @@
+
+
+The scenario for this test is the following.
+
+The client:
+
+- makes a first request to the server, the send_request interception point does nothing
+- receives a reply, receive_reply interception point called -> *OK*
+- makes another request, the send_request interception point forwards it to the server IOR
+- receives a reply, receive_reply interception point called -> *OK*
+- makes a third request, the send_request interception does nothing
+
+At this point server is instructed to throw an exception.
+
+If the server throws one exception in the following set
+*COMM_FAILURE*
+*TRANSIENT*
+*NO_RESPONSE*
+*OBJ_ADAPTER*
+with completion status *COMPLETED_NO* the client's *receive_other* interception point is
+called *with an invalid ClientRequestInfo object*. Reading this object will result in a
+BAD_INV_ORDER exception to be raised with minor code of 1330446350.
+
+If the server throws any other exception, the receive_exception interception point is
+called as expected.
+
+
+__Successful Output__
+
+$> ./run_test.pl
+SERVER: test_i servant: <IOR:....>
+CLIENT: Issuing request 1.
+CRI: in send_request
+CRI: in receive_reply
+CLIENT: Request 1 returns 1.
+CLIENT: Issuing request 2.
+CRI: in send_request
+CRI: request 2 will be forwarded via send_request()
+CRI: in send_request
+CRI: in receive_reply
+CLIENT: Request 2 returns 2.
+CLIENT: Issuing request 3.
+CRI: in send_request
+CRI: in receive_other
+CRI: in receive_other, before reply_status
+CRI: in receive_other, after reply_status
+CRI: in send_request
+CRI: in receive_reply
+CLIENT: Request 3 returns 4.
+CRI: in send_request
+SERVER: Server is shutting down at 4.
+SERVER: Event loop finished.
+CRI: in receive_other
+
+
+__Regression Output__
+
+$> ./run_test.pl
+SERVER: test_i servant: <IOR:....>
+CLIENT: Issuing request 1.
+CRI: in send_request
+CRI: in receive_reply
+CLIENT: Request 1 returns 1.
+CLIENT: Issuing request 2.
+CRI: in send_request
+CRI: request 2 will be forwarded via send_request()
+CRI: in send_request
+CRI: in receive_reply
+CLIENT: Request 2 returns 2.
+CLIENT: Issuing request 3.
+CRI: in send_request
+CRI: in receive_other
+CRI: in receive_other, before reply_status
+(15042|46912532998624) EXCEPTION, CRI: exception
+system exception, ID 'IDL:omg.org/CORBA/BAD_INV_ORDER:1.0'
+OMG minor code (14), described as 'Invalid portable interceptor call', completed = NO
+
+CRI: in receive_other, after reply_status
+CRI: in send_request
+CRI: in receive_reply
+CLIENT: Request 3 returns 4.
+CRI: in send_request
+SERVER: Server is shutting down at 4.
+SERVER: Event loop finished.
+CRI: in receive_other

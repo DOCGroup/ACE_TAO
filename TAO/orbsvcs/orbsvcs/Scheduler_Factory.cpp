@@ -1,6 +1,4 @@
-// $Id$
-
-#include "ace/OS.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Singleton.h"
 #include "ace/Null_Mutex.h"
 
@@ -10,12 +8,10 @@
 #include "orbsvcs/Scheduler_Factory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Scheduler_Factory.i"
+#include "orbsvcs/Scheduler_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(orbsvcs,
-          Scheduler_Factory,
-          "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialize static class members.
 RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
@@ -100,7 +96,7 @@ struct ACE_Scheduler_Factory_Data
   // The static runtime scheduler.
 */
 
-  TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX> scheduler_;
+  TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> scheduler_;
   // The scheduler.
 
   ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
@@ -109,7 +105,7 @@ struct ACE_Scheduler_Factory_Data
   // applications; must be set by either the application or Event
   // Channel.
 
-  ACE_Scheduler_Factory_Data (void)
+  ACE_Scheduler_Factory_Data ()
     : scheduler_ (TAO_SF_config_count,
                   TAO_SF_config_info,
                   TAO_SF_entry_count,
@@ -130,9 +126,9 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_RT_Info rti[])
 {
   if (server_ != 0 || TAO_SF_entry_count != -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("ACE_Scheduler_Factory::use_runtime - ")
-                       ACE_LIB_TEXT("server already configured\n")),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("ACE_Scheduler_Factory::use_runtime - ")
+                       ACE_TEXT("server already configured\n")),
                       -1);
   TAO_SF_config_count = cc;
   TAO_SF_config_info = cfgi;
@@ -144,7 +140,7 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
 }
 
 static RtecScheduler::Scheduler_ptr
-static_server (void)
+static_server ()
 {
   RtecScheduler::Scheduler_ptr server_ = 0;
 
@@ -158,22 +154,19 @@ static_server (void)
                        ACE_Null_Mutex>::instance ()) == 0)
         return 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      server_ = ace_scheduler_factory_data->scheduler_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_ = ace_scheduler_factory_data->scheduler_._this ();
 
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT("ACE_Scheduler_Factory - configured static server\n")));
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("ACE_Scheduler_Factory - configured static server\n")));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("ACE_Scheduler_Factory::config_runtime - ")
-                           ACE_LIB_TEXT("cannot allocate server\n"));
+      ex._tao_print_exception (
+        ACE_TEXT("ACE_Scheduler_Factory::config_runtime - ")
+        ACE_TEXT("cannot allocate server\n"));
     }
-  ACE_ENDTRY;
 
   return server_;
 }
@@ -194,30 +187,24 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
     // config runs.
     return 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup (name);
       CORBA::Object_var objref =
-        naming->resolve (schedule_name
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        naming->resolve (schedule_name);
 
       server_ =
-        RtecScheduler::Scheduler::_narrow(objref.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RtecScheduler::Scheduler::_narrow(objref.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       server_ = 0;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("ACE_Scheduler_Factory::use_config - ")
-                           ACE_LIB_TEXT(" exception while resolving server\n"));
+      ex._tao_print_exception (
+        ACE_TEXT("ACE_Scheduler_Factory::use_config - ")
+        ACE_TEXT(" exception while resolving server\n"));
     }
-  ACE_ENDTRY;
 
   status_ = ACE_Scheduler_Factory::CONFIG;
   return 0;
@@ -234,21 +221,20 @@ ACE_Scheduler_Factory::server (RtecScheduler::Scheduler_ptr sptr)
 }
 
 RtecScheduler::Scheduler_ptr
-ACE_Scheduler_Factory::server (void)
+ACE_Scheduler_Factory::server ()
 {
   if (server_ == 0 && TAO_SF_entry_count != -1)
     server_ = static_server ();
 
   if (server_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("ACE_Scheduler_Factor::server - ")
-                       ACE_LIB_TEXT("no scheduling service configured\n")),
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("ACE_Scheduler_Factor::server - ")
+                       ACE_TEXT("no scheduling service configured\n")),
                       0);
   return server_;
 }
 
 static char header[] =
-"// $Id $\n\n"
 "// This file was automatically generated by the Scheduler_Factory.\n"
 "// Before editing the file please consider generating it again.\n"
 "\n"
@@ -258,7 +244,7 @@ static char header[] =
 static char footer[] =
 "\n"
 "// This sets up Scheduler_Factory to use the runtime version.\n"
-"int scheduler_factory_setup = \n"
+"int scheduler_factory_setup =\n"
 "  ACE_Scheduler_Factory::use_runtime (configs_size, configs, infos_size, infos);\n"
 "\n"
 "// EOF\n";
@@ -307,7 +293,7 @@ int ACE_Scheduler_Factory::dump_schedule
     const RtecScheduler::Dependency_Set& dependencies,
     const RtecScheduler::Config_Info_Set& configs,
     const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
-    const char* file_name,
+    const ACE_TCHAR* file_name,
     const char* rt_info_format,
     const char* dependency_format,
     const char* config_info_format,
@@ -350,17 +336,17 @@ int ACE_Scheduler_Factory::dump_schedule
   FILE* file = stdout;
   if (file_name != 0)
     {
-      file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(file_name), ACE_LIB_TEXT("w"));
+      file = ACE_OS::fopen (file_name, ACE_TEXT("w"));
       if (file == 0)
           return -1;
     }
-  ACE_OS::fprintf (file, header);
+  ACE_OS::fprintf (file, "%s", header);
 
   // Indicate anomalies encountered during scheduling.
 
-  ACE_OS::fprintf(file, (anomalies.length () > 0
-                         ? start_anomalies_found
-                         : start_anomalies_none));
+  ACE_OS::fprintf(file, "%s", (anomalies.length () > 0
+                               ? start_anomalies_found
+                               : start_anomalies_none));
 
   for (i = 0; i < anomalies.length (); ++i)
     {
@@ -400,7 +386,7 @@ int ACE_Scheduler_Factory::dump_schedule
     }
 
   // Print out operation QoS info.
-  ACE_OS::fprintf (file, start_infos);
+  ACE_OS::fprintf (file, "%s", start_infos);
 
   for (i = 0;
        i < infos.length ();
@@ -449,9 +435,9 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf(file, "\n");
 
   if (infos.length () > 0)
-    ACE_OS::fprintf (file, end_infos);
+    ACE_OS::fprintf (file, "%s", end_infos);
   else
-    ACE_OS::fprintf (file, end_infos_empty);
+    ACE_OS::fprintf (file, "%s", end_infos_empty);
 
   // Print out banner indicating which dependencies are dumped.
   if (dump_disabled_dependencies)
@@ -464,7 +450,7 @@ int ACE_Scheduler_Factory::dump_schedule
     }
 
   // Print out operation dependency info.
-  ACE_OS::fprintf (file, start_dependencies);
+  ACE_OS::fprintf (file, "%s", start_dependencies);
 
   for (i = 0;
        i < dependencies.length ();
@@ -496,13 +482,13 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, "\n");
 
   if (dependencies.length () > 0)
-    ACE_OS::fprintf (file, end_dependencies);
+    ACE_OS::fprintf (file, "%s", end_dependencies);
   else
-    ACE_OS::fprintf (file, end_dependencies_empty);
+    ACE_OS::fprintf (file, "%s", end_dependencies_empty);
 
 
   // Print out queue configuration info.
-  ACE_OS::fprintf (file, start_configs);
+  ACE_OS::fprintf (file, "%s", start_configs);
 
   for (i = 0;
        i < configs.length ();
@@ -524,18 +510,17 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, "\n");
 
   if (configs.length () > 0)
-    ACE_OS::fprintf (file, end_configs);
+    ACE_OS::fprintf (file, "%s", end_configs);
   else
-    ACE_OS::fprintf (file, end_configs_empty);
+    ACE_OS::fprintf (file, "%s", end_configs_empty);
 
-  ACE_OS::fprintf (file, footer);
+  ACE_OS::fprintf (file, "%s", footer);
   ACE_OS::fclose (file);
   return 0;
 }
 
 void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * entry, FILE* file)
 {
-
    if( entry == 0 )
    {
       ACE_OS::fprintf (file, "Entry is NULL");
@@ -610,7 +595,6 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
    log_tuple_subset(entry->prop_tuple_subset(), file);
    ACE_OS::fprintf(file, "\n   }\n}");
 
-
 }
 
 void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
@@ -638,11 +622,12 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
       if (tuple_iter.next (tuple_ptr_ptr) == 0
          || tuple_ptr_ptr == 0 || ((*tuple_ptr_ptr) == 0) )
       {
+         //FUZZ: disable check_for_NULL
          ACE_OS::fprintf (file, "{ NULL TUPLE POINTER }\n");
+         //FUZZ: enable check_for_NULL
       }
       else
       {
-
       ACE_OS::fprintf (file,
          subset_tuple_format,
          (*tuple_ptr_ptr)->handle,
@@ -669,7 +654,7 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
    FILE* file = stdout;
    if (file_name != 0)
    {
-      file = ACE_OS::fopen (file_name, "w");
+      file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
       if (file == 0)
         return -1;
     }
@@ -682,14 +667,11 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
       TAO_Reconfig_Scheduler_Entry * entry = entry_ptr_array[index];
 
       log_scheduling_entry(entry, file);
-
-
    }
 
 
    ACE_OS::fclose (file);
    return 0;
-
 }
 
 void
@@ -702,7 +684,7 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
    FILE* file = stdout;
    if (file_name != 0)
    {
-      file = ACE_OS::fopen (file_name, "w");
+      file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
       if (file == 0)
         return;
     }
@@ -720,28 +702,23 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
 
    for (int ndx = 0; ndx < tuple_ptr_array_size; ndx++)
      {
-       fprintf(file,
-               subset_tuple_format,
-               tuple_ptr_array[ndx]->handle,
-               tuple_ptr_array[ndx]->rate_index,
-               tuple_ptr_array[ndx]->period,
-               tuple_ptr_array[ndx]->criticality,
-               tuple_ptr_array[ndx]->priority,
-               tuple_ptr_array[ndx]->preemption_subpriority,
-               tuple_ptr_array[ndx]->preemption_priority,
-               tuple_ptr_array[ndx]->enabled);
+       ACE_OS::fprintf(file,
+                       subset_tuple_format,
+                       tuple_ptr_array[ndx]->handle,
+                       tuple_ptr_array[ndx]->rate_index,
+                       tuple_ptr_array[ndx]->period,
+                       tuple_ptr_array[ndx]->criticality,
+                       tuple_ptr_array[ndx]->priority,
+                       tuple_ptr_array[ndx]->preemption_subpriority,
+                       tuple_ptr_array[ndx]->preemption_priority,
+                       tuple_ptr_array[ndx]->enabled);
      }
 
    ACE_OS::fclose (file);
 }
-#if defined (HPUX) && !defined (__GNUG__)
-  // aCC can't handle RtecScheduler::Preemption_Priority_t used as an operator
-  // name.
-  typedef CORBA::Long RtecScheduler_Preemption_Priority_t;
-#endif /* HPUX && !g++ */
 
 RtecScheduler::Preemption_Priority_t
-ACE_Scheduler_Factory::preemption_priority (void)
+ACE_Scheduler_Factory::preemption_priority ()
 {
   // Return whatever we've got.  The application or Event Channel is
   // responsible for making sure that it was set.
@@ -749,15 +726,8 @@ ACE_Scheduler_Factory::preemption_priority (void)
     {
       ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> *tss =
         ace_scheduler_factory_data->preemption_priority_;
-      // egcs 1.0.1 raises an internal compiler error if we implicitly
-      // call the type conversion operator.  So, call it explicitly.
-#if defined (HPUX) && !defined (__GNUG__)
-      const RtecScheduler::Preemption_Priority_t preemption_priority =
-        static_cast<RtecScheduler::Preemption_Priority_t> (tss->operator RtecScheduler_Preemption_Priority_t ());
-#else
       const RtecScheduler::Preemption_Priority_t preemption_priority =
         static_cast<RtecScheduler::Preemption_Priority_t> (tss->operator RtecScheduler::Preemption_Priority_t ());
-#endif /* HPUX && !g++ */
       return preemption_priority;
     }
   else
@@ -778,116 +748,8 @@ ACE_Scheduler_Factory::set_preemption_priority
         return;
 
   ace_scheduler_factory_data->preemption_priority_->
-#if defined (HPUX) && !defined (__GNUG__)
-    // aCC can't handle the typedef.
-    operator RtecScheduler_Preemption_Priority_t & () = preemption_priority;
-#else
     operator RtecScheduler::Preemption_Priority_t & () = preemption_priority;
-#endif /* HPUX && !g++ */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>;
-template class ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >;
-template class ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>;
-template class ACE_Ordered_MultiSet<TAO_RT_Info_Tuple *>;
-template class ACE_Ordered_MultiSet_Iterator<TAO_RT_Info_Tuple *>;
-template class auto_ptr<RtecScheduler::Config_Info>;
-template class auto_ptr<RtecScheduler::RT_Info>;
-template class auto_ptr<TAO_Reconfig_Scheduler_Entry>;
-template class ACE_Auto_Basic_Ptr<RtecScheduler::Config_Info>;
-template class ACE_Auto_Basic_Ptr<RtecScheduler::RT_Info>;
-template class ACE_Auto_Basic_Ptr<TAO_Reconfig_Scheduler_Entry>;
-template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<int, TAO_RT_Info_Ex*, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<int, TAO_RT_Info_Ex*, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<int,TAO_RT_Info_Ex*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,TAO_RT_Info_Ex*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<int, RtecScheduler::Config_Info *>;
-template class ACE_Hash_Map_Entry<int, RtecScheduler::Dependency_Set *>;
-template class ACE_Hash_Map_Entry<int, RtecScheduler::RT_Info *>;
-template class ACE_RB_Tree<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Node<const char *, RtecScheduler::RT_Info *>;
-template class ACE_RB_Tree_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Iterator_Base<char const *, RtecScheduler::RT_Info *, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Reverse_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<int, TAO_RT_Info_Ex*>;
-template class ACE_RB_Tree<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Node<const char *, TAO_RT_Info_Ex*>;
-template class ACE_RB_Tree_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Iterator_Base<char const *, TAO_RT_Info_Ex*, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Reverse_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Dependency_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_DFS_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Priority_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_Tuple_Admission_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy>;
-template class TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>
-#pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
-#pragma instantiate ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>
-#pragma instantiate ACE_Ordered_MultiSet<TAO_RT_Info_Tuple *>
-#pragma instantiate ACE_Ordered_MultiSet_Iterator<TAO_RT_Info_Tuple *>
-#pragma instantiate auto_ptr<RtecScheduler::Config_Info>
-#pragma instantiate auto_ptr<RtecScheduler::RT_Info>
-#pragma instantiate auto_ptr<TAO_Reconfig_Scheduler_Entry>
-#pragma instantiate ACE_Auto_Basic_Ptr<RtecScheduler::Config_Info>
-#pragma instantiate ACE_Auto_Basic_Ptr<RtecScheduler::RT_Info>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Reconfig_Scheduler_Entry>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int, TAO_RT_Info_Ex*, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, TAO_RT_Info_Ex*, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,TAO_RT_Info_Ex*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,TAO_RT_Info_Ex*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::Config_Info *>
-#pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::Dependency_Set *>
-#pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::RT_Info *>
-#pragma instantiate ACE_Hash_Map_Entry<int, TAO_RT_Info_Ex*>
-#pragma instantiate ACE_RB_Tree<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Node<const char *, RtecScheduler::RT_Info *>
-#pragma instantiate ACE_RB_Tree_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Iterator_Base<char const *, RtecScheduler::RT_Info *, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Node<const char *, TAO_RT_Info_Ex*>
-#pragma instantiate ACE_RB_Tree_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Iterator_Base<char const *, TAO_RT_Info_Ex*, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Dependency_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_DFS_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Priority_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Tuple_Admission_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy>
-#pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex> *ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

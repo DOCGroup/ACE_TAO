@@ -1,63 +1,77 @@
-// $Id$
-
 #include "tao/TAO_Singleton_Manager.h"
-#include "tao/Exception.h"
 
 #include "ace/Guard_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
+#include "ace/os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/TAO_Singleton_Manager.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#if defined (ACE_HAS_EXCEPTIONS)
-# if defined (ACE_MVS)
-#   include /**/ <unexpect.h>
-# else
-#  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#   include /**/ <exception>
-#  else
-#   include /**/ <exception.h>
-#  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
-# endif /* ACE_MVS */
-#endif /* ACE_HAS_EXCEPTIONS */
-
-ACE_RCSID (tao,
-           TAO_Singleton_Manager,
-           "$Id$")
-
-extern "C" void
-TAO_Singleton_Manager_cleanup_destroyer (void *, void *)
+namespace
 {
-  if (TAO_Singleton_Manager::instance_)
+  // Singleton instance pointer.
+  TAO_Singleton_Manager * the_instance = nullptr;
+}
+
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
+# define TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_Singleton_Manager_cleanup_destroyer)
+# define TAO_SINGLETON_MANAGER_FINI_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_Singleton_Manager_fini)
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+// Adapter for cleanup, used to register cleanup function with the
+// ACE_Object_Manager.
+extern "C" void
+TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME (void *, void *)
+{
+#if defined (TAO_HAS_VERSIONED_NAMESPACE) \
+    && TAO_HAS_VERSIONED_NAMESPACE == 1
+  using namespace TAO_VERSIONED_NAMESPACE_NAME;
+#endif  /* TAO_HAS_VERSIONED_NAMESPACE */
+
+  if (the_instance)
     {
       (void) TAO_Singleton_Manager::instance ()->fini ();
     }
 }
 
-TAO_Singleton_Manager *TAO_Singleton_Manager::instance_ = 0;
+#if (ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE == 1)
+static void TAO_SINGLETON_MANAGER_FINI_NAME () ACE_GCC_DESTRUCTOR_ATTRIBUTE;
 
-void *TAO_Singleton_Manager::preallocated_object[
-  TAO_Singleton_Manager::TAO_PREALLOCATED_OBJECTS] = { 0 };
+void TAO_SINGLETON_MANAGER_FINI_NAME ()
+{
+#if defined (TAO_HAS_VERSIONED_NAMESPACE) \
+    && TAO_HAS_VERSIONED_NAMESPACE == 1
+  using namespace TAO_VERSIONED_NAMESPACE_NAME;
+#endif  /* TAO_HAS_VERSIONED_NAMESPACE */
+  if (the_instance)
+    {
+      (void) TAO_Singleton_Manager::instance ()->fini ();
+    }
+}
+#endif
 
-TAO_Singleton_Manager::TAO_Singleton_Manager (void)
-  // default_mask_ isn't initialized, because it's defined by <init>.
-  : thread_hook_ (0),
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Singleton_Manager::TAO_Singleton_Manager ()
+  : default_mask_ (nullptr),
+    thread_hook_ (nullptr),
     exit_info_ (),
     registered_with_object_manager_ (-1)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    , internal_lock_ (new TAO_SYNCH_RECURSIVE_MUTEX)
+    , internal_lock_ (nullptr)
 # endif /* ACE_MT_SAFE */
-#if defined (ACE_HAS_EXCEPTIONS)
-    , old_unexpected_ (0)
-#endif  /* ACE_HAS_EXCEPTIONS */
 {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_NEW (this->internal_lock_,
+           TAO_SYNCH_RECURSIVE_MUTEX);
+# endif /* ACE_MT_SAFE */
   // Be sure that no further instances are created via instance ().
-  if (instance_ == 0)
+  if (the_instance == nullptr)
     {
-      instance_ = this;
+      the_instance = this;
     }
 
   // @@ This is a hack.  Allow the TAO_Singleton_Manager to be registered
@@ -68,20 +82,25 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
   (void) this->init (register_with_object_manager);
 }
 
-TAO_Singleton_Manager::~TAO_Singleton_Manager (void)
+TAO_Singleton_Manager::~TAO_Singleton_Manager ()
 {
-  this->dynamically_allocated_ = 0;   // Don't delete this again in fini()
+  this->dynamically_allocated_ = false;   // Don't delete this again in fini()
   (void) this->fini ();
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  delete this->internal_lock_;
+  this->internal_lock_ = nullptr;
+#endif /* ACE_MT_SAFE */
 }
 
 sigset_t *
-TAO_Singleton_Manager::default_mask (void)
+TAO_Singleton_Manager::default_mask ()
 {
   return TAO_Singleton_Manager::instance ()->default_mask_;
 }
 
 ACE_Thread_Hook *
-TAO_Singleton_Manager::thread_hook (void)
+TAO_Singleton_Manager::thread_hook ()
 {
   return TAO_Singleton_Manager::instance ()->thread_hook_;
 }
@@ -96,39 +115,38 @@ TAO_Singleton_Manager::thread_hook (ACE_Thread_Hook *new_thread_hook)
 }
 
 TAO_Singleton_Manager *
-TAO_Singleton_Manager::instance (void)
+TAO_Singleton_Manager::instance ()
 {
   // This function should be called during construction of static
   // instances, or before any other threads have been created in the
   // process.  So, it's not thread safe.
-
-  if (instance_ == 0)
+  if (the_instance == nullptr)
     {
-      TAO_Singleton_Manager *instance_pointer;
+      TAO_Singleton_Manager *instance_pointer = nullptr;
 
       ACE_NEW_RETURN (instance_pointer,
                       TAO_Singleton_Manager,
-                      0);
-      ACE_ASSERT (instance_pointer == instance_);
+                      nullptr);
+      ACE_ASSERT (instance_pointer == the_instance);
 
-      instance_pointer->dynamically_allocated_ = 1;
+      instance_pointer->dynamically_allocated_ = true;
 
       return instance_pointer;
     }
   else
     {
-      return instance_;
+      return the_instance;
     }
 }
 
 int
-TAO_Singleton_Manager::init (void)
+TAO_Singleton_Manager::init ()
 {
   if (this->registered_with_object_manager_ == -1)
     {
       // Register the TAO_Singleton_Manager with the
       // ACE_Object_Manager.
-      int register_with_object_manager = 1;
+      int const register_with_object_manager = 1;
 
       return this->init (register_with_object_manager);
     }
@@ -145,7 +163,7 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       // initialized.
       this->object_manager_state_ = OBJ_MAN_INITIALIZING;
 
-      if (this == instance_)
+      if (this == the_instance)
         {
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           // @@ No MT-specific pre-allocated objects.
@@ -175,7 +193,6 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       // with a manager of a different type from the one it is
       // currently registered with.  This indicates a problem with the
       // caller's logic.
-
       errno = EINVAL;
       return -1;
     }
@@ -185,12 +202,12 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       if (register_with_object_manager == 1
           && ACE_Object_Manager::at_exit (
                this,
-               (ACE_CLEANUP_FUNC) TAO_Singleton_Manager_cleanup_destroyer,
-               0) != 0)
+               (ACE_CLEANUP_FUNC) TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME,
+               nullptr,
+               typeid (*this).name ()) != 0)
         return -1;
 
-      this->registered_with_object_manager_ =
-        register_with_object_manager;
+      this->registered_with_object_manager_ = register_with_object_manager;
     }
 
   // Had already initialized.
@@ -201,14 +218,15 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
 // other than The Instance.  This can happen if a user creates one for some
 // reason.  All objects clean up their per-object information and managed
 // objects, but only The Instance cleans up the static preallocated objects.
-
 int
-TAO_Singleton_Manager::fini (void)
+TAO_Singleton_Manager::fini ()
 {
-  if (instance_ == 0  ||  this->shutting_down_i ())
-    // Too late.  Or, maybe too early.  Either fini () has already
-    // been called, or init () was never called.
-    return this->object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+  if (the_instance == nullptr  ||  this->shutting_down_i ())
+    {
+      // Too late.  Or, maybe too early.  Either fini () has already
+      // been called, or init () was never called.
+      return this->object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
+    }
 
   // No mutex here.  Only the main thread should destroy the singleton
   // TAO_Singleton_Manager instance.
@@ -222,52 +240,27 @@ TAO_Singleton_Manager::fini (void)
   if (this->next_)
     {
       this->next_->fini ();
-      this->next_ = 0;  // Protect against recursive calls.
+      this->next_ = nullptr;  // Protect against recursive calls.
     }
 
   // Call all registered cleanup hooks, in reverse order of
   // registration.
   this->exit_info_.call_hooks ();
 
-  // Only clean up preallocated objects when the singleton Instance is being
-  // destroyed.
-  if (this == instance_)
+  // Remove ourselves from the ACE object manager
+  if (this->registered_with_object_manager_ == 1)
     {
-#if ! defined (ACE_HAS_STATIC_PREALLOCATION)
-      // Cleanup the dynamically preallocated objects.
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      // @@ No MT-specific preallocated objects yet.
-# endif  /* ACE_MT_SAFE */
-      // @@ No preallocated objects yet.
-#endif  /* ! ACE_HAS_STATIC_PREALLOCATION */
+      ACE_Object_Manager::remove_at_exit (this);
     }
 
-  delete this-> default_mask_;
-  this->default_mask_ = 0;
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  delete this->internal_lock_;
-  this->internal_lock_ = 0;
-#endif /* ACE_MT_SAFE */
-
-#if defined (ACE_HAS_EXCEPTIONS)
-  // Restore the old unexpected exception handler since TAO will no
-  // longer be handling exceptions.  Allow the application to once
-  // again handle unexpected exceptions.
-# if (!defined (_MSC_VER) \
-      && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
-      && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)) || defined (ghs)
-  (void) std::set_unexpected (this->old_unexpected_);
-# else
-  (void) set_unexpected (this->old_unexpected_);
-# endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#endif /* ACE_HAS_EXCEPTIONS */
+  delete this->default_mask_;
+  this->default_mask_ = nullptr;
 
   // Indicate that this TAO_Singleton_Manager instance has been shut down.
   this->object_manager_state_ = OBJ_MAN_SHUT_DOWN;
 
-  if (this == instance_)
-    instance_ = 0;
+  if (this == the_instance)
+    the_instance = nullptr;
 
   if (this->dynamically_allocated_)
     {
@@ -278,49 +271,32 @@ TAO_Singleton_Manager::fini (void)
 }
 
 int
-TAO_Singleton_Manager::starting_up (void)
+TAO_Singleton_Manager::starting_up ()
 {
-  return TAO_Singleton_Manager::instance_
-    ? instance_->starting_up_i ()
+  return
+    the_instance
+    ? the_instance->starting_up_i ()
     : 1;
 }
 
 int
-TAO_Singleton_Manager::shutting_down (void)
+TAO_Singleton_Manager::shutting_down ()
 {
-  return TAO_Singleton_Manager::instance_
-    ? instance_->shutting_down_i ()
+  return
+    the_instance
+    ? the_instance->shutting_down_i ()
     : 1;
 }
-
-#if defined (ACE_HAS_EXCEPTIONS)
-void
-TAO_Singleton_Manager::_set_unexpected (TAO_unexpected_handler u)
-{
-  // This must be done after the system TypeCodes and Exceptions have
-  // been initialized.  An unexpected exception will cause TAO's
-  // unexpected exception handler to be called.  That handler
-  // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
-  // course requires the TypeCode constants and system exceptions to
-  // have been initialized.
-# if (!defined (_MSC_VER) \
-      && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
-      && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)) || defined (ghs)
-  this->old_unexpected_ = std::set_unexpected (u);
-# else
-  this->old_unexpected_ = set_unexpected (u);
-# endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-}
-#endif /* ACE_HAS_EXCEPTIONS */
 
 int
 TAO_Singleton_Manager::at_exit_i (void *object,
                                   ACE_CLEANUP_FUNC cleanup_hook,
-                                  void *param)
+                                  void *param,
+                                  const char *name)
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                             ace_mon,
-                            *instance_->internal_lock_,
+                            *the_instance->internal_lock_,
                             -1));
 
   if (this->shutting_down_i ())
@@ -336,5 +312,7 @@ TAO_Singleton_Manager::at_exit_i (void *object,
       return -1;
     }
 
-  return this->exit_info_.at_exit_i (object, cleanup_hook, param);
+  return this->exit_info_.at_exit_i (object, cleanup_hook, param, name);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

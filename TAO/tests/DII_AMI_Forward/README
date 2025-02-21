@@ -1,0 +1,31 @@
+/**
+
+
+
+@page DII_AMI_Forward Test README File
+
+This test illustrates the new feature outlined in bug 3105 for
+supporting the detection and handling of a LOCATION FORWARD
+exception within a DII based asynch invocation.
+
+DII Asynch reply handlers operate very close to the TAO internals,
+receiving raw CDR buffers as parameters rather than collections of
+arguments. This example is built on apriori knowledge of the nature
+of the call and its return type in order to work. A more general
+purpose handler would take a reference to the request instance in
+order to handle a variety of responses. As such, it is impractical
+to have a single instance of the reply handler supporting more than
+one pending invocation.
+
+This test is designed around a server that, on the receipt of the
+first invocation raises a location forward exception. The client's
+DII asynch reply handler then reissues the invocation using the new
+object reference and finally handles the reply.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/

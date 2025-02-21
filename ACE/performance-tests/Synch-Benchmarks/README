@@ -1,0 +1,48 @@
+
+
+This directory contains a program for benchmarking various
+synchronization and concurrent programming mechanisms in ACE.
+
+To build the program, do a make on the top level Makefile (or,
+on NT, open Synch_Tests.dsw and build evey project in it.)
+There are several modules which perform different benchmarking
+measurements in subdirectories.  Here is a short description of all
+the subdirectories:
+
+  Synch_lib:    This directory contains interface definitions required
+                by both main program (synch_driver) and other modules.
+  Base_Test:    This directory contains a set of baseline tests.  They
+                measure the time to obtain a lock without contension,
+                or trying to objtain a lock with contension.
+  Perf_Test:    This directory contains a set of performance tests.
+                They measure the opeation performed by spawning a
+                bunch of threads and let these threads compete with
+                each other in obtaining a lock.
+
+There'll always be a "Method" object in each module subdirectory.
+They defines the method used in benchmarking and usually takes some
+options which can be defined in the 'svc.conf' file.  Beside from this
+"Method" object, there are also a lot of "Test" objects that define
+the mechanism to be tested.
+
+Executing the program:  the synch_driver performs various benchmarking
+according to the "script" defined in 'svc.conf' file.  All command
+line options applicable to ACE's Service_Config class can be used.
+
+The entries in svc.conf file are always in groups.  Each group
+consists of several svc.conf entries.  The first entry in each group
+is the "Method" entry which defines the methodology used in the test.
+The rest of the entries are "Test" entries which define the mechanism
+to be test using the "Method".
+
+At this moment, you can not have entries with the same object (either
+"Method" object or "Test" object) in one svc.conf file.  Therefore, at
+this moment, there can only be two groups in the svc.conf.  Of them,
+each "Test" can only be performed once.  Therefore, there's no way to
+benchmark using the same method with differnt configurations within
+the same svc.conf file.  However, this can be easily overcome by
+defining multiple svc.conf files and invoking the synch_driver with
+different svc.conf file.
+
+There'll be more detailed description about how a "Method" object can
+be configured in respective subdirectory.

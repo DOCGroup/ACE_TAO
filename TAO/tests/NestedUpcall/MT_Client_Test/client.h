@@ -1,21 +1,13 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/MT_Client_Test
-//
-// = FILENAME
-//    client.h
-//
-// = DESCRIPTION
-//    Test for multithreaded client using one global ORB (and Reactor)
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.h
+ *
+ *  Test for multithreaded client using one global ORB (and Reactor)
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
 
 #ifndef MT_CLIENT_H
 #define MT_CLIENT_H
@@ -31,80 +23,82 @@
 #include "tao/ORB.h"
 #include "MT_Client_TestC.h"
 
+/**
+ * @class MT_Client
+ *
+ * @brief A simple client talking to one server
+ *
+ * It is connecting to a server which holds the Object_A
+ * or using the "-m" switch to a server holding the MT_Object
+ */
 class MT_Client
 {
-  // = TITLE
-  //    A simple client talking to one server
-  //
-  // = DESCRIPTION
-  //    It is connecting to a server which holds the Object_A
-  //    or using the "-m" switch to a server holding the MT_Object
-
 public:
-  MT_Client (void);
-  ~MT_Client (void);
-  // = Constructor and destructor.
+  /// = Constructor and destructor.
+  MT_Client ();
+  ~MT_Client ();
 
-  int run (void);
-  // Execute client example code.
+  /// Execute client example code.
+  int run ();
 
+  /// Initialize the client communication endpoint with server.
   int init (int argc,
-            char **argv,
+            ACE_TCHAR **argv,
             int client_number);
-  // Initialize the client communication endpoint with server.
 
 private:
-  int read_ior (char *filename);
-  // reading the IOR of object A in
+  /// reading the IOR of object A in
+  int read_ior (ACE_TCHAR *filename);
 
-  int parse_args (void);
-  // Parses the arguments passed on the command line.
+  /// Parses the arguments passed on the command line.
+  int parse_args ();
 
+  /// # of arguments on the command line.
   int argc_;
-  // # of arguments on the command line.
 
-  char **argv_;
-  // arguments from command line.
+  /// arguments from command line.
+  ACE_TCHAR **argv_;
 
+  /// Key of the object
   char *object_key_;
-  // Key of the object
 
+  /// Flag to tell server to shutdown.
   int shutdown_;
-  // Flag to tell server to shutdown.
 
+  /// Remember our orb.
   CORBA::ORB_var orb_var_;
-  // Remember our orb.
 
+  /// pointer to the mt Object
   MT_Object_var mT_Object_var_;
-  // pointer to the mt Object
 
+  /// This is used to choose the server...
   int client_number_;
-  // This is used to choose the server...
 
+  /// number of loops
   unsigned long iterations_;
-  // number of loops
-
 };
 
+/**
+ * @class MT_Client_Task
+ *
+ * @brief Wrapper for the MT_Client to be an extra thread
+ *
+ * No big purpose, just wrapping
+ */
 class MT_Client_Task : public ACE_Task<ACE_SYNCH>
 {
-  // = TITLE
-  //    Wrapper for the MT_Client to be an extra thread
-  //
-  // = DESCRIPTION
-  //    No big purpose, just wrapping
 public:
-  MT_Client_Task (int argc, char **argv, int client_number);
+  MT_Client_Task (int argc, ACE_TCHAR **argv, int client_number);
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   MT_Client mT_Client_;
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
 
+  /// To determine if we use the first or the second server.
   int client_number_;
-  // To determine if we use the first or the second server.
 };
 
 #endif /* MT_CLIENT_H */

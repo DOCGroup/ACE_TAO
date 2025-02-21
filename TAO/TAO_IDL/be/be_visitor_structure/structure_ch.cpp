@@ -1,26 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    structure_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Structure in the client header.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    structure_ch.cpp
+ *
+ *  Visitor generating code for Structure in the client header.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_structure, 
-           structure_ch, 
-           "$Id$")
+#include "structure.h"
 
 // ******************************************************
 // for client header
@@ -31,7 +20,7 @@ be_visitor_structure_ch::be_visitor_structure_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure_ch::~be_visitor_structure_ch (void)
+be_visitor_structure_ch::~be_visitor_structure_ch ()
 {
 }
 
@@ -47,36 +36,32 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
   // the recursive typecode include in the stub source file.
   ACE_Unbounded_Queue<AST_Type *> list;
   (void) node->in_recursion (list);
-        
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the _var and _out typedefs.
   node->gen_common_varout (os);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  *os << be_nl_2;
 
-  *os << be_nl << be_nl
+  TAO_INSERT_COMMENT (os);
+
+  *os << be_nl_2
       << "struct " << be_global->stub_export_macro () << " "
       << node->local_name () << be_nl
-      << "{" << be_idt_nl;
+      << "{" << be_idt;
 
-  // Generate the _ptr_type and _var_type typedefs.
-  *os << "typedef " << node->local_name () << "_var _var_type;"
-      << be_nl << be_nl;
+  node->gen_stub_decls (os);
 
-  if (be_global->any_support ())
-    {
-      *os << "static void _tao_any_destructor (void *);";
-    }
+  *os << be_nl;
 
   // Generate code for field members.
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_structure_ch::"
-                         "visit_structure - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_structure_ch::")
+                         ACE_TEXT ("visit_structure - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -91,13 +76,13 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_structure_ch::"
-                             "visit_structure - "
-                             "TypeCode declaration failed\n"),
+                             ACE_TEXT ("be_visitor_structure_ch::")
+                             ACE_TEXT ("visit_structure - ")
+                             ACE_TEXT ("TypeCode declaration failed\n")),
                             -1);
         }
     }
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

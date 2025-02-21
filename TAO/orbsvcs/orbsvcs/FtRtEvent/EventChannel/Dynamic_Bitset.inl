@@ -4,11 +4,11 @@
 /**
  *  @file   Dynamic_Bitset.inl
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 Dynamic_Bitset::~Dynamic_Bitset()
@@ -64,3 +64,4 @@ Dynamic_Bitset::reference Dynamic_Bitset::operator[](Dynamic_Bitset::size_type b
   return Dynamic_Bitset::reference(this, bit);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

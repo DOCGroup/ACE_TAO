@@ -1,28 +1,16 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_init_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Valuetypes factory in the client header
-//    (see IDL to C++ mapping)
-//
-// = AUTHOR
-//   Boris Kolpackov <bosk@ipmce.ru>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype_init_cs.cpp
+ *
+ *  Visitor generating code for Valuetypes factory in the client header
+ *  (see IDL to C++ mapping)
+ *
+ *  @author Boris Kolpackov <bosk@ipmce.ru>
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuetype,
-           valuetype_init_cs,
-           "$Id$")
+#include "valuetype.h"
 
 be_visitor_valuetype_init_cs::be_visitor_valuetype_init_cs (
     be_visitor_context *ctx
@@ -31,7 +19,7 @@ be_visitor_valuetype_init_cs::be_visitor_valuetype_init_cs (
 {
 }
 
-be_visitor_valuetype_init_cs::~be_visitor_valuetype_init_cs (void)
+be_visitor_valuetype_init_cs::~be_visitor_valuetype_init_cs ()
 {
 }
 
@@ -81,32 +69,31 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
                    "%s_init",
                    node->local_name ());
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // ctor
-  *os << be_nl << be_nl
-      << fname << "::" << lname << " (void)" << be_nl
+  *os << be_nl_2
+      << fname << "::" << lname << " ()" << be_nl
       << "{" << be_nl << "}";
 
   // dtor
-  *os << be_nl << be_nl
-      << fname << "::~" << lname << " (void)" << be_nl
+  *os << be_nl_2
+      << fname << "::~" << lname << " ()" << be_nl
       << "{" << be_nl << "}";
 
   // The _downcast method.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << node->name () << "_init *" << be_nl << node->name ()
-      << "_init::_downcast (CORBA::ValueFactoryBase *v)" << be_nl
+      << "_init::_downcast (::CORBA::ValueFactoryBase *v)" << be_nl
       << "{" << be_idt_nl
-      << "return dynamic_cast< ::" << node->name () 
-      << "_init * > (v);" << be_uidt_nl
+      << "return dynamic_cast<::" << node->name ()
+      << "_init *> (v);" << be_uidt_nl
       << "}";
 
   // tao_repository_id
-  *os << be_nl << be_nl
-      << "const char* " << be_nl
-      << fname << "::tao_repository_id (void)" << be_nl
+  *os << be_nl_2
+      << "const char*" << be_nl
+      << fname << "::tao_repository_id ()" << be_nl
       << "{" << be_idt_nl
       <<   "return ::" << node->full_name ()
       <<                "::_tao_obv_static_repository_id ();"
@@ -116,31 +103,30 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {
       // generate create_for_unmarshal()
-      *os << be_nl << be_nl
-          << "CORBA::ValueBase *" << be_nl
-          << fname << "::create_for_unmarshal" << " "
-          << "(ACE_ENV_SINGLE_ARG_DECL)" << be_nl
+      *os << be_nl_2
+          << "::CORBA::ValueBase *" << be_nl
+          << fname << "::create_for_unmarshal ()" << be_nl
           << "{" << be_idt_nl
-          << "CORBA::ValueBase *ret_val = 0;" << be_nl
+          << "::CORBA::ValueBase *ret_val = nullptr;" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt << be_idt_nl
           << "ret_val," << be_nl
           << "OBV_" << node->full_name () << "," << be_nl
-          << "CORBA::NO_MEMORY ()" << be_uidt_nl
-          << ");" << be_uidt_nl
+          << "::CORBA::NO_MEMORY ());" << be_uidt
+          << be_uidt_nl
           << "return ret_val;"
           << be_uidt_nl << "}";
 
         if (node->supports_abstract ())
           {
-            *os << be_nl << be_nl
-                << "CORBA::AbstractBase_ptr" << be_nl
-                << fname << "::create_for_unmarshal_abstract (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
+            *os << be_nl_2
+                << "::CORBA::AbstractBase_ptr" << be_nl
+                << fname << "::create_for_unmarshal_abstract ()" << be_nl
                 << "{" << be_idt_nl
-                << "CORBA::AbstractBase *ret_val = 0;" << be_nl
+                << "::CORBA::AbstractBase *ret_val = nullptr;" << be_nl
                 << "ACE_NEW_THROW_EX (" << be_idt << be_idt_nl
                 << "ret_val," << be_nl
                 << "OBV_" << node->full_name () << "," << be_nl
-                << "CORBA::NO_MEMORY ()" << be_uidt_nl
+                << "::CORBA::NO_MEMORY ()" << be_uidt_nl
                 << ");" << be_uidt_nl
                 << "return ret_val;"
                 << be_uidt_nl << "}";

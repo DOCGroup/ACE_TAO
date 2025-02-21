@@ -1,8 +1,7 @@
+// -*- C++ -*-
 //=============================================================================
 /**
  *  @file   FilterAdmin.h
- *
- *  $Id$
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
@@ -19,79 +18,62 @@
 
 #include "ace/Hash_Map_Manager.h"
 
-#include "ID_Factory.h"
-#include "Event.h"
-#include "notify_serv_export.h"
-#include "Topology_Object.h"
+#include "orbsvcs/Notify/ID_Factory.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+#include "orbsvcs/Notify/EventChannel.h"
+
+class TAO_Notify_EventChannel;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_FilterAdmin
  *
  * @brief FilterAdmin interface methods implementation.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   : public TAO_Notify::Topology_Object
 {
-
  public:
   /// Constructor
-  TAO_Notify_FilterAdmin (void);
+  TAO_Notify_FilterAdmin ();
 
   /// Destructor
-  virtual ~TAO_Notify_FilterAdmin (void);
+  virtual ~TAO_Notify_FilterAdmin ();
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_Notify_Event::Ptr &event ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::UnsupportedFilterableData
-                     ));
+  CORBA::Boolean match (const TAO_Notify_Event::Ptr &event);
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::UnsupportedFilterableData
-                     ));
+  CORBA::Boolean match (const TAO_Notify_Event* event);
 
-  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter);
 
-  virtual void remove_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::FilterNotFound
-                     ));
+  virtual void remove_filter (CosNotifyFilter::FilterID filter);
 
-  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::FilterNotFound
-                     ));
+  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
 
-  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyFilter::FilterIDSeq * get_all_filters ();
 
-  virtual void remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void remove_all_filters ();
 
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
-    const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
+    const TAO_Notify::NVPList& attrs);
+
+  void event_channel (TAO_Notify_EventChannel* ec);
+
  private:
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_NULL_MUTEX> FILTER_LIST;
 
-  virtual void release (void);
+  virtual void release ();
 
   /// Mutex to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;
@@ -101,10 +83,14 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 
   /// Id generator for proxy suppliers
   TAO_Notify_ID_Factory filter_ids_;
+
+  TAO_Notify_EventChannel::Ptr ec_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "FilterAdmin.inl"
+#include "orbsvcs/Notify/FilterAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

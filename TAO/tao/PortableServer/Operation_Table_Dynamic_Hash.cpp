@@ -1,12 +1,6 @@
-// $Id$
-
-#include "Operation_Table_Dynamic_Hash.h"
+#include "tao/PortableServer/Operation_Table_Dynamic_Hash.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID(PortableServer,
-          Operation_Table_Dynamic_Hash,
-          "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -29,6 +23,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // constructor
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
   TAO_operation_db_entry const * db,
@@ -48,13 +44,13 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
 
       // @@ (ASG): what happens if bind fails ???
       if (this->bind (db[i].opname, s) == -1)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("bind failed")));
     }
 }
 
-TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
+TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable ()
 {
   // Initialize an iterator.  We need to go thru each entry and free
   // up storage allocated to hold the external ids.  In this case,
@@ -76,8 +72,7 @@ int
 TAO_Dynamic_Hash_OpTable::bind (const char *opname,
                                 const TAO::Operation_Skeletons skel_ptr)
 {
-  return this->hash_.bind (CORBA::string_dup (opname),
-                           skel_ptr);
+  return this->hash_.bind (CORBA::string_dup (opname), skel_ptr);
 }
 
 int
@@ -88,9 +83,7 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
   ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
   TAO::Operation_Skeletons s;
 
-  int retval =
-    this->hash_.find ((const char *)opname,
-                      s);
+  int const retval = this->hash_.find (opname, s);
 
   if (retval != -1)
     {
@@ -110,8 +103,7 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
 
   TAO::Operation_Skeletons skel;
 
-  int retval =
-    this->hash_.find ((const char *)opname, skel);
+  int const retval = this->hash_.find (opname, skel);
 
   if (retval != -1)
     {
@@ -128,37 +120,4 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
   return retval;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator_Base_Ex<const char *,
-                                             TAO::Operation_Skeletons,
-                                             ACE_Hash<const char *>,
-                                             ACE_Equal_To<const char *>,
-                                             ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<const char *,
-                                        TAO::Operation_Skeletons,
-                                        ACE_Hash<const char *>,
-                                        ACE_Equal_To<const char *>,
-                                        ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *,
-                                                TAO::Operation_Skeletons,
-                                                ACE_Hash<const char *>,
-                                                ACE_Equal_To<const char *>,
-                                                ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<const char *,
-                                       TAO::Operation_Skeletons,
-                                       ACE_Hash<const char *>,
-                                       ACE_Equal_To<const char *>,
-                                       ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<const char *,
-                                  TAO::Operation_Skeletons>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, TAO::Operation_Skeletons, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, TAO::Operation_Skeletons, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO::Operation_Skeletons, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, TAO::Operation_Skeletons, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<const char *, TAO::Operation_Skeletons>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

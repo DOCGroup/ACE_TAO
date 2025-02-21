@@ -1,9 +1,5 @@
-// $Id$
-
 #include "Notifier_Server.h"
 #include "notifier.h"
-ACE_RCSID(Notifier, notifier, "$Id$")
-
 
 int
 Notifier::handle_signal (int signum, siginfo_t *, ucontext_t *)
@@ -18,33 +14,28 @@ Notifier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 void
-Notifier::run (void)
+Notifier::run ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      ns_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ns_.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return;
     }
-  ACE_ENDTRY;
 }
 
-Notifier::Notifier (int argc, char *argv[])
+Notifier::Notifier (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      ns_.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ns_.init (argc, argv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Notifier_Server.init failed\n ");
+      ex._tao_print_exception ("Notifier_Server.init failed\n");
     }
-  ACE_ENDTRY;
 
   // Register with the ORB's Reactor to receive a signal to shut us
   // down.
@@ -54,14 +45,14 @@ Notifier::Notifier (int argc, char *argv[])
                 "register_handler"));
 }
 
-Notifier::~Notifier (void)
+Notifier::~Notifier ()
 {
   // Cleanup.
   this->ns_.close ();
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Initialize server daemon.
   Notifier notifier (argc, argv);

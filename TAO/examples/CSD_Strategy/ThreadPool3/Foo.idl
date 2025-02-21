@@ -1,0 +1,28 @@
+#ifndef FOO_IDL
+#define FOO_IDL
+
+exception FooException {};
+exception TestException {};
+
+interface Foo
+{
+  /// void return-type, no arguments
+  void op1();
+
+  /// void return-type, 1 "in" argument
+  void op2(in long value);
+
+  /// long return-type, no arguments
+  long op3();
+
+  /// one-way version of op2
+  oneway void op4(in long value);
+
+  /// Operation that always raises an exception.
+  void op5() raises (FooException);
+
+  /// Client calls this last.  It will shutdown the server.
+  void done();
+};
+
+#endif

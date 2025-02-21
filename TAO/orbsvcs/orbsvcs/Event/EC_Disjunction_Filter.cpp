@@ -1,8 +1,6 @@
-// $Id$
+#include "orbsvcs/Event/EC_Disjunction_Filter.h"
 
-#include "EC_Disjunction_Filter.h"
-
-ACE_RCSID(Event, EC_Disjunction_Filter, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Disjunction_Filter::
     TAO_EC_Disjunction_Filter (TAO_EC_Filter* children[],
@@ -19,7 +17,7 @@ TAO_EC_Disjunction_Filter::
     }
 }
 
-TAO_EC_Disjunction_Filter::~TAO_EC_Disjunction_Filter (void)
+TAO_EC_Disjunction_Filter::~TAO_EC_Disjunction_Filter ()
 {
   TAO_EC_Filter** end = this->children_ + this->n_;
   for (TAO_EC_Filter** i = this->children_;
@@ -27,43 +25,41 @@ TAO_EC_Disjunction_Filter::~TAO_EC_Disjunction_Filter (void)
        ++i)
     {
       delete *i;
-      *i = 0;
+      *i = nullptr;
     }
   delete[] this->children_;
-  this->children_ = 0;
+  this->children_ = nullptr;
   this->n_ = 0;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Disjunction_Filter::begin (void) const
+TAO_EC_Disjunction_Filter::begin () const
 {
   return this->children_;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Disjunction_Filter::end (void) const
+TAO_EC_Disjunction_Filter::end () const
 {
   return this->children_ + this->n_;
 }
 
 int
-TAO_EC_Disjunction_Filter::size (void) const
+TAO_EC_Disjunction_Filter::size () const
 {
   return static_cast<int> (this->n_);
 }
 
 int
 TAO_EC_Disjunction_Filter::filter (const RtecEventComm::EventSet& event,
-                                   TAO_EC_QOS_Info& qos_info
-                                   ACE_ENV_ARG_DECL)
+                                   TAO_EC_QOS_Info& qos_info)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
        ++i)
     {
-      int n = (*i)->filter (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      int n = (*i)->filter (event, qos_info);
       if (n != 0)
         return n;
     }
@@ -72,16 +68,14 @@ TAO_EC_Disjunction_Filter::filter (const RtecEventComm::EventSet& event,
 
 int
 TAO_EC_Disjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
-                                   TAO_EC_QOS_Info& qos_info
-                                   ACE_ENV_ARG_DECL)
+                                   TAO_EC_QOS_Info& qos_info)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
        ++i)
     {
-      int n = (*i)->filter (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      int n = (*i)->filter (event, qos_info);
       if (n != 0)
         return n;
     }
@@ -90,24 +84,22 @@ TAO_EC_Disjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 
 void
 TAO_EC_Disjunction_Filter::push (const RtecEventComm::EventSet& event,
-                                 TAO_EC_QOS_Info& qos_info
-                                 ACE_ENV_ARG_DECL)
+                                 TAO_EC_QOS_Info& qos_info)
 {
-  if (this->parent () != 0)
-    this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
+  if (this->parent () != nullptr)
+    this->parent ()->push (event, qos_info);
 }
 
 void
 TAO_EC_Disjunction_Filter::push_nocopy (RtecEventComm::EventSet& event,
-                                 TAO_EC_QOS_Info& qos_info
-                                 ACE_ENV_ARG_DECL)
+                                 TAO_EC_QOS_Info& qos_info)
 {
-  if (this->parent () != 0)
-    this->parent ()->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
+  if (this->parent () != nullptr)
+    this->parent ()->push_nocopy (event, qos_info);
 }
 
 void
-TAO_EC_Disjunction_Filter::clear (void)
+TAO_EC_Disjunction_Filter::clear ()
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
@@ -119,7 +111,7 @@ TAO_EC_Disjunction_Filter::clear (void)
 }
 
 CORBA::ULong
-TAO_EC_Disjunction_Filter::max_event_size (void) const
+TAO_EC_Disjunction_Filter::max_event_size () const
 {
   CORBA::ULong n = 0;
   ChildrenIterator end = this->end ();
@@ -152,8 +144,9 @@ TAO_EC_Disjunction_Filter::can_match (
 int
 TAO_EC_Disjunction_Filter::add_dependencies (
       const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &
-      ACE_ENV_ARG_DECL_NOT_USED)
+      const TAO_EC_QOS_Info &)
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

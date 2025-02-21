@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 
 #include "tao/ORB_Core.h"
@@ -8,25 +6,21 @@
 #include "tao/Thread_Lane_Resources.h"
 
 #if !defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(BiDirectional, test_i, "$Id$")
-
 void
-Callback_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Callback_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 void
-Callback_i::callback_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Callback_i::callback_method (/**/)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Callback method called \n"));
+    ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
 
 
@@ -34,8 +28,7 @@ Callback_i::callback_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_A
 
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Boolean do_callback
-                              ACE_ENV_ARG_DECL_NOT_USED )
-    ACE_THROW_SPEC ((CORBA::SystemException))
+ )
 {
   if (do_callback)
     {
@@ -47,23 +40,24 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback
 
 void
 Simple_Server_i::callback_object (Callback_ptr callback
-                                  ACE_ENV_ARG_DECL_NOT_USED )
-    ACE_THROW_SPEC ((CORBA::SystemException))
+ )
 {
   // Store the callback object
   this->callback_ = Callback::_duplicate (callback);
 }
 
 int
-Simple_Server_i::call_client (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::call_client ()
 {
   if (this->flag_)
     {
       for (int times = 0; times < this->no_iterations_; ++times)
         {
-          this->callback_->callback_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->callback_->callback_method ();
 
+          // If the cache size has gotten larger this indicates that
+          // the connection isn't being shared properly, i.e., a new
+          // connection was created, so we'll abort.
           if (this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size () > 1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -73,8 +67,7 @@ Simple_Server_i::call_client (ACE_ENV_SINGLE_ARG_DECL)
             }
         }
 
-      this->callback_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->callback_->shutdown ();
       this->flag_ = 0;
 
       return 1;
@@ -85,8 +78,7 @@ Simple_Server_i::call_client (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

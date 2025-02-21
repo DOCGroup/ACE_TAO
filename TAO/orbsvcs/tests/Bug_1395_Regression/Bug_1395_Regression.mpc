@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*IDL): taoidldefaults {
 
   IDL_Files {
@@ -10,7 +8,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, imr_client {
+project(*Server): taoserver, imr_client, avoids_corba_e_micro, svc_utils {
   after += *IDL
 
   Source_Files {
@@ -24,7 +22,7 @@ project(*Server): taoserver, imr_client {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoclient, anytypecode {
   after += *IDL
 
   Source_Files {

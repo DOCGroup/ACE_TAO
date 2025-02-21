@@ -1,22 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Simple/bank
-//
-// = FILENAME
-//    Bank_Client_i.h
-//
-// = DESCRIPTION
-//    This class implements the  interface calls for RMI.
-//
-// = AUTHOR
-//
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Bank_Client_i.h
+ *
+ *  This class implements the  interface calls for RMI.
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef BANK_CLIENT_I_H
 #define BANK_CLIENT_I_H
@@ -24,43 +17,44 @@
 #include "../Simple_util.h"
 #include "BankC.h"
 
+/**
+ * @class Bank_Client_i
+ *
+ * @brief Grid_Client interface subclass.
+ *
+ * This class implements the interface between the interface
+ * objects and the client .
+ */
 class Bank_Client_i
 {
-  // = TITLE
-  //   Grid_Client interface subclass.
-  //
-  // = DESCRIPTION
-  //   This class implements the interface between the interface
-  //   objects and the client .
 public:
-  // = Initialization and termination methods.
-  Bank_Client_i (void);
-  // Constructor
+  /// Constructor
+  Bank_Client_i ();
 
-  virtual ~Bank_Client_i (void);
-  // Destructor
+  /// Destructor
+  ~Bank_Client_i ();
 
-  virtual int run (const char *, int, char *[]);
-  // Execute the methods.
+  /// Execute the methods.
+  int run (const char *, int, ACE_TCHAR *[]);
 
 private:
-  Client<Bank::AccountManager, Bank::AccountManager_var> client;
-  // Instantiate the client object.
+  /// Method that calls all the test functions
+  int check_accounts ();
 
-  int check_accounts (void);
-  // Method that calls all the test functions
+  /// Tests if accounts opened with different names return a different account
+  /// reference.
+  void test_for_different_name ();
 
-  void test_for_different_name (ACE_ENV_SINGLE_ARG_DECL);
-  // Tests if accounts opened with different names return a different account
-  // reference.
+  /// Tests if accounts opened with the same name return the same
+  /// object reference.
+  void test_for_same_name ();
 
-  void test_for_same_name (ACE_ENV_SINGLE_ARG_DECL);
-  // Tests if accounts opened with the same name return the same
-  // object reference.
+  /// Tests for the Overdraft Exception when the client tries to
+  /// withdraw more money than the current balance.
+  void test_for_overdraft ();
 
-  void test_for_overdraft (ACE_ENV_SINGLE_ARG_DECL);
-  // Tests for the Overdraft Exception when the client tries to
-  // withdraw more money than the current balance.
+  /// Instantiate the client object.
+  Client<Bank::AccountManager> client_;
 };
 
 #endif /* TIME_CLIENT_I_H */

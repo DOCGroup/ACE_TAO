@@ -1,31 +1,28 @@
-// $Id$
-
 #include "orbsvcs/Event_Service_Constants.h"
-#include "EC_Basic_Filter_Builder.h"
-#include "EC_Type_Filter.h"
-#include "EC_Conjunction_Filter.h"
-#include "EC_Disjunction_Filter.h"
-#include "EC_And_Filter.h"
-#include "EC_Negation_Filter.h"
-#include "EC_Bitmask_Filter.h"
-#include "EC_Masked_Type_Filter.h"
-#include "EC_Timeout_Filter.h"
+#include "orbsvcs/Event/EC_Basic_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Type_Filter.h"
+#include "orbsvcs/Event/EC_Conjunction_Filter.h"
+#include "orbsvcs/Event/EC_Disjunction_Filter.h"
+#include "orbsvcs/Event/EC_And_Filter.h"
+#include "orbsvcs/Event/EC_Negation_Filter.h"
+#include "orbsvcs/Event/EC_Bitmask_Filter.h"
+#include "orbsvcs/Event/EC_Masked_Type_Filter.h"
+#include "orbsvcs/Event/EC_Timeout_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Basic_Filter_Builder.i"
+#include "orbsvcs/Event/EC_Basic_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Basic_Filter_Builder, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Basic_Filter_Builder::~TAO_EC_Basic_Filter_Builder (void)
+TAO_EC_Basic_Filter_Builder::~TAO_EC_Basic_Filter_Builder ()
 {
 }
 
 TAO_EC_Filter*
 TAO_EC_Basic_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *supplier,
-    RtecEventChannelAdmin::ConsumerQOS& qos
-    ACE_ENV_ARG_DECL_NOT_USED) const
+    RtecEventChannelAdmin::ConsumerQOS& qos) const
 {
   CORBA::ULong pos = 0;
   return this->recursive_build (supplier, qos, pos);
@@ -39,7 +36,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
 {
   CORBA::ULong l = qos.dependencies.length ();
   if (pos == l)
-    return 0;
+    return nullptr;
 
   const RtecEventComm::Event& e = qos.dependencies[pos].event;
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
@@ -48,7 +45,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       CORBA::ULong i = 0;
       for (; i != n; ++i)
         {
@@ -62,7 +59,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       CORBA::ULong i = 0;
       for (; i != n; ++i)
         {
@@ -76,7 +73,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       CORBA::ULong i = 0;
       for (; i != n; ++i)
         {
@@ -97,7 +94,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       pos++; // COnsumer the designator
 
       if (pos == qos.dependencies.length ())
-        return 0;
+        return nullptr;
       CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
       pos++;
@@ -113,13 +110,13 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       pos++; // Consume the designator
 
       if (pos == qos.dependencies.length ())
-        return 0;
+        return nullptr;
       CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
       pos++;
 
       if (pos == qos.dependencies.length ())
-        return 0;
+        return nullptr;
       CORBA::ULong source_value = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_value = qos.dependencies[pos].event.header.type;
       pos++;
@@ -196,3 +193,5 @@ TAO_EC_Basic_Filter_Builder::
     }
   return count;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

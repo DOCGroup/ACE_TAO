@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Time_Date_Client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
@@ -7,20 +5,18 @@
 // This is the interface program that accesses the remote object
 
 // Constructor.
-Time_Date_Client_i::Time_Date_Client_i (void)
+Time_Date_Client_i::Time_Date_Client_i ()
 {
-  // no-op
 }
 
 //Destructor.
-Time_Date_Client_i::~Time_Date_Client_i (void)
+Time_Date_Client_i::~Time_Date_Client_i ()
 {
-  // no-op
 }
 
 int
 Time_Date_Client_i::parse_args (int,
-                                char *[])
+                                ACE_TCHAR *[])
 {
   return 0;
 }
@@ -28,7 +24,7 @@ Time_Date_Client_i::parse_args (int,
 int
 Time_Date_Client_i::run (const char *name,
                          int argc,
-                         char *argv[])
+                         ACE_TCHAR *argv[])
 {
   // Initialize the client.
   if (client_.init (name, argc, argv) == -1)
@@ -37,53 +33,38 @@ Time_Date_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       CORBA::Long l;
 
       // Get the time & date in binary format.
-      client_->bin_date (l
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client_->bin_date (l);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Binary time_date = %d\n",
+                  ACE_TEXT ("(%P|%t) Binary time_date = %d\n"),
                   l));
 
       // Get the time & date in string format.
       CORBA::String_var str_var;
-      client_->str_date (str_var.out()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client_->str_date (str_var.out());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) String time_date = %s\n",
+                  ACE_TEXT ("(%P|%t) String time_date = %C\n"),
                   str_var.in()));
 
-      client_.shutdown ();
+      if (client_.do_shutdown () == 1)
+        client_->shutdown ();
     }
-  ACE_CATCH (CORBA::UserException, range_ex)
+  catch (const CORBA::UserException& range_ex)
     {
-      ACE_PRINT_EXCEPTION (range_ex,
-                           "\tFrom get and set time_date");
+      range_ex._tao_print_exception ("\tFrom get and set time_date");
       return -1;
     }
-  ACE_CATCH (CORBA::SystemException, memex)
+  catch (const CORBA::SystemException& memex)
     {
-      ACE_PRINT_EXCEPTION (memex,
-                           "Cannot make time_date");
+      memex._tao_print_exception ("Cannot make time_date");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Time_Date,Time_Date_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Client<Time_Date,Time_Date_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

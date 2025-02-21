@@ -1,0 +1,7 @@
+// -*- MPC -*-
+workspace {
+  exclude {
+    tests
+    examples
+  }
+}

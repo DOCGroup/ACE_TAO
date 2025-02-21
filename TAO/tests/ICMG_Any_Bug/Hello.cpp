@@ -1,10 +1,5 @@
-//
-// $Id$
-//
 #include "Hello.h"
 #include "HelloWorld.h"
-
-ACE_RCSID(ICMG_Any_Bug, Hello, "$Id")
 
 Hello::Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa)),
@@ -13,28 +8,24 @@ Hello::Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 }
 
 Test::HelloWorld_ptr
-Hello::get_helloworld (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Hello::get_helloworld ()
 {
   HelloWorld *hello_world;
   ACE_NEW_THROW_EX (hello_world,
-          HelloWorld,
-		    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Test::HelloWorld::_nil ());
+                    HelloWorld,
+                    CORBA::NO_MEMORY ());
 
-  PortableServer::ObjectId_var oid =
-    poa_->activate_object (hello_world
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Test::HelloWorld::_nil ());
+  PortableServer::ObjectId_var id =
+    this->poa_->activate_object (hello_world);
 
-  Test::HelloWorld_var hw = hello_world->_this ();
+  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+
+  Test::HelloWorld_var hw = Test::HelloWorld::_narrow (object.in ());
   return hw._retn ();
 }
 
 void
-Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (false);
 }

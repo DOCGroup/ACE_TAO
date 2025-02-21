@@ -4,8 +4,6 @@
 /**
  *  @file    ORB.h
  *
- *  $Id$
- *
  *  Header file for CORBA's ORB type.
  *
  *  @author DOC Center - Washington University at St. Louis
@@ -19,20 +17,27 @@
 
 #include /**/ "ace/pre.h"
 
-#include "UserException.h"
+#include "tao/UserException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orb_typesC.h"
-#include "objectid.h"
-#include "Policy_ForwardC.h"
-#include "CORBA_methods.h"
-#include "VarOut_T.h"
+#include "tao/orb_typesC.h"
+#include "tao/objectid.h"
+#include "tao/VarOut_T.h"
+#include "tao/Pseudo_VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
+#include "tao/Sequence_T.h"
+#include "tao/Policy_ForwardC.h"
+#include "tao/ServicesC.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
+#include <atomic>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef enum
 {
@@ -52,7 +57,7 @@ class TAO_OutputCDR;
 class TAO_Stub;
 class TAO_Valuetype_Adapter;
 class TAO_Acceptor_Filter;
-class TAO_SeqElem_String_Manager;
+class TAO_ORB_Core;
 
 // ****************************************************************
 
@@ -63,6 +68,9 @@ namespace CORBA
   class UnionMemberSeq;
   class ValueMemberSeq;
   class ORB_ObjectIdList;
+
+  class Object;
+  typedef Object * Object_ptr;
 
   class ExceptionList;
   typedef ExceptionList * ExceptionList_ptr;
@@ -76,37 +84,30 @@ namespace CORBA
   class NVList;
   typedef NVList *NVList_ptr;
 
-  // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
+  class NamedValue;
+  typedef NamedValue *NamedValue_ptr;
+
+  class Policy;
+  typedef Policy *Policy_ptr;
+
+  class OperationDef;
+  typedef OperationDef * OperationDef_ptr;
+
+  typedef CORBA::ULong PolicyType;
+
+  // TODO - implement OMG's 'ORBid CORBA::ORB::id ()'.
 
   typedef
-    TAO_MngSeq_Var_T<
-        ORB_ObjectIdList,
-        TAO_SeqElem_String_Manager
+    TAO_VarSeq_Var_T<
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
-        ORB_ObjectIdList,
-        ORB_ObjectIdList_var,
-        TAO_SeqElem_String_Manager
+    TAO_Seq_Out_T<
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_out;
-
-  struct ServiceInformation;
-
-  typedef
-    TAO_Var_Var_T<
-        ServiceInformation
-      >
-    ServiceInformation_var;
-
-  typedef
-    TAO_Out_T<
-        ServiceInformation,
-        ServiceInformation_var
-      >
-    ServiceInformation_out;
 
   class ValueFactoryBase;
   typedef ValueFactoryBase *ValueFactory;
@@ -116,14 +117,37 @@ namespace CORBA
   class Request;
   typedef Request * Request_ptr;
   typedef TAO_Pseudo_Var_T<Request> Request_var;
-  typedef TAO_Pseudo_Out_T<Request, Request_var> Request_out;
+  typedef TAO_Pseudo_Out_T<Request> Request_out;
 
   class ORB;
   typedef ORB * ORB_ptr;
   typedef TAO_Pseudo_Var_T<ORB> ORB_var;
-  typedef TAO_Pseudo_Out_T<ORB, ORB_var> ORB_out;
+  typedef TAO_Pseudo_Out_T<ORB> ORB_out;
 
   typedef CORBA::Short ValueModifier;
+
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
+    // Typedefs for CORBA::RequestSeq, which is an argument of
+    // send_multiple_requests_*().
+    typedef
+      TAO::unbounded_object_reference_sequence<
+          CORBA::Request, CORBA::Request_var
+        >
+      RequestSeq;
+
+    typedef
+      TAO_VarSeq_Var_T<
+          RequestSeq
+        >
+      RequestSeq_var;
+
+    typedef
+      TAO_Seq_Out_T<
+          RequestSeq
+        >
+      RequestSeq_out;
+#endif
 
   /**
    * @class ORB
@@ -140,28 +164,25 @@ namespace CORBA
   class TAO_Export ORB
   {
   public:
-
     class TAO_Export InvalidName : public CORBA::UserException
     {
     public:
-      InvalidName (void);
+      InvalidName ();
       InvalidName (const InvalidName &);
-      ~InvalidName (void);
+      ~InvalidName ();
 
       InvalidName &operator= (const InvalidName &);
 
       static InvalidName *_downcast (CORBA::Exception *);
-      static CORBA::Exception *_alloc (void);
+      static CORBA::Exception *_alloc ();
 
-      virtual CORBA::Exception *_tao_duplicate (void) const;
+      virtual CORBA::Exception *_tao_duplicate () const;
 
-      virtual void _raise (void) const;
+      virtual void _raise () const;
 
-      virtual void _tao_encode (TAO_OutputCDR &
-                                ACE_ENV_ARG_DECL) const;
+      virtual void _tao_encode (TAO_OutputCDR &) const;
 
-      virtual void _tao_decode (TAO_InputCDR &
-                                ACE_ENV_ARG_DECL);
+      virtual void _tao_decode (TAO_InputCDR &);
     };
 
     typedef char *ObjectId;
@@ -184,19 +205,27 @@ namespace CORBA
 
     /// Returns a pointer to a nil ORB, i.e., an non-existent ORB.  This
     /// can be used for initialization or in comparisons.
-    static CORBA::ORB_ptr _nil (void);
+    static CORBA::ORB_ptr _nil ();
 
     /// Return this ORB's ORBid.
-    char * id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    char * id ();
 
     /**
      * Turn a string-ified object reference back into an object
      * pointer.  Typically these strings are created using
      * object_to_string(), but not necessarily locally.
      */
-    CORBA::Object_ptr string_to_object (const char *str
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Object_ptr string_to_object (const char *str);
 
+#if defined (ACE_USES_WCHAR)
+    /**
+     * Turn a string-ified object reference back into an object
+     * pointer.  Typically these strings are created using
+     * object_to_string(), but not necessarily locally.
+     * This is a TAO specific extension.
+     */
+    CORBA::Object_ptr string_to_object (const wchar_t *str);
+#endif
     /**
      * Turn an object reference into a string.  Each type of ORB,
      * e.g. an IIOP ORB, must implement this.  This can be used by
@@ -204,204 +233,139 @@ namespace CORBA
      * this is typically eventually given to @c string_to_object() as
      * an argument.
      */
-    char * object_to_string (CORBA::Object_ptr obj
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    char * object_to_string (CORBA::Object_ptr obj);
 
+#if !defined(CORBA_E_MICRO)
     // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
     CORBA::ValueFactory register_value_factory (
         const char *repository_id,
-        CORBA::ValueFactory factory
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    void unregister_value_factory (const char * repository_id
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    CORBA::ValueFactory lookup_value_factory (
-        const char *repository_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        CORBA::ValueFactory factory);
+#endif
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined(CORBA_E_MICRO)
+    void unregister_value_factory (const char * repository_id);
+#endif
 
-    // Typedefs for CORBA::ORB::RequestSeq, which is an argument of
-    // send_multiple_requests_*().
+#if !defined(CORBA_E_MICRO)
+    CORBA::ValueFactory lookup_value_factory (const char *repository_id);
+#endif
 
-    typedef
-      TAO_Unbounded_Pseudo_Sequence<
-          CORBA::Request
-        >
-      RequestSeq;
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-    typedef
-      TAO_VarSeq_Var_T<
-          RequestSeq,
-          TAO_Pseudo_Object_Manager<
-              CORBA::Request
-            >
-        >
-      RequestSeq_var;
-
-    typedef
-      TAO_Seq_Out_T<
-          RequestSeq,
-          RequestSeq_var,
-          TAO_Pseudo_Object_Manager<
-              CORBA::Request
-            >
-        >
-      RequestSeq_out;
-
-    void create_list (CORBA::Long count,
-                      CORBA::NVList_ptr &new_list
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void create_list (CORBA::Long count, CORBA::NVList_ptr &new_list);
 
     void create_operation_list(CORBA::OperationDef_ptr opDef,
-                               CORBA::NVList_ptr& result
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                               CORBA::NVList_ptr& result);
 
-    void create_named_value (CORBA::NamedValue_ptr &nmval
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void create_named_value (CORBA::NamedValue_ptr &nmval);
 
-    void create_exception_list (CORBA::ExceptionList_ptr &exclist
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void create_exception_list (CORBA::ExceptionList_ptr &exclist);
 
-    void create_environment (CORBA::Environment_ptr &new_env
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void create_environment (CORBA::Environment_ptr &new_env);
 
     // The following are not implemented and just throw
     // CORBA::NO_IMPLEMENT.
 
-    void create_context_list (CORBA::ContextList_ptr &ctxtlist
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void create_context_list (CORBA::ContextList_ptr &ctxtlist);
 
-    void get_default_context (CORBA::Context_ptr &ctx
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void get_default_context (CORBA::Context_ptr &ctx);
 
     CORBA::Boolean get_service_information (
       CORBA::ServiceType service_type,
-      CORBA::ServiceInformation_out service_information
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      CORBA::ServiceInformation_out service_information);
 
-    void send_multiple_requests_oneway (const CORBA::ORB::RequestSeq &req
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void send_multiple_requests_oneway (const CORBA::RequestSeq &req);
 
-    void send_multiple_requests_deferred (const CORBA::ORB::RequestSeq &req
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void send_multiple_requests_deferred (const CORBA::RequestSeq &req);
 
-    void get_next_response (CORBA::Request_ptr &req
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void get_next_response (CORBA::Request_ptr &req);
 
-    CORBA::Boolean poll_next_response (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Boolean poll_next_response ();
 
     /// The ORB TypeCode creation functions.
 
     CORBA::TypeCode_ptr create_struct_tc (
         const char *id,
         const char *name,
-        const CORBA::StructMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const CORBA::StructMemberSeq &members);
 
     CORBA::TypeCode_ptr create_union_tc (
         const char *id,
         const char *name,
         CORBA::TypeCode_ptr discriminator_type,
-        const CORBA::UnionMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const CORBA::UnionMemberSeq &members);
 
     CORBA::TypeCode_ptr create_enum_tc (
         const char *id,
         const char *name,
-        const CORBA::EnumMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const CORBA::EnumMemberSeq &members);
 
     CORBA::TypeCode_ptr create_alias_tc (
         const char *id,
         const char *name,
-        CORBA::TypeCode_ptr original_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        CORBA::TypeCode_ptr original_type);
 
     CORBA::TypeCode_ptr create_exception_tc (
         const char *id,
         const char *name,
-        const CORBA::StructMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const CORBA::StructMemberSeq &members);
 
-    CORBA::TypeCode_ptr create_interface_tc (
-        const char *id,
-        const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::TypeCode_ptr create_interface_tc (const char *id, const char *name);
 
-    CORBA::TypeCode_ptr create_string_tc (
-        CORBA::ULong bound
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::TypeCode_ptr create_string_tc (CORBA::ULong bound);
 
-    CORBA::TypeCode_ptr create_wstring_tc (
-        CORBA::ULong bound
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::TypeCode_ptr create_wstring_tc (CORBA::ULong bound);
 
     CORBA::TypeCode_ptr create_fixed_tc (
         CORBA::UShort digits,
-        CORBA::UShort scale
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        CORBA::UShort scale);
 
     CORBA::TypeCode_ptr create_sequence_tc (
         CORBA::ULong bound,
-        CORBA::TypeCode_ptr element_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        CORBA::TypeCode_ptr element_type);
 
     CORBA::TypeCode_ptr create_array_tc (
         CORBA::ULong length,
-        CORBA::TypeCode_ptr element_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        CORBA::TypeCode_ptr element_type);
 
     CORBA::TypeCode_ptr create_value_tc (
         const char *id,
         const char *name,
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
-        const CORBA::ValueMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const CORBA::ValueMemberSeq &members);
 
     CORBA::TypeCode_ptr create_value_box_tc (
         const char *id,
         const char *name,
-        CORBA::TypeCode_ptr boxed_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        CORBA::TypeCode_ptr boxed_type);
 
-    CORBA::TypeCode_ptr create_native_tc (
-        const char *id,
-        const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::TypeCode_ptr create_native_tc (const char *id, const char *name);
 
-    CORBA::TypeCode_ptr create_recursive_tc (
-        const char *id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::TypeCode_ptr create_recursive_tc (const char *id);
 
     CORBA::TypeCode_ptr create_abstract_interface_tc (
         const char *id,
-        const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const char *name);
 
     CORBA::TypeCode_ptr create_local_interface_tc (
         const char *id,
-        const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const char *name);
 
     CORBA::TypeCode_ptr create_component_tc (
         const char *id,
-        const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const char *name);
 
     CORBA::TypeCode_ptr create_home_tc (
         const char *id,
-        const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-        );
+        const char *name);
 
     CORBA::TypeCode_ptr create_event_tc (
         const char *id,
         const char *name,
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
-        const CORBA::ValueMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const CORBA::ValueMemberSeq &members);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -413,7 +377,7 @@ namespace CORBA
      * If an error occurs during initialization or at runtime, a CORBA
      * system exception will be thrown.
      */
-    void run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    void run ();
 
     /**
      * Instructs the ORB to initialize itself and run its event loop in
@@ -425,11 +389,10 @@ namespace CORBA
      *
      * If this function is called with a @ tv value, client threads
      * making invocations will continue their operations. When the
-     * operation timesout and returns, any invocations showing up on
+     * operation times out and returns, any invocations showing up on
      * the server will be buffered by TCP.
      **/
-    void run (ACE_Time_Value &tv
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void run (ACE_Time_Value &tv);
 
     /**
      * Instructs the ORB to initialize itself and run its event loop in
@@ -443,15 +406,14 @@ namespace CORBA
      *
      * If this function is called with @a tv value, client threads
      * making invocations will continue their operations. When the
-     * operation timesout and returns, any invocations showing up on
+     * operation times out and returns, any invocations showing up on
      * the server will be buffered by TCP.
      **/
-    void run (ACE_Time_Value *tv
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void run (ACE_Time_Value *tv);
 
     /// Returns an indication of whether the ORB needs to perform some
     /// work.
-    CORBA::Boolean work_pending (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Boolean work_pending ();
 
     /// Returns an indication of whether the ORB needs to perform some
     /// work but will look for work pending for no more than the
@@ -460,8 +422,7 @@ namespace CORBA
      * @note This is useful for implementing an event loop with an
      *       idle timeout.
      */
-    CORBA::Boolean work_pending (ACE_Time_Value &tv
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Boolean work_pending (ACE_Time_Value &tv);
 
     /**
      * This operation performs an implementation-defined unit of work.
@@ -469,11 +430,9 @@ namespace CORBA
      * is not present; this behavior can be modified by passing an
      * appropriate @c ACE_Time_Value as described in run().
      **/
-    void perform_work (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-    void perform_work (ACE_Time_Value &
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    void perform_work (ACE_Time_Value *
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void perform_work ();
+    void perform_work (ACE_Time_Value &tv);
+    void perform_work (ACE_Time_Value *tv);
 
     /**
      * This operation instructs the ORB to shut down. Shutting down the
@@ -483,8 +442,7 @@ namespace CORBA
      * deactivation or other operations associated with object adapters)
      * has completed.
      */
-    void shutdown (CORBA::Boolean wait_for_completion = 0
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void shutdown (CORBA::Boolean wait_for_completion = false);
 
     /**
      * Explicitly destroy the ORB, releasing any resources.  Note that
@@ -498,12 +456,7 @@ namespace CORBA
      * the ORB in one thread and trying to service a request in another
      * thread are not well defined. TAO does not support such cases.
      */
-    void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
-    CORBA::Object_ptr resolve_initial_references (
-        const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+    void destroy ();
 
     /**
      * This method acts as a mini-bootstrapping Naming Service, which is
@@ -523,56 +476,48 @@ namespace CORBA
      */
     CORBA::Object_ptr resolve_initial_references (
       const char *name,
-      ACE_Time_Value *timeout
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_Time_Value *timeout = 0);
 
+#if !defined(CORBA_E_MICRO)
     /// Register an object reference with the ORB.
-    void register_initial_reference (const char * id,
-                                     CORBA::Object_ptr obj
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void register_initial_reference (const char * id, CORBA::Object_ptr obj);
+
+    /// Unregister an object reference with the ORB.
+    CORBA::Object_ptr unregister_initial_reference (const char * id);
+#endif
 
     /// Returns a sequence of ObjectIds that lists which objects have
     /// references available via the initial references mechanism.
-    CORBA::ORB::ObjectIdList_ptr list_initial_services (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    CORBA::ORB::ObjectIdList_ptr list_initial_services ();
 
+#if !defined(CORBA_E_MICRO)
     CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                     const CORBA::Any& val
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                     const CORBA::Any& val);
+#endif
 
     // ----------------------------------------------------------------
     // = TAO-specific extensions to the CORBA specification.
     // ----------------------------------------------------------------
 
+#if !defined(CORBA_E_MICRO)
     /// Create an empty policy, usually to be filled in later by
     /// demarshaling.
-    CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
-                                      ACE_ENV_ARG_DECL);
+    CORBA::Policy_ptr _create_policy (CORBA::PolicyType type);
+#endif
 
-    /// Resolve the POA.
-    CORBA::Object_ptr resolve_root_poa (ACE_ENV_SINGLE_ARG_DECL);
-
-    // Reference counting...
-    CORBA::ULong _incr_refcnt (void);
-    CORBA::ULong _decr_refcnt (void);
+    /// Reference counting...
+    unsigned long _incr_refcount ();
+    unsigned long _decr_refcount ();
+    unsigned long _refcount () const;
 
     /// Set the IOR flag.
     void _use_omg_ior_format (CORBA::Boolean ior);
 
     /// Get the IOR flag.
-    CORBA::Boolean _use_omg_ior_format (void);
+    CORBA::Boolean _use_omg_ior_format ();
 
     /// Get the ORB core.
-    TAO_ORB_Core *orb_core (void) const;
-
-    /**
-     * TAO specific extension to get and set the client ID. The client
-     * id can be set by the application which would be used by the FT
-     * service. As there are no specific interfaces defined in the
-     * spec, we have this proprietary extension.
-     */
-    const ACE_CString &_tao_ft_client_id (void);
-    void _tao_ft_client_id (const char *id);
+    TAO_ORB_Core *orb_core () const;
 
     /// Factory method that creates an ORB.
     static CORBA::ORB_ptr _tao_make_ORB (TAO_ORB_Core * orb_core);
@@ -580,12 +525,12 @@ namespace CORBA
     // Useful for template programming.
     typedef ORB_ptr _ptr_type;
     typedef ORB_var _var_type;
+    typedef ORB_out _out_type;
 
     /// Get the Timeout value
-    ACE_Time_Value *get_timeout (void);
+    ACE_Time_Value *get_timeout ();
 
   protected:
-
     // We must be created via the @c CORBA::ORB_init() function.
     ORB (TAO_ORB_Core *orb_core);
 
@@ -594,49 +539,43 @@ namespace CORBA
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    ~ORB (void);
-
-    /// Resolve the POA current.
-    CORBA::Object_ptr resolve_poa_current (void);
+    ~ORB ();
 
     /// Resolve the Policy Manager for this ORB.
-    CORBA::Object_ptr resolve_policy_manager (void);
+    CORBA::Object_ptr resolve_policy_manager ();
 
     /// Resolve the Policy Current for this thread.
-    CORBA::Object_ptr resolve_policy_current (void);
+    CORBA::Object_ptr resolve_policy_current ();
 
   private:
-
     /// Resolve the given service based on the service ID.
-    CORBA::Object_ptr resolve_service (TAO_MCAST_SERVICEID service_id
-                                       ACE_ENV_ARG_DECL);
+    /**
+     * "@c resolve_service" is a legacy name.  This method now simply
+     * sets up a default initial reference that will be subsequently
+     * used in resolve_initial_references().
+     */
+    void resolve_service (TAO::MCAST_SERVICEID service_id);
 
     /// Convert an OMG IOR into an object reference.
-    CORBA::Object_ptr ior_string_to_object (const char* ior
-                                            ACE_ENV_ARG_DECL);
+    CORBA::Object_ptr ior_string_to_object (const char* ior);
 
     /// Convert an URL style IOR into an object reference.
-    CORBA::Object_ptr url_ior_string_to_object (const char* ior
-                                                ACE_ENV_ARG_DECL);
+    CORBA::Object_ptr url_ior_string_to_object (const char* ior);
 
     /// Check if ORB has shutdown.  If it has, throw the appropriate
     /// exception.
-    void check_shutdown (ACE_ENV_SINGLE_ARG_DECL);
+    void check_shutdown ();
 
     /// Set the timeout value
     void set_timeout (ACE_Time_Value * timeout);
 
   private:
-
-    /// lock required for mutual exclusion between multiple threads.
-    TAO_SYNCH_MUTEX lock_;
-
     /// Maintains a reference count of number of instantiations of the
     /// ORB.
-    CORBA::ULong refcount_;
+    std::atomic<uint32_t> refcount_;
 
     /// The ORB_Core that created us....
-    TAO_ORB_Core *orb_core_;
+    TAO_ORB_Core * orb_core_;
 
     /// Decides whether to use the URL notation or to use IOR notation.
     CORBA::Boolean use_omg_ior_format_;
@@ -647,23 +586,13 @@ namespace CORBA
 
     /// Timeout value
     ACE_Time_Value * timeout_;
-
   };
 }  // End namespace CORBA
 
-namespace TAO
-{
-  namespace ORB
-  {
-    /// Initialize the ORB globals correctly, i.e., only when they
-    /// haven't been initialized yet.
-    void init_orb_globals (ACE_ENV_SINGLE_ARG_DECL);
-  }
-}
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/ORB.i"
+# include "tao/ORB.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

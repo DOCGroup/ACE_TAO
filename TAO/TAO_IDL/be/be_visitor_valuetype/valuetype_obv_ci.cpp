@@ -1,30 +1,19 @@
 
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_obv_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Valuetypes
-//    OBV_ class implementation
-//    (see C++ mapping OMG 20.17)
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>,
-//    based on interface_ch.cpp from Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuetype_obv_ci.cpp
+ *
+ *  Visitor generating code for Valuetypes
+ *  OBV_ class implementation
+ *  (see C++ mapping OMG 20.17)
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ *  @author based on interface_ch.cpp from Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_obv_ci, 
-           "$Id$")
+#include "valuetype.h"
 
 // ******************************************************
 // Valuetype visitor for OBV_ class implementation
@@ -37,7 +26,7 @@ be_visitor_valuetype_obv_ci::be_visitor_valuetype_obv_ci (
 {
 }
 
-be_visitor_valuetype_obv_ci::~be_visitor_valuetype_obv_ci (void)
+be_visitor_valuetype_obv_ci::~be_visitor_valuetype_obv_ci ()
 {
 }
 
@@ -72,7 +61,7 @@ be_visitor_valuetype_obv_ci::visit_valuetype (be_valuetype *node)
                              ), -1);
         }
     } // if !opt_accessor ()
-    
+
   return 0;
 }
 
@@ -87,9 +76,9 @@ be_visitor_valuetype_obv_ci::visit_field (be_field *node)
 {
   be_visitor_context new_ctx (*this->ctx_);
   be_visitor_valuetype_field_ci visitor (&new_ctx);
-  
-  visitor.in_obv_space_ = 1;
-  
+
+  visitor.in_obv_space_ = true;
+
   if (visitor.visit_field (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -98,6 +87,6 @@ be_visitor_valuetype_obv_ci::visit_field (be_field *node)
                          "visit_field failed\n"),
                         -1);
     }
-    
+
   return 0;
 }

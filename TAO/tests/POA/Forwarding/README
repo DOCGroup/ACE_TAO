@@ -1,0 +1,38 @@
+
+
+This document describes the standard CORBA location forwarding
+example.  For detailed explanation on how TAO's location forwarding
+feature is designed, see
+
+$TAO_ROOT/docs/forwarding.html
+
+The test in this directory sets up three servers, the first writes its
+servant's object reference (IOR) to a file.  The second server reads
+the IOR, recognizes it as forwarding location, and writes its own to a
+file too.  The third server does the same as the second server.  The
+third server's IOR is then read by the client, which then issues a
+number of requests.  After <iterations> normal requests, a forwarding
+request is sent to the object.
+
+Here's an example for 5 requests:
+
+doit() returned 127
+doit() returned 128
+doit() returned 129
+Asking server to forward next time
+doit() returned 127
+doit() returned 128
+doit() returned 129
+Asking server to forward next time
+doit() returned 127
+doit() returned 128
+doit() returned 129
+
+The location forwarding is implemented through the servant activator.
+Check run_test.pl for an example of how to run the server.
+
+The first three calls will be called on the first server, then the
+location forwarding is called and the next three calls are going to be
+called on the second server.  Location forwarding is then called on
+the second one and the last three calls are then done on the thrid
+server.

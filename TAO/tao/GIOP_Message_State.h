@@ -4,14 +4,12 @@
 /**
  *  @file     GIOP_Message_State.h
  *
- *  $Id$
- *
  *   GIOP utility definitions
- *
  *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
- *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================
 #ifndef TAO_GIOP_MESSAGE_STATE_H
@@ -25,8 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORB_Core;
-class TAO_GIOP_Message_Base;
+#include "tao/GIOPC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_GIOP_Message_State
@@ -39,9 +38,9 @@ class TAO_GIOP_Message_Base;
 class TAO_Export TAO_GIOP_Message_State
 {
 public:
-
-  /// Ctor
-  TAO_GIOP_Message_State (void);
+  /// Constructor
+  TAO_GIOP_Message_State () = default;
+  ~TAO_GIOP_Message_State () = default;
 
   /// Parse the message header.
   ///
@@ -52,25 +51,33 @@ public:
   int parse_message_header (ACE_Message_Block &incoming);
 
   /// Return the message size
-  CORBA::ULong message_size (void) const;
+  CORBA::ULong message_size () const;
 
   /// Return the message size
-  CORBA::ULong payload_size (void) const;
+  CORBA::ULong payload_size () const;
 
   /// Return the byte order information
-  CORBA::Octet byte_order (void) const;
+  CORBA::Octet byte_order () const;
 
-  /// Reset the state..
-  void reset (void);
+  /// Return the message type
+  GIOP::MsgType message_type () const;
+
+  /// Return the more fragments
+  CORBA::Boolean more_fragments () const;
+
+  void more_fragments (CORBA::Boolean fragment);
+
+  /// Get the GIOP version
+  TAO_GIOP_Message_Version const &giop_version () const;
+
+  /// Return the compressed information
+  CORBA::Boolean compressed () const;
 
 private:
-
-  friend class TAO_GIOP_Message_Base;
-
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
 
-  /// Checks for the magic word 'GIOP' in the start of the incoing
+  /// Checks for the magic word 'GIOP' in the start of the incoming
   /// stream
   int parse_magic_bytes (char *buf);
 
@@ -87,49 +94,42 @@ private:
   /// Gets the size of the payload and set the size in the <state>
   void get_payload_size (char *buf);
 
-  /// Parses the GIOP FRAGMENT_HEADER  information from the incoming
-  /// stream.
-  int parse_fragment_header (const char *buf,
-                             size_t length);
-
-  /// Read the unsigned long from the buffer. The <buf> should just
+  /// Read the unsigned long from the buffer. The @a buf should just
   /// point to the next 4 bytes data that represent the ULong
-  CORBA::ULong read_ulong (const char *buf);
+  CORBA::ULong read_ulong (const char *buf) const;
 
 private:
-  // GIOP version information..
-  TAO_GIOP_Message_Version giop_version_;
+  /// GIOP version information..
+  TAO_GIOP_Message_Version giop_version_ {TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR};
 
   /// 0 = big, 1 = little
-  CORBA::Octet byte_order_;
+  CORBA::Octet byte_order_ {0};
 
   /// MsgType above
-  CORBA::Octet message_type_;
+  GIOP::MsgType message_type_ {GIOP::Request};
 
-  /// in byte_order!
-  CORBA::ULong message_size_;
-
-  /// Request Id from the Fragment header
-  CORBA::ULong request_id_;
+  /// In byte_order!
+  CORBA::ULong payload_size_ {0};
 
   /// (Requests and Replys)
   /// A value of zero indicates that this message does not have any
   /// fragments.  A value of non-zero indicates that it does have
   /// fragments.
-  CORBA::Octet more_fragments_;
+  CORBA::Boolean more_fragments_ {false};
 
-  /// Missing data
-  CORBA::ULong missing_data_;
+  /// Compressed
+  CORBA::Boolean compressed_ {false};
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
-const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
-const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
-const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
-const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
-const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
-const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
+constexpr size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
+constexpr size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
+constexpr size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
+constexpr size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
+constexpr size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
+constexpr size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
+constexpr size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_State.inl"

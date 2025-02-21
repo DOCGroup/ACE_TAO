@@ -1,4 +1,4 @@
-		HTTP Tunneling Inter-ORB Protocol
+      HTTP Tunneling Inter-ORB Protocol
 
 Introduction
 Components
@@ -6,8 +6,6 @@ HTTP Tunneling Protocol
 HTTP Tunneling Inter-ORB Protocol
 
 Introduction
-
-
 
 1.Terminology
 
@@ -32,7 +30,7 @@ peers to identify many different clients, which may reside on locally
 similar or non-routable networks, such as 10.*.*.* or 192.168.*.*.
 
 HTIOP_Factory - This is the service configuration class used to load
-the pluggable protocol via the ACE Service Configuratior. The
+the pluggable protocol via the ACE Service Configurator. The
 HTIOP_Factory takes the following initialization arguments:
 
 -config <filename> Specifies the text file containing HTBP specific
@@ -74,16 +72,16 @@ TAO to utilize the HTBP Protocol.
 3.  Directory Structure
 
 . $ACE_ROOT/ace/HTBP
-	Files used for implementing the low level HTBP Protocol.
+  Files used for implementing the low level HTBP Protocol.
 
 . $TAO_ROOT/orbsvcs/orbsvcs/HTIOP
-	Files that implements HTIOP protocol.
+  Files that implements HTIOP protocol.
 
 . $ACE_ROOT/tests/HTBP
-	Tests for the low level HTBP Protocol.
+  Tests for the low level HTBP Protocol.
 
 . $TAO_ROOT/orbsvcs/tests/HTIOP
-	Tests for the HTIOP protocol.
+  Tests for the HTIOP protocol.
 
 4. Requirements for using HTBP Protocol
   Refer to ace/HTBP/README for details on configuring HTBP clients
@@ -106,7 +104,7 @@ TAO to utilize the HTBP Protocol.
 
   A second challenge is that while a proxy will open multiple TCP/IP
   connections to a server (the outside peer), when faced with multiple
-  simultanious HTTP requests, it will reuse those connections at will
+  simultaneous HTTP requests, it will reuse those connections at will
   to forward any subsequent requests. This means that a socket is
   associated with a particular HTIOP session for only one HTTP
   request/reply.

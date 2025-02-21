@@ -1,5 +1,4 @@
-// $Id$
-// 
+//
 // = FILENAME
 //    VisCompFactory.java
 //
@@ -12,12 +11,12 @@
 // ============================================================================
 
 import java.beans.*;
-				
+
 class VisCompFactory {
 
-  VisComp getNewVisComp (int property, String name) {    
-           
-    ClassLoader classLoader_ = this.getClass().getClassLoader();	
+  VisComp getNewVisComp (int property, String name) {
+
+    ClassLoader classLoader_ = this.getClass().getClassLoader();
 
     VisComp visComp_ = null;
     String visCompName_ = "VisComp";

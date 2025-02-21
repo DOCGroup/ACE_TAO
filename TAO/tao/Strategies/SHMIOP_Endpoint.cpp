@@ -1,28 +1,21 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
-
-#include "SHMIOP_Endpoint.h"
+#include "tao/Strategies/SHMIOP_Endpoint.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "SHMIOP_Connection_Handler.h"
+#include "tao/Strategies/SHMIOP_Connection_Handler.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
 #include "ace/OS_NS_stdio.h"
 
-
-ACE_RCSID (Strategies,
-           SHMIOP_Endpoint,
-           "$Id$")
-
-
 #if !defined (__ACE_INLINE__)
-# include "SHMIOP_Endpoint.i"
+# include "tao/Strategies/SHMIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
                                           int use_dotted_decimal_addresses)
@@ -63,7 +56,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     this->host_ = host;
 }
 
-TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (void)
+TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
     , host_ ()
     , port_ (0)
@@ -89,7 +82,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
   this->priority (priority);
 }
 
-TAO_SHMIOP_Endpoint::~TAO_SHMIOP_Endpoint (void)
+TAO_SHMIOP_Endpoint::~TAO_SHMIOP_Endpoint ()
 {
 }
 
@@ -104,7 +97,7 @@ TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
     {
       if (use_dotted_decimal_addresses == 0 && TAO_debug_level > 5)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - SHMIOP_Endpoint::set, ")
                       ACE_TEXT ("- %p cannot determine hostname\n")));
         }
@@ -113,7 +106,7 @@ TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("SHMIOP_Endpoint::set ")
                         ACE_TEXT ("- %p\n"),
@@ -137,7 +130,7 @@ TAO_SHMIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   size_t actual_len =
     ACE_OS::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
+    + std::strlen ("65536")         // max port
     + sizeof ('\0');
 
   if (length < actual_len)
@@ -158,13 +151,13 @@ TAO_SHMIOP_Endpoint::host (const char *h)
 }
 
 TAO_Endpoint *
-TAO_SHMIOP_Endpoint::next (void)
+TAO_SHMIOP_Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO_SHMIOP_Endpoint::duplicate (void)
+TAO_SHMIOP_Endpoint::duplicate ()
 {
   TAO_SHMIOP_Endpoint *endpoint = 0;
   ACE_NEW_RETURN (endpoint,
@@ -193,7 +186,7 @@ TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_SHMIOP_Endpoint::hash (void)
+TAO_SHMIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;
@@ -215,7 +208,7 @@ TAO_SHMIOP_Endpoint::hash (void)
 }
 
 const ACE_INET_Addr &
-TAO_SHMIOP_Endpoint::object_addr (void) const
+TAO_SHMIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -260,4 +253,7 @@ TAO_SHMIOP_Endpoint::object_addr (void) const
 
   return this->object_addr_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

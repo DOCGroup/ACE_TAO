@@ -1,0 +1,44 @@
+
+
+This application demostrates reference counted servants.
+
+The server program is available here. Use the Generic_Servant/client
+program to test this.
+
+________________________________________
+
+To test this example, type run_test.pl
+________________________________________
+
+Or
+________________________________________
+
+Run the server as follows:
+
+% ./server -f output
+
+This will produce a file named output which will contain the ior.
+
+Run the client as follows:
+
+% cd $TAO_ROOT/examples/POA/Generic_Servant
+% ./client -f ../Reference_Counted_Servant/output
+________________________________________
+
+Or
+________________________________________
+
+Run the server as follows:
+
+% ./server -ORBobjrefstyle URL &
+
+Run the client as follows:
+
+% cd $TAO_ROOT/examples/POA/Generic_Servant
+% ./client -k <IOR>
+
+Comments :
+=========
+ - As soon as, the server prints out the IOR, cut it and use it for
+running the client.
+________________________________________

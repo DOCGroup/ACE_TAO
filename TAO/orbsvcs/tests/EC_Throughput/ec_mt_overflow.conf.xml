@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<!-- Converted from ec_mt_overflow.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <static id="EC_QueueFullSimpleActions" params="discard"/>
+ <static id="EC_Factory" params="-ECDispatching mt -ECDispatchingThreads 4 -ECFiltering basic -ECProxyConsumerLock thread -ECProxySupplierLock thread -ECSupplierFiltering per-supplier"/>
+  <static id="Client_Strategy_Factory" params="-ORBConnectStrategy blocked -ORBClientConnectionHandler RW -ORBTransportMuxStrategy exclusive" />
+</ACE_Svc_Conf>

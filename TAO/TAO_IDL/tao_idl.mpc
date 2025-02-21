@@ -1,12 +1,11 @@
-// -*- MPC -*-
-// $Id$
-
-project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
+// -*- MPC -*-cr
+project(TAO_IDL_EXE) : aceexe, install, tao_rules, tao_output, tao_idl_fe {
   exename      = tao_idl
-  libs        += TAO_IDL_BE TAO_IDL_FE
-  includes    += include be_include fe
-  install      = $(ACE_ROOT)/bin
-  after       += TAO_IDL_BE TAO_IDL_FE gperf
+  exeout       = $(ACE_ROOT)/bin
+  after       += TAO_IDL_BE gperf
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe ..
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the exe
@@ -16,16 +15,36 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
     optimize =
   }
 
-  specific(automake) {
-    macros += TAO_IDL_INCLUDE_DIR=\"\\"$(includedir)/tao\\"\"
+  specific(prop:static) {
+    after += TAO_IDL_BE_VIS_V
+    libs  += TAO_IDL_BE TAO_IDL_BE_VIS_V TAO_IDL_BE_VIS_A TAO_IDL_BE_VIS_O TAO_IDL_BE_VIS_C TAO_IDL_BE_VIS_E TAO_IDL_BE_VIS_I TAO_IDL_BE_VIS_S TAO_IDL_BE_VIS_U TAO_IDL_BE_VIS_C TAO_IDL_BE_VIS_A TAO_IDL_BE_VIS_E TAO_IDL_BE_VIS_V TAO_IDL_BE_VIS_S TAO_IDL_BE_VIS_O TAO_IDL_BE
+  } else {
+    libs += TAO_IDL_BE
   }
 
   verbatim(gnuace, local) {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
-      CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+      ifeq ($(ACE_CC_PREPROCESSOR),)
+        CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+        ifeq (1,$(STUDIO_12_OR_BETTER))
+          CPPFLAGS += -DTAO_IDL_PREPROCESSOR_ARGS='\"-E -features=no%altspell\"'
+        endif
+      else
+        CPPFLAGS += -DACE_CC_PREPROCESSOR=\\\"$(subst \\,\\,$(ACE_CC_PREPROCESSOR))\\\"
+      endif
     else
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
     endif
+  }
+
+  verbatim(gnuace, postinstall) {
+"	@$(MKDIR) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
+"	ln -sf ../../../bin/tao_idl $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
+"ifeq ($(shared_libs),1)"
+"	@$(MKDIR) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/lib"
+"	ln -sf ../../../$(INSTALL_LIB)/$(LIB_PREFIX)TAO_IDL_FE.$(SOEXT) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/lib"
+"	ln -sf ../../../$(INSTALL_LIB)/$(LIB_PREFIX)TAO_IDL_BE.$(SOEXT) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/lib"
+"endif"
   }
 
   Source_Files {
@@ -36,134 +55,5 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
 
   Header_Files {
     include/drv_extern.h
-  }
-}
-
-
-project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile {
-  sharedname   = TAO_IDL_BE
-  libs        += TAO_IDL_FE
-  includes    += include be_include fe
-  dynamicflags = TAO_IDL_BE_BUILD_DLL
-  after       += TAO_IDL_FE
-
-  specific {
-    // Override the template value for optimize.  Building the backend
-    // with optimization turned on doesn't seem to work (at least not with
-    // vc6 or vc71).  This is due to the use of addresses of static objecs
-    // within the code.
-    optimize =
-  }
-
-  Source_Files {
-    be
-  }
-
-  Header_Files {
-    be_include
-  }
-}
-
-
-project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile {
-  sharedname   = TAO_IDL_FE
-  includes    += include fe
-  dynamicflags = TAO_IDL_FE_BUILD_DLL
-
-  specific {
-    // Override the template value for optimize.  Building the frontend
-    // with optimization turned on doesn't seem to work (at least not with
-    // vc6 or vc71).  This is due to the use of addresses of static objecs
-    // within the code.
-    optimize =
-  }
-
-  Source_Files {
-    fe
-    ast
-    util
-    narrow
-  }
-
-  Header_Files {
-    include
-  }
-
-  verbatim(gnuace, local) {
-    fe/fe_lookup.cpp: fe/keywords.dat
-    "	echo '\/\/ $$I''d$$' > $@"
-    "	echo '' >> $@"
-    "	echo '#include \"fe_private.h\"' >> $@"
-    "	echo '#include \"ace/OS_NS_string.h\"' >> $@"
-    "	echo '' >> $@"
-    "	$(ACE_ROOT)/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ | \\"
-    "	sed -e 's/,}/,0}/g' \\"
-    "	    -e 's/\\*str == \\*s && !strncmp/len == static_cast<unsigned int> (ACE_OS::strlen (s)) \\&\\& *str == *s \\&\\& !ACE_OS::strncmp/g' \\"
-    "	>> $@"
-
-    fe/lex.yy.cpp: fe/idl.ll
-    "	@echo 'WARNING: Potentially outdated $@'"
-    "	@echo '         either touch(1) the file or explicitly'"
-    "	@echo '         generate it using:'"
-    "	@echo '    make lex.yy'"
-
-    .PHONY: lex.yy
-    lex.yy:
-    "ifeq ($(notdir $(LEX)), flex)"
-    "	$(LEX) -L -t fe/idl.ll | \\"
-    "	sed -e 's/yy/tao_yy/g' \\"
-    "	    -e 's/YY/TAO_YY/g' \\"
-    "	    -e 's/ NULL/ 0/g' \\"
-    "	    -e 's/	/        /g' \\"
-    "	    -e 's/  *$$\/\/g' \\"
-    "	    -e 's/TAO_YY_BREAK break;/TAO_YY_BREAK ACE_NOTREACHED (break;)/g' \\"
-    "	    -e 's/ECHO/TAO_YY_ECHO/' \\"
-    "	    -e 's/fread\([^\)]*\)/static_cast<int> (&)/g' \\"
-    "	    -e 's/\\$$Hea''der.*\\$$/$$I''d$$/' \\"
-    "	    -e 's@#include <stdio\.h>@#include \"ace/os_include/os_stdio.h\"@' \\"
-    "	    -e 's@#include <unistd\.h>@#include \"ace/os_include/os_ctype.h\"@' \\"
-    "	    -e '/#include </d' \\"
-    "	> fe/lex.yy.cpp"
-    "	(cd fe; patch < lex.yy.cpp.diff)"
-    "else"
-    "	@echo 'ERROR: You must use flex 2.5.4 or higher to process this file'"
-    "	@/bin/false"
-    "endif"
-
-    fe/y.tab.cpp: fe/idl.yy
-    "	@echo 'WARNING: Potentially outdated $@'"
-    "	@echo '         either touch(1) the file or explicitly'"
-    "	@echo '         generate it using:'"
-    "	@echo '    make y.tab'"
-
-    .PHONY: y.tab
-    y.tab: fe/idl.yy
-    "ifeq ($(notdir $(YACC)), bison)"
-    "	$(YACC) -y -l -d fe/idl.yy"
-    "	sed -e 's/char \\*getenv/char *ace_foo/g' \\"
-    "	    -e 's/= getenv/= ACE_OS::getenv/g' \\"
-    "	    -e 's/int yynew_state,/int,/g' \\"
-    "	    -e 's/int yyold_state,/int,/g' \\"
-    "	    -e 's/int yyrule_num,/int,/g' \\"
-    "	    -e 's/\\(YYDEBUG_DISCARD_TOKEN.*int\\) yytoken_num/\\1/g' \\"
-    "	    -e 's/yynewerror:\/\/g' \\"
-    "	    -e 's/yy/tao_yy/g' \\"
-    "	    -e 's/YY/TAO_YY/g' \\"
-    "	    -e 's/	/        /g' \\"
-    "	    -e 's/  *$$\/\/g' \\"
-    "	    -e 's/y\\.tab\\.c/y.tab.cpp/g' \\"
-    "	    -e 's%\\(#pragma ident\\)%\/\/ \\1%' < y.tab.c > /tmp/$(USER).Y"
-    "	sed -e 's/yy/tao_yy/g' \\"
-    "	    -e 's/YY/TAO_YY/g' < y.tab.h > /tmp/$(USER).YH"
-    "	echo '\/\/ $$I''d$$' > fe/y.tab.cpp"
-    "	cat /tmp/$(USER).Y >> fe/y.tab.cpp"
-    "	echo '\/\/ $$I''d$$' > fe/y.tab.h"
-    "	cat /tmp/$(USER).YH >> fe/y.tab.h"
-    "	$(RM) /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h"
-    "	(cd fe; patch < y.tab.cpp.diff)"
-    "else"
-    "	@echo 'ERROR: You must use bison 1.875b or higher to process this file'"
-    "	@/bin/false"
-    "endif"
   }
 }

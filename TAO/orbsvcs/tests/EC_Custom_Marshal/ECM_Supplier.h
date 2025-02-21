@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 //
 // ============================================================================
 //
@@ -33,27 +32,25 @@ class Test_Supplier : public ACE_Task<ACE_SYNCH>
 public:
   Test_Supplier (ECMS_Driver *driver);
 
-  int svc (void);
+  int svc ();
   // Run the test, just forwards to the driver
 
   void connect (const char* name,
                 int event_a,
                 int event_b,
-                RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+                RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the supplier to the EC.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
   // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
   // The methods in the skeleton.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy (void);
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy ();
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 
@@ -83,14 +80,14 @@ class ECMS_Driver
   // = DESCRIPTION
   //
 public:
-  ECMS_Driver (void);
+  ECMS_Driver ();
 
   enum {
     MAX_SUPPLIERS = 16
     // Maximum number of suppliers.
   };
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Execute the test.
 
   int supplier_task (Test_Supplier *supplier,
@@ -99,23 +96,21 @@ public:
 
   void push_supplier (void* supplier_cookie,
                       RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-                      const RtecEventComm::EventSet &events
-                      ACE_ENV_ARG_DECL_NOT_USED);
+                      const RtecEventComm::EventSet &events);
   // Callback method for suppliers, we push for them to their
   // consumers and take statistics on the way.
   // It is possible that we ignore the <consumer> parameter when
   // testing the short-circuit case.
 
 private:
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
-  void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
-  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
+  void disconnect_suppliers ();
   // Connect the suppliers.
 
-  void activate_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_suppliers ();
   // Activate the suppliers, i.e. they start generating events.
 
 private:
@@ -138,7 +133,7 @@ private:
   int event_b_;
   // We send two types of events, with different contents.
 
-  const char* pid_file_name_;
+  const ACE_TCHAR* pid_file_name_;
   // The name of a file where the process stores its pid
 };
 

@@ -1,18 +1,16 @@
-// $Id$
-
-#include "Method_Request.h"
+#include "orbsvcs/Notify/Method_Request.h"
 
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(Notify, TAO_Notify_Method_Request_Queueable, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Method_Request::~TAO_Notify_Method_Request (void)
+TAO_Notify_Method_Request::~TAO_Notify_Method_Request ()
 {
 }
 
 TAO_Notify_Method_Request_Queueable *
-TAO_Notify_Method_Request_Queueable::copy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Method_Request_Queueable::copy ()
 {
   return this;
 }
@@ -54,4 +52,14 @@ TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event* event)
     deadline += ACE_OS::gettimeofday ();
     this->msg_deadline_time (deadline);
   }
+
+  this->time_ = event->creation_time ();
 }
+
+const ACE_Time_Value&
+TAO_Notify_Method_Request_Queueable::creation_time () const
+{
+  return this->time_;
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

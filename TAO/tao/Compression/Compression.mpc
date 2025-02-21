@@ -1,0 +1,54 @@
+project(*idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  idlflags += -SS -Sorb -Sci -GA \
+              -Wb,export_macro=TAO_Compression_Export \
+              -iC tao/Compression
+  IDL_Files {
+    idlflags -= -Sa -St
+    idlflags += -Gp -Gd -Sal\
+                -Wb,export_macro=TAO_Compression_Export \
+                -Wb,export_include=tao/Compression/compression_export.h \
+                -Wb,include_guard=TAO_COMPRESSION_SAFE_INCLUDE \
+                -Wb,safe_include=tao/Compression/Compression.h
+    Compression.pidl
+  }
+
+  IDL_Files {
+    idlflags += \
+                -Wb,export_include=tao/Compression/compression_export.h \
+                -Wb,unique_include=tao/Compression/Compression.h
+    Compression_include.pidl
+  }
+
+  specific {
+    install_dir = tao/Compression
+  }
+}
+
+project(Compression) : taolib, tao_output, install, taoidldefaults, anytypecode {
+  after       += *idl
+  sharedname   = TAO_Compression
+  dynamicflags += TAO_COMPRESSION_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    CompressionC.cpp
+    Compression_includeC.cpp
+    CompressionA.cpp
+    Compression_includeA.cpp
+  }
+
+  Header_Files {
+    *.h
+    CompressionC.h
+    CompressionS.h
+    CompressionA.h
+    Compression_includeC.h
+    Compression_includeS.h
+    Compression_includeA.h
+  }
+
+  specific {
+    install_dir = tao/Compression
+  }
+}

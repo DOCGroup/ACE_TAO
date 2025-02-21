@@ -1,0 +1,37 @@
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+
+project(*Server): taoserver, pi_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  Source_Files {
+    test_i.cpp
+    Server_ORBInitializer.cpp
+    Server_Request_Interceptor.cpp
+    ServantLocator.cpp
+    server.cpp
+  }
+  Source_Files {
+    testC.cpp
+    testS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, pi {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    testC.cpp
+  }
+  IDL_Files {
+  }
+}
+

@@ -1,7 +1,4 @@
 #!/bin/sh
-#
-# $Id$
-#
 
 MSG_INTERVAL=5000 # 50000
 # The interval between the messages, in usecs

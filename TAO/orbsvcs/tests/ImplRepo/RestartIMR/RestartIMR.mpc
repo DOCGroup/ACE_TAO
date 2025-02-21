@@ -1,0 +1,25 @@
+//
+// Really the server is the only one that needs to avoid minimum_corba and
+// the lot.  But there's no sense in building anything if you can't build
+// the server.
+
+project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  custom_only = 1
+  IDL_Files {
+    test.idl
+  }
+}
+
+project(*server): taoserver, imr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = server
+  after += *idl
+  IDL_Files {
+  }
+  Source_Files {
+    testC.cpp
+    testS.cpp
+    server.cpp
+    test_i.cpp
+  }
+}
+

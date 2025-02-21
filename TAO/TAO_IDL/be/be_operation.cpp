@@ -1,52 +1,34 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_operation.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Operation that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_operation.cpp
+ *
+ *  Extension of class AST_Operation that provides additional means for C++
+ *  mapping.
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
 
 #include "be_operation.h"
-#include "be_operation_strategy.h"
 #include "be_predefined_type.h"
 #include "be_argument.h"
 #include "be_visitor.h"
+#include "be_util.h"
+
+#include "ast_exception.h"
+
+#include "utl_err.h"
+#include "utl_exceptlist.h"
+
 #include "global_extern.h"
-
-ACE_RCSID (be,
-           be_operation,
-           "$Id$")
-
-be_operation::be_operation (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    UTL_Scope (),
-    AST_Operation (),
-    be_scope (),
-    be_decl ()
-{
-  ACE_NEW (this->strategy_,
-           be_operation_default_strategy (this));
-}
 
 be_operation::be_operation (AST_Type *rt,
                             AST_Operation::Flags fl,
                             UTL_ScopedName *n,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool local,
+                            bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_op,
@@ -59,38 +41,34 @@ be_operation::be_operation (AST_Type *rt,
                    abstract),
     be_scope (AST_Decl::NT_op),
     be_decl (AST_Decl::NT_op,
-             n)
+             n),
+    is_sendc_ami_ (false),
+    is_excep_ami_ (false),
+    is_attr_op_ (false)
 {
-  ACE_NEW (this->strategy_,
-           be_operation_default_strategy (this));
-
   if (this->imported ())
     {
       return;
     }
-    
+
   idl_global->operation_seen_ = true;
 
   if (!this->is_local ())
     {
-      be_type *bt = be_type::narrow_from_decl (rt);
-      bt->seen_in_operation (I_TRUE);
-      this->set_arg_seen_bit (bt);
+      be_type *bt = dynamic_cast<be_type*> (rt);
+      bt->seen_in_operation (true);
+      be_util::set_arg_seen_bit (bt);
       idl_global->non_local_op_seen_ = true;
     }
 }
 
-
-be_operation::~be_operation (void)
+be_operation::~be_operation ()
 {
 }
 
 void
-be_operation::destroy (void)
+be_operation::destroy ()
 {
-  delete this->strategy_;
-  this->strategy_ = 0;
-
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();
   this->be_decl::destroy ();
@@ -103,47 +81,60 @@ be_operation::accept (be_visitor *visitor)
   return visitor->visit_operation (this);
 }
 
-be_operation_strategy *
-be_operation::set_strategy (be_operation_strategy *new_strategy)
+AST_Argument *
+be_operation::be_add_argument (AST_Argument *arg)
 {
-  be_operation_strategy *old = this->strategy_;
-
-  if (new_strategy != 0)
-    {
-      this->strategy_ = new_strategy;
-    }
-
-  return old;
-}
-
-
-TAO_CodeGen::CG_STATE
-be_operation::next_state (TAO_CodeGen::CG_STATE current_state,
-                          int is_extra_state)
-{
-  return this->strategy_->next_state (current_state, is_extra_state);
+  this->add_to_scope (arg);
+  this->add_to_referenced (arg,
+                           false,
+                           nullptr);
+  return arg;
 }
 
 int
-be_operation::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
+be_operation::be_insert_exception (AST_Exception *ex)
 {
-  return this->strategy_->has_extra_code_generation (current_state);
+  UTL_ExceptList *new_list = nullptr;
+  ACE_NEW_RETURN (new_list,
+                  UTL_ExceptList (ex,
+                                  this->pd_exceptions),
+                  -1);
+  this->pd_exceptions = new_list;
+  return 0;
 }
 
-be_operation*
-be_operation::marshaling (void)
+bool
+be_operation::is_sendc_ami () const
 {
-  return this->strategy_->marshaling ();
+  return this->is_sendc_ami_;
 }
 
-be_operation*
-be_operation::arguments (void)
+void
+be_operation::is_sendc_ami (bool val)
 {
-  return this->strategy_->arguments ();
+  this->is_sendc_ami_ = val;
 }
 
+bool
+be_operation::is_excep_ami () const
+{
+  return this->is_excep_ami_;
+}
 
-// Narrowing
-IMPL_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl)
-IMPL_NARROW_FROM_DECL (be_operation)
-IMPL_NARROW_FROM_SCOPE (be_operation)
+void
+be_operation::is_excep_ami (bool val)
+{
+  this->is_excep_ami_ = val;
+}
+
+bool
+be_operation::is_attr_op () const
+{
+  return this->is_attr_op_;
+}
+
+void
+be_operation::is_attr_op (bool val)
+{
+  this->is_attr_op_ = val;
+}

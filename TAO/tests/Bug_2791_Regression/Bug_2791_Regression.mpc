@@ -1,0 +1,15 @@
+// -*- MPC -*-
+
+project (*client) : taoclient, valuetype {
+
+   IDL_Files {
+      Message.idl
+   }
+
+   Source_Files {
+      MessageC.cpp
+      Message_i.cpp
+      MessageFactory.cpp
+      client.cpp
+   }
+}

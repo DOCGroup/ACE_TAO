@@ -1,0 +1,29 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): orbsvcsexe, portableserver, security, ssl {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  after += *idl
+  IDL_Files {
+  }
+}
+
+project(*Client): orbsvcsexe, security, ssl {
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+  after += *idl
+  IDL_Files {
+  }
+}

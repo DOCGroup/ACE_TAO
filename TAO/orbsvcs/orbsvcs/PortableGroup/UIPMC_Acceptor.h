@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Acceptor.h
  *
- *  $Id$
- *
  *  MIOP specific acceptor processing
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
@@ -17,23 +15,25 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport_Acceptor.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "UIPMC_Connection_Handler.h"
-
+#include "tao/Transport_Acceptor.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_State.h"
 
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
-// TAO UIPMC_Acceptor concrete call defination
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Note [] as sizeof used to infer length
+static const char CopyPreferredInterfaceToken[]= "$$$$";
+
+// TAO UIPMC_Acceptor concrete call definition
 
 /**
  * @class TAO_UIPMC_Acceptor
@@ -46,17 +46,18 @@ class TAO_PortableGroup_Export TAO_UIPMC_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_UIPMC_Acceptor (CORBA::Boolean flag = 0);
+  TAO_UIPMC_Acceptor (bool listen_on_all_ifs,
+                      const char *listener_interfaces);
 
   /// Destructor.
-  ~TAO_UIPMC_Acceptor (void);
+  ~TAO_UIPMC_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address (void) const;
+  const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints (void);
+  const ACE_INET_Addr *endpoints ();
 
   /**
    * The TAO_Acceptor methods, check the documentation in
@@ -73,12 +74,12 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0);
-  virtual int close (void);
+  virtual int close ();
   virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
   virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count ();
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);
@@ -103,7 +104,6 @@ public:
                               char *&host);
 
 protected:
-
   /**
    * Implement the common part of the open*() methods.  This method is
    * virtual to allow a derived class implementation to be invoked
@@ -114,8 +114,6 @@ protected:
 
   /// Parse protocol specific options.
   virtual int parse_options (const char *options);
-
-protected:
 
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
@@ -145,12 +143,14 @@ protected:
   TAO_ORB_Core *orb_core_;
 
 private:
-
-  TAO_UIPMC_Connection_Handler *connection_handler_;
+  bool listen_on_all_;
+  ACE_CString listener_interfaces_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "UIPMC_Acceptor.i"
+#include "orbsvcs/PortableGroup/UIPMC_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

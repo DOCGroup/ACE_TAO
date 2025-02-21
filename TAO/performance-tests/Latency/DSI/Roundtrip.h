@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef ROUNDTRIP_H
 #define ROUNDTRIP_H
@@ -24,15 +21,13 @@ public:
   Roundtrip (CORBA::ORB_ptr orb);
 
   // = The DSI methods
-  virtual void invoke (CORBA::ServerRequest_ptr request
-                       ACE_ENV_ARG_DECL);
+  virtual void invoke (CORBA::ServerRequest_ptr request);
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa
-      ACE_ENV_ARG_DECL);
+      PortableServer::POA_ptr poa);
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };

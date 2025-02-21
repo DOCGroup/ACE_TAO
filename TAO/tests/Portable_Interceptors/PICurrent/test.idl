@@ -4,8 +4,6 @@
 /**
  * @file   test.idl
  *
- * $Id$
- *
  * Simple IDL file to test PortableInterceptor::Current
  * support.
  *
@@ -21,6 +19,8 @@ module PICurrentTest
     void invoke_me ();
 
     void invoke_you ();
+
+    void invoke_we ();
 
     oneway void shutdown ();
   };

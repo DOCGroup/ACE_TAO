@@ -3,8 +3,6 @@
  *
  * @brief Define the RtecEventChannelAdmin module
  *
- * $Id$
- *
  * TAO's Real-time Event Service is described in:
  *
  * http://doc.ece.uci.edu/~coryan/EC/
@@ -283,14 +281,14 @@ module RtecEventChannelAdmin
    */
   interface Observer
   {
-    /// A change in the list of consumers has ocurred.
+    /// A change in the list of consumers has occurred.
     /**
      * The disjunction of the subscriptions is sent to the
      * observer.
      */
     void update_consumer (in ConsumerQOS sub);
 
-    /// A change in the list of suppliers has ocurred.
+    /// A change in the list of suppliers has occurred.
     /**
      * The list of all the event publications is passed to the
      * observer.

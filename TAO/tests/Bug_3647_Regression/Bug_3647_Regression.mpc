@@ -1,0 +1,50 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults, strategies {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Backend): taoserver, utils, strategies {
+  after += *idl
+  Source_Files {
+    Backend_Impl.cpp
+    backend_server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+  exename = backend_server
+}
+
+project(*Middle): taoserver, messaging, utils, strategies {
+  after += *idl
+  Source_Files {
+    Middle_Impl.cpp
+    middle_server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+  exename = middle_server
+}
+
+project(*Client): taoclient, messaging, utils, strategies {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}
+

@@ -4,8 +4,6 @@
 /**
  *  @file   FT_EventService.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -18,10 +16,12 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "TP_Task.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace POA_RtecScheduler
 {
     class Scheduler;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 class FT_EventService : private TAO_FTEC_Become_Primary_Listener
 {
@@ -33,8 +33,7 @@ public:
 
 private:
   int parse_args (int argc, ACE_TCHAR* argv []);
-  void setup_scheduler(CosNaming::NamingContext_ptr naming_context
-                                        ACE_ENV_ARG_DECL);
+  void setup_scheduler(CosNaming::NamingContext_ptr naming_context);
   int report_factory(CORBA::ORB_ptr orb,
                    FtRtecEventChannelAdmin::EventChannel_ptr ec);
   virtual void become_primary();

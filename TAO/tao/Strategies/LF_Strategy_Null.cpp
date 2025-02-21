@@ -1,17 +1,6 @@
-// -*- C++ -*-
-// $Id$
+#include "tao/Strategies/LF_Strategy_Null.h"
 
-#include "LF_Strategy_Null.h"
-
-#if !defined (__ACE_INLINE__)
-# include "LF_Strategy_Null.inl"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID(tao, LF_Strategy_Null, "$Id$")
-
-TAO_LF_Strategy_Null::~TAO_LF_Strategy_Null (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_LF_Strategy_Null::set_upcall_thread (TAO_Leader_Follower &)
@@ -30,3 +19,5 @@ TAO_LF_Strategy_Null::reset_event_loop_thread (int,
                                                TAO_Leader_Follower &)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

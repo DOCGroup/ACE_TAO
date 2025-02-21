@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Dispatching.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -19,11 +18,13 @@
 
 #include "orbsvcs/RtecEventCommC.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_QOS_Info;
 class TAO_EC_ProxyPushSupplier;
@@ -44,18 +45,18 @@ class TAO_RTEvent_Serv_Export TAO_EC_Dispatching
 {
 public:
   /// Destructor...
-  virtual ~TAO_EC_Dispatching (void);
+  virtual ~TAO_EC_Dispatching ();
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.
-  virtual void activate (void) = 0;
+  virtual void activate () = 0;
 
   /**
    * Deactivate any internal threads and cleanup internal data
    * structures, it should only return once the threads have finished
    * their jobs.
    */
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 
   /**
    * The consumer represented by @a proxy should receive @a event.
@@ -65,14 +66,14 @@ public:
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet &event,
-                     TAO_EC_QOS_Info &qos_info
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                     TAO_EC_QOS_Info &qos_info) = 0;
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet &event,
-                            TAO_EC_QOS_Info &qos_info
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                            TAO_EC_QOS_Info &qos_info) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

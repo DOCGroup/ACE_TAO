@@ -1,8 +1,6 @@
 /**
  * @file Client_Group.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -13,16 +11,12 @@
 #include "Client_Group.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Client_Group, 
-           "$Id$")
-
 void
 Client_Group::init (CORBA::Long experiment_id,
                     CORBA::Long base_event_type,
                     CORBA::ULong iterations,
                     CORBA::Long workload_in_usecs,
-                    ACE_UINT32 gsf,
+                    ACE_High_Res_Timer::global_scale_factor_type gsf,
                     PortableServer::POA_ptr supplier_poa,
                     PortableServer::POA_ptr consumer_poa)
 {
@@ -37,7 +31,7 @@ Client_Group::init (CORBA::Long experiment_id,
                     CORBA::Long event_type_range,
                     CORBA::ULong iterations,
                     CORBA::Long workload_in_usecs,
-                    ACE_UINT32 gsf,
+                    ACE_High_Res_Timer::global_scale_factor_type gsf,
                     PortableServer::POA_ptr supplier_poa,
                     PortableServer::POA_ptr consumer_poa)
 {
@@ -54,14 +48,12 @@ Client_Group::init (CORBA::Long experiment_id,
 }
 
 void
-Client_Group::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                       ACE_ENV_ARG_DECL)
+Client_Group::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  this->client_pair_.connect (ec ACE_ENV_ARG_PARAMETER);
+  this->client_pair_.connect (ec);
   Auto_Disconnect<Client_Pair> client_pair_disconnect (&this->client_pair_);
 
-  this->loopback_pair_.connect (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->loopback_pair_.connect (ec);
   Auto_Disconnect<Loopback_Pair> loopback_pair_disconnect (&this->loopback_pair_);
 
   loopback_pair_disconnect.release ();
@@ -69,7 +61,7 @@ Client_Group::connect (RtecEventChannelAdmin::EventChannel_ptr ec
 }
 
 void
-Client_Group::disconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Group::disconnect ()
 {
   Auto_Disconnect<Client_Pair> client_pair_disconnect (&this->client_pair_);
   Auto_Disconnect<Loopback_Pair> loopback_pair_disconnect (&this->loopback_pair_);

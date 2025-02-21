@@ -1,7 +1,8 @@
-// $Id$
+// -*- C++ -*-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Notify_Object::ID
-TAO_Notify_ID_Factory::id (void)
+TAO_Notify_ID_Factory::id ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mtx_, 0);
   return ++seed_;
@@ -16,3 +17,5 @@ TAO_Notify_ID_Factory::set_last_used (const TAO_Notify_Object::ID id)
     this->seed_ = id;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

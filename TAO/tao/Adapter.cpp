@@ -1,12 +1,9 @@
-// $Id$
+#include "tao/Adapter.h"
 
-#include "Adapter.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (tao,
-           Adapter,
-           "$Id$")
-
-TAO_Adapter::~TAO_Adapter (void)
+TAO_Adapter::~TAO_Adapter ()
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

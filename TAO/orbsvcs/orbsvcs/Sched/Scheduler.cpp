@@ -1,29 +1,20 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    sched
-//
-// = FILENAME
-//    Scheduler.cpp
-//
-// = CREATION DATE
-//    23 January 1997
-//
-// = AUTHOR
-//    David Levine
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Scheduler.cpp
+ *
+ *  @author David Levine
+ */
+//=============================================================================
 
+
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Sched_Params.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "Scheduler.h"
+#include "orbsvcs/Sched/Scheduler.h"
 #include "ace/OS_NS_stdio.h"
 
 #include "ace/Lock_Adapter_T.h"
 
-ACE_RCSID(Sched, Scheduler, "$Id$")
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -160,7 +151,7 @@ ACE_Scheduler::get_rt_info (Object_Name name,
       if (info_collection_.bind (lookup, info_array) != 0)
         {
           delete rtinfo;
-          delete info_array;
+          delete [] info_array;
           rtinfo = 0;
           return FAILED; // Error!
         }
@@ -195,7 +186,7 @@ int ACE_Scheduler::number_of_dependencies(RT_Info& rt_info)
 int ACE_Scheduler::add_dependency(RT_Info* rt_info,
                               const Dependency_Info& d)
 {
-  // ACE_DEBUG ((LM_DEBUG, "Sched (%t) adding dependency to: %s\n",
+  // ORBSVCS_DEBUG ((LM_DEBUG, "Sched (%t) adding dependency to: %s\n",
   //              (const char*)rt_info->entry_point));
   RtecScheduler::Dependency_Set& set = rt_info->dependencies;
   int l = set.length();
@@ -211,15 +202,14 @@ void ACE_Scheduler::export_to_file (RT_Info* info, FILE* file)
 
 void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
 {
-  // The divide-by-1 is for ACE_U_LongLong support.
   (void) ACE_OS::fprintf (file,
-                          ACE_LIB_TEXT("%s\n%d\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT("\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT("\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT("\n")
-                          ACE_LIB_TEXT("%d\n%d\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT("\n")
-                          ACE_LIB_TEXT("%u\n# begin dependencies\n%d\n"),
+                          ACE_TEXT("%s\n%d\n")
+                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
+                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
+                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
+                          ACE_TEXT("%d\n%d\n")
+                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
+                          ACE_TEXT("%u\n# begin dependencies\n%d\n"),
                           (const char*)info.entry_point,
                           info.handle,
                           ORBSVCS_Time::to_hrtime (info.worst_case_execution_time) / 1,
@@ -238,13 +228,11 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
       (void) ACE_OS::fprintf (file, "%s, %d\n",
                               (const char*)tmp.entry_point,
                               info.dependencies[i].number_of_calls);
-
     }
 
   (void) ACE_OS::fprintf (file, "# end dependencies\n%d\n%d\n\n",
                           info.priority,
                           info.preemption_subpriority);
-
 
 }
 
@@ -257,7 +245,7 @@ ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
   Config_Info *config_info;
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Config info for priority %lu could not be found\n",
                        p_priority),
                       -1);
@@ -269,32 +257,3 @@ ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
   return 0;
 }
   // provide the thread priority and queue type for the given priority level
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
-
-template class ACE_Lock_Adapter<TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Manager<ACE_CString,
-                               ACE_Scheduler::RT_Info **,
-                               TAO_SYNCH_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_CString, ACE_Scheduler::RT_Info **,
-                                     TAO_SYNCH_MUTEX>;
-template class ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
-                                TAO_SYNCH_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
-                                        TAO_SYNCH_MUTEX>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>
-
-#pragma instantiate ACE_Lock_Adapter<TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Manager<ACE_CString, ACE_Scheduler::RT_Info **, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_CString, ACE_Scheduler::RT_Info **, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, TAO_SYNCH_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// EOF

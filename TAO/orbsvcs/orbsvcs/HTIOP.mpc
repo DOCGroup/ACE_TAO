@@ -1,11 +1,8 @@
 // -*- MPC -*-
-//
-// $Id$
-
-project : htbp, orbsvcslib, core {
+project : htbp, orbsvcslib, orbsvcs_output, install, tao_versioning_idl_defaults, svc_utils {
   sharedname   = TAO_HTIOP
-  idlflags    += -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h
-  dynamicflags = HTIOP_BUILD_DLL
+  idlflags    += -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h -SS
+  dynamicflags += HTIOP_BUILD_DLL
   tagchecks += HTIOP
   pch_header =
   pch_source =
@@ -14,9 +11,16 @@ project : htbp, orbsvcslib, core {
     HTIOP.idl
   }
 
+  IDL_Files {
+    idlflags += -Sci -Gp -Gd -Sa -Sorb \
+                -o HTIOP
+    idlflags -= -St
+    gendir = HTIOP
+    HTIOP/htiop_endpoints.pidl
+  }
+
   Source_Files(ORBSVCS_COMPONENTS) {
     HTIOP {
-      HTIOPC.cpp
       HTIOP
     }
   }

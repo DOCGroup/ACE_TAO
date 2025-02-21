@@ -1,17 +1,12 @@
 // file      : RolyPoly/RolyPoly_i.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #include "RolyPoly_i.h"
 #include "StateUpdate.h"
+#include "tao/AnyTypeCode/Any.h"
 
 RolyPoly_i::RolyPoly_i (CORBA::ORB_ptr orb)
   : number_ (0)
   , orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
-
-RolyPoly_i::~RolyPoly_i (void)
 {
 }
 
@@ -38,9 +33,7 @@ set_state (CORBA::Any const& state)
 
 
 CORBA::Short
-RolyPoly_i::number (char *&str
-                ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+RolyPoly_i::number (char *&str)
 {
   CORBA::string_free (str);
 
@@ -62,10 +55,9 @@ RolyPoly_i::number (char *&str
 }
 
 void
-RolyPoly_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+RolyPoly_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Server is shutting down.\n"));
 
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

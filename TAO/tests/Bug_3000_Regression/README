@@ -1,0 +1,25 @@
+/**
+
+
+
+@page Callback_oneway_rw Test README File
+
+  This test is a modification of the Callback test.
+
+  When using the RW wait startegy, the Transport_Cache_Manager::find_transport()
+   temporarily removes the selected handler from the reactor read list. This
+   is supposed to be undone in the wait strategy TAO_Wait_On_Read::wait().
+   However since in one-way invocations, the wait isn't done the handle gets lost.
+
+  This is demonstrated in this test (a modification of the $TAO_ROOT/tests/CallbackTest).
+   A server using RW wait makes a oneway callback to the client(). The client starts
+   upon a fixed endpoint. Since the server handle wasn't put back into the reactor
+   read list, the client connection closure goes undetected. When a second client comes
+   online, the server reuses the half-closed connection to send the one-way callback. This
+   deadlocks.
+
+  - run_test.pl  // Tests the default wait startegy (LF).
+
+  - run_test.pl default  // Tests using the RW wait startegy.
+
+*/

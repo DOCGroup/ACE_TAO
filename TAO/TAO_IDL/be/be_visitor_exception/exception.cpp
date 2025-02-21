@@ -1,27 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    .cpp
-//
-// = DESCRIPTION
-//    Generic visitor generating code for Exceptions.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    exception.cpp
+ *
+ *  Generic visitor generating code for Exceptions.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_exception, 
-           exception, 
-           "$Id$")
-
+#include "exception.h"
 
 // Generic exception visitor.
 be_visitor_exception::be_visitor_exception (be_visitor_context *ctx)
@@ -29,7 +17,7 @@ be_visitor_exception::be_visitor_exception (be_visitor_context *ctx)
 {
 }
 
-be_visitor_exception::~be_visitor_exception (void)
+be_visitor_exception::~be_visitor_exception ()
 {
 }
 
@@ -91,7 +79,7 @@ be_visitor_exception::visit_field (be_field *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_exception::"
                            "visit_field - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -101,7 +89,7 @@ be_visitor_exception::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception::"
                          "visit_field - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 

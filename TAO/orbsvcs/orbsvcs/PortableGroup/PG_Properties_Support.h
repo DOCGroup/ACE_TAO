@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Properties_Support.h
- *
- *  $Id$
  *
  *  This file declares classes to help manage the PortableGroup::Properties
  *  It serves roughly the same purpose as PG_PropertiesManager, but takes a
@@ -17,8 +16,10 @@
 #ifndef TAO_PG_PROPERTIES_SUPPORT_H
 #define TAO_PG_PROPERTIES_SUPPORT_H
 
-#include "PG_Property_Set.h"
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -51,11 +52,11 @@ namespace TAO
   {
     typedef ACE_Hash_Map_Manager<
       ACE_CString,
-      ::TAO::PG_Property_Set *,
+      ::TAO::PG_Property_Set_var,
       TAO_SYNCH_MUTEX> Properties_Map;
     typedef ACE_Hash_Map_Iterator<
       ACE_CString,
-      ::TAO::PG_Property_Set *,
+      ::TAO::PG_Property_Set_var,
       TAO_SYNCH_MUTEX> Properties_Map_Iterator;
 
   public:
@@ -67,12 +68,10 @@ namespace TAO
      * Overwriting any value previously set for that property.
      * Leaving all other properties untouched.
      * @param name the name of the property to set
-     * @value an Any containing the value.
+     * @param value an Any containing the value.
      */
     void set_default_property (const char * name,
-          const PortableGroup::Value & value
-          ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          const PortableGroup::Value & value);
 
     /**
      * Update the default property set.
@@ -82,9 +81,7 @@ namespace TAO
      *
      * @param props the set of properties to update the defaults.
      */
-    void set_default_properties (const PortableGroup::Properties & props
-         ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    void set_default_properties (const PortableGroup::Properties & props);
 
     /**
      * Export the default properties in PortableGroup::Properties format.
@@ -95,10 +92,7 @@ namespace TAO
      * resource leaks.
      * @returns a newly allocated PortableGroup::Properties.
      */
-    PortableGroup::Properties * get_default_properties (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty));
+    PortableGroup::Properties * get_default_properties ();
 
     /**
      * Undefine default properties that appear in props.
@@ -107,12 +101,10 @@ namespace TAO
      * property set.  Removal is done by name.  The property values do not
      * have to match.  There is no penalty for attempting to remove a property
      * that does not exist.
-     * @param props a set of propertys to be removed by name.
+     * @param props a set of properties to be removed by name.
      */
     void remove_default_properties (
-        const PortableGroup::Properties & props
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        const PortableGroup::Properties & props);
 
     /**
      * Override or define properties associated with a type_id.
@@ -128,12 +120,7 @@ namespace TAO
      */
     void set_type_properties (
         const char *type_id,
-        const PortableGroup::Properties & overrides
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableGroup::InvalidProperty,
-        PortableGroup::UnsupportedProperty));
+        const PortableGroup::Properties & overrides);
 
     /**
      * Export the property set in a PortableGroup::Properties format.
@@ -153,9 +140,7 @@ namespace TAO
      * @returns a newly allocated PortableGroup::Properties that must be released by the caller.
      */
     PortableGroup::Properties * get_type_properties (
-        const char *type_id
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ( (CORBA::SystemException));
+        const char *type_id);
 
     /**
      * Export the property set in a PortableGroup::Properties format.
@@ -170,10 +155,8 @@ namespace TAO
      * @param type_id identifies the set of properties to be found.
      * @returns a pointer to a Property_Set owned by this Properties_Support object.
      */
-    TAO::PG_Property_Set *  find_typeid_properties (
-        const char *type_id
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    TAO::PG_Property_Set_var  find_typeid_properties (
+        const char *type_id);
 
     /**
      * Undefine default properties that appear in props.
@@ -182,13 +165,12 @@ namespace TAO
      * property set.  Removal is done by name.  The property values do not
      * have to match.  There is no penalty for attempting to remove a property
      * that does not exist.
-     * @param props a set of propertys to be removed by name from the type_id set.
+     * @param type_id identifies the set of properties to be removed.
+     * @param props a set of properties to be removed by name from the type_id set.
      */
     void remove_type_properties (
         const char *type_id,
-        const PortableGroup::Properties & props
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ( (CORBA::SystemException));
+        const PortableGroup::Properties & props);
 
     ///////////////
     // Data Members
@@ -199,11 +181,13 @@ namespace TAO
     TAO_SYNCH_MUTEX internals_;
 
     /// The default property set.
-    TAO::PG_Property_Set default_properties_;
+    TAO::PG_Property_Set_var default_properties_;
 
     /// A collection of property sets indexed by type_id.
     Properties_Map properties_map_;
   };
 } //namespace TAO_PG
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // TAO_PG_PROPERTIES_SUPPORT_H

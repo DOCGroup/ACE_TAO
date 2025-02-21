@@ -1,111 +1,113 @@
 // -*- C++ -*-
-//
-// $Id$
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<typename S, typename S_slice, typename S_forany>
+template<typename S_forany,
+         template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::
-In_Var_Array_Argument_T (const S_slice * x)
-  : x_ (const_cast<S_slice *> (x))
-{}
+TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::
+In_Var_Array_Argument_T (const typename S_forany::_slice_type * x)
+  : x_ (const_cast<typename S_forany::_slice_type *> (x))
+{
+}
 
-template<typename S, typename S_slice, typename S_forany>
+template<typename S_forany,
+         template <typename> class Insert_Policy>
 ACE_INLINE
-S_slice const *
-TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
+typename S_forany::_slice_type const *
+TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::arg () const
 {
   return this->x_.in ();
 }
 
-// ==========================================================================
-
-template<typename S, typename S_slice, typename S_forany>
+template<typename S_forany,
+         template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::
-Inout_Var_Array_Argument_T (S_slice  *&x)
-  : x_ (x)
+TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::
+In_Var_Array_Clonable_Argument_T (const typename S_forany::_slice_type * x)
+  : In_Var_Array_Argument_T<S_forany,Insert_Policy> (x),
+    is_clone_ (false)
 {}
 
-template<typename S, typename S_slice, typename S_forany>
+// ==========================================================================
+
+template<typename S_forany,
+         template <typename> class Insert_Policy>
 ACE_INLINE
-S_slice *
-TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::arg (void)
+TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::
+Inout_Var_Array_Argument_T (typename S_forany::_slice_type  *&x)
+  : x_ (x)
+{
+}
+
+template<typename S_forany,
+         template <typename> class Insert_Policy>
+ACE_INLINE
+typename S_forany::_slice_type *
+TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::arg ()
 {
   return this->x_.inout ();
 }
 
 // ==========================================================================
 
-template<typename S,
-         typename S_slice,
-         typename S_var,
-         typename S_out,
+template<typename S_out,
          typename S_forany,
-         typename S_tag>
+         template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany,S_tag>::
+TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::
 Out_Var_Array_Argument_T (S_out x)
   : x_ (x.ptr ())
 {
 }
 
-template<typename S,
-         typename S_slice,
-         typename S_var,
-         typename S_out,
+template<typename S_out,
          typename S_forany,
-         typename S_tag>
+         template <typename> class Insert_Policy>
 ACE_INLINE
-S_slice *&
-TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany,S_tag>::arg (void)
+typename S_forany::_slice_type *&
+TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::arg ()
 {
   return this->x_;
 }
 
 // ==========================================================================
 
-template<typename S,
-         typename S_slice,
-         typename S_var,
+template<typename S_var,
          typename S_forany,
-         typename S_tag>
+         template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::
-Ret_Var_Array_Argument_T (void)
+TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::
+Ret_Var_Array_Argument_T ()
 {}
 
-template<typename S,
-         typename S_slice,
-         typename S_var,
+template<typename S_var,
          typename S_forany,
-         typename S_tag>
+         template <typename> class Insert_Policy>
 ACE_INLINE
-S_slice *&
-TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::arg (void)
+typename S_forany::_slice_type *&
+TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::arg ()
 {
   return this->x_.out ();
 }
 
-template<typename S,
-         typename S_slice,
-         typename S_var,
+template<typename S_var,
          typename S_forany,
-         typename S_tag>
+         template <typename> class Insert_Policy>
 ACE_INLINE
-S_slice *
-TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::excp (void)
+typename S_forany::_slice_type *
+TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::excp ()
 {
   return this->x_.ptr ();
 }
 
-template<typename S,
-         typename S_slice,
-         typename S_var,
+template<typename S_var,
          typename S_forany,
-         typename S_tag>
+         template <typename> class Insert_Policy>
 ACE_INLINE
-S_slice *
-TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::retn (void)
+typename S_forany::_slice_type *
+TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::retn ()
 {
   return this->x_._retn ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

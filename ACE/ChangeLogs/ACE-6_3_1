@@ -1,0 +1,385 @@
+commit 7fc95eae60941bc44164ea39ad1d53ad4438f09b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 29 11:32:09 2014 +0100
+
+    Reversed change
+        * ACE/bin/make_release.py:
+
+commit 916a11aaa628809749d3277004ffb192c3e9954f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 29 11:28:36 2014 +0100
+
+    Fixed bug in updating the versions
+        * ACE/bin/make_release.py:
+
+commit 06325909ca408a6f4720ef00e4a92b26302f8690
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Dec 27 16:02:53 2014 +0100
+
+    Documentation updates related to migration to github
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/ACE-development-process.html:
+        * ACE/docs/usage-bugzilla.html:
+
+commit 4042a8c5cade2138dc710023fd4854bea93549cc
+Author: Olli Savia <ops@iki.fi>
+Date:   Sat Dec 20 14:02:53 2014 +0200
+
+    Fixed to compile with Tk 8.6
+
+commit 92ee48d432a8d9a0d9a6081248a02cef210d5ea1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 18 12:29:43 2014 +0100
+
+    Add some missing libraries for a full build system
+        * ACE/docs/bczar/bczar.html:
+
+commit 8658015d9555dd6e523a33f8fff15900c73355cb
+Author: Olli Savia <ops@iki.fi>
+Date:   Thu Dec 18 08:25:07 2014 +0200
+
+    Added a note about OpenBSD support
+
+commit a1a4acc39718d72254b3320999a6535a1c669bec
+Author: Olli Savia <ops@iki.fi>
+Date:   Wed Dec 17 09:06:50 2014 +0200
+
+    Updated for OpenBSD 5.6
+
+commit 1c47dadae760ef4f4e1f786f7174082dfc920dff
+Author: bjeram <bogdan.jeram+github@gmail.com>
+Date:   Fri Dec 12 13:44:18 2014 +0100
+
+    Update config-vxworks6.8.h
+
+    # define ACE_LACKS_RAND_R 1
+    # define ACE_LACKS_STD_WSTRING
+    should be move to (they have been moved)
+    to: config-vxworks6.4.h
+
+commit d555ad63ca9d091f7faa9628f377975cefb72723
+Author: bjeram <bogdan.jeram+github@gmail.com>
+Date:   Fri Dec 12 13:42:54 2014 +0100
+
+    Update config-vxworks6.4.h
+
+    lack of rand_r and wstring is tru also for older version of VxWork, so we can move:
+    # define ACE_LACKS_RAND_R 1
+    # define ACE_LACKS_STD_WSTRING
+    from config-vxworks6.8.h to config-vxworks6.4.h
+
+commit f3c9c570e2051032ed173868204055a15d6d99ba
+Author: bjeram <bogdan.jeram+github@gmail.com>
+Date:   Fri Dec 12 13:27:23 2014 +0100
+
+    Update OS_NS_dlfcn.inl
+
+    changed how is it checked for VxWorks version (using: (ACE_VXWORKS < 0x690)).
+
+commit 716885f2a7a247b6be56e0b50035fbeb8bab5ef7
+Author: bjeram <bogdan.jeram+github@gmail.com>
+Date:   Fri Dec 12 13:24:41 2014 +0100
+
+    Update OS_NS_dlfcn.inl
+
+    fixed  ACE_OS::dlsym function that it works for VxWorks - older than 6.9.
+
+commit 132154fa12b98a56009b813262733a7f92e3a4d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 9 13:13:14 2014 +0100
+
+    Mention move to github and the fact that the ChangeLog is now generated as part of the release process
+        * ACE/NEWS:
+        * CIAO/NEWS:
+        * DAnCE/NEWS:
+        * TAO/NEWS:
+
+commit 2a88bf85e33e8768c5f8c2f033ee7aa9ce2e4d53
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 9 11:09:25 2014 +0100
+
+    Removed several scripts that are not used anymore
+        * ACE/bin/coverity_model.cpp:
+        * ACE/bin/package_copy_script.sh:
+        * ACE/bin/svn_props.py:
+        * ACE/bin/update-ace+tao.sh:
+        * ACE/docs/svn/config:
+        * ACE/docs/svn/svn-prefs.reg:
+          Deleted.
+
+commit 3ab4f994397f310aca2fdb8c45c7f58c171039df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 9 11:05:28 2014 +0100
+
+    Updated links to github and Vanderbilt
+        * ACE/debian/debian.control:
+        * ACE/rpmbuild/ace-tao.spec:
+
+commit cbb031970b20bd30f023efc7ff4b727c1d0087ef
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 19:09:53 2014 +0100
+
+    Don't use a separate branch for updating the version, without it the script is much easier to use in different trees
+        * ACE/bin/make_release.py:
+
+commit b3b560e6d355a66f18c46126950d463aea77126b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:37:16 2014 +0100
+
+    Mention setup of ssh to github
+        * ACE/docs/bczar/bczar.html:
+
+commit fcb4ad2352a6388fab9ba08eb6f254ed332757b7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:31:43 2014 +0100
+
+    More links to Vanderbilt
+        * ACE/docs/ACE-bug-process.html:
+
+commit 228fbda274e3960bae282c6d5dbf43938881c281
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:27:13 2014 +0100
+
+    Updated link for ACE-members.html
+        * ACE/ACE-INSTALL.html:
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/ACE-development-process.html:
+        * ACE/etc/DOC-way.html:
+        * TAO/docs/TAO-tutorials.html:
+
+commit 1c10f8ec74aca70417c54040ecc7f27dffd46511
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:26:14 2014 +0100
+
+    Updated links and documentation to point to github and latest pagest from Doug
+        * ACE/ACE-INSTALL.html:
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/ACE-development-process.html:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * TAO/TAO-INSTALL.html:
+
+commit df687d078bd9b23ceab144fe287c17f412c2130d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:12:34 2014 +0100
+
+    Remove old svn related code
+        * ACE/bin/make_release.py:
+
+commit 453e5d395a4ae40a748488da333016fb2a2bbff7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:01:04 2014 +0100
+
+    Removed old comments
+        * ACE/bin/make_release.py:
+
+commit c9b47e7ab218547ca426290ff244ac90afbdc0ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:00:54 2014 +0100
+
+    Removed, not needed with git
+
+        * ACE/bin/sets-manager.py:
+          Deleted.
+
+commit 21ecdd9eb2da9fa05c13f7bc79d901f8a3928b20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 11:04:18 2014 +0100
+
+    Updated support links
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/Download.html:
+
+commit 1235513fe709d84b66e9e6add744d6c54256816f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 11:01:03 2014 +0100
+
+    Updated links to point to github
+        * ACE/docs/Download.html:
+
+commit a9c5a4a5f50ae1ec006099c154c322590c31bc6a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 10:54:14 2014 +0100
+
+    Documenting new release steps
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+
+commit 06805ce26cf92598563b7eca0d3d77cf7ab56ddf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 10:48:10 2014 +0100
+
+    Separate update/tag/push in separate steps
+        * ACE/bin/make_release.py:
+
+commit c62d6c2fe3b30fa8b190a3fd9d8debab37aae6fe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Dec 6 20:30:01 2014 +0100
+
+    Fixed creating kit, working on separating update, tag, and push as possible separate steps as part of the tagging process so that they can all be done one by one and reviewed first
+        * ACE/bin/make_release.py:
+
+commit 2ede70680d566246f96595540cdec35b524f90d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Dec 6 19:17:50 2014 +0100
+
+    Also remove previous tags
+        * ACE/bin/make_release.py:
+
+commit b2f296ef2f2f2a1eb2b1045159649e137f7ce716
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 20:34:44 2014 +0100
+
+    Use existing root options, also push master to origin
+        * ACE/bin/make_release.py:
+
+commit 65e0e74f865c2a1b4b45cf0c5ea9e3dcd458a1a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 20:18:33 2014 +0100
+
+    Fixed changelog name
+        * ACE/bin/make_release.py:
+
+commit f756d71bf7f5aa58a2013d82d385b17ae758b535
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 15:53:05 2014 +0100
+
+    Further refinements to the new git based packaging script
+        * ACE/bin/make_release.py:
+
+commit c1d1da03216a7ac7aeec4e4aa9c79961b425e46e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 15:36:20 2014 +0100
+
+    Fixed changelog generation
+        * ACE/bin/make_release.py:
+
+commit 1b400d3d94244fbb31bc7468b2559a21d5810a40
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 15:17:57 2014 +0100
+
+    Added push commands
+        * ACE/bin/make_release.py:
+
+commit 311e29bbc8c259b4d96339647f8a21eb3d900b74
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 15:09:12 2014 +0100
+
+    Enabled changelog generation
+        * ACE/bin/make_release.py:
+
+commit d75767893c91f0fa3084164a23498dc5499785ec
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 15:06:17 2014 +0100
+
+    Minor fixes
+        * ACE/bin/make_release.py:
+
+commit d1499a889cb9a37239c7275c1dfb794d0b063d9f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 15:01:42 2014 +0100
+
+    Make changes on work branch, add changelog
+        * ACE/bin/make_release.py:
+
+commit 2e62d26678a6bd869442e979ba0c4000f51f67e7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 13:45:52 2014 +0100
+
+    Working on updated release instructions and scripts for github usage
+        * ACE/bin/make_release.py:
+        * ACE/docs/bczar/bczar.html:
+
+commit 2abc01041f9cf2e504ad442ca11c721e216bdbdf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 13:29:07 2014 +0100
+
+    Working further on tagging
+        * ACE/bin/make_release.py:
+
+commit 6f3cb719b3c73efc8ad3f1e4e83929ca7851bcab
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 13:22:46 2014 +0100
+
+    Working on the release script and packaging
+        * ACE/bin/make_release.py:
+
+commit afe93ba0e49c2498e99b11d71fbe62753f7be726
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 11:34:05 2014 +0100
+
+    Started with conversion to use git
+        * ACE/bin/make_release.py:
+
+commit f0f8061a94d4d20276bb855bf45373397f278b88
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 09:46:30 2014 +0100
+
+    Moved all changelogs to the ChangeLogs archive directory, release script
+    will generate a changelog for each release
+        * ACE/ChangeLog -> ACE/ChangeLogs/ChangeLog-2014b:
+        * CIAO/ChangeLog -> CIAO/ChangeLogs/ChangeLog-2014b:
+        * DAnCE/ChangeLog -> DAnCE/ChangeLogs/ChangeLog-2014b:
+        * TAO/ChangeLog -> TAO/ChangeLogs/ChangeLog-2014b:
+          Moved.
+
+commit d117c31bf57d7fa63e359346db830ddcc6d45209
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 25 14:53:33 2014 +0000
+
+    Tue Nov 25 14:52:51 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+            * ACE-INSTALL.html:
+              Fixed cygwin setup instructions as reported by
+              Koh Onishi <k_onishi at mtj dot biglobe dot ne dot jp> in
+              bugzilla 4066
+
+commit 78cb57fd010c8daa5756ec567f5fe68db40572a0
+Author: mcorino <mcorino@ae88bc3d-4319-0410-8dbf-d08b4c9d3795>
+Date:   Tue Nov 25 09:19:43 2014 +0000
+
+    ChangelogTag: Tue Nov 25 09:18:14 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+commit a58d14593b5434a17178bbe6c31803f7cc265d0e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 24 11:20:40 2014 +0000
+
+    Mon Nov 24 11:20:09 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+            * ace/Abstract_Timer_Queue.h:
+              Doxygen fix
+
+commit e90ea901fd702abfff722e90ddab30c265030220
+Author: mcorino <mcorino@ae88bc3d-4319-0410-8dbf-d08b4c9d3795>
+Date:   Mon Nov 24 11:00:50 2014 +0000
+
+    ChangelogTag: Mon Nov 24 10:49:54 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+commit 00b5626856157cd71aa0a3283080f63444bfd927
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 14 15:03:56 2014 +0000
+
+    Fri Nov 14 15:03:21 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+            * bin/MakeProjectCreator/config/vc14nmake.mpb:
+              Disable warnings 4456, 4458, and 4459 with Visual Studio 2015
+              when we are using nmake
+
+commit 71058033973363641455678a87958679dc721fbd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 14 09:02:34 2014 +0000
+
+    Fri Nov 14 08:14:39 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+            * NEWS:
+            * docs/Download.html:
+            * docs/bczar/bczar.html:
+            * etc/index.html:
+              Make 6.3.0 public
+
+            * bin/MakeProjectCreator/config/vc12.features:
+            * bin/MakeProjectCreator/config/vc14.features:
+              Missing features files
+
+            * bin/MakeProjectCreator/config/vc_warnings.mpb:
+              Disable warnings 4456, 4458, and 4459 with Visual Studio 2015

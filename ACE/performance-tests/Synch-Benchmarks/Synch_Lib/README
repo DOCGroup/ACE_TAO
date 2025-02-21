@@ -1,0 +1,6 @@
+
+
+This subdirectory contains a library that defines the interface used
+by all benchmarking modules.  The library is required by all modules
+and the synch_driver.  If you want to develop your own benchmarking
+module, this directory provides a starting point.

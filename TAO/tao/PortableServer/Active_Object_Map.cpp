@@ -1,25 +1,40 @@
-// $Id$
-
-#include "Active_Object_Map.h"
-#include "Active_Object_Map_Entry.h"
-#include "tao/SystemException.h"
+#include "tao/PortableServer/Active_Object_Map.h"
+#include "tao/PortableServer/Active_Object_Map_Entry.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Active_Object_Map.i"
+# include "tao/PortableServer/Active_Object_Map.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
+#include "tao/SystemException.h"
 
-ACE_RCSID(PortableServer,
-          Active_Object_Map,
-          "$Id$")
+#include <memory>
+#include "ace/CORBA_macros.h"
+#include "tao/debug.h"
+#include "PortableServer_Functions.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /* static */
 size_t TAO_Active_Object_Map::system_id_size_ = 0;
 
+static void
+hexstring (ACE_CString& hexstr, const char* s, size_t l)
+{
+  char buf[3] = {0};
+
+  hexstr.fast_resize (2 + l * 2);
+  hexstr.append ("0x", 2);
+  while (--l)
+    {
+      ACE_OS::sprintf (buf, "%02x", (unsigned int)(unsigned char)*s);
+      hexstr.append (buf, 2);
+      ++s;
+    }
+}
+
 void
-TAO_Active_Object_Map::set_system_id_size
-  (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
+TAO_Active_Object_Map::set_system_id_size (
+  const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
 {
   if (TAO_Active_Object_Map::system_id_size_ == 0)
     {
@@ -29,8 +44,7 @@ TAO_Active_Object_Map::set_system_id_size
             {
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
             case TAO_LINEAR:
-              TAO_Active_Object_Map::system_id_size_ =
-                sizeof (CORBA::ULong);
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
               break;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -53,13 +67,11 @@ TAO_Active_Object_Map::set_system_id_size
             {
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
             case TAO_LINEAR:
-              TAO_Active_Object_Map::system_id_size_ =
-                sizeof (CORBA::ULong);
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
               break;
 
             case TAO_DYNAMIC_HASH:
-              TAO_Active_Object_Map::system_id_size_ =
-                sizeof (CORBA::ULong);
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
               break;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -73,112 +85,121 @@ TAO_Active_Object_Map::set_system_id_size
     }
 }
 
-TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
-                                              int unique_id_policy,
-                                              int persistent_id_policy,
-                                              const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters
-                                              ACE_ENV_ARG_DECL)
-  : user_id_map_ (0),
-    servant_map_ (0),
-    id_uniqueness_strategy_ (0),
-    lifespan_strategy_ (0),
-    id_assignment_strategy_ (0),
-    id_hint_strategy_ (0),
-    using_active_maps_ (0)
+TAO_Active_Object_Map::TAO_Active_Object_Map (
+    int user_id_policy,
+    int unique_id_policy,
+    int persistent_id_policy,
+    const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &
+      creation_parameters)
+  : using_active_maps_ (false)
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
 
-  TAO_Id_Uniqueness_Strategy *id_uniqueness_strategy = 0;
+  TAO_Id_Uniqueness_Strategy *id_uniqueness_strategy {};
 
   if (unique_id_policy)
     {
       ACE_NEW_THROW_EX (id_uniqueness_strategy,
                         TAO_Unique_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
+#if !defined (CORBA_E_MICRO)
       ACE_NEW_THROW_EX (id_uniqueness_strategy,
                         TAO_Multiple_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
+#else
+      TAOLIB_ERROR ((LM_ERROR,
+                  "Multiple Id Strategy not supported with CORBA/e\n"));
+#endif
     }
 
-  // Give ownership to the auto pointer.
-  auto_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
+  // Give ownership to the unique pointer.
+  std::unique_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
 
-  TAO_Lifespan_Strategy *lifespan_strategy = 0;
+  TAO_Lifespan_Strategy *lifespan_strategy {};
 
   if (persistent_id_policy)
     {
+#if !defined (CORBA_E_MICRO)
       ACE_NEW_THROW_EX (lifespan_strategy,
                         TAO_Persistent_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
+#else
+      ACE_UNUSED_ARG (persistent_id_policy);
+      TAOLIB_ERROR ((LM_ERROR,
+                  "Persistent Id Strategy not supported with CORBA/e\n"));
+#endif
     }
   else
     {
       ACE_NEW_THROW_EX (lifespan_strategy,
                         TAO_Transient_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
-  // Give ownership to the auto pointer.
-  auto_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
+  // Give ownership to the unique pointer.
+  std::unique_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
 
-  TAO_Id_Assignment_Strategy *id_assignment_strategy = 0;
+  TAO_Id_Assignment_Strategy *id_assignment_strategy {};
 
   if (user_id_policy)
     {
+#if !defined (CORBA_E_MICRO)
       ACE_NEW_THROW_EX (id_assignment_strategy,
                         TAO_User_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
+#else
+      TAOLIB_ERROR ((LM_ERROR,
+                  "User Id Assignment not supported with CORBA/e\n"));
+#endif
     }
   else if (unique_id_policy)
     {
       ACE_NEW_THROW_EX (id_assignment_strategy,
                         TAO_System_Id_With_Unique_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
+#if !defined (CORBA_E_MICRO)
       ACE_NEW_THROW_EX (id_assignment_strategy,
                         TAO_System_Id_With_Multiple_Id_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
+#else
+      TAOLIB_ERROR ((LM_ERROR,
+                  "System Id Assignment with multiple "
+                  "not supported with CORBA/e\n"));
+#endif
     }
 
-  // Give ownership to the auto pointer.
-  auto_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
+  // Give ownership to the unique pointer.
+  std::unique_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
 
-  TAO_Id_Hint_Strategy *id_hint_strategy = 0;
+  TAO_Id_Hint_Strategy *id_hint_strategy {};
   if ((user_id_policy
        || creation_parameters.allow_reactivation_of_system_ids_)
       && creation_parameters.use_active_hint_in_ids_)
     {
-      this->using_active_maps_ = 1;
+      this->using_active_maps_ = true;
 
       ACE_NEW_THROW_EX (id_hint_strategy,
-                        TAO_Active_Hint_Strategy (creation_parameters.active_object_map_size_),
+                        TAO_Active_Hint_Strategy (
+                          creation_parameters.active_object_map_size_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       ACE_NEW_THROW_EX (id_hint_strategy,
                         TAO_No_Hint_Strategy,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
 
-  // Give ownership to the auto pointer.
-  auto_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
+  // Give ownership to the unique pointer.
+  std::unique_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
 
-  servant_map *sm = 0;
+  servant_map *sm {};
   if (unique_id_policy)
     {
       switch (creation_parameters.reverse_object_lookup_strategy_for_unique_id_policy_)
@@ -186,32 +207,33 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
         case TAO_LINEAR:
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
           ACE_NEW_THROW_EX (sm,
-                            servant_linear_map (creation_parameters.active_object_map_size_),
+                            servant_linear_map (
+                              creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
 #else
-          ACE_ERROR ((LM_ERROR,
-                      "linear option for -ORBUniqueidPolicyReverseDemuxStrategy "
+          TAOLIB_ERROR ((LM_ERROR,
+                      "linear option for "
+                      "-ORBUniqueidPolicyReverseDemuxStrategy "
                       "not supported with minimum POA maps. "
-                      "Ingoring option to use default... \n"));
+                      "Ignoring option to use default...\n"));
           /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
         case TAO_DYNAMIC_HASH:
         default:
           ACE_NEW_THROW_EX (sm,
-                            servant_hash_map (creation_parameters.active_object_map_size_),
+                            servant_hash_map (
+                              creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
         }
     }
 
-  // Give ownership to the auto pointer.
-  auto_ptr<servant_map> new_servant_map (sm);
+  // Give ownership to the unique pointer.
+  std::unique_ptr<servant_map> new_servant_map (sm);
 
-  user_id_map *uim = 0;
+  user_id_map *uim {};
   if (user_id_policy
       || creation_parameters.allow_reactivation_of_system_ids_)
     {
@@ -220,15 +242,15 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
         case TAO_LINEAR:
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
           ACE_NEW_THROW_EX (uim,
-                            user_id_linear_map (creation_parameters.active_object_map_size_),
+                            user_id_linear_map (
+                              creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
 #else
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "linear option for -ORBUseridPolicyDemuxStrategy "
                       "not supported with minimum POA maps. "
-                      "Ingoring option to use default... \n"));
+                      "Ignoring option to use default...\n"));
           /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -237,7 +259,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
           ACE_NEW_THROW_EX (uim,
                             user_id_hash_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
         }
     }
@@ -250,56 +271,58 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
           ACE_NEW_THROW_EX (uim,
                             user_id_linear_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
 
         case TAO_DYNAMIC_HASH:
           ACE_NEW_THROW_EX (uim,
                             user_id_hash_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
 #else
         case TAO_LINEAR:
         case TAO_DYNAMIC_HASH:
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "linear and dynamic options for -ORBSystemidPolicyDemuxStrategy "
                       "are not supported with minimum POA maps. "
-                      "Ingoring option to use default... \n"));
+                      "Ignoring option to use default...\n"));
           /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
         case TAO_ACTIVE_DEMUX:
         default:
 
-          this->using_active_maps_ = 1;
+          this->using_active_maps_ = true;
 
           ACE_NEW_THROW_EX (uim,
                             user_id_active_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK;
           break;
         }
     }
 
-  // Give ownership to the auto pointer.
-  auto_ptr<user_id_map> new_user_id_map (uim);
+  // Give ownership to the unique pointer.
+  std::unique_ptr<user_id_map> new_user_id_map (uim);
 
   id_uniqueness_strategy->set_active_object_map (this);
   lifespan_strategy->set_active_object_map (this);
   id_assignment_strategy->set_active_object_map (this);
 
   // Finally everything is fine.  Make sure to take ownership away
-  // from the auto pointer.
-  this->id_uniqueness_strategy_ = new_id_uniqueness_strategy.release ();
-  this->lifespan_strategy_ = new_lifespan_strategy.release ();
-  this->id_assignment_strategy_ = new_id_assignment_strategy.release ();
-  this->id_hint_strategy_ = new_id_hint_strategy.release ();
-  this->servant_map_ = new_servant_map.release ();
-  this->user_id_map_ = new_user_id_map.release ();
+  // from the unique pointer.
+  this->id_uniqueness_strategy_ = std::move(new_id_uniqueness_strategy);
+  this->lifespan_strategy_ =  std::move(new_lifespan_strategy);
+  this->id_assignment_strategy_ = std::move(new_id_assignment_strategy);
+  this->id_hint_strategy_ = std::move(new_id_hint_strategy);
+  this->servant_map_ = std::move(new_servant_map);
+  this->user_id_map_ = std::move(new_user_id_map);
+
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+  ACE_NEW (this->monitor_,
+           ACE::Monitor_Control::Size_Monitor);
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
-TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
+TAO_Active_Object_Map::~TAO_Active_Object_Map ()
 {
   user_id_map::iterator iterator = this->user_id_map_->begin ();
   user_id_map::iterator end = this->user_id_map_->end ();
@@ -312,44 +335,41 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
       delete map_entry.second ();
     }
 
-  delete this->id_uniqueness_strategy_;
-  delete this->lifespan_strategy_;
-  delete this->id_assignment_strategy_;
-  delete this->id_hint_strategy_;
-  delete this->servant_map_;
-  delete this->user_id_map_;
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+  this->monitor_->remove_from_registry ();
+  this->monitor_->remove_ref ();
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
-int
-TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_id,
-                                          CORBA::Short priority,
-                                          int &priorities_match,
-                                          int &deactivated)
+bool
+TAO_Active_Object_Map::is_user_id_in_map (
+  const PortableServer::ObjectId &user_id,
+  CORBA::Short priority,
+  bool &priorities_match,
+  bool &deactivated)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->user_id_map_->find (user_id,
-                                         entry);
-  if (result == 0)
-    {
-      if (entry->servant_ == 0)
-        {
-          result = 0;
+  TAO_Active_Object_Map_Entry *entry {};
+  bool result = false;
+  int const find_result = this->user_id_map_->find (user_id, entry);
 
+  if (find_result == 0)
+    {
+      if (entry->servant_ == nullptr)
+        {
           if (entry->priority_ != priority)
-            priorities_match = 0;
+            {
+              priorities_match = false;
+            }
         }
       else
         {
-          result = 1;
+          result = true;
+
           if (entry->deactivated_)
             {
-              deactivated = 1;
+              deactivated = true;
             }
         }
-    }
-  else
-    {
-      result = 0;
     }
 
   return result;
@@ -357,29 +377,26 @@ TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_i
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Id_Uniqueness_Strategy::~TAO_Id_Uniqueness_Strategy (void)
-{
-}
-
 void
-TAO_Id_Uniqueness_Strategy::set_active_object_map (TAO_Active_Object_Map *active_object_map)
+TAO_Id_Uniqueness_Strategy::set_active_object_map (
+  TAO_Active_Object_Map *active_object_map)
 {
   this->active_object_map_ = active_object_map;
 }
 
 int
 TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
-                                           int &deactivated)
+                                           bool &deactivated)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->active_object_map_->servant_map_->find (servant,
-                                                             entry);
+  TAO_Active_Object_Map_Entry *entry{};
+  int result = this->active_object_map_->servant_map_->find (servant, entry);
   if (result == 0)
     {
       result = 1;
+
       if (entry->deactivated_)
         {
-          deactivated = 1;
+          deactivated = true;
         }
     }
   else
@@ -391,21 +408,32 @@ TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
 }
 
 int
-TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
-                                            const PortableServer::ObjectId &user_id,
-                                            CORBA::Short priority,
-                                            TAO_Active_Object_Map_Entry *&entry)
+TAO_Unique_Id_Strategy::bind_using_user_id (
+  PortableServer::Servant servant,
+  const PortableServer::ObjectId &user_id,
+  CORBA::Short priority,
+  TAO_Active_Object_Map_Entry *&entry)
 {
-  int result = this->active_object_map_->user_id_map_->find (user_id,
-                                                             entry);
+  int result =
+    this->active_object_map_->user_id_map_->find (user_id, entry);
+
   if (result == 0)
     {
-      if (servant != 0)
+      if (servant != nullptr)
         {
           entry->servant_ = servant;
 
-          result = this->active_object_map_->servant_map_->bind (entry->servant_,
-                                                                 entry);
+          result =
+            this->active_object_map_->servant_map_->bind (entry->servant_,
+                                                          entry);
+
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+          if (result == 0)
+            {
+              this->active_object_map_->monitor_->receive (
+                this->active_object_map_->servant_map_->current_size ());
+            }
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
         }
     }
   else
@@ -421,18 +449,28 @@ TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
 
       if (result == 0)
         {
-          result = this->active_object_map_->user_id_map_->bind (entry->user_id_,
-                                                                 entry);
+          result =
+            this->active_object_map_->user_id_map_->bind (entry->user_id_, entry);
           if (result == 0)
             {
-              if (servant != 0)
-                result = this->active_object_map_->servant_map_->bind (entry->servant_,
-                                                                       entry);
+              if (servant != nullptr)
+                {
+                  result =
+                    this->active_object_map_->servant_map_->bind (entry->servant_, entry);
+                }
+
               if (result != 0)
                 {
                   this->active_object_map_->user_id_map_->unbind (entry->user_id_);
                   this->active_object_map_->id_hint_strategy_->unbind (*entry);
                   delete entry;
+                }
+              else
+                {
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+                  this->active_object_map_->monitor_->receive (
+                    this->active_object_map_->servant_map_->current_size ());
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
                 }
             }
           else
@@ -442,71 +480,127 @@ TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
             }
         }
       else
-        delete entry;
+        {
+          delete entry;
+        }
     }
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  if (result == 0 && TAO_debug_level > 7)
+    {
+      CORBA::String_var idstr (PortableServer::ObjectId_to_string (user_id));
+      CORBA::String_var repository_id (
+          servant ? servant->_repository_id () : 0);
+      ACE_CString hex_idstr;
+      hexstring (hex_idstr, idstr.in (), user_id.length ());
+
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_Unique_Id_Strategy::"
+                  "bind_using_user_id: type=%C, id=%C\n",
+                  repository_id.in (),
+                  hex_idstr.c_str()));
+    }
+#endif
 
   return result;
 }
 
 int
-TAO_Unique_Id_Strategy::unbind_using_user_id (const PortableServer::ObjectId &user_id)
+TAO_Unique_Id_Strategy::unbind_using_user_id (
+  const PortableServer::ObjectId &user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->active_object_map_->user_id_map_->unbind (user_id,
-                                                               entry);
+  TAO_Active_Object_Map_Entry *entry {};
+  int result = this->active_object_map_->user_id_map_->unbind (user_id, entry);
   if (result == 0)
     {
+      if (TAO_debug_level > 7)
+        {
+          CORBA::String_var idstr (
+              PortableServer::ObjectId_to_string (entry->user_id_));
+          ACE_CString hex_idstr;
+          hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
+
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - TAO_Unique_Id_Strategy::unbind_using_user_id: id=%C\n",
+                      hex_idstr.c_str()));
+        }
+
       if (entry->servant_ != 0)
-        result = this->active_object_map_->servant_map_->unbind (entry->servant_);
+        {
+          result =
+            this->active_object_map_->servant_map_->unbind (entry->servant_);
+        }
 
       if (result == 0)
-        result =
-          this->active_object_map_->id_hint_strategy_->unbind (*entry);
+        {
+          result =
+            this->active_object_map_->id_hint_strategy_->unbind (*entry);
+
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+          this->active_object_map_->monitor_->receive (
+            this->active_object_map_->servant_map_->current_size ());
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
+        }
 
       if (result == 0)
-        delete entry;
-    }
-  return result;
-}
-
-int
-TAO_Unique_Id_Strategy::find_user_id_using_servant (PortableServer::Servant servant,
-                                                    PortableServer::ObjectId_out user_id)
-{
-  TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->active_object_map_->servant_map_->find (servant,
-                                                             entry);
-  if (result == 0)
-    {
-      if (entry->deactivated_)
-        result = -1;
-      else
-        ACE_NEW_RETURN (user_id,
-                        PortableServer::ObjectId (entry->user_id_),
-                        -1);
+        {
+          delete entry;
+        }
     }
 
   return result;
 }
 
 int
-TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant servant,
-                                                      PortableServer::ObjectId_out system_id,
-                                                      CORBA::Short &priority)
+TAO_Unique_Id_Strategy::find_user_id_using_servant (
+  PortableServer::Servant servant,
+  PortableServer::ObjectId_out user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->active_object_map_->servant_map_->find (servant,
-                                                             entry);
+  TAO_Active_Object_Map_Entry *entry {};
+  int result = this->active_object_map_->servant_map_->find (servant, entry);
+
   if (result == 0)
     {
       if (entry->deactivated_)
-        result = -1;
+        {
+          result = -1;
+        }
       else
         {
-          result = this->active_object_map_->id_hint_strategy_->system_id (system_id,
-                                                                           *entry);
+          ACE_NEW_RETURN (user_id,
+                          PortableServer::ObjectId (entry->user_id_),
+                          -1);
+        }
+    }
+
+  return result;
+}
+
+int
+TAO_Unique_Id_Strategy::find_system_id_using_servant (
+  PortableServer::Servant servant,
+  PortableServer::ObjectId_out system_id,
+  CORBA::Short &priority)
+{
+  TAO_Active_Object_Map_Entry *entry {};
+  int result = this->active_object_map_->servant_map_->find (servant,
+                                                             entry);
+  if (result == 0)
+    {
+      if (entry->deactivated_)
+        {
+          result = -1;
+        }
+      else
+        {
+          result =
+            this->active_object_map_->id_hint_strategy_->system_id (
+              system_id,
+              *entry);
           if (result == 0)
-            priority = entry->priority_;
+            {
+              priority = entry->priority_;
+            }
         }
     }
 
@@ -514,7 +608,8 @@ TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant se
 }
 
 CORBA::Boolean
-TAO_Unique_Id_Strategy::remaining_activations (PortableServer::Servant servant)
+TAO_Unique_Id_Strategy::remaining_activations (
+  PortableServer::Servant servant)
 {
   ACE_UNUSED_ARG (servant);
 
@@ -524,25 +619,28 @@ TAO_Unique_Id_Strategy::remaining_activations (PortableServer::Servant servant)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+#if !defined (CORBA_E_MICRO)
 int
-TAO_Multiple_Id_Strategy::is_servant_in_map (PortableServer::Servant,
-                                             int &)
+TAO_Multiple_Id_Strategy::is_servant_in_map (PortableServer::Servant, bool &)
 {
   return -1;
 }
 
 int
-TAO_Multiple_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
-                                              const PortableServer::ObjectId &user_id,
-                                              CORBA::Short priority,
-                                              TAO_Active_Object_Map_Entry *&entry)
+TAO_Multiple_Id_Strategy::bind_using_user_id (
+  PortableServer::Servant servant,
+  const PortableServer::ObjectId &user_id,
+  CORBA::Short priority,
+  TAO_Active_Object_Map_Entry *&entry)
 {
-  int result = this->active_object_map_->user_id_map_->find (user_id,
-                                                             entry);
+  int result = this->active_object_map_->user_id_map_->find (user_id, entry);
+
   if (result == 0)
     {
-      if (servant != 0)
-        entry->servant_ = servant;
+      if (servant != nullptr)
+        {
+          entry->servant_ = servant;
+        }
     }
   else
     {
@@ -558,64 +656,112 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
 
       if (result == 0)
         {
-          result = this->active_object_map_->user_id_map_->bind (entry->user_id_,
-                                                                 entry);
+          result =
+            this->active_object_map_->user_id_map_->bind (entry->user_id_,
+                                                          entry);
           if (result != 0)
             {
               this->active_object_map_->id_hint_strategy_->unbind (*entry);
               delete entry;
             }
+          else
+            {
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+              this->active_object_map_->monitor_->receive (
+                this->active_object_map_->user_id_map_->current_size ());
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
+            }
         }
       else
-        delete entry;
+        {
+          delete entry;
+        }
     }
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  if (result == 0 && TAO_debug_level > 7)
+    {
+      CORBA::String_var idstr (PortableServer::ObjectId_to_string (user_id));
+      CORBA::String_var repository_id (
+          servant ? servant->_repository_id () : 0);
+      ACE_CString hex_idstr;
+      hexstring (hex_idstr, idstr.in (), user_id.length ());
+
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_Multiple_Id_Strategy::"
+                  "bind_using_user_id: type=%C, id=%C\n",
+                  repository_id.in (),
+                  hex_idstr.c_str()
+                  ));
+    }
+#endif
 
   return result;
 }
 
 int
-TAO_Multiple_Id_Strategy::unbind_using_user_id (const PortableServer::ObjectId &user_id)
+TAO_Multiple_Id_Strategy::unbind_using_user_id (
+  const PortableServer::ObjectId &user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result = this->active_object_map_->user_id_map_->unbind (user_id,
                                                                entry);
   if (result == 0)
     {
+      if (TAO_debug_level > 7)
+        {
+          CORBA::String_var idstr (
+              PortableServer::ObjectId_to_string (entry->user_id_));
+          ACE_CString hex_idstr;
+          hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
+
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - TAO_Multiple_Id_Strategy::unbind_using_user_id: id=%C\n",
+                      hex_idstr.c_str()));
+        }
+
       result = this->active_object_map_->id_hint_strategy_->unbind (*entry);
 
       if (result == 0)
-        delete entry;
+        {
+          delete entry;
+        }
+
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+              this->active_object_map_->monitor_->receive (
+                this->active_object_map_->user_id_map_->current_size ());
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
     }
 
   return result;
 }
 
 int
-TAO_Multiple_Id_Strategy::find_user_id_using_servant (PortableServer::Servant servant,
-                                                      PortableServer::ObjectId_out user_id)
+TAO_Multiple_Id_Strategy::find_user_id_using_servant (
+  PortableServer::Servant,
+  PortableServer::ObjectId_out)
 {
-  ACE_UNUSED_ARG (servant);
-  ACE_UNUSED_ARG (user_id);
-
   return -1;
 }
 
 int
-TAO_Multiple_Id_Strategy::find_system_id_using_servant (PortableServer::Servant,
-                                                        PortableServer::ObjectId_out,
-                                                        CORBA::Short &)
+TAO_Multiple_Id_Strategy::find_system_id_using_servant (
+  PortableServer::Servant,
+  PortableServer::ObjectId_out,
+  CORBA::Short &)
 {
   return -1;
 }
 
 CORBA::Boolean
-TAO_Multiple_Id_Strategy::remaining_activations (PortableServer::Servant servant)
+TAO_Multiple_Id_Strategy::remaining_activations (
+  PortableServer::Servant servant)
 {
-  TAO_Active_Object_Map::user_id_map::iterator end
-    = this->active_object_map_->user_id_map_->end ();
+  TAO_Active_Object_Map::user_id_map::iterator end =
+    this->active_object_map_->user_id_map_->end ();
 
-  for (TAO_Active_Object_Map::user_id_map::iterator iter
-         = this->active_object_map_->user_id_map_->begin ();
+  for (TAO_Active_Object_Map::user_id_map::iterator iter =
+         this->active_object_map_->user_id_map_->begin ();
        iter != end;
        ++iter)
     {
@@ -623,38 +769,45 @@ TAO_Multiple_Id_Strategy::remaining_activations (PortableServer::Servant servant
       TAO_Active_Object_Map_Entry *entry = map_pair.second ();
 
       if (entry->servant_ == servant)
-        return 1;
+        {
+          return 1;
+        }
     }
 
   return 0;
 }
-
-TAO_Lifespan_Strategy::~TAO_Lifespan_Strategy (void)
-{
-}
+#endif
 
 void
-TAO_Lifespan_Strategy::set_active_object_map (TAO_Active_Object_Map *active_object_map)
+TAO_Lifespan_Strategy::set_active_object_map (
+  TAO_Active_Object_Map *active_object_map)
 {
   this->active_object_map_ = active_object_map;
 }
 
 int
-TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                                  const PortableServer::ObjectId &user_id,
-                                                                  PortableServer::Servant &servant,
-                                                                  TAO_Active_Object_Map_Entry *&entry)
+TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (
+  const PortableServer::ObjectId &system_id,
+  const PortableServer::ObjectId &user_id,
+  PortableServer::Servant &servant,
+  TAO_Active_Object_Map_Entry *&entry)
 {
   int result = this->active_object_map_->id_hint_strategy_->find (system_id,
                                                                   entry);
   if (result == 0)
     {
       if (entry->deactivated_)
-        result = -1;
+        {
+          result = -1;
+        }
       else if (entry->servant_ == 0)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-        servant = entry->servant_;
+        {
+          servant = entry->servant_;
+        }
     }
   else
     {
@@ -663,71 +816,95 @@ TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (const Portable
       if (result == 0)
         {
           if (entry->deactivated_)
-            result = -1;
+            {
+              result = -1;
+            }
           else if (entry->servant_ == 0)
-            result = -1;
+            {
+              result = -1;
+            }
           else
-            servant = entry->servant_;
+            {
+              servant = entry->servant_;
+            }
         }
     }
 
   if (result == -1)
-    entry = 0;
+    {
+      entry = 0;
+    }
 
   return result;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
+#if !defined (CORBA_E_MICRO)
 int
-TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                                   const PortableServer::ObjectId &user_id,
-                                                                   PortableServer::Servant &servant,
-                                                                   TAO_Active_Object_Map_Entry *&entry)
+TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id (
+  const PortableServer::ObjectId &system_id,
+  const PortableServer::ObjectId &user_id,
+  PortableServer::Servant &servant,
+TAO_Active_Object_Map_Entry *&entry)
 {
-  int result = this->active_object_map_->id_hint_strategy_->find (system_id,
-                                                                  entry);
-  if (result == 0 &&
-      user_id == entry->user_id_)
+  int result =
+    this->active_object_map_->id_hint_strategy_->find (system_id,
+                                                       entry);
+  if (result == 0 && user_id == entry->user_id_)
     {
       if (entry->deactivated_)
-        result = -1;
+        {
+          result = -1;
+        }
       else if (entry->servant_ == 0)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-        servant = entry->servant_;
+        {
+          servant = entry->servant_;
+        }
     }
   else
     {
-      result = this->active_object_map_->user_id_map_->find (user_id,
-                                                             entry);
+      result =
+        this->active_object_map_->user_id_map_->find (user_id, entry);
+
       if (result == 0)
         {
           if (entry->deactivated_)
-            result = -1;
+            {
+              result = -1;
+            }
           else if (entry->servant_ == 0)
-            result = -1;
+            {
+              result = -1;
+            }
           else
-            servant = entry->servant_;
+            {
+              servant = entry->servant_;
+            }
         }
     }
 
   if (result == -1)
-    entry = 0;
+    {
+      entry = 0;
+    }
 
   return result;
 }
-
-TAO_Id_Assignment_Strategy::~TAO_Id_Assignment_Strategy (void)
-{
-}
+#endif
 
 void
-TAO_Id_Assignment_Strategy::set_active_object_map (TAO_Active_Object_Map *active_object_map)
+TAO_Id_Assignment_Strategy::set_active_object_map (
+  TAO_Active_Object_Map *active_object_map)
 {
   this->active_object_map_ = active_object_map;
 }
 
+#if !defined (CORBA_E_MICRO)
 int
 TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant,
                                             CORBA::Short,
@@ -735,18 +912,21 @@ TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant,
 {
   return -1;
 }
+#endif
 
 int
-TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Servant servant,
-                                                             CORBA::Short priority,
-                                                             TAO_Active_Object_Map_Entry *&entry)
+TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
+  PortableServer::Servant servant,
+  CORBA::Short priority,
+  TAO_Active_Object_Map_Entry *&entry)
 {
   ACE_NEW_RETURN (entry,
                   TAO_Active_Object_Map_Entry,
                   -1);
 
-  int result = this->active_object_map_->user_id_map_->bind_create_key (entry,
-                                                                        entry->user_id_);
+  int result =
+    this->active_object_map_->user_id_map_->bind_create_key (entry,
+                                                             entry->user_id_);
   if (result == 0)
     {
       entry->servant_ = servant;
@@ -756,15 +936,25 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Ser
 
       if (result == 0)
         {
-          if (servant != 0)
-            result = this->active_object_map_->servant_map_->bind (entry->servant_,
-                                                                   entry);
+          if (servant != nullptr)
+            {
+              result =
+                this->active_object_map_->servant_map_->bind (entry->servant_,
+                                                              entry);
+            }
 
           if (result != 0)
             {
               this->active_object_map_->user_id_map_->unbind (entry->user_id_);
               this->active_object_map_->id_hint_strategy_->unbind (*entry);
               delete entry;
+            }
+          else
+            {
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+              this->active_object_map_->monitor_->receive (
+                this->active_object_map_->servant_map_->current_size ());
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
             }
         }
       else
@@ -774,21 +964,45 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Ser
         }
     }
   else
-    delete entry;
+    {
+      delete entry;
+    }
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  if (result == 0 && TAO_debug_level > 7)
+    {
+      CORBA::String_var idstr (
+          PortableServer::ObjectId_to_string (entry->user_id_));
+      CORBA::String_var repository_id (
+          servant ? servant->_repository_id () : 0);
+      ACE_CString hex_idstr;
+      hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
+
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_System_Id_With_Unique_Id_Strategy::"
+                  "bind_using_system_id: type=%C, id=%C\n",
+                  repository_id.in (),
+                  hex_idstr.c_str()
+                  ));
+    }
+#endif
 
   return result;
 }
 
+#if !defined (CORBA_E_MICRO)
 int
-TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (PortableServer::Servant servant,
-                                                               CORBA::Short priority,
-                                                               TAO_Active_Object_Map_Entry *&entry)
+TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
+  PortableServer::Servant servant,
+  CORBA::Short priority,
+  TAO_Active_Object_Map_Entry *&entry)
 {
   ACE_NEW_RETURN (entry,
                   TAO_Active_Object_Map_Entry,
                   -1);
-  int result = this->active_object_map_->user_id_map_->bind_create_key (entry,
-                                                                        entry->user_id_);
+  int result =
+    this->active_object_map_->user_id_map_->bind_create_key (entry,
+                                                             entry->user_id_);
   if (result == 0)
     {
       entry->servant_ = servant;
@@ -801,18 +1015,39 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (PortableServer::S
           this->active_object_map_->user_id_map_->unbind (entry->user_id_);
           delete entry;
         }
+
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+      this->active_object_map_->monitor_->receive (
+        this->active_object_map_->user_id_map_->current_size ());
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
     }
   else
-    delete entry;
+    {
+      delete entry;
+    }
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  if (result == 0 && TAO_debug_level > 7)
+    {
+      CORBA::String_var idstr (
+          PortableServer::ObjectId_to_string (entry->user_id_));
+      CORBA::String_var repository_id (
+          servant ? servant->_repository_id () : 0);
+      ACE_CString hex_idstr;
+      hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
+
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_System_Id_With_Multiple_Id_Strategy::"
+                  "bind_using_system_id: type=%C, id=%C\n",
+                  repository_id.in (),
+                  hex_idstr.c_str()
+                  ));
+    }
+#endif
 
   return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
-
-TAO_Id_Hint_Strategy::~TAO_Id_Hint_Strategy (void)
-{
-}
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -821,16 +1056,12 @@ TAO_Active_Hint_Strategy::TAO_Active_Hint_Strategy (CORBA::ULong map_size)
 {
 }
 
-TAO_Active_Hint_Strategy::~TAO_Active_Hint_Strategy (void)
-{
-}
-
 int
-TAO_Active_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
-                                       PortableServer::ObjectId &user_id)
+TAO_Active_Hint_Strategy::recover_key (
+  const PortableServer::ObjectId &system_id,
+  PortableServer::ObjectId &user_id)
 {
-  return this->system_id_map_.recover_key (system_id,
-                                           user_id);
+  return this->system_id_map_.recover_key (system_id, user_id);
 }
 
 int
@@ -857,7 +1088,7 @@ TAO_Active_Hint_Strategy::find (const PortableServer::ObjectId &system_id,
 }
 
 size_t
-TAO_Active_Hint_Strategy::hint_size (void)
+TAO_Active_Hint_Strategy::hint_size ()
 {
   return ACE_Active_Map_Manager_Key::size ();
 }
@@ -874,10 +1105,6 @@ TAO_Active_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_No_Hint_Strategy::~TAO_No_Hint_Strategy (void)
-{
-}
-
 int
 TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
                                    PortableServer::ObjectId &user_id)
@@ -892,33 +1119,26 @@ TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
 }
 
 int
-TAO_No_Hint_Strategy::bind (TAO_Active_Object_Map_Entry &entry)
+TAO_No_Hint_Strategy::bind (TAO_Active_Object_Map_Entry &)
 {
-  ACE_UNUSED_ARG (entry);
-
   return 0;
 }
 
 int
-TAO_No_Hint_Strategy::unbind (TAO_Active_Object_Map_Entry &entry)
+TAO_No_Hint_Strategy::unbind (TAO_Active_Object_Map_Entry &)
 {
-  ACE_UNUSED_ARG (entry);
-
   return 0;
 }
 
 int
-TAO_No_Hint_Strategy::find (const PortableServer::ObjectId &system_id,
-                            TAO_Active_Object_Map_Entry *&entry)
+TAO_No_Hint_Strategy::find (const PortableServer::ObjectId &,
+                            TAO_Active_Object_Map_Entry *&)
 {
-  ACE_UNUSED_ARG (system_id);
-  ACE_UNUSED_ARG (entry);
-
   return -1;
 }
 
 size_t
-TAO_No_Hint_Strategy::hint_size (void)
+TAO_No_Hint_Strategy::hint_size ()
 {
   return 0;
 }
@@ -933,220 +1153,4 @@ TAO_No_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr<TAO_Id_Uniqueness_Strategy>;
-template class auto_ptr<TAO_Lifespan_Strategy>;
-template class auto_ptr<TAO_Id_Assignment_Strategy>;
-template class auto_ptr<TAO_Id_Hint_Strategy>;
-template class auto_ptr<TAO_Active_Object_Map::servant_map>;
-template class auto_ptr<TAO_Active_Object_Map::user_id_map>;
-
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Strategy>;
-template class ACE_Auto_Basic_Ptr<TAO_Lifespan_Strategy>;
-template class ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Strategy>;
-template class ACE_Auto_Basic_Ptr<TAO_Id_Hint_Strategy>;
-template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::servant_map>;
-template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::user_id_map>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-
-// Common typedefs.
-typedef PortableServer::ObjectId id;
-typedef PortableServer::Servant servant;
-typedef TAO_Active_Object_Map_Entry *value;
-
-typedef ACE_Pair<id, value> id_expanded_value;
-typedef ACE_Reference_Pair<const id, value> id_value_type;
-typedef ACE_Reference_Pair<const servant, value> servant_value_type;
-typedef ACE_Equal_To<id> id_compare_keys;
-typedef ACE_Equal_To<servant> servant_compare_keys;
-typedef TAO_ObjectId_Hash id_hash;
-typedef TAO_Servant_Hash servant_hash;
-typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
-
-template class ACE_Noop_Key_Generator<servant>;
-
-// Common
-template class ACE_Reference_Pair<const id, value>;
-template class ACE_Reference_Pair<const servant, value>;
-
-// Map and iterator classes.
-template class ACE_Map<id, value>;
-template class ACE_Map<servant, value>;
-template class ACE_Iterator<id_value_type>;
-template class ACE_Iterator<servant_value_type>;
-template class ACE_Reverse_Iterator<id_value_type>;
-template class ACE_Reverse_Iterator<servant_value_type>;
-
-// Iterator base classes.
-template class ACE_Iterator_Impl<id_value_type>;
-template class ACE_Iterator_Impl<servant_value_type>;
-template class ACE_Reverse_Iterator_Impl<id_value_type>;
-template class ACE_Reverse_Iterator_Impl<servant_value_type>;
-
-// Active Map Manager related.
-template class ACE_Pair<id, value>;
-template class ACE_Active_Map_Manager_Adapter<id, value, TAO_Ignore_Original_Key_Adapter>;
-template class ACE_Active_Map_Manager_Adapter<id, value, TAO_Preserve_Original_Key_Adapter>;
-template class ACE_Active_Map_Manager_Iterator_Adapter<id_value_type, id_expanded_value>;
-template class ACE_Active_Map_Manager_Reverse_Iterator_Adapter<id_value_type, id_expanded_value>;
-template class ACE_Active_Map_Manager<id_expanded_value>;
-template class ACE_Map_Manager<ACE_Active_Map_Manager_Key, id_expanded_value, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, id_expanded_value, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_Active_Map_Manager_Key, id_expanded_value, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, id_expanded_value, ACE_Null_Mutex>;
-template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, id_expanded_value>;
-
-// Hash Map Manager related.
-template class ACE_Hash_Map_Manager_Ex_Adapter<id, value, id_hash, id_compare_keys, TAO_Incremental_Key_Generator>;
-template class ACE_Hash_Map_Manager_Ex_Adapter<servant, value, servant_hash, servant_compare_keys, noop_servant_key_generator>;
-template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<id_value_type, id, value, id_hash, id_compare_keys>;
-template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<servant_value_type, servant, value, servant_hash, servant_compare_keys>;
-template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<id_value_type, id, value, id_hash, id_compare_keys>;
-template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<servant_value_type, servant, value, servant_hash, servant_compare_keys>;
-template class ACE_Hash_Map_Manager_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<id, value>;
-template class ACE_Hash_Map_Entry<servant, value>;
-template class ACE_Equal_To<id>;
-template class ACE_Equal_To<servant>;
-
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
-// Map Manager related.
-template class ACE_Map_Manager_Iterator_Adapter<id_value_type, id, value>;
-template class ACE_Map_Manager_Iterator_Adapter<servant_value_type, servant, value>;
-template class ACE_Map_Manager_Reverse_Iterator_Adapter<id_value_type, id, value>;
-template class ACE_Map_Manager_Reverse_Iterator_Adapter<servant_value_type, servant, value>;
-template class ACE_Map_Manager_Adapter<id, value, TAO_Incremental_Key_Generator>;
-template class ACE_Map_Manager_Adapter<servant, value, noop_servant_key_generator>;
-template class ACE_Map_Manager<id, value, ACE_Null_Mutex>;
-template class ACE_Map_Manager<servant, value, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<id, value, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<servant, value, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<id, value, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<servant, value, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<id, value, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<servant, value, ACE_Null_Mutex>;
-template class ACE_Map_Entry<id, value>;
-template class ACE_Map_Entry<servant, value>;
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr<TAO_Id_Uniqueness_Strategy>
-#pragma instantiate auto_ptr<TAO_Lifespan_Strategy>
-#pragma instantiate auto_ptr<TAO_Id_Assignment_Strategy>
-#pragma instantiate auto_ptr<TAO_Id_Hint_Strategy>
-#pragma instantiate auto_ptr<TAO_Active_Object_Map::servant_map>
-#pragma instantiate auto_ptr<TAO_Active_Object_Map::user_id_map>
-
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Strategy>
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Lifespan_Strategy>
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Strategy>
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Hint_Strategy>
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::servant_map>
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::user_id_map>
-#  endif  /* ACE_LACKS_AUTO_PTR */
-
-// Common typedefs.
-typedef PortableServer::ObjectId id;
-typedef PortableServer::Servant servant;
-typedef TAO_Active_Object_Map_Entry * value;
-
-typedef ACE_Pair<id, value> id_expanded_value;
-typedef ACE_Reference_Pair<const id, value> id_value_type;
-typedef ACE_Reference_Pair<const servant, value> servant_value_type;
-typedef ACE_Equal_To<id> id_compare_keys;
-typedef ACE_Equal_To<servant> servant_compare_keys;
-typedef TAO_ObjectId_Hash id_hash;
-typedef TAO_Servant_Hash servant_hash;
-typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
-
-#pragma instantiate ACE_Noop_Key_Generator<servant>
-
-// Common
-#pragma instantiate ACE_Reference_Pair<const id, value>
-#pragma instantiate ACE_Reference_Pair<const servant, value>
-
-// Map and iterator classes.
-#pragma instantiate ACE_Map<id, value>
-#pragma instantiate ACE_Map<servant, value>
-#pragma instantiate ACE_Iterator<id_value_type>
-#pragma instantiate ACE_Iterator<servant_value_type>
-#pragma instantiate ACE_Reverse_Iterator<id_value_type>
-#pragma instantiate ACE_Reverse_Iterator<servant_value_type>
-
-// Iterator base classes.
-#pragma instantiate ACE_Iterator_Impl<id_value_type>
-#pragma instantiate ACE_Iterator_Impl<servant_value_type>
-#pragma instantiate ACE_Reverse_Iterator_Impl<id_value_type>
-#pragma instantiate ACE_Reverse_Iterator_Impl<servant_value_type>
-
-// Active Map Manager related.
-#pragma instantiate ACE_Pair<id, value>
-#pragma instantiate ACE_Active_Map_Manager_Adapter<id, value, TAO_Ignore_Original_Key_Adapter>
-#pragma instantiate ACE_Active_Map_Manager_Adapter<id, value, TAO_Preserve_Original_Key_Adapter>
-#pragma instantiate ACE_Active_Map_Manager_Iterator_Adapter<id_value_type, id_expanded_value>
-#pragma instantiate ACE_Active_Map_Manager_Reverse_Iterator_Adapter<id_value_type, id_expanded_value>
-#pragma instantiate ACE_Active_Map_Manager<id_expanded_value>
-#pragma instantiate ACE_Map_Manager<ACE_Active_Map_Manager_Key, id_expanded_value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, id_expanded_value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_Active_Map_Manager_Key, id_expanded_value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, id_expanded_value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, id_expanded_value>
-
-// Hash Map Manager related.
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<id, value, id_hash, id_compare_keys, TAO_Incremental_Key_Generator>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<servant, value, servant_hash, servant_compare_keys, noop_servant_key_generator>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<id_value_type, id, value, id_hash, id_compare_keys>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<servant_value_type, servant, value, servant_hash, servant_compare_keys>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<id_value_type, id, value, id_hash, id_compare_keys>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<servant_value_type, servant, value, servant_hash, servant_compare_keys>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<id, value>
-#pragma instantiate ACE_Hash_Map_Entry<servant, value>
-#pragma instantiate ACE_Equal_To<id>
-#pragma instantiate ACE_Equal_To<servant>
-
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
-// Map Manager related.
-#pragma instantiate ACE_Map_Manager_Iterator_Adapter<id_value_type, id, value>
-#pragma instantiate ACE_Map_Manager_Iterator_Adapter<servant_value_type, servant, value>
-#pragma instantiate ACE_Map_Manager_Reverse_Iterator_Adapter<id_value_type, id, value>
-#pragma instantiate ACE_Map_Manager_Reverse_Iterator_Adapter<servant_value_type, servant, value>
-#pragma instantiate ACE_Map_Manager_Adapter<id, value, TAO_Incremental_Key_Generator>
-#pragma instantiate ACE_Map_Manager_Adapter<servant, value, noop_servant_key_generator>
-#pragma instantiate ACE_Map_Manager<id, value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Manager<servant, value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<id, value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<servant, value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<id, value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<servant, value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<id, value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<servant, value, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<id, value>
-#pragma instantiate ACE_Map_Entry<servant, value>
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

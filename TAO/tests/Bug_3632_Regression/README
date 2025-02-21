@@ -1,0 +1,10 @@
+
+
+C++ mapping says that "For bounded sequences, the maximum length is part of the
+type and cannot be set or modified..." and later "For a bounded sequence,
+maximum() always returns the bound of the sequence as given in its OMG IDL type
+declaration."
+
+Also it says that "For a bounded sequence, attempting to set the current length
+to a value larger than the maximum length given in the OMG IDL specification
+produces undefined behavior".

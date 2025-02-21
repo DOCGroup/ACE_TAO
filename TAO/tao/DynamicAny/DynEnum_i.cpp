@@ -1,51 +1,45 @@
-// $Id$
-
-#include "DynEnum_i.h"
-#include "DynAnyFactory.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+// -*- C++ -*-
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "tao/DynamicAny/DynEnum_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/CDR.h"
 
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (DynamicAny,
-           DynEnum_i,
-           "$Id$")
-
-
-TAO_DynEnum_i::TAO_DynEnum_i (void)
+TAO_DynEnum_i::TAO_DynEnum_i (CORBA::Boolean allow_truncation)
+  : TAO_DynCommon (allow_truncation)
+  , value_ (0u)
 {
 }
 
-TAO_DynEnum_i::~TAO_DynEnum_i (void)
+TAO_DynEnum_i::~TAO_DynEnum_i ()
 {
 }
 
 void
-TAO_DynEnum_i::init_common (void)
+TAO_DynEnum_i::init_common ()
 {
-  this->ref_to_component_ = 0;
-  this->container_is_destroying_ = 0;
-  this->has_components_ = 0;
-  this->destroyed_ = 0;
+  this->ref_to_component_ = false;
+  this->container_is_destroying_ = false;
+  this->has_components_ = false;
+  this->destroyed_ = false;
   this->current_position_ = -1;
   this->component_count_ = 0;
 }
 
 void
-TAO_DynEnum_i::init (const CORBA::Any &any
-                     ACE_ENV_ARG_DECL)
+TAO_DynEnum_i::init (const CORBA::Any &any)
 {
   CORBA::TypeCode_var tc = any.type ();
-
-  CORBA::TCKind kind =
-    TAO_DynAnyFactory::unalias (tc.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind != CORBA::tk_enum)
     {
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
 
   this->type_ = tc;
@@ -54,9 +48,12 @@ TAO_DynEnum_i::init (const CORBA::Any &any
 
   if (impl->encoded ())
     {
-      TAO::Unknown_IDL_Type *unk =
+      TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
+      if (!unk)
+        throw CORBA::INTERNAL ();
+
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
@@ -74,16 +71,13 @@ TAO_DynEnum_i::init (const CORBA::Any &any
 }
 
 void
-TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc
-                     ACE_ENV_ARG_DECL)
+TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc);
 
   if (kind != CORBA::tk_enum)
     {
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
@@ -96,8 +90,7 @@ TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynEnum_i *
-TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref
-                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
@@ -110,42 +103,30 @@ TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref
 // ****************************************************************
 
 char *
-TAO_DynEnum_i::get_as_string (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynEnum_i::get_as_string ()
 {
-  const char *retval =
-    this->type_.in ()->member_name (this->value_
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+
+  const char *retval = ct.in ()->member_name (this->value_);
 
   return CORBA::string_dup (retval);
 }
 
 void
-TAO_DynEnum_i::set_as_string (const char *value_as_string
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::InvalidValue
-    ))
+TAO_DynEnum_i::set_as_string (const char *value_as_string)
 {
-  CORBA::ULong count =
-    this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+
+  CORBA::ULong count = ct.in ()->member_count ();
 
   CORBA::ULong i;
   const char *temp = 0;
 
   for (i = 0; i < count; ++i)
     {
-      temp = this->type_.in ()->member_name (i
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      temp = ct.in ()->member_name (i);
 
-      if (!ACE_OS::strcmp (value_as_string,
-                           temp))
+      if (!ACE_OS::strcmp (value_as_string, temp))
         {
           break;
         }
@@ -157,30 +138,21 @@ TAO_DynEnum_i::set_as_string (const char *value_as_string
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::InvalidValue ());
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 }
 
 CORBA::ULong
-TAO_DynEnum_i::get_as_ulong (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynEnum_i::get_as_ulong ()
 {
   return this->value_;
 }
 
 void
-TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
-                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::InvalidValue
-    ))
+TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
 {
-  CORBA::ULong max =
-    this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+  CORBA::ULong const max = ct.in ()->member_count ();
 
   if (value_as_ulong < max)
     {
@@ -188,25 +160,17 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::InvalidValue ());
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 }
 
 // ****************************************************************
 
 void
-TAO_DynEnum_i::from_any (const CORBA::Any& any
-                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
+TAO_DynEnum_i::from_any (const CORBA::Any& any)
 {
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind == CORBA::tk_enum)
     {
@@ -215,9 +179,12 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
 
       if (impl->encoded ())
         {
-          TAO::Unknown_IDL_Type *unk =
+          TAO::Unknown_IDL_Type * const unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-            
+
+          if (!unk)
+            throw CORBA::INTERNAL ();
+
           // We don't want unk's rd_ptr to move, in case we are shared by
           // another Any, so we use this to copy the state, not the buffer.
           TAO_InputCDR for_reading (unk->_tao_get_cdr ());
@@ -233,15 +200,12 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 
 CORBA::Any_ptr
-TAO_DynEnum_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynEnum_i::to_any ()
 {
   TAO_OutputCDR out_cdr;
 
@@ -251,7 +215,6 @@ TAO_DynEnum_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   TAO_InputCDR in_cdr (out_cdr);
   TAO::Unknown_IDL_Type *unk = 0;
@@ -259,42 +222,36 @@ TAO_DynEnum_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   retval->replace (unk);
   return retval;
 }
 
 CORBA::Boolean
-TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
-                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
 {
-  CORBA::TypeCode_var tc = rhs->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::TypeCode_var tc = rhs->type ();
 
-  CORBA::Boolean equivalent = tc->equivalent (this->type_.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::Boolean equivalent = tc->equivalent (this->type_.in ());
 
   if (!equivalent)
     {
-      return 0;
+      return false;
     }
 
-  CORBA::Any_var any = rhs->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::Any_var any = rhs->to_any ();
 
   TAO::Any_Impl *impl = any->impl ();
   CORBA::ULong value;
 
   if (impl->encoded ())
     {
-      TAO::Unknown_IDL_Type *unk =
+      TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
+      if (!unk)
+        throw CORBA::INTERNAL ();
+
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
@@ -312,35 +269,28 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
 }
 
 void
-TAO_DynEnum_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynEnum_i::destroy ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (!this->ref_to_component_ || this->container_is_destroying_)
     {
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynEnum_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
+TAO_DynEnum_i::current_component ()
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                    DynamicAny::DynAny::_nil ());
+  throw DynamicAny::DynAny::TypeMismatch ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

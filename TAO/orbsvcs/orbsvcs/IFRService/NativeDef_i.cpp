@@ -1,15 +1,9 @@
-// $Id$
-
-#include "NativeDef_i.h"
-#include "Repository_i.h"
+#include "orbsvcs/IFRService/NativeDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           NativeDef_i,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_NativeDef_i::TAO_NativeDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -19,32 +13,28 @@ TAO_NativeDef_i::TAO_NativeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_NativeDef_i::~TAO_NativeDef_i (void)
+TAO_NativeDef_i::~TAO_NativeDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_NativeDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_NativeDef_i::def_kind ()
 {
   return CORBA::dk_Native;
 }
 
 CORBA::TypeCode_ptr
-TAO_NativeDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_NativeDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  this->update_key ();
 
-  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i ();
 }
 
 CORBA::TypeCode_ptr
-TAO_NativeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_NativeDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -57,6 +47,7 @@ TAO_NativeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             name);
 
   return this->repo_->tc_factory ()->create_native_tc (id.c_str (),
-                                                       name.c_str ()
-                                                       ACE_ENV_ARG_PARAMETER);
+                                                       name.c_str ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

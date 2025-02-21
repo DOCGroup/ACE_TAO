@@ -1,0 +1,8 @@
+// -*- MPC -*-
+project(*Ntf Cons): notifytest {
+  exename = Consumer
+
+  Source_Files {
+    Consumer.cpp
+  }
+}

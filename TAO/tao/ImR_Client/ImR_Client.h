@@ -4,8 +4,6 @@
 /**
  *  @file    ImR_Client.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -16,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "imr_client_export.h"
+#include "tao/ImR_Client/imr_client_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +23,8 @@
 #include "tao/PortableServer/ImR_Client_Adapter.h"
 
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ServerObject_i;
 
@@ -46,30 +46,38 @@ namespace TAO
     {
     public:
       /// Constructor.
-      ImR_Client_Adapter_Impl (void);
+      ImR_Client_Adapter_Impl ();
 
       /// Used to force the initialization of the PortableServer code.
-      static int Initializer (void);
+      static int Initializer ();
 
       /// ImplRepo helper method, notify the ImplRepo on startup
-      virtual void imr_notify_startup (TAO_Root_POA* poa ACE_ENV_ARG_DECL);
+      virtual void imr_notify_startup (TAO_Root_POA* poa);
 
       /// ImplRepo helper method, notify the ImplRepo on shutdown
-      virtual void imr_notify_shutdown (TAO_Root_POA* poa ACE_ENV_ARG_DECL);
+      virtual void imr_notify_shutdown (TAO_Root_POA* poa);
 
+      /// ImplRepo helper method, create an IMR-ified object for a
+      /// key with a given type
+      virtual CORBA::Object_ptr imr_key_to_object(TAO_Root_POA* poa,
+                                                  const TAO::ObjectKey &key,
+                                                  const char *type_id) const;
     private:
       /// Implementation Repository Server Object
       ServerObject_i *server_object_;
     };
-
-    ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
-    ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
 
     static int
     TAO_Requires_ImR_Client_Initializer =
       TAO::ImR_Client::ImR_Client_Adapter_Impl::Initializer ();
   }
 }
+
+
+ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
+ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -3,8 +3,6 @@
 /**
  *  @file   Locator_XMLHandler.h
  *
- *  $Id$
- *
  *  @author Justin Michel <michel_j@ociweb.com>
  */
 //=============================================================================
@@ -13,76 +11,80 @@
 #define Locator_XMLHandler_H
 
 #include "ACEXML/common/DefaultHandler.h"
+#include "tao/ORB.h"
+#include "Server_Info.h"
+#include "Activator_Info.h"
 
-#include "ace/Vector_T.h"
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class XML_Backing_Store;
 /**
- * Callback SAX XML Handler for parsing XML.
+ * Callback SAX XML Handler for parsing Locator XML.
  */
 class Locator_XMLHandler : public ACEXML_DefaultHandler
 {
 public:
-
+  typedef std::pair<ACE_CString, ACE_CString> NameValue;
+  typedef std::vector<NameValue> NameValues;
   // XML ELEMENT names
-  static const char* ROOT_TAG;
-  static const char* SERVER_INFO_TAG;
-  static const char* ENVIRONMENT_TAG;
-  static const char* ACTIVATOR_INFO_TAG;
+  static const ACE_TCHAR* ROOT_TAG;
+  static const ACE_TCHAR* SERVER_INFO_TAG;
+  static const ACE_TCHAR* ENVIRONMENT_TAG;
+  static const ACE_TCHAR* ACTIVATOR_INFO_TAG;
+
+  static const ACE_TCHAR* SERVER_TAG;
+  static const ACE_TCHAR* POANAME_TAG;
+  static const ACE_TCHAR* JACORB_TAG;
+  static const ACE_TCHAR* ACTNAME_TAG;
+  static const ACE_TCHAR* CMDLINE_TAG;
+  static const ACE_TCHAR* DIR_TAG;
+  static const ACE_TCHAR* MODE_TAG;
+  static const ACE_TCHAR* LIMIT_TAG;
+  static const ACE_TCHAR* PARTIOR_TAG;
+  static const ACE_TCHAR* IOR_TAG;
+  static const ACE_TCHAR* STARTED_TAG;
+  static const ACE_TCHAR* PEER_TAG;
+  static const ACE_TCHAR* PID_TAG;
+  static const ACE_TCHAR* KEYNAME_TAG;
+  static const ACE_TCHAR* ALTKEY_TAG;
 
   struct EnvVar {
-    ACE_CString name;
-    ACE_CString value;
+    ACE_TString name;
+    ACE_TString value;
     bool operator==(const EnvVar&) const; // To allow Vector explicit instantiation
     bool operator!=(const EnvVar&) const; // To allow Vector explicit instantiation
   };
 
-  typedef ACE_Vector<EnvVar> EnvList;
+  typedef std::vector<EnvVar> EnvList;
+  typedef std::vector<ACE_CString> PeerList;
 
-  struct Callback {
-    virtual ~Callback() {}
- 
-    virtual void next_server (const ACE_CString& server_name,
-      const ACE_CString& aname, const ACE_CString& startup_cmd,
-      const EnvList& env_vars, const ACE_CString& working_dir,
-      const ACE_CString& actmode, int start_limit,
-      const ACE_CString& partial_ior, const ACE_CString& ior) = 0;
+  /// constructor
+  /// @param repo the repo to update based on XML
+  Locator_XMLHandler (XML_Backing_Store& repo);
 
-    virtual void next_activator (const ACE_CString& activator_name,
-                                 long token,
-                                 const ACE_CString& ior) = 0;
-  };
-
-  Locator_XMLHandler (Callback& cb);
-
+  /// provide implementation for handling a new XML element
   virtual void startElement (const ACEXML_Char* namespaceURI,
                              const ACEXML_Char* localName,
                              const ACEXML_Char* qName,
-                             ACEXML_Attributes* atts ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
+                             ACEXML_Attributes* atts);
 
+  /// provide implementation for handling terminating an XML element
   virtual void endElement (const ACEXML_Char* namespaceURI,
                            const ACEXML_Char* localName,
-                           const ACEXML_Char* qName ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((ACEXML_SAXException));
+                           const ACEXML_Char* qName);
 
  private:
-
-  // callback on completion of an element
-  Callback& callback_;
-
-  ACE_CString server_name_;
-  ACE_CString activator_name_;
-  ACE_CString command_line_;
-  ACE_CString activation_;
-  ACE_CString working_dir_;
-  ACE_CString server_object_ior_;
-  ACE_CString partial_ior_;
-  int start_limit_;
+  /// the repository
+  XML_Backing_Store& repo_;
+  Server_Info *si_;
+  bool server_started_;
+  NameValues extra_params_;
   EnvList env_vars_;
+  PeerList peer_list_;
 };
 
 #endif /* Locator_XMLHandler_H */

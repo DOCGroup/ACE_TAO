@@ -1,90 +1,87 @@
-//$Id$
 #ifndef DT_CREATOR_H
 #define DT_CREATOR_H
 
-#include "orbsvcs/CosNamingC.h"
-#include "ace/Service_Config.h"
-#include "ace/Service_Object.h"
-#include "tao/RTScheduling/RTScheduler.h"
-#include "ace/Arg_Shifter.h"
 #include "POA_Holder.h"
 #include "Job_i.h"
 #include "Synch_i.h"
+#include "rtschedtestlib_export.h"
+
+#include "tao/RTScheduling/RTScheduler.h"
+#include "orbsvcs/CosNamingC.h"
+
+#include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/High_Res_Timer.h"
 
 class Thread_Task;
 class Task;
-
 
 typedef Thread_Task **DT_LIST;
 typedef POA_Holder **POA_LIST;
 typedef Job_i **JOB_LIST;
 
-class DT_Creator : public ACE_Service_Object
+class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 {
  public:
-  DT_Creator (void);
+  DT_Creator ();
 
-  virtual ~DT_Creator (void);
+  virtual ~DT_Creator ();
 
-  int init (int argc, char *argv []);
+  int init (int argc, ACE_TCHAR *argv []);
 
   int dt_task_init (ACE_Arg_Shifter& arg_shifter);
 
-  virtual void create_distributable_threads (RTScheduling::Current_ptr  current
-					     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual void create_distributable_threads (RTScheduling::Current_ptr  current);
 
-  void activate_poa_list (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void activate_job_list (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void activate_schedule (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void activate_poa_list ();
+  void activate_job_list ();
+  void activate_schedule ();
 
-  virtual void yield (int suspend_time,
-		      Thread_Task* task) = 0;
+  virtual void yield (time_t suspend_time,
+                      Thread_Task* task) = 0;
 
-  virtual void wait (void) = 0;
+  virtual void wait () = 0;
 
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
-  
+
   virtual Thread_Task* create_thr_task (int importance,
-					int start_time,
-					int load,
-					int iter,
-					int dist,
-					char *job_name) = 0;
-  //  virtual Task* task (void) = 0;
-  
+          time_t start_time,
+          int load,
+          int iter,
+          int dist,
+          char *job_name) = 0;
+  //  virtual Task* task () = 0;
+
   /// Resolve the naming service.
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service ();
 
-  int dt_count (void);
+  int dt_count ();
 
-  void dt_ended (void);
-  void job_ended (void);
+  void dt_ended ();
+  void job_ended ();
 
-  void check_ifexit (void);
+  void check_ifexit ();
 
   void log_msg (char* msg);
 
   void orb (CORBA::ORB_ptr);
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
-  ACE_Time_Value* base_time (void);  
-  void base_time (ACE_Time_Value*);  
+  ACE_Time_Value* base_time ();
+  void base_time (ACE_Time_Value*);
 
-  ACE_hrtime_t base_hr_time (void);  
+  ACE_hrtime_t base_hr_time ();
 
-  virtual int total_load (void) = 0;
+  virtual int total_load () = 0;
 
-  RTScheduling::Current_ptr current (void); 
+  Synch_i* synch ();
 
-  Synch_i* synch (void);
+  void register_synch_obj ();
 
-  void register_synch_obj (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int activate_root_poa ();
 
-  int activate_root_poa (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  
  protected:
-
-
   DT_LIST dt_list_;
   POA_LIST poa_list_;
   JOB_LIST job_list_;
@@ -100,17 +97,12 @@ class DT_Creator : public ACE_Service_Object
   int active_job_count_;
   char** log;
   ACE_Time_Value* base_time_;
-  RTScheduling::Current_var current_; 
-  /// RT ORB
-  RTCORBA::RTORB_var rt_orb_;
-  /// Reference to the root poa.
-  PortableServer::POA_var root_poa_;
   /// A naming context.
   CosNaming::NamingContextExt_var naming_;
-  char* file_name_;
-  char* log_file_name_;
-  ACE_UINT32 gsf_;
-  Synch_i* synch_;
+  ACE_TString file_name_;
+  ACE_TString log_file_name_;
+  ACE_High_Res_Timer::global_scale_factor_type gsf_;
+  PortableServer::Servant_var<Synch_i> synch_;
 };
 
 

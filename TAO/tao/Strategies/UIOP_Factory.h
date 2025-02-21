@@ -1,18 +1,13 @@
 // -*- C++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   UIOP_Factory.h
-//
-// = AUTHOR
-//   Fred Kuhns <fredk@cs.wustl.edu>
-//   Ossama Othman <othman@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file   UIOP_Factory.h
+ *
+ *  @author Fred Kuhns <fredk@cs.wustl.edu>Ossama Othman <othman@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_UIOP_FACTORY_H
 #define TAO_UIOP_FACTORY_H
@@ -28,8 +23,10 @@
 # if TAO_HAS_UIOP == 1
 
 #include "tao/Protocol_Factory.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -38,10 +35,10 @@ class TAO_Strategies_Export TAO_UIOP_Protocol_Factory : public TAO_Protocol_Fact
 {
 public:
   /// Constructor.
-  TAO_UIOP_Protocol_Factory (void);
+  TAO_UIOP_Protocol_Factory ();
 
   /// Destructor.
-  virtual ~TAO_UIOP_Protocol_Factory (void);
+  virtual ~TAO_UIOP_Protocol_Factory ();
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
@@ -51,11 +48,11 @@ public:
   virtual int match_prefix (const ACE_CString &prefix);
 
   /// Returns the prefix used by the protocol.
-  virtual const char *prefix (void) const;
+  virtual const char *prefix () const;
 
   /// Return the character used to mark where an endpoint ends and
   /// where its options begin.
-  virtual char options_delimiter (void) const;
+  virtual char options_delimiter () const;
 
   /**
    * @name Protocol factory methods
@@ -63,20 +60,17 @@ public:
    * Check Protocol_Factory.h for a description of these methods.
    */
   //@{
-  virtual TAO_Acceptor  *make_acceptor (void);
-  virtual TAO_Connector *make_connector  (void);
-  virtual int requires_explicit_endpoint (void) const;
+  virtual TAO_Acceptor  *make_acceptor ();
+  virtual TAO_Connector *make_connector  ();
+  virtual int requires_explicit_endpoint () const;
   //@}
-
-private:
-  int major_;
-  int minor_;
-  // Changing the version number can be used to provide backwards
-  // compatibility with old clients.
 };
+
 
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_UIOP_Protocol_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 # endif  /* TAO_HAS_UIOP == 1 */
 

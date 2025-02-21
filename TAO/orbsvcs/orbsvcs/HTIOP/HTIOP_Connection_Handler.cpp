@@ -1,12 +1,13 @@
-// $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
-#include "HTIOP_Connection_Handler.h"
-
-#include "HTIOP_Transport.h"
-#include "HTIOP_Endpoint.h"
+#include "orbsvcs/HTIOP/HTIOP_Transport.h"
+#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
 
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"
+#include "ace/os_include/os_netdb.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -21,9 +22,7 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Connection_Handler,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connection_Handler::Connection_Handler (ACE_Thread_Manager *t)
   : SVC_HANDLER (t,0,0),
@@ -37,20 +36,30 @@ TAO::HTIOP::Connection_Handler::Connection_Handler (ACE_Thread_Manager *t)
   ACE_ASSERT (this->orb_core () != 0);
 }
 
-TAO::HTIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core,
-                                                    CORBA::Boolean flag)
+TAO::HTIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
   : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core)
 {
   TAO::HTIOP::Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
-          TAO::HTIOP::Transport (this, orb_core, flag));
+          TAO::HTIOP::Transport (this, orb_core));
 
   this->transport (specific_transport);
 }
 
-TAO::HTIOP::Connection_Handler::~Connection_Handler (void)
+TAO::HTIOP::Connection_Handler::~Connection_Handler ()
 {
+  delete this->transport ();
+  int const result =
+    this->release_os_resources ();
+
+  if (result == -1 && TAO_debug_level)
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - HTIOP_Connection_Handler::")
+                  ACE_TEXT("~HTIOP_Connection_Handler, ")
+                  ACE_TEXT("release_os_resources() failed %m\n")));
+    }
 }
 
 int
@@ -62,6 +71,9 @@ TAO::HTIOP::Connection_Handler::open_handler (void *v)
 int
 TAO::HTIOP::Connection_Handler::open (void*)
 {
+  if (this->shared_open() == -1)
+    return -1;
+
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
@@ -79,10 +91,9 @@ TAO::HTIOP::Connection_Handler::open (void*)
   if (this->peer ().get_local_addr (local_addr) == -1)
     return -1;
 
-  if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
+  if (local_addr.is_ip_equal (remote_addr)
       && local_addr.get_port_number () == remote_addr.get_port_number ())
     {
-
       if (TAO_debug_level > 0)
         {
           ACE_TCHAR remote_as_string[MAXHOSTNAMELEN + 16];
@@ -94,7 +105,7 @@ TAO::HTIOP::Connection_Handler::open (void*)
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof(local_as_string),
                                             0);
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO(%P|%t) - TAO::HTIOP::Connection_Handler::open, ")
                       ACE_TEXT("Holy Cow! The remote addr and ")
                       ACE_TEXT("local addr are identical (%s == %s)\n"),
@@ -111,7 +122,7 @@ TAO::HTIOP::Connection_Handler::open (void*)
       if (remote_addr.addr_to_string (client, sizeof (client), 0) == -1)
         return -1;
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) TAO_HTIOP connection to peer ")
                   ACE_TEXT ("<%s> on %d\n"),
                   client, this->peer ().get_handle ()));
@@ -122,19 +133,20 @@ TAO::HTIOP::Connection_Handler::open (void*)
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
     return -1;
 
-  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+                       this->orb_core ()->leader_follower ());
 
   return 0;
 }
 
 int
-TAO::HTIOP::Connection_Handler::resume_handler (void)
+TAO::HTIOP::Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO::HTIOP::Connection_Handler::close_connection (void)
+TAO::HTIOP::Connection_Handler::close_connection ()
 {
   return this->close_connection_eh (this);
 }
@@ -152,7 +164,7 @@ TAO::HTIOP::Connection_Handler::handle_input (ACE_HANDLE h)
       if (result != -1 && peer().session())
         {
           if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT("TAO::HTIOP::Connection_Handler::handle_input: ")
                         ACE_TEXT("now binding to %d\n"),
                         peer().get_handle()));
@@ -188,20 +200,21 @@ TAO::HTIOP::Connection_Handler::handle_close (ACE_HANDLE ,
 int
 TAO::HTIOP::Connection_Handler::close (u_long)
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
+                       this->orb_core ()->leader_follower ());
   this->transport ()->remove_reference ();
   return 0;
 }
 
 int
-TAO::HTIOP::Connection_Handler::release_os_resources (void)
+TAO::HTIOP::Connection_Handler::release_os_resources ()
 {
   int result = this->peer().close ();
   return result;
 }
 
 int
-TAO::HTIOP::Connection_Handler::add_transport_to_cache (void)
+TAO::HTIOP::Connection_Handler::add_transport_to_cache ()
 {
   ACE::HTBP::Addr addr;
 
@@ -221,8 +234,7 @@ TAO::HTIOP::Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..
-  return cache.cache_idle_transport (&prop,
-                                     this->transport ());
+  return cache.cache_transport (&prop, this->transport ());
 }
 
 int
@@ -244,11 +256,11 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT("(%P|%t) Listening port [%d] on [%s],[%s]\n"),
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("(%P|%t) Listening port [%d] on [%C],[%C]\n"),
                       listen_point.port,
-                      ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ()),
-                      ACE_TEXT_CHAR_TO_TCHAR(listen_point.htid.in())));
+                      listen_point.host.in (),
+                      listen_point.htid.in()));
         }
 
       // Construct an  TAO::HTIOP::Endpoint object
@@ -275,20 +287,22 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
 }
 
 int
-TAO::HTIOP::Connection_Handler::set_dscp_codepoint (CORBA::Boolean /*enable_network_priority*/)
+TAO::HTIOP::Connection_Handler::set_dscp_codepoint (CORBA::Long /*dscp*/)
 {
   return 0;
 }
 
+int
+TAO::HTIOP::Connection_Handler::set_dscp_codepoint (
+  CORBA::Boolean /*enable_network_priority*/)
+{
+  return 0;
+}
 
-// ****************************************************************
+int
+TAO::HTIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+{
+  return ACE::handle_write_ready (this->peer ().get_handle (), t);
+}
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Svc_Handler<ACE::HTBP::STREAM, ACE_NULL_SYNCH>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Svc_Handler<ACE::HTBP::STREAM, ACE_NULL_SYNCH>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

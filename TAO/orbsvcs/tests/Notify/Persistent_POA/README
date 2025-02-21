@@ -1,0 +1,28 @@
+
+
+Notification Persistent POA Test
+================================
+
+Description
+-----------
+
+This test exercises the persistent POA used to create the
+NotifyEventChannelFactory.  It uses the Blocking test consumer and a
+modified version of the Blocking test supplier to do so.
+
+The first notify service is started, the supplier creates an event channel,
+the first notify service is killed and a new one is started on the same
+host/port combination.  The supplier then creates a new event channel (using
+the IOR of the old notify service) and the consumer is started.
+
+Usage
+-----
+
+To run this test, just run the run_test.pl perl script.  It will run both
+structured and sequence tests with each of the implemented discard policies.
+
+
+Expected Results
+----------------
+If there is any message with the word ERROR in it, then the test has failed.
+Otherwise, the test was ok.

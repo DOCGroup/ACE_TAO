@@ -1,14 +1,6 @@
 // -*- C++ -*-
-
 #include "Foo_i.h"
-
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (Secure_Invocation,
-           Foo_i,
-           "$Id$")
-
 
 Foo_i::Foo_i (CORBA::ORB_ptr orb,
               SecurityLevel3::SecurityCurrent_ptr current)
@@ -18,17 +10,12 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 }
 
 void
-Foo_i::baz (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Foo::Bar::NoSecurityAttributes))
+Foo_i::baz ()
 {
   SecurityLevel3::ClientCredentials_var credentials =
-    this->current_->client_credentials (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->current_->client_credentials ();
 
-  CORBA::String_var id =
-    credentials->creds_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var id = credentials->creds_id ();
 
   ACE_DEBUG ((LM_DEBUG,
               "\n"
@@ -39,8 +26,7 @@ Foo_i::baz (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Foo_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Foo_i::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

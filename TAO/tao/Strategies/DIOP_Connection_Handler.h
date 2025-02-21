@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
  *  @file   DIOP_Connection_Handler.h
- *
- *  $Id$
  *
  *  @author  Michael Kircher
  */
@@ -17,24 +15,21 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-
-#include "ace/Reactor.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "DIOP_Transport.h"
+#include "tao/Strategies/DIOP_Transport.h"
 #include "ace/SOCK_Dgram.h"
-#include "strategies_export.h"
+#include "ace/Reactor.h"
+#include "ace/Acceptor.h"
 
-// Forward Decls
-class TAO_Pluggable_Messaging;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -46,30 +41,25 @@ class TAO_Pluggable_Messaging;
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-
-
-class TAO_Strategies_Export TAO_DIOP_Connection_Handler :
-  public TAO_DIOP_SVC_HANDLER,
-  public TAO_Connection_Handler
+class TAO_Strategies_Export TAO_DIOP_Connection_Handler
+  : public TAO_DIOP_SVC_HANDLER
+  , public TAO_Connection_Handler
 {
-
 public:
-
   TAO_DIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
-  TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag);
+  TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
-  ~TAO_DIOP_Connection_Handler (void);
+  ~TAO_DIOP_Connection_Handler ();
 
   /// Called by the <Strategy_Acceptor> when the handler is completely
   /// connected.  Argument is unused.
   virtual int open (void *);
 
   // @@ Frank: Similar to open, but called on server
-  virtual int open_server (void);
+  virtual int open_server ();
 
   //@{
   /**
@@ -85,8 +75,8 @@ public:
   //@{
   /** @name Event Handler overloads
    */
-  virtual int resume_handler (void);
-  virtual int close_connection (void);
+  virtual int resume_handler ();
+  virtual int close_connection ();
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -95,7 +85,7 @@ public:
   //@}
 
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_transport_to_cache ();
 
   // @@ Frank: Not needed
   /*
@@ -109,35 +99,31 @@ public:
    *
    */
   //@{
-  ACE_HANDLE get_handle (void) const;
-
-  const ACE_INET_Addr &addr (void);
+  const ACE_INET_Addr &addr ();
 
   void addr (const ACE_INET_Addr &addr);
 
-  const ACE_INET_Addr &local_addr (void);
+  const ACE_INET_Addr &local_addr ();
 
   void local_addr (const ACE_INET_Addr &addr);
-
-  const ACE_INET_Addr &server_addr (void);
-
-  void server_addr (const ACE_INET_Addr &addr);
-
-  const ACE_SOCK_Dgram &dgram (void);
   //@}
   // DIOP Additions - End
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
 protected:
-
   //@{
   /**
    * @name TAO_Connection Handler overloads
    */
-  virtual int release_os_resources (void);
+  virtual int release_os_resources ();
+  virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
+
+  /// Helper method used by the set_dscp_codepoint () methods
+  int set_tos (int tos);
 
   // DIOP Additions - Begin
   /**
@@ -145,8 +131,6 @@ protected:
    *
    */
   //@{
-  ACE_SOCK_Dgram udp_socket_;
-
   /// This is always the remote address
   ACE_INET_Addr addr_;
 
@@ -159,6 +143,8 @@ private:
   /// Stores the type of service value.
   int dscp_codepoint_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 

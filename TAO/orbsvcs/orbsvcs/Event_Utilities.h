@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Event_Utilities.h
- *
- *  $Id$
  *
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
@@ -19,7 +17,10 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-#include "Event/event_export.h"
+#include "orbsvcs/Event/event_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 
 typedef void (*TAO_EC_Event_Initializer) (RtecEventComm::Event&);
 
@@ -93,10 +94,11 @@ class TAO_RTEvent_Export ACE_ConsumerQOS_Factory
 {
 public:
   /// Default construction.
-  ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer = 0);
+  ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer = 0,
+                           CORBA::ULong qos_max_len = 0);
 
   /// Death and destruction.
-  ~ACE_ConsumerQOS_Factory (void);
+  ~ACE_ConsumerQOS_Factory ();
 
   /**
    * The Event Channel waits until all the children have accepted at
@@ -115,7 +117,7 @@ public:
 
   /// The consumer wants all the events *except* the group that
   /// follows.
-  int start_negation (void);
+  int start_negation ();
 
   /// Insert a bitmask filter, this acts as a quick rejection mechanism
   /// for the subsequent filters.
@@ -134,7 +136,7 @@ public:
                               CORBA::ULong type_value);
 
   /// Insert a node that accepts any event, useful for bitmask filters.
-  int insert_null_terminator (void);
+  int insert_null_terminator ();
 
   // = Insert operations add to the current conjunction or disjunction
   // group.  These return 0 on success, -1 on failure.  Before insert
@@ -177,10 +179,10 @@ public:
 
   /// Allows conversions to ConsumerQOS, which is expected by the
   /// PushSupplierProxy::connect_push_consumer interface.
-  const RtecEventChannelAdmin::ConsumerQOS &get_ConsumerQOS (void);
+  const RtecEventChannelAdmin::ConsumerQOS &get_ConsumerQOS ();
 
   /// Calls this->get_ConsumerQOS.
-  operator const RtecEventChannelAdmin::ConsumerQOS &(void);
+  operator const RtecEventChannelAdmin::ConsumerQOS &();
 
   static void debug (const RtecEventChannelAdmin::ConsumerQOS& qos);
 
@@ -208,7 +210,7 @@ class TAO_RTEvent_Export ACE_SupplierQOS_Factory
 public:
   /// Default construction.
   ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = 0,
-                           int qos_max_len = 0);
+                           CORBA::ULong qos_max_len = 0);
 
   /**
    * Publish @a sid and @a type that is generate by a method described by
@@ -222,10 +224,10 @@ public:
 
   /// Allows conversions to SupplierQOS, which is expected by the
   /// PushSupplierProxy::connect_push_supplier interface.
-  const RtecEventChannelAdmin::SupplierQOS &get_SupplierQOS (void);
+  const RtecEventChannelAdmin::SupplierQOS &get_SupplierQOS ();
 
   /// Calls this->get_SupplierQOS().
-  operator const RtecEventChannelAdmin::SupplierQOS &(void);
+  operator const RtecEventChannelAdmin::SupplierQOS &();
 
   static void debug (const RtecEventChannelAdmin::SupplierQOS& qos);
 
@@ -242,9 +244,10 @@ private:
   TAO_EC_Event_Initializer event_initializer_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event_Utilities.i"
+#include "orbsvcs/Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

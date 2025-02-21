@@ -1,42 +1,20 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor for code generation of Arrays for the Any operators in the client
-//    stubs.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_cs.cpp
+ *
+ *  Visitor for code generation of Arrays for the Any operators in the client
+ *  stubs.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_array,
-           any_op_cs,
-           "$Id$")
-
-
-// ***************************************************************************
-// Array visitor for generating Any operator declarations in the client
-// stubs file
-// ***************************************************************************
+#include "array.h"
 
 be_visitor_array_any_op_cs::be_visitor_array_any_op_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
-{
-}
-
-be_visitor_array_any_op_cs::~be_visitor_array_any_op_cs (void)
 {
 }
 
@@ -50,9 +28,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
-      << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
@@ -62,11 +38,13 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
   // type is inserted into an Any and then marshaled.
   if (node->is_local ())
     {
-      *os << be_nl << be_nl
+      *os << be_global->core_versioning_begin () << be_nl;
+
+      *os << be_nl_2
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "Any_Array_Impl_T<" << be_idt << be_idt_nl
           << node->name () << "_slice," << be_nl
           << node->name () << "_forany" << be_uidt_nl
@@ -75,9 +53,9 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
           << "return false;" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "Any_Array_Impl_T<" << be_idt << be_idt_nl
           << node->name () << "_slice," << be_nl
           << node->name () << "_forany" << be_uidt_nl
@@ -86,12 +64,20 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "}";
+
+      *os << be_global->core_versioning_end () << be_nl;
     }
 
+  *os << be_global->anyops_versioning_begin () << be_nl;
+
+  // If this is non-zero, we want to call its tc_name()
+  // for the TypeCode to pass to the Any operator impls.
+  be_typedef *td = this->ctx_->tdef ();
+
   *os << "void operator<<= (" << be_idt << be_idt_nl
-      << "CORBA::Any &_tao_any," << be_nl
-      << "const " << node->name () << "_forany &_tao_elem" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "::CORBA::Any &_tao_any," << be_nl
+      << "const " << node->name () << "_forany &_tao_elem)" << be_uidt_nl
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl
       << node->name () << "_slice," << be_nl
@@ -100,18 +86,18 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
-      << node->tc_name () << "," << be_nl
+      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem.nocopy ()" << be_idt_nl
       << "? _tao_elem.ptr ()" << be_nl
       << ": "
       << node->name () << "_dup (_tao_elem.in ())" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
-  *os << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-      << "const CORBA::Any &_tao_any," << be_nl
-      << node->name () << "_forany &_tao_elem" << be_uidt_nl
-      << ")" << be_uidt_nl
+  *os << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
+      << "const ::CORBA::Any &_tao_any," << be_nl
+      << node->name () << "_forany &_tao_elem)" << be_uidt_nl
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
       << "TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl
@@ -120,11 +106,13 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ">::extract (" << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
-      << node->tc_name () << "," << be_nl
-      << "_tao_elem.out ()" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
+      << "_tao_elem.out ());" << be_uidt
+      << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  node->cli_stub_any_op_gen (1);
+  *os << be_global->anyops_versioning_end () << be_nl;
+
+  node->cli_stub_any_op_gen (true);
   return 0;
 }

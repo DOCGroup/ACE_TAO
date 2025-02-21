@@ -1,0 +1,4 @@
+// -*- MPC -*-
+feature(valuetype_out_indirection) {
+  macros += TAO_HAS_VALUETYPE_OUT_INDIRECTION
+}

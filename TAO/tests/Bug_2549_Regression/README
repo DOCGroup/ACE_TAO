@@ -1,0 +1,4 @@
+
+
+This is a compile only test. If it compiles, it's passed. It tests that you can include the new include pidls whilst the old pidls exist in the file but within ifdefs without it all going horribly wrong.
+

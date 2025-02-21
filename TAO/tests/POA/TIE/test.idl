@@ -1,0 +1,20 @@
+interface A
+{
+  long doit();
+};
+
+module Outer
+{
+  interface B
+    {
+      long doit();
+    };
+
+  module Inner
+    {
+      interface C
+        {
+          long doit();
+        };
+    };
+};

@@ -1,0 +1,14 @@
+//  -*- MPC -*-
+project(HTBP) : acelib, ace_output, install {
+  avoids      += ace_for_tao
+  sharedname   = ACE_HTBP
+  dynamicflags += HTBP_BUILD_DLL
+
+  specific {
+    install_dir = ace/HTBP
+  }
+
+  Pkgconfig_Files {
+    ACE_HTBP.pc.in
+  }
+}

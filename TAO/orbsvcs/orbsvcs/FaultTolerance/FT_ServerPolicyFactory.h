@@ -4,8 +4,6 @@
 /**
  *  @file     FT_ServerPolicyFactory.h
  *
- *  $Id$
- *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
@@ -31,26 +29,25 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "FT_ServerORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ServerORB_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Policy factory for all FTCORBA related policies.
-class TAO_FT_ServerORB_Export TAO_FT_ServerPolicyFactory :
-  public PortableInterceptor::PolicyFactory,
-  public TAO_Local_RefCounted_Object
+class TAO_FT_ServerPolicyFactory
+  : public PortableInterceptor::PolicyFactory
+  , public ::CORBA::LocalObject
 {
 public:
-
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any &value
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::PolicyError));
+                                           const CORBA::Any &value);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #include /**/ "ace/post.h"
 

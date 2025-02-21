@@ -1,25 +1,18 @@
-// $Id$
+#include "tao/DynamicInterface/Unknown_User_Exception.h"
 
-#include "Unknown_User_Exception.h"
-
-#include "tao/Any.h"
-#include "tao/Environment.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Struct_Field.h"
-#include "tao/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/SystemException.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (DynamicInterface,
-           Unknown_User_Exception,
-           "$Id$")
-
-
-CORBA::UnknownUserException::UnknownUserException (void)
+CORBA::UnknownUserException::UnknownUserException ()
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
                           "UnknownUserException"),
     exception_ (0)
@@ -44,25 +37,15 @@ CORBA::UnknownUserException::UnknownUserException (
            CORBA::Any (*e.exception_));
 }
 
-CORBA::UnknownUserException::~UnknownUserException (void)
+CORBA::UnknownUserException::~UnknownUserException ()
 {
   delete this->exception_;
 }
 
 CORBA::Any &
-CORBA::UnknownUserException::exception (void)
+CORBA::UnknownUserException::exception ()
 {
   return *this->exception_;
-}
-
-int
-CORBA::UnknownUserException::_is_a (const char *interface_id) const
-{
-  return
-    ((ACE_OS::strcmp (interface_id,
-                      "IDL:omg.org/CORBA/UnknownUserException:1.0")
-        == 0)
-      || UserException::_is_a (interface_id));
 }
 
 CORBA::UnknownUserException *
@@ -78,43 +61,45 @@ CORBA::UnknownUserException::_downcast (CORBA::Exception const * ex)
 }
 
 void
-CORBA::UnknownUserException::_raise (void) const
+CORBA::UnknownUserException::_raise () const
 {
-  TAO_RAISE (*this);
+  throw *this;
 }
 
 CORBA::Exception *
-CORBA::UnknownUserException::_tao_duplicate (void) const
+CORBA::UnknownUserException::_tao_duplicate () const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = nullptr;
   ACE_NEW_RETURN (
       result,
       CORBA::UnknownUserException (*this),
-      0
-    );
+      nullptr);
   return result;
 }
 
 void
-CORBA::UnknownUserException::_tao_encode (
-    TAO_OutputCDR &
-    ACE_ENV_ARG_DECL
-  ) const
+CORBA::UnknownUserException::_tao_encode (TAO_OutputCDR &) const
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void
-CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &
-                                         ACE_ENV_ARG_DECL)
+CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &)
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
+}
+
+const char *
+CORBA::UnknownUserException::_rep_id () const
+{
+  return this->exception_->_tao_get_typecode ()->id ();
 }
 
 CORBA::TypeCode_ptr
-CORBA::UnknownUserException::_tao_type (void) const
+CORBA::UnknownUserException::_tao_type () const
 {
-  return CORBA::_tc_UnknownUserException;
+  //return CORBA::_tc_UnknownUserException;
+  return this->exception_->_tao_get_typecode ();
 }
 
 namespace TAO
@@ -144,3 +129,5 @@ namespace CORBA
   CORBA::TypeCode_ptr const _tc_UnknownUserException =
     &TAO::TypeCode::tc_UnknownUserException;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

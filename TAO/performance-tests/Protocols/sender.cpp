@@ -1,8 +1,7 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
@@ -13,6 +12,7 @@
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "tao/ORB_Constants.h"
+#include "tao/Policy_ManagerC.h"
 #include "Custom_Network_Priority_Mapping.h"
 #include "Custom_Network_Priority_Mapping.cpp"
 #include "tao/debug.h"
@@ -26,16 +26,16 @@ enum Test_Type
     LATENCY
   };
 
-static const char *ior = "file://distributor.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://distributor.ior");
 static int shutdown_server = 0;
 static CORBA::ULong iterations = 5;
 static CORBA::ULong invocation_rate = 5;
 static int count_missed_end_deadlines = 0;
-static ACE_UINT32 gsf = 0;
+static ACE_High_Res_Timer::global_scale_factor_type gsf = 0;
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
 static CORBA::ULong message_size = 0;
-static const char *test_protocol = "IIOP";
+static const ACE_TCHAR *test_protocol = ACE_TEXT ("IIOP");
 static int print_statistics = 1;
 static int number_of_connection_attempts = 20;
 static int enable_diffserv_code_points = 0;
@@ -43,9 +43,9 @@ static RTCORBA::Priority corba_priority = RTCORBA::minPriority;
 static Test_Type test_type = PACED;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:b:c:d:e:i:k:m:p:r:s:t:x:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:d:e:i:k:m:p:r:s:t:x:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -105,17 +105,17 @@ parse_args (int argc, char **argv)
 
       default:
         {
-          const char *test = 0;
+          const ACE_TCHAR *test = 0;
           switch (test_type)
             {
             case PACED:
-              test = "PACED";
+              test = ACE_TEXT ("PACED");
               break;
             case THROUGHPUT:
-              test = "THROUGHPUT";
+              test = ACE_TEXT ("THROUGHPUT");
               break;
             case LATENCY:
-              test = "LATENCY";
+              test = ACE_TEXT ("LATENCY");
               break;
             }
 
@@ -159,7 +159,7 @@ parse_args (int argc, char **argv)
 
 double
 to_seconds (ACE_UINT64 hrtime,
-            ACE_UINT32 sf)
+            ACE_High_Res_Timer::global_scale_factor_type sf)
 {
   double seconds = static_cast<double> (
                      ACE_UINT64_DBLCAST_ADAPTER (hrtime / sf));
@@ -170,7 +170,7 @@ to_seconds (ACE_UINT64 hrtime,
 
 ACE_UINT64
 to_hrtime (double seconds,
-           ACE_UINT32 sf)
+           ACE_High_Res_Timer::global_scale_factor_type sf)
 {
   return ACE_UINT64 (seconds * sf * ACE_HR_SCALE_CONVERSION);
 }
@@ -183,14 +183,13 @@ public:
           CORBA::PolicyManager_ptr policy_manager,
           test_ptr test);
 
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run ();
 
-  void print_stats (void);
+  void print_stats ();
 
-  void setup (ACE_ENV_SINGLE_ARG_DECL);
+  void setup ();
 
 private:
-
   ACE_hrtime_t deadline_for_current_call (CORBA::ULong i);
   void missed_start_deadline (CORBA::ULong invocation);
   void missed_end_deadline (CORBA::ULong invocation);
@@ -231,7 +230,7 @@ Worker::Worker (CORBA::ORB_ptr orb,
 {
   // Each sender will have a random session id.  This helps in
   // identifying late packets arriving at the server.
-  ACE_OS::srand ((unsigned) ACE_OS::time (NULL));
+  ACE_OS::srand ((unsigned) ACE_OS::time (0));
   this->session_id_ = ACE_OS::rand ();
 
   // Interval is inverse of rate.
@@ -267,12 +266,12 @@ Worker::Worker (CORBA::ORB_ptr orb,
   this->base_protocol_policy_[0] =
     this->rtorb_->create_client_protocol_policy (protocols);
 
-  if (ACE_OS::strcmp (test_protocol, "DIOP") == 0)
+  if (ACE_OS::strcmp (test_protocol, ACE_TEXT ("DIOP")) == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
       protocols[0].protocol_type = TAO_TAG_DIOP_PROFILE;
     }
-  else if (ACE_OS::strcmp (test_protocol, "SCIOP") == 0)
+  else if (ACE_OS::strcmp (test_protocol, ACE_TEXT ("SCIOP")) == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is SCIOP\n"));
       protocols[0].protocol_type = TAO_TAG_SCIOP_PROFILE;
@@ -317,7 +316,7 @@ Worker::Worker (CORBA::ORB_ptr orb,
 }
 
 void
-Worker::print_stats (void)
+Worker::print_stats ()
 {
   CORBA::ULong missed_total_deadlines =
     this->missed_start_deadlines_ + this->missed_end_deadlines_;
@@ -395,14 +394,14 @@ Worker::print_stats (void)
     {
       if (do_dump_history)
         {
-          this->history_.dump_samples ("HISTORY", gsf);
+          this->history_.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
 
       ACE_Basic_Stats stats;
       this->history_.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
+      stats.dump_results (ACE_TEXT("Total"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              this->test_end_ - this->test_start_,
                                              iterations);
     }
@@ -454,31 +453,27 @@ Worker::missed_end_deadline (CORBA::ULong invocation)
 }
 
 void
-Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
+Worker::setup ()
 {
   // Make sure we have a connection to the server using the test
   // protocol.
   this->policy_manager_->set_policy_overrides (this->test_protocol_policy_,
-                                               CORBA::SET_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                               CORBA::SET_OVERRIDE);
 
   // Since the network maybe unavailable temporarily, make sure to try
   // for a few times before giving up.
   for (int j = 0;;)
     {
-
     test_protocol_setup:
 
-      ACE_TRY_EX (B1)
+      try
         {
           // Send a message to ensure that the connection is setup.
-          this->test_->oneway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (B1);
+          this->test_->oneway_sync ();
 
           goto test_protocol_success;
         }
-      ACE_CATCH (CORBA::TRANSIENT, exception)
+      catch (const CORBA::TRANSIENT&)
         {
           ++j;
 
@@ -488,7 +483,6 @@ Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
               goto test_protocol_setup;
             }
         }
-      ACE_ENDTRY;
 
       ACE_ERROR ((LM_ERROR,
                   "Cannot setup test protocol\n"));
@@ -501,31 +495,26 @@ Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
   // Use IIOP for setting up the test since the test protocol maybe
   // unreliable.
   this->policy_manager_->set_policy_overrides (this->base_protocol_policy_,
-                                               CORBA::SET_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                               CORBA::SET_OVERRIDE);
 
   // Since the network maybe unavailable temporarily, make sure to try
   // for a few times before giving up.
   for (int k = 0;;)
     {
-
     base_protocol_setup:
 
-      ACE_TRY_EX (B2)
+      try
         {
           // Let the server know what to expect..
           this->test_->start_test (this->session_id_,
-                                   test_protocol,
+                                   ACE_TEXT_ALWAYS_CHAR (test_protocol),
                                    invocation_rate,
                                    message_size,
-                                   iterations
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (B2);
+                                   iterations);
 
           goto base_protocol_success;
         }
-      ACE_CATCH (CORBA::TRANSIENT, exception)
+      catch (const CORBA::TRANSIENT&)
         {
           ACE_OS::sleep (1);
 
@@ -535,7 +524,6 @@ Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
               goto base_protocol_setup;
             }
         }
-      ACE_ENDTRY;
 
       ACE_ERROR ((LM_ERROR,
                   "Cannot setup base protocol\n"));
@@ -549,13 +537,11 @@ Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Worker::run (ACE_ENV_SINGLE_ARG_DECL)
+Worker::run ()
 {
   // Select the test protocol for these invocation.
   this->policy_manager_->set_policy_overrides (this->test_protocol_policy_,
-                                               CORBA::SET_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                               CORBA::SET_OVERRIDE);
 
   // Payload.
   ::test::octets_var payload (new ::test::octets);
@@ -609,18 +595,14 @@ Worker::run (ACE_ENV_SINGLE_ARG_DECL)
         {
           this->test_->oneway_method (this->session_id_,
                                       i,
-                                      payload.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                      payload.in ());
         }
       else
         {
           // Use twoway calls for LATENCY.
           this->test_->twoway_method (this->session_id_,
                                       i,
-                                      payload.inout ()
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                      payload.inout ());
         }
 
       // For PACED and LATENCY, each sender call is individually
@@ -657,10 +639,9 @@ Worker::run (ACE_ENV_SINGLE_ARG_DECL)
   // This call is used to ensure that all the THROUGHPUT related data
   // has reached the server.
   if (test_type == THROUGHPUT &&
-      ACE_OS::strcmp (test_protocol, "DIOP") != 0)
+      ACE_OS::strcmp (test_protocol, ACE_TEXT ("DIOP")) != 0)
     {
-      this->test_->twoway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->test_->twoway_sync ();
     }
 
   // Record end time for the test.
@@ -668,48 +649,33 @@ Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 
   // Use IIOP to indicate end of test to server.
   this->policy_manager_->set_policy_overrides (this->base_protocol_policy_,
-                                               CORBA::SET_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                               CORBA::SET_OVERRIDE);
 
   // Tell server that the test is over.
-  this->test_->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->test_->end_test ();
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rtorb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::RTORB::_narrow (object.in ());
 
       object =
-        orb->resolve_initial_references ("ORBPolicyManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyManager::_narrow (object.in ());
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -718,14 +684,10 @@ main (int argc, char **argv)
 
       // Resolve the Network priority Mapping Manager
       object =
-        orb->resolve_initial_references ("NetworkPriorityMappingManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NetworkPriorityMappingManager");
 
       RTCORBA::NetworkPriorityMappingManager_var mapping_manager =
-        RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ()
-                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ());
 
       // Initialize the custom priority mapping
       Custom_Network_Priority_Mapping *cnpm = 0;
@@ -742,41 +704,34 @@ main (int argc, char **argv)
       mapping_manager->mapping (cnpm);
 
       object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       test_var test =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object.in ());
 
       Worker worker (orb.in (),
                      rtorb.in (),
                      policy_manager.in (),
                      test.in ());
 
-      worker.setup (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      worker.setup ();
 
-      worker.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      worker.run ();
 
       if (print_statistics)
         worker.print_stats ();
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
+      ACE_OS::sleep(1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error!");
+      ex._tao_print_exception ("Error!");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -67,7 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_FACTORY_AST_FACTORY_HH
 #define _AST_FACTORY_AST_FACTORY_HH
 
-// Representation of OBV factory construct declaration.
+// Representation of OBV and component home factory
+// construct declaration.
 
 #include "ast_decl.h"
 #include "utl_scope.h"
@@ -79,48 +78,39 @@ class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {
 public:
-
-  // Constructor(s).
-  AST_Factory (void);
-
   AST_Factory (UTL_ScopedName *n);
 
-  // Destructor.
-  virtual ~AST_Factory (void);
+  virtual ~AST_Factory ();
 
-  // Data Accessors.
-
-  // Public operations.
-
-  UTL_ExceptList *exceptions (void);
+  UTL_ExceptList *exceptions ();
   // Return exception list.
 
-  int n_exceptions (void);
+  int n_exceptions ();
   // Return exception count.
 
-  virtual int argument_count (void);
+  virtual int argument_count ();
   // Return the count of members.
 
-  virtual int has_native (void);
+  virtual int has_native ();
   // Any of the arguments or the return value is a <native> type.
   // This is important because in that case no code should be
   // generated for the stubs.
-
-  // Narrowing.
-  DEF_NARROW_METHODS2(AST_Factory, AST_Decl, UTL_Scope);
-  DEF_NARROW_FROM_DECL(AST_Factory);
-  DEF_NARROW_FROM_SCOPE(AST_Factory);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-private:
+  // Method to add exceptions.
+  UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
+
+  static AST_Decl::NodeType const NT;
+
+protected:
   // Data.
 
   UTL_ExceptList *pd_exceptions;
@@ -138,12 +128,12 @@ private:
 private:
   // Operations.
 
-  int compute_argument_attr (void);
+  int compute_argument_attr ();
   // Count the number of arguments.
 
   // Scope Management Protocol.
 
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   virtual AST_Argument *fe_add_argument (AST_Argument *a);
   virtual UTL_NameList *fe_add_exceptions (UTL_NameList *e);
 };

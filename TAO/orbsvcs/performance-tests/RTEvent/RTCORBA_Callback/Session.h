@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef SESSION_H
 #define SESSION_H
@@ -18,15 +15,11 @@ public:
            PortableServer::POA_ptr poa);
 
   // = The skeleton methods
-  virtual void sample (Test::Timestamp the_timestamp
-                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void sample (Test::Timestamp the_timestamp);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableServer::POA_ptr _default_POA ();
 
 private:
   Test::Callback_var cb_;

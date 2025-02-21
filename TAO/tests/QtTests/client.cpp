@@ -1,51 +1,43 @@
-// $Id$
-
 #include "testC.h"
 #include "ace/Get_Opt.h"
-#include "tao/QtResource_Loader.h"
-
-ACE_RCSID(QtTests, client, "$Id$")
+#include "ace/Argv_Type_Converter.h"
+#include "tao/QtResource/QtResource_Loader.h"
 
 #include "client.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  QApplication app (argc, argv);
+  ACE_Argv_Type_Converter ct (argc, argv);
+  QApplication app (argc,  ct.get_ASCII_argv ());
   TAO::QtResource_Loader qt_resources (&app);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       Client client (orb.in (), app);
 
-      client.parse_args (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.parse_args (argc, argv);
 
       // Creates the Qt widgets
-      client.create_widgets (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.create_widgets ();
 
       // This may look a bit suspect, but Qt wants the manager widget
       // as the toplevel widget unlike Xt for display purposes.
-      app.setMainWidget (&(client.box_));
+      app.setActiveWindow (&(client.mainwindow_));
 
       // Show them on Screen
       client.show ();
 
       app.exec ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -56,7 +48,7 @@ Client::Client (CORBA::ORB_ptr orb,
 {
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
   delete this->slider_;
   delete this->push_button_;
@@ -64,12 +56,11 @@ Client::~Client (void)
 
 void
 Client::parse_args (int argc,
-                    char *argv[]
-                    ACE_ENV_ARG_DECL)
+                    ACE_TCHAR *argv[])
 {
-  const char *ior = "file://test.ior";
+  const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -88,12 +79,10 @@ Client::parse_args (int argc,
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->string_to_object (ior);
 
   this->server_ =
-    LCD_Display::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    LCD_Display::_narrow (object.in ());
 
   if (CORBA::is_nil(this->server_.in ()))
     {
@@ -103,15 +92,16 @@ Client::parse_args (int argc,
 }
 
 void
-Client::create_widgets (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+Client::create_widgets (/**/)
 {
   // Ewsize the box
-  this->box_.resize (200,120);
+  this->mainwindow_.resize (200,120);
+  this->mainwindow_.setWindowTitle("QtClient");
 
   // Make a pushbutton widget
   ACE_NEW (this->push_button_,
-           QPushButton ("Quit",
-                        &this->box_));
+           QPushButton ("Quit"));
+  box_.addWidget(this->push_button_);
 
   // Connect the click () SIGNAL routine with the SLOT handler that we
   // have defined
@@ -122,13 +112,14 @@ Client::create_widgets (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PAR
 
   // Create a slider widget
   ACE_NEW (this->slider_,
-           QSlider (QSlider::Horizontal,
-                    &this->box_,
-                    "Slider"));
+           QSlider (Qt::Horizontal));
 
   // Add resource for the slider
   this->slider_->setRange (0, 99);
   this->slider_->setValue (0);
+
+  box_.addWidget(this->slider_);
+
 
   // Connect the valuechanged SIGNAL routine with the slot that we
   // have defined. THe slot routine would invoke the remote call.
@@ -137,12 +128,14 @@ Client::create_widgets (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PAR
                     this,
                     SLOT (remote_call (int)));
 
+  this->mainwindow_.setLayout(&box_);
+
 }
 
 void
-Client::show (void)
+Client::show ()
 {
-  this->box_.show ();
+  this->mainwindow_.show ();
 }
 
 void
@@ -152,7 +145,7 @@ Client::remote_call (int val)
 }
 
 void
-Client::shutdown_call (void)
+Client::shutdown_call ()
 {
   this->server_->shutdown ();
 }

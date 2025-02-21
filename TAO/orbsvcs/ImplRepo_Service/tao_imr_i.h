@@ -4,10 +4,7 @@
 /**
  *  @file    tao_imr_i.h
  *
- *  $Id$
- *
  *  This class implements the Implementation Repository helper application.
- *
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
@@ -18,7 +15,7 @@
 #include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/corba.h"
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 // Forward Declaration
 class TAO_IMR_Op;
@@ -33,23 +30,22 @@ class TAO_IMR_Op;
 class TAO_IMR_i
 {
 public:
-
   // = Constructor and destructor.
-  TAO_IMR_i (void);
-  ~TAO_IMR_i (void);
+  TAO_IMR_i ();
+  ~TAO_IMR_i ();
 
   /// Execute client code.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with server.
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
 
 private:
   /// Print out information about all operations.
-  void print_usage (void);
+  void print_usage ();
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// # of arguments on the command line.
   int argc_;
@@ -65,7 +61,7 @@ private:
   ImplementationRepository::Administration_var imr_;
 
   /// What we need to do.
-  ACE_Auto_Ptr<TAO_IMR_Op> op_;
+  std::unique_ptr<TAO_IMR_Op> op_;
 };
 
 
@@ -85,32 +81,36 @@ public:
     NO_PERMISSION,
     ALREADY_REGISTERED,
     CANNOT_ACTIVATE,
-    NOT_FOUND
+    NOT_FOUND,
+    CANNOT_COMPLETE
   };
 
   /// Factory.
   static TAO_IMR_Op *make_op (const ACE_TCHAR *op_name);
 
   /// Destructor.
-  virtual ~TAO_IMR_Op (void);
+  virtual ~TAO_IMR_Op ();
 
   /// Parse arguments.
   virtual int parse (int argc, ACE_TCHAR **argv) = 0;
 
   /// Do the work.
-  virtual int run (void) = 0;
+  virtual int run () = 0;
 
   /// Sets the implrepo locator pointer
   void set_imr (ImplementationRepository::Administration_ptr imr);
 
 protected:
-  /// Reference to our implementation repository.
-  ImplementationRepository::Administration_ptr imr_;
+  TAO_IMR_Op () : imr_ (0), quiet_ (false) {}
 
   // = Helper methods
 
   /// Prints out the information contained in a ServerInformation structure.
   void display_server_information (const ImplementationRepository::ServerInformation &info);
+
+  /// Reference to our implementation repository.
+  ImplementationRepository::Administration_ptr imr_;
+  bool quiet_;
 };
 
 
@@ -125,11 +125,11 @@ class TAO_IMR_Op_Activate : public TAO_IMR_Op
 {
 public:
   virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
+  virtual int run ();
 
 protected:
   /// Prints a message about the usage
-  void print_usage (void);
+  void print_usage ();
 
   /// POA server name.
   ACE_CString server_name_;
@@ -147,11 +147,11 @@ class TAO_IMR_Op_Autostart : public TAO_IMR_Op
 {
 public:
   virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
+  virtual int run ();
 
 protected:
   /// Prints a message about the usage
-  void print_usage (void);
+  void print_usage ();
 };
 
 
@@ -167,17 +167,62 @@ class TAO_IMR_Op_IOR : public TAO_IMR_Op
 {
 public:
   virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
+  virtual int run ();
 
 protected:
   /// Prints a message about the usage
-  void print_usage (void);
+  void print_usage ();
 
   /// POA server name.
   ACE_CString server_name_;
 
   /// Filename to output to.
-  ACE_CString filename_;
+  ACE_TString filename_;
+};
+
+
+/**
+ * @class TAO_IMR_Op_Kill
+ *
+ * @brief Kill Operation
+ *
+ * Kill is used to unregister a server in the IMR.
+ */
+class TAO_IMR_Op_Kill : public TAO_IMR_Op
+{
+public:
+  virtual int parse (int argc, ACE_TCHAR **argv);
+  virtual int run ();
+
+protected:
+  /// Prints a message about the usage
+  void print_usage ();
+
+  ACE_CString server_name_;
+  int signum_;
+};
+
+
+/**
+ * @class TAO_IMR_Op_Link
+ *
+ * @brief Link Operation
+ *
+ * Link is used to unregister a server in the IMR.
+ */
+class TAO_IMR_Op_Link : public TAO_IMR_Op
+{
+public:
+  virtual int parse (int argc, ACE_TCHAR **argv);
+  virtual int run ();
+
+protected:
+  /// Prints a message about the usage
+  void print_usage ();
+
+  ACE_CString server_name_;
+
+  CORBA::StringSeq peers_;
 };
 
 
@@ -192,20 +237,29 @@ protected:
 class TAO_IMR_Op_List : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_List (void);
+  TAO_IMR_Op_List ();
 
   virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
+  virtual int run ();
 
 protected:
   /// Prints a message about the usage
-  void print_usage (void);
+  void print_usage ();
 
   /// POA server name.
   ACE_CString server_name_;
 
   /// If true, more server information is displayed.
   int verbose_server_information_;
+
+  /// If true, only show servers that are currently active.
+  int list_only_active_servers_;
+
+  /// retrieve no more than this number of entries at a time
+  CORBA::ULong how_many_;
+
+  /// If true, use minimum formatting.
+  int terse_;
 
   /// Prints out the information contained in a ServerInformation structure.
   /// Specialized to only print server information
@@ -224,13 +278,15 @@ class TAO_IMR_Op_Remove : public TAO_IMR_Op
 {
 public:
   virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
+  virtual int run ();
 
 protected:
   /// Prints a message about the usage
-  void print_usage (void);
+  void print_usage ();
 
   ACE_CString server_name_;
+  bool force_;
+  int signum_;
 };
 
 
@@ -245,11 +301,11 @@ class TAO_IMR_Op_Shutdown : public TAO_IMR_Op
 {
 public:
   virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
+  virtual int run ();
 
 protected:
   /// Prints a message about the usage
-  void print_usage (void);
+  void print_usage ();
 
   ACE_CString server_name_;
 };
@@ -262,10 +318,10 @@ class TAO_IMR_Op_ShutdownRepo : public TAO_IMR_Op
 public:
   TAO_IMR_Op_ShutdownRepo();
   virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
+  virtual int run ();
 
 protected:
-  void print_usage (void);
+  void print_usage ();
 
   bool activators_;
 };
@@ -284,10 +340,9 @@ public:
   TAO_IMR_Op_Register(bool is_add);
 
   virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run (void);
+  virtual int run ();
 
 protected:
-
   /// Enables pre-registration checks
   bool is_add_;
 
@@ -295,7 +350,7 @@ protected:
   void addenv (ACE_TCHAR *opt);
 
   /// Prints a message about the usage.
-  void print_usage (void);
+  void print_usage ();
 
   /// POA server name.
   ACE_CString server_name_;

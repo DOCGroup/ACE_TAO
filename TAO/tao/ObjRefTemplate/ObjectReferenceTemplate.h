@@ -4,8 +4,6 @@
 /**
  * @file ObjectReferenceTemplate.h
  *
- * $Id$
- *
  * This is the implementation of the TAO::ORT_Adapter
  *
  * @author Bala Natarajan  <bala@dre.vanderbilt.edu>

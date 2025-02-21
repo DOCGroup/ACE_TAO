@@ -1,5 +1,3 @@
-// $Id$
-
 // ========================================================================
 //
 // = FILE
@@ -22,80 +20,39 @@
 class TAO_TTest_Export TAO_Service_Type_Exporter
 {
 public:
-
   TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
-                             CORBA::Boolean verbose
-                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                             CORBA::Boolean verbose);
 
-  void remove_all_types (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTradingRepos::ServiceTypeRepository::HasSubTypes));
+  ~TAO_Service_Type_Exporter ();
+
+  void remove_all_types ();
   // Remove all service types from the trading service instance.
 
-  void add_all_types (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
-                     CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::DuplicatePropertyName,
-                     CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition,
-                     CosTrading::UnknownServiceType,
-                     CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
+  void add_all_types ();
   // Add all the generated service types to the trading service instance.
 
-  void add_all_types_to_all (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
-                     CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::DuplicatePropertyName,
-                     CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition,
-                     CosTrading::UnknownServiceType,
-                     CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
+  void add_all_types_to_all ();
   // Add all the generated service types to all the trading service
   // instances linked to the trading service we bootstrapped to.
 
-  void list_all_types (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void list_all_types ();
   // List all the service types registered with the trading service
   // instance.
 
-  void describe_all_types (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::IllegalServiceType,
-                   CosTrading::UnknownServiceType));
+  void describe_all_types ();
   // Describe all the service types registered with the trading
   // service instance.
 
-  void fully_describe_all_types (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType));
+  void fully_describe_all_types ();
   // Same as describe_all_types, but fully describe lists the
   // properties of all service types the described service type
   // inherits from.
 
 private:
-
-  void create_types (void);
+  void create_types ();
   // Generate the service type description structures.
 
-  void add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos
-                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
-                     CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::DuplicatePropertyName,
-                     CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition,
-                     CosTrading::UnknownServiceType,
-                     CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
+  void add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos);
   // Add all types to a sepcified service type repository reference.
 
   void

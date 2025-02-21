@@ -1,11 +1,9 @@
-//$Id$
+#include "tao/PolicyFactory_Registry_Factory.h"
 
-#include "PolicyFactory_Registry_Factory.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (tao,
-           PolicyFactory_Registry_Factory,
-           "$Id$")
-
-TAO_PolicyFactory_Registry_Factory::~TAO_PolicyFactory_Registry_Factory (void)
+TAO_PolicyFactory_Registry_Factory::~TAO_PolicyFactory_Registry_Factory ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

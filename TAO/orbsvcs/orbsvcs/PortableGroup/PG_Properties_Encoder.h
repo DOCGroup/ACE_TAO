@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Properties_Encoder.h
- *
- *  $Id$
  *
  *  This file declares a class to help manage PortableGroup::Properties
  *
@@ -21,10 +20,12 @@
 
 #include "orbsvcs/PortableGroupS.h"
 #include "orbsvcs/CosNamingC.h"
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #include "ace/Vector_T.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
@@ -40,10 +41,6 @@ namespace TAO_PG
    */
   class TAO_PortableGroup_Export Properties_Encoder
   {
-    // Originally NamedValue was an ACE_Pair, but ACE_Pair allows operator ==
-    // (delegating to the member's operators ==.)  Since CORBA::Any does
-    // not support operator ==, this confused gcc version 2.9-gnupro-98r2
-    // on LynxOS pfadev04 3.0.1 110298-G PowerPC
     struct NamedValue
     {
     public:
@@ -58,7 +55,7 @@ namespace TAO_PG
       /// Meaningless method to keep ACE_Vector happy
       bool operator != (const NamedValue &rhs) const;
     };
-    typedef ACE_Vector< NamedValue, 10 > NamedValueVec;
+    typedef ACE_Vector<NamedValue, 10> NamedValueVec;
 
   public:
     /**
@@ -67,7 +64,7 @@ namespace TAO_PG
     Properties_Encoder ();
 
     /// standard destructor
-    ~Properties_Encoder ();
+    ~Properties_Encoder () = default;
 
     /**
      * add a name/value property to the Properties_Encoder.
@@ -81,16 +78,17 @@ namespace TAO_PG
     void encode (PortableGroup::Properties * property_set) const;
 
   private:
-    Properties_Encoder (const Properties_Encoder & rhs);
-    Properties_Encoder & operator = (const Properties_Encoder & rhs);
+    Properties_Encoder (const Properties_Encoder & rhs) = delete;
+    Properties_Encoder & operator = (const Properties_Encoder & rhs) = delete;
   private:
     NamedValueVec values_;
   };
-
 } //namespace TAO_PG
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "PG_Properties_Encoder.inl"
+#include "orbsvcs/PortableGroup/PG_Properties_Encoder.inl"
 #endif /* __ACE_INLINE__ */
 #include /**/ "ace/post.h"
 #endif // TAO_PG_PROPERTIES_ENCODER_H

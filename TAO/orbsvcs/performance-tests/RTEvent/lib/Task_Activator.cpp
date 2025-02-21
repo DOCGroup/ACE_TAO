@@ -1,8 +1,6 @@
 /**
  * @file Task_Activator.cpp
  *
- * $Id$
- *
  * @author Jody Hagins <jody@atdesk.com>
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
@@ -43,7 +41,7 @@ Task_Activator<Task>::Task_Activator (int priority,
 }
 
 template<class Task>
-Task_Activator<Task>::~Task_Activator (void)
+Task_Activator<Task>::~Task_Activator ()
 {
   if (this->task_ == 0)
     return;

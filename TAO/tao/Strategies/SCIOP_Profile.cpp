@@ -1,33 +1,27 @@
-// This may look like C, but it's really -*- C++ -*-
-// SCIOP_Profile.cpp
-
-#include "SCIOP_Profile.h"
+#include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
 #include "tao/CDR.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/StringSeqC.h"
-#include "sciop_endpointsC.h"
-
-ACE_RCSID(Strategies,
-          SCIOP_Profile,
-          "$Id$")
+#include "tao/Strategies/sciop_endpointsC.h"
+#include "ace/os_include/os_netdb.h"
 
 static const char prefix_[] = "sciop";
 
 const char TAO_SCIOP_Profile::object_key_delimiter_ = '/';
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 char
-TAO_SCIOP_Profile::object_key_delimiter (void) const
+TAO_SCIOP_Profile::object_key_delimiter () const
 {
   return TAO_SCIOP_Profile::object_key_delimiter_;
 }
-
-
 
 TAO_SCIOP_Profile::TAO_SCIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO::ObjectKey &object_key,
@@ -67,7 +61,7 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_SCIOP_Profile::~TAO_SCIOP_Profile (void)
+TAO_SCIOP_Profile::~TAO_SCIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -94,7 +88,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   if (cdr.read_ushort (this->endpoint_.port_) == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) SCIOP_Profile::decode - ")
                     ACE_TEXT ("error while decoding host/port")));
       return -1;
@@ -106,7 +100,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
     {
       TAO_SCIOP_Endpoint *endpoint = 0;
       ACE_NEW_RETURN (endpoint,
-                      TAO_SCIOP_Endpoint (endpointSeq[i].in(),
+                      TAO_SCIOP_Endpoint (endpointSeq[i],
                                           this->endpoint_.port_,
                                           this->endpoint_.priority()),
                       -1);
@@ -137,37 +131,36 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_SCIOP_Profile::parse_string_i (const char *ior
-                                   ACE_ENV_ARG_DECL)
+TAO_SCIOP_Profile::parse_string_i (const char *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
 
-  const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
+  const char *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == 0 || okd == ior)
     {
       // No object key delimiter or no hostname specified.
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 
   if (cp_pos == ior)
     {
       // No hostname specified!  It is required by the spec.
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
   else if (cp_pos != 0)
     {
@@ -210,21 +203,22 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SCIOP_Profile::parse_string ")
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
 
           // @@ What's the right exception to throw here?
-          ACE_THROW (CORBA::INV_OBJREF (
+          throw ::CORBA::INV_OBJREF (
                        CORBA::SystemException::_tao_minor_code (
                          TAO::VMCID,
                          EINVAL),
-                       CORBA::COMPLETED_NO));
+                       CORBA::COMPLETED_NO);
         }
-      else
-        this->endpoint_.host_ = CORBA::string_dup (tmp_host);
+
+      this->endpoint_.host_ = CORBA::string_dup (tmp_host);
+      this->endpoint_.preferred_interfaces (this->orb_core ());
     }
 
   TAO::ObjectKey ok;
@@ -243,7 +237,7 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     dynamic_cast<const TAO_SCIOP_Profile *> (other_profile);
 
   if (op == 0)
-    return 0;
+    return false;
 
   // Check endpoints equivalence.
   const TAO_SCIOP_Endpoint *other_endp = &op->endpoint_;
@@ -254,15 +248,14 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::ULong
-TAO_SCIOP_Profile::hash (CORBA::ULong max
-                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_SCIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hash value for all endpoints.
   CORBA::ULong hashval = 0;
@@ -291,13 +284,13 @@ TAO_SCIOP_Profile::hash (CORBA::ULong max
 }
 
 TAO_Endpoint*
-TAO_SCIOP_Profile::endpoint (void)
+TAO_SCIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO_SCIOP_Profile::endpoint_count (void) const
+TAO_SCIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -312,7 +305,7 @@ TAO_SCIOP_Profile::add_endpoint (TAO_SCIOP_Endpoint *endp)
 }
 
 char *
-TAO_SCIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SCIOP_Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
@@ -350,7 +343,7 @@ TAO_SCIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 const char *
-TAO_SCIOP_Profile::prefix (void)
+TAO_SCIOP_Profile::prefix ()
 {
   return ::prefix_;
 }
@@ -393,9 +386,9 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     encap << this->ref_object_key_->object_key ();
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "(%P|%t) TAO - IIOP_Profile::create_profile_body "
-                  "no object key marshalled \n"));
+                  "no object key marshalled\n"));
     }
 
   // Tagged Components
@@ -403,7 +396,7 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_SCIOP_Profile::encode_endpoints (void)
+TAO_SCIOP_Profile::encode_endpoints ()
 {
   CORBA::ULong actual_count = 0;
 
@@ -459,7 +452,7 @@ TAO_SCIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_SCIOP_Profile::decode_endpoints (void)
+TAO_SCIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -512,5 +505,7 @@ TAO_SCIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

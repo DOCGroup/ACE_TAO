@@ -2,11 +2,7 @@
 /**
  *  @file Command.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_COMMAND_H
@@ -19,26 +15,28 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/CORBA_macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Environment;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_Command
  *
  * @brief Base Class for all command objects.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command
 {
   friend class TAO_Notify_Tests_Command_Builder;
 public:
-  /// Constuctor
-  TAO_Notify_Tests_Command (void);
+  /// Constructor
+  TAO_Notify_Tests_Command ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Command ();
@@ -47,13 +45,13 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
     /// Implement command execution.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void execute_i () = 0;
 
   /// Return the name of this command.
-  virtual const char* get_name (void)= 0;
+  virtual const char* get_name () = 0;
 
   ///= Each derived type must also implement the following signature:
-  // static const char* name (void);
+  // static const char* name ();
 
 protected:
   /// Next command after this one.
@@ -65,7 +63,7 @@ protected:
 
 private:
   /// Execute the command.
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute ();
 
   /// Save the next command to exec.
   void next (TAO_Notify_Tests_Command* command);

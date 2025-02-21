@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Object_Adapter_Factory.h
- *
- *  $Id$
  *
  *  @author  Johnny Willemsen
  */
@@ -13,7 +12,7 @@
 #define TAO_PG_OBJECT_ADAPTER_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #include "tao/PortableServer/Object_Adapter_Factory.h"
 #include "tao/orbconf.h"
@@ -24,15 +23,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_PortableGroup_Export TAO_PG_Object_Adapter_Factory : public TAO_Object_Adapter_Factory
 {
 public:
   /// Constructor
-  TAO_PG_Object_Adapter_Factory (void);
+  TAO_PG_Object_Adapter_Factory ();
 
   /// Create adapter.
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_PG_Object_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_PG_Object_Adapter_Factory)

@@ -4,8 +4,6 @@
 /**
  *  @file ORBInitializer.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -32,7 +30,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 class ServerRequestInterceptor;
 
 /**
@@ -44,12 +41,11 @@ class ServerRequestInterceptor;
  */
 class ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  ORBInitializer (void);
+  ORBInitializer ();
 
   /**
    * @name PortableInterceptor::ORBInitializer Methods
@@ -58,22 +54,17 @@ public:
    * interface.
    */
   //@{
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
   //@}
 
   /// Return a reference to the LoadAlert object.
-  TAO_LB_LoadAlert & load_alert (void);
+  TAO_LB_LoadAlert & load_alert ();
 
-  ServerRequestInterceptor * interceptor (void) const;
+  ServerRequestInterceptor * interceptor () const;
 
 private:
-
   /// The CosLoadBalancing::LoadAlert servant to be used at this
   /// location.
   /**
@@ -83,7 +74,6 @@ private:
   TAO_LB_LoadAlert load_alert_;
 
   ServerRequestInterceptor * interceptor_;
-
 };
 
 

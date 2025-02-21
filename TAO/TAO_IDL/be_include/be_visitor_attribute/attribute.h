@@ -1,23 +1,15 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    attribute.h
-//
-// = DESCRIPTION
-//    Visitor for the Attribute class.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    attribute.h
+ *
+ *  Visitor for the Attribute class.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H
 #define _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H
@@ -26,26 +18,37 @@
 // Attribute visitor
 // ************************************************************
 
+/**
+ * @class be_visitor_attribute
+ *
+ * @brief be_visitor_attribute
+ *
+ * This is a concrete visitor to generate code for attributes. We have one
+ * class for mapping into the client and server.
+ */
 class be_visitor_attribute : public be_visitor_decl
 {
-  //
-  // = TITLE
-  //   be_visitor_attribute
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate code for attributes. We have one
-  //   class for mapping into the client and server.
-  //
-  //
 public:
+  /// constructor
   be_visitor_attribute (be_visitor_context *ctx);
-  // constructor
 
-  ~be_visitor_attribute (void);
-  // destructor
+  /// destructor
+  ~be_visitor_attribute ();
 
+  /// visit attribute. We provide code for this method in the derived class
   virtual int visit_attribute (be_attribute *node);
-  // visit attribute. We provide code for this method in the derived class
+
+  void for_facets (bool val);
+  void op_scope (be_decl *node);
+  void exec_class_extension (const char *extension);
+
+private:
+  bool for_facets_;
+  be_decl *op_scope_;
+
+  /// Defaults to "exec_i" but in special cases we want to
+  /// modify it.
+  ACE_CString exec_class_extension_;
 };
 
 #endif /* _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H*/

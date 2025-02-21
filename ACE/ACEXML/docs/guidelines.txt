@@ -1,0 +1,39 @@
+// -*- HTML-Helper -*-
+
+/**
+@page acexml_guides ACEXML Programming Guidelines
+
+<ul>
+  <li>A lot of class names under @c $(ACE_ROOT)/ACEXML/common do not
+      follow the naming convention suggested in ACE-guidelines.html.
+      The reason for that is because those classes were derived from
+      the SAX2 API and we would like to keep them as similar as
+      possible.
+  <li>Character encoding:  The default character encoding for ACEXML
+      can be set at compile time.   ACEXML uses UTF-8 encoding in most
+      platforms where <code>ACEXML_Char</code> maps to
+      <code>char</code> in this case.  When ACE is configured to use
+      <CODE>wchar</CODE> and <CODE>UNICODE</CODE>,  ACEXML uses UTF-16
+      encoding and <code>ACEXML_Char</code> maps to
+      <code>wchar_t</code>.  Notice that ACEXML assume
+      <code>sizeof (wchar_t)</code> is of 2-byte long.  For platforms
+      using 4-byte <code>wchar_t</code>, ACEXML will not work
+      correctly, but it should be trivial to fix.<p>
+
+  <li>Currently, there's only an example showing how to use the parser
+      under @c $(ACE_ROOT)/ACEXML/examples/SAXPrint/.
+
+  <li><b>(Not supported yet)</b> To develop a new validator, one must
+      create a DLL implementing
+      @c ACEXML_Attributes_Def_Builder, @c
+      ACEXML_Attribute_Def_Builder, @c ACEXML_Element_Def_Builder,
+      @c ACEXML_Validator, and @c ACEXML_DTD_Manager.  The DLL should
+      also export a traditional C function called @c
+      create_dtd_manager.  The XML parser itself should also be
+      modified to support and dynamically link with the new validator.
+      See @c $(ACE_ROOT)/ACEXML/parser/debug_validator/ for an example.
+
+</ul>
+
+
+*/

@@ -1,16 +1,11 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Load_Balancing
-//
-// = FILENAME
-//    Load_Balancing_Service.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Load_Balancing_Service.cpp
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Load_Balancing_Service.h"
 #include "Load_Balancer_i.h"
@@ -18,15 +13,15 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Load_Balancing_Service::Load_Balancing_Service (void)
+Load_Balancing_Service::Load_Balancing_Service ()
   : ior_output_file_ (0)
 {
 }
 
 int
-Load_Balancing_Service::parse_args (int argc, char *argv[])
+Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -61,18 +56,15 @@ Load_Balancing_Service::parse_args (int argc, char *argv[])
 
 int
 Load_Balancing_Service::init (int argc,
-                    char* argv[])
+                    ACE_TCHAR* argv[])
 {
   int result;
   CORBA::String_var ior;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       result = this->orb_manager_.init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                        argv);
       if (result == -1)
         return result;
 
@@ -87,24 +79,20 @@ Load_Balancing_Service::init (int argc,
                       Object_Group_Factory_i (),
                       -1);
       PortableServer::ServantBase_var s = factory_servant;
-      ior = orb_manager_.activate (factory_servant
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ior = orb_manager_.activate (factory_servant);
 
       if (ior.in () == 0)
         return -1;
       else if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG,
-                    "Load_Balancer: Object Group Factory ior is %s\n",
+                    "Load_Balancer: Object Group Factory ior is %C\n",
                     ior.in ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Load_Balancing_Service::init");
+      ex._tao_print_exception ("Load_Balancing_Service::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   if (this->ior_output_file_ != 0)
     {
@@ -117,27 +105,25 @@ Load_Balancing_Service::init (int argc,
 }
 
 
-
 int
-Load_Balancing_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+Load_Balancing_Service::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Load_Balancer: Initialized \n"));
+              "Load_Balancer: Initialized\n"));
 
   int result;
 
-  result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  result = this->orb_manager_.run ();
 
   return result;
 }
 
-Load_Balancing_Service::~Load_Balancing_Service (void)
+Load_Balancing_Service::~Load_Balancing_Service ()
 {
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Load_Balancing_Service factory;
@@ -145,19 +131,15 @@ main (int argc, char *argv[])
   if (factory.init (argc, argv) == -1)
     return 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      result = factory.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = factory.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Load_Balancing_Service");
+      ex._tao_print_exception ("Load_Balancing_Service");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   if (result == -1)
     return 1;

@@ -4,8 +4,6 @@
 /**
  *  @file   amh_ss.h
  *
- *  $Id$
- *
  *  Specialized interface visitor for AMH
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -25,13 +23,11 @@ public:
   int visit_operation (be_operation *node);
   int visit_attribute (be_attribute *node);
 
-  ~be_visitor_amh_interface_ss (void);
+  ~be_visitor_amh_interface_ss ();
 
 protected:
   virtual void this_method (be_interface *node);
   virtual void dispatch_method (be_interface *node);
-
-  virtual void generate_send_reply (TAO_OutStream * os);
 
   virtual int generate_amh_classes (be_interface *node);
   virtual int generate_proxy_classes (be_interface *node);

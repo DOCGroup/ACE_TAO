@@ -1,0 +1,57 @@
+
+
+This directory contains utilities for running the ACE+TAO test suite on
+a LabVIEW RT 8 / Phar Lap ETS target. Although it's running Phar Lap ETS,
+and thus would normally be able to run programs, this environment is
+different than plain Phar Lap ETS in that the LabVIEW RT layer takes up
+the only process able to run on Phar Lap. Thus, everything executed needs
+to be done via LabVIEW RT facilities. Thus, we have the following
+restrictions:
+
+1. There's no NFS, no SMB; there's a target filesystem but no direct access.
+2. No executables can be directly executed.
+
+This yields the following:
+
+- All test "programs" are built as DLLs instead of executables. The DLL has
+  a known "main" entrypoint. To run the test, the DLL must be copied down
+  to the target, explicitly loaded, and its entrypoint called. MPC will
+  automatically build these DLLs when an executable is specified in the MPC
+  file by basing the MPC project on the labviewrt_dll.mpb base. This is done
+  by supplying "-base labviewrt_dll" on the MPC command line.
+
+- There is a test-controlling DLL that lives on the LabVIEW RT target, and is
+  loaded when the target boots. This DLL spawns a thread that listens on a
+  TCP port for connections; it runs a text-based protocol by which it can
+  be directed to load and run test DLLs and report results. This DLL is in
+  the labview_test_controller subdirectory; see its ReadMe.txt file for
+  more details.
+
+- The Perl test framework in PerlACE has a ProcessLVRT.pm and
+  TestTarget_LVRT.pm that know how to run the test protocol, get the log file
+  back from the target, etc. in order to integrate the LabVIEW RT scheme into
+  the ACE+TAO testing framework.
+
+- If a test encounters any significant errors that would produce something akin
+  to a crash or significant leak on a multi-process OS, it will probably
+  render the LabVIEW RT target unuseable and unresponsive. There are two
+  utilities in this directory that will help in this sort of situation:
+
+     1. Reboot_Target.exe: A Windows executable that runs a LabVIEW VI to
+        reboot a local target box. If the box is alive enough to be contacted
+        and run the LabVIEW VI that triggers the reboot, this works fine.
+        However, if the box is unresponsive, as it usually is, this doesn't
+        work. The advantage of this utility is that it doesn't require any
+        additional hardware or software.
+
+     2. PXI_Reset.exe: A Windows executable that runs a LabVIEW VI to
+        trigger a hardware reset on the target box. This utility works all
+        the time since it does a hardware reset. However, it requires an
+        additional piece of hardware that connects to the host PC via USB
+        and connects to the DB9 on the back of the PXI target. This little
+        hardware box was custom-made by Lockheed Martin, so you can't just
+        go buy one at Radio Shack.
+
+  If neither of these utilities is workable for you, you can probably use a
+  programmable power strip that can cycle the power on the target, and write
+  a utility that drives it.

@@ -1,29 +1,24 @@
-// This may look like C, but it's really -*- C++ -*-
-//
-// $Id$
-
-#include "PortableGroup_Loader.h"
-#include "PG_Object_Adapter_Factory.h"
-#include "PortableGroup_ORBInitializer.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Loader.h"
+#include "orbsvcs/PortableGroup/PG_Object_Adapter_Factory.h"
+#include "orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h"
+#include "orbsvcs/PortableGroup/miop_resource.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (PortableGroup,
-           PortableGroup_Loader,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
+TAO_PortableGroup_Loader::TAO_PortableGroup_Loader ()
 {
 }
 
 int
 TAO_PortableGroup_Loader::init (int /*argc*/,
-                                char* /*argv*/ [])
+                                ACE_TCHAR* /*argv*/ [])
 {
   ACE_TRACE ("TAO_PortableGroup_Loader::init");
   // Register the ORB initializer.
-  ACE_TRY_NEW_ENV
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -37,39 +32,30 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
       orb_initializer = temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception caught while initializing the PortableGroup:");
+      ex._tao_print_exception (
+        "Unexpected exception caught while initializing the PortableGroup:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-TAO_PortableGroup_Loader::Initializer (void)
+TAO_PortableGroup_Loader::Initializer ()
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_PortableGroup_Loader);
-  TAO_PortableGroup_Loader *tmp =
-    ACE_Dynamic_Service<TAO_PortableGroup_Loader>::instance (
-      "PortableGroup_Loader");
-
-  if (tmp != 0)
-    {
-      return tmp->init (0, 0);
-    }
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_MIOP_Resource_Factory);
 
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_PortableGroup_Loader,
                        ACE_TEXT ("PortableGroup_Loader"),

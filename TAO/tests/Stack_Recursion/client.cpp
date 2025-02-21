@@ -1,23 +1,21 @@
-// $Id$
-
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Stack_Recursion,
-          client,
-          "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+static int iterations = 1000;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'i':
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
       case 'k':
         ior = get_opts.opt_arg ();
         break;
@@ -30,29 +28,26 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Test::Sender_var sender =
-        Test::Sender::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Sender::_narrow(tmp.in ());
 
       if (CORBA::is_nil (sender.in ()))
         {
@@ -64,7 +59,7 @@ main (int argc, char *argv[])
 
 
       Client_Task client_task (sender.in (),
-                               1000,
+                               iterations,
                                1048576,
                                ACE_Thread_Manager::instance ());
 
@@ -75,28 +70,22 @@ main (int argc, char *argv[])
       ACE_Thread_Manager::instance ()->wait ();
 
       CORBA::Long count =
-        sender->get_event_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        sender->get_event_count ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
                   count));
 
       // shutdown the remote ORB
-      sender->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sender->shutdown ();
 
 
-
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

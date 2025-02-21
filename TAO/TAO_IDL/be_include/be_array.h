@@ -1,23 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_array.h
-//
-// = DESCRIPTION
-//    Extension of class AST_Array that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_array.h
+ *
+ *  Extension of class AST_Array that provides additional means for C++
+ *  mapping.
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
 
 #ifndef BE_ARRAY_H
 #define BE_ARRAY_H
@@ -33,35 +25,38 @@ class be_array : public virtual AST_Array,
                  public virtual be_type
 {
 public:
-  be_array (void);
-  // Default constructor.
-
   be_array (UTL_ScopedName *n,
             unsigned long ndims,
             UTL_ExprList *dims,
-            idl_bool local,
-            idl_bool abstract);
-  // Constructor.
+            bool local,
+            bool abstract);
 
-  ~be_array (void);
+  ~be_array () override = default;
 
+  /// Generate dimensions. If slice == 1, generate dimensions for the slice
+  /// definition.
   int gen_dimensions (TAO_OutStream *os,
                       unsigned short slice = 0);
-  // Generate dimensions. If slice == 1, generate dimensions for the slice
-  // definition.
+
+  /// Overridden from class be_type.
+  void gen_ostream_operator (TAO_OutStream *os,
+                             bool use_underscore) override;
+  void gen_member_ostream_operator (TAO_OutStream *os,
+                                    const char *instance_name,
+                                    bool use_underscore,
+                                    bool accessor) override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
-  // Narrowing.
-  DEF_NARROW_METHODS2 (be_array, AST_Array, be_type);
-  DEF_NARROW_FROM_DECL (be_array);
+  // Cleanup.
+  void destroy () override;
 
 protected:
-  virtual int create_name (void);
-  // Create a name for us.
+  /// Create a name for us.
+  virtual int create_name ();
 
-  virtual void compute_tc_name (void);
+  void compute_tc_name () override;
 };
 
 #endif

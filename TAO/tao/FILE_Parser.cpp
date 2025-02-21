@@ -1,34 +1,21 @@
-// $Id$
+#include "tao/FILE_Parser.h"
 
-#include "FILE_Parser.h"
+#if (TAO_HAS_FILE_PARSER == 1)
+
 #include "tao/ORB.h"
-#include "tao/Environment.h"
 #include "tao/Object.h"
 
 #include "ace/Read_Buffer.h"
-
-#if !defined(__ACE_INLINE__)
-#include "FILE_Parser.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (tao,
-           FILE_Parser,
-           "$Id$")
-
-
-TAO_FILE_Parser::~TAO_FILE_Parser (void)
-{
-}
-
 static const char file_prefix[] = "file:";
 
-int
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+bool
 TAO_FILE_Parser::match_prefix (const char *ior_string) const
 {
   return (ACE_OS::strncmp (ior_string,
@@ -37,10 +24,7 @@ TAO_FILE_Parser::match_prefix (const char *ior_string) const
 }
 
 CORBA::Object_ptr
-TAO_FILE_Parser::parse_string (const char *ior,
-                               CORBA::ORB_ptr orb
-                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
@@ -50,34 +34,32 @@ TAO_FILE_Parser::parse_string (const char *ior,
   FILE* file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (filename),
                               ACE_TEXT("r"));
 
-  if (file == 0)
+  if (file == nullptr)
     return CORBA::Object::_nil ();
 
-  ACE_Read_Buffer reader (file, 1);
+  ACE_Read_Buffer reader (file, true);
 
   char* string = reader.read ();
 
-  if (string == 0)
+  if (string == nullptr)
     return CORBA::Object::_nil ();
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();
-  ACE_TRY
+  try
     {
-      object = orb->string_to_object (string ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      object = orb->string_to_object (string);
 
       reader.alloc ()->free (string);
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
       reader.alloc ()->free (string);
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object;
 }
+
 
 ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,
                        ACE_TEXT ("FILE_Parser"),
@@ -89,8 +71,7 @@ ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,
 
 ACE_FACTORY_DEFINE (TAO, TAO_FILE_Parser)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#endif /* TAO_HAS_FILE_PARSER == 1 */
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

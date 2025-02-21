@@ -4,8 +4,6 @@
 /**
  * @file ObjectReferenceTemplate_i.h
  *
- * $Id$
- *
  * This is the implementation of the
  * PortableInterceptor::ObjectReferenceTemplate ValueType.
  *
@@ -24,13 +22,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Default_ORTC.h"
-#include "tao/SystemException.h"
+#include "tao/ObjRefTemplate/Default_ORTC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -43,13 +42,13 @@ namespace PortableServer
 namespace TAO
 {
   /**
-   * @class TAO_ObjectReferenceTemplate
+   * @class ObjectReferenceTemplate
    *
    * @brief Implementation of the PortableInterceptor::ObjectReferenceTemplate
    *        interface. This is a default implementation created to be returned
    *        by the IORInfo when the user requests the ORT or ORF.
    */
-  class TAO_ORT_Export ObjectReferenceTemplate
+  class ObjectReferenceTemplate
     : public virtual OBV_TAO_Default_ORT::ObjectReferenceTemplate,
       public virtual CORBA::DefaultValueRefCountBase
   {
@@ -59,6 +58,7 @@ namespace TAO
                              const char *orb_id,
                              PortableInterceptor::AdapterName *adapter_name,
                              PortableServer::POA_ptr poa);
+    ::CORBA::ValueBase *_copy_value ();
 
     /**
      * @name PortableInterceptor::ObjectReferenceTemplate Methods
@@ -67,15 +67,11 @@ namespace TAO
      * PortableInterceptor::ObjectReferenceTemplate ValueType.
      */
     //@{
-    virtual char * server_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * server_id ();
 
-    virtual char * orb_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * orb_id ();
 
-    virtual PortableInterceptor::AdapterName * adapter_name (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual PortableInterceptor::AdapterName * adapter_name ();
     //@}
 
     /**
@@ -87,21 +83,16 @@ namespace TAO
     //@{
     virtual CORBA::Object_ptr make_object (
       const char * repository_id,
-      const PortableInterceptor::ObjectId & id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-                       CORBA::SystemException
-                       ));
+      const PortableInterceptor::ObjectId & id);
     //@}
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management via
      * reference counting.
      */
-    ~ObjectReferenceTemplate (void);
+    ~ObjectReferenceTemplate ();
 
   private:
     const char *server_id_;
@@ -110,6 +101,8 @@ namespace TAO
     PortableServer::POA_var poa_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

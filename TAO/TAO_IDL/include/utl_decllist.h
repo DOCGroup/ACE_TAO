@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -86,14 +84,14 @@ public:
   // Operations
 
   // Constructor(s)
-  UTL_DeclList (FE_Declarator *s, 
+  UTL_DeclList (FE_Declarator *s,
                 UTL_DeclList *cdr);
 
   // Get element
-  FE_Declarator *head (void);
+  FE_Declarator *head ();
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   // Data
@@ -111,7 +109,7 @@ public:
   UTL_DecllistActiveIterator (UTL_DeclList *s);
 
   // Get current item
-  FE_Declarator *item (void);
+  FE_Declarator *item ();
 };
 
 #endif           // _UTL_DECLLIST_UTL_DECLLIST_HH

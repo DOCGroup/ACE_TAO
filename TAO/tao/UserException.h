@@ -4,8 +4,6 @@
 /**
  *  @file    UserException.h
  *
- *  $Id$
- *
  *  CORBA::UserException class header.
  *
  *  @author DOC Group at Vanderbilt U, Wash U, and UCI
@@ -18,12 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Exception.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Exception.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -38,46 +39,41 @@ namespace CORBA
   class TAO_Export UserException : public Exception
   {
   public:
-
     /// Copy constructor.
-    UserException (UserException const & rhs);
+    UserException (UserException const &rhs);
 
     /// Destructor.
-    ~UserException (void);
+    virtual ~UserException () = default;
 
     /// Assignment operator.
-    UserException & operator= (UserException const & rhs);
+    UserException &operator= (UserException const &rhs);
 
     /// The narrow operation.
-    static UserException * _downcast (CORBA::Exception * exception);
+    static UserException *_downcast (CORBA::Exception *exception);
 
-        /// The const version of narrow operation
-    static const UserException * _downcast (
-      CORBA::Exception const * exception);
+    /// The const version of narrow operation
+    static const UserException *_downcast (CORBA::Exception const *exception);
 
-    virtual void _raise (void) const = 0;
+    virtual void _raise () const = 0;
+
+    virtual CORBA::TypeCode_ptr _tao_type () const;
 
     // = TAO specific extension.
 
     /// Constructor from a repository id.
-    UserException (char const * repository_id,
-                   char const * local_name);
-
-    virtual int _is_a (char const * interface_id) const;
-
-    // Used for narrowing
+    UserException (char const *repository_id, char const *local_name);
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
-    virtual ACE_CString _info (void) const;
+    virtual ACE_CString _info () const;
 
-    //protected:
+  protected:
     /// Default constructor.
-    UserException (void);
-
+    UserException ();
   };
-
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/UserException.inl"

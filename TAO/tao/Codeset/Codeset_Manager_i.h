@@ -1,10 +1,6 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //======================================================================
 /*
  *  @file Codeset_Manager_i.h
- *
- *  $Id$
  *
  *  Interface for the TAO CodeSet Manager.
  *
@@ -19,14 +15,17 @@
 
 #include "tao/CONV_FRAMEC.h"
 #include "tao/Codeset_Manager.h"
+#include "tao/Codeset/codeset_export.h"
+#include "tao/Codeset/Codeset_Descriptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Unbounded_Set.h"
-#include "codeset_export.h"
-#include "Codeset_Descriptor.h"
+#include "ace/Dynamic_Service_Dependency.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 class TAO_Transport;
@@ -52,13 +51,11 @@ class TAO_Codeset_Descriptor;
  * determining the transmission codesets based an the local and remote codeset
  * information. The transmission codesets are communicated via a service
  * context attached to the first request sent on the new connection.
- *
  */
 
 class TAO_Codeset_Export TAO_Codeset_Manager_i :
   public TAO_Codeset_Manager
 {
-
 public:
   /// NCS for char is defaulted to ISO 8859-1:1987; Latin Alphabet
   /// No. 1
@@ -68,11 +65,11 @@ public:
   static CONV_FRAME::CodeSetId default_wchar_codeset;
 
   TAO_Codeset_Manager_i ();
-  ~TAO_Codeset_Manager_i ();
+  ~TAO_Codeset_Manager_i () = default;
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values
   /// for Char/Wchar in to the Object Reference.
-  void set_codeset (TAO_Tagged_Components& ) const;
+  void set_codeset (TAO_Tagged_Components&) const;
   ///
   /// Called from an object of "TAO_GIOP_Invocation" to set TCS on the
   /// Transport
@@ -91,10 +88,10 @@ public:
   /// initialization.  This will traverse the list of named codeset
   /// translator factories and add any of those that have a native
   /// codeset id matching the manager's native codeset id.
-  void open(void);
+  void open(TAO_ORB_Core& core);
 
-  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void);
-  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void);
+  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor ();
+  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor ();
 
 private:
   // Compute the TCS for Char/WChar asper the CORBA Specification
@@ -129,6 +126,8 @@ private:
   TAO_Codeset_Translator_Base * get_translator_i (TAO_Codeset_Descriptor&,
                                                   CONV_FRAME::CodeSetId);
 
+  void get_ncs (CONV_FRAME::CodeSetId &ncsc, CONV_FRAME::CodeSetId& ncsw);
+
   // The CodeSetComponentInfo struct contains all of the information
   // regarding the code sets this application recognizes. This is
   // where the native code set for both char and wchar are stored.
@@ -138,6 +137,7 @@ private:
   TAO_Codeset_Descriptor wchar_descriptor_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

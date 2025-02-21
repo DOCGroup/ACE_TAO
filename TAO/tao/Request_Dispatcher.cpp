@@ -1,27 +1,22 @@
-// $Id$
+#include "tao/Request_Dispatcher.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/ORB_Core.h"
 
-#include "Request_Dispatcher.h"
-#include "TAO_Server_Request.h"
-#include "ORB_Core.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (tao, 
-           Request_Dispatcher, 
-           "$Id$")
-
-TAO_Request_Dispatcher::~TAO_Request_Dispatcher (void)
+TAO_Request_Dispatcher::~TAO_Request_Dispatcher ()
 {
 }
 
 void
 TAO_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                   TAO_ServerRequest &request,
-                                  CORBA::Object_out forward_to
-                                  ACE_ENV_ARG_DECL)
+                                  CORBA::Object_out forward_to)
 {
   // Dispatch based on object key
-  orb_core->adapter_registry ()->dispatch (request.object_key (),
-                                           request,
-                                           forward_to
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  orb_core->adapter_registry ().dispatch (request.object_key (),
+                                          request,
+                                          forward_to);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

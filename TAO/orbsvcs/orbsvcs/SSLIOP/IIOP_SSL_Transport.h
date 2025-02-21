@@ -4,8 +4,6 @@
 /**
  *  @file   IIOP_SSL_Transport.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -16,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -24,6 +22,7 @@
 
 #include "tao/IIOP_Transport.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Resume_Handle;
@@ -58,11 +57,10 @@ namespace TAO
   public:
     /// Constructor.
     IIOP_SSL_Transport (IIOP_SSL_Connection_Handler *handler,
-                        TAO_ORB_Core *orb_core,
-                        CORBA::Boolean flag = 0);
+                        TAO_ORB_Core *orb_core);
 
     /// Default destructor.
-    ~IIOP_SSL_Transport (void);
+    ~IIOP_SSL_Transport ();
 
     /** @name Overridden Template Methods
      *
@@ -70,17 +68,15 @@ namespace TAO
      * details.
      */
     virtual int handle_input (TAO_Resume_Handle &rh,
-                              ACE_Time_Value *max_wait_time = 0,
-                              int block = 0);
+                              ACE_Time_Value *max_wait_time = 0);
 
   protected:
-
     /// Reference to the TAO::SSLIOP::Current object.
     TAO::SSLIOP::Current_var current_;
-
   };
-
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

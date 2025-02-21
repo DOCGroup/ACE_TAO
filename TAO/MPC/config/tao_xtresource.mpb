@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : taolib, ace_xtreactor {
+  requires += tao_xtresource
+  after    += TAO_XtResource
+  libs     += TAO_XtResource
+}

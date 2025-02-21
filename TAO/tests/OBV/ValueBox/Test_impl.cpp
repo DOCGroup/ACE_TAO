@@ -1,10 +1,4 @@
-// $Id$
-
 #include "Test_impl.h"
-
-ACE_RCSID(Forward,
-          Test_impl,
-          "$Id$")
 
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
@@ -20,20 +14,18 @@ void rotate_string(char *s)
    unsigned char c;
    size_t l;
 
-   l = strlen(s);
+   l = ACE_OS::strlen(s);
    if (l>1)
    {
       c = s[l-1];
-      memmove(&s[1], &s[0], l-1);
+      ACE_OS::memmove(&s[1], &s[0], l-1);
       s[0] = c;
    }
 }
 
 
 VBlong *
-Test_impl::basic_op1 (VBlong * p1, VBlong *& p2, VBlong_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Test_impl::basic_op1 (VBlong * p1, VBlong *& p2, VBlong_out p3)
 {
   ACE_NEW_RETURN (p3,
                   VBlong (p2->_value()*5),
@@ -52,9 +44,7 @@ Test_impl::basic_op1 (VBlong * p1, VBlong *& p2, VBlong_out p3
 vb_basic::M_VBlong *
 Test_impl::basic_op2 (vb_basic::M_VBlong * p1,
                       vb_basic::M_VBlong *& p2,
-                      vb_basic::M_VBlong_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                      vb_basic::M_VBlong_out p3)
 {
   ACE_NEW_RETURN (p3,
                   vb_basic::M_VBlong (p2->_value()*5),
@@ -72,9 +62,7 @@ Test_impl::basic_op2 (vb_basic::M_VBlong * p1,
 
 ::CORBA::Long
 Test_impl::basic_op3 (::CORBA::Long p1, ::CORBA::Long& p2,
-                      ::CORBA::Long_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                      ::CORBA::Long_out p3)
 {
   p3 = p2 * 5;
 
@@ -87,9 +75,7 @@ Test_impl::basic_op3 (::CORBA::Long p1, ::CORBA::Long& p2,
 VBstring *
 Test_impl::string_op1 (::VBstring * p1,
                        ::VBstring *& p2,
-                       ::VBstring_out p3
-                       ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                       ::VBstring_out p3)
 {
   rotate_string (p2->_boxed_inout ());
 
@@ -110,20 +96,18 @@ Test_impl::string_op1 (::VBstring * p1,
 char *
 Test_impl::string_op2 (const char * p1,
                        char *& p2,
-                       CORBA::String_out p3
-                       ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                       CORBA::String_out p3)
 {
   rotate_string (p2);
 
-  p3 = CORBA::string_alloc (strlen(p2));
-  strcpy (p3, p2);
+  p3 = CORBA::string_alloc (ACE_OS::strlen(p2));
+  ACE_OS::strcpy (p3, p2);
 
   rotate_string ((char *) p1);
 
   char *return_string;
-  return_string = CORBA::string_alloc (strlen(p1));
-  strcpy (return_string, p1);
+  return_string = CORBA::string_alloc (ACE_OS::strlen(p1));
+  ACE_OS::strcpy (return_string, p1);
 
   return return_string;
 }
@@ -131,9 +115,7 @@ Test_impl::string_op2 (const char * p1,
 ::VBseqlong *
 Test_impl::seq_op1 (::VBseqlong * p1,
                     ::VBseqlong *& p2,
-                    ::VBseqlong_out p3
-                    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                    ::VBseqlong_out p3)
 {
   ACE_NEW_RETURN (p3,
                   VBseqlong(*p2),
@@ -160,9 +142,7 @@ Test_impl::seq_op1 (::VBseqlong * p1,
 void
 Test_impl::seq_op2 (const ::TDseqlong & p1,
                     ::TDseqlong & p2,
-                    ::TDseqlong_out p3
-                    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                    ::TDseqlong_out p3)
 {
   ACE_NEW (p3,
            TDseqlong(p1));
@@ -181,9 +161,7 @@ Test_impl::seq_op2 (const ::TDseqlong & p1,
 ::VBfixed_struct1 *
 Test_impl::struct_op1 (::VBfixed_struct1 * p1,
                        ::VBfixed_struct1 *& p2,
-                       ::VBfixed_struct1_out p3
-                       ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                       ::VBfixed_struct1_out p3)
 {
   ACE_NEW_RETURN (p3,
                   VBfixed_struct1 (p2->_value()),
@@ -209,9 +187,7 @@ Test_impl::struct_op1 (::VBfixed_struct1 * p1,
 void
 Test_impl::struct_op2 (const ::Fixed_Struct1 & p1,
                        ::Fixed_Struct1 & p2,
-                       ::Fixed_Struct1_out p3
-                       ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                       ::Fixed_Struct1_out p3)
 {
   p3 = p1;
 
@@ -223,9 +199,7 @@ Test_impl::struct_op2 (const ::Fixed_Struct1 & p1,
 ::VBvariable_struct1 *
 Test_impl::struct_op3 (::VBvariable_struct1 * p1,
                        ::VBvariable_struct1 *& p2,
-                       ::VBvariable_struct1_out p3
-                       ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                       ::VBvariable_struct1_out p3)
 {
   // transform p2 values
   p2->l (p2->l() * 3);
@@ -247,9 +221,7 @@ Test_impl::struct_op3 (::VBvariable_struct1 * p1,
 void
 Test_impl::struct_op4 (const ::Variable_Struct1 & p1,
                        ::Variable_Struct1 & p2,
-                       ::Variable_Struct1_out p3
-                       ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                       ::Variable_Struct1_out p3)
 {
   ACE_NEW (p3,
            Variable_Struct1());
@@ -261,14 +233,12 @@ Test_impl::struct_op4 (const ::Variable_Struct1 & p1,
 }
 
 
-::VBlongarray * 
+::VBlongarray *
 Test_impl::array_op1 (::VBlongarray * p1,
                       ::VBlongarray *& p2,
-                      ::VBlongarray_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-                  ACE_THROW_SPEC ((CORBA::SystemException))
+                      ::VBlongarray_out p3)
 {
-  long array_len = sizeof(LongArray) / sizeof(long);
+  long array_len = sizeof(LongArray) / sizeof(CORBA::Long);
 
   for (long i=0; i<array_len; i++)
     {
@@ -290,11 +260,9 @@ Test_impl::array_op1 (::VBlongarray * p1,
 void
 Test_impl::array_op2 (const ::LongArray p1,
                       ::LongArray p2,
-                      ::LongArray_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                      ::LongArray_out p3)
 {
-  long array_len = sizeof(LongArray) / sizeof(long);
+  long array_len = sizeof(LongArray) / sizeof(CORBA::Long);
 
   long i;
   for (i=0; i<array_len; i++)
@@ -312,11 +280,9 @@ Test_impl::array_op2 (const ::LongArray p1,
 ::VBstringarray *
 Test_impl::array_op3 (::VBstringarray * p1,
                       ::VBstringarray *& p2,
-                      ::VBstringarray_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                      ::VBstringarray_out p3)
 {
-  long array_len = sizeof( ::StringArray  ) / sizeof( StringArray_slice );
+  long array_len = sizeof( ::StringArray  ) / sizeof( StringArray_slice);
 
   char * p;
   for (long i=0; i<array_len; i++)
@@ -340,11 +306,9 @@ Test_impl::array_op3 (::VBstringarray * p1,
 void
 Test_impl::array_op4 (const ::StringArray p1,
                       ::StringArray p2,
-                      ::StringArray_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                      ::StringArray_out p3)
 {
-  long array_len = sizeof( ::StringArray  ) / sizeof( StringArray_slice );
+  long array_len = sizeof(::StringArray) / sizeof( StringArray_slice);
 
   char * p;
   long i;
@@ -362,16 +326,13 @@ Test_impl::array_op4 (const ::StringArray p1,
     }
 
   p3 = sa;
-
 }
 
 
 ::VBfixed_union1 *
 Test_impl::union_op1 (::VBfixed_union1 * p1,
                       ::VBfixed_union1 *& p2,
-                      ::VBfixed_union1_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                      ::VBfixed_union1_out p3)
 {
   CORBA::Long longValue;
   CORBA::Short shortValue;
@@ -415,9 +376,7 @@ Test_impl::union_op1 (::VBfixed_union1 * p1,
 void
 Test_impl::union_op2 (const ::Fixed_Union1 & p1,
                       ::Fixed_Union1 & p2,
-                      ::Fixed_Union1_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                      ::Fixed_Union1_out p3)
 {
   p3 = p1;
 
@@ -436,9 +395,7 @@ Test_impl::union_op2 (const ::Fixed_Union1 & p1,
 ::VBvariable_union1 *
 Test_impl::union_op3 (::VBvariable_union1 * p1,
                       ::VBvariable_union1 *& p2,
-                      ::VBvariable_union1_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                      ::VBvariable_union1_out p3)
 {
   CORBA::Long longValue;
   CORBA::String_var stringValue;
@@ -485,9 +442,7 @@ Test_impl::union_op3 (::VBvariable_union1 * p1,
 void
 Test_impl::union_op4 (const ::Variable_Union1 & p1,
                       ::Variable_Union1 & p2,
-                      ::Variable_Union1_out p3
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                      ::Variable_Union1_out p3)
 {
   CORBA::String_var stringValue;
 
@@ -521,8 +476,7 @@ Test_impl::union_op4 (const ::Variable_Union1 & p1,
 
 
 void
-Test_impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Test_impl::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

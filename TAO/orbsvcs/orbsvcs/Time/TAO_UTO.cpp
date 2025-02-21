@@ -1,21 +1,13 @@
 // -*- C++ -*-
-// $Id$
+#include "orbsvcs/Time/TAO_UTO.h"
+#include "orbsvcs/Time/TAO_TIO.h"
 
-#include "TAO_UTO.h"
-#include "TAO_TIO.h"
-#include "ace/OS.h"
-
-
-ACE_RCSID (Time,
-           TAO_UTO,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::InaccuracyT inaccuracy,
                   TimeBase::TdfT tdf)
 {
-
   this->attr_utc_time_.time = time;
 
   // Extract the lower 32 bits in the inacclo.
@@ -24,29 +16,22 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   // Extract the lower 16 bits of the remaining bits. 'And'ing with 0xFFFF
   // is only a sanity check.
 
-#if defined (ACE_LACKS_U_LONGLONG_T)
-  this->attr_utc_time_.inacchi = 0;
-#else
   this->attr_utc_time_.inacchi =
     static_cast<CORBA::UShort> ((inaccuracy >> 32U) & 0xFFFF);
 
-#endif /* ACE_LACKS_U_LONGLONG_T */
-
   this->attr_utc_time_.tdf = tdf;
-
 }
 
 // Destructor.
 
-TAO_UTO::~TAO_UTO (void)
+TAO_UTO::~TAO_UTO ()
 {
 }
 
 // Get Method for the readonly attribute time.
 
 TimeBase::TimeT
-TAO_UTO::time (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_UTO::time ()
 {
   return attr_utc_time_.time;
 }
@@ -54,8 +39,7 @@ TAO_UTO::time (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Get method for the readonly attribute inaccuracy.
 
 TimeBase::InaccuracyT
-TAO_UTO::inaccuracy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_UTO::inaccuracy ()
 {
   // Construct the Inaccuracy from the
   // inacchi and inacclo.
@@ -69,8 +53,7 @@ TAO_UTO::inaccuracy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Get method for the readonly attribute tdf.
 
 TimeBase::TdfT
-TAO_UTO::tdf (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_UTO::tdf ()
 {
   return attr_utc_time_.tdf;
 }
@@ -78,8 +61,7 @@ TAO_UTO::tdf (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Get method for the readonly attribute utc_time.
 
 TimeBase::UtcT
-TAO_UTO::utc_time (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_UTO::utc_time ()
 {
   return attr_utc_time_;
 }
@@ -88,8 +70,7 @@ TAO_UTO::utc_time (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // the Base Time, UTC and Distributed Time Sync. Algos. [3].
 
 CosTime::UTO_ptr
-TAO_UTO::absolute_time (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_UTO::absolute_time ()
 {
   return CosTime::UTO::_nil ();
 }
@@ -99,20 +80,15 @@ TAO_UTO::absolute_time (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
-                       CosTime::UTO_ptr uto
-                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                       CosTime::UTO_ptr uto)
 {
-  TimeBase::TimeT uto_time = uto->time (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosTime::TCIndeterminate);
+  TimeBase::TimeT uto_time = uto->time ();
 
   TimeBase::InaccuracyT this_inaccuracy =
-    this->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosTime::TCIndeterminate);
+    this->inaccuracy ();
 
   TimeBase::InaccuracyT uto_inaccuracy =
-    uto->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosTime::TCIndeterminate);
+    uto->inaccuracy ();
 
   if (comparison_type == CosTime::MidC)
     {
@@ -162,16 +138,13 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 // is meaningless if the base times of UTOs are different.
 
 CosTime::TIO_ptr
-TAO_UTO::time_to_interval (CosTime::UTO_ptr uto
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 {
   TAO_TIO *tio = 0;
 
-  ACE_TRY
+  try
     {
-      TimeBase::TimeT uto_time = uto->time (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TimeBase::TimeT uto_time = uto->time ();
 
       if (this->time () > uto_time)
         {
@@ -179,8 +152,6 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto
                             TAO_TIO (uto_time,
                                      this->time ()),
                             CORBA::NO_MEMORY ());
-
-          ACE_TRY_CHECK;
         }
       else
         {
@@ -188,35 +159,29 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto
                             TAO_TIO (this->time (),
                                      uto_time),
                             CORBA::NO_MEMORY ());
-
-          ACE_TRY_CHECK;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      ex._tao_print_exception ("Exception:");
       return CosTime::TIO::_nil ();
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosTime::TIO::_nil ());
 
-  return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return tio->_this ();
 }
 
 // Returns a TIO object representing the error interval around the
 // time value in the UTO.
 
 CosTime::TIO_ptr
-TAO_UTO::interval (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_UTO::interval ()
 {
   TAO_TIO *tio = 0;
 
-  ACE_TRY
+  try
     {
       TimeBase::TimeT this_inaccuracy =
-          this->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          this->inaccuracy ();
 
       TimeBase::TimeT lower =
         this->time () - this_inaccuracy;
@@ -228,15 +193,14 @@ TAO_UTO::interval (ACE_ENV_SINGLE_ARG_DECL)
                         TAO_TIO (lower,
                                  upper),
                         CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      ex._tao_print_exception ("Exception:");
       return CosTime::TIO::_nil ();
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosTime::TIO::_nil ());
 
-  return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return tio->_this ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

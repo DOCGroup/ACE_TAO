@@ -1,24 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//    CosTransaction.idl
-//
-// = DESCRIPTION
-//    Described in CORBAservices: Common Object Services
-//    Specification, chapter 7 The concurrency service description can
-//    be downloaded from
-//    ftp://www.omg.org/pub/docs/formal/97-11-02.idl
-//
-// = AUTHOR
-//    Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CosConcurrencyControl.idl
+ *
+ *  Described in CORBAservices: Common Object Services
+ *  Specification, chapter 7 The concurrency service description can
+ *  be downloaded from
+ *  ftp://www.omg.org/pub/docs/formal/97-11-02.idl
+ *
+ *
+ *  @author Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_CONCURRENCY_IDL
 #define TAO_CONCURRENCY_IDL
@@ -36,7 +31,7 @@
 
 #pragma prefix "omg.org"
 
-module CosConcurrencyControl 
+module CosConcurrencyControl
 {
   // = TITLE
   //     CosConcurrencyControl
@@ -44,15 +39,15 @@ module CosConcurrencyControl
   // = DESCRIPTION
   //     This idl file describes the concurrency control service.  The
   //     purpose of the concurrency control service is to mediate
-  //     concurrent access to an pbject such that the consistency of
+  //     concurrent access to an object such that the consistency of
   //     the object is not compromised when accessed by concurrently
   //     executing computations.
 
-  // = These are the different lock types supported by this module. 
+  // = These are the different lock types supported by this module.
 
-  // For a description of the compatability between the different lock
+  // For a description of the compatibility between the different lock
   // types please consult the service description (OMG).
-  enum lock_mode 
+  enum lock_mode
   {
     read,
     write,
@@ -61,10 +56,10 @@ module CosConcurrencyControl
     intention_write
   };
 
+  /// The LockNotHeld exception is is raised when an operation to
+  /// unlock or change the mode of a lock is called and the specified
+  /// lock is not held
   exception LockNotHeld {};
-  // The LockNotHeld exception is is raised when an operation to
-  // unlock or change the mode of a lock is called and the specified
-  // lock is not held
 
 #ifdef TAO_HAS_TRANSACTION_CONTROL_SERVICE
   // @@ The lock coordinator is designed for transactional lock sets,
@@ -74,12 +69,12 @@ module CosConcurrencyControl
       // = TITLE
       //     LockCoordinator drops all locks associated with a transaction.
       // = DESCRIPTION
-      //     The LockCoordinator interface enables a transaction service to 
+      //     The LockCoordinator interface enables a transaction service to
       //     drop all locks held by a transaction.
 
-      void drop_locks ();
-      // Releases all the locks held by the transaction. Designet to be
+      // Releases all the locks held by the transaction. Designed to be
       // used by transaction service when a transaction commits or aborts.
+      void drop_locks ();
     };
 #endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
 
@@ -87,12 +82,12 @@ module CosConcurrencyControl
     {
       // = TITLE
       //     LockSet inteface to the concurrency service in implicit
-      //     mode. 
+      //     mode.
       //
       // = DESCRIPTION
       //     Clients operating in the implicit mode
       //     (i.e. non-transactional mode) acquire and release locks
-      //     in lock sets throug this interface. The interface only
+      //     in lock sets through this interface. The interface only
       //     provides operations to acquire and release locks on
       //     behalf of the calling thread or transaction.
 
@@ -131,7 +126,7 @@ module CosConcurrencyControl
       // = TITLE
       //     TransactionalLockSet interface to the concurrency service
       //     in transactional mode.
-      // 
+      //
       // = DESCRIPTION
       //     Clients operating in the transactional mode acquire and
       //     release locks in lock sets through this interface. The
@@ -141,26 +136,26 @@ module CosConcurrencyControl
       //     transaction is explicitly passed as a reference to the
       //     operations. Please see the description of the LockSet
       //     interface for a detailed description.
-      
+
       void lock (in CosTransactions::Coordinator current,
                  in lock_mode mode);
       // See LockSet::lock
-      
+
       boolean try_lock (in CosTransactions::Coordinator current,
                         in lock_mode mode);
       // See LockSet::try_lock
-      
+
       void unlock (in CosTransactions::Coordinator current,
                    in lock_mode mode)
         raises (LockNotHeld);
       // See LockSet::unlock
-      
+
       void change_mode (in CosTransactions::Coordinator current,
                         in lock_mode held_mode,
                         in lock_mode new_mode)
         raises (LockNotHeld);
       // See LockSet::change_mode
-      
+
       LockCoordinator get_coordinator (in CosTransactions::Coordinator which);
       // See LockSet::get_coordinator
     };

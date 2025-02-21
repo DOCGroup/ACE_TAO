@@ -4,8 +4,6 @@
 /**
  *  @file   SL2_QOPPolicy.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
@@ -16,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "security_export.h"
+#include "orbsvcs/Security/security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,6 +24,7 @@
 
 #include "tao/LocalObject.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -47,12 +46,11 @@ namespace TAO
      * Security::SecQOPPolicy policy type, and the appropriate
      * Security::QOP enumeration (inserted into a CORBA::Any).
      */
-    class TAO_Security_Export QOPPolicy
+    class QOPPolicy
       : public virtual SecurityLevel2::QOPPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       QOPPolicy (::Security::QOP qop);
 
@@ -60,40 +58,34 @@ namespace TAO
        * @name CORBA::Policy Methods
        */
       //@{
-      virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::PolicyType policy_type ();
 
-      virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Policy_ptr copy ();
 
-      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void destroy ();
       //@}
 
       /// Return the Quality-of-Protection value associated with this
       /// policy.
-      virtual ::Security::QOP qop (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual ::Security::QOP qop ();
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechansim.
        */
-      ~QOPPolicy (void);
+      ~QOPPolicy ();
 
     private:
-
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
-      ::Security::QOP qop_;
-
+      ::Security::QOP const qop_;
     };
-
   } // End Security namespace
 }  // End TAO namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file ECG_UDP_Out_Endpoint.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Marina Spivak (marina@atdesk.com)
@@ -13,7 +12,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +25,11 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/Atomic_Op.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_INET_Addr;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_UDP_Out_Endpoint
@@ -42,10 +45,10 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Out_Endpoint
 {
 public:
   /// Constructor
-  TAO_ECG_UDP_Out_Endpoint (void);
+  TAO_ECG_UDP_Out_Endpoint ();
 
   /// Constructor
-  ~TAO_ECG_UDP_Out_Endpoint (void);
+  ~TAO_ECG_UDP_Out_Endpoint ();
 
   /// Copy Constructor
   TAO_ECG_UDP_Out_Endpoint (const TAO_ECG_UDP_Out_Endpoint& rhs);
@@ -55,10 +58,10 @@ public:
 
   /// Obtain the datagram associated with this endpoint. Clients of
   /// this class must open, and register (if necessary) this datagram.
-  ACE_SOCK_Dgram& dgram (void);
+  ACE_SOCK_Dgram& dgram ();
 
   /// Obtain the next request id.
-  CORBA::ULong next_request_id (void);
+  CORBA::ULong next_request_id ();
 
   /// The endpoint can detect if a data-gram was sent by itself, this
   /// is useful to ignore or remove messages sent by the same process.
@@ -92,8 +95,10 @@ private:
  */
 typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint,ACE_Null_Mutex> TAO_ECG_Refcounted_Endpoint;
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "ECG_UDP_Out_Endpoint.i"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

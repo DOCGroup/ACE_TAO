@@ -1,0 +1,18 @@
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+
+  interface CallBack
+  {
+    oneway void method2 ();
+  };
+
+  /// A very simple interface
+  interface Hello
+  {
+    void set_callback (in CallBack cb);
+
+    oneway void method (in short count);
+
+  };
+};

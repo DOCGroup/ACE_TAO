@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>Using the CosNotification Monitoring Extensions</title>
+  <!--  -->
+</head>
+<body>
+<h2>Using the NotifyMonitoringExt::EventChannelFactory.</h2>
+<p>
+Obtain the CosNotification Service EventChannelFactory from the Name Service
+as you normally would.  Instead of narrowing it to a
+<b>CosNotifyChannelAdmin::EventChannelFactory</b>, narrow it to a
+<b>NotifyMonitoringExt::EventChannelFactory</b>.
+</p>
+<pre>
+  CosNaming::Name name(1);
+  name.length(1);
+  name[0].id = CORBA::string_dup("NotifyEventChannelFactory");
+
+  CORBA::Object_var obj = naming_context->resolve(name);
+
+  NotifyMonitoringExt::EventChannelFactory_var notify_factory =
+    NotifyMonitoringExt::EventChannelFactory::_narrow(obj.in());
+</pre>
+<p>
+You can then create named event channels using the
+<b>create_named_channel</b> method.
+</p>
+<pre>
+  CosNotification::QoSProperties initial_qos;
+  CosNotification::AdminProperties initial_admin;
+  CosNotifyChannelAdmin::ChannelID id;
+
+  CosNotifyChannelAdmin::EventChannel_var ec =
+    notify_factory->create_named_channel(initial_qos,
+                                         initial_admin,
+                                         id,
+                                         "Name of Event Channel");
+</pre>
+<h2>Using the NotifyMonitoringExt::ConsumerAdmin.</h2>
+<p>
+Obtain the <b>NotifyMonitoringExt::ConsumerAdmin</b> as you would the
+<b>CosNotifyChannelAdmin::ConsumerAdmin</b>.  However, it must then be
+narrowed to a <b>NotifyMonitoringExt::ConsumerAdmin</b>.
+</p>
+<pre>
+  CosNotifyChannelAdmin::AdminID admin_id;
+
+  CosNotifyChannelAdmin::ConsumerAdmin_var admin =
+    ec->new_for_consumers(CosNotifyChannelAdmin::OR_OP, admin_id);
+
+  NotifyMonitoringExt::ConsumerAdmin_var madmin =
+    NotifyMonitoringExt::ConsumerAdmin::_narrow(admin.in());
+</pre>
+<p>
+It is also possible to create named ConsumerAdmin objects using the
+following.
+</p>
+<pre>
+  CosNotifyChannelAdmin::AdminID admin_id;
+
+  CosNotifyChannelAdmin::ConsumerAdmin_var admin =
+    ec->named_new_for_consumers(CosNotifyChannelAdmin::OR_OP, admin_id,
+                                "ConsumerAdmin Name");
+
+  NotifyMonitoringExt::ConsumerAdmin_var madmin =
+    NotifyMonitoringExt::ConsumerAdmin::_narrow(admin.in());
+</pre>
+<p>
+Once you have a <b>NotifyMonitoringExt::ConsumerAdmin</b> you can then
+create a named proxy push supplier:
+</p>
+<pre>
+  CosNotifyChannelAdmin::ProxyID proxy_id;
+
+  CosNotifyChannelAdmin::ProxySupplier_var proxy_supplier =
+    admin->obtain_named_notification_push_supplier (
+                    CosNotifyChannelAdmin::STRUCTURED_EVENT,
+                    proxy_id,
+                    "Consumer Name");
+</pre>
+<h2>Using the NotifyMonitoringExt::SupplierAdmin.</h2>
+<p>
+Obtain the <b>NotifyMonitoringExt::SupplierAdmin</b> as you would the
+<b>CosNotifyChannelAdmin::SupplierAdmin</b>.  However, it must then be
+narrowed to a <b>NotifyMonitoringExt::SupplierAdmin</b>.
+</p>
+<pre>
+  CosNotifyChannelAdmin::AdminID admin_id;
+
+  CosNotifyChannelAdmin::SupplierAdmin_var admin =
+    ec->new_for_suppliers(CosNotifyChannelAdmin::AND_OP, admin_id);
+
+  NotifyMonitoringExt::SupplierAdmin_var madmin =
+    NotifyMonitoringExt::SupplierAdmin::_narrow(admin.in());
+</pre>
+<p>
+It is also possible to create named ConsumerAdmin objects using the
+following.
+</p>
+<pre>
+  CosNotifyChannelAdmin::AdminID admin_id;
+
+  CosNotifyChannelAdmin::SupplierAdmin_var admin =
+    ec->named_new_for_suppliers(CosNotifyChannelAdmin::AND_OP, admin_id,
+                                "SupplierAdmin Name");
+
+  NotifyMonitoringExt::SupplierAdmin_var madmin =
+    NotifyMonitoringExt::SupplierAdmin::_narrow(admin.in());
+</pre>
+<p>
+Once you have a <b>NotifyMonitoringExt::SupplierAdmin</b> you can then
+create a named proxy push consumer:
+</p>
+<pre>
+  CosNotifyChannelAdmin::ProxyID proxy_id;
+
+  CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
+    admin->obtain_named_notification_push_consumer (
+                    CosNotifyChannelAdmin::STRUCTURED_EVENT,
+                    proxy_id,
+                    "Supplier Name");
+</pre>
+<h2>Effects of using these interfaces</h2>
+<p>
+Using these extended interfaces allows users to link descriptive names
+to various objects held within the CosNotification Service.  Assuming
+that the Notify_Service has been configured to enable the monitoring
+capabilities, these objects would normally be given names that are
+equivalent to their id upon activation.
+</p>
+<font size=-1>See also the <a href="monitor.html">Notification Service
+Monitor</a> documentation.</font>
+</body>
+</html>

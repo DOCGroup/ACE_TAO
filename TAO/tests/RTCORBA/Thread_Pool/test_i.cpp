@@ -1,11 +1,7 @@
-// $Id$
-
 #include "test_i.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
-
-ACE_RCSID(Thread_Pools, test_i, "$Id$")
 
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
@@ -19,9 +15,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 CORBA::Long
 test_i::method (CORBA::Long client_id,
-                CORBA::Long iteration
-                ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                CORBA::Long iteration)
 {
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -29,7 +23,7 @@ test_i::method (CORBA::Long client_id,
 
   /// Get the lane attribute in TSS.
   TAO_Thread_Lane *lane =
-    (TAO_Thread_Lane *) tss->lane_;
+    static_cast <TAO_Thread_Lane *> (tss->lane_);
 
   if (lane)
     ACE_DEBUG ((LM_DEBUG,
@@ -50,16 +44,13 @@ test_i::method (CORBA::Long client_id,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (false);
 }

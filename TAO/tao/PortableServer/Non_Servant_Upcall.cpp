@@ -1,16 +1,12 @@
-// $Id$
-
-#include "Non_Servant_Upcall.h"
-#include "Object_Adapter.h"
-#include "Root_POA.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Non_Servant_Upcall.inl"
+# include "tao/PortableServer/Non_Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           Non_Servant_Upcall,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -25,11 +21,13 @@ namespace TAO
       if (this->object_adapter_.non_servant_upcall_nesting_level_ != 0)
         {
           // Remember previous instance of non_servant_upcall.
-          this->previous_ = this->object_adapter_.non_servant_upcall_in_progress_;
+          this->previous_ =
+            this->object_adapter_.non_servant_upcall_in_progress_;
 
           // Assert that the thread is the same as the one before.
-          ACE_ASSERT (ACE_OS::thr_equal (this->object_adapter_.non_servant_upcall_thread_,
-                                         ACE_OS::thr_self ()));
+          ACE_ASSERT (ACE_OS::thr_equal (
+                      this->object_adapter_.non_servant_upcall_thread_,
+                      ACE_OS::thr_self ()));
         }
 
       // Remember which thread is calling the adapter activators.
@@ -45,7 +43,7 @@ namespace TAO
       this->object_adapter_.lock ().release ();
     }
 
-    Non_Servant_Upcall::~Non_Servant_Upcall (void)
+    Non_Servant_Upcall::~Non_Servant_Upcall ()
     {
       // Reacquire the Object Adapter lock.
       this->object_adapter_.lock ().acquire ();
@@ -65,28 +63,24 @@ namespace TAO
 
           // Check if all pending requests are over.
           if (this->poa_.waiting_destruction () &&
-              this->poa_.outstanding_requests () == 0)
+            this->poa_.outstanding_requests () == 0)
             {
-              ACE_TRY_NEW_ENV
+              try
                 {
-                  this->poa_.complete_destruction_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  this->poa_.complete_destruction_i ();
                 }
-              ACE_CATCHANY
+              catch (const::CORBA::Exception&ex)
                 {
                   // Ignore exceptions
-                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                       "TAO_POA::complete_destruction_i");
+                  ex._tao_print_exception ("TAO_POA::complete_destruction_i");
                 }
-              ACE_ENDTRY;
             }
 
-          // If locking is enabled.
-          if (this->object_adapter_.enable_locking_)
-            // Wakeup all waiting threads.
-            this->object_adapter_.non_servant_upcall_condition_.broadcast ();
+          // Wakeup all waiting threads.
+          this->object_adapter_.non_servant_upcall_condition_.broadcast ();
         }
     }
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

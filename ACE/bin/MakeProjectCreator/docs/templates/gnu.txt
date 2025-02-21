@@ -1,0 +1,16 @@
+// This defines the role of all the template variables specific to the
+// 'gnuace' project type.
+//
+// Please try to keep this alphabetically sorted.
+//
+build_dir_per_project = Specifies to use per project object file output dirs (VDIR and VSHDIR) if set to '1'.
+idl_files = When a Define_Custom(IDL) is used, they will be accessible through this variable name.
+install = This is a synonym for exeout.
+linkflags = Platform specific flags passed during the linking of dynamic libraries and executables.
+tao = Indicates whether or not this project contains TAO code.
+tao_idl = The full path to the idl compiler.
+tao_idl_dep = The full path to the idl compiler as a dependency.
+tao_idlflags = The default flags for the idl compiler.
+targetoutdir = Specifies a location for all targets and intermediaries within the makefile.  It should always end in a slash.
+vpath = The value will be used as the VPATH setting within the makefile.
+xerceslib = The name of the Xerces library.

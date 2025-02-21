@@ -4,11 +4,8 @@
 /**
  *  @file    nestea_client_i.h
  *
- *  $Id$
- *
  *  This class implements a simple CORBA client which controls a Nestea
  *  can database
- *
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
@@ -32,27 +29,27 @@ class Nestea_Client_i
 {
 public:
   // = Constructor and destructor.
-  Nestea_Client_i (void);
-  ~Nestea_Client_i (void);
+  Nestea_Client_i ();
+  ~Nestea_Client_i ();
 
   /// Execute client example code.
   int run ();
 
   /// Initialize the client communication endpoint with server.
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
 
 private:
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// # of arguments on the command line.
   int argc_;
 
   /// arguments from command line.
-  char **argv_;
+  ACE_TCHAR **argv_;
 
   /// Key of the obj ref of the server.
-  char *server_key_;
+  ACE_TCHAR *server_key_;
 
   /// Server object ptr.
   Nestea_Bookshelf_ptr server_;

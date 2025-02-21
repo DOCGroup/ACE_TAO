@@ -4,8 +4,6 @@
 /**
  *  @file   Security_Current.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
@@ -15,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "security_export.h"
+#include "orbsvcs/Security/security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +23,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/LocalObject.h"
 
-#include "Security_Current_Impl.h"
+#include "orbsvcs/Security/Security_Current_Impl.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -33,6 +31,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Security_Current
@@ -44,10 +44,9 @@
  */
 class TAO_Security_Export TAO_Security_Current
   : public SecurityLevel2::Current,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_Security_Current (size_t tss_slot, const char *orb_id);
 
@@ -61,9 +60,7 @@ public:
   /// Return the security attributes corresponding to the types in the
   /// given attribute type list associated with the current request.
   virtual Security::AttributeList * get_attributes (
-      const Security::AttributeTypeList & attributes
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const Security::AttributeTypeList & attributes);
   //@}
 
   /**
@@ -75,9 +72,7 @@ public:
   //@{
   /// Return the Credentials received from the client associate with
   /// the current request.
-  virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials ();
   //@}
 
   /// Return the TSS slot ID assigned to the "SecurityCurrent" object.
@@ -85,17 +80,16 @@ public:
    * The concrete TSS SecurityCurrent implementations will each use
    * this slot ID.
    */
-  size_t tss_slot (void) const;
+  size_t tss_slot () const;
 
 protected:
-
   /// Destructor
   /// Protected to force allocation on the heap.
-  ~TAO_Security_Current (void);
+  ~TAO_Security_Current ();
 
   /// Fully initialize this object.  This method is used predominantly
   /// to set the ORB core pointer.
-  int init (void);
+  int init ();
 
   /// Set the TSS Security::Current implementation.
   /**
@@ -107,34 +101,28 @@ protected:
    * There is no function that places the implementation pointer in
    * TSS.  The underlying security mechanism does that.
    */
-  TAO::Security::Current_Impl *implementation (void);
+  TAO::Security::Current_Impl *implementation ();
 
 private:
-
-  /// Prevent copying through the copy constructor and the assignment
-  /// operator.
-  //@{
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_Security_Current (const TAO_Security_Current &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Security_Current &))
-  //@}
+  TAO_Security_Current (const TAO_Security_Current &) = delete;
+  void operator= (const TAO_Security_Current &) = delete;
 
 private:
-
   /// TSS slot assigned to this object.
-  size_t tss_slot_;
+  size_t const tss_slot_;
 
   /// The ORBid of the ORB with which this object is registered.
   CORBA::String_var orb_id_;
 
   /// Pointer to the ORB Core corresponding to the ORB with which this
   /// object is registered.
-  TAO_ORB_Core *orb_core_;
-
+  TAO_ORB_Core * orb_core_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Security_Current.inl"
+# include "orbsvcs/Security/Security_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

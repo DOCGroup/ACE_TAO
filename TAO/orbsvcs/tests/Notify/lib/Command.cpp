@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Command.h"
 
 #include "tao/Exception.h"
@@ -7,9 +5,8 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(lib, TAO_Command, "$Id$")
 
-TAO_Notify_Tests_Command::TAO_Notify_Tests_Command (void)
+TAO_Notify_Tests_Command::TAO_Notify_Tests_Command ()
   :next_ (0), command_ (INVALID)
 {
 }
@@ -31,7 +28,7 @@ TAO_Notify_Tests_Command::next (TAO_Notify_Tests_Command* command)
 }
 
 void
-TAO_Notify_Tests_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Command::execute ()
 {
   if (this->command_ == INVALID)
     {
@@ -41,19 +38,18 @@ TAO_Notify_Tests_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG, "Executing command: %s\n", this->get_name ()));
 
-      ACE_TRY
+      try
         {
-          this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->execute_i ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-            ACE_LIB_TEXT("Error: Exception running command\n"));
+          ex._tao_print_exception (
+            ACE_TEXT(
+              "Error: Exception running command\n"));
         }
-      ACE_ENDTRY;
     }
 
   if (this->next_)
-    this->next_->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->next_->execute ();
 }

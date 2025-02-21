@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Factory.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,15 +15,21 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
 #include "ace/Service_Object.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 
@@ -63,7 +67,8 @@ class TAO_RTEvent_Serv_Export TAO_EC_Factory : public ACE_Service_Object
 {
 public:
   /// destructor...
-  virtual ~TAO_EC_Factory (void);
+  TAO_EC_Factory ();
+  virtual ~TAO_EC_Factory ();
 
   /// Create and destroy the dispatching module.
   virtual TAO_EC_Dispatching*
@@ -139,9 +144,9 @@ public:
 
   /// Create and destroy the locking strategies for both
   /// ProxyPushConsumers and ProxyPushSuppliers
-  virtual ACE_Lock* create_consumer_lock (void) = 0;
+  virtual ACE_Lock* create_consumer_lock () = 0;
   virtual void destroy_consumer_lock (ACE_Lock*) = 0;
-  virtual ACE_Lock* create_supplier_lock (void) = 0;
+  virtual ACE_Lock* create_supplier_lock () = 0;
   virtual void destroy_supplier_lock (ACE_Lock*) = 0;
 
   /// The ConsumerControl and SupplierControl strategies are used to
@@ -155,6 +160,10 @@ public:
   virtual void
       destroy_supplier_control (TAO_EC_SupplierControl*) = 0;
 };
+
+TAO_RTEvent_Serv_Export extern unsigned short TAO_EC_debug_level;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,14 +1,12 @@
 //-*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Fault_Tolerance_Service.h
  *
- *  $Id$
- *
  *  A collection of the ORB and ORB core related properties that are
  *  specific to FT service. The TAO_ORB_Core holds an instance of this
  *  class.
- *
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
@@ -17,85 +15,55 @@
 #define TAO_FAULT_TOLERANCE_SERVICE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/SString.h"
+
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 
-class ACE_Lock;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Service_Callbacks;
 class TAO_ORB_Core;
-class ACE_Lock;
 
 /**
  * @class TAO_Fault_Tolerance_Service
  *
  * @brief TAO_Fault_Tolerant_Service
  *
- * A collection of ORB & ORB_Core related stuff that is needed at
- * the ORB level. The ORB Core would carry an instance of this
- * class and invoke methods on this.
- * Note: This collection would be really useful when we have
- * logging in  place. The contents of this class can be logged at
- * regular check point intervals.
+ * A class that holds an FT service call back instance.
  */
 class TAO_Export TAO_Fault_Tolerance_Service
 {
-
 public:
   /// Ctor
-  TAO_Fault_Tolerance_Service (void);
+  TAO_Fault_Tolerance_Service () = default;
 
   /// Dtor
-  ~TAO_Fault_Tolerance_Service (void);
+  ~TAO_Fault_Tolerance_Service ();
 
-  /// Initialise the internal data structures
+  /// Initialize the internal data structures
   void init (TAO_ORB_Core *orb_core);
 
   /// Return the underlying callback object
-  TAO_Service_Callbacks *service_callback (void);
-
-  /// Return the underlying <ft_object_id>
-  const ACE_CString &client_id (void);
-
-  /// Set the client id
-  void client_id (const char *id);
-
-  /// Generate and return a new retention id
-  CORBA::Long retention_id (void);
+  TAO_Service_Callbacks *service_callback ();
 
 private:
+  void operator= (const TAO_Fault_Tolerance_Service &);
+  TAO_Fault_Tolerance_Service (const TAO_Fault_Tolerance_Service &);
 
+private:
   /// hook to callback on to the service
-  TAO_Service_Callbacks *ft_service_callback_;
-
-  /// The object id that would be used if the ft service is loaded.
-  ACE_CString ft_object_id_;
-
-  /**
-   * This and the <ft_object_id_> act as unique identifiers for the
-   * request sent from the source Object. Modification of this value
-   * is done by the loaded FT
-   */
-  CORBA::Long ft_object_retention_id_;
-
-  /// Lock for the retention id
-  ACE_Lock *ft_object_retention_id_lock_;
-
-  // NOTE: At a glance this retention id can be easily mistaken for a
-  // request id in a GIOP request. But the purpose served are a lot
-  // more than what a RequestId does for GIOP. So, we have a unique
-  // generator with a lock to protect from different threads accessing
-  // this.
+  TAO_Service_Callbacks *ft_service_callback_ {};
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Fault_Tolerance_Service.i"
+# include "tao/Fault_Tolerance_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

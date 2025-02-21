@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Scheduling_Strategy.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "orbsvcs/RtecBaseC.h"
 #include "orbsvcs/RtecEventCommC.h"
@@ -25,6 +24,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
@@ -46,22 +47,21 @@ class TAO_RTEvent_Serv_Export TAO_EC_Scheduling_Strategy
 {
 public:
   /// Destructor
-  virtual ~TAO_EC_Scheduling_Strategy (void);
+  virtual ~TAO_EC_Scheduling_Strategy ();
 
   /// Add all the dependencies between @a supplier and @a consumer
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
-      TAO_EC_ProxyPushConsumer *consumer
-      ACE_ENV_ARG_DECL) = 0;
+      TAO_EC_ProxyPushConsumer *consumer) = 0;
 
   /// Schedule an event set and deliver them to the filter in the
   /// desired order and grouping.
   virtual void schedule_event (const RtecEventComm::EventSet &event,
                                TAO_EC_ProxyPushConsumer *consumer,
-                               TAO_EC_Supplier_Filter *filter
-                               ACE_ENV_ARG_DECL) = 0;
-
+                               TAO_EC_Supplier_Filter *filter) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

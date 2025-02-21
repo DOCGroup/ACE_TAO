@@ -1,0 +1,22 @@
+
+
+The example ThreadPool, ThreadPool2 and ThreadPool3 use the same idl file which
+defines some twoway calls and a simple oneway call and they are different just
+because of their configurations such as the number of servants, the number of
+ORB threads and the number of csd threads.
+
+ThreadPool  - 1 servant, 1 ORB theread (main thread), 1 csd thread.
+ThreadPool2 - multiple servants, 1 ORB theread (main thread), multiple
+csd threads.
+ThreadPool3 - 1 servant, multiple ORB thereads (main thread), multiple
+csd threads.
+
+The example 6 is simply a copy of the threadpool example, the only difference
+is it uses the TIE approach.
+
+The example ThreadPool4 and ThreadPool5 use the same idl file which includes
+the operations defined in example ThreadPool, ThreadPool2 and ThreadPool3 in
+addition of callbacks and the oneway "IN" argument test. The ThreadPool4 is
+a collocated test. The ThreadPool5 combines all other test cases together except
+the ThreadPool6 example.
+

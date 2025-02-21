@@ -1,12 +1,10 @@
-// $Id$
-
-#include "SCIOP_Transport.h"
+#include "tao/Strategies/SCIOP_Transport.h"
 
 #if TAO_HAS_SCIOP == 1
 
-#include "SCIOP_Connection_Handler.h"
-#include "SCIOP_Acceptor.h"
-#include "SCIOP_Profile.h"
+#include "tao/Strategies/SCIOP_Connection_Handler.h"
+#include "tao/Strategies/SCIOP_Acceptor.h"
+#include "tao/Strategies/SCIOP_Profile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/operation_details.h"
@@ -14,65 +12,37 @@
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Sync_Strategies.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-// #include "tao/GIOP_Message_Lite.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
 
-ACE_RCSID (tao,
-           SCIOP_Transport,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
-                                        TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean )
+                                          TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_SCIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
-  , messaging_object_ (0)
 {
-#if 0
-  // First step in deprecating this.
-  if (flag)
-    {
-      // Use the lite version of the protocol
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core));
-    }
-  else
-#endif /*if 0*/
-    {
-      // Use the normal GIOP object
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core));
-    }
 }
 
-TAO_SCIOP_Transport::~TAO_SCIOP_Transport (void)
+TAO_SCIOP_Transport::~TAO_SCIOP_Transport ()
 {
-  delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
-TAO_SCIOP_Transport::event_handler_i (void)
+TAO_SCIOP_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_SCIOP_Transport::connection_handler_i (void)
+TAO_SCIOP_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
-}
-
-TAO_Pluggable_Messaging *
-TAO_SCIOP_Transport::messaging_object (void)
-{
-  return this->messaging_object_;
 }
 
 ssize_t
@@ -103,7 +73,7 @@ TAO_SCIOP_Transport::recv (char *buf,
       TAO_debug_level > 4 &&
       errno != ETIME)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::recv, ")
                   ACE_TEXT ("read failure - %m\n"),
                   this->id ()));
@@ -133,10 +103,10 @@ TAO_SCIOP_Transport::recv (char *buf,
 
 int
 TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
-                                  TAO_ORB_Core *orb_core,
-                                  TAO_OutputCDR &stream,
-                                  int message_semantics,
-                                  ACE_Time_Value *max_wait_time)
+                                   TAO_ORB_Core *orb_core,
+                                   TAO_OutputCDR &stream,
+                                   TAO_Message_Semantics message_semantics,
+                                   ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
@@ -145,6 +115,7 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
   if (this->send_message (stream,
                           stub,
+                          0,
                           message_semantics,
                           max_wait_time) == -1)
     return -1;
@@ -156,13 +127,16 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
 int
 TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
-                                  TAO_Stub *stub,
-                                  int message_semantics,
-                                  ACE_Time_Value *max_wait_time)
+                                   TAO_Stub *stub,
+                                   TAO_ServerRequest *request,
+                                   TAO_Message_Semantics message_semantics,
+                                   ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object_->format_message (stream) != 0)
-    return -1;
+  if (this->messaging_object ()->format_message (stream, stub, request) != 0)
+    {
+      return -1;
+    }
 
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = this->send_message_shared (stub,
@@ -173,75 +147,12 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::send_message, ")
                     ACE_TEXT (" write failure - %m\n"),
                     this->id ()));
       return -1;
     }
-
-  return 1;
-}
-
-int
-TAO_SCIOP_Transport::send_message_shared (TAO_Stub *stub,
-                                         int message_semantics,
-                                         const ACE_Message_Block *message_block,
-                                         ACE_Time_Value *max_wait_time)
-{
-  int r;
-
-  {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
-    r = this->send_message_shared_i (stub, message_semantics,
-                                     message_block, max_wait_time);
-  }
-
-  if (r == -1)
-    {
-      this->close_connection ();
-    }
-
-  return r;
-}
-
-int
-TAO_SCIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
-                                             TAO_Target_Specification &spec,
-                                             TAO_OutputCDR &msg)
-{
-  // Check whether we have a Bi Dir SCIOP policy set, whether the
-  // messaging objects are ready to handle bidirectional connections
-  // and also make sure that we have not recd. or sent any information
-  // regarding this before...
-  if (this->orb_core ()->bidir_giop_policy () &&
-      this->messaging_object_->is_ready_for_bidirectional (msg) &&
-      this->bidirectional_flag () < 0)
-    {
-      this->set_bidir_context_info (opdetails);
-
-      // Set the flag to 1  (i.e., originating side)
-      this->bidirectional_flag (1);
-
-      // At the moment we enable BiDIR giop we have to get a new
-      // request id to make sure that we follow the even/odd rule
-      // for request id's. We only need to do this when enabled
-      // it, after that the Transport Mux Strategy will make sure
-      // that the rule is followed
-      opdetails.request_id (this->tms ()->request_id ());
-    }
-
-  return TAO_Transport::generate_request_header (opdetails,
-                                                 spec,
-                                                 msg);
-}
-
-int
-TAO_SCIOP_Transport::messaging_init (CORBA::Octet major,
-                                    CORBA::Octet minor)
-{
-  this->messaging_object_->init (major, minor);
 
   return 1;
 }
@@ -256,7 +167,7 @@ TAO_SCIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
-  if ((cdr >> listen_list) == 0)
+  if (!(cdr >> listen_list))
     return -1;
 
   // As we have received a bidirectional information, set the flag to
@@ -283,14 +194,14 @@ TAO_SCIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
        acceptor++)
     {
       // Check whether it is a SCIOP acceptor
-      if ((*acceptor)->tag () == TAO_TAG_SCIOP_PROFILE)
+      if ((*acceptor)->tag () == this->tag ())
         {
           if (this->get_listen_point (listen_point_list,
                                       *acceptor) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SCIOP_Transport::set_bidir_info, "
-                          "error getting listen_point \n"));
+                          "error getting listen_point\n"));
 
               return;
             }
@@ -307,10 +218,7 @@ TAO_SCIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
     return;
 
   // Add this info in to the svc_list
-  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
-                                                    cdr);
-
-  return;
+  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
 }
 
 int
@@ -332,10 +240,9 @@ TAO_SCIOP_Transport::get_listen_point (
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
 
-  if (this->connection_handler_->peer ().get_local_addr (local_addr)
-      == -1)
+  if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local ")
                          ACE_TEXT ("host address in ")
                          ACE_TEXT ("get_listen_point()\n")),
@@ -352,21 +259,18 @@ TAO_SCIOP_Transport::get_listen_point (
                                local_addr,
                                local_interface.out ()) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local host")
-                         ACE_TEXT (" name \n")),
+                         ACE_TEXT (" name\n")),
                         -1);
     }
 
-  for (size_t index = 0;
-       index != count;
-       index++)
+  for (size_t index = 0; index != count; index++)
     {
-      if (local_addr.get_ip_address()
-          == endpoint_addr[index].get_ip_address())
+      if (local_addr.get_ip_address() == endpoint_addr[index].get_ip_address())
         {
           // Get the count of the number of elements
-          CORBA::ULong len = listen_point_list.length ();
+          CORBA::ULong const len = listen_point_list.length ();
 
           // Increase the length by 1
           listen_point_list.length (len + 1);
@@ -381,5 +285,7 @@ TAO_SCIOP_Transport::get_listen_point (
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

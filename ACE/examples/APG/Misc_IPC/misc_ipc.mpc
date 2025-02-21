@@ -1,0 +1,21 @@
+// -*- MPC -*-
+project(UDP Broadcast) : aceexe, avoids_ace_for_tao {
+  exename = UDP_Broadcast
+  Source_Files {
+    UDP_Broadcast.cpp
+  }
+}
+
+project(UDP Multicast) : aceexe {
+  exename = UDP_Multicast
+  Source_Files {
+    UDP_Multicast.cpp
+  }
+}
+
+project(UDP Unicast) : aceexe, avoids_ace_for_tao {
+  exename = UDP_Unicast
+  Source_Files {
+    UDP_Unicast.cpp
+  }
+}

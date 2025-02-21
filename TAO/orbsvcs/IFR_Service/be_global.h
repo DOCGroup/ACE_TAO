@@ -1,29 +1,22 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IFR_BE_DLL
-//
-// = FILENAME
-//    be_global.h
-//
-// = DESCRIPTION
-//    Header file for class containing compiler back end global data.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_global.h
+ *
+ *  Header file for class containing compiler back end global data.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IFR_BE_GLOBAL_H
 #define TAO_IFR_BE_GLOBAL_H
 
 #include "TAO_IFR_BE_Export.h"
-#include "idl_bool.h"
-#include "tao/ORB.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
+#include "tao/ORB.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
 
@@ -44,95 +37,80 @@ public:
   // = DESCRIPTION
   //    Storage of global data specific to the compiler back end
   //
-  BE_GlobalData (void);
-  // Constructor.
+  /// Constructor.
+  BE_GlobalData ();
 
-  virtual ~BE_GlobalData (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~BE_GlobalData ();
 
   // Data accessors.
 
-  idl_bool removing (void) const;
-  void removing (idl_bool value);
+  bool removing () const;
+  void removing (bool value);
 
-  CORBA::ORB_ptr orb (void) const;
+  CORBA::ORB_ptr orb () const;
   void orb (CORBA::ORB_ptr orb);
 
-  CORBA::Repository_ptr repository (void) const;
+  CORBA::Repository_ptr repository () const;
   void repository (CORBA::Repository_ptr repo);
 
-  CORBA::ModuleDef_ptr holding_scope (void) const;
-  void holding_scope (CORBA::ModuleDef_ptr scope);
+  ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes ();
 
-  const char *holding_scope_name (void) const;
+  /// Cleanup function.
+  void destroy ();
 
-  ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes (void);
-
-  void destroy (void);
-  // Cleanup function.
-
-  const char *filename (void) const;
+  const char *filename () const;
   void filename (char *fname);
 
-  idl_bool enable_locking (void) const;
-  void enable_locking (idl_bool value);
+  bool enable_locking () const;
+  void enable_locking (bool value);
 
-  idl_bool do_included_files (void) const;
-  void do_included_files (idl_bool val);
-  
-  ACE_CString orb_args (void) const;
+  bool do_included_files () const;
+  void do_included_files (bool val);
+
+  bool allow_duplicate_typedefs () const;
+  void allow_duplicate_typedefs (bool val);
+
+  ACE_CString orb_args () const;
   void orb_args (const ACE_CString& args);
-  
-  ACE_CString spawn_options (void);
-  // Command line passed to ACE_Process::spawn. Different
-  // implementations in IDL and IFR backends.
 
+  /// Command line passed to ACE_Process::spawn. Different
+  /// implementations in IDL and IFR backends.
+  ACE_CString spawn_options ();
+
+  /// Parse an argument that might affect the backend.
   void parse_args (long &i, char **av);
-  // Parse args that affect the backend.
-  
-  void prep_be_arg (char *s);
-  // Special BE arg call factored out of DRV_args.
-  
-  void arg_post_proc (void);
-  // Checks made after parsing args.
-  
-  void usage (void) const;
-  // Display usage of BE-specific options.
-  
-  AST_Generator *generator_init (void);
-  // Create an AST node generator.
 
 private:
-  idl_bool removing_;
-  // Are we removing IR objects from the repository?
+  /// Are we removing IR objects from the repository?
+  bool removing_;
 
+  /// Reference to our ORB.
   CORBA::ORB_var orb_;
-  // Reference to our ORB.
 
+  /// Reference to the interface repository.
   CORBA::Repository_var repository_;
-  // Reference to the interface repository.
 
-  CORBA::ModuleDef_var holding_scope_;
-  // Used to hold struct/union/exception member defns until
-  // they are moved into their permanent scope.
-
+  /// Must be something unlikely to clash.
   CORBA::String_var holding_scope_name_;
-  // Must be something unlikely to clash.
 
+  /// IR object scope stack.
   ACE_Unbounded_Stack<CORBA::Container_ptr> ifr_scopes_;
-  // IR object scope stack.
 
+  /// Name of the IDL file we are processing.
   char *filename_;
-  // Name of the IDL file we are processing.
 
-  idl_bool enable_locking_;
-  // Option to lock at the IDL file level.
+  /// Option to lock at the IDL file level.
+  bool enable_locking_;
 
-  idl_bool do_included_files_;
-  // Option to process included IDL files.
-  
+  /// Option to process included IDL files.
+  bool do_included_files_;
+
+  /// Option to enable duplicate typedefs in parsed IDL.
+  bool allow_duplicate_typedefs_;
+
+  /// Holder for -ORB args saved and passed to DRV_fork.
   ACE_CString orb_args_;
-  //Holder for -ORB args saved and passed to DRV_fork.
 };
 
 #endif /* TAO_IFR_BE_GLOBAL_H */

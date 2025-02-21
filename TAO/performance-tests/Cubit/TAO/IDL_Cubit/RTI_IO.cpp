@@ -1,12 +1,10 @@
-// $Id$
-
 #include "RTI_IO.h"
 #include "ace/Log_Msg.h"
 
 void
 print_RtiPacket (Cubit::RtiPacket const &arg)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "packetHeader.packetLength %d\n"
               "packetHeader.federationHandle %d\n"
               "packetHeader.channelHandle %d\n"
@@ -16,7 +14,7 @@ print_RtiPacket (Cubit::RtiPacket const &arg)
               arg.packetHeader.channelHandle,
               arg.packetHeader.packetColor));
 
-  for (CORBA::ULong j = 0; j < arg.msgs.length (); ++j) 
+  for (CORBA::ULong j = 0; j < arg.msgs.length (); ++j)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "* message * %d\n",
@@ -25,12 +23,12 @@ print_RtiPacket (Cubit::RtiPacket const &arg)
       Cubit::RtiObjectUpdateMessageHeader const &oumh = arg.msgs[j].oumh ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\tupdateLength: %d\n" 
+                  "\tupdateLength: %d\n"
                   "\tupdateTag: %d\n"
-                  "\tobjectHandle: %d\n" 
+                  "\tobjectHandle: %d\n"
                   "\ttimestamp: %f\n"
-                  //"\teventRetractionHandle: \n"
-                  "\tclassHandle: %d\n" 
+                  //"\teventRetractionHandle:\n"
+                  "\tclassHandle: %d\n"
                   "\tsendingFederateHandle: %d\n"
                   "\tuserTag: %s\n"
                   "\ttransportationHandle: %x\n"
@@ -46,7 +44,7 @@ print_RtiPacket (Cubit::RtiPacket const &arg)
                   oumh.transportationHandle,
                   oumh.orderingHandle));
 
-      for (CORBA::ULong k = 0; k < oumh.messagePayload.length (); ++k) 
+      for (CORBA::ULong k = 0; k < oumh.messagePayload.length (); ++k)
         {
           Cubit::HandleValuePair const & hvp=oumh.messagePayload[k];
           ACE_DEBUG ((LM_DEBUG, "\t\thandle: %d\n", hvp.handle));

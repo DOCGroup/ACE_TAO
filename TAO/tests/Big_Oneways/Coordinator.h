@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef BIG_ONEWAYS_COORDINATOR_H
 #define BIG_ONEWAYS_COORDINATOR_H
@@ -18,27 +15,24 @@ public:
 
 
   /// Check if all the peers have registered already
-  int has_all_peers (void) const;
+  int has_all_peers () const;
 
   /// Check a session on each peer
   void create_session_list (Test::Session_Control_ptr session_control,
                             CORBA::ULong payload_size,
                             CORBA::ULong thread_count,
                             CORBA::ULong message_count,
-                            Test::Session_List &session_list
-                            ACE_ENV_ARG_DECL);
+                            Test::Session_List &session_list);
 
   /// Shutdown all the peers
-  void shutdown_all_peers (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown_all_peers ();
 
   // = The skeleton methods
-  virtual void add_peer (Test::Peer_ptr peer
-                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void add_peer (Test::Peer_ptr peer);
 
 protected:
   /// Protected Destructor, call _remove_ref() instead
-  virtual ~Coordinator (void);
+  virtual ~Coordinator ();
 
 private:
   /// Store a reference to each peer

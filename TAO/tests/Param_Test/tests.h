@@ -1,20 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    tests.h
-//
-// = DESCRIPTION
-//    All the test objects header files included here
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    tests.h
+ *
+ *  All the test objects header files included here
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TESTS_H
 #define TESTS_H

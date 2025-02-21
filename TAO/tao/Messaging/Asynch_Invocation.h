@@ -4,8 +4,6 @@
 /**
  *  @file    Asynch_Invocation.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -25,15 +23,16 @@
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Operation_Details;
 class TAO_InputCDR;
-class ACE_Time_Value;
 class TAO_Asynch_Reply_Dispatcher_Base;
-
-namespace CORBA
-{
-  class SystemException;
-}
 
 namespace TAO
 {
@@ -49,19 +48,17 @@ namespace TAO
                               TAO_Asynch_Reply_Dispatcher_Base *rd,
                               bool response_expected = true);
 
-    Invocation_Status remote_invocation (ACE_Time_Value *value
-                                         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::Exception));
+    Invocation_Status remote_invocation (ACE_Time_Value *value);
 
   protected:
     // To prevent leaking memory from the reply dispatcher that we
     // are given
     ACE_Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base,
                              ARDB_Refcount_Functor> safe_rd_;
-
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_MESSAGING_ASYNCH_INVOCATION_H*/

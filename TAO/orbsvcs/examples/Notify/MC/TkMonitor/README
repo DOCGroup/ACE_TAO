@@ -1,0 +1,16 @@
+
+
+This Tk interface to the Notify Service Monitor requires opalORB v0.0.3 or
+later which can be downloaded from http://sourceforge.net/projects/opalorb/
+
+It will require some form of make (GNU make, nmake, Borland make, etc.)
+You must have the TAO_ROOT environment variable set to the full path of the
+TAO directory and you must also have the OPALORB_ROOT environment variable
+set to the full path of opalORB.  Then run make.  It will generate the stubs
+and at that point you are ready to run monitor.pl -ORBInitRef NameService=...
+
+By default, the monitor interface will use the Name Service to locate the
+monitor service.  However, an IOR can be passed as the first parameter to
+monitor.pl to designate the location of the monitor service.  This can be
+any one of the opalORB supported IOR formats.  See
+http://opalorb.sourceforge.net/CORBA/ORB.html for supported formats.

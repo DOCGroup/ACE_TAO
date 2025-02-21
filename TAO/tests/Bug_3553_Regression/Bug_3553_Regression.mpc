@@ -1,0 +1,35 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  idlflags += -Sp
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, iortable {
+  after += *idl
+  Source_Files {
+    Hello.cpp
+    Bug_3553_Regression_server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, rtcorba, avoids_corba_e_micro {
+  after += *idl
+  Source_Files {
+    Bug_3553_Regression_client.cpp
+  }
+  Source_Files {
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}
+

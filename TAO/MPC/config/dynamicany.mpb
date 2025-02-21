@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : taolib, anytypecode, valuetype {
+  after   += DynamicAny
+  libs    += TAO_DynamicAny
+}

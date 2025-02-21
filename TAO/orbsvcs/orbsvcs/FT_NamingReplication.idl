@@ -1,0 +1,106 @@
+/* -*- IDL -*- */
+//=============================================================================
+/**
+ *  @file    FT_NamingReplication.idl
+ *
+ *
+ *  This file is part of Fault Tolerant Naming Service in support of
+ *  replication between redundant servers.
+ *
+ *  @author Kevin Stanley <stanleyk@ociweb.com>
+ */
+//=============================================================================
+
+#ifndef _FT_NAMING_REPLICATION_IDL_
+#define _FT_NAMING_REPLICATION_IDL_
+
+#include <orbsvcs/CosNaming.idl>
+#include <orbsvcs/FT_NamingManager.idl>
+#include <orbsvcs/FT_CORBA_ORB.idl>
+
+module FT_Naming
+{
+
+  enum ChangeType { NEW, UPDATED, DELETED };
+
+  exception NotAvailable
+  {
+  };
+
+  exception InvalidPeer
+  {
+    string reason;
+  };
+
+  /*
+   * A structure that describes the updated element in a Naming Service
+   */
+  struct NamingContextUpdate
+  {
+    /// The name of context being updated
+    string context_name;
+    /// The type of change that is being reported
+    ChangeType change_type;
+  };
+
+  struct ReplicaInfo
+  {
+    boolean combined;
+    CosNaming::NamingContext root_context;
+    FT_Naming::NamingManager naming_manager;
+  };
+
+  /*
+   * A structure that describes the updated element within
+   * an Object Group Manager
+   */
+  struct ObjectGroupUpdate
+  {
+    /// This is used to identify object group references.
+    PortableGroup::ObjectGroupId id;
+    /// The type of change that is being reported
+    ChangeType change_type;
+  };
+
+  enum EntityKind {
+    ctx_name,
+    obj_grp
+  };
+
+  union UpdateInfo switch (EntityKind) {
+  case ctx_name : NamingContextUpdate ctx;
+  case obj_grp  : ObjectGroupUpdate grp;
+  };
+
+  typedef sequence<UpdateInfo> UpdateInfoSeq;
+
+  interface UpdatePushNotifier
+  {
+    oneway void register_peer (in UpdatePushNotifier peer,
+                               in ReplicaInfo info,
+                               in unsigned long long initial_seq_num);
+
+    void notify_update (in unsigned long long seq_num,
+                        inout UpdateInfoSeq info);
+  };
+
+  interface ReplicationManager
+  {
+   /*
+    * Register with a peer replica providing an object reference for
+    * notification of updates.  Each replica will maintain their state
+    * in a shared repository and the update notification indicates the
+    * element that was changed.
+    */
+    ReplicaInfo register_replica (in ReplicationManager replica,
+                                  in ReplicaInfo replica_info)
+      raises (NotAvailable);
+
+    oneway void notify_updated_object_group(in ObjectGroupUpdate group_info);
+
+    oneway void notify_updated_context(in NamingContextUpdate context_info);
+  };
+};
+
+
+#endif // _FT_NAMING_REPLICATION_IDL_

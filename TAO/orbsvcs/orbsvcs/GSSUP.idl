@@ -4,8 +4,6 @@
 /**
  *  @file   GSSUP.idl
  *
- *  $Id$
- *
  *  @author Object Management Group
  */
 //=============================================================================
@@ -13,7 +11,7 @@
 #ifndef _GSSUP_IDL_
 #define _GSSUP_IDL_
 
-#include <CSI.idl>
+#include <orbsvcs/CSI.idl>
 //import ::CSI;
 
 module GSSUP {

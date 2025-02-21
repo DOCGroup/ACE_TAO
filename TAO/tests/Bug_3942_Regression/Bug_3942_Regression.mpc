@@ -1,0 +1,4 @@
+project: taoexe {
+  macros += LOCAL
+  idlflags += -DLOCAL
+}

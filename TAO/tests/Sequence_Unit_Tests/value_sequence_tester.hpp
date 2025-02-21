@@ -5,85 +5,102 @@
  *
  * @brief Helper class to implement tests for *_value_sequence
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
+#include "tao/Basic_Types.h"
 
-#include <boost/test/unit_test.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+#include "test_macros.h"
+#include "tao/SystemException.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class tested_sequence,
     class tested_allocation_traits>
 struct value_sequence_tester
 {
   typedef typename tested_sequence::value_type value_type;
+  typedef typename tested_sequence::const_value_type const_value_type;
 
-  void test_default_constructor()
+  int test_default_constructor()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
       tested_sequence x;
 
-      BOOST_CHECK_EQUAL(
+      CHECK_EQUAL(
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
+      CHECK_EQUAL(CORBA::ULong(0), x.length());
     }
-    BOOST_CHECK_MESSAGE(a.expect(0), a);
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    FAIL_RETURN_IF_NOT(a.expect(0), a);
+    // Nothing was allocated then there is nothing to free.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
+    return 0;
   }
 
 
-  void test_copy_constructor_from_default()
+  int test_copy_constructor_from_default()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
       tested_sequence x;
-      BOOST_CHECK_MESSAGE(a.expect(0), a);
-      BOOST_CHECK_EQUAL(
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      CHECK_EQUAL(
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
+      CHECK_EQUAL(CORBA::ULong(0), x.length());
 
       tested_sequence y(x);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_EQUAL(x.maximum(), y.maximum());
-      BOOST_CHECK_EQUAL(x.length(), y.length());
-      BOOST_CHECK_EQUAL(x.release(), y.release());
+      // Default constructed sequence doesn't have elements,
+      // thus there is nothing to allocate/copy in copy constructor.
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      CHECK_EQUAL(x.maximum(), y.maximum());
+      CHECK_EQUAL(x.length(), y.length());
+      CHECK_EQUAL(x.release(), y.release());
     }
-    BOOST_CHECK_MESSAGE(f.expect(2), f);
+    // Nothing was allocated then there is nothing to free.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
+    return 0;
   }
 
-  void test_index_accessor()
+  int test_index_accessor()
+  {
+    try
+      {
+        tested_sequence x;
+        x.length(8);
+        // Set x[4] to any value just for suppressing valgrind complains.
+        x[4] = 1;
+
+        tested_sequence const & y = x;
+        const_value_type & z = y[4];
+        CHECK_EQUAL(z, y[4]);
+      }
+    catch (const ::CORBA::BAD_PARAM &)
+      {
+        ACE_ERROR ((LM_ERROR, "Error: test_index_accessor: BAD_PARAM exception caught\n"));
+        return 1;
+      }
+    return 0;
+  }
+
+  int test_index_modifier()
   {
     tested_sequence x;
     x.length(8);
 
     tested_sequence const & y = x;
-    int const & z = y[4];
-    BOOST_CHECK_EQUAL(z, y[4]);
-  }
-
-  void test_index_modifier()
-  {
-    tested_sequence x;
-    x.length(8);
-
-    tested_sequence const & y = x;
-    int const & z = y[4];
+    const_value_type & z = y[4];
     x[4] = 4;
-    BOOST_CHECK_EQUAL(4, x[4]);
-    BOOST_CHECK_EQUAL(4, y[4]);
-    BOOST_CHECK_EQUAL(4, z);
+    CHECK_EQUAL(4, x[4]);
+    CHECK_EQUAL(4, y[4]);
+    CHECK_EQUAL(4, z);
+    return 0;
   }
 
-  void test_index_checking()
+  int test_index_checking()
   {
     tested_sequence x;
     x.length(8);
@@ -91,52 +108,57 @@ struct value_sequence_tester
     tested_sequence const & y = x;
     int z = 0;
 
-    BOOST_CHECK_THROW(z = y[32], std::range_error);
-    BOOST_CHECK_THROW(x[32] = z, std::range_error);
+    CHECK_THROW(z = y[32], std::range_error);
+    CHECK_THROW(x[32] = z, std::range_error);
+    return 0;
   }
 
-  void test_copy_constructor_values()
+  int test_copy_constructor_values()
   {
     tested_sequence a;
     a.length(16);
     for(CORBA::ULong i = 0; i != 16; ++i) a[i] = i*i;
 
     tested_sequence b(a);
-    BOOST_CHECK_EQUAL(a.length(), b.length());
+    CHECK_EQUAL(a.length(), b.length());
     for(CORBA::ULong i = 0; i != a.length(); ++i)
     {
-      BOOST_CHECK_MESSAGE(a[i] == b[i],
+      FAIL_RETURN_IF_NOT(a[i] == b[i],
           "Mismatched elements at index " << i);
     }
+    return 0;
   }
 
-  void test_assignment_from_default()
+  int test_assignment_from_default()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
       tested_sequence x;
-      BOOST_CHECK_MESSAGE(a.expect(0), a);
-      BOOST_CHECK_EQUAL(
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      CHECK_EQUAL(
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
+      CHECK_EQUAL(CORBA::ULong(0), x.length());
 
       tested_sequence y;
-      BOOST_CHECK_MESSAGE(a.expect(0), a);
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
 
       y = x;
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
-      BOOST_CHECK_EQUAL(x.maximum(), y.maximum());
-      BOOST_CHECK_EQUAL(x.length(), y.length());
-      BOOST_CHECK_EQUAL(x.release(), y.release());
+      // Default constructed sequence doesn't have elements,
+      // thus there is nothing to allocate/copy in operator=.
+      FAIL_RETURN_IF_NOT(a.expect(0), a);
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
+      CHECK_EQUAL(x.maximum(), y.maximum());
+      CHECK_EQUAL(x.length(), y.length());
+      CHECK_EQUAL(x.release(), y.release());
     }
-    BOOST_CHECK_MESSAGE(f.expect(2), f);
+    // Nothing was allocated then there is nothing to free.
+    FAIL_RETURN_IF_NOT(f.expect(0), f);
+    return 0;
   }
 
-  void test_assignment_values()
+  int test_assignment_values()
   {
     tested_sequence a;
     a.length(16);
@@ -144,17 +166,18 @@ struct value_sequence_tester
 
     tested_sequence b;
     b = a;
-    BOOST_CHECK_EQUAL(a.maximum(), b.maximum());
-    BOOST_CHECK_EQUAL(a.length(),  b.length());
-    BOOST_CHECK_EQUAL(a.release(), b.release());
+    CHECK_EQUAL(a.maximum(), b.maximum());
+    CHECK_EQUAL(a.length(),  b.length());
+    CHECK_EQUAL(a.release(), b.release());
     for(CORBA::ULong i = 0; i != a.length(); ++i)
     {
-      BOOST_CHECK_MESSAGE(a[i] == b[i],
+      FAIL_RETURN_IF_NOT(a[i] == b[i],
           "Mismatched elements at index " << i);
     }
+    return 0;
   }
 
-  void test_exception_in_copy_constructor()
+  int test_exception_in_copy_constructor()
   {
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
@@ -163,13 +186,14 @@ struct value_sequence_tester
 
       expected_calls a(tested_allocation_traits::allocbuf_calls);
       tested_allocation_traits::allocbuf_calls.failure_countdown(1);
-      BOOST_CHECK_THROW(tested_sequence y(x), testing_exception);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
+      CHECK_THROW(tested_sequence y(x), testing_exception);
+      FAIL_RETURN_IF_NOT(a.expect(1), a);
     }
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    FAIL_RETURN_IF_NOT(f.expect(1), f);
+    return 0;
   }
 
-  void test_exception_in_assignment()
+  int test_exception_in_assignment()
   {
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
@@ -180,17 +204,18 @@ struct value_sequence_tester
       expected_calls a(tested_allocation_traits::allocbuf_calls);
       f.reset();
       tested_allocation_traits::allocbuf_calls.failure_countdown(1);
-      BOOST_CHECK_THROW(y = x, testing_exception);
+      CHECK_THROW(y = x, testing_exception);
 
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_MESSAGE(f.expect(0), f);
+      FAIL_RETURN_IF_NOT(a.expect(1), a);
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
 
-      BOOST_CHECK_EQUAL(CORBA::ULong(3), y.length());
+      CHECK_EQUAL(CORBA::ULong(3), y.length());
     }
-    BOOST_CHECK_MESSAGE(f.expect(2), f);
+    FAIL_RETURN_IF_NOT(f.expect(2), f);
+    return 0;
   }
 
-  void test_get_buffer_const()
+  int test_get_buffer_const()
   {
     tested_sequence a; a.length(4);
     tested_sequence const & b = a;
@@ -198,67 +223,31 @@ struct value_sequence_tester
     value_type const * buffer = b.get_buffer();
     a[0] = 1; a[1] = 4; a[2] = 9; a[3] = 16;
 
-    BOOST_CHECK_EQUAL(1,  buffer[0]);
-    BOOST_CHECK_EQUAL(4,  buffer[1]);
-    BOOST_CHECK_EQUAL(9,  buffer[2]);
-    BOOST_CHECK_EQUAL(16, buffer[3]);
+    CHECK_EQUAL(1,  buffer[0]);
+    CHECK_EQUAL(4,  buffer[1]);
+    CHECK_EQUAL(9,  buffer[2]);
+    CHECK_EQUAL(16, buffer[3]);
+    return 0;
   }
 
-  void add_all(boost::unit_test_framework::test_suite * ts)
+  int test_all()
   {
-    boost::shared_ptr<value_sequence_tester> shared_this(self_);
+    int status = 0;
 
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_default_constructor,
-                shared_this));
-
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_copy_constructor_from_default,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_index_accessor,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_index_modifier,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_index_checking,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_copy_constructor_values,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_assignment_from_default,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_assignment_values,
-                shared_this));
-
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_exception_in_copy_constructor,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_exception_in_assignment,
-                shared_this));
-
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_get_buffer_const,
-                shared_this));
+    status +=this->test_default_constructor();
+    status +=this->test_copy_constructor_from_default();
+    status +=this->test_index_accessor();
+    status +=this->test_index_modifier();
+    status +=this->test_index_checking();
+    status +=this->test_copy_constructor_values();
+    status +=this->test_assignment_from_default();
+    status +=this->test_assignment_values();
+    status +=this->test_exception_in_copy_constructor();
+    status +=this->test_exception_in_assignment();
+    status +=this->test_get_buffer_const();
+    return status;
   }
-
-  static boost::shared_ptr<value_sequence_tester> allocate()
-  {
-    boost::shared_ptr<value_sequence_tester> ptr(
-        new value_sequence_tester);
-    ptr->self_ = ptr;
-
-    return ptr;
-  }
-
-private:
-  value_sequence_tester() {}
-
-  boost::weak_ptr<value_sequence_tester> self_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_value_sequence_tester_hpp

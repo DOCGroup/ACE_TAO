@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef HELLO_H
 #define HELLO_H
@@ -17,11 +14,10 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::ULong next_prime (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong next_prime ();
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 

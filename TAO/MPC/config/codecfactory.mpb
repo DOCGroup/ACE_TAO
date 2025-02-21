@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : taolib, anytypecode {
+  after   += CodecFactory
+  libs    += TAO_CodecFactory
+}

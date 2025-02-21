@@ -1,18 +1,19 @@
-// $Id$
+// -*- C++ -*-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Long
-TAO_Notify_Object::id (void) const
+TAO_Notify_Object::id () const
 {
   return id_;
 }
 
 ACE_INLINE void
-TAO_Notify_Object::execute_task (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL)
+TAO_Notify_Object::execute_task (TAO_Notify_Method_Request& method_request)
 {
   TAO_Notify_Worker_Task::Ptr task( this->worker_task_ );
   if ( task.isSet() )
   {
-    task->execute( method_request ACE_ENV_ARG_PARAMETER );
+    task->execute( method_request );
   }
 }
 
@@ -46,25 +47,25 @@ TAO_Notify_Object::set_primary_as_proxy_poa()
 }
 
 ACE_INLINE TAO_Notify_POA_Helper*
-TAO_Notify_Object::poa (void)
+TAO_Notify_Object::poa ()
 {
   return this->poa_;
 }
 
 ACE_INLINE TAO_Notify_POA_Helper*
-TAO_Notify_Object::object_poa (void)
+TAO_Notify_Object::object_poa ()
 {
   return this->object_poa_;
 }
 
 ACE_INLINE TAO_Notify_POA_Helper*
-TAO_Notify_Object::proxy_poa (void)
+TAO_Notify_Object::proxy_poa ()
 {
   return this->proxy_poa_;
 }
 
-ACE_INLINE int
-TAO_Notify_Object::has_shutdown (void)
+ACE_INLINE bool
+TAO_Notify_Object::has_shutdown ()
 {
   return this->shutdown_;
 }
@@ -77,15 +78,17 @@ TAO_Notify_Object::set_admin_properties( TAO_Notify_AdminProperties* admin_prope
 }
 
 ACE_INLINE TAO_Notify_Event_Manager&
-TAO_Notify_Object::event_manager (void)
+TAO_Notify_Object::event_manager ()
 {
   ACE_ASSERT( this->event_manager_.get() != 0 );
   return *this->event_manager_;
 }
 
 ACE_INLINE TAO_Notify_AdminProperties&
-TAO_Notify_Object::admin_properties (void)
+TAO_Notify_Object::admin_properties ()
 {
   ACE_ASSERT( this->admin_properties_.get() != 0 );
   return *this->admin_properties_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

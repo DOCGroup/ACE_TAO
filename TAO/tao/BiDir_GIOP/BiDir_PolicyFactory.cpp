@@ -1,34 +1,28 @@
-#include "BiDir_PolicyFactory.h"
-#include "BiDirGIOP.h"
-#include "BiDir_Policy_i.h"
-
+// -*- C++ -*-
+#include "tao/BiDir_GIOP/BiDir_PolicyFactory.h"
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "tao/BiDir_GIOP/BiDir_Policy_i.h"
 #include "tao/ORB_Constants.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "ace/CORBA_macros.h"
 
-ACE_RCSID (BiDir_GIOP,
-           BiDir_PolicyFactory,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO_BiDir_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
+    const CORBA::Any &value)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
 
   if (type == BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE)
     {
       BiDirPolicy::BidirectionalPolicyValue val;
 
       // Extract the value from the any.
-      value >>= val;
       if ((value >>= val) == 0)
         {
-          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                            CORBA::Policy::_nil ());
+          throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
 
       ACE_NEW_THROW_EX (policy,
@@ -38,11 +32,11 @@ TAO_BiDir_PolicyFactory::create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
     }
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

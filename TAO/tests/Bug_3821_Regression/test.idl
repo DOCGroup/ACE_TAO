@@ -1,0 +1,177 @@
+module test {
+  enum Enumeration {
+    Enum1,
+    Enum2,
+    Enum3
+  };
+
+  union UnionAllCovered_EnumerationDiscriminant switch (Enumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  case Enum3:
+    long e_enum3;
+  };
+
+  union UnionAllCoveredWithDefault_EnumerationDiscriminant switch (Enumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  case Enum3:
+  default:
+    long e_def;
+  };
+
+  union UnionWithDefault_EnumerationDiscriminant switch (Enumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  default:
+    long e_def;
+  };
+
+  union UnionWithImplicitDefault_EnumerationDiscriminant switch (Enumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  };
+
+  typedef Enumeration TypedefedEnumeration;
+
+  union UnionAllCovered_TypedefedEnumerationDiscriminant switch (TypedefedEnumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  case Enum3:
+    long e_enum3;
+  };
+
+  union UnionAllCoveredWithDefault_TypedefedEnumerationDiscriminant switch (TypedefedEnumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  case Enum3:
+  default:
+    long e_def;
+  };
+
+  union UnionWithDefault_TypedefedEnumerationDiscriminant switch (TypedefedEnumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  default:
+    long e_def;
+  };
+
+  union UnionWithImplicitDefault_TypedefedEnumerationDiscriminant switch (TypedefedEnumeration) {
+  case Enum1:
+    long e_enum1;
+  case Enum2:
+    long e_enum2;
+  };
+
+  union UnionAllCovered_BooleanDiscriminant switch (boolean)
+  {
+  case TRUE:
+    long e_true;
+  case FALSE:
+    long e_false;
+  };
+
+  union UnionWithDefault_BooleanDiscriminant switch (boolean)
+  {
+  case TRUE:
+    long e_true;
+  default:
+    long e_def;
+  };
+
+  union UnionWithImplicitDefault_BooleanDiscriminant switch (boolean)
+  {
+  case TRUE:
+    long e_true;
+  };
+
+  union UnionAllCovered_CharDiscriminant switch (char)
+  {
+  case '\000': case '\001': case '\002': case '\003': case '\004': case '\005': case '\006': case '\007':
+  case '\010': case '\011': case '\012': case '\013': case '\014': case '\015': case '\016': case '\017':
+  case '\020': case '\021': case '\022': case '\023': case '\024': case '\025': case '\026': case '\027':
+  case '\030': case '\031': case '\032': case '\033': case '\034': case '\035': case '\036': case '\037':
+  case '\040': case '\041': case '\042': case '\043': case '\044': case '\045': case '\046': case '\047':
+  case '\050': case '\051': case '\052': case '\053': case '\054': case '\055': case '\056': case '\057':
+  case '\060': case '\061': case '\062': case '\063': case '\064': case '\065': case '\066': case '\067':
+  case '\070': case '\071': case '\072': case '\073': case '\074': case '\075': case '\076': case '\077':
+
+  case '\100': case '\101': case '\102': case '\103': case '\104': case '\105': case '\106': case '\107':
+  case '\110': case '\111': case '\112': case '\113': case '\114': case '\115': case '\116': case '\117':
+  case '\120': case '\121': case '\122': case '\123': case '\124': case '\125': case '\126': case '\127':
+  case '\130': case '\131': case '\132': case '\133': case '\134': case '\135': case '\136': case '\137':
+  case '\140': case '\141': case '\142': case '\143': case '\144': case '\145': case '\146': case '\147':
+  case '\150': case '\151': case '\152': case '\153': case '\154': case '\155': case '\156': case '\157':
+  case '\160': case '\161': case '\162': case '\163': case '\164': case '\165': case '\166': case '\167':
+  case '\170': case '\171': case '\172': case '\173': case '\174': case '\175': case '\176': case '\177':
+
+  case '\200': case '\201': case '\202': case '\203': case '\204': case '\205': case '\206': case '\207':
+  case '\210': case '\211': case '\212': case '\213': case '\214': case '\215': case '\216': case '\217':
+  case '\220': case '\221': case '\222': case '\223': case '\224': case '\225': case '\226': case '\227':
+  case '\230': case '\231': case '\232': case '\233': case '\234': case '\235': case '\236': case '\237':
+  case '\240': case '\241': case '\242': case '\243': case '\244': case '\245': case '\246': case '\247':
+  case '\250': case '\251': case '\252': case '\253': case '\254': case '\255': case '\256': case '\257':
+  case '\260': case '\261': case '\262': case '\263': case '\264': case '\265': case '\266': case '\267':
+  case '\270': case '\271': case '\272': case '\273': case '\274': case '\275': case '\276': case '\277':
+
+  case '\300': case '\301': case '\302': case '\303': case '\304': case '\305': case '\306': case '\307':
+  case '\310': case '\311': case '\312': case '\313': case '\314': case '\315': case '\316': case '\317':
+  case '\320': case '\321': case '\322': case '\323': case '\324': case '\325': case '\326': case '\327':
+  case '\330': case '\331': case '\332': case '\333': case '\334': case '\335': case '\336': case '\337':
+  case '\340': case '\341': case '\342': case '\343': case '\344': case '\345': case '\346': case '\347':
+  case '\350': case '\351': case '\352': case '\353': case '\354': case '\355': case '\356': case '\357':
+  case '\360': case '\361': case '\362': case '\363': case '\364': case '\365': case '\366': case '\367':
+  case '\370': case '\371': case '\372': case '\373': case '\374': case '\375': case '\376': case '\377':
+    long e_chars;
+  };
+
+  union UnionWithDefault_CharDiscriminant switch (char)
+  {
+  case '\0': case '\1': case '\2': case '\3': case '\4': case '\5': case '\6': case '\7':
+    long e_chars;
+  default:
+    long e_def;
+  };
+
+  union UnionWithImplicitDefault_CharDiscriminant switch (char)
+  {
+  case '\0': case '\1': case '\2': case '\3': case '\4': case '\5': case '\6': case '\7':
+    long e_chars;
+  };
+
+  union UnionWithDefault_LongDiscriminant switch (long)
+  {
+  case 1:
+    long e_case1;
+  case 2:
+    long e_case2;
+  case 3:
+    long e_case3;
+  default:
+    long e_def;
+  };
+
+  union UnionWithImplicitDefault_LongDiscriminant switch (long)
+  {
+  case 1:
+    long e_case1;
+  case 2:
+    long e_case2;
+  case 3:
+    long e_case3;
+  };
+};

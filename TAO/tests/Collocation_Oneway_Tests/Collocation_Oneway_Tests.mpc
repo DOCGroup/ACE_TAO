@@ -1,0 +1,4 @@
+// -*- MPC -*-
+project(*): taoserver, messaging, valuetype {
+  exename = Collocated_Test
+}

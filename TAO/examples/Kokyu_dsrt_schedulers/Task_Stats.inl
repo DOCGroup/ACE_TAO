@@ -1,4 +1,4 @@
-//$Id$
+#include "ace/Log_Msg.h"
 
 ACE_INLINE int
 Task_Stats::sample (ACE_UINT32 thr_run_time, int thr_count)

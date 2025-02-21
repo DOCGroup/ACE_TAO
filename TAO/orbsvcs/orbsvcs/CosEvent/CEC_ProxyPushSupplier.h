@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_ProxyPushSupplier.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
@@ -22,11 +21,13 @@
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;
@@ -44,7 +45,7 @@ class TAO_CEC_TypedEventChannel;
  * remember that this class is used to communicate with a
  * PushConsumer, so, in effect, this is the ambassador for a
  * consumer inside the event channel.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * It does not assume ownership of the TAO_CEC_Dispatching object.
  * It makes a copy of the ConsumerQOS and the consumer object
  * reference.
@@ -59,28 +60,27 @@ public:
   typedef CosEventChannelAdmin::ProxyPushSupplier_var _var_type;
 
   /// constructor...
-  TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel);
+  TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel,
+                             const ACE_Time_Value &timeout);
 
   /// typed ec constructor
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* typed_event_channel);
+  TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* typed_event_channel,
+                             const ACE_Time_Value &timeout);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  virtual ~TAO_CEC_ProxyPushSupplier (void);
+  virtual ~TAO_CEC_ProxyPushSupplier ();
 
   /// Activate in the POA
   virtual void activate (
-      CosEventChannelAdmin::ProxyPushSupplier_ptr &
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CosEventChannelAdmin::ProxyPushSupplier_ptr &);
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void deactivate ();
 
   /// Return 0 if no consumer is connected...
-  CORBA::Boolean is_connected (void) const;
+  CORBA::Boolean is_connected () const;
 
   /**
    * Return the consumer object reference. It returns nil() if it has
@@ -88,60 +88,47 @@ public:
    * NOTE: This method does not return a new reference!!! Doing so
    * will increase the locking overhead on the critical path.
    */
-  CosEventComm::PushConsumer_ptr consumer (void) const;
+  CosEventComm::PushConsumer_ptr consumer () const;
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown ();
 
   /// Internal methods to push an event to each consumer.
-  virtual void push (const CORBA::Any &event
-                     ACE_ENV_ARG_DECL);
-  virtual void push_nocopy (CORBA::Any &event
-                            ACE_ENV_ARG_DECL);
+  virtual void push (const CORBA::Any &event);
+  virtual void push_nocopy (CORBA::Any &event);
   /// Internal methods to invoke a typed event to each consumer.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event
-                       ACE_ENV_ARG_DECL);
+  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Pushes to the consumer, verifies that it is connected.
-  void push_to_consumer (const CORBA::Any &event
-                         ACE_ENV_ARG_DECL);
-  void reactive_push_to_consumer (const CORBA::Any &event
-                                  ACE_ENV_ARG_DECL);
+  void push_to_consumer (const CORBA::Any &event);
+  void reactive_push_to_consumer (const CORBA::Any &event);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  void invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event
-                           ACE_ENV_ARG_DECL);
-  void reactive_invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event
-                                    ACE_ENV_ARG_DECL);
+  void invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event);
+  void reactive_invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
    * it is disconnected then it returns true and sets the
-   * <disconnected> flag.
+   * @a disconnected flag.
    */
-  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 
   // = The CosEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
-                CosEventComm::PushConsumer_ptr push_consumer
-                ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosEventChannelAdmin::AlreadyConnected,
-                       CosEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                CosEventComm::PushConsumer_ptr push_consumer);
+  virtual void disconnect_push_supplier ();
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA ();
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
 protected:
   /// Set the consumer, used by some implementations to change the
@@ -154,18 +141,32 @@ protected:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Release the child and the consumer
-  void cleanup_i (void);
+  void cleanup_i ();
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  CORBA::Boolean is_typed_ec (void) const;
+  CORBA::Boolean is_typed_ec () const;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+  /// Assigns the parameter to both consumer_ and nopolicy_consumer_, and
+  /// applies policies (when appropriate) to consumer_.
+  CosEventComm::PushConsumer_ptr apply_policy
+  (CosEventComm::PushConsumer_ptr c);
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  CosTypedEventComm::TypedPushConsumer_ptr apply_policy
+  (CosTypedEventComm::TypedPushConsumer_ptr c);
+#endif
+
+  CORBA::Object_ptr apply_policy_obj (CORBA::Object_ptr c);
 
 private:
   /// The Event Channel that owns this object.
   TAO_CEC_EventChannel* event_channel_;
+
+  ACE_Time_Value timeout_;
 
   /// The Typed Event Channel that owns this object.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -178,23 +179,35 @@ private:
   /// The reference count.
   CORBA::ULong refcount_;
 
-  /// The consumer....
+  /// The consumer -- use apply_policy() instead of assigning directly to
+  /// consumer_.  This will keep consumer_ and nopolicy_consumer_ in sync.
   CosEventComm::PushConsumer_var consumer_;
 
+  /// The consumer without any policies applied
+  CosEventComm::PushConsumer_var nopolicy_consumer_;
+
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  /// The typed consumer....
+  /// The typed consumer -- use apply_policy() instead of assigning directly to
+  /// typed_consumer_.  This will keep typed_consumer_ and
+  /// nopolicy_typed_consumer_ in sync.
   CosTypedEventComm::TypedPushConsumer_var typed_consumer_;
 
   /// The consumer object returned from get_typed_consumer()
   CORBA::Object_var typed_consumer_obj_;
+
+  /// The typed consumer without any policies applied
+  CosTypedEventComm::TypedPushConsumer_var nopolicy_typed_consumer_;
+
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_ProxyPushSupplier.i"
+#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

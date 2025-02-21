@@ -1,6 +1,5 @@
 // -*- C++ -*-
-//
-// $Id$
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
 TAO_PG_Location_Hash::operator() (
@@ -19,3 +18,5 @@ TAO_PG_Location_Hash::operator() (
 
   return hash;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

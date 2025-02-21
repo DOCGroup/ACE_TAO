@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Roundtrip.h"
 #include "ORBInitializer.h"
 #include "RPS_Monitor.h"
@@ -12,21 +10,17 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID (LoadBalancing,
-           server,
-           "$Id$")
-
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 CORBA::Float reject_threshold = 0;
 CORBA::Float critical_threshold = 0;
 CORBA::Float dampening = 0;
-const char * strategy = "Random";
+const ACE_TCHAR *strategy = ACE_TEXT("Random");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:s:r:c:d:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:r:c:d:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -42,17 +36,17 @@ parse_args (int argc, char *argv[])
 
       case 'r':
         reject_threshold =
-          static_cast<CORBA::Float> (::atof (get_opts.opt_arg ()));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'c':
         critical_threshold =
-          static_cast<CORBA::Float> (::atof (get_opts.opt_arg ()));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case 'd':
         dampening =
-          static_cast<CORBA::Float> (::atof (get_opts.opt_arg ()));
+          static_cast<CORBA::Float> (ACE_OS::atof (get_opts.opt_arg ()));
         break;
 
       case '?':
@@ -68,25 +62,20 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 CORBA::Object_ptr
 join_object_group (CORBA::ORB_ptr orb,
                    CosLoadBalancing::LoadManager_ptr lm,
-                   const PortableGroup::Location & location
-                   ACE_ENV_ARG_DECL)
+                   const PortableGroup::Location & location)
 {
   CORBA::Object_var ns_object =
-    orb->resolve_initial_references ("NameService"
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    orb->resolve_initial_references ("NameService");
 
   CosNaming::NamingContext_var nc =
-    CosNaming::NamingContext::_narrow (ns_object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    CosNaming::NamingContext::_narrow (ns_object.in ());
 
   CosNaming::Name name (1);
   name.length (1);
@@ -96,13 +85,11 @@ join_object_group (CORBA::ORB_ptr orb,
 
   CORBA::Object_var group;
 
-  ACE_TRY
+  try
     {
-      group = nc->resolve (name
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      group = nc->resolve (name);
     }
-  ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
+  catch (const CosNaming::NamingContext::NotFound& )
     {
       // Object group not created.  Create one.
       const char repository_id[] = "IDL:Test/Roundtrip:1.0";
@@ -124,16 +111,12 @@ join_object_group (CORBA::ORB_ptr orb,
 
       group = lm->create_object (repository_id,
                                  criteria,
-                                 fcid.out ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                 fcid.out ());
 
-      ACE_TRY_EX (foo)
+      try
         {
           nc->bind (name,
-                    group.in ()
-                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (foo);
+                    group.in ());
 
           PortableGroup::Properties props (1);
           props.length (1);
@@ -143,19 +126,19 @@ join_object_group (CORBA::ORB_ptr orb,
 
           CosLoadBalancing::StrategyInfo strategy_info;
 
-          strategy_info.name = CORBA::string_dup (strategy);
+          strategy_info.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(strategy));
 
-          if (ACE_OS::strcasecmp (strategy, "LeastLoaded") == 0
-              && (reject_threshold != 0
-                  || critical_threshold != 0
-                  || dampening != 0))
+          if (ACE_OS::strcasecmp (strategy, ACE_TEXT("LeastLoaded")) == 0
+              && (!ACE::is_equal (reject_threshold, (CORBA::Float)0.0)
+                  || !ACE::is_equal (critical_threshold, (CORBA::Float)0.0)
+                  || !ACE::is_equal (dampening, (CORBA::Float)0.0)))
             {
               CORBA::ULong len = 1;
 
               PortableGroup::Properties & props =
                 strategy_info.props;
 
-              if (reject_threshold != 0)
+              if (!ACE::is_equal (reject_threshold, (CORBA::Float)0.0))
                 {
                   const CORBA::ULong i = len - 1;
 
@@ -167,7 +150,7 @@ join_object_group (CORBA::ORB_ptr orb,
                   props[i].val <<= reject_threshold;
                 }
 
-              if (critical_threshold != 0)
+              if (!ACE::is_equal (critical_threshold, (CORBA::Float)0.0))
                 {
                   const CORBA::ULong i = len - 1;
 
@@ -179,7 +162,7 @@ join_object_group (CORBA::ORB_ptr orb,
                   props[i].val <<= critical_threshold;
                 }
 
-              if (dampening != 0)
+              if (!ACE::is_equal (dampening, (CORBA::Float)0.0))
                 {
                   const CORBA::ULong i = len - 1;
 
@@ -195,58 +178,44 @@ join_object_group (CORBA::ORB_ptr orb,
 
           props[0].val <<= strategy_info;
 
-          lm->set_default_properties (props
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          lm->set_default_properties (props);
         }
-      ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+      catch (const CosNaming::NamingContext::AlreadyBound& )
         {
           // Somebody beat us to creating the object group.  Clean up
           // the one we created.
-          lm->delete_object (fcid.in ()
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (foo);
+          lm->delete_object (fcid.in ());
 
-          group = nc->resolve (name
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (foo);
+          group = nc->resolve (name);
         }
-      ACE_ENDTRY;
-      ACE_TRY_CHECK;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   Roundtrip * roundtrip_impl;
   ACE_NEW_THROW_EX (roundtrip_impl,
                     Roundtrip (orb),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableServer::ServantBase_var owner_transfer (roundtrip_impl);
 
   Test::Roundtrip_var roundtrip =
-    roundtrip_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    roundtrip_impl->_this ();
 
   group = lm->add_member (group.in (),
                           location,
-                          roundtrip.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                          roundtrip.in ());
 
   return group._retn ();
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority);
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
@@ -263,7 +232,7 @@ main (int argc, char *argv[])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       ORBInitializer *initializer = 0;
       ACE_NEW_RETURN (initializer,
@@ -272,19 +241,14 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -292,63 +256,48 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::Object_var lm_object =
-        orb->resolve_initial_references ("LoadManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("LoadManager");
 
       CosLoadBalancing::LoadManager_var load_manager =
-        CosLoadBalancing::LoadManager::_narrow (lm_object.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosLoadBalancing::LoadManager::_narrow (lm_object.in ());
 
       RPS_Monitor * monitor_servant;
       ACE_NEW_THROW_EX (monitor_servant,
                         RPS_Monitor (initializer->interceptor ()),
                         CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
 
       PortableServer::ServantBase_var safe_monitor_servant (monitor_servant);
 
       CosLoadBalancing::LoadMonitor_var load_monitor =
-        monitor_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        monitor_servant->_this ();
 
       PortableGroup::Location_var location =
-        load_monitor->the_location (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        load_monitor->the_location ();
 
       CORBA::Object_var roundtrip =
         ::join_object_group (orb.in (),
                              load_manager.in (),
-                             location.in ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             location.in ());
 
       TAO_LB_LoadAlert & alert_servant = initializer->load_alert ();
 
       CosLoadBalancing::LoadAlert_var load_alert =
-        alert_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        alert_servant._this ();
 
 
       CORBA::String_var ior =
-        orb->object_to_string (roundtrip.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (roundtrip.in ());
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -361,32 +310,24 @@ main (int argc, char *argv[])
       ACE_OS::fclose (output_file);
 
       load_manager->register_load_monitor (location.in (),
-                                           load_monitor.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                           load_monitor.in ());
 
       load_manager->register_load_alert (location.in (),
-                                         load_alert.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                         load_alert.in ());
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

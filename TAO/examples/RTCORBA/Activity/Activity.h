@@ -3,8 +3,6 @@
 /**
  *  @file Activity.h
  *
- *  $Id$
- *
  *  An activity is a process that contains Tasks.
  *  Each Task is composed of certain units of Jobs.
  *  A Job can perform work that is local/remote.
@@ -21,10 +19,12 @@
 #include "orbsvcs/CosNamingC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
-#include "activity_export.h"
 #include "ace/Null_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 class Job_i;
 class Periodic_Task;
 class Builder;
@@ -34,9 +34,8 @@ class Builder;
  *
  * @brief Driver class that maintains the orb and collections of objects for
  * generating activity in this process.
- *
  */
-class activity_Export Activity
+class Activity
 {
   friend class ACE_Singleton<Activity, ACE_Null_Mutex>;
 
@@ -46,23 +45,22 @@ private:
 
 public:
   /// initialize the ORB et. al.
-  int init (int& argc, char *argv [] ACE_ENV_ARG_DECL);
+  int init (int& argc, ACE_TCHAR *argv []);
 
 
   /// Activate the tasks, jobs, poas.
-  void run (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  void run (int argc, ACE_TCHAR *argv[]);
 
   /// Resolve the naming service.
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service ();
 
   /// = Accessors
-  CORBA::ORB_ptr orb (void);
-  RTCORBA::Current_ptr current (void);
+  CORBA::ORB_ptr orb ();
+  RTCORBA::Current_ptr current ();
   void builder (Builder* builder);
 
   /// Returns priority if server declared model else -1
-  CORBA::Short get_server_priority (CORBA::Object_ptr server
-                                    ACE_ENV_ARG_DECL);
+  CORBA::Short get_server_priority (CORBA::Object_ptr server);
   /// = Callbacks
   /// Task ended notification
   void task_ended (Periodic_Task* ended_task);
@@ -70,23 +68,23 @@ public:
   /// Job shutdown notification
   void job_ended (Job_i* ended_job);
 
-  protected:
+protected:
   /// = Activation methods.
   /// Activate the POA's
-  void activate_poa_list (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_poa_list ();
 
   /// Activate the task list.
-  void activate_schedule (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_schedule ();
 
   /// Activate the Job's
-  void activate_job_list (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_job_list ();
 
   /// Check if we should process exit
-  void check_ifexit (void);
+  void check_ifexit ();
 
   /// Create a file whose name is specified in the -Started_Flag <file_name> argument at startup.
   /// This file flags that the Activity has finished its bootstrapping step.
-  void create_started_flag_file (int argc, char *argv[]);
+  void create_started_flag_file (int argc, ACE_TCHAR *argv[]);
 
   /// = Data members
 
@@ -112,7 +110,7 @@ public:
   PortableServer::POA_var root_poa_;
 
   /// A naming context.
-  CosNaming::NamingContextExt_var naming_;
+  CosNaming::NamingContextExt_ptr naming_;
 
   /// The Priority Mapping helper.
   RTCORBA::PriorityMapping *priority_mapping_;

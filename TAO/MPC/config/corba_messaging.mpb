@@ -1,0 +1,4 @@
+// -*- MPC -*-
+project {
+  requires += corba_messaging
+}

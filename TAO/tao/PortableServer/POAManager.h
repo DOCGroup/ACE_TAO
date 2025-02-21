@@ -4,8 +4,6 @@
 /**
  *  @file    POAManager.h
  *
- *  $Id$
- *
  *   POAManager
  *
  *  @author  Irfan Pyarali
@@ -16,23 +14,19 @@
 #define TAO_POAMANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "poa_macros.h"
-#include "POAManagerC.h"
+#include "tao/PortableServer/poa_macros.h"
+#include "tao/PortableServer/POAManagerC.h"
 
 // Local Object
 #include "tao/LocalObject.h"
 #include "tao/PI_ForwardC.h"
 #include "ace/Unbounded_Set.h"
-
-// Forward decl.
-class TAO_Root_POA;
-class TAO_Object_Adapter;
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -41,105 +35,94 @@ class TAO_Object_Adapter;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Forward decl.
+class TAO_Root_POA;
+class TAO_Object_Adapter;
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+class TAO_POAManager_Factory;
+
+namespace PortableServer
+{
+  class POAManagerFactory;
+  typedef POAManagerFactory *POAManagerFactory_ptr;
+}
+#endif
+
 class TAO_PortableServer_Export TAO_POA_Manager :
   public PortableServer::POAManager,
-  public TAO_Local_RefCounted_Object
+  public ::CORBA::LocalObject
 {
   friend class TAO_Root_POA;
   friend class TAO_Object_Adapter;
 
 public:
-
-  void activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POAManager::AdapterInactive));
+  void activate ();
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  void hold_requests (CORBA::Boolean wait_for_completion
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POAManager::AdapterInactive));
+  void hold_requests (CORBA::Boolean wait_for_completion);
 
-  void discard_requests (CORBA::Boolean wait_for_completion
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POAManager::AdapterInactive));
+  void discard_requests (CORBA::Boolean wait_for_completion);
 
   void deactivate (CORBA::Boolean etherealize_objects,
-                   CORBA::Boolean wait_for_completion
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POAManager::AdapterInactive));
+                   CORBA::Boolean wait_for_completion);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  PortableServer::POAManager::State get_state (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POAManager::State get_state ();
 
-  TAO_POA_Manager (TAO_Object_Adapter &object_adapter);
+  char *get_id ();
 
-  ~TAO_POA_Manager (void);
+  TAO_POA_Manager (TAO_Object_Adapter &object_adapter,
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+                   const char * id,
+                   const ::CORBA::PolicyList & policies,
+                   PortableServer::POAManagerFactory_ptr poa_manager_factory);
+#else
+                   const char * id);
+#endif
 
-  PortableInterceptor::AdapterManagerId get_manager_id (ACE_ENV_SINGLE_ARG_DECL);
+  ~TAO_POA_Manager ();
 
   /// Check the state of this POA manager
-  void check_state (ACE_ENV_SINGLE_ARG_DECL);
+  void check_state ();
 
-  PortableServer::POAManager::State get_state_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POAManager::State get_state_i ();
 
-  virtual CORBA::ORB_ptr _get_orb (
-      ACE_ENV_SINGLE_ARG_DECL
-    );
+  virtual CORBA::ORB_ptr _get_orb ();
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  CORBA::PolicyList& get_policies ();
+#endif
 
 protected:
-
-  void activate_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POAManager::AdapterInactive));
+  void activate_i ();
 
   void deactivate_i (CORBA::Boolean etherealize_objects,
-                     CORBA::Boolean wait_for_completion
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POAManager::AdapterInactive));
+                     CORBA::Boolean wait_for_completion);
 
   /// Method needed for notifying the IORInterceptors that the state
   /// of POAManager changed.
-  void adapter_manager_state_changed (PortableServer::POAManager::State state
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void adapter_manager_state_changed (PortableServer::POAManager::State state);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  void hold_requests_i (CORBA::Boolean wait_for_completion
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POAManager::AdapterInactive));
+  void hold_requests_i (CORBA::Boolean wait_for_completion);
 
-  void discard_requests_i (CORBA::Boolean wait_for_completion
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POAManager::AdapterInactive));
+  void discard_requests_i (CORBA::Boolean wait_for_completion);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  ACE_Lock &lock (void);
+  ACE_Lock &lock ();
 
   int remove_poa (TAO_Root_POA *poa);
 
   int register_poa (TAO_Root_POA *poa);
 
-  /**
-   * Generate an AdapterManagerId for this POAManager.
-   * @return A value that uniquely identifies the POAManager within a
-   *         given process.
-   */
-  PortableInterceptor::AdapterManagerId generate_manager_id (void) const;
-
 protected:
-
   PortableServer::POAManager::State state_;
 
   ACE_Lock &lock_;
@@ -150,16 +133,31 @@ protected:
 
   TAO_Object_Adapter &object_adapter_;
 
-  PortableInterceptor::AdapterManagerId poa_manager_id_;
+  CORBA::String_var id_;
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  TAO_POAManager_Factory& poa_manager_factory_;
+  CORBA::PolicyList policies_;
+#endif
+
+private :
+  /**
+   * Generate an id for this POAManager.
+   * @return A value that uniquely identifies the POAManager within a
+   *         given process.
+   * @note: The id_ has the ownership of the memory allocated in this method.
+   */
+  char* generate_manager_id () const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "POAManager.i"
+# include "tao/PortableServer/POAManager.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

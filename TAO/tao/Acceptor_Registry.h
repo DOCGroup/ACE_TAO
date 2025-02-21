@@ -4,8 +4,6 @@
 /**
  *  @file     Acceptor_Registry.h
  *
- *  $Id$
- *
  *  Interface for the TAO pluggable protocol framework.
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
@@ -23,13 +21,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/Exception.h"
 #include "tao/params.h"
 
-// Forward declarations.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Addr;
 class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_Acceptor;
 class TAO_Acceptor_Filter;
@@ -51,45 +53,44 @@ typedef TAO_Acceptor** TAO_AcceptorSetIterator;
  * All loaded ESIOP or GIOP acceptor bridges must register with
  * this object.
  *
- * This class maintains a list os acceptor factories
- * for all loaded ORB protocols.
- * There is one Acceptor_Registry per ORB_Core.
+ * This class maintains a list of acceptor factories for all loaded ORB
+ * protocols. There is one Acceptor_Registry per ORB_Core.
  */
 class TAO_Export TAO_Acceptor_Registry
 {
 public:
-  // = Initialization and termination methods.
   ///  Default constructor.
-  TAO_Acceptor_Registry (void);
+  TAO_Acceptor_Registry () = default;
 
   ///  Default destructor.
-  ~TAO_Acceptor_Registry (void);
+  ~TAO_Acceptor_Registry ();
 
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
             const TAO_EndpointSet &endpoint_set,
-            bool ignore_address
-            ACE_ENV_ARG_DECL);
+            bool ignore_address);
 
   /// Close all open acceptors.
-  int close_all (void);
+  int close_all ();
 
   /// Returns the total number of endpoints in all of its acceptors.
-  size_t endpoint_count (void);
+  size_t endpoint_count ();
 
-  /// Check if there is at least one profile in <mprofile> that
+  /// Check if there is at least one profile in @a mprofile that
   /// corresponds to a collocated object.
-  int is_collocated (const TAO_MProfile& mprofile);
+  bool is_collocated (const TAO_MProfile& mprofile);
 
   /// Return the acceptor bridges
   TAO_Acceptor *get_acceptor (CORBA::ULong tag);
 
   // = Iterator.
-  TAO_AcceptorSetIterator begin (void);
-  TAO_AcceptorSetIterator end (void);
+  TAO_AcceptorSetIterator begin ();
+  TAO_AcceptorSetIterator end ();
 
 private:
+  TAO_Acceptor_Registry (const TAO_Acceptor_Registry &) = delete;
+  TAO_Acceptor_Registry &operator= (const TAO_Acceptor_Registry &) = delete;
 
   /// Create a default acceptor for all loaded protocols.
   int open_default (TAO_ORB_Core *orb_core,
@@ -103,6 +104,15 @@ private:
                     int minor,
                     TAO_ProtocolFactorySetItor &factory,
                     const char *options);
+
+  /// Open a default acceptor.
+  int open_default_i (TAO_ORB_Core *orb_core,
+                      ACE_Reactor *reactor,
+                      int major,
+                      int minor,
+                      TAO_ProtocolFactorySetItor &factory,
+                      TAO_Acceptor* acceptor,
+                      const char *options);
 
   /// Extract endpoint-specific options from the endpoint string.
   void extract_endpoint_options (ACE_CString &addrs,
@@ -121,24 +131,20 @@ private:
               ACE_Reactor *reactor,
               ACE_CString &address,
               TAO_ProtocolFactorySetItor &factory,
-              bool ignore_address
-              ACE_ENV_ARG_DECL);
-
-private:
-  // The acceptor registry should not be copied.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Acceptor_Registry (const TAO_Acceptor_Registry&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Acceptor_Registry&))
+              bool ignore_address);
 
 private:
   /// List of acceptors that are currently open.
-  TAO_Acceptor **acceptors_;
+  TAO_Acceptor **acceptors_ {};
 
   /// Number of acceptors that are currently open.
-  size_t size_;
+  size_t size_ {};
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "tao/Acceptor_Registry.i"
+#include "tao/Acceptor_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,12 +1,20 @@
-//
-// $Id$
-//
 #include "Test_i.h"
 
+test_i::test_i (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
 void
-test_i::send_stuff (const char* string
-                    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::send_stuff (const char* string)
 {
   ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - %s\n", string));
+}
+
+void
+test_i::shutdown ()
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) About to invoke shudown...\n"));
+  this->orb_->shutdown (false);
 }

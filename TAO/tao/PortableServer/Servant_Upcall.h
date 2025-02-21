@@ -4,8 +4,6 @@
 /**
  *  @file    Servant_Upcall.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali
  */
 //=============================================================================
@@ -15,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,6 +25,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration
 class TAO_Root_POA;
@@ -40,7 +40,7 @@ namespace CORBA
   class Object;
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+  typedef TAO_Pseudo_Out_T<Object> Object_out;
 }
 
 namespace TAO
@@ -52,7 +52,8 @@ namespace TAO
      *
      * @brief This class finds out the POA and the servant to perform an
      * upcall.  It can only be instantiated without the object
-     * adapter's lock held.
+     * adapter's lock held. For each upcall a new instance of this
+     * class is created.
      */
     class TAO_PortableServer_Export Servant_Upcall
     {
@@ -69,7 +70,7 @@ namespace TAO
       {
       public:
         /// Constructor.
-        Pre_Invoke_State (void);
+        Pre_Invoke_State ();
 
         enum State
         {
@@ -89,65 +90,61 @@ namespace TAO
       };
 
       /// Constructor.
-      Servant_Upcall (TAO_ORB_Core *orb_core);
+      explicit Servant_Upcall (TAO_ORB_Core *orb_core);
 
       /// Destructor.
-      ~Servant_Upcall (void);
+      ~Servant_Upcall ();
 
       /// Locate POA and servant.
       int prepare_for_upcall (const TAO::ObjectKey &key,
                               const char *operation,
-                              CORBA::Object_out forward_to
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              CORBA::Object_out forward_to);
 
       /// Helper.
       int prepare_for_upcall_i (const TAO::ObjectKey &key,
                                 const char *operation,
                                 CORBA::Object_out forward_to,
-                                int &wait_occurred_restart_call
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                bool &wait_occurred_restart_call);
 
       /// Run pre_invoke for a remote request.
-      void pre_invoke_remote_request (TAO_ServerRequest &req
-                                      ACE_ENV_ARG_DECL);
+      void pre_invoke_remote_request (TAO_ServerRequest &req);
 
       /// Run pre_invoke for a collocated request.
-      void pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_DECL);
+      void pre_invoke_collocated_request ();
 
       /// Run post_invoke for a request.
-      void post_invoke (void);
+      void post_invoke ();
 
       /// Locate POA.
-      ::TAO_Root_POA *lookup_POA (const TAO::ObjectKey &key
-                                  ACE_ENV_ARG_DECL);
+      ::TAO_Root_POA *lookup_POA (const TAO::ObjectKey &key);
 
       /// POA accessor.
-      ::TAO_Root_POA &poa (void) const;
+      ::TAO_Root_POA &poa () const;
 
       /// Object Adapter accessor.
-      TAO_Object_Adapter &object_adapter (void) const;
+      TAO_Object_Adapter &object_adapter () const;
 
       /// System ID accessor.
-      const PortableServer::ObjectId &id (void) const;
+      const PortableServer::ObjectId &id () const;
 
       /// User ID accessors.  This is the same value returned by
       /// PortableServer::Current::get_object_id().
       void user_id (const PortableServer::ObjectId *);
-      const PortableServer::ObjectId &user_id (void) const;
+      const PortableServer::ObjectId &user_id () const;
 
       /// Servant accessor.
-      PortableServer::Servant servant (void) const;
+      PortableServer::Servant servant () const;
 
   #if (TAO_HAS_MINIMUM_POA == 0)
 
       /// Get the Servant Locator's cookie
-      void* locator_cookie (void) const;
+      void* locator_cookie () const;
 
       /// Set the Servant Locator's cookie
       void locator_cookie (void* cookie);
 
       /// Get the operation name.
-      const char *operation (void) const;
+      const char *operation () const;
 
       /// Set the operation name.
       void operation (const char *);
@@ -158,10 +155,10 @@ namespace TAO
       void active_object_map_entry (TAO_Active_Object_Map_Entry *entry);
 
       /// Get the active_object_map_entry.
-      TAO_Active_Object_Map_Entry *active_object_map_entry (void) const;
+      TAO_Active_Object_Map_Entry *active_object_map_entry () const;
 
       /// Get the priority for the current upcall.
-      CORBA::Short priority (void) const;
+      CORBA::Short priority () const;
 
       enum State
       {
@@ -173,27 +170,25 @@ namespace TAO
       };
 
       /// Get the state.
-      State state (void) const;
+      State state () const;
 
       /// Set the state.
       void state (State);
 
       /// Increment the refcount
-      void increment_servant_refcount (void);
+      void increment_servant_refcount ();
 
     protected:
-
-      void post_invoke_servant_cleanup (void);
-      void single_threaded_poa_setup (ACE_ENV_SINGLE_ARG_DECL);
-      void single_threaded_poa_cleanup (void);
-      void servant_cleanup (void);
-      void poa_cleanup (void);
+      void post_invoke_servant_cleanup ();
+      void single_threaded_poa_setup ();
+      void single_threaded_poa_cleanup ();
+      void servant_cleanup ();
+      void poa_cleanup ();
 
       /// Clean-up / reset state of this Servant_Upcall object.
-      void upcall_cleanup (void);
+      void upcall_cleanup ();
 
     protected:
-
       TAO_Object_Adapter *object_adapter_;
 
       ::TAO_Root_POA *poa_;
@@ -202,6 +197,7 @@ namespace TAO
 
       State state_;
 
+      CORBA::Octet system_id_buf_[TAO_POA_OBJECT_ID_BUF_SIZE];
       PortableServer::ObjectId system_id_;
 
       const PortableServer::ObjectId *user_id_;
@@ -232,12 +228,14 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "Servant_Upcall.inl"
+# include "tao/PortableServer/Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

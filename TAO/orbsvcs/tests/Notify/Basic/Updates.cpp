@@ -1,11 +1,8 @@
-//$Id$
-
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
 #include "Updates.h"
 
-ACE_RCSID (Notify_Tests, Updates, "$Id$")
 
 Updates_StructuredPushConsumer::Updates_StructuredPushConsumer (Updates *test_client)
   : test_client_ (test_client)
@@ -16,12 +13,7 @@ void
 Updates_StructuredPushConsumer::offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL_NOT_USED
       )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer::offer_change invoked:\n"));
@@ -43,10 +35,7 @@ void
 Updates_StructuredPushSupplier::subscription_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    ACE_ENV_ARG_DECL_NOT_USED
   )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "StructuredPushSupplier::subscription_change invoked:\n"));
@@ -55,7 +44,7 @@ Updates_StructuredPushSupplier::subscription_change (
 
 /***************************************************************************/
 
-Updates::Updates (void)
+Updates::Updates ()
   : added_count_ (0), removed_count_ (0)
 {
 }
@@ -66,72 +55,54 @@ Updates::~Updates ()
 
 int
 Updates::init (int argc,
-               char* argv []
-               ACE_ENV_ARG_DECL)
+               ACE_TCHAR* argv [])
 {
   // Initialize base class.
   Notify_Test_Client::init (argc,
-                            argv
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                            argv);
 
   // Create all participents.
-  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->create_EC ();
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_,
-                            adminid
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                            adminid);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_,
-                            adminid
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                            adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
   ACE_NEW_RETURN (consumer_,
                   Updates_StructuredPushConsumer (this),
                   -1);
-  consumer_->init (root_poa_.in ()
-                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  consumer_->init (root_poa_.in ());
 
-  consumer_->connect (this->consumer_admin_.in ()
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  consumer_->connect (this->consumer_admin_.in ());
 
   ACE_NEW_RETURN (supplier_,
                  Updates_StructuredPushSupplier (this),
                  -1);
-  supplier_->init (root_poa_.in ()
-                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  supplier_->init (root_poa_.in ());
 
-  supplier_->connect (this->supplier_admin_.in ()
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  supplier_->connect (this->supplier_admin_.in ());
 
   return 0;
 }
 
 void
-Updates::create_EC (ACE_ENV_SINGLE_ARG_DECL)
+Updates::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
   ec_ = notify_factory_->create_channel (initial_qos_,
                                          initial_admin_,
-                                         id
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                         id);
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
@@ -142,10 +113,10 @@ Updates::types_changed (const CosNotification::EventTypeSeq & added,
 {
   if (TAO_debug_level)
     {
-      ACE_DEBUG ((LM_DEBUG, "Added Types.. \n"));
+      ACE_DEBUG ((LM_DEBUG, "Added Types..\n"));
       this->print_event_types (added);
 
-      ACE_DEBUG ((LM_DEBUG, "Removed Types.. \n"));
+      ACE_DEBUG ((LM_DEBUG, "Removed Types..\n"));
       this->print_event_types (removed);
     }
 
@@ -190,7 +161,7 @@ Updates::wait_for_updates (int expected_added, int expected_removed)
 }
 
 void
-Updates::reset_counts (void)
+Updates::reset_counts ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   this->added_count_ = 0;
@@ -198,22 +169,20 @@ Updates::reset_counts (void)
 }
 
 void
-Updates::run_test (ACE_ENV_SINGLE_ARG_DECL)
+Updates::run_test ()
 {
-  this->test_subscription_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->test_subscription_change ();
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Finished testing subscription_change!\n"));
 
-  this->test_offer_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->test_offer_change ();
 
   ACE_DEBUG ((LM_DEBUG, "Updates test has run successfully!\n"));
 }
 
 void
-Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
+Updates::test_subscription_change ()
 {
   {
     // reset counts.
@@ -240,11 +209,7 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
         this->print_event_types (removed);
       }
 
-    this->consumer_->get_proxy_supplier ()->subscription_change (added,
-                                                                 removed
-                                                                 ACE_ENV_ARG_PARAMETER
-                                                                 );
-    ACE_CHECK;
+    this->consumer_->get_proxy_supplier ()->subscription_change (added, removed);
 
     this->wait_for_updates (3, 0); // The supplier should receive Added (RED, GREEN, BLUE)
 
@@ -254,7 +219,7 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -278,11 +243,7 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
         this->print_event_types (removed);
       }
 
-    this->consumer_->get_proxy_supplier ()->subscription_change (added,
-                                                                 removed
-                                                                 ACE_ENV_ARG_PARAMETER
-                                                                 );
-    ACE_CHECK;
+    this->consumer_->get_proxy_supplier ()->subscription_change (added, removed);
 
     this->wait_for_updates (1, 0); // The supplier should receive Added (PURPLE).
 
@@ -292,7 +253,7 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -314,11 +275,7 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
         this->print_event_types (removed);
       }
 
-    this->consumer_->get_proxy_supplier ()->subscription_change (added,
-                                                                 removed
-                                                                 ACE_ENV_ARG_PARAMETER
-                                                                 );
-    ACE_CHECK;
+    this->consumer_->get_proxy_supplier ()->subscription_change (added, removed);
 
     this->wait_for_updates (0, 4);
     // The supplier should receive Remove {RED, GREEN} out of the 4 actally removed (RED, GREEN, BLUE, PURPLE) becaue that whats it offered for.
@@ -329,7 +286,7 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_subscription_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -337,7 +294,7 @@ Updates::test_subscription_change (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
+Updates::test_offer_change ()
 {
   {
     // reset counts.
@@ -364,11 +321,7 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
         this->print_event_types (removed);
       }
 
-    this->supplier_->get_proxy_consumer ()->offer_change (added,
-                                                          removed
-                                                          ACE_ENV_ARG_PARAMETER
-                                                          );
-    ACE_CHECK;
+    this->supplier_->get_proxy_consumer ()->offer_change (added, removed);
 
     this->wait_for_updates (3, 0); // The consumer should receive Added (RED, GREEN, BLUE)
 
@@ -378,7 +331,7 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -402,11 +355,7 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
         this->print_event_types (removed);
       }
 
-    this->supplier_->get_proxy_consumer ()->offer_change (added,
-                                                          removed
-                                                          ACE_ENV_ARG_PARAMETER
-                                                                 );
-    ACE_CHECK;
+    this->supplier_->get_proxy_consumer ()->offer_change (added, removed);
 
     this->wait_for_updates (1, 0); // The consumer should receive Added (PURPLE).
 
@@ -416,7 +365,7 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -438,11 +387,7 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
         this->print_event_types (removed);
       }
 
-    this->supplier_->get_proxy_consumer ()->offer_change (added,
-                                                          removed
-                                                          ACE_ENV_ARG_PARAMETER
-                                                          );
-    ACE_CHECK;
+    this->supplier_->get_proxy_consumer ()->offer_change (added, removed);
 
     this->wait_for_updates (0, 4);
     // The consumer should receive Remove {RED, GREEN} out of the 4 actally removed (RED, GREEN, BLUE, PURPLE) becaue that whats it offered for.
@@ -453,7 +398,7 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
 
     if (TAO_debug_level)
       {
-        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types \n"));
+        ACE_DEBUG ((LM_DEBUG, "obtain_offer_types\n"));
         this->print_event_types (obtained.in ());
       }
   }
@@ -463,34 +408,22 @@ Updates::test_offer_change (ACE_ENV_SINGLE_ARG_DECL)
 /***************************************************************************/
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Updates updates;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       updates.init (argc,
-                    argv
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                    argv);
 
-      updates.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      updates.run_test ();
     }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
     {
-      ACE_PRINT_EXCEPTION (se, "Error: ");
+      se._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

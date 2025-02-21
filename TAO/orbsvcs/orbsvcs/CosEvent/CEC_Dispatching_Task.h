@@ -1,11 +1,8 @@
-// $Id$
 // -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   CEC_Dispatching_Task.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
@@ -16,32 +13,32 @@
 #define TAO_CEC_DISPATCHING_TASK_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Task.h"
+
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Block.h"
-#include "ace/Lock_Adapter_T.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
 
 #include "tao/Basic_Types.h"
-#include "tao/Objref_VarOut_T.h"
 
-#include "orbsvcs/CosEvent/event_serv_export.h"
-
-#include "CEC_ProxyPushSupplier.h"
+#include "ace/Message_Block.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/Task.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "CEC_TypedEvent.h"
+#include "orbsvcs/CosEvent/CEC_TypedEvent.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_Dispatching_Task
  *
  * @brief Implement the dispatching queues for FIFO and Priority
  * dispatching.
- *
  */
 class TAO_Event_Serv_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
@@ -50,16 +47,14 @@ public:
   TAO_CEC_Dispatching_Task (ACE_Thread_Manager* thr_manager = 0);
 
   /// Process the events in the queue.
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
-                     CORBA::Any& event
-                     ACE_ENV_ARG_DECL);
+                     CORBA::Any& event);
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       TAO_CEC_TypedEvent& typed_event
-                       ACE_ENV_ARG_DECL);
+                       TAO_CEC_TypedEvent& typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 private:
@@ -83,10 +78,10 @@ public:
                            ACE_Allocator *mb_allocator = 0);
 
   /// Destructor
-  virtual ~TAO_CEC_Dispatch_Command (void);
+  virtual ~TAO_CEC_Dispatch_Command ();
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) = 0;
+  virtual int execute () = 0;
 };
 
 // ****************************************************************
@@ -98,7 +93,7 @@ public:
   TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int execute () override;
 };
 
 // ****************************************************************
@@ -113,10 +108,10 @@ public:
                         ACE_Allocator *mb_allocator);
 
   /// Destructor
-  virtual ~TAO_CEC_Push_Command (void);
+  ~TAO_CEC_Push_Command () override;
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int execute () override;
 
 private:
   /// The proxy
@@ -139,10 +134,10 @@ public:
                           ACE_Allocator *mb_allocator);
 
   /// Destructor
-  virtual ~TAO_CEC_Invoke_Command (void);
+  ~TAO_CEC_Invoke_Command () override;
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int execute () override;
 
 private:
   /// The proxy
@@ -153,8 +148,10 @@ private:
 };
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_Dispatching_Task.i"
+#include "orbsvcs/CosEvent/CEC_Dispatching_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

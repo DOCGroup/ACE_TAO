@@ -2,28 +2,22 @@
 /**
 *  @file   amh_ss.cpp
 *
-*  $Id$
-*
 *  Creates code for AMH operations.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           amh_ss,
-           "$Id$")
-
+#include "operation.h"
 #include "ace/SString.h"
 
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
-    be_visitor_context *ctx
-  )
+      be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_amh_operation_ss::~be_visitor_amh_operation_ss (void)
+be_visitor_amh_operation_ss::~be_visitor_amh_operation_ss ()
 {
 }
 
@@ -32,6 +26,12 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 {
   // If there is an argument of type "native", return immediately.
   if (node->has_native ())
+    {
+      return 0;
+    }
+
+  /// These are not for the server side.
+  if (node->is_sendc_ami ())
     {
       return 0;
     }
@@ -62,9 +62,9 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
            si.next ())
         {
           be_argument *argument =
-            be_argument::narrow_from_decl (si.item ());
+            dynamic_cast<be_argument*> (si.item ());
 
-          if (argument == 0
+          if (argument == nullptr
               || argument->direction () == AST_Argument::dir_OUT)
             {
               continue;
@@ -82,7 +82,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
       *os << be_nl
           << "TAO_InputCDR & _tao_in ="
-          << " *_tao_server_request.incoming ();" << be_nl << be_nl
+          << " *_tao_server_request.incoming ();" << be_nl_2
           << "if (!(" << be_idt << be_idt;
 
       // Marshal each in and inout argument.
@@ -99,9 +99,9 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
            sj.next ())
         {
           be_argument *argument =
-            be_argument::narrow_from_decl (sj.item ());
+            dynamic_cast<be_argument*> (sj.item ());
 
-          if (argument == 0
+          if (argument == nullptr
               || argument->direction () == AST_Argument::dir_OUT)
             {
               continue;
@@ -125,8 +125,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       *os << be_uidt_nl << "))" << be_nl;
 
       // If marshaling fails, raise exception.
-      if (this->gen_raise_exception (0,
-                                     "CORBA::MARSHAL",
+      if (this->gen_raise_exception ("::CORBA::MARSHAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -152,11 +151,11 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
          !i.is_done ();)
       {
         be_argument *argument =
-          be_argument::narrow_from_decl (i.item ());
+          dynamic_cast<be_argument*> (i.item ());
 
         i.next ();
 
-        if (argument == 0
+        if (argument == nullptr
             || argument->direction () == AST_Argument::dir_OUT)
           {
             continue;
@@ -173,8 +172,6 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
                               -1);
           }
       }
-
-    *os << be_nl << "ACE_ENV_ARG_PARAMETER";
   }
 
   if (this->generate_shared_epilogue (os) == -1)
@@ -183,7 +180,6 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
     }
 
   return 0;
-
 }
 
 int
@@ -201,9 +197,6 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
     {
       return -1;
     }
-
-  *os << be_nl
-      << "ACE_ENV_ARG_PARAMETER";
 
   if (this->generate_shared_epilogue (os) == -1)
     {
@@ -224,28 +217,38 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
                             node->field_type (),
                             node->name ());
 
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_args_vardecl_ss visitor (&ctx);
+  int status = 0;
 
-  if (visitor.visit_argument (&the_argument) == -1)
-    {
-      return -1;
-    }
+  {
+    be_visitor_context ctx (*this->ctx_);
+    be_visitor_args_vardecl_ss vardecl_visitor (&ctx);
+
+    status = vardecl_visitor.visit_argument (&the_argument);
+
+    if (-1 == status)
+      {
+        the_argument.destroy ();
+        return -1;
+      }
+  }
 
   *os << be_nl
       << "TAO_InputCDR & _tao_in ="
       << " *_tao_server_request.incoming ();"
-      << be_nl << be_nl
+      << be_nl_2
       << "if (!(" << be_idt << be_idt;
 
   {
     be_visitor_context ctx (*this->ctx_);
     ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS);
     ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-    be_visitor_args_marshal_ss visitor (&ctx);
+    be_visitor_args_marshal_ss marshal_visitor (&ctx);
 
-    if (visitor.visit_argument (&the_argument) == -1)
+    status = marshal_visitor.visit_argument (&the_argument);
+
+    if (-1 == status)
       {
+        the_argument.destroy ();
         return -1;
       }
   }
@@ -254,9 +257,9 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
       << "{" << be_idt_nl;
 
   // If marshaling fails, raise exception.
-  if (this->gen_raise_exception (0,
-                                 "CORBA::MARSHAL",
-                                 "") == -1)
+  status = this->gen_raise_exception ("::CORBA::MARSHAL",
+                                      "");
+  if (-1 == status)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) gen_raise_exception failed\n"),
@@ -266,7 +269,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   *os << be_uidt_nl
       << "}" << be_uidt_nl;
 
-  if (this->generate_shared_section (node, os) == -1)
+  if (-1 == this->generate_shared_section (node, os))
     {
       return -1;
     }
@@ -274,17 +277,17 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   *os << ",";
 
   {
-    be_visitor_args_upcall_ss visitor (this->ctx_);
+    be_visitor_args_upcall_ss upcall_visitor (this->ctx_);
+    status = upcall_visitor.visit_argument (&the_argument);
+    the_argument.destroy ();
 
-    if (visitor.visit_argument (&the_argument) == -1)
+    if (-1 == status)
       {
         return -1;
       }
   }
 
-  *os << be_nl << "ACE_ENV_ARG_PARAMETER";
-
-  if (this->generate_shared_epilogue (os) == -1)
+  if (-1 == this->generate_shared_epilogue (os))
     {
       return -1;
     }
@@ -297,16 +300,15 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
                                                        TAO_OutStream *os,
                                                        const char *skel_prefix)
 {
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context
   be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_interface*> (node->defined_in ());
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ss::"
@@ -323,27 +325,29 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   // buf was allocated by ACE_OS::strdup, so we need to use free instead
   // of delete.
   ACE_OS::free (buf);
-  buf = 0;
+  buf = nullptr;
 
   *os << "void" << be_nl
       << amh_skel_name.c_str () << "::"
-      << skel_prefix
+      << skel_prefix << this->ctx_->port_prefix ().c_str ()
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & _tao_server_request," << be_nl
-      << "void * /* context */," << be_nl
-      << "void * _tao_servant" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")" << be_uidt_nl;
+      << "TAO::Portable_Server::Servant_Upcall * /* context */," << be_nl
+      << "TAO_ServantBase * _tao_servant)" << be_uidt
+      << be_uidt_nl;
 
   // Generate the actual code for the skeleton.
-  // last argument - is always ACE_ENV_ARG_PARAMETER.
+  // last argument
   *os << "{" << be_idt_nl;
 
   // Get the right object implementation.
   *os << amh_skel_name.c_str () << " * const _tao_impl =" << be_idt_nl
-      << "static_cast<" << amh_skel_name.c_str () << " *> ("
+      << "dynamic_cast<" << amh_skel_name.c_str () << " *> ("
       << "_tao_servant" << ");" << be_uidt_nl;
+
+  *os << "if (!_tao_impl)" << be_idt_nl
+      << "throw ::CORBA::INTERNAL ();" << be_uidt_nl;
 
   return 0;
 }
@@ -353,7 +357,15 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
                                                       TAO_OutStream *os)
 {
   be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_interface*> (node->defined_in ());
+
+  if (!intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) generate_shared_section - "
+                         "bad interface scope\n"),
+                        -1);
+    }
 
   // Create the response handler
   char *buf;
@@ -363,21 +375,25 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
   // buf was allocated by ACE_OS::strdup, so we need to use free instead
   // of delete.
   ACE_OS::free (buf);
-  buf = 0;
+  buf = nullptr;
 
   *os << be_nl
+      << "TAO_ORB_Core *orb_core =" << be_idt_nl
+      << "_tao_server_request.orb ()->orb_core ();" << be_uidt_nl << be_nl
       << "TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =" << be_idt_nl
-      << "_tao_server_request.orb()->orb_core ()->lane_resources().amh_response_handler_allocator();" << be_uidt_nl << be_nl
-      << "TAO::TAO_Buffer_Allocator<"
-      << response_handler_implementation_name.c_str ()
-      << ", TAO_AMH_BUFFER_ALLOCATOR> buffer_allocator (amh_allocator);"
-      << be_nl << be_nl
+      << "orb_core->lane_resources ().amh_response_handler_allocator ();"
+      << be_uidt_nl << be_nl
+      << "TAO::TAO_Buffer_Allocator<" << be_idt << be_idt_nl
+      << response_handler_implementation_name.c_str () << "," << be_nl
+      << "TAO_AMH_BUFFER_ALLOCATOR" << be_uidt_nl
+      << "> buffer_allocator (amh_allocator);"
+      << be_uidt_nl << be_nl
       << response_handler_implementation_name.c_str ()
       << "_ptr _tao_rh_ptr = "
       << be_idt_nl
       << "buffer_allocator.allocate();"
       << be_uidt_nl << be_nl
-      << "if (!_tao_rh_ptr) " << be_idt_nl << "ACE_THROW (CORBA::NO_MEMORY ());"
+      << "if (!_tao_rh_ptr) " << be_idt_nl << "throw ::CORBA::NO_MEMORY ();"
       << be_uidt_nl;
 
   // Initialize amh rh

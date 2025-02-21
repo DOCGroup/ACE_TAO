@@ -4,8 +4,6 @@
 /**
  *  @file    Transport_Mux_Strategy.h
  *
- *  $Id$
- *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================
@@ -15,18 +13,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+#include "tao/Reply_Dispatcher.h"
 
-class TAO_Reply_Dispatcher;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Transport;
 class TAO_Pluggable_Reply_Params;
-class ACE_Lock;
 
 /**
  * @class TAO_Transport_Mux_Strategy
@@ -34,64 +33,66 @@ class ACE_Lock;
  * @brief Strategy to determine whether the connection should be
  * multiplexed for multiple requests or it is exclusive for a
  * single request at a time.
- *
  */
 class TAO_Export TAO_Transport_Mux_Strategy
 {
-
 public:
   /// Base class constructor.
   TAO_Transport_Mux_Strategy (TAO_Transport *transport);
 
   /// Base class destructor.
-  virtual ~TAO_Transport_Mux_Strategy (void);
+  virtual ~TAO_Transport_Mux_Strategy ();
 
   /// Generate and return an unique request id for the current
   /// invocation.
-  virtual CORBA::ULong request_id (void) = 0;
-
-  // = Bind and Find methods for the <Request ID, ReplyDispatcher>
-  //   pairs.
+  virtual CORBA::ULong request_id () = 0;
 
   /// Bind the dispatcher with the request id. Commonalities in the
   /// derived class implementations is kept here.
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_Reply_Dispatcher *rd) = 0;
+                               ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) = 0;
 
   /**
    * Unbind the dispatcher, the client is no longer waiting for the
-   * request, for example, because the request timedout.
+   * request, for example, because the request timed out.
    * The strategy can (must) cleanup any resources associated with the
    * request.
    * A later reply for that request should be ignored.
    */
   virtual int unbind_dispatcher (CORBA::ULong request_id) = 0;
 
-  /// Dispatch the reply for <request_id>, cleanup any resources
+  /**
+   * Dispatch a reply timeout for request @a request_id
+   **/
+  virtual int reply_timed_out (CORBA::ULong request_id) = 0;
+
+  /// Dispatch the reply for request_id, cleanup any resources
   /// allocated for that request.
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
 
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now. The return value indicates whether idling was
   /// successful or not.
-  virtual bool idle_after_send (void) = 0;
+  virtual bool idle_after_send () = 0;
 
   /// Request is sent and the reply is received. Idle the transport
   /// now. The return value indicates whether idling was successful or
   /// not.
-  virtual bool idle_after_reply (void) = 0;
+  virtual bool idle_after_reply () = 0;
 
   /// The transport object has closed the connection, inform all Reply
   /// dispatchers and waiting strategies.
-  virtual void connection_closed (void) = 0;
+  virtual void connection_closed () = 0;
+
+  /// Do we have a request pending
+  virtual bool has_request () = 0;
 
 protected:
   /// Cache the transport reference.
   TAO_Transport *transport_;
-
-  /// Lock to protect the state of the object
-  ACE_Lock *lock_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

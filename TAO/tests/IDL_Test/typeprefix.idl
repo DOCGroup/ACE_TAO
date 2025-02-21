@@ -1,0 +1,18 @@
+// Test a construct with typeprefix which failed when TAO_IDL was build
+// with Intel C++
+
+module A
+{
+  typeprefix A "TAO";
+  interface B {};
+  interface C{
+    void op (in B a);
+  };
+};
+/*
+module A
+{
+  typeprefix A "TAO";
+  interface B{};
+};*/
+

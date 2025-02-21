@@ -4,8 +4,6 @@
 /**
  * @file SL3_SecurityManager.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -30,6 +28,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SL3
@@ -41,12 +41,11 @@ namespace TAO
      *
      *
      */
-    class TAO_Security_Export SecurityManager
+    class SecurityManager
       : public virtual SecurityLevel3::SecurityManager,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       SecurityManager (SecurityLevel3::CredentialsCurator_ptr cc);
 
@@ -57,14 +56,10 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::CredentialsCurator_ptr credentials_curator (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredentialsCurator_ptr credentials_curator ();
 
       virtual SecurityLevel3::TargetCredentials_ptr get_target_credentials (
-          CORBA::Object_ptr the_object
-          ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          CORBA::Object_ptr the_object);
 
       virtual SecurityLevel3::ContextEstablishmentPolicy_ptr
       create_context_estab_policy (
@@ -73,36 +68,30 @@ namespace TAO
           SecurityLevel3::FeatureDirective use_client_auth,
           SecurityLevel3::FeatureDirective use_target_auth,
           SecurityLevel3::FeatureDirective use_confidentiality,
-          SecurityLevel3::FeatureDirective use_integrity
-          ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          SecurityLevel3::FeatureDirective use_integrity);
 
       virtual SecurityLevel3::ObjectCredentialsPolicy_ptr
       create_object_creds_policy (
-          const SecurityLevel3::OwnCredentialsList & cred_list
-          ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          const SecurityLevel3::OwnCredentialsList & cred_list);
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~SecurityManager (void);
+      virtual ~SecurityManager ();
 
     private:
-
       /// The ORB-specific SecurityLevel3::CredentialsCurator
       /// reference.
       SecurityLevel3::CredentialsCurator_var credentials_curator_;
-
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined(_MSC_VER)

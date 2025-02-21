@@ -1,0 +1,23 @@
+// -*- MPC -*-
+project(*HA Status) : acelib, avoids_ace_for_tao {
+  sharedname   = HA_Status
+  dynamicflags += HASTATUS_BUILD_DLL
+  Source_Files {
+    HA_Status_Dynamic.cpp
+  }
+}
+
+project(HA Configurable Server Dynamic) : aceexe, avoids_ace_for_tao {
+  exename = HA_Configurable_Server_Dynamic
+  Source_Files {
+    HA_Configurable_Server_Dynamic.cpp
+  }
+}
+
+project(HA Configurable Server Static) : aceexe, avoids_ace_for_tao {
+  exename = HA_Configurable_Server_Static
+  Source_Files {
+    HA_Configurable_Server_Static.cpp
+    HA_Status_Static.cpp
+  }
+}

@@ -1,0 +1,41 @@
+
+
+CORBA Messaging
+
+
+File: DevGuideExamples/Messaging/AMIcallback/README
+
+
+This directory contains an example illustrating the Asynchronous
+Method Invocation (AMI) feature of TAO.  This feature permits
+requests to be made that do not require a client to block while
+waiting for a reply from a server.
+
+This example is based on the Messenger example in GettingStarted
+directory.  A message is send by MessengerClient and displayed by
+MessengerServer.  The server responds to provide confirmation
+that the message was received.  The delay for this exchange of
+messages is then displayed.
+
+
+How to Run
+----------
+
+To start the server:
+------------------
+./MessengerServer
+
+
+To start the client:
+------------------
+./MessengerClient
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl

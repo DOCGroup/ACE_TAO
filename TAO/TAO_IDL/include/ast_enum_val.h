@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -69,31 +67,36 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_constant.h"
 
+class AST_Enum;
+
 // An enumerator is a constant of type unsigned long.
 
 class TAO_IDL_FE_Export AST_EnumVal : public virtual AST_Constant
 {
 public:
-  // Operations.
-
-  // Constructor(s).
-  AST_EnumVal (void);
-
-  AST_EnumVal (unsigned long v,
+  AST_EnumVal (ACE_CDR::ULong v,
                UTL_ScopedName *n);
 
-  // Destructor.
-  virtual ~AST_EnumVal (void);
-
-  // Narrowing.
-  DEF_NARROW_METHODS1(AST_EnumVal, AST_Constant);
-  DEF_NARROW_FROM_DECL(AST_EnumVal);
+  virtual ~AST_EnumVal ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const { return true; }
+
+  /// Parent Enum of this value
+  ///{
+  AST_Enum *enum_parent ();
+  void enum_parent (AST_Enum* node);
+  ///)
+
+private:
+  AST_Enum *enum_parent_;
 };
 
 #endif           // _AST_ENUM_VAL_AST_ENUM_VAL_HH

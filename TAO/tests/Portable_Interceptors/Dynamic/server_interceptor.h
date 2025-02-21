@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef TAO_SERVER_INTERCEPTOR_H
 #define TAO_SERVER_INTERCEPTOR_H
 
@@ -18,62 +15,34 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Server-side echo interceptor.  For checking interceptor visually only.
 class Echo_Server_Request_Interceptor
   : public PortableInterceptor::ServerRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
-  // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Server_Request_Interceptor (void);
-  // cotr.
+  Echo_Server_Request_Interceptor (int& result);
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
+  char * name () override;
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy () override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-        )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableInterceptor::ForwardRequest
-      ));
+  void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-        PortableInterceptor::ServerRequestInfo_ptr
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-        )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableInterceptor::ForwardRequest
-      ));
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
 protected:
-
-  virtual ~Echo_Server_Request_Interceptor (void);
-  // dotr.
+  ~Echo_Server_Request_Interceptor () override = default;
 
 private:
-  const char *myname_;
-
+  int& result_;
 };
 
 #if defined(_MSC_VER)

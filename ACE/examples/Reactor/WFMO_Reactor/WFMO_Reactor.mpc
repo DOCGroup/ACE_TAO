@@ -1,0 +1,112 @@
+// -*- MPC -*-
+project(*Abandoned): aceexe, wfmo {
+  exename = abandoned
+  Source_Files {
+    Abandoned.cpp
+  }
+}
+
+project(*APC): aceexe, wfmo {
+  exename = apc
+  Source_Files {
+    APC.cpp
+  }
+}
+
+project(*Console_Input): aceexe, wfmo {
+  exename = console_input
+  Source_Files {
+    Console_Input.cpp
+  }
+}
+
+project(*Directory_Changes): aceexe, wfmo {
+  exename = directory_changes
+  Source_Files {
+    Directory_Changes.cpp
+  }
+}
+
+project(*Exceptions): aceexe, wfmo {
+  exename = exceptions
+  Source_Files {
+    Exceptions.cpp
+  }
+}
+
+project(*Handle_Close): aceexe, wfmo {
+  exename = handle_close
+  Source_Files {
+    Handle_Close.cpp
+  }
+}
+
+project(*Multithreading): aceexe, wfmo {
+  exename = multithreading
+  Source_Files {
+    Multithreading.cpp
+  }
+}
+
+project(*Network_Events): aceexe, wfmo {
+  exename = network_events
+  Source_Files {
+    Network_Events.cpp
+  }
+}
+
+project(*Prerun_State_Changes): aceexe, wfmo {
+  exename = prerun_state_changes
+  Source_Files {
+    Prerun_State_Changes.cpp
+  }
+}
+
+project(*Registration): aceexe, wfmo {
+  exename = registration
+  Source_Files {
+    Registration.cpp
+  }
+}
+
+project(*Registry_Changes): aceexe, wfmo, avoids_ace_for_tao {
+  exename = registry_changes
+  Source_Files {
+    Registry_Changes.cpp
+  }
+}
+
+project(*Removals): aceexe, wfmo {
+  exename = removals
+  Source_Files {
+    Removals.cpp
+  }
+}
+
+project(*Suspended_Removals): aceexe, wfmo {
+  exename = suspended_removals
+  Source_Files {
+    Suspended_Removals.cpp
+  }
+}
+
+project(*Talker): aceexe, wfmo, avoids_ace_for_tao {
+  exename = talker
+  Source_Files {
+    Talker.cpp
+  }
+}
+
+project(*Timeouts): aceexe, wfmo {
+  exename = timeouts
+  Source_Files {
+    Timeouts.cpp
+  }
+}
+
+project(*Window_Messages): aceexe, wfmo, avoids_ace_for_tao {
+  exename = window_messages
+  Source_Files {
+    Window_Messages.cpp
+  }
+}

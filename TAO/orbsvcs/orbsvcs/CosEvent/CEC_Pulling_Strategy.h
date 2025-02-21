@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Pulling_Strategy.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
@@ -15,15 +14,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Basic_Types.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Objref_VarOut_T.h"
+#include "tao/Basic_Types.h"
 
-#include "orbsvcs/CosEvent/event_serv_export.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_Pulling_Strategy
@@ -40,29 +39,28 @@ class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy
 {
 public:
   /// destructor...
-  virtual ~TAO_CEC_Pulling_Strategy (void);
+  virtual ~TAO_CEC_Pulling_Strategy ();
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.
-  virtual void activate (void) = 0;
+  virtual void activate () = 0;
 
   /**
    * Deactivate any internal threads and cleanup internal data
    * structures, it should only return once the threads have finished
    * their jobs.
    */
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 
 #if 0
   /// Some strategies may want to keep track of connected consumers.
-  virtual void connected (TAO_CEC_ProxyPullConsumer *
-                          ACE_ENV_ARG_DECL_NOT_USED) = 0;
-  virtual void reconnected (TAO_CEC_ProxyPullConsumer *
-                            ACE_ENV_ARG_DECL_NOT_USED) = 0;
-  virtual void diconnected (TAO_CEC_ProxyPullConsumer *
-                            ACE_ENV_ARG_DECL_NOT_USED) = 0;
+  virtual void connected (TAO_CEC_ProxyPullConsumer *) = 0;
+  virtual void reconnected (TAO_CEC_ProxyPullConsumer *) = 0;
+  virtual void diconnected (TAO_CEC_ProxyPullConsumer *) = 0;
 #endif /* 0 */
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CEC_PULLING_STRATEGY_H */

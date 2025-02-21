@@ -1,0 +1,35 @@
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): portableserver, orbsvcsexe, avoids_minimum_corba, iortable, imr_client, avoids_corba_e_micro, threads {
+  exename = MessengerServer
+  after += *idl
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+    Terminator.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, anytypecode, avoids_minimum_corba, threads {
+  exename = MessengerClient
+  after += *idl
+  Source_Files {
+    MessengerClient.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}

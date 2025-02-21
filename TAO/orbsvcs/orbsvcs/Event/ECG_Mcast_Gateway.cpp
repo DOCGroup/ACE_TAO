@@ -1,13 +1,12 @@
-// $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Event/ECG_Mcast_Gateway.h"
 
-#include "ECG_Mcast_Gateway.h"
-
-#include "EC_Lifetime_Utils_T.h"
-#include "ECG_Simple_Address_Server.h"
-#include "ECG_Complex_Address_Server.h"
-#include "ECG_Simple_Mcast_EH.h"
-#include "ECG_Mcast_EH.h"
-#include "ECG_UDP_EH.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "orbsvcs/Event/ECG_Simple_Address_Server.h"
+#include "orbsvcs/Event/ECG_Complex_Address_Server.h"
+#include "orbsvcs/Event/ECG_Simple_Mcast_EH.h"
+#include "orbsvcs/Event/ECG_Mcast_EH.h"
+#include "orbsvcs/Event/ECG_UDP_EH.h"
 
 #include "orbsvcs/Event_Utilities.h"
 
@@ -17,20 +16,19 @@
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ECG_Mcast_Gateway.i"
+#include "orbsvcs/Event/ECG_Mcast_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_Mcast_Gateway, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_EC_Shutdown_Command<TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> >
+typedef TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Sender> >
 UDP_Sender_Shutdown;
 
-typedef TAO_EC_Shutdown_Command<TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> >
+typedef TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Receiver> >
 UDP_Receiver_Shutdown;
 
-
 int
-TAO_ECG_Mcast_Gateway::init_svcs (void)
+TAO_ECG_Mcast_Gateway::init_svcs ()
 {
   return ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_ECG_Mcast_Gateway);
@@ -38,13 +36,13 @@ TAO_ECG_Mcast_Gateway::init_svcs (void)
 
 
 int
-TAO_ECG_Mcast_Gateway::fini (void)
+TAO_ECG_Mcast_Gateway::fini ()
 {
   return 0;
 }
 
 int
-TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
+TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 {
   int result = 0;
 
@@ -52,53 +50,53 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, "-ECGService") == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGService")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "receiver") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT ("receiver")) == 0)
                 this->service_type_ = ECG_MCAST_RECEIVER;
-              else if (ACE_OS::strcasecmp (opt, "sender") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("sender")) == 0)
                 this->service_type_ = ECG_MCAST_SENDER;
-              else if (ACE_OS::strcasecmp (opt, "two_way") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("two_way")) == 0)
                 this->service_type_ = ECG_MCAST_TWO_WAY;
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
-                                         "Unsupported <-ECGService> option "
-                                         "value: <%s>. Ignoring this option "
-                                         "- using defaults instead.\n",
-                            opt));
+                  ORBSVCS_ERROR ((LM_ERROR,
+                             ACE_TEXT ("Unsupported <-ECGService> option ")
+                             ACE_TEXT ("value: <%s>. Ignoring this option ")
+                             ACE_TEXT ("- using defaults instead.\n"),
+                             opt));
                   result = -1;
                 }
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGAddressServer") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGAddressServer")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "basic") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT ("basic")) == 0)
                 this->address_server_type_ = ECG_ADDRESS_SERVER_BASIC;
-              else if (ACE_OS::strcasecmp (opt, "source") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("source")) == 0)
                 this->address_server_type_ = ECG_ADDRESS_SERVER_SOURCE;
-              else if (ACE_OS::strcasecmp (opt, "type") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("type")) == 0)
                 this->address_server_type_ = ECG_ADDRESS_SERVER_TYPE;
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
-                                  "Unsupported <-ECGAddressServer> "
-                                  "option value: <%s>. Ignoring this "
-                                  "option - using defaults instead.\n",
+                  ORBSVCS_ERROR ((LM_ERROR,
+                              ACE_TEXT ("Unsupported <-ECGAddressServer> ")
+                              ACE_TEXT ("option value: <%s>. Ignoring this ")
+                              ACE_TEXT ("option - using defaults instead.\n"),
                               opt));
                   result = -1;
                 }
@@ -106,37 +104,37 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGAddressServerArg") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGAddressServerArg")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              this->address_server_arg_.set (arg_shifter.get_current ());
+              this->address_server_arg_.set (ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()));
               arg_shifter.consume_arg ();
             }
         }
 
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGHandler") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGHandler")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "basic") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT ("basic")) == 0)
                 this->handler_type_ = ECG_HANDLER_BASIC;
-              else if (ACE_OS::strcasecmp (opt, "complex") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("complex")) == 0)
                 this->handler_type_ = ECG_HANDLER_COMPLEX;
-              else if (ACE_OS::strcasecmp (opt, "udp") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("udp")) == 0)
                 this->handler_type_ = ECG_HANDLER_UDP;
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
-                                  "Unsupported <-ECGHandler> "
-                                  "option value: <%s>. Ignoring this "
-                                  "option - using defaults instead.\n",
+                  ORBSVCS_ERROR ((LM_ERROR,
+                              ACE_TEXT ("Unsupported <-ECGHandler> ")
+                              ACE_TEXT ("option value: <%s>. Ignoring this ")
+                              ACE_TEXT ("option - using defaults instead.\n"),
                               opt));
                   result = -1;
                 }
@@ -144,20 +142,20 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGTTL") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGTTL")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              unsigned long tmp = ACE_OS::strtoul (opt, 0, 0) & 0xff;
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              unsigned long tmp = ACE_OS::strtoul (opt, nullptr, 0) & 0xff;
               this->ttl_value_ = static_cast<u_char> (tmp);
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGNIC") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGNIC")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -168,7 +166,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGIPMULTICASTLOOP") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGIPMULTICASTLOOP")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -180,7 +178,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGNONBLOCKING") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGNONBLOCKING")) == 0)
       {
           arg_shifter.consume_arg ();
 
@@ -195,9 +193,9 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
       else
         {
           arg_shifter.ignore_arg ();
-          ACE_DEBUG ((LM_WARNING,
-                             "Ignoring <%s> option "
-                             "during initialization.\n",
+          ORBSVCS_DEBUG ((LM_WARNING,
+                      ACE_TEXT ("Ignoring <%s> option ")
+                      ACE_TEXT ("during initialization.\n"),
                       arg));
           result = -1;
         }
@@ -219,7 +217,7 @@ TAO_ECG_Mcast_Gateway::init (const char * address_server_arg,
   this->handler_type_ = attr.handler_type;
   this->service_type_ = attr.service_type;
   this->ttl_value_ = attr.ttl_value;
-  this->nic_.set (attr.nic.c_str ());
+  this->nic_.set (ACE_TEXT_CHAR_TO_TCHAR(attr.nic.c_str ()));
   this->ip_multicast_loop_ = attr.ip_multicast_loop;
   this->non_blocking_ = attr.non_blocking;
 
@@ -238,14 +236,14 @@ TAO_ECG_Mcast_Gateway::init (
 }
 
 int
-TAO_ECG_Mcast_Gateway::validate_configuration (void)
+TAO_ECG_Mcast_Gateway::validate_configuration ()
 {
   if ((this->handler_type_ == ECG_HANDLER_BASIC
        || this->handler_type_ == ECG_HANDLER_UDP)
       && this->service_type_ != ECG_MCAST_SENDER
       && this->address_server_type_ != ECG_ADDRESS_SERVER_BASIC)
     {
-      ACE_DEBUG ((LM_ERROR,
+      ORBSVCS_DEBUG ((LM_ERROR,
                       "Configurations for mcast handler and "
                       "address server do not match.\n"));
       return -1;
@@ -256,7 +254,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
   // implementation, which does not, we'll have to remove this check.
   if (this->address_server_arg_.length () == 0)
     {
-      ACE_DEBUG ((LM_ERROR,
+      ORBSVCS_DEBUG ((LM_ERROR,
                       "Address server initializaton "
                       "argument not specified.\n"));
       return -1;
@@ -265,7 +263,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
   if (this->ip_multicast_loop_ != 0
       && this->ip_multicast_loop_ != 1)
     {
-      ACE_DEBUG ((LM_ERROR,
+      ORBSVCS_DEBUG ((LM_ERROR,
                   "IP MULTICAST LOOP option must have a boolean value.\n"));
       return -1;
     }
@@ -273,7 +271,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
   if (this->non_blocking_ != 0
       && this->non_blocking_ != 1)
     {
-      ACE_DEBUG ((LM_ERROR,
+      ORBSVCS_DEBUG ((LM_ERROR,
                   "NON BLOCKING flag must have a boolean value.\n"));
       return -1;
     }
@@ -282,16 +280,16 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
 }
 
 TAO_ECG_Refcounted_Endpoint
-TAO_ECG_Mcast_Gateway::init_endpoint (void)
+TAO_ECG_Mcast_Gateway::init_endpoint ()
 {
-  TAO_ECG_UDP_Out_Endpoint* endpoint = 0;
+  TAO_ECG_UDP_Out_Endpoint* endpoint = nullptr;
   TAO_ECG_Refcounted_Endpoint refendpoint;
 
   // Try to allocate a new endpoint from the heap
   ACE_NEW_NORETURN (endpoint,
                     TAO_ECG_UDP_Out_Endpoint);
 
-  if (endpoint != 0)
+  if (endpoint != nullptr)
   {
     refendpoint.reset (endpoint);
   }
@@ -304,7 +302,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
 
   if (dgram.open (ACE_Addr::sap_any) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                              "Cannot open dgram "
                              "for sending mcast messages.\n"));
       return TAO_ECG_Refcounted_Endpoint ();
@@ -323,7 +321,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
                                       sizeof (this->ttl_value_))
           == -1)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "Error setting TTL option on dgram "
                       "for sending mcast messages.\n"));
           return TAO_ECG_Refcounted_Endpoint ();
@@ -335,7 +333,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
                                   &this->ip_multicast_loop_,
                                   sizeof (this->ip_multicast_loop_)) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Error setting MULTICAST_LOOP option "
                   "on dgram for sending mcast messages.\n"));
       return TAO_ECG_Refcounted_Endpoint ();
@@ -344,7 +342,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
   if (this->non_blocking_
       && dgram.enable(ACE_NONBLOCK) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Error setting NON BLOCKING option.\n"));
       return TAO_ECG_Refcounted_Endpoint ();
     }
@@ -353,80 +351,79 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
 }
 
 PortableServer::ServantBase *
-TAO_ECG_Mcast_Gateway::init_address_server (void)
+TAO_ECG_Mcast_Gateway::init_address_server ()
 {
   const char * address_server_arg =
     (this->address_server_arg_.length ())
-    ? this->address_server_arg_.c_str () : 0;
+    ? this->address_server_arg_.c_str () : nullptr;
 
   if (this->address_server_type_ == ECG_ADDRESS_SERVER_BASIC)
     {
-      TAO_EC_Servant_Var<TAO_ECG_Simple_Address_Server> impl =
+      PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> impl =
         TAO_ECG_Simple_Address_Server::create ();
       if (!impl.in ())
-        return 0;
+        return nullptr;
 
       if (impl->init (address_server_arg) == -1)
         {
-          return 0;
+          return nullptr;
         }
       return impl._retn ();
     }
 
   else if (this->address_server_type_ == ECG_ADDRESS_SERVER_SOURCE)
     {
-      TAO_EC_Servant_Var<TAO_ECG_Complex_Address_Server> impl =
+      PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
         TAO_ECG_Complex_Address_Server::create (1);
       if (!impl.in ())
-        return 0;
+        return nullptr;
 
       if (impl->init (address_server_arg) == -1)
         {
-          return 0;
+          return nullptr;
         }
       return impl._retn ();
     }
 
   else if (this->address_server_type_ == ECG_ADDRESS_SERVER_TYPE)
     {
-      TAO_EC_Servant_Var<TAO_ECG_Complex_Address_Server> impl =
+      PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
         TAO_ECG_Complex_Address_Server::create (0);
       if (!impl.in ())
-        return 0;
+        return nullptr;
 
       if (impl->init (address_server_arg) == -1)
         {
-          return 0;
+          return nullptr;
         }
       return impl._retn ();
     }
 
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Cannot create address server: "
                   "unknown address server type specified.\n"));
-      return 0;
+      return nullptr;
     }
 }
 
 TAO_ECG_Refcounted_Handler
 TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
                                      RtecEventChannelAdmin::EventChannel_ptr ec,
-                                     ACE_Reactor *reactor
-                                     ACE_ENV_ARG_DECL)
+                                     ACE_Reactor *reactor)
 {
   TAO_ECG_Refcounted_Handler handler;
 
-  const char * nic =
-    (this->nic_.length ()) ? this->nic_.c_str () : 0;
+  const ACE_TCHAR * nic =
+    (this->nic_.length ()) ? this->nic_.c_str () : nullptr;
   const char * address_server_arg =
     (this->address_server_arg_.length ())
-    ? this->address_server_arg_.c_str () : 0;
+    ? this->address_server_arg_.c_str () : nullptr;
 
   if (this->handler_type_ == ECG_HANDLER_BASIC)
     {
-      TAO_ECG_Simple_Mcast_EH * h = 0;
+      TAO_ECG_Simple_Mcast_EH * h = nullptr;
       ACE_NEW_RETURN (h,
                       TAO_ECG_Simple_Mcast_EH (receiver),
                       handler);
@@ -439,7 +436,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   else if (this->handler_type_ == ECG_HANDLER_COMPLEX)
     {
-      TAO_ECG_Mcast_EH * h = 0;
+      TAO_ECG_Mcast_EH * h = nullptr;
       ACE_NEW_RETURN (h,
                       TAO_ECG_Mcast_EH (receiver, nic),
                       handler);
@@ -447,13 +444,12 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
       h->reactor (reactor);
 
-      h->open (ec ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO_ECG_Refcounted_Handler ());
+      h->open (ec);
     }
 
   else if (this->handler_type_ == ECG_HANDLER_UDP)
     {
-      TAO_ECG_UDP_EH * h = 0;
+      TAO_ECG_UDP_EH * h = nullptr;
       ACE_NEW_RETURN (h,
                       TAO_ECG_UDP_EH (receiver),
                       handler);
@@ -463,7 +459,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
       ACE_INET_Addr ipaddr;
       if (ipaddr.set (address_server_arg) != 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "ERROR using address server argument "
                       "in ACE_INET_Addr.set ().\n"));
           return TAO_ECG_Refcounted_Handler ();
@@ -474,7 +470,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Cannot create handler: unknown "
                   "handler type specified.\n"));
       return handler;
@@ -483,23 +479,20 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
   return handler;
 }
 
-TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
+PortableServer::Servant_var<TAO_ECG_UDP_Sender>
 TAO_ECG_Mcast_Gateway::init_sender (
                                RtecEventChannelAdmin::EventChannel_ptr ec,
                                RtecUDPAdmin::AddrServer_ptr address_server,
-                               TAO_ECG_Refcounted_Endpoint endpoint_rptr
-                               ACE_ENV_ARG_DECL)
+                               TAO_ECG_Refcounted_Endpoint endpoint_rptr)
 {
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
+  PortableServer::Servant_var<TAO_ECG_UDP_Sender>
     sender (TAO_ECG_UDP_Sender::create ());
   if (!sender.in ())
     return sender;
 
   sender->init (ec,
                 address_server,
-                endpoint_rptr
-                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> ());
+                endpoint_rptr);
 
   TAO_EC_Auto_Command<UDP_Sender_Shutdown> sender_shutdown;
   sender_shutdown.set_command (UDP_Sender_Shutdown (sender));
@@ -507,9 +500,8 @@ TAO_ECG_Mcast_Gateway::init_sender (
   if (this->consumer_qos_.dependencies.length () > 0)
     {
       // Client supplied consumer qos.  Use it.
-      this->consumer_qos_.is_gateway = 1;
-      sender->connect (this->consumer_qos_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> ());
+      this->consumer_qos_.is_gateway = true;
+      sender->connect (this->consumer_qos_);
     }
   else
     {
@@ -521,33 +513,29 @@ TAO_ECG_Mcast_Gateway::init_sender (
                                    0);
       RtecEventChannelAdmin::ConsumerQOS & qos =
         const_cast<RtecEventChannelAdmin::ConsumerQOS &> (consumer_qos_factory.get_ConsumerQOS ());
-      qos.is_gateway = 1;
+      qos.is_gateway = true;
 
-      sender->connect (qos ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> ());
+      sender->connect (qos);
     }
 
   sender_shutdown.disallow_command ();
   return sender;
 }
 
-TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
+PortableServer::Servant_var<TAO_ECG_UDP_Receiver>
 TAO_ECG_Mcast_Gateway::init_receiver (
                                RtecEventChannelAdmin::EventChannel_ptr ec,
                                RtecUDPAdmin::AddrServer_ptr address_server,
-                               TAO_ECG_Refcounted_Endpoint endpoint_rptr
-                               ACE_ENV_ARG_DECL)
+                               TAO_ECG_Refcounted_Endpoint endpoint_rptr)
 {
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
+  PortableServer::Servant_var<TAO_ECG_UDP_Receiver>
     receiver (TAO_ECG_UDP_Receiver::create ());
   if (!receiver.in ())
     return receiver;
 
   receiver->init (ec,
                   endpoint_rptr,
-                  address_server
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> ());
+                  address_server);
 
   TAO_EC_Auto_Command<UDP_Receiver_Shutdown> receiver_shutdown;
   receiver_shutdown.set_command (UDP_Receiver_Shutdown (receiver));
@@ -558,10 +546,9 @@ TAO_ECG_Mcast_Gateway::init_receiver (
                                0, 1);
   RtecEventChannelAdmin::SupplierQOS & qos =
     const_cast<RtecEventChannelAdmin::SupplierQOS &> (supplier_qos_factory.get_SupplierQOS ());
-  qos.is_gateway = 1;
+  qos.is_gateway = true;
 
-  receiver->connect (qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> ());
+  receiver->connect (qos);
 
   receiver_shutdown.disallow_command ();
   return receiver;
@@ -569,33 +556,30 @@ TAO_ECG_Mcast_Gateway::init_receiver (
 
 void
 TAO_ECG_Mcast_Gateway::verify_args (CORBA::ORB_ptr orb,
-                                    RtecEventChannelAdmin::EventChannel_ptr ec
-                                    ACE_ENV_ARG_DECL)
+                                    RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   if (CORBA::is_nil (ec))
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Nil event channel argument passed to "
                   "TAO_ECG_Mcast_Gateway::run().\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   if (CORBA::is_nil (orb))
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Nil orb argument passed to "
                   "TAO_ECG_Mcast_Gateway::run().\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 }
 
 void
 TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
-                            RtecEventChannelAdmin::EventChannel_ptr ec
-                            ACE_ENV_ARG_DECL)
+                            RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   // Verify args.
-  this->verify_args (orb, ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->verify_args (orb, ec);
 
   // Auto-cleanup objects.
   TAO_EC_Object_Deactivator address_server_deactivator;
@@ -607,52 +591,47 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
     this->init_address_server ();
   if (!address_server_servant.in ())
     {
-      ACE_DEBUG ((LM_ERROR,
+      ORBSVCS_DEBUG ((LM_ERROR,
                   "Unable to create address server.\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   RtecUDPAdmin::AddrServer_var address_server;
 
   PortableServer::POA_var poa =
-    address_server_servant->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    address_server_servant->_default_POA ();
 
   activate (address_server,
             poa.in (),
             address_server_servant.in (),
-            address_server_deactivator
-            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+            address_server_deactivator);
 
   TAO_ECG_Refcounted_Endpoint endpoint_rptr;
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender;
+  PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender;
 
   // Set up event sender.
   if (this->service_type_ == ECG_MCAST_SENDER
       || this->service_type_ == ECG_MCAST_TWO_WAY)
     {
       endpoint_rptr = this->init_endpoint ();
-      if (endpoint_rptr.get () == 0)
+      if (endpoint_rptr.get () == nullptr)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       sender = this->init_sender (ec,
                                   address_server.in (),
-                                  endpoint_rptr
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                  endpoint_rptr);
       if (!sender.in ())
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       sender_shutdown.set_command (UDP_Sender_Shutdown (sender));
     }
 
   // Set up event receiver.
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver;
+  PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver;
   if (this->service_type_ == ECG_MCAST_RECEIVER
       || this->service_type_ == ECG_MCAST_TWO_WAY)
     {
@@ -660,12 +639,10 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
 
       receiver = this->init_receiver (ec,
                                       address_server.in (),
-                                      endpoint_rptr
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                      endpoint_rptr);
       if (!receiver.in ())
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       receiver_shutdown.set_command (UDP_Receiver_Shutdown (receiver));
@@ -673,12 +650,10 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
       TAO_ECG_Refcounted_Handler
         handler_rptr (this->init_handler (receiver.in (),
                                           ec,
-                                          reactor
-                                          ACE_ENV_ARG_PARAMETER));
-      ACE_CHECK;
-      if (handler_rptr.get () == 0)
+                                          reactor));
+      if (handler_rptr.get () == nullptr)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
       receiver->set_handler_shutdown (handler_rptr);
     }
@@ -689,6 +664,8 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
   sender_shutdown.disallow_command ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_ECG_Mcast_Gateway,
@@ -698,18 +675,3 @@ ACE_STATIC_SVC_DEFINE (TAO_ECG_Mcast_Gateway,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_ECG_Mcast_Gateway)
-
-// ****************************************************************
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_ECG_Mcast_Gateway>;
-template void activate<TAO_Objref_Var_T<RtecUDPAdmin::AddrServer> >(TAO_Objref_Var_T<RtecUDPAdmin::AddrServer>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL);
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_ECG_Mcast_Gateway>
-#pragma instantiate void activate<TAO_Objref_Var_T<RtecUDPAdmin::AddrServer> >(TAO_Objref_Var_T<RtecUDPAdmin::AddrServer>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

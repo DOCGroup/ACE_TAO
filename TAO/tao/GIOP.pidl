@@ -1,32 +1,14 @@
-//$Id$
-// ================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   GIOP1_2.pidl
-//
-// = DESCRIPTION
-//   Some new data types included for GIOP 1.2
-//   This file was used to generate the code in
-//   GIOP*.* The command used to generate code
-//   is:
-//
-//     tao_idl
-//        -o orig -Ge 1 -GA -I.. -SS -Sc
-//          -Wb,export_macro=TAO_Export
-//          -Wb,export_include="tao/TAO_Export.h"
-//          -Wb,pre_include="ace/pre.h"
-//          -Wb,post_include="ace/post.h"
-//          GIOP.pidl
-//
-// ================================================================
+// -*- IDL -*-
+/**
+ * @file GIOP.pidl
+ *
+ * @brief Pre-compiled IDL source for the GIOP module.
+ */
 
 #ifndef TAO_GIOP_PIDL
 #define TAO_GIOP_PIDL
 
-#include "IOP_IOR.pidl"
+#include "tao/IOP.pidl"
 
 #pragma prefix "omg.org"
 
@@ -54,6 +36,35 @@ module GIOP
     case KeyAddr: CORBA::OctetSeq object_key;
     case ProfileAddr: IOP::TaggedProfile profile;
     case ReferenceAddr: IORAddressingInfo ior;
+  };
+
+  enum MsgType {
+    Request,
+    Reply,
+    CancelRequest,
+    LocateRequest,
+    LocateReply,
+    CloseConnection,
+    MessageError,
+    Fragment
+  };
+
+  enum ReplyStatusType {
+    NO_EXCEPTION,
+    USER_EXCEPTION,
+    SYSTEM_EXCEPTION,
+    LOCATION_FORWARD,
+    LOCATION_FORWARD_PERM,
+    NEEDS_ADDRESSING_MODE
+  };
+
+  enum LocateStatusType {
+    UNKNOWN_OBJECT,
+    OBJECT_HERE,
+    OBJECT_FORWARD,
+    OBJECT_FORWARD_PERM,
+    LOC_SYSTEM_EXCEPTION,
+    LOC_NEEDS_ADDRESSING_MODE
   };
 };
 

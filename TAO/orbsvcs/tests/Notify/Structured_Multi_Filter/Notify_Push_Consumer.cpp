@@ -1,4 +1,3 @@
-// $Id$
 #include "Notify_Push_Consumer.h"
 #include "Notify_Test_Client.h"
 #include "tao/debug.h"
@@ -77,29 +76,23 @@ Notify_Push_Consumer::Notify_Push_Consumer (const char* name,
 
 void
 Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                                CosNotifyChannelAdmin::EventChannel_ptr notify_channel ACE_ENV_ARG_DECL)
-                                ACE_THROW_SPEC ((CORBA::SystemException))
+                                CosNotifyChannelAdmin::EventChannel_ptr notify_channel)
 {
   CosNotifyComm::StructuredPushConsumer_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
     CosNotifyChannelAdmin::STRUCTURED_EVENT,
-    proxy_id_
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    proxy_id_);
 
   if (consumerFilter_ != None)
   {
     CosNotifyFilter::FilterFactory_var ffact =
-      notify_channel->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      notify_channel->default_filter_factory ();
 
     CosNotifyFilter::Filter_var filter =
-      ffact->create_filter ("TCL" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      ffact->create_filter ("ETCL");
 
     ACE_ASSERT(! CORBA::is_nil (filter.in ()));
 
@@ -107,10 +100,9 @@ Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consume
     constraint_list.length (1);
 
     constraint_list[0].event_types.length (0);
-    constraint_list[0].constraint_expr = CORBA::string_dup ("group != 1");
+    constraint_list[0].constraint_expr = CORBA::string_dup ("$group != 1");
 
-    filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
     proxysupplier->add_filter (filter.in ());
   }
@@ -118,15 +110,12 @@ Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consume
 
   this->proxy_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
-    proxysupplier.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    proxysupplier.in ());
 
-  this->proxy_->connect_structured_push_consumer (objref.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_->connect_structured_push_consumer (objref.in ());
 
   // give ownership to POA
-  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->_remove_ref ();
 }
 
 static void validate_expression(bool expr, const char* msg)
@@ -141,9 +130,7 @@ static void validate_expression(bool expr, const char* msg)
 
 void
 Notify_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent& event
-  ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  const CosNotification::StructuredEvent& event)
 {
   ACE_DEBUG((LM_DEBUG, "-"));
   received_++;

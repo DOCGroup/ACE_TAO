@@ -2,27 +2,22 @@
 /**
 *  @file   amh_ch.cpp
 *
-*  $Id$
-*
-*  Specialized interface visitor for AMH-RH generates code that is 
+*  Specialized interface visitor for AMH-RH generates code that is
 *  specific to AMH interfaces.
 *
 *  @author Mayur Deshpande <mayur@ics.uci.edu>
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           amh_ch, 
-           "$Id$")
+#include "interface.h"
 
 be_visitor_amh_interface_ch::be_visitor_amh_interface_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_amh_interface_ch::~be_visitor_amh_interface_ch (void)
+be_visitor_amh_interface_ch::~be_visitor_amh_interface_ch ()
 {
 }
 
@@ -40,9 +35,6 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
   node->gen_var_out_seq_decls ();
 
   TAO_OutStream *os = this->ctx_->stream ();
-
-  // Now the interface definition itself.
-  os->gen_ifdef_macro (node->flat_name ());
 
   // Now generate the class definition.
   *os << "class " << be_global->stub_export_macro ()
@@ -72,7 +64,7 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
     {
       // We do not inherit from anybody, hence we do so from the base
       // CORBA::Object class.
-      *os << "public virtual CORBA::Object" << be_uidt_nl;
+      *os << "public virtual ::CORBA::Object" << be_uidt_nl;
     }
 
   // Generate the body.
@@ -84,6 +76,8 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
       << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
+      << be_nl
+      << "typedef " << node->local_name () << "_out _out_type;"
       << be_nl;
 
   // Generate code for the interface definition by traversing thru the
@@ -98,6 +92,6 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

@@ -1,9 +1,6 @@
-// This may look like C, but it's really -*- C++ -*-
 // ===================================================================
 /**
  *  @file   Big_Reply_i.h
- *
- *  $Id$
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  **/
@@ -29,17 +26,14 @@ public:
                CORBA::ULong length);
 
   ///Destructor
-  virtual ~Big_Reply_i (void);
+  virtual ~Big_Reply_i ();
 
   // = The skeleton methods
-  virtual Test::Octet_Seq *get_big_reply (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Test::Octet_Seq *get_big_reply ();
 
-  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void ping ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
   /// Our local ORB ptr
@@ -50,7 +44,6 @@ private:
 
   /// The reply message
   Test::Octet_Seq_var reply_message_;
-
 };
 
 #include /**/ "ace/post.h"

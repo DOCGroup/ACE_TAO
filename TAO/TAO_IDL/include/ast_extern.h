@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -67,7 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_EXTERN_AST_EXTERN_HH
 #define _AST_EXTERN_AST_EXTERN_HH
 
-#include "idl_bool.h"
 
 class AST_Type;
 class AST_Decl;
@@ -80,9 +77,9 @@ class AST_Decl;
 // type the full definition was also seen.
 
 extern void AST_record_fwd_decl (AST_Type *i);
-extern TAO_IDL_FE_Export void AST_check_fwd_decls (void);
-extern idl_bool AST_illegal_recursive_type (AST_Decl *t);
-extern idl_bool AST_illegal_interface_recursion (AST_Decl *t);
+extern TAO_IDL_FE_Export void AST_check_fwd_decls ();
+extern bool AST_illegal_recursive_type (AST_Decl *t);
+extern bool AST_illegal_interface_recursion (AST_Decl *t);
 
 #endif           // _AST_EXTERN_AST_EXTERN_HH
 

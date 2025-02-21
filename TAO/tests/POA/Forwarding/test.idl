@@ -1,0 +1,13 @@
+interface test
+{
+  long doit ();
+  // Returns numbers: they are constantly increasing
+
+  exception Cannot_Forward {};
+  // Raised if object cannot be forwarded.
+
+  void forward ()
+    raises (Cannot_Forward);
+
+  oneway void shutdown ();
+};

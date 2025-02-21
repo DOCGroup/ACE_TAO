@@ -1,0 +1,57 @@
+// -*- MPC -*-
+project(*event_handler_t) : aceexe {
+  exename = event_handler_t
+  Source_Files {
+    test_event_handler_t.cpp
+  }
+  Template_Files {
+  }
+}
+project(*demuxing) : aceexe {
+  exename = demuxing
+  Source_Files {
+    test_demuxing.cpp
+  }
+}
+project(*early_timeouts) : aceexe {
+  exename = early_timeouts
+  Source_Files {
+    test_early_timeouts.cpp
+  }
+}
+project(*notification) : aceexe {
+  exename = notification
+  Source_Files {
+    notification.cpp
+  }
+}
+project(*pingpong) : aceexe {
+  exename = pingpong
+  Source_Files {
+    pingpong.cpp
+  }
+}
+project(*reactors) : aceexe {
+  exename = reactors
+  Source_Files {
+    test_reactors.cpp
+  }
+}
+project(*signals_1) : aceexe {
+  exename = signals_1
+  Source_Files {
+    test_signals_1.cpp
+  }
+}
+project(*signals_2) : aceexe {
+  exename = signals_2
+  Source_Files {
+    test_signals_2.cpp
+  }
+}
+project(*timer_queue) : aceexe {
+  exename = timer_queue
+  Source_Files {
+    test_timer_queue.cpp
+  }
+}

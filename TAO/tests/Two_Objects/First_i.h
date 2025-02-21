@@ -1,30 +1,27 @@
-//
-// $Id$
-//
-
+// -*- C++ -*-
 
 #ifndef TAO_TWO_OBJECTS_FIRST_I_H
 #define TAO_TWO_OBJECTS_FIRST_I_H
 
 #include "Two_ObjectsS.h"
-#include "ace/Auto_Event.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Auto_Event;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /// Implement the Two_Objects_Test::First interface
 class First_i
   : public virtual POA_Two_Objects_Test::First
 {
 public:
-
   // Ctor..
   First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done);
 
   /// Interface methods..
-  void oneway_method (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  void oneway_method ();
 
 private:
-
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
   ACE_Auto_Event &two_way_done_;

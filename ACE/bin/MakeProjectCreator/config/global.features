@@ -1,0 +1,164 @@
+// The global features file contains the default feature settings.
+// By default, if a feature isn't listed here then it is enabled.
+// If it is listed, then the value assigned to the feature is interpreted
+// as a boolean value.  You really shouldn't have to edit this file except
+// to change the defaults.  If you want to override these values you can do
+// one of two things.
+//
+// 1) Create a default.features in this directory with the features you
+//    want enabled or disabled.
+// 2) Create a feature file anywhere you like with the features you want and
+//    use the -feature_file option to specify where it is located.
+//
+// Feature definitions from this file are always overwritten by -features
+// command option of mwc.pl.
+//
+// This file is somewhat akin to the platform_macros.GNU file in that build
+// settings can be set here.
+
+// Enable these by default.
+acexml        = 1
+ace_svcconf   = 1
+ace_token     = 1
+ace_idl_dependencies = 1
+
+// By default we disable these.
+ace_for_tao   = 0
+cross_compile = 0
+ssl           = 0
+openssl11     = 0
+qos           = 0
+rapi          = 0
+repo          = 0
+minimum_corba = 0
+java          = 0
+zlib          = 0
+zzip          = 0
+bzip2         = 0
+lzo1          = 0
+lzo2          = 0
+ipv6          = 0
+mfc           = 0
+rpc           = 0
+sctp          = 0
+boost         = 0
+dummy_label   = 0
+wince         = 0
+uses_wchar    = 0  // i.e. unicode
+gen_ostream   = 0
+ziparchive    = 0
+negotiate_codesets  = 0
+notify_monitor_control = 0
+versioned_namespace = 0
+vcl           = 0
+stl           = 0
+xsc           = 0
+tao_idl_fe_gen = 0
+ace_svcconf_gen = 0
+xerces        = 0
+xerces2       = 0
+xerces3       = 0
+ofccm         = 0
+ndds          = 0
+nddsmonitor   = 0
+mcpp          = 0
+wireshark_any = 0
+wireshark     = 0
+wireshark_cmake = 0
+old_stdstream = 0
+exclude_inet  = 0
+inet_ssl      = 0
+coredx        = 0
+dds4ccm_opendds = 0
+dds4ccm_ndds = 0
+dds4ccm_splice = 0
+dds4ccm_coredx = 0
+openmp = 0
+
+// Features for various GUI libraries
+
+// Some of features are switched on because they are also controlled
+// by higher level features eg. gl is 1 because it is necessary for fl,
+// but if someone turns on fl, we may assume gl is available. This way makefile
+// generation is simplified. Moreover all internal ACE features like ace_qtreactor
+// and tao_qtresource are also turn on, because we want to build every component
+// related with if qt is provided. It is proposed to not remove
+// switched on features from global.features just because features are available
+// by default. This file is also a kind of ACE capabilities documentation, hence
+// it is better to enumerate here all features recognized by ACE.
+
+// 1 - wxWindows (wxWidgets) libraries are available
+wxWindows     = 0
+// 1 - Motif (Lestif) libraries are available
+motif         = 0
+// 1 - Athena widgets libraries are available
+athena        = 0
+// 1 - X11 libraries are available
+x11           = 1
+// 1 - X Toolkit libraries are available
+xt            = 0
+// 1 - Tk libraries are available
+tk            = 0
+// 1 - Fast Light toolkit libraries are available (assume lowercase h in header files)
+fl            = 0
+// 1 - Qt3 libraries are available
+qt            = 0
+qt3           = 0
+// 1 - Qt4 core libraries are available
+qt4           = 0
+// Qt5
+qt5 = 0
+// 1 - Fox libraries are available
+fox           = 0
+// 1 - OpenGL libraries are available
+gl            = 1
+
+// Features for ACE support for various GUI libraries
+// Use QtReactor
+ace_qtreactor    = 1
+// Use XtReactor
+ace_xtreactor    = 1
+// Use TkReactor
+ace_tkreactor    = 1
+// Use FlReactor
+ace_flreactor    = 1
+// Use FoxReactor
+ace_foxreactor   = 1
+
+// Features for TAO support for various GUI libraries
+// Use QtResources for TAO
+tao_qtresource    = 1
+// Use XtResources for TAO
+tao_xtresource    = 1
+// Use TkResources for TAO
+tao_tkresource    = 1
+// Use FlResources for TAO
+tao_flresource    = 1
+// Use FoxResources for TAO
+tao_foxresource    = 1
+
+//Use the ZIP_Wrapper feature for when using the ZIP wrapper classes
+ZIP_Wrapper = 0
+
+// Feature for CORBA subsets
+corba_e_compact = 0
+corba_e_micro   = 0
+
+// Footprint feature
+optimize_collocated_invocations = 1
+
+// Option to disable iiop
+tao_no_iiop = 0
+
+// Option to enable the linking of the TAO_CodecFactory library
+// whenever TAO is linked in
+link_codecfactory = 0
+
+// Feature for LwCCM
+ccm_lw = 1
+// Feature for CCM for disabling events.
+ccm_noevent = 0
+// Feature for direct collocation
+ccm_direct_collocation = 0
+
+valuetype_out_indirection=1

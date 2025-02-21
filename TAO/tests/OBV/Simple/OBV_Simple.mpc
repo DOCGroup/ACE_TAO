@@ -1,0 +1,36 @@
+// -*- MPC -*-
+project(*IDL): taoidldefaults {
+  idlflags -= -St
+  IDL_Files {
+    OBV.idl
+  }
+  custom_only = 1
+}
+
+project(*server): taoserver, utils, valuetype {
+  exename = server
+  after += *IDL
+  Source_Files {
+    OBVS.cpp
+    OBVC.cpp
+    Server_i.cpp
+    OBV_impl.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*client): taoserver, utils, valuetype {
+  exename = client
+  after += *IDL
+  Source_Files {
+    OBVS.cpp
+    OBVC.cpp
+    Client_i.cpp
+    OBV_impl.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

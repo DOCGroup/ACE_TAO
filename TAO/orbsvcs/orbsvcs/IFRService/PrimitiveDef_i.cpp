@@ -1,62 +1,48 @@
-/* -*- C++ -*- */
-// $Id$
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/PrimitiveDef_i.h"
 
-#include "Repository_i.h"
-#include "PrimitiveDef_i.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (IFRService, 
-           PrimitiveDef_i, 
-           "$Id$")
-
-TAO_PrimitiveDef_i::TAO_PrimitiveDef_i (
-    TAO_Repository_i *repo
-  )
+TAO_PrimitiveDef_i::TAO_PrimitiveDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
     TAO_IDLType_i (repo)
 {
 }
 
-TAO_PrimitiveDef_i::~TAO_PrimitiveDef_i (void)
+TAO_PrimitiveDef_i::~TAO_PrimitiveDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_PrimitiveDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PrimitiveDef_i::def_kind ()
 {
   return CORBA::dk_Primitive;
 }
 
 void
-TAO_PrimitiveDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PrimitiveDef_i::destroy ()
 {
-  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_i ();
 }
 
 void
-TAO_PrimitiveDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PrimitiveDef_i::destroy_i ()
 {
-  ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 2,
-                                   CORBA::COMPLETED_NO));
+  throw CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 }
 
 CORBA::TypeCode_ptr
-TAO_PrimitiveDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PrimitiveDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  this->update_key ();
 
-  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i ();
 }
 
 CORBA::TypeCode_ptr
-TAO_PrimitiveDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PrimitiveDef_i::type_i ()
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -115,20 +101,17 @@ TAO_PrimitiveDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA::PrimitiveKind
-TAO_PrimitiveDef_i::kind (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PrimitiveDef_i::kind ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::pk_null);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::pk_null);
+  this->update_key ();
 
-  return this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->kind_i ();
 }
 
 CORBA::PrimitiveKind
-TAO_PrimitiveDef_i::kind_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_PrimitiveDef_i::kind_i ()
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -138,3 +121,4 @@ TAO_PrimitiveDef_i::kind_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return static_cast<CORBA::PrimitiveKind> (pkind);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

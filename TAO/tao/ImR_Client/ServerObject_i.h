@@ -1,15 +1,16 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    ServerObject_i.h
  *
- *  $Id$
- *
- *  @author  Darrell Brunsch and Irfan Pyarali
+ *  @author  Darrell Brunsch
+ *  @author  Irfan Pyarali
  */
 // ===================================================================
 
-#ifndef TAO_IMPLREPO_I_H
-#define TAO_IMPLREPO_I_H
+#ifndef TAO_SERVEROBJECT_I_H
+#define TAO_SERVEROBJECT_I_H
 
 #include /**/ "ace/pre.h"
 
@@ -21,6 +22,8 @@
 
 #include "tao/ImR_Client/ServerObjectS.h"
 #include "tao/ImR_Client/imr_client_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ServerObject_i
@@ -36,19 +39,16 @@ class TAO_IMR_Client_Export ServerObject_i
 {
 public:
   /// Constructor.
-  ServerObject_i (CORBA::ORB_ptr orb,
-                  PortableServer::POA_ptr poa);
+  ServerObject_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Ping method.
-  void ping (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void ping ();
 
   /// Shutdown the server.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
   /// Returns the default POA for this servant.
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA ();
 
 protected:
   /// Our ORB.  We need this member in case we need to shutdown the
@@ -59,6 +59,8 @@ protected:
   PortableServer::POA_var poa_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
-#endif /* TAO_IMPLREPO_I_H */
+#endif /* TAO_SERVEROBJECT_I_H */

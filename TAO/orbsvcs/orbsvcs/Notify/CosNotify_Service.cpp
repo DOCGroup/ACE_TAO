@@ -1,9 +1,9 @@
-// $Id$
-
-#include "CosNotify_Service.h"
-#include "Properties.h"
-#include "Default_Factory.h"
-#include "Builder.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/CosNotify_Service.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Default_Factory.h"
+#include "orbsvcs/Notify/Builder.h"
+#include "orbsvcs/Notify/EventChannel.h"
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
@@ -11,11 +11,9 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Notify,
-           TAO_CosNotify_Service,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CosNotify_Service::TAO_CosNotify_Service (void)
+TAO_CosNotify_Service::TAO_CosNotify_Service ()
 {
 }
 
@@ -32,98 +30,198 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
 
   // Default to an all reactive system.
   int ec_threads = 0;
-  int dispatching_threads = 0;
-  int listener_threads = 0;
-  int source_threads = 0;
-  int lookup_threads = 0;
+  int consumer_threads = 0;
+  int supplier_threads = 0;
 
-  int task_per_proxy = 0;
+  bool task_per_proxy = false;
 
   TAO_Notify_Properties *properties = TAO_Notify_PROPERTIES::instance();
 
   while (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTDispatching")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTDispatching")) == 0)
         {
-          // If Dispatching Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -MTDispatching option has been deprecated, use -DispatchingThreads \n")));
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -MTDispatching option has been deprecated, use -DispatchingThreads\n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-DispatchingThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DispatchingThreads"))))
         {
-          dispatching_threads = ACE_OS::atoi (current_arg);
-          arg_shifter.consume_arg ();
-        }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTSourceEval")) == 0)
-        {
-          // If Source Threads are initalized, the option is implicit.
-          arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -MTSourceEval option has been deprecated, use -SourceThreads \n")));
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-SourceThreads"))))
-        {
-          source_threads = ACE_OS::atoi (current_arg);
+          consumer_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTLookup")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTSourceEval")) == 0)
         {
-          // If Lookup Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -MTLookup option has been deprecated, use -SourceThreads \n")));
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -MTSourceEval option has been deprecated, use -SourceThreads\n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-LookupThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-SourceThreads"))))
         {
-          // Since this option is always either added to source_threads
-          // or ignored, we'll deprecate it in favor of that option.
-          lookup_threads = ACE_OS::atoi (current_arg);
+          supplier_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -LookupThreads option has been deprecated, use -SourceThreads \n")));
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTListenerEval")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTLookup")) == 0)
         {
-          // If Listener Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -MTListenerEval option has been deprecated, use -DispatchingThreads \n")));
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -MTLookup option has been deprecated, use -SourceThreads\n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ListenerThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LookupThreads"))))
         {
-          // Since this option is always added to dispatching_threads, we'll
+          supplier_threads += ACE_OS::atoi (current_arg);
+          arg_shifter.consume_arg ();
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -LookupThreads option has been deprecated, use -SourceThreads\n")));
+        }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTListenerEval")) == 0)
+        {
+          arg_shifter.consume_arg ();
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -MTListenerEval option has been deprecated, use -DispatchingThreads\n")));
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ListenerThreads"))))
+        {
+          // Since this option is always added to consumer_threads, we'll
           // deprecate it in favor of that option.
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) The -ListenerThreads option has been deprecated, use -DispatchingThreads \n")));
-          listener_threads = ACE_OS::atoi (current_arg);
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) The -ListenerThreads option has been deprecated, use -DispatchingThreads\n")));
+          consumer_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AsynchUpdates")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AsynchUpdates")) == 0)
         {
           arg_shifter.consume_arg ();
 
           properties->asynch_updates (1);
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-NoUpdates")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NoUpdates")) == 0)
         {
           arg_shifter.consume_arg ();
 
           properties->updates (0);
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllocateTaskperProxy")) == 0)
         {
-          task_per_proxy = 1;
+          task_per_proxy = true;
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllowReconnect")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
+        {
+          current_arg = arg_shifter.get_the_parameter
+                                (ACE_TEXT("-UseSeparateDispatchingORB"));
+          if (current_arg != 0 &&
+              (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
+               ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
+            {
+              properties->separate_dispatching_orb (
+                            static_cast<bool> (ACE_OS::atoi(current_arg)));
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Using separate Dispatching ORB\n")));
+            }
+          else
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+                          ACE_TEXT ("argument (%s).  Ignoring invalid ")
+                          ACE_TEXT ("-UseSeparateDispatchingORB usage.\n"),
+                          (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+            }
+          if (current_arg != 0)
+            arg_shifter.consume_arg ();
+        }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllowReconnect")) == 0)
       {
         arg_shifter.consume_arg ();
         TAO_Notify_PROPERTIES::instance()->allow_reconnect (true);
       }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-DefaultConsumerAdminFilterOp")) == 0)
+      {
+        current_arg = arg_shifter.get_the_parameter
+                      (ACE_TEXT("-DefaultConsumerAdminFilterOp"));
+        CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
+        if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+                      op = CosNotifyChannelAdmin::AND_OP;
+        else if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+                      op = CosNotifyChannelAdmin::OR_OP;
+        else
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+                        ACE_TEXT ("argument (%s).  Ignoring invalid ")
+                        ACE_TEXT ("-DefaultConsumerAdminFilterOp usage.\n"),
+                        (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+          }
+        properties->defaultConsumerAdminFilterOp (op);
+        arg_shifter.consume_arg ();
+      }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-DefaultSupplierAdminFilterOp")) == 0)
+      {
+        current_arg = arg_shifter.get_the_parameter
+                      (ACE_TEXT("-DefaultSupplierAdminFilterOp"));
+        CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
+        if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+                      op = CosNotifyChannelAdmin::AND_OP;
+        else if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+                      op = CosNotifyChannelAdmin::OR_OP;
+        else
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+                        ACE_TEXT ("argument (%s).  Ignoring invalid ")
+                        ACE_TEXT ("-DefaultSupplierAdminFilterOp usage.\n"),
+                        (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+          }
+        properties->defaultSupplierAdminFilterOp (op);
+        arg_shifter.consume_arg ();
+      }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClient")) == 0)
+      {
+        arg_shifter.consume_arg ();
+        TAO_Notify_PROPERTIES::instance()->validate_client (true);
+        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Using reactive client control.\n")));
+      }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientDelay")) == 0)
+      {
+        current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientDelay"));
+        if (current_arg != 0)
+        {
+          ACE_Time_Value tv (ACE_OS::atoi (current_arg));
+          TAO_Notify_PROPERTIES::instance()->validate_client_delay (tv);
+        }
+        else
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+            ACE_TEXT ("argument (%s).  Ignoring invalid ")
+            ACE_TEXT ("-ValidateClientDelay usage.\n"),
+            (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+        }
+        if (current_arg != 0)
+          arg_shifter.consume_arg ();
+      }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientInterval")) == 0)
+      {
+        current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientInterval"));
+        if (current_arg != 0)
+        {
+          ACE_Time_Value tv (ACE_OS::atoi (current_arg));
+          TAO_Notify_PROPERTIES::instance()->validate_client_interval (tv);
+        }
+        else
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
+            ACE_TEXT ("argument (%s).  Ignoring invalid ")
+            ACE_TEXT ("-ValidateClientDelay usage.\n"),
+            (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+        }
+        if (current_arg != 0)
+          arg_shifter.consume_arg ();
+      }
       else
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Ignoring unknown option for Notify Factory: %s\n"),
                     arg_shifter.get_current()
           ));
@@ -138,19 +236,23 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
     properties->default_event_channel_qos_properties (qos);
   }
 
-  if (task_per_proxy == 0)
+  if (!task_per_proxy)
     {
       // Set the per ConsumerAdmin QoS
       {
+        if (consumer_threads > 0)
+          ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each ConsumerAdmin.\n", consumer_threads));
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, dispatching_threads + listener_threads);
+        this->set_threads (qos, consumer_threads);
         properties->default_consumer_admin_qos_properties (qos);
       }
 
       // Set the per SupplierAdmin QoS
       {
+        if (supplier_threads > 0)
+          ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each SupplierAdmin.\n", supplier_threads));
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, lookup_threads + source_threads);
+        this->set_threads (qos, supplier_threads);
         properties->default_supplier_admin_qos_properties (qos);
       }
     }
@@ -158,15 +260,19 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
     {
       // Set the per ProxyConsumer QoS
       {
+        if (supplier_threads > 0)
+          ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each Supplier.\n", supplier_threads));
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, source_threads); // lookup thread per proxy doesn't make sense.
+        this->set_threads (qos, supplier_threads); // lookup thread per proxy doesn't make sense.
         properties->default_proxy_consumer_qos_properties (qos);
       }
 
       // Set the per ProxySupplier QoS
       {
+        if (consumer_threads > 0)
+          ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each Consumer.\n", consumer_threads));
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, dispatching_threads + listener_threads);
+        this->set_threads (qos, consumer_threads);
         properties->default_proxy_supplier_qos_properties (qos);
       }
     }
@@ -186,105 +292,213 @@ TAO_CosNotify_Service::set_threads (CosNotification::QoSProperties &qos, int thr
 }
 
 int
-TAO_CosNotify_Service::fini (void)
+TAO_CosNotify_Service::fini ()
 {
+  if (TAO_Notify_PROPERTIES::instance()->separate_dispatching_orb())
+    {
+      if (!CORBA::is_nil (TAO_Notify_PROPERTIES::instance()->dispatching_orb()))
+        {
+          CORBA::ORB_var dispatcher =
+            TAO_Notify_PROPERTIES::instance()->dispatching_orb();
+          dispatcher->shutdown ();
+          dispatcher->destroy ();
+        }
+    }
+
+  TAO_Notify_Properties::instance()->close ();
   return 0;
 }
 
 void
-TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
 {
-  ACE_DEBUG ((LM_DEBUG, "Loading the Cos Notification Service...\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Loading the Cos Notification Service...\n"));
 
-  this->init_i (orb ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  if (TAO_Notify_PROPERTIES::instance()->separate_dispatching_orb())
+    {
+      // got here by way of svc.conf. no second orb supplied so create one
+      if (CORBA::is_nil (TAO_Notify_PROPERTIES::instance()->dispatching_orb()))
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "No dispatching orb supplied. Creating default one.\n"));
+
+          int argc = 0;
+          ACE_TCHAR *argv0 = 0;
+          ACE_TCHAR **argv = &argv0;  // ansi requires argv be null terminated.
+          CORBA::ORB_var dispatcher = CORBA::ORB_init (argc, argv,
+                                                       "default_dispatcher");
+
+          TAO_Notify_PROPERTIES::instance()->dispatching_orb(dispatcher.in());
+        }
+
+      this->init_i2 (orb, TAO_Notify_PROPERTIES::instance()->dispatching_orb());
+    }
+  else
+    {
+      this->init_i (orb);
+    }
 }
 
 void
-TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb)
+{
+  this->init_i2 (orb, dispatching_orb);
+}
+
+void
+TAO_CosNotify_Service::finalize_service (
+                   CosNotifyChannelAdmin::EventChannelFactory_ptr factory)
+{
+  // Get out early if we can
+  if (CORBA::is_nil (factory))
+    return;
+
+  // Make sure the factory doesn't go away while we're in here
+  CosNotifyChannelAdmin::EventChannelFactory_var ecf =
+    CosNotifyChannelAdmin::EventChannelFactory::_duplicate (factory);
+
+  // Find all the consumer admin objects and shutdown the worker tasks
+  CosNotifyChannelAdmin::ChannelIDSeq_var channels =
+    ecf->get_all_channels ();
+  CORBA::ULong length = channels->length ();
+  for(CORBA::ULong i = 0; i < length; i++)
+    {
+      try
+        {
+          CosNotifyChannelAdmin::EventChannel_var ec =
+            ecf->get_event_channel (channels[i]);
+          if (!CORBA::is_nil (ec.in ()))
+            {
+              TAO_Notify_EventChannel* nec =
+                dynamic_cast<TAO_Notify_EventChannel*> (ec->_servant ());
+              if (nec != 0)
+                nec->destroy ();
+            }
+        }
+      catch (const CORBA::Exception&)
+        {
+          // We're shutting things down, so ignore exceptions
+        }
+    }
+
+  TAO_Notify_EventChannelFactory* necf =
+    dynamic_cast<TAO_Notify_EventChannelFactory*> (ecf->_servant ());
+
+  if (necf != 0)
+    necf->stop_validator();
+}
+
+void
+TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb)
 {
   // Obtain the Root POA
   CORBA::Object_var object  =
-    orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    orb->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 " (%P|%t) Unable to resolve the RootPOA.\n"));
 
-  PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in ());
 
-  /// Set the properties
-    TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
+  // Set the properties
+  TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
 
-    properties->orb (orb);
-    properties->default_poa (default_poa.in ());
+  properties->orb (orb);
+  properties->default_poa (default_poa.in ());
 
-    // Init the factory
-    this->factory_.reset (this->create_factory (ACE_ENV_SINGLE_ARG_PARAMETER));
-    ACE_ASSERT( this->factory_.get() != 0 );
-    TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
-    ACE_CHECK;
+  // Init the factory
+  this->factory_.reset (this->create_factory ());
+  ACE_ASSERT( this->factory_.get() != 0 );
+  TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
 
-    this->builder_.reset (this->create_builder (ACE_ENV_SINGLE_ARG_PARAMETER));
-    ACE_ASSERT( this->builder_.get() != 0 );
-    TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
-    ACE_CHECK;
+  this->builder_.reset (this->create_builder ());
+  ACE_ASSERT( this->builder_.get() != 0 );
+  TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
+}
+
+void
+TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb)
+{
+  // Obtain the Root POA
+  CORBA::Object_var object  =
+    orb->resolve_initial_references("RootPOA");
+
+  if (CORBA::is_nil (object.in ()))
+    ORBSVCS_ERROR ((LM_ERROR, " (%P|%t) Unable to resolve the RootPOA.\n"));
+
+  PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in ());
+
+  // Set the properties
+  TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
+
+  properties->orb (orb);
+  properties->dispatching_orb (dispatching_orb);
+  properties->separate_dispatching_orb (true);
+
+  properties->default_poa (default_poa.in ());
+
+  // Init the factory and builder
+  this->factory_.reset (this->create_factory ());
+  ACE_ASSERT( this->factory_.get() != 0 );
+  TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
+
+  this->builder_.reset (this->create_builder ());
+  ACE_ASSERT( this->builder_.get() != 0 );
+  TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
 }
 
 TAO_Notify_Factory*
-TAO_CosNotify_Service::create_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosNotify_Service::create_factory ()
 {
   TAO_Notify_Factory* factory = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
   if (factory == 0)
     {
        ACE_NEW_THROW_EX (factory,
-                      TAO_Notify_Default_Factory (),
-                      CORBA::NO_MEMORY ());
-       ACE_CHECK_RETURN(0);
+                         TAO_Notify_Default_Factory (),
+                         CORBA::NO_MEMORY ());
     }
   return factory;
 }
 
 TAO_Notify_Builder*
-TAO_CosNotify_Service::create_builder (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosNotify_Service::create_builder ()
 {
   TAO_Notify_Builder* builder = 0;
   ACE_NEW_THROW_EX (builder,
                     TAO_Notify_Builder (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN(0);
 
   return builder;
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_CosNotify_Service::create (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::create (PortableServer::POA_ptr poa,
+                               const char* factory_name)
 {
-  return this->builder().build_event_channel_factory (poa ACE_ENV_ARG_PARAMETER);
+  return this->builder().build_event_channel_factory (poa, factory_name);
 }
 
 void
-TAO_CosNotify_Service::remove (TAO_Notify_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CosNotify_Service::remove (TAO_Notify_EventChannelFactory* /*ecf*/)
 {
   // NOP.
 }
 
 TAO_Notify_Factory&
-TAO_CosNotify_Service::factory (void)
+TAO_CosNotify_Service::factory ()
 {
   ACE_ASSERT( this->factory_.get() != 0 );
   return *this->factory_;
 }
 
 TAO_Notify_Builder&
-TAO_CosNotify_Service::builder (void)
+TAO_CosNotify_Service::builder ()
 {
   ACE_ASSERT( this->builder_.get() != 0 );
   return *this->builder_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /*********************************************************************************************************************/
 

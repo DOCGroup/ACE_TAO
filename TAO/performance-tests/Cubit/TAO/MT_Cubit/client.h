@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    client.h
-//
-// = AUTHOR
-//    Andy Gokhale, Brian Mendel, Sumedh Mungee, Sergio Flores-Gaitan
-//    and Nagarajan Surendran.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.h
+ *
+ *  @author Andy Gokhale
+ *  @author Brian Mendel
+ *  @author Sumedh Mungee
+ *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
+ */
+//=============================================================================
+
 
 #include "ace/Task.h"
 
@@ -30,151 +27,154 @@
 #include "Util_Thread.h"
 #include "Timer.h"
 
-#if defined (CHORUS_MVME)
-#include "pccTimer.h"
-#endif /* CHORUS_MVME */
-
 #if defined (VME_DRIVER)
 #include <hostLib.h>
-extern "C" STATUS vmeDrv (void);
+extern "C" STATUS vmeDrv ();
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* defined (VME_DRIVER) */
 
+/**
+ * @class Client_i
+ *
+ * @brief Helper class implementing the Multi-Threaded Cubit client.
+ */
 class Client_i : public virtual MT_Priority
 {
-  // = TITLE
-  //     Helper class implementing the Multi-Threaded Cubit client.
 public:
-  Client_i (void);
-  //constructor.
+  ///constructor.
+  Client_i ();
 
-  virtual ~Client_i (void);
-  // destructor.
+  /// destructor.
+  virtual ~Client_i ();
 
-  int init (int argc, char *argv[]);
-  // Initialize the state of <Client_i>.
+  /// Initialize the state of <Client_i>.
+  int init (int argc, ACE_TCHAR *argv[]);
 
-  void run (void);
-  // Run the tests.
+  /// Run the tests.
+  void run ();
 
-  int do_priority_inversion_test (void);
-  // Performs the priority inversion test.
+  /// Performs the priority inversion test.
+  int do_priority_inversion_test ();
 
-  int do_thread_per_rate_test (void);
-  // Performs the test with 4 threads each sending requests at rates
-  // of 20, 10, 5, and 1Hz.
+  /// Performs the test with 4 threads each sending requests at rates
+  /// of 20, 10, 5, and 1Hz.
+  int do_thread_per_rate_test ();
 
-  int start_servant (void);
-  // Starts the client utilization thread.
+  /// Starts the client utilization thread.
+  int start_servant ();
 
-  void output_latency (void);
-  // output the latency results for the requests.
+  /// output the latency results for the requests.
+  void output_latency ();
 
 #if defined (VXWORKS)
-  void output_taskinfo (void);
-  // Outputs the details of this task to a file taskinfo.txt.
+  /// Outputs the details of this task to a file taskinfo.txt.
+  void output_taskinfo ();
 #endif /* VXWORKS */
 
 private:
-  void init_low_priority (void);
-  // Sets the priority to be used for the low priority clients.
+  /// Sets the priority to be used for the low priority clients.
+  void init_low_priority ();
 
-  void calc_util_time (void);
-  // Calculate the time for one util computation.
+  /// Calculate the time for one util computation.
+  void calc_util_time ();
 
-  int activate_high_client (void);
-  // Activates the high priority client.
+  /// Activates the high priority client.
+  int activate_high_client ();
 
-  int activate_low_client (void);
-  // Activates the low priority client.
+  /// Activates the low priority client.
+  int activate_low_client ();
 
-  int activate_util_thread (void);
-  // Activates the utilization thread.
+  /// Activates the utilization thread.
+  int activate_util_thread ();
 
-  void print_priority_inversion_stats (void);
-  // Prints the results of the tests.
+  /// Prints the results of the tests.
+  void print_priority_inversion_stats ();
 
-  void print_context_stats (void);
-  // Prints the context switch results.
+  /// Prints the context switch results.
+  void print_context_stats ();
 
-  void print_util_stats (void);
-  // Prints the utilization test results.
+  /// Prints the utilization test results.
+  void print_util_stats ();
 
-  void print_latency_stats (void);
-  // Prints the latency and jitter results.
+  /// Prints the latency and jitter results.
+  void print_latency_stats ();
 
-  void get_context_switches (void);
-  // gets the number of context switches.
+  /// gets the number of context switches.
+  void get_context_switches ();
 
+  /// Pointer to the high priority client object.
   Client *high_priority_client_;
-  // Pointer to the high priority client object.
 
+  /// Array to hold pointers to the low priority tasks.
   Client **low_priority_client_;
-  // Array to hold pointers to the low priority tasks.
 
+  /// Timer for timing the tests.
   ACE_High_Res_Timer timer_;
-  // Timer for timing the tests.
 
+  /// Priority helper object.
   MT_Priority priority_;
-  // Priority helper object.
 
+  /// Utilization thread.
   Util_Thread *util_thread_;
-  // Utilization thread.
 
+  /// Utilization thread manager.
   ACE_Thread_Manager util_thread_manager_;
-  // Utilization thread manager.
 
+  /// Time for one computation of utilization thread.
   ACE_timer_t util_task_duration_;
-  // Time for one computation of utilization thread.
 
+  /// Pointer to task state.
   Task_State *ts_;
-  // Pointer to task state.
 
+  /// Priority used for the high priority client.
   ACE_Sched_Priority high_priority_;
-  // Priority used for the high priority client.
 
+  /// Priority used by the low priority clients.
   ACE_Sched_Priority low_priority_;
-  // Priority used by the low priority clients.
 
+  /// Number of low priority clients
   u_int num_low_priority_;
-  // Number of low priority clients
 
+  /// Number of priorities used.
   u_int num_priorities_;
-  // Number of priorities used.
 
+  /**
+   * Granularity of the assignment of the priorities.  Some OSs have
+   * fewer levels of priorities than we have threads in our test, so
+   * with this mechanism we assign priorities to groups of threads
+   * when there are more threads than priorities.
+   */
   u_int grain_;
-  // Granularity of the assignment of the priorities.  Some OSs have
-  // fewer levels of priorities than we have threads in our test, so
-  // with this mechanism we assign priorities to groups of threads
-  // when there are more threads than priorities.
 
+  /// counter of the number of priorities used within a grain.
   u_int counter_;
-  // counter of the number of priorities used within a grain.
 
-  char *task_id_;
-  // Set a task_id string starting with "@", so we are able to
+  // Set a task_name string starting with "@", so we are able to
   // accurately count the number of context switches.
+  char* task_name_;
 
+  /// elapsed time for the latency tests.
   ACE_Time_Value delta_;
-  // elapsed time for the latency tests.
 
+  /// number of command line arguments.
   int argc_;
-  // number of command line arguments.
 
-  char **argv_;
-  // command line argument array.
+  /// command line argument array.
+  ACE_TCHAR **argv_;
 
+  /**
+   * Create a separate manager for the client.  This allows the use of
+   * its wait () method on VxWorks, without interfering with the
+   * server's (global) thread manager.
+   */
   ACE_Thread_Manager client_thread_manager_;
-  // Create a separate manager for the client.  This allows the use of
-  // its wait () method on VxWorks, without interfering with the
-  // server's (global) thread manager.
 
+  /// Stores the total number of context switches incurred by the
+  /// program while making CORBA requests
   u_int context_switch_;
-  // Stores the total number of context switches incurred by the
-  // program while making CORBA requests
 
+  /// Thread manager for the servant used for utilization.
   ACE_Thread_Manager server_thread_manager_;
-  // Thread manager for the servant used for utilization.
 
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
   ACE_Profile_Timer timer_for_context_switch;

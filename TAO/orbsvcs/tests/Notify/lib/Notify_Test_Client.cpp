@@ -1,15 +1,8 @@
-// $Id$
-
 #include "Notify_Test_Client.h"
-
-ACE_RCSID (lib,
-           Notify_Test_Client,
-           "$Id$")
-
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
-Notify_Test_Client::Notify_Test_Client (void)
+Notify_Test_Client::Notify_Test_Client ()
 : num_clients_( 0 )
 , done_( false )
 {
@@ -19,136 +12,124 @@ Notify_Test_Client::Notify_Test_Client (void)
 
 Notify_Test_Client::~Notify_Test_Client ()
 {
-  ACE_TRY_NEW_ENV
-  {
-    root_poa_->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    orb_->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCH (CORBA::Exception, e)
-  {
-    ACE_PRINT_EXCEPTION (e, "\nError: ");
-  }
-  ACE_ENDTRY;
+  if (!CORBA::is_nil (root_poa_.in ()) &&
+      !CORBA::is_nil (orb_.in ()))
+    {
+      try
+      {
+        root_poa_->destroy(true, true);
+        orb_->destroy();
+      }
+      catch (const CORBA::Exception& e)
+      {
+        e._tao_print_exception ("\nError: ");
+      }
+    }
 }
 
 int
-Notify_Test_Client::init (int argc, char *argv [] ACE_ENV_ARG_DECL)
+Notify_Test_Client::init (int argc, ACE_TCHAR *argv[])
 {
-  int status = this->init_ORB (argc, argv ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int status = this->init_ORB (argc, argv);
   if (status == 0)
     {
-      this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      this->resolve_Notify_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->resolve_naming_service ();
+      this->resolve_Notify_factory ();
     }
   return status;
 }
 
 int
-Notify_Test_Client::parse_args (int /*argc*/, char** /*argv*/)
+Notify_Test_Client::parse_args (int /*argc*/, ACE_TCHAR *[] /*argv*/)
 {
    return 0;
 }
 
 
 int
-Notify_Test_Client::init_ORB (int argc,
-                              char *argv []
-                              ACE_ENV_ARG_DECL)
+Notify_Test_Client::init_ORB (int argc, ACE_TCHAR *argv[])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   if (this->parse_args (argc, argv) != 0)
     {
       return -1;
     }
 
-  CORBA::Object_ptr poa_object  =
-    this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
 
-  if (CORBA::is_nil (poa_object))
+  if (CORBA::is_nil (poa_object.in ()))
     {
       ACE_ERROR ((LM_ERROR,
                   " (%P|%t) Unable to initialize the POA.\n"));
       return -1;
     }
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    root_poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
   return 0;
 }
 
 void
-Notify_Test_Client::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Notify_Test_Client::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_THROW (CORBA::UNKNOWN ());
+    throw CORBA::UNKNOWN ();
 
   this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CosNaming::NamingContext::_narrow (naming_obj.in ());
 }
 
 void
-Notify_Test_Client::resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL)
+Notify_Test_Client::resolve_Notify_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
   name[0].id = CORBA::string_dup (NOTIFY_FACTORY_NAME);
 
   CORBA::Object_var obj =
-    this->naming_context_->resolve (name
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->naming_context_->resolve (name);
 
   this->notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (
-                                                    obj.in ()
-                                                    ACE_ENV_ARG_PARAMETER
-                                                  );
-  ACE_CHECK;
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
 }
 
 int
-Notify_Test_Client::ORB_run (ACE_ENV_SINGLE_ARG_DECL)
+Notify_Test_Client::ORB_run ()
 {
   while (! is_done())
   {
     ACE_Time_Value tv(0, 10 * 1000);
-    orb_->run(tv ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(-1);
+    orb_->run(tv);
   }
 
   ACE_DEBUG((LM_DEBUG, "\nWaiting for stray events...\n"));
 
   ACE_Time_Value tv(2);
-  orb_->run(tv ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
+  orb_->run(tv);
+
+  return 0;
+}
+
+int
+Notify_Test_Client::ORB_run (ACE_Time_Value& tv)
+{
+  orb_->run(tv);
+
+  ACE_DEBUG((LM_DEBUG, "\nWaiting for stray events...\n"));
+
+  ACE_Time_Value tv2(2,0);
+  orb_->run(tv2);
 
   return 0;
 }
@@ -169,43 +150,38 @@ Notify_Test_Client::consumer_done (TAO_Notify_Tests_Peer*)
 }
 
 bool
-Notify_Test_Client::is_done (void) const
+Notify_Test_Client::is_done () const
 {
   return this->done_;
 }
 
 CORBA::ORB_ptr
-Notify_Test_Client::orb (void)
+Notify_Test_Client::orb ()
 {
   return this->orb_.in ();
 }
 
 
 PortableServer::POA_ptr
-Notify_Test_Client::root_poa (void)
+Notify_Test_Client::root_poa ()
 {
   return this->root_poa_.in ();
 }
 
-
 CosNaming::NamingContext_ptr
-Notify_Test_Client::naming_context (void)
+Notify_Test_Client::naming_context ()
 {
   return this->naming_context_.in ();
 }
 
-
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-Notify_Test_Client::notify_factory (void)
+Notify_Test_Client::notify_factory ()
 {
   return this->notify_factory_.in ();
 }
 
-
 CosNotifyChannelAdmin::EventChannel_ptr
-Notify_Test_Client::create_event_channel (const char* cname,
-                                          int resolve
-                                          ACE_ENV_ARG_DECL)
+Notify_Test_Client::create_event_channel (const char* cname, bool resolve)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
   CosNaming::Name name (1);
@@ -230,10 +206,7 @@ Notify_Test_Client::create_event_channel (const char* cname,
 
       ec = notify_factory_->create_channel (initial_qos,
                                             initial_admin,
-                                            id
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
-
+                                            id);
 
       naming_context_->rebind(name, ec.in());
     }

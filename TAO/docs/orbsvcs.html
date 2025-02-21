@@ -1,5 +1,5 @@
 <html>
-  <!-- $Id$ -->
+  <!--  -->
   <head>
     <title>TAO's CORBA Object Services Documentation</title>
   </head>
@@ -48,7 +48,7 @@ bgcolor="#ffffff">
       the users control over collocation of the services implementation.
       As a first cut all the service implementations are included in the
       orbsvcs library <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE>.
-      Since there are serveral services and each one is implemented
+      Since there are several services and each one is implemented
       using several files we have given a different directory to each
       service.
       This structure could also simplify a future split into several
@@ -79,7 +79,7 @@ bgcolor="#ffffff">
       <TR>
         <TD>Event Service</TD>
         <TD><CODE>orbsvcs/orbsvcs/CosEvent</CODE></TD>
-        <TD>Pradeep Gore <pradeep at oomworks dot com> 
+        <TD>Pradeep Gore <pradeep at oomworks dot com>
         and OCI<taosupport at ociweb dot com> </TD>
         </TR>
       <TR>
@@ -179,30 +179,30 @@ bgcolor="#ffffff">
       executables if they want any changes in CORBA policies or would
       like to set their own bits when running a service. The
       executables that are packed with the TAO distribution should be
-      viewed as an executable with a basic subset of features. 
+      viewed as an executable with a basic subset of features.
       The binaries in question are located in
       <CODE>$TAO_ROOT/orbsvcs</CODE>, and the list includes:
     </P>
 
     <UL>
-      <LI>Concurrency_Service</LI>
-      <LI>Dump_Schedule</LI>
-      <LI>LifeCycle_Service</LI>
-      <LI>LoadBalancer</LI>
-      <LI>CosEvent_Service</LI>
-      <LI>Event_Service</LI>
-      <LI>FTRT_Event_Service</LI>
-      <LI>FTRT_Event_Service</LI>
-      <LI>FT_ReplicationManager </LI>
-      <LI>FT_Service</LI>
-      <LI>Fault_Detector</LI>
-      <LI>Fault_Notifier</LI>
-      <LI>Naming_Service</LI>
-      <LI>Scheduling_Service</LI>
-      <LI>Trading_Service</LI>
-      <LI>Time_Service</LI>
-      <LI>ImplRepo_Service *(see below)*</LI>
-      <LI>Notify_Service</LI>
+      <LI>Concurrency_Service/tao_cosconcurrency</LI>
+      <LI>Dump_Schedule/tao_dump_schedule</LI>
+      <LI>LifeCycle_Service/tao_coslifecycle</LI>
+      <LI>LoadBalancer/tao_loadmanager</LI>
+      <LI>CosEvent_Service/tao_cosevent</LI>
+      <LI>Event_Service/tao_rtevent</LI>
+      <LI>FTRT_Event_Service/Event_Service/ftrt_eventservice</LI>
+      <LI>FTRT_Event_Service/Factory_Service/ftrtec_factory_service</LI>
+      <LI>FTRT_Event_Service/Gateway_Service/ftrtec_gateway_service</LI>
+      <LI>FT_ReplicationManager/tao_ft_replicationmanager</LI>
+      <LI>Fault_Detector/tao_fault_detector</LI>
+      <LI>Fault_Notifier/tao_fault_notifier</LI>
+      <LI>Naming_Service/tao_cosnaming</LI>
+      <LI>Scheduling_Service/tao_cosscheduling</LI>
+      <LI>Trading_Service/tao_costrading</LI>
+      <LI>Time_Service/tao_costime_server</LI>
+      <LI>ImplRepo_Service/tao_imr_locator *(see below)*</LI>
+      <LI>Notify_Service/tao_cosnotification</LI>
     </UL>
 
     <P>In the future we plan to use a single binary and ACE Service

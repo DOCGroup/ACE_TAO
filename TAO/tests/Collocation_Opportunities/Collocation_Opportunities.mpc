@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
-project(Collocation Opportunities): taoserver, pi_server {
+project(Collocation Opportunities): taoserver, avoids_corba_e_micro {
   exename = Collocation_Opportunities
 }

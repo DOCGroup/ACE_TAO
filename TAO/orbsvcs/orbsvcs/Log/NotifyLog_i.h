@@ -4,8 +4,6 @@
 /**
  *  @file   NotifyLog_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsNotifyLogAdmin::NotifyLog interface.
  *  File also conatins TAO_Notify_LogConsumer which is used
  *  to write events to the Log.
@@ -29,12 +27,14 @@
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/Log/NotifyLogConsumer.h"
 
-#include "notifylog_serv_export.h"
+#include "orbsvcs/Log/notifylog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_NotifyLog_i;
@@ -53,11 +53,9 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLog_i :
   public POA_DsNotifyLogAdmin::NotifyLog
 {
 public:
-  // = Initialization and Termination.
-
   /// Constructor.
   TAO_NotifyLog_i (CORBA::ORB_ptr orb,
-		   PortableServer::POA_ptr poa,
+                   PortableServer::POA_ptr poa,
                    TAO_LogMgr_i &logmgr_i,
                    DsLogAdmin::LogMgr_ptr factory,
                    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
@@ -68,150 +66,76 @@ public:
   ~TAO_NotifyLog_i ();
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
 
   /// Destroy the log object and all contained records.
   void
-  destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  destroy ();
 
   /// Activate the NotifyLog.
   void
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  activate ();
 
   // = Methods from CosNotifyChannelAdmin::EventChannel.
   CosNotifyFilter::Filter_ptr
-  get_filter (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  get_filter ();
 
-  void set_filter (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  void set_filter (CosNotifyFilter::Filter_ptr filter);
 
   CosNotifyChannelAdmin::EventChannelFactory_ptr
-  MyFactory (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  MyFactory ();
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
-  default_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  default_consumer_admin ();
 
   CosNotifyChannelAdmin::SupplierAdmin_ptr
-  default_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  default_supplier_admin ();
 
   CosNotifyFilter::FilterFactory_ptr
-  default_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  default_filter_factory ();
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
   new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-    CosNotifyChannelAdmin::AdminID& id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    CosNotifyChannelAdmin::AdminID& id);
 
   CosNotifyChannelAdmin::SupplierAdmin_ptr
   new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-    CosNotifyChannelAdmin::AdminID& id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    CosNotifyChannelAdmin::AdminID& id);
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
-  get_consumeradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::AdminNotFound,
-      CORBA::SystemException
-    ));
+  get_consumeradmin (CosNotifyChannelAdmin::AdminID id);
 
   CosNotifyChannelAdmin::SupplierAdmin_ptr
-  get_supplieradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::AdminNotFound,
-      CORBA::SystemException
-    ));
+  get_supplieradmin (CosNotifyChannelAdmin::AdminID id);
 
   CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_consumeradmins (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  get_all_consumeradmins ();
 
   CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_supplieradmins (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  get_all_supplieradmins ();
 
   CosNotification::AdminProperties*
-  get_admin (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  get_admin ();
 
-  void set_admin (const CosNotification::AdminProperties& admin ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotification::UnsupportedAdmin,
-      CORBA::SystemException
-    ));
+  void set_admin (const CosNotification::AdminProperties& admin);
 
   CosNotification::QoSProperties*
-  get_qos (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  get_qos ();
 
-  void set_qos (const CosNotification::QoSProperties& ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotification::UnsupportedQoS,
-      CORBA::SystemException
-    ));
+  void set_qos (const CosNotification::QoSProperties&);
 
   void validate_qos (const CosNotification::QoSProperties&,
-    CosNotification::NamedPropertyRangeSeq_out ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CosNotification::UnsupportedQoS,
-      CORBA::SystemException
-    ));
+    CosNotification::NamedPropertyRangeSeq_out);
 
   // = Methods from DsEventLogAdmin::EventLog.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  for_consumers ();
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-protected:
-
-  /// Used to access the hash map that holds all the Logs created.
-  TAO_LogMgr_i &logmgr_i_;
+  for_suppliers ();
 
 private:
   /// The PushConsumer that consumes the events and stores them
@@ -222,7 +146,7 @@ private:
   CosNotifyChannelAdmin::EventChannel_var event_channel_;
 
   /// The Event Channel ID that the log uses.
-  CosNotifyChannelAdmin::ChannelID channelID_;
+  //  CosNotifyChannelAdmin::ChannelID channelID_;
 
   /// The EventChannelFactory used to create the EventChannel above.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
@@ -230,8 +154,10 @@ private:
   /// The ConsumerAdmin that the log uses.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
 
-  PortableServer::POA_var	poa_;
+  PortableServer::POA_var poa_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

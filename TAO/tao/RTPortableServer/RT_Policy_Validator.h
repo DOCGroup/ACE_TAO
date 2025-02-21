@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    RT_Policy_Validator.h
- *
- *  $Id$
  *
  *  This file contains the declaration for the RTCORBA policy validator.
  *
@@ -24,9 +24,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "rtportableserver_export.h"
+#include "tao/RTPortableServer/rtportableserver_export.h"
 #include "tao/Policy_Validator.h"
 #include "tao/RTCORBA/RTCORBA.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
@@ -40,7 +42,7 @@ public:
   TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_POA_RT_Policy_Validator (void);
+  ~TAO_POA_RT_Policy_Validator () override = default;
 
   static RTCORBA::ServerProtocolPolicy_ptr server_protocol_policy_from_thread_pool (TAO_Thread_Pool *thread_pool,
                                                                                     TAO_ORB_Core &orb_core);
@@ -50,22 +52,18 @@ public:
                                                              TAO_ORB_Core &orb_core);
 
   static TAO_Thread_Pool *extract_thread_pool (TAO_ORB_Core &orb_core,
-                                               TAO_Policy_Set &policies
-                                               ACE_ENV_ARG_DECL);
+                                               TAO_Policy_Set &policies);
 
 protected:
-
   /**
    * Validate that the policies in the specified set
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  void validate_impl (TAO_Policy_Set &policies
-                      ACE_ENV_ARG_DECL);
+  void validate_impl (TAO_Policy_Set &policies) override;
 
   /// Add/merge policies.
-  void merge_policies_impl (TAO_Policy_Set &policies
-                            ACE_ENV_ARG_DECL);
+  void merge_policies_impl (TAO_Policy_Set &policies) override;
 
   /**
    * Return whether the specified policy type is legal for the
@@ -73,21 +71,19 @@ protected:
    * potentially specify policies that are unknown to an
    * validate () routine, and these need to be caught.
    */
-  virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
+  CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) override;
 
 private:
-  void validate_server_protocol (TAO_Policy_Set &policies
-                                 ACE_ENV_ARG_DECL);
+  void validate_server_protocol (TAO_Policy_Set &policies);
 
-  void validate_priorities (TAO_Policy_Set &policies
-                            ACE_ENV_ARG_DECL);
+  void validate_priorities (TAO_Policy_Set &policies);
 
-  void validate_thread_pool (TAO_Policy_Set &policies
-                             ACE_ENV_ARG_DECL);
+  void validate_thread_pool (TAO_Policy_Set &policies);
 
   TAO_Thread_Pool *thread_pool_;
-
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

@@ -1,14 +1,12 @@
-// $Id$
-
-#include "Timer_Reactor.h"
-
-ACE_RCSID(Notify, TAO_Notify_Timer_Reactor, "$Id$")
-
-#include "ace/Reactor.h"
+#include "orbsvcs/Notify/Timer_Reactor.h"
+#include "orbsvcs/Notify/Properties.h"
 #include "tao/ORB_Core.h"
-#include "Properties.h"
+#include "ace/Reactor.h"
 
-TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor (void)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor ()
   :reactor_ (0)
 {
   // Get the ORB
@@ -22,7 +20,7 @@ TAO_Notify_Timer_Reactor::~TAO_Notify_Timer_Reactor ()
 }
 
 void
-TAO_Notify_Timer_Reactor::release (void)
+TAO_Notify_Timer_Reactor::release ()
 {
   delete this;
   //@@ inform factory
@@ -33,7 +31,7 @@ TAO_Notify_Timer_Reactor::schedule_timer (ACE_Event_Handler *handler,
                                const ACE_Time_Value &delay_time,
                                const ACE_Time_Value &interval)
 {
-  return  this->reactor_->schedule_timer (handler, 0, delay_time, interval);
+  return this->reactor_->schedule_timer (handler, 0, delay_time, interval);
 }
 
 int
@@ -41,3 +39,5 @@ TAO_Notify_Timer_Reactor::cancel_timer (long timer_id)
 {
   return this->reactor_->cancel_timer (timer_id);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

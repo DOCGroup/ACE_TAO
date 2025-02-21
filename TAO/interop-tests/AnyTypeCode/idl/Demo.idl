@@ -1,0 +1,63 @@
+module Demo
+{
+
+  struct BaseStruct
+  {
+    string str;
+  };
+
+  struct NestedStruct;
+
+  typedef sequence<NestedStruct> NestedSeq;
+
+  struct NestedStruct
+  {
+    BaseStruct foo1;
+    BaseStruct foo2;
+    BaseStruct foo3;
+    NestedSeq bars;
+  };
+
+  //------------------------------
+
+  union BaseUnion switch (short)
+  {
+    case 1: string str;
+    case 2: long l;
+    default: short s;
+  };
+
+  union NestedUnion switch (short)
+  {
+    case 1: BaseUnion bar1;
+    case 2: BaseUnion bar2;
+    default: BaseUnion defaultBar;
+  };
+
+  //------------------------------
+
+  valuetype BaseValue
+  {
+    public string str;
+
+    factory create(in string str);
+  };
+
+  valuetype NestedValue
+  {
+    public BaseValue foo1;
+    public BaseValue foo2;
+  };
+
+  //------------------------------
+
+  interface ATC_Test
+  {
+    string do_struct (in any a);
+    string do_union (in any a);
+    string do_value (in any a);
+
+    oneway void shutdown ();
+  };
+
+};

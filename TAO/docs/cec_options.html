@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>COS Event Channel Configuration</title>
-    <!-- $Id$ -->
+    <!--  -->
   </head>
 
   <body>
@@ -202,6 +202,36 @@ static CEC_Factory "-CECDispatching reactive ....."
           </TD>
         </TR>
 
+        <!-- <TR NAME="CECConsumerOperationTimeout"> -->
+        <TR>
+          <TD><CODE>-CECConsumerOperationTimeout</CODE>
+            <EM>timeout</EM>
+          </TD>
+          <TD>Set the relative roundtrip timeout for all operations (except
+            &quot;pings&quot; due to reactive consumer control) on consumers.
+            Reactive consumer control must be enabled for this option to take
+            effect.  The units for <EM>timeout</EM> are microseconds.
+            If a remote operation invoked on the consumer exceeds the timeout,
+            then that consumer will be considered &quot;bad&quot; and will be
+            disconnected from the event channel.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="CECSupplierOperationTimeout"> -->
+        <TR>
+          <TD><CODE>-CECSupplierOperationTimeout</CODE>
+            <EM>timeout</EM>
+          </TD>
+          <TD>Set the relative roundtrip timeout for all operations (except
+            &quot;pings&quot; due to reactive supplier control) on suppliers.
+            Reactive supplier control must be enabled for this option to take
+            effect.  The units for <EM>timeout</EM> are microseconds.
+            If a remote operation invoked on the supplier exceeds the timeout
+            then that supplier will be considered &quot;bad&quot; and will be
+            disconnected from the event channel.
+          </TD>
+        </TR>
+
         <!-- <TR NAME="CECProxyConsumerCollection"> -->
         <TR>
           <TD><CODE>-CECProxyConsumerCollection</CODE>
@@ -313,6 +343,19 @@ static CEC_Factory "-CECDispatching reactive ....."
             </P>
          </TD>
         </TR>
+
+        <!-- <TR NAME="CECProxyDisconnectRetries"> -->
+        <TR>
+          <TD><CODE>-CECShutdownWaitCompletion</CODE>
+            <EM>true|false</EM>
+          </TD>
+          <TD><P>Default <CODE>true</CODE> which means we wait on all events in the queue
+          to be processed on shutdown, in case of <CODE>false</CODE> all pending events in the queue are flushed
+          on shutdown.
+            </P>
+         </TD>
+        </TR>
+
       </TABLE>
     </P>
 
@@ -422,13 +465,5 @@ static CEC_Factory "-CECDispatching reactive ....."
     <P><HR><P>
 
       Back to the TAO <A HREF="index.html">components documentation</A>.
-
-      <!--#include virtual="/~schmidt/cgi-sig.html" -->
-
-    <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
-<!-- Created: Thu Jul  1 21:44:28 CDT 1999 -->
-<!-- hhmts start -->
-Last modified: Fri Apr 20 15:24:09 CDT 2001
-<!-- hhmts end -->
   </body>
 </html>

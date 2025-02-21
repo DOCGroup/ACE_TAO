@@ -1,11 +1,8 @@
-// $Id$
-
 // ******************************************************************
 // Include Section
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 
 #include "tao/ORB_Core.h"
 
@@ -18,6 +15,7 @@
 #include "Notify_Test_Client.h"
 
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 // ******************************************************************
 // Data Section
@@ -25,7 +23,7 @@
 
 static TAO_Notify_Tests_StructuredPushSupplier* supplier_1 = 0;
 static int max_events = 1000;
-static const char* ior_output_file = "supplier.ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
 
 // ******************************************************************
 // Subroutine Section
@@ -39,14 +37,12 @@ public:
   {
   }
 
-  void go (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  void go ()
   {
     started_ = true;
   }
 
-  void done (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  void done ()
   {
     started_ = false;
   }
@@ -76,14 +72,14 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Supplier_Client::parse_args (int argc, char *argv[])
+Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:e:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:e:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -106,31 +102,28 @@ Supplier_Client::parse_args (int argc, char *argv[])
         -1);
   }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 
 static CosNotifyChannelAdmin::SupplierAdmin_ptr
-create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
-                      ACE_ENV_ARG_DECL)
+create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::SupplierAdmin_var admin =
     ec->new_for_suppliers (CosNotifyChannelAdmin::AND_OP,
-    adminid
-    ACE_ENV_ARG_PARAMETER);
+    adminid);
 
-  ACE_CHECK_RETURN (0);
 
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
 }
 
 
 static void
-SendEvent (int id ACE_ENV_ARG_DECL_NOT_USED)
+SendEvent (int id)
 {
-  const char* type = ( (id & 1) == 1 ? "odd" : "even" );
+  const char* type = ( (id & 1) == 1 ? "odd" : "even");
   CosNotification::StructuredEvent event;
 
   event.header.fixed_header.event_type.domain_name =
@@ -145,33 +138,28 @@ SendEvent (int id ACE_ENV_ARG_DECL_NOT_USED)
   event.filterable_data[0].name = CORBA::string_dup("type");
   event.filterable_data[0].value <<= type;
 
-  ACE_TRY_NEW_ENV
+  try
   {
-    supplier_1->send_event(event ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    supplier_1->send_event(event);
   }
-  ACE_CATCH (CORBA::Exception, e)
+  catch (const CORBA::Exception& e)
   {
-    ACE_PRINT_EXCEPTION (e, "Error: Supplier exception: ");
+    e._tao_print_exception ("Error: Supplier exception: ");
   }
-  ACE_ENDTRY;
 }
 
 static void
 create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
-                  PortableServer::POA_ptr poa
-                  ACE_ENV_ARG_DECL)
+                  PortableServer::POA_ptr poa)
 {
   // startup the first supplier
   ACE_NEW_THROW_EX (supplier_1,
     TAO_Notify_Tests_StructuredPushSupplier (),
     CORBA::NO_MEMORY ());
 
-  supplier_1->init (poa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier_1->init (poa);
 
-  supplier_1->connect (admin ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  supplier_1->connect (admin);
 }
 
 
@@ -179,32 +167,27 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Auto_Ptr< sig_i > sig_impl;
+  std::unique_ptr<sig_i> sig_impl;
   int status = 0;
-  ACE_TRY_NEW_ENV
+  try
   {
     Supplier_Client client;
-    status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    status = client.init (argc, argv);
 
     if (status == 0)
     {
       CosNotifyChannelAdmin::EventChannel_var ec =
-        client.create_event_channel ("MyEventChannel", 0
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        client.create_event_channel ("MyEventChannel", 0);
 
       CORBA::ORB_ptr orb = client.orb ();
 
-      sig_impl.reset( new sig_i( orb ) );
-      sig_var sig = sig_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sig_impl.reset( new sig_i(orb));
+      sig_var sig = sig_impl->_this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (sig.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (sig.in ());
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -212,28 +195,27 @@ int main (int argc, char* argv[])
         FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-          "Cannot open output file for "
-          "writing IOR: %s",
-          ior_output_file),
+          "Cannot open output file %s for "
+          "writing IOR: %C",
+          ior_output_file,
+          ior.in ()),
           1);
         ACE_OS::fprintf (output_file, "%s", ior.in ());
         ACE_OS::fclose (output_file);
       }
 
       CosNotifyChannelAdmin::SupplierAdmin_var admin =
-        create_supplieradmin (ec.in () ACE_ENV_ARG_PARAMETER);
+        create_supplieradmin (ec.in ());
       if (!CORBA::is_nil (admin.in ()))
       {
-        create_suppliers(admin.in (), client.root_poa () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        create_suppliers(admin.in (), client.root_poa ());
 
         sig_impl->wait_for_startup();
 
         ACE_DEBUG((LM_DEBUG, "1 supplier sending %d events...\n", max_events));
         for (int i = 0; i < max_events; ++i)
         {
-          SendEvent (i ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          SendEvent (i);
         }
         ACE_DEBUG((LM_DEBUG, "\nSupplier sent %d events.\n", max_events));
 
@@ -241,17 +223,15 @@ int main (int argc, char* argv[])
 
         ACE_OS::unlink (ior_output_file);
 
-        ec->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ec->destroy();
       }
     }
   }
-  ACE_CATCH (CORBA::Exception, e)
+  catch (const CORBA::Exception& e)
   {
-    ACE_PRINT_EXCEPTION (e, "Error: Supplier exception: ");
+    e._tao_print_exception ("Error: Supplier exception: ");
     status = 1;
   }
-  ACE_ENDTRY;
 
   return status;
 }

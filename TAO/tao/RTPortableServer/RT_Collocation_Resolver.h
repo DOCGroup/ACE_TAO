@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    RT_Collocation_Resolver.h
- *
- *  $Id$
  *
  *  @author  Irfan Pyarali
  */
@@ -25,6 +25,8 @@
 #include "tao/Collocation_Resolver.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_RT_Collocation_Resolver
  *
@@ -38,14 +40,15 @@ class TAO_RTPortableServer_Export TAO_RT_Collocation_Resolver :
   public TAO_Collocation_Resolver
 {
 public:
-
   /// Is @a object collocated?
-  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
-                                        ACE_ENV_ARG_DECL) const;
+  CORBA::Boolean is_collocated (CORBA::Object_ptr object) const override;
 };
+
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)
 ACE_FACTORY_DECLARE (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

@@ -1,52 +1,41 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    short.cpp
-//
-// = DESCRIPTION
-//    tests shorts
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    short.cpp
+ *
+ *  tests shorts
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "short.h"
-
-ACE_RCSID (Param_Test, 
-           short, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Short
 // ************************************************************************
 
-Test_Short::Test_Short (void)
+Test_Short::Test_Short ()
   : opname_ (CORBA::string_dup ("test_short"))
 {
 }
 
-Test_Short::~Test_Short (void)
+Test_Short::~Test_Short ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Short::opname (void) const
+Test_Short::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Short::dii_req_invoke (CORBA::Request *req
-                            ACE_ENV_ARG_DECL)
+Test_Short::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -54,25 +43,21 @@ Test_Short::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_short);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   req->return_value () >>= this->ret_;
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= this->inout_;
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= this->out_;
 }
 
 int
-Test_Short::init_parameters (Param_Test_ptr /*objref*/
-                             ACE_ENV_ARG_DECL_NOT_USED)
+Test_Short::init_parameters (Param_Test_ptr /*objref*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -82,7 +67,7 @@ Test_Short::init_parameters (Param_Test_ptr /*objref*/
 }
 
 int
-Test_Short::reset_parameters (void)
+Test_Short::reset_parameters ()
 {
   this->inout_ =  0;
   this->out_ =  0;
@@ -91,31 +76,25 @@ Test_Short::reset_parameters (void)
 }
 
 int
-Test_Short::run_sii_test (Param_Test_ptr objref
-                          ACE_ENV_ARG_DECL)
+Test_Short::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_short (this->in_,
                                        this->inout_,
-                                       this->out_
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                       this->out_);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Short::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Short::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Short::check_validity (void)
+Test_Short::check_validity ()
 {
   if (this->inout_ == this->in_ * 2 &&
       this->out_ == this->in_ * 3 &&
@@ -132,7 +111,7 @@ Test_Short::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Short::print_values (void)
+Test_Short::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"

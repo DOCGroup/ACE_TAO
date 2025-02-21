@@ -1,60 +1,33 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_eventtype.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_EventType and be_valuetype that provides
-//    additional means for C++ mapping of an eventtype.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_eventtype.cpp
+ *
+ *  Extension of class AST_EventType and be_valuetype that provides
+ *  additional means for C++ mapping of an eventtype.
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
 
 #include "be_eventtype.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be,
-           be_eventtype,
-           "$Id$")
+#include "global_extern.h"
 
-// Default constructor.
-be_eventtype::be_eventtype (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    be_scope (),
-    be_decl (),
-    be_type (),
-    be_interface (),
-    AST_ValueType (),
-    be_valuetype (),
-    AST_EventType ()
-{
-}
-
-// Constructor used to build the AST.
 be_eventtype::be_eventtype (UTL_ScopedName *n,
-                            AST_Interface **inherits,
+                            AST_Type **inherits,
                             long n_inherits,
-                            AST_ValueType *inherits_concrete,
+                            AST_Type *inherits_concrete,
                             AST_Interface **inherits_flat,
                             long n_inherits_flat,
-                            AST_Interface **supports,
+                            AST_Type **supports,
                             long n_supports,
-                            AST_Interface *supports_concrete,
-                            idl_bool abstract,
-                            idl_bool truncatable,
-                            idl_bool custom)
-  : COMMON_Base (0,
+                            AST_Type *supports_concrete,
+                            bool abstract,
+                            bool truncatable,
+                            bool custom)
+  : COMMON_Base (false,
                  abstract),
     AST_Decl (AST_Decl::NT_eventtype,
               n),
@@ -66,7 +39,7 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
                    n_inherits,
                    inherits_flat,
                    n_inherits_flat,
-                   0,
+                   false,
                    abstract),
     be_scope (AST_Decl::NT_eventtype),
     be_decl (AST_Decl::NT_eventtype,
@@ -78,7 +51,7 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
                   n_inherits,
                   inherits_flat,
                   n_inherits_flat,
-                  0,
+                  false,
                   abstract),
     AST_ValueType (n,
                    inherits,
@@ -119,7 +92,7 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
 {
 }
 
-be_eventtype::~be_eventtype (void)
+be_eventtype::~be_eventtype ()
 {
 }
 
@@ -128,16 +101,13 @@ be_eventtype::~be_eventtype (void)
 int
 be_eventtype::accept (be_visitor *visitor)
 {
-  return visitor->visit_eventtype (this);
+  return (idl_global->ignore_idl3 ()
+            ? 0
+            : visitor->visit_eventtype (this));
 }
 
 void
-be_eventtype::destroy (void)
+be_eventtype::destroy ()
 {
   this->be_valuetype::destroy ();
 }
-
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_eventtype, be_valuetype, AST_EventType)
-IMPL_NARROW_FROM_DECL (be_eventtype)
-IMPL_NARROW_FROM_SCOPE (be_eventtype)

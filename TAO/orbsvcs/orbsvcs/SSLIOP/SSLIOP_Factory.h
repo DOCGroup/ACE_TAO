@@ -4,8 +4,6 @@
 /**
  *  @file     SSLIOP_Factory.h
  *
- *  $Id$
- *
  *  SSLIOP implementation of PP Framework Protocol_Factory interface.
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
@@ -19,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,15 +31,15 @@
 #include "ace/Service_Config.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Acceptor;
 class TAO_Connector;
-
 
 namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Protocol_Factory
      *
@@ -54,34 +52,32 @@ namespace TAO
       : public TAO_Protocol_Factory
     {
     public:
-
       /// Constructor.
-      Protocol_Factory (void);
+      Protocol_Factory ();
 
       /// Destructor.
-      virtual ~Protocol_Factory (void);
+      virtual ~Protocol_Factory ();
 
       // = Service Configurator hooks.
       /// Dynamic linking hook
-      virtual int init (int argc, char* argv[]);
+      virtual int init (int argc, ACE_TCHAR* argv[]);
 
       /// Verify prefix is a match
       virtual int match_prefix (const ACE_CString & prefix);
 
       /// Returns the prefix used by the protocol.
-      virtual const char * prefix (void) const;
+      virtual const char * prefix () const;
 
       /// Return the character used to mark where an endpoint ends and
       /// where its options begin.
-      virtual char options_delimiter (void) const;
+      virtual char options_delimiter () const;
 
       // = Check Protocol_Factory.h for a description of these methods.
-      virtual TAO_Acceptor  * make_acceptor (void);
-      virtual TAO_Connector * make_connector  (void);
-      virtual int requires_explicit_endpoint (void) const;
+      virtual TAO_Acceptor  * make_acceptor ();
+      virtual TAO_Connector * make_connector  ();
+      virtual int requires_explicit_endpoint () const;
 
     private:
-
       /// Parse an X509 file path, which is expected to looks like:
       ///   <X509Path> ::= <Prefix> ':' <Path>
       ///   <Prefix>   ::= 'PEM' | 'ASN1'
@@ -90,17 +86,21 @@ namespace TAO
       /// if the prefix can not be recognized. The *path will point
       /// to the part of the original buffer, after the initial ':',
       /// or will contain 0, if no path was specified.
-      /// 
+      ///
       /// Beware: This function modifies the buffer pointed to by arg!
-      /// 
-      static int parse_x509_file (char *arg, char **path);
-      
-      /// Create and register the SSLIOP ORB initializer.
-      int register_orb_initializer (
-        CSIIOP::AssociationOptions csiv2_target_supports,
-        CSIIOP::AssociationOptions csiv2_target_requires);
+      ///
+      static int parse_x509_file (char *arg, char *&path);
 
-    private:
+      /// Callback for supplying a password to be used accessing a private key.
+      /// Key initialized by env var or supplied in arg list.
+      /// This callback is only used when a password is configured.
+      static int pem_passwd_cb (char *buf, int size, int , void *);
+
+      /// The stored password
+      static ACE_CString pem_passwd_;
+
+      /// Create and register the SSLIOP ORB initializer.
+      int register_orb_initializer ();
 
       /// Default quality-of-protection settings for the SSLIOP
       /// pluggable protocol.
@@ -114,20 +114,15 @@ namespace TAO
        */
       ACE_Time_Value timeout_;
 
-      /// The SSLIOP-specific CSIv2 transport mechanism component.
-      /**
-       * This SSLIOP-specific structure is embedded in the CSIv2 transport
-       * mechanism list of the @c CSIIOP::CompoundSecMechList IOR tagged
-       * component.
-       */
-      CSIIOP::TLS_SEC_TRANS * csiv2_component_;
-
+      bool check_host_;
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
 // Work around preprocessor tokenization.
 typedef TAO::SSLIOP::Protocol_Factory TAO_SSLIOP_Protocol_Factory;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 ACE_STATIC_SVC_REQUIRE (TAO_SSLIOP_Protocol_Factory)

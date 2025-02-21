@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Ossama Othman <ossama@uci.edu>
 
 #include "Push_Iterator_Factory_i.h"
@@ -9,22 +7,13 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (AMI_Observer,
-           Push_Iterator_Factory_i,
-           "$Id$")
-
-
 Web_Server::Metadata_Type *
 Push_Iterator_Factory_i::register_callback
   (const char *pathname,
-   Web_Server::Callback_ptr client_callback
-   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
+   Web_Server::Callback_ptr client_callback)
 {
   if (CORBA::is_nil (client_callback))  // @@ Will it ever be nil?
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      0);
+    throw CORBA::BAD_PARAM ();
 
   // What goes on in this method is a bit strange at first glance
   // since the client can potentially receive all of the data before
@@ -44,41 +33,35 @@ Push_Iterator_Factory_i::register_callback
                     Callback_Handler (pathname,
                                       client_callback),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   // Transfer ownership to the POA.
   PortableServer::ServantBase_var tmp (handler);
 
   // Start sending data to the client callback object.
-  handler->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  handler->run ();
 
   ACE_stat file_status;
   if (ACE_OS::stat (pathname,
                     &file_status) == -1)
     // HTTP 1.1 "Internal Server Error".
-    ACE_THROW_RETURN (Web_Server::Error_Result (500),
-                      0);
+    throw Web_Server::Error_Result (500);
 
   Web_Server::Metadata_Type *meta_tmp = 0;
   ACE_NEW_THROW_EX (meta_tmp,
                     Web_Server::Metadata_Type,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   Web_Server::Metadata_Type_var metadata = meta_tmp;
 
   if (this->modification_date (&file_status,
                                metadata.inout ()) != 0)
     // HTTP 1.1 "Internal Server Error.
-    ACE_THROW_RETURN (Web_Server::Error_Result (500),
-                      0);
+    throw Web_Server::Error_Result (500);
 
   if (this->content_type (pathname,
                           metadata.inout ()) != 0)
     // HTTP 1.1 "Internal Server Error.
-    ACE_THROW_RETURN (Web_Server::Error_Result (500),
-                      0);
+    throw Web_Server::Error_Result (500);
 
   return metadata._retn ();
 }
@@ -89,7 +72,7 @@ Push_Iterator_Factory_i::modification_date
    Web_Server::Metadata_Type & metadata)
 {
   // Get the modification time from the file status structure/
-  struct tm *t_gmt = gmtime (&(file_status->st_mtime));
+  struct tm *t_gmt = ACE_OS::gmtime (&(file_status->st_mtime));
 
   // A time string is probably never going to exceed 256 bytes.
   const size_t buflen = 256;

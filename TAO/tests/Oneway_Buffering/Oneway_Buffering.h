@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef ONEWAY_BUFFERING_H
 #define ONEWAY_BUFFERING_H
@@ -18,18 +15,13 @@ public:
                     Test::Oneway_Buffering_Admin_ptr admin);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &the_payload
-                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_data (const Test::Payload &the_payload);
 
-  virtual void flush (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void flush ();
 
-  virtual void sync (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void sync ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to shutdown the application.

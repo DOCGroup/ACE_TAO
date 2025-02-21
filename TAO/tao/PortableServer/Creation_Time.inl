@@ -1,15 +1,15 @@
 // -*- C++ -*-
-//
-// $Id$
-
+#include "tao/orbconf.h"        /* For POA_NO_TIMESTAMP definition. */
 #include "ace/OS_NS_string.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace Portable_Server
   {
     ACE_INLINE CORBA::ULong
-    Creation_Time::creation_time_length (void)
+    Creation_Time::creation_time_length ()
     {
       return 2 * sizeof (CORBA::ULong);
     }
@@ -22,7 +22,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Creation_Time::Creation_Time (void)
+    Creation_Time::Creation_Time ()
     {
       this->time_stamp_[Creation_Time::SEC_FIELD]  = 0;
       this->time_stamp_[Creation_Time::USEC_FIELD] = 0;
@@ -37,7 +37,7 @@ namespace TAO
     }
 
     ACE_INLINE const void *
-    Creation_Time::creation_time (void) const
+    Creation_Time::creation_time () const
     {
       return &this->time_stamp_;
     }
@@ -107,7 +107,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Temporary_Creation_Time::Temporary_Creation_Time (void)
+    Temporary_Creation_Time::Temporary_Creation_Time ()
       : time_stamp_ (0)
     {
     }
@@ -120,3 +120,4 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

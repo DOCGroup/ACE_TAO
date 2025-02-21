@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "Stock_Consumer.h"
 #include "QuoterC.h"
@@ -31,11 +28,9 @@ Stock_Consumer::disconnect ()
 }
 
 void
-Stock_Consumer::push (const CORBA::Any& data
-                      ACE_ENV_ARG_DECL_NOT_USED)
-  throw (CORBA::SystemException)
+Stock_Consumer::push (const CORBA::Any& data)
 {
-  Quoter::Event *event;
+  const Quoter::Event *event {};
   if ((data >>= event) == 0)
     return; // Invalid event
 
@@ -46,8 +41,7 @@ Stock_Consumer::push (const CORBA::Any& data
 }
 
 void
-Stock_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    throw (CORBA::SystemException)
+Stock_Consumer::disconnect_push_consumer ()
 {
   this->supplier_proxy_ = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }

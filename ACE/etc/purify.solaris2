@@ -1,0 +1,159 @@
+#### To use:  create a symlink, named .purify, to this file in your home
+#### directory:
+####   % ln -s $ACE_ROOT/env/purify.solaris2 ~/.purify
+#### Please note the leading dot in .purify.
+####
+#### I use these Purify options:
+####   -best-effort -cache-dir=/tmp/purifycache -chain-length=20 \
+####   -fds-inuse-at-exit=no -ignore-signals=SIGINT -inuse-at-exit \
+####   -max_threads=100
+#### These options are hard-coded in ACE wrapper_macros.GNU.
+
+####
+#### In addition to what's already in Purify's .purify.solaris2:
+####
+suppress miu malloc; *alloc; thr_setspecific
+suppress miu malloc; realloc; thr_keycreate
+suppress mlk malloc; calloc; thr_setspecific
+suppress plk malloc; *alloc; thr_setspecific
+suppress miu malloc; realloc; putenv
+
+####
+#### This looks like a minor problem in the g++ rx library or the Solaris 2.5
+#### C library qsort.
+####
+suppress umr qst; qsort; rx_compactify_nfa; rx_compile; re_compile_pattern; Regex::Regex(const char*,int,int,const char*); Regex::_GLOBAL_.I.(const Regex&)
+
+####
+#### A problem in Solaris LWPs?  This shows up in the ACE Thread_Manager_Test.
+####
+suppress umr _lwp_in_syscall; _thrp_suspend
+
+####
+#### These look like benign UMRs in the threads library.
+####
+suppress umr __sigprocmask; _thrp_exit; _t_cancel; _thr_exit_common
+suppress umr __sigprocmask; _thrp_exit; _thr_exit_common; _age
+
+####
+#### With Solaris 2.5.1, time (and other) functions apparently hold
+#### on to memory for the duration of a process.  Not unexpected, but
+#### the following suppress the Purify MIU reports.
+####
+suppress miu malloc; calloc; _tzload; _ltzset_u; localtime_u; ctime
+suppress miu malloc; calloc; _tzload; _ltzset_u; localtime_u; localtime_r; ctime_r
+suppress miu malloc; strdup; _tzload; _ltzset_u; localtime_u; ctime
+suppress miu malloc; strdup; _tzload; _ltzset_u; localtime_u; localtime_r; ctime_r
+suppress miu malloc; tzcpy; getzname; _ltzset_u; localtime_u; ctime
+suppress miu malloc; tzcpy; getzname; _ltzset_u; localtime_u; localtime_r; ctime_r
+suppress miu malloc; strdup; getsystemTZ; _ltzset_u; localtime_u; localtime_r; ctime_r
+suppress miu malloc; _atfork_append; _ld_concurrency; _init
+suppress miu malloc; Balloc; _IO_dtoa; _IO_outfloat; ostream::operator <<(double)
+
+####
+#### Another small leak, this doesn't look harmful.
+####
+suppress miu malloc; process_nls_path; catopen; __STATIC_CONSTRUCTOR(void); _init
+
+####
+#### Socket-related allocations, revealed by IOStream_Test or
+#### SOCK_Connector_Test.
+####
+suppress miu malloc; _nss_XbyY_buf_alloc; gethostbyaddr
+suppress miu malloc; _nss_XbyY_buf_alloc; gethostbyname
+suppress miu malloc; _s_alloc_bufs; _s_alloc; _s_socreate
+suppress miu malloc; add_silink; _s_alloc; _s_socreate
+suppress miu malloc; calloc; fgetnetconfig; getnetlist; setnetconfig
+suppress miu malloc; getnetlist; setnetconfig
+suppress miu malloc; *; getnetlist; setnetconfig
+suppress miu malloc; *; *; getnetlist; setnetconfig
+suppress miu malloc; realloc; rx_compactify_nfa
+suppress miu malloc; strdup; __rpc_getconfip; gethostby*_r
+suppress miu malloc; strdup; getlookups; fgetnetconfig; getnetlist
+suppress miu malloc; *; _nsw_getoneconfig; do_getconfig
+suppress miu malloc; add_concell; do_getconfig; __nsw_getconfig
+
+####
+#### Allocations during OS accept call. Can be seen in the
+#### Cached_Accept_Conn_Test and Cached_Conn_Test
+####
+suppress mlk malloc; setnetconfig; _s_match_netconf; _s_socreate; __accept; accept
+
+####
+#### With Sun C++ 4.2, there's an FMR within the ostream deletion.
+####
+suppress fmr unsafe_ostream::flush(void); unsafe_ostream::~unsafe_ostream(void); ostream::~ostream(void); iostream::~iostream(void)
+
+####
+#### Problem with FMR in thread-specific storage?  The Purify
+#### trace doesn't show where the allocated storage was freed;
+#### it usually does for FMRs.
+####
+#### ****  Purify instrumented ./TSS_Test (pid 16650)  ****
+#### FMR: Free memory read:
+####   * This is occurring while in thread 5:
+####    thr_getspecific [libthread.so.1]
+####    worker(void*)  [OS.i:3975]
+####    _thread_start  [libthread.so.1]
+####   * Reading 4 bytes from 0x7e8c8 in the heap.
+####   * Address 0x7e8c8 is 24 bytes into a freed  block at 0x7e8b0 of 32 bytes.
+####   * This block was allocated from thread 4:
+####    malloc         [rtlib.o]
+####    realloc        [rtlib.o]
+####    thr_keycreate  [libthread.so.1]
+####    ACE_OS::thr_keycreate(unsigned int*,void(*)(void*),void*) [OS.cpp:1938]
+####    worker(void*)  [TSS_Test.cpp:125]
+####    _thread_start  [libthread.so.1]
+####   * There have been 0 frees since this block was freed thread 4.
+####
+#### ****  Purify instrumented ./TSS_Test (pid 16650)  ****
+#### FMR: Free memory read:
+####   * This is occurring while in thread 5:
+####    thr_setspecific [libthread.so.1]
+####    ACE_OS::thr_setspecific(unsigned int,void*) [OS.cpp:1866]
+####    worker(void*)  [TSS_Test.cpp:98]
+####    _thread_start  [libthread.so.1]
+####   * Reading 4 bytes from 0x7e8c8 in the heap.
+####   * Address 0x7e8c8 is 24 bytes into a freed  block at 0x7e8b0 of 32 bytes.
+####   * This block was allocated from thread 4:
+####    malloc         [rtlib.o]
+####    realloc        [rtlib.o]
+####    thr_keycreate  [libthread.so.1]
+####    ACE_OS::thr_keycreate(unsigned int*,void(*)(void*),void*) [OS.cpp:1938]
+####    worker(void*)  [TSS_Test.cpp:125]
+####    _thread_start  [libthread.so.1]
+####   * There have been 0 frees since this block was freed thread 4.
+####
+suppress fmr thr_getspecific
+suppress fmr thr_setspecific
+
+####
+#### Write of one byte beyond the stack in ::pthread_setcanceltype ().
+#### This code fragment exhibits the BSW error:
+####   int result;
+####   return ::pthread_setcanceltype (PTHREAD_CANCEL_ASYNCHRONOUS, &result);
+####
+suppress bsw pthread_setcanceltype
+
+####
+#### TSS leaks:  on Solaris, TSS isn't cleaned up very well.
+####
+suppress mlk malloc; __0OnWuI; operator new(unsigned int); ACE_TSS<*>::make_TSS_TYPE(void) const
+
+# Don't seem to need these any more:
+# suppress miu malloc; __bUiLtIn_nEw; __builtin_new; ACE_Task_Exit::instance ()
+# suppress miu malloc; __bUiLtIn_nEw; __builtin_new; ACE_TSS<*>::make_TSS_TYPE () const
+# suppress mlk malloc; __bUiLtIn_nEw; __builtin_new; ACE_TSS<*>::make_TSS_TYPE () const
+# suppress plk malloc; __bUiLtIn_nEw; __builtin_new; ACE_TSS<*>::make_TSS_TYPE () const
+
+####
+#### SunOS 5.7's thread library has these leaks.
+####
+suppress miu malloc; _atfork_append; _t0init; _init
+suppress miu malloc; _atfork_append; _ld_concurrency; _t0init; _init
+
+suppress umr *; get_info_by_class; sched_getparam
+suppress umr *; *; get_info_by_class; sched_getparam
+suppress umr get_local_info; order_haddrlist; _get_hostserv_inetnetdir_byname; gethostbyname_r
+
+#### EOF

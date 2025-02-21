@@ -1,48 +1,46 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file RT_Properties.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_RT_PROPERTIES_H
 #define TAO_Notify_RT_PROPERTIES_H
 #include /**/ "ace/pre.h"
 
-#include "rt_notify_export.h"
+#include "orbsvcs/Notify/rt_notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Singleton.h"
 #include "tao/RTCORBA/RTCORBA.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_RT_Properties
  *
- * @brief RT specifc global properties are stored here.
- *
+ * @brief RT specific global properties are stored here.
  */
 class TAO_RT_Notify_Export TAO_Notify_RT_Properties
 {
-  friend class TAO_Singleton<TAO_Notify_RT_Properties, TAO_SYNCH_MUTEX>;
-
 public:
-  /// Constuctor
-  TAO_Notify_RT_Properties (void);
+  /// Constructor
+  TAO_Notify_RT_Properties ();
 
   /// Destructor
   ~TAO_Notify_RT_Properties ();
 
-  RTCORBA::RTORB_ptr rt_orb (void);
+  /// Return singleton instance of this class.
+  static TAO_Notify_RT_Properties * instance ();
+
+  RTCORBA::RTORB_ptr rt_orb ();
   void rt_orb (RTCORBA::RTORB_ptr rt_orb);
 
-  RTCORBA::Current_ptr current (void);
+  RTCORBA::Current_ptr current ();
   void current (RTCORBA::Current_ptr current);
 
 protected:
@@ -53,12 +51,15 @@ protected:
   RTCORBA::Current_var current_;
 };
 
-typedef TAO_Singleton<TAO_Notify_RT_Properties, TAO_SYNCH_MUTEX> TAO_Notify_RT_PROPERTIES;
+/**
+ * @todo Remove this legacy TAO_Notify_RT_Properties typedef.
+ */
+typedef TAO_Notify_RT_Properties TAO_Notify_RT_PROPERTIES;
 
-TAO_RT_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_RT_Properties, TAO_SYNCH_MUTEX)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "RT_Properties.inl"
+#include "orbsvcs/Notify/RT_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

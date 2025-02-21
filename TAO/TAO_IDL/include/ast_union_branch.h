@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -81,29 +79,28 @@ class AST_Union;
 class TAO_IDL_FE_Export AST_UnionBranch : public virtual AST_Field
 {
 public:
-  // Operations.
-
-  // Constructor(s) and destructor.
-  AST_UnionBranch (void);
-
   AST_UnionBranch (UTL_LabelList *ll,
                    AST_Type *ft,
                    UTL_ScopedName *n);
 
-  virtual ~AST_UnionBranch (void);
+  virtual ~AST_UnionBranch ();
 
-  // Data Accessors.
+  UTL_LabelList *labels () const;
+
   AST_UnionLabel *label (unsigned long index = 0);
 
-  unsigned long label_list_length (void);
-  
-  // Called if our labels are enum values - adds them the
+  unsigned long label_list_length ();
+
+  // Called if our labels are enum values - adds them to the
   // enclosing scope's name_referenced list.
   void add_labels (AST_Union *u);
 
-  // Narrowing.
-  DEF_NARROW_METHODS1 (AST_UnionBranch, AST_Field);
-  DEF_NARROW_FROM_DECL (AST_UnionBranch);
+  // Integer literals create a ulonglong AST_Expression. If
+  // our union's discriminator type is some other kind of
+  // integer, and we have more than one label, only the first
+  // one gets coerced in the lookup for add of the branch. So
+  // we call this at the end of fe_add_union_branch.
+  void coerce_labels (AST_Union *u);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -111,11 +108,16 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-private:
-  // Data.
+  // Cleanup.
+  virtual void destroy ();
 
-  UTL_LabelList *pd_ll;
+  static AST_Decl::NodeType const NT;
+
+  virtual bool auto_dump_annotations () const { return false; }
+
+private:
   // list of labels.
+  UTL_LabelList *pd_ll;
 };
 
 #endif           // _AST_UNION_BRANCH_AST_UNION_BRAN_HH

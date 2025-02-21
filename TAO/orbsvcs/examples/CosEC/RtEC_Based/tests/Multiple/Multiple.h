@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//   Multiple.h
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// = DESCRIPTION
-//   This is a test class for the Cos Event Service.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Multiple.h
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *
+ * This is a test class for the Cos Event Service.
+ */
+//=============================================================================
+
 
 #ifndef COSECMULTIPLE_H
 #define COSECMULTIPLE_H
@@ -32,48 +29,47 @@ class Multiple
   //   Base class for suppliers and consumers to send/receive events
   //   via the Cos Event Service.
  public:
-  // = Initialization and termination methods.
-  Multiple (void);
-  // Constructor.
+  /// Constructor.
+  Multiple ();
 
-  virtual ~Multiple (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~Multiple ();
 
-  int init (int argc, char *argv[]);
-  // Calls parse_args, Starts up an ORB, gets hold of the Event Service.
-  // Returns 0 on success, -1 on error.
+  /// Calls parse_args, Starts up an ORB, gets hold of the Event Service.
+  /// Returns 0 on success, -1 on error.
+  int init (int argc, ACE_TCHAR *argv[]);
 
-  int runORB (void);
-  // Calls the ORB's <run> method.
+  /// Calls the ORB's <run> method.
+  int runORB ();
 
-  void shutdown (void);
-  // Closes down the ORB and exits.
+  /// Closes down the ORB and exits.
+  void shutdown ();
 
  protected:
-  virtual int parse_args (int argc, char *argv []) = 0;
-  // Parse the command line arguments.
+  /// Parse the command line arguments.
+  virtual int parse_args (int argc, ACE_TCHAR *argv []) = 0;
 
+  /// Reference to a running Event Service.
   CosEventChannelAdmin::EventChannel_ptr cos_ec_;
-  // Reference to a running Event Service.
 
-  const char* service_name;
-// The name with which to locate the Event Service.
+  /// The name with which to locate the Event Service.
+  const ACE_TCHAR *service_name_;
 
  private:
-  int init_ORB (int argc, char *argv[]);
-  // initializes the ORB.
-  // Returns 0 on success, -1 on error.
+  /// initializes the ORB.
+  /// Returns 0 on success, -1 on error.
+  int init_ORB (int argc, ACE_TCHAR *argv[]);
 
-  int init_CosEC (void);
-  // initializes the COS EC.
-  // Returns 0 on success, -1 on error.
+  /// initializes the COS EC.
+  /// Returns 0 on success, -1 on error.
+  int init_CosEC ();
 
+  /// The ORB that we use.
   CORBA::ORB_var orb_;
-  // The ORB that we use.
 
+  /// An instance of the name client used for resolving the factory
+  /// objects.
   TAO_Naming_Client naming_client_;
-  // An instance of the name client used for resolving the factory
-  // objects.
 };
 
 #endif /* COSECMULTIPLE_H */

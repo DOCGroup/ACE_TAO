@@ -1,27 +1,23 @@
-#include "LB_LoadAlert.h"
-
-
-ACE_RCSID (LoadBalancer,
-           LB_LoadAlert,
-           "$Id$")
+#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 #if !defined (__ACE_INLINE__)
-# include "LB_LoadAlert.inl"
+# include "orbsvcs/LoadBalancing/LB_LoadAlert.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_LB_LoadAlert::TAO_LB_LoadAlert (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_LB_LoadAlert::TAO_LB_LoadAlert ()
   : alerted_ (0),
     lock_ ()
 {
 }
 
-// TAO_LB_LoadAlert::~TAO_LB_LoadAlert (void)
-// {
-// }
+TAO_LB_LoadAlert::~TAO_LB_LoadAlert ()
+{
+}
 
 void
-TAO_LB_LoadAlert::enable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_LB_LoadAlert::enable_alert ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
@@ -29,10 +25,11 @@ TAO_LB_LoadAlert::enable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_LB_LoadAlert::disable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_LB_LoadAlert::disable_alert ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
   this->alerted_ = 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

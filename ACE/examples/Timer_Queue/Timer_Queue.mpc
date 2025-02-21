@@ -1,0 +1,49 @@
+// -*- MPC -*-
+project(*Library) : acelib {
+  sharedname = tqtd
+  dynamicflags += ACE_BUILD_SVC_DLL
+  Source_Files {
+    Async_Timer_Queue_Test.cpp
+    Driver.cpp
+    Reactor_Timer_Queue_Test.cpp
+    Thread_Timer_Queue_Test.cpp
+    Thread_Timer_Queue_Custom_Handler_Test.cpp
+    Custom_Handler.cpp
+  }
+}
+
+project(*Async) : aceexe {
+  exename = Asynch_Timer_Queue_Test
+  after  += Timer_Queue_Library
+  libs   += tqtd
+  Source_Files {
+    main_async.cpp
+  }
+}
+
+project(*Reactor) : aceexe {
+  exename = Reactor_Timer_Queue_Test
+  after  += Timer_Queue_Library
+  libs   += tqtd
+  Source_Files {
+    main_reactor.cpp
+  }
+}
+
+project(*Thread) : aceexe {
+  exename = Thread_Timer_Queue_Test
+  after  += Timer_Queue_Library
+  libs   += tqtd
+  Source_Files {
+    main_thread.cpp
+  }
+}
+
+project(*Thread_Custom_Handlers) : aceexe {
+  exename = Thread_Custom_Handlers_Timer_Queue_Test
+  after  += Timer_Queue_Library
+  libs   += tqtd
+  Source_Files {
+    main_thread_custom_handler.cpp
+  }
+}

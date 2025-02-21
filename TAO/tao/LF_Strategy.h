@@ -4,8 +4,6 @@
 /**
  *  @file LF_Strategy.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -15,13 +13,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Leader_Follower;
 
 /**
@@ -38,7 +43,7 @@ class TAO_Export TAO_LF_Strategy
 {
 public:
   /// Destructor
-  virtual ~TAO_LF_Strategy (void);
+  virtual ~TAO_LF_Strategy ();
 
   /// The current thread will handle an upcall
   /**
@@ -67,6 +72,8 @@ public:
   virtual void reset_event_loop_thread (int call_reset,
                                         TAO_Leader_Follower &) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

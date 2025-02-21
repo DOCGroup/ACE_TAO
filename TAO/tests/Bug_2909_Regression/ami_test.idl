@@ -1,0 +1,29 @@
+
+//=============================================================================
+/**
+ *  @file    ami_test.idl
+ *
+ *  IDL description of the AMI Test interface
+ *
+ *
+ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
+ */
+//=============================================================================
+
+
+
+module A
+  {
+    exception DidTheRightThing {
+    };
+    exception DidTheWrongThing {
+    };
+
+    interface AMI_Test
+      {
+        void foo (in long value)
+          raises (DidTheRightThing);
+
+        oneway void shutdown ();
+      };
+  };

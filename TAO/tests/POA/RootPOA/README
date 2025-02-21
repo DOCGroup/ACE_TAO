@@ -1,0 +1,13 @@
+
+
+This program obtains the name of the Root POA.
+
+Run the application as follows.
+
+% RootPOA
+
+Comments:
+========
+
+- It prints out the name of the Root POA. Currently, the name of the
+  RootPOA in TAO is an empty string.

@@ -1,13 +1,16 @@
-//$Id$
-#include "UUID.h"
+#include "orbsvcs/FtRtEvent/Utils/UUID.h"
 
-ACE_RCSID (Utils,
-           UUID,
-           "$Id$")
 #if !defined(__ACE_INLINE__)
-#include "UUID.inl"
+#include "orbsvcs/FtRtEvent/Utils/UUID.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_sys_time.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+namespace TAO_FtRt
+{
 static union
 {
   struct
@@ -45,14 +48,14 @@ static const char *seperators = "----";
 /**
  * construct an UUID from the string representation
  */
-UUID::UUID (const char  *string_rep)
+UUID::UUID (const ACE_TCHAR *string_rep)
 {
-  if (this->from_string(string_rep) == false)
+  if (this->from_string(ACE_TEXT_ALWAYS_CHAR(string_rep)) == false)
     rep_.timestamp.hi = 0;
 }
 
 bool
-UUID::from_string (const char  *string_rep)
+UUID::from_string (const char *string_rep)
 {
   int offset = 0;
 
@@ -113,7 +116,7 @@ UUID::to_string (char  *string_rep) const
 void
 UUID::create (unsigned char *buffer)
 {
-  static ACE_RANDR_TYPE seed;
+  static unsigned int seed;
 
   if (seed == 0) seed = ACE_OS::getpid();
 
@@ -123,8 +126,8 @@ UUID::create (unsigned char *buffer)
     // initialize the node
     if (ACE_OS::getmacaddress(&node.mac_address) == -1)
     {
-      node.rand_node.rand1 = ACE_OS::rand_r(seed);
-      node.rand_node.rand2 = (unsigned short) ACE_OS::rand_r(seed);
+      node.rand_node.rand1 = ACE_OS::rand_r(&seed);
+      node.rand_node.rand2 = (unsigned short) ACE_OS::rand_r(&seed);
     }
   }
 
@@ -154,10 +157,12 @@ UUID::create (unsigned char *buffer)
   buffer[7] = (unsigned char) (((timestamp >> 56) & 0x0f) + 0x10);
 
   ACE_UINT16  clockSequence = static_cast<
-    ACE_UINT16> (ACE_OS::rand_r(seed) & 0x2ff);
+    ACE_UINT16> (ACE_OS::rand_r(&seed) & 0x2ff);
 
   buffer[8] = (unsigned char) ((clockSequence >> 8) & 0x1f);
   buffer[9] = (unsigned char) (clockSequence & 0x1f);
 
-  memcpy(buffer + 10, &node, 6);
+  ACE_OS::memcpy(buffer + 10, &node, 6);
 }
+}
+TAO_END_VERSIONED_NAMESPACE_DECL

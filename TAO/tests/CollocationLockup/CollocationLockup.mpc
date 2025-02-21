@@ -1,0 +1,45 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    AB.idl
+    SimpleNamingService.idl
+  }
+  custom_only = 1
+}
+
+project: taoserver {
+  exename = CollocationLockup
+
+  after += *idl
+
+  Source_Files {
+    CollocationLockup.cpp
+  }
+  Source_Files {
+    ABC.cpp
+    ABS.cpp
+  }
+  Source_Files {
+    SimpleNamingServiceC.cpp
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*SimpleNamingService): taoserver {
+  exename = SimpleNamingService
+
+  after += *idl
+
+  Source_Files {
+    SimpleNamingService.cpp
+  }
+  Source_Files {
+    SimpleNamingServiceC.cpp
+    SimpleNamingServiceS.cpp
+  }
+
+  IDL_Files {
+  }
+}

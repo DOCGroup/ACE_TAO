@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Server_Task.h"
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
@@ -11,15 +9,15 @@
 #include "interceptors.h"
 #include "Collocated_ORBInitializer.h"
 
-const char *output = "test.ior";
-const char *input = "file://test.ior";
+const ACE_TCHAR *output = ACE_TEXT ("test.ior");
+const ACE_TCHAR *input = ACE_TEXT ("file://test.ior");
 ACE_CString server_orb;
 ACE_CString client_orb;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:o");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -36,22 +34,20 @@ parse_args (int argc, char *argv[])
         // This is a hack but that is okay!
         return 0;
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc,
-                  argv) == -1)
+  if (parse_args (argc, argv) == -1)
     return -1;
 
   server_orb.set ("server_orb");
   client_orb.set ("client_orb");
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer;
 
@@ -61,18 +57,10 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      ACE_Argv_Type_Converter satc (argc, argv);
+      PortableInterceptor::register_orb_initializer (initializer.in ());
 
       CORBA::ORB_var sorb =
-        CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv (),
-                         server_orb.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, server_orb.c_str ());
 
       ACE_Manual_Event me;
 
@@ -91,13 +79,8 @@ main (int argc, char *argv[])
       // Wait for the server thread to do some processing
       me.wait ();
 
-      ACE_Argv_Type_Converter catc (argc, argv);
       CORBA::ORB_var corb =
-        CORBA::ORB_init (catc.get_argc (),
-                         catc.get_TCHAR_argv (),
-                         client_orb.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, client_orb.c_str ());
 
       Client_Task client_task (input,
                                corb.in (),
@@ -112,11 +95,10 @@ main (int argc, char *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions..
     }
-  ACE_ENDTRY;
 
   return 0;
 }

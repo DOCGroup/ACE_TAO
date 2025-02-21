@@ -2,27 +2,23 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib "../../../bin";
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
 $status = 0;
 $type = "";
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
 sub run_test
 {
     my $type = shift(@_);
 
-    if (PerlACE::is_vxworks_test()) {
-        $BT = new PerlACE::ProcessVX ("basic_test", "-t $type");
-    }
-    else {
-        $BT = new PerlACE::Process ("basic_test", "-t $type");
-    }
-    my $basictest = $BT->SpawnWaitKill (10);
-    
+   $BT = $server->CreateProcess ("basic_test", "-t $type");
+    my $basictest = $BT->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
     if ($basictest != 0) {
         print STDERR "ERROR: basic test for ($type) returned $basictest\n";
         $status = 1;
@@ -32,7 +28,7 @@ sub run_test
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
         print "Run_Test Perl script for TAO DynAny Test\n\n";
-        print "run_test [-chorus <target>] [-t type]\n";
+        print "run_test [-t type]\n";
         print "\n";
         print "-t type             -- runs only one type of dynany test\n";
         exit;

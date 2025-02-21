@@ -1,0 +1,352 @@
+commit ce3d80c7193755025f34d5b20e608517b5e84664
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 28 09:20:42 2023 +0200
+
+    Update NEWS
+
+commit a65d91cdc463e7cf6cf509138956b2d38c5e5727
+Merge: 90c46e2c3be 395f5e53709
+Author: Justin Wilson <wilsonj@unityfoundation.io>
+Date:   Tue Jun 27 09:21:17 2023 -0500
+
+    Merge pull request #2080 from jrw972/port0-ace-lacks-getservbyname
+    
+    `ACE_INET_Addr::set` errantly succeeds when ACE_LACKS_GETSERVBYNAME
+
+commit 3579743a175b284e56d12064e8437f1f51f3a9a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 23 08:16:13 2023 +0200
+
+    Make more members const
+    
+        * ACE/ace/Shared_Memory_Pool.cpp:
+        * ACE/ace/Shared_Memory_Pool.h:
+
+commit 77d104dfe850c53aa4395cedad65fe635bf1d13e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 22 21:32:51 2023 -0500
+
+    shm_addr_table_ needs to be initialized after max_segments_ is known
+
+commit 395f5e53709aa2bee45de13d66e5a0706cf82dad
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Wed Jun 21 11:28:26 2023 -0500
+
+    `ACE_INET_Addr::set` errantly succeeds when ACE_LACKS_GETSERVBYNAME
+    
+    Problem
+    -------
+    
+    Calling `set("1.2.3.4")` on an ACE_INET_Addr eventually tries to part
+    it as a port name.  When `ACE_LACKS_GETSERVBYNAME`, this succeeds
+    returning port number 0 with the reset address.
+    
+    When port names are not expected, this breaks a useful idiom of
+    parsing addresses that may or may not contain port numbers:
+    
+        ACE_INET_Addr addr;
+        if (addr.set(x) == 0) {
+          // Success, address contained a port number
+        } else if (addr.set(u_short(0), x) == 0) {
+          // Success, address did not contain a port number.
+        } else {
+          // Fail
+        }
+    
+    Solution
+    --------
+    
+    Return -1 for the port number when `ACE_LACKS_GETSERVBYNAME`.
+
+commit 3b4af688618b118f84a6e6e63630415668fe80aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 20 13:01:41 2023 +0200
+
+    Add fix to ACE_Shared_Memory_Pool
+    
+        * ACE/NEWS:
+
+commit 49fe3a9ff8e07ba85f6a87179a48f6b4651850e7
+Merge: d971b4b29ea 32ea782b6cf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 20 08:06:02 2023 +0200
+
+    Merge branch 'master' into jwi-shmem
+
+commit d971b4b29eaadcd6cb65e1f0665ea174c0df4b4b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 20 08:05:44 2023 +0200
+
+    Update ACE/ace/Shared_Memory_Pool.cpp
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 9821bb3bb8bcb78ced6fab55aaff9501b0ad9157
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 19 16:20:36 2023 +0200
+
+    Doxygen fix
+    
+        * ACE/ace/Malloc_T.h:
+
+commit 62ef18910774b1fac1d61a93752b6209ebb22674
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 19 16:11:00 2023 +0200
+
+    Layout change
+    
+        * ACE/ace/Malloc_T.cpp:
+
+commit 117bcac2bf19155a7bf535a7ee20fc67042fa364
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 19 16:07:05 2023 +0200
+
+    No need for a base_shm_id when we change the cleanup
+        * ACE/ace/Shared_Memory_Pool.cpp:
+        * ACE/ace/Shared_Memory_Pool.h:
+
+commit ec7265778d3c83f28171a92a720452e70a155f65
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 19 14:43:28 2023 +0200
+
+    Use std::strcmp
+    
+        * ACE/ace/Malloc_T.cpp:
+
+commit a2566cf5e0cc39ec85231f26c39447d70ccff2f6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 19 14:43:17 2023 +0200
+
+    Document return values
+    
+        * ACE/ace/Malloc_T.h:
+
+commit 22cf00e2a6cebbad7587ab85b873b02388bac82d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 17 19:25:39 2023 +0200
+
+    Use  as egrep is obsolescent
+
+commit d7c2886ae5c93e52f787e7b2758112353d5c45c1
+Merge: 63cb68e694e 9b773291b4c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 16 10:22:37 2023 +0200
+
+    Merge branch 'jwi-shmem' of https://github.com/DOCGroup/ACE_TAO into jwi-shmem
+
+commit 63cb68e694e9b942516c8480c5241574485d5500
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 16 10:22:17 2023 +0200
+
+    Make used_ again an int, not cause some unexpected interoperability with older ACE versions
+    
+        * ACE/ace/Shared_Memory_Pool.cpp:
+        * ACE/ace/Shared_Memory_Pool.h:
+
+commit 9b773291b4c1ed20b2783f8e0b4af9da7a9bf68a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 15 14:11:35 2023 +0200
+
+    Removed empty lines
+    
+        * ACE/tests/SV_Shared_Memory_Test.cpp:
+
+commit 680dcb6dc233f5e9d807de2f0e2421a702c958ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 15 14:11:25 2023 +0200
+
+    Fixed typo
+    
+        * ACE/examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+
+commit 1e43fa6691d8b12ca12f58a2f54f972dd796fa11
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 15 13:28:29 2023 +0200
+
+    Removed debug lines
+    
+        * ACE/ace/Shared_Memory_Pool.cpp:
+
+commit c2c58f6805ee69ab70912d4b6463c466bc502ac2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 15 13:24:29 2023 +0200
+
+    Reworked the shared memory pool implementation in order to detach from shared memory segments when we don't use them anymore. At the moment the memory pool is destroyed also let the OS release all resources
+    
+        * ACE/ace/Shared_Memory_Pool.cpp:
+        * ACE/ace/Shared_Memory_Pool.h:
+
+commit 6c593fc0986a8398b1c2fa1bb9069986a962dd5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 15 11:24:12 2023 +0200
+
+    Call shmdt when we only need to release the shared memory
+    
+        * ACE/ace/Malloc_T.cpp:
+        * ACE/ace/Malloc_T.inl:
+        * ACE/ace/Mem_Map.cpp:
+        * ACE/ace/Shared_Memory.h:
+        * ACE/ace/Shared_Memory_MM.h:
+        * ACE/ace/Shared_Memory_Pool.cpp:
+        * ACE/ace/Shared_Memory_Pool.h:
+
+commit 483414737903481da9cf63b58ed3eb6c57f4d0f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 15 11:23:39 2023 +0200
+
+    Use nullptr
+    
+        * ACE/ace/MMAP_Memory_Pool.cpp:
+
+commit 1b6da609c0e15725dba3aa70ac097117f9d5769f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 15 08:14:42 2023 +0200
+
+    Layout changes
+    
+        * ACE/ace/SV_Shared_Memory.h:
+
+commit ab3b192fcda5715a0c92e5627acdeb4e8f71911c
+Merge: 874ceda869d 2d267693fc0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 7 12:37:51 2023 +0200
+
+    Merge pull request #2069 from jwillemsen/jwi-mqtest
+    
+    Test simplifications
+
+commit 2d267693fc0c39c56fac87d7f2b6ce00885942a9
+Merge: aef8140bea1 9729442488f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 7 08:27:27 2023 +0200
+
+    Merge branch 'master' into jwi-mqtest
+
+commit d1eab7db50121338cf719a4a4fddce59414487b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 7 08:27:03 2023 +0200
+
+    Fixed trailing whitespace
+    
+        * ACE/tests/Message_Queue_Test_Ex.cpp:
+
+commit aef8140bea1a6fc2d58631e2ad16f81a5f447018
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 7 08:26:23 2023 +0200
+
+    Test changes
+    
+        * ACE/tests/Message_Queue_Test_Ex.cpp:
+        * ACE/tests/Message_Queue_Test_Ex.h:
+
+commit a78936549748c2dbb9e751d4d21baa532228f1df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 7 08:23:22 2023 +0200
+
+    Update Message_Queue_Test_Ex.cpp
+
+commit a3a7c2a50383ebf00534c28014704ce57e092821
+Merge: 5625244fd7b b50aba0fdce
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Thu Apr 6 11:09:11 2023 +0200
+
+    Merge branch 'master' into message_queue_ex_get_queue
+
+commit 5625244fd7bb77bafabce28fdec790f51ef50080
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Thu Apr 6 11:08:34 2023 +0200
+
+    more review comments
+
+commit 761e24b54d7fda41ed58a6e2f41ba905e43bf3d9
+Merge: 3e44fb91cf7 9e18d338ec5
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Wed Apr 5 17:37:54 2023 +0200
+
+    Merge branch 'message_queue_ex_get_queue' of https://github.com/esohns/ACE_TAO into message_queue_ex_get_queue
+
+commit 3e44fb91cf724aeb48b38169482a4878de316afc
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Wed Apr 5 17:37:23 2023 +0200
+
+    integrated review comments
+
+commit e1432d22fcf52f941e587e8e8b5f291d5a08ff9c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 29 15:55:22 2023 +0200
+
+    Mention that nullptr should be used
+    
+        * ACE/bin/fuzz.pl:
+
+commit a1480384cc3233889d1f043fcd428c627843d272
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 3 11:05:30 2023 +0100
+
+    Add space to resolve compiler warnings on condaforge
+    
+        * ACE/ace/OS_NS_Thread.inl:
+        * ACE/ace/OS_NS_unistd.inl:
+
+commit ed1a2e35ca124c5697f32527ad286e22e9f5877b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 3 09:38:39 2023 +0100
+
+    Make ACE 7.1.0 and TAO 3.1.0 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+
+commit 9e18d338ec598e1a8da6d32a0fba5a20c76978f7
+Merge: 8b6ad82dc91 8ab31e3e5bb
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Sun Jan 22 17:38:34 2023 +0100
+
+    Merge branch 'master' into message_queue_ex_get_queue
+
+commit 8b6ad82dc91f728cea2c9e86a17e5969a3338fcc
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Mon Jan 9 19:38:43 2023 +0100
+
+    0 --> NULL --> nullptr
+
+commit e24acc256b9af44bda969d392ec46ddfec28c5a5
+Merge: 22be043fb46 a667874d6a6
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Mon Jan 9 19:13:15 2023 +0100
+
+    Merge branch 'message_queue_ex_get_queue' of https://github.com/esohns/ACE_TAO into message_queue_ex_get_queue
+
+commit 22be043fb46aff505eea86e66fe19bf5249f1ad3
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Mon Jan 9 19:12:43 2023 +0100
+
+    address some static code analysis issues
+
+commit a667874d6a61052c898deeb6f393ac33973af68f
+Merge: a905022c2d5 1d0c1af12a5
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Mon Jan 9 18:13:08 2023 +0100
+
+    Merge branch 'master' into message_queue_ex_get_queue
+
+commit a905022c2d552261e6d60c497140b5ff7669dd4d
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Mon Jan 9 18:02:05 2023 +0100
+
+    added API comments and unit test case as requested
+
+commit e4bf4867d9a36e7b155cd9358c97811ce599f16c
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Jan 7 19:52:20 2023 +0100
+
+    removed constness
+
+commit 65a391a415e559663c43077b90b70de225b1d7ea
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Jan 7 16:43:24 2023 +0100
+
+    support accessing the underlying queue (e.g. for iteration)

@@ -1,6 +1,5 @@
 
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl
 // ------------------------------
@@ -8,8 +7,6 @@
 #define TAO_RTCORBA_EXPORT_H
 
 #include "ace/config-all.h"
-
-#include "tao/Objref_VarOut_T.h"
 
 #if defined (TAO_AS_STATIC_LIBS)
 #  if !defined (TAO_RTCORBA_HAS_DLL)

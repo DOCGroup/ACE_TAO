@@ -1,14 +1,12 @@
 
 
-// $Id$
-
 #include "server.h"
 #include "ace/Get_Opt.h"
 
 static FILE *output_file = 0;
 // File into which the received data is written.
 
-static const char *output_file_name = "output";
+static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
 // File handle of the file into which data is written.
 
 int done = 0;
@@ -37,10 +35,10 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != 0)
     {
       // Write the received data to the file.
-      unsigned int result = ACE_OS::fwrite (frame->rd_ptr (),
-                                            frame->length (),
-                                            1,
-                                            output_file);
+      size_t result = ACE_OS::fwrite (frame->rd_ptr (),
+                                      frame->length (),
+                                      1,
+                                      output_file);
 
       if (result == frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -53,7 +51,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-FTP_Server_Callback::handle_destroy (void)
+FTP_Server_Callback::handle_destroy ()
 {
   // Called when the ftp client requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
@@ -62,20 +60,19 @@ FTP_Server_Callback::handle_destroy (void)
   return 0;
 }
 
-Server::Server (void)
+Server::Server ()
   : mmdevice_ (0)
 {
 }
 
-Server::~Server (void)
+Server::~Server ()
 {
   delete this->mmdevice_;
 }
 
 int
 Server::init (int,
-              char **
-              ACE_ENV_ARG_DECL)
+              ACE_TCHAR *[])
 {
   int result =
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
@@ -94,8 +91,7 @@ Server::init (int,
   server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice");
 
   CORBA::Object_var mmdevice =
-    this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
+    this->mmdevice_->_this ();
 
   // Initialize the naming services
   if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -106,16 +102,14 @@ Server::init (int,
 
   // Register the server object with the naming server.
   this->my_naming_client_->rebind (server_mmdevice_name,
-                                   mmdevice.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                   mmdevice.in ());
 
   return 0;
 }
 
 int
 parse_args (int argc,
-            char **argv)
+            ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc,
                     argv,
@@ -140,18 +134,13 @@ parse_args (int argc,
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            argv);
 
       int result =
         parse_args (argc,
@@ -173,72 +162,46 @@ main (int argc,
                        "File Opened Successfully\n"));
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       Server server;
       result =
         server.init (argc,
-                     argv
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                     argv);
 
       if (result != 0)
         return result;
 
       while ( !done )
       {
-        if ( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) ) 
-	{
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-	}
+        if ( orb->work_pending())
+        {
+          orb->perform_work ();
+        }
       }
 
-      orb->shutdown( 1 ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
+      orb->shutdown(1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_OS::fclose (output_file);
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_AV_Endpoint_Reactive_Strategy_B
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

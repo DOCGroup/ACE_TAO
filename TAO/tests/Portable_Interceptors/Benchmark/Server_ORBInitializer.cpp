@@ -1,15 +1,7 @@
 // -*- C++ -*-
-//
-// $Id$
-//
-
 #include "Server_ORBInitializer.h"
 #include "Interceptor_Type.h"
 #include "server_interceptors.h"
-
-ACE_RCSID (Benchmark,
-           Server_ORBInitializer,
-           "$Id$")
 
 Server_ORBInitializer::Server_ORBInitializer (int interceptor_type)
   :  interceptor_type_ (interceptor_type)
@@ -18,19 +10,14 @@ Server_ORBInitializer::Server_ORBInitializer (int interceptor_type)
 
 void
 Server_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
 Server_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   PortableInterceptor::ServerRequestInterceptor_ptr tmp =
     PortableInterceptor::ServerRequestInterceptor::_nil ();
 
@@ -65,11 +52,8 @@ Server_ORBInitializer::post_init (
         break;
       }
     }
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var interceptor = tmp;
 
-  info->add_server_request_interceptor (interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (interceptor.in ());
 }

@@ -1,0 +1,17 @@
+// -*- MPC -*-
+project(*Lib) : acelib {
+  sharedname    = Export_Lib
+  dynamicflags += TEST_BUILD_DLL
+  Source_Files {
+    dll.cpp
+  }
+}
+
+project(*test) : aceexe {
+  exename = test
+  after  += *Lib
+  libs   += Export_Lib
+  Source_Files {
+    test.cpp
+  }
+}

@@ -1,0 +1,32 @@
+// -*- MPC -*-
+project(Alarm) : aceexe {
+  exename = Alarm
+  Source_Files {
+    Alarm.cpp
+  }
+}
+
+project(Task) : aceexe {
+  exename = Task
+  Source_Files {
+    Task.cpp
+  }
+}
+
+project(Timers) : aceexe {
+  exename = Timers
+  Source_Files {
+    Timers.cpp
+    CB.cpp
+    TimerDispatcher.cpp
+  }
+}
+
+project(Upcall) : aceexe {
+  exename = Upcall
+  Source_Files {
+    Upcall.cpp
+    PCB.cpp
+    PTimerDispatcher.cpp
+  }
+}

@@ -1,33 +1,22 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuebox.cpp
-//
-// = DESCRIPTION
-//    Visitor for generation of code for valuebox
-//
-// = AUTHOR
-//    Gary Maxey
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    valuebox.cpp
+ *
+ *  Visitor for generation of code for valuebox
+ *
+ *  @author Gary Maxey
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuebox,
-           valuebox,
-           "$Id$")
+#include "valuebox.h"
 
 be_visitor_valuebox::be_visitor_valuebox (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_valuebox::~be_visitor_valuebox (void)
+be_visitor_valuebox::~be_visitor_valuebox ()
 {
 }
 

@@ -1,8 +1,5 @@
-// $Id$
-
 #include "Driver.h"
 
-ACE_RCSID(lib, TAO_Driver, "$Id$")
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Thread_Manager.h"
@@ -63,7 +60,8 @@ check_supported_priorities (CORBA::ORB_ptr orb)
 }
 
 /*****************************************************************/
-TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker (void)
+TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker () :
+  cmd_builder_ (0)
 {
 }
 
@@ -74,8 +72,9 @@ TAO_Notify_Tests_Worker::command_builder (TAO_Notify_Tests_Command_Builder* cmd_
 }
 
 int
-TAO_Notify_Tests_Worker::svc (void)
+TAO_Notify_Tests_Worker::svc ()
 {
+#if 0
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -86,21 +85,19 @@ TAO_Notify_Tests_Worker::svc (void)
       return -1;
     }
 
-  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands @ priority:%d \n", priority));
+  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands @ priority:%d\n", priority));
+#endif
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
-      ACE_DEBUG ((LM_DEBUG, "Running Commands... \n"));
-      this->cmd_builder_->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "Running Commands...\n"));
+      this->cmd_builder_->execute ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: ORB run error\n");
+      ex._tao_print_exception ("Error: ORB run error\n");
     }
-  ACE_ENDTRY;
 
 
   ACE_DEBUG ((LM_DEBUG, "Finished executing commands\n"));
@@ -110,7 +107,7 @@ TAO_Notify_Tests_Worker::svc (void)
 
 /*****************************************************************/
 
-TAO_Notify_Tests_ORB_Run_Worker::TAO_Notify_Tests_ORB_Run_Worker (void)
+TAO_Notify_Tests_ORB_Run_Worker::TAO_Notify_Tests_ORB_Run_Worker ()
 {
 }
 
@@ -127,8 +124,15 @@ TAO_Notify_Tests_ORB_Run_Worker::run_period (ACE_Time_Value run_period)
 }
 
 int
-TAO_Notify_Tests_ORB_Run_Worker::svc (void)
+TAO_Notify_Tests_ORB_Run_Worker::svc ()
 {
+#if 0
+  // ACE_Thread::getprio() fails on systems that do not support thread
+  // priorities.  While we could just treat the failure as benign, I'm
+  // just disabling it altogether.  It doesn't provide much value, and
+  // makes service startup needlessly more verbose.  See bugzilla 2477
+  // for details.
+
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -139,28 +143,24 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
       return -1;
     }
 
+  ACE_DEBUG ((LM_ERROR, "Activated ORB Run Worker Thread to run the ORB @ priority:%d\n", priority));
+#endif
 
-  ACE_DEBUG ((LM_ERROR, "Activated ORB Run Worker Thread to run the ORB @ priority:%d \n", priority));
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_DEBUG ((LM_ERROR, "Running ORB, timeout in %d sec\n", this->run_period_.sec ()));
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 /*****************************************************************/
 
-TAO_Notify_Tests_Driver::TAO_Notify_Tests_Driver (void)
+TAO_Notify_Tests_Driver::TAO_Notify_Tests_Driver ()
   :cmd_builder_ (0), activation_manager_ (0), run_period_ (0,0), skip_priority_levels_check_ (0)
 {
   this->activation_manager_ = new TAO_Notify_Tests_Activation_Manager ();
@@ -175,7 +175,7 @@ TAO_Notify_Tests_Driver::~TAO_Notify_Tests_Driver ()
 }
 
 int
-TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
+TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -183,7 +183,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-Timeout")))) // -Timeout timeout_period_S
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout")))) // -Timeout timeout_period_S
         {
           if (current_arg != 0)
             {
@@ -192,7 +192,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-IORoutput")))) // -IORoutput file_name
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // -IORoutput file_name
         {
           if (this->activation_manager_->ior_output_file (current_arg) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -201,7 +201,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-IORinput")))) // -IORinput file_name
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput")))) // -IORinput file_name
         {
           if (this->activation_manager_->ior_input_file (current_arg) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -210,7 +210,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Skip_Priority_Levels_Check") == 0) // Skip the check for multiple priority levels.
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Skip_Priority_Levels_Check")) == 0) // Skip the check for multiple priority levels.
         {
           this->skip_priority_levels_check_ = 1;
 
@@ -226,15 +226,13 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 }
 
 int
-TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv(),
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                command_line.get_TCHAR_argv(),
+                                "");
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
@@ -244,8 +242,7 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   if (skip_priority_levels_check_ == 0)
     check_supported_priorities (this->orb_.in());
 
-  LOOKUP_MANAGER->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  LOOKUP_MANAGER->init (this->orb_.in ());
 
   this->cmd_builder_ =
     ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>::instance (TAO_Notify_Tests_Name::command_builder);
@@ -263,7 +260,7 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_Notify_Tests_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Driver::run ()
 {
   // Task activation flags.
   long flags =
@@ -272,8 +269,9 @@ TAO_Notify_Tests_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
   // Become an active object.
-  int priority = ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy ()
-                                                 , this->orb_->orb_core ()->orb_params ()->scope_policy ());
+  int priority = ACE_Sched_Params::priority_min (
+                   ACE_Utils::truncate_cast<ACE_Sched_Params::Policy> (this->orb_->orb_core ()->orb_params ()->sched_policy ()),
+                   ACE_Utils::truncate_cast<int> (this->orb_->orb_core ()->orb_params ()->scope_policy ()));
 
   // Become an active object.
   if (this->worker_.activate (flags, 1, 0, priority) == -1)
@@ -310,18 +308,7 @@ TAO_Notify_Tests_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_Notify_Tests_Driver::shutdown (void)
+TAO_Notify_Tests_Driver::shutdown ()
 {
   this->orb_->shutdown ();
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

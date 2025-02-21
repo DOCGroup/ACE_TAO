@@ -1,21 +1,14 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    options.h
-//
-// = DESCRIPTION
-//    Options for the Param_Test application
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    options.h
+ *
+ *  Options for the Param_Test application
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef OPTIONS_H
 #define OPTIONS_H
@@ -80,54 +73,54 @@ public:
     DII
   };
 
-  Options (void);
-  // constructor
+  /// constructor
+  Options ();
 
-  ~Options (void);
-  // destructor
+  /// destructor
+  ~Options ();
 
-  int parse_args (int argc, char **argv);
-  // Parses the arguments passed on the command line.
+  /// Parses the arguments passed on the command line.
+  int parse_args (int argc, ACE_TCHAR **argv);
 
-  char const * param_test_ior (void) const;
-  // return the IOR for the servant
+  /// return the IOR for the servant
+  char const * param_test_ior () const;
 
-  TEST_TYPE test_type (void);
-  // what test to run
+  /// what test to run
+  TEST_TYPE test_type ();
 
-  INVOKE_TYPE invoke_type (void);
-  // whether to use SII or DII
+  /// whether to use SII or DII
+  INVOKE_TYPE invoke_type ();
 
-  CORBA::ULong loop_count (void);
-  // number of times to run the test
+  /// number of times to run the test
+  CORBA::ULong loop_count ();
 
-  CORBA::Boolean debug (void) const;
-  // whether debug option is on or not
+  /// whether debug option is on or not
+  CORBA::Boolean debug () const;
 
-  CORBA::Boolean shutdown (void) const;
-  // If we should request the server to shutdown.
+  /// If we should request the server to shutdown.
+  CORBA::Boolean shutdown () const;
 
 private:
-  int read_ior (char *filename);
-  // Function to read the servant IOR from a file.
+  /// Function to read the servant IOR from a file.
+  int read_ior (ACE_TCHAR *filename);
 
+  /// IOR for the servant
   CORBA::String_var ior_;
-  // IOR for the servant
 
+  /// what test to run
   TEST_TYPE test_type_;
-  // what test to run
 
+  /// whether SII or DII
   INVOKE_TYPE invoke_type_;
-  // whether SII or DII
 
+  /// Number of times to do the "test_*" operations.
   CORBA::ULong loop_count_;
-  // Number of times to do the "test_*" operations.
 
+  /// debugging output values
   CORBA::Boolean debug_;
-  // debugging output values
 
+  /// server shutdown flag.
   CORBA::Boolean shutdown_;
-  // server shutdown flag.
 };
 
 typedef ACE_Singleton<Options, TAO_SYNCH_RECURSIVE_MUTEX> OPTIONS;

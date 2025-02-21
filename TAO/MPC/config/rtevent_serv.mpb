@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : orbsvcslib, rtevent_skel  {
+  avoids    += ace_for_tao  // Requires ACE_crc32
+  after     += RTEvent_Serv
+  libs      += TAO_RTEvent_Serv
+}

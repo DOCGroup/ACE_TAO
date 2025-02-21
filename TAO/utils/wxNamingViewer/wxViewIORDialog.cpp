@@ -1,9 +1,6 @@
 // @file wxViewIORDialog.cpp
 //
 // @author Charlie Frasch  <cfrasch@atdesk.com>
-//
-// $Id$
-
 #include "pch.h"
 #include "wxViewIORDialog.h"
 
@@ -116,7 +113,6 @@ namespace  // anonymous
       dialog->SetSizer( topsizer);
       topsizer->SetSizeHints( dialog);
     }
-
 };  // anonymous
 
 BEGIN_EVENT_TABLE( WxViewIORDialog, wxDialog)
@@ -172,9 +168,7 @@ WxViewIORDialog::WxViewIORDialog(
   applyButton->Enable( false);
 
   if (object != CORBA::Object::_nil()) {
-
     WxViewIORDialog::object = CORBA::Object::_duplicate( object);
-
   }
   CORBA::String_var ior = orb->object_to_string( object);
   WxViewIORDialog::ior = ior;
@@ -188,11 +182,9 @@ void WxViewIORDialog::decodeIOR()
 
   // if object is nil, return out
   if(CORBA::is_nil( object.in())) {
-
     typeID = "";
     TransferDataToWindow();
     return;
-
   }
 
   // Get the stub
@@ -206,23 +198,16 @@ void WxViewIORDialog::decodeIOR()
   CORBA::ULong count = baseProfiles.profile_count();
   wxTreeItemId rootItem = profiles->AddRoot( "Profiles");
   for( CORBA::ULong slot = 0; slot < count; slot++) {
-
     const TAO_Profile* profile = baseProfiles.get_profile( slot);
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY {
-
+    try{
       // The need to const_cast should disappear in TAO 1.1.2 BUT IT DIDN'T
       char* profileString =
-          const_cast<TAO_Profile*>(profile)->to_string(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          const_cast<TAO_Profile*>(profile)->to_string();
       profiles->AppendItem( rootItem, profileString);
       delete [] profileString;
-
-    } ACE_CATCH( CORBA::Exception, ex) {
-
+    } catch (const CORBA::Exception& ex) {
       wxMessageBox( ex._info().c_str(), "CORBA::Exception");
-
-    } ACE_ENDTRY;
+    }
 
   }
   profiles->Expand( rootItem);
@@ -233,12 +218,9 @@ void WxViewIORDialog::OnApply( wxCommandEvent& event)
 {
   wxDialog::OnApply( event);
   try {
-
     object = orb->string_to_object( ior);
     decodeIOR();
-
   } catch( CORBA::Exception& ex) {
-
     wxMessageBox( ex._info().c_str(), "CORBA::Exception");
   }
 }
@@ -248,9 +230,7 @@ void WxViewIORDialog::onIORText( wxCommandEvent& event)
 {
   // Enable the Apply button if the IOR has changed
   if (event.GetString() != ior) {
-
     applyButton->Enable( true);
-
   }
 }
 

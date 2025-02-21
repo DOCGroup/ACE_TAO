@@ -4,8 +4,6 @@
 /**
  *  @file RPS_Monitor.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -34,7 +32,6 @@ class RPS_Monitor
   : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
-
   /// Constructor
   RPS_Monitor (ServerRequestInterceptor * interceptor);
 
@@ -44,14 +41,11 @@ public:
    * Methods required by the CosLoadBalancing::LoadMonitor interface.
    */
   //@{
-
   /// Return the location at which the LoadMonitor resides.
   /**
    * The returned "Location" is a sequence of length 1.
    */
-  virtual CosLoadBalancing::Location * the_location (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosLoadBalancing::Location * the_location ();
 
   /// Return the average CPU load at the location which this
   /// LoadMonitor resides.
@@ -60,23 +54,19 @@ public:
    *         equal to CosLoadBalancing::LoadAverage, and the average CPU
    *         load.
    */
-  virtual CosLoadBalancing::LoadList * loads (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosLoadBalancing::LoadList * loads ();
 
   //@}
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~RPS_Monitor (void);
+  ~RPS_Monitor ();
 
 private:
-
   /// The name of the location at which this LoadMonitor resides.
   CosLoadBalancing::Location location_;
 
@@ -84,7 +74,7 @@ private:
 
   ACE_Time_Value last_time_;
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 };
 
 #include /**/ "ace/post.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    Basic_SArgument_T.h
  *
- *  $Id$
- *
  *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
 //=============================================================================
@@ -22,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -30,17 +30,17 @@ namespace TAO
    * @brief Template class for IN skeleton argument of basic IDL types.
    *
    */
-  template<typename S>
-  class In_Basic_SArgument_T : public Argument
+  template<typename S, template <typename> class Insert_Policy>
+  class In_Basic_SArgument_T : public InArgument
   {
   public:
-    In_Basic_SArgument_T (void);
+    In_Basic_SArgument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S arg (void) const;
+    S arg () const;
 
   private:
     S x_;
@@ -52,18 +52,18 @@ namespace TAO
    * @brief Template class for INOUT skeleton argument of basic IDL types.
    *
    */
-  template<typename S>
-  class Inout_Basic_SArgument_T : public Argument
+  template<typename S, template <typename> class Insert_Policy>
+  class Inout_Basic_SArgument_T : public InoutArgument
   {
   public:
-    Inout_Basic_SArgument_T (void);
+    Inout_Basic_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    S & arg ();
 
   private:
     S x_;
@@ -75,17 +75,17 @@ namespace TAO
    * @brief Template class for OUT skeleton argument of basic IDL types.
    *
    */
-  template<typename S>
-  class Out_Basic_SArgument_T : public Argument
+  template<typename S, template <typename> class Insert_Policy>
+  class Out_Basic_SArgument_T : public OutArgument
   {
   public:
-    Out_Basic_SArgument_T (void);
+    Out_Basic_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    S & arg ();
 
   private:
     S x_;
@@ -97,17 +97,17 @@ namespace TAO
    * @brief Template class for return skeleton value of basic IDL types.
    *
    */
-  template<typename S>
-  class Ret_Basic_SArgument_T : public Argument
+  template<typename S, template <typename> class Insert_Policy>
+  class Ret_Basic_SArgument_T : public RetArgument
   {
   public:
-    Ret_Basic_SArgument_T (void);
+    Ret_Basic_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    S & arg ();
 
   private:
     S x_;
@@ -119,7 +119,7 @@ namespace TAO
    * @brief Template class for skeleton argument traits of basic IDL types.
    *
    */
-  template<typename T>
+  template<typename T, template <typename> class Insert_Policy>
   struct Basic_SArg_Traits_T
   {
     typedef T                           ret_type;
@@ -127,10 +127,10 @@ namespace TAO
     typedef T &                         inout_type;
     typedef T &                         out_type;
 
-    typedef In_Basic_SArgument_T<T>     in_arg_val;
-    typedef Inout_Basic_SArgument_T<T>  inout_arg_val;
-    typedef Out_Basic_SArgument_T<T>    out_arg_val;
-    typedef Ret_Basic_SArgument_T<T>    ret_val;
+    typedef In_Basic_SArgument_T<T, Insert_Policy>     in_arg_val;
+    typedef Inout_Basic_SArgument_T<T, Insert_Policy>  inout_arg_val;
+    typedef Out_Basic_SArgument_T<T, Insert_Policy>    out_arg_val;
+    typedef Ret_Basic_SArgument_T<T, Insert_Policy>    ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
@@ -138,21 +138,16 @@ namespace TAO
     typedef inout_type                  inout_arg_type;
     typedef out_type                    out_arg_type;
     typedef out_type                    ret_arg_type;
-
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/Basic_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/PortableServer/Basic_SArgument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Basic_SArgument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

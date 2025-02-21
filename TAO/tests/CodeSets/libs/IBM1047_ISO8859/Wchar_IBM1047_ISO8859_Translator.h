@@ -4,11 +4,8 @@
 /**
  *  @file    Wchar_IBM1047_ISO8859_Translator.h
  *
- *  $Id$
- *
  *  Declares the arrays required to convert between IBM1047 (aka EBCDIC)  and ISO8859 (aka
  *  Latin/1).
- *
  *
  *  @author Jim Rogers (jrogers@viasoft.com)
  */
@@ -45,21 +42,18 @@ class IBM1047_ISO8859_Export WIBM1047_ISO8859 : public ACE_WChar_Codeset_Transla
 {
 public:
   /// A do nothing constructor.
-  WIBM1047_ISO8859 (void);
+  WIBM1047_ISO8859 ();
 
   /// Virtual destruction
-  virtual ~WIBM1047_ISO8859 (void);
+  virtual ~WIBM1047_ISO8859 ();
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
-                                      ACE_CDR::WChar &);
-  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR &,
-                                        ACE_CDR::WChar *&);
+  virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &, ACE_CDR::WChar &);
+  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR &, ACE_CDR::WChar *&);
   virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR &,
                                             ACE_CDR::WChar *,
                                             ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR &,
-                                       ACE_CDR::WChar);
+  virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR &, ACE_CDR::WChar);
   virtual ACE_CDR::Boolean write_wstring (ACE_OutputCDR &,
                                          ACE_CDR::ULong,
                                          const ACE_CDR::WChar *);

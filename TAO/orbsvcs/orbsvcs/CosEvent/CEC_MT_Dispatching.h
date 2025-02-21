@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_MT_Dispatching.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
@@ -15,13 +14,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_Dispatching.h"
+#include "orbsvcs/CosEvent/CEC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CEC_Dispatching_Task.h"
+#include "orbsvcs/CosEvent/CEC_Dispatching_Task.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 
@@ -38,28 +39,25 @@ class TAO_Event_Serv_Export TAO_CEC_MT_Dispatching : public TAO_CEC_Dispatching
 {
 public:
   /// Constructor
-  /// It will create <nthreads> servicing threads...
+  /// It will create @a nthreads servicing threads...
   TAO_CEC_MT_Dispatching (int nthreads,
                          int thread_creation_flags,
                          int thread_priority,
-                         int force_activate);
+                         int force_activate,
+                         bool shutdown_completion);
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_CEC_ProxyPushSupplier* proxy,
-                     const CORBA::Any & event
-                     ACE_ENV_ARG_DECL);
+                     const CORBA::Any & event);
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                            CORBA::Any& event
-                            ACE_ENV_ARG_DECL);
+                            CORBA::Any& event);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       const TAO_CEC_TypedEvent & typed_event
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       const TAO_CEC_TypedEvent & typed_event);
   virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                              TAO_CEC_TypedEvent & typed_event
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              TAO_CEC_TypedEvent & typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 private:
@@ -67,18 +65,18 @@ private:
   ACE_Thread_Manager thread_manager_;
 
   /// The number of active tasks
-  int nthreads_;
+  int const nthreads_;
 
   /// The flags (THR_BOUND, THR_NEW_LWP, etc.) used to create the
   /// dispatching threads.
-  int thread_creation_flags_;
+  int const thread_creation_flags_;
 
   /// The priority of the dispatching threads.
-  int thread_priority_;
+  int const thread_priority_;
 
   /// If activation at the requested priority fails then we fallback on
   /// the defaults for thread activation.
-  int force_activate_;
+  int const force_activate_;
 
   /// The dispatching task
   TAO_CEC_Dispatching_Task task_;
@@ -88,7 +86,12 @@ private:
 
   /// Are the threads running?
   int active_;
+
+  /// The flag which allows or not to wait the message queue threads completion
+  bool const wait_for_shutdown_thread_completion_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

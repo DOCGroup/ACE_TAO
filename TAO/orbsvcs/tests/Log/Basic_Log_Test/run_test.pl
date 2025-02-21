@@ -1,57 +1,101 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;  
- 
-# $Id$
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
+
 # -*- perl -*-
 
-use lib '../../../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
 $status = 0;
+$debug_level = '0';
 
-$nsior = PerlACE::LocalFile ("ns.ior");
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
-unlink $nsior;
+my $ns_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $lg_service = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $client = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 
-$NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$LS = new PerlACE::Process ("../../../Logging_Service/Basic_Logging_Service/Basic_Logging_Service", "-ORBInitRef NameService=file://$nsior");
-$CLIENT = new PerlACE::Process ("client", "-ORBInitRef NameService=file://$nsior");
+my $iorbase = "ns.ior";
+my $ns_iorfile = $ns_service->LocalFile ($iorbase);
+my $lg_iorfile = $lg_service->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$ns_service->DeleteFile ($iorbase);
+$lg_service->DeleteFile ($iorbase);
+$client->DeleteFile ($iorbase);
 
+$NS = $ns_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
+                                  "-o $ns_iorfile");
+$LS = $lg_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Logging_Service/Basic_Logging_Service/tao_tls_basic",
+                                  "-ORBInitRef NameService=file://$lg_iorfile");
+$CL = $client->CreateProcess ("client", "-ORBInitRef NameService=file://$client_iorfile");
 
 print STDERR "Starting Naming Service\n";
 
-$NS->Spawn ();
+$process_status = $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($nsior, 20) == -1) {
-	print STDERR "ERROR: cannot find naming service IOR file\n";
-	$NS->Kill ();
-	exit 1;
+if ($process_status != 0) {
+    print STDERR "ERROR: naming service returned $process_status\n";
+    exit 1;
+}
+
+if ($ns_service->WaitForFileTimed ($iorbase,
+                                   $ns_service->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+if ($ns_service->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$ns_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+if ($lg_service->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$lg_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
 }
 
 print STDERR "Starting Logging Service\n";
 
-$LS->Spawn ();
+$process_status = $LS->Spawn ();
 
-# Give time for logging service to initialize and install its object 
+if ($process_status != 0) {
+    print STDERR "ERROR: logging service returned $process_status\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
+# Give time for logging service to initialize and install its object
 # reference in the nameing service.
-sleep (5);
+sleep (10);
 
 print STDERR "Starting client\n";
 
-$CLIENT->Spawn ();
+$process_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-$client = $CLIENT->WaitKill (10);
-
-$NS->Kill ();
-
-$LS->Kill ();
-
-if ($client != 0) {
-	print STDERR "ERROR: client returned $client\n";
-	$status = 1;
+if ($process_status != 0) {
+    print STDERR "ERROR: client returned $process_status\n";
+    $status = 1;
 }
 
-unlink $nsior;
+$NS->Kill ();
+$LS->Kill ();
+
+$ns_service->DeleteFile ($iorbase);
+$lg_service->DeleteFile ($iorbase);
+$client->DeleteFile ($iorbase);
 
 exit $status;

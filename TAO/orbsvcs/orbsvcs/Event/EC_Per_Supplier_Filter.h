@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Per_Supplier_Filter.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -16,13 +14,15 @@
 #define TAO_EC_PER_SUPPLIER_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Supplier_Filter.h"
-#include "EC_Supplier_Filter_Builder.h"
-#include /**/ "event_serv_export.h"
+#include "orbsvcs/Event/EC_Supplier_Filter.h"
+#include "orbsvcs/Event/EC_Supplier_Filter_Builder.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY> class TAO_ESF_Proxy_Collection;
 class TAO_EC_Event_Channel_Base;
@@ -46,26 +46,21 @@ public:
   TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
 
   /// Destructor
-  virtual ~TAO_EC_Per_Supplier_Filter (void);
+  virtual ~TAO_EC_Per_Supplier_Filter ();
 
   // = The TAO_EC_Supplier_Filter methods.
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
-  virtual void connected (TAO_EC_ProxyPushSupplier* supplier
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier
-                             ACE_ENV_ARG_DECL);
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void connected (TAO_EC_ProxyPushSupplier* supplier);
+  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier);
+  virtual void shutdown ();
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_ProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL_NOT_USED);
+                     TAO_EC_ProxyPushConsumer *consumer);
   virtual void push_scheduled_event (RtecEventComm::EventSet &event,
-                                     const TAO_EC_QOS_Info &event_info
-                                     ACE_ENV_ARG_DECL);
-  virtual CORBA::ULong _decr_refcnt (void);
-  virtual CORBA::ULong _incr_refcnt (void);
+                                     const TAO_EC_QOS_Info &event_info);
+  virtual CORBA::ULong _decr_refcnt ();
+  virtual CORBA::ULong _incr_refcnt ();
 
 private:
   /// The event channel, used to locate the set of consumers.
@@ -91,7 +86,6 @@ private:
  * @class TAO_EC_Per_Supplier_Filter_Builder
  *
  * @brief Create Per_Supplier_Filter objects
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Per_Supplier_Filter_Builder : public TAO_EC_Supplier_Filter_Builder
 {
@@ -110,8 +104,10 @@ private:
   TAO_EC_Event_Channel_Base* event_channel_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Per_Supplier_Filter.i"
+#include "orbsvcs/Event/EC_Per_Supplier_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

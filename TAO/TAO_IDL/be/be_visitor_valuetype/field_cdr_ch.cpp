@@ -1,26 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    field_cdr_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Field in the client header file.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    field_cdr_ch.cpp
+ *
+ *  Visitor generating code for Field in the client header file.
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           field_cdr_op_ch, 
-           "$Id$")
+#include "valuetype.h"
 
 // **********************************************
 //  Visitor for field in the client header file.
@@ -30,26 +19,26 @@ be_visitor_valuetype_field_cdr_ch::be_visitor_valuetype_field_cdr_ch (
     be_visitor_context *ctx
   )
   : be_visitor_decl (ctx),
-    pre_ (""), 
+    pre_ (""),
     post_ ("")
 {
 }
 
-be_visitor_valuetype_field_cdr_ch::~be_visitor_valuetype_field_cdr_ch (void)
+be_visitor_valuetype_field_cdr_ch::~be_visitor_valuetype_field_cdr_ch ()
 {
 }
 
 int
 be_visitor_valuetype_field_cdr_ch::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_ch::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -60,7 +49,7 @@ be_visitor_valuetype_field_cdr_ch::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_ch::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -74,7 +63,7 @@ be_visitor_valuetype_field_cdr_ch::visit_array (be_array *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // This is the case for anonymous arrays.
       be_visitor_context ctx (*this->ctx_);
@@ -86,7 +75,7 @@ be_visitor_valuetype_field_cdr_ch::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_ch::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -99,7 +88,7 @@ be_visitor_valuetype_field_cdr_ch::visit_enum (be_enum *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -110,7 +99,7 @@ be_visitor_valuetype_field_cdr_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_ch::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -123,7 +112,7 @@ be_visitor_valuetype_field_cdr_ch::visit_sequence (be_sequence *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias () // not a typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -134,7 +123,7 @@ be_visitor_valuetype_field_cdr_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_ch::"
                              "visit_sequence - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -147,7 +136,7 @@ be_visitor_valuetype_field_cdr_ch::visit_structure (be_structure *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -158,7 +147,7 @@ be_visitor_valuetype_field_cdr_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_ch::"
                              "visit_struct - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -182,11 +171,11 @@ be_visitor_valuetype_field_cdr_ch::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_ch::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -195,7 +184,7 @@ be_visitor_valuetype_field_cdr_ch::visit_union (be_union *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -206,7 +195,7 @@ be_visitor_valuetype_field_cdr_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cdr_ch::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }

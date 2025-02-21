@@ -1,33 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    bd_str_seq.cpp
-//
-// = DESCRIPTION
-//    tests bounded string sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    bd_str_seq.cpp
+ *
+ *  tests bounded string sequences
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "bd_str_seq.h"
-
-ACE_RCSID (Param_Test, 
-           bd_str_seq, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_Bounded_String_Sequence
 // ************************************************************************
 
-Test_Bounded_String_Sequence::Test_Bounded_String_Sequence (void)
+Test_Bounded_String_Sequence::Test_Bounded_String_Sequence ()
   : opname_ (CORBA::string_dup ("test_bounded_strseq")),
     in_ (new Param_Test::Bounded_StrSeq),
     inout_ (new Param_Test::Bounded_StrSeq),
@@ -36,21 +26,20 @@ Test_Bounded_String_Sequence::Test_Bounded_String_Sequence (void)
 {
 }
 
-Test_Bounded_String_Sequence::~Test_Bounded_String_Sequence (void)
+Test_Bounded_String_Sequence::~Test_Bounded_String_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Bounded_String_Sequence::opname (void) const
+Test_Bounded_String_Sequence::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Bounded_String_Sequence::dii_req_invoke (CORBA::Request *req
-                                              ACE_ENV_ARG_DECL)
+Test_Bounded_String_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -58,29 +47,25 @@ Test_Bounded_String_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Bounded_StrSeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   const Param_Test::Bounded_StrSeq *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_StrSeq (*tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Bounded_StrSeq (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Bounded_StrSeq (*tmp);
 }
 
 int
-Test_Bounded_String_Sequence::init_parameters (Param_Test_ptr
-                                               ACE_ENV_ARG_DECL_NOT_USED)
+Test_Bounded_String_Sequence::init_parameters (Param_Test_ptr)
 {
   const char *choiceList[] =
   {
@@ -104,7 +89,7 @@ Test_Bounded_String_Sequence::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Bounded_String_Sequence::reset_parameters (void)
+Test_Bounded_String_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::Bounded_StrSeq; // delete the previous ones
   this->out_ = new Param_Test::Bounded_StrSeq;
@@ -113,33 +98,27 @@ Test_Bounded_String_Sequence::reset_parameters (void)
 }
 
 int
-Test_Bounded_String_Sequence::run_sii_test (Param_Test_ptr objref
-                                            ACE_ENV_ARG_DECL)
+Test_Bounded_String_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Bounded_StrSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_bounded_strseq (this->in_.in (),
                                                 this->inout_.inout (),
-                                                out
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Bounded_String_Sequence::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Bounded_String_Sequence::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Bounded_String_Sequence::check_validity (void)
+Test_Bounded_String_Sequence::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_->length () == this->inout_->length ()) &&
@@ -168,7 +147,7 @@ Test_Bounded_String_Sequence::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Bounded_String_Sequence::print_values (void)
+Test_Bounded_String_Sequence::print_values ()
 {
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
@@ -176,7 +155,7 @@ Test_Bounded_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   this->in_[i]? (const char *)this->in_[i]:"<nul>"));
     }
@@ -187,7 +166,7 @@ Test_Bounded_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->inout_[i]? (const char *)this->inout_[i]:"<nul>")));
     }
@@ -198,7 +177,7 @@ Test_Bounded_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->out_[i]? (const char *)this->out_[i]:"<nul>")));
     }
@@ -209,7 +188,7 @@ Test_Bounded_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->ret_[i]? (const char *)this->ret_[i]:"<nul>")));
     }

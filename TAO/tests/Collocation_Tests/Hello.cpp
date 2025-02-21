@@ -1,11 +1,7 @@
-//
-// $Id$
-//
 #include "Hello.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
-
-ACE_RCSID(Hello, Hello, "$Id$")
+#include "tao/ORB_Core_Auto_Ptr.h"
 
   Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)
@@ -15,8 +11,7 @@ ACE_RCSID(Hello, Hello, "$Id$")
 }
 
 char *
-Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Hello::get_string ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
@@ -42,7 +37,8 @@ Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           TAO::ORB_Table * const orb_table =
             TAO::ORB_Table::instance ();
 
-          if (orb_table->find ("server_orb") == 0)
+          TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
+          if (tmp.get () == nullptr)
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,
@@ -58,8 +54,11 @@ Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  // Give the client thread time to return from the collocated
+  // call to this method before shutting down the ORB.  We sleep
+  // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
+  ACE_OS::sleep (1);
+  this->orb_->shutdown (false);
 }

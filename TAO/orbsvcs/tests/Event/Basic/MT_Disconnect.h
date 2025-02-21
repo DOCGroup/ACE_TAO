@@ -3,8 +3,6 @@
 /**
  *  @file   MT_Disconnect.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -28,10 +26,10 @@ public:
         int use_callbacks);
 
   // = Check the ACE_Task_Base documentation.
-  int svc (void);
+  int svc ();
 
   /// Run a single iteration of the test
-  void run_iteration (ACE_ENV_SINGLE_ARG_DECL);
+  void run_iteration ();
 
 private:
   /// The event channel used on the test

@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: codecfactory, rtcorba, kokyu, rtscheduling {
-  after   += Kokyu_DSRT_Schedulers
-  libs    += Kokyu_DSRT_Schedulers
-  includes += $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
-}

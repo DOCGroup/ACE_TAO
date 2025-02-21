@@ -1,4 +1,3 @@
-//$Id$
 /*
  * Copyright (c) 1995 Regents of the University of California.
  * All rights reserved.
@@ -37,10 +36,12 @@ static const char rcsid[] =
     "@(#) $Header$";
 */
 
-#include "media_timer.h"
+#include "orbsvcs/AV/media_timer.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdlib.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 MediaTimer* MediaTimer::instance_;
 
@@ -65,15 +66,14 @@ MediaTimer::~MediaTimer()
  * unix_ts() call the transmitter will make to get the correspondence
  * between the media timestamp & unix time.
  */
-ACE_UINT32 MediaTimer::media_ts()
+time_t MediaTimer::media_ts()
 {
-  //timeval tv;
   ACE_Time_Value tv = ACE_OS::gettimeofday();
-  ACE_UINT32 u = tv.usec ();
+  time_t u = tv.usec ();
   u = (u << 3) + u; /* x 9 */
-        /* sec * 90Khz + (usec * 90Khz) / 1e6 */
-        u = tv.sec () * 90000 + (u / 100);
-        return (u + offset_);
+  /* sec * 90Khz + (usec * 90Khz) / 1e6 */
+  u = tv.sec () * 90000 + (u / 100);
+  return (u + offset_);
 }
 
 /*
@@ -85,7 +85,9 @@ ACE_UINT32 MediaTimer::media_ts()
  * correspond to the current clock.  (This information if vital
  * for cross-media synchronization.)
  */
-ACE_UINT32 MediaTimer::ref_ts()
+time_t MediaTimer::ref_ts()
 {
         return (media_ts());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

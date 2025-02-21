@@ -1,21 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/Performance
-//
-// = FILENAME
-//    UDP_i.h
-//
-// = DESCRIPTION
-//    This class implements the server functionality of the UDP test.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UDP_i.h
+ *
+ *  This class implements the server functionality of the UDP test.
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #ifndef UDP_I_H
 #define UDP_I_H
@@ -24,53 +18,42 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
+/**
+ * @class UDP_i:
+ *
+ * @brief UDP Object Implementation
+ */
 class UDP_i: public POA_UDP
 {
-  // = TITLE
-  //    UDP Object Implementation
-  //
-  // = DESCRIPTION
-  //
 public:
-  // = Initialization and termination methods.
-  UDP_i (void);
-  // Constructor
+  /// Constructor
+  UDP_i ();
 
-  ~UDP_i (void);
-  // Destructor
+  /// Destructor
+  ~UDP_i ();
 
-  virtual void setResponseHandler (UDP_ptr udpHandler
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void setResponseHandler (UDP_ptr udpHandler);
 
   virtual void invoke (const char *client_name,
-                       CORBA::Long request_id
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                       CORBA::Long request_id);
 
-  virtual void reset (const char * client_name
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void reset (const char * client_name);
 
+  /// Shutdown the server.
+  virtual void shutdown ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  // Shutdown the server.
-
+  /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
 
+  /// Return the number of lost messages
   ACE_UINT32 getMessagesCount ();
-  // Return the number of lost messages
 
+  /// Return the number of lost messages
   ACE_UINT32 getWrongMessagesCount ();
-  // Return the number of lost messages
-
 
 private:
+  /// ORB pointer.
   CORBA::ORB_var orb_;
-  // ORB pointer.
 
   ACE_Hash_Map_Manager_Ex < CORBA::String_var,
                             CORBA::Long,

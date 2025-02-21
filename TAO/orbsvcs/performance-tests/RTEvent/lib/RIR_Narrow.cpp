@@ -1,8 +1,6 @@
 /**
  * @file RIR_Narrow.cpp
  *
- * $Id$
- *
  * @author Jody Hagins <jody@atdesk.com>
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
@@ -15,35 +13,30 @@
 
 #include "ace/Log_Msg.h"
 
-template<class Interface> ACE_TYPENAME RIR_Narrow<Interface>::Interface_ptr
+template<class Interface> typename RIR_Narrow<Interface>::Interface_ptr
 RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
-                                const char *object_id
-                                ACE_ENV_ARG_DECL)
+                                const char *object_id)
 {
-  Interface_var interface;
+  Interface_var intface;
 
-  ACE_TRY
+  try
     {
       CORBA::Object_var object =
-        orb->resolve_initial_references (object_id
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references (object_id);
 
-      interface = Interface::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      intface = Interface::_narrow (object.in ());
 
-      if (CORBA::is_nil (interface.in ()))
+      if (CORBA::is_nil (intface.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      "Panic - error while narrowing <%s>\n",
+                      "Panic - error while narrowing <%C>\n",
                       object_id));
           ACE_OS::exit (1);
         }
-    }ACE_CATCHANY{
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught an exception \n");
+    } catch (const CORBA::Exception& ex) {
+      ex._tao_print_exception ("Caught an exception\n");
     }
-  ACE_ENDTRY;
-  return interface._retn ();
+  return intface._retn ();
 }
 
 #endif /* TAO_PERF_RTEC_RIR_NARROW_CPP */

@@ -1,18 +1,14 @@
-// $Id$
-
-#include "AdminProperties.h"
+#include "orbsvcs/Notify/AdminProperties.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "AdminProperties.inl"
+#include "orbsvcs/Notify/AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (Notify,
-           TAO_Notify_AdminProperties,
-           "$Id$")
 
 #include "orbsvcs/CosNotificationC.h"
 
-TAO_Notify_AdminProperties::TAO_Notify_AdminProperties (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Notify_AdminProperties::TAO_Notify_AdminProperties ()
   : max_global_queue_length_ (CosNotification::MaxQueueLength, 0)
   , max_consumers_ (CosNotification::MaxConsumers, 0)
   , max_suppliers_ (CosNotification::MaxSuppliers, 0)
@@ -38,7 +34,7 @@ TAO_Notify_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
   this->reject_new_events_.set (*this);
 
   //@@ check if unsupported property was set.
-  // This will happen when number of successfull inits != numbers of items bound in map_.
+  // This will happen when number of successful inits != numbers of items bound in map_.
 
   return 0;
 }
@@ -76,7 +72,7 @@ TAO_Notify_AdminProperties::init ()
 }
 
 CORBA::Boolean
-TAO_Notify_AdminProperties::queue_full (void)
+TAO_Notify_AdminProperties::queue_full ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, 1);
 
@@ -88,3 +84,5 @@ TAO_Notify_AdminProperties::queue_full (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

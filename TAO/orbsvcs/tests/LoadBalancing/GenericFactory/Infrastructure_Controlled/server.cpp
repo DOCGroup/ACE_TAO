@@ -2,12 +2,8 @@
 #include "Factory.h"
 #include "Simple.h"
 
-ACE_RCSID (Infrastructure_Controlled,
-           server,
-           "$Id$")
-
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   const char *location1 = "MyLocation 1";
   const char *location2 = "MyLocation 2";

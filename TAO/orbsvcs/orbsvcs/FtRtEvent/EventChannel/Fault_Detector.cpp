@@ -1,20 +1,17 @@
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Reactor.h"
-#include "Fault_Detector.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
 #include "ace/Select_Reactor.h"
 
-ACE_RCSID (EventChannel,
-           Fault_Detector,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Fault_Detector::ReactorTask::ReactorTask()
-: reactor_(new ACE_Select_Reactor, 1)
+  : reactor_(new ACE_Select_Reactor, 1)
 {
 }
 
 int
-Fault_Detector::ReactorTask::svc (void)
+Fault_Detector::ReactorTask::svc ()
 {
   this->reactor_.owner(ACE_OS::thr_self());
   this->reactor_.run_reactor_event_loop();
@@ -40,7 +37,7 @@ Fault_Detector* Fault_Detector::instance()
   return detector;
 }
 
-int Fault_Detector::init(int argc, char** argv)
+int Fault_Detector::init(int argc, ACE_TCHAR** argv)
 {
   detector = this;
   if (this->parse_conf(argc, argv)==0 &&
@@ -48,7 +45,7 @@ int Fault_Detector::init(int argc, char** argv)
   {
     if (!reactor_task_.thr_count() &&
       reactor_task_.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,"Cannot activate reactor thread\n"),
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,"Cannot activate reactor thread\n"),
       -1);
     return 0;
   }
@@ -65,7 +62,9 @@ void Fault_Detector::set_listener(TAO_FTEC_Fault_Listener* listener)
   listener_ = listener;
 }
 
-int Fault_Detector::parse_conf(int , char** )
+int Fault_Detector::parse_conf(int , ACE_TCHAR** )
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

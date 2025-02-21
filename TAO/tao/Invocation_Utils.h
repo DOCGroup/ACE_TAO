@@ -4,9 +4,6 @@
 /**
  *  @file    Invocation_Utils.h
  *
- *  $Id$
- *
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -21,6 +18,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   enum Invocation_Status
@@ -28,7 +29,7 @@ namespace TAO
       /// Initial state of the FSM in the invocation class.
       TAO_INVOKE_START = 0,
       /// The request must be restarted, a temporary failure has
-      /// occured.
+      /// occurred.
       TAO_INVOKE_RESTART,
       /// invoke() call successful. Final state of the FSM.
       TAO_INVOKE_SUCCESS,
@@ -63,9 +64,24 @@ namespace TAO
     TAO_ASYNCHRONOUS_POLLER_INVOCATION,
     /// Types of DII
     TAO_DII_INVOCATION,
-    TAO_DII_DEFERRED_INVOCATION
+    TAO_DII_DEFERRED_INVOCATION,
+    TAO_DII_ASYNCH_INVOCATION
   };
+
+  enum Forward_On_Exception
+    {
+      FOE_NON              = 0x0,
+      FOE_OBJECT_NOT_EXIST = 0x1,
+      FOE_COMM_FAILURE     = 0x2,
+      FOE_TRANSIENT        = 0x4,
+      FOE_INV_OBJREF       = 0x8,
+      FOE_OBJ_ADAPTER      = 0x10,
+      FOE_NO_RESPONSE      = 0x20,
+      FOE_ALL              = 0xFFFFFFFF
+    };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_INVOCATION_UTILS_H */

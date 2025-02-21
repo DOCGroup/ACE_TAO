@@ -4,8 +4,6 @@
 /**
  *  @file LB_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -16,14 +14,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "LB_LoadAlert.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/LocalObject.h"
 #include "tao/PI/PI.h"
+#include "tao/LocalObject.h"
+#include "tao/Versioned_Namespace.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -32,6 +31,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LB_ORBInitializer
@@ -50,10 +50,9 @@
  */
 class TAO_LB_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_LB_ORBInitializer (const CORBA::StringSeq & object_groups,
                          const CORBA::StringSeq & repository_ids,
@@ -66,17 +65,12 @@ public:
    * interface.
    */
   //@{
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
   //@}
 
 private:
-
   /// List of stringified object group references.
   const CORBA::StringSeq object_groups_;
 
@@ -94,9 +88,9 @@ private:
    * used out of convencience.
    */
   TAO_LB_LoadAlert load_alert_;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "tao/ORB_Core.h"
@@ -17,12 +15,11 @@ public:
   Test_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void test_method (CORBA::Short priority
-                    ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void test_method (CORBA::Short priority);
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  //FUZZ: disable check_for_lack_ACE_OS
+  void shutdown ();
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   CORBA::ORB_var orb_;
@@ -35,27 +32,22 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::test_method (CORBA::Short priority
-                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Test_i::test_method (CORBA::Short priority)
 {
   // Use RTCurrent to find out the CORBA priority of the current
   // thread.
 
   CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("RTCurrent");
 
   RTCORBA::Current_var current =
-    RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    RTCORBA::Current::_narrow (obj.in ());
 
   if (CORBA::is_nil (obj.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
   CORBA::Short servant_thread_priority =
-    current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    current->the_priority ();
 
   // Print out the info.
   if (servant_thread_priority != priority)
@@ -70,24 +62,23 @@ Test_i::test_method (CORBA::Short priority
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Test_i::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 //*************************************************************************
 
-const char *ior_output_file1 = "test1.ior";
-const char *ior_output_file2 = "test2.ior";
+const ACE_TCHAR *ior_output_file1 = ACE_TEXT("test1.ior");
+const ACE_TCHAR *ior_output_file2 = ACE_TEXT("test2.ior");
 CORBA::Short poa_priority = -1;
 CORBA::Short object_priority = -1;
 
 // Parse command-line arguments.
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:o:a:b:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:o:a:b:"));
   int c, result;
 
   while ((c = get_opts ()) != -1)
@@ -102,7 +93,7 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'a':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            "%hd",
                            &poa_priority);
         if (result == 0 || result == EOF)
@@ -112,7 +103,7 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'b':
-        result = ::sscanf (get_opts.opt_arg (),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            "%hd",
                            &object_priority);
         if (result == 0 || result == EOF)
@@ -149,7 +140,7 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%s> is nil\n",
+                       "ERROR: Object reference <%C> is nil\n",
                        msg),
                       -1);
   else
@@ -161,32 +152,26 @@ create_object (RTPortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *server_impl,
                CORBA::Short priority,
-               const char *filename
-               ACE_ENV_ARG_DECL)
+               const ACE_TCHAR *filename)
 {
   // Register with poa.
   PortableServer::ObjectId_var id;
 
   if (priority > -1)
     id = poa->activate_object_with_priority (server_impl,
-                                             priority
-                                             ACE_ENV_ARG_PARAMETER);
+                                             priority);
   else
-    id = poa->activate_object (server_impl ACE_ENV_ARG_PARAMETER);
+    id = poa->activate_object (server_impl);
 
-  ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var server =
-    poa->id_to_reference (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    poa->id_to_reference (id.in ());
 
   // Print out the IOR.
   CORBA::String_var ior =
-    orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    orb->object_to_string (server.in ());
 
-  ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
+  ACE_DEBUG ((LM_DEBUG, "<%C>\n\n", ior.in ()));
 
   // Print ior to the file.
   if (filename != 0)
@@ -207,14 +192,12 @@ create_object (RTPortableServer::POA_ptr poa,
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -225,34 +208,28 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // RTORB.
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTORB");
+      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
       // RootPOA.
       object =
-        this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references("RootPOA");
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
         return -1;
 
       // POAManager.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Create child POA with SERVER_DECLARED PriorityModelPolicy,
       // and MULTIPLE_ID id uniqueness policy (so we can use one
@@ -261,25 +238,18 @@ Task::svc (void)
       poa_policy_list.length (2);
       poa_policy_list[0] =
         rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
-                                              poa_priority
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                              poa_priority);
 
       poa_policy_list[1] =
-        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("Child_POA",
                               poa_manager.in (),
-                              poa_policy_list
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              poa_policy_list);
 
       RTPortableServer::POA_var rt_poa =
-        RTPortableServer::POA::_narrow (child_poa.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTPortableServer::POA::_narrow (child_poa.in ());
       if (check_for_nil (rt_poa.in (), "RTPOA") == -1)
         return -1;
 
@@ -290,49 +260,43 @@ Task::svc (void)
       int result;
       ACE_DEBUG ((LM_DEBUG, "\nActivated object one as "));
       result = create_object (rt_poa.in (), this->orb_.in (), &server_impl,
-                              -1, ior_output_file1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              -1, ior_output_file1);
       if (result == -1)
         return -1;
 
       // Create object 2 (override POA's priority).
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
       result = create_object (rt_poa.in (), this->orb_.in (), &server_impl,
-                              object_priority, ior_output_file2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              object_priority, ior_output_file2);
       if (result == -1)
         return -1;
 
       // Activate POA manager.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Start ORB event loop.
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception caught in Server_Declared test server:");
+      ex._tao_print_exception (
+        "Unexpected exception caught in Server_Declared test server:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
@@ -380,12 +344,11 @@ main (int argc, char *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

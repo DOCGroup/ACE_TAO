@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Server_Main.h
- *
- *  $Id$
  *
  *  Declares a generic object that acts as "main" for a CORBA server.
  *  @author Dale Wilson <wilson_d@ociweb.com>
@@ -33,28 +32,33 @@
  *  the following methods:
  *      Xyzzy_i (); // null constructor
  *      ~Xyzzy_i (); // destructor
- *      int parse_args (int argc, char * argv[]);
- *      int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+ *      int parse_args (int argc, ACE_TCHAR * argv[]);
+ *      int init (CORBA::ORB_ptr orb );
  *      int idle(int &result);
- *      int fini (ACE_ENV_SINGLE_ARG_DECL);
+ *      int fini ();
  *      const char * identity () const;
  *
  *      parse_args, self_register, self_unregister return 0 if ok, nonzero for error.
  *      idle returns 0 to continue execution; nonzero to exit -- returning "result" from the process
  *      identity provides a string to identify this servant in log messages.
- *
  */
 //=============================================================================
 
 #ifndef TAO_UTILS_SERVANTMAIN_H
 #define TAO_UTILS_SERVANTMAIN_H
 
-#include <ace/ACE.h>
+#include /**/ "ace/pre.h"
+
+#include "ace/ACE.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ <ace/pre.h>
+#include "tao/orbconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Utils
@@ -64,13 +68,13 @@ namespace TAO
     {
     public:
       Server_Main(const char * name);
+      Server_Main (const Server_Main &) = delete;
+      Server_Main (Server_Main &&) = delete;
+      Server_Main &operator= (const Server_Main &) = delete;
+      Server_Main &operator= (Server_Main &&) = delete;
       ~Server_Main();
 
       int run (int argc, ACE_TCHAR *argv[]);
-
-    private:
-      Server_Main( const Server_Main &);
-      Server_Main & operator = (const Server_Main &);
 
     private:
       const char * name_;
@@ -78,14 +82,10 @@ namespace TAO
   } // namespace UTILS
 } // namespace TAO
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "Server_Main.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-# pragma implementation "Server_Main.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/Utils/Server_Main.cpp"
 
-#include /**/ <ace/post.h>
+#include /**/ "ace/post.h"
 
 #endif //TAO_UTILS_SERVANTMAIN_H

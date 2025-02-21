@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef BIG_ONEWAYS_PEER_H
 #define BIG_ONEWAYS_PEER_H
@@ -17,18 +14,15 @@ public:
   Peer (CORBA::ORB_ptr orb);
 
   /// Destructor
-  virtual ~Peer (void);
+  virtual ~Peer ();
 
   // = The skeleton methods
   virtual Test::Session_ptr create_session (Test::Session_Control_ptr control,
                                             CORBA::ULong payload_size,
                                             CORBA::ULong thread_count,
                                             CORBA::ULong message_count,
-                                            CORBA::ULong peer_count
-                                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                            CORBA::ULong peer_count);
+  virtual void shutdown ();
 
 private:
   /// Keep a pointer to the ORB to shutdown cleanly

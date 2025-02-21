@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : csd_threadpool, taolib, pi, avoids_corba_e_micro {
+  after   += Dynamic_TP
+  libs    += TAO_Dynamic_TP
+}

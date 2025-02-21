@@ -1,22 +1,18 @@
-// $Id$
+#include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
+#include "ace/Guard_T.h"
 
-#include "Update_Manager.h"
-
-ACE_RCSID (EventChannel,
-           Update_Manager,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Update_Manager::Update_Manager(ACE_Auto_Event& evt,
                                int num_backups,
                                int transaction_depth,
                                bool& success)
-: evt_(evt)
-, replied_(num_backups)
-, suicide_condition_(num_backups)
-, num_backups_(num_backups)
-, transaction_level_(transaction_depth)
-, success_(success)
+  : evt_(evt)
+  , replied_(num_backups)
+  , suicide_condition_(num_backups)
+  , num_backups_(num_backups)
+  , transaction_level_(transaction_depth)
+  , success_(success)
 {
   suicide_condition_.flip();
   signal_condition_.resize(transaction_depth, true);
@@ -29,7 +25,7 @@ Update_Manager::~Update_Manager()
 
 void Update_Manager::handle_reply(int id)
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> guard(mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   replied_[id] = true;
 
   if ((replied_ & signal_condition_) == signal_condition_) {
@@ -42,7 +38,7 @@ void Update_Manager::handle_reply(int id)
 
 void Update_Manager::handle_exception(int id)
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> guard(mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   replied_[id] = true;
   ++transaction_level_;
 
@@ -56,3 +52,5 @@ void Update_Manager::handle_exception(int id)
   if (replied_ == suicide_condition_)
     delete this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

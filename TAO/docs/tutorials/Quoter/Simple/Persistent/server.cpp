@@ -1,27 +1,22 @@
-// $Id$
 
-//===========================================================================
-//
-// = FILENAME
-//     server.cpp
-//
-// = DESCRIPTION
-//
-//     In this example, a new POA (childPOA) is created and its
-//     policy is set so that it object references are persistent.
-//
-// = AUTHOR
-//     Priyanka Gontla <pgontla@ece.uci.edu>
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file     server.cpp
+ *
+ *   In this example, a new POA (childPOA) is created and its
+ *   policy is set so that it object references are persistent.
+ *
+ *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #include "Stock_Factory_i.h"
 #include "ace/streams.h"
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
-
     // Initialze the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
@@ -89,10 +84,10 @@ int main (int argc, char *argv[])
     orb-> run ();
 
     // Destroy POA, waiting until the destruction terminates.
-    root_poa->destroy (1, 1);
+    root_poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (CORBA::Exception &) {
+  catch (const CORBA::Exception &) {
     cerr << "CORBA exception raised !" << endl;
   }
   return 0;

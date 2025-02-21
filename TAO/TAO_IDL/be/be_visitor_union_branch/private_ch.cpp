@@ -1,27 +1,16 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    private_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union branch for the private part of the
-//    class.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    private_ch.cpp
+ *
+ *  Visitor generating code for Union branch for the private part of the
+ *  class.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_union_branch, 
-           private_ch, 
-           "$Id$")
+#include "union_branch.h"
 
 // **********************************************
 //  visitor for union_branch in the client header generating the private information
@@ -36,7 +25,7 @@ be_visitor_union_branch_private_ch::be_visitor_union_branch_private_ch (
 }
 
 // Destructor.
-be_visitor_union_branch_private_ch::~be_visitor_union_branch_private_ch (void)
+be_visitor_union_branch_private_ch::~be_visitor_union_branch_private_ch ()
 {
 }
 
@@ -44,7 +33,7 @@ be_visitor_union_branch_private_ch::~be_visitor_union_branch_private_ch (void)
 int
 be_visitor_union_branch_private_ch::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -73,8 +62,8 @@ int
 be_visitor_union_branch_private_ch::visit_array (be_array *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -97,8 +86,7 @@ be_visitor_union_branch_private_ch::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -123,8 +111,8 @@ int
 be_visitor_union_branch_private_ch::visit_enum (be_enum *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node
   if (this->ctx_->alias ())
@@ -147,8 +135,7 @@ be_visitor_union_branch_private_ch::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -162,8 +149,8 @@ int
 be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node
   if (this->ctx_->alias ())
@@ -186,8 +173,7 @@ be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -201,8 +187,8 @@ int
 be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node
   if (this->ctx_->alias ())
@@ -225,8 +211,7 @@ be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -240,8 +225,8 @@ int
 be_visitor_union_branch_private_ch::visit_valuebox (be_valuebox *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node
   if (this->ctx_->alias ())
@@ -264,8 +249,7 @@ be_visitor_union_branch_private_ch::visit_valuebox (be_valuebox *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -279,8 +263,8 @@ int
 be_visitor_union_branch_private_ch::visit_valuetype (be_valuetype *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node
   if (this->ctx_->alias ())
@@ -303,8 +287,7 @@ be_visitor_union_branch_private_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -318,8 +301,8 @@ int
 be_visitor_union_branch_private_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node
   if (this->ctx_->alias ())
@@ -342,8 +325,7 @@ be_visitor_union_branch_private_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -359,13 +341,14 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
   )
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
+  be_typedef *td = this->ctx_->alias ();
 
   // Check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
+  if (td != nullptr)
     {
-      bt = this->ctx_->alias ();
+      bt = td;
     }
   else
     {
@@ -383,27 +366,29 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
-  if (node->pt () == AST_PredefinedType::PT_object)
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
+  if (pt == AST_PredefinedType::PT_object
+      || pt == AST_PredefinedType::PT_abstract)
     {
       *os << bt->name () << "_var"
           << " *" << ub->local_name () << "_;";
     }
-  else if (node->pt () == AST_PredefinedType::PT_pseudo)
+  else if (pt == AST_PredefinedType::PT_pseudo)
     {
-      *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
-          << "_;";
+      *os << bt->nested_type_name (bu, "_ptr")
+          << " " << ub->local_name () << "_;";
     }
-  else if (node->pt () == AST_PredefinedType::PT_value)
+  else if (pt == AST_PredefinedType::PT_value)
     {
-      *os << bt->nested_type_name (bu, " *") << " " << ub->local_name ()
-          << "_;";
+      *os << bt->nested_type_name (bu, " *")
+          << " " << ub->local_name () << "_;";
     }
-  else if (node->pt () == AST_PredefinedType::PT_any)
+  else if (pt == AST_PredefinedType::PT_any)
     {
       // Cannot have an object inside of a union. In addition, an Any is a
       // variable data type.
@@ -423,8 +408,8 @@ int
 be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node
   if (this->ctx_->alias ())
@@ -447,8 +432,7 @@ be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -464,7 +448,7 @@ int
 be_visitor_union_branch_private_ch::visit_string (be_string *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
+  be_decl *bu = this->ctx_->scope ()->decl ();
 
   if (!ub || !bu)
     {
@@ -477,8 +461,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -488,7 +471,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
     }
   else
     {
-      *os << "CORBA::WChar *" << ub->local_name () << "_;";
+      *os << "::CORBA::WChar *" << ub->local_name () << "_;";
     }
 
   return 0;
@@ -498,8 +481,8 @@ int
 be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node
   if (this->ctx_->alias ())
@@ -522,8 +505,7 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -544,6 +526,16 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
 }
 
 int
+be_visitor_union_branch_private_ch::visit_structure_fwd (
+  be_structure_fwd *node)
+{
+  be_structure *s =
+    dynamic_cast<be_structure*> (node->full_definition ());
+
+  return this->visit_structure (s);
+}
+
+int
 be_visitor_union_branch_private_ch::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
@@ -560,7 +552,7 @@ be_visitor_union_branch_private_ch::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -568,8 +560,8 @@ int
 be_visitor_union_branch_private_ch::visit_union (be_union *node)
 {
   be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ();
-  be_type *bt;
+  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node
   if (this->ctx_->alias ())
@@ -592,8 +584,7 @@ be_visitor_union_branch_private_ch::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -604,3 +595,14 @@ be_visitor_union_branch_private_ch::visit_union (be_union *node)
 
   return 0;
 }
+
+int
+be_visitor_union_branch_private_ch::visit_union_fwd (
+  be_union_fwd *node)
+{
+  be_union *u =
+    dynamic_cast<be_union*> (node->full_definition ());
+
+  return this->visit_union (u);
+}
+

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ECT_Consumer.h"
 
 #include "orbsvcs/Event_Utilities.h"
@@ -10,21 +8,20 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Sched_Params.h"
-
-ACE_RCSID (EC_Throughput, 
-           ECT_Consumer, 
-           "$Id$")
+#include "ace/OS_NS_unistd.h"
 
 Test_Consumer::Test_Consumer (ECT_Driver *driver,
                               void *cookie,
-                              int n_suppliers)
+                              int n_suppliers,
+                              int stall_length)
   : driver_ (driver),
     cookie_ (cookie),
     n_suppliers_ (n_suppliers),
     recv_count_ (0),
-    shutdown_count_ (0)
+    shutdown_count_ (0),
+    stall_length_(stall_length)
 {
 }
 
@@ -33,12 +30,10 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
                         const char* name,
                         int type_start,
                         int type_count,
-                        RtecEventChannelAdmin::EventChannel_ptr ec
-                        ACE_ENV_ARG_DECL)
+                        RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   RtecScheduler::handle_t rt_info =
-    scheduler->create (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    scheduler->create (name);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -52,9 +47,7 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
                   RtecScheduler::VERY_LOW_IMPORTANCE,
                   time,
                   0,
-                  RtecScheduler::OPERATION
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                  RtecScheduler::OPERATION);
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -66,48 +59,39 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_consumers ();
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
 
-  RtecEventComm::PushConsumer_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  RtecEventComm::PushConsumer_var objref = this->_this ();
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
-                                                qos.get_ConsumerQOS ()
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                qos.get_ConsumerQOS ());
 }
 
 void
-Test_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Test_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_proxy_->disconnect_push_supplier ();
 
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 
   // Deactivate the servant
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
+  poa->deactivate_object (id.in ());
 }
 
 void
-Test_Consumer::dump_results (const char* name,
-                             ACE_UINT32 gsf)
+Test_Consumer::dump_results (const ACE_TCHAR* name,
+                             ACE_Basic_Stats::scale_factor_type gsf)
 {
   this->throughput_.dump_results (name, gsf);
 }
@@ -119,9 +103,7 @@ Test_Consumer::accumulate (ACE_Throughput_Stats& stats) const
 }
 
 void
-Test_Consumer::push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+Test_Consumer::push (const RtecEventComm::EventSet& events)
 {
   if (events.length () == 0)
     {
@@ -134,7 +116,14 @@ Test_Consumer::push (const RtecEventComm::EventSet& events
 
   // We start the timer as soon as we receive the first event...
   if (this->recv_count_ == 0)
-    this->first_event_ = ACE_OS::gethrtime ();
+    {
+      this->first_event_ = ACE_OS::gethrtime ();
+      ACE_DEBUG ((LM_DEBUG,
+                "ECT_Consumer (%P|%t) stalling for %d seconds\n", this->stall_length_));
+      ACE_OS::sleep(this->stall_length_);
+      ACE_DEBUG ((LM_DEBUG, "ECT_Consumer (%P|%t) finished stalling\n"));
+    }
+
 
   this->recv_count_ += events.length ();
 
@@ -159,8 +148,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events
             {
               // We stop the timer as soon as we realize it is time to
               // do so.
-              this->driver_->shutdown_consumer (this->cookie_ ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+              this->driver_->shutdown_consumer (this->cookie_);
             }
         }
       else
@@ -177,13 +165,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events
 }
 
 void
-Test_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+Test_Consumer::disconnect_push_consumer ()
 {
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

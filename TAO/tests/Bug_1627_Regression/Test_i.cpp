@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Test_i.h"
 
 Test_i::Test_i()
@@ -14,8 +11,7 @@ Test_i::~Test_i()
 }
 
 void
-Test_i::test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Test_i::test_method ()
 {
    // Noop
 }

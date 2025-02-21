@@ -1,0 +1,4 @@
+#include <orb.idl>
+
+interface Foo : CORBA::Policy
+{};

@@ -1,5 +1,3 @@
-// $Id$
-
 // server.cpp : Defines the class behaviors for the application.
 
 #include "stdafx.h"
@@ -14,6 +12,7 @@
 #include "serverView.h"
 
 #include "ace/ACE.h"
+#include "ace/Init_ACE.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -43,61 +42,42 @@ END_MESSAGE_MAP()
 static unsigned long
 spawn_my_orb_thread (void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      // Initialization arguments for the ORB
-      const char *orb_name = "";
-
-      CORBA::ORB_var the_orb =
-        CORBA::ORB_init (__argc,
-                         __argv,
-                         orb_name
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var the_orb = CORBA::ORB_init (__argc, __argv);
 
       CORBA::Object_var orb_obj =
-        the_orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        the_orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var the_root_poa =
-        PortableServer::POA::_narrow (orb_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (orb_obj.in ());
 
       PortableServer::POAManager_var the_poa_manager =
-        the_root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        the_root_poa->the_POAManager ();
 
-      the_poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      the_poa_manager->activate ();
 
       // Initializing the NamingService
       W32_Test_Impl myservant;
       W32_Test_Interface_var orb_servant =
-        myservant._this (ACE_TRY_CHECK);
-      ACE_TRY_CHECK;
+        myservant._this ();
 
       CORBA::String_var ior =
-        the_orb->object_to_string (orb_servant.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        the_orb->object_to_string (orb_servant.in ());
 
-      FILE *output_file = ACE_OS::fopen ("ior.txt",
-                                        "w");
+      FILE *output_file = ACE_OS::fopen ("ior.txt", "w");
       ACE_OS::fprintf (output_file,
                        "%s",
                        ior.in ());
       ACE_OS::fclose (output_file);
 
-      the_orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      the_orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 0;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return 0;
 }
@@ -114,35 +94,28 @@ CServerApp::CServerApp()
 
 CServerApp::~CServerApp()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var the_shutdown_orb;
 
       int argc = 0;
-      char **argv = 0;
-      const char *orb_name = "";
+      ACE_TCHAR **argv = 0;
+      const ACE_TCHAR *orb_name = ACE_TEXT("");
 
       // Retrieving a reference to the ORB used inside the thread
       the_shutdown_orb =
         CORBA::ORB_init (argc,
                          argv,
-                         orb_name
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         orb_name);
 
-      the_shutdown_orb->shutdown (0 // wait_for_completion
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      the_shutdown_orb->shutdown (false);
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
 
   ACE::fini ();
@@ -167,11 +140,19 @@ BOOL CServerApp::InitInstance()
   //  of your final executable, you should remove from the following
   //  the specific initialization routines you do not need.
 
+/*
+   From MFC 5.0, Enable3dControls and Enable3dControlsStatic are obsolete
+   because their functionality is incorporated into Microsoft's 32-bit
+   operating systems. Basically no need to call with VC5.0 and above.
+
+#if !defined (_WIN32_WCE)
 #ifdef _AFXDLL
-  Enable3dControls();                   // Call this when using MFC in a shared DLL
+  Enable3dControls(); // Call this when using MFC in a shared DLL
 #else
-  Enable3dControlsStatic();     // Call this when linking to MFC statically
+  Enable3dControlsStatic(); // Call this when linking to MFC statically
 #endif
+#endif
+*/
 
   // Change the registry key under which our settings are stored.
   // TODO: You should modify this string to be something appropriate

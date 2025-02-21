@@ -1,28 +1,26 @@
-//$Id$
 #include "POA_Holder.h"
-#include "ace/Arg_Shifter.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-POA_Holder::POA_Holder (void)
-  :priority_model_ (RTCORBA::CLIENT_PROPAGATED),
-   server_priority_ (0)
-  {
-  }
+POA_Holder::POA_Holder ()
+  : priority_model_ (RTCORBA::CLIENT_PROPAGATED),
+    server_priority_ (0)
+{
+}
 
 int
 POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
 {
   const ACE_TCHAR *current_arg = 0;
 
-  POA_name_ = arg_shifter.get_current (); // Read the name of the POA
+  POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Read the name of the POA
   arg_shifter.consume_arg ();
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter ("-PriorityModel")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))))
         {
-          if (arg_shifter.cur_arg_strncasecmp ("CLIENT") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
             priority_model_ = RTCORBA::CLIENT_PROPAGATED;
           else
             priority_model_ = RTCORBA::SERVER_DECLARED;
@@ -31,7 +29,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
           server_priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Lanes")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Lanes"))))
         {
           int lanecount = ACE_OS::atoi (current_arg);
           lanes_.length (lanecount);
@@ -41,7 +39,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
           //parse lane values ...
           while (arg_shifter.is_anything_left ())
             {
-              if (arg_shifter.cur_arg_strncasecmp ("-Lane") == 0)
+              if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Lane")) == 0)
                 {
                   arg_shifter.consume_arg ();
 
@@ -59,14 +57,16 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
 
                   //if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG, "lane parsed - %d, %d, %d\n",
-                              lanes_[l_index].lane_priority, lanes_[l_index].static_threads, lanes_[l_index].dynamic_threads));
+                              lanes_[l_index].lane_priority,
+                              lanes_[l_index].static_threads,
+                              lanes_[l_index].dynamic_threads));
                   l_index++;
                 }
               else
                 break;
             } /* while -- lane values */
         } /* if -Lanes */
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Bands")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"))))
         {
           int bandcount = ACE_OS::atoi (current_arg);
           bands_.length (bandcount);
@@ -76,7 +76,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
           //parse band values ...
           while (arg_shifter.is_anything_left ())
             {
-              if (arg_shifter.cur_arg_strncasecmp ("-Band") == 0)
+              if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Band")) == 0)
                 {
                   arg_shifter.consume_arg ();
 
@@ -89,7 +89,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   arg_shifter.consume_arg ();
 
                   //if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG, "band parsed - %d, %d \n",
+                  ACE_DEBUG ((LM_DEBUG, "band parsed - %d, %d\n",
                               bands_[b_index].low, bands_[b_index].high));
                   b_index++;
                 }
@@ -107,9 +107,8 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
+POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa)
 {
-
   /*
     lanes bands priomodel
 
@@ -124,7 +123,7 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
     else
     policy_list_length = 1
 
-   */
+  */
 
   CORBA::Policy_var priority_model_policy;
   CORBA::Policy_var lanes_policy;
@@ -133,9 +132,7 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
   // Create a priority model policy.
   priority_model_policy =
     rt_orb->create_priority_model_policy (priority_model_,
-                                          server_priority_
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                          server_priority_);
 
   if (lanes_.length () != 0)
     {
@@ -155,26 +152,19 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
                                               allow_borrowing,
                                               allow_request_buffering,
                                               max_buffered_requests,
-                                              max_request_buffer_size
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                              max_request_buffer_size);
 
 
       // Create a thread-pool policy.
       lanes_policy =
-        rt_orb->create_threadpool_policy (threadpool_id
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
+        rt_orb->create_threadpool_policy (threadpool_id);
     }
 
   if (bands_.length () != 0)
     {
       // Create a bands policy.
       bands_policy =
-        rt_orb->create_priority_banded_connection_policy (this->bands_
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        rt_orb->create_priority_banded_connection_policy (this->bands_);
     }
 
   CORBA::PolicyList poa_policy_list;
@@ -205,16 +195,13 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "creating POA %s\n", POA_name_.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, "creating POA %C\n", POA_name_.c_str ()));
 
   // Get the POA Manager.
   PortableServer::POAManager_var poa_manager =
-    parent_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    parent_poa->the_POAManager ();
 
-  parent_poa->create_POA (POA_name_.c_str (),
-                          poa_manager.in (),
-                          poa_policy_list
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->poa_ = parent_poa->create_POA (POA_name_.c_str (),
+                                       poa_manager.in (),
+                                       poa_policy_list);
 }

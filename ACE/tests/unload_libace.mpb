@@ -1,0 +1,11 @@
+// -*- MPC -*-
+feature(ace_for_tao) {
+  macros += ACE_LIB_NAME=\\"ACE_FOR_TAO\\"
+}
+project: vc_warnings {
+  specific(bmake) {
+    unicode_flags += -DACE_USES_WCHAR
+    macros += ACE_LD_DECORATOR_STR=ACE_TEXT(\\"$(LIBMODIFIER)$(ULIBMODIFIER)\\")
+    debug_macros += ACE_NO_INLINE=1
+  }
+}

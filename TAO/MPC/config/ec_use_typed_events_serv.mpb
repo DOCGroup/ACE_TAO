@@ -1,0 +1,3 @@
+// -*- MPC -*-
+feature(ec_typed_events) : dynamicinterface, ifr_client {
+}

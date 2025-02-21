@@ -1,22 +1,17 @@
-//$Id$
-
 #ifndef SYNCH_I_H
 #define SYNCH_I_H
 
 #include "SynchS.h"
 
-class Synch_i : public POA_Synch
+class SYNCH_Export Synch_i : public POA_Synch
 {
  public:
+  Synch_i ();
+  virtual void go (CORBA::Long base_time);
 
-  Synch_i (void);
-  virtual void go (CORBA::Long base_time
-                   ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  int synched ();
 
-  int synched (void);
-
-  ACE_Time_Value* base_time (void);
+  ACE_Time_Value* base_time ();
 
  private:
   int synched_;

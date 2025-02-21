@@ -1,8 +1,5 @@
 //
 // Client interface definition.
-//
-// $Id$
-//
 
 
 interface client

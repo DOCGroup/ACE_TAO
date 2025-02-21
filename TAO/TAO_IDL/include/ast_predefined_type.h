@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -93,26 +91,20 @@ public:
       , PT_any          // Predefined type "CORBA::Any"
       , PT_object       // Predefined type "CORBA::Object"
       , PT_value        // Predefined type "CORBA::ValueBase"
+      , PT_abstract     // Predefined type "CORBA::AbstractBase"
       , PT_void         // Predefined type "void"
       , PT_pseudo       // Predefined type for pseudo objects
+      , PT_int8         // Predefined type for int8
+      , PT_uint8        // Predefined type for uint8
     };
-
-  // Operations.
-
-  // Constructor(s).
-  AST_PredefinedType (void);
 
   AST_PredefinedType (PredefinedType t,
                       UTL_ScopedName *n);
 
-  virtual ~AST_PredefinedType (void);
+  virtual ~AST_PredefinedType ();
 
   // Data Accessors.
-  PredefinedType pt (void);
-
-  // Narrowing
-  DEF_NARROW_METHODS1(AST_PredefinedType, AST_ConcreteType);
-  DEF_NARROW_FROM_DECL(AST_PredefinedType);
+  PredefinedType pt ();
 
   // AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -121,10 +113,12 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
+
+  static AST_Decl::NodeType const NT;
 
 protected:
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
 
 private:

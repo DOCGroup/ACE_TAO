@@ -1,0 +1,32 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Foo.idl
+  }
+  custom_only = 1
+}
+
+project(*security server): orbsvcsexe, orbsvcslib, security, portableserver, ssliop {
+  exename = server
+  Source_Files {
+    Foo_i.cpp
+    FooC.cpp
+    FooS.cpp
+    server.cpp
+  }
+  after += *idl
+  IDL_Files {
+  }
+}
+
+project(*security client): orbsvcsexe, orbsvcslib, security {
+  exename = client
+  Source_Files {
+    FooC.cpp
+    client.cpp
+  }
+  after += *idl
+  IDL_Files {
+  }
+}
+

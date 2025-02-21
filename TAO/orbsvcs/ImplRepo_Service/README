@@ -1,0 +1,532 @@
+/** -*- HTML-Helper -*-
+
+@mainpage Implementation Repository
+
+@section intro Introduction
+
+The purpose of the Implementation Repository (ImR) in TAO is for the automatic
+activation of a TAO server when a method is invoked but the server is not
+running. It does this by working with the server to keep track of when it is
+activated and stores information on how to reactivate it. Method
+invocations on the server will actually be sent to the Implementation
+Repository, which will then be able to start the server process if it is not
+already running and forward the invocation to the real server.
+
+@section resources Resources
+
+The ImR in TAO was first based on a paper on the subject by
+<a href="http://www.triodia.com/staff/michi-henning.html">Michi Henning</a>
+called <a href="http://www.triodia.com/staff/michi/cacm.pdf">Binding,
+Migration, and Scalability in CORBA</a>. Mr. Henning later went on to
+coauthor the book
+<a href="http://cseng.awl.com/bookdetail.qry?ISBN=0-201-37927-9&amp;ptype=0">
+Advanced CORBA Programming in C++</a> and included a chapter on the
+Implementation Repository. The description of the ImR in this chapter is used
+as the specification for TAO's ImR.
+
+@ref usersguide - Overall documentation on how to use the ImR in your programs
+
+@ref ntservice - Running the ImR as a NT Service
+
+@ref imrandnaming - Using the Naming Service with the Implementation Repository
+
+@section authors Authors
+
+The guy who first worked on ImR and provided a base for the current
+ImR is Darrell Brunsch
+@<<a href="mailto:brunsch@cs.wustl.edu">brunsch@cs.wustl.edu</a>@>.
+The current version is developed by Phil Mesnier
+@<<a href="mailto:mesnier_p@ociweb.com">mesnier_p@ociweb.com</a>@>.
+You can reach us at the ACE/TAO
+<a href="https://github.com/DOCGroup/ACE_TAO">github project</a>.
+
+The NT Service part of the ImR was developed by Jeff Parsons @<<a
+href="mailto:parsons@cs.wustl.edu">parsons@cs.wustl.edu</a>@>.  He can
+also be reached via the same channels.
+It was later extended and enhanced by Justin Michel <michel_j@ociweb.com>
+
+*/
+
+
+/**
+@page usersguide Implementation Repository User's Guide
+
+In order for a server to make use of the Implementation Repository, it must
+communicate with the ImR to keep it up to date on such things as the server's
+running status. These functions now are contained within the POA, so when a
+Persistent POA is used on a server that has -ORBUseImR specified, it will
+communicate with an Implementation Repository, if one is available.
+
+@subsection description The ImR
+
+The ImR is based on the ImR in TAO 1.2.2 with added features to help
+improve throughput and load balancing. The work to be performed by the
+Implementation Repository is distributed between two entities (locator
+and activator) to help achieve the goal of better throughput and load
+balance.
+
+@subsection locator tao_imr_locator
+
+The locator acts as the main server which is visible to the
+application intending to use the ImR. It receives requests sent via
+tao_imr and distributes the work to the registered activators.  It is
+stateless and does not maintain any information except about the
+activators that are registered with it. Its job is to act as a
+mediator between the application and the actual activator that does
+the real work. As of now, we only support one locator to be running at
+any time. locator can be reached through the usual methods of
+-ORBInitRef and -ORBDefaultInitRef and multicast.
+
+Commandline Arguments that can be passed to tao_imr_locator
+
+-d <level 0..10>   locator specific debug level
+-m                 support multicast discovery.
+-l                 lock the repository, making it read only.
+-o <filename>      write the ior to the file.
+-t <timeout>       specify a startup timeout value (default 60 seconds)
+-i                 periodically ping servers to check liveness.
+-v                 the minimum successful ping interval. (default 10 seconds)
+-g                 the timeout for ping attempts. (default 1 second)
+-s                 run as a winNT service
+-c <command>       execute the named service command: install, remove
+-x <filename>      support persistence to the locator. We use XML to support
+                   persistence. Names of the activators registered with the locator,
+                   their IORs, and the servers registered with each of the activators are
+                   saved to the xml file. Use this option to pass the name of the file
+                   where the data has to be saved.
+-p <filename>      similar to "-x" but using an ACE_Configuration_Heap file to persist
+                   the data.
+-r                 similar to "-p" but using an ACE_Configuration_Win32Registry to persist
+                   the data. (only available on Win32 platforms)
+--directory <path> similar to "-x" option, but the repository will be written out
+                   to multiple files in the indicated directory: "imr_listings.xml" which
+                   indicates all servers and activators in the repository indicating the
+                   filename containing that server's or activator's persistence data.
+                   This option is used along with the "--primary" or "--backup" option
+                   to create a Fault Tolerant locator.
+--primary          pass along with "--directory <dir>" to startup the primary
+                   ImR_Locator. See ft_imr_locator subsection.
+--backup           pass along with "--directory <dir>" to startup the backup
+                   ImR_Locator. See ft_imr_locator subsection.
+-UnregisterIfAddressReused Enable the verification that a newly started server is reusing
+                   the endpoint address of another server that it is not linked with. If it
+                   finds this case, and the existing server is not running, its registration
+                   is removed.
+
+  And, of course, the ORB Options.
+
+@subsection ft_imr_locator FaultTolerant_ImR_Locator
+
+The ImR_Locator implements a fault tolerant service with the following options:
+
+  The --primary option tells the ImR_Locator that it will startup as the primary
+  in a redundant service pair.
+
+  The --backup option tells the ImR_Locator that it will startup as the backup
+  in a redundant service pair.
+
+  The --directory <ft_imr_shared_dir> option tells the ImR_Locator the shared
+  file system directory to use as the backing store for the redundant service
+  pair.
+
+  The -o <ft_imr_ior_filename> option tells the ImR_Locator to output the
+  redundant service pair ImRService ior file, which it can only do after
+  successfully starting the primary and backup ImRService instances. The ior
+  file contains the combined profiles of the primary and backup ImRLocators. The
+  client must use the ior file to use the fault tolerant locator.
+
+The primary and backup ImRLocator instances should have the same ORBEndPoint
+protocol list so that any client can send a request to either primary or backup
+regardless of protocol (IIOP,UIOP,etc...).
+
+The ImR_Locator primary and backup options cannot be passed on the command
+line along with -ORBObjRefStyle URL, since that style will cause the backup
+profile to not be available in the ior.
+
+At startup the primary must be started first, then the backup. When
+a single ImR_Locator goes down, it can be restarted at anytime
+(using the same ORBEndPoints). If they are both shutdown after a successful
+startup of the redundant pair, then either the primary or backup can be
+restarted first. With only a single server running, there is no fault
+tolerance support, but the original fault tolerant ior which was created
+by the backup with the -o option can still be used as long as the ORBEndPoint
+list remains the same for both instances.
+
+As long as both the primary and backup ImR_Locators are not shutdown at the
+same time the Fault Tolerant locator will always be available.
+
+@subsection ft_imr_locator_startup FaultTolerant_ImR_Locator Startup
+
+<ol>
+  <li>
+    <em>Start the primary.</em><br>
+    It will write the replication ior to a file in the shared persistence
+    directory.<br>
+    <code>
+      tao_imr_locator
+        --primary
+        -ORBEndpoint <primary_hostname:port>
+        --directory <ft_imr_shared_dir>
+    </code>
+  </li>
+  <li>
+    </em>Start the backup.</em><br>
+    Reads the primary replication ior from the shared persistence directory.<br>
+    Writes the multi-profile ior to ft_imr_ior_filename<br>.
+    <code>
+      tao_imr_locator
+        --backup
+        -ORBEndpoint <backup_hostname:port>
+        --directory <ft_imr_shared_dir>
+        -o <ft_imr_ior_filename>
+    </code>
+  </li>
+</ol>
+
+@subsection activator tao_imr_activator
+
+Activators, as you might have guessed, do the real work of
+activating servers or shutting them down and maintaining the information
+about servers related to them. Only one instance of an activator
+can be run on one host. The activator is not exposed at all to the
+application. Only the locator needs to and it is the only one that
+can contact the activator.
+
+An instance of tao_imr_activator first registers itself with the
+locator so that it can begin to receive requests. When registering
+with the locator, it passes the hostname where it is being run and
+its IOR to the locator. And, the locator reaches it using the
+same information.
+
+The Commandline parameters that are valid for tao_imr_activator are
+
+-c              Run the Service command: install, remove, install_no_imr
+-d <level 0..5> Debug Information
+-l              Notify the locator of server state changes
+-o <filename>   Write the IOR to a file
+-s              Run as a winNT service.
+-e <length>     Supply an Environment buffer length
+-m <count>      Supply a max number of Environment variables
+-delay <time>   A testing parameter used to impose a delay after the
+                detection of a child process death before notifying the
+                locator of the termination. Should not be used in
+                production environments
+-detach <1|0>   Override the default child-process detachment. By default
+                this value is 0, indicating the child process will terminate.
+                This may also be set or overridden by adding
+                #define IMR_DETACH_CHILD_DEF
+                to your $ACE_ROOT/ace/config.h file to make the default value 1.
+-h              Prints the help.
+
+@subsection work So how does the whole thing work?
+
+The first thing to do is to have a locator running. Once the locator
+is running, we can instantiate one or more activators as needed per
+the application. As mentioned already, the activators, upon
+instantiation, register with the locator to be able to receive
+requests.
+
+When a new server has to be added or any change has to the done to an
+existing server, a request is to be sent to the locator via the
+tao_imr utility. Startup commands, the working directory, the host
+where the server should be started up and such other information are
+passed to the locator via the tao_imr command line arguments.
+
+If the host where the server should be started up is passed while
+adding a new server, the locator chooses the activator that is running
+on that host to be responsible for the server's activities. Otherwise,
+an activator is chosen based on the Round robin algorithm. We plan to
+use better algorithms based on the existing load for the same purpose
+in future. Whatever way the activator is chosen for a server, once an
+activator is chosen, that activator remains responsible for the server
+throughout the server's lifetime.
+
+After an activator is chosen, the locator passes the request to the
+chosen activator. The activator acts on the request and updates its
+database to reflect the new state of the server.
+
+@subsection run How is the ImR run?
+
+<ol>
+  <li>First run the <b>tao_imr_locator</b>
+    <em>Example:<code> </code> </em><code> tao_imr_locator -o locator.ior<br></code>
+  <li>Run the <b>Activator</b>
+    <em>Example:<code> </code> </em><code> tao_imr_activator -ORBInitRef ImplRepoService=file://locator.ior<br></code>
+
+@subsection use How is the ImR used?
+
+The main steps for the lifetime of a server that uses the ImR are generally
+the following:
+
+<ol>
+  <li>Register name and startup commands with the ImR using <b>tao_imr<br>
+    </b><em>Example:<code>  </code> </em><code> tao_imr -ORBInitRef
+    ImplRepoService=file://locator.ior add plane -c &quot;airplane_server -i
+    -ORBInitRef ImplRepoService=file://locator.ior&quot;<br></code>
+    <br>
+    Note that the name used to register the server is the name of the POA
+    which the objects are created in. So in this example, the airplane_server
+    creates a POA called &quot;plane&quot; and activates its servants under
+    it.<br>
+  <li>Start the server once to generate an ImR-ified IOR<br>
+  <li>Start clients and pass them the above IOR<br>
+  <li>Clients will use the IOR, which will automatically go through the ImR<br>
+  <li>The ImR will start the server if it is not already running<br>
+  <li>At any time when the server is not currently in use by a client, it can be
+      shut down using <strong>tao_imr<br></strong><em>Example:</em><code> tao_imr
+      -ORBInitRef ImplRepoService=file://locator.ior shutdown plane<br>
+    </code>
+  <li>After the server isn't needed anymore, it can be removed from the ImR database
+      using <strong>tao_imr<br></strong><em>Example:<code> </em>tao_imr -ORBInitRef
+      ImplRepoService=file://locator.ior remove plane</code>
+</ol>
+
+@subsection serverresponsibilities So what does the server need to do?
+
+A server must be run with the argument &quot;-ORBUseImR 1&quot; supplied to
+ORB_init. Then any object managed by a <strong>persistent</strong> POA will
+be reachable via the ImR locator. The locator must also be reachable by the
+server, using -ORBInitRef ImplRepoService=<ior> or similar.
+
+@subsection defaultinitref Use of -ORBDefaultInitRef with the ImR
+
+As mentioned in the INS documentation (in TAO/docs/INS.html), a base IOR
+can be passed to the ORB.  Then when resolve_initial_reference is called,
+the ORB can append the service name to the base IOR to form a full IOR.
+
+When used with the ImR, this can be a powerful feature.  If the ImR's endpoint
+is used as the base IOR, then the ImR can be used to provide many services via
+the resolve_initial_reference functionality.
+
+For example, let's say the ImR service is running on doriath on port 5555 and
+the Name Service is already registered with the ImR (in that the ImR knows how
+to start the Name Service).
+
+Now we should be able to run some client that uses the Name Service like this:
+
+<code>client -ORBDefaultInitRef corbaloc:iiop:doriath:5555/</code>
+
+When the client calls resolve_initial_reference("NameService"), the ORB will
+resolve that to "corbaloc:iiop:doriath:5555/NameService".  The ImR
+recognizes this IOR as a pointer to the NameService, and will then
+start it up if necessary.  Finally, it will forward the client to the
+Name Service.
+
+Services used in this way have two requirements:
+
+- The server must be registered as the request_initial_reference name.  For
+  example, the Name Service is registered as the "NameService", and thus also
+  contains a POA with the name "NameService".
+- The server must also be able to handle the INS name
+  "corbaloc:iiop:machine:port/poa_name", where the poa_name is the
+  same name as above.
+
+@subsection activationmodes What are activation modes
+
+Each server can have one of three different types of activation modes:
+
+<ul>
+  <li>NORMAL is the default.  The server can be started via tao_imr,
+      the command line, and with client requests.
+  <li>MANUAL specifies that the server shouldn't be activated with a
+      client request but can be activated through tao_imr or via the
+      command line.
+  <li>PER_CLIENT specifies that each request to the ImplRepo will
+      result in a new server process started up.  Because clients
+      cache the forwarded reference, there is one server per client
+      (more or less).  There are some exceptions, such as if the
+      original IOR is used in different threads (each thread would get
+      a different server).  <b>Note:</b> The Implementation Repository
+      doesn't store any information about the started servers in this
+      mode, so it cannot be used to shut down the servers.  So the
+      servers must have an alternative way of shutting down.
+  <li>AUTO_START specifies that a server should be activated when the
+      Implementation Repository is started.  tao_imr also has an
+      autostart command to activate all servers marked AUTO_START.
+</ul>
+
+@subsection taoImRior Using the tao_imr ior command
+
+First, some background.
+
+For the longest time, there was no way with TAO's Implementation
+Repository to register a server and then start using the client
+immediately.  The server had to be started once just for the purpose
+of creating an IOR for the client to use.  The problem was that it was
+very difficult to create an IOR without running the server.
+
+It would be nice to be able to generate a valid IOR without requiring
+the program to be run. A valid IOR in this case requires two major
+things.  First it requires the endpoint of the ImR. This is relatively
+easy to get, since it is encoded in the ImR's IOR.  Second it also
+requires an object key.  At the least, this involves both the POA
+hierarchy and the object name.
+
+So if we knew the POA and object names, then we should be able to
+create an IOR for the server. One possibility would be to have tao_imr
+ask for both the POA and the object, and then create the POA hierarchy
+to generate an IOR.  Doing the generation is this manner (letting the
+POA create the reference) shields us from changes in the IOR
+generation schemes.  Since we are using the same code that the server
+would use, our IORs would be up to date.
+
+It ends up there is an easier way to do this.  The Interoperable
+Naming Service is intended to be used in situations where an IOR could
+be created by hand.  Using the same information as above, it is not
+difficult to take the endpoint information from the ImR and attach the
+POA name.  For example, let's say that we are running the ImR on
+ringil.ece.uci.edu at port 5000.  The endpoint would be
+&quot;corbaloc:iiop:1.2@ringil.ece.uci.edu:5000&quot;.  If we are
+creating an IOR for the nestea server, we'd just need to attach
+&quot;/nestea_server&quot; to the end of the endpoint.  Now we have an
+IOR.
+
+So what does this mean for the server?
+
+The main issue here is that the server must be changed to support the
+simplified name. This can be done by using the IORTable like this:
+
+<CODE>
+      CORBA::Object_var table_object =
+        this->orb_->resolve_initial_references ("IORTable";
+
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in ());
+
+      if (CORBA::is_nil (adapter.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
+      else
+        {
+          adapter->bind (poa_name, server_str.in ());
+        }
+</CODE>
+
+These lines, as taken from the nestea_server example, just uses the same
+poa_name as registered with the ImR and associates it with the server_obj
+object in the IOR table.  Because the ImR will be able to handle the
+simplified name (if it uses the POA name scheme) then this IOR will work.
+
+Just one more thing, each object that needs an IOR needs to be registered
+with the IOR table.  But this raises the problem of uniqueness; they all
+can't have the same name.  The ImR will actually only look at the name part
+of the simplified IOR up to the first &quot;/&quot;.  So both
+&quot;corbaloc:iiop:1.2@ringil:5000/nestea_server/foo&quot; and
+&quot;corbaloc:iiop:1.2@ringil:5000/nestea_server/bar&quot; will be treated by
+the ImR as objects in the &quot;nestea_server&quot; server.
+
+@subsection persistence Persistent Implementation Repository
+
+TAO's Implementation Repository can be made persistent by doing two things:
+
+<ul>
+<li>
+Always start up the Implementation Repository on the same port. This ensures that
+the Implementation Repository will not have to re-ImR-ify the IORs of every server
+registered to it each time it starts up. The way to accomplish this is to add<br>
+-ORBEndpoint iiop://(hostname):(portnumber)<br>
+
+to the activator's startup command line. The host
+name can be obtained portable in C++ code with the lines<br>
+
+  ACE_INET_addr ad;<br>
+  char *hostname = ad.get_host_name ();<br>
+
+or in a Perl script by adding<br>
+
+  use Sys::Hostname;<br>
+  $hostname = hostname();<br>
+
+There are even specific port numbers, assigned to the OMG by the IANA,
+which can be used for this purpose. They are 683 (for IIOP) and 684
+(for IIOP over SSL).  For more information about this, see
+<a href="http://www.iana.org/">http://www.iana.org/</a>
+and <a href="http://www.isi.edu/in-notes/iana/assignments/port-numbers">
+http://www.isi.edu/in-notes/iana/assignments/port-numbers</a>.<br><br>
+<li>
+Pass the ImR a filename to use for the backing store, specified by the
+command line option<br>
+
+-p (filename)<br>
+
+This option must be used the first and every subsequent time the
+persistent ImR is started up.
+
+</ul>
+*/
+
+/**
+@page ntservice Running as an NT service
+
+The tao_imr_locator.exe can function as a Windows NT Service.  The -c
+option can be used to install and remove the service (this requires
+Administrator access on the machine).
+
+@note When using the locator as a service, it must have all of its
+required ACE/TAO DLL's in the path or in the same directory.  For
+example, the run_test.pl copies tao_imr_locator.exe to the
+ACE_wrappers@\bin directory before using "-c install".  Alternatively,
+You can set the usual ACE_ROOT, TAO_ROOT, and PATH environment
+variables on a system wide basis.
+
+The service can be then started either from the Windows NT "Services"
+Admin Tool or via the "net" program on the command line:
+
+<CODE>net start "TAO Implementation Repository Locator"</CODE>
+<CODE>net start "TAO Implementation Repository Activator"</CODE>
+
+The Implementation Repository supports start and stop but not pause.
+
+When the Activator is installed using tao_imr_activator -c install, it
+is added with a dependency on a locator service. If you don't wish to
+also install the locator on the same machine, then you must use the -c
+install_no_imr option instead.
+
+@subsection serviceopts Service Options
+
+Any options that are specified along with -c install, will be saved in
+the registry under
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TAOIMRActivator\Parameters and
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TAOIMRLocator\Parameters.
+For example:
+tao_imr_activator -c install -d 3 -l -m -o activator.ior -t 30 -orbendpoint iiop://:9988 -orbdebuglevel 1
+
+The order of arguments makes no difference, but you must run
+-c remove and then -c install if you want to change the parameters.
+
+You can also manually change these using the typical regedit utility.
+
+*/
+
+/**
+@page imrandnaming Naming Service
+
+@subsection lowdown The Short Answer
+
+Register the Naming Service with an Implementation Repository using the
+POA name "NameService".  So for example:
+
+<CODE>tao_imr add NameService -c "Naming_Service -ORBUseIMR 1"</CODE>
+
+And then an IOR can be created by:
+
+<CODE>tao_imr ior NameService</CODE>
+
+The above commands depend on multicast (since the commands are shorter and
+easier put in documents).  You might need to add "-ORBInitRef
+ImplRepoService=..." for a more robust solution.
+
+@subsection details Various Details
+
+The Naming Service in TAO contains one persistent POA named "NameService".
+If -ORBUseIMR 1 is passed to it, it will communicate with the ImR as any
+other persistent POA does.  Also, the Naming Service recognizes the INS
+object key "NameService".  This allows you to use the "tao_imr ior"
+command to create corbaloc IORs.
+
+NameService was chosen because resolve_initial_references () uses that
+name.  And that allows us to do interesting things with ORBDefaultInitRef
+(as shown in the @ref defaultinitref section).
+
+*/

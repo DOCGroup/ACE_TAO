@@ -1,0 +1,40 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file   ExceptionHolder.pidl
+ *
+ *   tao_idl
+ *        -o orig -Gp -Gd -GA -SS
+ *        -Wb,export_macro=TAO_Messaging_Export
+ *        -Wb,export_include=messaging_export.h
+ *        -Wb,pre_include="ace/pre.h"
+ *        -Wb,post_include="ace/post.h" -I$(TAO_ROOT)
+ *        ExceptionHolder.pidl
+ */
+//=============================================================================
+
+#ifndef TAO_MESSAGING_EXCEPTIONHOLDER_PIDL
+#define TAO_MESSAGING_EXCEPTIONHOLDER_PIDL
+
+#include "tao/OctetSeq.pidl"
+#include "tao/AnyTypeCode/Dynamic.pidl"
+
+#pragma prefix "omg.org"
+
+module Messaging
+{
+  /// Exception Delivery in the Callback Model
+  native UserExceptionBase;
+  valuetype ExceptionHolder {
+    void raise_exception() raises (UserExceptionBase);
+    void raise_exception_with_list(
+      in Dynamic::ExceptionList exc_list)
+      raises (UserExceptionBase);
+    private boolean is_system_exception;
+    private boolean byte_order;
+    private CORBA::OctetSeq marshaled_exception;
+  };
+};
+
+#endif /* TAO_MESSAGING_EXCEPTIONHOLDER_PIDL */

@@ -1,32 +1,41 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
 
-# $Id$
 # -*- perl -*-
+
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
+use English;
+
+$status = 0;
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+my $iorbase = "cubit.ior";
+my $server_shmiop_conf = $server->LocalFile ("server_shmiop$PerlACE::svcconf_ext");
+
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
 
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
 # Taken from perlrun man page.
 
-# Do not use environment variables here since not all platforms use ACE_ROOT
-use lib "../../../../../bin";
-use PerlACE::Run_Test;
-use English;
-
-$status = 0;
-
-$iorfile = PerlACE::LocalFile ("cubit.ior");
-$iiop_lite_conf = PerlACE::LocalFile ("iiop_lite$PerlACE::svcconf_ext");
-$uiop_lite_conf = PerlACE::LocalFile ("uiop_lite$PerlACE::svcconf_ext");
-$server_shmiop_conf = PerlACE::LocalFile ("server_shmiop$PerlACE::svcconf_ext");
-
-$svnsflags = " -f $iorfile";
-$clnsflags = " -f $iorfile";
-$clflags = "";
-$svflags = "";
-$quietflag = " -q ";
-$giopliteflag = 0;
+$client_flags = "";
+$server_flags = "";
+$quiet_flag = " -q ";
+$shmiop = 1;
 
 ###############################################################################
 # Parse the arguments
@@ -39,94 +48,114 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         print "-n num              -- client uses <num> iterations\n";
         print "-debug              -- sets the debug flag for both client and "
                                       . "server\n";
+        print "-noshmiop           -- don't run SHMIOP test\n";
         exit;
     }
     elsif ($ARGV[$i] eq "-debug") {
-        $clflags .= " -d ";
-        $svflags .= " -d ";
+        $client_flags .= " -d ";
+        $server_flags .= " -d ";
     }
     elsif ($ARGV[$i] eq "-n") {
-        $clflags .= " -n $ARGV[$i + 1] ";
+        $client_flags .= " -n $ARGV[$i + 1] ";
         $i++;
     }
     elsif ($ARGV[$i] eq "-verbose") {
-        $quietflag = "";
+        $quiet_flag = "";
+    }
+    elsif ($ARGV[$i] eq "-noshmiop") {
+        $shmiop = 0;
     }
     else {
         print STDERR "ERROR: Unknown Option: ".$ARGV[$i]."\n";
     }
 }
 
-$SV = new PerlACE::Process ("server");
-$CL = new PerlACE::Process ("client");
+$SV = $server->CreateProcess ("server", "");
+$CL = $client->CreateProcess ("client", "-f $client_iorfile $client_flags $quiet_flag -x");
 
 ###############################################################################
 # run_test_helper
 
 sub run_test_helper ()
 {
-    $SV->Spawn ();
+    $server_status = $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
-        print STDERR "ERROR: cannot find file <$iorfile>\n";
-        $SV->Kill ();
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
         exit 1;
     }
 
-    my $client = $CL->SpawnWaitKill (120);
-    my $server = $SV->WaitKill (30);
+    if ($server->WaitForFileTimed ($iorbase,
+                                   $server->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
+    }
 
-    unlink $iorfile;
+    if ($server->GetFile ($iorbase) == -1) {
+        print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
+    }
 
-    if ($server != 0) {
-        print STDERR "ERROR: server error status $server\n";
+    if ($client->PutFile ($iorbase) == -1) {
+        print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
+    }
+
+    $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 105);
+
+    if ($client_status != 0) {
+        print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
     }
 
-    if ($client != 0) {
-        print STDERR "ERROR: client error status $client\n";
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 20);
+
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
+
+    $server->DeleteFile($iorbase);
+    $client->DeleteFile($iorbase);
 }
 
 ###############################################################################
+my $server_stdarg = "-ORBdebuglevel $debug_level -f $server_iorfile $server_flags";
 
 if (! (-x $SV->Executable () && -x $CL->Executable)) {
     print STDERR "ERROR: server and/or client missing or not executable!\n";
     exit 1;
 }
 
-unlink $iorfile;
-
 print STDERR "============================================================\n";
 print STDERR "Running IDL_Cubit with the default ORB protocol.\n\n";
 
-$SV->Arguments ($svflags . $svnsflags);
-$CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
+$SV->Arguments ($server_stdarg);
 
 run_test_helper ();
 
-if ($OSNAME ne "MSWin32") {
+if ($OSNAME ne "MSWin32" && $OSNAME ne "VMS") {
     print STDERR "============================================================\n";
     print STDERR "Running IDL_Cubit with the UIOP protocol.\n\n";
 
-    $SV->Arguments ($svflags . $svnsflags . " -ORBEndpoint uiop:// ");
-    $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
+    $SV->Arguments ("$server_stdarg -ORBEndpoint uiop:// ");
 
     run_test_helper ();
+}
 
+if ($shmiop) {
     print STDERR "============================================================\n";
     print STDERR "Running IDL_Cubit with the SHMIOP protocol.\n\n";
 
-    $SV->Arguments ($svflags . $svnsflags
-                    . " -ORBEndpoint shmiop:// -ORBSvcconf $server_shmiop_conf ");
-    $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
+    $SV->Arguments ("$server_stdarg -ORBEndpoint shmiop:// -ORBSvcconf $server_shmiop_conf ");
 
     run_test_helper ();
+}
 
 # Clean up SHMIOP files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");
-
-}
 
 exit $status;

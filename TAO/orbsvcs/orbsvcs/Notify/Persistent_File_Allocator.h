@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Persistent_File_Allocator.h
- *
- *  $Id$
  *
  *  A Persistent_File_Allocator manages a free list and allocates and
  *  deallocates blocks from a Random_File.  There should be only one
@@ -23,17 +21,17 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_serv_export.h"
-#include "Random_File.h"
-#include "Bit_Vector.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Random_File.h"
+#include "orbsvcs/Notify/Bit_Vector.h"
 #include "ace/Containers_T.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Manager.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
-
-
 /// \brief An interface to allow callbacks on completion of persistent storage
 /// requests.
 class TAO_Notify_Serv_Export Persistent_Callback
@@ -120,8 +118,8 @@ private:
  * Maintains a free list, write queue, allocations of new
  * blocks, reads, and writes.  This class also manages a thread that performs
  * background updating of a Random_File.
- * @@todo this is too much for one class to do.  It should be refactored.
- * @@todo: we shouldn't arbitrarily use a thread.
+ * @todo this is too much for one class to do.  It should be refactored.
+ * @todo we shouldn't arbitrarily use a thread.
  */
 class TAO_Notify_Serv_Export Persistent_File_Allocator
 {
@@ -170,7 +168,7 @@ public:
   bool write(Persistent_Storage_Block* psb);
 
   /// for information (unit test) only.
-  size_t file_size () const;
+  ACE_OFF_T file_size () const;
 
 private:
   /// Free a previously assigned block.
@@ -191,15 +189,16 @@ private:
   Random_File pstore_;
   Bit_Vector free_blocks_;
   ACE_Unbounded_Queue<Persistent_Storage_Block*> block_queue_;
-  ACE_SYNCH_MUTEX lock_;
-  ACE_SYNCH_MUTEX free_blocks_lock_;
-  ACE_SYNCH_MUTEX queue_lock_;
+  TAO_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX free_blocks_lock_;
+  TAO_SYNCH_MUTEX queue_lock_;
   bool terminate_thread_;
   bool thread_active_;
   ACE_SYNCH_CONDITION wake_up_thread_;
 };
-
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* PERSISTENT_FILE_ALLOCATOR_H */

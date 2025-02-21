@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Reactive_SupplierControl.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_SupplierControl.h"
+#include "orbsvcs/Event/EC_SupplierControl.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 
@@ -29,6 +28,8 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 
@@ -51,7 +52,6 @@ class TAO_EC_Reactive_SupplierControl;
  * like it may be a good idea to change some naming and templatize...
  * @todo The same templates should be used for the Notification and
  * COS Event services.
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_Handler
 {
@@ -87,25 +87,23 @@ public:
                                    CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_EC_Reactive_SupplierControl (void);
+  virtual ~TAO_EC_Reactive_SupplierControl ();
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_SupplierControl
-  virtual int activate (void);
-  virtual int shutdown (void);
-  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual int activate ();
+  virtual int shutdown ();
+  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy);
   virtual void system_exception (TAO_EC_ProxyPushConsumer *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
 private:
   /// Check if the suppliers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void query_suppliers ();
 
 private:
   /// The polling rate
@@ -145,15 +143,16 @@ class TAO_EC_Ping_Supplier : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 public:
   TAO_EC_Ping_Supplier (TAO_EC_SupplierControl *control);
 
-  virtual void work (TAO_EC_ProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_EC_ProxyPushConsumer *consumer);
 
 private:
   TAO_EC_SupplierControl *control_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Reactive_SupplierControl.i"
+#include "orbsvcs/Event/EC_Reactive_SupplierControl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

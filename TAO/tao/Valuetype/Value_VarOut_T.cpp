@@ -1,38 +1,16 @@
-// $Id$
-
 #ifndef TAO_VALUE_VAROUT_T_CPP
 #define TAO_VALUE_VAROUT_T_CPP
 
 #include "tao/Valuetype/Value_VarOut_T.h"
 #include "tao/Valuetype/Value_CORBA_methods.h"
 
+#include <algorithm>  /* For std::swap<>() */
 
-template<typename T>
-void
-TAO::Value_Traits<T>::add_ref (T * p)
-{
-  CORBA::add_ref (p);
-}
-
-template<typename T>
-void
-TAO::Value_Traits<T>::remove_ref (T * p)
-{
-  CORBA::remove_ref (p);
-}
-
-template<typename T>
-void
-TAO::Value_Traits<T>::release (T * p)
-{
-  CORBA::remove_ref (p);
-}
-
-// ===============================================================
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
-TAO_Value_Var_T<T>::TAO_Value_Var_T (void)
-  : ptr_ (0)
+TAO_Value_Var_T<T>::TAO_Value_Var_T ()
+  : ptr_ (nullptr)
 {}
 
 template <typename T>
@@ -46,13 +24,6 @@ TAO_Value_Var_T<T>::TAO_Value_Var_T (const T * p)
 {}
 
 template <typename T>
-T *
-TAO_Value_Var_T<T>::ptr (void) const
-{
-  return this->ptr_;
-}
-
-template <typename T>
 TAO_Value_Var_T<T>::TAO_Value_Var_T (const TAO_Value_Var_T<T> & p)
   : TAO_Base_var ()
 {
@@ -61,7 +32,7 @@ TAO_Value_Var_T<T>::TAO_Value_Var_T (const TAO_Value_Var_T<T> & p)
 }
 
 template <typename T>
-TAO_Value_Var_T<T>::~TAO_Value_Var_T (void)
+TAO_Value_Var_T<T>::~TAO_Value_Var_T ()
 {
   TAO::Value_Traits<T>::remove_ref (this->ptr_);
 }
@@ -70,23 +41,25 @@ template <typename T>
 TAO_Value_Var_T<T> &
 TAO_Value_Var_T<T>::operator= (T * p)
 {
-  TAO::Value_Traits<T>::remove_ref (this->ptr_);
-  this->ptr_ = p;
-  TAO::Value_Traits<T>::add_ref (p);
+  if (this->ptr_ != p)
+    {
+      // This constructor doesn't increase the reference count so we
+      // we must check for self-assignment.  Otherwise the reference
+      // count would be prematurely decremented upon exiting this
+      // scope.
+      TAO_Value_Var_T<T> tmp (p);
+      std::swap (this->ptr_, tmp.ptr_);
+    }
+
   return *this;
 }
 
 template <typename T>
 TAO_Value_Var_T<T> &
-TAO_Value_Var_T<T>::operator= (const TAO_Value_Var_T & p)
+TAO_Value_Var_T<T>::operator= (const TAO_Value_Var_T<T> & p)
 {
-  if (this != &p)
-  {
-    TAO::Value_Traits<T>::remove_ref (this->ptr_);
-    T * tmp = p.ptr ();
-    TAO::Value_Traits<T>::add_ref (tmp);
-    this->ptr_ = tmp;
-  }
+  TAO_Value_Var_T<T> tmp (p);
+  std::swap (this->ptr_, tmp.ptr_);
 
   return *this;
 }
@@ -105,28 +78,28 @@ TAO_Value_Var_T<T>::operator T *& ()
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::operator-> (void) const
+TAO_Value_Var_T<T>::operator-> () const
 {
   return this->ptr_;
 }
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::in (void) const
+TAO_Value_Var_T<T>::in () const
 {
   return this->ptr_;
 }
 
 template <typename T>
 T *&
-TAO_Value_Var_T<T>::inout (void)
+TAO_Value_Var_T<T>::inout ()
 {
   return this->ptr_;
 }
 
 template <typename T>
 T *&
-TAO_Value_Var_T<T>::out (void)
+TAO_Value_Var_T<T>::out ()
 {
   TAO::Value_Traits<T>::remove_ref (this->ptr_);
   this->ptr_ = 0;
@@ -135,11 +108,18 @@ TAO_Value_Var_T<T>::out (void)
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::_retn (void)
+TAO_Value_Var_T<T>::_retn ()
 {
   T * tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
+}
+
+template <typename T>
+T *
+TAO_Value_Var_T<T>::ptr () const
+{
+  return this->ptr_;
 }
 
 // *************************************************************
@@ -148,7 +128,7 @@ template <typename T>
 TAO_Value_Out_T<T>::TAO_Value_Out_T (T *& p)
   : ptr_ (p)
 {
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 }
 
 template <typename T>
@@ -156,29 +136,19 @@ TAO_Value_Out_T<T>::TAO_Value_Out_T (TAO_Value_Var_T<T> & p)
   : ptr_ (p.out ())
 {
   TAO::Value_Traits<T>::remove_ref (this->ptr_);
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 }
 
 template <typename T>
 TAO_Value_Out_T<T>::TAO_Value_Out_T (const TAO_Value_Out_T<T> & p)
-  : ptr_ (const_cast<THIS_OUT_TYPE &> (p).ptr_)
+  : ptr_ (const_cast<TAO_Value_Out_T<T> &> (p).ptr_)
 {}
 
 template <typename T>
 TAO_Value_Out_T<T> &
 TAO_Value_Out_T<T>::operator= (const TAO_Value_Out_T<T> & p)
 {
-  this->ptr_ = const_cast<THIS_OUT_TYPE &> (p).ptr_;
-  return *this;
-}
-
-template <typename T>
-TAO_Value_Out_T<T> &
-TAO_Value_Out_T<T>::operator= (const TAO_Value_Var_T<T> & p)
-{
-  T * tmp = p.ptr ();
-  TAO::Value_Traits<T>::add_ref (tmp);
-  this->ptr_ = tmp;
+  this->ptr_ = const_cast<TAO_Value_Out_T<T> &> (p).ptr_;
   return *this;
 }
 
@@ -198,16 +168,18 @@ TAO_Value_Out_T<T>::operator T *& ()
 
 template <typename T>
 T *&
-TAO_Value_Out_T<T>::ptr (void)
+TAO_Value_Out_T<T>::ptr ()
 {
   return this->ptr_;
 }
 
 template <typename T>
 T *
-TAO_Value_Out_T<T>::operator-> (void)
+TAO_Value_Out_T<T>::operator-> ()
 {
   return this->ptr_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_VALUE_VAROUT_T_CPP */

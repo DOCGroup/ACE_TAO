@@ -1,41 +1,24 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor for code generation of Arrays for the CDR operators in the client
-//    stubs.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_cs.cpp
+ *
+ *  Visitor for code generation of Arrays for the CDR operators in the client
+ *  stubs.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_array, 
-           cdr_op_cs, 
-           "$Id$")
-
-// ***************************************************************************
-// Array visitor for generating CDR operator declarations in the client
-// stubs file
-// ***************************************************************************
+#include "array.h"
 
 be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs (void)
+be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs ()
 {
 }
 
@@ -44,13 +27,13 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 {
   if (this->ctx_->alias ())
     {
-      // We are here because we are visiting base type 
+      // We are here because we are visiting base type
       // of the array node which is itself an
       // array, i.e., this is a case of array of array.
       return this->visit_node (node);
     }
 
-  if (node->cli_stub_cdr_op_gen () 
+  if (node->cli_stub_cdr_op_gen ()
       || node->imported ()
       || node->is_local ())
     {
@@ -58,8 +41,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
     }
 
   // Retrieve the base type.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  AST_Decl::NodeType nt = bt->node_type ();
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -69,6 +51,8 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                          "Bad base type\n"),
                         -1);
     }
+
+  AST_Decl::NodeType nt = bt->node_type ();
 
   // If we contain an anonymous sequence,
   // generate code for the sequence here.
@@ -90,8 +74,8 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
-      && bt->is_child (this->ctx_->scope ()))
+  if (this->ctx_->alias () == nullptr // Not a typedef.
+      && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);
@@ -136,11 +120,13 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 
   // Save the node's local name and full name in a buffer for quick use later
   // on.
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  if (this->ctx_->tdef ())
+  bool use_underscore = (this->ctx_->tdef () == nullptr);
+
+  if (!use_underscore)
     {
       ACE_OS::sprintf (fname, "%s", node->full_name ());
     }
@@ -148,22 +134,22 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
     {
       // For anonymous arrays ...
       // We have to generate a name for us that has an underscope prepended
-      // to our local name. This needs to be inserted after the parents's 
+      // to our local name. This needs to be inserted after the parents's
       // name.
 
       if (node->is_nested ())
         {
-          be_decl *parent = 
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          be_decl *parent =
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
@@ -173,15 +159,16 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
+
+  *os << be_global->core_versioning_begin () << be_nl;
 
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << fname << "_forany &_tao_array" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "const " << fname << "_forany &_tao_array)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (bt->accept (this) == -1)
@@ -193,13 +180,13 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
-      << fname << "_forany &_tao_array" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << fname << "_forany &_tao_array)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (bt->accept (this) == -1)
@@ -211,9 +198,16 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}";
+  *os << "}" << be_nl;
 
-  node->cli_stub_cdr_op_gen (1);
+  if (be_global->gen_ostream_operators ())
+    {
+      node->gen_ostream_operator (os, use_underscore);
+    }
+
+  *os << be_global->core_versioning_end () << be_nl;
+
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 
@@ -256,7 +250,8 @@ be_visitor_array_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 }
 
 int
-be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
+be_visitor_array_cdr_op_cs::visit_predefined_type (
+  be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -265,6 +260,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_value:
+    case AST_PredefinedType::PT_abstract:
     case AST_PredefinedType::PT_any:
       // Let the helper handle this.
       return this->visit_node (node);
@@ -273,7 +269,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
                          "visit_predefined_type - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     default:
       // All other primitive types. Handle them as shown below.
@@ -288,9 +284,10 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   unsigned long i;
 
   // Grab the array node.
-  be_array *array = this->ctx_->be_node_as_array ();
+  be_array *array =
+    dynamic_cast<be_array*> (this->ctx_->node ());
 
-  if (!node)
+  if (array == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -302,8 +299,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   // We generate optimized code based on an optimized interface available from
   // the CDR class. These optimizations are applicable only to primitive
   // types.
-  *os << "return" << be_idt_nl
-      << "strm.";
+  *os << "return strm.";
 
   // Based on our substate, we may be reading from a stream or writing into a
   // stream.
@@ -364,6 +360,12 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       break;
     case AST_PredefinedType::PT_boolean:
       *os << "boolean_array";
+      break;
+    case AST_PredefinedType::PT_uint8:
+      *os << "uint8_array";
+      break;
+    case AST_PredefinedType::PT_int8:
+      *os << "int8_array";
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -433,6 +435,12 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_boolean:
       *os << "ACE_CDR::Boolean";
       break;
+    case AST_PredefinedType::PT_uint8:
+      *os << "ACE_CDR::UInt8";
+      break;
+    case AST_PredefinedType::PT_int8:
+      *os << "ACE_CDR::Int8";
+      break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -458,7 +466,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  unsigned long ndims = array->n_dims ();
+  unsigned long const ndims = array->n_dims ();
 
   // Generate a product of all the dimensions. This will be the total length
   // of the "unfolded" single dimensional array.
@@ -467,7 +475,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       // Retrieve the ith dimension value.
       AST_Expression *expr = array->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -497,8 +505,8 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
         }
     }
 
-  *os << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl;
+  *os << ");"
+      << be_uidt << be_uidt << be_uidt_nl;
 
   return 0;
 }
@@ -540,11 +548,11 @@ be_visitor_array_cdr_op_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -553,11 +561,12 @@ int
 be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  unsigned long i;
-  be_array *node = this->ctx_->be_node_as_array ();
+  ACE_CDR::ULong i;
+  be_array *node =
+    dynamic_cast<be_array*> (this->ctx_->node ());
   AST_Decl::NodeType nt = bt->node_type ();
 
-  if (!node)
+  if (node == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -567,9 +576,9 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
     }
 
   // Initialize a boolean variable.
-  *os << "CORBA::Boolean _tao_marshal_flag = 1;" << be_nl;
+  *os << "CORBA::Boolean _tao_marshal_flag = true;" << be_nl;
 
-  unsigned long ndims = node->n_dims ();
+  ACE_CDR::ULong ndims = node->n_dims ();
 
   // We get here if the "type" of individual elements of the array is not a
   // primitive type. In this case, we are left with no other alternative but to
@@ -581,7 +590,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -593,10 +602,10 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
-          *os << be_nl << "for (CORBA::ULong i" << i 
+          *os << be_nl << "for (::CORBA::ULong i" << i
               << " = 0; i" << i << " < "
-              << expr->ev ()->u.ulval << " && _tao_marshal_flag; i" << i
-              << "++)" << be_idt_nl
+              << expr->ev ()->u.ulval << " && _tao_marshal_flag; ++i" << i
+              << ")" << be_idt_nl
               << "{" << be_idt;
         }
       else
@@ -634,8 +643,37 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
         }
       else
         {
+          be_string *str = nullptr;
+          if (bt->node_type () == AST_Decl::NT_string ||
+              bt->node_type () == AST_Decl::NT_wstring)
+            {
+              str = dynamic_cast<be_string*> (bt);
+              if (!str)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_visitor_array_cdr_op_cs::"
+                                     "visit_node - "
+                                     "bad string node\n"),
+                                    -1);
+                }
+            }
+
           *os << "_tao_marshal_flag = (strm >> ";
-          *os << "_tao_array ";
+          if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
+            {
+              if (str->width () == (long) sizeof (char))
+                {
+                  *os << "ACE_InputCDR::to_string (_tao_array ";
+                }
+              else
+                {
+                  *os << "ACE_InputCDR::to_wstring (_tao_array ";
+                }
+            }
+          else
+            {
+              *os << "_tao_array ";
+            }
 
           for (i = 0; i < ndims; ++i)
             {
@@ -648,8 +686,20 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
               // handled in a special way.
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
+                if (str->max_size ()->ev ()->u.ulval != 0)
+                  {
+                    *os << ".out (), "
+                        << str->max_size ()->ev ()->u.ulval << ")";
+                  }
+                else
+                  {
+                    *os << ".out ()";
+                  }
+                break;
               case AST_Decl::NT_valuetype:
               case AST_Decl::NT_valuetype_fwd:
+              case AST_Decl::NT_eventtype:
+              case AST_Decl::NT_eventtype_fwd:
               case AST_Decl::NT_valuebox:
                 *os << ".out ()";
                 break;
@@ -658,7 +708,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                   // We need to separately handle this case of pseudo
                   // objects because they have a _var type.
                   be_predefined_type *pt =
-                    be_predefined_type::narrow_from_decl (bt);
+                    dynamic_cast<be_predefined_type*> (bt);
 
                   if (!pt)
                     {
@@ -704,13 +754,13 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
           *os << bt->name () << "_forany tmp (tmp_var.inout ());" << be_nl;
           *os << "_tao_marshal_flag = (strm << tmp);";
         }
-      else if (nt == AST_Decl::NT_interface 
+      else if (nt == AST_Decl::NT_interface
                || nt == AST_Decl::NT_interface_fwd)
         {
           *os << "_tao_marshal_flag = " << be_idt_nl
               << "TAO::Objref_Traits<" << bt->name () << ">::"
               << "marshal (_tao_array";
-          
+
           for (i = 0; i < ndims; ++i)
             {
               *os << "[i" << i << "]";
@@ -720,8 +770,37 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
         }
       else
         {
+          be_string *str = nullptr;
+          if (bt->node_type () == AST_Decl::NT_string ||
+              bt->node_type () == AST_Decl::NT_wstring)
+            {
+              str = dynamic_cast<be_string*> (bt);
+              if (!str)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_visitor_array_cdr_op_cs::"
+                                     "visit_node - "
+                                     "bad string node\n"),
+                                    -1);
+                }
+            }
+
           *os << "_tao_marshal_flag = (strm << ";
-          *os << "_tao_array ";
+          if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
+            {
+              if (str->width () == (long) sizeof (char))
+                {
+                  *os << "ACE_OutputCDR::from_string (_tao_array ";
+                }
+              else
+                {
+                  *os << "ACE_OutputCDR::from_wstring (_tao_array ";
+                }
+            }
+          else
+            {
+              *os << "_tao_array ";
+            }
 
           for (i = 0; i < ndims; ++i)
             {
@@ -734,8 +813,20 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
               // handled in a special way.
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
+                if (str->max_size ()->ev ()->u.ulval != 0)
+                  {
+                    *os << ".in (), "
+                        << str->max_size ()->ev ()->u.ulval << ")";
+                  }
+                else
+                  {
+                    *os << ".in ()";
+                  }
+                break;
               case AST_Decl::NT_valuetype:
               case AST_Decl::NT_valuetype_fwd:
+              case AST_Decl::NT_eventtype:
+              case AST_Decl::NT_eventtype_fwd:
               case AST_Decl::NT_valuebox:
                 *os << ".in ()";
                 break;
@@ -744,7 +835,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                   // We need to separately handle this case of pseudo
                   // objects because they have a _var type.
                   be_predefined_type *pt =
-                    be_predefined_type::narrow_from_decl (bt);
+                    dynamic_cast<be_predefined_type*> (bt);
 
                   if (!pt)
                     {
@@ -785,7 +876,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       *os << be_uidt_nl << "}" << be_uidt;
     }
 
-  *os << be_nl << be_nl << "return _tao_marshal_flag;" << be_uidt_nl;
+  *os << be_nl_2 << "return _tao_marshal_flag;" << be_uidt_nl;
 
   return 0;
 }

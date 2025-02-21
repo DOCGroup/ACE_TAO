@@ -1,0 +1,37 @@
+project(*DevGuideIDL): taoidldefaults, valuetype {
+  idlflags += -Wb,pch_include=_pch.h
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*DevGuideMsgServer): taoserver, valuetype, avoids_minimum_corba {
+  exename = MessengerServer
+  after += *DevGuideIDL
+  Source_Files {
+    Messenger_i.cpp
+    Message_i.cpp
+    MessengerServer.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*DevGuideMsgClient): taoclient, valuetype, avoids_minimum_corba {
+  exename = MessengerClient
+  after += *DevGuideIDL
+  Source_Files {
+    Message_i.cpp
+    MessengerClient.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}

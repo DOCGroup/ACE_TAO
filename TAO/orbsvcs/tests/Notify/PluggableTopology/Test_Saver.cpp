@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test_Saver.h"
 
 #include <ace/streams.h>
@@ -13,8 +11,7 @@ bool
 Test_Saver::begin_object(CORBA::Long id,
       const ACE_CString &type,
       const TAO_Notify::NVPList& attrs,
-      bool changed
-      ACE_ENV_ARG_DECL_NOT_USED)
+      bool changed)
 {
   ACE_OS::fprintf (stdout, "Test_Saver::begin_object type=\"%s\""
                    "  id=%d changed=\"%d\"", type.c_str(), id, changed);
@@ -29,7 +26,7 @@ Test_Saver::begin_object(CORBA::Long id,
 
 void
 Test_Saver::end_object (CORBA::Long id,
-      const ACE_CString &type ACE_ENV_ARG_DECL_NOT_USED)
+      const ACE_CString &type)
 {
   ACE_OS::fprintf (stdout, "Test_Saver::end_object type=\"%s\" id=%d\n",
                    type.c_str(), id);

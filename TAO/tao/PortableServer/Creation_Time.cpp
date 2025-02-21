@@ -1,10 +1,6 @@
-#include "Creation_Time.h"
-
-ACE_RCSID (PortableServer,
-           Creation_Time,
-           "$Id$")
+#include "tao/PortableServer/Creation_Time.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Creation_Time.inl"
+# include "tao/PortableServer/Creation_Time.inl"
 #endif /* ! __ACE_INLINE__ */
 

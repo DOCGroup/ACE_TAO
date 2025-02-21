@@ -1,0 +1,179 @@
+// -*- IDL -*-
+
+/**
+ * @file Compression.pidl
+ */
+
+#ifndef _COMPRESSION_PIDL_
+#define _COMPRESSION_PIDL_
+
+#include "tao/OctetSeq.pidl"
+
+module Compression
+{
+    typeprefix Compression "omg.org";
+
+    /**
+     * Exception thrown when an error occurs during a compress or decompress
+     * operation.
+     */
+    exception CompressionException
+    {
+        long reason;
+        string description;
+    };
+
+    /**
+     * Exception thrown if a CompressorFactory with the same CompressorId is
+     * already registered with the CompressionManager.
+     */
+    exception FactoryAlreadyRegistered
+    {
+    };
+
+    /**
+     * Exception thrown if a CompressorId is not known.
+     */
+    exception UnknownCompressorId
+    {
+    };
+
+    /**
+     * CompressorId type.
+     */
+    typedef unsigned short CompressorId;
+    const CompressorId COMPRESSORID_NONE = 0;
+    const CompressorId COMPRESSORID_GZIP = 1;
+    const CompressorId COMPRESSORID_PKZIP = 2;
+    const CompressorId COMPRESSORID_BZIP2 = 3;
+    const CompressorId COMPRESSORID_ZLIB = 4;
+    const CompressorId COMPRESSORID_LZMA = 5;
+    const CompressorId COMPRESSORID_LZO = 6;
+    const CompressorId COMPRESSORID_RZIP = 7;
+    const CompressorId COMPRESSORID_7X = 8;
+    const CompressorId COMPRESSORID_XAR = 9;
+    const CompressorId COMPRESSORID_RLE = 10;
+
+
+    /**
+     * CompressionLevel type.
+     */
+    typedef unsigned short CompressionLevel;
+
+    /**
+     * CompressionRatio type.
+     */
+    typedef float CompressionRatio;
+
+    /**
+     * CompressionLevelId struc.
+     */
+    struct CompressorIdLevel {
+      CompressorId     compressor_id;
+      CompressionLevel compression_level;
+    };
+    typedef sequence <CompressorIdLevel> CompressorIdLevelList;
+
+    typedef CORBA::OctetSeq Buffer;
+
+    local interface CompressorFactory;
+
+    /**
+     * Compressor - abstraction of a compressor and decompressor.
+     */
+    local interface Compressor
+    {
+        /**
+         * Operation that compresses data contained in the source Buffer into
+         * the target Buffer. If an error occurs during the compression, it
+         * throws CompressionException
+         */
+        void compress(in Buffer source, inout Buffer target) raises (CompressionException);
+        /**
+         * Operation that decompresses data contained in the source Buffer into
+         * the target Buffer. If an error occurs during the decompression, it
+         * throws CompressionException
+         */
+        void decompress(in Buffer source, inout Buffer target) raises(CompressionException);
+        /**
+         * The CompressorFactory associated with this Compressor.
+         */
+        readonly attribute CompressorFactory compressor_factory;
+        /**
+         * The (implementation and algorithm specific) compression level
+         * associated with this Compressor.
+         */
+        readonly attribute CompressionLevel compression_level;
+        /**
+         * The total number of compressed bytes read and written by Compressors
+         * that were created by this CompressorFactory
+         * (i.e. the "target" side of Compressor::compress and
+         * the "source" side of Compressor::decompress operations).
+         */
+        readonly attribute unsigned long long compressed_bytes;
+        /**
+         * The total number of uncompressed bytes read and written by
+         * Compressors that were created by this CompressorFactory
+         * (i.e. the "source" side of Compressor::compress and
+         * the "target" side of Compressor::decompress operations).
+         */
+        readonly attribute unsigned long long uncompressed_bytes;
+        /**
+         * The average compression achieved by Compressors that were created by
+         * this CompressorFactory, usually a value between 0 and >=1.
+         * (i.e. compressed_bytes divided by uncompressed_bytes).
+         */
+        readonly attribute CompressionRatio compression_ratio;
+    };
+
+    local interface CompressorFactory
+    {
+        /**
+         * The CompressorId associated with this CompressorFactory
+         */
+        readonly attribute CompressorId compressor_id;
+        /**
+         * Create a Compressor instance with the given compression level.
+         */
+        Compressor get_compressor(in CompressionLevel compression_level);
+    };
+
+    typedef sequence<CompressorFactory> CompressorFactorySeq;
+
+    /**
+     * Per-ORB interface to register and unregister CompressorFactories.
+     * Initial reference: "CompressionManager"
+     */
+    local interface CompressionManager
+    {
+        /**
+         * Register a new CompressorFactory
+         */
+        void register_factory(in CompressorFactory compressor_factory) raises(FactoryAlreadyRegistered);
+        /**
+         * Unregister a CompressorFactory with the given CompressorId from the
+         * CompressionManager
+         */
+        void unregister_factory(in CompressorId compressor_id) raises (UnknownCompressorId);
+        /**
+         * Retrieve a CompressorFactory with the given CompressorId from the
+         * CompressionManager
+         */
+        CompressorFactory get_factory(in CompressorId compressor_id) raises(UnknownCompressorId);
+        /**
+         * Create a Compressor with the given compression_level from the
+         * CompressorFactory with the given CompressorId
+         */
+        Compressor get_compressor(in CompressorId compressor_id, in CompressionLevel compression_level) raises(UnknownCompressorId);
+        /**
+         * Create a Compressor with the given CompressorIdLevel
+         */
+        //Compressor get_compressor(in CompressorIdLevel compressor_id_level) raises(UnknownCompressorId);
+        /**
+         * List all registered CompressorFactories
+         */
+        CompressorFactorySeq get_factories();
+    };
+};
+
+#endif

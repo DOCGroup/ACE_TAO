@@ -1,0 +1,33 @@
+//
+// Really the server is the only one that needs to avoid minimum_corba and
+// the lot.  But there's no sense in building anything if you can't build
+// the server.
+
+project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  custom_only = 1
+  IDL_Files {
+    bug_689_regression.idl
+  }
+}
+
+project(*server): taoserver, imr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  IDL_Files {
+  }
+  Source_Files {
+    bug_689_regressionC.cpp
+    bug_689_regressionS.cpp
+    server.cpp
+    bug_689_regression_i.cpp
+  }
+}
+
+project(*client): taoclient, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *idl
+  IDL_Files {
+  }
+  Source_Files {
+    bug_689_regressionC.cpp
+    client.cpp
+  }
+}

@@ -4,8 +4,6 @@
 /**
  *  @file   CSIIOP.idl
  *
- *  $Id$
- *
  *  @author Object Management Group
  */
 //=============================================================================
@@ -13,8 +11,7 @@
 #ifndef _CSIIOP_IDL_
 #define _CSIIOP_IDL_
 
-//#include <IOP.pidl>
-#include "tao/IOP_IOR.pidl"
+#include "tao/IOP.pidl"
 #include "CSI.idl"
 //import ::IOP
 //import ::CSI
@@ -121,7 +118,7 @@ module CSIIOP {
 
   struct TransportAddress {
     string host_name;
-    unsigned short port;
+    unsigned short _port;
   };
 
   typedef sequence <TransportAddress> TransportAddressList;

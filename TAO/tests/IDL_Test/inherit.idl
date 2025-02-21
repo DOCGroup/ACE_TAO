@@ -1,0 +1,38 @@
+
+//=============================================================================
+/**
+ *  @file    inherit.idl
+ *
+ *  Tests of interface inheritance in IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+
+module OldInherit
+{
+  interface one
+  {
+    void op_one ();
+  };
+  interface two : one
+  {
+    void op_two ();
+  };
+  interface three : one
+  {
+    void op_three ();
+  };
+  interface four : two, three
+  {
+    void op_four ();
+  };
+
+  interface five : four, three, two
+  {
+    void op_five ();
+  };
+};
+

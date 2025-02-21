@@ -1,0 +1,12 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// A very simple interface
+  interface Hello
+  {
+    /// Return a simple string
+    oneway void get_string ();
+
+  };
+};

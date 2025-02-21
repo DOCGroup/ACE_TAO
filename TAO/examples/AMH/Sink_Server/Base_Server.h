@@ -4,12 +4,9 @@
 /**
  *  @file  Base_Server.h
  *
- *  $Id$
- *
  *  @desc  Implements common CORBA server ORB and POA initialisations.
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
- *
  */
 // =========================================================================
 
@@ -35,7 +32,7 @@ class AMH_Servant;
 class Base_Server
 {
 public:
-  Base_Server (int &argc, char **argv);
+  Base_Server (int &argc, ACE_TCHAR **argv);
 
   //    Is there any reason to make the destructor virtual?  Will you
   //    ever be destroying a derived class through a pointer to
@@ -47,37 +44,39 @@ public:
   // entry in the vtbl) and if, by chance, someone does delete a
   // derived-class though this classes ptr, we are still safe.  The
   // short answer to your question is : I don't know. :)
-  virtual ~Base_Server (void);
+  virtual ~Base_Server ();
 
   // Just parse the command line for the output-file (-o) option.
   // return -1 if -o option is not present
-  virtual int parse_args (void);
+  virtual int parse_args ();
 
   /// try and schedule using FIFO
-  void try_RT_scheduling (void);
+  void try_RT_scheduling ();
 
   /// ORB inititalisation stuff
-  int start_orb_and_poa (void);
+  int start_orb_and_poa ();
+
+  int shutdown_orb_and_poa ();
 
   /// register the servant with the poa
   virtual void register_servant (AMH_Servant *servant);
 
   /// orb-perform_work () abstraction
-  virtual void run_event_loop (void);
+  virtual void run_event_loop ();
 
 public:
   // @@ Mayur, please put inlined methods in a separate `.inl' file,
   //    as detailed in the ACE/TAO coding/style guidelines, and as per
   //    our conventions.
-  // Mayur: A seperate file for just one method? AAAGH. OK.  
+  // Mayur: A separate file for just one method? AAAGH. OK.
 
   /// Accesor method (for servants) to the initialised ORB
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
 protected:
   int &argc_;
-  char **argv_;
-  const char *ior_output_file_;
+  ACE_TCHAR **argv_;
+  const ACE_TCHAR *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 

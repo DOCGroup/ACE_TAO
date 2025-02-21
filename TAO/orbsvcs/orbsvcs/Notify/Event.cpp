@@ -1,40 +1,38 @@
-// $Id$
-
-#include "Event.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/Event.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Event.inl"
+#include "orbsvcs/Notify/Event.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (Notify,
-           TAO_Notify_Event,
-           "$Id$")
 
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "orbsvcs/CosNotificationC.h"
 // NOTE: unfortunately we must know about derived types to implement unmarshal
-#include "Any/AnyEvent.h"
-#include "Structured/StructuredEvent.h"
+#include "orbsvcs/Notify/Any/AnyEvent.h"
+#include "orbsvcs/Notify/Structured/StructuredEvent.h"
 
-TAO_Notify_Event::TAO_Notify_Event (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Notify_Event::TAO_Notify_Event ()
 : priority_ (CosNotification::Priority, CosNotification::DefaultPriority)
 , timeout_ (CosNotification::Timeout)
-, reliable_ (CosNotification::EventReliability, false)
+, reliable_ (CosNotification::EventReliability, true)
 , clone_ (0)
 , is_on_heap_ (false)
+, time_ (ACE_OS::gettimeofday ())
 {
   //  if (TAO_debug_level > 0)
-  //  ACE_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));
+  //  ORBSVCS_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));
 }
 
 TAO_Notify_Event::~TAO_Notify_Event ()
 {
   // if (TAO_debug_level > 1)
-  //  ACE_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
+  //  ORBSVCS_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
 }
 void
-TAO_Notify_Event::release (void)
+TAO_Notify_Event::release ()
 {
   delete this;
 }
@@ -70,7 +68,7 @@ TAO_Notify_Event::unmarshal (TAO_InputCDR & cdr)
       result = TAO_Notify_StructuredEvent::unmarshal (cdr);
       break;
     default:
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) TAO_Notify_Event::unmarshal: unknown event code %d\n"),
         code));
       break;
@@ -79,3 +77,4 @@ TAO_Notify_Event::unmarshal (TAO_InputCDR & cdr)
   return result;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

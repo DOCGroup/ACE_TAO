@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Sched/Reconfig_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -13,29 +11,26 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(EC_Examples, Service, "$Id$")
 
 int config_run = 0;
 
-int parse_args (int argc, char *argv[]);
+int parse_args (int argc, ACE_TCHAR *argv[]);
 
 typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_SCHED_TYPE;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
         {
@@ -45,28 +40,22 @@ main (int argc, char* argv[])
         }
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // ****************************************************************
 
 #if 0
       // Obtain a reference to the naming service...
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService");
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 #endif /* 0 */
 
       // ****************************************************************
@@ -92,8 +81,7 @@ main (int argc, char* argv[])
         }
 
       RtecScheduler::Scheduler_var scheduler =
-        sched_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        sched_impl->_this ();
 
 #if 0
       // Bind the scheduler with the naming service so clients
@@ -104,9 +92,7 @@ main (int argc, char* argv[])
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
       // Register the servant with the Naming Context....
-      naming_context->rebind (schedule_name, scheduler.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      naming_context->rebind (schedule_name, scheduler.in ());
 #endif /* 0 */
 
       // ****************************************************************
@@ -117,13 +103,11 @@ main (int argc, char* argv[])
 
       TAO_EC_Event_Channel ec_impl (attributes);
       ACE_DEBUG ((LM_DEBUG, "activating EC\n"));
-      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl.activate ();
       ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl._this ();
 
       // ****************************************************************
 
@@ -133,8 +117,7 @@ main (int argc, char* argv[])
       Consumer consumer_impl;
 
       RtecScheduler::handle_t consumer_rt_info1 =
-        scheduler->create ("consumer_event_1" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        scheduler->create ("consumer_event_1");
 
       // Let's say that the execution time for event 1 is 2
       // milliseconds...
@@ -148,13 +131,10 @@ main (int argc, char* argv[])
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       time,
                       0,
-                      RtecScheduler::OPERATION
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                      RtecScheduler::OPERATION);
 
       RtecScheduler::handle_t consumer_rt_info2 =
-        scheduler->create ("consumer_event_2" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        scheduler->create ("consumer_event_2");
 
       // Let's say that the execution time for event 2 is 1
       // milliseconds...
@@ -167,9 +147,7 @@ main (int argc, char* argv[])
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       time,
                       0,
-                      RtecScheduler::OPERATION
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                      RtecScheduler::OPERATION);
 
       ACE_ConsumerQOS_Factory consumer_qos;
       consumer_qos.start_disjunction_group ();
@@ -182,22 +160,17 @@ main (int argc, char* argv[])
 
       // The canonical protocol to connect to the EC
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_consumers ();
 
       RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy =
-        consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        consumer_admin->obtain_push_supplier ();
 
       RtecEventComm::PushConsumer_var consumer =
-        consumer_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        consumer_impl._this ();
 
       ACE_DEBUG ((LM_DEBUG, "connecting consumer\n"));
       supplier_proxy->connect_push_consumer (consumer.in (),
-                                             consumer_qos.get_ConsumerQOS ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             consumer_qos.get_ConsumerQOS ());
       ACE_DEBUG ((LM_DEBUG, "consumer connected\n"));
 
       // ****************************************************************
@@ -205,8 +178,7 @@ main (int argc, char* argv[])
       Supplier supplier_impl;
 
       RtecScheduler::handle_t supplier_rt_info1 =
-        scheduler->create ("supplier_event_1" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        scheduler->create ("supplier_event_1");
 
       // The execution times are set to reasonable values, but
       // actually they are changed on the real execution, i.e. we
@@ -224,13 +196,10 @@ main (int argc, char* argv[])
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       0,
                       1,
-                      RtecScheduler::OPERATION
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                      RtecScheduler::OPERATION);
 
       RtecScheduler::handle_t supplier_rt_info2 =
-        scheduler->create ("supplier_event_2" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        scheduler->create ("supplier_event_2");
 
       // The execution times are set to reasonable values, but
       // actually they are changed on the real execution, i.e. we
@@ -247,9 +216,7 @@ main (int argc, char* argv[])
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       0,
                       1,
-                      RtecScheduler::OPERATION
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                      RtecScheduler::OPERATION);
 
       RtecEventComm::EventSourceID supplier_id = 1;
       ACE_SupplierQOS_Factory supplier_qos;
@@ -264,22 +231,17 @@ main (int argc, char* argv[])
 
       // The canonical protocol to connect to the EC
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_suppliers ();
 
       RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy =
-        supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        supplier_admin->obtain_push_consumer ();
 
       RtecEventComm::PushSupplier_var supplier =
-        supplier_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        supplier_impl._this ();
 
       ACE_DEBUG ((LM_DEBUG, "connecting supplier\n"));
       consumer_proxy->connect_push_supplier (supplier.in (),
-                                             supplier_qos.get_SupplierQOS ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             supplier_qos.get_SupplierQOS ());
       ACE_DEBUG ((LM_DEBUG, "supplier connected\n"));
 
       // ****************************************************************
@@ -316,16 +278,14 @@ main (int argc, char* argv[])
                                          infos.out (),
                                          deps.out (),
                                          configs.out (),
-                                         anomalies.out ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                         anomalies.out ());
 
           // Dump the schedule to a file..
           ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                                 deps.in (),
                                                 configs.in (),
                                                 anomalies.in (),
-                                                "schedule.out");
+                                                ACE_TEXT("schedule.out"));
         }
 
       // ****************************************************************
@@ -350,13 +310,11 @@ main (int argc, char* argv[])
         {
           if (i % 2 == 0)
             {
-              consumer_proxy->push (event1 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              consumer_proxy->push (event1);
             }
           else
             {
-              consumer_proxy->push (event2 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              consumer_proxy->push (event2);
             }
 
           ACE_Time_Value rate (0, 10000);
@@ -370,20 +328,19 @@ main (int argc, char* argv[])
       // just a simple demo so we are going to be lazy.
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 // ****************************************************************
 
-int parse_args (int argc, char *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -402,110 +359,7 @@ int parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
-// ****************************************************************
-
-// Instantiate the templates used by the Reconfig scheduler above
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
-template class auto_ptr<RtecScheduler::Config_Info>;
-template class auto_ptr<RtecScheduler::RT_Info>;
-template class auto_ptr<TAO_Reconfig_Scheduler_Entry>;
-template class ACE_Auto_Basic_Ptr<RtecScheduler::Config_Info>;
-template class ACE_Auto_Basic_Ptr<RtecScheduler::RT_Info>;
-template class ACE_Auto_Basic_Ptr<TAO_Reconfig_Scheduler_Entry>;
-template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<int, TAO_RT_Info_Ex*, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<int, TAO_RT_Info_Ex*, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<int,TAO_RT_Info_Ex*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<int,TAO_RT_Info_Ex*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<int, RtecScheduler::Config_Info *>;
-template class ACE_Hash_Map_Entry<int, RtecScheduler::Dependency_Set *>;
-template class ACE_Hash_Map_Entry<int, RtecScheduler::RT_Info *>;
-template class ACE_RB_Tree<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Node<const char *, RtecScheduler::RT_Info *>;
-template class ACE_RB_Tree_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Iterator_Base<char const *, RtecScheduler::RT_Info *, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Reverse_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<int, TAO_RT_Info_Ex*>;
-template class ACE_RB_Tree<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Node<const char *, TAO_RT_Info_Ex*>;
-template class ACE_RB_Tree_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Iterator_Base<char const *, TAO_RT_Info_Ex*, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>;
-template class ACE_RB_Tree_Reverse_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Dependency_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_DFS_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Priority_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_Tuple_Admission_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy>;
-template class TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-#  endif /* __GNUC__ */
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
-#pragma instantiate auto_ptr<RtecScheduler::Config_Info>
-#pragma instantiate auto_ptr<RtecScheduler::RT_Info>
-#pragma instantiate auto_ptr<TAO_Reconfig_Scheduler_Entry>
-#pragma instantiate ACE_Auto_Basic_Ptr<RtecScheduler::Config_Info>
-#pragma instantiate ACE_Auto_Basic_Ptr<RtecScheduler::RT_Info>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Reconfig_Scheduler_Entry>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<int, TAO_RT_Info_Ex*, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, TAO_RT_Info_Ex*, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<int,TAO_RT_Info_Ex*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Config_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::Dependency_Set*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,RtecScheduler::RT_Info*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<int,TAO_RT_Info_Ex*,ACE_Hash<int>,ACE_Equal_To<int>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::Config_Info *>
-#pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::Dependency_Set *>
-#pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::RT_Info *>
-#pragma instantiate ACE_Hash_Map_Entry<int, TAO_RT_Info_Ex*>
-#pragma instantiate ACE_RB_Tree<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Node<const char *, RtecScheduler::RT_Info *>
-#pragma instantiate ACE_RB_Tree_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Iterator_Base<char const *, RtecScheduler::RT_Info *, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Node<const char *, TAO_RT_Info_Ex*>
-#pragma instantiate ACE_RB_Tree_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Iterator_Base<char const *, TAO_RT_Info_Ex*, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Dependency_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_DFS_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Priority_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Tuple_Admission_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy>
-#pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#  endif /* __GNUC__ */
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

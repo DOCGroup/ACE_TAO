@@ -1,14 +1,7 @@
 #include "FactoryC_impl.h"
 
-ACE_RCSID (Factory,
-           FactoryC_impl,
-           "$Id$")
-
 OBV_FactoryTest::Value2*
 Value2_init_impl::create_default (CORBA::ULong id)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   OBV_FactoryTest::Value2* ret_val = 0;
   ACE_NEW_RETURN (ret_val,
@@ -28,9 +21,6 @@ Value2_init_impl::create (
     CORBA::ULong id,
     const OBV_FactoryTest::BaseValue::BV_Data & data
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   OBV_FactoryTest::Value2* ret_val = 0;
   ACE_NEW_RETURN (ret_val,
@@ -47,13 +37,12 @@ Value2_init_impl::create (
 }
 
 CORBA::ValueBase *
-Value2_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
+Value2_init_impl::create_for_unmarshal ()
 {
   OBV_FactoryTest::Value2* ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,
                     Value2_impl,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return ret_val;
 }

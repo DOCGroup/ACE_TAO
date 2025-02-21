@@ -1,0 +1,55 @@
+
+
+File: DevGuideExamples/AMH_AMI/README
+
+The example in this directory demonstrates how AMH can be coupled with
+AMI to create very efficient and scalable middle components for
+multi-tier applications. In this case, a client connects to a middle
+server which in turn is connected to an inner server. the client
+submits a question to the middle server, which forwards the question
+on to the inner server. The inner server then waits a few seconds, to
+simulate a busy process, then replies. The reply is handled
+asynchronously by the middle server, using AMI, then forwarded to the
+original client using AMH. Neither the client nor the inner server are
+aware of the asynchronous nature of the middle server.
+
+The inner server has a single startup option, -crash. When supplied,
+the server will induce an exception when invoked, rather than
+returning the answer.
+
+The middle server also has a single option, -no_AMH. When run in this
+mode, the IOR it publishes will refer to an object that does not use
+AMH and AMI. This allows you to compare the behavior and source code
+for these two modes of operation.
+
+How to Run
+----------
+
+Start the inner server (writes inner.ior) :
+------------------
+./inner_server [-crash]
+
+
+Then start the middle server (writes middle.ior):
+------------------
+./middle_server [-no_AMH]
+
+Finally, run the client:
+------------------
+./client
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+
+
+NOTE:
+
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
+   perl ../run_test.pl

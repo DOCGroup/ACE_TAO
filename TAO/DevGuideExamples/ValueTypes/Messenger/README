@@ -1,0 +1,41 @@
+This directory contains a CORBA example illustrating a simple client and
+a server with a Interface Messenger. The Messenger Interface has
+an operation for sending a message (send_message).  The MessengerClient
+will send a message which is displayed by the MessengerServer when
+received.  The MessengerClient will then confirm that the message has
+been sent successfully.
+
+This version of the example has been modified to use a new ValueType called
+Message that encapsulates the message information. The send method on
+Messenger has been modified to take a single Message inout parameter.
+
+
+How to Run
+----------
+
+Start the server :
+------------------
+./server
+
+
+Start the client:
+------------------
+./client
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+
+
+NOTE:
+
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
+   perl ../run_test.pl

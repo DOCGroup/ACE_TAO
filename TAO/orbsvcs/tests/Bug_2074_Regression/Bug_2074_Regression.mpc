@@ -1,0 +1,8 @@
+// -*- MPC -*-
+project(*Test): taoclient, messaging, naming, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = test
+  Source_Files {
+    test.cpp
+    ORB_Task.cpp
+  }
+}

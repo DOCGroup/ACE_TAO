@@ -1,9 +1,8 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Trader_Constraint_Visitors.h
- *
- *  $Id$
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
@@ -14,12 +13,15 @@
 #define TAO_TRADER_CONSTRAINT_VISITOR_H
 #include /**/ "ace/pre.h"
 
-#include "Constraint_Visitors.h"
-#include "Trader.h"
-#include "Trader_Utils.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Trader_Utils.h"
 #include "orbsvcs/CosTradingC.h"
 
-class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator : public TAO_Constraint_Validator
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator
+: public TAO_Constraint_Validator
 {
  public:
   /**
@@ -34,8 +36,7 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator : public TAO_Const
                                    type_struct);
 
   /// Desctructor.
-  virtual ~TAO_Trader_Constraint_Validator (void);
-
+  virtual ~TAO_Trader_Constraint_Validator ();
 };
 
 class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
@@ -49,9 +50,11 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Const
 
  private:
   /// Utility with which to evaluate the properties of an offer, be
-  /// they dyanmic or static.
+  /// they dynamic or static.
   TAO_Property_Evaluator prop_eval_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TRADER_CONSTRAINT_VISITOR_H */

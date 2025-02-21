@@ -1,27 +1,20 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ArrayDef_i.h
-//
-// = DESCRIPTION
-//    ArrayDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ArrayDef_i.h
+ *
+ *  ArrayDef servant class.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef TAO_ARRAYDEF_I_H
 #define TAO_ARRAYDEF_I_H
 
-#include "IDLType_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,109 +25,62 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class TAO_ArrayDef_i
+ *
+ * @brief TAO_ArrayDef_i
+ *
+ * Represents an IDL array type.
+ */
 class TAO_IFRService_Export TAO_ArrayDef_i : public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_ArrayDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an IDL array type.
-  //
 public:
+  /// Constructor
   TAO_ArrayDef_i (TAO_Repository_i *repo);
-  // Constructor
 
-  virtual ~TAO_ArrayDef_i (void);
-  // Destructor
+  /// Destructor
+  virtual ~TAO_ArrayDef_i ();
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  /// Return our definition kind.
+  virtual CORBA::DefinitionKind def_kind ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Return our definition kind.
+  /// Remove the repository entry.
+  virtual void destroy ();
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Remove the repository entry.
+  virtual CORBA::TypeCode_ptr type ();
 
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::TypeCode_ptr type_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong length ();
 
-  virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::ULong length_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void length (CORBA::ULong length);
 
-  virtual CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void length_i (CORBA::ULong length);
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::TypeCode_ptr element_type ();
 
-  virtual CORBA::ULong length (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::TypeCode_ptr element_type_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::IDLType_ptr element_type_def ();
 
-  CORBA::ULong length_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::IDLType_ptr element_type_def_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void element_type_def (CORBA::IDLType_ptr element_type_def);
 
-  virtual void length (
-      CORBA::ULong length
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void length_i (
-      CORBA::ULong length
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual CORBA::TypeCode_ptr element_type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::TypeCode_ptr element_type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual CORBA::IDLType_ptr element_type_def (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::IDLType_ptr element_type_def_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void element_type_def (
-      CORBA::IDLType_ptr element_type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void element_type_def_i (
-      CORBA::IDLType_ptr element_type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void element_type_def_i (CORBA::IDLType_ptr element_type_def);
 
 private:
-  void destroy_element_type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Destroys an anonymous non-primitive element type.
+  /// Destroys an anonymous non-primitive element type.
+  void destroy_element_type ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

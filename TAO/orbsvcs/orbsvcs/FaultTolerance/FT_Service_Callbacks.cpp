@@ -1,7 +1,7 @@
-// $Id$
+#include "orbsvcs/FaultTolerance/FT_Service_Callbacks.h"
+#include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.h"
 
-#include "FT_Service_Callbacks.h"
-#include "FT_ClientPolicy_i.h"
+#include "ace/OS_NS_sys_time.h"
 
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
@@ -11,41 +11,60 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
-ACE_RCSID (FaultTolerance,
-           FT_Service_Callbacks,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (
-    TAO_ORB_Core *orb_core)
-
-  : orb_core_ (orb_core),
-    profile_lock_ (0),
-    primary_failed_ (0),
-    secondary_set_ (0),
-    group_component_ (),
-    group_component_flag_ (0)
+TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *)
 {
-  this->profile_lock_ =
-    this->orb_core_->client_factory ()->create_profile_lock ();
 }
 
-TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks (void)
+TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks ()
 {
-  // Delete the memeory for the lock
-  delete this->profile_lock_;
+}
+
+CORBA::Boolean
+TAO_FT_Service_Callbacks::select_profile (const TAO_MProfile &mprofile,
+    TAO_Profile *&pfile)
+{
+  CORBA::ULong const sz = mprofile.size ();
+
+  // Iterate through the list in a circular fashion. Stop one before
+  // the list instead of trying the same thing again.
+  for (CORBA::ULong i = 0;
+       i != sz;
+       ++i)
+    {
+      const TAO_Profile *curr_pfile = mprofile.get_profile (i);
+
+      IOP::TaggedComponent tagged_component;
+      tagged_component.tag = IOP::TAG_FT_PRIMARY;
+
+      // Get the tagged component from the  profile
+      const TAO_Tagged_Components &pfile_tagged =
+        curr_pfile->tagged_components ();
+
+      // Search for the TaggedComponent that we want
+      if (pfile_tagged.get_component (tagged_component) == 1)
+      {
+        // We have found a primary IOR
+        pfile = const_cast<TAO_Profile *>(curr_pfile);
+        return true;
+      }
+    }
+
+  return false;
 }
 
 CORBA::Boolean
 TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 {
   // Get the count
-  CORBA::ULong count =
-    obj->_stubobj ()->base_profiles ().profile_count ();
+  CORBA::ULong count = obj->_stubobj ()->base_profiles ().profile_count ();
 
   // If the profile count is zero then return true
   if (count == 0)
-    return 1;
+    return true;
   else
     {
       // else if each of the profile is nil
@@ -57,13 +76,12 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
             obj->_stubobj ()->base_profiles ().get_profile (cnt);
 
           if (pfile != 0)
-            return 0;
+            return false;
         }
     }
 
   // If it reaches here then it should be nill
-  return 1;
-
+  return true;
 }
 
 TAO_Service_Callbacks::Profile_Equivalence
@@ -92,8 +110,8 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
           CORBA::Boolean this_byte_order;
           CORBA::Boolean that_byte_order;
 
-          if (this_cdr >> ACE_InputCDR::to_boolean (this_byte_order) == 0 ||
-              that_cdr >> ACE_InputCDR::to_boolean (that_byte_order) == 0)
+          if ((this_cdr >> ACE_InputCDR::to_boolean (this_byte_order)) == 0 ||
+              (that_cdr >> ACE_InputCDR::to_boolean (that_byte_order)) == 0)
             {
               // Have tags but full of garbage - not equivalent
               return TAO_Service_Callbacks::NOT_EQUIVALENT;
@@ -134,8 +152,7 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
 }
 
 CORBA::ULong
-TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
-                                   CORBA::ULong max)
+TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p, CORBA::ULong max)
 {
   // At this point we assume that all the checks for other things
   // within the profiles have been satisfied
@@ -167,11 +184,75 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
   return (CORBA::ULong) group_component.object_group_id % max;
 }
 
+CORBA::Boolean
+TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_ptr obj,
+                                                          const TAO_Service_Context &service_context) const
+{
+  // do as much as possible outside of lock
+  IOP::ServiceContext sc;
+  sc.context_id = IOP::FT_GROUP_VERSION;
+
+  if (service_context.get_context (sc) == 0)
+      return false; /* false */
+
+  IOP::TaggedComponent tc;
+  tc.tag = IOP::TAG_FT_GROUP;
+
+  const TAO_Stub * stub = obj->_stubobj ();
+  // check for forward_profiles, branching to speed up operation on base_profiles
+  if (stub->forward_profiles ())
+    {
+      // set lock, as forward_profiles might be deleted concurrently
+      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                                guard,
+                                const_cast <TAO_SYNCH_MUTEX&>(stub->profile_lock ()),
+                                0));
+
+      // even now, the forward profiles might have been deleted in the meanwhile
+      const TAO_MProfile &mprofile = stub->forward_profiles()
+          ? *(stub->forward_profiles())
+          : stub->base_profiles();
+
+      if (mprofile.profile_count() == 0)
+        // releasing lock
+        return false;
+
+      // assuming group-attributes are set for all profiles, check
+      // only the first profile
+      const TAO_Tagged_Components &tagged_components =
+              mprofile.get_profile (0)->tagged_components ();
+
+      if (tagged_components.get_component (tc) == 0)
+        // releasing lock
+        return false; /* false */
+
+      return true; /* true */
+
+      // releasing lock
+    }
+  else /* operate on constant basic_profiles */
+    {
+      const TAO_MProfile &mprofile = stub->base_profiles();
+
+      if (mprofile.profile_count() == 0)
+        return false;
+
+      // assuming group-attributes are set for all profiles, check only the first profile
+      const TAO_Tagged_Components &tagged_components =
+              mprofile.get_profile (0)->tagged_components ();
+
+      if (tagged_components.get_component (tc) == 0)
+        return false; /* false */
+
+      return true; /* true */
+    }
+}
+
+
 TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_comm_failure (
     IOP::ServiceContextList &context_list,
-    TAO_Profile *profile
-    ACE_ENV_ARG_DECL)
+    TAO_Profile *profile)
 {
   if (this->restart_policy_check (context_list,
                                   profile))
@@ -179,19 +260,17 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
 
   // As the right tags are not found close the connection and throw an
   // exception
-  ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-      CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-          errno),
-      CORBA::COMPLETED_MAYBE),
-      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+  throw CORBA::COMM_FAILURE (
+    CORBA::SystemException::_tao_minor_code (
+      TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+      errno),
+    CORBA::COMPLETED_MAYBE);
 }
 
 TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_transient_failure (
     IOP::ServiceContextList &service,
-    TAO_Profile *profile
-    ACE_ENV_ARG_DECL_NOT_USED)
+    TAO_Profile *profile)
 {
   if (this->restart_policy_check (service,
                                   profile))
@@ -223,8 +302,19 @@ TAO_FT_Service_Callbacks::restart_policy_check (
         {
           if (service_list[i].context_id == IOP::FT_REQUEST)
             {
-              // Success
-              return 1;
+              // This would be a heck of a lot easier if we had the invocation
+              // here rather than just the contexts, but lemons -> lemonade I guess.
+              TAO_InputCDR cdr (reinterpret_cast <const char*> (service_list[i].context_data.get_buffer ()),
+                                service_list[i].context_data.length ());
+              CORBA::Boolean byte_order;
+              if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+                return 0;
+              cdr.reset_byte_order (static_cast <int> (byte_order));
+              FT::FTRequestServiceContext ftsrc;
+              if ((cdr >> ftsrc) == 0)
+                return 0;
+
+              return (ftsrc.expiration_time > now ());
             }
         }
     }
@@ -232,3 +322,17 @@ TAO_FT_Service_Callbacks::restart_policy_check (
   // Failure
   return 0;
 }
+
+TimeBase::TimeT
+TAO_FT_Service_Callbacks::now ()
+{
+  // Grab the localtime on the machine where this is running
+  ACE_Time_Value time_val = ACE_OS::gettimeofday ();
+  TimeBase::TimeT sec_part  = ((TimeBase::TimeT)time_val.sec ()) * 10000000;
+  TimeBase::TimeT usec_part = ((TimeBase::TimeT)time_val.usec ()) * 10;
+
+  // Add the offset to convert from posix time.
+  return (sec_part + usec_part + ACE_UINT64_LITERAL (0x1B21DD213814000));
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

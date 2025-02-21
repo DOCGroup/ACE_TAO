@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_SERVER_I_H
 #define TAO_SERVER_I_H
 
@@ -10,24 +8,19 @@ class Server_i : public POA_Test::Server
 {
 public:
   /// Constructor.
-  Server_i (void);
+  Server_i ();
 
   /// Return 1 when the shutdown method has been invoked.
-  int done (void);
+  int done ();
 
   /// Implement the CORBA methods
   //@{
-  void set_callback (Test::Callback_ptr callback
-                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void set_callback (Test::Callback_ptr callback);
 
   void request (Test::TimeStamp,
-                const Test::Payload &
-                ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                const Test::Payload &);
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
   //@}
 

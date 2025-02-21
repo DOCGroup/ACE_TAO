@@ -1,9 +1,4 @@
-//
-// $Id$
-//
 #include "Oneway_Buffering.h"
-
-ACE_RCSID(Oneway_Buffering, Oneway_Buffering, "$Id$")
 
 Oneway_Buffering::Oneway_Buffering (CORBA::ORB_ptr orb,
                                     Test::Oneway_Buffering_Admin_ptr admin)
@@ -13,29 +8,24 @@ Oneway_Buffering::Oneway_Buffering (CORBA::ORB_ptr orb,
 }
 
 void
-Oneway_Buffering::receive_data (const Test::Payload &the_payload
-                                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Oneway_Buffering::receive_data (const Test::Payload &the_payload)
 {
-  this->admin_->request_received (the_payload.length () ACE_ENV_ARG_PARAMETER);
+  this->admin_->request_received (the_payload.length ());
 }
 
 void
-Oneway_Buffering::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Oneway_Buffering::flush ()
 {
 }
 
 void
-Oneway_Buffering::sync (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Oneway_Buffering::sync ()
 {
-  this->admin_->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->admin_->flush ();
 }
 
 void
-Oneway_Buffering::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Oneway_Buffering::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

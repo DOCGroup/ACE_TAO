@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
 #ifndef MESSENGERI_H_
 #define MESSENGERI_H_
 
@@ -16,18 +14,16 @@ class  Messenger_i
 public:
   Messenger_i (CORBA::ORB_ptr orb, long instance);
 
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
   virtual
   CORBA::Long send_message (
       ::CORBA::Long thread,
       ::CORBA::Long iter,
       ::CORBA::Long obj,
-      ::CORBA::Long req
-   ) ACE_THROW_SPEC ((CORBA::SystemException));
+      ::CORBA::Long req);
 
-  virtual void shutdownOrb ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdownOrb ();
 
   bool acknowledgeHit();
 

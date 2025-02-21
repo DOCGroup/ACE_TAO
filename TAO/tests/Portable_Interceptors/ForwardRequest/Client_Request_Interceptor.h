@@ -4,8 +4,6 @@
 /**
  * @file Client_Request_Interceptor.h
  *
- * $Id$
- *
  * Implementation header for the client request interceptor for the
  * PortableInterceptor::ForwardRequest test.
  *
@@ -47,10 +45,9 @@
  */
 class Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Client_Request_Interceptor (const char *orb_id,
                               const char *forward_str);
@@ -65,43 +62,27 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestinterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
   //@}
 
 private:
-
   ///The ID of the ORB this interceptor is registered with.
   CORBA::String_var orb_id_;
 
@@ -115,7 +96,6 @@ private:
   /// Stringified reference to the object the initial request will be
   /// forwarded to by this interceptor.
   CORBA::String_var forward_str_;
-
 };
 
 #if defined(_MSC_VER)

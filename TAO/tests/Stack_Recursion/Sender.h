@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef STACK_RECURSION_SENDER_H
 #define STACK_RECURSION_SENDER_H
@@ -20,33 +17,28 @@ public:
   Sender (CORBA::ORB_ptr orb);
 
   /// Print out the results
-  void dump_results (void);
+  void dump_results ();
 
   /// Get the status of the flag..
-  int is_done (void) const;
+  bool is_done () const;
 
   // = The skeleton methods
   virtual CORBA::Boolean get_data (CORBA::ULong size,
-                                   Test::Payload_out payload
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                   Test::Payload_out payload);
 
-  virtual CORBA::Long get_event_count (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long get_event_count ();
 
-  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void ping ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
   CORBA::ULong message_count_;
   CORBA::ULong byte_count_;
   CORBA::ORB_var orb_;
 
-  int is_done_;
+  bool is_done_;
 };
 
 #include /**/ "ace/post.h"

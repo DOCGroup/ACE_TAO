@@ -1,5 +1,5 @@
-// $Id$
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_TypedEvent.h
@@ -12,17 +12,20 @@
 #define TAO_CEC_TYPEDEVENT_H_
 #include /**/ "ace/pre.h"
 
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/NVList.h"
+#include "tao/AnyTypeCode/NVList.h"
 #include "tao/CORBA_String.h"
 #include "tao/CORBA_methods.h"
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_CEC_TypedEvent
  *
@@ -38,7 +41,7 @@ class TAO_Event_Serv_Export TAO_CEC_TypedEvent
 {
 public:
   /// constructors...
-  TAO_CEC_TypedEvent (void);
+  TAO_CEC_TypedEvent ();
 
   TAO_CEC_TypedEvent (CORBA::NVList_ptr list,
                       const char * operation);
@@ -53,8 +56,10 @@ private:
   CORBA::String_var operation_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_TypedEvent.i"
+#include "orbsvcs/CosEvent/CEC_TypedEvent.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

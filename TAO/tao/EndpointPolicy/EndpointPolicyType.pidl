@@ -1,0 +1,18 @@
+/**
+ * @file EndpointPolicyType.pidl
+ *
+ * This file contains idl definition for EndpointPolicy type.
+ */
+
+#ifndef _TAO_ENDPOINT_POLICY_TYPE_IDL_
+#define _TAO_ENDPOINT_POLICY_TYPE_IDL_
+
+#include "tao/Policy_Forward.pidl"
+
+module EndpointPolicy
+{
+   const CORBA::PolicyType ENDPOINT_POLICY_TYPE = 0x4f43000c;
+};
+
+
+#endif /* _TAO_ENDPOINT_POLICY_TYPE_IDL_ */

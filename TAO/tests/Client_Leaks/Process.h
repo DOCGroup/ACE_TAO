@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CLIENT_LEAKS_PROCESS_H
 #define CLIENT_LEAKS_PROCESS_H
@@ -17,14 +14,12 @@ public:
   Process (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::Long get_process_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long get_process_id ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };

@@ -1,37 +1,22 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    union_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union in the client inline file
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    union_ci.cpp
+ *
+ *  Visitor generating code for Union in the client inline file
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           union_ci, 
-           "$Id$")
-
-// ******************************************************
-// For client inline.
-// ******************************************************
+#include "union.h"
 
 be_visitor_union_ci::be_visitor_union_ci (be_visitor_context *ctx)
   : be_visitor_union (ctx)
 {
 }
 
-be_visitor_union_ci::~be_visitor_union_ci (void)
+be_visitor_union_ci::~be_visitor_union_ci ()
 {
 }
 
@@ -47,8 +32,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// *************************************************************"
       << be_nl;
@@ -58,14 +42,14 @@ int be_visitor_union_ci::visit_union (be_union *node)
   // the discriminant type may have to be defined here if it was an enum
   // declaration inside of the union statement.
 
-  be_type *bt = be_type::narrow_from_decl (node->disc_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ci::"
                          "visit_union - "
-                         "bad discriminant type\n"), 
+                         "bad discriminant type\n"),
                         -1);
     }
 
@@ -76,7 +60,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ci::"
                          "visit union - "
-                         "codegen for discrminant failed\n"), 
+                         "codegen for discrminant failed\n"),
                         -1);
     }
 
@@ -87,10 +71,10 @@ int be_visitor_union_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ci::"
                          "visit_union - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
   return 0;
 }

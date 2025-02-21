@@ -1,0 +1,109 @@
+
+
+This directory contains an example which
+tests the setting of the Diffserv Codepoint (DSCP)
+values in the
+IP TOS field of a stream of UDP packets.
+
+Running the example
+===================
+
+(1)  On one host, run:
+        server [UDP port number]
+
+     If port number is omitted, a default port number of 20002
+     is used.
+
+(2)  On a second host, run:
+        diffserv_test [destination host] [destination port]
+
+        The host and port of where the server is running should
+        be specified.
+
+     A stream of UDP packets will be sent from to the server,
+     with various codepoints set.
+
+(3)  Look at the Diffserv Field (formerly known as the TOS field)
+     of your packets, using a protocol analyzer, such as Ethereal.
+
+
+
+
+Introduction
+============
+In RFC 2474, the Type of Service (TOS) field in
+the IP header was renamed the Diffserv (DS) field.
+The DS field is one octet (8 bits).
+
+        0   1   2   3   4   5   6   7
+      +---+---+---+---+---+---+---+---+
+      |         DSCP          |  ECN  |
+      +---+---+---+---+---+---+---+---+
+
+The first 6 bits of the field are
+reserved for the Diffserv Codepoint (DSCP).
+There are 64 possible values (0-63) for the DSCP.
+
+Bits 6 and 7 of the DS field are reserved
+for Explicit Congestion Notification (ECN).
+ECN is defined in RFC 3168.
+
+
+Per-Hop Behaviors (PHB)
+=======================
+
+A Per-Hop Behavior (PHB) is a description of the externally
+observable forwarding treatment applied at a differentiated
+services compliant node.
+
+Certain PHB's are defined in RFC's and associated with
+different DSCP values.  Other values are undefined and left
+for experimentation.  Please refer to the RFC's for a full
+explanation of the attributes of the various PHB's.
+
+
+DSCP value     PHB                          RFC
+(binary)
+-----------------------------------------------------------
+000000         Default (Best Effort)        2474
+001000         Class Selector (CS1)         2474
+010000         Class Selector (CS2)         2474
+011000         Class Selector (CS3)         2474
+100000         Class Selector (CS4)         2474
+101000         Class Selector (CS5)         2474
+110000         Class Selector (CS6)         2474
+111000         Class Selector (CS7)         2474
+001010         Assured Forwarding (AF11)    2597
+001100         Assured Forwarding (AF12)    2597
+001110         Assured Forwarding (AF13)    2597
+010010         Assured Forwarding (AF21)    2597
+010100         Assured Forwarding (AF22)    2597
+010110         Assured Forwarding (AF23)    2597
+011010         Assured Forwarding (AF31)    2597
+011100         Assured Forwarding (AF32)    2597
+011110         Assured Forwarding (AF33)    2597
+100010         Assured Forwarding (AF41)    2597
+100100         Assured Forwarding (AF42)    2597
+100110         Assured Forwarding (AF43)    2597
+101110         Expedited Forwarding (EF)    2598
+
+
+References
+==========
+RFC 2474, "Definition of the Differentiated Services (DS Field)
+           in the IPv4 and IPv6 Headers", http://www.ietf.org/rfc/rfc2474.txt
+
+RFC 2475, "An Architecture for Differentiated Services",
+           http://www.ietf.org/rfc/rfc2475.txt
+
+RFC 2597, "Assured Forwarding PHB Group", http://www.ietf.org/rfc/rfc2597.txt
+
+RFC 3246, "An Expedited Forwarding PHB", http://www.ietf.org/rfc/rfc3246.txt
+
+RFC 3247, "Supplemental Information for the New Definition of the EF PHB",
+          http://www.ietf.org/rfc/rfc3247.txt
+
+RFC 3168, "The Addition of Explicit Congestion Notification (ECN)
+           to IP", http://www.ietf.org/rfc/rfc3168.txt
+
+Ethereal, http://www.ethereal.com

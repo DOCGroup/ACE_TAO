@@ -1,6 +1,6 @@
 // -*- C++ -*-
 //
-//$Id$
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_FT_IOGR_Property::TAO_FT_IOGR_Property (
@@ -10,13 +10,13 @@ TAO_FT_IOGR_Property::TAO_FT_IOGR_Property (
 }
 
 ACE_INLINE
-TAO_FT_IOGR_Property::TAO_FT_IOGR_Property (void)
+TAO_FT_IOGR_Property::TAO_FT_IOGR_Property ()
   :ft_group_tagged_component_ (0)
 {
 }
 
 ACE_INLINE
-TAO_FT_IOGR_Property::~TAO_FT_IOGR_Property (void)
+TAO_FT_IOGR_Property::~TAO_FT_IOGR_Property ()
 {
 }
 
@@ -29,3 +29,5 @@ TAO_FT_IOGR_Property::reset_tagged_components (
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

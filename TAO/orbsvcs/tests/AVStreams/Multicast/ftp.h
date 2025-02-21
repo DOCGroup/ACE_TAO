@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef TAO_AV_FTP_H
 #define TAO_AV_FTP_H
 
@@ -18,8 +16,8 @@ class FTP_Client_Callback
   :public TAO_AV_Callback
 {
 public:
-  FTP_Client_Callback (void);
-  virtual int handle_end_stream (void);
+  FTP_Client_Callback ();
+  virtual int handle_end_stream ();
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object) {this->protocol_object_ = protocol_object;}
   virtual int handle_timeout (void *arg);
   virtual void get_timeout (ACE_Time_Value *&tv,
@@ -34,7 +32,7 @@ class FTP_Client_StreamEndPoint
   :public TAO_Client_StreamEndPoint
 {
 public:
-  FTP_Client_StreamEndPoint (void);
+  FTP_Client_StreamEndPoint ();
 
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
@@ -42,7 +40,6 @@ public:
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);
 protected:
-  //  FTP_Client_Flow_Handler *handler_;
   FTP_Client_Callback *callback_;
 };
 
@@ -69,14 +66,14 @@ private:
 class Client
 {
 public:
-  Client (void);
-  int init (int argc, char **argv);
-  int run (void);
-  FILE *file (void);
-  char *flowname (void);
-  TAO_StreamCtrl* streamctrl (void);
+  Client ();
+  int init (int argc, ACE_TCHAR *argv[]);
+  int run ();
+  FILE *file ();
+  char *flowname ();
+  TAO_StreamCtrl* streamctrl ();
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   int bind_to_server (const char *name);
   Endpoint_Reactive_Strategy endpoint_strategy_;
   AVStreams::MMDevice_var server_mmdevice_;
@@ -85,7 +82,7 @@ private:
   // Video stream controller
 
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   const char *filename_;
   const char *address_;
 

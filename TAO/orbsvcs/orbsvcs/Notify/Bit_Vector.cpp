@@ -1,10 +1,9 @@
-// $Id$
+#include "orbsvcs/Notify/Bit_Vector.h"
 
-#include "Bit_Vector.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 Bit_Vector::Bit_Vector()
   : size_(0)
   , first_set_bit_(0)
@@ -109,10 +108,4 @@ Bit_Vector::find_first_bit_of(const size_t location, bool set)
 
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Vector<ACE_UINT32>;
-template class ACE_Array_Base<ACE_UINT32>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Vector<ACE_UINT32>
-#pragma instantiate ACE_Array_Base<ACE_UINT32>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

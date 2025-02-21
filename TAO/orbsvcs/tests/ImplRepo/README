@@ -1,4 +1,4 @@
-$Id$
+
 
 Here are a few tests for the ImplRepo.  The best way to test is to
 use the run_test.pl passing it one of the following arguments:
@@ -9,10 +9,36 @@ nt_service_ir             same as above but runs ImplRepo as an NT service.
 nestea                    runs nestea client and server without ImplRepo.
 nestea_ir                 same as above but uses ImplRepo.
 both_ir                   combines airplane_ir and nestea_ir.
-persistent_ir             same as airplane_ir, but using persistent ImplRepo.
+persistent_ir             same as airplane_ir, but using persistent
+                          "-x <file>" flag for the ImplRepo.
+persistent_ir_hash        same as persistent_ir, but using "-p <file>" flag.
+persistent_ir_registry    same as persistent_ir, but using "-r" flag
+                          (windows registry flag).
+persistent_ir_shared      same as persistent_ir, but using
+                          "--directory <dir>" flag.
+persistent_ft             runs a primary and backup ImR Locator, verifying
+                          persistence works in different scenarios of
+                          the primary or backup being shutdown. Must also
+                          pass the "-replica" command to run_test.pl for
+                          this test to run.
+failover                  runs a primary and backup ImR Locator, verifying
+                          different scenarios of the primary or backup being
+                          shutdown and clients, servers, activators, and
+                          tao_imr activities being unaffected. Must also
+                          pass the "-replica" command to run_test.pl for
+                          this test to run.
+manual_persistent_restart Does a test with the ImR where we are using a
+                          manual registered server that is started but
+                          then killed when the ImR is not running, using
+                          the -x <file> flag
+manual_persistent_restart_hash same as manual_persistent_restart but using -p
+manual_persistent_restart_registry same as manual_persistent_restart but using
+                                   windows registry
+manual_persistent_restart_shared same as manual_persistent_restart --directory
 
-The nt_service_ir test will work only on Win32 platforms. For the test to
-run successfully, these conditions must be met:
+The nt_service_ir, persistent_ir_registry, and manual_persistent_restart_registry
+tests will work only on Win32 platforms. For the test to run successfully,
+these conditions must be met:
 
 --  The user must be logged in as administrator, or have administrative
     priveleges (in order to register an NT service).
@@ -21,7 +47,6 @@ run successfully, these conditions must be met:
     environment.
 
 --  ACE_ROOT/bin must be in the system path.
-
 
 How to use NT ImR Services
 ==================================
@@ -32,7 +57,7 @@ services. To do this run:
 ImplRepo_Service -c install
 ImR_Activator -c install
 
-If you want to reinstall or change the installed settings then you 
+If you want to reinstall or change the installed settings then you
 must first use:
 
 ImplRepo_Service -c remove
@@ -54,11 +79,11 @@ copy %tao_root%\orbsvcs\ImplRepo_Service\*.exe .\
 ImR_Activator -c install -x activator.xml -t 60 -d 0 -orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService
 ImplRepo_Service -c install -d 0 -orbendpoint iiop://:8888
 
-* Start both services. 
+* Start both services.
 net start taoimrlocator
 net start taoimractivator
 
-* Register a server 
+* Register a server
 cd %tao_root%\orbsvcs\tests\ImplRepo
 %tao_root%\orbsvcs\ImplRepo_service\tao_imr add airplane_server -orbuseimr 1 -orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService
 
@@ -71,6 +96,6 @@ airplane_client -k file://airplane.ior
 airplane_client -k corbaloc::localhost:8888/airplane_server
 
 
-More information about the Implementation Repository can be found in 
+More information about the Implementation Repository can be found in
 TAO/docs.
 

@@ -1,0 +1,25 @@
+
+
+This test provides regression coverage for bug tao397.
+
+The server installs a server request interceptor and persistent servant and writes out a vanilla IOR and an IOGR for itself.
+The client installs client side FT support and invokes the method "has_ft_request_service_context" on the IOR and then the IOGR.
+The server request interceptor indicates back to the client via the return value of the method if a FT request service context was transmitted.
+The client expects a context to have been sent *iff* the request was made on the IOGR.
+
+__Regression Output__
+
+[sm@beatrice tao397_regression]$ ./run_test.pl
+ERROR - REGRESSION - Request made on a plain IOR has a FT_REQUEST service context.
+Request made on an IOGR has a FT_REQUEST service context. This is OK.
+(9595|3074492096) server - event loop finished
+Error: REGRESSION identified!!!
+ERROR: client returned 1
+
+__Successful Output__
+
+[sm@beatrice tao397_regression]$ ./run_test.pl
+Request made on a plain IOR has no FT_REQUEST service context. This is OK.
+Request made on an IOGR has a FT_REQUEST service context. This is OK.
+(9496|3074320064) server - event loop finished
+Test passed !!!

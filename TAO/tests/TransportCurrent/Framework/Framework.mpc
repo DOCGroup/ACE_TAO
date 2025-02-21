@@ -1,0 +1,32 @@
+// -*- MPC -*-
+project(*Server): taoserver, tc, pi_server {
+  after += Current_Test_Lib_Client Current_Test_Lib_Server
+  libs += Current_Test_Lib_Client Current_Test_Lib_Server
+  includes += . ../lib
+  libpaths += ../lib
+
+  Source_Files {
+    server.cpp
+    Current_Test_Impl.cpp
+    Tester.cpp
+    Server_Main.cpp
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, tc, dynamicinterface, pi_server {
+  after += *Server Current_Test_Lib_Client Current_Test_Lib_Server
+  libs += Current_Test_Lib_Client Current_Test_Lib_Server
+  includes += . ../lib
+  libpaths += ../lib
+
+  Source_Files {
+    client.cpp
+    Tester.cpp
+  }
+
+  IDL_Files {
+  }
+}

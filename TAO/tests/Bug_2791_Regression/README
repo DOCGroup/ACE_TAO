@@ -1,0 +1,28 @@
+
+
+This test confirms that the reference count for a valuetype factory is decremented when the
+valuetype factory is unregistered via ORB::unregister_value_factory().  Before, the reference
+count was not being decremented, leaving the factory in memory.  The test registers and
+unregisters a valuetype factory and then removes its own reference to it, and checks that
+the valuetype factory destructor is called.
+
+_Expected Success Output_
+
+Registering factory reference
+Unregistering factory reference
+Value factory destructor flag: 0
+Actively removing reference
+MessageFactory: destructor invoked
+Value factory destructor flag: 1
+Shutting down / destroying ORB
+Test passed: value factory destructor was invoked as expected
+
+_Expected Regression Output_
+
+Registering factory reference
+Unregistering factory reference
+Value factory destructor flag: 0
+Actively removing reference
+Value factory destructor flag: 0
+Shutting down / destroying ORB
+Test failed: value factory destructor was not invoked

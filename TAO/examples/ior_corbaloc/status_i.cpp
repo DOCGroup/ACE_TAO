@@ -1,5 +1,3 @@
-// $Id$
-
 #include "status_i.h"
 
 corbaloc_Status_i::corbaloc_Status_i ()
@@ -9,8 +7,7 @@ corbaloc_Status_i::corbaloc_Status_i ()
 }
 
 CORBA::Boolean
-corbaloc_Status_i::print_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+corbaloc_Status_i::print_status ()
 {
   // If the server received the request from the client, return true
   // == 0;

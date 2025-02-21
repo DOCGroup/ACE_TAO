@@ -1,33 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_str_seq.cpp
-//
-// = DESCRIPTION
-//    tests unbounded string sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_str_seq.cpp
+ *
+ *  tests unbounded string sequences
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_str_seq.h"
-
-ACE_RCSID (Param_Test,
-           ub_str_seq, 
-           "$Id$")
 
 // ************************************************************************
 //               Test_String_Sequence
 // ************************************************************************
 
-Test_String_Sequence::Test_String_Sequence (void)
+Test_String_Sequence::Test_String_Sequence ()
   : opname_ (CORBA::string_dup ("test_strseq")),
     in_ (new CORBA::StringSeq),
     inout_ (new CORBA::StringSeq),
@@ -36,21 +26,20 @@ Test_String_Sequence::Test_String_Sequence (void)
 {
 }
 
-Test_String_Sequence::~Test_String_Sequence (void)
+Test_String_Sequence::~Test_String_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_String_Sequence::opname (void) const
+Test_String_Sequence::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_String_Sequence::dii_req_invoke (CORBA::Request *req
-                                      ACE_ENV_ARG_DECL)
+Test_String_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -58,29 +47,25 @@ Test_String_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_StringSeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
-  CORBA::StringSeq *tmp;
+  const CORBA::StringSeq *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::StringSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new CORBA::StringSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new CORBA::StringSeq (*tmp);
 }
 
 int
-Test_String_Sequence::init_parameters (Param_Test_ptr
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+Test_String_Sequence::init_parameters (Param_Test_ptr)
 {
   const char *choiceList[] =
   {
@@ -106,7 +91,7 @@ Test_String_Sequence::init_parameters (Param_Test_ptr
 }
 
 int
-Test_String_Sequence::reset_parameters (void)
+Test_String_Sequence::reset_parameters ()
 {
   this->inout_ = new CORBA::StringSeq; // delete the previous ones
   this->out_ = new CORBA::StringSeq;
@@ -115,33 +100,27 @@ Test_String_Sequence::reset_parameters (void)
 }
 
 int
-Test_String_Sequence::run_sii_test (Param_Test_ptr objref
-                                    ACE_ENV_ARG_DECL)
+Test_String_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       CORBA::StringSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_strseq (this->in_.in (),
                                         this->inout_.inout (),
-                                        out
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                        out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_String_Sequence::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_String_Sequence::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_String_Sequence::check_validity (void)
+Test_String_Sequence::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_->length () == this->inout_->length ()) &&
@@ -169,7 +148,7 @@ Test_String_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_String_Sequence::print_values (void)
+Test_String_Sequence::print_values ()
 {
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
@@ -177,7 +156,7 @@ Test_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   this->in_[i]? (const char *)this->in_[i]:"<nul>"));
     }
@@ -188,7 +167,7 @@ Test_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->inout_[i]? (const char *)this->inout_[i]:"<nul>")));
     }
@@ -199,7 +178,7 @@ Test_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->out_[i]? (const char *)this->out_[i]:"<nul>")));
     }
@@ -210,7 +189,7 @@ Test_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->ret_[i]? (const char *)this->ret_[i]:"<nul>")));
     }

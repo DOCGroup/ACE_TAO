@@ -1,0 +1,33 @@
+/**
+ * @file EDF_Scheduling.idl
+ *
+ * EDF_Scheduling.pidl,v 1.2 2003/10/08 13:26:32 venkita Exp
+ */
+
+#include "tao/RTScheduling/RTScheduler_include.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
+#include "tao/TimeBase.pidl"
+
+module EDF_Scheduling
+{
+  struct SchedulingParameter
+  {
+    TimeBase::TimeT deadline;
+    long importance;
+    TimeBase::TimeT period;
+    long task_id;
+  };
+
+  local interface SchedulingParameterPolicy
+  : CORBA::Policy
+  {
+    attribute SchedulingParameter value;
+  };
+
+  local interface Scheduler : RTScheduling::Scheduler
+  {
+    SchedulingParameterPolicy
+      create_scheduling_parameter
+        (in SchedulingParameter value);
+  };
+};

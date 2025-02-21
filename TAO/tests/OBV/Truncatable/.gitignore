@@ -1,0 +1,12 @@
+/client
+/ExtraC.cpp
+/ExtraC.h
+/ExtraC.inl
+/ExtraS.cpp
+/ExtraS.h
+/server
+/TruncatableC.cpp
+/TruncatableC.h
+/TruncatableC.inl
+/TruncatableS.cpp
+/TruncatableS.h

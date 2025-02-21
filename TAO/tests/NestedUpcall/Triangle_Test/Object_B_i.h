@@ -1,42 +1,38 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    Object_B_i.h
-//
-// = DESCRIPTION
-//    This class implements the Object B of the
-//    Nested Upcalls - Triangle test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Object_B_i.h
+ *
+ *  This class implements the Object B of the
+ *  Nested Upcalls - Triangle test.
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #ifndef OBJECT_B_IMPL_H
 #  define OBJECT_B_IMPL_H
 
 #include "Triangle_TestS.h"
 
+/**
+ * @class Object_B_i
+ *
+ * @brief Implement the <Object_B> IDL interface.
+ */
 class Object_B_i : public POA_Object_B
 {
-  // = TITLE
-  //     Implement the <Object_B> IDL interface.
 public:
-  Object_B_i (void);
-  // Constructor.
+  /// Constructor.
+  Object_B_i ();
 
-  virtual ~Object_B_i (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~Object_B_i ();
 
-  virtual void foo(Object_A_ptr theObject_A_ptr
-                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void foo(Object_A_ptr theObject_A_ptr);
+
+  virtual void shutdown ();
 };
 
 #endif /* OBJECT_B_IMPL_H */

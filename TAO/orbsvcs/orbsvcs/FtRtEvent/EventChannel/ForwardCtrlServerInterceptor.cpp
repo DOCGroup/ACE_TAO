@@ -1,9 +1,8 @@
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ForwardCtrlServerInterceptor.h"
-#include "GroupInfoPublisher.h"
-#include "IOGR_Maker.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/Safe_InputCDR.h"
 #include "../Utils/Log.h"
@@ -13,67 +12,48 @@
 
 #include "orbsvcs/FTRTC.h"
 
-ACE_RCSID (EventChannel,
-           ForwardCtrlServerInterceptor,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Object_ptr get_target(PortableInterceptor::ServerRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL)
+CORBA::Object_ptr get_target(PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var orb_id = ri->orb_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
+  CORBA::String_var orb_id = ri->orb_id();
 
   int argc =0;
-  char** argv =0;
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, orb_id.in()
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
+  ACE_TCHAR** argv =0;
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, orb_id.in());
 
   PortableServer::POA_var poa =
-    resolve_init<PortableServer::POA>(orb.in(), "RootPOA"
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
+    resolve_init<PortableServer::POA>(orb.in(), "RootPOA");
 
   PortableInterceptor::AdapterName_var adaptor_name =
-    ri->adapter_name(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
+    ri->adapter_name();
 
   for (size_t i = 1; i < adaptor_name->length(); ++i) {
-    poa = poa->find_POA((*adaptor_name)[i] , false
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(CORBA::Object::_nil());
+    poa = poa->find_POA((*adaptor_name)[i] , false);
   }
 
   CORBA::OctetSeq_var oid =
-    ri->object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
+    ri->object_id();
 
   CORBA::Object_var obj =
-    poa->id_to_reference(oid.in()
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
+    poa->id_to_reference(oid.in());
 
   return obj._retn();
 }
 
-CORBA::Object_ptr get_forward(PortableInterceptor::ServerRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL)
+CORBA::Object_ptr get_forward(PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::Object_var target =
-    get_target(ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
+    get_target(ri);
 
   TAO::ObjectKey_var key =
-    target->_key(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
+    target->_key();
 
   CORBA::Object_var iogr =
     GroupInfoPublisher::instance()->group_reference();
 
   CORBA::Object_var forward =
-    IOGR_Maker::instance()->ior_replace_key(iogr.in(), key.in()
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
+    IOGR_Maker::instance()->ior_replace_key(iogr.in(), key.in());
 
   return forward._retn();
 }
@@ -87,55 +67,41 @@ ForwardCtrlServerInterceptor::~ForwardCtrlServerInterceptor()
 {
 }
 
-char * ForwardCtrlServerInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+char * ForwardCtrlServerInterceptor::name ()
 {
   return CORBA::string_dup("ForwardCtrlServerInterceptor");
 }
 
-void ForwardCtrlServerInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+void ForwardCtrlServerInterceptor::destroy ()
 {
 }
 
-void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                                    ACE_ENV_ARG_DECL)
-                                                    ACE_THROW_SPEC ((CORBA::SystemException,
-                                                    PortableInterceptor::ForwardRequest))
+void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  ACE_TRY {
+  try{
     IOP::ServiceContext_var service_context =
-      ri->get_request_service_context(IOP::FT_GROUP_VERSION
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      ri->get_request_service_context(IOP::FT_GROUP_VERSION);
   }
-  ACE_CATCHANY {
+  catch (const CORBA::Exception&){
     // not an FT call , continue to process the request
     return;
   }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
   if (!publisher->is_primary()) {
     // I am not primary, forword the request to primary
-    CORBA::Object_var forward = get_forward(ri
-      ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var forward = get_forward(ri);
 
-    ACE_THROW (PortableInterceptor::ForwardRequest (forward.in()));
+    throw PortableInterceptor::ForwardRequest (forward.in());
   }
 }
 
 void ForwardCtrlServerInterceptor::receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr
-        ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest))
+        PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
-FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_context
-                                               ACE_ENV_ARG_DECL)
+FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_context)
 {
   Safe_InputCDR cdr (reinterpret_cast<const char*> (service_context->context_data.get_buffer ()),
                       service_context->context_data.length ());
@@ -143,63 +109,51 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO), 0);
+    throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FT::FTGroupVersionServiceContext fgvsc;
 
   if ((cdr >> fgvsc) == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-    CORBA::COMPLETED_NO), 0);
+    throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
   return fgvsc.object_group_ref_version;
 }
 
 
-
-void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   IOP::ServiceContext_var service_context;
   FT::ObjectGroupRefVersion version=0;
 
-  ACE_TRY_EX(block1)
+  try
   {
-    if (!ri->response_expected(ACE_ENV_SINGLE_ARG_PARAMETER))
+    if (!ri->response_expected())
       return;
-    ACE_TRY_CHECK_EX(block1);
 
     service_context =
-      ri->get_request_service_context(IOP::FT_GROUP_VERSION
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK_EX(block1);
+      ri->get_request_service_context(IOP::FT_GROUP_VERSION);
     // get the ref version service context
     version =
-      get_ft_group_version(service_context
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK_EX(block1);
+      get_ft_group_version(service_context);
   }
-  ACE_CATCHALL {
+  catch (...){
     // not an FT call , continue to reply the request
     return;
   }
-  ACE_ENDTRY;
 
   // pass a new IOGR if the client use an outdated version
 
   IOGR_Maker* maker = IOGR_Maker::instance();
-  TAO_FTRTEC::Log(3, "Current GROUP Version = %d, received version = %d\n",
+  TAO_FTRTEC::Log(3, ACE_TEXT("Current GROUP Version = %d, received version = %d\n"),
     maker->get_ref_version(), version);
 
   if (version < maker->get_ref_version()) {
-    ACE_DEBUG((LM_DEBUG, "Outdated IOGR version, passing new IOGR\n"));
+    ORBSVCS_DEBUG((LM_DEBUG, "Outdated IOGR version, passing new IOGR\n"));
 
-    ACE_TRY_EX(block2) {
-      CORBA::Object_var forward = get_forward(ri
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(block2);
+    try{
+      CORBA::Object_var forward = get_forward(ri);
 
       IOP::ServiceContext sc;
       sc.context_id = FTRT::FT_FORWARD;
@@ -209,7 +163,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
       //ACE_THROW (CORBA::MARSHAL ());
 
       if ((cdr << forward.in() ) == 0 )
-        ACE_THROW (CORBA::MARSHAL ());
+        throw CORBA::MARSHAL ();
 
       ACE_Message_Block mb;
       ACE_CDR::consolidate(&mb, cdr.begin());
@@ -229,28 +183,22 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
         }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-      ri->add_reply_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(block2);
+      ri->add_reply_service_context (sc, 0);
 
-      ACE_DEBUG((LM_DEBUG, "reply_service_context added\n"));
+      ORBSVCS_DEBUG((LM_DEBUG, "reply_service_context added\n"));
     }
-    ACE_CATCHALL {
+    catch (...){
     }
-    ACE_ENDTRY;
   }
 
 }
 
-void ForwardCtrlServerInterceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr
-                               ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
+void ForwardCtrlServerInterceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
-void ForwardCtrlServerInterceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr
-                           ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest))
+void ForwardCtrlServerInterceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

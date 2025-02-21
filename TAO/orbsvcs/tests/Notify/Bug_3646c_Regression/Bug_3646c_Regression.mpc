@@ -1,0 +1,25 @@
+// -*- MPC -*-
+project(*Ntf Cons): notifytest {
+  exename = Consumer
+
+  Source_Files {
+    Consumer.cpp
+  }
+}
+
+project (*lib): taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  sharedname = bug3646c
+  dynamicflags += BUG3646c_BUILD_DLL
+
+  Source_Files {
+    DllORB.cpp
+  }
+}
+
+project (*Server): taoserver, tao_notify_service, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  libs += bug3646c
+  after += *lib
+  Source_Files {
+    server.cpp
+  }
+}

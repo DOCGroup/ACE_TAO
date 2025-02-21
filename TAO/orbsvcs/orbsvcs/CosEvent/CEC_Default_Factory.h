@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Default_Factory.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
@@ -15,16 +14,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_Factory.h"
+#include "orbsvcs/CosEvent/CEC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CEC_Defaults.h"
+#include "orbsvcs/CosEvent/CEC_Defaults.h"
 
 #include "ace/Service_Config.h"
 #include "ace/Time_Value.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_Default_Factory
@@ -36,24 +37,24 @@
  * can specify which strategies will this factory generate.
  * Since the class can be dynamically loaded the strategies can be
  * set in the service configurator file.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  */
 class TAO_Event_Serv_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {
 public:
   /// Constructor
-  TAO_CEC_Default_Factory (void);
+  TAO_CEC_Default_Factory ();
 
   /// destructor...
-  virtual ~TAO_CEC_Default_Factory (void);
+  virtual ~TAO_CEC_Default_Factory ();
 
   /// Helper function to register the default factory into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // = The CEC_Factory methods
   virtual TAO_CEC_Dispatching*
@@ -92,30 +93,26 @@ public:
       create_proxy_push_consumer_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_push_consumer_collection (
-          TAO_CEC_ProxyPushConsumer_Collection*
-        );
+          TAO_CEC_ProxyPushConsumer_Collection*);
   virtual TAO_CEC_ProxyPullConsumer_Collection*
       create_proxy_pull_consumer_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_pull_consumer_collection (
-          TAO_CEC_ProxyPullConsumer_Collection*
-        );
+          TAO_CEC_ProxyPullConsumer_Collection*);
   virtual TAO_CEC_ProxyPushSupplier_Collection*
     create_proxy_push_supplier_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_push_supplier_collection (
-          TAO_CEC_ProxyPushSupplier_Collection*
-        );
+          TAO_CEC_ProxyPushSupplier_Collection*);
   virtual TAO_CEC_ProxyPullSupplier_Collection*
     create_proxy_pull_supplier_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_pull_supplier_collection (
-          TAO_CEC_ProxyPullSupplier_Collection*
-        );
+          TAO_CEC_ProxyPullSupplier_Collection*);
 
-  virtual ACE_Lock* create_consumer_lock (void);
+  virtual ACE_Lock* create_consumer_lock ();
   virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock (void);
+  virtual ACE_Lock* create_supplier_lock ();
   virtual void destroy_supplier_lock (ACE_Lock*);
 
   virtual TAO_CEC_ConsumerControl*
@@ -150,13 +147,15 @@ public:
       create_proxy_push_consumer_collection (TAO_CEC_TypedEventChannel*);
   virtual void
       destroy_proxy_push_consumer_collection (
-          TAO_CEC_TypedProxyPushConsumer_Collection*
-        );
+          TAO_CEC_TypedProxyPushConsumer_Collection*);
   virtual TAO_CEC_ConsumerControl*
       create_consumer_control (TAO_CEC_TypedEventChannel*);
   virtual TAO_CEC_SupplierControl*
       create_supplier_control (TAO_CEC_TypedEventChannel*);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+  virtual CORBA::Policy_ptr
+  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout);
 
 private:
   /// Parse an argument to set the type of collections used.
@@ -200,12 +199,24 @@ private:
   ACE_Time_Value consumer_control_timeout_;
   ACE_Time_Value supplier_control_timeout_;
 
+  /// The consumer and supplier operation timeouts.
+  /// Only in effect if the corresponding "reactive control" is enabled.
+  /// Applies the given timeout as the round-trip time policy on the
+  /// object reference.
+  ACE_Time_Value consumer_timeout_;
+  ACE_Time_Value supplier_timeout_;
+
   /// The number of retries before disconnecting a proxy
   unsigned int proxy_disconnect_retries_;
+
+  /// The flag which allows or not to wait the message queue threads completion
+  bool wait_for_shutdown_thread_completion_ { true };
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_Default_Factory.i"
+#include "orbsvcs/CosEvent/CEC_Default_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_CEC_Default_Factory)

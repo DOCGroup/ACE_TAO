@@ -3,8 +3,6 @@
 /**
  *  @file    FT_FaultEventDescriptor.h
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *
  *  @author Steve Totten <totten_s@ociweb.com>
@@ -26,13 +24,14 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "FT_ReplicationManagerLib_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /// Helper class for describing the properties in a fault event.
   struct TAO_ReplicationManagerLib_Export FT_FaultEventDescriptor
   {
   public:
-
     /// Default constructor.
     FT_FaultEventDescriptor ();
 
@@ -65,10 +64,10 @@ namespace TAO
 
     /// The object group's factories.
     PortableGroup::FactoryInfos_var factories;
-
   };
-
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

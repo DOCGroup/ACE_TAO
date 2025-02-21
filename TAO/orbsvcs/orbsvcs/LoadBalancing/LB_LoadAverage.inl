@@ -1,7 +1,5 @@
 // -*- C++ -*-
-//
-// $Id$
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Float
 TAO_LB_LoadAverage::effective_load (CORBA::Float previous_load,
@@ -14,10 +12,12 @@ TAO_LB_LoadAverage::effective_load (CORBA::Float previous_load,
   CORBA::Float result =
     this->dampening_ * previous_load + (1 - this->dampening_) * new_load;
 
-  ACE_ASSERT (this->tolerance_ != 0);
+  ACE_ASSERT (!ACE::is_equal (this->tolerance_, 0.0f));
 
   // Compute the effective load.
   result /= this->tolerance_;
 
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

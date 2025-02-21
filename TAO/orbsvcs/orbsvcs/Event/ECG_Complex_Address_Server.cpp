@@ -1,12 +1,13 @@
-// $Id$
-
-#include "ECG_Complex_Address_Server.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Event/ECG_Complex_Address_Server.h"
 #include "ace/SString.h"
 #include "ace/streams.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_Complex_Address_Server.i"
+#include "orbsvcs/Event/ECG_Complex_Address_Server.inl"
 #endif /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Complex_Address_Server::TAO_ECG_Complex_Address_Server (
                                               int is_source_mapping)
@@ -14,7 +15,7 @@ TAO_ECG_Complex_Address_Server::TAO_ECG_Complex_Address_Server (
 {
 }
 
-TAO_ECG_Complex_Address_Server::~TAO_ECG_Complex_Address_Server (void)
+TAO_ECG_Complex_Address_Server::~TAO_ECG_Complex_Address_Server ()
 {
 }
 
@@ -31,11 +32,11 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
   while (*data != '\0')
     {
       // Extract lookup value (it is followed by '@').
-      const char * location = 0;
+      const char * location = nullptr;
       location = ACE_OS::strchr (data, '@');
       if (!location)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                         "Unable to initialize address "
                                         "server: cannot find <@> separator "
                                         "in initialization string "
@@ -43,24 +44,24 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
                             -1);
         }
       size_t len = location - data;
-      key_string.set (data, len, 1);
+      key_string.set (data, len, true);
       data += len + 1;
 
       // Extract mcast address to be mapped to just extracted lookup
       // value.
-      location = 0;
+      location = nullptr;
       location = ACE_OS::strchr (data, ' ');
       if (location)
         {
           len = location - data;
-          mcast_string.set (data, len, 1);
+          mcast_string.set (data, len, true);
           data += len + 1;
         }
       else
         {
           // This must be the last entry in the mapping.
           len = ACE_OS::strlen (data);
-          mcast_string.set (data, len, 1);
+          mcast_string.set (data, len, true);
           data += len;
         }
 
@@ -81,7 +82,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
       && *key == '*')
     {
       if (this->default_addr_.set (mcast_addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
                                      "mcast address specified: %s.\n",
                            mcast_addr),
                           -1);
@@ -89,11 +90,11 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
     }
 
   // Convert strings to values.
-  char * endptr = 0;
+  char * endptr = nullptr;
   CORBA::Long header_value = ACE_OS::strtol (key, &endptr, 0);
   if (*endptr != '\0')
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
                                    "source/type specified: %s.\n",
                          key),
                         -1);
@@ -102,7 +103,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
   ACE_INET_Addr addr;
   if (addr.set (mcast_addr) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
                                    "mcast address specified: %s.\n",
                          mcast_addr),
                          -1);
@@ -110,7 +111,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
 
   if (this->mcast_mapping_.bind (header_value, addr) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: error adding "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: error adding "
                                    "new entry to the mapping.\n"),
                         -1);
     }
@@ -122,9 +123,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
 void
 TAO_ECG_Complex_Address_Server::get_addr (
                          const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr
-                         ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                         RtecUDPAdmin::UDP_Addr_out addr)
 {
   CORBA::Long key;
   if (this->is_source_mapping_)
@@ -132,24 +131,66 @@ TAO_ECG_Complex_Address_Server::get_addr (
   else
     key = header.type;
 
-  MAP::ENTRY * mapping_entry = 0;
+  MAP::ENTRY * mapping_entry = nullptr;
   if (this->mcast_mapping_.find (key, mapping_entry) == -1)
     {
       // Key was not found in the mapping.  Use default.
+#if defined (ACE_HAS_IPV6)
+      if (this->default_addr_.get_type() == PF_INET6)
+        throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+#endif /* ACE_HAS_IPV6 */
       addr.ipaddr = this->default_addr_.get_ip_address ();
       addr.port = this->default_addr_.get_port_number ();
     }
   else
     {
+#if defined (ACE_HAS_IPV6)
+      if (mapping_entry->int_id_.get_type() == PF_INET6)
+        throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+#endif /* ACE_HAS_IPV6 */
       addr.ipaddr = mapping_entry->int_id_.get_ip_address ();
       addr.port = mapping_entry->int_id_.get_port_number ();
     }
 }
 
 void
-TAO_ECG_Complex_Address_Server::dump_content (void)
+TAO_ECG_Complex_Address_Server::get_address (
+                         const RtecEventComm::EventHeader& header,
+                         RtecUDPAdmin::UDP_Address_out addr)
 {
-  ACE_DEBUG ((LM_DEBUG, "Default address: %s:%d\n",
+  CORBA::Long key;
+  if (this->is_source_mapping_)
+    key = header.source;
+  else
+    key = header.type;
+
+  MAP::ENTRY * mapping_entry = nullptr;
+  ACE_INET_Addr &src_addr =
+    (this->mcast_mapping_.find (key, mapping_entry) == -1) ?
+    this->default_addr_ : mapping_entry->int_id_;
+#if defined (ACE_HAS_IPV6)
+  if (src_addr.get_type() == PF_INET6)
+    {
+      RtecUDPAdmin::UDP_Addr_v6 v6;
+      sockaddr_in6 *in6 =
+        reinterpret_cast<sockaddr_in6 *>(src_addr.get_addr());
+      ACE_OS::memcpy (v6.ipaddr,&in6->sin6_addr,16);
+      v6.port = src_addr.get_port_number();
+      addr.v6_addr (v6);
+      return;
+    }
+#endif /* ACE_HAS_IPV6 */
+  RtecUDPAdmin::UDP_Addr v4;
+  v4.ipaddr = src_addr.get_ip_address();
+  v4.port = src_addr.get_port_number();
+  addr.v4_addr (v4);
+}
+
+
+void
+TAO_ECG_Complex_Address_Server::dump_content ()
+{
+  ORBSVCS_DEBUG ((LM_DEBUG, "Default address: %s:%d\n",
               this->default_addr_.get_host_addr (),
               this->default_addr_.get_port_number ()));
 
@@ -158,25 +199,11 @@ TAO_ECG_Complex_Address_Server::dump_content (void)
        iter++)
     {
       MAP::ENTRY & entry = *iter;
-      ACE_DEBUG ((LM_DEBUG, "%d --> %s:%d\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "%d --> %s:%d\n",
                   entry.ext_id_,
                   this->default_addr_.get_host_addr (),
                   this->default_addr_.get_port_number ()));
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr, ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<CORBA::Long, ACE_INET_Addr>;
-template class ACE_Hash_Map_Iterator_Base_Ex<CORBA::Long, ACE_INET_Addr, ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<CORBA::Long,ACE_INET_Addr,ACE_Null_Mutex>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr, ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<CORBA::Long, ACE_INET_Addr>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CORBA::Long, ACE_INET_Addr, ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<CORBA::Long,ACE_INET_Addr,ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

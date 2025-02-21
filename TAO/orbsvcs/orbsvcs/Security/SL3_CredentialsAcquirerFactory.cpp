@@ -1,11 +1,9 @@
-#include "SL3_CredentialsAcquirerFactory.h"
+#include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (Security,
-           SL3_CredentialsAcquirerFactory,
-           "$Id$")
-
-
-TAO::SL3::CredentialsAcquirerFactory::~CredentialsAcquirerFactory (void)
+TAO::SL3::CredentialsAcquirerFactory::~CredentialsAcquirerFactory ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

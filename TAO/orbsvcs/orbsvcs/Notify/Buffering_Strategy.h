@@ -2,11 +2,7 @@
 /**
  *  @file Buffering_Strategy.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_BUFFERING_STRATEGY_H
@@ -14,7 +10,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,9 +21,11 @@
 
 #include "orbsvcs/TimeBaseC.h"
 
-#include "Property.h"
-#include "Property_T.h"
-#include "AdminProperties.h"
+#include "orbsvcs/Notify/Property.h"
+#include "orbsvcs/Notify/Property_T.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Method_Request_Queueable;
 class TAO_Notify_QoSProperties;
@@ -38,14 +36,13 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Notify_Message_Queue;
  * @class TAO_Notify_Buffering_Strategy
  *
  * @brief Base Strategy to enqueue and dequeue items from a Message Queue.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Buffering_Strategy
 {
 public:
   TAO_Notify_Buffering_Strategy (
-      TAO_Notify_Message_Queue& msg_queue,
-    TAO_Notify_AdminProperties::Ptr& admin_properties);
+    TAO_Notify_Message_Queue& msg_queue,
+    const TAO_Notify_AdminProperties::Ptr& admin_properties);
 
   ~TAO_Notify_Buffering_Strategy ();
 
@@ -53,12 +50,11 @@ public:
   /// Order Policy
   /// Discard Policy
   /// MaxEventsPerConsumer
-  /// TAO_Notify_Extensions::BlockingPolicy
   void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Enqueue according the enqueing strategy.
   /// Return -1 on error else the number of items in the queue.
-  int enqueue (TAO_Notify_Method_Request_Queueable& method_request);
+  int enqueue (TAO_Notify_Method_Request_Queueable* method_request);
 
   /// Dequeue batch. This method will block for @a abstime if non-zero or else blocks till an item is available.
   /// Return -1 on error or if nothing is available, else the number of items actually dequeued (1).
@@ -66,15 +62,34 @@ public:
                const ACE_Time_Value *abstime);
 
   /// Shutdown
-  void shutdown (void);
+  void shutdown ();
+
+  /// Provide the time value of the oldest event in the queue.
+  ACE_Time_Value oldest_event ();
+
+  /// This interface allows tracking of the queue size
+  class TAO_Notify_Serv_Export Tracker
+  {
+  public:
+    Tracker ();
+    virtual ~Tracker ();
+    virtual void update_queue_count (size_t count) = 0;
+    virtual void count_queue_overflow (bool local_overflow, bool global_overflow) = 0;
+    void register_child (Tracker * child);
+    void unregister_child (Tracker * child);
+  protected:
+    Tracker * child_;
+  };
+
+  /// Set the tracker object.  This strategy does not own the tracker.
+  void set_tracker (Tracker* tracker);
 
 private:
-
   /// Apply the Order Policy and queue. return -1 on error.
-  int queue (TAO_Notify_Method_Request_Queueable& method_request);
+  int queue (TAO_Notify_Method_Request_Queueable* method_request);
 
   /// Discard as per the Discard Policy.
-  bool discard (TAO_Notify_Method_Request_Queueable& method_request);
+  bool discard (TAO_Notify_Method_Request_Queueable* method_request);
 
   ///= Data Members
 
@@ -85,7 +100,7 @@ private:
   TAO_Notify_AdminProperties::Ptr admin_properties_;
 
   /// The shared global lock used by all the queues.
-  ACE_SYNCH_MUTEX& global_queue_lock_;
+  TAO_SYNCH_MUTEX& global_queue_lock_;
 
   /// The global queue length - queue length accross all the queues.
   CORBA::Long& global_queue_length_;
@@ -102,7 +117,6 @@ private:
   TAO_Notify_Property_Long max_events_per_consumer_;
   TAO_Notify_Property_Time blocking_policy_;
 
-
   TAO_SYNCH_CONDITION& global_not_full_;
   TAO_SYNCH_CONDITION local_not_full_;
 
@@ -111,7 +125,12 @@ private:
 
   /// Flag to shutdown.
   bool shutdown_;
+
+  /// Optional queue tracker
+  Tracker* tracker_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

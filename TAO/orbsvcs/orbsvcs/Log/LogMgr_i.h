@@ -4,8 +4,6 @@
 /**
  *  @file   LogMgr_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::LogMgr interface.
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
@@ -26,7 +24,9 @@
 
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/Log/Log_Persistence_Strategy.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LogMgr_i
@@ -39,9 +39,6 @@ class TAO_Log_Serv_Export TAO_LogMgr_i
   : public virtual POA_DsLogAdmin::LogMgr
 {
 public:
-
-  // = Initialization and Termination Methods
-
   /// Constructor.
   TAO_LogMgr_i ();
 
@@ -50,33 +47,21 @@ public:
 
   /// Lists all log object references.
   DsLogAdmin::LogList *
-    list_logs (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+    list_logs ();
 
   /// Lists all log ids.
   DsLogAdmin::LogIdList *
-    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+    list_logs_by_id ();
 
   /// Returns a reference to the log with the supplied id.
   DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id
-              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+    find_log (DsLogAdmin::LogId id);
 
   /// Returns true if log exists, otherwise false
-  bool exists (DsLogAdmin::LogId id
-               ACE_ENV_ARG_DECL);
-  
+  bool exists (DsLogAdmin::LogId id);
+
   /// Remove the given entry from the container.
-  int remove (DsLogAdmin::LogId id
-	      ACE_ENV_ARG_DECL);
+  int remove (DsLogAdmin::LogId id);
 
   /// @brief Create ObjectId
   ///
@@ -86,8 +71,8 @@ public:
   ///
   /// @return object id
   ///
-  virtual PortableServer::ObjectId* 
-    create_objectid (DsLogAdmin::LogId id)			= 0;
+  virtual PortableServer::ObjectId*
+    create_objectid (DsLogAdmin::LogId id);
 
   /// @brief Create log reference
   ///
@@ -97,76 +82,97 @@ public:
   ///
   /// @return object reference
   ///
-  virtual DsLogAdmin::Log_ptr 
-    create_log_reference (DsLogAdmin::LogId id
-			  ACE_ENV_ARG_DECL)			= 0;
+  virtual DsLogAdmin::Log_ptr
+    create_log_reference (DsLogAdmin::LogId id);
 
   /// @brief Create log object
   ///
-  /// Create and activate Log object for log channel @a id.
+  /// Create Log object for log channel @a id.
   ///
   /// @param id log id
   ///
   /// @return object reference
   ///
-  virtual DsLogAdmin::Log_ptr 
-    create_log_object (DsLogAdmin::LogId id
-		       ACE_ENV_ARG_DECL)			= 0;
+  virtual DsLogAdmin::Log_ptr
+    create_log_object (DsLogAdmin::LogId id);
 
-  /// @brief Get log record store 
+  /// @brief Create log repository id
+  ///
+  /// Return repository id for log
+  ///
+  /// @return repository id
+  ///
+  virtual CORBA::RepositoryId
+    create_repositoryid  () = 0;
+
+  /// @brief Create log servant
+  ///
+  /// Create Log servant for log channel @a id.
+  ///
+  /// @param id log id
+  ///
+  /// @return pointer to servant
+  virtual PortableServer::ServantBase*
+    create_log_servant (DsLogAdmin::LogId id) = 0;
+
+  /// @brief Get log record store
   ///
   /// Get/Create a log record store for log channel @a id.
   ///
   /// @param id log id
   ///
   TAO_LogRecordStore*
-    get_log_record_store (DsLogAdmin::LogId id
-		          ACE_ENV_ARG_DECL);
+    get_log_record_store (DsLogAdmin::LogId id);
+
+  CORBA::ORB_ptr orb();
+
+  PortableServer::POA_ptr factory_poa();
+
+  PortableServer::POA_ptr log_poa();
 
 protected:
   /// @brief Initialize
   ///
   /// Creates factory and log channel POAs, and obtains the LogStore
   /// from a dynamically loaded Log_Persistence_Strategy (if one was
-  /// specified in the service config file, otherwise the default 
+  /// specified in the service config file, otherwise the default
   /// Hash_Persistence_Strategy is used.)
   ///
   /// @param orb ORB
   /// @param poa Parent POA
   ///
   void init (CORBA::ORB_ptr orb,
-	     PortableServer::POA_ptr poa
-	     ACE_ENV_ARG_DECL);
+    PortableServer::POA_ptr poa);
 
   /// @brief Create log
   void create_i (DsLogAdmin::LogFullActionType full_action,
-		 CORBA::ULongLong max_size,
-		 const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-		 DsLogAdmin::LogId_out id_out
-		 ACE_ENV_ARG_DECL);
+                 CORBA::ULongLong max_size,
+                 const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
+                 DsLogAdmin::LogId_out id_out);
 
   /// @brief Create log
   void create_with_id_i (DsLogAdmin::LogId id,
-			 DsLogAdmin::LogFullActionType full_action,
-			 CORBA::ULongLong max_size,
-			 const DsLogAdmin::CapacityAlarmThresholdList* thresholds
-			 ACE_ENV_ARG_DECL);
-  
+                         DsLogAdmin::LogFullActionType full_action,
+                         CORBA::ULongLong max_size,
+                         const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
+
   /// ORB.
-  CORBA::ORB_var                orb_;
+  CORBA::ORB_var orb_;
 
   /// POA.
-  PortableServer::POA_var	poa_;
+  PortableServer::POA_var poa_;
 
   /// Factory POA.
-  PortableServer::POA_var	factory_poa_;
+  PortableServer::POA_var factory_poa_;
 
   /// Log POA.
-  PortableServer::POA_var	log_poa_;
+  PortableServer::POA_var log_poa_;
 
 private:
-  TAO_LogStore*			logstore_;
+  TAO_LogStore* logstore_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TLS_LOGMGR_I_H */

@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_UDP_Admin.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,7 +16,9 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Simple_AddrServer
@@ -39,17 +40,20 @@ public:
   TAO_EC_Simple_AddrServer (CORBA::UShort port);
 
   /// Destructor
-  virtual ~TAO_EC_Simple_AddrServer (void);
+  virtual ~TAO_EC_Simple_AddrServer ();
 
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr
-                         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                         RtecUDPAdmin::UDP_Addr_out addr);
+
+  virtual void get_address (const RtecEventComm::EventHeader& header,
+                            RtecUDPAdmin::UDP_Address_out addr);
 
 private:
   CORBA::UShort port_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_UDP_ADMIN_H */

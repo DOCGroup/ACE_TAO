@@ -1,26 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    typedef_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Typedef in the client stubs
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    typedef_cs.cpp
+ *
+ *  Visitor generating code for Typedef in the client stubs
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_typedef, 
-           typedef_cs, 
-           "$Id$")
+#include "typedef.h"
 
 // ******************************************************
 // Typedef visitor for client stubs
@@ -31,7 +20,7 @@ be_visitor_typedef_cs::be_visitor_typedef_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef_cs::~be_visitor_typedef_cs (void)
+be_visitor_typedef_cs::~be_visitor_typedef_cs ()
 {
 }
 
@@ -59,7 +48,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt; // base type
+  be_type *bt = nullptr; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -78,7 +67,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad primitive base type\n"),  
+                             "bad primitive base type\n"),
                             -1);
         }
 
@@ -88,11 +77,11 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"),  
+                             "failed to accept visitor\n"),
                             -1);
         }
 
-      this->ctx_->alias (0);
+      this->ctx_->alias (nullptr);
     }
   else
     {
@@ -101,14 +90,14 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
       this->ctx_->tdef (node);
 
       // Grab the immediate base type node.
-      bt = be_type::narrow_from_decl (node->base_type ());
+      bt = dynamic_cast<be_type*> (node->base_type ());
 
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad base type\n"),  
+                             "bad base type\n"),
                             -1);
         }
 
@@ -118,7 +107,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"), 
+                             "failed to accept visitor\n"),
                             -1);
         }
 
@@ -133,13 +122,44 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_typedef_cs::"
                                  "visit_typedef - "
-                                 "TypeCode definition failed\n"), 
+                                 "TypeCode definition failed\n"),
                                 -1);
             }
 
         }
 
-      this->ctx_->tdef (0);
+      this->ctx_->tdef (nullptr);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_typedef_cs::visit_sequence (be_sequence *node)
+{
+  be_type *bt = nullptr;
+
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      // Let the base class visitor handle this case.
+      if (this->be_visitor_typedef::visit_sequence (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_cs::"
+                             "visit_sequence - "
+                             "base class visitor failed\n"),
+                            -1);
+        }
     }
 
   return 0;

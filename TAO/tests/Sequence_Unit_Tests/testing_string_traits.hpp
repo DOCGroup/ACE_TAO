@@ -5,13 +5,11 @@
  *
  * @brief Specialize the string traits so they can be used in testing.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 
 #include "testing_exception.hpp"
-#include "string_traits.hpp"
+#include "tao/String_Traits_T.h"
 #include "testing_counters.hpp"
 
 template<typename charT>
@@ -43,7 +41,7 @@ struct testing_string_traits
   static void release(char_type * s)
   {
     release_calls();
-    return real_traits::release(s);
+    real_traits::release(s);
   }
 
   static void not_released_from_const(
@@ -76,6 +74,7 @@ testing_string_traits<charT>::not_released_from_const_calls;
 template<typename charT> call_counter
 testing_string_traits<charT>::not_released_from_managed_calls;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 namespace details
@@ -95,5 +94,6 @@ struct string_traits<CORBA::WChar,true>
 
 } // namespace details
 } // namespace TAO
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_testing_string_traits_hpp

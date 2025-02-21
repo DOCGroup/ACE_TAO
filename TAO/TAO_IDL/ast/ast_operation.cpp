@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -78,37 +76,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_argument.h"
 #include "ast_exception.h"
+#include "ast_param_holder.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
+
 #include "utl_err.h"
 #include "utl_namelist.h"
 #include "utl_exceptlist.h"
 #include "utl_identifier.h"
 #include "utl_string.h"
 #include "utl_strlist.h"
+
 #include "global_extern.h"
 
-ACE_RCSID (ast, 
-           ast_operation, 
-           "$Id$")
-
-AST_Operation::AST_Operation (void)
-  : COMMON_Base (),
-    AST_Decl(),
-    UTL_Scope(),
-    pd_return_type (0),
-    pd_flags (OP_noflags),
-    pd_context (0),
-    pd_exceptions (0),
-    argument_count_ (-1),
-    has_native_ (0)
-{
-}
+AST_Decl::NodeType const
+AST_Operation::NT = AST_Decl::NT_op;
 
 AST_Operation::AST_Operation (AST_Type *rt,
                               Flags fl,
                               UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl(AST_Decl::NT_op,
@@ -116,15 +104,16 @@ AST_Operation::AST_Operation (AST_Type *rt,
     UTL_Scope(AST_Decl::NT_op),
     pd_return_type (rt),
     pd_flags (fl),
-    pd_context (0),
-    pd_exceptions (0),
+    pd_context (nullptr),
+    pd_exceptions (nullptr),
     argument_count_ (-1),
+    has_in_arguments_ (false),
     has_native_ (0)
 {
-  AST_PredefinedType *pdt = 0;
+  AST_PredefinedType *pdt = nullptr;
 
   // Check that if the operation is oneway, the return type must be void.
-  if (rt != 0 && pd_flags == OP_oneway)
+  if (rt != nullptr && pd_flags == OP_oneway)
     {
       if (rt->node_type () != AST_Decl::NT_pre_defined)
         {
@@ -133,9 +122,9 @@ AST_Operation::AST_Operation (AST_Type *rt,
         }
       else
         {
-          pdt = AST_PredefinedType::narrow_from_decl (rt);
+          pdt = dynamic_cast<AST_PredefinedType*> (rt);
 
-          if (pdt == 0 || pdt->pt () != AST_PredefinedType::PT_void)
+          if (pdt == nullptr || pdt->pt () != AST_PredefinedType::PT_void)
             {
               idl_global->err ()->error1 (UTL_Error::EIDL_NONVOID_ONEWAY,
                                           this);
@@ -144,36 +133,38 @@ AST_Operation::AST_Operation (AST_Type *rt,
     }
 }
 
-AST_Operation::~AST_Operation (void)
+AST_Operation::~AST_Operation ()
 {
 }
 
 // Public operations.
 
-int
-AST_Operation::void_return_type (void)
+bool
+AST_Operation::void_return_type ()
 {
   AST_Type* type = this->return_type ();
 
-  if (type->node_type () == AST_Decl::NT_pre_defined
-      && (AST_PredefinedType::narrow_from_decl (type)->pt ()
-            == AST_PredefinedType::PT_void))
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  return (type->node_type () == AST_Decl::NT_pre_defined
+          && (dynamic_cast<AST_PredefinedType*> (type)->pt ()
+                == AST_PredefinedType::PT_void));
 }
 
 // Return the member count.
 int
-AST_Operation::argument_count (void)
+AST_Operation::argument_count ()
 {
   this->compute_argument_attr ();
 
   return this->argument_count_;
+}
+
+// Return the IN/INOUT member flag.
+bool
+AST_Operation::has_in_arguments ()
+{
+  this->compute_argument_attr ();
+
+  return this->has_in_arguments_;
 }
 
 int
@@ -185,8 +176,7 @@ AST_Operation::count_arguments_with_direction (int direction_mask)
        !si.is_done ();
        si.next ())
     {
-      AST_Argument *arg =
-        AST_Argument::narrow_from_decl (si.item ());
+      AST_Argument *arg = dynamic_cast<AST_Argument*> (si.item ());
 
       if ((arg->direction () & direction_mask) != 0)
         {
@@ -200,7 +190,7 @@ AST_Operation::count_arguments_with_direction (int direction_mask)
 
 // Return if any argument or the return type is a <native> type.
 int
-AST_Operation::has_native (void)
+AST_Operation::has_native ()
 {
   this->compute_argument_attr ();
 
@@ -208,24 +198,53 @@ AST_Operation::has_native (void)
 }
 
 void
-AST_Operation::destroy (void)
+AST_Operation::destroy ()
 {
+  // No need to delete our exception list, the
+  // destroy() method does it. The UTL_ExceptList
+  // destroy() method does NOT delete the contained
+  // exception nodes.
+
+  if (this->pd_exceptions != nullptr)
+    {
+      this->pd_exceptions->destroy ();
+      this->pd_exceptions = nullptr;
+    }
+
+  this->UTL_Scope::destroy ();
+  this->AST_Decl::destroy ();
+}
+
+UTL_ExceptList *
+AST_Operation::be_add_exceptions (UTL_ExceptList *t)
+{
+  if (this->pd_exceptions != nullptr)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
+                                  this);
+    }
+  else
+    {
+      this->pd_exceptions = t;
+    }
+
+  return this->pd_exceptions;
 }
 
 // Private operations.
 
 // Compute total number of members.
 int
-AST_Operation::compute_argument_attr (void)
+AST_Operation::compute_argument_attr ()
 {
   if (this->argument_count_ != -1)
     {
       return 0;
     }
 
-  AST_Decl *d = 0;
-  AST_Type *type = 0;
-  AST_Argument *arg = 0;
+  AST_Decl *d = nullptr;
+  AST_Type *type = nullptr;
+  AST_Argument *arg = nullptr;
 
   this->argument_count_ = 0;
 
@@ -244,9 +263,16 @@ AST_Operation::compute_argument_attr (void)
             {
               this->argument_count_++;
 
-              arg = AST_Argument::narrow_from_decl (d);
+              arg = dynamic_cast<AST_Argument*> (d);
 
-              type = AST_Type::narrow_from_decl (arg->field_type ());
+              if (arg->direction() == AST_Argument::dir_IN ||
+                  arg->direction() == AST_Argument::dir_INOUT)
+                {
+                  this->has_in_arguments_ = true;
+                }
+
+
+              type = dynamic_cast<AST_Type*> (arg->field_type ());
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
@@ -256,7 +282,7 @@ AST_Operation::compute_argument_attr (void)
         }
     }
 
-  type = AST_Type::narrow_from_decl (this->return_type ());
+  type = dynamic_cast<AST_Type*> (this->return_type ());
 
   if (type->node_type () == AST_Decl::NT_native)
     {
@@ -275,193 +301,157 @@ AST_Operation::fe_add_context (UTL_StrList *t)
   return t;
 }
 
-UTL_ExceptList *
-AST_Operation::be_add_exceptions (UTL_ExceptList *t)
-{
-  if (this->pd_exceptions != 0)
-    {
-      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
-                                  this);
-    }
-  else
-    {
-      this->pd_exceptions = t;
-    }
-
-  return this->pd_exceptions;
-}
-
-AST_Argument *
-AST_Operation::be_add_argument (AST_Argument *arg)
-{
-  this->add_to_scope (arg);
-  this->add_to_referenced (arg,
-                           0,
-                           0);
-  return arg;
-}
-
-int
-AST_Operation::be_insert_exception (AST_Exception *ex)
-{
-  UTL_ExceptList *new_list = 0;
-  ACE_NEW_RETURN (new_list,
-                  UTL_ExceptList (ex,
-                                  this->pd_exceptions),
-                  -1);
-  this->pd_exceptions = new_list;
-  return 0;
-}
-
 // Add these exceptions (identified by name) to this scope.
 // This looks up each name to resolve it to the name of a known
 // exception, and then adds the referenced exception to the list
-//  exceptions that this operation can raise.
+// exceptions that this operation can raise.
 
 // NOTE: No attempt is made to ensure that exceptions are mentioned
 //       only once..
 UTL_NameList *
 AST_Operation::fe_add_exceptions (UTL_NameList *t)
 {
-  UTL_ScopedName *nl_n = 0;
-  AST_Exception *fe = 0;
-  AST_Decl *d = 0;
+  if (nullptr == t)
+    {
+      return nullptr;
+    }
 
-  this->pd_exceptions = 0;
+  UTL_ScopedName *nl_n = nullptr;
+  AST_Type *fe = nullptr;
+  AST_Decl *d = nullptr;
+
+  this->pd_exceptions = nullptr;
 
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
       nl_n = nl_i.item ();
+      d = this->lookup_by_name (nl_n, true);
 
-      d = this->lookup_by_name (nl_n,
-                                I_TRUE);
-
-      if (d == 0 || d->node_type() != AST_Decl::NT_except)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (nl_n);
-          return 0;
+          return nullptr;
         }
 
-      fe = AST_Exception::narrow_from_decl (d);
+      AST_Decl::NodeType nt = d->node_type ();
 
-      if ((this->flags () == AST_Operation::OP_oneway) && fe)
+      switch (nt)
+        {
+          case AST_Decl::NT_except:
+            break;
+          case AST_Decl::NT_param_holder:
+            {
+              AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (d);
+
+              nt = ph->info ()->type_;
+
+              if (nt != AST_Decl::NT_except
+                  && nt != AST_Decl::NT_type)
+                {
+                  idl_global->err ()->mismatched_template_param (
+                    ph->info ()->name_.c_str ());
+                }
+
+              break;
+            }
+          case AST_Decl::NT_typedef:
+            {
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
+
+              nt = td->primitive_base_type ()->node_type ();
+
+              if (nt != AST_Decl::NT_except)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                }
+
+              break;
+            }
+          case AST_Decl::NT_native:
+            {
+              // This is the only use case for this node type.
+              int compare =
+                ACE_OS::strcmp (d->local_name ()->get_string (),
+                                "UserExceptionBase");
+
+              if (compare != 0)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                }
+
+              break;
+            }
+          default:
+            idl_global->err ()->error1 (
+              UTL_Error::EIDL_ILLEGAL_RAISES,
+              this);
+
+            break;
+        };
+
+      bool oneway_op =
+        (this->flags () == AST_Operation::OP_oneway);
+
+      fe = dynamic_cast<AST_Type*> (d);
+
+      if (oneway_op && fe != nullptr)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                       this);
         }
 
-      if (fe == 0)
+      if (fe == nullptr)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                       this);
-          return 0;
+          return nullptr;
         }
 
-      if (this->pd_exceptions == 0)
+      if (this->pd_exceptions == nullptr)
         {
           ACE_NEW_RETURN (this->pd_exceptions,
                           UTL_ExceptList (fe,
-                                          0),
-                          0);
+                                          nullptr),
+                          nullptr);
         }
       else
         {
-          UTL_ExceptList *el = 0;
+          UTL_ExceptList *el = nullptr;
           ACE_NEW_RETURN (el,
                           UTL_ExceptList (fe,
-                                          0),
-                          0);
+                                          nullptr),
+                          nullptr);
 
           this->pd_exceptions->nconc (el);
         }
     }
 
-  return t;
+  // This return value is never used, it's easier to
+  // destroy it here and return 0 than to destroy it
+  // each place it is passed in.
+  t->destroy ();
+  delete t;
+  t = nullptr;
+  return nullptr;
 }
 
-// Add this AST_Argument node (an operation argument declaration)
-// to this scope.
 AST_Argument *
 AST_Operation::fe_add_argument (AST_Argument *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_by_name_local (t->local_name(), 0)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Cannot add OUT or INOUT argument to oneway operation.
-  if ((t->direction () == AST_Argument::dir_OUT
-       || t->direction() == AST_Argument::dir_INOUT)
-      && pd_flags == OP_oneway)
-    {
-      idl_global->err ()->error2 (UTL_Error::EIDL_ONEWAY_CONFLICT,
-                                  t,
-                                  this);
-      return 0;
-    }
-
-  AST_Type *arg_type = t->field_type ();
-
-  // This error is not caught in y.tab.cpp so we check for it here.
-  if (arg_type->node_type () == AST_Decl::NT_array
-      && arg_type->anonymous () == I_TRUE)
-    {
-      idl_global->err ()->syntax_error (idl_global->parse_state ());
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  UTL_ScopedName *mru = arg_type->last_referenced_as ();
-
-  if (mru != 0)
-    {
-      this->add_to_referenced (arg_type,
-                               I_FALSE,
-                               mru->first_component ());
-    }
-
-  return t;
+  return dynamic_cast<AST_Argument*> (this->fe_add_decl (t));
 }
 
 // Dump this AST_Operation node (an operation) to the ostream o.
 void
 AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = 0;
-  AST_Exception *e = 0;
-  UTL_String *s = 0;
+  AST_Decl *d = nullptr;
+  AST_Type *e = nullptr;
+  UTL_String *s = nullptr;
 
   if (this->pd_flags == OP_oneway)
     {
@@ -492,7 +482,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 
   this->dump_i (o, ")");
 
-  if (this->pd_exceptions != 0)
+  if (this->pd_exceptions != nullptr)
     {
       this->dump_i (o, " raises(");
 
@@ -513,7 +503,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
       this->dump_i (o, ")");
     }
 
-  if (this->pd_context != 0)
+  if (this->pd_context != nullptr)
     {
       this->dump_i (o, " context(");
 
@@ -543,30 +533,31 @@ AST_Operation::ast_accept (ast_visitor *visitor)
 // Data accessors
 
 AST_Type *
-AST_Operation::return_type (void)
+AST_Operation::return_type ()
 {
   return this->pd_return_type;
 }
 
 AST_Operation::Flags
-AST_Operation::flags (void)
+AST_Operation::flags ()
 {
   return this->pd_flags;
 }
 
 UTL_StrList *
-AST_Operation::context (void)
+AST_Operation::context ()
 {
   return this->pd_context;
 }
 
 UTL_ExceptList *
-AST_Operation::exceptions (void)
+AST_Operation::exceptions ()
 {
   return this->pd_exceptions;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2(AST_Operation, AST_Decl, UTL_Scope)
-IMPL_NARROW_FROM_DECL(AST_Operation)
-IMPL_NARROW_FROM_SCOPE(AST_Operation)
+bool
+AST_Operation::annotatable () const
+{
+  return true;
+}

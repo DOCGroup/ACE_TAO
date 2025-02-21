@@ -3,8 +3,6 @@
 /**
  *  @file    FT_ReplicationManagerFaultAnalyzer.h
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *  This is the Replication Manager's implementation of a fault analyzer.
  *
@@ -27,12 +25,15 @@
 #include "orbsvcs/FT_CORBAC.h"
 
 // Forward declarations.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class T> class ACE_Unbounded_Set;
 template <class T> class ACE_Unbounded_Set_Iterator;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   ///////////////////////
   // Forward declarations
   class FT_ReplicationManager;
@@ -47,7 +48,6 @@ namespace TAO
   class FT_ReplicationManagerFaultAnalyzer
     : public ::TAO::FT_DefaultFaultAnalyzer
   {
-
   public:
     /**
     * Constructor.
@@ -62,7 +62,6 @@ namespace TAO
     virtual ~FT_ReplicationManagerFaultAnalyzer ();
 
   public:
-
     /**
     * Validate event type to make sure it is one we can handle.
     * @param event The structured fault event, as from the Fault Notifier.
@@ -96,7 +95,6 @@ namespace TAO
     /////////////////////////
     // Implementation methods
   protected:
-
     /// Helper functions for fault analysis.
 
     // Extract the type id from a CORBA any.
@@ -183,10 +181,10 @@ namespace TAO
     // Data Members
   private:
     FT_ReplicationManager * replication_manager_;
-
   };
-
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

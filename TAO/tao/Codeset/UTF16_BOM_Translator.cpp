@@ -1,5 +1,4 @@
-// $Id$
-
+// -*- C++ -*-
 // ============================================================================
 //    Manages the transformation between native and transmitted UTF-16. It is
 //    Required because transmitted UTF-16 may carry a byte order marker (BOM)
@@ -12,23 +11,20 @@
 //
 // ============================================================================
 
-#include "UTF16_BOM_Translator.h"
+#include "tao/Codeset/UTF16_BOM_Translator.h"
 #include "ace/OS_Memory.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Codeset,
-           TAO_UTF16_BOM_Translator,
-           "$Id$")
-
-
-  // ****************************************************************
-
+// ****************************************************************
 
 typedef ACE_CDR::UShort ACE_UTF16_T;
-static const size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
-static const unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
-static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
+static constexpr size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
+static constexpr ACE_CDR::ULong ACE_UL_UTF16_CODEPOINT_SIZE = static_cast<ACE_CDR::ULong>(ACE_UTF16_CODEPOINT_SIZE);
+static constexpr unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
+static constexpr unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////
 // TAO_UTF16_BOM_Translator implementation
@@ -37,13 +33,9 @@ TAO_UTF16_BOM_Translator::TAO_UTF16_BOM_Translator (bool forceBE)
   : forceBE_(forceBE)
 {
   if (TAO_debug_level > 1)
-    ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT ("(%P|%t)TAO_UTF16_BOM_Translator")
-               ACE_TEXT("forceBE %d\n"), this->forceBE_?1:0 ));
-}
-
-TAO_UTF16_BOM_Translator::~TAO_UTF16_BOM_Translator (void)
-{
+    TAOLIB_DEBUG((LM_DEBUG,
+               ACE_TEXT ("TAO (%P|%t) - UTF16_BOM_Translator: ")
+               ACE_TEXT("forceBE %d\n"), this->forceBE_ ? 1:0 ));
 }
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
@@ -167,6 +159,70 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
   x = 0;
   return 0;
 }
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_CDR::Boolean
+TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
+                                        std::wstring &x)
+{
+  ACE_CDR::ULong len;
+  if (!this->read_4 (cdr, &len))
+    return false;
+
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len > 0 && len <= cdr.length ())
+    {
+      if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
+          && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
+        {
+          len /= ACE_UTF16_CODEPOINT_SIZE;
+
+          try
+            {
+              x.resize (len);
+            }
+          catch (const std::bad_alloc&)
+            {
+              return false;
+            }
+
+          if (this->read_wchar_array_i (cdr, &x[0], len, 1))
+            {
+              // Since reading the array may have adjusted the length,
+              // shrink to fit
+              x.resize (len);
+              return true;
+            }
+        }
+      else
+        {
+          try
+            {
+              x.resize (len);
+            }
+          catch (const std::bad_alloc&)
+            {
+              return false;
+            }
+
+          if (this->read_wchar_array (cdr, &x[0], len))
+            {
+              x.resize (len-1); // drop terminating zero wchar read from stream
+              return true;
+            }
+        }
+    }
+  else if (len == 0)
+    {
+      x.clear ();
+      return true;
+    }
+  x.clear ();
+  return false;
+}
+#endif
 
 ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::read_wchar_array_i (ACE_InputCDR & cdr,
@@ -325,7 +381,8 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
                                          const ACE_CDR::WChar *x)
 {
   // we'll accept a null pointer but only for an empty string
-  ACE_ASSERT (x != 0 || len == 0);
+  ACE_ASSERT ((x != 0 || len == 0) &&
+              len < (ACE_UINT32_MAX - 1) / ACE_UL_UTF16_CODEPOINT_SIZE);
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
@@ -335,7 +392,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
 
       if (this->forceBE_ && cdr.byte_order())
         {
-          ACE_CDR::ULong l = (len+1) * ACE_UTF16_CODEPOINT_SIZE;
+          ACE_CDR::ULong l = (len+1) * ACE_UL_UTF16_CODEPOINT_SIZE;
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_SWAPPED) &&
               x != 0)
@@ -343,7 +400,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
         }
       else
         {
-          ACE_CDR::ULong l = (len+1) * ACE_UTF16_CODEPOINT_SIZE;
+          ACE_CDR::ULong l = (len+1) * ACE_UL_UTF16_CODEPOINT_SIZE;
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_CORRECT) &&
               x != 0)
@@ -354,14 +411,19 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
     {
       // pre GIOP 1.2:  include null terminator in length
       ACE_CDR::ULong l = len + 1;
+
       if (this->write_4 (cdr, &l))
-        if (x != 0)
-          return this->write_wchar_array_i (cdr, x, len + 1);
-        else
-          {
-            ACE_UTF16_T s = 0;
-            return this->write_2 (cdr,&s);
-          }
+        {
+          if (x != 0)
+            {
+              return this->write_wchar_array_i (cdr, x, len + 1);
+            }
+          else
+            {
+              ACE_UTF16_T s = 0;
+              return this->write_2 (cdr,&s);
+            }
+        }
     }
 
   return 0;
@@ -407,7 +469,6 @@ TAO_UTF16_BOM_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
       sb[i] = static_cast<ACE_UTF16_T> (x[i]);
     }
   return 1;
-
 }
 
 ACE_CDR::Boolean
@@ -434,3 +495,5 @@ TAO_UTF16_BOM_Translator::write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
     }
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

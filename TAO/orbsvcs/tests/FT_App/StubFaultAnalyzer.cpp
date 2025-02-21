@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "StubFaultAnalyzer.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
@@ -22,10 +19,10 @@ StubFaultAnalyzer::~StubFaultAnalyzer ()
 }
 
 
-int StubFaultAnalyzer::parse_args (int argc, char * argv[])
+int StubFaultAnalyzer::parse_args (int argc, ACE_TCHAR * argv[])
 {
   int optionError = 0;
-  ACE_Get_Opt get_opts (argc, argv, "o:r:d:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:r:d:n:"));
   int c;
   while ((c = get_opts ()) != -1)
   {
@@ -33,7 +30,7 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
     {
       case 'r':
       {
-        this->replicaIORs.push_back (get_opts.opt_arg ());
+        this->replicaIORs.push_back (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       }
       case 'd':
@@ -105,7 +102,7 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
 /**
  * Register this object as necessary
  */
-int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
@@ -115,7 +112,8 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   this->factory_ = ::FT::FaultDetectorFactory::_narrow(detector_obj.in ());
   if (CORBA::is_nil(this->factory_.in ()))
   {
-    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n", this->detector_ior_);
+    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n",
+                     ACE_TEXT_ALWAYS_CHAR (this->detector_ior_));
     result = -1;
   }
 
@@ -125,7 +123,8 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   this->notifier_ = ::FT::FaultNotifier::_narrow(not_obj.in ());
   if (CORBA::is_nil(this->notifier_.in ()))
   {
-    ACE_OS::fprintf (stderr, "Can't resolve Notifier IOR %s\n", this->notifier_ior_);
+    ACE_OS::fprintf (stderr, "Can't resolve Notifier IOR %s\n",
+                     ACE_TEXT_ALWAYS_CHAR (this->notifier_ior_));
     result = -1;
   }
 
@@ -134,16 +133,12 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // register fault consumers
   if (result == 0)
   {
-    result = this->faultConsumer_.init (orb, this->notifier_
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    result = this->faultConsumer_.init (orb, this->notifier_);
   }
 
   if (result == 0)
   {
-    result = this->batchConsumer_.init (orb, this->notifier_
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    result = this->batchConsumer_.init (orb, this->notifier_);
   }
 
   /////////////////////////
@@ -219,21 +214,19 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
           this->factory_->create_object (
             type_id.in(),
             criteria.in(),
-            factory_creation_id
-            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+            factory_creation_id);
         }
       }
     }
 
     if (result == 0 && this->readyFile_ != 0)
     {
-	  FILE *ready = ACE_OS::fopen (this->readyFile_, "w");
-	  if ( ready )
-	  {
-		ACE_OS::fprintf (ready, "ready\n");
-		ACE_OS::fclose (ready);
-	  }
+      FILE *ready = ACE_OS::fopen (this->readyFile_, "w");
+      if ( ready )
+      {
+        ACE_OS::fprintf (ready, "ready\n");
+        ACE_OS::fclose (ready);
+      }
     }
   }
   return result;
@@ -251,15 +244,15 @@ const char * StubFaultAnalyzer::identity () const
 /**
  * Clean house for process shut down.
  */
-int StubFaultAnalyzer::fini (ACE_ENV_SINGLE_ARG_DECL)
+int StubFaultAnalyzer::fini ()
 {
-  this->faultConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
-  this->batchConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->faultConsumer_.fini();
+  this->batchConsumer_.fini();
   return 0;
 }
 
 
-int StubFaultAnalyzer::idle(int & result ACE_ENV_ARG_DECL_NOT_USED)
+int StubFaultAnalyzer::idle(int & result)
 {
   ACE_UNUSED_ARG(result);
   int quit = 0;
@@ -270,13 +263,3 @@ int StubFaultAnalyzer::idle(int & result ACE_ENV_ARG_DECL_NOT_USED)
   }
   return quit;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Vector < const char * >;
-  template class ACE_Vector < FT::PullMonitorable_var > ;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Vector < const char * >
-# pragma instantiate ACE_Vector < FT::PullMonitorable_var >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

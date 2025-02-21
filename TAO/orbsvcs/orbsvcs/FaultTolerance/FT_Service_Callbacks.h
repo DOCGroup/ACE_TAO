@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  * @file FT_Service_Callbacks.h
- *
- * $Id$
  *
  * A concrete FT service callback implementation
  *
@@ -14,7 +14,7 @@
 #define TAO_FT_CALLBACKS_H
 #include /**/ "ace/pre.h"
 
-#include "FT_ClientORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,6 +22,8 @@
 
 #include "tao/Service_Callbacks.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 class TAO_MProfile;
@@ -40,10 +42,15 @@ class TAO_FT_ClientORB_Export TAO_FT_Service_Callbacks : public TAO_Service_Call
 {
 public:
   /// Constructor
-  TAO_FT_Service_Callbacks (TAO_ORB_Core *orb_core);
+  TAO_FT_Service_Callbacks (TAO_ORB_Core *);
 
   /// Dtor
-  virtual ~TAO_FT_Service_Callbacks (void);
+  virtual ~TAO_FT_Service_Callbacks ();
+
+  /// Select the profile from MProfile as the needs of the services
+  /// may be. Return the profile in @a pfile
+  virtual CORBA::Boolean select_profile (const TAO_MProfile &mprofile,
+                                         TAO_Profile *&pfile);
 
   /// Check whether <obj> is nil or not. FT spec suggests some
   /// extensions for a CORBA::is_nil () operation.
@@ -57,56 +64,36 @@ public:
   virtual CORBA::ULong hash_ft (TAO_Profile *p,
                                 CORBA::ULong m);
 
+
+  /// Verify condition for  permanent forward is given,
+  /// both parameters must provide group attributes.
+  virtual CORBA::Boolean is_permanent_forward_condition
+  (const CORBA::Object_ptr obj,
+   const TAO_Service_Context &service_context) const;
+
   /// Check whether we need to raise an exception or go for a
   /// reinvocaton.
   virtual TAO::Invocation_Status raise_comm_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-      ACE_ENV_ARG_DECL);
+      TAO_Profile *profile);
 
   /// Check whether we need to raise an exception or go for a
   /// reinvocaton.
   virtual TAO::Invocation_Status raise_transient_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-      ACE_ENV_ARG_DECL);
+      TAO_Profile *profile);
+
+  static TimeBase::TimeT now ();
 
 private:
-
   /// Check whether the right flags are available so that we can issue a
   /// restart.
   CORBA::Boolean restart_policy_check (IOP::ServiceContextList &service_list,
                                        const TAO_Profile *profile);
-
-private:
-  /// The ORB core in which we have been activated
-  TAO_ORB_Core *orb_core_;
-
-  /// Mutex to protect access to the profile that gets passed along
-  /// @@ Lock needs to be removed...
-  ACE_Lock* profile_lock_;
-
-  /**
-   * A flag that indicates that the primary has already failed. So any
-   * more calls to select_profile () should not reset the profile
-   * pointer to the primary.
-   */
-  CORBA::Boolean primary_failed_;
-
-  /**
-   * A flag to indicate that a secondary has been selected for
-   * invocation. We do this only once in the cycle. When we get there
-   * again we dont select a primary again and again.
-   */
-  CORBA::Boolean secondary_set_;
-
-  /// FT group component in the IOGR
-  FT::TagFTGroupTaggedComponent group_component_;
-
-  /// A flag to indicate whether we have extracted the
-  /// <group_component> before.
-  CORBA::Boolean group_component_flag_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /*TAO_FT_CALLBACKS_H*/

@@ -1,73 +1,68 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/Pluggable
-//
-// = FILENAME
-//    PP_Test_i.h
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PP_Test_i.h
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _PP_TEST_I_H
 #define _PP_TEST_I_H
 
 #include "PP_TestS.h"
 
+/**
+ * @class PP_Test_i
+ *
+ * @brief Illustrates how to integrate a servant with the generated
+ * skeleton.
+ *
+ * Implementation of the example at the servant side.
+ * Sends a no-op oneway and twoway request.
+ */
 class PP_Test_i : public POA_Pluggable_Test
 {
-  // = TITLE
-  //    Illustrates how to integrate a servant with the generated
-  //    skeleton.
-  //
-  // = DESCRIPTION
-  //    Implementation of the example at the servant side.
-  //    Sends a no-op oneway and twoway request.
 public:
+  /// Constructor
   PP_Test_i (CORBA::ORB_ptr orb);
-  // Constructor
 
-  ~PP_Test_i (void);
-  // Destructor
+  /// Destructor
+  ~PP_Test_i ();
 
-  virtual void send_oneway (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Test a oneway call.
+  /// Test a oneway call.
+  virtual void send_oneway ();
 
-  virtual void send_void (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Test a twoway call.
+  /// Test a twoway call.
+  virtual void send_void ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Shutdown routine.
+  /// Shutdown routine.
+  virtual void shutdown ();
 
 protected:
+  /// Keep a pointer to the ORB so we can shut it down.
   CORBA::ORB_var orb_;
-  // Keep a pointer to the ORB so we can shut it down.
 };
 
+/**
+ * @class Pluggable_Test_Factory_i:
+ *
+ * @brief Pluggable_Test_Factory_i
+ *
+ * Factory object returning the Pluggable_Test objrefs
+ */
 class Pluggable_Test_Factory_i: public POA_Pluggable_Test_Factory
 {
-  // = TITLE
-  //   Pluggable_Test_Factory_i
-  //
-  // = DESCRIPTION
-  //   Factory object returning the Pluggable_Test objrefs
 public:
+  /// Constructor.
   Pluggable_Test_Factory_i (CORBA::ORB_ptr orb);
-  // Constructor.
 
-  ~Pluggable_Test_Factory_i (void);
-  // Destructor.
+  /// Destructor.
+  ~Pluggable_Test_Factory_i ();
 
-  virtual Pluggable_Test_ptr make_pluggable_test (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Make a Pluggable Test object.
+  /// Make a Pluggable Test object.
+  virtual Pluggable_Test_ptr make_pluggable_test ();
 
 private:
   PP_Test_i my_pluggable_test_;

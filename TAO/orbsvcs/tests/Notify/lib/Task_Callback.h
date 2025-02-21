@@ -2,11 +2,7 @@
 /**
  *  @file Task_Callback.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_TASK_CALLBACK_H
@@ -26,12 +22,11 @@ class TAO_Notify_Tests_Periodic_Consumer;
  * @class TAO_Notify_Tests_Task_Callback
  *
  * @brief
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Task_Callback
 {
 public:
-  virtual ~TAO_Notify_Tests_Task_Callback (void);
+  virtual ~TAO_Notify_Tests_Task_Callback ();
   virtual void done (TAO_Notify_Tests_Periodic_Supplier* supplier) = 0;
   virtual void done (TAO_Notify_Tests_Periodic_Consumer* consumer) = 0;
 };

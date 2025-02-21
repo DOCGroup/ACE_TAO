@@ -1,24 +1,45 @@
-// $Id$
-
 # include "Collocation_Tester.h"
+#include "ace/Get_Opt.h"
 
-ACE_RCSID (tests, client, "$Id$")
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
-int main (int argc, char *argv[])
+int
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  int c;
 
-  ACE_TRY
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'k':
+        ior = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-k <ior> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates successful parsing of the command line
+  return 0;
+}
+
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+{
+  try
     {
       // ORB Initialization
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO");
 
-      CORBA::Object_var object;
+      if (parse_args (argc, argv) != 0)
+        return 1;
 
-      // Get The IOR from a file
-      object = orb->string_to_object ("file://s.ior" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = orb->string_to_object (ior);
 
       if (CORBA::is_nil (object.in ()))
         {
@@ -27,15 +48,13 @@ int main (int argc, char *argv[])
         }
 
       Collocation_Tester tester (object.in ());
-      tester.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      tester.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "CORBA Exception Raised");
+      ex._tao_print_exception ("CORBA Exception Raised");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

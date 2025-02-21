@@ -1,0 +1,53 @@
+
+//=============================================================================
+/**
+ *  @file     File.idl
+ *
+ *   A simple File Descriptor and File System IDL interface.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
+
+// IDL
+
+module File
+{
+  exception IOError
+    {
+      long error;
+    };
+
+  interface Descriptor
+    {
+      typedef sequence<octet> DataBuffer;
+
+      long write (in DataBuffer buffer)
+        raises (IOError);
+      // write buffer to File
+
+      DataBuffer read (in long num_bytes)
+        raises (IOError);
+      // read num_bytes to DataBuffer
+
+      unsigned long lseek (in unsigned long offset,
+                           in long whence)
+        raises (IOError);
+      // seek to offset in File from whence
+
+      void destroy ();
+      // destroy the descriptor
+    };
+
+  interface System
+    {
+      /// File open operation
+      Descriptor open (in string file_name,
+                       in long flags)
+        raises (IOError);
+
+      oneway void shutdown ();
+    };
+};

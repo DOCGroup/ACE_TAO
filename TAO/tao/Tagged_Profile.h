@@ -4,8 +4,6 @@
 /**
  *  @file   Tagged_Profile.h
  *
- *  $Id$
- *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
@@ -22,49 +20,64 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Object_KeyC.h"
+#include /**/ "tao/Versioned_Namespace.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace CSD
+  {
+    class FW_Server_Request_Wrapper;
+  }
+}
 
 /**
  * @class TAO_Tagged_Profile
  *
  * @brief This class is used to manipulate and access the target
  *        address field of a GIOP 1.2 request.
- *
  */
 class TAO_Export TAO_Tagged_Profile
 {
 public:
+  /// Declare FW_Server_Request_Wrapper a friend
+  /// This friendship makes the FW_Server_Request_Wrapper be able to
+  /// clone the TAO_Tagged_Profile data member in TAO_ServerRequest.
+  friend class TAO::CSD::FW_Server_Request_Wrapper;
+
   /// Ctor
   TAO_Tagged_Profile (TAO_ORB_Core *orb_core);
 
-  /// Unmarshall the GIOP 1.2 target address field.
+  /// Unmarshal the GIOP 1.2 target address field.
   CORBA::Boolean unmarshall_target_address (TAO_InputCDR &cdr);
 
   /// Unmarshals the received object key for GIOP 1.0/1.1
   CORBA::Boolean unmarshall_object_key (TAO_InputCDR &cdr);
 
   /// Return the object key
-  TAO::ObjectKey &object_key (void);
+  TAO::ObjectKey &object_key ();
 
   /// Save the object key
   void object_key (TAO::ObjectKey &object_key);
 
   /// Return a const object key
-  const TAO::ObjectKey &object_key (void) const;
+  const TAO::ObjectKey &object_key () const;
 
-  /// get the tagged_profile
-  const IOP::TaggedProfile &tagged_profile (void) const;
+  /// Get the tagged_profile
+  const IOP::TaggedProfile &tagged_profile () const;
 
   /// Get the profile index, that needs to be used in the
   /// sequnce of TaggedProfiles contained  IOP::IOR that is
-  /// receivedfrom the client.
-  CORBA::ULong profile_index (void) const;
+  /// received from the client.
+  CORBA::ULong profile_index () const;
 
   /// Accessor to the type_id contained in the IOP::IOR received from
   /// the client.
-  const ACE_CString &type_id (void) const;
+  const char* type_id () const;
 
-  CORBA::Short discriminator (void) const;
+  CORBA::Short discriminator () const;
 
 private:
   /// Extract the object key from the TaggedProfile and store it in
@@ -110,7 +123,7 @@ private:
    *        string type_id;
    *        sequence<TaggedProfile>   profiles;
    *      };
-   * The mapping for the type_id of type string is TAO_String_Manager
+   * The mapping for the type_id of type string is TAO::String_Manager
    * which does lot of bad things like allocation on construction and
    * a deallocation on destruction. This is bad along the critical
    * path. So we will store this nested structure ripped open with the
@@ -124,11 +137,13 @@ private:
 
   /// The type_id in the IOP::IOR in case we receive the
   /// GIOP::IORAddressingInfo information.
-  ACE_CString type_id_;
+  const char* type_id_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "tao/Tagged_Profile.i"
+# include "tao/Tagged_Profile.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

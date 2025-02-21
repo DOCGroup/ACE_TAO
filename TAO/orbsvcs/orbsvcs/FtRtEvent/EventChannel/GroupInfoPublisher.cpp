@@ -1,27 +1,18 @@
-// $Id$
-
-#include "GroupInfoPublisher.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 #include "../Utils/resolve_init.h"
-#include "IOGR_Maker.h"
-#include "Identification_Service.h"
-#include "FTEC_Become_Primary_Listener.h"
+#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "../Utils/Log.h"
 
-//#include "../Utils/log_obj_endpoints.h"
-
-ACE_RCSID (EventChannel,
-           GroupInfoPublisher,
-           "$Id$")
-
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 GroupInfoPublisherBase::GroupInfoPublisherBase()
-: info_(new Info)
+  : info_(new Info)
 {
   info_->primary = false;
 }
-
-
 
 void
 GroupInfoPublisherBase::subscribe(TAO_FTEC_Become_Primary_Listener* listener)
@@ -53,20 +44,16 @@ GroupInfoPublisherBase::successor() const
 }
 
 
-
 const GroupInfoPublisherBase::BackupList&
 GroupInfoPublisherBase::backups() const
 {
   return info_->backups;
 }
 
-
-
 GroupInfoPublisherBase::Info*
 GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
                                    int my_position,
-                                   CORBA::ULong object_group_ref_version
-                                   ACE_ENV_ARG_DECL)
+                                   CORBA::ULong object_group_ref_version)
 {
   Info_ptr result(new Info);
 
@@ -84,16 +71,12 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   }
 
   CORBA::Object_var obj =
-    IOGR_Maker::instance()->make_iogr(iors,object_group_ref_version
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    IOGR_Maker::instance()->make_iogr(iors,object_group_ref_version);
 
   result->iogr =
-    ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
 
-  ACE_DEBUG((LM_DEBUG, "In setup_info\n"));
+  ORBSVCS_DEBUG((LM_DEBUG, "In setup_info\n"));
   //log_obj_endpoints(result->iogr.in());
 
   /// check if sucessor changed
@@ -106,37 +89,31 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
       iors[i] = CORBA::Object::_duplicate(info_list[i+ my_position+1].ior.in());
     }
 
-    obj =  IOGR_Maker::instance()->merge_iors(iors
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    obj =  IOGR_Maker::instance()->merge_iors(iors);
 
     result->successor =
-      FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+      FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
   }
   /*
   else {
     result->successor = info_->successor;
   }
-  
+
   if (!CORBA::is_nil(result->successor.in()))
   {
     CORBA::PolicyList_var pols;
     result->successor->_validate_connection (pols.out ());
   }
   */
- 
+
   // update backups
   result->backups.length(successors_length);
   for (i = 0; i < successors_length; ++i)  {
     result->backups[i] =
       FtRtecEventChannelAdmin::EventChannel::_narrow(
-      info_list[i+ my_position+1].ior.in()
-      ACE_ENV_ARG_PARAMETER);
+      info_list[i+ my_position+1].ior.in());
     //CORBA::PolicyList_var pols;
     //result->backups[i]->_validate_connection (pols.out ());
-    ACE_CHECK_RETURN(0);
   }
   return result.release();
 }
@@ -152,27 +129,22 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
     }
 
     if (!CORBA::is_nil(naming_context_.in())) {
-      TAO_FTRTEC::Log(1, "Registering to the Name Service\n");
-      ACE_TRY_NEW_ENV {
+      TAO_FTRTEC::Log(1, ACE_TEXT("Registering to the Name Service\n"));
+      try{
         naming_context_->rebind(FTRTEC::Identification_Service::instance()->name(),
-          info->iogr.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          info->iogr.in());
       }
-      ACE_CATCHALL {
+      catch (...){
         /// there's nothing we can do if the naming service is down
       }
-      ACE_ENDTRY;
     }
   }
-  info_ = info;
+  info_ = std::move(info);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, GroupInfoPublisherBase,  TAO_SYNCH_MUTEX)
+ACE_END_VERSIONED_NAMESPACE_DECL
 
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
-template ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex> *ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex>::singleton_;
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

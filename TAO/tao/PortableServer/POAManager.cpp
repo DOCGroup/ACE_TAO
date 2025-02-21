@@ -1,43 +1,59 @@
-// $Id$
-
-#include "POAManager.h"
-#include "Root_POA.h"
-#include "poa_macros.h"
+#include "tao/PortableServer/POAManager.h"
+#include "tao/PortableServer/POAManagerFactory.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/poa_macros.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/IORInterceptor_Adapter.h"
 
 #if !defined (__ACE_INLINE__)
-# include "POAManager.i"
+# include "tao/PortableServer/POAManager.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           POAManager,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
+TAO_POA_Manager::TAO_POA_Manager (
+  TAO_Object_Adapter &object_adapter,
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  const char * id,
+  const ::CORBA::PolicyList &policies,
+  PortableServer::POAManagerFactory_ptr poa_manager_factory)
+#else
+  const char * id)
+#endif
   : state_ (PortableServer::POAManager::HOLDING),
     lock_ (object_adapter.lock ()),
     poa_collection_ (),
     object_adapter_ (object_adapter),
-    poa_manager_id_ (this->generate_manager_id ())
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+    id_ (id == 0 ? this->generate_manager_id () : CORBA::string_dup (id)),
+    poa_manager_factory_ (* dynamic_cast <TAO_POAManager_Factory*> (poa_manager_factory)),
+    policies_ (policies)
+{
+  poa_manager_factory_._add_ref ();
+}
+#else
+    id_ (id == 0 ? this->generate_manager_id () : CORBA::string_dup (id))
 {
 }
+#endif
 
-TAO_POA_Manager::~TAO_POA_Manager (void)
+
+TAO_POA_Manager::~TAO_POA_Manager ()
 {
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  poa_manager_factory_._remove_ref ();
+#endif
 }
 
-PortableInterceptor::AdapterManagerId
-TAO_POA_Manager::get_manager_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+char *
+TAO_POA_Manager::get_id ()
 {
-  return this->poa_manager_id_;
+  return CORBA::string_dup (this->id_.in ());
 }
 
 void
-TAO_POA_Manager::activate_i (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
+TAO_POA_Manager::activate_i ()
 {
   // This operation changes the state of the POA manager to active. If
   // issued while the POA manager is in the inactive state, the
@@ -46,40 +62,42 @@ TAO_POA_Manager::activate_i (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
-      ACE_THROW (PortableServer::POAManager::AdapterInactive ());
+      throw PortableServer::POAManager::AdapterInactive ();
     }
   else
     {
       this->state_ = PortableServer::POAManager::ACTIVE;
+      // Find the poas that applied the custom servant dispatching
+      // strategy to launch the dispatching threads.
+
+      for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
+       iterator != this->poa_collection_.end ();
+       ++iterator)
+        {
+          (*iterator)->poa_activated_hook ();
+        }
     }
 
-  this->adapter_manager_state_changed (this->state_
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->adapter_manager_state_changed (this->state_);
 }
 
 void
 TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
-                               CORBA::Boolean wait_for_completion
-                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
+                               CORBA::Boolean wait_for_completion)
 {
-  // Is the <wait_for_completion> semantics for this thread correct?
+  // Is the @a wait_for_completion semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                      wait_for_completion
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                      wait_for_completion);
 
   // This operation changes the state of the POA manager to
   // inactive. If issued while the POA manager is in the inactive
-  // state, the AdapterInactive exception is raised.  Entering the
+  // state, this operation has not effect.  Entering the
   // inactive state causes the associated POAs to reject requests that
   // have not begun to be executed as well as any new requests.
 
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
-      ACE_THROW (PortableServer::POAManager::AdapterInactive ());
+      return;
     }
   else
     {
@@ -117,10 +135,11 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
        ++iterator)
     {
       TAO_Root_POA *poa = *iterator;
-      poa->deactivate_all_objects_i (etherealize_objects,
-                                     wait_for_completion
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      // Notify the poas that applied the custom servant dispatching
+      // strategy to stop the dispatching threads.
+      poa->poa_deactivated_hook ();
+
+      poa->deactivate_all_objects_i (etherealize_objects, wait_for_completion);
     }
 
   // If the ORB::shutdown operation is called, it makes a call on
@@ -128,44 +147,33 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
   // manager known in the process; the wait_for_completion parameter
   // to deactivate will be the same as the similarly named parameter
   // of ORB::shutdown.
-
-  this->adapter_manager_state_changed (this->state_
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->adapter_manager_state_changed (this->state_);
 }
 
 void
-TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::State state
-                                                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::State state)
 {
-  PortableInterceptor::AdapterState adapter_state = state;
+  PortableInterceptor::AdapterState adapter_state =
+    static_cast<PortableInterceptor::AdapterState> (state);
 
   TAO_IORInterceptor_Adapter *ior_adapter =
     this->object_adapter_.orb_core ().ior_interceptor_adapter ();
 
   if (ior_adapter)
     {
-      ior_adapter->adapter_manager_state_changed (TAO_POA_Manager::poa_manager_id_,
-                                                  adapter_state
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ior_adapter->adapter_manager_state_changed (this->id_.in (),
+                                                  adapter_state);
     }
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 void
-TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
-                                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
+TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                      wait_for_completion
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                      wait_for_completion);
 
   // This operation changes the state of the POA manager to
   // holding. If issued while the POA manager is in the inactive
@@ -174,10 +182,9 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
   // requests.  Any requests that have been queued but have not
   // started executing will continue to be queued while in the holding
   // state.
-
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
-      ACE_THROW (PortableServer::POAManager::AdapterInactive ());
+      throw PortableServer::POAManager::AdapterInactive ();
     }
   else
     {
@@ -196,7 +203,6 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
   // and the current thread is in an invocation context dispatched by
   // some POA belonging to the same ORB as this POA the BAD_INV_ORDER
   // exception is raised and the state is not changed.
-
   if (wait_for_completion)
     {
       for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
@@ -204,28 +210,19 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
            ++iterator)
         {
           TAO_Root_POA *poa = *iterator;
-          poa->wait_for_completions (wait_for_completion
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          poa->wait_for_completions (wait_for_completion);
         }
     }
 
-  this->adapter_manager_state_changed (this->state_
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->adapter_manager_state_changed (this->state_);
 }
 
 void
-TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
-                                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
+TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion)
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                      wait_for_completion
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                      wait_for_completion);
 
   // This operation changes the state of the POA manager to
   // discarding. If issued while the POA manager is in the inactive
@@ -235,10 +232,9 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
   // have not started executing are discarded. When a request is
   // discarded, a TRANSIENT system exception is returned to the
   // client.
-
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
-      ACE_THROW (PortableServer::POAManager::AdapterInactive ());
+      throw PortableServer::POAManager::AdapterInactive ();
     }
   else
     {
@@ -266,14 +262,11 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
            ++iterator)
         {
           TAO_Root_POA *poa = *iterator;
-          poa->wait_for_completions (wait_for_completion
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          poa->wait_for_completions (wait_for_completion);
         }
     }
 
-  this->adapter_manager_state_changed (this->state_
-                                       ACE_ENV_ARG_PARAMETER);
+  this->adapter_manager_state_changed (this->state_);
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -281,16 +274,23 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
 int
 TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
 {
-  int result = this->poa_collection_.remove (poa);
+  int const result = this->poa_collection_.remove (poa);
 
+  // The #if really only needs to go around the
+  // "this->poa_manager_factory_.remove_poamanager (this);" line, but it's
+  // moved out as an optimization for now.  If additional non-CORBA/e and
+  // non-minimum POA code needs to go in that clause the #if would have to
+  // move back in.
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   if (result == 0)
     {
       if (this->poa_collection_.is_empty ())
         {
-          CORBA::release (this);
+          this->poa_manager_factory_.remove_poamanager (this);
         }
     }
-
+#endif
   return result;
 }
 
@@ -301,7 +301,7 @@ TAO_POA_Manager::register_poa (TAO_Root_POA *poa)
 }
 
 void
-TAO_POA_Manager::check_state (ACE_ENV_SINGLE_ARG_DECL)
+TAO_POA_Manager::check_state ()
 {
   if (state_ == PortableServer::POAManager::ACTIVE)
     {
@@ -321,12 +321,12 @@ TAO_POA_Manager::check_state (ACE_ENV_SINGLE_ARG_DECL)
       // should be re-issued. (Of course, an ORB may always reject a
       // request for other reasons and raise some other system
       // exception.)
-      ACE_THROW (
+      throw
         CORBA::TRANSIENT (
           CORBA::SystemException::_tao_minor_code (
             TAO_POA_DISCARDING,
             1),
-          CORBA::COMPLETED_NO));
+          CORBA::COMPLETED_NO);
     }
 
   if (state_ == PortableServer::POAManager::HOLDING)
@@ -342,11 +342,9 @@ TAO_POA_Manager::check_state (ACE_ENV_SINGLE_ARG_DECL)
 
       // Since there is no queuing in TAO, we immediately raise a
       // TRANSIENT exception.
-      ACE_THROW (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_POA_HOLDING,
-          1),
-        CORBA::COMPLETED_NO));
+      throw ::CORBA::TRANSIENT (
+                CORBA::SystemException::_tao_minor_code (TAO_POA_HOLDING, 1),
+                CORBA::COMPLETED_NO);
     }
 
   if (state_ == PortableServer::POAManager::INACTIVE)
@@ -362,17 +360,16 @@ TAO_POA_Manager::check_state (ACE_ENV_SINGLE_ARG_DECL)
       // co-resident in the same process, the ORB could raise the
       // OBJ_ADAPTER system exception, with standard minor code 1, to
       // indicate that the object implementation is unavailable.
-      ACE_THROW (CORBA::OBJ_ADAPTER (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_POA_INACTIVE,
-          1),
-        CORBA::COMPLETED_NO));
+      throw ::CORBA::OBJ_ADAPTER (
+                CORBA::SystemException::_tao_minor_code (TAO_POA_INACTIVE, 1),
+                CORBA::COMPLETED_NO);
     }
 }
 
 CORBA::ORB_ptr
-TAO_POA_Manager::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_POA_Manager::_get_orb ()
 {
   return CORBA::ORB::_duplicate (this->object_adapter_.orb_core ().orb ());
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef SERVER_I_H
 #define SERVER_I_H
 
@@ -17,27 +14,25 @@ class Server_i
 
 public:
   // = Constructor and destructor.
-  Server_i (void);
-  ~Server_i (void);
+  Server_i ();
+  ~Server_i ();
 
-  int init (int &argc, char **&argv ACE_ENV_ARG_DECL);
+  int init (int &argc, ACE_TCHAR **argv);
   // Initialize the server multicast.
 
 private:
-
   /// Sets the IOR_Multicast class to listen for multicast requests
   // for this server.
   int enable_multicast (const char *ior);
 
   /// Parse the command line arguments.
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
-
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   CORBA::ORB_var orb_;
@@ -52,7 +47,6 @@ private:
   CORBA::String_var mcast_address_;
   // Address of the multicast address where to listen for requests for */
   // the server. */
-
 
 };
 

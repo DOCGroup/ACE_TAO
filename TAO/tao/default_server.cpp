@@ -1,42 +1,24 @@
-// $Id$
-
 #include "tao/default_server.h"
-#include "ace/Log_Msg.h"
+#include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao,
-           default_server,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
+TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory ()
   : activate_server_connections_ (0),
     thread_flags_ (THR_BOUND | THR_DETACHED),
-    poa_lock_type_ (TAO_THREAD_LOCK),
     thread_per_connection_use_timeout_ (-1)
 {
 }
 
-TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory (void)
+TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory ()
 {
   // Perform appropriate cleanup.
 }
 
 int
-TAO_Default_Server_Strategy_Factory::enable_poa_locking (void)
-{
-  switch (this->poa_lock_type_)
-    {
-    case TAO_NULL_LOCK:
-      return 0;
-    case TAO_THREAD_LOCK:
-    default:
-      return 1;
-    }
-}
-
-int
-TAO_Default_Server_Strategy_Factory::activate_server_connections (void)
+TAO_Default_Server_Strategy_Factory::activate_server_connections ()
 {
   return this->activate_server_connections_;
 }
@@ -49,13 +31,13 @@ TAO_Default_Server_Strategy_Factory::thread_per_connection_timeout (ACE_Time_Val
 }
 
 int
-TAO_Default_Server_Strategy_Factory::server_connection_thread_flags (void)
+TAO_Default_Server_Strategy_Factory::server_connection_thread_flags ()
 {
   return this->thread_flags_;
 }
 
 int
-TAO_Default_Server_Strategy_Factory::server_connection_thread_count (void)
+TAO_Default_Server_Strategy_Factory::server_connection_thread_count ()
 {
   return 1;
 }
@@ -70,13 +52,13 @@ TAO_Default_Server_Strategy_Factory::server_connection_thread_count (void)
 void
 TAO_Default_Server_Strategy_Factory::tokenize (ACE_TCHAR* flag_string)
 {
-  ACE_TCHAR* lasts = 0;
+  ACE_TCHAR* lasts = nullptr;
 
   for (ACE_TCHAR* flag = ACE_OS::strtok_r (flag_string,
                                       ACE_TEXT("|"),
                                       &lasts);
-       flag != 0;
-       flag = ACE_OS::strtok_r (0,
+       flag != nullptr;
+       flag = ACE_OS::strtok_r (nullptr,
                                 ACE_TEXT("|"),
                                 &lasts))
     {
@@ -147,7 +129,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
             else
               {
                 this->thread_per_connection_use_timeout_ = 1;
-                int milliseconds = ACE_OS::atoi (name);
+                int const milliseconds = ACE_OS::atoi (name);
                 this->thread_per_connection_timeout_.set (0,
                                                           1000 * milliseconds);
               }
@@ -163,7 +145,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         if (curarg < argc)
           this->active_object_map_creation_parameters_.active_object_map_size_ =
             ACE_OS::strtoul (argv[curarg],
-                             0,
+                             nullptr,
                              10);
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -173,7 +155,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         if (curarg < argc)
           this->active_object_map_creation_parameters_.poa_map_size_ =
             ACE_OS::strtoul (argv[curarg],
-                             0,
+                             nullptr,
                              10);
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -323,24 +305,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 ACE_TEXT("-ORBPOALock")) == 0)
-      {
-        ++curarg;
-        if (curarg < argc)
-          {
-            ACE_TCHAR* name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    ACE_TEXT("thread")) == 0)
-              this->poa_lock_type_ = TAO_THREAD_LOCK;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT("null")) == 0)
-              this->poa_lock_type_ = TAO_NULL_LOCK;
-            else
-              this->report_option_value_error (ACE_TEXT("-ORBPOALock"), name);
-          }
-      }
-    else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBThreadFlags")) == 0)
       {
         ++curarg;
@@ -353,14 +317,14 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
       {
         // Can we assume there is an argument after the option?
         // ++curarg;
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT("Server_Strategy_Factory - ")
                     ACE_TEXT("unknown option <%s>\n"),
                     argv[curarg]));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("Server_Strategy_Factory - ")
                     ACE_TEXT("ignoring option <%s>\n"),
                     argv[curarg]));
@@ -374,7 +338,7 @@ TAO_Default_Server_Strategy_Factory::report_option_value_error (
                                  const ACE_TCHAR* option_name,
                                  const ACE_TCHAR* option_value)
 {
-  ACE_DEBUG((LM_DEBUG,
+  TAOLIB_DEBUG((LM_DEBUG,
              ACE_TEXT ("Server_Strategy_Factory - unknown argument")
              ACE_TEXT (" <%s> for <%s>\n"),
              option_value, option_name));
@@ -387,3 +351,6 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Server_Strategy_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+

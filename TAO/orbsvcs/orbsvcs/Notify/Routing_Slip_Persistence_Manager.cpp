@@ -1,12 +1,13 @@
-// $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
+#include "orbsvcs/Notify/Standard_Event_Persistence.h"
+#include "orbsvcs/Notify/Persistent_File_Allocator.h"
+#include "ace/Truncate.h"
 
-#include "Routing_Slip_Persistence_Manager.h"
-#include "Standard_Event_Persistence.h"
-#include "Persistent_File_Allocator.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 Routing_Slip_Persistence_Manager::Routing_Slip_Persistence_Manager(
   Standard_Event_Persistence_Factory* factory)
   : removed_(false)
@@ -40,7 +41,7 @@ Routing_Slip_Persistence_Manager::~Routing_Slip_Persistence_Manager()
 void
 Routing_Slip_Persistence_Manager::set_callback(Persistent_Callback* callback)
 {
-  ACE_GUARD(ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD(TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->callback_ = callback;
 }
 
@@ -70,7 +71,7 @@ Routing_Slip_Persistence_Manager::store_root()
   versioninfo.wr_ptr()[0] = 1; // Major version number
   versioninfo.wr_ptr()[1] = 0; // Minor version number
   versioninfo.wr_ptr(2);
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   result = this->build_chain(this->first_routing_slip_block_,
     this->routing_slip_header_, this->allocated_routing_slip_blocks_,
     versioninfo);
@@ -152,7 +153,7 @@ Routing_Slip_Persistence_Manager::load(
       }
       else
       {
-        ACE_ERROR((LM_ERROR,
+        ORBSVCS_ERROR((LM_ERROR,
           ACE_TEXT(
             "(%P|%t) Reloaded Persistent Event is missing event.\n")
           ));
@@ -201,7 +202,7 @@ Routing_Slip_Persistence_Manager::store(const ACE_Message_Block& event,
   const ACE_Message_Block& routing_slip)
 {
   bool result = false;
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   if (!this->removed_)
   {
     result = store_i(event, routing_slip);
@@ -213,7 +214,7 @@ bool
 Routing_Slip_Persistence_Manager::update(const ACE_Message_Block& routing_slip)
 {
   bool result = false;
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   // If we have not gotten the event yet or we have no allocator, fail
   if (!this->removed_)
   {
@@ -229,7 +230,7 @@ bool
 Routing_Slip_Persistence_Manager::remove()
 {
   bool result = false;
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   // Assert that this is in the dllist
   ACE_ASSERT(this->prev_manager_ != this);
   ACE_ASSERT(this->persisted());
@@ -275,7 +276,7 @@ Routing_Slip_Persistence_Manager::Block_Header::Block_Header(Header_Type type)
   , data_size(0)
 {
 }
-Routing_Slip_Persistence_Manager::Block_Header::~Block_Header (void)
+Routing_Slip_Persistence_Manager::Block_Header::~Block_Header ()
 {
 }
 
@@ -325,16 +326,16 @@ Routing_Slip_Persistence_Manager::Block_Header::put_header(
   data[pos++] = static_cast<unsigned char> ((serial_number >> 8) & 0xff);
   data[pos++] = static_cast<unsigned char> ((serial_number >> 0) & 0xff);
   // Store next_overflow
-  data[pos++] = next_overflow >> 24;
-  data[pos++] = (next_overflow >> 16) & 0xff;
-  data[pos++] = (next_overflow >> 8) & 0xff;
-  data[pos++] = next_overflow & 0xff;
+  data[pos++] = static_cast<unsigned char> (next_overflow >> 24);
+  data[pos++] = static_cast<unsigned char> ((next_overflow >> 16) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_overflow >> 8) & 0xff);
+  data[pos++] = static_cast<unsigned char> (next_overflow & 0xff);
   // Store header_type
-  data[pos++] = (header_type >> 8) & 0xff;
-  data[pos++] = header_type & 0xff;
+  data[pos++] = static_cast<unsigned char> ((header_type >> 8) & 0xff);
+  data[pos++] = static_cast<unsigned char> (header_type & 0xff);
   // Store data_size
-  data[pos++] = (data_size >> 8) & 0xff;
-  data[pos++] = data_size & 0xff;
+  data[pos++] = static_cast<unsigned char> ((data_size >> 8) & 0xff);
+  data[pos++] = static_cast<unsigned char> (data_size & 0xff);
 
   return pos;
 }
@@ -384,10 +385,10 @@ Routing_Slip_Persistence_Manager::Routing_Slip_Header::put_header(
 
   unsigned char* data = psb.data();
   // Store next_routing_slip_block
-  data[pos++] = next_routing_slip_block >> 24;
-  data[pos++] = (next_routing_slip_block >> 16) & 0xff;
-  data[pos++] = (next_routing_slip_block >> 8) & 0xff;
-  data[pos++] = next_routing_slip_block & 0xff;
+  data[pos++] = static_cast<unsigned char> (next_routing_slip_block >> 24);
+  data[pos++] = static_cast<unsigned char> ((next_routing_slip_block >> 16) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_routing_slip_block >> 8) & 0xff);
+  data[pos++] = static_cast<unsigned char> (next_routing_slip_block & 0xff);
   // Store serial_number
   data[pos++] = static_cast<unsigned char> ((next_serial_number >> 56) & 0xff);
   data[pos++] = static_cast<unsigned char> ((next_serial_number >> 48) & 0xff);
@@ -398,10 +399,10 @@ Routing_Slip_Persistence_Manager::Routing_Slip_Header::put_header(
   data[pos++] = static_cast<unsigned char> ((next_serial_number >> 8) & 0xff);
   data[pos++] = static_cast<unsigned char> ((next_serial_number >> 0) & 0xff);
   // Store event_block
-  data[pos++] = event_block >> 24;
-  data[pos++] = (event_block >> 16) & 0xff;
-  data[pos++] = (event_block >> 8) & 0xff;
-  data[pos++] = event_block & 0xff;
+  data[pos++] = static_cast<unsigned char> (event_block >> 24);
+  data[pos++] = static_cast<unsigned char> ((event_block >> 16) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((event_block >> 8) & 0xff);
+  data[pos++] = static_cast<unsigned char> (event_block & 0xff);
   return pos;
 }
 
@@ -444,11 +445,11 @@ Routing_Slip_Persistence_Manager::store_i(const ACE_Message_Block& event,
     if (this->first_event_block_ != 0)
     {
       this->routing_slip_header_.event_block =
-        this->first_event_block_->block_number();
+        ACE_Utils::truncate_cast<Block_Number> (this->first_event_block_->block_number());
     }
     else
     {
-      ACE_ERROR((LM_ERROR,
+      ORBSVCS_ERROR((LM_ERROR,
         ACE_TEXT(
           "(%P|%t) No Event is being stored with this routing slip.\n")
         ));
@@ -577,7 +578,8 @@ Routing_Slip_Persistence_Manager::build_chain(
     mblk = mblk->cont();
     remainder = this->fill_block(*first_block, pos, mblk, 0);
   }
-  first_header.data_size = data_size - remainder;
+  first_header.data_size =
+    static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (data_size - remainder);
   first_header.next_overflow = 0;
 
   Block_Header* prevhdr = &first_header;
@@ -591,10 +593,11 @@ Routing_Slip_Persistence_Manager::build_chain(
     Persistent_Storage_Block* curblk = this->allocator_->allocate();
     allocated_blocks.push(curblk->block_number());
     // Set the previous block's overflow "pointer" to us.
-    prevhdr->next_overflow = curblk->block_number();
+    prevhdr->next_overflow = ACE_Utils::truncate_cast<Block_Number> (curblk->block_number());
     prevhdr->put_header(*prevblk);
     pos = hdr->put_header(*curblk);
-    hdr->data_size = remainder;
+    hdr->data_size =
+      static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (remainder);
 
     size_t offset_into_msg = mblk->length() - remainder;
     remainder = this->fill_block(*curblk, pos, mblk, offset_into_msg);
@@ -605,13 +608,16 @@ Routing_Slip_Persistence_Manager::build_chain(
       remainder = this->fill_block(*curblk, pos, mblk, 0);
     }
 
-    hdr->data_size -= remainder;
+    hdr->data_size = hdr->data_size -
+      static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (remainder);
     if (prevblk != first_block)
     {
       // allocator obtains ownership, so write out and delete the header
       // only.
       result &= this->allocator_->write(prevblk);
-      delete prevhdr;
+
+      if (prevhdr != &first_header)
+        delete prevhdr;
     }
     prevblk = curblk;
     prevhdr = hdr;
@@ -620,7 +626,9 @@ Routing_Slip_Persistence_Manager::build_chain(
   {
     prevhdr->put_header(*prevblk);
     result &= this->allocator_->write(prevblk);
-    delete prevhdr;
+
+    if (prevhdr != &first_header)
+      delete prevhdr;
   }
   pos = first_header.put_header(
     *first_block);
@@ -692,7 +700,7 @@ Routing_Slip_Persistence_Manager::update_next_manager(
   Routing_Slip_Persistence_Manager* next)
 {
   bool result = false;
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   ACE_ASSERT(this->persisted());
   if (!this->removed_)
   {
@@ -796,10 +804,4 @@ Routing_Slip_Persistence_Manager::remove_from_dllist()
 
 } /* namespace TAO_Notify */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-//template class ACE_Node<size_t>;
-//template class ACE_Unbounded_Stack<size_t>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-//#pragma instantiate ACE_Node<size_t>
-//#pragma instantiate ACE_Unbounded_Stack<size_t>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

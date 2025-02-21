@@ -1,0 +1,3 @@
+project: notification_mc {
+  exename = Statistic
+}

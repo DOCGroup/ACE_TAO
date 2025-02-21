@@ -1,0 +1,17 @@
+interface Test
+{
+  // sleep for the said time, unless u head from
+  //  client earlier. If both sec and msec are 0,
+  //  sleep untill client wakes u up.
+  oneway void sleep (in long sec, in long msec);
+  void unsleep ();
+
+  // the server will ignore the message string.
+  // An interface to send variable length strings across the
+  //  physical layer.
+  oneway void dummy_one_way (in string msg);
+
+  void dummy_two_way ();
+
+  void shutdown ();
+};

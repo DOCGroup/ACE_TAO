@@ -1,10 +1,5 @@
 // -*- C++ -*-
-
 #include "Server_ORBInitializer.h"
-
-ACE_RCSID (ForwardRequest,
-           Server_ORBInitializer,
-           "$Id$")
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -12,24 +7,20 @@ ACE_RCSID (ForwardRequest,
 
 #include "tao/ORB_Constants.h"
 
-Server_ORBInitializer::Server_ORBInitializer (void)
+Server_ORBInitializer::Server_ORBInitializer ()
   : server_interceptor_ ()
 {
 }
 
 void
 Server_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
 Server_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
   PortableInterceptor::ServerRequestInterceptor_ptr interceptor;
   // Install the server request interceptor.
@@ -40,17 +31,14 @@ Server_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   this->server_interceptor_ = interceptor;
 
-  info->add_server_request_interceptor (interceptor
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (interceptor);
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr
-Server_ORBInitializer::server_interceptor (void)
+Server_ORBInitializer::server_interceptor ()
 {
   return
     PortableInterceptor::ServerRequestInterceptor::_duplicate (

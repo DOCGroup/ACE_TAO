@@ -1,0 +1,17 @@
+// -*- MPC -*-
+project (bug2936-exe): aceexe {
+  exename=server
+  Source_Files {
+    bug2936.cpp
+  }
+}
+
+project (bug2936-lib): taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  sharedname = bug2936
+  dynamicflags += BUG2936_BUILD_DLL
+
+  Source_Files {
+    DllORB.cpp
+    PersistentPOA.cpp
+  }
+}

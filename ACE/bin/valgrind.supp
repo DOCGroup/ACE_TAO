@@ -1,0 +1,357 @@
+
+{
+   <Suppress all the leaks in cc1plus>
+   Memcheck:Leak
+   fun:*
+   obj:*cc1plus
+}
+
+{
+   <Suppress all the leaks in g++>
+   Memcheck:Leak
+   fun:*
+   obj:*g++*
+}
+
+{
+   <Suppress all the leaks in perl>
+   Memcheck:Leak
+   ...
+   obj:*/bin/perl
+}
+
+{
+   <Suppress all the leaks in bash>
+   Memcheck:Leak
+   ...
+   obj:*/bin/bash
+}
+
+{
+   <Suppress all the leaks in grep>
+   Memcheck:Leak
+   ...
+   obj:*/bin/grep
+}
+
+{
+   <Suppress all the conditional jumps in grep>
+   Memcheck:Cond
+   ...
+   obj:*/bin/grep
+}
+
+{
+   <Suppress all the leaks in ps>
+   Memcheck:Leak
+   ...
+   obj:*/bin/ps
+}
+
+{
+   <Suppress all the leaks in ls>
+   Memcheck:Leak
+   ...
+   obj:*/bin/ls
+}
+
+# {
+#   <RTI warning>
+#   Memcheck:Param
+#   fun:*
+#   fun:NDDS_Transport_UDPv4_send
+#   fun:RTINetioSender_send
+# }
+
+{
+   <Invalid read>
+   Memcheck:Addr8
+   fun:__memcpy_ssse3_back
+}
+
+{
+   <IIOP error>
+   Memcheck:Addr8
+   fun:__strspn_sse42
+}
+
+{
+   <cleanup load>
+   Memcheck:Leak
+   fun:*
+   fun:*ACE_Log_Msg_Manager*get_lock*
+}
+
+{
+   <cleanup load>
+   Memcheck:Leak
+   ...
+   fun:*ACE_Log_Msg*close*
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:*
+   fun:*ACE_Log_Msg_Manager*init_backend*
+}
+
+{
+   <dlopen>
+   Memcheck:Leak
+   fun:calloc
+   fun:_dlerror_run
+}
+
+{
+  <dlopen2>
+   Memcheck:Leak
+   fun:malloc
+   fun:add_to_global
+   fun:dl_open_worker
+   fun:_dl_catch_error
+   fun:_dl_open
+   fun:dlopen_doit
+   fun:_dl_catch_error
+   fun:_dlerror_run
+}
+
+{
+   <dlopen3>
+   Memcheck:Leak
+   fun:calloc
+   fun:_dl_new_object
+   fun:_dl_map_object_from_fd
+   fun:_dl_map_object
+   fun:openaux
+   fun:_dl_catch_error
+   fun:_dl_map_object_deps
+   fun:dl_open_worker
+   fun:_dl_catch_error
+   fun:_dl_open
+   fun:dlopen_doit
+   fun:_dl_catch_error
+   fun:_dlerror_run
+}
+
+{
+  <dlopen4>
+   Memcheck:Leak
+   fun:malloc
+   fun:_dl_map_object_deps
+   fun:dl_open_worker
+   fun:_dl_catch_error
+   fun:_dl_open
+   fun:dlopen_doit
+   fun:_dl_catch_error
+   fun:_dlerror_run
+}
+
+{
+  <dlopen5>
+   Memcheck:Leak
+   fun:calloc
+   fun:_dl_check_map_versions
+   fun:dl_open_worker
+   fun:_dl_catch_error
+   fun:_dl_open
+   fun:dlopen_doit
+   fun:_dl_catch_error
+   fun:_dlerror_run
+}
+
+{
+   <dlopen6>
+   Memcheck:Leak
+   fun:malloc
+   fun:_dl_new_object
+   fun:_dl_map_object_from_fd
+   fun:_dl_map_object
+   fun:openaux
+   fun:_dl_catch_error
+   fun:_dl_map_object_deps
+   fun:dl_open_worker
+   fun:_dl_catch_error
+   fun:_dl_open
+   fun:dlopen_doit
+   fun:_dl_catch_error
+   fun:_dlerror_run
+}
+
+{
+   <dlopen7>
+   Memcheck:Leak
+   fun:calloc
+   fun:do_lookup_x
+   fun:_dl_lookup_symbol_x
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:open_path
+   fun:_dl_map_object
+   fun:openaux
+   fun:_dl_catch_error
+   fun:_dl_map_object_deps
+   fun:dl_open_worker
+   fun:_dl_catch_error
+   fun:_dl_open
+   fun:dlopen_doit
+   fun:_dl_catch_error
+   fun:_dlerror_run
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:_dl_close_worker
+   fun:_dl_close
+   fun:_dl_catch_error
+   fun:_dlerror_run
+   fun:dlclose
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   ...
+   fun:dl_open_worker
+   fun:_dl_catch_error
+   fun:_dl_open
+   fun:dlopen_doit
+   fun:_dl_catch_error
+   fun:_dlerror_run
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib64/libicuuc.so.42.0
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:calloc
+   fun:_dl_new_object
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:_dl_scope_free
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:_dl_lookup_symbol_x
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:_dl_new_object
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:open_path
+   fun:_dl_map_object
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:realloc
+   fun:_dl_new_object
+}
+
+{
+  <ndds>
+  Memcheck:Leak
+  fun:*
+  fun:*_dl_scope_free*
+}
+
+{
+  <ndds>
+  Memcheck:Leak
+  fun:*
+  fun:*_dl_new_object*
+}
+
+{
+  <ndds>
+  Memcheck:Leak
+  fun:*
+  fun:*NDDSConfigLogger*get_instance*
+}
+
+{
+  <ndds>
+  Memcheck:Leak
+  fun:*
+  fun:*register_or_unregister_typeI*
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:dl_open_worker
+}
+
+{
+   <see https://bugzilla.redhat.com/show_bug.cgi?id=755242>
+   Memcheck:Addr8
+   fun:wcscmp
+}
+
+{
+  <ndds>
+  Memcheck:Leak
+  ...
+  fun:PRESPsReaderQueue_initializeQueryConditionInventory
+}
+
+{
+   <uninitialized socket buffer>
+   Memcheck:Param
+   writev(vector[...])
+   fun:writev
+   fun:*ACE*sendv*
+   fun:*TAO_IIOP_Transport*send*
+   fun:*TAO_Transport*drain_queue_helper*
+   fun:*TAO_Transport*drain_queue_i*
+   fun:*TAO_Transport*send_synch_message_helper*
+   ...
+   fun:*TAO_IIOP_Transport*send_message*
+}
+
+{
+   <uninitialized buffer>
+   Memcheck:Value8
+   fun:*nibble2hex*
+   fun:*ORB*object_to_string*
+}
+
+{
+   <zlib Conditional jump or move depends on uninitialised value(s)>
+   Memcheck:Cond
+   obj:/usr/lib/libz.so.1.2.3
+   obj:/usr/lib/libz.so.1.2.3
+   fun:deflate
+   fun:compress2
+}

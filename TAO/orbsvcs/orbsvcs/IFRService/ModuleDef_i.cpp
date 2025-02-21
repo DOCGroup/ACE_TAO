@@ -1,15 +1,9 @@
-// $Id$
-
-#include "ModuleDef_i.h"
-#include "Repository_i.h"
+#include "orbsvcs/IFRService/ModuleDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           ModuleDef_i,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ModuleDef_i::TAO_ModuleDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -20,76 +14,63 @@ TAO_ModuleDef_i::TAO_ModuleDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ModuleDef_i::~TAO_ModuleDef_i (void)
+TAO_ModuleDef_i::~TAO_ModuleDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ModuleDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ModuleDef_i::def_kind ()
 {
   return CORBA::dk_Module;
 }
 
 void
-TAO_ModuleDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ModuleDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_i ();
 }
 
 void
-TAO_ModuleDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ModuleDef_i::destroy_i ()
 {
   // Destroy our members.
-  TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  TAO_Container_i::destroy_i ();
 
   // Destroy ourself.
-  TAO_Contained_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  TAO_Contained_i::destroy_i ();
 }
 
 CORBA::Contained::Description *
-TAO_ModuleDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ModuleDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_i ();
 }
 
 CORBA::Contained::Description *
-TAO_ModuleDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ModuleDef_i::describe_i ()
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   CORBA::Contained::Description_var retval = desc_ptr;
 
-  retval->kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  retval->kind = this->def_kind ();
 
   CORBA::ModuleDescription md;
 
-  md.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  md.name = this->name_i ();
 
-  md.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  md.id = this->id_i ();
 
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -98,10 +79,11 @@ TAO_ModuleDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 
   md.defined_in = container_id.c_str ();
 
-  md.version = this->version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  md.version = this->version_i ();
 
   retval->value <<= md;
 
   return retval._retn ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

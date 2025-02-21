@@ -1,8 +1,11 @@
-// $Id$
-#include "RTCP_Packet.h"
-#include "RTP.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/AV/RTCP_Packet.h"
+#include "orbsvcs/AV/RTP.h"
 
-RTCP_Packet::RTCP_Packet(void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+RTCP_Packet::RTCP_Packet()
 {
   this->chd_.ver_ = 2;
   this->chd_.count_ = 0;
@@ -17,24 +20,24 @@ RTCP_Packet::RTCP_Packet(char* buffer)
   this->chd_.ver_ = (buffer[0] & 0xC0) >> 6;
 
   if (this->chd_.ver_ != RTP_VERSION)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "RTCP_Packet::RTCP_Packet version incorrect"));
 
   this->chd_.pad_ = (buffer[0] & 0x20) >> 5;
   this->chd_.count_ = buffer[0] & 0x1F;
   this->chd_.pt_ = buffer[1];
-  this->chd_.length_ = ntohs(*(ACE_UINT16*)&buffer[2]);
+  this->chd_.length_ = ACE_NTOHS(*(ACE_UINT16*)&buffer[2]);
   this->packet_data_ = 0;
 }
 
-RTCP_Packet::~RTCP_Packet(void)
+RTCP_Packet::~RTCP_Packet()
 {
 }
 
 void
 RTCP_Packet::get_packet_data(char **buffer, ACE_UINT16 &length)
 {
-  length = this->packet_size();
+  length = static_cast<ACE_UINT16> (this->packet_size());
 
   // buiidPacket is defined for each child of RTCP_Packet
   // buildPacket creates a snapshot of the RTCP packet in the buffer pktData
@@ -63,7 +66,6 @@ RTCP_Packet::is_valid (char is_first)
     }
 
   return 1;
-
 }
 
 /*
@@ -92,18 +94,18 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
   // Optional - if there is a reason for leaving, store it.
   // The reason is padded with extra zeros because the packet must
   // end on an even 32-bit boundary.
-  memset(this->reason_, 0, sizeof(this->reason_));
+  ACE_OS::memset(this->reason_, 0, sizeof(this->reason_));
   if (text)
     {
       size_t text_length = ACE_OS::strlen(text);
-      memcpy(this->reason_, text, text_length);
+      ACE_OS::memcpy(this->reason_, text, text_length);
       this->reason_length_ = static_cast<unsigned char> (text_length);
     }
   else
     this->reason_length_ = 0;
 
   // Set the packet length
-  this->chd_.length_ = this->chd_.count_ + (this->reason_length_+1)/4;
+  this->chd_.length_ = static_cast<ACE_UINT16> (this->chd_.count_ + (this->reason_length_+1)/4);
   if ((this->reason_length_+1)%4)
     this->chd_.length_++;
 
@@ -128,21 +130,18 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
   // Store the source ids of the sources leaving the session
   for (j=0; j<this->chd_.count_; j++)
     {
-      this->ssrc_list_[j] = ntohl(*(ACE_UINT32*)&buffer[index]);
+      this->ssrc_list_[j] = ACE_NTOHL(*(ACE_UINT32*)&buffer[index]);
       index+=4;
     }
 
   // Optional - store the reason for leaving
-  unsigned int temp = this->chd_.length_; // Borland reports a warning on the
-                                          // following line with out this.
-  memset(this->reason_, 0, sizeof(this->reason_));
-  if (temp > this->chd_.count_)
+  ACE_OS::memset(this->reason_, 0, sizeof(this->reason_));
+  if (this->chd_.length_ > this->chd_.count_)
     {
       this->reason_length_ = buffer[index];
       index++;
-      memcpy(this->reason_, &buffer[index], this->reason_length_);
+      ACE_OS::memcpy(this->reason_, &buffer[index], this->reason_length_);
       index+=this->reason_length_;
-
     }
   else
     this->reason_length_ = 0;
@@ -156,7 +155,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
 
 //==============================================================================
 
-RTCP_BYE_Packet::~RTCP_BYE_Packet(void)
+RTCP_BYE_Packet::~RTCP_BYE_Packet()
 {
   if (this->ssrc_list_)
     delete []this->ssrc_list_;
@@ -167,9 +166,9 @@ RTCP_BYE_Packet::~RTCP_BYE_Packet(void)
 //==============================================================================
 
 unsigned int
-RTCP_BYE_Packet::packet_size(void)
+RTCP_BYE_Packet::packet_size()
 {
-  ACE_UINT16 size = (1+chd_.count_) * 4;
+  ACE_UINT16 size = static_cast<ACE_UINT16> ((1+chd_.count_) * 4);
 
   if (this->reason_length_ > 0)
     {
@@ -193,7 +192,7 @@ RTCP_BYE_Packet::ssrc_list(ACE_UINT32 **ssrc_list, unsigned char &length)
 //==============================================================================
 
 const char *
-RTCP_BYE_Packet::reason (void)
+RTCP_BYE_Packet::reason ()
 {
   ACE_CString reason = (const char *)this->reason_;
 
@@ -203,7 +202,7 @@ RTCP_BYE_Packet::reason (void)
 //==============================================================================
 
 void
-RTCP_BYE_Packet::build_packet(void)
+RTCP_BYE_Packet::build_packet()
 {
   unsigned int index;
   unsigned int i;
@@ -215,26 +214,26 @@ RTCP_BYE_Packet::build_packet(void)
            char[this->packet_size()]);
 
   index = 0;
-  this->packet_data_[index] = (this->chd_.ver_ << 6) |
-                              (this->chd_.pad_ << 5) |
-                               this->chd_.count_;
+  this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
+                                                 (this->chd_.pad_ << 5) |
+                                                 this->chd_.count_);
   index++;
   this->packet_data_[index] = this->chd_.pt_;
   index++;
-  *((ACE_UINT16*)&this->packet_data_[index]) = htons(this->chd_.length_);
+  *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(this->chd_.length_);
   index+=2;
 
   for (i=0; i<this->chd_.count_; i++)
     {
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ssrc_list_[i]);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_list_[i]);
       index+=4;
     }
 
-  if (this->reason_)
+  if (this->reason_length_)
     {
       this->packet_data_[index] = this->reason_length_;
       index++;
-      memcpy(&this->packet_data_[index], this->reason_, this->reason_length_);
+      ACE_OS::memcpy(&this->packet_data_[index], this->reason_, this->reason_length_);
       index += this->reason_length_;
       while (index < this->packet_size())
         {
@@ -245,15 +244,15 @@ RTCP_BYE_Packet::build_packet(void)
 }
 
 void
-RTCP_BYE_Packet::dump (void)
+RTCP_BYE_Packet::dump ()
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_BYE_Packet:: from ssrc(s) "));
   for (int i=0; i< this->ssrc_list_length_; i++)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "%u ",
                 this->ssrc_list_[i]));
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\n    Reason '%s'\n",
               this->reason_));
 }
@@ -282,7 +281,7 @@ RTCP_RR_Packet::RTCP_RR_Packet(ACE_UINT32 ssrc, RR_Block *blocks)
       block_ptr = block_ptr->next_;
     }
 
-  this->chd_.length_ = 1+6*this->chd_.count_; // + profile specific extensions ??
+  this->chd_.length_ = static_cast<ACE_UINT16> (1+6*(this->chd_.count_)); // + profile specific extensions ??
 
   this->packet_data_ = 0;
 }
@@ -300,7 +299,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
 
   // The common part of the header is initialized in the parent.
   i=4;
-  this->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+  this->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
   i+=4;
   for (unsigned int j=0; j<this->chd_.count_; j++)
     {
@@ -318,19 +317,19 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
         }
 
       local_block_ptr->next_ = 0;
-      local_block_ptr->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      ACE_UINT32 temp = ntohl(*(ACE_UINT32*)&buffer[i]);
+      ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       local_block_ptr->fraction_ = (temp&0xff000000) >> 24;
       local_block_ptr->lost_ = temp & 0x00ffffff;
       i+=4;
-      local_block_ptr->last_seq_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->last_seq_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->jitter_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->jitter_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->lsr_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->lsr_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->dlsr_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->dlsr_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
     }
 
@@ -341,7 +340,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
 
 //==============================================================================
 
-RTCP_RR_Packet::~RTCP_RR_Packet(void)
+RTCP_RR_Packet::~RTCP_RR_Packet()
 {
   RR_Block *prev;
 
@@ -362,16 +361,16 @@ RTCP_RR_Packet::~RTCP_RR_Packet(void)
 //==============================================================================
 
 unsigned int
-RTCP_RR_Packet::packet_size(void)
+RTCP_RR_Packet::packet_size()
 {
-    ACE_UINT16 size = (2+this->chd_.count_*6) * 4;
+    ACE_UINT16 size = static_cast<ACE_UINT16> ((2+this->chd_.count_*6) * 4);
     return size;
 }
 
 //==============================================================================
 
 void
-RTCP_RR_Packet::build_packet(void)
+RTCP_RR_Packet::build_packet()
 {
   int index;
   RR_Block *local_block_ptr;
@@ -383,59 +382,59 @@ RTCP_RR_Packet::build_packet(void)
            char [this->packet_size ()]);
 
   index = 0;
-  this->packet_data_[index] = (this->chd_.ver_ << 6) |
-                              (this->chd_.pad_ << 5) |
-                              this->chd_.count_;
+  this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
+                                                 (this->chd_.pad_ << 5) |
+                                                 this->chd_.count_);
   index++;
   this->packet_data_[index] = chd_.pt_;
   index++;
-  *((ACE_UINT16*)&this->packet_data_[index]) = htons(chd_.length_);
+  *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(chd_.length_);
   index+=2;
-  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ssrc_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_);
   index+=4;
 
   local_block_ptr = this->rr_;
   while (local_block_ptr)
     {
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->ssrc_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->ssrc_);
       index+=4;
-      ACE_UINT32 temp = htonl((local_block_ptr->fraction_&0xff) << 24) &
+      ACE_UINT32 temp = ACE_HTONL((local_block_ptr->fraction_&0xff) << 24) &
                               local_block_ptr->lost_;
       *((ACE_UINT32*)&this->packet_data_[index]) = temp;
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->last_seq_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->last_seq_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->jitter_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->jitter_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->lsr_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->lsr_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->dlsr_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->dlsr_);
       index+=4;
       local_block_ptr = local_block_ptr->next_;
     }
 }
 
 void
-RTCP_RR_Packet::dump (void)
+RTCP_RR_Packet::dump ()
 {
   RR_Block *b = this->rr_;
   int count = 1;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_RR_Packet:: from %u - %d rr blocks follow.\n",
               this->ssrc_,
               this->chd_.count_));
 
   while (b)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "  Block %d: ssrc %u; frac %u; lost %u; last seq %u\n",
                   count,
                   b->ssrc_,
                   b->fraction_,
                   b->lost_,
                   b->last_seq_));
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "           jitter %u; lsr %u; dlsr %u;\n",
                   b->jitter_,
                   b->lsr_,
@@ -447,7 +446,7 @@ RTCP_RR_Packet::dump (void)
 }
 
 
-RTCP_SDES_Packet::RTCP_SDES_Packet(void) :
+RTCP_SDES_Packet::RTCP_SDES_Packet() :
                    RTCP_Packet ()
 {
   this->chd_.pt_ = RTCP_PT_SDES;
@@ -490,7 +489,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
         }
       cp->next_ = 0;
       cp->item_ = 0;
-      cp->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      cp->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
 
       while (buffer[i]!=RTCP_SDES_END)
@@ -520,9 +519,9 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
               i++;
               ACE_NEW (ip->info_.standard_.data_,
                        char[ip->info_.standard_.length_+1]);
-              memcpy(ip->info_.standard_.data_,
-                     &buffer[i],
-                     ip->info_.standard_.length_);
+              ACE_OS::memcpy(ip->info_.standard_.data_,
+                             &buffer[i],
+                             ip->info_.standard_.length_);
               ip->info_.standard_.data_[ip->info_.standard_.length_] = 0;
               i+=ip->info_.standard_.length_;
             }
@@ -534,16 +533,16 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
               i++;
               ACE_NEW (ip->info_.priv_.name_,
                        char[ip->info_.priv_.name_length_+1]);
-              memcpy(ip->info_.priv_.name_,
-                     &buffer[i],
-                     ip->info_.priv_.name_length_);
+              ACE_OS::memcpy(ip->info_.priv_.name_,
+                             &buffer[i],
+                             ip->info_.priv_.name_length_);
               ip->info_.priv_.name_[ip->info_.priv_.name_length_] = 0;
               i+=ip->info_.priv_.name_length_;
               ACE_NEW (ip->info_.priv_.data_,
                        char[ip->info_.priv_.data_length_+1]);
-              memcpy(ip->info_.priv_.data_,
-                     &buffer[i],
-                     ip->info_.priv_.data_length_);
+              ACE_OS::memcpy(ip->info_.priv_.data_,
+                             &buffer[i],
+                             ip->info_.priv_.data_length_);
               ip->info_.priv_.data_[ip->info_.priv_.data_length_] = 0;
               i+=ip->info_.priv_.data_length_;
             }
@@ -560,7 +559,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
 //==============================================================================
 
-RTCP_SDES_Packet::~RTCP_SDES_Packet(void)
+RTCP_SDES_Packet::~RTCP_SDES_Packet()
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesChunk_t *cpprev;
@@ -601,7 +600,7 @@ RTCP_SDES_Packet::~RTCP_SDES_Packet(void)
 void
 RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
 {
-  sdesChunk_t *cp; // pointer to chunk
+  sdesChunk_t *cp = 0; // pointer to chunk
 
   // If this is the first chunk.
   if (chd_.count_ == 0)
@@ -688,22 +687,22 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
     }
 
   ip->type_ = type;
-  
+
   ip->info_.standard_.length_ = length;
 
   ACE_NEW (ip->info_.standard_.data_,
            char[length]);
 
-  memcpy(ip->info_.standard_.data_, data, length);
+  ACE_OS::memcpy(ip->info_.standard_.data_, data, length);
 }
 
 //==============================================================================
 
 void
 RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
-                                 unsigned char nameLength, 
+                                 unsigned char nameLength,
                                  const char* name,
-                                 unsigned char dataLength, 
+                                 unsigned char dataLength,
                                  const char* data)
 {
   sdesChunk_t *cp; // pointer to chunk
@@ -768,14 +767,14 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
   ACE_NEW (ip->info_.priv_.data_,
            char[dataLength]);
 
-  memcpy(ip->info_.priv_.name_, name, nameLength);
-  memcpy(ip->info_.priv_.data_, data, dataLength);
+  ACE_OS::memcpy(ip->info_.priv_.name_, name, nameLength);
+  ACE_OS::memcpy(ip->info_.priv_.data_, data, dataLength);
 }
 
 //==============================================================================
 
 unsigned int
-RTCP_SDES_Packet::packet_size(void)
+RTCP_SDES_Packet::packet_size()
 {
   int size;
   sdesChunk_t *cp; // pointer to chunk
@@ -806,7 +805,7 @@ RTCP_SDES_Packet::packet_size(void)
       cp = cp->next_;
     }
 
-  chd_.length_ = size/4 - 1;
+  chd_.length_ = static_cast<ACE_UINT16> (size/4 - 1);
 
   return size;
 }
@@ -814,7 +813,7 @@ RTCP_SDES_Packet::packet_size(void)
 //==============================================================================
 
 void
-RTCP_SDES_Packet::build_packet(void)
+RTCP_SDES_Packet::build_packet()
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item
@@ -827,17 +826,19 @@ RTCP_SDES_Packet::build_packet(void)
            char[this->packet_size()]);
 
   index = 0;
-  this->packet_data_[index] = (chd_.ver_ << 6) | (chd_.pad_ << 5) | chd_.count_;
+  this->packet_data_[index] = static_cast<char> ((chd_.ver_ << 6) |
+                                                 (chd_.pad_ << 5) |
+                                                  chd_.count_);
   index++;
   this->packet_data_[index] = chd_.pt_;
   index++;
-  *((ACE_UINT16*)&this->packet_data_[index]) = htons(chd_.length_);
+  *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(chd_.length_);
   index+=2;
 
   cp = this->chunk_;
   while (cp)
     {
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(cp->ssrc_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(cp->ssrc_);
       index+=4;
 
       ip = cp->item_;
@@ -895,21 +896,21 @@ RTCP_SDES_Packet::build_packet(void)
 }
 
 void
-RTCP_SDES_Packet::dump (void)
+RTCP_SDES_Packet::dump ()
 {
   sdesItem_t *ip;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_SDES_Packet:: "));
 
   if (this->num_chunks_ != 1)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Mixers not currently supported.\n"));
       return;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "from ssrc %u\n",
               this->chunk_->ssrc_));
 
@@ -930,42 +931,42 @@ RTCP_SDES_Packet::dump (void)
         case RTCP_SDES_END:
              break;
         case RTCP_SDES_CNAME:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    CNAME '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_NAME:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    NAME '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_EMAIL:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    EMAIL '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_PHONE:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    PHONE '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_LOC:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    LOC '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_TOOL:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    TOOL '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_NOTE:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    NOTE '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_PRIV:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    '%s' '%s'\n",
                          ip->info_.priv_.name_,
                          ip->info_.priv_.data_));
@@ -1013,7 +1014,7 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
       block_ptr = block_ptr->next_;
     }
 
-  this->chd_.length_ = 6 + 6*chd_.count_; //+profile specific extensions ??
+  this->chd_.length_ = static_cast<ACE_UINT16> (6 + 6*(chd_.count_)); //+profile specific extensions ??
 
   this->packet_data_ = 0;
 }
@@ -1031,17 +1032,17 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
 
   // The common part of the header is initialized in the parent.
   i=4;
-  this->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+  this->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->ntp_ts_msw_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+  this->ntp_ts_msw_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->ntp_ts_lsw_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+  this->ntp_ts_lsw_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->rtp_ts_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+  this->rtp_ts_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->psent_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+  this->psent_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->osent_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+  this->osent_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
   i+=4;
   for (unsigned int j=0; j<this->chd_.count_; j++)
     {
@@ -1059,19 +1060,19 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
         }
 
       local_block_ptr->next_ = 0;
-      local_block_ptr->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      ACE_UINT32 temp = ntohl(*(ACE_UINT32*)&buffer[i]);
+      ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       local_block_ptr->fraction_ = (temp&0xff000000) >> 24;
       local_block_ptr->lost_ = temp & 0x00ffffff;
       i+=4;
-      local_block_ptr->last_seq_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->last_seq_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->jitter_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->jitter_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->lsr_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->lsr_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->dlsr_ = ntohl(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->dlsr_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
     }
 
@@ -1082,7 +1083,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
 
 //==============================================================================
 
-RTCP_SR_Packet::~RTCP_SR_Packet(void)
+RTCP_SR_Packet::~RTCP_SR_Packet()
 {
   RR_Block *prev;
 
@@ -1102,9 +1103,9 @@ RTCP_SR_Packet::~RTCP_SR_Packet(void)
 
 //==============================================================================
 
-unsigned int RTCP_SR_Packet::packet_size (void)
+unsigned int RTCP_SR_Packet::packet_size ()
 {
-  ACE_UINT16 size  = (2+chd_.count_*6) * 4; // + profile specific extensions ?
+  ACE_UINT16 size  = static_cast<ACE_UINT16> ((2+chd_.count_*6) * 4); // + profile specific extensions ?
   size += 20; // the first line is the same as RR; 20 more bytes for SR
 
   return size;
@@ -1112,7 +1113,7 @@ unsigned int RTCP_SR_Packet::packet_size (void)
 
 //==============================================================================
 
-void RTCP_SR_Packet::build_packet(void)
+void RTCP_SR_Packet::build_packet()
 {
   int index = 0;
   RR_Block *local_block_ptr;
@@ -1123,76 +1124,78 @@ void RTCP_SR_Packet::build_packet(void)
   ACE_NEW (this->packet_data_,
            char[this->packet_size()]);
 
-  this->packet_data_[index] = (this->chd_.ver_ << 6) | (this->chd_.pad_ << 5) | this->chd_.count_;
+  this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
+                                                 (this->chd_.pad_ << 5) |
+                                                  this->chd_.count_);
   index++;
   this->packet_data_[index] = this->chd_.pt_;
   index++;
-  *((ACE_UINT16*)&this->packet_data_[index]) = htons(this->chd_.length_);
+  *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(this->chd_.length_);
   index+=2;
-  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ssrc_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ntp_ts_msw_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ntp_ts_msw_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ntp_ts_lsw_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ntp_ts_lsw_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->rtp_ts_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->rtp_ts_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->psent_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->psent_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->osent_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->osent_);
   index+=4;
 
   local_block_ptr = this->rr_;
   while (local_block_ptr)
     {
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->ssrc_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->ssrc_);
       index+=4;
-      ACE_UINT32 temp = htonl((local_block_ptr->fraction_&0xff) << 24) &
+      ACE_UINT32 temp = ACE_HTONL((local_block_ptr->fraction_&0xff) << 24) &
                               local_block_ptr->lost_;
       *((ACE_UINT32*)&this->packet_data_[index]) = temp;
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->last_seq_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->last_seq_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->jitter_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->jitter_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->lsr_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->lsr_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->dlsr_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->dlsr_);
       index+=4;
       local_block_ptr = local_block_ptr->next_;
     }
 }
 
 void
-RTCP_SR_Packet::dump (void)
+RTCP_SR_Packet::dump ()
 {
   RR_Block *b = this->rr_;
   int count = 1;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_SR_Packet:: from %u - %d rr blocks follow.\n",
               this->ssrc_,
               this->chd_.count_));
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "    NTP(sec) %u.%u; RTP ts %u\n",
               this->ntp_ts_msw_,
               this->ntp_ts_lsw_,
               this->rtp_ts_));
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "    packets sent %u; octets sent %u\n",
               this->psent_,
               this->osent_));
 
   while (b)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "  Block %d: ssrc %u; frac %u; lost %u; last seq %u\n",
                   count,
                   b->ssrc_,
                   b->fraction_,
                   b->lost_,
                   b->last_seq_));
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "           jitter %u; lsr %u; dlsr %u;\n",
                   b->jitter_,
                   b->lsr_,
@@ -1202,3 +1205,5 @@ RTCP_SR_Packet::dump (void)
       ++count;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

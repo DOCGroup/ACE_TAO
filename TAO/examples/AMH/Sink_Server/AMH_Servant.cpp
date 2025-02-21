@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "AMH_Servant.h"
 #include "Timer_Handler.h"
@@ -22,16 +19,16 @@ AMH_Servant::AMH_Servant (CORBA::ORB_ptr orb)
   this->reactor_ = orb->orb_core ()->reactor ();
 }
 
-AMH_Servant::~AMH_Servant (void)
+AMH_Servant::~AMH_Servant ()
 {
 }
 
 int
-AMH_Servant::parse_args (int &argc, char **argv)
+AMH_Servant::parse_args (int &argc, ACE_TCHAR **argv)
 {
   // *** To get correct behaviour, SET POSIXLY_CORECT=1 on Linux
   // systems!!! ***
-  ACE_Get_Opt get_opts (argc, argv, "s:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:"));
   int c;
 
   int count_argv = 0;
@@ -75,11 +72,9 @@ AMH_Servant::parse_args (int &argc, char **argv)
 
 void
 AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                          Test::Timestamp send_time
-                          ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                          Test::Timestamp send_time)
 {
-  ACE_TRY
+  try
     {
       // @@ Mayur, the below Timer_Handler instance will leak if your
       //    schedule_timer() call below fails (which you do not check
@@ -96,7 +91,6 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       long l = this->reactor_->schedule_timer (handler,
                                                (void *) 0,
                                                ACE_Time_Value (0, this->sleep_time_));
-      ACE_TRY_CHECK;
 
       if (l == -1) //schedule timer failed
         {
@@ -110,11 +104,10 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
           return;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Exception in start_test \n");
+      ex._tao_print_exception ("Exception in start_test\n");
     }
-  ACE_ENDTRY;
 
   // Footnote: This method is thread-safe:
   // - We have no common state (and don't alter any).
@@ -123,37 +116,29 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 }
 
 void
-AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
 {
-  ACE_TRY
+  try
     {
       _tao_rh->start_test ();
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Exception in start_test \n");
+      ex._tao_print_exception ("Exception in start_test\n");
     }
-  ACE_ENDTRY;
 }
 
 void
-AMH_Servant::end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+AMH_Servant::end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
 {
-  ACE_TRY
+  try
     {
       _tao_rh->end_test ();
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Exception in end_test \n");
+      ex._tao_print_exception ("Exception in end_test\n");
     }
-  ACE_ENDTRY;
 }
 
 

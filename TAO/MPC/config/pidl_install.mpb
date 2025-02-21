@@ -1,0 +1,8 @@
+project {
+  Define_Custom(PidlInstallWithoutBuilding) {
+    automatic = 0
+  }
+  specific {
+    custom_install += pidlinstallwithoutbuilding_files
+  }
+}

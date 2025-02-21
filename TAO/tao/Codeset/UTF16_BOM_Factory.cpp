@@ -1,38 +1,22 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tao
-//
-// = FILENAME
-//    UTF16_BOM_Factory.cpp
-//
-// = DESCRIPTION
-//    Loader for an instance of the UTF16_BOM_Translator.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UTF16_BOM_Factory.cpp
+ *
+ *  Loader for an instance of the UTF16_BOM_Translator.
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
 
-#include "UTF16_BOM_Factory.h"
+#include "tao/debug.h"
+#include "tao/Codeset/UTF16_BOM_Factory.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
-// Instantiate templates that allow discovery of this factory
-// via the Service Manager.
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_UTF16_BOM_Factory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_UTF16_BOM_Factory>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
                        ACE_TEXT ("UTF16_BOM_Factory"),
@@ -42,12 +26,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF16_BOM_Factory)
-
-TAO_UTF16_BOM_Factory::TAO_UTF16_BOM_Factory ()
-  : translator_ (0)
-  , forceBE_ (false)
-{
-}
 
 TAO_UTF16_BOM_Factory::~TAO_UTF16_BOM_Factory ()
 {
@@ -68,7 +46,7 @@ TAO_UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t)TAO_UTF16_BOM_Factory parameter error: %s\n")
         ACE_TEXT ("Usage: TAO_UTF16_BOM_Factory \"-forceBE\"\n")
         , argv[narg]
@@ -139,10 +117,12 @@ TAO_UTF16_BOM_Factory::create_translator () const
     if (this->translator_ == 0)
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_UTF16_BOM_Factory ")
-                    ACE_TEXT ("cannot create Translator\n")
+        TAOLIB_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - UTF16_BOM_Factory: ")
+                    ACE_TEXT ("Cannot create translator\n")
         ));
     }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

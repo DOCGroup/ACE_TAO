@@ -1,0 +1,9 @@
+// -*- MPC -*-
+project(Netsvcs_Client_Test) : aceexe {
+  avoids += ace_for_tao
+  exename = client_test
+  Source_Files {
+    main.cpp
+    Client_Test.cpp
+  }
+}

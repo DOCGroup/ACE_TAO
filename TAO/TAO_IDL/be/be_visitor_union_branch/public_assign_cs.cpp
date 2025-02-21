@@ -1,26 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    public_assign_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union Branch for the assignment operator
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    public_assign_cs.cpp
+ *
+ *  Visitor generating code for Union Branch for the assignment operator
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_union_branch,
-           public_assign_cs,
-           "$Id$")
+#include "union_branch.h"
 
 // **********************************************
 //  visitor for union_branch in the client stubs file generating the code for
@@ -36,7 +25,7 @@ be_visitor_union_branch_public_assign_cs (be_visitor_context *ctx)
 
 // destructor
 be_visitor_union_branch_public_assign_cs::
-~be_visitor_union_branch_public_assign_cs (void)
+~be_visitor_union_branch_public_assign_cs ()
 {
 }
 
@@ -50,32 +39,46 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
 
   *os << be_nl;
 
-  // This visitor is used when we are generating the copy ctor and
-  // assignment operator for the union.
-  // Individual assignment of the members takes place inside a case
-  // statement because the type of member assigned is based on the value
-  // of the discriminant
-  for (unsigned long i = 0;
-       i < node->label_list_length ();
-       ++i)
+  const be_visitor_union::BoolUnionBranch bub =
+    be_visitor_union::boolean_branch (node);
+
+  switch (bub)
     {
-      // check if we are printing the default case
-      if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
+    case be_visitor_union::BUB_NONE:
+      // This visitor is used when we are generating the copy ctor and
+      // assignment operator for the union.
+      // Individual assignment of the members takes place inside a case
+      // statement because the type of member assigned is based on the value
+      // of the discriminant
+      for (unsigned long i = 0;
+           i < node->label_list_length ();
+           ++i)
         {
-          *os << "default:" << be_nl;
+          // check if we are printing the default case
+          if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
+            {
+              *os << "default:" << be_nl;
+            }
+          else
+            {
+              *os << "case ";
+              node->gen_label_value (os, i);
+              *os << ":" << be_nl;
+            }
         }
-      else
-        {
-          *os << "case ";
-          node->gen_label_value (os, i);
-          *os << ":" << be_nl;
-        }
+
+      *os << "{" << be_idt_nl;
+      break;
+    case be_visitor_union::BUB_TRUE:
+    case be_visitor_union::BUB_FALSE:
+      *os << "if (" << (bub == be_visitor_union::BUB_TRUE ? "" : "!")
+          << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
+    default:
+      break;
     }
 
-  *os << "{" << be_idt_nl;
-
   // first generate the type information
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -97,8 +100,18 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
                          ), -1);
     }
 
-  *os << "}" << be_nl;
-  *os << "break;";
+  switch (bub)
+    {
+    case be_visitor_union::BUB_NONE:
+      *os << "}" << be_nl << "break;";
+      break;
+    case be_visitor_union::BUB_TRUE:
+    case be_visitor_union::BUB_FALSE:
+      *os << "}" << be_uidt_nl;
+      break;
+    case be_visitor_union::BUB_UNCONDITIONAL:
+      *os << be_nl;
+    }
 
   return 0;
 }
@@ -109,10 +122,10 @@ int
 be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -152,7 +165,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
 
       if (bt->is_nested ())
         {
-          be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+          be_decl *parent = dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
           ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                            bt->local_name ()->get_string ());
         }
@@ -181,11 +194,11 @@ int
 be_visitor_union_branch_public_assign_cs::visit_enum (be_enum *)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_assign_cs::"
@@ -209,10 +222,10 @@ int
 be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -235,11 +248,11 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  idl_bool bt_is_defined = node->is_defined ();
+  bool bt_is_defined = node->is_defined ();
 
-  *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+  *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
       << "{" << be_idt_nl
-      << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+      << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl;
@@ -266,7 +279,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
         }
 
       *os << "duplicate (" << be_idt << be_idt_nl
-          << "u.u_." << ub->local_name () << "_->ptr ()" << be_uidt_nl
+          << "u.u_." << ub->local_name () << "_->in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
@@ -289,10 +302,10 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
       *os << "duplicate (" << be_idt << be_idt_nl
           << "u.u_." << ub->local_name ()
-          << "_->ptr ()" << be_uidt_nl
+          << "_->in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")," << be_uidt_nl
-          << "*this" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
+          << "*this);" << be_uidt
+          << be_uidt << be_uidt_nl;
     }
 
   *os << "}" << be_uidt << be_uidt_nl;
@@ -306,10 +319,10 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
   )
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -332,11 +345,11 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  idl_bool bt_is_defined = node->full_definition ()->is_defined ();
+  bool bt_is_defined = node->full_definition ()->is_defined ();
 
-  *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+  *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
       << "{" << be_idt_nl
-      << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+      << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl;
@@ -363,7 +376,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
         }
 
       *os << "duplicate (" << be_idt << be_idt_nl
-          << "u.u_." << ub->local_name () << "_->ptr ()" << be_uidt_nl
+          << "u.u_." << ub->local_name () << "_->in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
@@ -386,10 +399,10 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
 
       *os << "duplicate (" << be_idt << be_idt_nl
           << "u.u_." << ub->local_name ()
-          << "_->ptr ()" << be_uidt_nl
+          << "_->in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")," << be_uidt_nl
-          << "*this" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
+          << "*this);" << be_uidt
+          << be_uidt << be_uidt_nl;
     }
 
   *os << "}" << be_uidt << be_uidt_nl;
@@ -421,10 +434,10 @@ int
 be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -447,9 +460,9 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+  *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
       << "{" << be_idt_nl
-      << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+      << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl;
@@ -457,7 +470,7 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
   // So the template will work with the macro.
   *os << "typedef "
       << bt->name () << "_var OBJECT_FIELD;" << be_nl;
-  *os << "CORBA::add_ref (u.u_." << ub->local_name ()
+  *os << "::CORBA::add_ref (u.u_." << ub->local_name ()
       << "_->ptr ());" << be_nl;
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
@@ -465,7 +478,7 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
       // We are generating the copy constructor.
       *os << "ACE_NEW (" << be_idt << be_idt_nl
           << "this->u_." << ub->local_name () << "_," << be_nl
-          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->ptr ())"
+          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->in ())"
           << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
@@ -474,10 +487,10 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
       // We are generating the assignment operator.
       *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
           << "this->u_." << ub->local_name () << "_," << be_nl
-          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->ptr ()),"
+          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->in ()),"
           << be_nl
-          << "*this" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
+          << "*this);" << be_uidt
+          << be_uidt << be_uidt_nl;
     }
 
   *os << "}" << be_uidt << be_uidt_nl;
@@ -491,10 +504,10 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
   )
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -522,16 +535,16 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
     {
     case AST_PredefinedType::PT_object:
       // So the template will work with the macro.
-      *os << "typedef CORBA::Object_var OBJECT_FIELD;" << be_nl;
+      *os << "typedef ::CORBA::Object_var OBJECT_FIELD;" << be_nl;
 
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
         {
           // We are generating the copy constructor.
           *os << "ACE_NEW (" << be_idt << be_idt_nl
               << "this->u_." << ub->local_name () << "_," << be_nl
-              << "OBJECT_FIELD (CORBA::Object"
+              << "OBJECT_FIELD (::CORBA::Object"
               << "::_duplicate (u.u_." << ub->local_name ()
-              << "_->ptr ()))" << be_uidt_nl
+              << "_->in ()))" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl;
         }
       else
@@ -539,11 +552,11 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
           // We are generating the assignment operator.
           *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
               << "this->u_." << ub->local_name () << "_," << be_nl
-              << "OBJECT_FIELD (CORBA::Object"
+              << "OBJECT_FIELD (::CORBA::Object"
               << "::_duplicate (u.u_." << ub->local_name ()
-              << "_->ptr ()))," << be_nl
-              << "*this" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl;
+              << "_->in ()))," << be_nl
+              << "*this);" << be_uidt
+              << be_uidt << be_uidt_nl;
         }
 
       break;
@@ -556,9 +569,9 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
     case AST_PredefinedType::PT_any:
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
         {
-          *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+          *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
               << "{" << be_idt_nl
-              << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+              << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
               << "}" << be_uidt_nl
               << "else" << be_idt_nl
               << "{" << be_idt_nl
@@ -571,9 +584,9 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
         }
       else
         {
-          *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+          *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
               << "{" << be_idt_nl
-              << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+              << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
               << "}" << be_uidt_nl
               << "else" << be_idt_nl
               << "{" << be_idt_nl
@@ -581,8 +594,8 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
               << "this->u_." << ub->local_name () << "_," << be_nl
               << bt->name () << " (*u.u_."
               << ub->local_name () << "_)," << be_nl
-              << "*this" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl
+              << "*this);" << be_uidt
+              << be_uidt << be_uidt_nl
               << "}" << be_uidt << be_uidt_nl;
         }
 
@@ -603,10 +616,10 @@ int
 be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -631,9 +644,9 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
     {
-      *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+      *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
           << "{" << be_idt_nl
-          << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+          << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "else" << be_idt_nl
           << "{" << be_idt_nl
@@ -646,9 +659,9 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
     }
   else
     {
-      *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+      *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
           << "{" << be_idt_nl
-          << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+          << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "else" << be_idt_nl
           << "{" << be_idt_nl
@@ -656,8 +669,8 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
           << "this->u_." << ub->local_name () << "_," << be_nl
           << bt->name () << " (*u.u_."
           << ub->local_name () << "_)," << be_nl
-          << "*this" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
+          << "*this);" << be_uidt
+          << be_uidt << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl;
     }
 
@@ -668,11 +681,11 @@ int
 be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
+    dynamic_cast<be_union*> (this->ctx_->scope ());
 
-  if (!ub || !bu)
+  if (ub == nullptr || bu == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_assign_cs::"
@@ -688,11 +701,11 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::string_dup (u.u_.";
+      *os << "::CORBA::string_dup (u.u_.";
     }
   else
     {
-      *os << "CORBA::wstring_dup (u.u_.";
+      *os << "::CORBA::wstring_dup (u.u_.";
     }
 
   *os << ub->local_name () << "_);" << be_uidt_nl;
@@ -704,10 +717,10 @@ int
 be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -734,9 +747,9 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
     {
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
         {
-          *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+          *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
               << "{" << be_idt_nl
-              << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+              << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
               << "}" << be_uidt_nl
               << "else" << be_idt_nl
               << "{" << be_idt_nl
@@ -749,9 +762,9 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
         }
       else
         {
-          *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+          *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
               << "{" << be_idt_nl
-              << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+              << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
               << "}" << be_uidt_nl
               << "else" << be_idt_nl
               << "{" << be_idt_nl
@@ -759,8 +772,8 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
               << "this->u_." << ub->local_name () << "_," << be_nl
               << bt->name () << " (*u.u_."
               << ub->local_name () << "_)," << be_nl
-              << "*this" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl
+              << "*this);" << be_uidt
+              << be_uidt << be_uidt_nl
               << "}" << be_uidt << be_uidt_nl;
         }
     }
@@ -771,6 +784,16 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
     }
 
   return 0;
+}
+
+int
+be_visitor_union_branch_public_assign_cs::visit_structure_fwd (
+  be_structure_fwd *node)
+{
+  be_structure *s =
+    dynamic_cast<be_structure*> (node->full_definition ());
+
+  return this->visit_structure (s);
 }
 
 int
@@ -791,7 +814,7 @@ be_visitor_union_branch_public_assign_cs::visit_typedef (be_typedef *node)
                          ), -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -799,10 +822,10 @@ int
 be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
 {
   be_union_branch *ub =
-    this->ctx_->be_node_as_union_branch (); // get union branch
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
-    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -827,9 +850,9 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
     {
-      *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+      *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
           << "{" << be_idt_nl
-          << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+          << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "else" << be_idt_nl
           << "{" << be_idt_nl
@@ -842,9 +865,9 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
     }
   else
     {
-      *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
+      *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
           << "{" << be_idt_nl
-          << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
+          << "this->u_." << ub->local_name () << "_ = nullptr;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "else" << be_idt_nl
           << "{" << be_idt_nl
@@ -852,10 +875,21 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
           << "this->u_." << ub->local_name () << "_," << be_nl
           << bt->name () << " (*u.u_."
           << ub->local_name () << "_)," << be_nl
-          << "*this" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
+          << "*this);" << be_uidt
+          << be_uidt << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl;
     }
 
   return 0;
 }
+
+int
+be_visitor_union_branch_public_assign_cs::visit_union_fwd (
+  be_union_fwd *node)
+{
+  be_union *u =
+    dynamic_cast<be_union*> (node->full_definition ());
+
+  return this->visit_union (u);
+}
+

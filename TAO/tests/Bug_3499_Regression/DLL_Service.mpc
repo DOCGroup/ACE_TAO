@@ -1,0 +1,42 @@
+project (Bug_3499_Regression) : aceexe {
+  exename = Bug_3499_Regression
+  Source_Files {
+    DLL_Service_Host.cpp
+  }
+}
+
+project (Bug_3499_Regression_ACE_DLL_Service) : acelib {
+  sharedname = Bug_3499_Regression_ACE_DLL_Service
+  dynamicflags += ACE_DLL_SERVICE_BUILD_DLL
+  dllout = .
+  libout = .
+  Source_Files {
+    DLL_Service.cpp
+  }
+  Header_Files {
+    DLL_Service_export.h
+  }
+  Inline_Files {
+
+  }
+}
+
+project (Bug3499Reg_ACE_DLL_TAO_Service) : portableserver, taolib {
+  sharedname = Bug_3499_Regression_ACE_DLL_TAO_Service
+
+  dynamicflags += ACE_DLL_TAO_SERVICE_BUILD_DLL
+
+  after += Bug_3499_Regression_ACE_DLL_Service
+  libs  += Bug_3499_Regression_ACE_DLL_Service
+
+  dllout = .
+  libout = .
+
+  Source_Files {
+    DLL_TAO_Service.cpp
+  }
+
+  Header_Files {
+    DLL_TAO_Service_export.h
+  }
+}

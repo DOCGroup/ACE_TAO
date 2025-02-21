@@ -4,11 +4,7 @@
 /**
  *  @file   Event_Supplier.h
  *
- *  $Id$
- *
  *  An example of using the Event_Logging_Service.
- *  
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
@@ -34,20 +30,18 @@ class Supplier : public POA_CosEventComm::PushSupplier
   //   This class is a supplier of events.
   //
 public:
-  Supplier (void);
+  Supplier ();
   // Constructor
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
   // = The CosEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
   // The skeleton methods.
 
 private:
-
   // = Data Members
   CORBA::ORB_var orb_;
   // The ORB that we use.
@@ -60,7 +54,6 @@ private:
 
   CosEventChannelAdmin::ProxyPushConsumer_var consumer_;
   // The proxy that we are connected to.
-
 };
 
 #endif /* EVENT_SUPPLIER_H */

@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  * @file Trader.h
- *
- * $Id$
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Seth Widoff <sbw1@cs.wustl.edu>
@@ -17,7 +15,7 @@
 #define TAO_TRADER_BASE_H
 #include /**/ "ace/pre.h"
 
-#include "Interpreter_Utils.h"
+#include "orbsvcs/Trader/Interpreter_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,6 +33,8 @@
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward Declaration.
 class TAO_Trader_Base;
 
@@ -51,7 +51,6 @@ class TAO_Trader_Base;
 class TAO_Trading_Serv_Export TAO_Trader_Factory
 {
 public:
-
   typedef TAO_Trader_Base TAO_TRADER;
 
   /**
@@ -77,17 +76,15 @@ public:
   static TAO_TRADER* create_trader (int& argc, ACE_TCHAR** argv);
 
 protected:
-
   TAO_Trader_Factory (int& argc, ACE_TCHAR** argv);
 
 private:
-
   enum Conformance { TAO_TRADER_QUERY,
                      TAO_TRADER_SIMPLE,
                      TAO_TRADER_STANDALONE,
                      TAO_TRADER_LINKED };
 
-  TAO_TRADER* manufacture_trader (void);
+  TAO_TRADER* manufacture_trader ();
 
   void parse_args (int& argc, ACE_TCHAR** argv);
 
@@ -122,20 +119,12 @@ private:
  * Class used to remove the circular dependencies between the
  * Attribute classes and the Trader class.
  */
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x572)
-// Work around Borland unresolved symbol errors concerning the
-// out-of-line virtual destructor.  The virtual destructor should
-// not be inlined, nor should we have to export TAO_Lockable from the
-// DSO/DLL.  *sigh*
 class TAO_Trading_Serv_Export TAO_Lockable
-#else
-class TAO_Lockable
-#endif  /* __BORLANDC__ < 0x572 */
 {
 public:
-  virtual ~TAO_Lockable (void);
+  virtual ~TAO_Lockable ();
 
-  virtual ACE_Lock& lock (void) = 0;
+  virtual ACE_Lock& lock () = 0;
 };
 
 
@@ -151,27 +140,25 @@ public:
 class TAO_Trading_Serv_Export TAO_Support_Attributes_i
 {
 public:
-  // = Initialization and termination methods.
   TAO_Support_Attributes_i (TAO_Lockable &locker);
   ~TAO_Support_Attributes_i ();
 
   // = Accessor methods.
-  CORBA::Boolean supports_modifiable_properties (void) const;
+  CORBA::Boolean supports_modifiable_properties () const;
   void supports_modifiable_properties (CORBA::Boolean);
 
-  CORBA::Boolean supports_dynamic_properties (void) const;
+  CORBA::Boolean supports_dynamic_properties () const;
   void supports_dynamic_properties (CORBA::Boolean);
 
-  CORBA::Boolean supports_proxy_offers (void) const;
+  CORBA::Boolean supports_proxy_offers () const;
   void supports_proxy_offers (CORBA::Boolean);
 
-  CosTrading::TypeRepository_ptr type_repos (void) const;
+  CosTrading::TypeRepository_ptr type_repos () const;
   void type_repos (CosTrading::TypeRepository_ptr);
 
-  CosTradingRepos::ServiceTypeRepository_ptr service_type_repos (void) const;
+  CosTradingRepos::ServiceTypeRepository_ptr service_type_repos () const;
 
 private:
-
   /// A reference to the trader (needed for obtaining the lock.)
   TAO_Lockable &locker_;
 
@@ -203,18 +190,15 @@ private:
 class TAO_Trading_Serv_Export TAO_Link_Attributes_i
 {
 public:
-  // = Initialization and termination methods.
-
   TAO_Link_Attributes_i (TAO_Lockable &locker);
   ~TAO_Link_Attributes_i ();
 
   // = Accessor methods.
 
-  CosTrading::FollowOption max_link_follow_policy (void) const;
+  CosTrading::FollowOption max_link_follow_policy () const;
   void  max_link_follow_policy (CosTrading::FollowOption);
 
 private:
-
   /// A reference to the trader (needed for obtaining the lock.)
   TAO_Lockable &locker_;
 
@@ -234,49 +218,45 @@ private:
 class TAO_Trading_Serv_Export TAO_Import_Attributes_i
 {
 public:
-  // = Initialization and termination methods.
-
   TAO_Import_Attributes_i (TAO_Lockable &locker);
-
-  ~TAO_Import_Attributes_i (void);
+  ~TAO_Import_Attributes_i ();
 
   // = Accessor methods.
 
-  CORBA::ULong def_search_card (void) const;
+  CORBA::ULong def_search_card () const;
   void def_search_card (CORBA::ULong);
 
-  CORBA::ULong max_search_card (void) const;
+  CORBA::ULong max_search_card () const;
   void max_search_card (CORBA::ULong);
 
-  CORBA::ULong def_match_card (void) const;
+  CORBA::ULong def_match_card () const;
   void def_match_card (CORBA::ULong);
 
-  CORBA::ULong max_match_card (void) const;
+  CORBA::ULong max_match_card () const;
   void max_match_card (CORBA::ULong);
 
-  CORBA::ULong def_return_card (void) const;
+  CORBA::ULong def_return_card () const;
   void def_return_card (CORBA::ULong);
 
-  CORBA::ULong max_return_card (void) const;
+  CORBA::ULong max_return_card () const;
   void max_return_card (CORBA::ULong);
 
-  CORBA::ULong max_list (void) const;
+  CORBA::ULong max_list () const;
   void max_list (CORBA::ULong);
 
-  CORBA::ULong def_hop_count (void) const;
+  CORBA::ULong def_hop_count () const;
   void def_hop_count (CORBA::ULong);
 
-  CORBA::ULong max_hop_count (void) const;
+  CORBA::ULong max_hop_count () const;
   void max_hop_count (CORBA::ULong);
 
-  CosTrading::FollowOption def_follow_policy (void) const;
+  CosTrading::FollowOption def_follow_policy () const;
   void def_follow_policy (CosTrading::FollowOption);
 
-  CosTrading::FollowOption max_follow_policy (void) const;
+  CosTrading::FollowOption max_follow_policy () const;
   void max_follow_policy (CosTrading::FollowOption);
 
 private:
-
   TAO_Lockable &locker_;
 
   /// Upper bound of offers to be searched if <search_card>
@@ -332,50 +312,45 @@ private:
 class TAO_Trading_Serv_Export TAO_Trading_Components_i
 {
 public:
-
-  // = Initialization and termination methods.
   TAO_Trading_Components_i (TAO_Lockable &locker);
-  ~TAO_Trading_Components_i (void);
-
-  // = CosTrading::TraderComponents methods.
+  ~TAO_Trading_Components_i ();
 
   /// Returns an object reference to the Lookup interface of the trader.
   /// Returns nil if the trader does not support Lookup interface.
-  CosTrading::Lookup_ptr lookup_if (void) const;
+  CosTrading::Lookup_ptr lookup_if () const;
 
   /// Set the reference to the Lookup interface.
   void lookup_if (CosTrading::Lookup_ptr);
 
   /// Returns object reference for the Register interface of the trader.
   /// Returns nil if the trader does not support Register interface.
-  CosTrading::Register_ptr register_if (void) const;
+  CosTrading::Register_ptr register_if () const;
 
   /// Set the reference to the Register interface of the trader.
   void register_if (CosTrading::Register_ptr);
 
   /// Returns object reference for the Link interface of the trader.
   /// Returns nil if the trader does not support Link interface.
-  CosTrading::Link_ptr link_if (void) const;
+  CosTrading::Link_ptr link_if () const;
 
   /// Set the reference to the Link interface of the trader.
   void link_if (CosTrading::Link_ptr);
 
   /// Returns object reference to the Proxy interface of the trader.
   /// Returns nil if the trader does not support Proxy interface.
-  CosTrading::Proxy_ptr proxy_if (void) const;
+  CosTrading::Proxy_ptr proxy_if () const;
 
   /// Set the reference to the Proxy interface of the trader.
   void proxy_if (CosTrading::Proxy_ptr);
 
   /// Returns object reference for the Admin interface of the trader.
   /// Returns nil if the trader does not support Admin interface.
-  CosTrading::Admin_ptr admin_if (void) const;
+  CosTrading::Admin_ptr admin_if () const;
 
   /// Set the reference to the Admin interface of the trader.
   void admin_if (CosTrading::Admin_ptr);
 
 private:
-
   TAO_Lockable &locker_;
 
   CosTrading::Lookup_var lookup_;
@@ -406,7 +381,6 @@ private:
 class TAO_Trading_Serv_Export TAO_Trader_Base : public TAO_Lockable
 {
 public:
-
   enum Trader_Components
   {
     LOOKUP = 0x001,
@@ -416,25 +390,25 @@ public:
     ADMIN = 0x010
   };
 
-  virtual ~TAO_Trader_Base (void);
+  virtual ~TAO_Trader_Base ();
 
   // = Accessors for objects that manage trader's configuration.
 
-  TAO_Trading_Components_i &trading_components (void);
+  TAO_Trading_Components_i &trading_components ();
 
-  const TAO_Trading_Components_i &trading_components (void) const;
+  const TAO_Trading_Components_i &trading_components () const;
 
-  TAO_Import_Attributes_i &import_attributes (void);
+  TAO_Import_Attributes_i &import_attributes ();
 
-  const TAO_Import_Attributes_i &import_attributes (void) const;
+  const TAO_Import_Attributes_i &import_attributes () const;
 
-  TAO_Support_Attributes_i &support_attributes (void);
+  TAO_Support_Attributes_i &support_attributes ();
 
-  const TAO_Support_Attributes_i &support_attributes (void) const;
+  const TAO_Support_Attributes_i &support_attributes () const;
 
-  TAO_Link_Attributes_i &link_attributes (void);
+  TAO_Link_Attributes_i &link_attributes ();
 
-  const TAO_Link_Attributes_i &link_attributes (void) const;
+  const TAO_Link_Attributes_i &link_attributes () const;
 
   // = Accessor for trader's lock.
 
@@ -479,15 +453,12 @@ protected:
   TAO_Link_Attributes_i link_attributes_;
 
  protected:
-
   /// Implemented.
-  TAO_Trader_Base (void);
+  TAO_Trader_Base ();
 
  private:
-
-  /// Unimplemented.
-  TAO_Trader_Base (const TAO_Trader_Base& TAO_Trader_Base);
-  TAO_Trader_Base& operator= (const TAO_Trader_Base&);
+  TAO_Trader_Base (const TAO_Trader_Base& TAO_Trader_Base) = delete;
+  TAO_Trader_Base& operator= (const TAO_Trader_Base&) = delete;
 };
 
 
@@ -496,7 +467,7 @@ protected:
 // hard time with it like that when compiling TAO_Service_Offer_Iterator.
 typedef ACE_Hash_Map_Manager_Ex<CORBA::ULong, CosTrading::Offer*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex> TAO_Offer_Map;
 
-typedef ACE_Unbounded_Set<TAO_String_Hash_Key> TAO_String_Set;
+typedef ACE_Unbounded_Set<CORBA::String_var> TAO_String_Set;
 typedef ACE_Unbounded_Queue<char*> TAO_String_Queue;
 
 // = Helpful operators.
@@ -512,6 +483,8 @@ operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 bool
 operator== (const CosTrading::Admin::OctetSeq& left,
             const CosTrading::Admin::OctetSeq& right);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

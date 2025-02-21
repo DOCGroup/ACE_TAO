@@ -1,4 +1,3 @@
-// $Id$
 // wxNamingObject.cpp
 
 #include "pch.h"

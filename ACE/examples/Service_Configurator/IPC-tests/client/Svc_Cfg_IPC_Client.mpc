@@ -1,0 +1,61 @@
+// -*- MPC -*-
+project(*loc dgram) : aceexe, avoids_ace_for_tao {
+  exename = local_dgram_test
+  Source_Files {
+    local_dgram_client_test.cpp
+  }
+}
+project(*loc fifo) : aceexe, avoids_ace_for_tao {
+  exename = local_fifo_test
+  Source_Files {
+    local_fifo_client_test.cpp
+  }
+}
+project(*loc pipe) : aceexe, avoids_ace_for_tao {
+  exename = local_pipe_test
+  Source_Files {
+    local_pipe_client_test.cpp
+  }
+}
+project(*loc spipe) : aceexe {
+  exename = local_spipe_test
+  Source_Files {
+    local_spipe_client_test.cpp
+  }
+}
+project(*loc stream) : aceexe, avoids_ace_for_tao {
+  exename = local_stream_test
+  Source_Files {
+    local_stream_client_test.cpp
+  }
+}
+project(*rem dgram) : aceexe, avoids_ace_for_tao {
+  exename = remote_dgram_test
+  Source_Files {
+    remote_dgram_client_test.cpp
+  }
+}
+project(*rem svc dir) : aceexe {
+  exename = remote_service_directory_test
+  Source_Files {
+    remote_service_directory_test.cpp
+  }
+}
+project(*rem stream) : aceexe, avoids_ace_for_tao {
+  exename = remote_stream_test
+  Source_Files {
+    remote_stream_client_test.cpp
+  }
+}
+project(*rem thr_stream) : aceexe {
+  exename = remote_thr_stream_test
+  Source_Files {
+    remote_thr_stream_client_test.cpp
+  }
+}
+project(*bcast) : aceexe, avoids_ace_for_tao {
+  exename = remote_broadcast_test
+  Source_Files {
+    broadcast_client_test.cpp
+  }
+}

@@ -2,11 +2,7 @@
 /**
  *  @file ProxyPushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROXYPUSHSUPPLIER_H
@@ -14,7 +10,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,12 +19,14 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/Event_ForwarderS.h"
 
-#include "../ProxySupplier_T.h"
+#include "orbsvcs/Notify/ProxySupplier_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class TAO_Notify_Serv_Export
@@ -39,7 +37,6 @@ TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::ProxyPushSupplier>;
  * @class TAO_Notify_ProxyPushSupplier
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::ProxyPushSupplier>
@@ -47,43 +44,32 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyPushSupplier
   typedef TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::ProxyPushSupplier> SuperClass;
   friend class TAO_Notify_Builder;
 public:
-  /// Constuctor
-  TAO_Notify_ProxyPushSupplier (void);
+  /// Constructor
+  TAO_Notify_ProxyPushSupplier ();
 
   /// Destructor
   virtual ~TAO_Notify_ProxyPushSupplier ();
 
-  virtual const char * get_proxy_type_name (void) const;
+  virtual const char * get_proxy_type_name () const;
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
+  virtual void validate ();
+  virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
   // = Interface methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyChannelAdmin::ProxyType MyType ();
 
   virtual void connect_any_push_consumer (
-    CosEventComm::PushConsumer_ptr push_consumer
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosEventChannelAdmin::AlreadyConnected,
-    CosEventChannelAdmin::TypeError
-  ));
+    CosEventComm::PushConsumer_ptr push_consumer);
 
-  virtual void disconnect_push_supplier (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  virtual void disconnect_push_supplier ();
 
 private:
   /// TAO_Notify_Destroy_Callback methods
-  virtual void release (void);
+  virtual void release ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

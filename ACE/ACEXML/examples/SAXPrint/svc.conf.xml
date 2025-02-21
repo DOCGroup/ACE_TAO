@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<!--  -->
+<!--   -->
+<!--  -->
+
+<!-- This is a test XML file.  Most of the stuff here don't make any sense at all -->
+<!DOCTYPE ACE_Svc_Conf PUBLIC 'GOODSAM' '../../apps/svcconf/svcconf.dtd'
+  [
+    <!NOTATION goody PUBLIC 'NBC' 'http://hardcoreace.com/'>
+    <!NOTATION frodo PUBLIC 'ABC'>
+    <!NOTATION bilbo SYSTEM "C:/ACE-GUIDELINE">
+    <!ENTITY ccm 'CCM_App'>
+    <!ENTITY pippin PUBLIC 'GOTO' 'http://taozen.com/' NDATA goody>
+    <!ENTITY sam PUBLIC 'SHIRE' 'http://taozen.com/'>
+    <!ENTITY gandolf SYSTEM 'D:/RINGS.DOT'>
+    <!ELEMENT GOOBEGONE EMPTY>
+    <!ELEMENT POOPOO ANY>
+    <!ELEMENT HOHOHO ((BOOBOO, GOOBEGONE)?, (GOOBEGONE|POOPOO)*)+>
+    <!ELEMENT BOOBOO (#PCDATA | BOOBOO)*>
+    <!ATTLIST GOOBEGONE
+              ohmy CDATA #REQUIRED
+              testing IDREF #IMPLIED>
+  ]>
+
+<ACE_Svc_Conf>
+<static id="ACE_Service_Manager" params="-d -p 4911"/>
+
+<dynamic id="Test_Task" type="service_object"> &#65; &amp;
+  <initializer path="CCM_App" init="_make_Test_Task" params="-p 3000" />
+</dynamic>
+
+<streamdef>
+  <dynamic id="CCM_App" type="stream" status="active">
+    <initializer path="CCM_App" init="make_stream"/>
+  </dynamic>
+  <module>
+    <dynamic id="Device_Adapter" type="module">
+      <initializer path="CCM_App" init="make_da"/>
+    </dynamic>
+    <dynamic id="Event_Analyzer" type="module">
+      <initializer path="CCM_App" init="make_ea"/>
+    </dynamic>
+    <dynamic id="Multicast_Router" type="module">
+      <initializer path="CCM_App" init="make_mr" params="-p 3001"/>
+    </dynamic>
+  </module>
+</streamdef>
+
+<stream id="&ccm;">
+  <module>
+    <remove id="Device_Adapter"/>
+    <!-- <remove id="Event_Analyzer"/> -->
+    <!-- <remove id="Multicast_Router"/> -->
+    <![CDATA[Only a text string.
+Do you &amp;expect something more? &#65;]]>
+<!-- Noticed that the "&amp;" in the above CDATA section can not be escaped. -->
+  </module>
+</stream>
+
+<!-- remove CCM_App -->
+<remove id="Test_&amp;Task&#x61;bc"/>
+</ACE_Svc_Conf>

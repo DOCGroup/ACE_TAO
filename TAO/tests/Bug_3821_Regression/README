@@ -1,0 +1,16 @@
+
+
+Even if union uses enumeration as discriminant and all possible case
+are specified in IDL there are still possible a lot of other values because
+enumeration is int internally. Thus we need _default() function for such
+unions and handle this case during marshaling/demarshaling.
+
+Successful output:
+
+$>./run_test.pl
+Starting Test
+Ended Test
+
+Regression output: Basically the test should not compile if there is a
+regression. But if it compiles then any ERROR message should indicate the
+regression.

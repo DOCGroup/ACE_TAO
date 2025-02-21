@@ -1,0 +1,13 @@
+project (TAO_Utils) : taolib, tao_output, install, portableserver, pi {
+  sharedname    = TAO_Utils
+  dynamicflags  = TAO_UTILS_BUILD_DLL
+
+  Template_Files {
+    RIR_Narrow.cpp
+    Server_Main.cpp
+  }
+
+  specific {
+    install_dir = tao/Utils
+  }
+}

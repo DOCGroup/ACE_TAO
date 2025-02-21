@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<!-- $Id$ -->
+<!--  -->
   <title>Options for TAO Components</title>
 </head>
 <body bgcolor="#ffffff" link="#000fff" vlink="#ff0f0f" text="#000000">
@@ -23,6 +23,7 @@
           <li><a href="#ORP">Optimizing Request Processing </a> </li>
           <li><a href="#CMPS">Connection Management and Protocol
 Selection </a> </li>
+	  <li><a href="#IRO">Multiple Invocation Retry Options</a></li>
           <li><a href="#MO">Miscellaneous Options </a></li>
         </ol>
       </li>
@@ -34,8 +35,11 @@ Selection </a> </li>
               <li><a href="#TARF">TAO_Advanced_Resource_Factory </a></li>
             </ol>
           </li>
-          <li><a href="#TSSF">Server_Strategy_Factory </a> </li>
-          <li><a href="#TCSF">Client_Strategy_Factory </a></li>
+          <li><a href="#TSSF">Server_Strategy_Factory</a> </li>
+          <li><a href="#TCSF">Client_Strategy_Factory</a></li>
+          <li><a href="#TUPF">TAO_UIPMC_Protocol_Factory</a></li>
+          <li><a href="#TMSF">TAO_MIOP_Resource_Factory</a></li>
+          <li><a href="#TTSM">Time_Policy_Manager</a></li>
         </ol>
       </li>
     </ul>
@@ -185,7 +189,7 @@ listening on for multicast requests. </td>
 In addition to being able to define the port where these known services
 are listening for multicast requests, as above, it is possible to set
 an environment variable that specifies the IOR of any named service.
-For example <code>NameServiceIOR=&lt;which&gt;,TradingServiceIOR=&lt;which&gt;,
+For example <code>NameServiceIOR=&lt;which,TradingServiceIOR=&lt;which&gt;,
 ImplRepoServiceIOR=&lt;which&gt;, MyServiceIOR=&lt;which&gt;</code>. This
 will have a similar effect to defining an -ORBInitRef value on the
 command line (see below). Any value set as a command line -ORBInitRef
@@ -201,7 +205,7 @@ same host:
 % NameService.exe -ORBEndpoint iiop://localhost:12345
 </code></p>
 <p><code>
-% client.exe -ORBInitRef NameService=iiop://localhost:12345
+% client.exe -ORBInitRef NameService=corbaloc:iiop:localhost:12345/NameService
 </code></p>
 <p>An explanation of these command-line options appears below. </p>
 <p></p>
@@ -251,6 +255,42 @@ named <code>"svc.conf"</code> in the current directory. </td>
 passed to the Service Configurator. You can pass multiple of these
 options on the same command-line. </td>
       </tr>
+      <tr>
+     <td><code>-ORBServiceConfigLoggerKey</CODE> <em>logger key</em></td>
+     <TD>Set the logger key in the <code>ACE_Service_Config</code>
+      framework.  Equivalent to the <code>-k</code> option on the ACE
+      service configurator class.
+     </td>
+      </tr>
+      <tr>
+     <td><code>-ORBSkipServiceConfigOpen</CODE> </td>
+     <TD>Do not process any <code>svc.conf</code> files, which has the
+     side-effect of not initializing the ACE Service Configurator
+     framework or registering the SIGHUP signal.
+     </td>
+      </tr>
+      <tr>
+     <td><code>-ORBIgnoreDefaultSvcConfFile</CODE> </td>
+     <TD>Do not process default <code>svc.conf</code> file. This does not
+     prohibit processing of explicitly provided <code>-ORBSvcConf</code> and/or
+     <code>-ORBSvcConfDirective</code> options.
+     </td>
+      </tr>
+      <tr>
+     <td><code>-ORBGestalt Local|ORB:<i>orbid</i></CODE> </td>
+     <TD>Instruct the ORB to create a local configuration "gestalt" or
+     context. By default, all ORBs share a common configuration context. This
+     is defined by a Service Repository that contains service objects, such
+     as the resource factory. In some cases multiple ORBs may be dynamically
+     loaded and as such may wish to have distinct configurations. Passing the
+     <code>Local</code> argument achieves this. Service objects loaded by an
+     ORB with a local configuration context will be used by that ORB in place
+     of any default service object. The final variation is that of shared
+     contexts. Passing the argument <code>ORB:<i>orbid</i></code> will cause
+     the ORB to share the local configuration of another ORB as identified with
+     the supplied id. <i>The shared context feature is not yet implemented.</i>
+     </td>
+      </tr>
     </tbody>
   </table>
   </p>
@@ -281,7 +321,7 @@ is used as a toggle to enable or disable debugging messages.</td>
 generate more output (try 10). The default value of this option is 0.</td>
       </tr>
       <tr>
-        <td><code>-ORBVerboseLogging <em>level (0|1|2)</em</code></td>
+        <td><code>-ORBVerboseLogging</code> <em>level (0|1|2)</em></td>
         <td>Controls the amount of status data printed on each line of
         the debug log. Higher numbers generate more output.
         The default value of this option is 0. </td>
@@ -290,6 +330,14 @@ generate more output (try 10). The default value of this option is 0.</td>
         <td><code>-ORBLogFile</code> <em>Logfilename</em></td>
         <td>Causes all <code>ACE_DEBUG</code> and <code>ACE_ERROR</code>
 output to be redirected to the designated <code>Logfilename</code>. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBHandleLoggingStrategyEvents</code>
+<em>LoggingStrategyServiceName</em></td>
+        <td>Causes use of ORB reactor for dispatching timer events to
+ACE_Logging_Strategy configured as a dynamic service with name
+<code>LoggingStrategyServiceName</code>. This allows to implement log file
+rotation. </td>
       </tr>
       <tr>
         <td><code>-ORBObjRefStyle</code> <em>IOR/URL</em></td>
@@ -326,6 +374,12 @@ current message block contains enough space for it -- the octet
 sequence is copied instead of appended to the CDR stream. </td>
       </tr>
       <tr>
+        <td><code>-ORBMaxMessageSize</code> <em>maxsize</em></td>
+        <td><a name="-ORBMaxMessageSize"></a>Set maximum size of
+              outgoing GIOP request/reply.  The request or reply
+              being sent will be fragmented, if necessary.</td>
+      </tr>
+      <tr>
         <td><code>-ORBCollocation</code> <em>global/per-orb/no</em></td>
         <td><a name="-ORBCollocation"></a>Specifies the use of
 collocation object optimization. If <code>global</code> is specified
@@ -335,17 +389,30 @@ treated as collocated. When <em>no</em> is specified, no objects are
 treated as collocated. </td>
       </tr>
       <tr>
-        <td><code>-ORBCollocationStrategy</code> <em>thru_poa/direct</em>
+        <td><code>-ORBCollocationStrategy</code> <em>thru_poa/direct/best</em>
         </td>
-        <td>Specifies what type of collocated object to use. If the <code>thru_poa</code>
-(default) strategy is used, TAO uses the collocation object
+        <td>Specifies what type of collocated object to use. If not specified
+the TAO_DEFAULT_COLLOCATION_STRATEGY default (default on  thru_poa) is used.
+If the <code>thru_poa</code> strategy is used, TAO uses the collocation object
 implementation that respects POA's current state and policies. When
 using the <code>direct</code> strategy, method invocations on
 collocated objects become direct calls to servant without checking
 POA's status, which can increase performance. If you use the <code>direct</code>
 strategy, your interfaces must be compiled with the <code><a
  href="compiler.html#collocation-stubs">-Gd</a></code> IDL <a
- href="compiler.html">compiler option</a>. </td>
+ href="compiler.html">compiler option</a>. If you choose for the <code>best</code> strategy,
+ TAO tries to perform the best possible collocation, first <code>direct</code> collocation if possible,
+else <code>thru_poa</code> collocation if possible and otherwise no collocation. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBAMICollocation</code> <em>1|0</em>
+        </td>
+        <td>Specifies what happens when making collocated AMI invocations.
+        When 1 (default) an AMI call will be done on a collocated
+        servant and the client thread will be used to invoke the
+        servant, when 0 the collocated call will be converted
+        to a remote call so that a different thread could be used
+        to execute the servant.</td>
       </tr>
       <tr>
         <td><code>-ORBNodelay</code> <em>boolean (0|1)</em></td>
@@ -382,7 +449,7 @@ also removes the ability to interoperate with ORBs on systems using
 alternative character or wide charater encodings. The default value may be set
 at compile time by defining <CODE>TAO_NEGOTIATE_CODESETS 0</CODE> in
 <CODE>orbconf.h</CODE>. Codeset negotiation support is enabled by default in
-TAO as shipped.<br> <bold>Note to static lib users</bold> In order to build
+TAO as shipped.<br> <b>Note to static lib users</b> In order to build
 TAO statically and get the codeset negotiation feature, two additional steps
 are needed to ensure the TAO_Codeset library is linked in and initalized. Add the MPC feature "negotiate_codesets=1" to the default.features file and regenerate your makefiles, and add <CODE>#include "tao/Codeset/Codeset.h"</CODE> somewhere in your application source, such as the cpp file containing your main.</td>
       </tr>
@@ -409,8 +476,7 @@ preferences over normal I/O, thereby causing priority inversion.</p>
         </td>
       </tr>
       <tr>
-       <td><code>-ORBDisableRTCollocation</code> <em>boolean
-       (0|1)</em></td> <td><a name="-ORBDisableRTCollocation"></a>This
+       <td><code>-ORBDisableRTCollocation</code> <em>boolean (0|1)</em></td> <td><a name="-ORBDisableRTCollocation"></a>This
        option controls whether the application wants to use or discard
        RT collocation decisions made by the RT ORB. A value of
        <CODE>1</CODE> (true) disables RT collocation decisions and falls back on the default
@@ -420,6 +486,24 @@ preferences over normal I/O, thereby causing priority inversion.</p>
        decisions for better performance. The default value is
        <code>0</code> (false). </td>
        </tr>
+      <tr>
+        <td><code>-ORBUseLocalMemoryPool</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBUseLocalMemoryPool"></a>TAO can use a local memory pool
+         to satisfy some of its needs for heap storage, as it is often more
+         efficient than using the platform's default memory allocator. The local
+         pool will always grow as large as necessary to satisfy memory allocations,
+         but it will never shrink. This means that sometimes a process can retain
+         memory that it no longer needs. If the default allocator is used then
+         TAO gives memory back as soon as it is not needed which allows for better
+         resource sharing at the expense of memory deallocation time.
+         <p>If this option is disabled (<code>0</code>), the ORB will use the
+        default allocator for the platform.</p>
+         <p>If this option is enabled (<code>1</code>), the orb will use the
+         local memory pool.</p>
+        <p> This option defaults to the compile-time option specified by
+        <code>TAO_USE_LOCAL_MEMORY_POOL</code>. The default is <code>1</code> (enabled)</p>
+        </td>
+      </tr>
     </tbody>
   </table>
   </p>
@@ -440,13 +524,23 @@ selection within a TAO application.
         <th>Description</th>
       </tr>
       <tr>
+        <td><code>-ORBAcceptErrorDelay</code> <em>seconds</em></td>
+        <td><a name="-ORBAcceptErrorDelay"></a>This argument controls the
+        amount of time to wait before attempting to accept new
+        connections in the event that a transient error occurs (such as
+        running out of file handles).  A delay of zero indicates that
+        accepting should not be attempted again after the transient error
+        and the handler will be removed from the reactor.
+        </td>
+      </tr>
+      <tr>
         <td><code>-ORBDefaultInitRef</code> <em>IOR prefix</em></td>
         <td><a name="-ORBDefaultInitRef"></a>This argument allows
 resolution of initial references not explicitly specified with
 <CODE>-ORBInitRef</CODE>. It requires a URL prefix that, after appending a slash '/'
 ('|' for the UIOP pluggable protocol) and a simple object key, forms a
 new URL to identify an initial object reference. The URL prefix format
-currently supported is based on the standard <code>corbaloc</code>
+currently supported is based on the standard <code><A href="INS.html#corbaloc">corbaloc</A></code>
 mechanism in the CORBA <a href="INS.html">Interoperable Naming
 Service. </a></td>
       </tr>
@@ -459,6 +553,23 @@ IP addresses.  This option is enabled (<code>1</code>) by default on
 Windows since DNS is often misconfigured there.  On other platforms
 this option is disabled (<code>0</code>) since domain names are
 more flexible address notations for IORs.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBIIOPClientPortBase</code> <em>base</em></td>
+        <td><a name="-ORBIIOPClientPortBase"></a>Clients using IIOP can be
+constrained to connect <em>from</em> a range of ports. The range is set using
+this base value then supplying a span to make it from <code>base</code> to
+<code>base + span</code>. The default base port value is 0, meaning a system
+selected port is used. If there are no available ports in the range, the ORB
+will throw a TRANSIENT exception. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBIIOPClientPortSpan</code> <em>span</em></td>
+        <td><a name="-ORBIIOPClientPortSpan"></a>Clients using IIOP can be
+constrained to connect <em>from</em> a range of ports. The range is set using
+a base port value along with this span to make a range from <code>base</code> to
+<code>base + span</code>. The default span is 0, meaning a client may connect from
+only the base port. The span is ignored if the base port number is 0.</td>
       </tr>
       <tr>
         <td><code>-ORBNoServerSideNameLookups</code> <em>boolean (0|1)</em></td>
@@ -477,8 +588,8 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         option instead. </font> </td>
       </tr>
       <tr>
-        <td><code>-ORBPreferredInterfaces</code>
-        <em>"targetNetwork:localNetwork,.."</em></td>
+        <td><code>&#8209;ORBPreferredInterfaces</code>
+        <em>targetNetwork=localNetwork[,...]</em></td>
         <td><a name="-ORBPreferredInterfaces"></a>  This option allows
     clients running on a multihomed host to pick a local
     network/interface to communicate with a remote target.
@@ -486,11 +597,13 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
     matching targetNetwork, then it will use the local ip address
     matching localNetwork. Simple wildcards can be used for both
     parameters, and multiple preferred interfaces can be specified
-    using comma separators. For example, for a machine with two network cards
+    using comma separators (no embedded spaces allowed) or additional &#8209;ORBPreferredInterfaces directives.
+    For example, for a machine with two network cards
     identified by the ip addresses 192.168.1.10 and 192.168.1.20, you can
-    use -ORBPreferredInterfaces *=*10,*=*20.
-    Or to force all communication on the loopback address to try to first
-    use the loopback address, use -ORBPreferredInterfaces 127.0.0.1=127* .
+    use -ORBPreferredInterfaces *=*10,*=*20 (or the two directives
+    &#8209;ORBPreferredInterfaces *=*10  &#8209;ORBPreferredInterfaces *=*20).
+    Or to force all communication to first try to
+    use the loopback address, use <code>&#8209;ORBPreferredInterfaces *=127.0.0.1</code> .
     <em>targetNetwork</em> can use any string, and must typically match
     with the value read from an IOR.
     <em>localNetwork</em> must use a dotted decimal address, because it
@@ -498,15 +611,31 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         </tr>
       <tr>
         <td><code>-ORBEnforcePreferredInterfaces</code>
-        <em>Yes/No</em></td>
-        <td><a name="-ORBEnforcePreferredInterfaces"></a> If this option is specified, then TAO will only try to use the interfaces
-    specified by the -ORBPreferredInterfaces option. By default, if a connection
-    cannot be made using a preferred interface, then TAO will attempt to use
-    the default interface. (INADDR_ANY)
-    Note : If none of the preferred interfaces apply to an outgoing connection
-    then they will not be enforced. Therefore, for this option to have any effect,
-    the connection through a legal preferred interface must fail.
-        </tr>
+        <em>boolean (0|1)</em></td>
+        <td><a name="-ORBEnforcePreferredInterfaces"></a> If this
+            option is set to <CODE>1</CODE> (true), then TAO will only try to use the
+            interfaces specified by the <CODE>-ORBPreferredInterfaces</CODE> option.
+            The default is <CODE>0</CODE> (false), in which case if a connection
+            cannot be made using a preferred interface, TAO will
+            attempt to use the default interface (<CODE>INADDR_ANY</CODE>).
+            Note: If none of the preferred interfaces apply to an outgoing connection
+            then they will not be enforced.  For this option to have
+            any effect, therefore, the connection through a legal preferred interface must fail.
+      </tr>
+      <tr>
+        <td><code>-ORBKeepalive</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBKeepalive"></a>This option allows users to specify
+        that the SO_KEEPALIVE option is set on TCP sockets used by IIOP.
+        The default is <code>0</code> (false).
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBDontRoute</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBDontRoute"></a>This option allows users to specify
+        that the SO_DONTROUTE option is set on TCP sockets used by IIOP.
+        The default is <code>0</code> (false).
+        </td>
+      </tr>
       <tr>
         <td><code>-ORBLingerTimeout</code> <em>timeout</em></td>
         <td><a name="-ORBLingerTimeout"></a> This option allows users to
@@ -518,10 +647,27 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         </td>
       </tr>
       <tr>
+        <td><code>-ORBIPHopLimit</code> <em>hops</em></td>
+        <td><a name="-ORBIPHopLimit"></a>This option allows users to
+        specify the TTL (IPv4) or hop limit (IPv6) value used when datagrams are
+        sent over a socket. The default is the one selected by the Operating System.
+        The <code>hops</code> value can be in the range of zero to the
+        maximum signed integer value for the particular platform on which
+        TAO is running. Currently this feature works in IIOP, DIOP, SCIOP, and MIOP.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBIPMulticastLoop</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBIPMulticastLoop"></a>This option allows users to
+        specify that the IP_MULTICAST_LOOP / IPV6_MULTICAST_LOOP option is set on
+        multicast sockets. The default is <code>1</code> (true).
+        </td>
+      </tr>
+      <tr>
         <td><code>-ORBListenEndpoints</code> <em>endpoint</em></td>
         <td><a name="-ORBListenEndpoints"></a> This option was
         introduced with the CORBA <a
-        href="http://www.omg.org/docs/orbos/01-01-04.pdf">Object
+        href="https://www.omg.org/cgi-bin/doc?orbos/01-01-04">Object
             Reference Template</A> (ORT) specification. It instructs a
         server ORB to listen for requests on the interface specified
         by <code>endpoint</code>. When used with Real-time CORBA, the option
@@ -581,7 +727,10 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         thread pool created by the process and <code>3</code>
         specifies the third lane of that thread pool.  Note that
         <code>0</code> should be used for the lane when specifying
-        endpoints for thread pools without lanes.
+        endpoints for thread pools without lanes. <code>*:*</code>
+        can be used to specify all pools and lanes, <code>1:*</code> means
+        all lanes from pool <code>1</code>, and <code>*:1</code>
+        means lane <code>1</code> from all pools.
 
         <p>Sets of endpoints may be specified using multiple
         <code>-ORBLaneListenEndpoints</code> options or by delimiting
@@ -615,7 +764,7 @@ listening on for multicast requests. By default, the <code>TAO_DEFAULT_IMPLREPO_
 arbitrary object reference for an initial service. The IOR could be in
 any one of the following formats: OMG <code>IOR</code>, <code>URL</code>,
         <code>corbaloc</code> (including <code>uioploc</code>) or <code>file</code>.
-        <code>corbaloc</code> is a multiple end-point IOR understood by
+        <code><A href="INS.html#corbaloc">corbaloc</A></code> is a multiple end-point IOR understood by
         <code>ORB::string_to_object()</code> and used as a
 boot-strapping mechanism by the <code>ORB::resolve_initial_references()</code>.
 The mappings specified through this argument override the ORB
@@ -662,8 +811,18 @@ listen endpoints should be encoded into IORs when <code>-ORBUseIMR</code>
 is set. The default is true. </td>
       </tr>
       <tr>
-        <td><code>-ORBUseSharedProfiles</code> <em>boolean (0|1)</em></td>
-        <td><a name="-ORBUseSharedProfiles"></a>
+        <td><code>-ORBUseParallelConnects</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBUseParallelConnects"></a>This option allows users to
+        specify the ORB attempt to connect simultaneously to all endpoints
+        listed in profiles, rather than stepping through individual endpoints,
+        trying and possibly failing, before moving on to the next. For this
+        feature to work, the server must be using shared profiles.
+        The default is <code>0</code> (false).
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBUseSharedProfile</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBUseSharedProfile"></a>
           This option allows multiple implicit or explicit endpoints to be
           combined into a single profile for a given protocol rather than using
           multiple profiles. For IIOP in non RTCORBA environments, the CORBA
@@ -671,14 +830,208 @@ is set. The default is true. </td>
           used to encode the combined endpoints. Processses using RTCORBA and
           priority banded connections will continue to generate Profiles with
           <code>TAO_TAG_IIOP_ENDPOINT</code> components.
-          This options is enabled by default.
+          This options is disabled by default.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBParallelConnectDelay</code> <em>unsigned long msec</em></td>
+        <td><a name="-ORBParallelConnectDelay"></a>When using parallel
+        connection attempts, this option defines the number of milliseconds to
+        delay when polling previously started connection attempts. If a server
+        is likely to be busy, this client side option will help avoid creating
+        redundant connections that must be accepted, only to be closed a moment
+        later. However, if the first reachable endpoint is far down the list,
+        this option will increase the delay before that endpoint is reached.
+        The default is <code>0</code>.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBPreferIPV6Interfaces</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBPreferIPV6Interfaces"></a>
+          If option is <CODE>1</CODE> (true) it directs the default
+          endpoint selector for client connections to first attempt to
+          connect any IIOP endpoints from a provided IOR specifying
+          IPv6 interfaces.  Only when none of these can be found or sucessfully connected IPv4
+          interfaces will be tried.  The default is <CODE>0</CODE> (false).
+          <p>
+          This option is only available for IPv6 enabled builds of TAO (<CODE>ACE_HAS_IPV6</CODE>).
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBConnectIPV6Only</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBConnectIPV6Only"></a>
+          If this option is <CODE>1</CODE> (true) it directs a server ORB to:<br><p>
+          <li>allow only IPv6 interfaces as listening endpoints</li>
+          <li>encode only IPv6 interfaces in the IOR profile</li>
+          <li>prevent (depending on availability of IPV6_V6ONLY socket option)
+          or block IPv6 to IPv4 connections</li>
+          <p>
+          This option directs the default endpoint selector for client connections
+          to only attempt to connect any IIOP endpoints from a provided IOR specifying
+          IPv6 interfaces.  Any available IPv4 interfaces will be
+              ignored.  The default setting is <CODE>0</CODE> (false).
+          <p>
+          This option is only available for IPv6 enabled builds of TAO (ACE_HAS_IPV6).
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBUseIPV6LinkLocal</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBUseIPV6LinkLocal"></a>
+          If this option is <CODE>1</CODE> (true) it directs a server ORB to allow
+          connections on IPv6 link local addresses.
+          The default setting is <CODE>0</CODE> (false).
+          <p>
+          This option is only available for IPv6 enabled builds of TAO (ACE_HAS_IPV6).
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBAllowZiopNoServerPolicies</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBAllowZiopNoServerPolicies"></a> If this option is <CODE>1</CODE>
+          (true) it directs a client ORB to use any client-side (sender) configured ZIOP compression
+          without having seen any server-side (listener) ZIOP available compressor's list policies.
+          The CORBA Compressed GIOP (ZIOP) V1.0 specification states that the Server publishes
+          its available (i.e. allowable) compressors in the IOR of each server object. This
+          option allows ZIOP to be used with MIOP and/or CORBALOCs that have no such
+          compression list policies embedded. The client simply has to trust that the server is
+          configured to allow its highest priority compressor to be used. Any servers
+          that cannot decompress the client's used ZIOP compressor will reject the
+          request as they simply cannot decode or handle it (client-side (sender) comms will simply
+          timeout or lock-up for any such incorrect two-way requests, or be oblivious
+          to the failure for any such incorrect one-way requests). The default
+          setting is <CODE>0</CODE> (false) i.e. to disallow compression in such cases
+          and conform to the ZIOP specification; but this can be changed by adding
+          <CODE>#define TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT true</CODE> to TAO's <CODE>config.h</CODE>
         </td>
       </tr>
     </tbody>
   </table>
   </p>
 </blockquote>
-<h4><a name="MO">5. Miscellaneous Options</a></h4>
+<h4><a name="IRO">5. Multiple Invocation Retry Options</a></h4>
+In cases such as connection timing issues or a load balancing server
+is temporarily not able to handle requests, it may be desirable to have
+the ORB transparently retry an invocation a maximum number of times
+until a successful invocation is made. To support this, a set of
+parameters can be used to cycle over base and location forwarded
+profiles until an invocation is successful. When cycling over
+profiles and the first base profile is to be used, a user-defined
+delay is made before retrying.
+<p></p>
+These parameters are used in the following situations:
+<p></p>
+<ul>
+  <li>Initial connection: If the connection to a server would result
+in a TRANSIENT exception being thrown, cycle over profiles no more than the value of
+the -ORBForwardOnTransientLimit option before throwing the exception.
+    <p></p>
+  </li>
+  <li>Waiting for a reply from the server: When using the IIOP protocol,
+on many platforms if zero bytes is read as the server's reply, this could
+indicate that the server may have had a disorderly shutdown or the
+connection to the server was abruptly terminated. In this case
+cycling through the profiles to retry the request will not exceeding the
+value of -ORBForwardOnReplyClosedLimit. If for example the Implementation
+Repository and Activator are used to start the server then this cycling could be
+used to give the server enough time to re-launch. When this option is
+used the -ORBForwardOnTransientLimit option should also be used to
+avoid exceptions being thrown when trying to reestablish a connection.
+<b>Note that because it is not known if the request was sent, this
+could result in the request being processed more than one by the
+server. Therefore this option should be used with care.</b>
+This is why, although a COMM_FAILURE exception is normally thrown in this case,
+this option is kept distinct from -ORBForwardOnCommFailureLimit
+discussed below.
+    <p></p>
+  <li>Server sends an exception as a reply: A reply is received
+and it is checked if it is an exception. If the exception is
+of type COMM_FAILURE with completion status of COMPLETED_NO, then
+the profiles will be cycled no more than the value of option
+-ORBForwardOnCommFailureLimit until a successful reply is
+received. Similar retries can be applied to TRANSIENT exceptions
+(-ORBForwardOnTransientLimit), OBJECT_NOT_EXIST exceptions
+(-ORBForwardOnObjectNotExistLimit), and INV_OBJREF exceptions
+(-ORBForwardOnInvObjrefLimit).
+    <p></p>
+  </li>
+</ul>
+
+The retry options are given in the table below. Note that for
+backward compatibility, the -ORBForward* options described in the
+<a href="#MO">Miscellaneous Options </a> section are retained.
+However, if any option in this section is used, then any
+-ORBForward* option given in the Miscellaneous Options
+section is ignored.
+    <p></p>
+
+These options can also be used in the list of
+    <a href="#TCSF">Client_Strategy_Factory</a> options
+in the service configurator file.
+Using the service configurator file can help insure these
+options are uniformly applied across multiple clients by
+having them use the same configurator file.
+
+<blockquote>
+  <p>
+  <table border="2" cellpadding="0" cellspacing="2">
+    <tbody>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnTransientLimit</code> <em>limit</em></td>
+        <td>Use this option to cycle through profiles when
+	establishing a connection with a server or when a
+	server replies to a request with a TRANSIENT
+	exception.
+        The number of retries will not exceed <em>limit</em>.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnCommFailureLimit</code> <em>limit</em></td>
+        <td>Use this option to cycle through profiles when a
+	server replies to a request with a COMM_FAILURE
+	exception.
+        The number of retries will not exceed <em>limit</em>.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnObjectNotExistLimit</code> <em>limit</em></td>
+        <td>Use this option to cycle through profiles when a
+	server replies to a request with a OBJECT_NOT_EXIST
+	exception.
+        The number of retries will not exceed <em>limit</em>.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnInvObjrefLimit</code> <em>limit</em></td>
+        <td>Use this option to cycle through profiles when a
+	server replies to a request with a INV_OBJREF
+	exception.
+        The number of retries will not exceed <em>limit</em>.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnReplyClosedLimit</code> <em>limit</em></td>
+        <td>Use this option to cycle through profiles when it has
+	been detected that a connection is closed when reading a server reply
+        and having the server possibly process the reqest more than once
+        is acceptable. This option currently does not work under FreeBSD.
+        The number of retries will not exceed <em>limit</em>.
+	If this option is used then -ORBForwardOnTransientLimit should
+	also be used to avoid a TRANSIENT exception being thrown.
+	</td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardDelay</code> <em>int msecs</em></td>
+        <td>Defines the number of milliseconds to delay while
+	cycling through profiles when the first base profile
+	is to be tried. The default is 100,000 milliseconds
+	(0.1 seconds).</td>
+      </tr>
+    </tbody>
+  </table>
+  </p>
+</blockquote>
+
+
+<h4><a name="MO">6. Miscellaneous Options</a></h4>
 Options in this category don't control the behavior of the ORB in
 terms of resouces or strategies. Instead, they are helper options
 provided for specific application requirements.
@@ -699,15 +1052,63 @@ coexisting ORBs (when there is more than one ORB).</td>
       </tr>
       <tr>
         <td><code>-ORBServerId</code> <em>server_id</em></td>
-        <td><a name="-ORBId"></a>This option allows setting a name/id
+        <td><a name="-ORBServerId"></a>This option allows setting a name/id
 to a server to uniquely identify a server to TAO's <a href="implrepo">Implementation
 Repository</a>. </td>
       </tr>
       <tr>
         <td><code>-ORBDaemon</code></td>
         <td>Specifies that the ORB should <em>daemonize</em> itself, <em>i.e.</em>,
-run as a background process. This option is only meaningful on OS
-platforms that support daemonization.</td>
+run as a background process. Note, that this changes the working directory to
+be the root directory "/". This especially affects relative paths specified at the command line.
+This option is only meaningful on OS platforms that support daemonization.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardInvocationOnObjectNotExist</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request to next available profile when
+        receiving OBJECT_NOT_EXIST exception reply. The default value is <CODE>0</CODE>
+        which means the request is not forwarded upon OBJECT_NOT_EXIST exception.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnceOnObjectNotExist</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request if it
+        receives OBJECT_NOT_EXIST exception reply. If it receives one of the exceptions
+       (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
+        the request is not forwarded again and exception is propagated to the client
+        code. The default value is <CODE>0</CODE> which means the request
+        is not forwarded upon OBJECT_NOT_EXIST exception.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnceOnCommFailure</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request if it
+        receives COMM_FAILURE exception reply. If it receives one of the exceptions
+        (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
+        the request is not forwarded again and exception is propagated to the client
+        code. The default value is <CODE>0</CODE> which means the request is not forwarded upon
+        COMM_FAILURE exception.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnceOnTransient</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request if it
+        receives TRANSIENT exception reply. If it receives one of the exceptions
+       (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
+        the request is not forwarded again and exception is propagated to the client
+        code. The default value is <CODE>0</CODE> which means the request
+        is not forwarded upon TRANSIENT exception.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBForwardOnceOnInvObjref</code> <em>boolean (0|1)</em></td>
+        <td>If this option is 1, the ORB forwards the request if it
+        receives INV_OBJREF exception reply. If it receives one of the exceptions
+       (OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT, INV_OBJREF) during forwarding,
+        the request is not forwarded again and exception is propagated to the client
+        code. The default value is <CODE>0</CODE> which means the request
+        is not forwarded upon INV_OBJREF exception.
+        </td>
       </tr>
     </tbody>
   </table>
@@ -717,7 +1118,7 @@ platforms that support daemonization.</td>
 <hr width="25%" align="left">
 <h3><a name="SVC">The Service Configurator File</a></h3>
 Internally, TAO uses the <a
- href="http://www.cs.wustl.edu/%7Eschmidt/PDF/Svc-Conf.pdf">ACE Service
+ href="http://www.dre.vanderbilt.edu/~schmidt/PDF/Svc-Conf.pdf">ACE Service
 Configurator framework</a> to allow applications to configure the ORB
 at run-time. Applications provide a file named <code>svc.conf</code>
 with options that configure appropriate strategies in to the ORB. The
@@ -747,6 +1148,21 @@ creates various strategies of special utility to the ORB, useful for
 controlling the behavior of clients. This factory is responsible for
 creating strategies useful for clients such as request multiplexing
 strategies, wait strategies, connect strategies etc.
+    <p></p>
+  </li>
+  <li> <a href="#TUPF">TAO UIPMC Protocol Factory </a> This factory is
+responsible for controlling the behavior of clients and servers that
+use UDP sockets.
+    <p></p>
+  </li>
+  <li> <a href="#TMSF">MIOP Strategy Factory.</a> This factory is
+responsible for controlling the behavior of clients and servers that
+use MIOP protocol.
+    <p></p>
+  </li>
+  <li> <a href="#TTSM">Time Policy Strategy Manager.</a> This factory
+manages the TIME_POLICY strategy used by the ORB for timers and
+countdowns.
     <p></p>
   </li>
 </ol>
@@ -843,8 +1259,8 @@ Resource_Factory "[list of options]"</code></p>
 resource factory with the options listed within the double quotes. The
 following table shows the list of possible options that can be
 specified within the double quotes in the above directive. There is an <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/tests/LongUpcalls/svc.conf?rev=HEAD">
-online</a> example of how this is used in TAO.</p>
+ href="../tests/LongUpcalls/svc.conf">
+example</a> of how this is used in TAO.</p>
 <p></p>
 <blockquote>
   <p>
@@ -855,132 +1271,122 @@ online</a> example of how this is used in TAO.</p>
         <th>Description</th>
       </tr>
       <tr>
-        <td><code>-ORBReactorMaskSignals</code> <em>0/1</em></td>
-        <td>ACE select reactors mask signals during upcalls to the
-event handlers. This is only useful if the application is going to trap
-those signals and handle them in any special way. Disabling the mask
-can improve performance by reducing the number of kernel level locks. </td>
+        <td><code>-ORBConnectionCacheLock</code> <em>locktype</em></td>
+        <td><a name="-ORBConnectionCacheLock"></a>Specify the type of
+          lock to be used by the Connection Cache. Possible values for lock type
+          are <code>thread</code>, which specifies that an inter-thread mutex is
+          used to guarantee exclusive access, and <code>null</code>, which
+          specifies that no locking be performed. The default is thread. </td>
       </tr>
       <tr>
-        <td><code>-ORBProtocolFactory</code> <em>factory</em></td>
-        <td><a name="-ORBProtocolFactory"></a>Specify which pluggable
-protocol factory to load. By default, only the factory for the IIOP
-protocol (<code>IIOP_Factory</code> is loaded.
-        <p>For example, if some protocol called <em><code>Foo</code></em>
-whose factory was called <em><code>Foo_Factory</code></em> was
-available, then it could be loaded into TAO by specifying <code>-ORBProtocolFactory
-Foo_Factory</code> in the service configurator file. The <em><code>Foo</code></em>
-pluggable protocol would then be available for use. </p>
+        <td><code>-ORBConnectionCacheMax</code> <em>limit</em></td>
+        <td><a name="-ORBConnectionCacheMax"></a>The transport cache
+          will grow to a maximum of the specified limit. The default is system
+          dependent, but can be overridden at compile-time by defining the
+          preprocessor macro <CODE>TAO_CONNECTION_CACHE_MAXIMUM</CODE>. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBConnectionCachePurgePercentage</code> <em>percent</em></td>
+        <td><a name="-ORBConnectionCachePurgePercentage"></a>If the
+          transport cache is purged, the specified percentage (20 by default) of
+          the total number of connections cached will be closed. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBConnectionPurgingStrategy</code> <em>type</em></td>
+        <td><a name="-ORBConnectionPurgingStrategy"></a>Opened
+          connections are added to the transport cache so they can be reused.
+          If a process continues to run and these connections are not reused,
+          however, the cache will continue to grow.  Before each new connection,
+          therefore, the cache is checked and purged if it has reached the limit
+          specified by the <CODE>-ORBConnectionCacheMax</CODE> option or the
+          system default if that option was not used. The possible values for
+          type are <CODE>lru</CODE>, <CODE>lfu</CODE>, <CODE>fifo</CODE>, and
+          <CODE>null</CODE>. The default is <CODE>lru</CODE> (least recently
+          used). The other options are <CODE>lfu</CODE> (least frequently used),
+          <CODE>fifo</CODE> (first in first out), and <CODE>null</CODE> (no
+          connections are purged) and are contained within the TAO Strategies
+          library. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBDropRepliesDuringShutdown</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBDropRepliesDuringShutdown"></a> Strategy to
+          make the ORB wait for replies to show up even if the ORB is
+          shutdown. The default is to drop replies. For example, clients
+          comunicating with misbehaved servers will continue to hang if
+          replies don't show up and even if the client ORB is shutdown
+          from another thread. This strategy helps the ORB decide to
+          wait for the replies or drop replies. Some clients may not
+          want to drop replies, and may want all their requests to be
+          processed until ORB::destroy () is called. Setting the value
+          of this option to 0 would help with that. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBFlushingStrategy</code> <em>type</em></td>
+        <td><a name="-ORBFlushingStrategy"></a>By default TAO provides
+          three strategies to flush queued messages. The <code>leader_follower</code>
+          strategy uses the Reactor and non-blocking I/O to send the outgoing
+          messages, this strategy participates in the Leader/Followers protocol
+          to synchronize access to the Reactor. The <code>reactive</code>
+          strategy uses the Reactor but does not take part in the
+          Leader/Followers protocol, thus it is better used only in single
+          threaded applications. Finally, the <code>blocking</code> strategy
+          flushes the queue as soon as it becomes "full", and blocks the thread
+          until all the data is sent.
         </td>
       </tr>
       <tr>
         <td><code>-ORBIORParser</code> <em>parser</em></td>
         <td><a name="-ORBIORParser"></a>Name an IOR Parser to load. IOR
-Parsers are used to interpret strings passed to <code>ORB::string_to_object()</code>.
-By default the ORB can handle multiple string formats, including <code>IOR:</code>,
-        <code>corbaloc:</code>, <code>corbaname:</code>, and <code>file:</code>.
-The application developer can <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/docs/ior_parsing.html?rev=HEAD">add
-new IOR formats </a>using this option. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBConnectionPurgingStrategy</code> <em>type</em></td>
-        <td><a name="-ORBConnectionPurgingStrategy"></a>Opened
-connections are added to the transport cache so they can be reused.
-If a process continues to run and these connections are not reused,
-however, the cache will continue to grow.  Before each new connection,
-therefore, the cache is checked and purged if it has reached the limit
-specified by the <CODE>-ORBConnectionCacheMax</CODE> option or the
-system default if that option was not used. The possible values for
-type are <CODE>lru</CODE>, <CODE>lfu</CODE>, <CODE>fifo</CODE>, and
-<CODE>null</CODE>. The default is <CODE>lru</CODE> (least recently
-used). The other options are <CODE>lfu</CODE> (least frequently used),
-<CODE>fifo</CODE> (first in first out), and <CODE>null</CODE> (no
-connections are purged) and are contained within the TAO Strategies
-library. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBConnectionCacheMax</code> <em>limit</em></td>
-        <td><a name="-ORBConnectionCacheMax"></a>The transport cache
-will grow to a maximum of the specified limit. The default is system
-dependent, but can be overridden at compile-time by defining the
-preprocessor macro <CODE>TAO_CONNECTION_CACHE_MAXIMUM</CODE>. </td>
+          Parsers are used to interpret strings passed to <code>ORB::string_to_object()</code>.
+          By default the ORB can handle multiple string formats, including <code>IOR:</code>,
+          <code>corbaloc:</code>, <code>corbaname:</code>, and <code>file:</code>.
+          The application developer can <a href="ior_parsing.html">add
+            new IOR formats </a>using this option. </td>
       </tr>
       <tr>
         <td><code>-ORBMuxedConnectionMax</code> <em>number</em></td>
         <td><a name="-ORBMuxedConnectionMax"></a>The transport cache
-allows only specified number of connections-per-QoS property to be
-added to connection cache. Threads not getting the connections will
-wait for the connections to be released. This option is more useful for
-transports using a muxed connection strategy and want control over the
-number of connections that are created by the active threads. </td>
+          allows only specified number of connections-per-QoS property to be
+          added to connection cache. Threads not getting the connections will
+          wait for the connections to be released. This option is more useful for
+          transports using a muxed connection strategy and want control over the
+          number of connections that are created by the active threads. </td>
       </tr>
       <tr>
-        <td><code>-ORBConnectionCachePurgePercentage</code> <em>percent</em></td>
-        <td><a name="-ORBConnectionCachePurgePercentage"></a>If the
-transport cache is purged, the specified percentage (20 by default) of
-the total number of connections cached will be closed. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBConnectionCacheLock</code> <em>locktype</em></td>
-        <td><a name="-ORBConnectionCacheLock"></a>Specify the type of
-lock to be used by the Connection Cache. Possible values for lock type
-are <code>thread</code>, which specifies that an inter-thread mutex is
-used to guarantee exclusive access, and <code>null</code>, which
-specifies that no locking be performed. The default is thread. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBCorbaObjectLock</code> <em>locktype</em></td>
-        <td><a name="-ORBCorbaObjectLock"></a> Specify the type of lock
-to be used by CORBA::Object. The lock is needed within the CORBA object
-to synchronize the state when the same object is shared by multiple
-threads. Possible values for lock type are <code>thread</code>, which
-specifies that an inter-thread mutex is used to guarantee exclusive
-access, and <code>null</code>, which specifies that no locking be
-performed. The default is thread. The <code>null</code> lock option is
-useful when there is only one thread in the system. This option can be
-used to minimize the amount of memory consumed by the locks in
-applications where locks are not needed. The memory growth problem gets
-particularly exacerbated for applications dealing with hundreds and
-thousands of objects. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBObjectKeyTableLock</code> <em>locktype</em></td>
-        <td><a name="-ORBObjectKeyTableLock"></a> Specify the type of
-lock to be used by the ObjectKey table. ObjectKey table keeps track of
-the ObjectKeys that are generated and made available through IORs. The
-table manages the life time of the object keys within the ORB through a
-reference counting mechanism. Possible values for lock type are <code>thread</code>,
-which specifies that an inter-thread mutex is used to guarantee
-exclusive access, and <code>null</code>, which specifies that no
-locking be performed. The default is thread. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBFlushingStrategy</code> <em>type</em></td>
-        <td><a name="-ORBFlushingStrategy"></a>By default TAO provides
-three strategies to flush queued messages. The <code>leader_follower</code>
-strategy uses the Reactor and non-blocking I/O to send the outgoing
-messages, this strategy participates in the Leader/Followers protocol
-to synchronize access to the Reactor. The <code>reactive</code>
-strategy uses the Reactor but does not take part in the
-Leader/Followers protocol, thus it is better used only in single
-threaded applications. Finally, the <code>blocking</code> strategy
-flushes the queue as soon as it becomes "full", and blocks the thread
-until all the data is sent.
+        <td><code>-ORBOutputCDRAllocator</code> <em>mmap|local_memory_pool</em></td>
+        <td><a name="-ORBOutputCDRAllocator"></a>When the define
+        <code>TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL</code> is set to 1 then always the mmap pool
+        will be used.
         </td>
       </tr>
       <tr>
-        <td><code>-ORBDropRepliesDuringShutdown</code> <em>0|1</em></td>
-        <td><a name="-ORBDropRepliesDuringShutdown"></a> Strategy to
-        make the ORB wait for replies to show up even if the ORB is
-        shutdown. The default is to drop replies. For example, clients
-        comunicating with misbehaved servers will continue to hang if
-        replies don't show up and even if the client ORB is shutdown
-        from another thread. This strategy helps the ORB decide to
-        wait for the replies or drop replies. Some clients may not
-        want to drop replies, and may want all their requests to be
-        processed until ORB::destroy () is called. Setting the value
-        of this option to 0 would help with that. </td>
+        <td><code>-ORBProtocolFactory</code> <em>factory</em></td>
+        <td><a name="-ORBProtocolFactory"></a>Specify which pluggable
+          protocol factory to load. By default, only the factory for the IIOP
+          protocol (<code>IIOP_Factory</code>) is loaded.
+          <p>For example, if some protocol called <em><code>Foo</code></em>
+            whose factory was called <em><code>Foo_Factory</code></em> was
+            available, then it could be loaded into TAO by specifying <code>-ORBProtocolFactory
+              Foo_Factory</code> in the service configurator file. The <em><code>Foo</code></em>
+            pluggable protocol would then be available for use. </p>
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBReactorMaskSignals</code> <em>0/1</em></td>
+        <td>ACE select reactors mask signals during upcalls to the
+          event handlers. This is only useful if the application is going to trap
+          those signals and handle them in any special way. Disabling the mask
+          can improve performance by reducing the number of kernel level locks. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBZeroCopyWrite</code> </td>
+        <td><a name="-ORBZeroCopyWrite"></a> Use a zero copy write
+        protocol, which at this moment the only option is sendfile.
+        If your platform does support sendfile but you don't want
+        that TAO uses it you can disable
+        sendfile in TAO by add the define <code>TAO_HAS_SENDFILE 0</code>
+        to your config.h file.
+        </td>
       </tr>
     </tbody>
   </table>
@@ -1010,9 +1416,9 @@ omit the <code>#include</code> if you always use dynamic libraries.
 <code>Resource_Factory</code>. Any directives for the
 <code>Resource_Factory</code> will have no effect (and generate
 warnings telling you so). The following table lists the options that
-can be provided in double quotes. An example is available <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">online
-</a> that shows how to specify this option in the svc.conf file.</p>
+can be provided in double quotes. An <a
+ href="../performance-tests/Latency/Single_Threaded/svc.conf"> example</a>
+is available that shows how to specify this option in the svc.conf file.</p>
 <p></p>
 <blockquote>
   <p>
@@ -1021,6 +1427,47 @@ can be provided in double quotes. An example is available <a
       <tr>
         <th>Option</th>
         <th>Description</th>
+      </tr>
+      <tr>
+        <td><code>-ORBAMHResponseHandlerAllocator</code> <em>which</em></td>
+        <td><a name="-ORBAMHResponseHandlerAllocator"></a>Specify whether the ORB
+          uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
+          = <code>null</code>) allocators for the AMH response handlers.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBAMIResponseHandlerAllocator</code> <em>which</em></td>
+        <td><a name="-ORBAMIResponseHandlerAllocator"></a>Specify whether the ORB
+          uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
+          = <code>null</code>) allocators for the AMI response handlers.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBInputCDRAllocator</code> <em>which</em></td>
+        <td><a name="-ORBInputCDRAllocator"></a>Specify whether the
+          ORB uses locked (<em>which</em> = <code>thread</code>) or lock-free
+          (<em>which</em> = <code>null</code>) allocators for the incoming CDR
+          buffers. Though <code>null</code> should give the optimal performance;
+          we made the default <code>thread</code>.  TAO optimizations for octet
+          sequences will not work in all cases when the allocator does not have
+          locks (for example if the octet sequences are part of a return
+          value). Using locked allocators also allows the users to take
+          advantage of the TAO octet sequence extensions to preserve the buffer
+          after the upcall. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBReactorRegistry</code> <em>registry_type</em></td>
+        <td><a name="-ORBReactorRegistry"></a>This option is no longer
+          supported. The Advanced Resource Factory will emit an error if you
+          attempt its use. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBReactorThreadQueue</code> <em>which</em></td>
+        <td><a name="-ORBReactorThreadQueue"></a>Applies only to the
+          <CODE>ACE_TP_Reactor</CODE>, i.e., when <code>-ORBReactorType</code> =
+          <code>tp</code>, and specifies the order, last-in-first-out
+          (<em>which</em> = <code>LIFO</code>), the default, or
+          first-in-first-out (<em>which</em> = <code>FIFO</code>), in which
+          waiting threads are selected to run by the
+          <CODE>ACE_Select_Reactor_Token</CODE>. </td>
       </tr>
       <tr>
         <td><code>-ORBReactorType</code> <em>which</em></td>
@@ -1051,58 +1498,22 @@ the ORB uses. The default reactor is the ACE_TP_Reactor.
             <tr>
               <td><code>tp</code></td>
               <td>Use the <code>ACE_TP_Reactor</code>, a select based
-thread-pool reactor which is the
-        MT_NO_UPCALL means use a client connection handler that
-        participates in the leader-follower model like MT, but, like
-        RW, does not allow handling of nested upcalls within the
-        waiting thread.
-
-default.</td>
+thread-pool reactor which is the default.</td>
+            </tr>
+            <tr>
+              <td><code>dev_poll</code></td>
+              <td>Use the <code>ACE_Dev_Poll_Reactor</code>, a
+              <code>/dev/poll</code> or Linux <code>sys_epoll()</code>
+              based thread-pool reactor.  It is intended to be a
+              highly scalable replacement for the
+              <code>select()</code> based reactors.  The
+              ACE_Dev_Poll_Reactor is currently only supported on
+              Linux. Be aware that dev_poll
+              support is experimental!</td>
             </tr>
           </tbody>
         </table>
         </td>
-      </tr>
-      <tr>
-        <td><code>-ORBReactorThreadQueue</code> <em>which</em></td>
-        <td><a name="-ORBReactorThreadQueue"></a>Applies only to the
-<CODE>ACE_TP_Reactor</CODE>, i.e., when <code>-ORBReactorType</code> =
-<code>tp</code>, and specifies the order, last-in-first-out
-(<em>which</em> = <code>LIFO</code>), the default, or
-first-in-first-out (<em>which</em> = <code>FIFO</code>), in which
-waiting threads are selected to run by the
-<CODE>ACE_Select_Reactor_Token</CODE>. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBInputCDRAllocator</code> <em>which</em></td>
-        <td><a name="-ORBInputCDRAllocator"></a>Specify whether the
-ORB uses locked (<em>which</em> = <code>thread</code>) or lock-free
-(<em>which</em> = <code>null</code>) allocators for the incoming CDR
-buffers. Though <code>null</code> should give the optimal performance;
-we made the default <code>thread</code>.  TAO optimizations for octet
-sequences will not work in all cases when the allocator does not have
-locks (for example if the octet sequences are part of a return
-value). Using locked allocators also allows the users to take
-advantage of the TAO octet sequence extensions to preserve the buffer
-after the upcall. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBAMHResponseHandlerAllocator</code> <em>which</em></td>
-        <td><a name="-ORBAMHResponseHandlerAllocator"></a>Specify whether the ORB
-uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
-= <code>null</code>) allocators for the AMH response handlers.</td>
-      </tr>
-      <tr>
-        <td><code>-ORBAMIResponseHandlerAllocator</code> <em>which</em></td>
-        <td><a name="-ORBAMIResponseHandlerAllocator"></a>Specify whether the ORB
-uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
-= <code>null</code>) allocators for the AMI response handlers.</td>
-      </tr>
-      <tr>
-        <td><code>-ORBReactorRegistry</code> <em>registry_type</em></td>
-        <td><a name="-ORBReactorRegistry"></a>This option is no longer
-supported. The Advanced Resource Factory will emit an error if you
-attempt its use. </td>
       </tr>
     </tbody>
   </table>
@@ -1135,8 +1546,8 @@ line)</p>
 <p><code>static Server_Strategy_Factory "[list of
 options]"</code></p>
 <p>would load all the options listed within "". An
-example is available <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">online</a>
+<a href="../performance-tests/Latency/Single_Threaded/svc.conf">example</a>
+is available
 that shows how to specify this option in the <code>svc.conf</code>
 file. </p>
 <p></p>
@@ -1149,11 +1560,78 @@ file. </p>
         <th>Description</th>
       </tr>
       <tr>
+        <td><code>-ORBActiveHintInIds</code> <em>adds an active hint
+            in ids</em></td>
+        <td>Specify whether an active hint should be added to ids. With
+          active hints, ids can be found quickly. However, they lead to larger
+          IORs. Note that this option is disregarded <code>if
+            -ORBAllowReactivationOfSystemids</code> is set to <code>0</code>.
+          The <em>-ORBActiveHintInIds</em>
+          can be <code>0</code> or <code>1</code>. This option defaults to <code>1</code>.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBActiveHintInPOANames</code> <em>adds an active
+hint in poa names</em></td>
+        <td>Specify whether an active hint should be added to POA
+names. With active hints, POA names can be found quickly. However, they
+lead to larger IORs. The <code>-ORBActiveHintInPOANames</code> can be <code>0</code>
+or <code>1</code>. This option defaults to <code>1</code>. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBActiveObjectMapSize</code> <em>active object map
+            size</em></td>
+        <td>Specify the size of the active object map. If not
+          specified, the default value is 64.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBAllowReactivationOfSystemids</code> <em>allows
+            reactivation of system ids</em></td>
+        <td>Specify whether system ids can be reactivated, i.e., once
+          an id that was generated by the system has been deactivated, will the
+          user reactivate a new servant using the old id. If the user is not
+          going to use this feature, the IORs can be shortened, an extra
+          comparison in the critical upcall path removed, and some memory on the
+          server side can be saved. The <code>ORBAllowReactivationOfSystemids</code>
+          can be <code>0</code> or <code>1</code>. This option defaults to <code>1</code>.
+        </td>
+      </tr>
+      <tr>
         <td><a name="orb_concurrency"><code>-ORBConcurrency</code></a> <em>which</em></td>
         <td>Specify which concurrency strategy to use. Range of values
 is <code>reactive</code> for a purely Reactor-driven concurrency
 strategy or <code>thread-per-connection</code> for creating a new
 thread to service each connection. The default is reactive. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBPersistentidPolicyDemuxStrategy</code> <em>persistent
+id policy based demultiplexing strategy</em></td>
+        <td>Specify the demultiplexing lookup strategy to be used with
+the persistent id policy. The <em>demultiplexing strategy</em> can be
+one of <code>dynamic</code> or <code>linear</code>. This option
+defaults to using the <code>dynamic</code> strategy. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBPoaMapSize</code> <em>poa map size</em></td>
+        <td>Specify the size of the POA map. If not specified, the
+default value is 24.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBSystemidPolicyDemuxStrategy</code> <em>system id
+policy based demultiplexing strategy</em></td>
+        <td>Specify the demultiplexing lookup strategy to be used with
+the system id policy. The <em>demultiplexing strategy</em> can be one
+of <code>dynamic</code>, <code>linear</code>, or <code>active</code>.
+This option defaults to use the <code>dynamic</code> strategy when <code>-ORBAllowReactivationOfSystemids</code>
+is true, and to <code>active</code> strategy when <code>-ORBAllowReactivationOfSystemids</code>
+is false. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBThreadFlags</code> <em>thread flags</em></td>
+        <td>Specify the flags used for thread creation. Flags can be
+any logical-OR combination of <code>THR_DETACHED</code>, <code>THR_BOUND</code>,
+        <code>THR_NEW_LWP</code>, <code>THE_SUSPENDED</code>. The
+default is <code>THR_BOUND | THR_DETACHED</code> . </td>
       </tr>
       <tr>
         <td><a name="server_timeout"><code>-ORBThreadPerConnectionTimeout</code></a>
@@ -1177,28 +1655,12 @@ disable polling entirely. This yields a slight performance improvement
         </td>
       </tr>
       <tr>
-        <td><code>-ORBActiveObjectMapSize</code> <em>active object map
-size</em></td>
-        <td>Specify the size of the active object map. If not
-specified, the default value is 64.</td>
-      </tr>
-      <tr>
-        <td><code>-ORBUseridPolicyDemuxStrategy</code> <em>user id
-policy based demultiplexing strategy</em></td>
+        <td><code>-ORBTransientidPolicyDemuxStrategy</code> <em>transient
+id policy based demultiplexing strategy</em></td>
         <td>Specify the demultiplexing lookup strategy to be used with
-the user id policy. The <em>demultiplexing strategy</em> can be one of
-        <code>dynamic</code> or <code>linear</code>. This option
-defaults to using the <code>dynamic</code> strategy. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBSystemidPolicyDemuxStrategy</code> <em>system id
-policy based demultiplexing strategy</em></td>
-        <td>Specify the demultiplexing lookup strategy to be used with
-the system id policy. The <em>demultiplexing strategy</em> can be one
-of <code>dynamic</code>, <code>linear</code>, or <code>active</code>.
-This option defaults to use the <code>dynamic</code> strategy when <code>-ORBAllowReactivationOfSystemids</code>
-is true, and to <code>active</code> strategy when <code>-ORBAllowReactivationOfSystemids</code>
-is false. </td>
+the transient id policy. The <em>demultiplexing strategy</em> can be
+one of <code>dynamic</code>, <code>linear</code>, or <code>active</code>.
+This option defaults to using the <code>active</code> strategy. </td>
       </tr>
       <tr>
         <td><code>-ORBUniqueidPolicyReverseDemuxStrategy</code> <em>unique
@@ -1209,71 +1671,12 @@ can be one of <code>dynamic</code> or <code>linear</code>. This
 option defaults to using the <code>dynamic</code> strategy. </td>
       </tr>
       <tr>
-        <td><code>-ORBAllowReactivationOfSystemids</code> <em>allows
-reactivation of system ids</em></td>
-        <td>Specify whether system ids can be reactivated, i.e., once
-an id that was generated by the system has been deactivated, will the
-user reactivate a new servant using the old id. If the user is not
-going to use this feature, the IORs can be shortened, an extra
-comparison in the critical upcall path removed, and some memory on the
-server side can be saved. The <code>ORBAllowReactivationOfSystemids</code>
-can be <code>0</code> or <code>1</code>. This option defaults to <code>1</code>.
-        </td>
-      </tr>
-      <tr>
-        <td><code>-ORBActiveHintInIds</code> <em>adds an active hint
-in
-ids</em></td>
-        <td>Specify whether an active hint should be added to ids. With
-active hints, ids can be found quickly. However, they lead to larger
-IORs. Note that this option is disregarded <code>if
--ORBAllowReactivationOfSystemids</code> is set to <code>0</code>. The <em>-ORBActiveHintInIds</em>
-can be <code>0</code> or <code>1</code>. This option defaults to <code>1</code>.
-        </td>
-      </tr>
-      <tr>
-        <td><code>-ORBPoaMapSize</code> <em>poa map size</em></td>
-        <td>Specify the size of the POA map. If not specified, the
-default value is 24.</td>
-      </tr>
-      <tr>
-        <td><code>-ORBPersistentidPolicyDemuxStrategy</code> <em>persistent
-id policy based demultiplexing strategy</em></td>
+        <td><code>-ORBUseridPolicyDemuxStrategy</code> <em>user id
+            policy based demultiplexing strategy</em></td>
         <td>Specify the demultiplexing lookup strategy to be used with
-the persistent id policy. The <em>demultiplexing strategy</em> can be
-one of <code>dynamic</code> or <code>linear</code>. This option
-defaults to using the <code>dynamic</code> strategy. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBTransientidPolicyDemuxStrategy</code> <em>transient
-id policy based demultiplexing strategy</em></td>
-        <td>Specify the demultiplexing lookup strategy to be used with
-the transient id policy. The <em>demultiplexing strategy</em> can be
-one of <code>dynamic</code>, <code>linear</code>, or <code>active</code>.
-This option defaults to using the <code>active</code> strategy. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBActiveHintInPOANames</code> <em>adds an active
-hint in poa names</em></td>
-        <td>Specify whether an active hint should be added to POA
-names. With active hints, POA names can be found quickly. However, they
-lead to larger IORs. The <code>-ORBActiveHintInPOANames</code> can be <code>0</code>
-or <code>1</code>. This option defaults to <code>1</code>. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBThreadFlags</code> <em>thread flags</em></td>
-        <td>Specify the flags used for thread creation. Flags can be
-any logical-OR combination of <code>THR_DETACHED</code>, <code>THR_BOUND</code>,
-        <code>THR_NEW_LWP</code>, <code>THE_SUSPENDED</code>. The
-default is <code>THR_BOUND | THR_DETACHED</code> . </td>
-      </tr>
-      <tr>
-        <td><code>-ORBPOALock</code> <em>lock type</em></td>
-        <td><a name="-ORBPOALock"></a>Specify the type of lock to be
-used for POA accesses. Possible values for <em>lock type</em> are <code>thread</code>,
-which specifies that an inter-thread mutex is used to guarantee
-exclusive access, and <code>null</code>, which specifies that no
-locking be performed. The default is <code>thread</code>.</td>
+          the user id policy. The <em>demultiplexing strategy</em> can be one of
+          <code>dynamic</code> or <code>linear</code>. This option
+          defaults to using the <code>dynamic</code> strategy. </td>
       </tr>
     </tbody>
   </table>
@@ -1292,12 +1695,10 @@ a default client strategy factory called
 configurator
 (<code>svc.conf</code>) file. The following line in the
 <code>svc.conf</code> file (all in one line)</p>
-<p><code>static
-Client_Strategy_Factory "[list of options]"</code></p>
-<p> would load all
-the options listed within "". An example is available <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">online</a>
-that shows how to specify this option in the <code>svc.conf</code>
+<p><code>static Client_Strategy_Factory "[list of options]"</code></p>
+<p> would load all the options listed within "". An <a
+ href="../performance-tests/Latency/Single_Threaded/svc.conf">example</a>
+is available that shows how to specify this option in the <code>svc.conf</code>
 file.</p>
 <p></p>
 <blockquote>
@@ -1309,22 +1710,13 @@ file.</p>
         <th>Description</th>
       </tr>
       <tr>
-        <td><code><a name="#-ORBProfileLock">-ORBProfileLock</a></code>
-        <em>which</em></td>
-        <td>Specify the kind of synchronization primitive for the
-Profiles. Default is <em>thread</em>, which means that a regular
-thread mutex is used. The second option is <em>null</em>, which means
-a null lock is used. This makes sense in case of optimizations and is
-allowed when no forwarding is used or only a single threaded client. </td>
-      </tr>
-      <tr>
         <td><code>-ORBClientConnectionHandler</code> <em>MT | ST | RW
         / MT_NOUPCALL</em><br>
         <code>-ORBWaitStrategy</code> <em>MT / ST / RW / MT_NOUPCALL
         </em>
 </td>
         <td><em>Please note that these two options are synonymous and can be used interchangeably.</em>
-	<p><a name="-ORBClientConnectionHandler"></a><em>ST</em> means
+        <p><a name="-ORBClientConnectionHandler"></a><em>ST</em> means
 use the single-threaded client connection handler, i.e., the leader
 follower model will not be used. However, <em>ST</em> does support
 nested upcalls and handling of new requests while waiting for the reply
@@ -1337,26 +1729,81 @@ of multiple threads with a single Reactor. </p>
 instead of waiting in the Reactor using the Leader/Followers
 pattern. The <em>RW</em> strategy only works when the application
 does not have to worry about new request showing up when waiting for a
-response. Further, this strategy cannot be used with Asynchronous
-Method Invocation (AMI) calls. Therefore, this strategy is appropriate
-only for "pure" synchronous clients. Note that applications that
-require nested upcalls are not "pure" synchronous clients. Also note that this
-strategy will only affect two way calls, since there is no waiting for
-one way calls. This strategy can also be used in an application that
-is both a client and a server if the server side is handled by a
-separate thread and the client threads are "pure" clients. </p> <p>
-        <CODE>MT_NOUPCALL</CODE> <b>(EXPERIMENTAL!)</b> means use a client connection handler that
+response. Further, this strategy cannot be used with BiDIR GIOP.
+Note that applications that require nested upcalls are not compatible
+with this strategy. Also note that this strategy will only affect synchronous
+two way calls, since there is no waiting for one way calls or AMI requests
+(at least not in the same sense as for synchronous two way calls).
+This strategy can also be used in an application that
+is both a client and a server where the server side is handled by a
+separate thread and the client threads are "pure" clients.
+Use in single threaded applications with both client and server roles is
+also possible but in these cases special care has to be taken to avoid
+deadlocks because of nested synchronous calls. Mixing in AMI requests and/or
+other asynchronous reactor (timer/notification) events might help solve
+such issues.
+When this strategy is set to RW, then also the -ORBFlushingStrategy
+(which is part of the Resource_Factory) has to be set to <code>blocking</code>.</p>
+<p>
+        <CODE>MT_NOUPCALL</CODE> means use a client connection handler that
         participates in the leader-follower model like MT, but, like
-        RW, does not allow handling of nested upcalls within the
-        waiting thread.  Note that with this strategy it is possible
+        RW, does not allow handling of nested CORBA upcalls within the
+        waiting thread. It does allow handling of other non CORBA (ACE reactor events)
+        like timers and ACE notification queue events. Note that with
+        this strategy it is possible
         to "run out of threads" in a thread pool, and that TAO doesn't
         grow thread pools.  Unlike RW, this does not require  <a
         href="#ORBTransportMuxStrategy">-ORBTransportMuxStrategy&nbsp;<em>EXCLUSIVE</em></a>.
-<!--
-I'm not sure what the affect of AMI on this option is.
--->
 </p>
         <p>Default for this option is <em>MT</em>. </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td><code>-ORBConnectionHandlerCleanup</code> <em>0 | 1</em><br>
+        </td>
+        <td><a name="-ORBConnectionHandlerCleanup"></a>Setting this
+        option to <em>1</em> lets the ORB know that connection
+        handlers setup for sending messages need to  be cleaned up
+        when errors occur. This option has an  effect only for
+        <em> -ORBClientConnectionHandler RW </em>. Rest of  the
+        options for <em> -ORBClientConnectionHandler </em> have been
+        automatically set up for cleaning the connection
+        handlers. Setting the option to <em> 1 </em> has a side
+        effect of registering and unregistering the connection
+        handlers with the Reactor for  every invocation, which has a
+        negative impact on performance. Setting  the option to <em> 0
+        </em> prevents this performance impact but leads  to problems
+        outlined
+ <A
+ href="http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2186">
+ here</A> and  <a
+ href="http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2224">
+ here</A>
+        <p>Default for this option is <em>0</em>. </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td><code>-ORBConnectStrategy</code> <em>type</em></td>
+        <td><a name="-ORBConnectStrategy"></a>TAO provides three
+strategies to connect to remote servers. The default <em>leader_follower</em>
+strategy uses the Reactor and non-blocking connects to connect and this
+strategy participates in the Leader/Followers protocol to synchronize
+access to the Reactor. The <em>reactive</em> strategy uses the Reactor
+for non-blocking connects but does not take part in the
+Leader/Followers protocol, thus it is better used only in single
+threaded applications. Finally, the <em>blocked</em> strategy as the
+name implies, blocks the thread until connection is complete. Some of
+the protocols in TAO (such as SHMIOP and SSLIOP) can only use the <em>blocked</em>
+strategy.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBDefaultSyncScope</code> <em>None | Transport | Server | Target</em></td>
+        <td><a name="-ORBDefaultSyncStrategy"></a>Supply a default sync scope for
+          the ORB to use when a Messaging Sync Scope policy is not used. When not
+          supplied, the default sync scope is SYNC_WITH_TRANSPORT.
         </td>
       </tr>
       <tr>
@@ -1372,18 +1819,378 @@ bulk." </p>
         </td>
       </tr>
       <tr>
-        <td><code>-ORBConnectStrategy</code> <em>type</em></td>
-        <td><a name="-ORBConnectStrategy"></a>TAO provides three
-strategies to connect to remote servers. The default <em>leader_follower</em>
-strategy uses the Reactor and non-blocking connects to connect and this
-strategy participates in the Leader/Followers protocol to synchronize
-access to the Reactor. The <em>reactive</em> strategy uses the Reactor
-for non-blocking connects but does not take part in the
-Leader/Followers protocol, thus it is better used only in single
-threaded applications. Finally, the <em>blocked</em> strategy as the
-name implies, blocks the thread until connection is complete. Some of
-the protocols in TAO (such as SHMIOP and SSLIOP) can only use the <em>blocked</em>
-strategy.
+	<td>Invocation Retry options</td>
+	<td>Options of the same names as the command-line options
+	    described in <a href="#IRO">Multiple Invocation Retry Options</a>
+	    can also be applied client strategy factory service. Any
+	    option provided on the command line will override the
+	    corresponding option in the service configurator
+	    file.
+	</td>
+      </tr>
+    </tbody>
+  </table>
+  </p>
+</blockquote>
+    <h4><a name="TUPF">4. TAO_UIPMC_Protocol_Factory</a></h4>
+    This factory is located in the <code>TAO_PortableGroup</code> library and
+    implements the MIOP protocol. It uses the
+    <a href="TMSF">TAO_MIOP_Resource_Factory</a> to manage UDP connection options
+    shared with the TAO_DIOP_Protocol_Factory. It accepts its own un-shared
+    options shown below. (Any options required should be given
+    to the TAO_UIPMC_Protocol_Factory between the two double-quotes at the end
+    of the line as a space separated list; however none are required as all
+    options take default values if not specified.) This factory can be loaded
+    dynamically using service configurator directives of the form (all on one line):
+    <p><code>dynamic UIPMC_Factory Service_Object *
+        TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""</code></p>
+    <p>Normally however in order to set up the TAO_UIPMC_Protocol_Factory correctly,
+    the application will have to use other service configurator directives as well;
+    for example:</p>
+    <code>dynamic UIPMC_Factory Service_Object *
+        TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""<br>
+        static Resource_Factory "&#8209;ORBProtocolFactory IIOP_Factory
+        &#8209;ORBProtocolFactory UIPMC_Factory"<br>
+        dynamic PortableGroup_Loader Service_Object *
+        TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""</code></p>
+    <blockquote>
+      <p></p>
+      <table border="2" cellpadding="0" cellspacing="2">
+        <tbody>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td ALIGN="left"><code>&#8209;ORBListenerInterfaces</code> <em>targetNetwork=localNetwork[,...] | CopyPreferredInterfaces</em></td>
+            <td ALIGN="left">This is a server-side (listener) option that specifies, on a multihomed host,
+             which network/interface(s) are to be used to listen for communications from the multicast addressed
+             remote client(s). If this option is unspecified (or if none of the given
+             <em>targetNetwork=localNetwork</em> patterns match the current addresses being set-up for
+             the attempted listener) then the default listener will be set-up as specified or defaulted with the
+             <code>&#8209;ORBListenOnAll</code> see above.
+             Otherwise when TAO attempts to establish the listeners for a <em>targetNetwork</em> multicast
+             address(es), it will use the local ip address(es) matching the <em>localNetwork</em> string. Simple
+             wildcards can be used for both parameters, and multiple paired <em>targetNetwork=localNetwork</em>
+             strings can be specified using comma separators (no embedded spaces allowed) or via additional
+             <code>&#8209;ORBListenerInterfaces</code> directives. It is also possiable to specify loopback
+             and/or multiple interfaces at the same time for each listener established via such
+             <code>&#8209;ORBListenerInterfaces</code> directives.
+             <p>
+             For example, for a machine with two network cards identified by the ip addresses
+             <code>192.168.1.10</code> and <code>192.168.1.20</code>, you can use the single directive
+             <code>&#8209;ORBListenerInterfaces 239.255.*=*10,224.255.*=*20</code> or the pair of directives
+             <code>&#8209;ORBListenerInterfaces 239.255.*=*10 &#8209;ORBListenerInterfaces 224.255.*=*20</code>
+             to establish the link to listen for <em>239.255.*</em> multicast addresses on the first interface, and
+             <em>224.255.*</em> multicast addresses on the second interface.</p>
+             <em>targetNetwork</em> can use any string, but must typically match the value writen into the IOR and so
+             will usually be a dotted decimal multicast address in the administrative "site local" range,
+             (<em>224.255.0.0</em> to <em>238.255.255.255</em>) or (<em>239.255.0.0</em> to <em>239.255.255.255</em>).
+             <p><em>localNetwork</em> must use a local dotted decimal address, because it will be matched with
+             the local ip interfaces.</p>
+             The same client-side (sender) assignments as specified by the ORB_init supplied command line option(s)
+             <code>&#8209;ORBPreferredInterfaces</code> can be duplicated by specifying the single special
+             <em>CopyPreferredInterfaces</em> parameter as in <code>&#8209;ORBListenerInterfaces CopyPreferredInterfaces</code>
+             (which may be prefixed and/or postfixed by other <code>&#8209;ORBListenerInterfaces <em>targetNetwork=localNetwork</em></code>
+             options as required).
+        </tr>
+          <tr>
+            <td ALIGN="left"><code>&#8209;ORBListenOnAll</code> <em>0 | 1</em></td>
+            <td ALIGN="left">This is a server-side (listener) option that by default is disabled; however
+            this option only takes effect where no <code>&#8209;ORBListenerInterfaces</code>
+            directives (if any, see below) match the actual multicast address being set-up.
+            <p>If disabled (<em>0</em>) the multicast address will be listened for only on the default multicast
+            interface associated with the <CODE>INADDR_ANY</CODE> local address (normally the first such
+            local interface on the system), the loopback interface is normally excluded.</p>
+            If enabled (<em>1</em>) the multicast address will be listened for on ALL the local network
+            interface(s) which are multicast enabled (again the loopback interface is normally excluded).
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </blockquote>
+    <h4><a name="TMSF">5. TAO_MIOP_Resource_Factory</a></h4>
+    This factory is located in the <code>TAO_PortableGroup</code> library and
+    manages UDP connection options shared between the TAO_DIOP_Protocol_Factory
+    and the <a href="TUPF">TAO_UIPMC_Protocol_Factory</a> (see above). It
+    accepts the options detailed below, which should be specified between the
+    two double-quotes shown here as a space-separated list; however none are
+    required as all options take default values if not specified. This factory
+    can be loaded dynamically using a service configurator directive of the
+    form (all on one line):
+    <p><code>dynamic MIOP_Resource_Factory Service_Object *
+        TAO_PortableGroup:_make_TAO_MIOP_Resource_Factory () ""</code></p>
+    You would normally have to use other service configurator
+    directives as well; for example:
+    <p><code>dynamic UIPMC_Factory Service_Object *
+        TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""<br>
+        static Resource_Factory "&#8209;ORBProtocolFactory IIOP_Factory
+        &#8209;ORBProtocolFactory UIPMC_Factory"<br>
+        dynamic PortableGroup_Loader Service_Object *
+        TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""<br>
+        dynamic MIOP_Resource_Factory Service_Object *
+        TAO_PortableGroup:_make_TAO_MIOP_Resource_Factory () ""</code></p>
+    Since DIOP and MIOP use UDP sockets (which is not a "reliable" transport unlike
+    TCP/IP), it is easy to configure them in such a way that messages will not
+    actually reach the servant. The options below are intended to maximize DIOP and
+    MIOP reliability, but they must be used with care; users of DIOP and MIOP must
+    understand that large messages are sent in fragments and they have to be
+    reassembled by the server in their entirety to be usable by the servant. If
+    even a single data fragment/packet is lost, the whole message cannot be
+    reconstructed and will be unusable. There is no way for the servant to even
+    know it has missed such a DIOP or MIOP message, and being a one-way protocol,
+    neither will the client be aware that the message has been lost. Fragments
+    can be lost due to a variety of reasons:
+    <p></p>
+    <ul>
+      <li>
+      The client sends too large a message fragment, or sends messages too fast,
+      overwhelming the client socket's transmission buffer. (In which case the
+      client-side (sender) OS simply ignores the excess send requests and some of the
+      fragments are not actually sent on the wire.)
+      <li>
+      The server socket's receive buffer became too full to acquire the fragments off
+      the wire. (In this case the client is again sending messages too fast, but this
+      time it is the servant that is too slow to process the messages it has already
+      received.)
+      <li>
+        Something happend to the network or routing and the packet was lost between the
+        client and the server, or the server OS failed to react to the hardware network
+        device in a timely manor so that network packets were lost.</li></ul>
+    <p></p>
+    <p style="Z-INDEX: 0">In the first two cases above, the loss can be mitigated by
+      the client adapting/throttling its sending rate so as to not overflow the
+      capacity of the client's operating system sending buffer and the receiving
+      buffer of the server socket. If there are multiple clients all sending to the
+      same server, all of these clients must be configured to slow down their sending
+      rate (as a software system design descision) as otherwise the server's receive
+      buffer will become swamped and some messages will be lost.</p>
+    <blockquote>
+      <p>
+        <table border="2" cellpadding="0" cellspacing="2" ID="Table1">
+          <tbody>
+            <tr>
+              <th>
+                Option</th>
+              <th>
+                Description</th>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBEagerDequeueing</code> <em>0 | 1</em></td>
+              <td ALIGN="left">This is a server-side (listener) option that is enabled by default;
+                although this default can be overriden when the TAO libraries are built in the <CODE>
+                  ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_EAGER_DEQUEUEING&nbsp;false</CODE>
+                which in this case would turn this off by default, unless specified in the
+                service file. If disabled (0) each thread servicing the MIOP listener will only
+                dequeue enough MIOP message fragments from the socket receive buffer to
+                complete a single full MIOP message which it will then process. This action
+                reduces the amount of user memory consumed by the server process, but it also
+                increases the likelihood of the OS sockets receive buffer overflowing (as
+                whilst processing each message, the thread cannot dequeue other incomming
+                message fragments). If enabled (1) it specifies that each server thread will
+                attempt to dequeue all available MIOP messages from the receiver's socket and
+                queue these up in a user memory FIFO queue, before attempting to process a
+                single MIOP message from the head of this FIFO queue. This action attempts to
+                speed up the dequeueing of MIOP messages from the OS socket receive buffer
+                (with a corresponding increase in the amount of user memory consumed by the
+                server process) so as to limit the number of MIOP messages that the server may
+                miss due to the OS sockets receive buffer becoming full.
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBMaxFragmentRate</code> <em>microseconds</em></td>
+              <td ALIGN="left">
+                <P>This client-side (sender) option (if enabled, see <code>&#8209;ORBSendThrottling</code> below)
+                  specifies a non-zero, positive amount of time (in
+                  uSec, i.e. microseconds) that it takes to transmit and process an individual
+                  message fragment of the maximum size; see the <code>&#8209;ORBMaxFragmentSize</code>
+                  option above. (This is the total of the
+                  client&#8209;&gt;server&#8209;&gt;servant processing time not just the average
+                  network transmission delay.) The client attempts to keep the rate at which it
+                  sends messages down to this speed by purposly delaying sending message
+                  fragments, if it would exceeding this capacity (but also see the <code>&#8209;ORBSendHighWaterMark</code>
+                  option below). The default is same value as specified, or is defaulted by, the <code>
+                    &#8209;ORBMaxFragmentSize</code> option above, but this time teated as
+                  microseconds not bytes. (This default delay value is approximatly the time
+                  required to transmit that number of bytes on a 10Base&#8209;T network.) Larger
+                  values will throttle back the clients transmittion rate, smaller values will
+                  speed it up; but note this value is used with the <code>&#8209;ORBMaxFragmentSize</code>
+                  option above&nbsp;to&nbsp;specify a working ratio&nbsp;so this value may need
+                  to be altered if the size is changed.
+                </P>
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBMaxFragments</code> <em>limit</em></td>
+              <td ALIGN="left">This is a client-side (sender) option used to limit the maximum number of
+                fragments that a client can break the outgoing message up into. The limit must
+                be a positive number or zero (indicating an unlimited number). The default is
+                normally <em>0 (i.e. unlimited)</em>, but this default can be overriden when
+                the TAO libraries are built in <code>ace/config.h</code>, by specifying the
+                new default limit such as <code>#define&nbsp;TAO_DEFAULT_MIOP_MAX_FRAGMENTS&nbsp;1</code>
+                which in this case would turn off fragmentation by default (as only a single
+                fragment would be allowed), unless a new limit is specified in the service
+                file. Any messages that are too large and require more fragments than allowed
+                by this setting are simply not transmitted by the client (the message is
+                effectly lost without any error indication, other than possibly a debug
+                message). This setting can be used as a safety setting to stop swamping the
+                network and servants with abnormally large messages, or during testing to
+                "lose" large messages for whatever reason.
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBFragmentsCleanupStrategy</code> <em>DELAY | NUMBER
+                  | MEMORY</em></td>
+              <td ALIGN="left">This option is used on the server to specify the incomplete
+                fragments cleanup strategy. The default is <em>DELAY</em>, indicating that the
+                fragments that cannot be reassembled after a certain delay should be removed
+                from the waiting queue (i.e. considered lost messages). The other options are <em>
+                  NUMBER</em> and <em>MEMORY</em>, which respectively mean the number of
+                messages in the waiting queue will be limited, or the whole memory comsumed by
+                the incomplete messages in the waiting queue will be limited.
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBFragmentsCleanupBound</code> <em>limit</em></td>
+              <td ALIGN="left">This option specifies the numerical limit for the server's <code>&#8209;ORBFragmentsCleanupStrategy</code>
+                option. If the strategy is <em>DELAY</em>, the value indicates the delay in
+                milliseconds (defaulting to 1000 milliseconds i.e. 1 second). If the strategy
+                is <em>NUMBER</em>, the limit indicates the number of non-reassembled messages
+                in the queue (defaulting to 5 messages). If the strategy is <em>MEMORY</em>,
+                the limit indicates the number of bytes reserved for the whole queue (with the
+                default being 3000000 bytes).
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBMaxFragmentSize</code> <em>bytes</em></td>
+              <td ALIGN="left">Another client-side (sender) option used to limit the number of bytes in
+                each individual MIOP fragment, which must be between <em>272</em> and <em><code>ACE_MAX_UDP_PACKET_SIZE</code>
+                  (normally 65507)</em> bytes inclusive. Smaller values increase (and larger
+                values decrease) the number of fragments required to send the actual payload
+                data. Each fragment requires the overhead of a new MIOP header (32 bytes)
+                prefixing the actual data being sent, with the header reducing the actual
+                usable payload data inside each fragment. Roughly this value can be considered
+                as the MTU (Maximum Transmission Unit) set for the specific connection. The
+                default takes the same value as the <code>ACE_MAX_UDP_PACKET_SIZE</code> for
+                the system, but this can be overridden in the <code>ace/config.h</code> by
+                giving a new value for <code>#define&nbsp;TAO_DEFAULT_MIOP_FRAGMENT_SIZE&nbsp;65507</code>
+                when the TAO libraries are built. <b>Note: most gateways and routing networks
+                  define an MTU of around <em>1458-1500</em>; it is therefore advisable to
+                  specify the correct <code>&#8209;ORBMaxFragmentSize</code> value otherwise some
+                  fragments may be lost.</b> See also the <code>&#8209;ORBSndSock</code> option
+                below. Note also if this value is changed (during development) and the <code>&#8209;ORBMaxFragmentRate</code>
+                option below is also specified, you should change that value by the same
+                factor, otherwise the speed of transmission will be effected as these two
+                options specify a working ratio.
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBRcvSock</code> <em>bytes</em></td>
+              <td ALIGN="left">This server-side (listener) option is the size of the incoming socket's
+                message buffer, i.e., how much data can be received directly off the wire by the
+                server and queued for processing by the servant whilst it is busy. If specified
+                in the service configuration file, this value will override (for MIOP only) the
+                value specified by the corresponding ORB_init parameter. If NOT specified in
+                either place, the default value for the system itself will be used. Again for a
+                Linux type OS, the systems RcvSock is usually about <b>65535</b> bytes, but
+                whatever value is actually specified it is normally doubled internally to take
+                account of the control structures required to track the messages themselves and
+                so it is not a hard limit. Specifying as large a value as possible (i.e.
+                whatever upper limit the OS will allow) with the MIOP <code>&#8209;ORBRcvSock</code>
+                option is advisable to maximize the available socket's receive buffer space, but
+                obviously this is a trade off between available memory and other OS non-paged
+                memory uses.
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBSendHighWaterMark</code> <em>bytes</em></td>
+              <td ALIGN="left">This client-side (sender) option (if enabled, see <code>&#8209;ORBSendThrottling</code> below)
+                is the usable size of the message
+                buffer, i.e how much data can be sent without introducing delays into the
+                transmition of individual MIOP fragments (due to the <code>&#8209;ORBMaxFragmentRate</code>
+                option above). <b>Its default value is the size of the buffer maintained by the
+                Operating System for the sending socket at the client side (see the <code>&#8209;ORBSndSock</code>
+                option below) and although it should ideally be based on the server's receive
+                socket buffer size, that information is not available to the client, and the
+                two values normally default to the same size anyway.</b> If in doubt specify
+                this value and&nbsp;set it to a smaller value than the full size of the servers <CODE>
+                  &#8209;ORBRcvSock</CODE> option&nbsp;(especially if multiple clients are all
+                broadcasting to the same server, when each client should only use a fraction of
+                the full buffer size based upon the number of clients actually in use).
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBSendThrottling</code> <em>0 | 1</em></td>
+              <td ALIGN="left">This is a client-side (sender) option that is enabled by default;
+                although this default can be overriden when the TAO libraries are built in the <CODE>
+                  ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_SEND_THROTTLING&nbsp;false</CODE>
+                which in this case would turn off throttling by default, unless specified in
+                the service file. If disabled (0) the client will always attempt to transmit
+                all MIOP message fragments without any delay. If enabled (1) the client will
+                attempt to automatically restrict the speed of sending individual MIOP messages
+                to maintain an average of <code>&#8209;ORBMaxFragmentSize</code> bytes per <code>&#8209;ORBMaxFragmentRate</code>
+                microseconds once the threshold of <code>&#8209;ORBSendHighWaterMark</code> bytes
+                of data are currently being transmitted or are in progress via each individual transport
+                (i.e. each individual client-side (sender) connection to the server).
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBSndSock</code> <em>bytes</em></td>
+              <td ALIGN="left">This client-side (sender) option is the size of the outgoing socket's
+                message buffer. If specified in the service configuration file, this value will
+                override (for MIOP only) the value specified by the corresponding ORB_init
+                parameter. If NOT specified in either place, the default value for the system
+                itself will be used. NOTE: the <code>&#8209;ORBSndSock</code> size normally
+                limits the maximum size of an individual message fragment, larger fragments can
+                be simply ignored (i.e. packet loss) by the client's socket without any error
+                indication; this value and the <code>&#8209;ORBMaxFragmentSize</code> should be
+                set with care. For a Linux type OS, the system's SndSock is usually defaulted to
+                about <b>65535</b> bytes, but whatever value is actually specified it is
+                normally doubled internally to take account of the control structures required
+                to track the messages themselves and so it is not a hard limit.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </p>
+    </blockquote>
+<h4><a name="TTSM">6. Time_Policy_Manager</a></h4>
+The TIME_POLICY manager controls the actual TIME_POLICY strategy used for
+ORB timers and countdowns. TAO provides a default strategy manager called
+<code>Time_Policy_Manager</code>.
+<p>Typically, the following options is set via the service
+configurator
+(<code>svc.conf</code>) file. The following line in the
+<code>svc.conf</code> file (all in one line)</p>
+<p><code>static
+Time_Policy_Manager "[option]"</code></p>
+<p> would load the option listed within "".
+An <a href="../tests/Time_Policy/hr_time.conf">example</a>
+is available that shows how to specify this option in the <code>svc.conf</code>
+file.</p>
+<p></p>
+<blockquote>
+  <p>
+  <table border="2" cellpadding="0" cellspacing="2">
+    <tbody>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><code>-ORBTimePolicyStrategy</code> <em>strategy</em></td>
+        <td><p><a name="-ORBTimePolicyStrategy"></a>The <em>strategy</em> argument
+defines the TIME_POLICY strategy to load. TAO provides two
+standard TIME_POLICY strategies:</p>
+<p><em>OS</em> denotes the system time policy strategy which uses the systems
+equivalent of <code>gettimeofday</code> to return a current time value. This is the default for
+TAO (unless <code>TAO_USE_HR_TIME_POLICY_STRATEGY</code> has been defined).</p>
+<p><em>HR</em> denotes the highres time policy strategy which uses the systems
+equivalent of a <code>MONOTONIC</code> timer source to return a current time value (when
+<code>TAO_USE_HR_TIME_POLICY_STRATEGY</code> has been defined this becomes the default for TAO).</p>
+<p>Any other value is assumed to denote the exact name of a dynamically loadable
+TIME_POLICY strategy. The <a href="../tests/Time_Policy_Custom">Time_Policy_Custom</a>
+test provides an example of this functionality.</p>
         </td>
       </tr>
     </tbody>

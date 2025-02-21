@@ -1,10 +1,6 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Wait_On_Read.h
- *
- *  $Id$
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
@@ -21,30 +17,42 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Wait_On_Read
  *
- *
  * Simply block on read() to wait for the reply.
  */
-class TAO_Export TAO_Wait_On_Read :  public TAO_Wait_Strategy
+class TAO_Wait_On_Read :  public TAO_Wait_Strategy
 {
-
 public:
   /// Constructor.
-  TAO_Wait_On_Read (TAO_Transport *transport);
+  explicit TAO_Wait_On_Read (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_On_Read (void);
+  ~TAO_Wait_On_Read () override = default;
 
-  // = Documented in TAO_Wait_Strategy.
+  /*! @copydoc TAO_Wait_Strategy::sending_request() */
+  int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics) override;
 
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    TAO_Synch_Reply_Dispatcher &rd);
-  virtual int register_handler (void);
-  virtual bool non_blocking (void) const;
-  virtual bool can_process_upcalls (void) const;
+   /*! @copydoc TAO_Wait_Strategy::finished_request() */
+  void finished_request () override;
+
+  /*! @copydoc TAO_Wait_Strategy::wait() */
+  int wait (ACE_Time_Value *max_wait_time, TAO_Synch_Reply_Dispatcher &rd) override;
+
+  /*! @copydoc TAO_Wait_Strategy::register_handler() */
+  int register_handler () override;
+
+  /*! @copydoc TAO_Wait_Strategy::non_blocking() */
+  bool non_blocking () const override;
+
+  /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
+  bool can_process_upcalls () const override;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

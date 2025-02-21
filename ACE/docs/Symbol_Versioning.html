@@ -1,0 +1,233 @@
+<!--  -->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Symbol Versioning in ACE</title>
+  </head>
+
+  <body>
+    <h3>Symbol Versioning in ACE</h3>
+
+    <p>
+      To provide a means for ACE-based application developers to avoid
+      symbol conflicts when multiple versions of ACE are linked to an
+      application ACE supports <em>versioned namespaces</em>.  When
+      enabled (disabled by default), ACE's versioned namespace support
+      causes all ACE symbols (classes, free functions, etc) to be
+      placed within a C++ namespace of the form "<code>namespace
+        ACE_5_5_1</code>".  For example, the <code>ACE_Reactor</code>
+      would end up being placed in the versioned namespace like so:
+    </p>
+
+    <blockquote>
+      <code>
+<pre>
+        namespace ACE_5_5_1
+        {
+          class ACE_Reactor
+          {
+            ...
+          };
+        }
+        using namespace ACE_5_5_1;
+</pre>
+      </code>
+    </blockquote>
+
+    <p>
+      Notice that a <code>using</code> clause exposes the ACE types
+      embedded in the versioned namespace back to the global
+      namespace.  This maximizes source code compatibility.  ACE
+      itself does this through the use of two macros:
+    </p>
+    <ul>
+      <li>
+        <code>ACE_BEGIN_VERSIONED_NAMESPACE_DECL</code><br>
+        <ul>
+          <li>
+            Expands to "<code>namespace ACE_VERSIONED_NAMESPACE NAME
+              {</code>", where
+            <code>ACE_VERSIONED_NAMESPACE_NAME</code> by defaults to
+            namespace name of the form
+            <code>ACE_<em>major</em>_<em>minor</em>_<em>beta</em></code>.
+            Users may override the default by defining the
+            <code>ACE_VERSIONED_NAMESPACE_NAME</code> preprocessor
+            symbol in their <code><strong>ace/config.h</strong></code>
+            header file.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>ACE_END_VERSIONED_NAMESPACE_DECL</code>
+        <ul>
+          <li>
+            Expands to "<code>} using namespace
+              ACE_VERSIONED_NAMESPACE_NAME;</code>", where
+            <code>ACE_VERSIONED_NAMESPACE_NAME</code> is described
+            above.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h2>Things ACE-based Application Developers Should Know</h2>
+    <p>
+      Every effort has been made to make the versioned namespace
+      support in ACE as transparent as possible, including transparent
+      versioned symbol support in the ACE_Service_Configurator when
+      the ACE_Service_Configurator macros, such as <em>e.g.</em>,
+      <code>ACE_FACTORY_DECLARE</code>, are used appropriately.  No
+      changes to service configurator directives are necessary.  For
+      example, the <code>ACE_Service_Configurator</code> will
+      transparently mangle the factory function name in a service
+      configurator directive on-the-fly, meaning it will only load a
+      "versioned" factory function name.  This allows multiple service
+      object factory functions, for example, to coexist in the same
+      process space.
+    </p>
+    <p>
+      There is, however, at least one caveat with respect to source
+      code compatibility: any forward declarations of ACE symbols must
+      also be placed within the versioned namespace.  For example, if
+      you have a forward declaration for <code>ACE_Reactor</code> in
+      your application code, you will need to place it within the
+      configured ACE versioned namespace as follows:
+    </p>
+    <blockquote>
+      <code>
+<pre>
+        ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+        class ACE_Reactor;
+        ACE_END_VERSIONED_NAMESPACE_DECL
+</pre>
+      </code>
+    </blockquote>
+    <p>
+      This must only be done once, as these macros hide the versioned
+      namespace name details from the application.  Alternatively, you
+      could place the forward declaration in a namespace that is an
+      alias of the ACE versioned namespace, <em>e.g.</em>:
+    </p>
+    <blockquote>
+      <code>
+<pre>
+        namespace Foo = ACE_VERSIONED_NAMESPACE_NAME;</code>
+        namespace Foo {
+          class ACE_Reactor;
+        }
+        using namespace Foo;
+</pre>
+      </code>
+    </blockquote>
+    <p>
+      Versioned namespace support in ACE may be enabled by adding
+      <code>versioned_namespace=1</code> to your MPC
+      <code><strong>default.features</strong></code> file.
+    </p>
+
+    <h2>Things ACE Developers Should Know</h2>
+    <p>
+      ACE developers should place all ACE symbols that are potentially
+      exposed to the user, including forward declarations in a
+      versioned namespace using the
+      <code>ACE_BEGIN_VERSIONED_NAMESSPACE_DECL</code> and
+      <code>ACE_END_VERSIONED_NAMESPACE_DECL</code> macros.  Free
+      functions that are declared to have a C calling convention
+      (<em>i.e.</em>, <code>extern "C"</code>) should have their names
+      mangled using the <code>ACE_PREPROC_CONCATENATE</code>
+      preprocessor.  For example:
+    </p>
+    <blockquote>
+      <code>
+<pre>
+        void ACE_func (void) { ... }
+        ...
+        ACE_func(); // Call ACE_func()
+</pre>
+      </code>
+    </blockquote>
+    <p>
+      becomes:
+    </p>
+    <blockquote>
+      <code>
+<pre>
+        #if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
+             && ACE_HAS_VERSIONED_NAMESPACE == 1) \
+          && !(defined (_MSC_VER) && _MSC_VER <= 1200)
+        // MSVC++ 6's preprocessor can't handle macro expansions
+        // required by the versioned namespace support.  *sigh*
+
+        # define ACE_FOO_FUNC_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_foo_func)
+
+        #else
+
+        # define ACE_FOO_FUNC_NAME ACE_foo_func
+
+        #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+        ...
+        void ACE_FOO_FUNC_NAME (void) { ... }
+
+        ACE_FOO_FUNC_NAME();  // Call mangled ACE_foo_func().
+</pre>
+      </code>
+    </blockquote>
+    <p>
+      The <code>ACE_PREPROC_CONCATENATE</code> is used rather than a
+      straight <code>##</code> preprocessor concatenation since in the
+      latter case preprocessor symbols like
+      <code>ACE_VERSIONED_NAMESPACE_NAME</code> will not be expanded
+      if they are concatenated.  <code>ACE_PREPROC_CONCATENATE</code>
+      forces the preprocessor to expand them during the argument
+      prescan by calling a macro that itself calls another that
+      performs the actual concatenation.
+    </p>
+    <h3>General Guidelines</h3>
+    <ul>
+      <li>
+        Versioned namespace macro/support must be added to all new files
+        added to ACE.
+      </li>
+      <li>
+        Do not place include directives between
+        <code>ACE_BEGIN_VERSIONED_NAMESPACE_DECL</code> and
+        <code>ACE_END_VERSIONED_NAMESPACE_DECL</code> macros.  Doing
+        so  will cause nested namespace to be created, which is not
+        the desired affect.
+      </li>
+      <li>Be aware of preprocessor conditional blocks when placing the
+        versioned namespace macros.  For example, if you open
+        versioned namespace within a given preprocessor condition
+        block, you'll most likely want to close it in the same
+        block.
+      </li>
+      <li>
+        If necessary, reopen and close the versioned namespace
+        multiple times in the same file by using the macros multiple
+        times to address the concerns described in the above two
+        items.
+      </li>
+      <li>
+        The <code>$ACE_ROOT/bin/fuzz.pl</code> script has a sanity
+        checking test for versioned namespaces that may be of use when
+        debugging nested namespace issues, and for detecting
+        <code>BEGIN</code>/<code>END</code> mismatches.
+      </li>
+    </ul>
+    <p>
+      Versioned namespace support in ACE may be enabled by adding
+      <code>versioned_namespace=1</code> to your MPC
+      <code><strong>default.features</strong></code> file.  Additional
+information about versioned namespaces is available from the <A
+HREF="http://www.riverace.com/newsletters/March2006.htm">Riverace
+website</A>.
+    </p>
+    <hr>
+    <address><a href="mailto:ossama@dre.vanderbilt.edu">Ossama Othman</a></address>
+<!-- Created: Fri Mar 17 08:35:50 PST 2006 -->
+<!-- hhmts start -->
+Last modified: 
+<!-- hhmts end -->
+  </body>
+</html>

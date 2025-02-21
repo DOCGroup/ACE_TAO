@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  libs    += TAO_TypeCodeFactory
+  after   += TypeCodeFactory
+}

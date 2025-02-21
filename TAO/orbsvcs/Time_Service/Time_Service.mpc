@@ -1,19 +1,27 @@
 // -*- MPC -*-
-// $Id$
-
-project(Time_Service_Server) : orbsvcsexe, core, time, naming, utils {
-  exename  = Time_Service_Server
+project(Time_Service_Server) : orbsvcsexe, install, time_serv, naming, utils, avoids_corba_e_micro {
+  exename  = tao_costime_server
   Source_Files {
     Server_i.cpp
     Time_Service_Server.cpp
   }
+
+  specific {
+    install_dir = tao/docs/timesvc
+  }
+
+  InstallData_Files {
+    README
+  }
+
+  Documentation_Files {
+  }
 }
 
-project(Time_Service_Clerk) : orbsvcsexe, core, time, naming, utils {
-  exename  = Time_Service_Clerk
+project(Time_Service_Clerk) : orbsvcsexe, install, time_serv, naming, utils, avoids_corba_e_micro {
+  exename  = tao_costime_clerk
   Source_Files {
     Clerk_i.cpp
     Time_Service_Clerk.cpp
   }
 }
-

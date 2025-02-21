@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/High_Res_Timer.h"
@@ -8,22 +6,19 @@
 #include "testC.h"
 #include "FP_Scheduler.h"
 
-ACE_RCSID(MT_Server, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int do_shutdown = 0;
 int enable_dynamic_scheduling = 0;
 int enable_yield = 1;
 
+/**
+ * Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
   Worker (CORBA::ORB_ptr orb,
           Simple_Server_ptr server_ptr,
@@ -34,7 +29,7 @@ public:
     //          int sleep_time);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
@@ -50,9 +45,9 @@ private:
 };
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xk:i:ds");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:ds"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -90,12 +85,12 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Fixed_Priority_Scheduler* scheduler=0;
   RTScheduling::Current_var current;
@@ -116,7 +111,9 @@ main (int argc, char *argv[])
   max_prio = ACE_Sched_Params::priority_max (sched_policy,
                                              sched_scope);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Sched_Params sched_params (sched_policy, max_prio);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_OS::sched_params (sched_params);
 
@@ -125,8 +122,7 @@ main (int argc, char *argv[])
       if (errno == ENOTSUP)
         {
           ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("getprio not supported\n")
-                     ));
+                     ACE_TEXT ("getprio not supported\n")));
         }
       else
         {
@@ -138,27 +134,26 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t): main thread prio is %d\n", prio));
 
-  ACE_TRY_NEW_ENV
+  try
     {
+      RTScheduling::Scheduler_var sched_owner;
+
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
@@ -166,15 +161,11 @@ main (int argc, char *argv[])
       if (enable_dynamic_scheduling)
         {
           ACE_DEBUG ((LM_DEBUG, "Dyn Sched enabled\n"));
-          CORBA::Object_ptr manager_obj =
-            orb->resolve_initial_references ("RTSchedulerManager"
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          CORBA::Object_var manager_obj =
+            orb->resolve_initial_references ("RTSchedulerManager");
 
           TAO_RTScheduler_Manager_var manager =
-            TAO_RTScheduler_Manager::_narrow (manager_obj
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
           Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type;
           if (enable_yield)
@@ -191,24 +182,20 @@ main (int argc, char *argv[])
                                          disp_impl_type,
                                          sched_policy,
                                          sched_scope), -1);
+          sched_owner = scheduler;
 
           manager->rtscheduler (scheduler);
 
           CORBA::Object_var object =
-            orb->resolve_initial_references ("RTScheduler_Current"
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->resolve_initial_references ("RTScheduler_Current");
 
           current  =
-            RTScheduling::Current::_narrow (object.in () 
-                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
+            RTScheduling::Current::_narrow (object.in ());
         }
 
-      Worker worker1 (orb.in (), 
-                      server.in (), 
-                      current.in (), 
+      Worker worker1 (orb.in (),
+                      server.in (),
+                      current.in (),
                       scheduler, 10, 15);
 
       if (worker1.activate (flags, 1, 0, max_prio) != 0)
@@ -219,9 +206,9 @@ main (int argc, char *argv[])
 
       ACE_OS::sleep(2);
 
-      Worker worker2 (orb.in (), 
-                      server.in (), 
-                      current.in (), 
+      Worker worker2 (orb.in (),
+                      server.in (),
+                      current.in (),
                       scheduler, 12, 5);
 
       if (worker2.activate (flags, 1, 0, max_prio) != 0)
@@ -233,50 +220,45 @@ main (int argc, char *argv[])
       worker1.wait ();
       worker2.wait ();
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%t): wait for worker threads done in main thread\n"));
 
       if (do_shutdown)
         {
           if (enable_dynamic_scheduling)
             {
-	      FP_Scheduling::SegmentSchedulingParameter sched_param;
-	      sched_param.base_priority = 0;
+              FP_Scheduling::SegmentSchedulingParameter sched_param;
+              sched_param.base_priority = 0;
               CORBA::Policy_var sched_param_policy
-		= scheduler->create_segment_scheduling_parameter (sched_param);
+                = scheduler->create_segment_scheduling_parameter (sched_param);
               CORBA::Policy_ptr implicit_sched_param = 0;
               current->begin_scheduling_segment (0,
                                                  sched_param_policy.in (),
-                                                 implicit_sched_param
-                                                 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                 implicit_sched_param);
             }
 
             ACE_DEBUG ((LM_DEBUG, "(%t): about to call server shutdown\n"));
-            server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            server->shutdown ();
 
             ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
 
 
             if (enable_dynamic_scheduling)
             {
-              current->end_scheduling_segment (0 
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              current->end_scheduling_segment (0);
             }
         }
 
       scheduler->shutdown ();
       ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -301,9 +283,8 @@ Worker::Worker (CORBA::ORB_ptr orb,
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   const char * name = 0;
   /*
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):about to sleep for %d sec\n", sleep_time_));
@@ -319,8 +300,7 @@ Worker::svc (void)
       if (errno == ENOTSUP)
         {
           ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("getprio not supported\n")
-                     ));
+                     ACE_TEXT ("getprio not supported\n")));
         }
       else
         {
@@ -337,29 +317,25 @@ Worker::svc (void)
       FP_Scheduling::SegmentSchedulingParameter sched_param;
       sched_param.base_priority = prio_;
       CORBA::Policy_var sched_param_policy
-	= scheduler_->create_segment_scheduling_parameter (sched_param);
+        = scheduler_->create_segment_scheduling_parameter (sched_param);
 
       CORBA::Policy_ptr implicit_sched_param = 0;
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):before begin_sched_segment\n"));
       scheduler_current_->begin_scheduling_segment (name,
                                                     sched_param_policy.in (),
-                                                    implicit_sched_param
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                                    implicit_sched_param);
 
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):after begin_sched_segment\n"));
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):about to make two way call\n"));
-  server_->test_method (server_load_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  server_->test_method (server_load_);
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):two way call done\n"));
 
   if (enable_dynamic_scheduling)
     {
       scheduler_current_->end_scheduling_segment (name);
-      ACE_CHECK_RETURN (-1);
     }
 
   ACE_DEBUG ((LM_DEBUG, "client worker thread (%t) done\n"));

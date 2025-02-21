@@ -1,31 +1,21 @@
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/ior_corbaname/
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//     This implements a simple CORBA client for the
-//     corbaname: style IOR parser
-//
-// = AUTHOR
-//     Priyanka Gontla <pgontla@ece.uci.edu>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *   This implements a simple CORBA client for the
+ *   corbaname: style IOR parser
+ *
+ *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #include "ior_corbaname_client_i.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       IOR_corbaname_Client_i client;
 
@@ -33,14 +23,12 @@ int main (int argc, char *argv [])
         return 1;
       else
         {
-          return client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          return client.run ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
     }
-  ACE_ENDTRY;
   return 1;
 }

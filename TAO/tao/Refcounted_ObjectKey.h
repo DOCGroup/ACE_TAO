@@ -4,8 +4,6 @@
 /**
  *  @file Refcounted_ObjectKey.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -15,11 +13,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Object_KeyC.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Object_KeyC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -29,8 +31,8 @@ namespace TAO
    * @brief A wrapper class that ties together a refcount to an
    * ObjectKey.
    *
-   * The refounts in this class is manipulated within the context of
-   * the lock in the TAO::ObjectKey_Table. Manipulating the refcounts
+   * The refcount in this class is manipulated within the context of
+   * the lock in the TAO::ObjectKey_Table. Manipulating the refcount
    * from anywhere else is strictly forbidden.
    */
   class TAO_Export Refcounted_ObjectKey
@@ -40,29 +42,34 @@ namespace TAO
     Refcounted_ObjectKey (const ObjectKey &ref);
 
     /// Accessor for the underlying ObjectKey.
-    const ObjectKey &object_key (void) const;
+    const ObjectKey &object_key () const;
 
   protected:
     friend class ObjectKey_Table;
 
     /// Protected destructor
-    ~Refcounted_ObjectKey (void);
+    ~Refcounted_ObjectKey ();
 
-    /// Methods for incrementing and decrementing refcounts.
-    long incr_refcount (void);
-    long decr_refcount (void);
+    /// Methods for incrementing refcount.
+    void incr_refcount ();
+
+    /// Methods for decrementing refcount. Return the refcount, used by the
+    /// ObjectKey table.
+    CORBA::ULong decr_refcount ();
 
   private:
     /// The object key
     ObjectKey object_key_;
 
     /// The refcount on the object key..
-    long ref_count_;
+    CORBA::ULong refcount_;
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Refcounted_ObjectKey.inl"
+#include "tao/Refcounted_ObjectKey.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

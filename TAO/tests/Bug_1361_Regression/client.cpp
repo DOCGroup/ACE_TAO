@@ -1,20 +1,15 @@
-// $Id$
-
 #include "Echo.h"
 #include "ORB_Task.h"
-#include "tao/Messaging/Messaging.h"
-#include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
+#include "ace/OS_NS_signal.h"
 
-ACE_RCSID(Bug_1270_Regression, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int serverthreads = 4;
 
 int
-parse_args (int argc, char *argv[]);
+parse_args (int argc, ACE_TCHAR *argv[]);
 
 class Client_Timer : public ACE_Event_Handler
 {
@@ -23,9 +18,11 @@ public:
   Client_Timer (ACE_Reactor * reactor)
     : ACE_Event_Handler (reactor)
   {
+    this->reference_counting_policy ().value (
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   }
 
-  void activate (void)
+  void activate ()
   {
     ACE_Time_Value tv (150, 0);
     this->reactor()->schedule_timer (this, 0, tv, tv);
@@ -34,38 +31,26 @@ public:
   /// Thread entry point
   int handle_timeout (ACE_Time_Value const & , void const *)
   {
-    // kill the application
-    raise (9);
     this->reactor ()->cancel_timer (this);
+    // kill the application
+    ACE::terminate_process (ACE_OS::getpid ());
     return 0;
   }
-  int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
-  {
-    delete this;
-    return 0;
-  }
-
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -73,45 +58,14 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (policy_current.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "ERROR: Nil policy current\n"));
-          return 1;
-        }
-      CORBA::Any scope_as_any;
-      scope_as_any <<= Messaging::SYNC_WITH_TRANSPORT;
-
-      CORBA::PolicyList policies(1); policies.length (1);
-      policies[0] =
-        orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            scope_as_any
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      TAO::Utils::Servant_Var<Echo> impl;
+      PortableServer::ServantBase_var impl;
       {
-        Echo * tmp;
+        Echo * tmp = 0;
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
@@ -122,19 +76,19 @@ main (int argc, char *argv[])
         impl = tmp;
       }
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (impl.in ());
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Test::Echo_var echo =
-        impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Echo::_narrow (object_act.in ());
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Test::Echo_Caller_var server =
-        Test::Echo_Caller::_narrow(tmp.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Echo_Caller::_narrow(tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -144,32 +98,28 @@ main (int argc, char *argv[])
                             1);
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       ORB_Task worker (orb.in());
       worker.activate (THR_NEW_LWP | THR_JOINABLE,
                        serverthreads);
 
-      ACE_TRY_EX (BL)
+      try
         {
           for(int i = serverthreads; i; --i)
             {
-              server->start_task(echo.in()
-                                 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX (BL);
+              server->start_task(echo.in());
             }
         }
-      ACE_CATCHALL
+      catch (...)
         {
         }
-      ACE_ENDTRY;
 
       Client_Timer * task = new Client_Timer (orb->orb_core()->reactor());
       task->activate ();
+      task->remove_reference ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       worker.wait ();
 
@@ -177,28 +127,23 @@ main (int argc, char *argv[])
                   "(%P|%t) client - event loop finished\n"));
 
       // Actually the code here should never be reached.
-      root_poa->destroy (1, 1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:t:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -208,7 +153,7 @@ parse_args (int argc, char *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 't':
-        serverthreads = atoi(get_opts.opt_arg ());
+        serverthreads = ACE_OS::atoi(get_opts.opt_arg ());
         break;
 
       case '?':
@@ -221,6 +166,6 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }

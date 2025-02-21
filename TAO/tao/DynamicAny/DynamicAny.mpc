@@ -1,0 +1,54 @@
+project(*idl) : tao_versioning_idl_defaults, valuetype, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb \
+                -Wb,export_macro=TAO_DynamicAny_Export \
+                -Wb,export_include=tao/DynamicAny/dynamicany_export.h \
+                -Wb,include_guard=TAO_DYNAMICANY_SAFE_INCLUDE \
+                -Wb,safe_include=tao/DynamicAny/DynamicAny.h \
+                -iC tao/DynamicAny
+    DynamicAny.pidl
+  }
+  PIDL_Files {
+  }
+
+  specific {
+    install_dir = tao/DynamicAny
+  }
+}
+
+project(DynamicAny) : install, tao_output, valuetype, taoidldefaults {
+  after       += *idl
+  sharedname    = TAO_DynamicAny
+  dynamicflags  = TAO_DYNAMICANY_BUILD_DLL
+
+  Source_Files {
+    DynamicAny.cpp
+    DynamicAnyC.cpp
+    DynAny_i.cpp
+    DynArray_i.cpp
+    DynCommon.cpp
+    DynEnum_i.cpp
+    DynSequence_i.cpp
+    DynStruct_i.cpp
+    DynUnion_i.cpp
+    DynValue_i.cpp
+    DynValueBox_i.cpp
+    DynValueCommon_i.cpp
+    DynAnyFactory.cpp
+  }
+
+  Header_Files {
+    *.h
+    DynamicAnyC.h
+    DynamicAnyS.h
+  }
+
+  Template_Files {
+    DynAnyUtils_T.cpp
+  }
+
+  specific {
+    install_dir = tao/DynamicAny
+  }
+}

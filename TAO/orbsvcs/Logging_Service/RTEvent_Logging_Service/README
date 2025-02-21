@@ -1,5 +1,5 @@
 The service is registered with the naming service with the name
-"RTEventLogFactory" .  
+"RTEventLogFactory" .
 
 To run the RTEvent Logging Service:
 ------------------------

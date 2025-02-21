@@ -1,11 +1,8 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Endpoint_Strategy.h
- *
- *  $Id$
  *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  */
@@ -16,7 +13,8 @@
 #define TAO_AV_ENDPOINT_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "AVStreams_i.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "ace/os_include/os_netdb.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -24,6 +22,12 @@
 # pragma warning(push)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Process_Options;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_AV_Endpoint_Strategy
@@ -33,23 +37,20 @@
  */
 class TAO_AV_Export TAO_AV_Endpoint_Strategy
 {
-
 public:
   /// Constructor
-  TAO_AV_Endpoint_Strategy (void);
+  TAO_AV_Endpoint_Strategy ();
 
   /// Destructor
-  virtual ~TAO_AV_Endpoint_Strategy (void);
+  virtual ~TAO_AV_Endpoint_Strategy ();
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
   /// Called by the MMDevice, when it needs to create an B type endpoint
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
 protected:
   /// The "A" stream endpoint
@@ -60,7 +61,6 @@ protected:
 
   /// The vdev
   AVStreams::VDev_var vdev_;
-
 };
 
 // ----------------------------------------------------------------------
@@ -72,33 +72,32 @@ protected:
 class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy
   : public TAO_AV_Endpoint_Strategy
 {
-
 public:
   /// Constructor. The process_options contain the name and arguments
   /// for the process to be created
   TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Process_Strategy (void);
+  virtual ~TAO_AV_Endpoint_Process_Strategy ();
 
   /// creates a new child process, and waits on a semaphore
   /// until the child process has finished creating the endpoints
-  virtual int activate (void);
+  virtual int activate ();
 
 protected:
   /// Bind to the naming service
-  virtual int bind_to_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int bind_to_naming_service ();
 
   /**
    * Get the object reference for the newly created stream
    * endpoint (which will be in the child process)
    * Subclasses will define the functionality for this
    */
-  virtual int get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual int get_stream_endpoint () = 0;
 
   /// Get the Vdev object reference for the newly created
   /// endpoint
-  virtual int get_vdev (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int get_vdev ();
 
   /// Naming context
   CosNaming::NamingContext_var naming_context_;
@@ -123,23 +122,20 @@ protected:
 class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_A
   : public TAO_AV_Endpoint_Process_Strategy
 {
-
 public:
   /// Constructor
   TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Process_Strategy_A (void);
+  virtual ~TAO_AV_Endpoint_Process_Strategy_A ();
 
 protected:
   /// Creates an "A" type stream endpoint, and a vdev
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
   /// Gets the "A" type stream endpoint from the child process
-  virtual int get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
-
+  virtual int get_stream_endpoint ();
 };
 
 // ----------------------------------------------------------------------
@@ -151,28 +147,27 @@ protected:
 class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_B
   : public TAO_AV_Endpoint_Process_Strategy
 {
-
 public:
   /// Constructor
   TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Process_Strategy_B (void);
+  virtual ~TAO_AV_Endpoint_Process_Strategy_B ();
 
 protected:
   /// Creates a "B" type stream endpoint, and a vdev
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
 
   /// Gets the object reference of the "B" type streamendpoint.
-  virtual int get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
-
+  virtual int get_stream_endpoint ();
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // Include the templates here.
-#include "Endpoint_Strategy_T.h"
+#include "orbsvcs/AV/Endpoint_Strategy_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

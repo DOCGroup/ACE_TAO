@@ -1,22 +1,19 @@
-// $Id$
-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
-const char *ior =
-  "corbaloc:iiop:192.3.47/10007/RandomObject";
+const ACE_TCHAR *ior =
+  ACE_TEXT("corbaloc:iiop:192.3.47/10007/RandomObject");
 
 ACE_Profile_Timer profile_timer;
 TimeBase::TimeT timeout_period = 1000000;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -35,22 +32,21 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-test_timeout (CORBA::Object_ptr object ACE_ENV_ARG_DECL)
+test_timeout (CORBA::Object_ptr object)
 {
   // Start the timer
   profile_timer.start ();
 
-  ACE_TRY
+  try
     {
       // First connection happens here..
       Test::Hello_var hello =
-        Test::Hello::_narrow(object ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Hello::_narrow(object);
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -61,16 +57,14 @@ test_timeout (CORBA::Object_ptr object ACE_ENV_ARG_DECL)
         }
 
       CORBA::String_var the_string =
-        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello->get_string ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Stop the timer
       profile_timer.stop ();
@@ -82,55 +76,44 @@ test_timeout (CORBA::Object_ptr object ACE_ENV_ARG_DECL)
       // Give a 30% error margin for handling exceptions etc. It is a
       // high margin, though!. But the timeout is too small and wider
       // range would help.
-#if defined (ACE_LACKS_FLOATING_POINT) && (ACE_LACKS_FLOATING_POINT != 0)
-      // The elapsed time is in usecs
-      if (el.real_time > 200000)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) ERROR: Too long to timeout \n"),
-                             1);
-        }
-#else
       // The elapsed time is in secs
       if (el.real_time > 0.200)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) ERROR: Too long to timeout \n"),
+                             "(%P|%t) ERROR: Too long to timeout: %F\n",
+                             el.real_time),
                              1);
         }
-#endif /* ACE_LACKS_FLOATING_POINT == 1*/
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Success, timeout: %F\n",
+                    el.real_time));
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int retval = 1;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("PolicyCurrent");
 
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyCurrent::_narrow (object.in ());
 
       CORBA::Any timeout_as_any;
       timeout_as_any <<= timeout_period;
@@ -139,36 +122,27 @@ main (int argc, char *argv[])
       policy_list.length (1);
       policy_list[0] =
         orb->create_policy (TAO::CONNECTION_TIMEOUT_POLICY_TYPE,
-                            timeout_as_any
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            timeout_as_any);
 
       policy_current->set_policy_overrides (policy_list,
-                                            CORBA::ADD_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            CORBA::ADD_OVERRIDE);
 
       for (CORBA::ULong l = 0;
            l != policy_list.length ();
            ++l)
         {
-          policy_list[l]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy_list[l]->destroy ();
         }
 
-      retval = test_timeout (tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = test_timeout (tmp.in ());
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return retval;
 }

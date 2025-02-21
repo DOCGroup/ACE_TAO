@@ -1,0 +1,50 @@
+
+//=============================================================================
+/**
+ *  @file    simple2.idl
+ *
+ *  Further tests of simple IDL
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+
+#include "simple.idl"
+
+interface simple3 : simple2
+{
+  exception OverFlow
+  {
+    long   a;
+    string msg;
+  };
+
+  exception UnderFlow
+  {
+    long   b;
+    string msg;
+  };
+
+  exception BadNum
+  {
+    vec10 c;
+  };
+
+  exception UserError
+  {
+    any reason;
+  };
+
+  long op3 (in long a,
+            out simple3 b,
+            out simple2 c,
+            out simple d)
+    raises (OverFlow, UnderFlow, BadNum);
+
+  any op4 (in any x,
+           inout any y,
+           out any z)
+    raises (UnderFlow);
+};

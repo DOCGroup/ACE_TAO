@@ -1,0 +1,33 @@
+// -*- MPC -*-
+project(*Server): taoserver, tc_iiop, pi_server {
+  after += Current_Test_Lib_Client Current_Test_Lib_Server
+  libs  += Current_Test_Lib_Client Current_Test_Lib_Server
+  includes += . ../lib
+  libpaths += ../lib
+
+  Source_Files {
+    IIOP_Tester.cpp
+    server.cpp
+    Current_Test_Impl.cpp
+    IIOP_Server_Request_Interceptor.cpp
+    IIOP_Server_Main.cpp
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, tc_iiop, dynamicinterface, pi_server {
+  after += *Server Current_Test_Lib_Client Current_Test_Lib_Server
+  libs  += Current_Test_Lib_Client Current_Test_Lib_Server
+  includes += . ../lib
+  libpaths += ../lib
+
+  Source_Files {
+    IIOP_Tester.cpp
+    client.cpp
+  }
+
+  IDL_Files {
+  }
+}

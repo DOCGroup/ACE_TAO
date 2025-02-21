@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -84,8 +82,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Constant : public virtual AST_Decl
 {
 public:
-  AST_Constant (void);
-
   AST_Constant (AST_Expression::ExprType et,
                 AST_Decl::NodeType nt,
                 AST_Expression *ev,
@@ -95,28 +91,18 @@ public:
                 AST_Expression *ev,
                 UTL_ScopedName *n);
 
-  virtual ~AST_Constant (void);
+  virtual ~AST_Constant ();
 
   // Data Accessors.
-  AST_Expression *constant_value (void);
-  AST_Expression::ExprType et (void);
+  AST_Expression *constant_value ();
+  AST_Expression::ExprType et ();
 
   // Accessors for the private member.
-  idl_bool ifr_added (void);
-  void ifr_added (idl_bool val);
+  bool ifr_added ();
+  void ifr_added (bool val);
 
-  const char *exprtype_to_string (void);
-  // Returns the appropriate type.
-
-  static const char *exprtype_to_string (AST_Expression::ExprType et);
-  // For use with ORBs without the CORBA namespace.
-
-  UTL_ScopedName *enum_full_name (void);
+  UTL_ScopedName *enum_full_name ();
   // If our type is enum, we have to generate the scoped name.
-
-  // Narrowing
-  DEF_NARROW_METHODS1(AST_Constant, AST_Decl);
-  DEF_NARROW_FROM_DECL(AST_Constant);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -125,7 +111,11 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
+
+  static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const { return true; }
 
 protected:
   AST_Expression *pd_constant_value;
@@ -134,7 +124,7 @@ protected:
   AST_Expression::ExprType pd_et;
   // Its expression type.
 
-  idl_bool ifr_added_;
+  bool ifr_added_;
   // Has this node been added to the IFR?
 };
 

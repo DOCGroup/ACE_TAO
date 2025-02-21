@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   CEC_Reactive_SupplierControl.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -19,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_SupplierControl.h"
+#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,6 +28,8 @@
 #include "tao/ORB.h"
 
 #include "ace/Event_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Reactive_SupplierControl;
@@ -70,7 +70,7 @@ private:
  *
  * Defines the interface for the supplier control strategy.
  * This strategy handles misbehaving or failing suppliers.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * = LOCKING
  * = TODO
  */
@@ -78,7 +78,7 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_SupplierControl
   : public TAO_CEC_SupplierControl
 {
 public:
-  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
   TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
                                     const ACE_Time_Value &timeout,
@@ -93,31 +93,26 @@ public:
       const ACE_Time_Value &timeout,
       unsigned int retries,
       TAO_CEC_TypedEventChannel *typed_event_channel,
-      CORBA::ORB_ptr orb
-    );
+      CORBA::ORB_ptr orb);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  virtual ~TAO_CEC_Reactive_SupplierControl (void);
+  virtual ~TAO_CEC_Reactive_SupplierControl () = default;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_CEC_SupplierControl
-  virtual int activate (void);
-  virtual int shutdown (void);
-  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual int activate ();
+  virtual int shutdown ();
+  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual void supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *proxy);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy);
   virtual void system_exception (TAO_CEC_ProxyPullConsumer *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
   /// Do we need to disconnect this supplier?  The parameter type for
   /// proxy is PortableServer::ServantBase* due to the fact that this
@@ -131,7 +126,7 @@ public:
 private:
   /// Check if the suppliers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void query_suppliers ();
 
 private:
   /// The polling rate
@@ -179,8 +174,7 @@ class TAO_CEC_Ping_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPushConsum
 public:
   TAO_CEC_Ping_Push_Supplier (TAO_CEC_SupplierControl *control);
 
-  virtual void work (TAO_CEC_ProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_ProxyPushConsumer *consumer);
 
 private:
   TAO_CEC_SupplierControl *control_;
@@ -194,8 +188,7 @@ class TAO_CEC_Ping_Typed_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_TypedProx
 public:
   TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_SupplierControl *control);
 
-  virtual void work (TAO_CEC_TypedProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_TypedProxyPushConsumer *consumer);
 
 private:
   TAO_CEC_SupplierControl *control_;
@@ -209,15 +202,16 @@ class TAO_CEC_Ping_Pull_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPullConsum
 public:
   TAO_CEC_Ping_Pull_Supplier (TAO_CEC_SupplierControl *control);
 
-  virtual void work (TAO_CEC_ProxyPullConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_ProxyPullConsumer *consumer);
 
 private:
   TAO_CEC_SupplierControl *control_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_Reactive_SupplierControl.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_SupplierControl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

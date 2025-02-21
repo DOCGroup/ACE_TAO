@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -78,57 +76,49 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_defines.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast, 
-           ast_string, 
-           "$Id$")
-
-AST_String::AST_String (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    pd_max_size (0),
-    pd_width (sizeof (char))
-{
-  // Always the case.
-  this->size_type (AST_Type::VARIABLE);
-}
+// Note we are overlooking the wstring case here.
+AST_Decl::NodeType const
+AST_String::NT = AST_Decl::NT_string;
 
 AST_String::AST_String (AST_Decl::NodeType nt,
                         UTL_ScopedName *n,
                         AST_Expression *ms,
                         long wide)
   : COMMON_Base (),
-    AST_Decl (nt,
-		          n,
-              I_TRUE),
-    AST_Type (nt,
-		          n),
-    AST_ConcreteType (nt,
-		                  n),
+    AST_Decl (nt, n, true),
+    AST_Type (nt, n),
+    AST_ConcreteType (nt, n),
     pd_max_size (ms),
     pd_width (wide)
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
 
-  Identifier *id = 0;
-  UTL_ScopedName *new_name = 0;
-  UTL_ScopedName *conc_name = 0;
+  Identifier *id = nullptr;
+  UTL_ScopedName *new_name = nullptr;
+  UTL_ScopedName *conc_name = nullptr;
+  bool narrow = this->width () == (ssize_t) sizeof (char);
 
   ACE_NEW (id,
-           Identifier (this->width () == 1 ? "Char *" : "WChar *"));
+           Identifier (narrow ? "char *" : "WChar *"));
 
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
-                           0));
+                           nullptr));
 
-  ACE_NEW (id,
-           Identifier ("CORBA"));
+  if (narrow)
+    {
+      new_name = conc_name;
+    }
+  else
+    {
+      ACE_NEW (id,
+               Identifier ("CORBA"));
 
-  ACE_NEW (new_name,
-           UTL_ScopedName (id,
-                           conc_name));
+      ACE_NEW (new_name,
+               UTL_ScopedName (id,
+                               conc_name));
+    }
 
   this->set_name (new_name);
 
@@ -158,7 +148,7 @@ AST_String::AST_String (AST_Decl::NodeType nt,
   this->flat_name_ = ACE::strnew (namebuf);
 }
 
-AST_String::~AST_String (void)
+AST_String::~AST_String ()
 {
 }
 
@@ -180,29 +170,25 @@ AST_String::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_String::destroy (void)
+AST_String::destroy ()
 {
   this->pd_max_size->destroy ();
   delete this->pd_max_size;
-  this->pd_max_size = 0;
+  this->pd_max_size = nullptr;
 
-  this->AST_Decl::destroy ();
+  this->AST_ConcreteType::destroy ();
 }
 
 // Data accessors.
 
 AST_Expression *
-AST_String::max_size (void)
+AST_String::max_size ()
 {
   return this->pd_max_size;
 }
 
 long
-AST_String::width (void)
+AST_String::width ()
 {
   return this->pd_width;
 }
-
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_String, AST_ConcreteType)
-IMPL_NARROW_FROM_DECL(AST_String)

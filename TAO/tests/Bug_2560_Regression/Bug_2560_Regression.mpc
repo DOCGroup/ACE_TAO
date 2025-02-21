@@ -1,0 +1,35 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Quoter.idl
+  }
+  custom_only = 1
+}
+
+project(*client) : taoclient {
+  after += *idl
+  exename = client
+  source_files {
+    client.cpp
+  }
+  source_files {
+    QuoterC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*server) : taoserver, avoids_corba_e_micro {
+  after += *idl
+  source_files {
+    server.cpp
+    Stock_Factory_i.cpp
+    Stock_i.cpp
+  }
+  source_files {
+    QuoterC.cpp
+    QuoterS.cpp
+  }
+  IDL_Files {
+  }
+}

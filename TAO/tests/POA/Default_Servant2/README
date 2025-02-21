@@ -1,0 +1,45 @@
+
+
+
+Default_Servants
+================
+
+	By using the USE_DEFAULT_SERVANT policy, the developer can create
+	a POA that will use a single servant to implement all of its objects.
+	This approach is useful when there is very little data associated
+	with each object, so little that the data can be encoded in the
+	Object Id.
+
+Example:
+=======
+	In the example implementation a Single Servant is enough to
+	serve requests for a File Descriptor interface. The Object Id of the
+	Descriptor objects are formed from the file handle returned by the
+	System call. The servant can get the file handle from the object
+	reference to process the request. Thus a single Descriptor servant
+	can serve multiple objects.
+
+SERVER:
+======
+
+	1. To run the server, type
+
+	   % server [-ORBobjrefstyle URL]
+
+CLIENT:
+======
+	The client tries to create a file "test" and writes a message to
+	the file and reads it back and prints it.
+
+	1. To run the client, type
+
+	   % client -k IOR
+
+	where the IOR is got from the server output.
+
+
+
+
+
+
+

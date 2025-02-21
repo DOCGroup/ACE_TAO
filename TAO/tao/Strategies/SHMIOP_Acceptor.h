@@ -1,21 +1,13 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    SHMIOP_Acceptor.h
-//
-// = DESCRIPTION
-//    SHMIOP specific acceptor processing
-//
-// = AUTHOR
-//    Nanbor Wang
-//
-// ============================================================================
+// -*- C++ -*-
+// ===================================================================
+/**
+ *  @file   SHMIOP_Acceptor.h
+ *
+ *  @brief  SHMIOP specific acceptor processing
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+// ===================================================================
 
 #ifndef TAO_SHMIOP_ACCEPTOR_H
 #define TAO_SHMIOP_ACCEPTOR_H
@@ -31,29 +23,30 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/Transport_Acceptor.h"
-#include "SHMIOP_Connection_Handler.h"
+#include "tao/Strategies/SHMIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
 // TAO SHMIOP_Acceptor concrete call definitions
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_SHMIOP_Acceptor
  *
  * @brief The SHMIOP-specific bridge class for the concrete acceptor.
- *
  */
 class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_SHMIOP_Acceptor (CORBA::Boolean flag = 0);
+  TAO_SHMIOP_Acceptor ();
 
   /// Destructor.
-  ~TAO_SHMIOP_Acceptor (void);
+  ~TAO_SHMIOP_Acceptor ();
 
-  typedef ACE_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_BASE_ACCEPTOR;
+  typedef TAO_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_SHMIOP_Connection_Handler> TAO_SHMIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler> TAO_SHMIOP_CONCURRENCY_STRATEGY;
   typedef TAO_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_ACCEPT_STRATEGY;
@@ -75,13 +68,13 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0);
-  virtual int close (void);
+  virtual int close ();
   virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
 
   virtual int is_collocated (const TAO_Endpoint* endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count ();
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);
@@ -90,7 +83,7 @@ public:
   /// Set the MMAP options the MEM_Stream this acceptor creates will
   /// use.
   int set_mmap_options (const ACE_TCHAR *prefix,
-                        off_t size);
+                        ACE_OFF_T size);
 
 private:
   /// Implement the common part of the open*() methods.
@@ -142,11 +135,10 @@ private:
 
   /// Determine the minimum size of mmap file.  This dictate the
   /// maximum size of a CORBA method invocation.
-  off_t mmap_size_;
-
-  /// Should we use GIOP lite??
-  CORBA::Boolean lite_flag_;
+  ACE_OFF_T mmap_size_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

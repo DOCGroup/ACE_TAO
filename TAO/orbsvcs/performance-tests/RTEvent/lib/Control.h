@@ -1,8 +1,5 @@
 /**
  * @file Control.h
- *
- * $Id$
- *
  */
 
 #ifndef TAO_RTEC_PERF_CONTROL_H
@@ -19,7 +16,6 @@
  * @class Control
  *
  * @brief Implement the Federated_Test::Control interface
- *
  */
 class TAO_RTEC_Perf_Export Control
  : public virtual POA_Federated_Test::Control
@@ -33,17 +29,14 @@ public:
            PortableServer::POA_ptr poa);
 
   /// Destructor
-  virtual ~Control (void);
+  virtual ~Control ();
 
   //@{
   /** @name The Federated_Test::Control methods
    */
-  virtual void join (Federated_Test::Peer_ptr peer
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void join (Federated_Test::Peer_ptr peer);
 
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableServer::POA_ptr _default_POA ();
   //@}
 
 private:

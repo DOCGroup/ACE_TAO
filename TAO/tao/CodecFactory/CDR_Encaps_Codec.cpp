@@ -1,51 +1,45 @@
 // -*- C++ -*-
-//
-// $Id$
-
-#include "CDR_Encaps_Codec.h"
+#include "tao/CodecFactory/CDR_Encaps_Codec.h"
 
 #include "tao/CDR.h"
 #include "tao/OctetSeqC.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl.h"
-#include "tao/TypeCode.h"
-#include "tao/Marshal.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
-#include "tao/TypeCode_Constants.h"
+#include "tao/Codeset_Translator_Base.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
+#include "ace/CORBA_macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (tao,
-           CDR_Encaps_Codec,
-           "$Id$")
-
-
-TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (CORBA::Octet major,
-                                            CORBA::Octet minor,
-                                            TAO_ORB_Core * orb_core)
+TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (
+  CORBA::Octet major,
+  CORBA::Octet minor,
+  TAO_ORB_Core * orb_core,
+  TAO_Codeset_Translator_Base * char_trans,
+  TAO_Codeset_Translator_Base * wchar_trans)
   : major_ (major),
     minor_ (minor),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    char_translator_ (char_trans),
+    wchar_translator_ (wchar_trans)
 {
 }
 
-TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec (void)
+TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec ()
 {
 }
 
 CORBA::OctetSeq *
-TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::Codec::InvalidTypeForEncoding))
+TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
 {
-  this->check_type_for_encoding (data
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_type_for_encoding (data);
 
   // ----------------------------------------------------------------
 
@@ -57,6 +51,15 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
                      0,                     // memcpy_tradeoff
                      this->major_,
                      this->minor_);
+
+  if (this->char_translator_)
+    {
+      this->char_translator_->assign (&cdr);
+    }
+  if (this->wchar_translator_)
+    {
+      this->wchar_translator_->assign (&cdr);
+    }
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       && (cdr << data))
@@ -70,7 +73,6 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
                             0,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (0);
 
       CORBA::OctetSeq_var safe_octet_seq = octet_seq;
 
@@ -81,7 +83,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
            i != 0;
            i = i->cont ())
         {
-          size_t len = i->length ();
+          size_t const len = i->length ();
           ACE_OS::memcpy (buf, i->rd_ptr (), len);
           buf += len;
         }
@@ -89,14 +91,11 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
       return safe_octet_seq._retn ();
     }
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+  throw ::CORBA::MARSHAL ();
 }
 
 CORBA::Any *
-TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::Codec::FormatMismatch))
+TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data)
 {
   // @todo How do we check for a format mismatch so that we can throw
   //       a IOP::Codec::FormatMismatch exception?
@@ -123,6 +122,15 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
                     this->minor_,
                     this->orb_core_);
 
+  if (this->char_translator_)
+    {
+      this->char_translator_->assign (&cdr);
+    }
+  if (this->wchar_translator_)
+    {
+      this->wchar_translator_->assign (&cdr);
+    }
+
   CORBA::Boolean byte_order;
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
     {
@@ -136,7 +144,6 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
                             0,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (0);
 
       CORBA::Any_var safe_any = any;
 
@@ -144,19 +151,13 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
         return safe_any._retn ();
     }
 
-  ACE_THROW_RETURN (IOP::Codec::FormatMismatch (),
-                    0);
+  throw IOP::Codec::FormatMismatch ();
 }
 
 CORBA::OctetSeq *
-TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
-                                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::Codec::InvalidTypeForEncoding))
+TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
 {
-  this->check_type_for_encoding (data
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_type_for_encoding (data);
 
   // ----------------------------------------------------------------
   TAO_OutputCDR cdr ((size_t) 0,            // size
@@ -168,14 +169,26 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
                      this->major_,
                      this->minor_);
 
+  if (this->char_translator_)
+    {
+      this->char_translator_->assign (&cdr);
+    }
+  if (this->wchar_translator_)
+    {
+      this->wchar_translator_->assign (&cdr);
+    }
+
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
     {
       TAO::Any_Impl *impl = data.impl ();
 
       if (impl->encoded ())
         {
-          TAO::Unknown_IDL_Type *unk =
+          TAO::Unknown_IDL_Type * const unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+          if (!unk)
+            throw ::CORBA::INTERNAL ();
 
           // We don't want unk's rd_ptr to move, in case we are shared by
           // another Any, so we use this to copy the state, not the buffer.
@@ -183,9 +196,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 
           TAO_Marshal_Object::perform_append (data._tao_get_typecode (),
                                               &for_reading,
-                                              &cdr
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                              &cdr);
         }
       else
         {
@@ -205,7 +216,6 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
                               ),
                             CORBA::COMPLETED_NO
                           ));
-      ACE_CHECK_RETURN (0);
 
       CORBA::OctetSeq_var safe_octet_seq = octet_seq;
 
@@ -226,17 +236,12 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
       return safe_octet_seq._retn ();
     }
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (),
-                    0);
+  throw ::CORBA::MARSHAL ();
 }
 
 CORBA::Any *
 TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
-                                    CORBA::TypeCode_ptr tc
-                                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::Codec::FormatMismatch,
-                   IOP::Codec::TypeMismatch))
+                                    CORBA::TypeCode_ptr tc)
 {
   // The ACE_CDR::mb_align() call can shift the rd_ptr by up
   // to ACE_CDR::MAX_ALIGNMENT-1 bytes. Similarly, the offset
@@ -276,6 +281,15 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                     this->minor_,
                     this->orb_core_);
 
+  if (this->char_translator_)
+    {
+      this->char_translator_->assign (&cdr);
+    }
+  if (this->wchar_translator_)
+    {
+      this->wchar_translator_->assign (&cdr);
+    }
+
   CORBA::Boolean byte_order;
 
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
@@ -292,7 +306,6 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                               ),
                             CORBA::COMPLETED_NO
                           ));
-      ACE_CHECK_RETURN (0);
 
       CORBA::Any_var safe_any = any;
 
@@ -305,21 +318,19 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
       return safe_any._retn ();
     }
 
-  ACE_THROW_RETURN (IOP::Codec::FormatMismatch (),
-                    0);
+  throw IOP::Codec::FormatMismatch ();
 }
 
 void
-TAO_CDR_Encaps_Codec::check_type_for_encoding (
-    const CORBA::Any & data
-    ACE_ENV_ARG_DECL
-  )
+TAO_CDR_Encaps_Codec::check_type_for_encoding (const CORBA::Any & data)
 {
   // @@ TODO: Are there any other conditions we need to check?
 
   CORBA::TypeCode_var typecode = data.type ();
   if (this->major_ == 1
       && this->minor_ == 0
-      && typecode->equivalent (CORBA::_tc_wstring ACE_ENV_ARG_PARAMETER))
-    ACE_THROW (IOP::Codec::InvalidTypeForEncoding ());
+      && typecode->equivalent (CORBA::_tc_wstring))
+    throw IOP::Codec::InvalidTypeForEncoding ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

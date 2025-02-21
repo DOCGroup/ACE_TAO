@@ -1,10 +1,48 @@
-// $Id$
+project(Async_ImR_Client_IDL) : orbsvcslib, orbsvcs_output, install_lib, valuetype, portableserver, messaging, tao_versioning_idl_defaults {
+  sharedname = TAO_Async_ImR_Client_IDL
+  dynamicflags += ASYNC_IMR_CLIENT_BUILD_DLL
 
-project(ImR_Activator_IDL) : orbsvcslib, conv_lib, portableserver, imr_client {
+  idlflags += -Gp -Gd -Sorb \
+              -I$(TAO_ROOT)/tao/ImR_Client \
+              -Wb,export_macro=Async_IMR_Client_Export \
+              -Wb,export_include=async_imr_client_export.h
+
+  idlflags -= -Sa -St
+
+  Modify_Custom(IDL) {
+    output_follows_input = 0
+  }
+
+  IDL_Files {
+    idlflags += -GA -GC
+    ../../tao/ImR_Client/ServerObject.idl
+  }
+
+  IDL_Files {
+    idlflags += -GX -GH
+    ../../tao/ImR_Client/ImplRepo.idl
+  }
+
+  Source_Files {
+  }
+
+  Header_Files {
+    async_imr_client_export.h
+  }
+}
+
+
+project(ImR_Activator_IDL) : orbsvcslib, orbsvcs_output, install_lib, valuetype, dynamicinterface, portableserver, messaging, tao_versioning_idl_defaults {
   sharedname = TAO_ImR_Activator_IDL
-  dynamicflags = ACTIVATOR_IDL_BUILD_DLL
-  idlflags += -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h
+  dynamicflags += ACTIVATOR_IDL_BUILD_DLL
+  after += Async_ImR_Client_IDL
+  libs += TAO_Async_ImR_Client_IDL
+  idlflags += -Wb,export_macro=ActivatorIDL_Export \
+              -Wb,export_include=activator_idl_export.h \
+              -I$(TAO_ROOT)/tao/ImR_Client
+
   idl_files {
+    idlflags += -GH -GC
     ImR_Activator.idl
   }
   source_files {
@@ -16,42 +54,36 @@ project(ImR_Activator_IDL) : orbsvcslib, conv_lib, portableserver, imr_client {
   }
 }
 
-project(ImR_Locator_IDL) : orbsvcslib, conv_lib, valuetype, portableserver, imr_client, messaging {
+project(ImR_Locator_IDL) : orbsvcslib, orbsvcs_output, install_lib, valuetype, portableserver, messaging, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro,tao_versioning_idl_defaults {
   sharedname   = TAO_ImR_Locator_IDL
   after       += ImR_Activator_IDL
-  libs        += TAO_ImR_Activator_IDL
+  libs        += TAO_ImR_Activator_IDL TAO_Async_ImR_Client_IDL
   // Dont try to build this project if ImR_Activator_IDL is not built
-  requires    += corba_messaging
 
-  dynamicflags = LOCATOR_IDL_BUILD_DLL
-  idlflags    += -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h
+  dynamicflags += LOCATOR_IDL_BUILD_DLL
+  idlflags    += -Wb,export_macro=LocatorIDL_Export \
+                 -Wb,export_include=locator_idl_export.h \
+                 -I$(TAO_ROOT)/tao/ImR_Client
   idl_files {
+    idlflags += -GH
     ImR_Locator.idl
-  }
-
-  idl_files {
-    idlflags    += -GH
-    AsyncStartupWaiter.idl
   }
 
   source_files {
     ImR_LocatorS.cpp
     ImR_LocatorC.cpp
-    AsyncStartupWaiterS.cpp
-    AsyncStartupWaiterC.cpp
   }
   header_files {
     locator_idl_export.h
   }
 }
 
-project(ImR_Activator) : orbsvcslib, conv_lib, acexml, minimum_corba, valuetype, portableserver, imr_client {
+project(ImR_Activator) : orbsvcslib, orbsvcs_output, install_lib, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, valuetype, portableserver, messaging, dynamicinterface, pi, codecfactory, svc_utils {
   sharedname   = TAO_ImR_Activator
-  dynamicflags = ACTIVATOR_BUILD_DLL
-  after       += ImR_Activator_IDL ImR_Locator_IDL
-  libs        += TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL
+  dynamicflags += ACTIVATOR_BUILD_DLL
+  after       += ImR_Locator_IDL
+  libs        += TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL TAO_Async_ImR_Client_IDL
   // Dont try to build this project if ImR_Activator_IDL is not built
-  requires    += corba_messaging
 
   Source_Files {
     ImR_Activator_i.cpp
@@ -65,24 +97,34 @@ project(ImR_Activator) : orbsvcslib, conv_lib, acexml, minimum_corba, valuetype,
   }
 }
 
-project(ImR_Locator) : orbsvcslib, conv_lib, minimum_corba, iortable, portableserver, messaging, svc_utils, acexml, pi_server, imr_client {
+project(ImR_Locator) : orbsvcslib, orbsvcs_output, install_lib, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, async_iortable, portableserver, messaging, svc_utils, acexml, iormanip, dynamicinterface {
   sharedname   = TAO_ImR_Locator
-  dynamicflags = LOCATOR_BUILD_DLL
-  after       += ImR_Locator_IDL ImR_Activator_IDL
-  libs        += TAO_ImR_Locator_IDL TAO_ImR_Activator_IDL
+  dynamicflags += LOCATOR_BUILD_DLL
+  after       += ImR_Locator_IDL
+  libs        += TAO_ImR_Locator_IDL TAO_ImR_Activator_IDL TAO_Async_ImR_Client_IDL
+
   Source_Files {
     Activator_Info.cpp
     Adapter_Activator.cpp
+    AsyncAccessManager.cpp
+    AsyncListManager.cpp
     Forwarder.cpp
     ImR_Locator_i.cpp
-    AsyncStartupWaiter_i.cpp
+    ImR_ResponseHandler.cpp
+    ImR_Utils.cpp
     INS_Locator.cpp
+    LiveCheck.cpp
     Locator_XMLHandler.cpp
     Locator_Loader.cpp
     Locator_Options.cpp
     Iterator.cpp
     Server_Info.cpp
+    UpdateableServerInfo.cpp
     Locator_Repository.cpp
+    Config_Backing_Store.cpp
+    XML_Backing_Store.cpp
+    Shared_Backing_Store.cpp
+    Replicator.cpp
   }
   header_files {
     utils.h
@@ -92,18 +134,20 @@ project(ImR_Locator) : orbsvcslib, conv_lib, minimum_corba, iortable, portablese
   }
 }
 
-project(ImR_Locator_Service) : orbsvcsexe, install_bin, minimum_corba, iortable, messaging, acexml ,svc_utils, pi_server, imr_client {
-  exename  = ImplRepo_Service
-  after   += ImR_Locator ImR_Activator_IDL ImR_Locator_IDL
-  libs    += TAO_ImR_Locator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL
+project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, async_iortable, messaging, acexml ,svc_utils, pi_server, iormanip {
+  exename  = tao_imr_locator
+  after   += ImR_Locator
+  libs    += TAO_ImR_Locator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL TAO_Async_ImR_Client_IDL
 
   // Static Debug builds on Windows will not link properly due
   // to a linker bug.  It complains that the ACEXML library duplicates
   // a couple of template instantiations from the TAO_ImR_Locator library.
-  // This option works around that bug.  Unfortunately, there is no way to
-  // narrow the options down to only static debug builds.
-  specific(em3, nmake, vc6, vc71) {
-    link_options += /FORCE:MULTIPLE
+  // The FORCE:MULTIPLE option works around that bug.  Unfortunately,
+  // there is no way to narrow the options down to only static debug builds.
+  // Incremental linking has also been turned off since it is
+  // incompatible with this option, producing warnings at link time.
+  specific(em3, nmake, vc71) {
+    link_options += /FORCE:MULTIPLE /INCREMENTAL:NO
   }
 
   Source_Files {
@@ -115,10 +159,10 @@ project(ImR_Locator_Service) : orbsvcsexe, install_bin, minimum_corba, iortable,
 }
 
 
-project(ImR_Activator_Service) : orbsvcsexe, install_bin, acexml, minimum_corba, messaging, svc_utils, imr_client {
-  exename  = ImR_Activator
-  after   += ImR_Activator ImR_Activator_IDL ImR_Locator_IDL
-  libs    += TAO_ImR_Activator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL
+project(ImR_Activator_Service) : orbsvcsexe, install, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, messaging, dynamicinterface, svc_utils {
+  exename  = tao_imr_activator
+  after   += ImR_Activator
+  libs    += TAO_ImR_Activator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL TAO_Async_ImR_Client_IDL
   Source_Files {
     ImR_Activator.cpp
     Activator_NT_Service.cpp
@@ -128,13 +172,26 @@ project(ImR_Activator_Service) : orbsvcsexe, install_bin, acexml, minimum_corba,
 }
 
 
-project(tao_imr) : orbsvcsexe, install_bin, minimum_corba, portableserver, imr_client {
+project(tao_imr) : orbsvcsexe, install, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, portableserver, imr_client, messaging, svc_utils {
+  install         = $(ACE_ROOT)/bin
   exename  = tao_imr
-  install  = $(ACE_ROOT)/bin
+
   Source_Files {
     tao_imr.cpp
     tao_imr_i.cpp
   }
+
   idl_files {
+  }
+
+  specific {
+    install_dir = tao/docs/implrepo
+  }
+
+  InstallData_Files {
+    README
+  }
+
+  Documentation_Files {
   }
 }

@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -68,35 +66,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_TYPEDEF_AST_TYPEDEF_HH
 
 #include "ast_type.h"
+#include "ast_field.h"
 
 // Representation of typedef declaration.
 // A typedef declaration is a renaming of a base type.
 
-class TAO_IDL_FE_Export AST_Typedef : public virtual AST_Type
+class TAO_IDL_FE_Export AST_Typedef : public virtual AST_Type,
+                                      public virtual AST_Field
 {
 public:
-  // Operations.
-
-  // Constructor(s) and destructor.
-  AST_Typedef (void);
-
   AST_Typedef (AST_Type *base_type,
                UTL_ScopedName *n,
-               idl_bool local,
-               idl_bool abstract);
+               bool local,
+               bool abstract);
 
-  virtual ~AST_Typedef (void);
+  virtual ~AST_Typedef ();
 
-  AST_Type *primitive_base_type (void);
+  AST_Type *primitive_base_type () const;
   // Return the most primitive base type by traversing the chain of typedefed
   // base types.
 
   // Data Accessors.
-  AST_Type *base_type (void);
+  AST_Type *base_type () const;
 
-  // Narrowing.
-  DEF_NARROW_METHODS1(AST_Typedef, AST_Type);
-  DEF_NARROW_FROM_DECL(AST_Typedef);
+  virtual bool legal_for_primary_key () const;
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
+
+  virtual bool is_local ();
+  // Override the base class method.
+
+  bool owns_base_type () const;
+  void owns_base_type (bool val);
+  // Sometimes this has to be accessed or managed from outside.
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -105,17 +108,28 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
+
+  static AST_Decl::NodeType const NT;
+
+  virtual bool dump_annotations_inline () const { return true; }
+
+  /**
+   * Recursively acquired annotations from typedefs.
+   */
+  virtual AST_Annotation_Appls &annotations ();
 
 protected:
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
 
-private:
-  // Data.
-
-  AST_Type *pd_base_type;
-  // Typedef base type.
+  /**
+   * Cache of Recursively acquired annotations from typedefs.
+   */
+  ///{
+  AST_Annotation_Appls cached_annotations_;
+  bool has_cached_annotations_;
+  ///}
 };
 
 #endif           // _AST_TYPEDEF_AST_TYPEDEF_HH

@@ -1,19 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef TAO_NOTIFY_DELIVERY_REQUEST_H
 #define TAO_NOTIFY_DELIVERY_REQUEST_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
-#include "Topology_Object.h"
-#include "Event.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+#include "orbsvcs/Notify/Event.h"
 #include <ace/Vector_T.h>
 #include <ace/Bound_Ptr.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations of referenced classes
 class TAO_Notify_EventChannelFactory;
@@ -21,7 +20,6 @@ class TAO_Notify_ProxySupplier;
 
 namespace TAO_Notify
 {
-
 // Forward declarations of TAO_Notify classes/pointers/collections declared
 // in this header
 class Delivery_Request;
@@ -53,7 +51,7 @@ public:
 
   /// \brief A static "factory" method for use during restart.
   ///
-  /// \param routing_slip. The routing slip to which the new Delivery Request should be attached.
+  /// \param routing_slip The routing slip to which the new Delivery Request should be attached.
   /// \param request_id The id used to identify this Delivery Request to the Routing Slip.
   /// \param ecf The EventChannelFactory responsible for reloading this Delivery Method.
   /// \param cdr A CDR stream from which the peristent information for this Delivery Requect can be retrieved.
@@ -100,7 +98,7 @@ public:
   bool should_retry () const;
 
   /// expose routing slip method
-  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter ACE_ENV_ARG_DECL);
+  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
 
   // Meaningless, but needed by ACE_Vector on some platforms (gcc2.x LynxOS)
   bool operator == (const Delivery_Request & rhs) const;
@@ -121,11 +119,12 @@ private:
   ACE_CDR::Octet delivery_type_;
   IdVec destination_id_;
 };
-
 } // namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Delivery_Request.inl"
+#include "orbsvcs/Notify/Delivery_Request.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

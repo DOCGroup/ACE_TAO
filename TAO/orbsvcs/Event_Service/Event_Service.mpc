@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
-project : orbsvcsexe, core, rtevent_serv, rtschedevent, bidir_giop {
-  exename  = Event_Service
+project : orbsvcsexe, install, rtevent_serv, rtschedevent, bidir_giop, svc_utils {
+  exename  = tao_rtevent
 }

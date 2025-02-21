@@ -1,4 +1,3 @@
-//$Id$
 #include "TestClient.h"
 #include "MessengerC.h"
 
@@ -8,11 +7,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
-using std::string;
-
-TestClient::TestClient(CORBA::ORB_ptr orb, int argc, char* argv[])
+TestClient::TestClient (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
 : orb_(CORBA::ORB::_duplicate(orb))
 , pauseType_('s')
 , startupPause_(0)
@@ -24,52 +20,53 @@ TestClient::TestClient(CORBA::ORB_ptr orb, int argc, char* argv[])
 , shutdownOrb_(false)
 , expectHolding_(false)
 , expectNoProfile_(false)
+, iorFile_(ACE_TEXT("imr_test.ior"))
 {
-  parseCommands(argc, argv);
+  parseCommands (argc, argv);
 }
 
 TestClient::~TestClient()
 {
 }
 
-int TestClient::parseCommands(int argc, char* argv[])
+int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "s:t:i:r:x:e:z:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:t:i:r:x:e:z:k:"));
   int c;
   while ((c = get_opts()) != -1)
   {
     switch (c)
     {
     case 's':
-      startupPause_ = ::atoi(get_opts.opt_arg());
+      startupPause_ = ACE_OS::atoi(get_opts.opt_arg());
       break;
 
     case 't':
-      threadCount_ = ::atoi(get_opts.opt_arg());
+      threadCount_ = ACE_OS::atoi(get_opts.opt_arg());
       break;
 
     case 'i':
-      iterations_ = ::atoi(get_opts.opt_arg());
+      iterations_ = ACE_OS::atoi(get_opts.opt_arg());
       break;
 
     case 'r':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         if (opt[0] == 'r') { randomRequests_ = true; opt++; }
-        requestCount_ = ::atoi(opt);
+        requestCount_ = ACE_OS::atoi(opt);
         break;
       }
 
     case 'x':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         shutdownOrb_ = (opt && opt[0] != '0');
         break;
       }
 
     case 'e':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         while (opt && *opt != '\0')
         {
           if (*opt == 'h') expectHolding_ = true;
@@ -83,6 +80,10 @@ int TestClient::parseCommands(int argc, char* argv[])
       pauseType_ = get_opts.opt_arg()[0];
       break;
 
+    case 'k':
+      iorFile_ = get_opts.opt_arg();
+      break;
+
     case '?':
     default:
       ACE_ERROR_RETURN((LM_ERROR,
@@ -91,7 +92,7 @@ int TestClient::parseCommands(int argc, char* argv[])
         "\t-t <number of threads>\n"
         "\t-i <number of iterations per thread>\n"
         "\t-r <r><number of requests per string_to_object>\n"
-        "\t-x 'shutdown server orb at end of a string_to_object'\n"
+        "\t-x shutdown server orb at end of a string_to_object\n"
         "\t-e <h><n> 'catch holding or no profile exceptions'\n"
         "\n",
         argv[0]),
@@ -119,9 +120,9 @@ void TestClient::pause(int milliseconds)
 
 void TestClient::run()
 {
-  cout << "Starting Client." << endl;
+  ACE_DEBUG((LM_DEBUG, "Starting Client.\n"));
   pause(startupPause_);
-  cout << "* Client started." << endl;
+  ACE_DEBUG((LM_DEBUG, "* Client started.\n"));
 
   buildIORList();
 
@@ -129,21 +130,23 @@ void TestClient::run()
   {
     ACE_ERROR((LM_ERROR, "%p\n", "activate failed"));
   }
-  wait();
 
-  cout << "* Client ended." << endl;
+  this->wait();
+
+  ACE_DEBUG((LM_DEBUG, "* Client ended.\n"));
 }
 
 // Read in the stringified object references into an array
 // Warning: The file may contain many separate IORs separated by linefeeds.
 void TestClient::buildIORList()
 {
-  ifstream iorFile("imr_test.ior");
-  while (! iorFile.fail())
+  FILE* iorFile = ACE_OS::fopen (iorFile_, "r");
+  if ( iorFile == 0 )
+    ACE_ERROR ((LM_ERROR, "Fail to open %s\n", iorFile_));
+
+  ACE_TString ior;
+  while (getline(iorFile, ior) != EOF )
   {
-    string ior;
-    std::getline(iorFile, ior, '\n');
- 
     if (ior.length() > 0)
       iors_.push_back(ior);
     else
@@ -156,16 +159,18 @@ int TestClient::svc()
   // Every invocation of svc increates the thread count
   instance_++;
   int threadNum = instance_;
-  cout << "* Client Thread started (" << threadNum << "." << iterations_
-    << "." << iors_.size() << "." << requestCount_ << ")" << endl;
+  size_t vec_size = iors_.size();
+
+  ACE_DEBUG((LM_DEBUG, "* Client Thread started (%d.%d.%d.%d)\n",
+             threadNum, iterations_, vec_size, requestCount_));
 
   int     i           = 0;
   size_t  objIter     = 0;
   int     requestIter = 0;
 
-  string currentIOR;
+  ACE_TString currentIOR;
 
-  ACE_OS::srand(ACE_OS::time());
+  ACE_OS::srand(static_cast<u_int> (ACE_OS::time()));
 
   try
   {
@@ -176,7 +181,7 @@ int TestClient::svc()
     for (i = 1; i <= iterations_; i++)
     {
       // For each object reference read from file
-      for (objIter = 1; objIter <= iors_.size(); objIter++)
+      for (objIter = 1; objIter <= vec_size; objIter++)
       {
         requestIter = -1;
         // Get a imr_test_var
@@ -192,21 +197,21 @@ int TestClient::svc()
             // Calculate the number of requests
             int newReqCount (randomRequests_ == false ? requestCount_ :
             (int)((((double)ACE_OS::rand() / (double)RAND_MAX) * (double)(requestCount_ - 1)) + .5) + 1);
-            int serverInstance = 0;
             // For each request
             for (requestIter = 1; requestIter <= newReqCount;  requestIter++)
             {
               try
               {
-                serverInstance = test->send_message(threadNum, i, objIter, requestIter);
+                ::CORBA::Long instance = test->send_message(threadNum, i, objIter, requestIter);
+                ACE_UNUSED_ARG (instance);
               }
-              catch (CORBA::SystemException& ex)
+              catch (const CORBA::SystemException& ex)
               {
                 // If these exceptions are expected record the number of instances, otherwise rethrow
                 if (expectHolding_ == true && ex.minor() == TAO_POA_HOLDING)
                 {
-                  cout << "Caught expected holding exception with ("
-                    << threadNum << "." << objIter << "." << requestIter << ") " << endl;
+                   ACE_ERROR((LM_ERROR, "Caught expected holding exception with (%d.%d.%d)\n",
+                     threadNum, objIter, requestIter));
                   holdingCount++;
                 }
                 else
@@ -216,8 +221,8 @@ int TestClient::svc()
                 if (expectNoProfile_ == true
                   && ex.minor() == TAO_INVOCATION_SEND_REQUEST_MINOR_CODE)
                 {
-                  cout << "Caught expected no profile exception with ("
-                    << threadNum << "." << objIter << "." << requestIter << ") " << endl;
+                   ACE_ERROR((LM_ERROR, "Caught expected holding exception with (%d.%d.%d)\n",
+                     threadNum, objIter, requestIter));
                   noProfileCount++;
                 }
                 else
@@ -235,23 +240,23 @@ int TestClient::svc()
     // Report expected exceptions
     if (holdingCount > 0)
     {
-      cout << "Client thread " << threadNum << " received "
-        << holdingCount << " holding error(s)." << endl;
+      ACE_DEBUG((LM_DEBUG,"Client thread %d received %d holding error(s).\n",
+                 threadNum, holdingCount));
     }
 
     if (noProfileCount > 0)
     {
-      cout << "Client thread " << threadNum << " received "
-        << noProfileCount << " no profile error(s)." << endl;
+      ACE_DEBUG((LM_DEBUG,"Client thread %d received %d no profile error(s).\n",
+                 threadNum, noProfileCount));
     }
 
     return 0;
   } // try
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
   {
-    cerr << "CORBA client error with (" << threadNum << "." << i
-      << "." << objIter << "." << requestIter << "):" << currentIOR.c_str() << endl;
-    ACE_PRINT_EXCEPTION(ex, "");
+    ACE_ERROR((LM_ERROR,"CORBA client error with (%d.%d.%d.%d):%s\n",
+               threadNum, i, objIter, requestIter, currentIOR.c_str()));
+    ex._tao_print_exception ("");
   }
   return 1;
 }

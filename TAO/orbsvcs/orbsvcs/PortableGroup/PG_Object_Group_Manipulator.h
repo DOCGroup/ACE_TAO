@@ -4,8 +4,6 @@
 /**
  * @file PG_Object_Group_Manipulator.h
  *
- * $Id$
- *
  * @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
@@ -15,18 +13,21 @@
 #define TAO_PG_OBJECT_GROUP_MANIPULATOR_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/PortableGroupS.h"
+
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroupS.h"
+
 #include "tao/IORManipulation/IORManip_Loader.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class TAO::PG_Object_Group_Manipulator
    *
@@ -38,19 +39,17 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Object_Group_Manipulator
   {
   public:
-
     /// Constructor.
     PG_Object_Group_Manipulator ();
 
     /// Destructor.
-    ~PG_Object_Group_Manipulator ();
+    ~PG_Object_Group_Manipulator () = default;
 
     /**
      * Initializes the group creator.
      */
     void init (CORBA::ORB_ptr orb,
-               PortableServer::POA_ptr poa
-               ACE_ENV_ARG_DECL);
+               PortableServer::POA_ptr poa);
 
     /**
      * Create an empty object group.
@@ -58,29 +57,34 @@ namespace TAO
     PortableGroup::ObjectGroup_ptr create_object_group (
       const char * type_id,
       const char * domain_id,
-      PortableGroup::ObjectGroupId & group_id
-      ACE_ENV_ARG_DECL);
+      PortableGroup::ObjectGroupId & group_id);
+
+    /**
+     * Create an empty object group using a specific ID.
+     * Note that this should not also be used with create_object_group ()
+     * as the next object group ID to use will not necessarily be unique.
+     */
+    PortableGroup::ObjectGroup_ptr create_object_group_using_id (
+      const char * type_id,
+      const char * domain_id,
+      const PortableGroup::ObjectGroupId & group_id);
 
     PortableGroup::ObjectGroup_ptr remove_profiles (
       PortableGroup::ObjectGroup_ptr group,
-      PortableGroup::ObjectGroup_ptr profile
-      ACE_ENV_ARG_DECL) const;
+      PortableGroup::ObjectGroup_ptr profile) const;
 
     PortableGroup::ObjectGroup_ptr merge_iors (
-      TAO_IOP::TAO_IOR_Manipulation::IORList & iors
-      ACE_ENV_ARG_DECL) const;
+      TAO_IOP::TAO_IOR_Manipulation::IORList & iors) const;
 
     int set_primary (
       TAO_IOP::TAO_IOR_Property * prop,
       PortableGroup::ObjectGroup_ptr reference,
-      CORBA::Object_ptr new_primary
-      ACE_ENV_ARG_DECL) const;
+      CORBA::Object_ptr new_primary) const;
 
   void dump_membership (const char * label,
                         PortableGroup::ObjectGroup_ptr member) const;
 
   private:
-
     /**
      * Allocate an ogid for a new object group
      */
@@ -93,7 +97,6 @@ namespace TAO
       convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid) const;
 
   private:
-
     /// The orb
     CORBA::ORB_var orb_;
 
@@ -108,10 +111,10 @@ namespace TAO
 
     /// Next ogid to be allocated.
     PortableGroup::ObjectGroupId next_ogid_;
-
   };
 } //namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

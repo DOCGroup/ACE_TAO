@@ -1,49 +1,41 @@
-// $Id$
 #include "../Simple_util.h"
 #include "AccountManager_i.h"
 
 // This is the main driver program for the time and date server.
-
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Server<AccountManager_i> server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tBank server\n\n"));
+              ACE_TEXT ("\n\tBank server\n\n")));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       if (server.init ("Bank",
                        argc,
-                       argv
-                       ACE_ENV_ARG_PARAMETER) == -1)
+                       argv) == -1)
         return 1;
       else
         {
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
         }
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex,"User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex,"System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-
-  ACE_ENDTRY;
+  catch (const ::CORBA::Exception &e)
+    {
+      e._tao_print_exception ("CORBA exception");
+      return 1;
+    }
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Server<AccountManager_i>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Server<AccountManager_i>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

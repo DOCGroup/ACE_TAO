@@ -2,10 +2,7 @@
 /**
  *  @file    test_dynsequence.h
  *
- *  $Id$
- *
  *  Header file for class to test DynSequence.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
@@ -21,11 +18,11 @@ class Test_DynSequence
 {
 public:
   Test_DynSequence (CORBA::ORB_var orb, int debug);
-  ~Test_DynSequence (void);
+  ~Test_DynSequence ();
 
-  const char* test_name (void) const;
+  const char* test_name () const;
 
-  int run_test (void);
+  int run_test ();
 
 private:
   CORBA::ORB_var orb_;

@@ -1,0 +1,23 @@
+
+
+This test checks that the -ORBFTSendFullGroupTC property switches between sending only the IOGR group version as an FTGroupVersionServiceContext on requests or instead the complete FTGroupTaggedComponent data.
+
+_Success Looks Like_
+
+(20413|3074066112) server - event loop finished
+Test passed !!!
+
+_Regression looks like_
+
+[sm@beatrice tao431_regression]$ ./run_test.pl
+Error - REGRESSION - ORB doesn't even accept the config option
+ERROR: client returned 1
+ERROR: server timedout
+ERROR: server returned -1
+
+... or some message like:
+Error - REGRESSION - normal format service context not transmitted
+
+... and / or:
+
+Error - REGRESSION - extended format service context not transmitted

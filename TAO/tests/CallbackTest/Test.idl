@@ -1,0 +1,33 @@
+
+module Test
+{
+  /**
+   * Callback interface.
+   */
+  interface Callback
+  {
+    /// Make sure the callback object is in good shape
+    boolean are_you_there (out string answer);
+
+    /// Receive the first callback
+    oneway void test_oneway ();
+
+    /// Shutdown
+    oneway void shutdown ();
+
+  };
+
+  /**
+   * Clients connect to this interface passing in a Callback
+   * object.
+   * The service will then invoke all the methods on the
+   * Callback.
+   *
+   */
+  interface Service
+  {
+    /// Invoke the callback object from the server
+    oneway void run_test (in Callback the_callback);
+  };
+
+};

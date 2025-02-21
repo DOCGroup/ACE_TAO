@@ -1,5 +1,4 @@
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
 #include "ImR_Locator_i.h"
 #include "Locator_NT_Service.h"
 #include "Locator_Options.h"
@@ -8,7 +7,7 @@
 class ImR_Locator_Shutdown : public Shutdown_Functor
 {
 public:
-  ImR_Locator_Shutdown(ImR_Locator_i& imr);
+  ImR_Locator_Shutdown (ImR_Locator_i& imr);
 
   void operator() (int which_signal);
 private:
@@ -21,19 +20,16 @@ ImR_Locator_Shutdown::ImR_Locator_Shutdown (ImR_Locator_i &imr)
 }
 
 void
-ImR_Locator_Shutdown::operator() (int /*which_signal*/)
+ImR_Locator_Shutdown::operator () (int /*sig*/)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-  {
-    this->imr_.shutdown(true ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR: ");
-  }
-  ACE_ENDTRY;
+  try
+    {
+      this->imr_.signal_shutdown ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("ImR: ");
+    }
 }
 
 int
@@ -44,67 +40,63 @@ run_standalone (Options& opts)
   ImR_Locator_Shutdown killer (server);
   Service_Shutdown kill_contractor(killer);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int status = server.init (opts);
       if (status == -1)
         {
+          server.fini ();
           return 1;
         }
       else
         {
           // Run the server if it is initialized correctly.
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
 
           // End the server after its work is done.
-          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          status = server.fini ();
 
           if (status == -1)
             return 1;
         }
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unknown Exception");
+      ex._tao_print_exception ("Unknown Exception");
     }
-  ACE_ENDTRY;
 
   return 1;
 }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 ACE_NT_SERVICE_DEFINE (service, Locator_NT_Service, IMR_LOCATOR_SERVICE_NAME);
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
 int
-run_service (void)
+run_service ()
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
   SERVICE::instance ()->name (IMR_LOCATOR_SERVICE_NAME, IMR_LOCATOR_DISPLAY_NAME);
 
   ACE_NT_SERVICE_RUN (service, SERVICE::instance (), ret);
 
   if (ret == 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
+    ORBSVCS_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
 
   return ret;
 #else /* ACE_WIN32 */
   return 1;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 }
 
 /**
@@ -116,21 +108,21 @@ run_service (void)
 static int
 run_service_command (Options& opts)
 {
-  if (opts.service_command() == Options::SC_NONE)
+  if (opts.service_command () == Options::SC_NONE)
     return 0;
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_LOCATOR_SERVICE_NAME, IMR_LOCATOR_DISPLAY_NAME);
 
-  if (opts.service_command() == Options::SC_INSTALL)
+  if (opts.service_command () == Options::SC_INSTALL)
     {
       const DWORD MAX_PATH_LENGTH = 4096;
-      char pathname[MAX_PATH_LENGTH];
+      ACE_TCHAR pathname[MAX_PATH_LENGTH];
 
-      DWORD length = ACE_TEXT_GetModuleFileName(NULL, pathname, MAX_PATH_LENGTH);
+      DWORD length = ACE_TEXT_GetModuleFileName (0, pathname, MAX_PATH_LENGTH);
       if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
         {
-          ACE_ERROR ((LM_ERROR, "Error: Could not get module file name\n"));
+          ORBSVCS_ERROR ((LM_ERROR, "Error: Could not get module file name\n"));
           return -1;
         }
 
@@ -140,39 +132,42 @@ run_service_command (Options& opts)
       int ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
                                            SERVICE_ERROR_NORMAL,
                                            pathname);
-      if (ret != -1) {
-        ACE_DEBUG ((LM_DEBUG, "ImR: Service installed.\n"));
-        opts.save_registry_options();
-      } else {
-        ACE_ERROR((LM_ERROR, "Error: Failed to install service. error:%d\n", errno));
-      }
+      if (ret != -1)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "ImR: Service installed.\n"));
+          opts.save_registry_options ();
+        }
+      else
+        {
+          ORBSVCS_ERROR ((LM_ERROR, "Error: Failed to install service. errno %d, error <%p>\n", errno, "install"));
+        }
       if (ret == 0)
         return 1;
     }
-  else if (opts.service_command() == Options::SC_REMOVE)
+  else if (opts.service_command () == Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
-      ACE_DEBUG ((LM_DEBUG, "ImR: Service removed.\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "ImR: Service removed.\n"));
       if (ret == 0)
-        return 1; // If successfull, then we don't want to continue.
+        return 1; // If successful, then we don't want to continue.
     }
   else
-  {
-    ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d \n",
-      opts.service_command()));
-    return -1;
-  }
+    {
+      ORBSVCS_ERROR ((LM_ERROR, "Error: Unknown service command :%d\n",
+        opts.service_command ()));
+      return -1;
+    }
 
   return -1;
 
 #else /* ACE_WIN32 */
-  ACE_ERROR ((LM_ERROR, "NT Service not supported on this platform"));
+  ORBSVCS_ERROR ((LM_ERROR, "NT Service not supported on this platform"));
   return -1;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Options opts;
 
@@ -188,11 +183,10 @@ main (int argc, char *argv[])
   else if (result > 0)
     return 0;  // No error, but we should exit anyway.
 
-  if (opts.service())
+  if (opts.service ())
   {
     return run_service ();
   }
 
   return run_standalone (opts);
 }
-

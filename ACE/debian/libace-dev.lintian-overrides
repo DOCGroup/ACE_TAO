@@ -1,0 +1,2 @@
+# Required by some downstreams that use custom-built ACE instead of system-wide ACE for development
+libace-dev: symlink-is-self-recursive usr/lib/ace/lib ..

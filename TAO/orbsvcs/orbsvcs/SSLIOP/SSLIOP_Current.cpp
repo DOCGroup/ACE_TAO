@@ -1,16 +1,11 @@
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 #include "tao/debug.h"
 
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Current,
-           "$Id$")
-
-
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Current.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Current.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current::Current (TAO_ORB_Core *orb_core)
   : tss_slot_ (0),
@@ -18,15 +13,12 @@ TAO::SSLIOP::Current::Current (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO::SSLIOP::Current::~Current (void)
+TAO::SSLIOP::Current::~Current ()
 {
 }
 
 ::SSLIOP::ASN_1_Cert *
-TAO::SSLIOP::Current::get_peer_certificate (
-    ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   SSLIOP::Current::NoContext))
+TAO::SSLIOP::Current::get_peer_certificate ()
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
@@ -34,7 +26,7 @@ TAO::SSLIOP::Current::get_peer_certificate (
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (::SSLIOP::Current::NoContext (), 0);
+    throw ::SSLIOP::Current::NoContext ();
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
@@ -46,7 +38,6 @@ TAO::SSLIOP::Current::get_peer_certificate (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   ::SSLIOP::ASN_1_Cert_var certificate = c;
 
@@ -57,10 +48,7 @@ TAO::SSLIOP::Current::get_peer_certificate (
 }
 
 SSLIOP::SSL_Cert *
-TAO::SSLIOP::Current::get_peer_certificate_chain (
-    ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   SSLIOP::Current::NoContext))
+TAO::SSLIOP::Current::get_peer_certificate_chain ()
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
@@ -68,7 +56,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain (
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (SSLIOP::Current::NoContext (), 0);
+    throw SSLIOP::Current::NoContext ();
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
@@ -80,7 +68,6 @@ TAO::SSLIOP::Current::get_peer_certificate_chain (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   ::SSLIOP::SSL_Cert_var cert_chain = c;
 
@@ -91,10 +78,9 @@ TAO::SSLIOP::Current::get_peer_certificate_chain (
 }
 
 CORBA::Boolean
-TAO::SSLIOP::Current::no_context (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::SSLIOP::Current::no_context ()
 {
-  return (this->implementation () == 0 ? 1 : 0);
+  return (this->implementation () == 0 ? true : false);
 }
 
 void
@@ -125,9 +111,7 @@ TAO::SSLIOP::Current::teardown (TAO::SSLIOP::Current_Impl *prev_impl,
 }
 
 TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Current::_narrow (
-  CORBA::Object_ptr obj
-  ACE_ENV_ARG_DECL_NOT_USED)
+TAO::SSLIOP::Current::_narrow (CORBA::Object_ptr obj)
 {
   return  TAO::SSLIOP::Current::_duplicate (
               dynamic_cast<TAO::SSLIOP::Current *> (obj));
@@ -143,7 +127,7 @@ TAO::SSLIOP::Current::_duplicate (TAO::SSLIOP::Current_ptr obj)
 }
 
 const char *
-TAO::SSLIOP::Current::_interface_repository_id (void) const
+TAO::SSLIOP::Current::_interface_repository_id () const
 {
   return "IDL:TAO/SSLIOP/Current:1.0";
 }
@@ -151,55 +135,35 @@ TAO::SSLIOP::Current::_interface_repository_id (void) const
 // ----------------------------------------------------------------
 
 TAO::SSLIOP::Current_ptr
-tao_TAO_SSLIOP_Current_duplicate (
-    TAO::SSLIOP::Current_ptr p
-  )
+tao_TAO_SSLIOP_Current_duplicate (TAO::SSLIOP::Current_ptr p)
 {
   return TAO::SSLIOP::Current::_duplicate (p);
 }
 
 void
-tao_TAO_SSLIOP_Current_release (
-    TAO::SSLIOP::Current_ptr p
-  )
+tao_TAO_SSLIOP_Current_release (TAO::SSLIOP::Current_ptr p)
 {
   CORBA::release (p);
 }
 
 TAO::SSLIOP::Current_ptr
-tao_TAO_SSLIOP_Current_nil (
-    void
-  )
+tao_TAO_SSLIOP_Current_nil ()
 {
   return TAO::SSLIOP::Current::_nil ();
 }
 
 TAO::SSLIOP::Current_ptr
-tao_TAO_SSLIOP_Current_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
+tao_TAO_SSLIOP_Current_narrow (CORBA::Object *p)
 {
-  return TAO::SSLIOP::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
+  return TAO::SSLIOP::Current::_narrow (p);
 }
 
 CORBA::Object *
-tao_TAO_SSLIOP_Current_upcast (
-    void *src
-  )
+tao_TAO_SSLIOP_Current_upcast (void *src)
 {
   TAO::SSLIOP::Current **tmp =
     static_cast<TAO::SSLIOP::Current **> (src);
   return *tmp;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Pseudo_Var_T<TAO::SSLIOP::Current>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO_Pseudo_Var_T<TAO::SSLIOP::Current>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

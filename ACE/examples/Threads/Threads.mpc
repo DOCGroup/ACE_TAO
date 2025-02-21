@@ -1,0 +1,133 @@
+// -*- MPC -*-
+project(*auto_event) : aceexe {
+  exename = auto_event
+  Source_Files {
+    auto_event.cpp
+  }
+}
+project(*barrier1) : aceexe {
+  exename = barrier1
+  Source_Files {
+    barrier1.cpp
+  }
+}
+project(*barrier2) : aceexe {
+  exename = barrier2
+  Source_Files {
+    barrier2.cpp
+  }
+}
+project(*cancel) : aceexe {
+  exename = cancel
+  Source_Files {
+    cancel.cpp
+  }
+}
+project(*future1) : aceexe, avoids_ace_for_tao {
+  exename = future1
+  Source_Files {
+    future1.cpp
+  }
+}
+project(*future2) : aceexe, avoids_ace_for_tao {
+  exename = future2
+  Source_Files {
+    future2.cpp
+  }
+}
+project(*manual_event) : aceexe {
+  exename = manual_event
+  Source_Files {
+    manual_event.cpp
+  }
+}
+project(*process_mutex) : aceexe, avoids_ace_for_tao {
+  exename = process_mutex
+  Source_Files {
+    process_mutex.cpp
+  }
+}
+project(*process_semaphore) : aceexe, avoids_ace_for_tao {
+  exename = process_semaphore
+  Source_Files {
+    process_semaphore.cpp
+  }
+}
+project(*reader_writer) : aceexe {
+  exename = reader_writer
+  Source_Files {
+    reader_writer.cpp
+  }
+}
+project(*recursive_mutex) : aceexe {
+  exename = recursive_mutex
+  Source_Files {
+    recursive_mutex.cpp
+  }
+}
+project(*task_five) : aceexe {
+  exename = task_five
+  Source_Files {
+    task_five.cpp
+  }
+}
+project(*task_four) : aceexe {
+  exename = task_four
+  Source_Files {
+    task_four.cpp
+  }
+}
+project(*task_three) : aceexe {
+  exename = task_three
+  Source_Files {
+    task_three.cpp
+  }
+}
+project(*task_two) : aceexe {
+  exename = task_two
+  Source_Files {
+    task_two.cpp
+  }
+}
+project(*task_one) : aceexe {
+  exename = task_one
+  Source_Files {
+    task_one.cpp
+  }
+}
+project(*thread_manager) : aceexe {
+  exename = thread_manager
+  Source_Files {
+    thread_manager.cpp
+  }
+}
+project(*thread_pool) : aceexe {
+  exename = thread_pool
+  Source_Files {
+    thread_pool.cpp
+  }
+}
+project(*thread_specific) : aceexe {
+  exename = thread_specific
+  Source_Files {
+    thread_specific.cpp
+  }
+}
+project(*token) : aceexe {
+  exename = token
+  Source_Files {
+    token.cpp
+  }
+}
+project(*tss1) : aceexe {
+  exename = tss1
+  Source_Files {
+    tss1.cpp
+  }
+}
+project(*tss2) : aceexe {
+  exename = tss2
+  Source_Files {
+    tss2.cpp
+  }
+}

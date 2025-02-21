@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file EC_RTCORBA_Dispatching.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -16,22 +14,22 @@
 #define TAO_EC_RTCORBA_DISPATCHING_H
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_event_export.h"
-#include "EC_Dispatching.h"
+#include "orbsvcs/Event/rtcorba_event_export.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_Dispatching_Task.h"
+#include "orbsvcs/Event/EC_Dispatching_Task.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_RTCORBA_Dispatching
  *
  * @brief RTCORBA-based dispatching strategy
- *
  */
 class TAO_RTCORBAEvent_Export TAO_EC_RTCORBA_Dispatching : public TAO_EC_Dispatching
 {
@@ -42,21 +40,19 @@ public:
                               RTCORBA::Current_ptr current);
 
   /// Destructor
-  ~TAO_EC_RTCORBA_Dispatching (void);
+  ~TAO_EC_RTCORBA_Dispatching ();
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info
-                     ACE_ENV_ARG_DECL);
+                     TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info
-                            ACE_ENV_ARG_DECL);
+                            TAO_EC_QOS_Info& qos_info);
 
 private:
   /// The thread pools...
@@ -74,6 +70,8 @@ private:
   /// The dispatching task(s), one per lane
   TAO_EC_Dispatching_Task *tasks_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_RTCORBA_DISPATCHING_H */

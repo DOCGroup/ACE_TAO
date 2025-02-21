@@ -1,0 +1,15 @@
+/client
+/middle
+/ping
+/pingC.cpp
+/pingC.h
+/pingC.inl
+/pingS.cpp
+/pingS.h
+/pong
+/server
+/testC.cpp
+/testC.h
+/testC.inl
+/testS.cpp
+/testS.h

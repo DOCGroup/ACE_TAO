@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 #include "ace/Get_Opt.h"
 
 #include "testC.h"
@@ -7,22 +6,18 @@
 
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (ForwardRequest,
-           client,
-           "$Id$")
-
-const char *ior1 = 0;
-const char *ior2 = 0;
+const ACE_TCHAR *ior1 = 0;
+const ACE_TCHAR *ior2 = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 5)  // foo -k IOR_1 -k IOR_2
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Wrong number of arguments.\n"),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -48,12 +43,11 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 #if TAO_HAS_INTERCEPTORS == 1
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
@@ -65,16 +59,12 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Client ORB"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "Client ORB");
 
       if (::parse_args (argc, argv) != 0)
         return -1;
@@ -83,17 +73,15 @@ main (int argc, char *argv[])
       // IOR occurs during the various interceptions executed during
       // this test.
       CORBA::Object_var object =
-        orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior1);
 
       ForwardRequestTest::test_var server =
-        ForwardRequestTest::test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ForwardRequestTest::test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%s> is nil.\n",
                              ior1),
                             1);
         }
@@ -105,7 +93,7 @@ main (int argc, char *argv[])
 
       CORBA::Short old_number = 0;  // Previous invocation result.
       CORBA::Short number = 0;      // New invocation result.
-      for (int i = 1; i <= 4; ++i)
+      for (int i = 1; i <= 5; ++i)
         {
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Issuing request %d.\n",
@@ -114,9 +102,8 @@ main (int argc, char *argv[])
           if (i > 1)
             old_number = number;
 
-          number = server->number (ACE_ENV_SINGLE_ARG_PARAMETER);
+          number = server->number ();
 
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Request %d handled by object %d.\n",
@@ -143,16 +130,15 @@ main (int argc, char *argv[])
             }
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   if (status != -1)
     ACE_DEBUG ((LM_INFO,

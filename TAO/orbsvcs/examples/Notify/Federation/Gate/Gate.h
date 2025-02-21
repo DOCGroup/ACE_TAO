@@ -1,11 +1,8 @@
 // file      : Gate.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef GATE_H
 #define GATE_H
 
-#include "ace/OS.h"
 #include "ace/INET_Addr.h"
 #include "ace/UUID.h"
 
@@ -23,8 +20,7 @@
 
 #include "Export.h"
 
-class Gate_Export Gate : public POA_CosNotifyComm::StructuredPushConsumer,
-                         public PortableServer::RefCountServantBase
+class Gate_Export Gate : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
   virtual
@@ -53,23 +49,16 @@ private:
   //
   virtual void
   offer_change (CosNotification::EventTypeSeq const&,
-                CosNotification::EventTypeSeq const&
-                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosNotifyComm::InvalidEventType));
+                CosNotification::EventTypeSeq const&);
 
   // StructuredPushSupplier interface.
   //
   virtual void
-  push_structured_event (CosNotification::StructuredEvent const& e
-                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosEventComm::Disconnected));
+  push_structured_event (CosNotification::StructuredEvent const& e);
 
 
   virtual void
-  disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  disconnect_structured_push_consumer ();
 
 private:
   ACE_thread_t thread_;
@@ -83,11 +72,8 @@ private:
   ACE_RMCast::Socket socket_;
   CORBA::String_var id_;
 
-  typedef ACE_SYNCH_MUTEX Mutex;
-  typedef ACE_Guard<Mutex> Lock;
-
   bool stop_;
-  Mutex mutex_;
+  TAO_SYNCH_MUTEX mutex_;
   ACE_Thread_Manager thread_mgr_;
 };
 

@@ -3,8 +3,6 @@
 /**
  *  @file   Consumer.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -22,6 +20,7 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/OS_NS_time.h"
+#include "ace/High_Res_Timer.h"
 
 /**
  * @class EC_Consumer
@@ -46,8 +45,7 @@ public:
   virtual void connect (
       RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
 
   /**
    * The driver program can build the QoS attributes and we use
@@ -56,34 +54,31 @@ public:
    */
   virtual void connect (
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
 
   /// returns 0 if it is not connected
-  virtual int connected (void) const;
+  virtual int connected () const;
 
   /// The application can invoke this method to disconnect from the EC
   /// and deactivate this class.
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
 
   /// The application is shutting down, deactivate the consumer.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown ();
 
   /// Accumulate our statistics to the totals.
   void accumulate (ACE_Throughput_Stats& throughput) const;
 
   /// Printout the statistics
-  virtual void dump_results (const char* name,
-                             ACE_UINT32 global_scale_factor);
+  virtual void dump_results (
+    const ACE_TCHAR* name,
+    ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
 
 private:
   /// The main driver for the test.

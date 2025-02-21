@@ -1,0 +1,11 @@
+#include "tao/PortableInterceptor.pidl"
+#include "tao/PI_Server/PI_Server_include.pidl"
+
+#include "test.idl"
+
+local interface Simple_ServerRequestInterceptor
+    : PortableInterceptor::ServerRequestInterceptor
+{
+    /// Set the reference to which requests will be forwarded.
+    void forward_reference (in string iorstr);
+};

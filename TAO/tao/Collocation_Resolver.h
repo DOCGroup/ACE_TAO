@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Collocation_Resolver.h
- *
- *  $Id$
  *
  *  @author  Irfan Pyarali
  */
@@ -12,23 +12,23 @@
 #define TAO_COLLOCATION_RESOLVER_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-
-#include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
+
+#include "ace/Service_Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
-
-  class Environment;
 }
 
 /**
@@ -43,14 +43,14 @@ class TAO_Export TAO_Collocation_Resolver
   : public ACE_Service_Object
 {
 public:
-
   /// Destructor.
-  virtual ~TAO_Collocation_Resolver (void);
+  virtual ~TAO_Collocation_Resolver ();
 
   /// Is @a object collocated?
-  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
-                                        ACE_ENV_ARG_DECL) const = 0;
+  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object) const = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

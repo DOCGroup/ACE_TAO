@@ -1,20 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   TAO/orbsvcs/tests/Notify/Structured_Filter
-//
-// = FILENAME
-//   Notify_Push_Consumer.h
-//
-// = DESCRIPTION
-//   A structured push consumer implementation.
-//
-// = AUTHOR
-//    Chip Jones <jones_c@ociweb.com>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Push_Consumer.h
+ *
+ * A structured push consumer implementation.
+ *
+ *  @author Chip Jones <jones_c@ociweb.com>
+ */
+//=============================================================================
+
 #ifndef NOTIFY_PUSH_CONSUMER_H
 #define NOTIFY_PUSH_CONSUMER_H
 
@@ -31,12 +25,10 @@ public:
     NS_FilterType supplierFilter, Notify_Test_Client& client);
 
   void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                CosNotifyChannelAdmin::EventChannel_ptr ec ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                CosNotifyChannelAdmin::EventChannel_ptr ec);
 
 private:
-  void push_structured_event (const CosNotification::StructuredEvent& ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push_structured_event (const CosNotification::StructuredEvent&);
 private:
   ACE_CString name_;
   CORBA::Long sent_;

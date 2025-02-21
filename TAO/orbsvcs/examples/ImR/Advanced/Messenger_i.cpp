@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "Messenger_i.h"
 
 #include <ace/streams.h>
@@ -13,7 +10,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb, long instance)
 {
 }
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 
@@ -27,7 +24,7 @@ bool Messenger_i::acknowledgeHit()
 CORBA::Long Messenger_i::send_message (CORBA::Long thread,
                                        CORBA::Long iter,
                                        CORBA::Long obj,
-                                       CORBA::Long req) ACE_THROW_SPEC ((CORBA::SystemException))
+                                       CORBA::Long req)
 {
   cout << "* Invoked: (" << instance_ << "." << thread << "." << iter
     << "." << obj << "." << req << ")" << endl;
@@ -35,7 +32,7 @@ CORBA::Long Messenger_i::send_message (CORBA::Long thread,
   return instance_;
 }
 
-void Messenger_i::shutdownOrb () ACE_THROW_SPEC ((CORBA::SystemException))
+void Messenger_i::shutdownOrb ()
 {
   orb_->shutdown(0);
 }

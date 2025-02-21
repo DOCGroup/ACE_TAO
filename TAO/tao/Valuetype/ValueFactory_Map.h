@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file     ValueFactory_Map.h
- *
- *  $Id$
  *
  *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
@@ -22,11 +20,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "valuetype_export.h"
-
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/RW_Thread_Mutex.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -34,12 +32,11 @@ namespace CORBA
   typedef ValueFactoryBase *ValueFactory;
 }
 
-class TAO_Valuetype_Export TAO_ValueFactory_Map
+class TAO_ValueFactory_Map
 {
 public:
-
-  TAO_ValueFactory_Map (void);
-  ~TAO_ValueFactory_Map (void);
+  TAO_ValueFactory_Map ();
+  ~TAO_ValueFactory_Map ();
 
   /**
    * Associate the factory (int_id) with the repo_id (ext_id).
@@ -52,43 +49,39 @@ public:
   int rebind (const char *repo_id,
               CORBA::ValueFactory &factory);
 
-  /// Removes entry for repo_id from the map and sets factory to
+  /// Removes entry for @a repo_id from the map and sets factory to
   /// the tied one.
   int unbind (const char *repo_id,
               CORBA::ValueFactory &factory);
 
   /**
-   * Lookup a matching factory for repo_id.
+   * Lookup a matching factory for @a repo_id.
    * Invokes _add_ref () on the factory if found.
    * Returns -1 on failure and 0 on success.
    */
   int find (const char *repo_id,
             CORBA::ValueFactory &factory);
 
-  void dump (void);
+  void dump ();
 
   /// Return singleton instance of this class.
-  static TAO_ValueFactory_Map * instance (void);
+  static TAO_ValueFactory_Map * instance ();
 
 private:
-
   /// The hash table data structure.
   typedef ACE_Hash_Map_Manager_Ex<const char *,
                                   CORBA::ValueFactory,
                                   ACE_Hash<const char *>,
                                   ACE_Equal_To<const char *>,
-                                  TAO_SYNCH_RW_MUTEX>
+                                  ACE_SYNCH_NULL_MUTEX>
           FACTORY_MAP_MANAGER;
   FACTORY_MAP_MANAGER map_;
+
+  /// synchronization of the map
+  TAO_SYNCH_MUTEX mutex_;
 }; /* TAO_ValueFactory_Map */
 
-
-// Currently the ValueFactory_Map is a singleton and not per ORB
-// as in the OMG spec.
-/**
- * @todo Remove this legacy ValueFactory_Map typedef.
- */
-typedef TAO_ValueFactory_Map TAO_VALUEFACTORY_MAP;
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

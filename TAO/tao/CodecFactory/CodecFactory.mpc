@@ -1,0 +1,54 @@
+project(*idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -Sal -GX \
+                -Wb,stub_export_macro=TAO_CODECFACTORY_Export \
+                -Wb,stub_export_include=tao/CodecFactory/codecfactory_export.h \
+                -Wb,stub_export_file=codecfactory_export.h \
+                -Wb,include_guard=TAO_CODECFACTORY_SAFE_INCLUDE \
+                -Wb,safe_include=tao/CodecFactory/CodecFactory.h \
+                -iC tao/CodecFactory -Gxhst
+    idlflags -= -Sa -St
+    IOP_Codec.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Sci -SS -Sorb -Sa -GX \
+                -Wb,export_macro=TAO_CODECFACTORY_Export \
+                -Wb,export_include=tao/CodecFactory/codecfactory_export.h \
+                -Wb,unique_include=tao/CodecFactory/CodecFactory.h \
+                -iC CodecFactory
+    IOP_Codec_include.pidl
+  }
+
+  specific {
+    install_dir = tao/CodecFactory
+  }
+}
+
+project(CodecFactory) : taolib, tao_output, install, anytypecode, taoidldefaults, nolink_codecfactory {
+  after        += *idl
+  sharedname    = TAO_CodecFactory
+  dynamicflags  = TAO_CODECFACTORY_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    IOP_CodecC.cpp
+    IOP_Codec_includeC.cpp
+  }
+
+  Header_Files {
+    codecfactory_export.h
+    *.h
+    IOP_CodecA.h
+    IOP_CodecC.h
+    IOP_Codec_includeA.h
+    IOP_Codec_includeC.h
+    IOP_Codec_includeS.h
+    IOP_CodecS.h
+  }
+
+  specific {
+    install_dir = tao/CodecFactory
+  }
+}

@@ -1,0 +1,20 @@
+module C1
+{
+  valuetype EB  // NOT abstract
+  {
+  };
+};
+
+module M1
+{
+  valuetype VT; // Forward declare
+};
+
+module M1
+{
+  valuetype VT :  // Full definition
+   ::C1::EB
+  {
+    public long id;
+  };
+};

@@ -1,24 +1,13 @@
-// $Id$
+#include "orbsvcs/Event/ECG_Adapters.h"
 
-#include "ECG_Adapters.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (Event,
-           ECG_Adapters,
-           "$Id$")
-
-
-TAO_ECG_Handler_Shutdown::~TAO_ECG_Handler_Shutdown (void)
+TAO_ECG_Handler_Shutdown::~TAO_ECG_Handler_Shutdown ()
 {
 }
 
-TAO_ECG_Dgram_Handler::~TAO_ECG_Dgram_Handler (void)
+TAO_ECG_Dgram_Handler::~TAO_ECG_Dgram_Handler ()
 {
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Refcounted_Auto_Ptr<TAO_ECG_Handler_Shutdown, ACE_Null_Mutex>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Refcounted_Auto_Ptr<TAO_ECG_Handler_Shutdown, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+TAO_END_VERSIONED_NAMESPACE_DECL

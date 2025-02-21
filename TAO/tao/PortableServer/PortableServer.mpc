@@ -1,0 +1,181 @@
+project(*idl) : tao_versioning_idl_defaults, install, pidl_install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GA \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -iC tao/PortableServer
+    idlflags -= -Sa -St
+    ForwardRequest.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GA -Sal \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -iC tao/PortableServer
+    idlflags -= -Sa -St
+    AdapterActivator.pidl
+    IdAssignmentPolicy.pidl
+    IdUniquenessPolicy.pidl
+    ImplicitActivationPolicy.pidl
+    LifespanPolicy.pidl
+    RequestProcessingPolicy.pidl
+    ServantActivator.pidl
+    ServantLocator.pidl
+    ServantManager.pidl
+    ServantRetentionPolicy.pidl
+    ThreadPolicy.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -iC tao/PortableServer
+    idlflags -= -Sa -St
+    POAManager.pidl
+    POAManagerFactory.pidl
+    POA.pidl
+    PS_Current.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Sci -SS -Sorb -Sa -GX \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -Wb,unique_include=tao/PortableServer/PortableServer.h \
+                -iC tao/PortableServer
+    PortableServer_include.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Sci -SS -Sorb -Sa -GX \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -Wb,include_guard=TAO_PORTABLESERVER_SAFE_INCLUDE \
+                -Wb,safe_include=tao/PortableServer/PortableServer.h \
+                -iC tao/PortableServer
+    PortableServer.pidl
+  }
+
+  PidlInstallWithoutBuilding_Files {
+    PS_Forward.pidl
+  }
+
+  specific {
+    install_dir = tao/PortableServer
+  }
+}
+
+project(PortableServer) : taolib, tao_output, install, anytypecode, taoidldefaults, valuetype_out_indirection {
+  after       += *idl
+  sharedname   = TAO_PortableServer
+  dynamicflags += TAO_PORTABLESERVER_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    ForwardRequestC.cpp
+    AdapterActivatorC.cpp
+    IdAssignmentPolicyC.cpp
+    IdUniquenessPolicyC.cpp
+    ImplicitActivationPolicyC.cpp
+    LifespanPolicyC.cpp
+    RequestProcessingPolicyC.cpp
+    ServantActivatorC.cpp
+    ServantLocatorC.cpp
+    ServantManagerC.cpp
+    ServantRetentionPolicyC.cpp
+    ThreadPolicyC.cpp
+    POAManagerC.cpp
+    POAManagerFactoryC.cpp
+    POAC.cpp
+    PolicyS.cpp
+    PS_CurrentC.cpp
+    PortableServer_includeC.cpp
+    PortableServerC.cpp
+    AdapterActivatorA.cpp
+    ForwardRequestA.cpp
+    IdAssignmentPolicyA.cpp
+    IdUniquenessPolicyA.cpp
+    ImplicitActivationPolicyA.cpp
+    LifespanPolicyA.cpp
+    PS_ForwardA.cpp
+    Regular_POA.cpp
+    RequestProcessingPolicyA.cpp
+    Root_POA.cpp
+    ServantActivatorA.cpp
+    ServantLocatorA.cpp
+    ServantManagerA.cpp
+    ServantRetentionPolicyA.cpp
+    ThreadPolicyA.cpp
+  }
+
+  Header_Files {
+    *.h
+    AdapterActivatorC.h
+    ForwardRequestC.h
+    IdAssignmentPolicyC.h
+    IdUniquenessPolicyC.h
+    ImplicitActivationPolicyC.h
+    LifespanPolicyC.h
+    POAC.h
+    POAManagerC.h
+    POAManagerFactoryC.h
+    PolicyS.h
+    PolicyS_T.h
+    PortableServerC.h
+    PortableServer_includeC.h
+    PS_CurrentC.h
+    PS_ForwardC.h
+    RequestProcessingPolicyC.h
+    ServantActivatorC.h
+    ServantLocatorC.h
+    ServantManagerC.h
+    ServantRetentionPolicyC.h
+    ThreadPolicyC.h
+    AdapterActivatorA.h
+    ForwardRequestA.h
+    IdAssignmentPolicyA.h
+    IdUniquenessPolicyA.h
+    ImplicitActivationPolicyA.h
+    LifespanPolicyA.h
+    PortableServerA.h
+    PortableServer_includeA.h
+    Regular_POA.h
+    RequestProcessingPolicyA.h
+    ServantActivatorA.h
+    ServantLocatorA.h
+    ServantManagerA.h
+    ServantRetentionPolicyA.h
+    ThreadPolicyA.h
+    ForwardRequestS.h
+    AdapterActivatorS.h
+    IdAssignmentPolicyS.h
+    IdUniquenessPolicyS.h
+    ImplicitActivationPolicyS.h
+    LifespanPolicyS.h
+    RequestProcessingPolicyS.h
+    ServantActivatorS.h
+    ServantLocatorS.h
+    ServantManagerS.h
+    ServantRetentionPolicyS.h
+    ThreadPolicyS.h
+    POAManagerS.h
+    POAManagerFactoryS.h
+    POAS.h
+    PS_CurrentS.h
+    PortableServer_includeS.h
+    PortableServerS.h
+  }
+
+  Template_Files {
+    Servant_var.cpp
+    PolicyS_T.cpp
+    *_T.cpp
+  }
+
+  specific {
+    install_dir = tao/PortableServer
+  }
+}

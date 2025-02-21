@@ -1,13 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file     Reply_Dispatcher.h
  *
- *  $Id$
- *
  *   Define the interface for the Reply_Dispatcher strategies.
- *
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
@@ -18,23 +15,30 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+#include "tao/GIOPC.h"
+
+#include "ace/Atomic_Op.h"
+#include "ace/Intrusive_Auto_Ptr.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Allocator;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declarations.
-class TAO_GIOP_Message_State;
-class TAO_GIOP_Message_Version;
-class TAO_Transport;
 class TAO_Pluggable_Reply_Params;
 
 /**
  * @class TAO_Reply_Dispatcher
- *
  *
  * Different invocation modes process the Reply messages in
  * different ways.  Traditional synchronous replies simply receive
@@ -50,13 +54,12 @@ class TAO_Pluggable_Reply_Params;
  */
 class TAO_Export TAO_Reply_Dispatcher
 {
-
 public:
   /// Constructor.
-  TAO_Reply_Dispatcher (void);
+  TAO_Reply_Dispatcher (ACE_Allocator *allocator = 0);
 
   /// Destructor.
-  virtual ~TAO_Reply_Dispatcher (void);
+  virtual ~TAO_Reply_Dispatcher ();
 
   /**
    * Dispatch the reply. Return 1 on sucess, -1 on error.
@@ -69,6 +72,9 @@ public:
    */
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
 
+  /// Inform that the reply timed out
+  virtual void reply_timed_out () = 0;
+
   /**
    * The used for the pending reply has been closed.
    * No reply is expected.
@@ -77,18 +83,36 @@ public:
    *    the exception, it would a matter of simply adding a boolean
    *    argument to this function.
    */
-  virtual void connection_closed (void) = 0;
+  virtual void connection_closed () = 0;
 
-  /// Get the reply status.
-  CORBA::ULong reply_status (void) const;
+  /// Get the locate reply status.
+  GIOP::LocateStatusType locate_reply_status () const;
+
+  GIOP::ReplyStatusType reply_status () const;
+
+  static void intrusive_add_ref (TAO_Reply_Dispatcher*);
+  static void intrusive_remove_ref (TAO_Reply_Dispatcher*);
 
 protected:
-  /// Reply or LocateReply status.
-  CORBA::ULong reply_status_;
+  /// LocateReply status.
+  GIOP::LocateStatusType locate_reply_status_;
+
+  // RequestReply status
+  GIOP::ReplyStatusType reply_status_;
+
+private:
+  /// Support for intrusive reference counting
+  std::atomic<uint32_t> refcount_;
+
+  /// Allocator that was used to allocate this reply dispatcher. In case of
+  /// zero we come from the heap.
+  ACE_Allocator *allocator_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "tao/Reply_Dispatcher.i"
+#include "tao/Reply_Dispatcher.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

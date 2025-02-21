@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #if !defined (_ECHO_IDL)
 #define _ECHO_IDL
 
@@ -11,7 +9,7 @@ interface Echo
   // mesg string to be displayed and shuts down the server.
 
   typedef sequence<Object> List;
-	
+
   List echo_list (in string message);
   // This operation returns the message as a sequence of Objects and
   // displays it on the screen as a string.

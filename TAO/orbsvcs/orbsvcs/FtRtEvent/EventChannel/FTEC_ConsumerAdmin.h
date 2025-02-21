@@ -4,8 +4,6 @@
 /**
  *  @file   FTEC_ConsumerAdmin.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -18,8 +16,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
-#include "FT_ProxyAdmin_T.h"
-#include "ProxySupplierStateWorker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ProxySupplierStateWorker.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FtRtecEventChannelAdmin {
   struct ConsumerAdminState;
@@ -33,7 +33,6 @@ class TAO_FTEC_ProxyPushSupplier;
  *
  * @brief Implements the ConsumerAdmin interface, i.e. the factory for
  * TAO_FTEC_ProxyPushSupplier objects.
- *
  */
 class TAO_FTEC_ConsumerAdmin
   : public TAO_EC_ConsumerAdmin
@@ -55,15 +54,16 @@ public:
   TAO_FTEC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
-  virtual ~TAO_FTEC_ConsumerAdmin (void);
+  virtual ~TAO_FTEC_ConsumerAdmin ();
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-          ACE_THROW_SPEC ((CORBA::SystemException));
+      obtain_push_supplier ();
 
   void disconnect(RtecEventChannelAdmin::ProxyPushSupplier_ptr obj);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_CONSUMERADMIN_H */

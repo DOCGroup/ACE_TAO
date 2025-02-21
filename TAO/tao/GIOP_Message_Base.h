@@ -1,10 +1,8 @@
 // -*- C++ -*-
-//
+
 // ===================================================================
 /**
  *  @file GIOP_Message_Base.h
- *
- *  $Id$
  *
  *  @author Initially Copyrighted by Sun Microsystems Inc., 1994-1995,
  *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
@@ -16,20 +14,26 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Pluggable_Messaging.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Exception.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Fragmentation_Strategy.h"
 #include "tao/CDR.h"
+#include "tao/Incoming_Message_Stack.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
 class TAO_Queued_Data;
+class TAO_ServerRequest;
 
 /**
  * @class TAO_GIOP_Message_Base
@@ -38,152 +42,156 @@ class TAO_Queued_Data;
  *
  * This class will hold the specific details common to all the GIOP
  * versions. Some of them which are here may be shifted if things
- * start changing between versions. This class uses the
- * TAO_GIOP_Message_Reactive_Handler to read and parse messages.
+ * start changing between versions.
  */
 
-class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
+class TAO_Export TAO_GIOP_Message_Base
 {
 public:
   /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
+                         TAO_Transport * transport,
                          size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
-  /// Dtor
-  virtual ~TAO_GIOP_Message_Base (void);
+  /// Destructor
+  ~TAO_GIOP_Message_Base ();
 
   /// Initialize the underlying state object based on the @a major and
   /// @a minor revision numbers
-  virtual void init (CORBA::Octet major,
-                     CORBA::Octet minor);
-
-  /// Reset the messaging the object
-  virtual void reset (void);
+  void init (CORBA::Octet major, CORBA::Octet minor);
 
   /// Write the RequestHeader in to the @a cdr stream. The underlying
-  /// implementation of the mesaging should do the right thing.
-  virtual int generate_request_header (TAO_Operation_Details &op,
-                                       TAO_Target_Specification &spec,
-                                       TAO_OutputCDR &cdr);
+  /// implementation of the messaging should do the right thing.
+  int generate_request_header (TAO_Operation_Details &op,
+                               TAO_Target_Specification &spec,
+                               TAO_OutputCDR &cdr);
 
   /// Write the RequestHeader in to the @a cdr stream.
-  virtual int generate_locate_request_header (
+  int generate_locate_request_header (
       TAO_Operation_Details &op,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &cdr
-    );
+      TAO_OutputCDR &cdr);
 
   /// Write the reply header
-  virtual int generate_reply_header (
+  int generate_reply_header (
       TAO_OutputCDR &cdr,
-      TAO_Pluggable_Reply_Params_Base &params
-    );
+      TAO_Pluggable_Reply_Params_Base &params);
 
-  /// This method reads the message on the connection. Returns 0 when
-  /// there is short read on the connection. Returns 1 when the full
-  /// message is read and handled. Returns -1 on errors. If @a block is
-  /// 1, then reply is read in a blocking manner.
-  virtual int read_message (TAO_Transport *transport,
-                            int block = 0,
-                            ACE_Time_Value *max_wait_time = 0);
-
+  int generate_fragment_header (TAO_OutputCDR & cdr, CORBA::ULong request_id);
 
   /// Format the message. As we have not written the message length in
-  /// the header, we make use of this oppurtunity to insert and format
-  /// the message.
-  virtual int format_message (TAO_OutputCDR &cdr);
+  /// the header, we make use of this opportunity to insert and format
+  /// the message. (Called by client, for requests, provides stub pointer
+  /// but not the req pointer; called by server, for replies, provides req
+  /// pointer, not stub pointer.)
+  int format_message (TAO_OutputCDR &cdr, TAO_Stub *stub, TAO_ServerRequest *req);
 
-  /// Parse the incoming messages..
-  ///
-  /// \return -1 There was some error parsing the GIOP header
-  /// \return 0  The GIOP header was parsed correctly
-  /// \return 1  There was not enough data in the message block to
-  ///            parse the header
-  virtual int parse_incoming_messages (ACE_Message_Block &message_block);
-
-  /// Calculate the amount of data that is missing in the <incoming>
-  /// message block.
-  virtual ssize_t missing_data (ACE_Message_Block &message_block);
-
-  /* Extract the details of the next message from the @a incoming
-   * through @a qd. Returns 1 if there are more messages and returns a
-   * 0 if there are no more messages in @a incoming.
+  /**
+   * Parse the details of the next message from the @a incoming
+   * and initializes attributes of @a qd.
+   * @retval 0 If the message header could not be parsed completely,
+   * @retval 1 If the message header could be parsed completely
+   * @retval -1 On error.
    */
-  virtual int extract_next_message (ACE_Message_Block &incoming,
-                                    TAO_Queued_Data *&qd);
+  int parse_next_message (TAO_Queued_Data &qd, size_t &mesg_length);
+
+  /// Extract the details of the next message from the @a incoming
+  /// through @a qd. Returns 0 if the message header could not be
+  /// parsed completely, returns a 1 if the message header could be
+  /// parsed completely and returns -1 on error.
+  int extract_next_message (ACE_Message_Block &incoming, TAO_Queued_Data *&qd);
 
   /// Check whether the node @a qd needs consolidation from @a incoming.
-  virtual int consolidate_node (TAO_Queued_Data *qd,
-                                ACE_Message_Block &incoming);
-
-  /// Get the details of the message parsed through the @a qd.
-  virtual void get_message_data (TAO_Queued_Data *qd);
+  int consolidate_node (TAO_Queued_Data *qd, ACE_Message_Block &incoming);
 
   /// Process the request message that we have received on the
   /// connection
-  virtual int process_request_message (TAO_Transport *transport,
-                                       TAO_Queued_Data *qd);
-
+  int process_request_message (TAO_Transport *transport, TAO_Queued_Data *qd);
 
   /// Parse the reply message that we received and return the reply
   /// information through @a reply_info
-  virtual int process_reply_message (
+  int process_reply_message (
       TAO_Pluggable_Reply_Params &reply_info,
       TAO_Queued_Data *qd);
 
   /// Generate a reply message with the exception @a ex.
-  virtual int generate_exception_reply (
+  int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      CORBA::Exception &x
-    );
+      const CORBA::Exception &x);
 
   /// Header length
-  virtual size_t header_length (void) const;
+  size_t header_length () const;
 
   /// The header length of a fragment
-  virtual size_t fragment_header_length (CORBA::Octet major,
-                                         CORBA::Octet minor) const;
+  size_t fragment_header_length (
+    const TAO_GIOP_Message_Version& giop_version) const;
 
-  virtual TAO_OutputCDR &out_stream (void);
+  TAO_OutputCDR &out_stream ();
 
-protected:
+  /// Consolidate fragmented message with associated fragments, being
+  /// stored within this class.  If reliable transport is used (like
+  /// TCP) fragments are partially ordered on stack, last fragment on
+  /// top. Otherwise If un-reliable transport is used (like UDP)
+  /// fragments may be dis-ordered, and must be ordered before
+  /// consolidation.  @return 0 on success and @a msg points to
+  /// consolidated message, 1 if there are still fragments outstanding,
+  /// in case of error -1 is being returned. In any case @a qd must be
+  /// released by method implementation.
+  int consolidate_fragmented_message (TAO_Queued_Data *qd,
+                                      TAO_Queued_Data *&msg);
+
+  /// Discard all fragments associated to request-id encoded in
+  /// cancel_request.  This operation will never be called
+  /// concurrently by multiple threads nor concurrently to
+  /// consolidate_fragmented_message @return -1 on failure, 0 on
+  /// success, 1 no fragment on stack relating to CancelRequest.
+  int discard_fragmented_message (const TAO_Queued_Data *cancel_request);
+
+  /// Outgoing GIOP message fragmentation strategy.
+  TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy ();
+
+  /// Is the messaging object ready for processing BiDirectional
+  /// request/response?
+  bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
+
+private:
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  /// Decompresses a ZIOP message and turns it into a GIOP message
+  /// When decompressed, db contains a complete new ACE_Data_Block and
+  /// therefore qd its data block is also replaced.
+  bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
+                   size_t& rd_pos, size_t& wr_pos);
+#endif
 
   /// Processes the GIOP_REQUEST messages
-  virtual int process_request (TAO_Transport *transport,
-                               TAO_InputCDR &input,
-                               TAO_OutputCDR &output,
-                               TAO_GIOP_Message_Generator_Parser *);
+  int process_request (TAO_Transport *transport,
+                       TAO_InputCDR &input,
+                       TAO_OutputCDR &output,
+                       TAO_GIOP_Message_Generator_Parser *);
 
   /// Processes the GIOP_LOCATE_REQUEST messages
-  virtual int process_locate_request (TAO_Transport *transport,
-                                      TAO_InputCDR &input,
-                                      TAO_OutputCDR &output,
-                                      TAO_GIOP_Message_Generator_Parser *);
+  int process_locate_request (TAO_Transport *transport,
+                              TAO_InputCDR &input,
+                              TAO_OutputCDR &output,
+                              TAO_GIOP_Message_Generator_Parser *);
 
-  /// Set the state
-  void set_state (CORBA::Octet major,
-                  CORBA::Octet minor,
-                  TAO_GIOP_Message_Generator_Parser *&) const;
+  /// Get the parser
+  TAO_GIOP_Message_Generator_Parser *get_parser (
+    const TAO_GIOP_Message_Version &version) const;
+
+  /// Print out consolidate messages
+  int dump_consolidated_msg (TAO_OutputCDR &stream);
 
   /// Print out a debug messages..
-  void dump_msg (const char *label,
-                 const u_char *ptr,
+  void dump_msg (const char *label, const u_char *ptr,
                  size_t len);
-
-  /// Get the message type. The return value would be one of the
-  /// following:
-  /// TAO_PLUGGABLE_MESSAGE_REQUEST,
-  /// TAO_PLUGGABLE_MESSAGE_REPLY,
-  /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
-  /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
-  TAO_Pluggable_Message_Type message_type (
-                               const TAO_GIOP_Message_State &state) const;
 
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.
-  int write_protocol_header (TAO_GIOP_Message_Type t,
+  int write_protocol_header (GIOP::MsgType t,
+                             const TAO_GIOP_Message_Version& version,
                              TAO_OutputCDR &msg);
 
   /// Make a GIOP_LOCATEREPLY and hand that over to the transport so
@@ -197,12 +205,11 @@ protected:
                               TAO_GIOP_Message_Generator_Parser *);
 
   /// Send error messages
-  int  send_error (TAO_Transport *transport);
+  int send_error (TAO_Transport *transport);
 
   /// Close a connection, first sending GIOP::CloseConnection.
   void send_close_connection (const TAO_GIOP_Message_Version &version,
-                              TAO_Transport *transport,
-                              void *ctx);
+                              TAO_Transport *transport);
 
   /// We must send a LocateReply through @a transport, this request
   /// resulted in some kind of exception.
@@ -212,44 +219,60 @@ protected:
                             IOP::ServiceContextList *svc_info,
                             CORBA::Exception *x);
 
-
   /// Write the locate reply header
-  virtual int generate_locate_reply_header (
-      TAO_OutputCDR & /*cdr*/,
-      TAO_Pluggable_Reply_Params_Base & /*params*/);
-
-  /// Is the messaging object ready for processing BiDirectional
-  /// request/response?
-  virtual int is_ready_for_bidirectional (TAO_OutputCDR &msg);
+  int generate_locate_reply_header (
+      TAO_OutputCDR &cdr,
+      TAO_Pluggable_Reply_Params_Base &params);
 
   /// Creates a new node for the queue with a message block in the
   /// node of size @a sz.
   TAO_Queued_Data *make_queued_data (size_t sz);
 
-  /// Initialize the TAO_Queued_Data from the relevant portions of
-  /// a GIOP_Message_State.
-  void init_queued_data (TAO_Queued_Data* qd,
-                         const TAO_GIOP_Message_State& state) const;
+  /// Parse GIOP request-id of TAO_Queued_Data @a qd
+  /// @return 0 on success, otherwise -1
+  int parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong &request_id) const;
+
+  /// Parse GIOP request-id of TAO_InputCDR @a cdr.
+  /// @return 0 on success, otherwise -1
+  int parse_request_id (const TAO_InputCDR &cdr, CORBA::ULong &request_id) const;
+
+  /// Set GIOP message flags in message that has been marshaled into
+  /// the output CDR stream @a msg.
+  /**
+   * @note It is assumed that the GIOP message header is the first
+   *       thing marshaled into the output CDR stream @a msg.
+   */
+  void set_giop_flags (TAO_OutputCDR & msg) const;
 
 private:
   /// Cached ORB_Core pointer...
   TAO_ORB_Core *orb_core_;
 
-  /// The message handler object that does reading and parsing of the
-  /// incoming messages
-  TAO_GIOP_Message_State message_state_;
-
   /// All the implementations of GIOP message generator and parsers
   TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;
 
+  /// All Fragments being received are stored on stack in reverse
+  /// order, last top
+  TAO::Incoming_Message_Stack fragment_stack_;
+
 protected:
-  /// Buffer used for both the output and input CDR streams, this is
-  /// "safe" because we only one of the streams at a time.
-  char buffer_[ACE_CDR::DEFAULT_BUFSIZE];
+  /**
+   * @name Outgoing GIOP Fragment Related Attributes
+   *
+   * These attributes are only used when fragmenting outgoing GIOP
+   * requests and replies.
+   */
+  //@{
+  /// Strategy that sends data currently marshaled into this
+  /// TAO_OutputCDR stream if necessary.
+  TAO_GIOP_Fragmentation_Strategy* fragmentation_strategy_;
 
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
-#endif /*TAO_GIOP_MESSAGE_BASE_H*/
+
+#endif  /* TAO_GIOP_MESSAGE_BASE_H */

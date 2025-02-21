@@ -1,42 +1,25 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor for code generation of Arrays for the Cdr operators in the client
-//    header.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_ch.cpp
+ *
+ *  Visitor for code generation of Arrays for the Cdr operators in the client
+ *  header.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
+#include "array.h"
 #include "be_visitor_sequence/cdr_op_ch.h"
 
-ACE_RCSID (be_visitor_array, 
-           cdr_op_ch, 
-           "$Id$")
-
-// ***************************************************************************
-// Array visitor for generating CDR operator declarations in the client header
-// ***************************************************************************
-
 be_visitor_array_cdr_op_ch::be_visitor_array_cdr_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_array_cdr_op_ch::~be_visitor_array_cdr_op_ch (void)
+be_visitor_array_cdr_op_ch::~be_visitor_array_cdr_op_ch ()
 {
 }
 
@@ -50,7 +33,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
   AST_Decl::NodeType nt = bt->node_type ();
 
   // If the node is an array of anonymous sequence, we need to
@@ -72,8 +55,8 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
-      && bt->is_child (this->ctx_->scope ()))
+  if (this->ctx_->alias () == nullptr && // Not a typedef.
+      bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);
@@ -112,44 +95,39 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
+
+  *os << be_global->core_versioning_begin () << be_nl;
+
+  be_scope* scope = dynamic_cast<be_scope*> (node->defined_in ());
+  be_decl* parent = scope->decl ();
+  be_typedef *td = this->ctx_->tdef ();
+  ACE_CString arg_name (ACE_CString (parent->full_name ())
+                        + "::"
+                        + (td == nullptr ? "_" : "")
+                        + node->local_name ()->get_string ()
+                        + "_forany &_tao_array");
 
   // Generate the CDR << and >> operator declarations.
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator<< (TAO_OutputCDR &, const ";
+      << " operator<< (TAO_OutputCDR &strm, const "
+      << arg_name.c_str () << ");" << be_nl;
 
-  if (!this->ctx_->tdef ())
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator>> (TAO_InputCDR &, " << arg_name.c_str ()
+      << ");" << be_nl;
+
+  // Using 'const' with xxx_forany prevents the compiler from
+  // automatically converting back to xxx_slice *.
+  if (be_global->gen_ostream_operators ())
     {
-      be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
-      be_decl* parent = scope->decl ();
-
-      *os << parent->full_name ()
-          << "::_" << node->local_name ()
-          << "_forany &);" << be_nl;
-    }
-  else
-    {
-      *os << node->name () << "_forany &);" << be_nl;
-    }
-
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>> (TAO_InputCDR &, ";
-
-  if (!this->ctx_->tdef ())
-    {
-      be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
-      be_decl* parent = scope->decl ();
-
-      *os << parent->full_name ()
-          << "::_" << node->local_name ()
-          << "_forany &);";
-    }
-  else
-    {
-      *os << node->name () << "_forany &);";
+      *os << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (std::ostream &strm, const "
+          << arg_name.c_str () << ");" << be_nl;
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  *os << be_global->core_versioning_end ();
+
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

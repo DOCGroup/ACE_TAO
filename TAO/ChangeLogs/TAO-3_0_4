@@ -1,0 +1,460 @@
+commit 495a504d92acd6eebe0a0a266bec1259fa1aaf9e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 29 08:51:49 2021 +0200
+
+    Include tao/StringSeq.pidl to fix duplicate symbols with msvc
+    
+        * TAO/tests/Bug_1676_Regression/Test.idl:
+        * TAO/tests/Bug_3524_Regression/README:
+        * TAO/tests/Bug_3524_Regression/test.idl:
+
+commit 1ef3c8c0d9f5d3876480a503eeeb5299b6172b90
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 09:37:29 2021 +0200
+
+    Use default/override
+    
+        * TAO/TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+
+commit f2102281d3afb78fd9eddc566426ba4373e8de14
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 09:27:42 2021 +0200
+
+    Generate AMH destructor as default
+    
+        * TAO/TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+
+commit 2c74ffc0559e66fa4ef0f290d4caac328441b768
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 09:02:04 2021 +0200
+
+    Make use of default and more condensed code generation
+    
+        * TAO/TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO/TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO/tests/MT_Server/README:
+
+commit 94b620310f4582b648644945fe8a56ab30bd13cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 27 15:07:15 2021 +0200
+
+    Generate default constructor and destructor as default
+    
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+commit d017dac249b849bc0fda979684166b2ca61b5578
+Merge: a59431844a4 53f510db8ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 27 08:17:08 2021 +0200
+
+    Merge pull request #1687 from jwillemsen/jwi-autoptr5
+    
+    Use std::unique_ptr and default
+
+commit fc303f4408a093ea939c5583a5f5f1a7292f5704
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 26 19:29:18 2021 +0200
+
+    Use std::unique_ptr instead of ACE_Auto_Basic_Array_Ptr
+    
+        * ACE/ace/Configuration.cpp:
+        * ACE/ace/Local_Memory_Pool.cpp:
+        * ACE/ace/Local_Name_Space_T.cpp:
+        * ACE/ace/Log_Record.cpp:
+        * ACE/ace/OS_NS_unistd.cpp:
+        * ACE/ace/Parse_Node.cpp:
+        * ACE/ace/Process.cpp:
+        * ACE/ace/Remote_Name_Space.cpp:
+        * ACE/ace/XML_Utils/XML_Helper.tpp:
+        * TAO/tao/Storable_FlatFileStream.cpp:
+        * TAO/tao/Strategies/DIOP_Acceptor.cpp:
+
+commit ad7a6707a41f88f8fdf043cfc44f8674698880f0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 26 19:10:02 2021 +0200
+
+    Use std::unique_ptr and default
+    
+        * ACE/ace/INET_Addr.cpp:
+        * ACE/ace/Parse_Node.h:
+        * ACE/ace/Service_Gestalt.cpp:
+        * ACE/ace/TLI.cpp:
+        * ACE/ace/Thread_Manager.cpp:
+        * ACE/ace/UUID.cpp:
+        * ACE/ace/UUID.h:
+        * ACE/ace/WFMO_Reactor.cpp:
+        * ACE/tests/CDR_File_Test.cpp:
+        * TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * TAO/orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+        * TAO/orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp:
+        * TAO/orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+        * TAO/orbsvcs/examples/CosEC/Factory/README:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/README:
+        * TAO/orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1385_Regression/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_2561_Regression/Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Persistent_POA/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp:
+        * TAO/tao/IORManipulation/IORManipulation.cpp:
+        * TAO/tao/Leader_Follower.cpp:
+        * TAO/tao/Load_Protocol_Factory_T.h:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * TAO/tao/default_resource.cpp:
+        * TAO/tests/Oneway_Send_Timeouts/Server.cpp:
+        * TAO/tests/Storable/Savable.cpp:
+
+commit 701d5ca07e1f03b1e6be364f4070cbd84d532562
+Merge: 0e24b5e7990 0df9fc5ee12
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 20 16:31:24 2021 +0200
+
+    Merge pull request #1685 from jwillemsen/jwi-cleanup4
+    
+    Use default/override
+
+commit 0e24b5e7990cb86a0397b9feb81f7a6908858c6c
+Merge: 822763269c8 1ceca7d5958
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 20 16:31:07 2021 +0200
+
+    Merge pull request #1684 from jwillemsen/jwi-loopback
+    
+    Use is_loopback to check for a loopback address
+
+commit 0df9fc5ee123522365129fde957f6375f95c2778
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 20 10:53:52 2021 +0200
+
+    Use default/override
+    
+        * TAO/tao/Strategies/LF_Strategy_Null.inl:
+          Deleted.
+    
+        * TAO/tao/Strategies/COIOP_Connection_Handler.h:
+        * TAO/tao/Strategies/COIOP_Connector.cpp:
+        * TAO/tao/Strategies/COIOP_Connector.h:
+        * TAO/tao/Strategies/COIOP_Endpoint.cpp:
+        * TAO/tao/Strategies/COIOP_Endpoint.h:
+        * TAO/tao/Strategies/COIOP_Factory.cpp:
+        * TAO/tao/Strategies/COIOP_Factory.h:
+        * TAO/tao/Strategies/COIOP_Transport.cpp:
+        * TAO/tao/Strategies/COIOP_Transport.h:
+        * TAO/tao/Strategies/DIOP_Connection_Handler.h:
+        * TAO/tao/Strategies/DIOP_Connector.cpp:
+        * TAO/tao/Strategies/DIOP_Connector.h:
+        * TAO/tao/Strategies/DIOP_Endpoint.cpp:
+        * TAO/tao/Strategies/DIOP_Endpoint.h:
+        * TAO/tao/Strategies/DIOP_Factory.cpp:
+        * TAO/tao/Strategies/DIOP_Factory.h:
+        * TAO/tao/Strategies/DIOP_Transport.cpp:
+        * TAO/tao/Strategies/DIOP_Transport.h:
+        * TAO/tao/Strategies/LF_Strategy_Null.cpp:
+        * TAO/tao/Strategies/LF_Strategy_Null.h:
+
+commit 1ceca7d59580a854c5d80517301664a5fdeb4763
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 20 10:50:53 2021 +0200
+
+    Use is_loopback to check for a loopback address
+    
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+
+commit 822763269c85d3bcc4a4453b1293be789a8a0228
+Merge: c9e35711780 4b188f27199
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 17 16:38:17 2021 +0200
+
+    Merge pull request #1682 from jwillemsen/jwi-queueddata
+    
+    Use uniform initialization and fix g++ unitialized warning
+
+commit 4b188f271990a6781ad8d8a9833dcafe29e2a3fe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 17 15:14:55 2021 +0200
+
+    Use uniform initialization and fix g++ unitialized warning
+    
+        * TAO/tao/Queued_Data.cpp:
+        * TAO/tao/Queued_Data.h:
+        * TAO/tao/Queued_Data.inl:
+
+commit ebf00c730e8c5255c201509130aeda6c42135f26
+Merge: 46fcff0baa5 b899399eccc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 17 08:57:13 2021 +0200
+
+    Merge pull request #1675 from jwillemsen/jwi-strncat
+    
+    Use ACE_OS::strcat, much easier and removes a warning of gcc on strnc…
+
+commit 8f66df19d50e8fd163239245e3f65fe91e2f72a3
+Merge: 632f8eddde0 63c63c2dfa2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 15 12:20:37 2021 +0200
+
+    Merge pull request #1681 from jwillemsen/jwi-makekeys2
+    
+    Next round create 2048 bit keys
+
+commit 63c63c2dfa220b140a90626fc21a226260108fbb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 15 12:06:18 2021 +0200
+
+    Next round create 2048 bit keys
+    
+        * TAO/orbsvcs/tests/Security/BiDirectional/ssl/make-client-keys:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/make-client-keys:
+        * TAO/orbsvcs/tests/Security/MT_BiDir_SSL/ssl/make-client-keys:
+
+commit bfe78d306ca5adf4097615dc0d38ffed4049c598
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 15 09:40:08 2021 +0200
+
+    Updated expired certificates
+
+commit a1570029524d1afb0f670748dd3136dd5b34634d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 15 09:27:34 2021 +0200
+
+    Updated expires certificates
+
+commit 27010649539be8117b37516080a7091969a4b03a
+Merge: 5c5cd427623 184eb684d14
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 21:13:03 2021 +0200
+
+    Merge pull request #1679 from jwillemsen/jwi-ssl3
+    
+    Layout/override changes
+
+commit 5c5cd42762380e82a4bb62bb0aec85dcfaadf8fc
+Merge: a954f862cd0 7ea6b67d928
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 21:12:41 2021 +0200
+
+    Merge pull request #1678 from jwillemsen/jwi-ssl2
+    
+    ACE SSL minor changes
+
+commit 184eb684d14c2f3d49f43b0eb005ad106479d5c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 18:39:40 2021 +0200
+
+    Use 9999 days
+    
+        * TAO/orbsvcs/tests/Security/BiDirectional/ssl/make-client-keys:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/make-client-keys:
+        * TAO/orbsvcs/tests/Security/MT_BiDir_SSL/ssl/make-client-keys:
+
+commit c837a2c4803c75aa41bb4964fa1f102be2c6da08
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 18:34:08 2021 +0200
+
+    Layout change
+    
+        * TAO/orbsvcs/tests/Security/Big_Request/TX_Object.idl:
+
+commit 5f1d797afa90de94277507b9013ccb7b83bb0aa1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 18:33:59 2021 +0200
+
+    Layout changes, use override
+    
+        * TAO/orbsvcs/tests/Security/Big_Request/README:
+        * TAO/orbsvcs/tests/Security/Big_Request/TX_Object_i.cpp:
+        * TAO/orbsvcs/tests/Security/Big_Request/TX_Object_i.h:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/README:
+
+commit 7ea6b67d9283840032bfe48dbbf0bafae291a2b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 18:09:08 2021 +0200
+
+    Correct location of -days argument
+    
+        * TAO/orbsvcs/tests/Security/cert/README:
+
+commit 9cb961a20fb7800dba903618916bf0d7d28d6046
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 18:08:55 2021 +0200
+
+    Fixed typo
+    
+        * TAO/orbsvcs/tests/Security/BiDirectional/README:
+
+commit dc5f4ca3f4d3373ed82c8453646d71bfbc42e2b1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 18:08:46 2021 +0200
+
+    Use nullptr
+    
+        * TAO/tao/Strategies/advanced_resource.cpp:
+
+commit a29c70a149c86df030793d3e2f95fa54fca0cede
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 18:08:35 2021 +0200
+
+    Logging changes
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+commit a954f862cd0260d6c664c01c641861abae28a481
+Merge: b02dec6e4d8 5866183a2e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 10 08:28:11 2021 +0200
+
+    Merge pull request #1676 from jwillemsen/jwi-gccwarningsdep
+    
+    Fix auto_ptr and fallthrough warnings
+
+commit 5866183a2e45b255ff9db4e8e2564e2d0b9171df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 9 14:33:20 2021 +0200
+
+    Fix auto_ptr and fallthrough warnings
+    
+        * TAO/orbsvcs/DevGuideExamples/NotifyService/EventSequence/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NotifyService/EventSequence/README:
+        * TAO/orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+        * TAO/orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h:
+        * TAO/orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.cpp:
+        * TAO/orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
+
+commit b899399eccc3d0f97323b4a15a319332417c3f1a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 9 13:36:18 2021 +0200
+
+    Use ACE_OS::strcat, much easier and removes a warning of gcc on strncat usage
+    
+        * TAO/TAO_IDL/util/utl_idlist.cpp:
+
+commit 1bfbc674980869ef05c6fed94c01f291ff5fd7d4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 31 21:01:43 2021 -0500
+
+    Removed conv_lib.mpb
+    
+    Replaced uses of it with install_lib
+
+commit b4b2c11a6121786288b489eca3e2f155bea26167
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 26 16:32:34 2021 -0500
+
+    annotest_idl.mpc: simplify using tao_idl_fe.mpb now that it's fixed
+
+commit 5e2989a4d63b05cab291bd99acf2fdb00cb0578e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 26 16:20:30 2021 -0500
+
+    Unit test for TAO_IDL_FE's AST
+
+commit 26c8e7643c6623ffee6c902203ec9b55c7f216cf
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 26 16:17:44 2021 -0500
+
+    removed invalid base project from tao_idl_fe
+
+commit 194e1f3a1ae2b1379ba49ecab2b06cbfe7b3dcfb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 26 08:48:34 2021 -0500
+
+    TAO_IDL_FE: NT_fixed needs owns_base_type in typedef
+    
+    (cherry picked from commit 3a344501bebb195b1728c209d3e162622e8ec506)
+
+commit f75799c04412ef1cf29948f3fde889cbb32f0d1f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 23 16:38:36 2021 +0200
+
+    Docu/cleanup
+    
+        * TAO/examples/Borland/ChatClientWnd.h:
+        * TAO/examples/Borland/ORBThread.h:
+        * TAO/examples/Borland/Receiver.idl:
+        * TAO/examples/Borland/ReceiverImpl.h:
+
+commit ff36cc735a8fc98d840982116021da48c4cb2568
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 16 16:59:42 2021 +0200
+
+    Cleanup old Embarcadero compiler checks
+    
+        * ACE/ace/Compression/rle/RLECompressor.cpp:
+        * ACE/ace/post.h:
+        * ACE/ace/pre.h:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Notify/RT_Factory.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * TAO/tests/Bug_3574_Regression/test.cpp:
+
+commit e41cfa87c167c64e26a90c7079bc47e8362e4d8b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:21:00 2021 +0200
+
+    Removed ACE_HAS_UTIME because it is not used and fixed some broken links
+    
+        * ACE/ace/config-aix-5.x.h:
+        * ACE/docs/Download.html:
+        * TAO/tao/Transport.h:
+        * TAO/tao/Transport_Selection_Guard.h:
+
+commit a79c07f1ebc800f8ef643a7d69c29e987420fd4e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 4 09:27:08 2021 +0200
+
+    Make ACE 7.0.3 and TAO 3.0.3 available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

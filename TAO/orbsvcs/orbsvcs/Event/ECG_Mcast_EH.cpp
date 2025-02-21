@@ -1,5 +1,4 @@
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -10,44 +9,44 @@
 #include "ace/os_include/os_fcntl.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_Mcast_EH.i"
+#include "orbsvcs/Event/ECG_Mcast_EH.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_Mcast_EH, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
                                     const ACE_TCHAR *net_if,
                                     CORBA::ULong sz)
-  : net_if_ (net_if?ACE_OS::strdup (net_if):0)
-    , subscriptions_ ()
-    , receiver_ (recv)
-    , recvbuf_size_ (sz)
-    , observer_ ()
-    , auto_observer_disconnect_ ()
+  : net_if_ (net_if ? ACE_OS::strdup (net_if) : nullptr)
+  , subscriptions_ ()
+  , receiver_ (recv)
+  , recvbuf_size_ (sz)
+  , observer_ ()
+  , auto_observer_disconnect_ ()
 {
-    ACE_ASSERT (this->receiver_);
+  ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH (void)
+TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH ()
 {
   ACE_OS::free (this->net_if_);
 }
 
 void
-TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec
-                        ACE_ENV_ARG_DECL)
+TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   if (!this->receiver_)
     {
       // We are shut down.
-      ACE_THROW (CORBA::INTERNAL());
+      throw CORBA::INTERNAL();
     }
 
   if (CORBA::is_nil (ec))
     {
-      ACE_ERROR ((LM_ERROR,  "TAO_ECG_Mcast_EH::open(): "
+      ORBSVCS_ERROR ((LM_ERROR,  "TAO_ECG_Mcast_EH::open(): "
                              "nil ec argument"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   // Create and activate Event Channel Observer.
@@ -56,26 +55,21 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec
 
   if (!this->observer_.in ())
     {
-      ACE_THROW (CORBA::NO_MEMORY ());
+      throw CORBA::NO_MEMORY ();
     }
 
   TAO_EC_Object_Deactivator observer_deactivator;
   RtecEventChannelAdmin::Observer_var observer_ref;
   PortableServer::POA_var poa =
-    this->observer_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->observer_->_default_POA ();
 
   activate (observer_ref,
             poa.in (),
             this->observer_.in (),
-            observer_deactivator
-            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+            observer_deactivator);
 
   RtecEventChannelAdmin::Observer_Handle handle =
-    ec->append_observer (observer_ref.in ()
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->append_observer (observer_ref.in ());
 
   this->observer_->set_deactivator (observer_deactivator);
   this->auto_observer_disconnect_.set_command
@@ -83,7 +77,7 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec
 }
 
 int
-TAO_ECG_Mcast_EH::shutdown (void)
+TAO_ECG_Mcast_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)
@@ -96,14 +90,14 @@ TAO_ECG_Mcast_EH::shutdown (void)
   if (this->observer_.in ())
     {
       this->observer_->shutdown ();
-      this->observer_ = 0;
+      this->observer_ = nullptr;
     }
 
   // Indicates that we are in a shutdown state.
-  this->receiver_ = 0;
+  this->receiver_ = nullptr;
 
   // Deregister from reactor, close and clean up sockets.
-  size_t subscriptions_size = this->subscriptions_.size ();
+  size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
     {
       (void) this->reactor ()->remove_handler (
@@ -120,7 +114,7 @@ TAO_ECG_Mcast_EH::shutdown (void)
 int
 TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 {
-  size_t subscriptions_size = this->subscriptions_.size ();
+  size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
     {
       ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
@@ -134,16 +128,12 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 
 void
 TAO_ECG_Mcast_EH::update_consumer (
-         const RtecEventChannelAdmin::ConsumerQOS& sub
-    ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+         const RtecEventChannelAdmin::ConsumerQOS& sub)
 {
   Address_Set multicast_addresses;
 
   this->compute_required_subscriptions (sub,
-                                        multicast_addresses
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                        multicast_addresses);
 
   this->delete_unwanted_subscriptions (multicast_addresses);
 
@@ -153,9 +143,7 @@ TAO_ECG_Mcast_EH::update_consumer (
 void
 TAO_ECG_Mcast_EH::compute_required_subscriptions (
     const RtecEventChannelAdmin::ConsumerQOS& sub,
-    Address_Set& multicast_addresses
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    Address_Set& multicast_addresses)
 {
   CORBA::ULong count = sub.dependencies.length ();
   for (CORBA::ULong i = 0; i != count; ++i)
@@ -166,12 +154,38 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
         {
           continue;
         }
-      RtecUDPAdmin::UDP_Addr addr;
 
-      this->receiver_->get_addr (header, addr ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_INET_Addr inet_addr;
+      try
+        {
+          // Grab the right mcast group for this event...
+          RtecUDPAdmin::UDP_Address_var udp_addr;
 
-      ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
+          this->receiver_->get_address (header, udp_addr.out());
+          switch (udp_addr->_d())
+            {
+            case RtecUDPAdmin::Rtec_inet:
+              inet_addr.set(udp_addr->v4_addr().port,
+                            udp_addr->v4_addr().ipaddr);
+              break;
+            case RtecUDPAdmin::Rtec_inet6:
+#if defined (ACE_HAS_IPV6)
+              inet_addr.set_type(PF_INET6);
+#endif
+              inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
+              inet_addr.set_port_number(udp_addr->v6_addr().port);
+              break;
+            }
+        }
+      catch (const ::CORBA::BAD_OPERATION &)
+        {
+          // server only supports IPv4
+           // Grab the right mcast group for this event...
+          RtecUDPAdmin::UDP_Addr udp_addr;
+          this->receiver_->get_addr (header, udp_addr);
+          inet_addr.set (udp_addr.port, udp_addr.ipaddr);
+        }
+
       // Ignore errors, if the element is in the set we simply ignore
       // the problem...
       (void) multicast_addresses.insert (inet_addr);
@@ -223,16 +237,28 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       new_subscription.mcast_addr = *k;
       ACE_NEW (new_subscription.dgram, ACE_SOCK_Dgram_Mcast);
 
-      size_t subscriptions_size = this->subscriptions_.size ();
+      size_t const subscriptions_size = this->subscriptions_.size ();
       this->subscriptions_.size (subscriptions_size + 1);
       this->subscriptions_[subscriptions_size] = new_subscription;
 
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
-      socket->subscribe (new_subscription.mcast_addr, 1, this->net_if_);
+
+      if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
+        ORBSVCS_ERROR ((LM_ERROR,
+                    "Error: %d - Unable to open multicast socket\n",
+                    ACE_ERRNO_GET));
+      }
+
       if ( socket->enable (ACE_NONBLOCK) != 0 ) {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to enable nonblocking on mcast_eh\n",
-                    errno ));
+                    ACE_ERRNO_GET));
+      }
+
+      if (socket->join (new_subscription.mcast_addr, 1, this->net_if_) == -1) {
+        ORBSVCS_ERROR ((LM_ERROR,
+                    "Error: %d - Unable to join multicast group\n",
+                    ACE_ERRNO_GET));
       }
 
       if (this->recvbuf_size_ != 0
@@ -242,9 +268,9 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
                                                      sizeof (this->recvbuf_size_)) == -1)
           && errno != ENOTSUP )
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "Error: %d - Unable to set mcast_eh recvbuf_size:%d\n",
-                      errno,
+                      ACE_ERRNO_GET,
                       this->recvbuf_size_));
         }
       (void) this->reactor ()->register_handler (
@@ -263,66 +289,23 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 
 void
 TAO_ECG_Mcast_EH::Observer::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& sub
-    ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    const RtecEventChannelAdmin::ConsumerQOS& sub)
 {
   if (this->eh_)
-    this->eh_->update_consumer (sub ACE_ENV_ARG_PARAMETER);
+    this->eh_->update_consumer (sub);
 }
 
 void
 TAO_ECG_Mcast_EH::Observer::update_supplier (
-    const RtecEventChannelAdmin::SupplierQOS&
-    ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+    const RtecEventChannelAdmin::SupplierQOS&)
 {
 }
 
 void
-TAO_ECG_Mcast_EH::Observer::shutdown (void)
+TAO_ECG_Mcast_EH::Observer::shutdown ()
 {
-  this->eh_ = 0;
+  this->eh_ = nullptr;
   this->deactivator_.deactivate ();
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template void activate<TAO_Objref_Var_T<RtecEventChannelAdmin::Observer> >(TAO_Objref_Var_T<RtecEventChannelAdmin::Observer>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL);
-template class ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>;
-template class ACE_Hash<ACE_INET_Addr>;
-template class ACE_Node<ACE_INET_Addr>;
-template class ACE_Equal_To<ACE_INET_Addr>;
-template class ACE_Unbounded_Set<ACE_INET_Addr>;
-template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>;
-template class ACE_Array_Base<TAO_ECG_Mcast_EH::Subscription>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate void activate<TAO_Objref_Var_T<RtecEventChannelAdmin::Observer> >(TAO_Objref_Var_T<RtecEventChannelAdmin::Observer>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL)
-#pragma instantiate ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>
-#pragma instantiate ACE_Hash<ACE_INET_Addr>
-#pragma instantiate ACE_Node<ACE_INET_Addr>
-#pragma instantiate ACE_Equal_To<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_INET_Addr>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>
-#pragma instantiate ACE_Array_Base<TAO_ECG_Mcast_EH::Subscription>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

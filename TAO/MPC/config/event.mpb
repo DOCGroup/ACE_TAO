@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : orbsvcslib, ec_use_typed_events, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after     += CosEvent
+  libs      += TAO_CosEvent
+  tagchecks += CosEvent
+}

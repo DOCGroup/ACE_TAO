@@ -1,9 +1,7 @@
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
 #include "Server_i.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(TimeService, Time_Service_Server, "$Id$")
 
 // This is the main driver program for the Time Service server.
 
@@ -12,34 +10,30 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   Server_i server;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "[SERVER] Process/Thread Id : (%P/%t) Time Service server\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int r = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int r = server.init (argc, argv);
 
       if (r == -1)
         return 1;
       else
         {
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

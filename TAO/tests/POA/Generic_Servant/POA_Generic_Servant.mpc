@@ -1,0 +1,20 @@
+project(POA_Generic_Servant_Lib): taolib_with_idl, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  sharedname = Generic_Servant
+  dynamicflags += GENERIC_SERVANT_BUILD_DLL
+  idlflags += -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h
+  Source_Files {
+    test_i.cpp
+  }
+}
+
+project(*client): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = client
+  avoids += ace_for_tao
+  after  += POA_Generic_Servant_Lib
+  libs   += Generic_Servant
+  idl_files {
+  }
+  Source_Files {
+    client.cpp
+  }
+}

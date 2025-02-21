@@ -1,0 +1,52 @@
+
+//=============================================================================
+/**
+ *  @file    primtypes.idl
+ *
+ *  Tests of primitive types in IDL
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+
+module OldPrimTypes
+{
+  interface ex1
+  {
+    attribute long l1;
+
+    long m1 (in long a);
+
+    ex1 mtypes (in long a1,
+                inout long a2,
+                out long a3,
+                in unsigned long b1,
+                inout unsigned long b2,
+                out unsigned long b3,
+                in short c1,
+                inout short c2,
+                out short c3,
+                in unsigned short d1,
+                inout unsigned short d2,
+                out unsigned short d3,
+                in float e1,
+                inout float e2,
+                out float e3,
+                in double f1,
+                inout double f2,
+                out double f3,
+                in char g1,
+                inout char g2,
+                out char g3);
+  };
+
+  interface ex2 : ex1
+  {
+    readonly attribute long l2;
+
+    long m2 (in long a, out long b);
+    void mv ();
+  };
+};

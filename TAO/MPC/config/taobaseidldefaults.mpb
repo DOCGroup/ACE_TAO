@@ -1,0 +1,116 @@
+// -*- MPC -*-
+project: build_files {
+  // Set the idl compiler and flags as template values
+  specific {
+    tao_idl      = <%quote%>$(ACE_ROOT)/bin/tao_idl<%quote%>
+    tao_idl_dep  = $(ACE_ROOT)/bin/tao_idl
+    tao_idlflags = -Wb,pre_include=ace/pre.h \
+                   -Wb,post_include=ace/post.h -I<%quote%>$(TAO_ROOT)<%quote%>
+  }
+
+  Define_Custom(IDL) {
+    automatic            = 1
+    dependent            = $(TAO_IDL_DEP)
+    dependent_libs       = $(ACE_ROOT)/lib/TAO_IDL_BE $(ACE_ROOT)/lib/TAO_IDL_FE
+    command              = $(TAO_IDL)
+    libpath              = $(ACE_ROOT)/lib
+    inputext             = .idl
+    keyword idlflags     = commandflags
+    output_follows_input = 0
+
+    optional(header_outputext) {
+      commandflags(!-Sch || !-Ssh || -GC) = .h, .hpp, .hxx, .hh
+    }
+
+    optional(source_pre_extension) {
+      commandflags(!-Scc) = C
+    }
+    optional(header_pre_extension) {
+      commandflags(!-Sch) = C
+    }
+    optional(source_outputext) {
+      commandflags(!-Scc && !-Ssc) = .cpp, .cxx, .cc, .C
+    }
+
+    // Inline related options
+    optional(inline_outputext) {
+      commandflags(!-Sci) += .inl, .i
+    }
+    optional(inline_pre_extension) {
+      commandflags(!-Sci) += C
+    }
+
+    // Source related options
+    optional(source_pre_extension) {
+      commandflags(!-SS && !-oS) += S
+    }
+    optional(source_pre_extension) {
+      commandflags(-GA && !-oA) += A
+    }
+
+    // Header related options
+    optional(header_pre_extension) {
+      commandflags(!-oS && !-Ssh) += S
+    }
+
+    // Other
+    optional(template_outputext) {
+      commandflags(-GT && !-SS && !-oS) += S_T.cpp, S_T.cxx, S_T.cc, S_T.C
+    }
+    optional(header_pre_extension) {
+      commandflags(-GT && !-SS && !-oS) += S_T
+    }
+    optional(header_pre_extension) {
+      commandflags(-GA && !-oA || -GX) += A
+    }
+
+    optional(source_pre_extension) {
+      commandflags(-Gsv && !-Ssvntc) += _svnt
+    }
+
+    optional(source_pre_extension) {
+      commandflags(-Gsv && !-Ssvntt) += _svnt_T
+    }
+
+    optional(header_pre_extension) {
+      commandflags(-Gsv) += _svnt
+    }
+
+    optional(header_pre_extension) {
+      commandflags(-Gsv && !-Ssvntt) += _svnt_T
+    }
+
+    optional(source_pre_extension) {
+      commandflags(-Gcn) += _conn
+    }
+
+    optional(header_pre_extension) {
+      commandflags(-Gcn) += _conn
+    }
+
+    optional(generic_outputext) {
+      commandflags(-Glem || -GM) += .idl
+    }
+
+    optional(generic_pre_extension) {
+      commandflags(-Glem) += E
+      commandflags(-GM) += A
+    }
+  }
+
+  after    += TAO_IDL_EXE
+  idlflags += $(TAO_IDLFLAGS)
+  idlflags += -Sa -St
+}
+
+feature (corba_e_compact) {
+  idlflags += -DCORBA_E_COMPACT -Gce
+}
+
+feature (corba_e_micro) {
+  idlflags += -DCORBA_E_MICRO -Gce
+}
+
+feature(minimum_corba) {
+  idlflags += -DTAO_HAS_MINIMUM_POA -Gmc
+}

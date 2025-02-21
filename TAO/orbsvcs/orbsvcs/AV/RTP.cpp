@@ -32,14 +32,16 @@
  * SUCH DAMAGE.
  */
 
-// $Id$
-
-#include "RTP.h"
-#include "RTCP.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/AV/RTP.h"
+#include "orbsvcs/AV/RTCP.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_strings.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // RTP_Packet
 
@@ -49,7 +51,7 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
   // skip the standard header info
   int index = 12;
 
-  memcpy(this->packet_, buffer, length);
+  ACE_OS::memcpy(this->packet_, buffer, length);
 
   for (int j=0; j<(int)this->cc(); j++)
     {
@@ -70,8 +72,8 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
   else
     this->extension_bytes_ = 0;
 
-  this->packet_size_ = length;
-  this->payload_size_ = length-index;
+  this->packet_size_ = static_cast<ACE_UINT16> (length);
+  this->payload_size_ = static_cast<ACE_UINT16> (length-index);
 
   // This is necessary only for payload types that have 16 bit values to correct
   //  the network byte ordering.
@@ -112,7 +114,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   if (data_size > RTP_MTU-12)
   {
     data_size = RTP_MTU-12;
-    ACE_DEBUG ((LM_DEBUG, "\n(%N,%l) RTP_Packet: Warning - packet truncated\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "\n(%N,%l) RTP_Packet: Warning - packet truncated\n"));
   }
 
   if (csrc_count > 15)
@@ -137,7 +139,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   this->packet_[index] = ((marker & 0x1) << 7 ) |
                          ((payload_type & 0x7f));
   index++;
-  *((ACE_UINT16*)&this->packet_[index]) = (ACE_UINT16)htons(seq_num);
+  *((ACE_UINT16*)&this->packet_[index]) = (ACE_UINT16)htons(static_cast<u_short> (seq_num));
   index+=2;
   *((ACE_UINT32*)&this->packet_[index]) = (ACE_UINT32)htonl(timestamp);
   index+=4;
@@ -150,7 +152,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       index+=4;
     }
 
-  memcpy (this->host_byte_order_payload_, data, data_size);
+    ACE_OS::memcpy (this->host_byte_order_payload_, data, data_size);
 
   this->payload_size_ = data_size;
 
@@ -173,78 +175,78 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       }
 }
 
-RTP_Packet::~RTP_Packet(void)
+RTP_Packet::~RTP_Packet()
 {
 }
 
 ACE_UINT16
-RTP_Packet::packet_size(void)
+RTP_Packet::packet_size()
 {
     return this->packet_size_;
 }
 
 ACE_UINT16
-RTP_Packet::payload_size(void)
+RTP_Packet::payload_size()
 {
     return this->payload_size_;
 }
 
 unsigned int
-RTP_Packet::ver (void)
+RTP_Packet::ver ()
 {
   return ( this->packet_[0] & 0xC0 ) >> 6;
 }
 
 unsigned int
-RTP_Packet::pad (void)
+RTP_Packet::pad ()
 {
   return ( this->packet_[0] & 0x20 ) >> 5;
 }
 
 unsigned int
-RTP_Packet::ext (void)
+RTP_Packet::ext ()
 {
   return ( this->packet_[0] & 0x10 ) >> 4;
 }
 
 unsigned int
-RTP_Packet::cc  (void)
+RTP_Packet::cc  ()
 {
   return ( this->packet_[0] & 0x0F ) ;
 }
 
 unsigned int
-RTP_Packet::mrk (void)
+RTP_Packet::mrk ()
 {
   return ( this->packet_[1] & 0x80 ) >> 7;
 }
 
 unsigned int
-RTP_Packet::pt  (void)
+RTP_Packet::pt  ()
 {
   return ( this->packet_[1] & 0x7F ) ;
 }
 
 ACE_UINT16
-RTP_Packet::sn  (void)
+RTP_Packet::sn  ()
 {
   return ntohs(*(ACE_UINT16*)(&this->packet_[2])) ;
 }
 
 ACE_UINT32
-RTP_Packet::ts  (void)
+RTP_Packet::ts  ()
 {
   return ntohl(*(ACE_UINT32*)(&this->packet_[4])) ;
 }
 
 ACE_UINT32
-RTP_Packet::ssrc (void)
+RTP_Packet::ssrc ()
 {
   return ntohl(*(ACE_UINT32*)(&this->packet_[8])) ;
 }
 
 unsigned int
-RTP_Packet::ext_bytes (void)
+RTP_Packet::ext_bytes ()
 {
   return this->extension_bytes_;
 }
@@ -256,11 +258,11 @@ RTP_Packet::get_frame_info (TAO_AV_frame_info *frame_info)
   frame_info->timestamp = this->ts();
   frame_info->ssrc = this->ssrc();
   frame_info->sequence_num = this->sn();
-  frame_info->format = this->pt();
+  frame_info->format = static_cast<CORBA::Octet> (this->pt());
 }
 
 int
-RTP_Packet::is_valid (void)
+RTP_Packet::is_valid ()
 {
   // taken from RFC 1889 - Appendix A.1
 
@@ -292,7 +294,7 @@ void
 RTP_Packet::get_csrc_list (ACE_UINT32 **csrc_list, ACE_UINT16 &length)
 {
   *csrc_list = this->host_byte_order_csrc_list_;
-  length = this->cc ();
+  length = static_cast<ACE_UINT16> (this->cc ());
 }
 
 void
@@ -313,12 +315,12 @@ RTP_Packet::get_packet_data (char **packet, ACE_UINT16 &length)
 // TAO_AV_RTP_Object
 
 int
-TAO_AV_RTP_Object::handle_input (void)
+TAO_AV_RTP_Object::handle_input ()
 {
   TAO_AV_frame_info frame_info;
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "\nTAO_AV_RTP_Object::handle_input\n"));
 
   // Handles the incoming RTP packet input.
@@ -327,7 +329,7 @@ TAO_AV_RTP_Object::handle_input (void)
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
   if (n == 0)
-    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
+    ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
   if (n < 0)
     {
       if ((errno == EADDRNOTAVAIL) || (errno == ECONNRESET))
@@ -336,7 +338,7 @@ TAO_AV_RTP_Object::handle_input (void)
           return -1;
         }
       else
-        ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
+        ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
     }
 
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
@@ -355,7 +357,7 @@ TAO_AV_RTP_Object::handle_input (void)
   rtp_packet.get_payload(&data_ptr, length);
 
   this->frame_.rd_ptr (this->frame_.base ());
-  memcpy (this->frame_.rd_ptr (), data_ptr, length);
+  ACE_OS::memcpy (this->frame_.rd_ptr (), data_ptr, length);
   this->frame_.wr_ptr (this->frame_.rd_ptr() + length);
 
   this->callback_->receive_frame (&this->frame_, &frame_info, *addr);
@@ -383,7 +385,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   if (frame_info != 0)
     {
       if (frame_info->format != this->format_)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
       if (frame_info->ssrc != 0)
         this->ssrc_ = frame_info->ssrc;
@@ -396,11 +398,11 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
                                   frame_info->boundary_marker,  // marker
-                                  this->format_,                // payload type
+                                  static_cast<unsigned char> (this->format_),                // payload type
                                   frame_info->sequence_num,     // sequence num
                                   frame_info->timestamp,        // time stamp
                                   this->ssrc_,                  // ssrc
-                                  csrc_count,                   // csrc count
+                                  static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
                                   frame->rd_ptr (),             // data
                                   (ACE_UINT16)frame->length ()),// data size
@@ -452,11 +454,11 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
                                   0,                            // marker
-                                  this->format_,                // payload type
+                                  static_cast<unsigned char> (this->format_),                // payload type
                                   this->sequence_num_,          // sequence num
                                   ts,                           // time stamp
                                   this->ssrc_,                  // ssrc
-                                  csrc_count,                   // csrc count
+                                  static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
                                   frame->rd_ptr (),             // data
                                   (ACE_UINT16)frame->length ()),// data size
@@ -474,7 +476,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 
   result = this->transport_->send (&mb);
   if (result < 0)
-    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
+    ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
 
   TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*> (this->control_object_);
   if (rtcp_prot_obj)
@@ -504,9 +506,9 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
   if (frame_info != 0)
     {
       if (frame_info->format != this->format_)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
-      this->sequence_num_ = frame_info->sequence_num;
+      this->sequence_num_ = static_cast<ACE_UINT16> (frame_info->sequence_num);
       if (frame_info->ssrc != 0)
         this->ssrc_ = frame_info->ssrc;
 
@@ -519,11 +521,11 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
                                   frame_info->boundary_marker,  // marker
-                                  this->format_,                // payload type
+                                  static_cast<unsigned char> (this->format_),                // payload type
                                   frame_info->sequence_num,     // sequence num
                                   frame_info->timestamp,        // time stamp
                                   this->ssrc_,                  // ssrc
-                                  csrc_count,                   // csrc count
+                                  static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
                                   (char *)iov[0].iov_base,      // data
                                   data_size),                   // data size
@@ -577,11 +579,11 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
                                   0,                            // marker
-                                  this->format_,                // payload type
+                                  static_cast<unsigned char> (this->format_),                // payload type
                                   this->sequence_num_,          // sequence num
                                   ts,                           // time stamp
                                   this->ssrc_,                  // ssrc
-                                  csrc_count,                   // csrc count
+                                  static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
                                   (char *)iov[0].iov_base,      // data
                                   data_size),                   // data size
@@ -604,7 +606,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
   delete rtp_packet;
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
 
   return 0;
 }
@@ -623,7 +625,7 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
    control_object_ (0),
    connection_gone_ (0)
 {
-  this->sequence_num_ = ACE_OS::rand ();
+  this->sequence_num_ = static_cast<ACE_UINT16> (ACE_OS::rand ());
   this->timestamp_offset_ = ACE_OS::rand ();
 
   char buf [BUFSIZ];
@@ -636,12 +638,12 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
   this->frame_.size (2 * this->transport_->mtu ());
 }
 
-TAO_AV_RTP_Object::~TAO_AV_RTP_Object (void)
+TAO_AV_RTP_Object::~TAO_AV_RTP_Object ()
 {
 }
 
 int
-TAO_AV_RTP_Object::destroy (void)
+TAO_AV_RTP_Object::destroy ()
 {
   if(this->control_object_)
      this->control_object_->destroy ();
@@ -656,7 +658,7 @@ int
 TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
 {
   this->policy_list_ = policy_list;
-  u_int num_policies = this->policy_list_.length ();
+  CORBA::ULong const num_policies = this->policy_list_.length ();
   TAO_AV_Policy *policy = 0;
 
   for (u_int i=0; i< num_policies;i++)
@@ -669,7 +671,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
             TAO_AV_Payload_Type_Policy *payload_policy =
               static_cast<TAO_AV_Payload_Type_Policy *> (policy);
             if (payload_policy == 0)
-              ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:Payload policy not defined\n"),-1);
+              ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:Payload policy not defined\n"),-1);
             this->format_ = payload_policy->value ();
           }
           break;
@@ -678,8 +680,8 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
             TAO_AV_SSRC_Policy *ssrc_policy =
               static_cast<TAO_AV_SSRC_Policy *> (policy);
             if (ssrc_policy == 0)
-              ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
-            this->ssrc_ = ssrc_policy->value ();;
+              ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
+            this->ssrc_ = ssrc_policy->value ();
           }
           break;
         default:
@@ -700,31 +702,31 @@ TAO_AV_RTP_Object::control_object (TAO_AV_Protocol_Object *object)
 }
 
 int
-TAO_AV_RTP_Object::start (void)
+TAO_AV_RTP_Object::start ()
 {
   this->control_object_->start ();
   return this->callback_->handle_start ();
 }
 
 int
-TAO_AV_RTP_Object::stop (void)
+TAO_AV_RTP_Object::stop ()
 {
   this->control_object_->stop ();
   return this->callback_->handle_stop ();
 }
 
 // TAO_AV_RTP_Flow_Factory
-TAO_AV_RTP_Flow_Factory::TAO_AV_RTP_Flow_Factory (void)
+TAO_AV_RTP_Flow_Factory::TAO_AV_RTP_Flow_Factory ()
 {
 }
 
-TAO_AV_RTP_Flow_Factory::~TAO_AV_RTP_Flow_Factory (void)
+TAO_AV_RTP_Flow_Factory::~TAO_AV_RTP_Flow_Factory ()
 {
 }
 
 int
 TAO_AV_RTP_Flow_Factory::init (int /* argc */,
-                                char * /* argv */ [])
+                               ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }
@@ -738,7 +740,7 @@ TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   TAO_AV_Callback *callback = 0;
 
   if( endpoint->get_callback (entry->flowname (), callback) ) {
-    ACE_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
   }
 
   TAO_AV_Protocol_Object *object = 0;
@@ -766,10 +768,12 @@ TAO_AV_RTP_Flow_Factory::match_protocol (const char *flow_string)
 }
 
 const char *
-TAO_AV_RTP_Flow_Factory::control_flow_factory (void)
+TAO_AV_RTP_Flow_Factory::control_flow_factory ()
 {
   return "RTCP";
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_RTP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_RTP_Flow_Factory,

@@ -1,0 +1,14 @@
+valuetype Event
+{
+  void do_print ();
+  public long value_;
+};
+
+interface Checkpoint
+{
+  void  put_event (in Event e);
+  // This operation will shutdown the server.
+  oneway void shutdown ();
+};
+
+

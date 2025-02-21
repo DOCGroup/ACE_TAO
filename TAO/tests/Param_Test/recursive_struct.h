@@ -1,20 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    recursive_struct.h
-//
-// = DESCRIPTION
-//    Tests a structure that contains a sequence of itself
-//
-// = AUTHORS
-//    Aniruddha Gokhale, Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    recursive_struct.h
+ *
+ *  Tests a structure that contains a sequence of itself
+ *
+ *  @author Aniruddha Gokhale
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_RECURSIVE_STRUCT_H
 #define PARAM_TEST_RECURSIVE_STRUCT_H
@@ -29,64 +24,61 @@
 class Test_Recursive_Struct
 {
 public:
-  Test_Recursive_Struct (void);
-  // ctor
+  /// ctor
+  Test_Recursive_Struct ();
 
-  ~Test_Recursive_Struct (void);
-  // dtor
+  /// dtor
+  ~Test_Recursive_Struct ();
 
-  int run_sii_test (Param_Test_ptr objref
-                    ACE_ENV_ARG_DECL);
-  // run the SII test
+  /// run the SII test
+  int run_sii_test (Param_Test_ptr objref);
 
-  const char *opname (void) const;
-  // return operation name
+  /// return operation name
+  const char *opname () const;
 
-  int init_parameters (Param_Test_ptr objref
-                       ACE_ENV_ARG_DECL);
-  // set values for parameters
+  /// set values for parameters
+  int init_parameters (Param_Test_ptr objref);
 
-  int reset_parameters (void);
-  // reset values for CORBA
+  /// reset values for CORBA
+  int reset_parameters ();
 
-  CORBA::Boolean check_validity (void);
-  // check if results are valid
+  /// check if results are valid
+  CORBA::Boolean check_validity ();
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
-  void print_values (void);
-  // print all the values
+  /// print all the values
+  void print_values ();
 
-  void dii_req_invoke (CORBA::Request *
-                       ACE_ENV_ARG_DECL_NOT_USED);
-  // invoke DII request with appropriate exception handling.
+  /// invoke DII request with appropriate exception handling.
+  void dii_req_invoke (CORBA::Request *);
 
 private:
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// in parameter
   Param_Test::Recursive_Struct in_;
-  // in parameter
 
   // these need memory management
+  /// inout parameter
   Param_Test::Recursive_Struct_var inout_;
-  // inout parameter
 
+  /// out parameter
   Param_Test::Recursive_Struct_var out_;
-  // out parameter
 
+  /// return value
   Param_Test::Recursive_Struct_var ret_;
-  // return value
 
+  /// helper function for init_parameters
   void deep_init (Param_Test::Recursive_Struct &rs,
                   Generator *gen,
                   CORBA::ULong level);
-  // helper function for init_parameters
 
+  /// helper function for check_validity
   CORBA::Boolean deep_check (const Param_Test::Recursive_Struct &in_struct,
                              const Param_Test::Recursive_Struct &test_struct);
-  // helper function for check_validity
 };
 
 #endif /* PARAM_TEST_RECURSIVE_STRUCT_H */

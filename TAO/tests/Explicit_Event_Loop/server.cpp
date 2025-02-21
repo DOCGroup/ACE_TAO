@@ -1,37 +1,30 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Explicit_Event_Loop
-//
-// = FILENAME
-//    server.cpp
-//
-// = AUTHORS
-//   Source code used in TAO has been modified and adapted from the
-//   code provided in the book, "Advanced CORBA Programming with C++"
-//   by Michi Henning and Steve Vinoski. Copyright
-//   1999. Addison-Wesley, Reading, MA.  Used with permission of
-//   Addison-Wesley.
-//
-//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  @author Source code used in TAO has been modified and adapted from thecode provided in the book
+ *  @author "Advanced CORBA Programming with C++"by Michi Henning and Steve Vinoski. Copyright1999. Addison-Wesley
+ *  @author Reading
+ *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "server.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_time.h"
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 int done = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:d");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -52,18 +45,17 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 
 TimeOfDay
 Time_impl::
-get_gmt ( ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+get_gmt ()
 {
-  time_t time_now = time (0);
-  struct tm *time_p = gmtime (&time_now);
+  time_t time_now = ACE_OS::time (0);
+  struct tm *time_p = ACE_OS::gmtime (&time_now);
 
   TimeOfDay tod;
   tod.hour = time_p->tm_hour;
@@ -83,17 +75,12 @@ void do_something_else()
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         {
@@ -102,33 +89,29 @@ main (int argc, char *argv[])
 
       // Get reference to Root POA.
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa
-        = PortableServer::POA::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = PortableServer::POA::_narrow (obj.in ());
 
       // Activate POA manager.
       PortableServer::POAManager_var mgr
-        = poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Create an object.
       Time_impl time_servant;
 
       // Write its stringified reference to stdout.
-      Time_var tm = time_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var id =
+        poa->activate_object (&time_servant);
 
-      CORBA::String_var str = orb->object_to_string (tm.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = poa->id_to_reference (id.in ());
+
+      Time_var tm = Time::_narrow (object.in ());
+
+      CORBA::String_var str = orb->object_to_string (tm.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
@@ -145,8 +128,7 @@ main (int argc, char *argv[])
                   "Cannot open output file for writing IOR: %s",
                   ior_output_file
                 ),
-                1
-              );
+                1);
             }
 
           ACE_OS::fprintf (output_file,
@@ -159,13 +141,11 @@ main (int argc, char *argv[])
       while (!done)
         {
           CORBA::Boolean pending =
-            orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->work_pending ();
 
           if (pending)
             {
-              orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              orb->perform_work ();
             }
           do_something_else ();
         }
@@ -174,20 +154,18 @@ main (int argc, char *argv[])
       orb->destroy ();
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "server: a CORBA exception occured");
+      ex._tao_print_exception ("server: a CORBA exception occurred");
       return 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s\n",
                          "client: an unknown exception was caught\n"),
                          1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

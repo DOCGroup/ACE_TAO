@@ -1,13 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Synch_Reply_Dispatcher.h
  *
- *  $Id$
- *
- *   Dispatch the reply appropriately.
- *
+ *  Dispatch the reply appropriately.
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
@@ -27,6 +24,8 @@
 #include "tao/LF_Invocation_Event.h"
 #include "tao/CDR.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Pluggable_Reply_Params;
 
 namespace IOP
@@ -37,28 +36,28 @@ namespace IOP
 /**
  * @class TAO_Synch_Reply_Dispatcher
  *
- * @brief Reply dispatcher for Synchoronous Method Invocation (SMI)s.
- *
+ * @brief Reply dispatcher for Synchronous Method Invocation (SMI)s.
  */
 class TAO_Export TAO_Synch_Reply_Dispatcher
   : public TAO_Reply_Dispatcher
   , public TAO_LF_Invocation_Event
 {
-
 public:
   /// Constructor.
   TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
                               IOP::ServiceContextList &sc);
 
   /// Destructor.
-  virtual ~TAO_Synch_Reply_Dispatcher (void);
+  virtual ~TAO_Synch_Reply_Dispatcher ();
 
   /// Return the reply CDR.
-  TAO_InputCDR &reply_cdr (void);
+  TAO_InputCDR &reply_cdr ();
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
-  virtual void connection_closed (void);
+  virtual void connection_closed ();
+
+  virtual void reply_timed_out ();
 
 protected:
   /// The service context list
@@ -78,7 +77,7 @@ private:
   /// The buffer that is used to initialise the data block
   char buf_[ACE_CDR::DEFAULT_BUFSIZE];
 
-  /// datablock that is created on teh stack to initialise the CDR
+  /// Datablock that is created on the stack to initialise the CDR
   /// stream underneath.
   ACE_Data_Block db_;
 
@@ -86,6 +85,8 @@ private:
   /// demarshalled by the stubs
   TAO_InputCDR reply_cdr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

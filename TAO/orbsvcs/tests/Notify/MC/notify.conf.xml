@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<!-- Converted from notify.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!-- #  -->
+ <dynamic id="TAO_MonitorAndControl" type="Service_Object">
+   <initializer path="TAO_CosNotification_MC" init="_make_TAO_MonitorAndControl" params="-o monitor.ior"/>
+ </dynamic>
+ <dynamic id="TAO_MC_Notify_Service" type="Service_Object">
+   <initializer path="TAO_CosNotification_MC_Ext" init="_make_TAO_MC_Notify_Service"/>
+ </dynamic>
+ <static id="Notify_Default_Event_Manager_Objects_Factory" params="-DispatchingThreads 1"/>
+</ACE_Svc_Conf>

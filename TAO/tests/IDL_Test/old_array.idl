@@ -1,0 +1,66 @@
+
+//=============================================================================
+/**
+ *  @file    old_array.idl
+ *
+ *  Tests of array IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+
+#include "simple.idl"
+
+module OldArray
+{
+  typedef char str22[22][2];
+  typedef boolean boolarray[3][40];
+
+  typedef char char_17[17];
+  typedef char char_10_2[10][2];
+
+  struct A
+  {
+    long a1;
+    char_17 a2;
+    char_10_2 a3;
+  };
+
+  struct B
+  {
+    long b1;
+    A b2;
+  };
+
+  struct C
+  {
+    long c1;
+    long c2;
+  };
+
+  typedef A A_matrix[2][3][4];
+  typedef B B_matrix[2][3][4];
+  typedef C C_matrix[2][3][4];
+
+  typedef A_matrix A_rmatrix[2][3][4][5];
+
+  interface A_i
+  {
+    A op (in A a1,
+          inout A a2,
+          out A a3);
+
+    str22 op2 (in str22 a1,
+               inout str22 a2,
+               out str22 a3);
+
+    A_matrix op4 (in A a1,
+                  inout A a2,
+                  out A a3);
+
+    attribute str22 attribute_array;
+  };
+};
+

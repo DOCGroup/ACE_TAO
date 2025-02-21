@@ -1,0 +1,21 @@
+project(*_Dev_Supplier): namingexe, rteventexe, rtevent_serv {
+  exename   = EchoEventSupplier
+  includes += ../common
+
+  Source_Files {
+    EchoEventSupplierMain.cpp
+    EchoEventSupplier_i.cpp
+    SimpleAddressServer.cpp
+  }
+}
+
+project(*_Dev_Consumer): namingexe, rteventexe {
+  exename   = EchoEventConsumer
+  includes += ../common
+
+  Source_Files {
+    EchoEventConsumerMain.cpp
+    EchoEventConsumer_i.cpp
+  }
+}
+

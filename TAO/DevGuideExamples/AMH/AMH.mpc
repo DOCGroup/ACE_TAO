@@ -1,0 +1,39 @@
+project(*idl): taoidldefaults, amh {
+  idlflags += -Wb,pch_include=amh_pch.h
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, amh {
+  exename = MessengerServer
+  after += *idl
+  Source_Files {
+    AMH_Messenger_i.cpp
+    MessengerServer.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+// This project doesn't really require AMH, but since they
+// are in the same directory and share the generated idl code
+// it has to be there.
+project(*Client): taoclient, amh {
+  exename = MessengerClient
+  after += *idl
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}

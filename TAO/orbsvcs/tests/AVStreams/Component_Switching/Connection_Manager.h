@@ -1,22 +1,16 @@
-//$Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Component_Switching
-//
-// = FILENAME
-//    Connection_Manager.h
-//
-// = DESCRIPTION
-//    This is a helper class that allows the senders bind to multiple
-//    receivers and receivers to bind to senders. It also lets the
-//    senders and receivers disconnect streams.
-//
-// = AUTHOR
-//    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Connection_Manager.h
+ *
+ *  This is a helper class that allows the senders bind to multiple
+ *  receivers and receivers to bind to senders. It also lets the
+ *  senders and receivers disconnect streams.
+ *
+ *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CONNECTION_MANAGER_H
 #define CONNECTION_MANAGER_H
@@ -26,62 +20,58 @@
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/PortableServer/PortableServer.h"
 
+/**
+ * @class Connection_Manager
+ *
+ * @brief Defines the Connection Manager.
+ *
+ * This is a helper class that allows the senders bind to
+ * multiple receivers and receivers to bind to senders. It also
+ * lets the senders and receivers disconnect streams.
+ */
 class Connection_Manager
 {
-  // = TITLE
-  //    Defines the Connection Manager.
-  //
-  // = DESCRIPTION
-  //    This is a helper class that allows the senders bind to
-  //    multiple receivers and receivers to bind to senders. It also
-  //    lets the senders and receivers disconnect streams.
 public:
+  /// Constructor
+  Connection_Manager ();
 
-  Connection_Manager (void);
-  // Constructor
+  /// Destructor
+  ~Connection_Manager ();
 
-  ~Connection_Manager (void);
-  // Destructor
-
+  /// Initialize this class.
   int init (CORBA::ORB_ptr orb);
-  // Initialize this class.
 
+  /// Method that binds the sender to the Naming Service and retrieves
+  /// the references of any registered receivers.
   void bind_to_receivers (const ACE_CString &sender_name,
-                          AVStreams::MMDevice_ptr sender
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  // Method that binds the sender to the Naming Service and retreives
-  // the references of any registered receivers.
+                          AVStreams::MMDevice_ptr sender);
 
-  void connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // Connect to the receivers that we found.
+  /// Connect to the receivers that we found.
+  void connect_to_receivers ();
 
+  /// Bind receiver to the sender.
   void bind_to_sender (const ACE_CString &sender_name,
                        const ACE_CString &receiver_name,
-                       AVStreams::MMDevice_ptr receiver
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  // Bind receiver to the sender.
+                       AVStreams::MMDevice_ptr receiver);
 
-  void connect_to_sender (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // Connect to the sender that we found.
+  /// Connect to the sender that we found.
+  void connect_to_sender ();
 
-  void destroy (const ACE_CString &flowname
-                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  // Destroy streams associated with <flowname>.
+  /// Destroy streams associated with <flowname>.
+  void destroy (const ACE_CString &flowname);
 
+  /// Unbind the sender from the Naming Service
   void unbind_sender (const ACE_CString &sender_name,
-                      AVStreams::MMDevice_ptr sender_mmdevice
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS) ;
-  // Unbind the sender from the Naming Service
+                      AVStreams::MMDevice_ptr sender_mmdevice) ;
 
+  /// Unbind the Receiver from the Naming Service
   void unbind_receiver (const ACE_CString &sender_name,
                         const ACE_CString &receiver_name,
                         AVStreams::MMDevice_ptr receiver_mmdevice);
-  // Unbind the Receiver from the Naming Service
 
+  /// Add new streamctrl.
   void add_streamctrl (const ACE_CString &flowname,
-                       TAO_StreamEndPoint *endpoint
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  // Add new streamctrl.
+                       TAO_StreamEndPoint *endpoint);
 
   // Map of receivers.
   typedef ACE_Hash_Map_Manager<ACE_CString,
@@ -102,19 +92,17 @@ public:
           StreamCtrls;
 
   // Map accessors.
-  Receivers &receivers (void);
-  Protocol_Objects &protocol_objects (void);
-  StreamCtrls &streamctrls (void);
+  Receivers &receivers ();
+  Protocol_Objects &protocol_objects ();
+  StreamCtrls &streamctrls ();
 
 protected:
+  void find_receivers ();
 
-  void find_receivers (ACE_ENV_SINGLE_ARG_DECL);
+  void add_to_receivers (CosNaming::BindingList &binding_list);
 
-  void add_to_receivers (CosNaming::BindingList &binding_list
-                         ACE_ENV_ARG_DECL);
-
+  /// The Naming Service client.
   TAO_Naming_Client naming_client_;
-  // The Naming Service client.
 
   // The maps.
   Receivers receivers_;

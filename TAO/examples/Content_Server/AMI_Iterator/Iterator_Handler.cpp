@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Ossama Othman <ossama@uci.edu>
 
 #include "ace/FILE_Connector.h"
@@ -10,13 +8,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (AMI_Iterator,
-           Iterator_Handler,
-           "$Id$")
-
-
-Iterator_Handler::Iterator_Handler (void)
+Iterator_Handler::Iterator_Handler ()
   : file_ (ACE_sap_any_cast (const ACE_FILE_Addr &)),
     file_io_ (),
     contents_ (),
@@ -28,16 +20,14 @@ Iterator_Handler::Iterator_Handler (void)
   // Nothing else
 }
 
-Iterator_Handler::~Iterator_Handler (void)
+Iterator_Handler::~Iterator_Handler ()
 {
   (void) this->file_io_.close ();
 }
 
 void
 Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
-                              const Web_Server::Chunk_Type &chunk_data
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                              const Web_Server::Chunk_Type &chunk_data)
 {
   if (pending_data)
     {
@@ -58,10 +48,7 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
         this->offset_ += chunk->length ();
 
       this->contents_->sendc_next_chunk (this->ami_handler_.in (),
-                                         this->offset_
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
+                                         this->offset_);
     }
   else
     {
@@ -72,9 +59,7 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
       (*this->request_count_)--;  // No more data.
 
       // Done with the iterator, so destroy it.
-      this->contents_->sendc_destroy (this->ami_handler_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->contents_->sendc_destroy (this->ami_handler_.in ());
 
       // File retrieval has completed, so spawn an external viewer to
       // display its contents.
@@ -83,59 +68,44 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
     }
 }
 void
-Iterator_Handler::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Iterator_Handler::destroy ()
 {
   // Deactivate this reply handler.
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->deactivate ();
 }
 
 
 void
 Iterator_Handler::run (int *request_count,
                        const char *pathname,
-                       Web_Server::Iterator_Factory_ptr factory
-                       ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Web_Server::Error_Result))
+                       Web_Server::Iterator_Factory_ptr factory)
 {
   if (request_count != 0)
       this->request_count_ = request_count;
   else
     // @@ Application code shouldn't throw system exceptions.
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
   // Initialize the Content Iterator
   this->initialize_content_iterator (pathname,
-                                     factory
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                     factory);
 
   // Activate this Reply Handler.
-  this->ami_handler_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->ami_handler_ = this->_this ();
 
   // Begin the asynchronous invocation.
   this->contents_->sendc_next_chunk (this->ami_handler_.in (),
-                                     this->offset_
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                     this->offset_);
 }
 
 void
 Iterator_Handler::initialize_content_iterator
   (const char *pathname,
-   Web_Server::Iterator_Factory_ptr factory
-   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Web_Server::Error_Result))
+   Web_Server::Iterator_Factory_ptr factory)
 {
   // Obtain a Content Iterator for the desired file.
   factory->get_iterator (pathname,
                          this->contents_,
-                         this->metadata_
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                         this->metadata_);
 
   // Create a temporary file to store the retrieved data.
   ACE_FILE_Connector connector;
@@ -155,22 +125,18 @@ Iterator_Handler::initialize_content_iterator
 }
 
 void
-Iterator_Handler::deactivate (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Iterator_Handler::deactivate ()
 {
   // Get the POA used when activating the Reply Handler object.
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
 
   // Now deactivate the iterator object.
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (oid.in ());
 }
 
 
@@ -241,7 +207,7 @@ Iterator_Handler::get_viewer (char *viewer,
 }
 
 int
-Iterator_Handler::spawn_viewer (void)
+Iterator_Handler::spawn_viewer ()
 {
   char viewer[BUFSIZ];
 

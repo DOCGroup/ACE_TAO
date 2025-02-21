@@ -1,30 +1,17 @@
+//=============================================================================
+/**
+ *  @file    valuetype_obv_ch.cpp
+ *
+ *  Visitor generating code for Valuetypes in the client header
+ *  OBV_ class
+ *  (see C++ mapping OMG 20.17)
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ *  @author based on interface_ch.cpp from Aniruddha Gokhale
+ */
+//=============================================================================
 
-//
-// $Id$
-//
-
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    valuetype_obv__ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Valuetypes in the client header
-//    OBV_ class
-//    (see C++ mapping OMG 20.17)
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>,
-//    based on interface_ch.cpp from Aniruddha Gokhale
-//
-// ============================================================================
-
-ACE_RCSID (be_visitor_valuetype,
-           valuetype_obv_ch,
-           "$Id$")
+#include "valuetype.h"
 
 // ******************************************************
 // Valuetype visitor for client header
@@ -37,10 +24,9 @@ be_visitor_valuetype_obv_ch::be_visitor_valuetype_obv_ch (
 {
 }
 
-be_visitor_valuetype_obv_ch::~be_visitor_valuetype_obv_ch (void)
+be_visitor_valuetype_obv_ch::~be_visitor_valuetype_obv_ch ()
 {
 }
-
 
 // OBV_ class must be in OBV_ namespace.
 int
@@ -54,13 +40,12 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ ;
+  TAO_INSERT_COMMENT (os);
 
   // OBV_ class maps only to a typedef if we are optimizing accessors.
   if (node->opt_accessor ())
     {
-      *os << be_nl << be_nl << "typedef " << node->full_name () << " ";
+      *os << be_nl_2 << "typedef " << node->full_name () << " ";
 
       if (!node->is_nested ())
         {
@@ -71,11 +56,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
     }
   else
     {
-      // STEP 1: Generate the class name and the class name we inherit.
-      os->gen_ifdef_macro (node->flat_name (), "_OBV");
-
-      *os << be_nl << be_nl << "// OBV_ class" << be_nl;
-      *os << "class " << be_global->stub_export_macro() << " ";;
+      *os << be_nl_2 << "// OBV_ class" << be_nl;
+      *os << "class " << be_global->stub_export_macro() << " ";
 
       if (!node->is_nested())
         {
@@ -86,7 +68,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           << ": public virtual "
           << node->full_name ();
 
-      // STEP 1a (about which previous implementer forgot ):
+      // STEP 1 (about which previous implementer forgot ):
       // Generate inheritance from corresponding OBV_ classes.
 
 //------>>>
@@ -100,8 +82,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //     another (not abstract or empty abstract <would like to
       //     know how to go there>) then its OBV_ already has mix-in
       //
-			// (3) We have VT that supports an abstract interface. In this case,
-			//     we will add implementations of _add_ref and _remove_ref that
+      // (3) We have VT that supports an abstract interface. In this case,
+      //     we will add implementations of _add_ref and _remove_ref that
       //     call this->DefaultValueRefCountBase and so it must be mixed in
       //
       // (4) The rest. Don't need to bother about anything, just inherit
@@ -109,7 +91,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i = 0;
-      AST_Interface *inherited = 0;
+      AST_Type *inherited = nullptr;
 
       for (; i < node->n_inherits (); ++i)
         {
@@ -133,7 +115,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << "," << be_nl;
 
           // dump the scoped name.
-          *os << "  public virtual CORBA::DefaultValueRefCountBase";
+          *os << "  public virtual ::CORBA::DefaultValueRefCountBase";
         }
 
       *os << be_uidt_nl;
@@ -142,33 +124,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       // STEP 2: Generate the body ==
 
-      *os << "{" << be_nl;
-
-      this->begin_public ();
-
-      // Default constructor and destructor are public if OBV class is concrete
-      if (!node->have_operation ())
-        {
-
-          *os << be_nl;
-
-          if (! node->is_nested ())
-            {
-              *os << "OBV_";
-            }
-
-          *os << node->local_name () << " (void);";
-
-          *os << be_nl << "virtual ~";
-
-          if (! node->is_nested ())
-            {
-              *os << "OBV_";
-            }
-
-          *os << node->local_name () << " (void);";
-        }
-
+      *os << "{";
 
       // Generate code for the OBV_ class definition.
       if (this->visit_valuetype_scope (node) == -1)
@@ -185,64 +141,109 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // to avoid ambiguity.
       if (node->n_supports () > 0)
         {
-          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__ ;
+          TAO_INSERT_COMMENT (os);
 
-          *os << be_nl << be_nl << "virtual void _add_ref (void);" << be_nl;
-          *os << "virtual void _remove_ref (void);";
+          *os << be_nl_2 << "virtual void _add_ref ();" << be_nl;
+          *os << "virtual void _remove_ref ();";
         }
 
       if (node->have_operation ())
         {
-           // Default constructor and destructor are protected if OBV class is abstract
-          *os << be_nl << be_uidt_nl << "protected:" << be_idt;
+          this->begin_private ();
+        }
+      else
+        {
+          this->begin_public ();
+        }
 
+      *os << be_nl;
+
+      // Default constructor.
+      if (! node->is_nested ())
+        {
+          *os << "OBV_";
+        }
+
+      *os << node->local_name () << " () = default;";
+
+      // Initializing constructor.
+      if (node->has_member ())
+        {
           *os << be_nl;
-          if (! node->is_nested ())
-            {
-              *os << "OBV_";
-            }
-
-          *os << node->local_name () << " (void);";
-
-          *os << be_nl << "virtual ~";
 
           if (! node->is_nested ())
             {
               *os << "OBV_";
             }
 
-          *os << node->local_name () << " (void);";
+          *os << node->local_name () << " (" << be_idt << be_idt;
+
+          unsigned long index = 0;
+          this->gen_obv_init_constructor_args (node, index);
+
+          *os << be_uidt_nl
+              << ");" << be_uidt;
+        }
+
+      // Virtual destructor.
+      *os << be_nl << "virtual ~";
+      if (! node->is_nested ())
+        {
+          *os << "OBV_";
+        }
+      *os << node->local_name () << " ();";
+
+      // Virtual _copy_value() only provided in OBV_* class when
+      // ::CORBA::DefaultValueRefCountBase has been included.
+      // The OBV_ class is concrete in this case and so requires
+      // a _copy_value definition.
+      // Otherwise, the end user derives from this abstract
+      // OBV_* class and it is up to them to provide the correct
+      // implimentation of the _copy_value() there.
+      if (this->obv_need_ref_counter (node))
+        {
+          *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
+              << "virtual ::CORBA::ValueBase *_copy_value ();";
         }
 
       // Map fields to private data.
       if (!node->opt_accessor ())
         {
-          *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
+          if (be_global->cdr_support ())
+            {
+              *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
 
-          *os << "virtual CORBA::Boolean" << be_nl
-              << "_tao_marshal__" << node->flat_name ()
-              << " (TAO_OutputCDR &) const;" << be_nl << be_nl;
+              *os << "virtual ::CORBA::Boolean" << be_nl
+                  << "_tao_marshal__" << node->flat_name()
+                  << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl_2;
 
-          *os << "virtual CORBA::Boolean" << be_nl
-              << "_tao_unmarshal__" << node->flat_name ()
-              << " (TAO_InputCDR &);" << be_nl << be_nl;
+              *os << "virtual ::CORBA::Boolean" << be_nl
+                  << "_tao_unmarshal__" << node->flat_name()
+                  << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl_2;
 
-          *os << "CORBA::Boolean "
-              << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
-              << "CORBA::Boolean "
-              << "_tao_unmarshal_state (TAO_InputCDR &);"
-              << be_uidt_nl << be_nl;
+              *os << "::CORBA::Boolean "
+                  << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
+                  << be_nl
+                  << "::CORBA::Boolean "
+                  << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
+                  << be_nl
+                  << "virtual void "
+                  << "truncation_hook ();"
+                  << be_uidt_nl << be_nl;
+            }
 
           *os << "private:" << be_idt;
 
           this->gen_pd (node);
         }
 
-      *os << be_uidt_nl;
-      *os << "};";
-
-      os->gen_endif ();
+      if (be_global->cdr_support ())
+        {
+          *os << be_nl
+              << "CORBA::Boolean require_truncation_ {false};";
+        }
+      *os << be_uidt_nl
+          << "};";
     }
 
   return 0;
@@ -257,7 +258,7 @@ be_visitor_valuetype_obv_ch::visit_eventtype (be_eventtype *node)
 int
 be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 {
-  be_valuetype *vt = be_valuetype::narrow_from_scope (node->defined_in ());
+  be_valuetype *vt = dynamic_cast<be_valuetype*> (node->defined_in ());
 
   if (!vt)
     {
@@ -285,16 +286,25 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 }
 
 void
-be_visitor_valuetype_obv_ch::begin_public (void)
+be_visitor_valuetype_obv_ch::begin_public ()
 {
+  AST_Decl::NodeType nt = this->ctx_->node ()->node_type ();
+
+  // These types are skipped in the OBV class.
+  if (nt == AST_Decl::NT_attr || nt == AST_Decl::NT_op)
+    {
+      return;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "public:" << be_idt;
+  *os << be_uidt_nl << be_nl
+      << "public:" << be_idt;
 }
 
 void
-be_visitor_valuetype_obv_ch::begin_private (void)
+be_visitor_valuetype_obv_ch::begin_private ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << be_uidt_nl << be_nl;
-  *os << "protected:" << be_idt;
+  *os << be_uidt_nl << be_nl
+      << "protected:" << be_idt;
 }

@@ -1,54 +1,44 @@
 // -*- C++ -*-
-
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "Server_Request_Interceptor.h"
-
 #include "tao/ORB_Constants.h"
-
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (ForwardRequest,
-           Server_Request_Interceptor,
-           "$Id$")
-
-Server_Request_Interceptor::Server_Request_Interceptor (void)
+Server_Request_Interceptor::Server_Request_Interceptor ()
   : request_count_ (0)
 {
   this->obj_[0] = CORBA::Object::_nil ();
   this->obj_[1] = CORBA::Object::_nil ();
 }
 
-Server_Request_Interceptor::~Server_Request_Interceptor (void)
+Server_Request_Interceptor::~Server_Request_Interceptor ()
 {
 }
 
 void
 Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj1,
-  CORBA::Object_ptr obj2
-  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  CORBA::Object_ptr obj2)
 {
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
-    ACE_THROW (CORBA::INV_OBJREF (
-                 CORBA::SystemException::_tao_minor_code (
-                   TAO::VMCID,
-                   EINVAL),
-                 CORBA::COMPLETED_NO));
+    throw CORBA::INV_OBJREF (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        EINVAL),
+      CORBA::COMPLETED_NO);
 
   this->obj_[0] = CORBA::Object::_duplicate (obj1);
   this->obj_[1] = CORBA::Object::_duplicate (obj2);
 }
 
 char *
-Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Server_Request_Interceptor::destroy ()
 {
   CORBA::release (this->obj_[0]);
   CORBA::release (this->obj_[1]);
@@ -56,16 +46,12 @@ Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   this->request_count_++;
 
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->response_expected ();
 
   if (!response_expected)   // A one-way request.
     return;
@@ -87,20 +73,16 @@ Server_Request_Interceptor::receive_request_service_contexts (
                   "receive_request_service_contexts().\n",
                   this->request_count_));
 
-      ACE_THROW (PortableInterceptor::ForwardRequest (this->obj_[0]));
+      throw PortableInterceptor::ForwardRequest (this->obj_[0]);
     }
 }
 
 void
 Server_Request_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->response_expected ();
 
   if (!response_expected)   // A one-way request.
     return;
@@ -110,6 +92,8 @@ Server_Request_Interceptor::receive_request (
   // Request 3 -- forwarded by receive_request_service_contexts()
   // Request 4 -- non-forwarded (give client chance to print result)
   // Request 5 -- forwarded by this interception point
+  // Request 6 -- non-forwarded (request 5 gets forwarded here)
+  // Request 7 -- throw exception to initiate forwarding from sent_exception
 
   if (this->request_count_ == 5)
     {
@@ -126,37 +110,60 @@ Server_Request_Interceptor::receive_request (
       // "request_count_ - 1" is used above since there was a location
       // forward.
 
-      ACE_THROW (PortableInterceptor::ForwardRequest (this->obj_[1]));
+      throw PortableInterceptor::ForwardRequest (this->obj_[1]);
+    }
+
+  if (this->request_count_ == 7)
+    {
+      // Throw an exception to force the invocation of send_exception.
+      ACE_DEBUG ((LM_DEBUG,
+                  "SERVER (%P|%t) OBJ_NOT_EXIST exception thrown for request %d\n"
+                  "SERVER (%P|%t) via receive_request().\n",
+                  this->request_count_ - 2));
+
+      throw CORBA::OBJECT_NOT_EXIST (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 }
 
 void
 Server_Request_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
 void
 Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr ri)
 {
+  CORBA::Any_var exception = ri->sending_exception ();
+  CORBA::TypeCode_var tc = exception->type ();
+  const char *id = tc->id ();
+
+  CORBA::OBJECT_NOT_EXIST nonexist_exception;
+
+  if (ACE_OS::strcmp (id, nonexist_exception._rep_id ()) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "SERVER (%P|%t) OBJ_NOT_EXIST exception caught for request %d\n"
+                  "SERVER (%P|%t) will be forwarded to object 1\n"
+                  "SERVER (%P|%t) via send_exception().\n",
+                  this->request_count_ - 2));
+
+      throw PortableInterceptor::ForwardRequest (this->obj_[0]);
+    }
+
 }
 
 void
 Server_Request_Interceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->response_expected ();
 
   if (!response_expected)   // A one-way request.
     return;
@@ -165,11 +172,10 @@ Server_Request_Interceptor::send_other (
   // LOCATION_FORWARD reply.
 
   // This will throw an exception if a location forward has not
-  // occured.  If an exception is thrown then something is wrong with
+  // occurred.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var forward = ri->forward_reference ();
 
   if (CORBA::is_nil (forward.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 }

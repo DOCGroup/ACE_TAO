@@ -1,0 +1,12 @@
+// -*- IDL -*-
+#ifndef TAO_CORBA_ANY_SEQ_IDL
+#define TAO_CORBA_ANY_SEQ_IDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef sequence<any> AnySeq;
+};
+
+#endif  /* TAO_CORBA_ANY_SEQ_IDL */

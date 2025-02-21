@@ -1,9 +1,9 @@
-// $Id$
-
-#include "ECG_Simple_Mcast_EH.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Event/ECG_Simple_Mcast_EH.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/os_fcntl.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Simple_Mcast_EH::TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv)
   : receiver_ (recv)
@@ -11,7 +11,7 @@ TAO_ECG_Simple_Mcast_EH::TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv)
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_Simple_Mcast_EH::~TAO_ECG_Simple_Mcast_EH (void)
+TAO_ECG_Simple_Mcast_EH::~TAO_ECG_Simple_Mcast_EH ()
 {
 }
 
@@ -23,22 +23,22 @@ TAO_ECG_Simple_Mcast_EH::open (const char * mcast_addr,
   if (!this->receiver_)
     return -1;
 
-  if (mcast_addr == 0)
+  if (mcast_addr == nullptr)
     return -1;
 
   ACE_INET_Addr mcast_group;
   if (mcast_group.set (mcast_addr) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Unable to open mcast handler: "
                        "error using specified address %s "
                        "in ACE_INET.set ().\n",
                        mcast_addr),
                       -1);
 
-  if (this->dgram_.subscribe (mcast_group, 1, net_if) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+  if (this->dgram_.join (mcast_group, 1, net_if) != 0)
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                       "Unable to open mcast handler: error "
-                      "subscribing to %s\n",
+                      "joining to %s\n",
                        mcast_addr),
                       -1);
 
@@ -50,7 +50,7 @@ TAO_ECG_Simple_Mcast_EH::open (const char * mcast_addr,
                                                   ACE_Event_Handler::READ_MASK))
     {
       this->dgram_.close ();
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "Cannot register handler with reactor.\n"),
                         -1);
     }
@@ -59,7 +59,7 @@ TAO_ECG_Simple_Mcast_EH::open (const char * mcast_addr,
 }
 
 int
-TAO_ECG_Simple_Mcast_EH::shutdown (void)
+TAO_ECG_Simple_Mcast_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)
@@ -72,17 +72,17 @@ TAO_ECG_Simple_Mcast_EH::shutdown (void)
                                                  ACE_Event_Handler::READ_MASK);
     }
   if (result != 0)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "Unable to deregister handler from reactor "
                 "on shutdown.\n"));
 
   result = this->dgram_.close ();
   if (result != 0)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "Unable to close mcast receiving dgram "
                 "on shutdown.\n"));
 
-  this->receiver_ = 0;
+  this->receiver_ = nullptr;
 
   return result;
 }
@@ -92,3 +92,5 @@ TAO_ECG_Simple_Mcast_EH::handle_input (ACE_HANDLE /* fd */)
 {
   return this->receiver_->handle_input (this->dgram_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

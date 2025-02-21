@@ -4,8 +4,6 @@
 /**
  *  @file    LB_LoadAlertInfo.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=======================================================================
@@ -24,6 +22,7 @@
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LB_LoadAlertInfo
@@ -35,7 +34,7 @@
 struct TAO_LB_LoadAlertInfo
 {
   /// Constructor.
-  TAO_LB_LoadAlertInfo (void);
+  TAO_LB_LoadAlertInfo ();
 
   /// Reference to the LoadAlert object.
   CosLoadBalancing::LoadAlert_var load_alert;
@@ -43,9 +42,9 @@ struct TAO_LB_LoadAlertInfo
   /// True if the LoadAlert object has been alerted about a given load
   /// condition.  False otherwise.
   CORBA::Boolean alerted;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

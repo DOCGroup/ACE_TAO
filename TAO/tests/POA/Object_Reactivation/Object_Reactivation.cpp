@@ -1,21 +1,15 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/Object_Reactivation
-//
-// = FILENAME
-//     Object_Reactivation.cpp
-//
-// = DESCRIPTION
-//     This program tests the reactivation of a servant that has been
-//     deactivated but not removed from the Active Object Map yet.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     Object_Reactivation.cpp
+ *
+ *   This program tests the reactivation of a servant that has been
+ *   deactivated but not removed from the Active Object Map yet.
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "ace/Task.h"
@@ -27,9 +21,9 @@
 static int debug = 1;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,8 +50,7 @@ class test_i : public POA_test
 public:
   test_i (ACE_Auto_Event &event);
 
-  void deactivate_self (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void deactivate_self ();
 
 private:
   ACE_Auto_Event &event_;
@@ -69,22 +62,16 @@ test_i::test_i (ACE_Auto_Event &event)
 }
 
 void
-test_i::deactivate_self (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::deactivate_self ()
 {
-  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var poa = this->_default_POA ();
 
-  PortableServer::ObjectId_var id = poa->servant_to_id (this
-                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::ObjectId_var id = poa->servant_to_id (this);
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG, "(%t) Deactivating servant\n"));
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (id.in ());
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete: signaling main thread and going to sleep\n"));
@@ -108,7 +95,7 @@ public:
              PortableServer::Servant servant,
              const ACE_CString &task_id,
              const PortableServer::ObjectId &id);
-  int svc (void);
+  int svc ();
 
 private:
   test_var test_;
@@ -135,7 +122,7 @@ Activator::Activator (test_ptr t,
 }
 
 int
-Activator::svc (void)
+Activator::svc ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for deactivation to complete\n"));
@@ -147,33 +134,27 @@ Activator::svc (void)
   if (debug)
     ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete, trying to activate\n"));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       if (this->task_id_ == "first thread")
         {
           PortableServer::ObjectId_var id =
-            this->poa_->activate_object (this->servant_
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->poa_->activate_object (this->servant_);
         }
       else
         {
           this->poa_->activate_object_with_id (this->id_,
-                                               this->servant_
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                               this->servant_);
         }
 
       if (debug)
         ACE_DEBUG ((LM_DEBUG, "(%t) Activation complete\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Activator::svc");
+      ex._tao_print_exception ("Activator::svc");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -181,7 +162,7 @@ class Deactivator : public ACE_Task_Base
 {
 public:
   Deactivator (test_ptr t);
-  int svc (void);
+  int svc ();
 
 private:
   test_var test_;
@@ -193,36 +174,27 @@ Deactivator::Deactivator (test_ptr t)
 }
 
 int
-Deactivator::svc (void)
+Deactivator::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->test_->deactivate_self (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_->deactivate_self ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Deactivator::svc");
+      ex._tao_print_exception ("Deactivator::svc");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -232,23 +204,17 @@ main (int argc, char **argv)
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       ACE_Auto_Event event1;
       test_i servant1 (event1);
@@ -256,19 +222,24 @@ main (int argc, char **argv)
       ACE_Auto_Event event2;
       test_i servant2 (event2);
 
-      test_var test_object1 = servant1._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var id_act =
+        root_poa->activate_object (&servant1);
 
-      test_var test_object2 = servant2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object_act = root_poa->id_to_reference (id_act.in ());
+
+      test_var test_object1 = test::_narrow (object_act.in ());
+
+      id_act = root_poa->activate_object (&servant2);
+
+      object_act = root_poa->id_to_reference (id_act.in ());
+
+      test_var test_object2 = test::_narrow (object_act.in ());
 
       PortableServer::ObjectId_var id1 =
         root_poa->reference_to_id (test_object1.in ());
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id2 =
         root_poa->reference_to_id (test_object2.in ());
-      ACE_TRY_CHECK;
 
       Activator activator1 (test_object1.in (),
                             event1,
@@ -299,18 +270,15 @@ main (int argc, char **argv)
       if (result != 0)
         return result;
 
-      root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Reactive_ConsumerControl.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_ConsumerControl.h"
+#include "orbsvcs/Event/EC_ConsumerControl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,6 +27,8 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 
@@ -77,25 +77,23 @@ public:
                                    CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_EC_Reactive_ConsumerControl (void);
+  virtual ~TAO_EC_Reactive_ConsumerControl ();
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_ConsumerControl
-  virtual int activate (void);
-  virtual int shutdown (void);
-  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual int activate ();
+  virtual int shutdown ();
+  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy);
   virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void query_consumers ();
 
 private:
   /// The polling rate
@@ -135,15 +133,16 @@ class TAO_EC_Ping_Consumer : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 public:
   TAO_EC_Ping_Consumer (TAO_EC_ConsumerControl *control);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_EC_ProxyPushSupplier *supplier);
 
 private:
   TAO_EC_ConsumerControl *control_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Reactive_ConsumerControl.i"
+#include "orbsvcs/Event/EC_Reactive_ConsumerControl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

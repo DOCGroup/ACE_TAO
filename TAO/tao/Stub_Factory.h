@@ -4,12 +4,9 @@
 /**
  *  @file    Stub_Factory.h
  *
- *  $Id$
- *
  *   Defines the a factory interface for creating Stubs.
  *   This class creates the default stub, that is used in
  *   plain CORBA.
- *
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
@@ -19,25 +16,23 @@
 #define TAO_STUB_FACTORY_H_
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
 #include "ace/Service_Object.h"
 
-#include "tao/TAO_Export.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward references
 class TAO_MProfile;
 class TAO_ORB_Core;
 class TAO_Stub;
-
-namespace CORBA
-{
-  class Environment;
-}
 
 /**
  * @class TAO_Stub_Factory
@@ -52,15 +47,16 @@ namespace CORBA
 class TAO_Export TAO_Stub_Factory : public ACE_Service_Object
 {
 public:
-  // -- Ctor/Dtor --
-  virtual ~TAO_Stub_Factory (void);
+  /// Destructor.
+  virtual ~TAO_Stub_Factory ();
 
   /// Creates a Stub Object.
   virtual TAO_Stub *create_stub (const char *repository_id,
                                  const TAO_MProfile &profiles,
-                                 TAO_ORB_Core *orb_core
-                                 ACE_ENV_ARG_DECL) = 0;
+                                 TAO_ORB_Core *orb_core) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_STUB_FACTORY_H_ */

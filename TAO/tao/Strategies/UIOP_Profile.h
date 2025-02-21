@@ -4,8 +4,6 @@
 /**
  *  @file     UIOP_Profile.h
  *
- *  $Id$
- *
  *   Unix Domain Socket (UIOP) profile specific processing
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
@@ -27,13 +25,14 @@
 
 # if TAO_HAS_UIOP == 1
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Profile.h"
-#include "UIOP_Connection_Handler.h"
-#include "UIOP_Endpoint.h"
+#include "tao/Strategies/UIOP_Connection_Handler.h"
+#include "tao/Strategies/UIOP_Endpoint.h"
 
 #include "ace/UNIX_Addr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_UIOP_Profile
@@ -48,10 +47,10 @@ class TAO_Strategies_Export TAO_UIOP_Profile : public TAO_Profile
 public:
   /// The object key delimiter that UIOP uses or expects.
   static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
   /// Return the char string prefix.
-  static const char *prefix (void);
+  static const char *prefix ();
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.  (actually, no marshalling for this protocol)
@@ -71,31 +70,28 @@ public:
   TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.
-  ~TAO_UIOP_Profile (void);
+  ~TAO_UIOP_Profile ();
 
   /// Template methods. Please see Profile.h for documentation.
-  virtual char *to_string (ACE_ENV_SINGLE_ARG_DECL);
-  virtual int encode_endpoints (void);
-  virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL);
+  virtual char *to_string () const;
+  virtual int encode_endpoints ();
+  virtual TAO_Endpoint *endpoint ();
+  virtual CORBA::ULong endpoint_count () const;
+  virtual CORBA::ULong hash (CORBA::ULong max);
   /**
-   * Add <endp> to this profile's list of endpoints (it is inserted
+   * Add @a endp to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
-   * <endp>.
+   * @a endp.
    */
   void add_endpoint (TAO_UIOP_Endpoint *endp);
 
 protected:
-
   /// Protected template methods. Please see documentation in
   /// Profile.h for details.
   virtual int decode_profile (TAO_InputCDR& cdr);
-  virtual void parse_string_i (const char *string
-                               ACE_ENV_ARG_DECL);
+  virtual void parse_string_i (const char *string);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
-  virtual int decode_endpoints (void);
+  virtual int decode_endpoints ();
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 private:
@@ -119,6 +115,8 @@ private:
   /// Number of endpoints in the list headed by <endpoint_>.
   CORBA::ULong count_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 # endif  /* TAO_HAS_UIOP == 1 */
 

@@ -1,0 +1,8 @@
+# Statically configure the Timer_Service, which must have been linked
+# statically into the application process.  Up to 4 arguments are
+# passed in.  The final 3 arguments are retrieved from environment
+# variables, so they can be set by changing your environment before
+# running the main program.  If you don't have these variables set
+# they are ignored.
+static Timer_Service_1
+  "timer $INTERVAL $MAX_TIMEOUTS $TRACE"

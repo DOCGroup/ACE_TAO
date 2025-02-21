@@ -1,11 +1,8 @@
-// $Id$
-
 #include "TT_Info.h"
 #include "orbsvcs/Trader/Trader_Utils.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Trading, TT_Info, "$Id$")
 
 const char* TT_Info::INTERFACE_NAMES[] =
 {
@@ -127,22 +124,23 @@ const char* TT_Info::MODEL_NUMBERS[] =
   "9q834jidlj234ujof"
 };
 
-const int TT_Info::NUM_QUERIES = 7;
-const char* TT_Info::QUERIES[][3] =
+const int TT_Info::NUM_QUERIES = 9;
+const char* TT_Info::QUERIES[][4] =
 {
-  {INTERFACE_NAMES[REMOTE_IO], "", ""},
-  {INTERFACE_NAMES[REMOTE_IO], "'Cupples' ~ Location", ""},
-  {INTERFACE_NAMES[PLOTTER], "'sbw1' in User_Queue", "min Cost_Per_Page"},
-  {INTERFACE_NAMES[PLOTTER], "Num_Colors > 1 and 'Cupples' ~ Location", "min Cost_Per_Page"},
-  {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec > 3 and Color == TRUE", "with 'sbw1' in User_Queue"},
-  {INTERFACE_NAMES[PRINTER], "Color == TRUE or Double_Sided == TRUE", "random"},
-  {INTERFACE_NAMES[PRINTER], "(Color or Double_Sided) and 'sbw1' in User_Queue", "with 'Cupples' ~ Location"}
+  {INTERFACE_NAMES[REMOTE_IO], "", "", "45"},
+  {INTERFACE_NAMES[REMOTE_IO], "'Cupples' ~ Location", "", "6"},
+  {INTERFACE_NAMES[PLOTTER], "'sbw1' in User_Queue", "min Cost_Per_Page", "4"},
+  {INTERFACE_NAMES[PLOTTER], "Num_Colors > 1 and 'Cupples' ~ Location", "min Cost_Per_Page", "2"},
+  {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec < -101215752192 and Color == TRUE", "with 'sbw1' in User_Queue", "0"},
+  {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec > 3.0 and Color == TRUE", "with 'sbw1' in User_Queue", "5"},
+  {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec > -3.0 and Color == TRUE", "with 'sbw1' in User_Queue", "7"},
+  {INTERFACE_NAMES[PRINTER], "Color == TRUE or Double_Sided == TRUE", "random", "15"},
+  {INTERFACE_NAMES[PRINTER], "(Color or Double_Sided) and 'sbw1' in User_Queue", "with 'Cupples' ~ Location", "4"}
 };
 
 void
 TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
-                          CORBA::Boolean print_dynamic
-                          ACE_ENV_ARG_DECL)
+                          CORBA::Boolean print_dynamic)
 {
   TAO_Property_Evaluator prop_eval (prop_seq);
 
@@ -152,15 +150,13 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
       CORBA::Any* value = 0;
       CORBA::TypeCode_ptr tc = 0;
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
-      ACE_TRY
+      try
         {
           CORBA::Boolean is_dynamic = prop_eval.is_dynamic_property (k);
-          ACE_TRY_CHECK;
 
           if (print_dynamic || ! is_dynamic)
             {
-              value = prop_eval.property_value(k ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              value = prop_eval.property_value(k);
 
               tc = value->type ();
             }
@@ -169,37 +165,33 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
               ACE_DEBUG ((LM_DEBUG, "Dynamic Property\n"));
             }
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           // @@ Seth, don't pass the exceptions back?
           ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
 
       if (tc == 0)
         continue;
-      int check = tc->equal (TAO_Trader_Test::_tc_StringSeq ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      int check = tc->equal (TAO_Trader_Test::_tc_StringSeq);
 
       if (check)
         {
-          TAO_Trader_Test::StringSeq* str_seq;
+          const TAO_Trader_Test::StringSeq* str_seq = 0;
           (*value) >>= str_seq;
 
           for (seq_length = str_seq->length (), i = 0; i < seq_length; i++)
-            ACE_DEBUG ((LM_DEBUG, "%s ", (const char *) (*str_seq)[i]));
+            ACE_DEBUG ((LM_DEBUG, "%C ", (const char *) (*str_seq)[i]));
 
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       else
         {
-          check = tc->equal (TAO_Trader_Test::_tc_ULongSeq ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          check = tc->equal (TAO_Trader_Test::_tc_ULongSeq);
 
           if (check)
             {
-              TAO_Trader_Test::ULongSeq* ulong_seq;
+              const TAO_Trader_Test::ULongSeq* ulong_seq = 0;
               (*value) >>= ulong_seq;
 
               for (seq_length = ulong_seq->length (), i = 0; i < seq_length; i++)
@@ -231,7 +223,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= CORBA::Any::to_boolean (boolean_val))
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%s\n",
+                  ACE_DEBUG ((LM_DEBUG, "%C\n",
                               boolean_val?"TRUE":"FALSE"));
                 }
               else if ((*value) >>= short_val)
@@ -252,7 +244,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= float_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%f\n", long_val));
+                  ACE_DEBUG ((LM_DEBUG, "%f\n", float_val));
                 }
               else if ((*value) >>= double_val)
                 {
@@ -260,14 +252,14 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= string_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%s\n", string_val));
+                  ACE_DEBUG ((LM_DEBUG, "%C\n", string_val));
                 }
             }
         }
     }
 }
 
-TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
+TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
   : federated_ (0),
     quiet_ (0),
     ior_ (0)
@@ -276,29 +268,29 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *current_arg = arg_shifter.get_current ();
+      const ACE_TCHAR *current_arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (current_arg, "-f") == 0 ||
-          ACE_OS::strcmp (current_arg, "-federate") == 0)
+      if (ACE_OS::strcmp (current_arg, ACE_TEXT("-f")) == 0 ||
+          ACE_OS::strcmp (current_arg, ACE_TEXT("-federate")) == 0)
         {
           arg_shifter.consume_arg ();
           this->federated_ = 1;
         }
-      else if (ACE_OS::strcmp (current_arg, "-q") == 0 ||
-               ACE_OS::strcmp (current_arg, "-quiet") == 0)
+      else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-q")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_TEXT("-quiet")) == 0)
         {
           arg_shifter.consume_arg ();
           this->quiet_ = 1;
         }
-      else if (ACE_OS::strcmp (current_arg, "-i") == 0 ||
-               ACE_OS::strcmp (current_arg, "-iorfile") == 0)
+      else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-i")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_TEXT("-iorfile")) == 0)
         {
           arg_shifter.consume_arg ();
           FILE* ior_file = 0;
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* file_name = arg_shifter.get_current ();
+              const ACE_TCHAR* file_name = arg_shifter.get_current ();
               ior_file = ACE_OS::fopen (file_name, "r");
 
               if (ior_file == 0)
@@ -309,7 +301,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
               arg_shifter.consume_arg ();
             }
           else
-            ior_file = ACE_OS::fdopen (ACE_STDIN, "r");
+            ior_file = ACE_OS::fdopen (ACE_STDIN, ACE_TEXT("r"));
 
           if (ior_file != 0)
             {
@@ -323,7 +315,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
         {
           ACE_DEBUG ((LM_DEBUG, "Ignoring argument <%s>\n",
                       current_arg));
-          arg_shifter.consume_arg ();
+          arg_shifter.ignore_arg ();
         }
     }
 }

@@ -1,17 +1,13 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "testC.h"
 
-ACE_RCSID(Native_Exceptions, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -35,17 +31,17 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -59,7 +55,7 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
+                             "Object reference <%s> is nil.\n",
                              ior),
                             1);
         }
@@ -87,9 +83,9 @@ main (int argc, char *argv[])
 
       server->shutdown ();
     }
-  catch (CORBA::SystemException &ex)
+  catch (const CORBA::SystemException &ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
 

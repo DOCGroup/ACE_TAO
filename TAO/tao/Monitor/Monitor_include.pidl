@@ -1,0 +1,20 @@
+// -*- IDL -*-
+
+/**
+ * @file Monitor_include.pidl
+ *
+ * @brief Include file for use in applications that need Monitor.pidl.
+ */
+
+#ifndef _MONITOR_INCLUDE_IDL_
+#define _MONITOR_INCLUDE_IDL_
+
+// This pragma is here to make the Visual Age preprocessor generate #line
+// output for this file before the files it includes.
+#pragma prefix ""
+
+
+///FUZZ: disable check_for_include/
+#include "tao/Monitor/Monitor.pidl"
+
+#endif /* _MONITOR_INCLUDE_IDL_ */

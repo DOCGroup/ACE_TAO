@@ -1,11 +1,8 @@
-
 // -*- C++ -*-
 
 //=============================================================================
 /**
  * @file SL3_ObjectCredentialsPolicy.h
- *
- * $Id$
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
@@ -31,6 +28,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SL3
@@ -46,12 +46,11 @@ namespace TAO
      * POA will have the credentials contained within this Policy
      * associated with them.
      */
-    class TAO_Security_Export ObjectCredentialsPolicy
+    class ObjectCredentialsPolicy
       : public virtual SecurityLevel3::ObjectCredentialsPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       ObjectCredentialsPolicy (
         const SecurityLevel3::OwnCredentialsList & creds);
@@ -63,40 +62,32 @@ namespace TAO
        * SecurityLevel3::ObjectCredentialsPolicy interface.
        */
       //@{
-      virtual SecurityLevel3::OwnCredentialsList * creds_list (
-          ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::OwnCredentialsList * creds_list ();
 
-      virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::PolicyType policy_type ();
 
-      virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Policy_ptr copy ();
 
-      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void destroy ();
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ObjectCredentialsPolicy (void);
+      ~ObjectCredentialsPolicy ();
 
     private:
-
       /// List of POA-specific OwnCredentials.
       SecurityLevel3::OwnCredentialsList creds_list_;
-
     };
-
   } // End SL3 namespace
 
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

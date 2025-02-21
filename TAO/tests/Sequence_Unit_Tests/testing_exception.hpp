@@ -5,8 +5,6 @@
  *
  * @brief Simple exception to raise in the tests.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

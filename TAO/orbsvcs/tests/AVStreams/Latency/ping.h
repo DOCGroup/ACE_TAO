@@ -1,17 +1,12 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/orbsvcs/tests/AVStreams/Latency
-//
-// = FILENAME
-//   ping.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   ping.h
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_PING_H
 #define TAO_PING_H
@@ -24,12 +19,12 @@
 class Ping_Recv_Callback : public TAO_AV_Callback
 {
 public:
-  Ping_Recv_Callback (void);
-  virtual int handle_stop (void);
+  Ping_Recv_Callback ();
+  virtual int handle_stop ();
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *frame_info = 0,
                              const ACE_Addr &peer_address = ACE_Addr::sap_any);
-  virtual int handle_destroy (void);
+  virtual int handle_destroy ();
  protected:
   int count_;
 };
@@ -37,26 +32,25 @@ public:
 class Ping_Recv : public TAO_FlowConsumer
 {
 public:
-  Ping_Recv (void);
+  Ping_Recv ();
 
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
 
 private:
+  /// The callback object...
   Ping_Recv_Callback callback_;
-  // The callback object...
 };
 
 class Pong_Send_Callback : public TAO_AV_Callback
 {
 public:
-
+  /// Ad-hoc method to send a response outside the context of a
+  /// handle_timeout.
   int send_response (ACE_hrtime_t stamp);
-  // Ad-hoc method to send a response outside the context of a
-  // handle_timeout.
 
   virtual int handle_timeout (void *arg);
-  virtual int handle_end_stream (void);
+  virtual int handle_end_stream ();
   virtual void get_timeout (ACE_Time_Value *&tv,
                             void *&arg);
 };
@@ -64,7 +58,7 @@ public:
 class Pong_Send : public TAO_FlowProducer
 {
 public:
-  Pong_Send (void);
+  Pong_Send ();
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
 };

@@ -1,36 +1,22 @@
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    module_sh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Module in the server header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    module_sh.cpp
+ *
+ *  Visitor generating code for Module in the server header
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_module, 
-           module_sh, 
-           "$Id$")
-
-// ************************************************************
-// Module visitor for server header
-// ************************************************************
+#include "module.h"
 
 be_visitor_module_sh::be_visitor_module_sh (be_visitor_context *ctx)
   : be_visitor_module (ctx)
 {
 }
 
-be_visitor_module_sh::~be_visitor_module_sh (void)
+be_visitor_module_sh::~be_visitor_module_sh ()
 {
 }
 
@@ -45,8 +31,7 @@ be_visitor_module_sh::visit_module (be_module *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the skeleton class name.
 
@@ -72,16 +57,15 @@ be_visitor_module_sh::visit_module (be_module *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_module_sh::"
                          "visit_module - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
-  *os << be_uidt_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_uidt_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "} // module "
       << node->name ();
 
   return 0;
-
 }

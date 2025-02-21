@@ -1,49 +1,44 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    Initiator_i.h
-//
-// = DESCRIPTION
-//    This class implements the Initiator of the
-//    Nested Upcalls - Triangle test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Initiator_i.h
+ *
+ *  This class implements the Initiator of the
+ *  Nested Upcalls - Triangle test.
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #ifndef INITIATOR_IMPL_H
 #  define INITIATOR_IMPL_H
 
 #include "Triangle_TestS.h"
 
+/**
+ * @class Initiator_i
+ *
+ * @brief Implement the <Initiator> IDL interface.
+ */
 class Initiator_i : public POA_Initiator
 {
-  // = TITLE
-  //     Implement the <Initiator> IDL interface.
 public:
+  /// Constructor.
   Initiator_i (Object_A_ptr object_A_ptr,
                   Object_B_ptr object_B_ptr);
-  // Constructor.
 
-  virtual ~Initiator_i (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~Initiator_i ();
 
-  virtual void foo_object_B (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void foo_object_B ();
 
 private:
+  /// reference to object A
   Object_A_var object_A_var_;
-  // reference to object A
 
+  /// reference to object B
   Object_B_var object_B_var_;
-  // reference to object B
 };
 
 #endif /* INITIATOR_IMPL_H */

@@ -1,17 +1,20 @@
-// $Id$
+#include "orbsvcs/Notify/Random_File.h"
 
-#include "Random_File.h"
-
-#include "ace/OS.h"
+#include "orbsvcs/Log_Macros.h"
+#include "ace/OS_NS_fcntl.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/Guard_T.h"
+
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
-
 Random_File::Random_File()
   : block_size_(512)
 {
@@ -28,14 +31,14 @@ Random_File::block_size() const
   return this->block_size_;
 }
 
-size_t
+ACE_OFF_T
 Random_File::size() const
 {
-  Random_File * mutable_this = const_cast<Random_File *> (this);
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, mutable_this->lock_, 0);
-  size_t original_pos = mutable_this->tell ();
+  Random_File * const mutable_this = const_cast<Random_File *> (this);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_OFF_T original_pos = mutable_this->tell ();
   mutable_this->ACE_FILE::seek(0, SEEK_END);
-  size_t cursize = mutable_this->tell();
+  ACE_OFF_T cursize = mutable_this->tell();
   mutable_this->ACE_FILE::seek (original_pos, SEEK_SET);
   if ((cursize % this->block_size_) != 0)
   {
@@ -47,13 +50,13 @@ Random_File::size() const
 bool
 Random_File::open(const ACE_TCHAR* filename, size_t block_size)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
   this->block_size_ = block_size;
   bool result = (this->close() == 0);
 
   if (result)
   {
-    if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+    if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Opening file %s\n")
       , filename
       ));
@@ -84,10 +87,10 @@ Random_File::open(const ACE_TCHAR* filename, size_t block_size)
 bool
 Random_File::write(const size_t block_number, void* buf, bool atomic)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Write block %d %c\n"),
-    static_cast<int> (block_number),
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
+    ACE_TEXT ("(%P|%t) Write block %B %c\n"),
+    block_number,
     (atomic ? '*' : ' ')
     ));
   bool result = this->seek(block_number);
@@ -119,10 +122,10 @@ Random_File::write(const size_t block_number, void* buf, bool atomic)
 bool
 Random_File::read(const size_t block_number, void* buf)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Read block %d\n"),
-    static_cast<int> (block_number)
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
+    ACE_TEXT ("(%P|%t) Read block %B\n"),
+    block_number
     ));
   bool result = this->seek(block_number);
   if (result)
@@ -155,6 +158,4 @@ Random_File::sync()
 
 } /* namespace TAO_Notify */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

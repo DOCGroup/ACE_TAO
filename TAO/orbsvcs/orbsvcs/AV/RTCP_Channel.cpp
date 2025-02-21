@@ -1,10 +1,10 @@
-// $Id$
-#include "ace/OS.h"
-
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/AV/RTCP_Channel.h"
+#include "orbsvcs/AV/RTP.h"
 #include "tao/debug.h"
 
-#include "RTCP_Channel.h"
-#include "RTP.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
                                   const ACE_Addr *peer_addr)
@@ -29,7 +29,7 @@ RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
   this->peer_address_ = inet_addr;
 }
 
-RTCP_Channel_In::~RTCP_Channel_In(void)
+RTCP_Channel_In::~RTCP_Channel_In()
 {
   delete this->peer_address_;
 }
@@ -188,9 +188,7 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
   else if (udelta <= RTP_SEQ_MOD - MAX_MISORDER)
     {
       // the sequence number made a large jump
-      ACE_UINT32 temp = seq; // Borland reports a warning on the next line
-                             // without this line.
-      if (temp == this->bad_seq_)
+      if (seq == this->bad_seq_)
         {
           // two sequential packets, assume the other side restarted without
           // telling us so just re-sync
@@ -198,7 +196,7 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
           this->init_seq (seq);
 
           if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "RTCP_Channel_In: large jump in sequence number",
                       "; init seq\n"));
         }
@@ -222,7 +220,7 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
                                 const ACE_Addr *peer_address)
 {
   if (*peer_address != *this->peer_address_)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "RTCP_Channel_In::recv_rtp_packet - possible loop/collision detected"));
 
   RTP_Packet data_packet(mb->rd_ptr (), static_cast<int> (mb->length ()));
@@ -231,13 +229,13 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
   if (data_packet.is_valid ())
     this->updateStatistics(&data_packet);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "RTCP_Channel_In::recvDataPacket - invalid RTP packet\n"));
 }
 
 
 RR_Block *
-RTCP_Channel_In::getRRBlock(void)
+RTCP_Channel_In::getRRBlock()
 {
   // If no data has been received since the last report, don't create a block.
   if (!this->data_since_last_report_)
@@ -310,17 +308,16 @@ RTCP_Channel_In::getRRBlock(void)
   return local_block_ptr;
 }
 
-RTCP_Channel_Out::RTCP_Channel_Out(void)
+RTCP_Channel_Out::RTCP_Channel_Out()
   :cname_ ("cname"),
    active_ (0),
    timestamp_ (0),
-   timestamp_offset_ (0),
    packets_sent_ (0),
    octets_sent_ (0)
 {
 }
 
-RTCP_Channel_Out::~RTCP_Channel_Out(void)
+RTCP_Channel_Out::~RTCP_Channel_Out()
 {
 }
 
@@ -338,26 +335,27 @@ RTCP_Channel_Out::updateStatistics (RTP_Packet *data_packet)
 }
 
 ACE_UINT32
-RTCP_Channel_Out::timestamp (void)
+RTCP_Channel_Out::timestamp ()
 {
   return this->timestamp_;
 }
 
 ACE_UINT32
-RTCP_Channel_Out::packets_sent (void)
+RTCP_Channel_Out::packets_sent ()
 {
   return this->packets_sent_;
 }
 
 ACE_UINT32
-RTCP_Channel_Out::octets_sent (void)
+RTCP_Channel_Out::octets_sent ()
 {
   return this->octets_sent_;
 }
 
 char
-RTCP_Channel_Out::active (void)
+RTCP_Channel_Out::active ()
 {
   return this->active_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

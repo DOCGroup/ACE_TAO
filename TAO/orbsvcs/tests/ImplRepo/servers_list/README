@@ -1,0 +1,16 @@
+
+
+This test runs various servers registered with the ImR and verifies
+that the number of servers returned by the tao_imr list command is
+what is expected.
+
+The test abruptly terminates a server and verifies that when only
+listing the active servers (obtained by passing the -a option to list)
+that the number returned is one less than the number of servers listed
+before killing the server. Note that currently this verification will
+fail if the activator is not used (passing -no_activator) because the
+ImR always assumes that servers are alive in this case.
+
+This test also illustrates that without passing the -a option to the
+list command that all the servers registered with the ImR will be
+shown whether or not they are active.

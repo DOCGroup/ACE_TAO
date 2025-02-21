@@ -1,62 +1,54 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation_ih.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the implementation header
-//
-// = AUTHOR
-//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation_ih.cpp
+ *
+ *  Visitor generating code for Operation in the implementation header
+ *
+ *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           operation_ih, 
-           "$Id$")
-
-// ************************************************************
-// Operation visitor for implementation header.
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_ih::be_visitor_operation_ih (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_ih::~be_visitor_operation_ih (void)
+be_visitor_operation_ih::~be_visitor_operation_ih ()
 {
 }
 
 int
 be_visitor_operation_ih::visit_operation (be_operation *node)
 {
+  // Impl classes shouldn't have implied AMI operations.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
-  
-  *os << be_nl << be_nl;
+
+  *os << be_nl_2;
 
   if (be_global->gen_impl_debug_info ())
     {
-      *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      TAO_INSERT_COMMENT (os);
     }
 
   // every operation is declared virtual in the client code
   *os << "virtual" << be_nl;
 
   // STEP I: generate the return type
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
+                         "(%N:%l) be_visitor_operation_ih::"
                          "visit_operation - "
                          "Bad return type\n"),
                         -1);

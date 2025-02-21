@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-//
 
 #ifndef TAO_INTERCEPTOR_TYPE_H
 #define TAO_INTERCEPTOR_TYPE_H
@@ -26,7 +23,7 @@ enum Interceptor_Type
   IT_DYNAMIC
 };
 
-void get_interceptor_type (int argc, char *argv[],
+void get_interceptor_type (int argc, ACE_TCHAR *argv[],
                            int &interceptor_type);
 
 #include /**/ "ace/post.h"

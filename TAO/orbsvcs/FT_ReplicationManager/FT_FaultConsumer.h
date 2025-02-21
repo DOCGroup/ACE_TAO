@@ -3,8 +3,6 @@
 /**
  *  @file    FT_FaultConsumer.h
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *
  *  @author Steve Totten <totten_s@ociweb.com>
@@ -26,9 +24,10 @@
 #include "orbsvcs/FT_NotifierC.h"
 #include "FT_ReplicationManagerLib_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
-
   ///////////////////////
   // Forward declarations
   class FT_FaultAnalyzer;
@@ -40,7 +39,6 @@ namespace TAO
   class TAO_ReplicationManagerLib_Export FT_FaultConsumer
     : public virtual POA_CosNotifyComm::StructuredPushConsumer
   {
-
     //////////////////////
     // non-CORBA interface
 
@@ -69,15 +67,14 @@ namespace TAO
     int init (
       PortableServer::POA_ptr poa,
       FT::FaultNotifier_ptr fault_notifier,
-      TAO::FT_FaultAnalyzer * fault_analyzer
-      ACE_ENV_ARG_DECL);
+      TAO::FT_FaultAnalyzer * fault_analyzer);
 
     /**
     * Clean house for process shut down.
     * - Disconnect from FT::FaultNotifier.
     * - Deactivate from the POA.
     */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini ();
 
     /**
     * Accessor for a duplicate of this consumer's object reference.
@@ -91,7 +88,6 @@ namespace TAO
     size_t notifications () const;
 
   public:
-
     /**
     * @name POA_CosNotifyComm::StructuredPushConsumer Methods
     *
@@ -99,26 +95,16 @@ namespace TAO
     * interface.
     */
     //@{
-
     ////////////////
     // CORBA methods
     virtual void push_structured_event (
-      const CosNotification::StructuredEvent &notification
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
+      const CosNotification::StructuredEvent &notification);
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType));
+        const CosNotification::EventTypeSeq & removed);
 
-   virtual void disconnect_structured_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+   virtual void disconnect_structured_push_consumer ();
 
     //@}
 
@@ -133,7 +119,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /// The POA with which we are activated.
     PortableServer::POA_var poa_;
 
@@ -155,10 +140,10 @@ namespace TAO
     ///TODO: Remove this later, it is just for testing.
     // Keep track of how many notifications we have received.
     size_t notifications_;
-
   };
-
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

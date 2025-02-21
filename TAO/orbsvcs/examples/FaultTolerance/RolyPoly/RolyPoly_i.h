@@ -1,7 +1,5 @@
 // file      : RolyPoly/RolyPoly_i.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef ROLY_POLY_I_H
 #define ROLY_POLY_I_H
 
@@ -14,26 +12,17 @@ class RolyPoly_i : public virtual POA_RolyPoly,
 public:
   RolyPoly_i (CORBA::ORB_ptr orb);
 
-  ~RolyPoly_i (void);
+  ~RolyPoly_i () = default;
 
   // Checkpointable
-  //
-  virtual CORBA::Any*
-  get_state ();
+  virtual CORBA::Any* get_state ();
 
-  virtual void
-  set_state (CORBA::Any const& state);
-
+  virtual void set_state (CORBA::Any const& state);
 
   // RolyPoly
-  //
-  virtual CORBA::Short
-  number (char *&s ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Short number (char *&s);
 
-  virtual void
-  shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
   CORBA::Short number_;

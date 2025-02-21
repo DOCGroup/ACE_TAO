@@ -4,8 +4,6 @@
 /**
  * @file SSLIOP_CredentialsAcquirerFactory.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
@@ -27,11 +25,12 @@
 #include "orbsvcs/SecurityLevel3C.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class CredentialsAcquirerFactory
      *
@@ -44,18 +43,15 @@ namespace TAO
       : public virtual TAO::SL3::CredentialsAcquirerFactory
     {
     public:
-
       /// Create a TAO::SSLIOP::CredentialsAcquirerFactory.
       virtual SecurityLevel3::CredentialsAcquirer_ptr make (
         TAO::SL3::CredentialsCurator_ptr curator,
-        const CORBA::Any & acquisition_arguments
-        ACE_ENV_ARG_DECL);
-
+        const CORBA::Any & acquisition_arguments);
     };
-
   } // End SSLIOP namespace
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

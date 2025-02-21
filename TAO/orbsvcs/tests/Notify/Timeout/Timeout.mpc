@@ -1,0 +1,31 @@
+project(tao_*idl): taoidldefaults {
+  custom_only = 1
+}
+
+project(*consumer): notifytest {
+  after  += tao_*idl
+  exename = Structured_Consumer
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    sigC.cpp
+    Notify_Structured_Push_Consumer.cpp
+    Structured_Consumer.cpp
+  }
+}
+
+project(*supplier): notifytest {
+  after  += tao_*idl
+  exename = Structured_Supplier
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    sigC.cpp
+    sigS.cpp
+    Structured_Supplier.cpp
+  }
+}

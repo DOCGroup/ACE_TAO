@@ -1,29 +1,25 @@
-// $Id$
-
 #include "tao/DynamicInterface/Request.h"
 #include "tao/Strategies/advanced_resource.h"
-#include "tao/TC_Constants_Forward.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (DII_Latency,
-           client,
-           "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
 int do_dump_history = 0;
 int do_shutdown = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hxk:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,18 +52,17 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -83,18 +78,16 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       if (CORBA::is_nil (object.in ()))
         {
@@ -107,15 +100,13 @@ main (int argc, char *argv[])
       for (int j = 0; j < 100; ++j)
         {
           CORBA::Request_var request =
-            object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            object->_request ("test_method");
 
           CORBA::ULongLong dummy = 0;
           request->add_in_arg("send_time") <<= dummy;
 
           request->set_return_type (CORBA::_tc_ulonglong);
-          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          request->invoke ();
         }
 
       ACE_Sample_History history (niterations);
@@ -123,17 +114,16 @@ main (int argc, char *argv[])
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
       for (int i = 0; i < niterations; ++i)
         {
-          CORBA::ULongLong start = ACE_OS::gethrtime ();
+          ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           CORBA::Request_var request =
-            object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            object->_request ("test_method");
 
-          request->add_in_arg("send_time") <<= start;
+          CORBA::ULongLong start_time = static_cast <CORBA::ULongLong> (start);
+          request->add_in_arg("send_time") <<= start_time;
 
           request->set_return_type (CORBA::_tc_ulonglong);
-          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          request->invoke ();
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
@@ -144,39 +134,36 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       if (do_dump_history)
         {
-          history.dump_samples ("HISTORY", gsf);
+          history.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
+      stats.dump_results (ACE_TEXT("Total"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              test_end - test_start,
                                              stats.samples_count ());
 
       if (do_shutdown)
         {
           CORBA::Request_var request =
-            object->_request ("shutdown" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            object->_request ("shutdown");
 
-          request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
+          request->invoke ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

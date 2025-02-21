@@ -1,0 +1,16 @@
+project(*server) : taoserver, threads {
+  after += *lib
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*lib): taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  libout = .
+  sharedname = Bug_3251
+  dynamicflags += BUG_3251_REGRESSION_BUILD_DLL
+  Source_Files {
+    DllOrb.cpp
+    PersistentPoa.cpp
+  }
+}

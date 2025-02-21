@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -8,17 +6,15 @@
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(Activation, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
 int do_dump_history = 0;
 int do_shutdown = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hxk:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -51,17 +47,17 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
@@ -78,22 +74,19 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test::Factory_var factory =
-        Test::Factory::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Factory::_narrow (object.in ());
 
       if (CORBA::is_nil (factory.in ()))
         {
@@ -109,7 +102,8 @@ main (int argc, char *argv[])
       ACE_Sample_History activation (niterations);
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Activating %d objects\n", niterations));
@@ -118,8 +112,7 @@ main (int argc, char *argv[])
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           references[i] =
-            factory->create_simple_object (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            factory->create_simple_object ();
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           activation.sample (now - start);
@@ -128,12 +121,12 @@ main (int argc, char *argv[])
 
       if (do_dump_history)
         {
-          activation.dump_samples ("ACTIVATION_HISTORY", gsf);
+          activation.dump_samples (ACE_TEXT("ACTIVATION_HISTORY"), gsf);
         }
 
       ACE_Basic_Stats activation_stats;
       activation.collect_basic_stats (activation_stats);
-      activation_stats.dump_results ("Activation", gsf);
+      activation_stats.dump_results (ACE_TEXT("Activation"), gsf);
 
       ACE_Sample_History destruction (niterations);
 
@@ -142,8 +135,7 @@ main (int argc, char *argv[])
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          references[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          references[j]->destroy ();
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           destruction.sample (now - start);
@@ -152,25 +144,23 @@ main (int argc, char *argv[])
 
       if (do_dump_history)
         {
-          destruction.dump_samples ("DESTRUCTION_HISTORY", gsf);
+          destruction.dump_samples (ACE_TEXT("DESTRUCTION_HISTORY"), gsf);
         }
 
       ACE_Basic_Stats destruction_stats;
       destruction.collect_basic_stats (destruction_stats);
-      destruction_stats.dump_results ("Destruction", gsf);
+      destruction_stats.dump_results (ACE_TEXT("Destruction"), gsf);
 
       if (do_shutdown)
         {
-          factory->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          factory->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

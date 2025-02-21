@@ -1,7 +1,5 @@
 // file      : RolyPoly/StateUpdate.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef STATE_UPDATE_H
 #define STATE_UPDATE_H
 

@@ -4,8 +4,6 @@
 /**
  *  @file RequestProcessingStrategyServantActivator.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -14,24 +12,19 @@
 #define TAO_REQUESTPROCESSINGSTRATEGYSERVANTACTIVATOR_H
 #include /**/ "ace/pre.h"
 
-#include "RequestProcessingStrategyServantManager.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Servant_Location.h"
-#include "PortableServer.h"
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 
-namespace PortableServer
-{
-  class ServantActivator;
-
-  typedef ServantActivator *ServantActivator_ptr;
-  typedef TAO_Objref_Var_T<ServantActivator> ServantActivator_var;
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -41,59 +34,51 @@ namespace TAO
       : public RequestProcessingStrategyServantManager
     {
     public:
-      RequestProcessingStrategyServantActivator (void);
+      RequestProcessingStrategyServantActivator () = default;
 
-      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
+      void strategy_cleanup() override;
 
-      PortableServer::ServantManager_ptr get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+      PortableServer::ServantManager_ptr get_servant_manager () override;
 
-      void set_servant_manager (PortableServer::ServantManager_ptr imgr
-                                ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+      void set_servant_manager (PortableServer::ServantManager_ptr imgr) override;
 
-      virtual TAO_SERVANT_LOCATION locate_servant (
+      TAO_Servant_Location locate_servant (
         const PortableServer::ObjectId &system_id,
-        PortableServer::Servant &servant
-        ACE_ENV_ARG_DECL);
+        PortableServer::Servant &servant) override;
 
-      virtual PortableServer::Servant locate_servant (
+      PortableServer::Servant locate_servant (
         const char *operation,
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-        int &wait_occurred_restart_call
-        ACE_ENV_ARG_DECL);
+        bool &wait_occurred_restart_call) override;
 
-      virtual void cleanup_servant (
+      void cleanup_servant (
         PortableServer::Servant servant,
-        const PortableServer::ObjectId &user_id
-        ACE_ENV_ARG_DECL);
+        const PortableServer::ObjectId &user_id) override;
 
-      virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
+      void etherealize_objects (CORBA::Boolean etherealize_objects) override;
 
-      virtual void post_invoke_servant_cleanup(
+      void post_invoke_servant_cleanup(
         const PortableServer::ObjectId &system_id,
-        const TAO::Portable_Server::Servant_Upcall &servant_upcall);
+        const TAO::Portable_Server::Servant_Upcall &servant_upcall) override;
 
     private:
       PortableServer::Servant incarnate_servant (
-        const PortableServer::ObjectId& object_id
-        ACE_ENV_ARG_DECL);
+        const PortableServer::ObjectId& object_id);
 
       void etherealize_servant (const PortableServer::ObjectId& object_id,
         PortableServer::Servant servant,
-        CORBA::Boolean cleanup_in_progress
-        ACE_ENV_ARG_DECL);
+        CORBA::Boolean cleanup_in_progress);
 
     private:
       PortableServer::ServantActivator_var servant_activator_;
-      CORBA::Boolean etherealize_objects_;
+      CORBA::Boolean etherealize_objects_ { true };
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

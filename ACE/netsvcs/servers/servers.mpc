@@ -1,0 +1,12 @@
+// -*- MPC -*-
+project(Netsvcs_server) : aceexe, avoids_ace_for_tao {
+  exename  = ace_netsvcs
+  libs     += netsvcs
+  after    += netsvcs
+  includes += $(ACE_ROOT)/netsvcs/lib
+  avoids += ace_for_tao
+
+  Source_Files {
+    main.cpp
+  }
+}

@@ -1,0 +1,34 @@
+//  -*- MPC -*-
+project(ACEXML): acelib, ace_output, codecs, install, zzip, zlib {
+  avoids       += ace_for_tao
+  sharedname    = ACEXML
+  dynamicflags += ACEXML_BUILD_DLL
+
+  specific {
+    install_dir = ACEXML/common
+  }
+
+  Source_Files {
+    // This file will only be added if the ace_codecs feature is enabled.
+    // See codecs.mpb for more information.
+    !XML_Codecs.cpp
+  }
+
+  Header_Files {
+    ACEXML_Export.h
+    Attributes.h
+    ContentHandler.h
+    DTDHandler.h
+    EntityResolver.h
+    ErrorHandler.h
+    Locator.h
+    XMLFilter.h
+    XMLReader.h
+    XML_Types.h
+    XML_Util.h
+  }
+
+  Pkgconfig_Files {
+    ACEXML.pc.in
+  }
+}

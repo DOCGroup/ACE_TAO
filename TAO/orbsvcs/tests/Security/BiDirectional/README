@@ -1,15 +1,13 @@
-# $Id$
+This is a test that exercises the bidirectional GIOP connection
+implementation in TAO over SSLIOP connection.
 
-This is a test that exercises the birectional GIOP connection
-implementation in TAO over SSLIOP connection. 
-
-Basicaly, the test is a copy of the $TAO_ROOT/tests/BiDirectional with
+Basically, the test is a copy of the $TAO_ROOT/tests/BiDirectional with
 added support for SSLIOP
 
 Start the server like this
 
 $ server -ORBSvcConf server.conf -o <file.ior> -i <no_iterations>
-$ client -ORBSvcConf client.conf -k file://<file.ior> -x 
+$ client -ORBSvcConf client.conf -k file://<file.ior> -x
 
 Or, simply
 
@@ -24,6 +22,6 @@ would crash itself.
 
 To determine that no new connections have been opened or used the test
 relies on the fact that TAO uses a transport cache. It can provide us
-iwith the number of currently cashed transports before and after making an
-invocation. Both the client and at the server make this check. 
+with the number of currently cashed transports before and after making an
+invocation. Both the client and at the server make this check.
 

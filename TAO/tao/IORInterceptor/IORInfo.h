@@ -4,8 +4,6 @@
 /**
  *  @file   IORInfo.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================
@@ -15,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IORInfoC.h"
+#include "tao/IORInterceptor/IORInfoC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,9 +29,10 @@
 #endif /* _MSC_VER */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations.
 class TAO_Root_POA;
-
 
 /**
  * @class TAO_IORInfo
@@ -43,10 +42,9 @@ class TAO_Root_POA;
  */
 class TAO_IORInfo
   : public virtual PortableInterceptor::IORInfo,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_IORInfo (TAO_Root_POA *poa);
 
@@ -56,48 +54,29 @@ public:
    * Methods exposed by the PortableInterceptor::IORInfo interface.
    */
   //@{
-
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
-  virtual CORBA::Policy_ptr get_effective_policy (
-      CORBA::PolicyType type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type);
 
   /// Add the given tagged component to all profiles.
-  virtual void add_ior_component (
-      const IOP::TaggedComponent & component
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void add_ior_component (const IOP::TaggedComponent & component);
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
   virtual void add_ior_component_to_profile (
       const IOP::TaggedComponent & component,
-      IOP::ProfileId profile_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      IOP::ProfileId profile_id);
 
-  virtual PortableInterceptor::AdapterManagerId manager_id (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * manager_id ();
 
-  virtual PortableInterceptor::AdapterState state (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableInterceptor::AdapterState state ();
 
-  virtual PortableInterceptor::ObjectReferenceTemplate * adapter_template (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableInterceptor::ObjectReferenceTemplate *adapter_template ();
 
-  virtual PortableInterceptor::ObjectReferenceFactory * current_factory (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableInterceptor::ObjectReferenceFactory *current_factory ();
 
   virtual void current_factory (
-      PortableInterceptor::ObjectReferenceFactory * current_factory
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ObjectReferenceFactory * current_factory);
 
   //@}
 
@@ -106,24 +85,23 @@ public:
    * Once the IOR interception points have been invoked, this IORInfo
    * instance is no longer valid.
    */
-  void invalidate (void);
+  void invalidate ();
 
   /// Inform the this IORInfo object that the
   /// IORInterceptor::components_established() interception point has
   /// been called.
   /**
-   * This method is used so to inform the IORInfo when the
+   * This method is used to inform the IORInfo object when the
    * add_ior_component() and add_ior_component_to_profile() methods
    * are invalid.  They are only valid in the
    * IORInterceptor::establish_components() interception point.
    */
-  void components_established (void);
+  void components_established ();
 
 protected:
-
-  /// Protected destructor to enforce proper memory managment through
+  /// Protected destructor to enforce proper memory management through
   /// the reference counting mechanism.
-  ~TAO_IORInfo (void);
+  ~TAO_IORInfo ();
 
   /// Check if this IORInfo instance is valid.
   /**
@@ -131,20 +109,15 @@ protected:
    * this IORInfo object is no longer valid.  Throw an exception in
    * that case.
    */
-  void check_validity (ACE_ENV_SINGLE_ARG_DECL);
+  void check_validity ();
 
 private:
-
-  /// Prevent copying through the copy constructor and the assignment
-  /// operator.
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_IORInfo (const TAO_IORInfo &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_IORInfo &))
+  TAO_IORInfo (const TAO_IORInfo &) = delete;
+  void operator= (const TAO_IORInfo &) = delete;
 
 private:
-
   /// Pointer to POA
-  TAO_Root_POA *poa_;
+  TAO_Root_POA * poa_;
 
   /// True if the IORInterceptor::components_established()
   /// interception point was called.  False otherwise.
@@ -155,11 +128,12 @@ private:
    * interception point has been called.
    */
   CORBA::Boolean components_established_;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "IORInfo.inl"
+# include "tao/IORInterceptor/IORInfo.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<!-- Converted from ./orbsvcs/tests/Notify/Bug_2415_Regression/notify.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!-- #  -->
+ <static id="TAO_CosNotify_Service" params="-DispatchingThreads 1 -DefaultConsumerAdminFilterOp AND -DefaultSupplierAdminFilterOp AND"/>
+</ACE_Svc_Conf>

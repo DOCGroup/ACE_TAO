@@ -1,8 +1,8 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   default_resource.h
- *
- *  $Id$
  *
  *  @author Yamuna Krishnamurthy
  */
@@ -22,6 +22,8 @@
 
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_AV_Default_Resource_Factory
  *
@@ -29,29 +31,27 @@
  *        The AV Streams resource factory loads the
  *        pluggable transport and flow protocol factories
  *        in the corresponding factory sets.
- *  
- *
  */
 
 class TAO_AV_Export TAO_AV_Default_Resource_Factory
-: public TAO_AV_Resource_Factory
+  : public TAO_AV_Resource_Factory
 {
 public:
-
   /// Constructor.
-  TAO_AV_Default_Resource_Factory (void);
+  TAO_AV_Default_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_AV_Default_Resource_Factory (void);
+  virtual ~TAO_AV_Default_Resource_Factory ();
 
   /**
    * @name Service Configurator Hooks
    */
   //@{
   /// Dynamic linking hook
-  virtual int init (int argc, char *argv[]);
-  
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_AV, TAO_AV_Default_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_Default_Resource_Factory)

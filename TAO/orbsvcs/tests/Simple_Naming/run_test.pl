@@ -2,106 +2,49 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 # -*- perl -*-
 
 # This is a Perl script that runs some Naming Service tests.
 # It runs all the tests that will run with min CORBA.
 # It starts all the servers and clients as necessary.
 
-use lib '../../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 use Cwd;
 
 ## Save the starting directory
+$status = 0;
+$multicast = '224.9.9.2';
 $startdir = getcwd();
 
-# Amount of delay (in seconds) between starting a server and a client
-# to allow proper server initialization.
-$sleeptime = 10;
-
 $quiet = 0;
+$skip_mmap = 0;
+$mt_only = 0;
 
-# check for -q flag
-if ($ARGV[0] eq '-q') {
-    $quiet = 1;
+foreach $i (@ARGV) {
+    if ($i eq '-q') {
+        $quiet = 1;
+    }
+    elsif ($i eq '-nommap') {
+        $skip_mmap = 1;
+    }
+    elsif ($i eq '-mtonly') {
+        $mt_only = 1;
+    }
 }
+
+my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
 # Variables for command-line arguments to client and server
 # executables.
-$ns_multicast_port = 10001 + PerlACE::uniqueid (); # Can not be 10000 on Chorus 4.0
-$ns_orb_port = 12000 + PerlACE::uniqueid ();
-$iorfile = PerlACE::LocalFile ("ns.ior");
-$persistent_ior_file = PerlACE::LocalFile ("pns.ior");
-$persistent_log_file = PerlACE::LocalFile ("test_log");
-$data_file = PerlACE::LocalFile ("test_run.data");
+$ns_multicast_port = 10001 + $test->RandomPort();
+$ns_orb_port = 12000 + $test->RandomPort();
 
-$status = 0;
+$iorfile = "ns.ior";
+$persistent_ior_file = "pns.ior";
+$persistent_log_file = "test_log";
 
-sub name_server
-{
-    my $args = "-ORBNameServicePort $ns_multicast_port -o $iorfile -m 1 @_";
-    my $prog = "$startdir/../../Naming_Service/Naming_Service";
-    $NS = new PerlACE::Process ($prog, $args);
-
-    unlink $iorfile;
-
-    $NS->Spawn ();
-
-    if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
-        print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
-        $NS->Kill (); 
-        exit 1;
-    }
-}
-
-sub client
-{
-    my $args = "@_"." ";
-    my $prog = "$startdir/client";
-
-    $CL = new PerlACE::Process ($prog, $args);
-
-    $client = $CL->SpawnWaitKill (60);
-
-    if ($client != 0) {
-        print STDERR "ERROR: client returned $client\n";
-        $status = 1;
-    }
-}
-
-## The options below have been reordered due to a
-## initialization problem (within the Naming_Service)
-## that has only been seen on Windows XP.
-
-# Options for all simple tests recognized by the 'client' program.
-@opts = ("-s -ORBInitRef NameService=file://$iorfile",
-         "-p $persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-s -ORBInitRef NameService=mcast://:$ns_multicast_port\::/NameService",
-         "-t -ORBInitRef NameService=file://$iorfile",
-         "-i -ORBInitRef NameService=file://$iorfile",
-         "-e -ORBInitRef NameService=file://$iorfile",
-         "-y -ORBInitRef NameService=file://$iorfile",
-         "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         );
-
-@server_opts = ("-t 30",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
-                "", "", "", "", "",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
-                );
-
-@comments = ("Simple Test: \n",
-             "mmap() Persistent Test (Part 1): \n",
-             "Simple Test (using multicast to locate the server): \n",
-             "Tree Test: \n",
-             "Iterator Test: \n",
-             "Exceptions Test: \n",
-             "Destroy Test: \n",
-             "mmap() Persistent Test (Part 2): \n",
-             );
-
-$test_number = 0;
+$data_file = "test_run.data";
 
 ## Allow the user to determine where the persistent file will be located
 ## just in case the current directory is not suitable for locking.
@@ -110,87 +53,165 @@ $test_number = 0;
 ## directory is NFS mounted from a system that does not properly support
 ## locking.
 foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
-  if (defined $possible && -d $possible) {
-    if (chdir($possible)) {
-      last;
+    if (defined $possible && -d $possible) {
+      if (chdir($possible)) {
+        last;
+      }
     }
-  }
 }
 
-print "INFO: Running the test in ", getcwd(), "\n";
+$test_log = $test->LocalFile ($data_file);
+$test->DeleteFile ($data_file);
 
-unlink ($persistent_ior_file, $persistent_log_file);
+#Files which used by test
+my $test_iorfile = $test->LocalFile ($iorfile);
+my $test_persistent_log_file = $test->LocalFile ($persistent_log_file);
+my $test_persistent_ior_file = $test->LocalFile ($persistent_ior_file);
 
-# Run server and client for each of the tests.  Client uses ior in a
-# file to bootstrap to the server.
-foreach $o (@opts) {
-    name_server ($server_opts[$test_number]);
+$test->DeleteFile($persistent_ior_file);
+$test->DeleteFile($iorfile);
+$test->DeleteFile($persistent_log_file);
 
-    print STDERR "\n          ".$comments[$test_number];
+sub name_server
+{
+    my $args = "-ORBMulticastDiscoveryEndpoint $multicast:$ns_multicast_port -o $test_iorfile -m 1 @_";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 
-    client ($o);
+    $SV = $test->CreateProcess ("$prog", "$args");
 
-    $NS->Kill ();
+    $test->DeleteFile($iorfile);
 
-    ## For some reason, only on Windows XP, we need to
-    ## wait before starting another Naming_Service when
-    ## the mmap persistence option is used
-    if ($^O eq "MSWin32") {
-      sleep(1);
+    $SV->Spawn ();
+
+    if ($test->WaitForFileTimed ($iorfile,
+                               $test->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$test_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
     }
 
-    $test_number++;
+    sleep(1);
 }
 
-unlink ($persistent_ior_file, $persistent_log_file);
+sub client
+{
+    my $args = "@_"." ";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/tests/Simple_Naming/client";
 
-# Now run the multithreaded test, sending output to the file.
-print STDERR "\n          Multithreaded Test:\n";
-unlink $data_file;
+    $CL = $test->CreateProcess ("$prog", "$args");
 
-open (OLDOUT, ">&STDOUT");
-open (STDOUT, ">$data_file") or die "can't redirect stdout: $!";
-open (OLDERR, ">&STDERR");
-open (STDERR, ">&STDOUT") or die "can't redirect stderror: $!";
+    $client_status = $CL->SpawnWaitKill ($test->ProcessStartWaitInterval() + 45);
 
-# just here to quiet warnings
-$fh = \*OLDOUT;
-$fh = \*OLDERR;
+    if ($client_status != 0) {
+        print STDERR "ERROR: client returned $client_status\n";
+        $status = 1;
+    }
 
-name_server ();
+}
 
-client ("-ORBInitRef NameService=file://$iorfile", "-m15");
+## The options below have been reordered due to a
+## initialization problem (within the Naming_Service)
+## that has only been seen on Windows XP.
 
-close (STDERR);
-close (STDOUT);
-open (STDOUT, ">&OLDOUT");
-open (STDERR, ">&OLDERR");
+sub common_tests
+{
+    # Options for all simple tests recognized by the 'client' program.
+    @opts = ("-s -ORBInitRef NameService=file://$test_iorfile",
+             "-p $test_persistent_ior_file -ORBInitRef NameService=file://$test_iorfile",
+             "-s -ORBInitRef NameService=mcast://$multicast:$ns_multicast_port\::/NameService",
+             "-t -ORBInitRef NameService=file://$test_iorfile",
+             "-i -ORBInitRef NameService=file://$test_iorfile",
+             "-e -ORBInitRef NameService=file://$test_iorfile",
+             "-y -ORBInitRef NameService=file://$test_iorfile",
+             "-c file://$test_persistent_ior_file -ORBInitRef NameService=file://$test_iorfile",
+        );
 
-$NS->Kill ();
+    $hostname = $test->HostName ();
 
-unlink $iorfile;
+    @server_opts = ("-t 30",
+                    "-ORBEndpoint iiop://$hostname:$ns_orb_port -f $test_persistent_log_file",
+                    "", "", "", "", "",
+                    "-ORBEndpoint iiop://$hostname:$ns_orb_port -f $test_persistent_log_file",
+        );
 
+    @comments = ("Simple Test: \n",
+                 "mmap() Persistent Test (Part 1): \n",
+                 "Simple Test (using multicast to locate the server): \n",
+                 "Tree Test: \n",
+                 "Iterator Test: \n",
+                 "Exceptions Test: \n",
+                 "Destroy Test: \n",
+                 "mmap() Persistent Test (Part 2): \n",
+        );
 
-$errors = system ("perl $startdir/process-m-output.pl $data_file 15") >> 8;
+    $test_number = 0;
 
-if ($errors > 0) {
-    $status = 1;
+    print "INFO: Running the test in ", getcwd(), "\n";
 
-    if (!$quiet) {
-        print STDERR "Errors Detected, printing output\n";
-        if (open (DATA, "<$data_file")) {
-            print STDERR "================================= Begin\n";
-            print STDERR <DATA>;
-            print STDERR "================================= End\n";
-            close (DATA);
+    # Run server and client for each of the tests.  Client uses ior in a
+    # file to bootstrap to the server.
+    foreach $o (@opts) {
+        if (index($comments[$test_number],"mmap") != -1 && $skip_mmap == 1) {
+            print STDERR "\n *** skipping ".$comments[$test_number];
         }
         else {
-            print STDERR "ERROR: Could not open $data_file\n";
+            name_server ($server_opts[$test_number]);
+            print STDERR "\n          ".$comments[$test_number];
+            client ($o);
+            $SV->Kill ();
         }
-        unlink $data_file;
+        ## For some reason, only on Windows XP, we need to
+        ## wait before starting another tao_cosnaming when
+        ## the mmap persistence option is used
+        if ($^O eq "MSWin32") {
+            sleep(1);
+        }
+        $test_number++;
     }
+
+    $test->DeleteFile($persistent_ior_file);
+    $test->DeleteFile($persistent_log_file);
+    $test->DeleteFile($iorfile);
+
 }
 
-unlink $iorfile;
+sub mt_test ()
+{
+    # Now run the multithreaded test, sending output to the file.
+    print STDERR "\n          Multithreaded Test:\n";
+    $test->DeleteFile ($data_file);
 
+    name_server ("");
+    client ("-ORBInitRef NameService=file://$test_iorfile -ORBLogFile $test_log", "-m15");
+
+    $SV->Kill ();
+
+    $errors = system ("perl $startdir/process-m-output.pl $test_log 15") >> 8;
+
+    if ($errors > 0) {
+        $status = 1;
+
+        if (!$quiet) {
+            print STDERR "Errors Detected, printing output\n";
+            if (open (DATA, "<$test_log")) {
+                print STDERR "================================= Begin\n";
+                print STDERR <DATA>;
+                print STDERR "================================= End\n";
+                close (DATA);
+            }
+            else {
+                print STDERR "ERROR: Could not open $test_log\n";
+            }
+            $test->DeleteFile ($data_file);
+        }
+    }
+
+    $test->DeleteFile($iorfile);
+}
+
+##############################################################################
+
+
+common_tests () if (!$mt_only);
+mt_test ();
 exit $status;

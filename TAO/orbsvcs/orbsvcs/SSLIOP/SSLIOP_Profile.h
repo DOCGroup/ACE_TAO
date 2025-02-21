@@ -4,8 +4,6 @@
 /**
  *  @file SSLIOP_Profile.h
  *
- *  $Id$
- *
  *  SSLIOP profile specific processing
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
@@ -25,14 +23,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Endpoint.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 #include "tao/IIOP_Profile.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // namespace TAO
 // {
 //   namespace SSLIOP
 //   {
-
     /**
      * @class Profile
      *
@@ -43,7 +42,7 @@
      * This class extends TAO_IIOP_Profile to support secure
      * communication using SSL.
      */
-    class TAO_SSLIOP_Export TAO_SSLIOP_Profile : public TAO_IIOP_Profile
+    class TAO_SSLIOP_Profile : public TAO_IIOP_Profile
     {
     public:
       /// Profile constructor, same as above except the object_key has
@@ -75,8 +74,8 @@
 
       // = Please see Profile.h for the documentation of these methods.
       virtual int decode (TAO_InputCDR& cdr);
-      virtual int encode_endpoints (void);
-      virtual TAO_Endpoint *endpoint (void);
+      virtual int encode_endpoints ();
+      virtual TAO_Endpoint *endpoint ();
 
       /**
        * Override parse_string() from the base class to update the SSL
@@ -86,8 +85,7 @@
        * Initialize this object using the given input string.
        * URL-style string contain only one endpoint.
        */
-      virtual void parse_string (const char * string
-                                 ACE_ENV_ARG_DECL);
+      virtual void parse_string (const char * string);
 
       /**
        * Add @a endp to this profile's list of endpoints (it is
@@ -97,14 +95,21 @@
        */
       void add_endpoint (TAO_SSLIOP_Endpoint * endp);
 
-    protected:
 
+      /**
+       * Remove @a endp from this profile's list of endpoints.
+       */
+      void remove_endpoint (TAO_SSLIOP_Endpoint * endp);
+
+      void remove_generic_endpoint (TAO_Endpoint *ep);
+
+    protected:
       /// Destructor.
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~TAO_SSLIOP_Profile (void);
+      ~TAO_SSLIOP_Profile ();
 
       /// Profile equivalence template method.
       /**
@@ -114,7 +119,6 @@
         const TAO_Profile * other_profile);
 
     private:
-
       /**
        * Helper for @c decode.  Decodes TAO_TAG_SSL_ENDPOINTS from a
        * tagged component. Decode only if RTCORBA is enabled.
@@ -125,7 +129,7 @@
        *       but sadly others pay the price (of footprint) under
        *       normal operations.
        */
-      int decode_tagged_endpoints (void);
+      int decode_tagged_endpoints ();
 
       /**
        * Head of this profile's list of endpoints.  This endpoint is
@@ -164,12 +168,12 @@
        * attributes - port number, for instance.
        */
       int ssl_only_;
-
     };
 
 //   }  // End SSLIOP namespace.
 // }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

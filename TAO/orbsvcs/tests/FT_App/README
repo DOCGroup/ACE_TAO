@@ -1,4 +1,4 @@
-$Id$
+
 
 This is a simple application intended to test Fault Tolerant Corba.
 
@@ -26,7 +26,7 @@ Commands consist of a single character followed by an optional number
 (with no space between).  For example: =10 sets the value of the counter
 to 10.  +5 increments the counter by 5 (thereby setting the value to 15).
 
-The '?' commmand lists the possible commands and their options.
+The '?' command lists the possible commands and their options.
 
 Additional programs:
  ft_notifier is a stub implementation of a fault notifier for testing fault detectors.

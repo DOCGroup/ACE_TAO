@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Peer_Admin.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -12,11 +11,13 @@
 #ifndef TAO_ESF_PEER_ADMIN_H
 #define TAO_ESF_PEER_ADMIN_H
 
-#include "ESF_Proxy_Admin.h"
+#include "orbsvcs/ESF/ESF_Proxy_Admin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ESF_Peer_Admin
@@ -38,17 +39,17 @@
  * the PROXY interface must implement:
  *
  * @verbatim
- * void connected (PEER *peer ACE_ENV_ARG_DECL_NOT_USED) throw ();
- * void reconnected (PEER *peer ACE_ENV_ARG_DECL_NOT_USED) throw ();
- * void disconnected (PEER *peer ACE_ENV_ARG_DECL_NOT_USED) throw ();
+ * void connected (PEER *peer) noexcept;
+ * void reconnected (PEER *peer) noexcept;
+ * void disconnected (PEER *peer) noexcept;
  * @endverbatim
  *
  * Similarly, the PEER interface must implement:
  *
  * @verbatim
- * void connected (PROXY *proxy ACE_ENV_ARG_DECL_NOT_USED) throw ();
- * void reconnected (PROXY *proxy ACE_ENV_ARG_DECL_NOT_USED) throw ();
- * void disconnected (PROXY *proxy ACE_ENV_ARG_DECL_NOT_USED) throw ();
+ * void connected (PROXY *proxy) noexcept;
+ * void reconnected (PROXY *proxy) noexcept;
+ * void disconnected (PROXY *proxy) noexcept;
  * @endverbatim
  */
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
@@ -59,16 +60,14 @@ public:
   TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
 
   /// destructor
-  virtual ~TAO_ESF_Peer_Admin (void);
+  virtual ~TAO_ESF_Peer_Admin ();
 
   /**
    * A <peer> has connected, this is invoked when the peer's client
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
-  virtual void peer_connected (PEER *peer
-                               ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void peer_connected (PEER *peer);
 
   /**
    * A <peer> has reconnected, i.e. its client has invoked the
@@ -76,28 +75,18 @@ public:
    * The default implementation delegates on the collection
    * <reconnected> method
    */
-  virtual void peer_reconnected (PEER *peer
-                                 ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void peer_reconnected (PEER *peer);
 
   /**
    * A <peer> has been disconnected. The default implementation
    * removes the object from the collection and deactivates the
    * proxy.
    */
-  virtual void peer_disconnected (PEER *peer
-                                  ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void peer_disconnected (PEER *peer);
 };
 
-// ****************************************************************
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Peer_Admin.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Peer_Admin.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Peer_Admin.cpp"
 
 #endif /* TAO_ESF_PEER_ADMIN_H */

@@ -1,34 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_wstring.cpp
-//
-// = DESCRIPTION
-//    tests unbounded wide strings
-//
-// = AUTHORS
-//      Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_wstring.cpp
+ *
+ *  tests unbounded wide strings
+ *
+ *  @author   Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_wstring.h"
 #include "ace/OS_NS_wchar.h"
 
-ACE_RCSID (Param_Test,
-           ub_wstring, 
-           "$Id$")
-
 // ************************************************************************
 //               Test_Unbounded_WString
 // ************************************************************************
 
-Test_Unbounded_WString::Test_Unbounded_WString (void)
+Test_Unbounded_WString::Test_Unbounded_WString ()
   : opname_ (CORBA::string_dup ("test_unbounded_wstring")),
     in_ (0),
     inout_ (0),
@@ -37,7 +27,7 @@ Test_Unbounded_WString::Test_Unbounded_WString (void)
 {
 }
 
-Test_Unbounded_WString::~Test_Unbounded_WString (void)
+Test_Unbounded_WString::~Test_Unbounded_WString ()
 {
   CORBA::string_free (this->opname_);
   CORBA::wstring_free (this->in_);
@@ -52,14 +42,13 @@ Test_Unbounded_WString::~Test_Unbounded_WString (void)
 }
 
 const char *
-Test_Unbounded_WString::opname (void) const
+Test_Unbounded_WString::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req
-                                        ACE_ENV_ARG_DECL)
+Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -70,29 +59,25 @@ Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_wstring);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   const CORBA::WChar *tmp;
   req->return_value () >>= tmp;
   this->ret_ = CORBA::wstring_dup (tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = CORBA::wstring_dup (tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = CORBA::wstring_dup (tmp);
 }
 
 int
-Test_Unbounded_WString::init_parameters (Param_Test_ptr
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+Test_Unbounded_WString::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -112,7 +97,7 @@ Test_Unbounded_WString::init_parameters (Param_Test_ptr
 }
 
 int
-Test_Unbounded_WString::reset_parameters (void)
+Test_Unbounded_WString::reset_parameters ()
 {
   // release any previously occupied values
   CORBA::wstring_free (this->inout_);
@@ -127,33 +112,27 @@ Test_Unbounded_WString::reset_parameters (void)
 }
 
 int
-Test_Unbounded_WString::run_sii_test (Param_Test_ptr objref
-                                      ACE_ENV_ARG_DECL)
+Test_Unbounded_WString::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       CORBA::WString_out str_out (this->out_);
 
       this->ret_ = objref->test_unbounded_wstring (this->in_,
                                                    this->inout_,
-                                                   str_out
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                   str_out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Unbounded_WString::run_sii_test\n");
-
+      ex._tao_print_exception ("Test_Unbounded_WString::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Unbounded_WString::check_validity (void)
+Test_Unbounded_WString::check_validity ()
 {
   CORBA::ULong len = ACE_OS::wslen (this->in_);
 
@@ -176,6 +155,6 @@ Test_Unbounded_WString::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Unbounded_WString::print_values (void)
+Test_Unbounded_WString::print_values ()
 {
 }

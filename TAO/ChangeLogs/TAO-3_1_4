@@ -1,0 +1,26 @@
+commit 9ac320c9a8e6b5f412e8eefb7f2870b3bf225918
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 21 11:01:05 2024 +0100
+
+    Fixed typos
+    
+        * ACE/ace/Configuration.h:
+        * ACE/protocols/tests/HTBP/Reactor_Tests/test_config.h:
+        * ACE/tests/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/AMI/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/BiDirectional/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/Hello/Test_Output.cpp:
+        * TAO/tao/PI/PICurrent_Impl.cpp:
+        * TAO/tests/POA/FindPOA/FindPOA.cpp:
+
+commit 1b193af01d5289f17269896566aba5acbd8eb145
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 16 11:41:47 2024 +0100
+
+    Make 7.1.3 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

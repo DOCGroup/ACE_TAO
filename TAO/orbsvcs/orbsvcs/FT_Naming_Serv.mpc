@@ -1,0 +1,42 @@
+// -*- MPC -*-
+
+project (FT_Naming_Serv) : orbsvcslib, orbsvcs_output, ftnaming, ftnaming_replication, install, naming_serv, naming, portablegroup, loadbalancing, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro  {
+  sharedname   = TAO_FT_Naming_Serv
+  idlflags    += -Wb,export_macro=TAO_FtNaming_Export -Wb,export_include=orbsvcs/Naming/FaultTolerant/ftnaming_export.h
+  dynamicflags += TAO_FTNAMING_BUILD_DLL
+  tagchecks   += FaultTolerantNaming
+
+  IDL_Files {
+  }
+
+  Source_Files (ORBSVCS_COMPONENTS) {
+    Naming/FaultTolerant/FT_Naming_Manager.cpp
+    Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp
+    Naming/FaultTolerant/FT_Naming_Server.cpp
+    Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp
+    Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp
+    Naming/FaultTolerant/FT_Random.cpp
+    Naming/FaultTolerant/FT_Round_Robin.cpp
+    Naming/FaultTolerant/FT_Storable_Naming_Context.cpp
+    Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp
+    Naming/FaultTolerant/FT_PG_Object_Group_Storable.cpp
+    Naming/FaultTolerant/FT_PG_Group_Factory.cpp
+  }
+
+  Header_Files {
+    Naming/FaultTolerant/FT_Naming_Manager.h
+    Naming/FaultTolerant/FT_Naming_Replication_Manager.h
+    Naming/FaultTolerant/FT_Naming_Server.h
+    Naming/FaultTolerant/FT_Persistent_Naming_Context.h
+    Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h
+    Naming/FaultTolerant/FT_Random.h
+    Naming/FaultTolerant/FT_Round_Robin.h
+    Naming/FaultTolerant/FT_Storable_Naming_Context.h
+    Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h
+    Naming/FaultTolerant/FT_PG_Object_Group_Storable.h
+    Naming/FaultTolerant/FT_PG_Group_Factory.h
+    Naming/FaultTolerant/ftnaming_export.h
+    Naming/FaultTolerant/ftnaming_intf_export.h
+  }
+
+}

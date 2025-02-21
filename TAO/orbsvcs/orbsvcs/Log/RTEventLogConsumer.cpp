@@ -13,20 +13,15 @@
 #include "orbsvcs/Event/EC_SupplierControl.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (Log,
-           RTEventLogConsumer,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Rtec_LogConsumer::TAO_Rtec_LogConsumer (TAO_RTEventLog_i *log)
-: log_ (log)
+  : log_ (log)
 {
-  // No-Op.
 }
 
-TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer (void)
+TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer ()
 {
-  // No-Op.
 }
 
 void
@@ -43,8 +38,7 @@ TAO_Rtec_LogConsumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer
 }
 
 void
-TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events)
 {
   // create a record list...
   DsLogAdmin::RecordList recList (1);
@@ -52,16 +46,14 @@ TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events ACE_ENV_ARG_DE
 
   recList [0].info <<= events;
 
-  this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK;
+  this->log_->write_recordlist (recList);
 
 }
 
 void
-TAO_Rtec_LogConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Rtec_LogConsumer::disconnect_push_consumer ()
 {
-  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_proxy_->disconnect_push_supplier ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

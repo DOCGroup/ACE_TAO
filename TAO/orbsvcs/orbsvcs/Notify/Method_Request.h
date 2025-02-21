@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Method_Request.h
- *
- *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
@@ -12,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +21,9 @@
 #include "ace/Bound_Ptr.h"
 #include "ace/OS_NS_sys_time.h"
 
-#include "Event.h"
+#include "orbsvcs/Notify/Event.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Method_Request_Queueable;
 
@@ -30,17 +31,16 @@ class TAO_Notify_Method_Request_Queueable;
  * @class TAO_Notify_Method_Request
  *
  * @brief Base class for Method Requests
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request
 {
 public:
   /// Destructor.
-  virtual ~TAO_Notify_Method_Request (void);
+  virtual ~TAO_Notify_Method_Request ();
 
   /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
-  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual int execute () = 0;
+  virtual TAO_Notify_Method_Request_Queueable* copy () = 0;
 };
 
 /***********************************************************************/
@@ -49,7 +49,6 @@ public:
  * @class TAO_Notify_Method_Request_Queueable
  *
  * @brief Interface for NS method Requests
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Queueable
   : public ACE_Message_Block
@@ -61,9 +60,17 @@ public:
   TAO_Notify_Method_Request_Queueable();
   TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event);
 
-  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Method_Request_Queueable* copy ();
   void init (const TAO_Notify_Event * event);
+
+  /// The creation time of the event to which this request corresponds.
+  const ACE_Time_Value& creation_time () const;
+
+private:
+  ACE_Time_Value time_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

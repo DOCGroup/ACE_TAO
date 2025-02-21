@@ -1,28 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Advanced/ch_21
-//
-// = FILENAME
-//    server.cpp
-//
-// = AUTHORS
-//   Source code used in TAO has been modified and adapted from the code
-//   provided in the book, "Advanced CORBA Programming with C++" by Michi
-//   Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading,
-//   MA.
-//
-//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  @author Source code used in TAO has been modified and adapted from the codeprovided in the book
+ *  @author "Advanced CORBA Programming with C++" by MichiHenning and Steve Vinoski. Copyright 1999. Addison-Wesley
+ *  @author Reading
+ *  @author MA.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+ */
+//=============================================================================
 
-#include <iostream>
-#include <fstream>
+
+#include <ace/streams.h>
 #include <strstream>
 #include "server.h"
-#include <ace/Synch_T.h>
 #include <algorithm>
 #include "icp.h"
 
@@ -72,7 +63,7 @@ static CCS::Thermometer_ptr make_dref (PortableServer::POA_ptr poa, CCS::AssetTy
     // the repository ID.
     char buf[32];
     assert (ICP_get (anum, "model", buf, sizeof (buf)) == 0);
-    const char * rep_id = strcmp (buf, "Sens-A-Temp") == 0
+    const char * rep_id = ACE_OS::strcmp (buf, "Sens-A-Temp") == 0
                             ? "IDL:acme.com/CCS/Thermometer:1.0"
                             : "IDL:acme.com/CCS/Thermostat:1.0";
 
@@ -149,8 +140,8 @@ Thermometer_impl::
 void
 Thermometer_impl::_add_ref ()
 {
-    ACE_Guard<ACE_Mutex> guard (m_count_mutex);
-    m_ref_count++;
+    ACE_GUARD (ACE_Mutex, ace_mon, m_count_mutex);
+    ++m_ref_count++;
 }
 
 void
@@ -158,7 +149,7 @@ Thermometer_impl::_remove_ref ()
 {
     bool del = false;
     {
-    ACE_Guard<ACE_Mutex> guard (m_count_mutex);
+    ACE_GUARD (ACE_Mutex, ace_mon, m_count_mutex);
     if (--m_ref_count == 0)
         del = true;
     }
@@ -169,8 +160,7 @@ Thermometer_impl::_remove_ref ()
 // IDL model attribute.
 
 CCS::ModelType
-Thermometer_impl::
-model () throw (CORBA::SystemException)
+Thermometer_impl::model ()
 {
     return get_model ();
 }
@@ -178,8 +168,7 @@ model () throw (CORBA::SystemException)
 // IDL asset_num attribute.
 
 CCS::AssetType
-Thermometer_impl::
-asset_num () throw (CORBA::SystemException)
+Thermometer_impl::asset_num ()
 {
     return m_anum;
 }
@@ -187,8 +176,7 @@ asset_num () throw (CORBA::SystemException)
 // IDL temperature attribute.
 
 CCS::TempType
-Thermometer_impl::
-temperature () throw (CORBA::SystemException)
+Thermometer_impl::temperature ()
 {
     return get_temp ();
 }
@@ -196,8 +184,7 @@ temperature () throw (CORBA::SystemException)
 // IDL location attribute accessor.
 
 CCS::LocType
-Thermometer_impl::
-location () throw (CORBA::SystemException)
+Thermometer_impl::location ()
 {
     return get_loc ();
 }
@@ -205,8 +192,7 @@ location () throw (CORBA::SystemException)
 // IDL remove operation.
 
 void
-Thermometer_impl::
-remove () throw (CORBA::SystemException)
+Thermometer_impl::remove ()
 {
     m_removed = true;
     _remove_ref ();
@@ -215,8 +201,7 @@ remove () throw (CORBA::SystemException)
 // IDL location attribute modifier.
 
 void
-Thermometer_impl::
-location (const char *loc) throw (CORBA::SystemException)
+Thermometer_impl::location (const char *loc)
 {
     set_loc (loc);
 }
@@ -237,9 +222,7 @@ get_nominal_temp ()
 // Helper function to set a thermostat's nominal temperature.
 
 CCS::TempType
-Thermostat_impl::
-set_nominal_temp (CCS::TempType new_temp)
-throw (CCS::Thermostat::BadTemp)
+Thermostat_impl::set_nominal_temp (CCS::TempType new_temp)
 {
     short old_temp;
 
@@ -254,7 +237,6 @@ throw (CCS::Thermostat::BadTemp)
 
     // Now set the nominal temperature to the new value.
     if (ICP_set (m_anum, "nominal_temp", &new_temp) != 0) {
-
         // If ICP_set () failed, read this thermostat's minimum
         // and maximum so we can initialize the BadTemp exception.
         CCS::Thermostat::BtData btd;
@@ -294,8 +276,7 @@ Thermostat_impl::
 // IDL get_nominal operation.
 
 CCS::TempType
-Thermostat_impl::
-get_nominal () throw (CORBA::SystemException)
+Thermostat_impl::get_nominal ()
 {
     return get_nominal_temp ();
 }
@@ -303,9 +284,7 @@ get_nominal () throw (CORBA::SystemException)
 // IDL set_nominal operation.
 
 CCS::TempType
-Thermostat_impl::
-set_nominal (CCS::TempType new_temp)
-throw (CORBA::SystemException, CCS::Thermostat::BadTemp)
+Thermostat_impl::set_nominal (CCS::TempType new_temp)
 {
     return set_nominal_temp (new_temp);
 }
@@ -333,8 +312,7 @@ remove_impl (CCS::AssetType anum)
 // Helper function to locate a servant in the asset map.
 
 bool
-Controller_impl::
-exists (CCS::AssetType anum)
+Controller_impl::exists (CCS::AssetType anum)
 {
     return m_assets.find (anum) != m_assets.end ();
 }
@@ -343,7 +321,7 @@ exists (CCS::AssetType anum)
 
 Controller_impl::
 Controller_impl (PortableServer::POA_ptr poa, const char * asset_file)
-throw (int) : m_poa (PortableServer::POA::_duplicate (poa)),
+           : m_poa (PortableServer::POA::_duplicate (poa)),
              m_asset_file (asset_file)
 {
     std::ifstream afile (m_asset_file.in (), std::ios::in|std::ios::out);//, 0666);
@@ -389,12 +367,10 @@ Controller_impl::
 }
 
 CCS::Thermometer_ptr
-Controller_impl::
-create_thermometer (CCS::AssetType anum, const char * loc)
-throw (CORBA::SystemException, CCS::Controller::DuplicateAsset)
+Controller_impl::create_thermometer (CCS::AssetType anum, const char * loc)
 {
     {
-    ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
+    ACE_GUARD (ACE_Mutex, ace_mon, m_assets_mutex);
 
     if (anum % 2 == 0)
         throw CORBA::BAD_PARAM ();   // Thermometers have odd numbers
@@ -415,13 +391,10 @@ create_thermostat (
     CCS::AssetType      anum,
     const char*     loc,
     CCS::TempType       temp)
-throw (
-    CORBA::SystemException,
-    CCS::Controller::DuplicateAsset,
-    CCS::Thermostat::BadTemp)
 {
-    {
-    ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
+  {
+    ACE_GUARD (ACE_Mutex, ace_mon, m_assets_mutex);
+
 
     if (anum % 2 != 0)
         throw CORBA::BAD_PARAM ();   // Thermostats have even numbers
@@ -432,7 +405,6 @@ throw (
     assert (ICP_set (anum, "location", loc) == 0);
     // Set the nominal temperature.
     if (ICP_set (anum, "nominal_temp", &temp) != 0) {
-
         // If ICP_set () failed, read this thermostat's minimum
         // and maximum so we can initialize the BadTemp exception.
         CCS::Thermostat::BtData btd;
@@ -452,17 +424,16 @@ throw (
     }
 
     add_impl (anum);
-    }
+  }
 
-    CORBA::Object_var obj = make_dref (m_poa.in (), anum);
-    return CCS::Thermostat::_narrow (obj.in ());
+  CORBA::Object_var obj = make_dref (m_poa.in (), anum);
+  return CCS::Thermostat::_narrow (obj.in ());
 }
 
 // IDL list operation.
 
 CCS::Controller::ThermometerSeq *
-Controller_impl::
-list () throw (CORBA::SystemException)
+Controller_impl::list ()
 {
     // Create a new thermometer sequence. Because we know
     // the number of elements we will put onto the sequence,
@@ -473,7 +444,7 @@ list () throw (CORBA::SystemException)
 
     AssetSet tmp_assets;
     {
-        ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
+        ACE_GUARD (ACE_Mutex, ace_mon, m_assets_mutex);
         tmp_assets = m_assets;
     }
 
@@ -493,7 +464,7 @@ Controller_impl::
 change (
     const CCS::Controller::ThermostatSeq &  tlist,
     CORBA::Short                            delta
-) throw (CORBA::SystemException, CCS::Controller::EChange)
+)
 {
     CCS::Controller::EChange ec;    // Just in case we need it
 
@@ -533,12 +504,10 @@ change (
 void
 Controller_impl::
 find (CCS::Controller::SearchSeq & slist)
-throw (CORBA::SystemException)
 {
     // Loop over input list and lookup each device.
     CORBA::ULong listlen = slist.length ();
     for (CORBA::ULong i = 0; i < listlen; i++) {
-
         AssetSet::iterator where;   // Iterator for asset set
         int num_found = 0;          // Num matched per iteration
 
@@ -550,10 +519,10 @@ throw (CORBA::SystemException)
         CCS::Controller::SearchCriterion sc = slist[i].key._d ();
         if (sc == CCS::Controller::ASSET) {
             // Search for matching asset number.
-                bool make = false;
-            CCS::AssetType num;
+            bool make = false;
+            CCS::AssetType num = 0;
                 {
-                ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
+                ACE_GUARD (ACE_Mutex, ace_mon, m_assets_mutex);
                 where = m_assets.find (slist[i].key.asset_num ());
                 if (where != m_assets.end ()) {
                 num = *where;
@@ -616,8 +585,8 @@ preinvoke (
     const PortableServer::ObjectId & oid,
     PortableServer::POA_ptr          /* poa */ ,
     const char *                     operation,
-    void * &                         /* cookie */ 
-) throw (CORBA::SystemException, PortableServer::ForwardRequest)
+    void * &                         /* cookie */
+)
 {
     // Convert object id into asset number.
     CORBA::String_var oid_string;
@@ -633,7 +602,7 @@ preinvoke (
     if (istr.fail ())
         throw CORBA::OBJECT_NOT_EXIST ();
 
-    ACE_Guard<ACE_Mutex> guard (m_ctrl->m_assets_mutex);
+    ACE_GUARD (ACE_Mutex, ace_mon, m_ctrl->m_assets_mutex);
 
     // Check whether the device is known.
     if (!m_ctrl->exists (anum))
@@ -655,7 +624,7 @@ preinvoke (
         // Instantiate correct type of servant.
         char buf[32];
         assert (ICP_get (anum, "model", buf, sizeof (buf)) == 0);
-        if (strcmp (buf, "Sens-A-Temp") == 0)
+        if (ACE_OS::strcmp (buf, "Sens-A-Temp") == 0)
             servant = new Thermometer_impl (anum);
         else
             servant = new Thermostat_impl (anum);
@@ -666,7 +635,7 @@ preinvoke (
 
         // If operation is "remove", also remove entry from
         // active object map -- the object is about to be deleted.
-        if (strcmp (operation, "remove") == 0)
+        if (ACE_OS::strcmp (operation, "remove") == 0)
             m_aom.erase (servant_pos);
     }
 
@@ -674,7 +643,7 @@ preinvoke (
     // If the operation is not a remove, move
     // the servant to the tail of the evictor queue
     // and update its queue position in the map.
-    if (strcmp (operation, "remove") != 0) {
+    if (ACE_OS::strcmp (operation, "remove") != 0) {
         m_eq.push_front (servant);
         m_aom[anum] = m_eq.begin ();
     } else {
@@ -687,7 +656,7 @@ preinvoke (
 //----------------------------------------------------------------
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
     try {
         // Initialize orb
@@ -757,8 +726,8 @@ main (int argc, char **argv)
         orb->run ();
     }
     catch (const CORBA::Exception & e) {
-        std::cerr << "Uncaught CORBA exception: " 
-                  //<< e 
+        std::cerr << "Uncaught CORBA exception: "
+                  << e
                   << std::endl;
         return 1;
     }

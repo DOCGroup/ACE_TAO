@@ -1,0 +1,34 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, iortable, avoids_corba_e_micro {
+  after += *idl
+  Source_Files {
+    Messenger_i.cpp
+    server.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, corba_messaging {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}
+

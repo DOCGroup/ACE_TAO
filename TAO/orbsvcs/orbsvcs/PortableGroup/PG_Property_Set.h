@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Property_Set.h
- *
- *  $Id$
  *
  *  This file declares classes to help manage the Properties
  *  defined in the Portable Object Group.
@@ -20,15 +19,20 @@
 #define TAO_PG_PROPERTY_SET
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Refcounted_Auto_Ptr.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  class PG_Property_Set;
+  typedef ACE_Refcounted_Auto_Ptr<PG_Property_Set, TAO_SYNCH_MUTEX> PG_Property_Set_var;
 
   /**
    * The PG_Property_Set captures the set of properties from a
@@ -57,19 +61,16 @@ namespace TAO
       ACE_SYNCH_NULL_MUTEX> ValueMapIterator;
 
   public:
-
     /**
      * constructor: empty set with no defaults.
      */
-    PG_Property_Set (void);
+    PG_Property_Set ();
 
     /**
      * constructor
      * @param property_set the properties to be decoded
      */
-    PG_Property_Set (const PortableGroup::Properties & property_set
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    PG_Property_Set (const PortableGroup::Properties & property_set);
 
     /**
      * constructor with defaults
@@ -77,17 +78,14 @@ namespace TAO
      * @param defaults a propert set decoder that supplies default values.
      */
     PG_Property_Set (const PortableGroup::Properties & property_set,
-                     PG_Property_Set * defaults
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                     const PG_Property_Set_var & defaults);
 
     /**
      * constructor with defaults, but no properties (yet)
      * (note this is not a copy constructor)
      * @param defaults a propert set decoder that supplies default values.
      */
-    PG_Property_Set (PG_Property_Set * defaults);
-
+    PG_Property_Set (const PG_Property_Set_var & defaults);
 
     ~PG_Property_Set ();
 
@@ -101,7 +99,7 @@ namespace TAO
      * @param pValue an out parameter to receive a pointer to the Any containing the value
      * @returns boolean true if found
      */
-    int find (const ACE_CString & key, const PortableGroup::Value *& pValue)const;
+    int find (const ACE_CString & key, const PortableGroup::Value *& pValue) const;
 
 
     /**
@@ -109,8 +107,7 @@ namespace TAO
      * Duplicate values replace previous values.
      * @param property_set the properties to be decoded
      */
-    void decode (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void decode (const PortableGroup::Properties & property_set);
 
     /**
      * Clear properties
@@ -118,16 +115,14 @@ namespace TAO
      */
     void clear ();
 
-    void remove (const PortableGroup::Properties & property_set)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void remove (const PortableGroup::Properties & property_set);
 
     /**
      * set or replace a single property
      */
     void set_property (
       const char * name,
-      const PortableGroup::Value & value
-      ACE_ENV_ARG_DECL);
+      const PortableGroup::Value & value);
 
 
     /**
@@ -152,13 +147,12 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    PG_Property_Set(const PG_Property_Set & rhs);
-    PG_Property_Set & operator = (const PG_Property_Set & rhs);
+    PG_Property_Set(const PG_Property_Set & rhs) = delete;
+    PG_Property_Set & operator = (const PG_Property_Set & rhs) = delete;
 
     ///////////////
     // Data Members
   private:
-
     /**
      * Protect internal state.
      */
@@ -168,9 +162,8 @@ namespace TAO
     /**
      * a parent to another property decoder that provides default values
      * these can be chained indefinitely.
-     * @todo reference counted pointers would be a good idea here.
      */
-    PG_Property_Set * defaults_;
+    PG_Property_Set_var defaults_;
   };
 
 
@@ -186,9 +179,11 @@ namespace TAO
 #endif // PG_PS_UNIT_TEST
 } //namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ////////////////////////////////////
 // include templated helper function
-#include "PG_Property_Set_Find.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set_Find.h"
 
 #include /**/ "ace/post.h"
 

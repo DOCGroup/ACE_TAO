@@ -1,0 +1,24 @@
+project(csd_tp_foo_b_lib) : csd_tp_test_lib, avoids_corba_e_micro {
+  sharedname   = CSD_TP_Foo_B
+  dynamicflags += CSD_TP_FOO_B_BUILD_DLL
+  idlflags  += -b -Wb,export_macro=CSD_TP_Foo_B_Export -Wb,export_include=CSD_TP_Foo_B_Export.h
+  includes  += $(TAO_ROOT)/tao
+
+  IDL_Files {
+    Foo_B.idl
+    Callback.idl
+  }
+
+  Source_Files {
+    Foo_BC.cpp
+    Foo_BS.cpp
+    Foo_B_ClientEngine.cpp
+    Foo_B_SimpleClientEngine.cpp
+    Foo_B_i.cpp
+    Foo_B_Statistics.cpp
+    Callback_i.cpp
+    CallbackC.cpp
+    CallbackS.cpp
+  }
+
+}

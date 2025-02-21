@@ -2,13 +2,12 @@
 /**
  * @brief Unit test for the TAO_Queued_Message class
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 // ============================================================================
 
 #include "tao/Asynch_Queued_Message.h"
+#include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/ACE.h"
@@ -16,15 +15,11 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID (tests,
-           Queued_Message_Test,
-           "$Id$")
-
 /// Max number of bytes on each message block
 const size_t max_block_length = 256;
 
 static TAO_Queued_Message *
-create_new_message (void)
+create_new_message ()
 {
   // First create a message block
   size_t block_size =
@@ -32,7 +27,7 @@ create_new_message (void)
   ACE_Message_Block mb (block_size);
   mb.wr_ptr (block_size);
 
-  return new TAO_Asynch_Queued_Message (&mb);
+  return new TAO_Asynch_Queued_Message (&mb, TAO_ORB_Core_instance (), 0, 0, 1);
 }
 
 /// Add a new message at the tail of the queue.
@@ -86,20 +81,15 @@ static void del_message (TAO_Queued_Message *&head,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
-
   // Initialize a random seed to get better coverage.
   // @@ The random seed and default values should be configurable
   // using command line options.
 
   ACE_hrtime_t current_hrtime = ACE_OS::gethrtime ();
-#if defined(ACE_HRTIME_T_IS_BASIC_TYPE)
-  ACE_UINT32 seed = current_hrtime;
-#else
   ACE_UINT32 seed =
     ACE_CU64_TO_CU32(current_hrtime);
-#endif
   ACE_OS::srand (seed);
 
   ACE_DEBUG ((LM_DEBUG, "Running test SEED = %d\n", seed));

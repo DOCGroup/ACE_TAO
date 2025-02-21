@@ -1,38 +1,22 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    array.cpp
-//
-// = DESCRIPTION
-//    Generic visitor for code generation for Arrays
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    array.cpp
+ *
+ *  Generic visitor for code generation for Arrays
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_array, 
-           array, 
-           "$Id$")
-
-
-// ************************************************************************
-//  generic visitor for array declaration
-// ************************************************************************
+#include "array.h"
 
 be_visitor_array::be_visitor_array (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_array::~be_visitor_array (void)
+be_visitor_array::~be_visitor_array ()
 {
 }
 
@@ -84,6 +68,8 @@ be_visitor_array::visit_predefined_type (be_predefined_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
+  *os << "::";
+
   if (pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_object)
     {
@@ -110,11 +96,11 @@ be_visitor_array::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "TAO_String_Manager";
+      *os << "::TAO::String_Manager";
     }
   else
     {
-      *os << "TAO_WString_Manager";
+      *os << "::TAO::WString_Manager";
     }
 
   return 0;
@@ -140,20 +126,20 @@ be_visitor_array::visit_typedef (be_typedef *node)
   AST_Decl::NodeType nt = pbt->node_type ();
   AST_PredefinedType::PredefinedType pt = AST_PredefinedType:: PT_void;
   int result = 0;
-  
+
   // We check for these first, because in these cases, we replace the
   // entire slice type with one of the strings below, instead of using
   // the node's type name, possibly suffixed with '_var'.
   if (nt == AST_Decl::NT_string)
     {
-      *os << "TAO_String_Manager";
-      
+      *os << "::TAO::String_Manager";
+
       return 0;
     }
   else if (nt == AST_Decl::NT_wstring)
     {
-      *os << "TAO_WString_Manager";
-      
+      *os << "::TAO::WString_Manager";
+
       return 0;
     }
 
@@ -161,13 +147,13 @@ be_visitor_array::visit_typedef (be_typedef *node)
 
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (pbt);
+      AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (pbt);
       pt = pdt->pt ();
     }
 
   // We must append a "_var" for typedefs of interfaces, CORBA::Objects or
   // typecodes.
-  if (nt == AST_Decl::NT_interface 
+  if (nt == AST_Decl::NT_interface
       || nt == AST_Decl::NT_interface_fwd
       || pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_object)
@@ -183,7 +169,7 @@ int
 be_visitor_array::visit_node (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -196,7 +182,7 @@ be_visitor_array::visit_node (be_type *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_ARRAY_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ());
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
     }
   else
     {
@@ -210,7 +196,7 @@ int
 be_visitor_array::emit_common (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -223,7 +209,7 @@ be_visitor_array::emit_common (be_type *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_ARRAY_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl (), "_var");
     }
   else
     {

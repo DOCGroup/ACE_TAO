@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -73,28 +71,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_field.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
+
+#include "utl_string.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
+#include "utl_identifier.h"
 
-ACE_RCSID (ast, 
-           ast_structure, 
-           "$Id$")
-
-AST_Structure::AST_Structure (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    UTL_Scope (),
-    member_count_ (-1),
-    local_struct_ (-1)
-{
-}
+#include "ace/Truncate.h"
 
 AST_Structure::AST_Structure (UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_struct,
@@ -105,14 +94,15 @@ AST_Structure::AST_Structure (UTL_ScopedName *n,
                       n),
     UTL_Scope (AST_Decl::NT_struct),
     member_count_ (-1),
-    local_struct_ (-1)
+    local_struct_ (-1),
+    fwd_decl_ (nullptr)
 {
 }
 
 AST_Structure::AST_Structure (AST_Decl::NodeType nt,
                               UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (nt,
@@ -123,40 +113,55 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
                       n),
     UTL_Scope (nt),
     member_count_ (-1),
-    local_struct_ (-1)
+    local_struct_ (-1),
+    fwd_decl_ (nullptr)
 {
 }
 
-AST_Structure::~AST_Structure (void)
+AST_Structure::~AST_Structure ()
 {
+  destroy ();
 }
 
 // Are we or the parameter node involved in any recursion?
-idl_bool
+bool
 AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
+  bool self_test = (list.size () == 0);
+
   // We should calculate this only once. If it has already been
   // done, just return it.
-  if (this->in_recursion_ != -1)
+  if (self_test && this->in_recursion_ != -1)
     {
-      return this->in_recursion_;
+      return (this->in_recursion_ == 1);
     }
+
+  if (list.size () > 1)
+  {
+    if (match_names (this, list))
+      {
+        // We've found ourselves outside of a sequence.
+        // This happens when we are not recursed ourselves but instead
+        // are part of another recursed type which is part of us.
+        // f.i. union containing sequence of struct containing the union as member.
+        return false;
+      }
+  }
+
+  list.enqueue_tail(this);
 
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
-      ACE_Unbounded_Queue<AST_Type *> scope_list = list;
-      scope_list.enqueue_tail (this);
-        
       // Initialize an iterator to iterate over our scope.
       // Continue until each element is visited.
-      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls); 
-           !si.is_done (); 
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
            si.next ())
         {
-          AST_Field *field = AST_Field::narrow_from_decl (si.item ());
+          AST_Field *field = dynamic_cast<AST_Field*> (si.item ());
 
-          if (field == 0)
+          if (field == nullptr)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
@@ -167,11 +172,11 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
               type = td->primitive_base_type ();
             }
 
-          if (type == 0)
+          if (type == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Structure::")
@@ -179,24 +184,25 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                                  ACE_TEXT ("bad field type\n")),
                                 0);
             }
-            
-          if (type->in_recursion (scope_list))
+
+          if (type->in_recursion (list))
             {
-              this->in_recursion_ = 1;
+              if (self_test)
+                this->in_recursion_ = 1;
               idl_global->recursive_type_seen_ = true;
-              return this->in_recursion_;
+              return true;
             }
         }
     }
 
   // Not in recursion.
-  this->in_recursion_ = 0;
-  return this->in_recursion_;
+  if (self_test)
+    this->in_recursion_ = 0;
+  return false;
 }
 
-// Return the member count.
 int
-AST_Structure::member_count (void)
+AST_Structure::member_count ()
 {
   if (this->member_count_ == -1)
     {
@@ -206,22 +212,21 @@ AST_Structure::member_count (void)
   return this->member_count_;
 }
 
-size_t
-AST_Structure::nfields (void) const
+ACE_CDR::ULong
+AST_Structure::nfields () const
 {
-  return this->fields_.size ();
+  return ACE_Utils::truncate_cast<ACE_CDR::ULong> (this->fields_.size ());
 }
 
 int
 AST_Structure::field (AST_Field **&result,
-                      size_t slot) const
+                      ACE_CDR::ULong slot) const
 {
-  return this->fields_.get (result,
-                            slot);
+  return this->fields_.get (result, slot);
 }
 
-idl_bool
-AST_Structure::is_local (void)
+bool
+AST_Structure::is_local ()
 {
   if (this->local_struct_ == -1)
     {
@@ -242,7 +247,7 @@ AST_Structure::is_local (void)
                 {
                   if (si.item ()->is_local ())
                     {
-                      this->local_struct_ = I_TRUE;
+                      this->local_struct_ = true;
                       break;
                     }
                 }
@@ -254,7 +259,7 @@ AST_Structure::is_local (void)
 }
 
 int
-AST_Structure::contains_wstring (void)
+AST_Structure::contains_wstring ()
 {
   if (this->contains_wstring_ == -1)
     {
@@ -275,202 +280,83 @@ AST_Structure::contains_wstring (void)
   return this->contains_wstring_;
 }
 
+bool
+AST_Structure::is_defined ()
+{
+  return nullptr == this->fwd_decl_ || this->fwd_decl_->is_defined ();
+}
+
+bool
+AST_Structure::legal_for_primary_key () const
+{
+  bool retval = true;
+
+  if (!this->recursing_in_legal_pk_)
+    {
+      this->recursing_in_legal_pk_ = true;
+
+      for (UTL_ScopeActiveIterator si (const_cast<AST_Structure *> (this),
+                                      UTL_Scope::IK_decls);
+          !si.is_done ();
+          si.next ())
+        {
+          AST_Field *f = dynamic_cast<AST_Field*> (si.item ());
+
+          if (f != nullptr && !f->field_type ()->legal_for_primary_key ())
+            {
+              retval = false;
+              break;
+            }
+        }
+
+      this->recursing_in_legal_pk_ = false;
+    }
+
+  return retval;
+}
+
+AST_StructureFwd *
+AST_Structure::fwd_decl () const
+{
+  return this->fwd_decl_;
+}
+
+void
+AST_Structure::fwd_decl (AST_StructureFwd *node)
+{
+  this->fwd_decl_ = node;
+}
+
+ACE_Unbounded_Queue<AST_Field *> &
+AST_Structure::fields ()
+{
+  return this->fields_;
+}
+
 // Private operations.
 
-// Add this AST_Field node (a field declaration) to this scope.
 AST_Field *
 AST_Structure::fe_add_field (AST_Field *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  AST_Type *ft = t->field_type ();
-  UTL_ScopedName *mru = ft->last_referenced_as ();
-
-  if (mru != 0)
-    {
-      this->add_to_referenced (ft,
-                               I_FALSE,
-                               mru->first_component ());
-    }
-
-  this->fields_.enqueue_tail (t);
-
-  return t;
+  return this->fe_add_ref_decl (t);
 }
 
-// Add an AST_Structure node (a manifest struct type) to this scope.
 AST_Structure *
 AST_Structure::fe_add_structure (AST_Structure *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
+  return this->fe_add_full_struct_type (t);
 }
 
-// Add an AST_Union node (a manifest union type) to this scope.
 AST_Union *
 AST_Structure::fe_add_union (AST_Union *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
-// Add this AST_Enum node (a manifest enum declaration) to this scope.
 AST_Enum *
 AST_Structure::fe_add_enum (AST_Enum *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to local types.
-  this->add_to_local_types (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 // Add this AST_EnumVal node (an enumerator declaration) to this scope.
@@ -480,51 +366,12 @@ AST_Structure::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Structure::fe_add_enum_val (AST_EnumVal *t)
 {
-  AST_Decl *d = 0;
-
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (this->referenced (d, t->local_name ()))
-        {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      this,
-                                      d);
-          return 0;
-        }
-
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
-          return 0;
-        }
-    }
-
-  // Add it to scope.
-  this->add_to_scope (t);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
-
-  return t;
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 // Compute total number of members.
 int
-AST_Structure::compute_member_count (void)
+AST_Structure::compute_member_count ()
 {
   this->member_count_ = 0;
 
@@ -565,19 +412,19 @@ void
 AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                                         UTL_Scope *s)
 {
-  if (i == 0)
+  if (i == nullptr)
     {
       return;
     }
 
   // Fwd redefinition should be in the same scope, so local
   // lookup is all that's needed.
-  AST_Decl *d = s->lookup_by_name_local (i->local_name (),
-                                         0);
+  AST_Decl *d =
+    s->lookup_by_name_local (i->local_name (), false);
 
-  AST_Structure *fd = 0;
+  AST_Structure *fd = nullptr;
 
-  if (d != 0)
+  if (d != nullptr)
     {
       // Full definition must have the same prefix as the forward declaration.
       if (ACE_OS::strcmp (i->prefix (), d->prefix ()) != 0)
@@ -597,7 +444,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
           || nt == AST_Decl::NT_union_fwd)
         {
           AST_StructureFwd *fwd_def =
-            AST_StructureFwd::narrow_from_decl (d);
+            dynamic_cast<AST_StructureFwd*> (d);
 
           fd = fwd_def->full_definition ();
         }
@@ -605,11 +452,11 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
       else if (nt == AST_Decl::NT_struct
                || nt == AST_Decl::NT_union)
         {
-          fd = AST_Structure::narrow_from_decl (d);
+          fd = dynamic_cast<AST_Structure*> (d);
         }
 
       // Successful?
-      if (fd == 0)
+      if (fd == nullptr)
         {
           // Should we give an error here?
           // No, look in fe_add_interface.
@@ -643,8 +490,20 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                 }
 
               fd->redefine (i);
+              AST_StructureFwd *fwd = fd->fwd_decl ();
+
+              if (nullptr != fwd)
+                {
+                  // So the fwd decl won't destroy us at cleanup time.
+                  // Unlike interfaces, valuetypes and components, it's
+                  // ok to do this here, since fwd declared structs
+                  // and unions must be defined in the same translation
+                  // unit.
+                  fwd->set_as_defined ();
+                }
 
               // Use full definition node.
+              i->destroy ();
               delete i;
               i = fd;
             }
@@ -657,13 +516,13 @@ void
 AST_Structure::redefine (AST_Structure *from)
 {
   // We've already checked for inconsistent prefixes.
-  this->prefix (ACE::strnew (from->prefix ()));
+  this->prefix (from->prefix ());
 
   this->set_defined_in (from->defined_in ());
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
-  this->set_file_name (idl_global->filename ());
+  this->set_file_name (idl_global->filename ()->get_string ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
   this->fields_ = from->fields_;
@@ -673,7 +532,7 @@ AST_Structure::redefine (AST_Structure *from)
 
 // Compute the size type of the node in question.
 int
-AST_Structure::compute_size_type (void)
+AST_Structure::compute_size_type ()
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -687,10 +546,10 @@ AST_Structure::compute_size_type (void)
           continue;
         }
 
-      AST_Field *f = AST_Field::narrow_from_decl (d);
+      AST_Field *f = dynamic_cast<AST_Field*> (d);
       AST_Type *t = f->field_type ();
 
-      if (t != 0)
+      if (t != nullptr)
         {
           this->size_type (t->size_type ());
 
@@ -701,7 +560,7 @@ AST_Structure::compute_size_type (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "WARNING (%N:%l) be_structure::compute_size_type - "
-                      "narrow_from_decl returned 0\n"));
+                      "dynamic_cast returned 0\n"));
         }
     }
 
@@ -715,12 +574,51 @@ AST_Structure::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Structure::destroy (void)
+AST_Structure::destroy ()
 {
+  this->AST_ConcreteType::destroy ();
+  this->UTL_Scope::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope)
-IMPL_NARROW_FROM_DECL(AST_Structure)
-IMPL_NARROW_FROM_SCOPE(AST_Structure)
+bool AST_Structure::annotatable () const
+{
+  return true;
+}
 
+AST_Decl *
+AST_Structure::operator[] (const size_t index)
+{
+  size_t count = member_count_ <= 0 ? 0 : member_count_;
+  if (index >= count)
+    {
+      return nullptr;
+    }
+  size_t i = 0;
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      if (i == index)
+        {
+          return si.item ();
+        }
+      i++;
+    }
+  return nullptr;
+}
+
+AST_Decl *
+AST_Structure::operator[] (const char* name)
+{
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Decl *field = si.item ();
+      const char *field_name = field->local_name ()->get_string ();
+      if (!ACE_OS::strcmp (name, field_name)) {
+        return field;
+      }
+    }
+  return nullptr;
+}

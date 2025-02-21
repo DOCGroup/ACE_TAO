@@ -1,0 +1,20 @@
+#ifndef __TEST2_IDL__
+#define __TEST2_IDL__
+module test {
+  typedef sequence<string> StringSeq;
+  interface aaa
+  {
+    void aaatest(in StringSeq data);
+  };
+};
+#endif // __TEST2_IDL__
+#ifndef __TEST2_IDL__
+#define __TEST2_IDL__
+module test {
+  typedef sequence<string> StringSeq;
+  interface aaa
+  {
+    void aaatest(in StringSeq data);
+  };
+};
+#endif // __TEST2_IDL__

@@ -1,0 +1,5 @@
+// -*- MPC -*-
+feature(gen_ostream) {
+  requires += gen_ostream
+  macros += GEN_OSTREAM_OPS
+}

@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Basic_Filter_Builder.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,13 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Filter_Builder.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel_Base;
@@ -44,12 +45,11 @@ public:
   TAO_EC_Basic_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   /// destructor...
-  virtual ~TAO_EC_Basic_Filter_Builder (void);
+  virtual ~TAO_EC_Basic_Filter_Builder ();
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos
-                        ACE_ENV_ARG_DECL) const;
+                        RtecEventChannelAdmin::ConsumerQOS& qos) const;
 
 private:
   /// Recursively build the filter tree.
@@ -67,8 +67,10 @@ private:
   TAO_EC_Event_Channel_Base* event_channel_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Basic_Filter_Builder.i"
+#include "orbsvcs/Event/EC_Basic_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

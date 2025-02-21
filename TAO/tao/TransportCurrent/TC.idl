@@ -1,0 +1,53 @@
+/**
+ * @file TC.idl
+ *
+ * @brief Defines the TAO::Transport::Current interface
+ *
+ * @author Iliyan Jeliazkov <iliyan@ociweb.com>
+ */
+
+#ifndef TAO_TRANSPORT_CURRENT_IDL
+#define TAO_TRANSPORT_CURRENT_IDL
+
+#include "tao/IOP.pidl"
+#include "tao/TimeBase.pidl"
+
+module TAO
+{
+  /// A type used to represent counters
+  typedef unsigned long long CounterT;
+
+  module Transport
+  {
+    /// Used to signal that a call was made within improper invocation
+    /// context.  Also, this exception is thrown if no Transport has
+    /// been selected for the current thread, for example in a
+    /// collocated invocation.
+    exception NoContext
+    {
+    };
+
+    /// The primary interface, providing access to Transport
+    /// information, available to the current thread.
+    local interface Current
+    {
+      /// Transport ID, unique within the process.
+      readonly attribute long id raises (NoContext);
+
+      /// Bytes sent/received through the transport.
+      readonly attribute CounterT bytes_sent raises (NoContext);
+      readonly attribute CounterT bytes_received raises (NoContext);
+
+      /// Messages (requests and replies) sent/received using the current
+      /// protocol.
+      readonly attribute CounterT messages_sent raises (NoContext);
+      readonly attribute CounterT messages_received raises (NoContext);
+
+      /// The absolute time (miliseconds) since the transport has been
+      /// open.
+      readonly attribute TimeBase::TimeT open_since raises (NoContext);
+    };
+  };
+};
+
+#endif /* TAO_TRANSPORT_CURRENT_IDL */

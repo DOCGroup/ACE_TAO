@@ -1,16 +1,11 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Load_Balancing
-//
-// = FILENAME
-//    Load_Balancing_Service.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Load_Balancing_Service.cpp
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Load_Balancing_Service.h"
 #include "Load_Balancer_i.h"
@@ -18,15 +13,15 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Load_Balancing_Service::Load_Balancing_Service (void)
+Load_Balancing_Service::Load_Balancing_Service ()
   : ior_output_file_ (0)
 {
 }
 
 int
-Load_Balancing_Service::parse_args (int argc, char *argv[])
+Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -60,19 +55,14 @@ Load_Balancing_Service::parse_args (int argc, char *argv[])
 }
 
 int
-Load_Balancing_Service::init (int argc,
-                    char* argv[])
+Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
 {
   int result;
   CORBA::String_var ior;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      result = this->orb_manager_.init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = this->orb_manager_.init (argc, argv);
       if (result == -1)
         return result;
 
@@ -87,21 +77,15 @@ Load_Balancing_Service::init (int argc,
 
       // Lifespan policy
       policies[0] =
-        this->orb_manager_.root_poa()->create_lifespan_policy (PortableServer::PERSISTENT
-                                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_manager_.root_poa()->create_lifespan_policy (PortableServer::PERSISTENT);
 
       policies[1] =
-        this->orb_manager_.root_poa()->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
-                                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_manager_.root_poa()->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
       PortableServer::POA_var persistent_POA =
         this->orb_manager_.root_poa()->create_POA ("persistent",
                                                    this->orb_manager_.poa_manager (),
-                                                   policies
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                   policies);
 
 
       // Destroy policy objects
@@ -109,8 +93,7 @@ Load_Balancing_Service::init (int argc,
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
 
       // Create, ref. count, and activate the servant.
@@ -122,14 +105,11 @@ Load_Balancing_Service::init (int argc,
 
       // Activate the POA manager
       //PortableServer::ServantBase_var s = factory_servant;
-      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.activate_poa_manager ();
 
       CORBA::Object_var objref = factory_servant->_this ();
 
-      ior = this->orb_manager_.orb ()->object_to_string (objref.in ()
-                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ior = this->orb_manager_.orb ()->object_to_string (objref.in ());
 
       if (ior.in () == 0)
         return -1;
@@ -138,13 +118,11 @@ Load_Balancing_Service::init (int argc,
                     "Object Group Factory ior: %s\n",
                     ior.in ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Load_Balancing_Service::init");
+      ex._tao_print_exception ("Load_Balancing_Service::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   if (this->ior_output_file_ != 0)
     {
@@ -157,24 +135,22 @@ Load_Balancing_Service::init (int argc,
 }
 
 
-
 int
-Load_Balancing_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+Load_Balancing_Service::run ()
 {
   int result;
 
-  result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  result = this->orb_manager_.run ();
 
   return result;
 }
 
-Load_Balancing_Service::~Load_Balancing_Service (void)
+Load_Balancing_Service::~Load_Balancing_Service ()
 {
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Load_Balancing_Service factory;
@@ -182,19 +158,15 @@ main (int argc, char *argv[])
   if (factory.init (argc, argv) == -1)
     return 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      result = factory.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = factory.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Load_Balancing_Service");
+      ex._tao_print_exception ("Load_Balancing_Service");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   if (result == -1)
     return 1;

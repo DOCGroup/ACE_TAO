@@ -1,0 +1,9 @@
+// -*- MPC -*-
+project: taoserver, ifr_client {
+  exename  = IFR_Inheritance_Test
+
+  IDL_Files {
+    // exclude this file
+    !IFR_Inheritance_Test.idl
+  }
+}

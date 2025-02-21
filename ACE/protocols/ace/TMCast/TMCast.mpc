@@ -1,0 +1,14 @@
+//  -*- MPC -*-
+project : acelib, ace_output, install, threads {
+  avoids = ace_for_tao
+  sharedname    = ACE_TMCast
+  dynamicflags += TMCAST_BUILD_DLL
+
+  specific {
+    install_dir = ace/TMCast
+  }
+
+  Pkgconfig_Files {
+    ACE_TMCast.pc.in
+  }
+}

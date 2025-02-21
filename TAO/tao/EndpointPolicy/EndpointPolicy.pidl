@@ -1,0 +1,32 @@
+/**
+ * @file EndpointPolicy.pidl
+ *
+ * This file contains idl definition for Endpoint policy interface and
+ * the policy value. This TAO-specific policy is used to filter endpoints
+ * in the profiles for use in Object References.
+ */
+
+#ifndef _TAO_ENDPOINT_POLICY_IDL_
+#define _TAO_ENDPOINT_POLICY_IDL_
+
+///FUZZ: disable check_for_include/
+#include "tao/Policy.pidl"
+#include "tao/EndpointPolicy/EndpointPolicyType.pidl"
+
+module EndpointPolicy
+{
+  local interface EndpointValueBase
+  {
+    readonly attribute unsigned long protocol_tag;
+  };
+
+  typedef sequence<EndpointValueBase> EndpointList;
+
+  local interface Policy : CORBA::Policy
+  {
+    readonly attribute EndpointList value;
+  };
+};
+
+
+#endif /* _TAO_ENDPOINT_POLICY_IDL_ */

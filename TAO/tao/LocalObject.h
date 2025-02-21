@@ -4,8 +4,6 @@
 /**
  * @file LocalObject.h
  *
- * $Id$
- *
  * Header file for CORBA's base "LocalObject" type.
  *
  * A "LocalObject" is an entity that can be the target of a local
@@ -29,33 +27,31 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Object.h"
+#include "tao/Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
   class LocalObject;
   typedef LocalObject *LocalObject_ptr;
   typedef TAO_Pseudo_Var_T<LocalObject> LocalObject_var;
-  typedef TAO_Pseudo_Out_T<LocalObject, LocalObject_var> LocalObject_out;
+  typedef TAO_Pseudo_Out_T<LocalObject> LocalObject_out;
 
   /**
    * @class LocalObject
-   *
-   * @note NW: It is not clear whether minimum CORBA should support
-   * LocalObject or not.  I think it should.
    */
   class TAO_Export LocalObject : public virtual CORBA::Object
   {
   public:
-
     /// Destructor
-    virtual ~LocalObject (void);
+    virtual ~LocalObject ();
 
     /// Increment the ref count
     static LocalObject_ptr _duplicate (LocalObject_ptr obj);
 
     /// Return a NIL object
-    static LocalObject_ptr _nil (void);
+    static LocalObject_ptr _nil ();
 
     /**
      * @todo Narrowing a LocalObject to a CORBA::Object is broken
@@ -64,43 +60,29 @@ namespace CORBA
      * regular object.  Or, even easier, add a @c is_local member into
      * CORBA::Object.  I'll take the easier route for now.
      */
-    static LocalObject_ptr _narrow (CORBA::Object_ptr obj
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    static LocalObject_ptr _narrow (CORBA::Object_ptr obj);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     /// Always returns false.
-    virtual CORBA::Boolean _non_existent (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
-
-    /// Throws CORBA::NO_IMPLEMENT.
-    virtual CORBA::ImplementationDef_ptr _get_implementation (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
-
-    /// Gets info about object from the Interface Repository.
-    virtual CORBA::InterfaceDef_ptr _get_interface (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
-
-    /// Throws NO_IMPLEMENT.
-    virtual CORBA::Object_ptr _get_component (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::Boolean _non_existent ();
 
     /// Get the repository id.
-    virtual char * _repository_id (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    );
+    virtual char * _repository_id ();
+
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
+    /// Gets info about object from the Interface Repository.
+    virtual CORBA::InterfaceDef_ptr _get_interface ();
+
+    /// Throws NO_IMPLEMENT.
+    virtual CORBA::Object_ptr _get_component ();
 
     virtual void _create_request (CORBA::Context_ptr ctx,
                                   const char * operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::Request_ptr & request,
-                                  CORBA::Flags req_flags
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  CORBA::Flags req_flags);
 
     virtual void _create_request (CORBA::Context_ptr ctx,
                                   const char * operation,
@@ -109,43 +91,34 @@ namespace CORBA
                                   CORBA::ExceptionList_ptr exclist,
                                   CORBA::ContextList_ptr ctxtlist,
                                   CORBA::Request_ptr & request,
-                                  CORBA::Flags req_flags
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  CORBA::Flags req_flags);
 
     /// Throws NO_IMPLEMENT.
-    virtual CORBA::Request_ptr _request (const char * operation
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    virtual CORBA::Request_ptr _request (const char * operation);
 
+#endif
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
     /// Throws CORBA::NO_IMPLEMENT.
-    CORBA::Policy_ptr _get_policy (CORBA::PolicyType type
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Policy_ptr _get_policy (CORBA::PolicyType type);
 
     /// Throws CORBA::NO_IMPLEMENT.
-    CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type);
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::Object_ptr _set_policy_overrides (
         const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+        CORBA::SetOverrideType set_add);
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::PolicyList * _get_policy_overrides (
-        const CORBA::PolicyTypeSeq & types
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+        const CORBA::PolicyTypeSeq & types);
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::Boolean _validate_connection (
-        CORBA::PolicyList_out inconsistent_policies
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+        CORBA::PolicyList_out inconsistent_policies);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -154,8 +127,7 @@ namespace CORBA
      * address of the object.  On non-32 bit platforms, the hash may
      * be non-unique.
      */
-    virtual CORBA::ULong _hash (CORBA::ULong maximum
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    virtual CORBA::ULong _hash (CORBA::ULong maximum);
 
     /**
      * Try to determine if this object is the same as @c other_obj.
@@ -164,99 +136,37 @@ namespace CORBA
      * different ORB protocols are in use) there is no default
      * implementation.
      */
-    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (());
+    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj);
 
-    // = Reference count managment.
-    /// Increment the reference count.
-    virtual void _add_ref (void);
-
-    /// Decrement the reference count.
-    virtual void _remove_ref (void);
-
-    virtual CORBA::ORB_ptr _get_orb (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual CORBA::ORB_ptr _get_orb ();
 
     // = TAO extensions
 
     /// Throws CORBA::NO_IMPLEMENT.
-    virtual TAO::ObjectKey * _key (ACE_ENV_SINGLE_ARG_DECL);
+    virtual TAO::ObjectKey * _key ();
 
     /// Useful for template programming.
     typedef LocalObject_ptr _ptr_type;
     typedef LocalObject_var _var_type;
+    typedef LocalObject_out _out_type;
 
   protected:
-
     /// Default constructor.
     /**
      * Make it protected to prevent instantiation of this class.
      */
-    LocalObject (void);
+    LocalObject ();
 
   private:
-
-    /**
-     * @name Unimplemented methods
-     */
-    //@{
-    LocalObject (const LocalObject &);
-    LocalObject & operator = (const LocalObject &);
-    //@}
-
+    LocalObject (const LocalObject &) = delete;
+    LocalObject & operator = (const LocalObject &)  = delete;
   };
 }   // End CORBA namespace
 
-/**
- * @class TAO_Local_RefCounted_Object
- *
- * @brief This class adds default reference counting to local
- *        objects.
- *
- * This is proprietary convenience class that implements reference
- * counting in locality constrained objects.
- */
-class TAO_Export TAO_Local_RefCounted_Object
-  : public virtual CORBA::LocalObject
-{
-public:
-
-  /// Increment reference count.
-  virtual void _add_ref (void);
-
-  /// Decrement reference count.
-  virtual void _remove_ref (void);
-
-protected:
-
-  // Default constructor.
-  /**
-   * Make it protected to prevent instantiation of this class.
-   */
-  TAO_Local_RefCounted_Object (void);
-
-private:
-
-  /**
-   * @name Unimplemented methods
-   */
-  //@{
-  TAO_Local_RefCounted_Object (const TAO_Local_RefCounted_Object &);
-  TAO_Local_RefCounted_Object & operator = (
-      const TAO_Local_RefCounted_Object &
-    );
-  //@}
-
-protected:
-  /// Reference counter.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
-};
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "LocalObject.i"
+# include "tao/LocalObject.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

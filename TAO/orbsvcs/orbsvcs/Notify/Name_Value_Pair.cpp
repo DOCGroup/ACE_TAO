@@ -1,24 +1,22 @@
-// $Id$
-
-#include "Name_Value_Pair.h"
-#include "Property_T.h"
-#include "ace/OS_String.h"
+#include "orbsvcs/Notify/Name_Value_Pair.h"
+#include "orbsvcs/Notify/Property_T.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_ctype.h"
 
 namespace
 {
-  ACE_UINT64 string_to_uint64(const char * s)
+  ACE_UINT64 string_to_uint64 (const char * s)
   {
-    size_t len = ACE_OS::strlen (s);
+    size_t const len = ACE_OS::strlen (s);
     if (len == 0)
       return 0;
-    if (! isdigit(s[0]))
+    if (! ACE_OS::ace_isdigit(s[0]))
       return 0;
 
     ACE_UINT64 t = 0;
     for (size_t i = 0; i < len; ++i)
     {
-      if (isdigit(s[i]) == 0)
+      if (ACE_OS::ace_isdigit(s[i]) == 0)
       {
         break;
       }
@@ -28,6 +26,8 @@ namespace
     return t;
   }
 }
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -57,11 +57,7 @@ namespace TAO_Notify
   {
     ACE_TCHAR buf[128];
     ACE_UINT64 us = p.value();
-#ifdef ACE_LACKS_LONGLONG_T
-    us.as_string(buf);
-#else
     ACE_OS::sprintf(buf, ACE_UINT64_FORMAT_SPECIFIER, us);
-#endif /* ACE_LACKS_LONGLONG_T */
     value = ACE_TEXT_ALWAYS_CHAR (buf);
   }
 
@@ -205,18 +201,10 @@ namespace TAO_Notify
 
   const NVP& NVPList::operator[](size_t ndx) const
   {
-    ACE_ASSERT(ndx < list_.size());
+    ACE_ASSERT (ndx < list_.size());
     return list_[ndx];
   }
 
 } // namespace TAO_Notify
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<TAO_Notify::NVP>;
-template class ACE_Array<TAO_Notify::NVP>;
-template class ACE_Vector<TAO_Notify::NVP>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<TAO_Notify::NVP>
-#pragma instantiate ACE_Array<TAO_Notify::NVP>
-#pragma instantiate ACE_Vector<TAO_Notify::NVP>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

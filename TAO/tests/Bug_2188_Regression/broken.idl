@@ -1,0 +1,122 @@
+//
+// broken.idl -- Test IDL for array type CCA regressions
+
+enum enum1
+{
+  One,
+  Two,
+  Three
+};
+typedef enum1 MyEnum;
+
+typedef char                    tmp1CharArray[10];
+typedef tmp1CharArray           tmp2CharArray;
+typedef tmp2CharArray           CharArray;
+
+typedef octet     OctetArray[10];
+typedef short     ShortArray[10];
+typedef long      LongArray[10];
+typedef long long   LongLongArray[10];
+typedef unsigned short    UShortArray[10];
+typedef unsigned long   ULongArray[10];
+typedef unsigned long long  ULongLongArray[10];
+typedef float     FloatArray[10];
+typedef double      DoubleArray[10];
+typedef string      StringArray[10];
+typedef boolean     BooleanArray[10];
+typedef MyEnum      MyEnumArray[10];
+
+typedef long      LongArrayArray[10][10];
+
+module moola
+{
+  typedef float     CashAmount;
+  typedef string<100> MyString;
+
+  interface Account
+  {
+    attribute string     name;
+    attribute CashAmount balance;
+
+    void deposit  (in CashAmount amount);
+    void withdraw (in CashAmount amount);
+  };
+};
+
+struct  Bucket
+{
+  long    a_long;
+  string    a_string;
+  FloatArray  a_floatArray;
+  MyEnum    a_enum;
+};
+
+typedef Bucket    BucketArray[10];
+typedef Bucket    BucketArrayArray[10][10];
+typedef moola::Account  AccountArray[10];
+
+
+struct SimpleStruct
+{
+  short simpleShort;
+  long  simpleLong;
+};
+
+interface ArrayTest
+{
+
+  LongArray longArrayOp(in LongArray p1,
+        inout LongArray p2, out LongArray p3);
+  StringArray stringArrayOp(in StringArray p1,
+        inout StringArray p2, out StringArray p3);
+  ShortArray  shortArrayOp(in ShortArray p1,
+        inout ShortArray p2, out ShortArray p3);
+  UShortArray ushortArrayOp(in UShortArray p1,
+        inout UShortArray p2, out UShortArray p3);
+  CharArray charArrayOp(in CharArray p1,
+        inout CharArray p2, out CharArray p3);
+  OctetArray  octetArrayOp(in OctetArray p1,
+        inout OctetArray p2, out OctetArray p3);
+  DoubleArray doubleArrayOp(in DoubleArray p1,
+        inout DoubleArray p2, out DoubleArray p3);
+/*
+  FloatArray  floatArrayOp(in FloatArray p1,
+        inout FloatArray p2, out FloatArray p3);
+  ULongArray  ulongArrayOp(in ULongArray p1,
+        inout ULongArray p2, out ULongArray p3);
+  BucketArray bucketArrayOp(in BucketArray p1,
+        inout BucketArray p2, out BucketArray p3);
+  BucketArrayArray  bucketArrayArrayOp(in BucketArrayArray p1,
+        inout BucketArrayArray p2,
+        out BucketArrayArray p3);
+  AccountArray  accountArrayOp(in AccountArray p1,
+        inout AccountArray p2, out AccountArray p3);
+  BooleanArray  booleanArrayOp(in BooleanArray p1,
+        inout BooleanArray p2, out BooleanArray p3);
+  LongArrayArray  longArrayArrayOp(in LongArrayArray p1,
+      inout LongArrayArray p2, out LongArrayArray p3);
+  MyEnumArray myEnumArrayOp(in MyEnumArray p1,
+      inout MyEnumArray p2, out MyEnumArray p3);
+*/
+  attribute LongArray   a_longArray;
+  attribute ULongArray    a_ulongArray;
+  attribute StringArray   a_stringArray;
+  attribute ShortArray    a_shortArray;
+  attribute UShortArray   a_ushortArray;
+  attribute char      a_char;
+  attribute CharArray   a_charArray;
+  attribute OctetArray    a_octetArray;
+  attribute DoubleArray   a_doubleArray;
+  attribute FloatArray    a_floatArray;
+  attribute BucketArray   a_bucketArray;
+  attribute AccountArray    a_accountArray;
+  attribute BooleanArray    a_booleanArray;
+  attribute LongArrayArray  a_longArrayArray;
+  attribute MyEnumArray   a_myEnumArray;
+};
+
+interface ServerAdmin
+{
+  ArrayTest target();
+  oneway void shutdown ();
+};

@@ -1,0 +1,36 @@
+project(*idl): taoidldefaults {
+  idlflags += -Wb,pch_include=bidir_giop_pch.h
+  IDL_Files {
+    simple.idl
+    callback.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
+  exename = server
+  after += *idl
+  Source_Files {
+    callbackC.cpp
+    simpleC.cpp
+    simpleS.cpp
+    simple_i.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
+  exename = client
+  after += *idl
+  Source_Files {
+    simpleC.cpp
+    callbackC.cpp
+    callbackS.cpp
+    callback_i.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

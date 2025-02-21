@@ -1,8 +1,4 @@
-// $Id$
-
 #include "AddrServer.h"
-
-ACE_RCSID(EC_Examples, AddrServer, "$Id$")
 
 AddrServer::AddrServer (const RtecUDPAdmin::UDP_Addr& addr)
   : addr_ (addr)
@@ -11,9 +7,14 @@ AddrServer::AddrServer (const RtecUDPAdmin::UDP_Addr& addr)
 
 void
 AddrServer::get_addr (const RtecEventComm::EventHeader&,
-                      RtecUDPAdmin::UDP_Addr_out addr
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                      RtecUDPAdmin::UDP_Addr_out addr)
 {
   addr = this->addr_;
+}
+
+void
+AddrServer::get_address (const RtecEventComm::EventHeader&,
+                         RtecUDPAdmin::UDP_Address_out addr)
+{
+  addr.v4_addr(this->addr_);
 }

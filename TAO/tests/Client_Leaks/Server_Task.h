@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CLIENT_LEAKS_SERVER_TASK_H
 #define CLIENT_LEAKS_SERVER_TASK_H
@@ -22,7 +19,7 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Reference to the ORB

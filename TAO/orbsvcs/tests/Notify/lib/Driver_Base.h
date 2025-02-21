@@ -2,11 +2,7 @@
 /**
  *  @file Driver_Base.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_APPLICATION_STARTER_H
@@ -23,7 +19,6 @@
  * @class TAO_Notify_Tests_Driver_Base
  *
  * @brief Base class for Driver.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Driver_Base
 {
@@ -31,7 +26,7 @@ public:
   virtual ~TAO_Notify_Tests_Driver_Base () {};
 
   /// Shutdown
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 };
 
 #include /**/ "ace/post.h"

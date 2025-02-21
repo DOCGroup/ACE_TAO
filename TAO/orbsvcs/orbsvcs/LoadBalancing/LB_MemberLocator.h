@@ -4,8 +4,6 @@
 /**
  *  @file LB_MemberLocator.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -25,6 +23,8 @@
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/LocalObject.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations.
 class TAO_LB_LoadManager;
 
@@ -38,10 +38,9 @@ class TAO_LB_LoadManager;
  */
 class TAO_LB_MemberLocator
   : public virtual PortableServer::ServantLocator,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   TAO_LB_MemberLocator (TAO_LB_LoadManager * load_balancer);
 
@@ -52,17 +51,13 @@ public:
    * interface.
    */
   //@{
-
   /// Clients requests are forwarded via the
   /// PortableServer::ForwardRequest exception thrown in this method.
   virtual PortableServer::Servant preinvoke (
       const PortableServer::ObjectId & oid,
       PortableServer::POA_ptr adapter,
       const char * operation,
-      PortableServer::ServantLocator::Cookie & the_cookie
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest));
+      PortableServer::ServantLocator::Cookie & the_cookie);
 
   /// This method is no-op in this ServantLocator implementation.
   virtual void postinvoke (
@@ -70,18 +65,16 @@ public:
       PortableServer::POA_ptr adapter,
       const char * operation,
       PortableServer::ServantLocator::Cookie the_cookie,
-      PortableServer::Servant the_servant
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableServer::Servant the_servant);
 
   //@}
 
 private:
-
   /// The load balancer/manager implementation.
   TAO_LB_LoadManager * load_manager_;
-
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

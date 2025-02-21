@@ -1,5 +1,4 @@
-// $Id$
-// 
+//
 // = FILENAME
 //    AnswerEvent.java
 //
@@ -20,4 +19,4 @@ public class AnswerEvent extends java.util.EventObject {
     this.selected_ = selected;
   }
 }
-    
+

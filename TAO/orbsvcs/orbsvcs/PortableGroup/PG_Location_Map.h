@@ -4,8 +4,6 @@
 /**
  *  @file     PG_Location_Map.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=======================================================================
@@ -22,14 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Location_Hash.h"
-#include "PG_Location_Equal_To.h"
+#include "orbsvcs/PortableGroup/PG_Location_Hash.h"
+#include "orbsvcs/PortableGroup/PG_Location_Equal_To.h"
 
 #include "orbsvcs/PortableGroupC.h"
 
 #include "ace/Array_Base.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 struct TAO_PG_ObjectGroup_Map_Entry;
@@ -44,6 +44,8 @@ typedef ACE_Hash_Map_Manager_Ex<
   TAO_PG_Location_Hash,
   TAO_PG_Location_Equal_To,
   ACE_Null_Mutex> TAO_PG_Location_Map;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

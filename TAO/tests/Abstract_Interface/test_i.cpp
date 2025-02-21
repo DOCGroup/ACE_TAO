@@ -1,21 +1,9 @@
-// $Id$
-
+// -*- C++ -*-
 #include "test_i.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (Abstract_Interface,
-           test_i,
-           "$Id$")
-
-
 char *
-foo_i::foo_op (const char * inarg
-               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    BadInput
-  ))
+foo_i::foo_op (const char * inarg)
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
@@ -25,20 +13,14 @@ foo_i::foo_op (const char * inarg
     }
   else
     {
-      ACE_THROW_RETURN (BadInput ("expected \"foo_op\"\n"),
-                        retval._retn ());
+      throw BadInput ("expected \"foo_op\"\n");
     }
 
   return retval._retn ();
 }
 
 char *
-foo_i::base_op (const char * inarg
-                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      BadInput
-    ))
+foo_i::base_op (const char * inarg)
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
@@ -48,37 +30,45 @@ foo_i::base_op (const char * inarg
     }
   else
     {
-      ACE_THROW_RETURN (BadInput ("expected \"base_op\"\n"),
-                        retval._retn ());
+      throw BadInput ("expected \"base_op\"\n");
     }
 
   return retval._retn ();
 }
 
+passer_i::passer_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+ : orb_ (CORBA::ORB::_duplicate (orb))
+ , poa_ (PortableServer::POA::_duplicate (poa))
+{
+}
+
 void
-passer_i::pass_ops (base_out outarg
-                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+passer_i::shutdown ()
+{
+  this->orb_->shutdown (false);
+}
+
+void
+passer_i::pass_ops (base_out outarg)
 {
   foo_i *servant = 0;
   ACE_NEW (servant,
            foo_i);
+
+  PortableServer::ObjectId_var id =
+    this->poa_->activate_object (servant);
+
+  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+
   PortableServer::ServantBase_var safety (servant);
-  outarg = servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  outarg = foo::_narrow (object.in ());
 }
 
 void
-passer_i::pass_state (base_out outarg
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+passer_i::pass_state (base_out outarg)
 {
   TreeController_var tc;
-  ACE_NEW (tc,
+  ACE_NEW (tc.inout (),
            OBV_TreeController);
 
   // Create the root node.
@@ -103,4 +93,10 @@ passer_i::pass_state (base_out outarg
   sn->right (r_dummy.in ());
 
   outarg = tc._retn ();
+}
+
+void
+passer_i::pass_nil (base_out outarg)
+{
+  outarg = foo::_nil ();
 }

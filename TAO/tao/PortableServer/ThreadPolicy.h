@@ -4,8 +4,6 @@
 /**
  *  @file ThreadPolicy.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -14,13 +12,13 @@
 #define TAO_PORTABLESERVER_THREADPOLICY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ThreadPolicyC.h"
+#include "tao/PortableServer/ThreadPolicyC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -30,7 +28,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -38,34 +38,32 @@ namespace TAO
   {
     class TAO_PortableServer_Export ThreadPolicy
       : public virtual ::PortableServer::ThreadPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
       ThreadPolicy (::PortableServer::ThreadPolicyValue value);
 
-      CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::Policy_ptr copy ();
 
-      void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      void destroy ();
 
-      ::PortableServer::ThreadPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      ::PortableServer::ThreadPolicyValue value ();
 
-      CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::PolicyType policy_type ();
 
       /// Return the cached policy type for this policy.
-      TAO_Cached_Policy_Type _tao_cached_type (void) const;
+      TAO_Cached_Policy_Type _tao_cached_type () const;
 
       /// Returns the scope at which this policy can be applied. See orbconf.h.
-      TAO_Policy_Scope _tao_scope (void) const;
+      TAO_Policy_Scope _tao_scope () const;
 
     private:
       ::PortableServer::ThreadPolicyValue value_;
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -2,8 +2,6 @@
 /**
  *  @file   EC.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  *  Event channel
@@ -27,13 +25,13 @@ class EC
 {
 public:
   /// Constructor
-  EC (void);
+  EC ();
 
   /// Run the test
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 #endif /* EC_H */

@@ -1,17 +1,16 @@
 // ============================================================================
-//
-// $Id$
-//
 // ============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
-#include "Config_Scheduler.h"
+#include "orbsvcs/Sched/Config_Scheduler.h"
 
-ACE_RCSID(Sched, Config_Scheduler, "$Id$")
 
-ACE_Config_Scheduler::ACE_Config_Scheduler (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_Config_Scheduler::ACE_Config_Scheduler ()
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
   : scheduler_strategy_ (static_cast<RtecScheduler::Preemption_Priority_t> (TAO_MIN_CRITICAL_PRIORITY))
   , impl (new ACE_Strategy_Scheduler (scheduler_strategy_))
@@ -22,20 +21,17 @@ ACE_Config_Scheduler::ACE_Config_Scheduler (void)
   // impl->output_level (10);
 }
 
-ACE_Config_Scheduler::~ACE_Config_Scheduler (void)
+ACE_Config_Scheduler::~ACE_Config_Scheduler ()
 {
   delete impl;
 }
 
 RtecScheduler::handle_t
-ACE_Config_Scheduler::create (const char * entry_point
-                              ACE_ENV_ARG_DECL_NOT_USED)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::DUPLICATE_NAME))
+ACE_Config_Scheduler::create (const char * entry_point)
 {
   typedef RtecScheduler::RT_Info* RT_Info_ptr;
 
-  RtecScheduler::RT_Info** rt_info;
+  RtecScheduler::RT_Info** rt_info = 0;
   ACE_NEW_RETURN (rt_info, RT_Info_ptr[1], -1);
 
   ACE_NEW_RETURN (rt_info[0], RtecScheduler::RT_Info, -1);
@@ -71,7 +67,7 @@ ACE_Config_Scheduler::create (const char * entry_point
     default:
       delete rt_info[0];
       delete[] rt_info;
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::create - register_task failed\n"));
       // @@ TODO: throw something.
       break;
@@ -80,9 +76,7 @@ ACE_Config_Scheduler::create (const char * entry_point
 }
 
 RtecScheduler::handle_t
-ACE_Config_Scheduler::lookup (const char * entry_point
-                              ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+ACE_Config_Scheduler::lookup (const char * entry_point)
 {
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->get_rt_info (entry_point, rt_info))
@@ -93,7 +87,7 @@ ACE_Config_Scheduler::lookup (const char * entry_point
     case BaseSchedImplType::FAILED:
     case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::lookup - get_rt_info failed\n"));
       // @@ TODO: throw something.
       break;
@@ -102,17 +96,14 @@ ACE_Config_Scheduler::lookup (const char * entry_point
 }
 
 RtecScheduler::RT_Info*
-ACE_Config_Scheduler::get (RtecScheduler::handle_t handle
-                           ACE_ENV_ARG_DECL_NOT_USED)
-     ACE_THROW_SPEC((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK))
+ACE_Config_Scheduler::get (RtecScheduler::handle_t handle)
 {
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
     case BaseSchedImplType::SUCCEEDED:
       {
-        // IDL memory managment semantics require that we return a copy.
+        // IDL memory management semantics require that we return a copy.
         RtecScheduler::RT_Info* copy;
         ACE_NEW_RETURN (copy, RtecScheduler::RT_Info (*rt_info), 0);
         return copy;
@@ -121,7 +112,7 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle
     case BaseSchedImplType::FAILED:
     case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::get - lookup_rt_info failed\n"));
       // @@ TODO: throw something.
       break;
@@ -138,10 +129,7 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
                                 RtecScheduler::Importance_t importance,
                                 RtecScheduler::Quantum_t quantum,
                                 CORBA::Long threads,
-                                RtecScheduler::Info_Type_t info_type
-                                ACE_ENV_ARG_DECL_NOT_USED)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK))
+                                RtecScheduler::Info_Type_t info_type)
 {
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
@@ -160,7 +148,7 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
     case BaseSchedImplType::FAILED:
     case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::set - lookup_rt_info failed\n"));
       // @@ TODO: throw something.
       break;
@@ -170,16 +158,11 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
 void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
                                      RtecScheduler::OS_Priority& priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
-                                     RtecScheduler::Preemption_Priority_t& p_priority
-                                     ACE_ENV_ARG_DECL_NOT_USED)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK,
-                      RtecScheduler::NOT_SCHEDULED))
+                                     RtecScheduler::Preemption_Priority_t& p_priority)
 {
-
   if (impl->priority (handle, priority, p_subpriority, p_priority) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::priority - priority failed\n"));
       // TODO: throw something.
     }
@@ -188,27 +171,18 @@ void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
 void ACE_Config_Scheduler::entry_point_priority (const char * entry_point,
                                                  RtecScheduler::OS_Priority& priority,
                                                  RtecScheduler::Preemption_Subpriority_t& p_subpriority,
-                                                 RtecScheduler::Preemption_Priority_t& p_priority
-                                                 ACE_ENV_ARG_DECL)
-     ACE_THROW_SPEC((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::NOT_SCHEDULED))
+                                                 RtecScheduler::Preemption_Priority_t& p_priority)
 {
-  this->priority (lookup (entry_point ACE_ENV_ARG_PARAMETER),
-                  priority, p_subpriority, p_priority
-                  ACE_ENV_ARG_PARAMETER);
+  this->priority (lookup (entry_point),
+                  priority, p_subpriority, p_priority);
 }
 
 void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
                                            RtecScheduler::handle_t dependency,
                                            CORBA::Long number_of_calls,
                                            RtecScheduler::Dependency_Type_t
-                                             dependency_type
-                                           ACE_ENV_ARG_DECL_NOT_USED)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK))
+                                             dependency_type)
 {
-
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
@@ -229,7 +203,7 @@ void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
     case BaseSchedImplType::FAILED:
     case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "cannot find %d to add dependency", handle));
       // TODO: throw something.
       break;
@@ -241,14 +215,8 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
                                                RtecScheduler::RT_Info_Set_out infos,
                                                RtecScheduler::Dependency_Set_out dependencies,
                                                RtecScheduler::Config_Info_Set_out configs,
-                                               RtecScheduler::Scheduling_Anomaly_Set_out anomalies
-                                               ACE_ENV_ARG_DECL_NOT_USED)
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
-                      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-                      RtecScheduler::TASK_COUNT_MISMATCH))
+                                               RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
 {
-
   // Initialize the scheduler implementation.
   impl->init (minimum_priority, maximum_priority);
 
@@ -327,7 +295,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         }
 
         // Output the anomaly message
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "%s: %s\n",
                     anomaly_severity_msg,
                     (*anomaly)->description.in ()));
@@ -344,7 +312,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
       // On a fatal anomaly abort without generating a schedule.
       case RtecScheduler::ANOMALY_FATAL:
         // TODO: throw something.
-        ACE_ERROR ((LM_ERROR, "Schedule failed due to FATAL anomaly.\n"));
+        ORBSVCS_ERROR ((LM_ERROR, "Schedule failed due to FATAL anomaly.\n"));
         return;
 
       // Otherwise, make sure we didn't get a fatal return type.
@@ -353,25 +321,25 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         {
           case BaseSchedImplType::ST_BAD_INTERNAL_POINTER :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "Schedule failed due to bad internal pointer.\n"));
             return;
 
           case BaseSchedImplType::ST_VIRTUAL_MEMORY_EXHAUSTED :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "Schedule failed due to insufficient memory.\n"));
             return;
 
           case BaseSchedImplType::THREAD_COUNT_MISMATCH :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "Schedule failed due to thread count mismatch.\n"));
             return;
 
           case BaseSchedImplType::TASK_COUNT_MISMATCH :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "Schedule failed due to task count mismatch.\n"));
             return;
 
@@ -402,7 +370,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         case BaseSchedImplType::FAILED:
         case BaseSchedImplType::ST_UNKNOWN_TASK:
         default:
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "Config_Scheduler::schedule - lookup_rt_info failed\n"));
           // TODO: throw something.
           break;
@@ -431,7 +399,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         case BaseSchedImplType::FAILED:
         case BaseSchedImplType::ST_UNKNOWN_TASK:
         default:
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "Config_Scheduler::schedule - "
                       "lookup_config_info failed\n"));
           // TODO: throw something.
@@ -439,28 +407,23 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         }
     }
 
-  ACE_DEBUG ((LM_DEBUG, "Schedule prepared.\n"));
-  ACE_DEBUG ((LM_DEBUG, "Dumping to stdout.\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Schedule prepared.\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Dumping to stdout.\n"));
   ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()),
                                         *(dependencies.ptr()),
                                         *(configs.ptr()),
                                         *(anomalies.ptr()), 0);
-  ACE_DEBUG ((LM_DEBUG, "Dump done.\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Dump done.\n"));
 }
 
 
 void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                                    RtecScheduler::OS_Priority& priority,
-                                                   RtecScheduler::Dispatching_Type_t & d_type
-                                                   ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    RtecScheduler::NOT_SCHEDULED,
-                    RtecScheduler::UNKNOWN_PRIORITY_LEVEL))
+                                                   RtecScheduler::Dispatching_Type_t & d_type)
 {
-
   if (impl->dispatch_configuration (p_priority, priority, d_type) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::dispatch_configuration -"
                   " dispatch_configuration failed\n"));
       // TODO: throw something.
@@ -470,16 +433,13 @@ void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Pri
 
 
 RtecScheduler::Preemption_Priority_t
-ACE_Config_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    RtecScheduler::NOT_SCHEDULED))
+ACE_Config_Scheduler::last_scheduled_priority ()
 {
-
   RtecScheduler::Preemption_Priority_t priority = impl->minimum_priority_queue ();
 
   if (priority < 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::last_scheduled_priority - priorities failed\n"));
       // TODO: throw something.
     }
@@ -491,11 +451,7 @@ ACE_Config_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   // All scheduled priorities range from 0 to the number returned, inclusive.
 
 void
-ACE_Config_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out configs
-                                         ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::NOT_SCHEDULED))
+ACE_Config_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out configs)
 {
   ACE_UNUSED_ARG ((configs));
 
@@ -513,164 +469,100 @@ void ACE_Config_Scheduler::reset (RtecScheduler::handle_t,
             RtecScheduler::Importance_t,
             RtecScheduler::Quantum_t,
             CORBA::Long,
-            RtecScheduler::Info_Type_t
-            ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::UNKNOWN_TASK,
-                   RtecScheduler::INTERNAL,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE))
+            RtecScheduler::Info_Type_t)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::set_seq (const RtecScheduler::RT_Info_Set&
-                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::UNKNOWN_TASK,
-                   RtecScheduler::INTERNAL,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE))
+void ACE_Config_Scheduler::set_seq (const RtecScheduler::RT_Info_Set&)
 // Set characteristics of the RT_Infos corresponding to the passed handles.
 // Tuples are added in the case of existing and/or multiple definitions.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::reset_seq (const RtecScheduler::RT_Info_Set&
-                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::UNKNOWN_TASK,
-                   RtecScheduler::INTERNAL,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE))
+void ACE_Config_Scheduler::reset_seq (const RtecScheduler::RT_Info_Set&)
 // Reset characteristics of the RT_Infos corresponding to the passed handles.
 // Tuples are replaced in the case of existing and/or multiple definitions.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set&
-                          ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::UNKNOWN_TASK,
-                   RtecScheduler::INTERNAL,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE))
+void ACE_Config_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set&)
 // Replace all RT_Infos, resetting characteristics of the RT_Infos
 // corresponding to the passed handles.  All other RT_Infos are
 // reset to their uninitialized values, i.e., the same they have
 // just after the create call.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void ACE_Config_Scheduler::remove_dependency (RtecScheduler::handle_t,
                                 RtecScheduler::handle_t,
                                 CORBA::Long,
-                                RtecScheduler::Dependency_Type_t
-                                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::UNKNOWN_TASK))
+                                RtecScheduler::Dependency_Type_t)
 // This method removes a dependency between two RT_Infos.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void ACE_Config_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t,
                                   RtecScheduler::handle_t,
                                   CORBA::Long,
                                   RtecScheduler::Dependency_Type_t,
-                                  RtecScheduler::Dependency_Enabled_Type_t
-                                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::UNKNOWN_TASK))
+                                  RtecScheduler::Dependency_Enabled_Type_t)
 // This method sets the enable state of a dependency between two RT_Infos.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set &
-                                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::UNKNOWN_TASK))
+void ACE_Config_Scheduler::set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set &)
 // This method sets the enable state of a sequence of dependencies.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void ACE_Config_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t,
-                               RtecScheduler::RT_Info_Enabled_Type_t
-                                       ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::UNKNOWN_TASK))
+                               RtecScheduler::RT_Info_Enabled_Type_t)
 // This method enables or disables an RT_Info.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void ACE_Config_Scheduler::set_rt_info_enable_state_seq (
-                  const RtecScheduler::RT_Info_Enable_State_Pair_Set &
-                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::UNKNOWN_TASK))
+                  const RtecScheduler::RT_Info_Enable_State_Pair_Set &)
 // This method enables or disables a sequence of RT_Infos.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void ACE_Config_Scheduler::recompute_scheduling (CORBA::Long,
                            CORBA::Long,
-                           RtecScheduler::Scheduling_Anomaly_Set_out
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-                   RtecScheduler::TASK_COUNT_MISMATCH,
-                   RtecScheduler::INTERNAL,
-                   RtecScheduler::DUPLICATE_NAME))
+                           RtecScheduler::Scheduling_Anomaly_Set_out)
 // Recomputes the scheduling priorities, etc.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::INTERNAL))
+void ACE_Config_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out)
 // Returns the set of rt_infos, with their assigned priorities (as
 // of the last schedule re-computation).
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out
-                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::INTERNAL))
+void ACE_Config_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out)
 // Returns the set of rt_infos, with their assigned priorities (as
 // of the last schedule re-computation).
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
-void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out
-                                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RtecScheduler::SYNCHRONIZATION_FAILURE,
-                   RtecScheduler::INTERNAL))
+void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out)
 // Returns the set of config_infos, describing the appropriate
 // number, types, and priority levels for the dispatching lanes.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_DNode<TAO_RT_Info_Tuple *>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_DNode<TAO_RT_Info_Tuple *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

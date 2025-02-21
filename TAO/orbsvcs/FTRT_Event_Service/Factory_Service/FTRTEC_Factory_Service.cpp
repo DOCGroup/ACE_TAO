@@ -1,21 +1,17 @@
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
 #include "EventChannelFactory_i.h"
 #include "ace/Task.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Factory_Service,
-           FTRTEC_Factory_Service,
-           "$Id$")
-
 namespace {
-  ACE_CString id, kind, output;
+  ACE_CString id, kind;
+  ACE_TString output;
 }
 
-int parse_args(int argc, char* argv[])
+int parse_args(int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("i:k:o:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:k:o:"));
   int opt;
 
   int result = 0;
@@ -24,10 +20,10 @@ int parse_args(int argc, char* argv[])
     switch (opt)
     {
     case 'i':
-      id = get_opt.opt_arg ();
+      id = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
       break;
     case 'k':
-      kind = get_opt.opt_arg ();
+      kind = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
       break;
     case 'o':
       output = get_opt.opt_arg ();
@@ -38,66 +34,51 @@ int parse_args(int argc, char* argv[])
     }
   }
 
-  if (result == -1 || (id.length() == 0 && output.length() == 0))
+  if (result == -1 || (id.length () == 0 && output.length () == 0))
   {
-    ACE_DEBUG ((LM_DEBUG,
-      ACE_LIB_TEXT("Usage: %s \n")
-      ACE_LIB_TEXT("  [-i id]  set the id that is used to register to the naming service\n")
-      ACE_LIB_TEXT("  [-k kind] set the kind that is used to register to the naming service\n")
-      ACE_LIB_TEXT("  [-o filename] set the output file name for the IOR\n")
-      ACE_LIB_TEXT("\n"),
+    ORBSVCS_DEBUG ((LM_DEBUG,
+      ACE_TEXT("Usage: %s\n")
+      ACE_TEXT("  [-i id]  set the id that is used to register to the naming service\n")
+      ACE_TEXT("  [-k kind] set the kind that is used to register to the naming service\n")
+      ACE_TEXT("  [-o filename] set the output file name for the IOR\n")
+      ACE_TEXT("\n"),
       argv[0]));
     return -1;
   }
   return 0;
 }
 
-int main(int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  try{
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, ""
-                                         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    if (parse_args(argc, argv) == -1)
+    if (parse_args (argc, argv) == -1)
       return -1;
 
     CORBA::Object_var obj =
-      orb->resolve_initial_references("RootPOA"
-      ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      orb->resolve_initial_references ("RootPOA");
 
     PortableServer::POA_var poa =
-      PortableServer::POA::_narrow(obj.in()
-                                   ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      PortableServer::POA::_narrow (obj.in ());
 
-    PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    PortableServer::POAManager_var mgr = poa->the_POAManager ();
 
-    mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    mgr->activate ();
 
-    EventChannelFactory_i servant("factory.cfg", orb.in());
+    EventChannelFactory_i servant ("factory.cfg", orb.in ());
 
     FT::GenericFactory_var event_channel_factory =
-      servant._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      servant._this ();
 
     // register to the Event Service
 
     if (id.length()) {
       CORBA::Object_var namng_contex_object =
-        orb->resolve_initial_references("NameService"
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("NameService");
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow(namng_contex_object.in()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow(namng_contex_object.in());
 
       // register to naming service
       CosNaming::Name name(1);
@@ -106,29 +87,25 @@ int main(int argc, ACE_TCHAR* argv[])
       if (kind.length())
         name[0].kind = CORBA::string_dup(kind.c_str());
 
-      naming_context->bind(name, event_channel_factory.in()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      naming_context->bind(name, event_channel_factory.in());
 
-      ACE_DEBUG((LM_DEBUG, "Register to naming service with %s", id.c_str()));
+      ORBSVCS_DEBUG((LM_DEBUG, "Register to naming service with %s", id.c_str()));
       if (kind.length())
-        ACE_DEBUG((LM_DEBUG, ", %s", kind.c_str()));
-      ACE_DEBUG((LM_DEBUG,"\n"));
+        ORBSVCS_DEBUG((LM_DEBUG, ", %s", kind.c_str()));
+      ORBSVCS_DEBUG((LM_DEBUG,"\n"));
     }
 
     if (output.length()) {
       // get the IOR of factory
-      CORBA::String_var str = orb->object_to_string(event_channel_factory.in()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var str = orb->object_to_string(event_channel_factory.in());
 
-      if (ACE_OS::strcmp(output.c_str(), "") != 0)
+      if (ACE_OS::strcmp(output.c_str(), ACE_TEXT("")) != 0)
       {
         FILE *output_file=
-          ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(output.c_str()),
-          ACE_LIB_TEXT("w"));
+          ACE_OS::fopen (output.c_str(),
+          ACE_TEXT("w"));
         if (output_file == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
           "Cannot open output file for writing IOR: %s",
           output.c_str()),
           1);
@@ -137,19 +114,14 @@ int main(int argc, ACE_TCHAR* argv[])
       }
     }
 
-    ACE_TRY_CHECK;
 
-    orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-
+    orb->run();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+    ex._tao_print_exception ("A CORBA Exception occurred.");
   }
-  ACE_ENDTRY;
 
-
-  ACE_CHECK_RETURN(1);
 
   return 0;
 }

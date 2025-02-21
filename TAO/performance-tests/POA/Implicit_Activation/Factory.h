@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef FACTORY_H
 #define FACTORY_H
@@ -23,11 +20,9 @@ public:
 
   // = The skeleton methods
 
-  virtual Test::Simple_ptr create_simple_object (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Test::Simple_ptr create_simple_object ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
   /// Keep a reference to the ORB

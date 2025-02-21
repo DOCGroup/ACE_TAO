@@ -1,7 +1,3 @@
-#
-# $Id$
-#
-
 This test verifies that the "PICurrent" object semantics are correct
 on both the client side and the server side.  In particular, it
 attempts to make sure the request scope current (RSC) and thread scope

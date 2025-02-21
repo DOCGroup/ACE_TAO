@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project {
-  avoids += minimum_corba
-}

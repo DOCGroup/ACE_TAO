@@ -1,0 +1,26 @@
+<?xml version='1.0'?>
+<ACE_Svc_Conf>
+  <!--  ACE will locate the libraries for you automatically by reading your LD -->
+  <!--  search path.  Moreover, ACE will automatically insert the correct suffix -->
+  <!--  (e.g., ".dll", ".so", etc.). -->
+
+  <!-- ORB -->
+  <dynamic id="DllOrb" type="Service_Object">
+    <!-- specify TS_ORB_ENDPOINT like this
+      TS_ORB_ENDPOINT="-ORBEndpoint iiop://aaa.bbb.ccc.ddd:nnnn"
+
+      examples:
+      TS_ORB_ENDPOINT"-ORBEndpoint iiop://127.0.0.0"
+      TS_ORB_ENDPOINT"-ORBEndpoint iiop://:4200"
+      TS_ORB_ENDPOINT"-ORBEndpoint iiop://127.0.0.0:4200"
+    -->
+    <initializer path="Bug_3251" init="_make_DllOrb" params="DllOrb -NumThreads 12 -ORBDebugLevel $TS_ORB_DEBUGLEVEL $TS_ORB_ENDPOINT -ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa"/>
+  </dynamic>
+  <!-- ORB -->
+
+  <!-- persistent POA -->
+  <dynamic id="PersistentPOA" type="Service_Object">
+    <initializer path="Bug_3251" init="_make_PersistentPoa" params="PersistentPOA DllOrb"/>
+  </dynamic>
+  <!-- persistent POA -->
+</ACE_Svc_Conf>

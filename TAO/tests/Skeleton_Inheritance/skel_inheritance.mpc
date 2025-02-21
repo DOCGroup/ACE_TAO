@@ -1,0 +1,216 @@
+// -*- MPC -*-
+project(idl_one_gen): taoidldefaults {
+  custom_only = 1
+
+  idlflags += -Wb,stub_export_macro=SKELETON_INHERITANCE_STUB_1_Export \
+              -Wb,stub_export_include=skeleton_inheritance_stub_1_export.h \
+              -Wb,skel_export_macro=SKELETON_INHERITANCE_SKEL_1_Export \
+              -Wb,skel_export_include=skeleton_inheritance_skel_1_export.h \
+              -Gxhst -Gxhsk -Gd
+
+  IDL_Files {
+    idl_1.idl
+  }
+}
+
+project(idl_two_gen): taoidldefaults {
+  custom_only = 1
+
+  idlflags += -Wb,stub_export_macro=SKELETON_INHERITANCE_STUB_2_Export \
+              -Wb,stub_export_include=skeleton_inheritance_stub_2_export.h \
+              -Wb,skel_export_macro=SKELETON_INHERITANCE_SKEL_2_Export \
+              -Wb,skel_export_include=skeleton_inheritance_skel_2_export.h \
+              -Gxhst -Gxhsk -Gd
+
+  IDL_Files {
+    idl_2.idl
+  }
+}
+
+project(idl_three_gen): taoidldefaults {
+  custom_only = 1
+
+  idlflags += -Wb,stub_export_macro=SKELETON_INHERITANCE_STUB_3_Export \
+              -Wb,stub_export_include=skeleton_inheritance_stub_3_export.h \
+              -Wb,skel_export_macro=SKELETON_INHERITANCE_SKEL_3_Export \
+              -Wb,skel_export_include=skeleton_inheritance_skel_3_export.h \
+              -Gxhst -Gxhsk -Gd
+
+  IDL_Files {
+    idl_3.idl
+  }
+}
+
+project(stub_one): taolib {
+  sharedname = stub_one
+  after += idl_one_gen
+
+  dynamicflags += SKELETON_INHERITANCE_STUB_1_BUILD_DLL
+
+  Source_Files {
+    idl_1C.cpp
+  }
+
+  Header_Files {
+    idl_1C.h
+  skeleton_inheritance_stub_1_export.h
+  }
+
+  Inline_Files {
+  idl_1C.inl
+  }
+}
+
+project(skel_one): taolib, portableserver {
+  after += idl_one_gen stub_one
+  libs += stub_one
+
+  sharedname = skel_one
+  dynamicflags += SKELETON_INHERITANCE_SKEL_1_BUILD_DLL
+
+  Source_Files {
+    idl_1S.cpp
+  }
+
+  Header_Files {
+    idl_1S.h
+  skeleton_inheritance_skel_1_export.h
+  }
+
+  Inline_Files {
+  idl_1S.inl
+  }
+
+  IDL_Files {
+  }
+}
+
+
+project(stub_two): taolib {
+  sharedname = stub_two
+  after += idl_two_gen idl_one_gen stub_one
+  libs += stub_one
+
+  dynamicflags += SKELETON_INHERITANCE_STUB_2_BUILD_DLL
+
+  Source_Files {
+    idl_2C.cpp
+  }
+
+  Header_Files {
+    idl_2C.h
+  skeleton_inheritance_stub_2_export.h
+  }
+
+  Inline_Files {
+  idl_2C.inl
+  }
+}
+
+project(skel_two): taolib, portableserver {
+  after += idl_two_gen stub_two skel_one idl_one_gen stub_one
+  libs += stub_two skel_one stub_one
+
+  sharedname = skel_two
+  dynamicflags += SKELETON_INHERITANCE_SKEL_2_BUILD_DLL
+
+  Source_Files {
+    idl_2S.cpp
+  }
+
+  Header_Files {
+    idl_2S.h
+  skeleton_inheritance_skel_2_export.h
+  }
+
+  Inline_Files {
+  idl_2S.inl
+  }
+
+  IDL_Files {
+  }
+}
+
+
+project(stub_three): taolib {
+  sharedname = stub_three
+  after += idl_three_gen idl_two_gen idl_one_gen \
+           stub_one stub_two
+  libs += stub_two stub_one
+
+  dynamicflags += SKELETON_INHERITANCE_STUB_3_BUILD_DLL
+
+  Source_Files {
+    idl_3C.cpp
+  }
+
+  Header_Files {
+    idl_3C.h
+  skeleton_inheritance_stub_3_export.h
+  }
+
+  Inline_Files {
+  idl_3C.inl
+  }
+}
+
+project(skel_three): taolib, portableserver {
+  after += idl_three_gen stub_three skel_one skel_two
+  libs += stub_three skel_two stub_two skel_one stub_one
+
+  sharedname = skel_three
+  dynamicflags += SKELETON_INHERITANCE_SKEL_3_BUILD_DLL
+
+  Source_Files {
+    idl_3S.cpp
+  }
+
+  Header_Files {
+    idl_3S.h
+  skeleton_inheritance_skel_3_export.h
+  }
+
+  Inline_Files {
+  idl_3S.inl
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Server): taoserver {
+  after +=  idl_gen \
+            stub_one skel_one \
+            stub_two skel_two \
+            stub_three skel_three
+  libs +=   skel_three stub_three  \
+            skel_two stub_two \
+            skel_one stub_one
+
+  Source_Files {
+    interface_3_i.cpp
+    server.cpp
+  }
+
+  Header_Files {
+    interface_3_i.h
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient {
+  after +=  idl_gen \
+            stub_one \
+            stub_two \
+            stub_three
+  libs +=   stub_three stub_two stub_one
+
+  Source_Files {
+    client.cpp
+  }
+
+  IDL_Files {
+  }
+}
+

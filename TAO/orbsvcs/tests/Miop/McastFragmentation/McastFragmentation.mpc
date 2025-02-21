@@ -1,0 +1,35 @@
+// -*- MPC -*-
+//
+
+project(*IDL): taoidldefaults {
+  IDL_Files {
+    Hello.idl
+  }
+  custom_only = 1
+}
+
+project(*Server) : taoserver, portablegroup {
+  exename = server
+  after += *IDL
+
+  Source_Files {
+    Hello_Impl.cpp
+    HelloC.cpp
+    HelloS.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client) : taoclient, portablegroup {
+  exename = client
+  after += *IDL
+
+  Source_Files {
+    HelloC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

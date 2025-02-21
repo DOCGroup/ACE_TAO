@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Kokyu_Factory.h
- *
- *  $Id$
  *
  *  @author Bryan Thrall (thrall@cs.wustl.edu)
  *
@@ -17,36 +15,37 @@
 #define TAO_EC_KOKYU_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "rtkokyu_event_export.h"
+#include "orbsvcs/Event/rtkokyu_event_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Kokyu_Factory
  *
  * @brief Extend the default factory to support scheduling
- *
  */
 class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Factory : public TAO_EC_Default_Factory
 {
 public:
   /// Constructor
-  TAO_EC_Kokyu_Factory (void);
+  TAO_EC_Kokyu_Factory ();
 
   /// Helper function to register the Kokyu factory into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   /// destructor...
-  virtual ~TAO_EC_Kokyu_Factory (void);
+  virtual ~TAO_EC_Kokyu_Factory ();
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
@@ -63,8 +62,10 @@ private:
   int disp_sched_scope_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Kokyu_Factory.i"
+#include "orbsvcs/Event/EC_Kokyu_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Kokyu_Factory)

@@ -1,0 +1,63 @@
+// -*- MPC -*-
+project(Async Cancel) : aceexe {
+  exename = Async_Cancel
+  Source_Files {
+    Async_Cancel.cpp
+  }
+}
+
+project(Coop Cancel) : aceexe {
+  exename = Coop_Cancel
+  Source_Files {
+    Coop_Cancel.cpp
+  }
+}
+
+project(ExitHandler) : aceexe {
+  exename = ExitHandler
+  Source_Files {
+    ExitHandler.cpp
+  }
+}
+
+project(Pool) : aceexe {
+  exename = Pool
+  Source_Files {
+    Pool.cpp
+  }
+}
+
+project(Priorities) : aceexe {
+  exename = Priorities
+  Source_Files {
+    Priorities.cpp
+  }
+}
+
+project(Signals) : aceexe {
+  exename = Signals
+  Source_Files {
+    Signals.cpp
+  }
+}
+
+project(Signals2) : aceexe {
+  exename = Signals2
+  Source_Files {
+    Signals2.cpp
+  }
+}
+
+project(Start Hook) : aceexe {
+  exename = Start_Hook
+  Source_Files {
+    Start_Hook.cpp
+  }
+}
+
+project(State) : aceexe {
+  exename = State
+  Source_Files {
+    State.cpp
+  }
+}

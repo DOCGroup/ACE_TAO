@@ -1,10 +1,4 @@
-// $Id$
-
 #include "test_i.h"
-
-ACE_RCSID (TC_Alignment, 
-           test_i, 
-           "$Id$")
 
 test_i::test_i (CORBA::ORB_ptr orb)
   : orb_ (orb)
@@ -12,14 +6,13 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 CORBA::Any *
-test_i::get_value (CORBA::Long offset
-                   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::get_value (CORBA::Long offset)
 {
-  CORBA::Any_var retval;
-  ACE_NEW_THROW_EX (retval,
+  CORBA::Any_ptr retval_ptr = 0;
+  ACE_NEW_THROW_EX (retval_ptr,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
+  CORBA::Any_var retval = retval_ptr;
 
   switch (offset)
   {
@@ -71,8 +64,7 @@ test_i::get_value (CORBA::Long offset
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::shutdown ()
 {
-  this->orb_->destroy ();
+  this->orb_->shutdown ();
 }

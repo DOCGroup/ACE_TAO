@@ -1,8 +1,5 @@
 /**
  * @file compare_histo.cpp
- *
- * $Id$
- *
  */
 
 #include <utility>
@@ -41,7 +38,7 @@ load_file (Vector &vector,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Vector X;
   load_file (X, argv[1]);

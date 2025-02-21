@@ -1,4 +1,4 @@
-#include "SSLIOP_Endpoint.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 
 #include "tao/IIOP_Endpoint.h"
 
@@ -8,14 +8,11 @@
 
 #include "tao/debug.h"
 
-ACE_RCSID (SSLIOP,
-           SSLIOP_Endpoint,
-           "$Id$")
-
-
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Endpoint.i"
+# include "orbsvcs/SSLIOP/SSLIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
                                           TAO_IIOP_Endpoint *iiop_endp)
@@ -84,46 +81,27 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
   this->trust_.trust_in_client = 1;
 }
 
-TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
+
+TAO_SSLIOP_Endpoint &
+TAO_SSLIOP_Endpoint::operator= (const TAO_SSLIOP_Endpoint &other)
+{
+  this->object_addr_ = other.object_addr_;
+  this->qop_ = other.qop_;
+  this->trust_ = other.trust_;
+  this->ssl_component_ = other.ssl_component_;
+
+  this->next_ = 0; // do not copy list membership, since we are only cloning the values
+
+  this->iiop_endpoint(other.iiop_endpoint_,
+                      other.destroy_iiop_endpoint_);
+  return *this;
+}
+
+TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint ()
 {
   if (this->destroy_iiop_endpoint_)
     delete this->iiop_endpoint_;
 }
-
-#if 0
-static void
-dump_endpoint (const char* msg, const TAO_Endpoint *other_endpoint)
-{
-  
-  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
-
-  TAO_SSLIOP_Endpoint *endpoint =
-    dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
-
-  if (endpoint == 0)
-  {
-    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) endpoint - %s: Unable to cast an endpoint to SSLIOP_Endpoint\n", msg));
-    return;
-  }
-  
-  char hostaddr[MAXHOSTNAMELEN + 16];
-  int gothost = endpoint->addr_to_string (hostaddr, sizeof hostaddr);
-
-  ACE_DEBUG ((LM_INFO, "TAO (%P|%t) SSLIOPEndpoint %s - %@ {%s, ssl=%d, iiop=%d,"
-                " qop=%d, trst=(%d,%d), c=%@, crdh=0x%x}, h=0x%x\n", 
-                msg,
-                endpoint,
-                (gothost == 0 ? hostaddr : "*UNKNOWN*"),
-                endpoint->ssl_component ().port , 
-                endpoint->iiop_endpoint ()->port (),
-                endpoint->qop() , 
-                endpoint->trust().trust_in_target , 
-                endpoint->trust().trust_in_client ,
-                endpoint->credentials() , 
-                (endpoint->credentials_set () ? endpoint->credentials()->hash () : 0) , 
-                endpoint->hash ()));
-}
-#endif /* 0 */
 
 int
 TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
@@ -147,7 +125,7 @@ TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 
 
 TAO_Endpoint *
-TAO_SSLIOP_Endpoint::next (void)
+TAO_SSLIOP_Endpoint::next ()
 {
   return this->next_;
 }
@@ -184,7 +162,7 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (this->iiop_endpoint() == 0 || endpoint->iiop_endpoint() == 0)
     return 0;
 
-  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (), 
+  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (),
                        endpoint->iiop_endpoint()->host ()) != 0))
     return 0;
 
@@ -192,7 +170,7 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 TAO_Endpoint *
-TAO_SSLIOP_Endpoint::duplicate (void)
+TAO_SSLIOP_Endpoint::duplicate ()
 {
   TAO_SSLIOP_Endpoint *endpoint = 0;
 
@@ -212,7 +190,7 @@ TAO_SSLIOP_Endpoint::duplicate (void)
 }
 
 CORBA::ULong
-TAO_SSLIOP_Endpoint::hash (void)
+TAO_SSLIOP_Endpoint::hash ()
 {
   // there is actually the potential for a race of the inverse case,
   // since setting the security attributes will reset the hash_val_,
@@ -243,7 +221,7 @@ TAO_SSLIOP_Endpoint::hash (void)
     // bi-directional support - as the 'guessed' IIOP port value will
     // hardly match the one specified in the bi-dir service context.
     this->hash_val_ =
-      oaddr.get_ip_address ()
+      oaddr.hash ()
       + this->ssl_component_.port;
   }
 
@@ -252,7 +230,7 @@ TAO_SSLIOP_Endpoint::hash (void)
 
 
 const ACE_INET_Addr &
-TAO_SSLIOP_Endpoint::object_addr (void) const
+TAO_SSLIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -261,7 +239,11 @@ TAO_SSLIOP_Endpoint::object_addr (void) const
   //   ...etc..
 
   // Double checked locking optimization.
-  if (this->object_addr_.get_type () != AF_INET)
+  if (this->object_addr_.get_type () != AF_INET
+#if defined (ACE_HAS_IPV6)
+      && this->object_addr_.get_type () != AF_INET6
+#endif /* ACE_HAS_IPV6 */
+     )
     {
       const ACE_INET_Addr &iiop_addr = this->iiop_endpoint_->object_addr ();
 
@@ -270,7 +252,11 @@ TAO_SSLIOP_Endpoint::object_addr (void) const
                         this->addr_lookup_lock_,
                         this->object_addr_);
 
-      if (this->object_addr_.get_type () != AF_INET)
+      if (this->object_addr_.get_type () != AF_INET
+#if defined (ACE_HAS_IPV6)
+          && this->object_addr_.get_type () != AF_INET6
+#endif /* ACE_HAS_IPV6 */
+     )
         {
           this->object_addr_ = iiop_addr;
           this->object_addr_.set_port_number (this->ssl_component_.port);
@@ -307,7 +293,6 @@ TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
 
 
 
-
 TAO_SSLIOP_Synthetic_Endpoint::~TAO_SSLIOP_Synthetic_Endpoint ()
 {
 }
@@ -335,7 +320,7 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint
 
   if (endpoint == 0)
     return 0;
-  
+
   if ((this->ssl_component ().port != 0
        && endpoint->ssl_component ().port != 0
        && this->ssl_component ().port != endpoint->ssl_component ().port)
@@ -351,7 +336,7 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint
   if (this->iiop_endpoint() == 0 || endpoint->iiop_endpoint() == 0)
     return 0;
 
-  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (), 
+  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (),
                        endpoint->iiop_endpoint()->host ()) != 0))
     return 0;
 
@@ -359,7 +344,7 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint
 }
 
 TAO_Endpoint *
-TAO_SSLIOP_Synthetic_Endpoint::duplicate (void)
+TAO_SSLIOP_Synthetic_Endpoint::duplicate ()
 {
   TAO_SSLIOP_Synthetic_Endpoint *endpoint = 0;
 
@@ -377,3 +362,4 @@ TAO_SSLIOP_Synthetic_Endpoint::duplicate (void)
   return endpoint;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

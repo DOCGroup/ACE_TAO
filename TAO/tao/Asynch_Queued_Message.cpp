@@ -1,5 +1,7 @@
-#include "Asynch_Queued_Message.h"
-#include "debug.h"
+// -*- C++ -*-
+#include "tao/Asynch_Queued_Message.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
@@ -7,27 +9,31 @@
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Malloc_Base.h"
+#include "ace/High_Res_Timer.h"
 
-
-ACE_RCSID (tao,
-           Asynch_Queued_Message,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   const ACE_Message_Block *contents,
+  TAO_ORB_Core *oc,
+  ACE_Time_Value *timeout,
   ACE_Allocator *alloc,
-  int is_heap_allocated)
-  : TAO_Queued_Message (alloc, is_heap_allocated)
+  bool is_heap_allocated)
+  : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (contents->total_length ())
   , offset_ (0)
+  , abs_timeout_ (ACE_Time_Value::zero)
 {
+  if (timeout != nullptr)// && *timeout != ACE_Time_Value::zero)
+    {
+      this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
+    }
   // @@ Use a pool for these guys!!
   ACE_NEW (this->buffer_, char[this->size_]);
 
   size_t copy_offset = 0;
   for (const ACE_Message_Block *i = contents;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       ACE_OS::memcpy (this->buffer_ + copy_offset,
@@ -38,29 +44,33 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
 }
 
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (char *buf,
+                                                      TAO_ORB_Core *oc,
                                                       size_t size,
-                                                      ACE_Allocator *alloc)
-  : TAO_Queued_Message (alloc)
+                                                      const ACE_Time_Value &abs_timeout,
+                                                      ACE_Allocator *alloc,
+                                                      bool is_heap_allocated)
+  : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (size)
   , offset_ (0)
   , buffer_ (buf)
+  , abs_timeout_ (abs_timeout)
 {
 }
 
-TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message (void)
+TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message ()
 {
   // @@ Use a pool for these guys!
   delete [] this->buffer_;
 }
 
 size_t
-TAO_Asynch_Queued_Message::message_length (void) const
+TAO_Asynch_Queued_Message::message_length () const
 {
   return this->size_ - this->offset_;
 }
 
 int
-TAO_Asynch_Queued_Message::all_data_sent (void) const
+TAO_Asynch_Queued_Message::all_data_sent () const
 {
   return this->size_ == this->offset_;
 }
@@ -83,7 +93,7 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
 {
   this->state_changed_i (TAO_LF_Event::LFS_ACTIVE);
 
-  size_t remaining_bytes = this->size_ - this->offset_;
+  size_t const remaining_bytes = this->size_ - this->offset_;
   if (byte_count > remaining_bytes)
     {
       this->offset_ = this->size_;
@@ -94,31 +104,32 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
   byte_count = 0;
 
   if (this->all_data_sent ())
-    this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+    this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+                         this->orb_core_->leader_follower ());
 }
 
 
 TAO_Queued_Message *
 TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 {
-  char *buf = 0;
+  char *buf = nullptr;
 
-  // @@todo: Need to use a memory pool. But certain things need to
+  // @todo: Need to use a memory pool. But certain things need to
   // change a bit in this class for that. Till then.
 
   // Just allocate and copy data that needs to be sent, no point
   // copying the whole buffer.
-  const size_t sz = this->size_ - this->offset_;
+  size_t const sz = this->size_ - this->offset_;
 
   ACE_NEW_RETURN (buf,
                   char[sz],
-                  0);
+                  nullptr);
 
   ACE_OS::memcpy (buf,
                   this->buffer_ + this->offset_,
                   sz);
 
-  TAO_Asynch_Queued_Message *qm = 0;
+  TAO_Asynch_Queued_Message *qm = nullptr;
 
   if (alloc)
     {
@@ -126,9 +137,12 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                              static_cast<TAO_Asynch_Queued_Message *> (
                                  alloc->malloc (sizeof (TAO_Asynch_Queued_Message))),
                              TAO_Asynch_Queued_Message (buf,
+                                                        this->orb_core_,
                                                         sz,
-                                                        alloc),
-                             0);
+                                                        this->abs_timeout_,
+                                                        alloc,
+                                                        true),
+                             nullptr);
     }
   else
     {
@@ -136,26 +150,26 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
       if (TAO_debug_level == 4)
         {
           // This debug is for testing purposes!
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Asynch_Queued_Message::clone\n"
-                      "Using global pool for allocation \n"));
+                      "Using global pool for allocation\n"));
         }
 
       ACE_NEW_RETURN (qm,
                       TAO_Asynch_Queued_Message (buf,
-                                                 sz),
-                      0);
+                                                 this->orb_core_,
+                                                 sz,
+                                                 this->abs_timeout_,
+                                                 nullptr,
+                                                 true),
+                      nullptr);
     }
-
-  // Set the flag to indicate that <qm> is created on the heap.
-  if (qm)
-    qm->is_heap_created_ = 1;
 
   return qm;
 }
 
 void
-TAO_Asynch_Queued_Message::destroy (void)
+TAO_Asynch_Queued_Message::destroy ()
 {
   if (this->is_heap_created_)
     {
@@ -163,15 +177,34 @@ TAO_Asynch_Queued_Message::destroy (void)
       // pool.
       if (this->allocator_)
         {
-          ACE_DES_FREE (this,
-                        this->allocator_->free,
-                        TAO_Asynch_Queued_Message);
-
+          ACE_DES_FREE_THIS (this->allocator_->free,
+                             TAO_Asynch_Queued_Message);
         }
       else // global release..
         {
           delete this;
         }
     }
-
 }
+
+bool
+TAO_Asynch_Queued_Message::is_expired (const ACE_Time_Value &now) const
+{
+  if (this->abs_timeout_ > ACE_Time_Value::zero)
+    {
+      if (this->offset_ > 0)
+        {
+          return false; //never expire partial messages
+        }
+      return this->abs_timeout_ < now;
+    }
+  return false;
+}
+
+void
+TAO_Asynch_Queued_Message::copy_if_necessary (const ACE_Message_Block*)
+{
+  // It's never necessary for asynchronously queued messages
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

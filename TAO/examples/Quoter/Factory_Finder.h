@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    FactoryFinder.h
-//
-// = DESCRIPTION
-//    Server for the Quoter Factory Finder
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Factory_Finder.h
+ *
+ *  Server for the Quoter Factory Finder
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 
@@ -25,45 +22,47 @@
 #ifndef QUOTER_FACTORY_FINDER_H
 #define QUOTER_FACTORY_FINDER_H
 
+/**
+ * @class Quoter_Factory_Finder_Server
+ = TILE
+ * Server object for the Quoter Factory Finder
+ */
 class Quoter_Factory_Finder_Server
 {
-  // = TILE
-  //   Server object for the Quoter Factory Finder
-
 public:
-  Quoter_Factory_Finder_Server (void);
-  // Default constructor
+  /// Default constructor
+  Quoter_Factory_Finder_Server ();
 
-  ~Quoter_Factory_Finder_Server (void);
-  // Destructor
+  /// Destructor
+  ~Quoter_Factory_Finder_Server ();
 
-  int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
-  // Initialize the Quoter_Server state - parsing arguments and ...
+  /// Initialize the Quoter_Server state - parsing arguments and ...
+  int init (int argc, ACE_TCHAR *argv[]);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the orb
+  /// Run the orb
+  int run ();
 
-  u_int parse_args (void);
-  // parse the passed parameters
+  /// parse the passed parameters
+  u_int parse_args ();
 
 private:
+  /// instance of the ORB Manager
   TAO_ORB_Manager orb_manager_;
-  // instance of the ORB Manager
 
+  /// instance of the Quoter Factory Finder
   Quoter_Factory_Finder_i *quoter_Factory_Finder_i_ptr_;
-  // instance of the Quoter Factory Finder
 
+  /// reference to the Quoter naming context
   CosNaming::NamingContext_var quoterNamingContext_var_;
-  // reference to the Quoter naming context
 
+  /// Number of commandline arguments.
   int argc_;
-  // Number of commandline arguments.
 
-  char **argv_;
-  // commandline arguments.
+  /// commandline arguments.
+  ACE_TCHAR **argv_;
 
+  /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_;
-  // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
 };
 
 #endif /* QUOTER_FACTORY_FINDER_H */

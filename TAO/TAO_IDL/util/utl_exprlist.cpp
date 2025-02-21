@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -68,42 +66,52 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
-#include	"utl_exprlist.h"
+#include "utl_exprlist.h"
+#include "ast_expression.h"
 
-ACE_RCSID (util, 
-           utl_exprlist, 
-           "$Id$")
-
-UTL_ExprList::UTL_ExprList (AST_Expression *s, 
+UTL_ExprList::UTL_ExprList (AST_Expression *s,
                             UTL_ExprList *cdr)
-	: UTL_List(cdr),
-	  pd_car_data(s)
+  : UTL_List (cdr),
+    pd_car_data (s)
 {
 }
 
 // Get list item.
 AST_Expression *
-UTL_ExprList::head (void)
+UTL_ExprList::head ()
 {
   return this->pd_car_data;
 }
 
+void
+UTL_ExprList::destroy ()
+{
+  if (this->pd_car_data != nullptr)
+    {
+      this->pd_car_data->destroy ();
+      delete this->pd_car_data;
+      this->pd_car_data = nullptr;
+    }
+
+  this->UTL_List::destroy ();
+}
+
 UTL_ExprlistActiveIterator::UTL_ExprlistActiveIterator (UTL_ExprList *s)
-	: UTL_ListActiveIterator(s)
+  : UTL_ListActiveIterator(s)
 {
 }
 
 // Get current item.
 AST_Expression *
-UTL_ExprlistActiveIterator::item (void)
+UTL_ExprlistActiveIterator::item ()
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_ExprList *) source)->head ();

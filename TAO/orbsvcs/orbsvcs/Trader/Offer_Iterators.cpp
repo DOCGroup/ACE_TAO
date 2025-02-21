@@ -1,34 +1,28 @@
-// $Id$
+#include "orbsvcs/Trader/Offer_Iterators.h"
 
-#include "Offer_Iterators.h"
-
-ACE_RCSID(Trader, Offer_Iterators, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Offer_Iterator::TAO_Offer_Iterator (const TAO_Property_Filter& pfilter)
   : pfilter_ (pfilter)
 {
 }
 
-TAO_Offer_Iterator::~TAO_Offer_Iterator (void)
+TAO_Offer_Iterator::~TAO_Offer_Iterator ()
 {
 }
 
 void
-TAO_Offer_Iterator::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Offer_Iterator::destroy ()
 {
   // Remove self from POA
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (id.in ());
 }
 
 TAO_Query_Only_Offer_Iterator::
@@ -37,7 +31,7 @@ TAO_Query_Only_Offer_Iterator(const TAO_Property_Filter& pfilter)
 {
 }
 
-TAO_Query_Only_Offer_Iterator::~TAO_Query_Only_Offer_Iterator(void)
+TAO_Query_Only_Offer_Iterator::~TAO_Query_Only_Offer_Iterator()
 {
 }
 
@@ -50,18 +44,14 @@ TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
 }
 
 CORBA::ULong
-TAO_Query_Only_Offer_Iterator::max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC((CORBA::SystemException,
-                 CosTrading::UnknownMaxLeft))
+TAO_Query_Only_Offer_Iterator::max_left ()
 {
   return static_cast<CORBA::ULong> (this->offers_.size ());
 }
 
 CORBA::Boolean
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
-                                       CosTrading::OfferSeq_out offers
-                                                               ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                                       CosTrading::OfferSeq_out offers)
 {
   offers = new CosTrading::OfferSeq;
 
@@ -72,7 +62,6 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   // populate the sequence.
   for (CORBA::ULong i = 0; i < offers_in_sequence; i++)
     {
-
       CosTrading::Offer *source = 0;
       this->offers_.dequeue_head (source);
       this->pfilter_.filter_offer (source, offers[i]);
@@ -81,30 +70,28 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   return offers_in_sequence != 0;
 }
 
-TAO_Offer_Iterator_Collection::TAO_Offer_Iterator_Collection (void)
+TAO_Offer_Iterator_Collection::TAO_Offer_Iterator_Collection ()
 {
 }
 
-TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
+TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection ()
 {
   while (! this->iters_.is_empty ())
     {
       CosTrading::OfferIterator* offer_iter = 0;
       this->iters_.dequeue_head (offer_iter);
 
-      ACE_TRY_NEW_ENV
+      try
         {
-          offer_iter->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          offer_iter->destroy ();
 
           CORBA::release (offer_iter);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           // Don't let the exceptions propagate since we're in a
           // destructor!
         }
-      ACE_ENDTRY;
     }
 }
 
@@ -118,9 +105,7 @@ add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter)
 
 CORBA::Boolean
 TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
-                                       CosTrading::OfferSeq_out offers
-                                       ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                                       CosTrading::OfferSeq_out offers)
 {
   CORBA::ULong offers_left = n;
   CORBA::Boolean return_value = 1;
@@ -129,7 +114,6 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
   ACE_NEW_THROW_EX (offers,
                     CosTrading::OfferSeq,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (return_value);
 
   while (offers_left > 0 && ! this->iters_.is_empty ())
     {
@@ -144,15 +128,12 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
       // Retrieve the set of offers.
       any_left =
         iter->next_n (offers_left,
-                      CosTrading::OfferSeq_out (out_offers.out ())
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (return_value);
+                      CosTrading::OfferSeq_out (out_offers.out ()));
 
       // If we've exhausted this iterator, destroy it.
       if (any_left == 0)
         {
-          iter->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (return_value);
+          iter->destroy ();
           CORBA::release (iter);
         }
       else
@@ -175,8 +156,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 }
 
 void
-TAO_Offer_Iterator_Collection::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Offer_Iterator_Collection::destroy ()
 {
   // Destroy all iterators in the collection.
   for (Offer_Iters::ITERATOR iters_iter (this->iters_);
@@ -186,38 +166,31 @@ TAO_Offer_Iterator_Collection::destroy (ACE_ENV_SINGLE_ARG_DECL)
       CosTrading::OfferIterator** iter = 0;
 
       iters_iter.next (iter);
-      (*iter)->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      (*iter)->destroy ();
     }
 
   // Remove self from POA
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (id.in ());
 }
 
 CORBA::ULong
-TAO_Offer_Iterator_Collection::max_left (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::UnknownMaxLeft))
+TAO_Offer_Iterator_Collection::max_left ()
 {
-  ACE_THROW_RETURN (CosTrading::UnknownMaxLeft(),
-                    0);
+  throw CosTrading::UnknownMaxLeft();
 }
 
-TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator (void)
+TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator ()
 {
 }
 
-TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator (void)
+TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator ()
 {
   int return_value = 0;
 
@@ -233,77 +206,47 @@ TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator (void)
 }
 
 CORBA::ULong
-TAO_Offer_Id_Iterator::max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                  CosTrading::UnknownMaxLeft))
+TAO_Offer_Id_Iterator::max_left ()
 {
   return static_cast<CORBA::ULong> (this->ids_.size ());
 }
 
 void
-TAO_Offer_Id_Iterator::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Offer_Id_Iterator::destroy ()
 {
   // Remove self from POA
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (id.in ());
 }
 
 CORBA::Boolean
 TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
-                               CosTrading::OfferIdSeq_out _ids
-                               ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                               CosTrading::OfferIdSeq_out _ids)
 {
-  // Calculate the number of Ids to be returned in this.
+  // Calculate the number of Ids to be returned.
   CORBA::ULong items_left = static_cast<CORBA::ULong> (this->ids_.size());
   int difference = items_left - n;
   CORBA::ULong returnable_items = (difference >= 0) ? n : items_left;
   CORBA::Boolean return_value = (CORBA::Boolean) (difference > 0);
 
-  if (returnable_items == 0)
-    ACE_NEW_RETURN (_ids,
-                    CosTrading::OfferIdSeq,
-                    return_value);
-  else
+  // Allocate result sequence.
+  ACE_NEW_RETURN (_ids,
+                  CosTrading::OfferIdSeq(returnable_items),
+                  (items_left > 0));
+  _ids->length(returnable_items);
+
+  // Transfer OfferIds chunk.
+  for (CORBA::ULong i = 0; i < returnable_items; i++)
     {
-      // Allocate space for the returned OfferIds.
-      CosTrading::OfferId* id_buf =
-        CosTrading::OfferIdSeq::allocbuf (returnable_items);
-
-      if (id_buf != 0)
-        {
-          // Copy in those ids!
-          for (CORBA::ULong i = 0; i < returnable_items; i++)
-            {
-              CosTrading::OfferId offer_id = 0;
-
-              this->ids_.dequeue_head (offer_id);
-              id_buf[i] = offer_id;
-            }
-
-          // Place them into an OfferIdSeq.
-          ACE_NEW_RETURN (_ids,
-                          CosTrading::OfferIdSeq (returnable_items,
-                                                  returnable_items,
-                                                  id_buf,
-                                                  1),
-                          return_value);
-        }
-      else
-        ACE_NEW_RETURN (_ids,
-                        CosTrading::OfferIdSeq,
-                        return_value);
+      CosTrading::OfferId offer_id = 0;
+      this->ids_.dequeue_head (offer_id);
+      (*_ids)[i] = offer_id;
     }
 
   // Return true only if there are items left to be returned in
@@ -317,18 +260,4 @@ TAO_Offer_Id_Iterator::insert_id (CosTrading::OfferId new_id)
   this->ids_.enqueue_tail (new_id);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node <CosTrading::Offer*>;
-template class ACE_Unbounded_Queue <CosTrading::Offer*>;
-template class ACE_Unbounded_Queue_Iterator <CosTrading::Offer*>;
-template class ACE_Node <CosTrading::OfferIterator*>;
-template class ACE_Unbounded_Queue <CosTrading::OfferIterator*>;
-template class ACE_Unbounded_Queue_Iterator <CosTrading::OfferIterator*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node <CosTrading::Offer*>
-#pragma instantiate ACE_Unbounded_Queue <CosTrading::Offer*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator <CosTrading::Offer*>
-#pragma instantiate ACE_Node <CosTrading::OfferIterator*>
-#pragma instantiate ACE_Unbounded_Queue <CosTrading::OfferIterator*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator <CosTrading::OfferIterator*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

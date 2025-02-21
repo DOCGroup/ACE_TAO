@@ -1,28 +1,17 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    argument_invoke.cpp
-//
-// = DESCRIPTION
-//    Visitor to pass arguments to the CDR operators. This one helps in
-//    generating the && and the , at the right place. This one is for the
-//    client stub side.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    argument_invoke.cpp
+ *
+ *  Visitor to pass arguments to the CDR operators. This one helps in
+ *  generating the && and the , at the right place. This one is for the
+ *  client stub side.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           argument_invoke, 
-           "$Id$")
+#include "operation.h"
 
 // ************************************************************
 // operation visitor to handle the passing of arguments to the CDR operators
@@ -30,16 +19,13 @@ ACE_RCSID (be_visitor_operation,
 
 be_visitor_operation_argument_invoke::be_visitor_operation_argument_invoke (
     be_visitor_context
-    *ctx
-  )
+    *ctx)
   : be_visitor_operation_argument (ctx),
     last_arg_printed_ (be_visitor_operation_argument_invoke::TAO_ARG_NONE)
 {
 }
 
-be_visitor_operation_argument_invoke::~be_visitor_operation_argument_invoke (
-    void
-  )
+be_visitor_operation_argument_invoke::~be_visitor_operation_argument_invoke ()
 {
 }
 
@@ -48,14 +34,14 @@ be_visitor_operation_argument_invoke::pre_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_argument *arg = be_argument::narrow_from_decl (bd);
+  be_argument *arg = dynamic_cast<be_argument*> (bd);
 
   if (!arg)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) "
                          "be_visitor_operation_argument_invoke"
-                         "::post_process - "
+                         "::pre_process - "
                          "Bad argument node\n"),
                         -1);
     }
@@ -108,7 +94,7 @@ be_visitor_operation_argument_invoke::pre_process (be_decl *bd)
 int
 be_visitor_operation_argument_invoke::post_process (be_decl *bd)
 {
-  be_argument *arg = be_argument::narrow_from_decl (bd);
+  be_argument *arg = dynamic_cast<be_argument*> (bd);
 
   if (!arg)
     {
@@ -119,6 +105,7 @@ be_visitor_operation_argument_invoke::post_process (be_decl *bd)
                          "Bad argument node\n"),
                         -1);
     }
+
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_OUTPUT:
@@ -165,6 +152,7 @@ be_visitor_operation_argument_invoke::post_process (be_decl *bd)
                          "Bad sub state\n"),
                         -1);
     }
+
   return 0;
 }
 

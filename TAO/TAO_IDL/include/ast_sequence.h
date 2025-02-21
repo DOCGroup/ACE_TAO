@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -68,46 +66,66 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_SEQUENCE_AST_SEQUENCE_HH
 
 #include "ast_concrete_type.h"
-#include "idl_bool.h"
+
 
 class AST_Expression;
 class AST_Type;
 
-// A sequence is a combination of a maximum size and a base type.
-
 class TAO_IDL_FE_Export AST_Sequence : public virtual AST_ConcreteType
 {
 public:
-  AST_Sequence (void);
-
   AST_Sequence (AST_Expression *max_size,
                 AST_Type *bt,
                 UTL_ScopedName *n,
-                idl_bool local,
-                idl_bool abstract);
+                bool local,
+                bool abstract);
 
-  virtual ~AST_Sequence (void);
+  virtual ~AST_Sequence ();
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
-  AST_Expression *max_size (void);
+  AST_Expression *max_size ();
 
-  AST_Type *base_type (void);
+  AST_Type *base_type () const;
 
-  virtual idl_bool unbounded (void) const;
+  /**
+   * Returns the fully dealiased base type if it's a typedef. If it's not a
+   * typedef, the it returns the same value as as base_type().
+   */
+  AST_Type *primitive_base_type () const;
+
+  virtual bool unbounded () const;
   // Is this sequence bounded or not.
 
-  // Narrowing.
-  DEF_NARROW_METHODS1(AST_Sequence, AST_ConcreteType);
-  DEF_NARROW_FROM_DECL(AST_Sequence);
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
+  virtual bool legal_for_primary_key () const;
+
+  // Is the element type a forward declared struct or union
+  // that hasn't yet been fully defined?
+  virtual bool is_defined ();
+
+  // Cleanup method.
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  static AST_Decl::NodeType const NT;
+
+  /**
+   * Get and Set Annotations on the base type
+   */
+  ///{
+  AST_Annotation_Appls &base_type_annotations ();
+  void base_type_annotations (const AST_Annotation_Appls &annotations);
+  ///}
 
 private:
   // Data.
@@ -117,8 +135,17 @@ private:
   AST_Type *pd_base_type;
   // Sequence base type.
 
-  idl_bool unbounded_;
+  bool unbounded_;
   // Whether we are bounded or unbounded.
+
+  bool owns_base_type_;
+  // If our base type is anonymous array or sequence, we're
+  // responsible for destroying it.
+
+  /**
+   * Annotations on the base type
+   */
+  AST_Annotation_Appls base_type_annotations_;
 };
 
 #endif           // _AST_SEQUENCE_AST_SEQUENCE_HH

@@ -2,43 +2,63 @@
 #include "server_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/SString.h"
+#include "ace/Get_Opt.h"
 
-ACE_RCSID (Callback,
-           server,
-           "$Id$")
-
-const char *cert_file = "cacert.pem";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+const ACE_TCHAR *cert_file = ACE_TEXT("cacert.pem");
 
 int
-main (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-o <iorfile>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates successful parsing of the command line
+  return 0;
+}
+
+int
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+{
+  try
     {
-      ACE_TString env ("SSL_CERT_FILE=");
+      ACE_TString env (ACE_TEXT("SSL_CERT_FILE="));
       env += cert_file;
-      ACE_OS::putenv (env.c_str ());
+      ACE_OS::putenv ( ACE_TEXT_ALWAYS_CHAR(env.c_str ()));
 
       //
       // Initialize the ORB
       //
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
+
+      if (parse_args (argc, argv) != 0)
+        return 1;
 
       //
       // Get the Root POA.
       //
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       //
       // Create the server, get object reference,
@@ -51,23 +71,17 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var theServer = tmp;
 
       PortableServer::ObjectId_var oid =
-        poa->activate_object (theServer.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->activate_object (theServer.in ());
       CORBA::Object_var server_obj =
-        poa->id_to_reference (oid.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->id_to_reference (oid.in ());
       CORBA::String_var server_IORString =
-        orb->object_to_string (server_obj.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (server_obj.in ());
 
       //
       // Write the IOR to a file.
       //
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen ("server.ior", "w");
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR\n"),
@@ -79,32 +93,24 @@ main (int argc, char *argv[])
       // Activate the POA manager.
       //
       PortableServer::POAManager_var mgr =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      mgr->activate ();
 
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("(%P) calling orb->run () ...\n")));
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
-      poa->destroy (1, 1
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa->destroy (true, true);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Caught exception\n"));
+      ex._tao_print_exception (ACE_TEXT ("Caught exception\n"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

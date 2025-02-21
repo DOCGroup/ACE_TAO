@@ -1,45 +1,37 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    buffer_type.h
-//
-// = DESCRIPTION
-//    Concrete visitor for the Sequence class
-//    This one provides code generation for the buffer type of the Sequence
-//    node.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    buffer_type.h
+ *
+ *  Concrete visitor for the Sequence class
+ *  This one provides code generation for the buffer type of the Sequence
+ *  node.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_
 #define _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_
 
+/**
+ * @class be_visitor_sequence_buffer_type
+ *
+ * @brief be_visitor_sequence_buffer_type
+ *
+ * This is a concrete visitor to generate the buffer type
+ * for a TAO_*_Sequence instantiation.
+ */
 class be_visitor_sequence_buffer_type : public be_visitor_decl
 {
-  //
-  // = TITLE
-  //    be_visitor_sequence_buffer_type
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the buffer type
-  //   for a TAO_*_Sequence instantiation.
-  //
 public:
+  /// Constructor
   be_visitor_sequence_buffer_type (be_visitor_context *ctx);
-  // Constructor
 
-  ~be_visitor_sequence_buffer_type (void);
-  // destructor
+  /// destructor
+  ~be_visitor_sequence_buffer_type ();
 
   // = Visitor methods.
   virtual int visit_predefined_type (be_predefined_type *node);
@@ -64,9 +56,8 @@ public:
   virtual int visit_typedef (be_typedef *node);
 
 protected:
+  /// helper that does the common job
   int visit_node (be_type *);
-  // helper that does the common job
-
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_ */

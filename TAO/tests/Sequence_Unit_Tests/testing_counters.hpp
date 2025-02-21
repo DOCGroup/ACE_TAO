@@ -7,14 +7,10 @@
  * called.   Here we implement some simple helper classes for that
  * purpose.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 
 #include "testing_exception.hpp"
-
-#include <boost/utility.hpp>
 
 #include <iostream>
 
@@ -59,7 +55,6 @@ private:
  *        number of times.
  */
 class expected_calls
-  : private boost::noncopyable
 {
 public:
   inline expected_calls(call_counter const & counter)
@@ -67,6 +62,11 @@ public:
     , previous_count_(counter.current_count())
     , counter_(counter)
   { }
+
+  expected_calls (const expected_calls &) = delete;
+  expected_calls (expected_calls &&) = delete;
+  expected_calls &operator= (const expected_calls &) = delete;
+  expected_calls &operator= (expected_calls &&) = delete;
 
   inline bool expect(long n)
   {
@@ -100,7 +100,6 @@ inline std::ostream & operator<<(std::ostream & os, expected_calls const & x)
 {
   return os << "current=" << x.current_count()
             << ",previous=" << x.previous_count();
-    
 }
 
 #endif // guard_testing_counters_hpp

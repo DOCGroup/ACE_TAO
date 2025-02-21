@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// Anything specific to examples could be added here. 
+// examples.mwc uses the implicit keyword to cause this 
+// project to be used as the base for all examples,
+project : aceexe {
+}

@@ -1,0 +1,42 @@
+// -*- MPC -*-
+project(Activate) : aceexe {
+  exename = Activate
+  Source_Files {
+    Activate.cpp
+  }
+}
+
+project(Condition Variables) : aceexe {
+  exename = Condition_Variables
+  Source_Files {
+    Condition_Variables.cpp
+  }
+}
+
+project(Guards) : aceexe {
+  exename = Guards
+  Source_Files {
+    Guards.cpp
+  }
+}
+
+project(Message Blocks) : aceexe {
+  exename = Message_Blocks
+  Source_Files {
+    Message_Blocks.cpp
+  }
+}
+
+project(Message Queue) : aceexe {
+  exename = Message_Queue
+  Source_Files {
+    Message_Queue.cpp
+  }
+}
+
+project(Mutexes) : aceexe {
+  exename = Mutexes
+  Source_Files {
+    Mutexes.cpp
+  }
+}

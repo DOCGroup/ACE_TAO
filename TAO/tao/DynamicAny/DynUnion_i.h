@@ -1,11 +1,7 @@
-/* -*- C++ -*- */
-// $Id$
-
+// -*- C++ -*-
 //=============================================================================
 /**
  *  @file    DynUnion_i.h
- *
- *  $Id$
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
@@ -16,19 +12,21 @@
 #define TAO_DYNUNION_I_H
 #include /**/ "ace/pre.h"
 
-#include "DynamicAny.h"
+#include "tao/DynamicAny/DynamicAny.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DynCommon.h"
+#include "tao/DynamicAny/DynCommon.h"
 #include "tao/LocalObject.h"
 
 #if defined (_MSC_VER)
 # pragma warning(push)
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_DynUnion_i
@@ -38,162 +36,67 @@
 class TAO_DynamicAny_Export TAO_DynUnion_i
   : public virtual DynamicAny::DynUnion,
     public virtual TAO_DynCommon,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
   /// Constructor.
-  TAO_DynUnion_i (void);
+  TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynUnion_i (void);
+  ~TAO_DynUnion_i ();
 
   /// Constructor taking an Any argument.
-  void init (const CORBA::Any& any ACE_ENV_ARG_DECL);
+  void init (const CORBA::Any& any);
 
   /// Constructor taking a typecode argument.
-  void init (CORBA::TypeCode_ptr tc ACE_ENV_ARG_DECL);
+  void init (CORBA::TypeCode_ptr tc);
 
   // = LocalObject methods.
-  static TAO_DynUnion_i *_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static TAO_DynUnion_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynUnion.
 
-  virtual DynamicAny::DynAny_ptr get_discriminator (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual DynamicAny::DynAny_ptr get_discriminator ();
 
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual void set_discriminator (DynamicAny::DynAny_ptr d);
 
-  virtual void set_discriminator (
-      DynamicAny::DynAny_ptr d
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void set_to_default_member ();
 
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
-      ));
+  virtual void set_to_no_active_member ();
 
-  virtual void set_to_default_member (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean has_no_active_member ();
 
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
-      ));
+  virtual CORBA::TCKind discriminator_kind ();
 
-  virtual void set_to_no_active_member (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual DynamicAny::DynAny_ptr member ();
 
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
-      ));
+  virtual char * member_name ();
 
-  virtual CORBA::Boolean has_no_active_member (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-  virtual CORBA::TCKind discriminator_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-  virtual DynamicAny::DynAny_ptr member (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
-      ));
-
-  virtual char * member_name (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
-      ));
-
-  virtual CORBA::TCKind member_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
-      ));
+  virtual CORBA::TCKind member_kind ();
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (
-      const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void from_any (const CORBA::Any & value);
 
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ));
+  virtual CORBA::Any * to_any ();
 
-  virtual CORBA::Any * to_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual void destroy ();
 
-  virtual CORBA::Boolean equal (
-      DynamicAny::DynAny_ptr dyn_any
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-  virtual DynamicAny::DynAny_ptr current_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
-      ));
+  virtual DynamicAny::DynAny_ptr current_component ();
 
 private:
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
-  void set_from_any (const CORBA::Any &any,
-                     CORBA::Boolean from_factory
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAnyFactory::InconsistentTypeCode
-      ));
+  void set_from_any (const CORBA::Any &any);
 
   /// Called by both versions of init().
-  void init_common (void);
+  void init_common ();
 
   /// Iterative check for label value match.
   CORBA::Boolean label_match (const CORBA::Any &my_any,
-                              const CORBA::Any &other_any
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+                              const CORBA::Any &other_any);
 
   /// Use copy() or assign() instead of these.
   TAO_DynUnion_i (const TAO_DynUnion_i &src);
@@ -207,6 +110,8 @@ private:
   /// The active member's slot in the union type code.
   CORBA::ULong member_slot_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 # pragma warning(pop)

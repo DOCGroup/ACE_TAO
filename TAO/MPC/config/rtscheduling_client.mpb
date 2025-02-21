@@ -1,0 +1,3 @@
+// -*- MPC -*-
+project : rt_client, rtscheduling {
+}

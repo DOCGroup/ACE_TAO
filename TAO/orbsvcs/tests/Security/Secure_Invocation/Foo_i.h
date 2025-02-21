@@ -4,8 +4,6 @@
 /**
  * @file Foo_i.h
  *
- * $Id$
- *
  * Implementation header for the Secure_Invocation test.
  *
  * @author Ossama Othman <ossama@uci.edu>
@@ -21,27 +19,21 @@
 class Foo_i : public virtual POA_Foo::Bar
 {
 public:
-
   /// Constructor.
   Foo_i (CORBA::ORB_ptr,
          SecurityLevel3::SecurityCurrent_ptr current);
 
   /// Test method.
-  virtual void baz (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Foo::Bar::NoSecurityAttributes));
+  virtual void baz ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-
   /// Reference to the ORB.
   CORBA::ORB_var orb_;
 
   /// Reference to the "SecurityCurrent" object.
   SecurityLevel3::SecurityCurrent_var current_;
-
 };
 
 #endif  /* SECURE_INVOCATION_FOO_I_H */

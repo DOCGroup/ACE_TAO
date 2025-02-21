@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Timeout_Generator.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -22,9 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
-#include "EC_Timeout_Filter.h"
+#include "orbsvcs/Event/EC_Timeout_Filter.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_QOS_Info;
 
@@ -45,14 +46,14 @@ class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Generator
 {
 public:
   /// destructor
-  virtual ~TAO_EC_Timeout_Generator (void);
+  virtual ~TAO_EC_Timeout_Generator ();
 
   /// Activate any internal threads.
-  virtual void activate (void) = 0;
+  virtual void activate () = 0;
 
   /// Deactivate any internal threads, clients can destroy the object
   /// after calling this method.
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 
   /// Add a timer at the given priority, returns the timer ID.
   virtual int schedule_timer (TAO_EC_Timeout_Filter* filter,
@@ -79,16 +80,18 @@ class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Adapter : public ACE_Event_Handler
 {
 public:
   /// Default construction.
-  TAO_EC_Timeout_Adapter (void);
+  TAO_EC_Timeout_Adapter ();
 
 private:
-  /// Casts <act> to EC_Filter and dispatches an event to it.
+  /// Casts @a act to EC_Filter and dispatches an event to it.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *act);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Timeout_Generator.i"
+#include "orbsvcs/Event/EC_Timeout_Generator.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

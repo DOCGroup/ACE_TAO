@@ -1,39 +1,24 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Any operators for the Sequence
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_ch.cpp
+ *
+ *  Visitor generating code for Any operators for the Sequence
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           any_op_ch, 
-           "$Id$")
-
-// ***************************************************************************
-// Sequence visitor for generating Any operator declarations in the client header
-// ***************************************************************************
+#include "sequence.h"
 
 be_visitor_sequence_any_op_ch::be_visitor_sequence_any_op_ch (
-    be_visitor_context *ctx
-  )
+                                                              be_visitor_context *ctx
+                                                              )
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_sequence_any_op_ch::~be_visitor_sequence_any_op_ch (void)
+be_visitor_sequence_any_op_ch::~be_visitor_sequence_any_op_ch ()
 {
 }
 
@@ -41,38 +26,71 @@ int
 be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 {
   if (node->cli_hdr_any_op_gen ()
-      || node->imported ())
+      || node->imported ()
+      || (node->is_local ()
+          && !be_global->gen_local_iface_anyops ()))
+    {
+      return 0;
+    }
+
+  if (idl_global->dcps_sequence_type_defined (node->full_name ()))
     {
       return 0;
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2;
+
+  TAO_INSERT_COMMENT (os);
+
+  *os << be_nl_2;
+
+  ACE_CString name;
+
+  bool alt = be_global->alt_mapping ();
+
+  if (alt)
+    {
+      be_type *bt =
+        dynamic_cast<be_type*> (node->base_type ());
+
+      name = "std::vector< ::";
+      name += bt->full_name ();
+      name += ">";
+    }
+  else
+    {
+      name = node->full_name ();
+    }
+
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // Generate the Any <<= and >>= operators.
-  *os << be_global->stub_export_macro ();
-  *os << " void"
-      << " operator<<= (CORBA::Any &, const ";
-  *os << node->name ();
-  *os << " &); // copying version" << be_nl;
-  *os << be_global->stub_export_macro ();
-  *os << " void"
-      << " operator<<= (CORBA::Any &, ";
-  *os << node->name ();
-  *os << "*); // noncopying version" << be_nl;
-  *os << be_global->stub_export_macro ();
-  *os << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, ";
-  *os << node->name ();
-  *os << " *&); // deprecated" << be_nl;
-  *os << be_global->stub_export_macro ();
-  *os << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, const ";
-  *os << node->name ();
-  *os << " *&);";
+  *os << macro
+      << " void"
+      << " operator<<= (::CORBA::Any &, const ::"
+      << name.c_str ()
+      << " &); // copying version" << be_nl;
 
-  node->cli_hdr_any_op_gen (1);
+  if (!alt)
+    {
+      *os << macro
+          << " void"
+          << " operator<<= (::CORBA::Any &, ::"
+          << name.c_str ()
+          << "*); // noncopying version" << be_nl;
+    }
+
+  *os << macro
+      << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, const ::"
+      << name.c_str ()
+      << " *&);";
+
+  *os << be_global->anyops_versioning_end () << be_nl;
+
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }

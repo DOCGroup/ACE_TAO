@@ -1,20 +1,18 @@
-#ifndef guard_testing_sequence_traits_hpp
-#define guard_testing_sequence_traits_hpp
+#ifndef guard_testing_allocation_traits_hpp
+#define guard_testing_allocation_traits_hpp
 /**
  * @file
  *
  * @brief Specialize the allocation traits in a manner suitable for
  * testing.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 
-#include "unbounded_value_allocation_traits.hpp"
-#include "bounded_value_allocation_traits.hpp"
-#include "unbounded_reference_allocation_traits.hpp"
-#include "bounded_reference_allocation_traits.hpp"
+#include "tao/Unbounded_Value_Allocation_Traits_T.h"
+#include "tao/Bounded_Value_Allocation_Traits_T.h"
+#include "tao/Unbounded_Reference_Allocation_Traits_T.h"
+#include "tao/Bounded_Reference_Allocation_Traits_T.h"
 #include "testing_exception.hpp"
 #include "testing_counters.hpp"
 
@@ -37,6 +35,13 @@ struct testing_allocation_traits : public base
     return base::allocbuf(maximum);
   }
 
+  // allocbuf_calls must be updated when allocbuf_noinit is called as well.
+  inline static value_type * allocbuf_noinit(CORBA::ULong maximum)
+  {
+    allocbuf_calls();
+    return base::allocbuf_noinit(maximum);
+  }
+
   static call_counter freebuf_calls;
   inline static void freebuf(value_type * buffer)
   {
@@ -54,6 +59,7 @@ testing_allocation_traits<T,base>::freebuf_calls;
 template<typename T, class base> call_counter
 testing_allocation_traits<T,base>::default_buffer_allocation_calls;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 namespace details
@@ -85,5 +91,6 @@ struct bounded_reference_allocation_traits<T,reference_traits,MAX,true>
 
 } // namespace details
 } // namespace TAO
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif // guard_testing_sequence_traits_hpp
+#endif // guard_testing_allocation_traits_hpp

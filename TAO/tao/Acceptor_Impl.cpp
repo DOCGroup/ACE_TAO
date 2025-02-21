@@ -1,20 +1,13 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     Acceptor_Impl.cpp
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@uci.edu>
-//     Ossama Othman <ossama@dre.vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Acceptor_Impl.cpp
+ *
+ *  @author  Carlos O'Ryan <coryan@uci.edu>  Ossama Othman <ossama@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ACCEPTOR_IMPL_CPP
 #define TAO_ACCEPTOR_IMPL_CPP
@@ -25,26 +18,22 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Thread_Per_Connection_Handler.h"
-#include "Server_Strategy_Factory.h"
-#include "ORB_Core.h"
-#include "Transport_Cache_Manager.h"
-#include "Thread_Lane_Resources.h"
-#include "Transport.h"
-#include "debug.h"
+#include "tao/Thread_Per_Connection_Handler.h"
+#include "tao/Server_Strategy_Factory.h"
+#include "tao/ORB_Core.h"
+#include "tao/Transport_Cache_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Transport.h"
+#include "tao/debug.h"
 
-ACE_RCSID (tao,
-           Acceptor_Impl,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>
-TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
-                                                           CORBA::Boolean flag)
+TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core)
   : ACE_Creation_Strategy<SVC_HANDLER> (0, orb_core->reactor()),
-    orb_core_ (orb_core),
-    lite_flag_ (flag)
+    orb_core_ (orb_core)
 {
 }
 
@@ -57,8 +46,7 @@ TAO_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
       this->orb_core_->lane_resources ().transport_cache ().purge ();
 
       ACE_NEW_RETURN (sh,
-                      SVC_HANDLER (this->orb_core_,
-                                   this->lite_flag_),
+                      SVC_HANDLER (this->orb_core_),
                       -1);
     }
 
@@ -81,7 +69,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
   // Indicate that this transport was opened in the server role
   if (TAO_debug_level > 6)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "
                 "opened as TAO_SERVER_ROLE\n"));
 
@@ -90,7 +78,14 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
   if (this->ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh,
                                                                          arg) == -1)
-    return -1;
+    {
+      // Activation fails, decrease reference.
+      sh->transport ()->remove_reference ();
+
+      // #REFCOUNT# is zero at this point.
+
+      return -1;
+    }
 
   // The service handler has been activated. Now cache the handler.
   if (sh->add_transport_to_cache () == -1)
@@ -98,13 +93,16 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
       // Adding to the cache fails, close the handler.
       sh->close ();
 
+      // close() doesn't really decrease reference.
+      sh->transport ()->remove_reference ();
+
       // #REFCOUNT# is zero at this point.
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
-                      ACE_TEXT ("could not add the handler to cache \n")));
+                      ACE_TEXT ("could not add the handler to cache\n")));
         }
 
       return -1;
@@ -112,9 +110,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
   // Registration with cache is successful, #REFCOUNT# is two at this
   // point.
-
-  TAO_Server_Strategy_Factory *f =
-    this->orb_core_->server_factory ();
+  TAO_Server_Strategy_Factory *f = this->orb_core_->server_factory ();
 
   int result = 0;
 
@@ -138,8 +134,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
       // Otherwise, it is the reactive concurrency model. We may want
       // to register ourselves with the reactor. Call the register
       // handler on the transport.
-      result =
-        sh->transport ()->register_handler ();
+      result = sh->transport ()->register_handler ();
     }
 
   if (result != -1)
@@ -165,19 +160,22 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
       // Close handler.
       sh->close ();
 
+      // close() doesn't really decrease reference.
+      sh->transport ()->remove_reference ();
+
       // #REFCOUNT# is zero at this point.
 
       if (TAO_debug_level > 0)
          {
-           const ACE_TCHAR *error = 0;
+           const ACE_TCHAR *error_message = 0;
            if (f->activate_server_connections ())
-             error = ACE_TEXT("could not activate new connection");
+             error_message = ACE_TEXT("could not activate new connection");
            else
-             error = ACE_TEXT("could not register new connection in the reactor");
+             error_message = ACE_TEXT("could not register new connection in the reactor");
 
-           ACE_ERROR ((LM_ERROR,
-                       "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "
-                       "%s\n", error));
+           TAOLIB_ERROR ((LM_ERROR,
+                       ACE_TEXT("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
+                       ACE_TEXT("%s\n"), error_message));
          }
 
       return -1;
@@ -198,20 +196,28 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::TAO_Accept_Strategy (TAO_
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                                                             int restart)
+                                                             bool restart)
 {
-
-  return ACCEPT_STRATEGY_BASE::open (local_addr,
-                                     restart);
+  return ACCEPT_STRATEGY_BASE::open (local_addr, restart);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDLER *svc_handler)
 {
-  return ACCEPT_STRATEGY_BASE::accept_svc_handler (svc_handler);
+  int const result = ACCEPT_STRATEGY_BASE::accept_svc_handler (svc_handler);
+  if (result == -1)
+    {
+      svc_handler->transport ()->remove_reference ();
+
+      // #REFCOUNT# is zero at this point.
+    }
+
+  return result;
 }
 
 
 /////////////////////////////////////////////////////////////////////
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ACCEPTOR_IMPL_CPP */

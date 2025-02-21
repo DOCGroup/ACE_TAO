@@ -1,9 +1,8 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file  FTEC_Gateway.h
- *
- *  $Id$
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
@@ -15,6 +14,8 @@
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC
 {
@@ -28,49 +29,36 @@ namespace TAO_FTRTEC
       ~FTEC_Gateway();
 
       RtecEventChannelAdmin::EventChannel_ptr activate
-          (PortableServer::POA_ptr poa
-            ACE_ENV_ARG_DECL);
+          (PortableServer::POA_ptr poa);
 
       RtecEventChannelAdmin::EventChannel_ptr
-        _this(ACE_ENV_SINGLE_ARG_DECL);
+        _this();
 
       //= The RtecEventChannelAdmin::EventChannel methods
       virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-        for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-          ACE_THROW_SPEC((CORBA::SystemException));
+        for_consumers ();
 
       virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-        for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-          ACE_THROW_SPEC((CORBA::SystemException));
+        for_suppliers ();
 
-      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-         ACE_THROW_SPEC((CORBA::SystemException));
+      virtual void destroy ();
 
       virtual RtecEventChannelAdmin::Observer_Handle
-        append_observer
-          (RtecEventChannelAdmin::Observer_ptr observer
-           ACE_ENV_ARG_DECL) ACE_THROW_SPEC((
-                             CORBA::SystemException,
-                             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-                             RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+        append_observer (RtecEventChannelAdmin::Observer_ptr observer);
 
-      virtual void remove_observer
-        (RtecEventChannelAdmin::Observer_Handle
-         ACE_ENV_ARG_DECL)  ACE_THROW_SPEC((
-                            CORBA::SystemException,
-                            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-                            RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+      virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
       void push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
-                const RtecEventComm::EventSet & data
-                ACE_ENV_ARG_DECL);
+                const RtecEventComm::EventSet & data);
   private:
       struct FTEC_Gateway_Impl  *impl_;
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "FTEC_Gateway.inl"
+#include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/  "ace/post.h"

@@ -1,17 +1,12 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/Xt_Stopwatch
-//
-// = FILENAME
-//   timer.h
-//
-// = AUTHOR
-//   Bala <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   timer.h
+ *
+ *  @author Bala <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TIMER_H
 #define TIMER_H
@@ -25,47 +20,48 @@
 class Timer_imp
 {
  public:
-
+  /// Constructor
   Timer_imp (XtAppContext &,
              CORBA::Long,
              Stopwatch_display *);
-  // Constructor..
 
-  void start (void);
-  // Resets, and starts the clock ticking
+  /// Destructor
+  virtual ~Timer_imp ();
 
-  void stop (void);
-  // Stops the clock
+  /// Resets, and starts the clock ticking
+  void start ();
 
-  CORBA::Float  elapsed_time (void);
-  // Returns time since timer started
+  /// Stops the clock
+  void stop ();
+
+  /// Returns time since timer started
+  CORBA::Float  elapsed_time ();
 
  private:
-
+  /// Static member function used for TimeOut callback.
   static void tick_callback (XtPointer,
                              XtIntervalId *);
-  // Static member function used for TimeOut callback.
 
-  void tick (void);
-  // Called every interval_ milliseconds
+  /// Called every interval_ milliseconds
+  void tick ();
 
+  /// Called at each clock tick...
   virtual void report_time (CORBA::Float);
-  // Called at each clock tick...
 
+  /// A copy of the stopwatch object
   Stopwatch_display *stopwatch_;
-  // A copy of the stopwatch object
 
+  /// Current number of ticks
   CORBA::Long counter_;
-  // Current number of ticks
 
+  /// Time in milliseconds between updates
   CORBA::Long interval_;
-  // Time in milliseconds between updates
 
+  /// Identifier of current TimeOut
   XtIntervalId id_;
-  // Identifier of current TimeOut
 
+  /// Required by Xt functions
   XtAppContext app_;
-  // Required by Xt functions
 };
 
 

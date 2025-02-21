@@ -1,23 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Advanced/ch_12
-//
-// = FILENAME
-//    server.h
-//
-// = AUTHORS
-//   Source code used in TAO has been modified and adapted from the
-//   code provided in the book, "Advanced CORBA Programming with C++"
-//   by Michi Henning and Steve Vinoski. Copyright
-//   1999. Addison-Wesley, Reading, MA.  Used with permission of
-//   Addison-Wesley.
-//
-//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.h
+ *
+ *  @author Source code used in TAO has been modified and adapted from thecode provided in the book
+ *  @author "Advanced CORBA Programming with C++"by Michi Henning and Steve Vinoski. Copyright1999. Addison-Wesley
+ *  @author Reading
+ *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef server_HH_
 #define server_HH_
@@ -27,6 +19,8 @@
 #include "assert.h"
 #include <map>
 #include <list>
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 
 using namespace std;
 
@@ -41,18 +35,12 @@ class Thermometer_impl : public virtual POA_CCS::Thermometer
 {
 public:
   // CORBA attributes
-  virtual CCS::ModelType  model ()
-    throw (CORBA::SystemException);
-  virtual CCS::AssetType  asset_num ()
-    throw (CORBA::SystemException);
-  virtual CCS::TempType   temperature ()
-    throw (CORBA::SystemException);
-  virtual CCS::LocType    location ()
-    throw (CORBA::SystemException);
-  virtual void            location (const char *loc)
-    throw (CORBA::SystemException);
-  virtual void            remove ()
-    throw (CORBA::SystemException);
+  virtual CCS::ModelType  model ();
+  virtual CCS::AssetType  asset_num ();
+  virtual CCS::TempType   temperature ();
+  virtual CCS::LocType    location ();
+  virtual void            location (const char *loc);
+  virtual void            remove ();
 
   // Constructor & destructor
   Thermometer_impl (CCS::AssetType anum);
@@ -78,10 +66,8 @@ class Thermostat_impl : public virtual POA_CCS::Thermostat,
 {
 public:
   // CORBA operations
-  virtual CCS::TempType   get_nominal ()
-    throw (CORBA::SystemException);
-  virtual CCS::TempType   set_nominal (CCS::TempType new_temp)
-    throw (CORBA::SystemException, CCS::Thermostat::BadTemp);
+  virtual CCS::TempType   get_nominal ();
+  virtual CCS::TempType   set_nominal (CCS::TempType new_temp);
 
   // Constructor and destructor
   Thermostat_impl (CCS::AssetType anum);
@@ -90,8 +76,7 @@ public:
 private:
   // Helper functions
   CCS::TempType   get_nominal_temp ();
-  CCS::TempType   set_nominal_temp (CCS::TempType new_temp)
-    throw (CCS::Thermostat::BadTemp);
+  CCS::TempType   set_nominal_temp (CCS::TempType new_temp);
 
   // Copy and assignment not supported
   Thermostat_impl (const Thermostat_impl &);
@@ -102,32 +87,22 @@ class Controller_impl : public virtual POA_CCS::Controller
 {
 public:
   // CORBA operations
-  virtual CCS::Controller::ThermometerSeq *
-  list () throw (CORBA::SystemException);
+  virtual CCS::Controller::ThermometerSeq* list ();
   virtual void
-  find (CCS::Controller::SearchSeq & slist)
-    throw (CORBA::SystemException);
+  find (CCS::Controller::SearchSeq & slist);
   virtual void change (const CCS::Controller::ThermostatSeq & tlist,
-                       CORBA::Short                           delta)
-    throw (CORBA::SystemException,
-           CCS::Controller::EChange);
+                       CORBA::Short                           delta);
   virtual CCS::Thermometer_ptr
   create_thermometer (CCS::AssetType      anum,
-                      const char*     loc)
-    throw (CORBA::SystemException,
-           CCS::Controller::DuplicateAsset);
+                      const char*     loc);
   virtual CCS::Thermostat_ptr
   create_thermostat (CCS::AssetType      anum,
                      const char*     loc,
-                     CCS::TempType       temp)
-    throw (CORBA::SystemException,
-           CCS::Controller::DuplicateAsset,
-           CCS::Thermostat::BadTemp);
+                     CCS::TempType       temp);
 
   // Constructor and destructor
   Controller_impl (PortableServer::POA_ptr poa,
-                   const char *            asset_file)
-    throw (int);
+                   const char *            asset_file);
   virtual ~Controller_impl ();
 
   // Helper functions to allow access to the object map
@@ -192,18 +167,13 @@ public:
   preinvoke (const PortableServer::ObjectId & oid,
              PortableServer::POA_ptr          poa,
              const char *                     operation,
-             void * &                         cookie
-             ACE_ENV_ARG_DECL)
-    throw (CORBA::SystemException,
-           PortableServer::ForwardRequest);
+             void * &                         cookie);
   virtual void
   postinvoke (const PortableServer::ObjectId & /*oid*/,
               PortableServer::POA_ptr          /*poa*/,
               const char *                     /*operation*/,
               void *                           /*cookie*/,
-              PortableServer::Servant          /*servant*/
-              ACE_ENV_ARG_DECL)
-    throw (CORBA::SystemException) {}
+              PortableServer::Servant          /*servant*/) {}
 private:
   Controller_impl *                   m_ctrl;
 

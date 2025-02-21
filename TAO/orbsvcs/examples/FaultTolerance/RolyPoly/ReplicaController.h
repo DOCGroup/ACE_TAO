@@ -1,24 +1,19 @@
 // file      : RolyPoly/ReplicaController.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef REPLICA_CONTROLLER_H
 #define REPLICA_CONTROLLER_H
 
 #include "ace/TMCast/GroupFwd.hpp"
 
-#include "tao/corba.h"
+#include "tao/LocalObject.h"
+#include "tao/PortableInterceptorC.h"
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableInterceptorC.h"
-#include "tao/LocalObject.h"
 
 #include "Log.h"
+#include <memory>
 
 // State management
-//
-//
-
 PortableInterceptor::SlotId
 state_slot_id ();
 
@@ -26,12 +21,9 @@ void
 state_slot_id (PortableInterceptor::SlotId slot_id);
 
 // ReplicaController
-//
-//
-
 class ReplicaController
   : public virtual PortableInterceptor::ServerRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
   virtual
@@ -40,57 +32,36 @@ public:
   ReplicaController (CORBA::ORB_ptr orb);
 
 public:
-  virtual char *
-  name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void
-  destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
   virtual void
   tao_ft_interception_point (
     PortableInterceptor::ServerRequestInfo_ptr ri,
-    CORBA::OctetSeq_out ocs
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+    CORBA::OctetSeq_out ocs);
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
   virtual void
   receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void
   receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void
   send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void
   send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void
   send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 
 private:
   static ACE_THR_FUNC_RETURN
@@ -103,7 +74,6 @@ private:
   resolve_poa (PortableInterceptor::AdapterName const& name);
 
 private:
-
   class RecordId
   {
   public:
@@ -133,7 +103,7 @@ private:
   Log_ log_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
-  auto_ptr<ACE_TMCast::Group> group_;
+  std::unique_ptr<ACE_TMCast::Group> group_;
 };
 
 #endif  /* REPLICA_CONTROLLER_H */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Task_T.h"
 #include "ace/Service_Config.h"
 
@@ -10,15 +8,16 @@ class Thread_Pool : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //   Defines a thread pool abstraction based on the <ACE_Task>.
 public:
-  Thread_Pool (ACE_Thread_Manager *thr_mgr,
+  Thread_Pool (CORBA::ORB_ptr orb,
+               ACE_Thread_Manager *thr_mgr,
                int n_threads);
   // Constructor activates <n_threads> in the thread pool.
 
-  virtual ~Thread_Pool (void);
+  virtual ~Thread_Pool ();
   // Destructor...
-  int shutdown (void);
+  int shutdown ();
 
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual int put (Test::Echo_ptr echoptr);
 
@@ -28,6 +27,7 @@ public:
 
 private:
   virtual int close (u_long);
-  int nt_;                      // number of threads
   // Close hook.
+  CORBA::ORB_var orb_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> nt_;     // number of threads
 };

@@ -4,8 +4,6 @@
 /**
  *  @file    Key_Adapters.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali
  */
 //=============================================================================
@@ -15,17 +13,21 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PS_ForwardC.h"
+#include "tao/PortableServer/PS_ForwardC.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Active_Map_Manager_Key;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
-////////////////////////////////////////////////////////////////////////////////
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+///////////////////////////////////////////////////////////////////////////////
 
 /**
  * @class TAO_Incremental_Key_Generator
@@ -37,13 +39,11 @@ class ACE_Active_Map_Manager_Key;
 class TAO_Incremental_Key_Generator
 {
 public:
-
-  TAO_Incremental_Key_Generator (void);
+  TAO_Incremental_Key_Generator ();
 
   int operator() (PortableServer::ObjectId &id);
 
 protected:
-
   CORBA::ULong counter_;
 };
 
@@ -59,7 +59,6 @@ protected:
 class TAO_PortableServer_Export TAO_ObjectId_Hash
 {
 public:
-
   /// Returns hash value.
   u_long operator () (const PortableServer::ObjectId &id) const;
 };
@@ -78,7 +77,6 @@ public:
 class TAO_Ignore_Original_Key_Adapter
 {
 public:
-
   int encode (const PortableServer::ObjectId &original_key,
               const ACE_Active_Map_Manager_Key &active_key,
               PortableServer::ObjectId &modified_key);
@@ -104,7 +102,6 @@ public:
 class TAO_Preserve_Original_Key_Adapter
 {
 public:
-
   int encode (const PortableServer::ObjectId &original_key,
               const ACE_Active_Map_Manager_Key &active_key,
               PortableServer::ObjectId &modified_key);
@@ -116,7 +113,9 @@ public:
               PortableServer::ObjectId &original_key);
 };
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

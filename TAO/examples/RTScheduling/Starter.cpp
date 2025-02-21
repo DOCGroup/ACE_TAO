@@ -1,41 +1,38 @@
-//$Id$
-
 #include "Starter.h"
-#include "ace/OS_NS_sys_time.h"
 
+#include "ace/OS_NS_sys_time.h"
 
 Starter::Starter (CORBA::ORB_ptr orb)
 {
   // Initialize the naming service
   if (this->naming_client_.init (orb) != 0)
     ACE_ERROR ((LM_ERROR,
-		" (%P|%t) Unable to initialize "
-		"the TAO_Naming_Client. \n"));
+    " (%P|%t) Unable to initialize "
+    "the TAO_Naming_Client.\n"));
 }
 
 void
-Starter::init (ACE_ENV_SINGLE_ARG_DECL)
+Starter::init ()
 {
-  this->resolve_synch_objs (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->resolve_synch_objs ();
 
   this->fire ();
 }
 
 void
-Starter::fire (void)
+Starter::fire ()
 {
   ACE_Time_Value base_time = ACE_OS::gettimeofday ();
   for (Synchs::iterator iterator = this->synchs_.begin ();
        iterator != this->synchs_.end ();
        ++iterator)
     {
-      (*iterator).int_id_.in ()->go (base_time.sec ());
+      (*iterator).int_id_.in ()->go (static_cast<CORBA::Long> (base_time.sec ()));
     }
 }
 
 void
-Starter::resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL)
+Starter::resolve_synch_objs ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -45,9 +42,7 @@ Starter::resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL)
     CORBA::string_dup ("Synch");
 
   CORBA::Object_var object =
-    this->naming_client_->resolve (name
-				   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->naming_client_->resolve (name);
 
   this->synch_context_ =
     CosNaming::NamingContext::_narrow (object.in ());
@@ -59,15 +54,11 @@ Starter::resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL)
 
   // Get the list of synchs registered for this sender.
   this->synch_context_->list (chunk,
-			      binding_list,
-			      iterator
-			      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+            binding_list,
+            iterator);
 
   // Add the receivers found in the bindinglist to the <receivers>.
-  this->add_to_synchs (binding_list
-		       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->add_to_synchs (binding_list);
 
   if (!CORBA::is_nil (iterator.in ()))
     {
@@ -77,13 +68,9 @@ Starter::resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL)
       while (more)
         {
           more = iterator->next_n (chunk,
-                                   binding_list
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                   binding_list);
 
-          this->add_to_synchs (binding_list
-			       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->add_to_synchs (binding_list);
         }
     }
 
@@ -91,8 +78,7 @@ Starter::resolve_synch_objs (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-Starter::add_to_synchs (CosNaming::BindingList &binding_list
-			ACE_ENV_ARG_DECL)
+Starter::add_to_synchs (CosNaming::BindingList &binding_list)
 {
   ACE_Time_Value base_time = ACE_OS::gettimeofday ();
   for (CORBA::ULong i = 0;
@@ -104,8 +90,8 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list
         binding_list [i].binding_name [0].id.in ();
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Synch Name %s\n",
-		  synch_name.c_str ()));
+      "Synch Name %C\n",
+      synch_name.c_str ()));
 
       CosNaming::Name name (1);
       name.length (1);
@@ -115,67 +101,37 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list
       // Resolve the reference of the receiver from the receiver
       // context.
       CORBA::Object_var obj =
-        this->synch_context_->resolve (name
-				       ACE_ENV_ARG_PARAMETER);
+        this->synch_context_->resolve (name);
 
       Synch_var synch_obj =
         Synch::_narrow (obj.in ());
 
 
-      synch_obj->go (base_time.sec ());
+      synch_obj->go (static_cast<CORBA::Long> (base_time.sec ()));
 
 //        // Add this receiver to the receiver map.
 //        this->synchs_.bind (synch_name,
-//  			  synch_obj);
+//          synch_obj);
     }
 }
 
 
 int
-main (int argc, char** argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-					    argv,
-					    ""
-					    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       Starter starter (orb.in ());
 
-      starter.init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+      starter.init ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 return 0;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<ACE_CString, Synch_var>;
-template class ACE_Hash_Map_Manager<ACE_CString, Synch_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, Synch_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Synch_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, Synch_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Synch_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, Synch_var>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, Synch_var, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, Synch_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Synch_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, Synch_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Synch_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

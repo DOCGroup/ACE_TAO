@@ -1,9 +1,8 @@
-// $Id$
-
-#include "EC_RTCORBA_Dispatching.h"
+#include "orbsvcs/Event/EC_RTCORBA_Dispatching.h"
 #include "tao/RTCORBA/Priority_Mapping.h"
 
-ACE_RCSID(Event, EC_RTCORBA_Dispatching, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_RTCORBA_Dispatching::
   TAO_EC_RTCORBA_Dispatching (const RTCORBA::ThreadpoolLanes &lanes,
@@ -19,13 +18,13 @@ TAO_EC_RTCORBA_Dispatching::
     this->tasks_[i].thr_mgr (&this->thread_manager_);
 }
 
-TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching (void)
+TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching ()
 {
   delete[] this->tasks_;
 }
 
 void
-TAO_EC_RTCORBA_Dispatching::activate (void)
+TAO_EC_RTCORBA_Dispatching::activate ()
 {
   for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
     {
@@ -48,7 +47,7 @@ TAO_EC_RTCORBA_Dispatching::activate (void)
 }
 
 void
-TAO_EC_RTCORBA_Dispatching::shutdown (void)
+TAO_EC_RTCORBA_Dispatching::shutdown ()
 {
   for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
     {
@@ -68,23 +67,20 @@ void
 TAO_EC_RTCORBA_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                              RtecEventComm::PushConsumer_ptr consumer,
                              const RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info
-                             ACE_ENV_ARG_DECL)
+                             TAO_EC_QOS_Info& qos_info)
 {
   RtecEventComm::EventSet event_copy = event;
-  this->push_nocopy (proxy, consumer, event_copy, qos_info ACE_ENV_ARG_PARAMETER);
+  this->push_nocopy (proxy, consumer, event_copy, qos_info);
 }
 
 void
 TAO_EC_RTCORBA_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                          RtecEventComm::PushConsumer_ptr consumer,
                                          RtecEventComm::EventSet& event,
-                                         TAO_EC_QOS_Info&
-                                         ACE_ENV_ARG_DECL)
+                                         TAO_EC_QOS_Info&)
 {
   RTCORBA::Priority current_priority =
-    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->current_->the_priority ();
 
   for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
     {
@@ -94,9 +90,9 @@ TAO_EC_RTCORBA_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
       // @@ If there were no threads available we may need to create
       // some...
 
-      this->tasks_[i].push (proxy, consumer, event
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->tasks_[i].push (proxy, consumer, event);
       break;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,45 @@
+
+
+OMG Naming Service
+
+File: DevGuideExamples/NamingService/Messenger/README
+
+
+The Original Messenger example, introduced in Chapters 4 and 5
+(GettingStartedUNIX and GettingStartedVC), is modified to utilize the
+Naming Service.  The client now uses the Naming Service rather than
+reading the server object's IOR as a string from a file.
+
+The Client code is stored in:
+
+DevGuideExamples/NamingService/Messenger/MessengerClient.cpp
+
+The Server code is stored in:
+
+DevGuideExamples/NamingService/Messenger/MessengerServer.cpp
+
+
+How to Run
+----------
+
+To start the Naming_Service:
+----------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior&
+
+To start the server:
+------------------
+./MessengerServer -ORBInitRef NameService=file://ns.ior
+
+To start the client:
+------------------
+./MessengerClient -ORBInitRef NameService=file://ns.ior
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the three steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+

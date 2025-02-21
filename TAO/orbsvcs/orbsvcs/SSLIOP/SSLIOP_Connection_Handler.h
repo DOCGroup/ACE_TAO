@@ -4,8 +4,6 @@
 /**
  *  @file    SSLIOP_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
  */
@@ -23,13 +21,15 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Transport.h"
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Transport.h"
 
 #include "tao/Connection_Handler.h"
 #include "tao/IIOPC.h"
 
 #include "ace/Reactor.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IIOP_Properties;
 
@@ -37,7 +37,6 @@ namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Connection_Handler
      *
@@ -51,20 +50,13 @@ namespace TAO
         public TAO_Connection_Handler
     {
     public:
-
       Connection_Handler (ACE_Thread_Manager* t = 0);
 
       /// Constructor.
-      /**
-       * @param arg Parameter is used by the Acceptor to pass the
-       *        protocol configuration properties for this
-       *        connection.
-       */
-      Connection_Handler (TAO_ORB_Core *orb_core,
-                          CORBA::Boolean flag);
+      Connection_Handler (TAO_ORB_Core *orb_core);
 
       /// Destructor.
-      ~Connection_Handler (void);
+      ~Connection_Handler ();
 
       /**
        * @name Connection Handler overloads
@@ -82,8 +74,8 @@ namespace TAO
       //@{
       /** @name Event Handler overloads
        */
-      virtual int resume_handler (void);
-      virtual int close_connection (void);
+      virtual int resume_handler ();
+      virtual int close_connection ();
       virtual int handle_input (ACE_HANDLE);
       virtual int handle_output (ACE_HANDLE);
       virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -93,7 +85,7 @@ namespace TAO
       //@}
 
       /// Add ourselves to cache.
-      int add_transport_to_cache (void);
+      int add_transport_to_cache ();
 
       /// Process the @a listen_list.
       int process_listen_point_list (IIOP::ListenPointList &listen_list);
@@ -109,27 +101,24 @@ namespace TAO
         TAO::SSLIOP::Current_Impl *previous_current_impl,
         bool &setup_done);
 
-    protected:
+      /// Return true if the host name matches the name/domain in the peer
+      /// certificate.
+      bool check_host ();
 
+    protected:
       //@{
       /**
        * @name TAO_Connection Handler overloads
        */
-      virtual int release_os_resources (void);
+      virtual int release_os_resources ();
       virtual void pos_io_hook (int & return_value);
+      virtual int handle_write_ready (const ACE_Time_Value *timeout);
       //@}
 
     protected:
-
       /// Reference to the SSLIOP::Current object (downcast to gain
       /// access to the low-level management methods).
       TAO::SSLIOP::Current_var current_;
-
-    private:
-
-      /// TCP configuration for this connection.
-      TAO_IIOP_Properties *tcp_properties_;
-
     };
 
     // ****************************************************************
@@ -152,16 +141,14 @@ namespace TAO
     class State_Guard
     {
     public:
-
       /// Constructor that sets up the TSS SSL state.
       State_Guard (TAO::SSLIOP::Connection_Handler *handler,
                    int &result);
 
       /// Destructor that tears down the TSS SSL state.
-      ~State_Guard (void);
+      ~State_Guard ();
 
     private:
-
       /// Pointer to the connection handler currently handling the
       /// request/upcall.
       Connection_Handler *handler_;
@@ -181,15 +168,15 @@ namespace TAO
       /// Flag that specifies whether or not setup of the SSLIOP::Current
       /// object completed for the current thread and invocation.
       bool setup_done_;
-
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (__ACE_INLINE__)
-#include "SSLIOP_Connection_Handler.i"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 

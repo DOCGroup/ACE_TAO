@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : taolib, portableserver, pi, codecfactory, avoids_corba_e_micro {
+  after += CSD_Framework
+  libs += TAO_CSD_Framework
+}

@@ -1,8 +1,6 @@
 /**
  * @file RTEC_Initializer.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -18,7 +16,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_EC_Event_Channel;
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 class RTCORBA_Setup;
 
 /**
@@ -26,7 +27,6 @@ class RTCORBA_Setup;
  *
  * @brief Implement a helper method to initialize and instance of
  * TAO's Real-time Event Service
- *
  */
 class TAO_RTEC_Perf_Export RTEC_Initializer
 {
@@ -34,8 +34,7 @@ public:
   /// Return a new event channel
   static TAO_EC_Event_Channel *create (PortableServer::POA_ptr consumer_poa,
                                        PortableServer::POA_ptr supplier_poa,
-                                       RTCORBA_Setup *rtcorba_setup
-                                       ACE_ENV_ARG_DECL);
+                                       RTCORBA_Setup *rtcorba_setup);
 };
 
 #endif /* TAO_PERF_RTEC_RTEC_INITIALIZER_H */

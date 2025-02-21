@@ -1,0 +1,15 @@
+/**
+ * @file exception_misuse1.idl
+ *
+ * https://github.com/DOCGroup/ACE_TAO/issues/2015
+ *
+ * tao_idl shall reject use of exception for argument of method
+ *
+ */
+interface exception_misuse1 {
+  exception exc_t {
+    string reason;
+  };
+  void doit (in exc_t ex);
+};
+

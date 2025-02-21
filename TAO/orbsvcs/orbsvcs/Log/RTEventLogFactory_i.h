@@ -4,10 +4,7 @@
 /**
  *  @file   RTEventLogFactory_i.h
  *
- *  $Id$
- *
  *  Implements the Factory for NotifyLog Objects.
- *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
@@ -29,13 +26,15 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecSchedulerS.h"
 
-#include "RTEventLog_i.h"
-#include "rteventlog_export.h"
+#include "orbsvcs/Log/RTEventLog_i.h"
+#include "orbsvcs/Log/rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTEventLog_i;
 class TAO_RTEventLogNotification;
@@ -45,7 +44,7 @@ class TAO_RTEventLogNotification;
  *
  * @brief The TAO_RTEventLogFactory is a factory that is used to create RTEventLogs which are event-aware.
  */
-class TAO_RTEventLog_Export TAO_RTEventLogFactory_i :
+class TAO_RTEventLog_Serv_Export TAO_RTEventLogFactory_i :
   public POA_RTEventLogAdmin::EventLogFactory,
   public TAO_LogMgr_i
 {
@@ -53,7 +52,7 @@ public:
   //= Initialization and termination code.
 
   /// Constructor.
-  TAO_RTEventLogFactory_i (void);
+  TAO_RTEventLogFactory_i ();
 
   /// Destructor.
   ~TAO_RTEventLogFactory_i ();
@@ -62,12 +61,11 @@ public:
   /// pointer to it.
   int
   init (CORBA::ORB_ptr orb,
-        PortableServer::POA_ptr poa
-        ACE_ENV_ARG_DECL);
+        PortableServer::POA_ptr poa);
 
   /// Activate this servant
   RTEventLogAdmin::EventLogFactory_ptr
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  activate ();
 
   /// Used to create a RTEventLog.
   RTEventLogAdmin::EventLog_ptr create (
@@ -75,13 +73,7 @@ public:
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         DsLogAdmin::LogId_out id
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DsLogAdmin::InvalidLogFullAction,
-        DsLogAdmin::InvalidThreshold
-      ));
+      );
 
   /// Same as create (), but allows clients to specify the id.
   RTEventLogAdmin::EventLog_ptr create_with_id (
@@ -89,31 +81,18 @@ public:
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DsLogAdmin::LogIdAlreadyExists,
-        DsLogAdmin::InvalidLogFullAction,
-        DsLogAdmin::InvalidThreshold
-      ));
+      );
 
    // = Implementation of the RtecEventChannelAdmin::ConsumerAdmin methods.
   RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 
 protected:
-  virtual PortableServer::ObjectId* create_objectid (DsLogAdmin::LogId id);
+  virtual CORBA::RepositoryId
+    create_repositoryid ();
 
-  virtual DsLogAdmin::Log_ptr create_log_object (DsLogAdmin::LogId id
-						 ACE_ENV_ARG_DECL);
-
-  virtual DsLogAdmin::Log_ptr create_log_reference (DsLogAdmin::LogId id
-						    ACE_ENV_ARG_DECL);
+  virtual PortableServer::ServantBase*
+    create_log_servant (DsLogAdmin::LogId id);
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
@@ -130,6 +109,8 @@ protected:
   /// The ConsumerAdmin that the EventLogFactory supports.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

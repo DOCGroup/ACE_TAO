@@ -1,0 +1,8 @@
+// -*- MPC -*-
+project : acelib {
+  avoids   += ace_for_tao   // Requires ACE_Configuration_Heap
+  requires += ace_uuid
+  after    += HTBP
+  libs     += ACE_HTBP
+  includes += $(ACE_ROOT)/protocols
+}

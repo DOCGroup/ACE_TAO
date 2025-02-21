@@ -1,21 +1,15 @@
-// $Id$
-
 #include "tao/DynamicInterface/Request.h"
 #include "TestC.h"
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include <string>
 
-ACE_RCSID (ICMG_Any_Bug,
-           client,
-           "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -34,34 +28,31 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference \n"),
+                             "Nil Test::Hello reference\n"),
                             1);
         }
 
@@ -73,8 +64,7 @@ main (int argc, char *argv[])
       any <<= "Hi From DOC Group";
       request->arguments ()->add_value ("msg", any, CORBA::ARG_IN);
 
-      request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      request->invoke ();
 
       CORBA::NamedValue_ptr results = request->result ();
       CORBA::Any * obj_any = results->value ();
@@ -84,41 +74,35 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (obj2.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Any_To_Object reference \n"),
+                             "Nil Any_To_Object reference\n"),
                             1);
         }
 
       Test::HelloWorld_var hello_world =
-        Test::HelloWorld::_narrow (obj2.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::HelloWorld::_narrow (obj2.in ());
 
       if (CORBA::is_nil (hello_world.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::HelloWorld reference \n"),
+                             "Nil Test::HelloWorld reference\n"),
                             1);
         }
 
       CORBA::String_var the_string =
-        hello_world->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello_world->get_string ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

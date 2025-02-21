@@ -1,5 +1,3 @@
-// $Id$
-
 interface Paper_Airplane_Server
 {
   string get_plane ();

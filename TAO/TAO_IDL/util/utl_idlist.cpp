@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -68,9 +66,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //   inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//   It relies on a type-unsafe cast from UTL_List to subclasses, which
+//   will cease to operate correctly if you use either multiple or
+//   public virtual inheritance.
 
 #include "utl_idlist.h"
 #include "utl_identifier.h"
@@ -79,10 +77,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
-ACE_RCSID (util, 
-           utl_idlist, 
-           "$Id$")
 
 // Constructor
 UTL_IdList::UTL_IdList (Identifier *s,
@@ -94,42 +88,36 @@ UTL_IdList::UTL_IdList (Identifier *s,
 
 // Public operations
 
-// Copy a list.
-UTL_List *
-UTL_IdList::copy (void)
+// Copy an IdList.
+UTL_IdList *
+UTL_IdList::copy ()
 {
-  UTL_IdList *retval = 0;
+  UTL_IdList *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  UTL_IdList (this->head ()->copy (),
+                              nullptr),
+                  nullptr);
 
-  if (this->tail () == 0)
+  if (this->tail () != nullptr)
     {
-      ACE_NEW_RETURN (retval,
-                      UTL_IdList (this->head ()->copy (),
-                                  0),
-                      0);
-    }
-  else
-    {
-      ACE_NEW_RETURN (retval,
-                      UTL_IdList (this->head ()->copy (),
-                                  (UTL_IdList *) this->tail ()->copy ()),
-                      0);
+      retval->nconc ((UTL_IdList *) this->tail ()->copy ());
     }
 
-  return (UTL_List *) retval;
+  return retval;
 }
 
 // Get list item.
 Identifier *
-UTL_IdList::head (void)
+UTL_IdList::head ()
 {
   return this->pd_car_data;
 }
 
 // Get last item of this list.
 Identifier *
-UTL_IdList::last_component (void)
+UTL_IdList::last_component ()
 {
-  if (this->tail () == 0)
+  if (this->tail () == nullptr)
     {
       return this->head ();
     }
@@ -139,7 +127,7 @@ UTL_IdList::last_component (void)
 
 // Get first item of this list holding a non-empty string.
 Identifier *
-UTL_IdList::first_component (void)
+UTL_IdList::first_component ()
 {
   if (ACE_OS::strlen (this->pd_car_data->get_string ()) > 0)
     {
@@ -160,11 +148,11 @@ UTL_IdList::compare (UTL_IdList *other)
     {
       UTL_List *this_tail = this->tail ();
 
-      if (this_tail == 0)
+      if (this_tail == nullptr)
         {
           return 1;
         }
-     
+
       return ((UTL_IdList *) this_tail)->compare (other);
     }
 
@@ -172,7 +160,7 @@ UTL_IdList::compare (UTL_IdList *other)
     {
       UTL_List *other_tail = other->tail ();
 
-      if (other_tail == 0)
+      if (other_tail == nullptr)
         {
           return 1;
         }
@@ -185,8 +173,8 @@ UTL_IdList::compare (UTL_IdList *other)
       return 1;
    }
 
-  Identifier *this_id = 0;
-  Identifier *other_id = 0;
+  Identifier *this_id = nullptr;
+  Identifier *other_id = nullptr;
 
   for (UTL_IdListActiveIterator this_iter (this), other_iter (other);
        !this_iter.is_done ();
@@ -210,8 +198,8 @@ UTL_IdList::compare (UTL_IdList *other)
 void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
-  long first = I_TRUE;
-  long second = I_FALSE;
+  bool first = true;
+  bool second = false;
 
   for (UTL_IdListActiveIterator i (this);
        !i.is_done ();
@@ -223,32 +211,40 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
         }
       else if (second)
         {
-          first = second = I_FALSE;
+          first = second = false;
         }
 
-      i.item ()->dump (o);
-
-      if (first)
+      if (i.item ()->get_string ())
         {
-          if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
+          i.item ()->dump (o);
+
+          if (first)
             {
-              first = I_FALSE;
+              if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
+                {
+                  first = false;
+                }
+              else
+                {
+                  second = true;
+                }
             }
-          else
-            {
-              second = I_TRUE;
-            }
+        }
+      else
+        {
+          o << "(null string)";
         }
     }
 }
 
 void
-UTL_IdList::destroy (void)
+UTL_IdList::destroy ()
 {
-  if (this->pd_car_data != 0)
+  if (this->pd_car_data != nullptr)
     {
+      this->pd_car_data->destroy ();
       delete this->pd_car_data;
-      this->pd_car_data = 0;
+      this->pd_car_data = nullptr;
     }
 
   this->UTL_List::destroy ();
@@ -266,12 +262,65 @@ UTL_IdListActiveIterator::UTL_IdListActiveIterator (UTL_IdList *s)
 
 // Get current item.
 Identifier *
-UTL_IdListActiveIterator::item (void)
+UTL_IdListActiveIterator::item ()
 {
-    if (this->source == 0)
+    if (this->source == nullptr)
       {
-        return 0;
+        return nullptr;
       }
 
     return ((UTL_IdList *) source)->head ();
+}
+
+char *
+UTL_IdList::get_string_copy ()
+{
+  /*
+   * Absolute Names have "::" as the first item in the idlist, so delimiters
+   * have to start be inserted depending on if the name is absolute or not
+   */
+  size_t delimiter_start = is_absolute () ? 1 : 0;
+
+  // Get buffer of the correct size
+  size_t n = 0;
+  size_t size = 1;
+  for (UTL_IdListActiveIterator i (this);
+       !i.is_done ();
+       i.next ())
+    {
+      if (n > delimiter_start)
+        {
+          size += 2; // For delimiter
+        }
+      const char *item = i.item ()->get_string ();
+      size += ACE_OS::strlen (item);
+      n++;
+    }
+  char *buffer = new char[size];
+  buffer[0] = '\0';
+
+  // Fill buffer
+  n = 0;
+  for (UTL_IdListActiveIterator i (this);
+       !i.is_done ();
+       i.next ())
+    {
+      if (n > delimiter_start)
+        {
+          ACE_OS::strcat (buffer, "::");
+        }
+      const char *item = i.item ()->get_string ();
+      ACE_OS::strcat (buffer, item);
+      n++;
+    }
+
+  buffer[size - 1] = '\0';
+
+  return buffer;
+}
+
+bool
+UTL_IdList::is_absolute ()
+{
+  return !ACE_OS::strcmp (first_component ()->get_string (), "::");
 }

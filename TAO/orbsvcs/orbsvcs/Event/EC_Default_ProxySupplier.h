@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Default_ProxySupplier.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Marina Spivak (marina@atdesk.com)
@@ -20,7 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Default_ProxyPushSupplier
@@ -28,49 +29,39 @@
  * @brief Implement the ReliableEventChannelAdmin::ProxyPushSupplier
  *         interface
  */
-class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushSupplier :
-  public POA_RtecEventChannelAdmin::ProxyPushSupplier,
-  public TAO_EC_ProxyPushSupplier
+class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushSupplier
+  : public POA_RtecEventChannelAdmin::ProxyPushSupplier,
+    public TAO_EC_ProxyPushSupplier
 {
 public:
-
   /// Constructor...
   TAO_EC_Default_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
   /// Destructor...
-  virtual ~TAO_EC_Default_ProxyPushSupplier (void);
+  virtual ~TAO_EC_Default_ProxyPushSupplier ();
 
   void activate (
-     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy
-     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
 
   /// IDL methods.
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       RtecEventChannelAdmin::AlreadyConnected,
-                       RtecEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void suspend_connection (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void resume_connection (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                const RtecEventChannelAdmin::ConsumerQOS &qos);
+  virtual void disconnect_push_supplier ();
+  virtual void suspend_connection ();
+  virtual void resume_connection ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA ();
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
 private:
-
   virtual PortableServer::ObjectId
-            object_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+            object_id ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

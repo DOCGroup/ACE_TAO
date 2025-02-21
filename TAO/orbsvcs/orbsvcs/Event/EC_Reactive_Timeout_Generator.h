@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Reactive_Timeout_Generator.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,11 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Timeout_Generator.h"
+#include "orbsvcs/Event/EC_Timeout_Generator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Reactive_Timeout_Generator
@@ -41,11 +42,11 @@ public:
   TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor = 0);
 
   /// destructor
-  virtual ~TAO_EC_Reactive_Timeout_Generator (void);
+  virtual ~TAO_EC_Reactive_Timeout_Generator ();
 
   // = The TAO_EC_Timeout_Generator methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual int schedule_timer (TAO_EC_Timeout_Filter* filter,
                               const ACE_Time_Value& delta,
                               const ACE_Time_Value& interval);
@@ -59,6 +60,8 @@ private:
   /// An adapter to receive the timeout events.
   TAO_EC_Timeout_Adapter event_handler_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,0 +1,41 @@
+
+#include "tao/OctetSeq.pidl"
+#include "tao/StringSeq.pidl"
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  exception Recursive_Type_In_Any_Test_Failed {};
+  exception Demarshaling_From_Any_Failed {};
+
+  struct NestedRecursiveStruct5;
+  typedef sequence<NestedRecursiveStruct5> NestedRecursiveStructSeq5;
+  struct NestedRecursiveStruct5
+  {
+    long i;
+    union MyUnion5 switch (short)
+    {
+      case 0:
+        struct InnerStruct5
+        {
+          union Intern5 switch (short)
+          {
+            case 0:
+              NestedRecursiveStructSeq5 recursive_structs5;
+          } intbb5;
+        } ins65;
+      default:
+        long i;
+    } in5;
+  };
+
+  /// Simple test interface.
+  interface Hello
+  {
+    /// Return the any provided as the "in" argument.
+    any get_any (in any the_any);
+
+    /// Shutdown the server ORB.
+    oneway void shutdown ();
+  };
+};

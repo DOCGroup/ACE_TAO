@@ -1,22 +1,16 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests
-//
-// = FILENAME
-//    CC_client.h
-//
-// = DESCRIPTION
-//      This is the test class for the concurrency service. The class
-//      implements a client to the concurrency service.
-//      This file contains the main function for the test.
-//
-// = AUTHORS
-//      Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CC_client.cpp
+ *
+ *    This is the test class for the concurrency service. The class
+ *    implements a client to the concurrency service.
+ *    This file contains the main function for the test.
+ *
+ *  @author   Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "CC_client.h"
 
@@ -25,14 +19,13 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID(Concurrency, CC_client, "$Id$")
 
 // Constructor.
-CC_Client::CC_Client (void)
+CC_Client::CC_Client ()
   : naming_service_ (0),
     cc_factory_ior_file_ (0),
     cc_factory_key_ (0),
@@ -46,7 +39,7 @@ CC_Client::CC_Client (void)
 {
 }
 
-CC_Client::~CC_Client (void)
+CC_Client::~CC_Client ()
 {
   // Free resources and close the ior files.
   if (this->cc_factory_ior_file_)
@@ -65,7 +58,7 @@ CC_Client::~CC_Client (void)
 // Reads the lock set factory ior from a file
 
 int
-CC_Client::read_ior (char *filename)
+CC_Client::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
@@ -88,9 +81,9 @@ CC_Client::read_ior (char *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-CC_Client::parse_args (void)
+CC_Client::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dc:sf:k:xbhe:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dc:sf:k:xbhe:"));
   int c;
   int result;
 
@@ -127,7 +120,7 @@ CC_Client::parse_args (void)
             break;
       case 'k': // read the cubit IOR from the command-line.
         this->cc_factory_key_ =
-          ACE_OS::strdup (get_opts.opt_arg ());
+          ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
       case 'x':
         this->shutdown_ = 1;
@@ -148,7 +141,7 @@ CC_Client::parse_args (void)
 // Execute client example code.
 
 int
-CC_Client::run (void)
+CC_Client::run ()
 {
   int tests_run = 0;
   // Tells whether any tests have been run
@@ -178,7 +171,7 @@ CC_Client::run (void)
       FILE *f;
 
       // Open the command file for parsing if the filename!=stdin
-      if(ACE_OS::strcmp(this->script_file_, "stdin")!=0)
+      if(ACE_OS::strcmp(this->script_file_, ACE_TEXT("stdin"))!=0)
         {
           f = ACE_OS::fopen(this->script_file_, "r");
           if(f==0)
@@ -211,7 +204,7 @@ CC_Client::run (void)
 // This function runs basic tests concerned with only one lock set
 
 int
-CC_Client::run_basic_tests (void)
+CC_Client::run_basic_tests ()
 {
   Test_Single_Lock_With_Mode t1 (naming_service_,
                                  CosConcurrencyControl::read);
@@ -239,11 +232,11 @@ CC_Client::run_basic_tests (void)
 }
 
 int
-CC_Client::check_extended_test_params(char *params)
+CC_Client::check_extended_test_params(ACE_TCHAR *params)
 {
   // Format (regexp): [0-9]+;.*;.*
   int no_of_params = 0;
-  char *cp = params; // pointer to walk along the string
+  ACE_TCHAR *cp = params; // pointer to walk along the string
   enum {TAO_START, TAO_NUMBER, TAO_ARG, TAO_ERROR} state = TAO_START;
 
   while(*cp!='\0')
@@ -251,7 +244,7 @@ CC_Client::check_extended_test_params(char *params)
       switch(state)
         {
         case TAO_START:
-          if(isdigit(*cp))
+          if(ACE_OS::ace_isdigit(*cp))
             state = TAO_NUMBER;
           else
             state = TAO_ERROR;
@@ -264,7 +257,7 @@ CC_Client::check_extended_test_params(char *params)
               no_of_params++;
             }
           else
-            if(!isdigit(*cp))
+            if(!ACE_OS::ace_isdigit(*cp))
               state = TAO_ERROR;
           break;
 
@@ -292,7 +285,7 @@ CC_Client::check_extended_test_params(char *params)
 }
 
 int
-CC_Client::run_extended_tests (char *params)
+CC_Client::run_extended_tests (ACE_TCHAR *params)
 {
   int success = CC_FAIL;
   int no_of_args = 0;
@@ -310,7 +303,7 @@ CC_Client::run_extended_tests (char *params)
 
   ACE_DEBUG((LM_DEBUG, "Number of arguments: %i\n", no_of_args));
 
-  char *cmd  = ACE_OS::strtok (params, ";");
+  char *cmd  = ACE_OS::strtok (ACE_TEXT_ALWAYS_CHAR(params), ";");
   char *arg1 = ACE_OS::strtok (0, ";");
   //  char *arg2 = ACE_OS::strtok (0, ";");
 
@@ -344,7 +337,7 @@ CC_Client::run_extended_tests (char *params)
 }
 
 void
-CC_Client::print_usage (void)
+CC_Client::print_usage ()
 {
   ACE_ERROR ((LM_ERROR,
               "usage:  %s"
@@ -360,42 +353,36 @@ CC_Client::print_usage (void)
 }
 
 int
-CC_Client::init_naming_service (void)
+CC_Client::init_naming_service ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_NEW_RETURN (naming_service_,
                       CC_naming_service,
                       -1);
 
-      this->naming_service_->Init (this->orb_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->naming_service_->Init (this->orb_);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
-CC_Client::init (int argc, char **argv)
+CC_Client::init (int argc, ACE_TCHAR **argv)
 {
   int naming_result;
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "internet"
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    "internet");
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -417,16 +404,13 @@ CC_Client::init (int argc, char **argv)
 
 
           CORBA::Object_var factory_object =
-            this->orb_->string_to_object (this->cc_factory_key_
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->orb_->string_to_object (this->cc_factory_key_);
 
 #if 0
           // The test cannot currently run without the naming service.
           this->factory_ =
             CosConcurrencyControl::LockSetFactory::_narrow
-            (factory_object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            (factory_object.in ());
 
           if (CORBA::is_nil (this->factory_.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -438,14 +422,12 @@ CC_Client::init (int argc, char **argv)
 
       ACE_DEBUG ((LM_DEBUG,
                   "Factory received OK\n"));
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "CC_Client::init");
+      ex._tao_print_exception ("CC_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -453,7 +435,7 @@ CC_Client::init (int argc, char **argv)
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CC_Client cc_client;
 

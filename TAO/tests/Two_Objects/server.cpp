@@ -1,22 +1,16 @@
-// $Id$
-
 #include "worker.h"
 #include "Object_Factory_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Test, server, "$Id$")
-
 int msglen = 100; //default length of reply message is 100 bytes
 int nthreads = 2;
-const char *ior_output_file = "test.ior";
-int timeout = 30; //default timeout for ORB is 30 sec
-
+const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:l:t:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:l:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -34,10 +28,6 @@ parse_args (int argc, char *argv[])
         nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
-      case 't':
-        timeout = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -45,34 +35,30 @@ parse_args (int argc, char *argv[])
                            "-o <iorfile>"
                            " -n <#of  threads>"
                            " -l <size of message in bytes>"
-                           " -t <timeout for ORB in secs>"
                            "\n",
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       // Get initial reference to the Root POA
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       // Narrow down to the appropriate type
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -81,34 +67,37 @@ main (int argc, char *argv[])
 
       // Get referencee to the POA manager
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Parse the arguments
       if (parse_args (argc, argv) != 0)
         return 1;
 
       ACE_DEBUG(( LM_DEBUG, "ior file = %s\t#threads = %d\t"
-                  "msglen = %d\tORB timeout = %d sec\n",
-                  ior_output_file, nthreads, msglen, timeout ));
+                  "msglen = %d\n",
+                  ior_output_file, nthreads, msglen));
 
       // Create the factory servant
-      Object_Factory_i *factory_impl;
+      Object_Factory_i *factory_impl = 0;
       ACE_NEW_THROW_EX (factory_impl,
                         Object_Factory_i (orb.in (), msglen),
                         CORBA::NO_MEMORY ());
+      PortableServer::ServantBase_var safe (factory_impl);
 
       // _this method registers the object withe the POA and returns
       // an object reference
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (factory_impl);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Two_Objects_Test::Object_Factory_var factory =
-        factory_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Two_Objects_Test::Object_Factory::_narrow (object_act.in ());
 
       // Convert the object reference to a string so that it can
       // be saved in a file and used by clinet programs later
       CORBA::String_var ior =
-        orb->object_to_string (factory.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (factory.in ());
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -123,11 +112,10 @@ main (int argc, char *argv[])
       ACE_OS::fclose (output_file);
 
       // Activate the POA manager
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Instantiate the specified # of worker threads
-      Worker worker (orb.in (), timeout);
+      Worker worker (orb.in ());
 
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
@@ -140,19 +128,15 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

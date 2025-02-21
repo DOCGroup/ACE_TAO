@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef TAO_TUTORIAL_QUOTER_RT_EVENT_SERVICE_STOCK_FACTORY_I_H
 #define TAO_TUTORIAL_QUOTER_RT_EVENT_SERVICE_STOCK_FACTORY_I_H
@@ -17,8 +14,7 @@ public:
                            RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   void destroy_stock_objects ();
 
-  Quoter::Stock_ptr get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol);
+  Quoter::Stock_ptr get_stock (const char *symbol);
 
 private:
   PortableServer::POA_var stock_factory_poa_;

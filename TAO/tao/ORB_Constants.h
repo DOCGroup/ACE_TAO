@@ -4,8 +4,6 @@
 /**
  *  @file  ORB_Constants.h
  *
- *  $Id$
- *
  *  Constants needed by various files.
  *
  *  @author  Jeff Parsons
@@ -23,6 +21,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // A hash define for the regular two way operation.
 #define TAO_TWOWAY_RESPONSE_FLAG 255
@@ -42,13 +42,13 @@ namespace CORBA
    * @c 2 is done as follows:
    *
    * @verbatim
-   *   throw (CORBA::BAD_PARAM (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+   *   throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
    * @endverbatim
    *
    * *NOT* as:
    *
    * @verbatim
-   *   throw (CORBA::BAD_PARAM (2, CORBA::COMPLETED_NO);
+   *   throw ::CORBA::BAD_PARAM (2, CORBA::COMPLETED_NO);
    * @endverbatim
    */
   const ULong OMGVMCID = 0x4f4d0000U;
@@ -106,43 +106,6 @@ namespace TAO
   const CORBA::ULong VPVID = VMCID;
 }
 
-/**
- * @name TAO-Specific System Exception Minor Code Values
- *
- * These system exception minor code values are specific to TAO.
- */
-//@{
-/// TAO VMCID assigned by the OMG.
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-  /**
-   * @note This constant has historically been used in the wrong way.
-   *       It was often used as the @a location argument to the @c
-   *       CORBA::SystemException::_tao_minor_code() static method.  A
-   *       more appropriate default @a location argument/value would
-   *       have been zero since the location code resides in portion of
-   *       the lower order 12 bits, not the higher order 20 bits which
-   *       is where the VMCID resides, and what this value happens to
-   *       be.
-   *
-   * @deprecated Please use @c TAO::VMCID instead, or zero if being used
-   *             as default TAO exception location code argument.
-   *
-   * @see @c TAO::VMCID
-   */
-  const CORBA::ULong TAO_DEFAULT_MINOR_CODE = TAO::VMCID;
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
-
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-  /// Maximum allowed system exception minor code.
-  /**
-   * @deprecated Please use @c TAO::MAX_MINOR_CODE instead.
-   *
-   * @see @c TAO::MAX_MINOR_CODE
-   */
-  const CORBA::ULong TAO_MAX_MINOR_CODE = TAO::MAX_MINOR_CODE;
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
-//@}
-
 /// A dummy service context that is inserted in the service context
 /// list to preserve the alignment in DSI based gateways, so no
 /// marshaling/demarshaling is required.
@@ -177,8 +140,8 @@ const CORBA::ULong TAO_TAG_SHMEM_PROFILE = 0x54414f02U;
 /// UDP
 const CORBA::ULong TAO_TAG_DIOP_PROFILE = 0x54414f04U;
 
-/// Unreliable IP Multicast
-const CORBA::ULong TAO_TAG_UIPMC_PROFILE = 0x54414f0CU;
+/// COIOP
+const CORBA::ULong TAO_TAG_COIOP_PROFILE = 0x54414f05U;
 
 /// SCIOP
 const CORBA::ULong TAO_TAG_SCIOP_PROFILE = 0x54414f0EU;
@@ -233,6 +196,8 @@ const CORBA::ULong TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE  = (0x15U << 7);
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
 //@}
 //@}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

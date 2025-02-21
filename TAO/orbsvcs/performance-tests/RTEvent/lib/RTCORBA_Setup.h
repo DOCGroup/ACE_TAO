@@ -1,8 +1,6 @@
 /**
  * @file RTCORBA_Setup.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -12,7 +10,6 @@
 #include "rtec_perf_export.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
-#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +21,6 @@ class RT_Class;
  * @class RTCORBA_Setup
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export RTCORBA_Setup
 {
@@ -32,18 +28,16 @@ public:
   /// Constructor
   RTCORBA_Setup (CORBA::ORB_ptr orb,
                  const RT_Class &rtclass,
-                 int nthreads
-                 ACE_ENV_ARG_DECL);
+                 int nthreads);
 
   /// Return the thread pool lanes appropriate for the benchamrks
-  const RTCORBA::ThreadpoolLanes & lanes (void) const;
+  const RTCORBA::ThreadpoolLanes & lanes () const;
 
   /// Return the priority of the process
-  RTCORBA::Priority process_priority (void) const;
+  RTCORBA::Priority process_priority () const;
 
 private:
-  void setup_lane (int priority, RTCORBA::ThreadpoolLane &lane
-		  ACE_ENV_ARG_DECL_WITH_DEFAULTS );
+  void setup_lane (int priority, RTCORBA::ThreadpoolLane &lane);
 
 private:
   RTCORBA::PriorityMappingManager_var priority_mapping_manager_;

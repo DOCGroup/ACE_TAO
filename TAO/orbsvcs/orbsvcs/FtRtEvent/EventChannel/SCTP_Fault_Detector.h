@@ -4,8 +4,6 @@
 /**
  *  @file   SCTP_Fault_Detector.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -26,8 +24,8 @@
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
 #include "ace/Multihomed_INET_Addr.h"
-#include "ConnectionHandler_T.h"
-#include "Fault_Detector_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,6 +43,7 @@ extern "C" {
 #define SCTP_NODELAY 1
 #endif // SCTP_NODELAY
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_SEQPACK_ASSOCIATION>, ACE_SOCK_SEQPACK_ACCEPTOR>
                       SCTP_ConnectionAcceptHandler;
@@ -75,8 +74,10 @@ class SCTP_Fault_Detector : public Fault_Detector_T<
 public:
     virtual ~SCTP_Fault_Detector();
 private:
-    virtual int parse_conf(int argc, char** argv);
+    virtual int parse_conf(int argc, ACE_TCHAR** argv);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP */
 

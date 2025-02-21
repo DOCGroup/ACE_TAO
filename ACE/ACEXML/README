@@ -1,0 +1,15 @@
+ACE XML PARSER Framework README file
+
+* Character set
+
+ACE XML only deal with pure unicode encoding.  I.e., ACE XML
+does not care about language specific encoding information.
+
+* SAX - The Simple API for XML
+
+ACE XML Parser interfaces follows the the design of SAX 2.0, which is
+a public domain specification for Java.  The major difference between
+ACE XML Parser interfaces and SAX is that we added an reference of
+ACEXML_Env to every SAX method to accommodate platforms/compilers that
+don't support C++ exceptions.  SAX is defined by David Megginson
+<david@megginson.com>

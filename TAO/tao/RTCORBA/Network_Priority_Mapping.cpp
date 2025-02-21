@@ -1,17 +1,15 @@
-// $Id$
-
 #include "tao/orbconf.h"
 
-#include "Network_Priority_Mapping.h"
-
-ACE_RCSID(RTCORBA,
-          Network_Priority_Mapping,
-          "$Id$")
+#include "tao/RTCORBA/Network_Priority_Mapping.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-TAO_Network_Priority_Mapping::~TAO_Network_Priority_Mapping (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Network_Priority_Mapping::~TAO_Network_Priority_Mapping ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

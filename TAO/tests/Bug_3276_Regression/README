@@ -1,0 +1,26 @@
+
+
+This is a regression test for TAO#3276.
+It tests whether nil forward requests are handled correctly.
+
+__Regression Output__
+
+$ ./run_test.pl
+Writing the servant locator object ref out to file /home/vzykov/devel/DOCGroup/check/Bug_3276_Regression/proxy.ior
+Activated as <IOR:010000001600000049444c3a53696d706c655f5365727665723a312e300000000100000000000000840000000101020023000000676c6173676f772e6865616471756172746572732e65636c6970736573702e636f6d00002e8900001b00000014010f00525354c8b4ec4733e803000000000001000000010000006e02000000000000000800000001000000004f41540100000018000000010000000100010001000000010001050901010000000000>
+Writing the root poa servant server IOR out to file /home/vzykov/devel/DOCGroup/check/Bug_3276_Regression/control.ior
+About to throw forward request exception for target...
+ERROR: client timedout
+ERROR: client returned -1
+ERROR: manager timedout
+ERROR: server returned -1
+
+__Successful Output__
+
+$ ./run_test.pl
+Writing the servant locator object ref out to file /home/vzykov/devel/DOCGroup/check/Bug_3276_Regression/proxy.ior
+Activated as <IOR:010000001600000049444c3a53696d706c655f5365727665723a312e300000000100000000000000840000000101020023000000676c6173676f772e6865616471756172746572732e65636c6970736573702e636f6d00002a8900001b00000014010f00525354e3b3ec472cf20c000000000001000000010000006e02000000000000000800000001000000004f41540100000018000000010000000100010001000000010001050901010000000000>
+Writing the root poa servant server IOR out to file /home/vzykov/devel/DOCGroup/check/Bug_3276_Regression/control.ior
+About to throw forward request exception for target...
+TRANSIENT caught in client as it was expected.
+Servant in process id (13116) received shutdown request. Complying...

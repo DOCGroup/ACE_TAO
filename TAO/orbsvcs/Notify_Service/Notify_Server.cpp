@@ -1,18 +1,40 @@
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
 #include "Notify_Service.h"
+#include "orbsvcs/Notify/Properties.h"
+
+// Must include this file to get a static initializer
+#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
+
 #include "ace/OS_main.h"
 
-TAO_Notify_Service_Driver notify_service;
+#include "orbsvcs/Shutdown_Utilities.h"
+#include "tao/debug.h"
 
-extern "C" void handler (int signum)
+
+class Notify_Service_Shutdown_Functor
+  : public Shutdown_Functor
 {
-  // check of sigint
-  if (signum == SIGINT)
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      notify_service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-    }
+public:
+  Notify_Service_Shutdown_Functor (TAO_Notify_Service_Driver& svc);
+
+  void operator() (int which_signal);
+
+private:
+  TAO_Notify_Service_Driver&        svc_;
+};
+
+Notify_Service_Shutdown_Functor::Notify_Service_Shutdown_Functor (TAO_Notify_Service_Driver& svc)
+  : svc_ (svc)
+{
+}
+
+void
+Notify_Service_Shutdown_Functor::operator() (int which_signal)
+{
+  if (TAO_debug_level > 0)
+    ORBSVCS_DEBUG ((LM_DEBUG,
+                "shutting down on signal %d\n", which_signal));
+  (void) this->svc_.fini ();
 }
 
 // Driver function for the TAO Notify Service.
@@ -20,26 +42,26 @@ extern "C" void handler (int signum)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  // ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
-  // Not handling signals. the shutdown code and event handler is maintained in case we want to address this in the future.
+  TAO_Notify_Service_Driver notify_service;
 
-  ACE_TRY_NEW_ENV
+  Notify_Service_Shutdown_Functor killer (notify_service);
+  Service_Shutdown kill_contractor (killer);
+
+  try
     {
-      if (notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT("Failed to initialize the Notification Service.\n")),
+      if (notify_service.init (argc, argv) == -1)
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT("Failed to initialize the Notification Service.\n")),
                           1);
 
-      notify_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      notify_service.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("Failed to run the Notification Service\n"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Failed to run the Notification Service\n"));
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

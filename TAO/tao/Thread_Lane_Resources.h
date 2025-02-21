@@ -4,8 +4,6 @@
 /**
  *  @file    Thread_Lane_Resources.h
  *
- *  $Id$
- *
  *  @author  Irfan Pyarali
  */
 // ===================================================================
@@ -14,19 +12,24 @@
 #define TAO_THREAD_LANE_RESOURCES_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Thread_Mutex.h"
+#include /**/ "tao/TAO_Export.h"
+#include "tao/params.h"
+#include "tao/Transport_Cache_Manager.h"
 
-#include "tao/TAO_Export.h"
-#include "tao/orbconf.h"
-#include "params.h"
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
 class TAO_Leader_Follower;
@@ -34,16 +37,6 @@ class TAO_MProfile;
 class TAO_New_Leader_Generator;
 class TAO_Connector_Registry;
 class TAO_Resource_Factory;
-
-namespace CORBA
-{
-  class Environment;
-}
-
-namespace TAO
-{
-  class Transport_Cache_Manager;
-}
 
 /**
  * @class TAO_Thread_Lane_Resources
@@ -62,96 +55,102 @@ public:
       TAO_New_Leader_Generator *new_leader_generator = 0);
 
   /// Destructor.
-  ~TAO_Thread_Lane_Resources (void);
+  ~TAO_Thread_Lane_Resources ();
 
-  // Does @a mprofile belong to us?
+  /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Open the acceptor registry.
   int open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
-                              bool ignore_address
-                              ACE_ENV_ARG_DECL);
+                              bool ignore_address);
 
   /// Finalize resources.
-  void finalize (void);
+  void finalize ();
 
   /// Shutdown the reactor.
-  void shutdown_reactor (void);
+  void shutdown_reactor ();
 
-  /// Certain ORB policies such as dropping replies on shutdown with
-  /// RW connection handlers would need cleanup of transports to wake
-  /// threads up.
-  void cleanup_rw_transports (void);
+  /// Certain ORB policies such as dropping replies on shutdown
+  /// would need cleanup of transports to wake threads up.
+  void close_all_transports ();
 
-  /// @named Accessors
+  /// @name Accessors
   //@{
+  TAO_Acceptor_Registry &acceptor_registry ();
 
-  TAO_Acceptor_Registry &acceptor_registry (void);
-
-  /*
+  /**
    * @note Returning a pointer helps to return 0 in case of
    * exceptions.
    */
-  TAO_Connector_Registry *connector_registry (ACE_ENV_SINGLE_ARG_DECL);
+  TAO_Connector_Registry *connector_registry ();
 
-  TAO::Transport_Cache_Manager &transport_cache (void);
+  /// Get the transport cache
+  TAO::Transport_Cache_Manager &transport_cache ();
 
-  TAO_Leader_Follower &leader_follower (void);
+  TAO_Leader_Follower &leader_follower ();
 
-  /* Allocator is intended for allocating the ACE_Data_Blocks used in
+  /**
+   * Allocator is intended for allocating the ACE_Data_Blocks used in
    * incoming CDR streams.  This allocator has locks.
    */
-  ACE_Allocator *input_cdr_dblock_allocator (void);
+  ACE_Allocator *input_cdr_dblock_allocator ();
 
-  /* Allocator is intended for allocating the buffers in the incoming
+  /**
+   * Allocator is intended for allocating the buffers in the incoming
    * CDR streams.  This allocator has locks.
    */
-  ACE_Allocator *input_cdr_buffer_allocator (void);
+  ACE_Allocator *input_cdr_buffer_allocator ();
 
-  /* Allocator is intended for allocating the ACE_Message_Blocks used
+  /**
+   * Allocator is intended for allocating the ACE_Message_Blocks used
    * in incoming CDR streams.  This allocator is global, and has locks.
    */
-  ACE_Allocator *input_cdr_msgblock_allocator (void);
+  ACE_Allocator *input_cdr_msgblock_allocator ();
 
-  /* Allocator is intended for allocating the buffers used in the
+  /**
+   * Allocator is intended for allocating the buffers used in the
    * Transport object. This allocator has locks.
    */
-  ACE_Allocator *transport_message_buffer_allocator (void);
+  ACE_Allocator *transport_message_buffer_allocator ();
 
-  /* Allocator is intended for allocating the ACE_Data_Blocks used in
+  /**
+   * Allocator is intended for allocating the ACE_Data_Blocks used in
    * outgoing CDR streams.  This allocator has locks.
    */
-  ACE_Allocator *output_cdr_dblock_allocator (void);
+  ACE_Allocator *output_cdr_dblock_allocator ();
 
-  /* Allocator is intended for allocating the buffers in the outgoing
+  /**
+   * Allocator is intended for allocating the buffers in the outgoing
    * CDR streams.  This allocator has locks.
    */
-  ACE_Allocator *output_cdr_buffer_allocator (void);
+  ACE_Allocator *output_cdr_buffer_allocator ();
 
-  /* Allocator is intended for allocating the ACE_Message_Blocks used
+  /**
+   * Allocator is intended for allocating the ACE_Message_Blocks used
    * in the outgoing CDR streams.  This allocator is global, and has
    * locks.
    */
-  ACE_Allocator *output_cdr_msgblock_allocator (void);
+  ACE_Allocator *output_cdr_msgblock_allocator ();
 
-  /* Allocator is intended for allocating the AMH response handlers
+  /**
+   * Allocator is intended for allocating the AMH response handlers
    * This allocator is global.
    */
-  ACE_Allocator *amh_response_handler_allocator (void);
+  ACE_Allocator *amh_response_handler_allocator ();
 
-  /* Allocator is intended for allocating the AMI response handlers
+  /**
+   * Allocator is intended for allocating the AMI response handlers
    * This allocator is global.
    */
-  ACE_Allocator *ami_response_handler_allocator (void);
+  ACE_Allocator *ami_response_handler_allocator ();
   //@}
 
 private:
-
   /// Checks if the acceptor registry has been created.
-  int has_acceptor_registry_been_created (void) const;
+  int has_acceptor_registry_been_created () const;
 
   /// Helper to get the resource factory in the ORB_Core
-  TAO_Resource_Factory *resource_factory (void);
+  TAO_Resource_Factory *resource_factory ();
 
 private:
   /// ORB_Core related to this thread lane.
@@ -206,6 +205,8 @@ private:
   ACE_Allocator *ami_response_handler_allocator_;
   //@}
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

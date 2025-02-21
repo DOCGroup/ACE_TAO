@@ -1,39 +1,44 @@
-// $Id$
-
-#include "ClientRequestInfo.h"
+#include "tao/PI/ClientRequestInfo.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/ExceptionA.h"
 
-ACE_RCSID (tao,
-           ClientRequestInfo,
-           "$Id$")
+#include "tao/PI/PICurrent.h"
+#include "tao/PI/RequestInfo_Util.h"
 
-#include "tao/Any.h"
 #include "tao/PolicyC.h"
 #include "tao/PortableInterceptorC.h"
-#include "tao/PICurrent.h"
 #include "tao/Invocation_Base.h"
+#include "tao/operation_details.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 #include "tao/debug.h"
 #include "tao/Service_Context.h"
+#include "tao/Exception_Data.h"
+
+#include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
   : invocation_ (inv),
-    rs_pi_current_ (),
-    copy_callback_ ()
+    rs_pi_current_ ()
 {
   this->setup_picurrent ();
 }
 
 void
-TAO_ClientRequestInfo::setup_picurrent (void)
+TAO_ClientRequestInfo::setup_picurrent ()
 {
   // Retrieve the thread scope current (no TSS access incurred yet).
+  CORBA::Object_ptr pi_current_obj =
+    this->invocation_->stub ()->orb_core ()->pi_current ();
+
   TAO::PICurrent *pi_current =
-    this->invocation_->orb_core ()->pi_current ();
+    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
   // If the slot count is zero, then there is nothing to copy.
   // Prevent any copying (and hence TSS accesses) from occurring.
@@ -42,29 +47,18 @@ TAO_ClientRequestInfo::setup_picurrent (void)
       // Retrieve the thread scope current.
       TAO::PICurrent_Impl *tsc = pi_current->tsc ();
 
-      // Logically copy the TSC's slot table to the RSC.
-      this->rs_pi_current_.lc_slot_table (tsc);
-
-      // PICurrent will potentially have to call back on the request
-      // scope current so that it can deep copy the contents of the
-      // thread scope current if the contents of the thread scope
-      // current are about to be modified.  It is necessary to do this
-      // deep copy once in order to completely isolate the request
-      // scope current from the thread scope current.  This is only
-      // necessary, if the thread scope current is modified after its
-      // contents have been *logically* copied to the request scope
-      // current.
-      this->copy_callback_.src_and_dst (tsc, &this->rs_pi_current_);
-      tsc->copy_callback (&this->copy_callback_);
+      if (tsc != 0)
+        {
+          // Logically copy the TSC's slot table to the RSC.
+          this->rs_pi_current_.take_lazy_copy (tsc);
+       }
     }
 }
 
 IOP::ServiceContext *
 TAO_ClientRequestInfo::get_service_context_i (
     TAO_Service_Context &service_context_list,
-    IOP::ServiceId id
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    IOP::ServiceId id)
 {
   IOP::ServiceContext_var service_context;
 
@@ -76,38 +70,30 @@ TAO_ClientRequestInfo::get_service_context_i (
   else
     {
       // Not found.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 26,
-                                          CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 26, CORBA::COMPLETED_NO);
     }
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo::target (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::target ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  this->check_validity ();
 
   return CORBA::Object::_duplicate (this->invocation_->target ());
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo::effective_target (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::effective_target ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  this->check_validity ();
 
   return CORBA::Object::_duplicate (this->invocation_->effective_target ());
 }
 
 IOP::TaggedProfile *
-TAO_ClientRequestInfo::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::effective_profile ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   IOP::TaggedProfile *tagged_profile = 0;
   ACE_NEW_THROW_EX (tagged_profile,
@@ -117,7 +103,6 @@ TAO_ClientRequestInfo::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   IOP::TaggedProfile_var safe_tagged_profile = tagged_profile;
 
@@ -129,9 +114,7 @@ TAO_ClientRequestInfo::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
 
   if (ep == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                                          CORBA::COMPLETED_NO),
-                                          0);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
     }
 
   // @@BAD_PARAM exception
@@ -145,23 +128,19 @@ TAO_ClientRequestInfo::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
 // exception from an Any. This method is in place just to be compliant
 // with the spec.
 CORBA::Any *
-TAO_ClientRequestInfo::received_exception (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::received_exception ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  if (this->invocation_->reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
-      && this->invocation_->reply_status () != PortableInterceptor::USER_EXCEPTION)
+  if (this->invocation_->pi_reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
+      && this->invocation_->pi_reply_status () != PortableInterceptor::USER_EXCEPTION)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO), 0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // The spec says that if it is a user exception which can't be
   // inserted then the UNKNOWN exception needs to be thrown with minor
   // code 1.
-
   CORBA::Any * temp = 0;
 
   ACE_NEW_THROW_EX (temp,
@@ -171,7 +150,6 @@ TAO_ClientRequestInfo::received_exception (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   CORBA::Any_var caught_exception_var = temp;
 
@@ -185,44 +163,32 @@ TAO_ClientRequestInfo::received_exception (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 char *
-TAO_ClientRequestInfo::received_exception_id (
-    ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::received_exception_id ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  CORBA::Exception *caught_exception =
-    invocation_->caught_exception ();
+  CORBA::Exception *caught_exception = invocation_->caught_exception ();
 
   if (caught_exception == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   return CORBA::string_dup (caught_exception->_rep_id ());
 }
 
 IOP::TaggedComponent *
-TAO_ClientRequestInfo::get_effective_component (
-    IOP::ComponentId id
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId id)
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  TAO_Stub *stub =
-    this->invocation_->effective_target ()->_stubobj ();
+  TAO_Stub *stub = this->invocation_->effective_target ()->_stubobj ();
 
-  TAO_Tagged_Components &ecs =
-    stub->profile_in_use ()->tagged_components ();
+  TAO_Tagged_Components &ecs = stub->profile_in_use ()->tagged_components ();
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
-  const CORBA::ULong len = components.length ();
+  CORBA::ULong const len = components.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       if (components[i].tag == id)
@@ -238,7 +204,6 @@ TAO_ClientRequestInfo::get_effective_component (
                                 TAO::VMCID,
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
-          ACE_CHECK_RETURN (0);
 
           IOP::TaggedComponent_var safe_tagged_component =
             tagged_component;
@@ -251,25 +216,17 @@ TAO_ClientRequestInfo::get_effective_component (
 
   // No tagged component was found that matched the given
   // IOP::ComponentId.
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                                      CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 }
 
 IOP::TaggedComponentSeq *
-TAO_ClientRequestInfo::get_effective_components (
-    IOP::ComponentId id
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  TAO_Stub *stub =
-    this->invocation_->target ()->_stubobj ();
+  TAO_Stub *stub = this->invocation_->target ()->_stubobj ();
 
-  TAO_Tagged_Components &ecs =
-    stub->profile_in_use ()->tagged_components ();
+  TAO_Tagged_Components &ecs = stub->profile_in_use ()->tagged_components ();
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
@@ -292,7 +249,6 @@ TAO_ClientRequestInfo::get_effective_components (
                                     TAO::VMCID,
                                     ENOMEM),
                                   CORBA::COMPLETED_NO));
-              ACE_CHECK_RETURN (0);
 
               safe_tagged_components = tagged_components;
             }
@@ -309,48 +265,38 @@ TAO_ClientRequestInfo::get_effective_components (
       // No tagged component sequence was allocated, meaning no tagged
       // components were found that matched the given
       // IOP::ComponentId.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                                          CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
     }
 
   return safe_tagged_components._retn ();
 }
 
 CORBA::Policy_ptr
-TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type
-                                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type)
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+  this->check_validity ();
 
   // @@ Do we need to look anywhere else for the request policies?
 
 #if TAO_HAS_CORBA_MESSAGING == 1
-  return this->invocation_->target ()->_get_policy (type
-                                                    ACE_ENV_ARG_PARAMETER);
+  return this->invocation_->target ()->_get_policy (type);
 #else
   ACE_UNUSED_ARG (type);
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (
+    CORBA::SystemException::_tao_minor_code (
+      TAO::VMCID,
+      ENOTSUP),
+    CORBA::COMPLETED_NO);
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 void
 TAO_ClientRequestInfo::add_request_service_context (
     const IOP::ServiceContext & service_context,
-    CORBA::Boolean replace
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    CORBA::Boolean replace)
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   // Get the service context from the list
   TAO_Service_Context &service_context_list =
@@ -358,17 +304,14 @@ TAO_ClientRequestInfo::add_request_service_context (
 
   if (service_context_list.set_context (service_context, replace) == 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 15,
-                                       CORBA::COMPLETED_NO));
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 }
 
 CORBA::ULong
-TAO_ClientRequestInfo::request_id (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::request_id ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   // @todo We may have to worry about AMI once we support interceptors
   //       in AMI requests since the Invocation object no longer
@@ -423,7 +366,7 @@ TAO_ClientRequestInfo::request_id (ACE_ENV_SINGLE_ARG_DECL)
 
   // @@ The following request ID generator prevents the
   //    PortableInterceptor::ClientRequestInterceptor::send_request()
-  //    interception point from occuring before the call to connect,
+  //    interception point from occurring before the call to connect,
   //    thus preventing us from adding an optimization that itself
   //    prevents a connection from being unnecessarily performed.
   //    Thus, the ClientRequestInfo object is forced to have its own
@@ -438,131 +381,190 @@ TAO_ClientRequestInfo::request_id (ACE_ENV_SINGLE_ARG_DECL)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "(%P|%t) ClientRequestInfo::request_id() failed\n"
                     "(%P|%t) since its request ID generator is not\n"
                     "(%P|%t) supported on this platform.\n"));
 
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw ::CORBA::INTERNAL ();
     }
 
   return id;
 }
 
 char *
-TAO_ClientRequestInfo::operation (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::operation ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  return CORBA::string_dup (this->invocation_->operation_name ());
+  return CORBA::string_dup (this->invocation_->operation_details ().opname  ());
 }
 
 Dynamic::ParameterList *
-TAO_ClientRequestInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::arguments ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  return this->invocation_->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list ();
+
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+
+  if (this->parameter_list (*parameter_list) == false)
+    throw ::CORBA::MARSHAL ();
+
+  return safe_parameter_list._retn ();
+}
+
+bool
+TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
+{
+  // Account for the return type that is in the argument list.
+  param_list.length (this->invocation_->operation_details ().args_num () - 1);
+
+  for (CORBA::ULong i = 1; i != this->invocation_->operation_details ().args_num (); ++i)
+    {
+      TAO::Argument *argument =
+        this->invocation_->operation_details ().args ()[i];
+      Dynamic::Parameter &p = param_list[i - 1];
+      p.mode = argument->mode ();
+      // When we are in send_request and have an out argument, then
+      // don't copy it, just let the any be empty with typecode tk_null
+      if ((this->invocation_->invoke_status () != TAO::TAO_INVOKE_START) ||
+          (this->invocation_->invoke_status () == TAO::TAO_INVOKE_START &&
+           argument->mode () != CORBA::PARAM_OUT))
+        {
+          argument->interceptor_value (&p.argument);
+        }
+    }
+
+  return true;
 }
 
 Dynamic::ExceptionList *
-TAO_ClientRequestInfo::exceptions (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::exceptions ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  return this->invocation_->exceptions (ACE_ENV_SINGLE_ARG_PARAMETER);
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list ();
+
+  Dynamic::ExceptionList_var safe_exception_list = exception_list;
+
+  if (this->exception_list (*exception_list) == false)
+    throw ::CORBA::MARSHAL ();
+
+  return safe_exception_list._retn ();
+}
+
+bool
+TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
+{
+  if (this->invocation_->operation_details ().ex_count ())
+    {
+      exception_list.length (this->invocation_->operation_details ().ex_count ());
+
+      for (CORBA::ULong i = 0;
+           i != this->invocation_->operation_details ().ex_count ();
+           ++i)
+        {
+          CORBA::TypeCode_ptr tcp =
+            this->invocation_->operation_details ().ex_data ()[i].tc_ptr;
+          if (!CORBA::is_nil (tcp))
+            {
+              exception_list[i] = tcp;
+            }
+        }
+    }
+  return true;
 }
 
 Dynamic::ContextList *
-TAO_ClientRequestInfo::contexts (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::contexts ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 Dynamic::RequestContext *
-TAO_ClientRequestInfo::operation_context (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::operation_context ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 CORBA::Any *
-TAO_ClientRequestInfo::result (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::result ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  return this->invocation_->result (ACE_ENV_SINGLE_ARG_PARAMETER);
+  // Generate the result on demand.
+  static const CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any);
+
+  CORBA::Any_var safe_result_any = result_any;
+
+  if (this->result (result_any) == false)
+    throw ::CORBA::MARSHAL ();
+
+  return safe_result_any._retn ();
+}
+
+bool
+TAO_ClientRequestInfo::result (CORBA::Any *any)
+{
+  // Result is always first element in TAO::Argument array.
+  TAO::Argument * const r = this->invocation_->operation_details ().args ()[0];
+
+  r->interceptor_value (any);
+
+  return true;
 }
 
 CORBA::Boolean
-TAO_ClientRequestInfo::response_expected (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::response_expected ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   return this->invocation_->response_expected ();
 }
 
 Messaging::SyncScope
-TAO_ClientRequestInfo::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::sync_scope ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  return this->invocation_->sync_scope ();
+  return this->invocation_->operation_details ().response_flags ();
 }
 
 PortableInterceptor::ReplyStatus
-TAO_ClientRequestInfo::reply_status (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::reply_status ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableInterceptor::SYSTEM_EXCEPTION);
+  this->check_validity ();
 
-  if (this->invocation_->reply_status() == -1)
+  PortableInterceptor::ReplyStatus const status =
+    this->invocation_->pi_reply_status();
+  if (status == -1 || status == PortableInterceptor::UNKNOWN)
     {
       // A reply hasn't been received yet.
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
-  return this->invocation_->reply_status();
+  return status;
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::forward_reference ()
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  this->check_validity ();
 
-  if (this->invocation_->reply_status() != PortableInterceptor::LOCATION_FORWARD)
+  if (this->invocation_->pi_reply_status() != PortableInterceptor::LOCATION_FORWARD)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        CORBA::Object::_nil ());
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // TAO::Invocation_Base::forward_reference() already duplicates the
@@ -572,60 +574,68 @@ TAO_ClientRequestInfo::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Any *
-TAO_ClientRequestInfo::get_slot (PortableInterceptor::SlotId id
-                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::InvalidSlot))
+TAO_ClientRequestInfo::get_slot (PortableInterceptor::SlotId id)
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
-  return this->rs_pi_current_.get_slot (id
-                                        ACE_ENV_ARG_PARAMETER);
+  return this->rs_pi_current_.get_slot (id);
 }
 
 IOP::ServiceContext *
-TAO_ClientRequestInfo::get_request_service_context (
-    IOP::ServiceId id
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::get_request_service_context (IOP::ServiceId id)
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   // Get the service context from the list
   TAO_Service_Context &service_context_list =
     this->invocation_->request_service_context ();
 
-  return this->get_service_context_i (service_context_list,
-                                      id
-                                      ACE_ENV_ARG_PARAMETER);
+  return this->get_service_context_i (service_context_list, id);
 }
 
 IOP::ServiceContext *
-TAO_ClientRequestInfo::get_reply_service_context (
-    IOP::ServiceId id
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ClientRequestInfo::get_reply_service_context (IOP::ServiceId id)
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   // Get the service context from the list
   TAO_Service_Context &service_context_list =
     this->invocation_->reply_service_context ();
 
-  return this->get_service_context_i (service_context_list,
-                                      id
-                                      ACE_ENV_ARG_PARAMETER);
+  return this->get_service_context_i (service_context_list, id);
 }
 
 void
-TAO_ClientRequestInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo::check_validity ()
 {
   if (this->invocation_ == 0)
-    ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                     CORBA::COMPLETED_NO));
+    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
+
+void
+TAO_ClientRequestInfo::tao_ft_expiration_time (TimeBase::TimeT time)
+{
+  this->invocation_->operation_details ().ft_expiration_time (time);
+}
+
+TimeBase::TimeT
+TAO_ClientRequestInfo::tao_ft_expiration_time () const
+{
+  return this->invocation_->operation_details ().ft_expiration_time ();
+}
+
+void
+TAO_ClientRequestInfo::tao_ft_retention_id (CORBA::Long request_id)
+{
+  this->invocation_->operation_details ().ft_retention_id (request_id) ;
+}
+
+CORBA::Long
+TAO_ClientRequestInfo::tao_ft_retention_id () const
+{
+  return this->invocation_->operation_details ().ft_retention_id ();
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

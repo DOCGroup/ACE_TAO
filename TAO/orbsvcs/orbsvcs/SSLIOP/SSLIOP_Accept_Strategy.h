@@ -4,8 +4,6 @@
 /**
  *  @file    SSLIOP_Accept_Strategy.h
  *
- *  $Id$
- *
  *  IIOP/SSL specific accept strategy
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
@@ -24,18 +22,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 
 #include "tao/Acceptor_Impl.h"
 
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Accept_Strategy
      *
@@ -63,20 +61,19 @@ namespace TAO
      */
     class Accept_Strategy
       : public TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler,
-                                   ACE_SSL_SOCK_ACCEPTOR>
+                                   ACE_SSL_SOCK_Acceptor>
     {
     public:
-
       /// Constructor.
       Accept_Strategy (TAO_ORB_Core * orb_core,
-                       const ACE_Time_Value & timeout);
+                       const ACE_Time_Value & timeout,
+                       bool check_host);
 
       /// Overridden method that forces a passive connection timeout value
       /// to be passed to the underlying acceptor.
       virtual int accept_svc_handler (handler_type * svc_handler);
 
     private:
-
       /// The accept() timeout.
       /**
        * This timeout includes the overall time to complete the SSL
@@ -84,12 +81,12 @@ namespace TAO
        * handshake.
        */
       const ACE_Time_Value timeout_;
-
+      bool const check_host_;
     };
-
   }  // End SSLIOP namespace
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

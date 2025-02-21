@@ -2,11 +2,7 @@
 /**
  *  @file SequencePushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_SEQUENCEPUSHSUPPLIER_H
@@ -36,7 +32,7 @@ public:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushSupplier_Traits
 {
 public:
-  TAO_Notify_Tests_SequencePushSupplier_Traits (void);
+  TAO_Notify_Tests_SequencePushSupplier_Traits ();
 
   typedef CosNotifyComm::SequencePushSupplier INTERFACE;
   typedef CosNotifyComm::SequencePushSupplier_ptr PTR;
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_SequencePushSupplier_Traits
  * @class TAO_Notify_Tests_SequencePushSupplier
  *
  * @brief SequencePushSupplier Implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushSupplier : public TAO_Notify_Tests_SequencePushSupplier_Base
 {
@@ -66,28 +61,24 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushSupplier : public TAO_
   typedef Peer_Traits::Proxy_Traits Proxy_Traits;
 
 public:
-  /// Constuctor
-  TAO_Notify_Tests_SequencePushSupplier (void);
+  /// Constructor
+  TAO_Notify_Tests_SequencePushSupplier ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_SequencePushSupplier ();
 
   /// Send one event.
-  virtual void send_events (const CosNotification::EventBatch& events
-                            ACE_ENV_ARG_DECL);
+  virtual void send_events (const CosNotification::EventBatch& events);
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL);
+  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_from_proxy ();
 
   // = SequencePushSupplier method
-  virtual void disconnect_sequence_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void disconnect_sequence_push_supplier ();
 };
 
 #if defined (__ACE_INLINE__)

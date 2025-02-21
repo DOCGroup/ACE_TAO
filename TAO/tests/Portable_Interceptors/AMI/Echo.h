@@ -1,8 +1,6 @@
 /**
  * @file Echo.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 #ifndef Echo__h_
@@ -17,11 +15,8 @@ class Echo
 public:
   Echo(CORBA::ORB_ptr orb);
 
-  virtual char * echo_operation(char const * the_input
-                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC((CORBA::SystemException));
-  virtual void shutdown(ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC((CORBA::SystemException));
+  virtual char * echo_operation(char const * the_input);
+  virtual void shutdown();
 
 private:
   CORBA::ORB_var orb_;

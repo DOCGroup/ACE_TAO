@@ -4,8 +4,6 @@
 /**
  *  @file   Tagged_Components.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -15,13 +13,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IOP_IORC.h"
+#include "tao/IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CONV_FRAMEC.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 
@@ -31,7 +32,7 @@ class TAO_Profile;
  * The standard TAG_ALTERNATE_IIOP_ADDRESSES tagged component is the
  * portable alternative.
  */
-const CORBA::ULong TAO_TAG_ENDPOINTS =  0x54414f02U;
+static const CORBA::ULong TAO_TAG_ENDPOINTS =  0x54414f02U;
 
 /**
  * @class TAO_Tagged_Components
@@ -55,7 +56,7 @@ class TAO_Export TAO_Tagged_Components
 {
 public:
   /// Constructor
-  TAO_Tagged_Components (void);
+  TAO_Tagged_Components ();
 
   // = Standard OMG that require fast access.
   /// The the IOP::TAG_ORB_TYPE component value
@@ -101,8 +102,10 @@ public:
 
   // = Marshaling and demarshaling
 
-  /// Marshal and demarshal the list.
+  /// Marshal the list.
   int encode (TAO_OutputCDR& cdr) const;
+
+  /// Demarshal the list.
   int decode (TAO_InputCDR& cdr);
 
   /**
@@ -110,7 +113,7 @@ public:
    * MutipleComponentProfile. Added by request from Chris Hafey
    * <chris@stentorsoft.com>
    */
-  IOP::MultipleComponentProfile &components (void);
+  IOP::MultipleComponentProfile &components ();
 
 private:
   /// Helper method to implement set_code_sets()
@@ -133,11 +136,11 @@ private:
   int get_known_component_i (IOP::TaggedComponent& component) const;
   int get_component_i (IOP::TaggedComponent& component) const;
 
-  /// Is <tag> a well-known component?
-  int known_tag (IOP::ComponentId tag) const;
+  /// Is @a tag a well-known component?
+  bool known_tag (IOP::ComponentId tag) const;
 
-  /// Does <tag> show up only once?
-  int unique_tag (IOP::ComponentId tag) const;
+  /// Does @a tag show up only once?
+  bool unique_tag (IOP::ComponentId tag) const;
 
 private:
   /// The ORB_TYPE component value
@@ -150,13 +153,15 @@ private:
   /// bunch of them.
   IOP::MultipleComponentProfile components_;
 
-  // A flag for each component...
+  /// A flag for each component...
   CORBA::Octet orb_type_set_;
   CORBA::Octet code_sets_set_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "tao/Tagged_Components.i"
+# include "tao/Tagged_Components.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

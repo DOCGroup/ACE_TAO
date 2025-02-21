@@ -1,5 +1,3 @@
-// $Id$
-
 #include "distributer.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
@@ -28,8 +26,7 @@ Distributer_Sender_StreamEndPoint::set_protocol_object (const char *flowname,
                                                object);
 
   // Store the related streamctrl.
-  connection_manager.add_streamctrl (flowname,
-                                     this);
+  connection_manager.add_streamctrl (flowname, this);
 
   return 0;
 }
@@ -44,7 +41,7 @@ Distributer_Receiver_StreamEndPoint::get_callback (const char *,
   return 0;
 }
 
-Distributer_Receiver_Callback::Distributer_Receiver_Callback (void)
+Distributer_Receiver_Callback::Distributer_Receiver_Callback ()
   : frame_count_ (1)
 {
 }
@@ -82,7 +79,7 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Distributer_Receiver_Callback::handle_destroy (void)
+Distributer_Receiver_Callback::handle_destroy ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Distributer_Callback::end_stream\n"));
@@ -93,44 +90,43 @@ Distributer_Receiver_Callback::handle_destroy (void)
   return 0;
 }
 
-Distributer::Distributer (void)
+Distributer::Distributer ()
   : sender_name_ ("sender")
   , distributer_name_ ("distributer")
   , done_ (0)
-    , addr_file_ ("addr_file")
+  , addr_file_ (ACE_TEXT ("addr_file"))
 {
 }
 
-Distributer::~Distributer (void)
+Distributer::~Distributer ()
 {
 }
 
 Connection_Manager &
-Distributer::connection_manager (void)
+Distributer::connection_manager ()
 {
   return this->connection_manager_;
 }
 
 int
-Distributer::parse_args (int argc,
-                         char **argv)
+Distributer::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "s:r:a:");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("s:r:a:"));
 
   int c;
   while ((c= opts ()) != -1)
     {
       switch (c)
         {
-	case 'a':
-	  this->addr_file_ = opts.opt_arg ();
-	  break;
+        case 'a':
+          this->addr_file_ = opts.opt_arg ();
+          break;
         case 's':
-          this->sender_name_ = opts.opt_arg ();
+          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->distributer_name_ = opts.opt_arg ();
+          this->distributer_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown Option\n"));
@@ -142,9 +138,7 @@ Distributer::parse_args (int argc,
 
 
 int
-Distributer::init (int argc,
-                   char ** argv
-                   ACE_ENV_ARG_DECL)
+Distributer::init (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the connection class.
   int result =
@@ -167,12 +161,11 @@ Distributer::init (int argc,
 
   // Parse the command line arguments
   result =
-    this->parse_args (argc,
-                      argv);
+    this->parse_args (argc, argv);
   if (result != 0)
     return result;
 
-  this->connection_manager_.load_ep_addr (this->addr_file_.c_str ());
+  this->connection_manager_.load_ep_addr (ACE_TEXT_ALWAYS_CHAR (this->addr_file_.c_str ()));
 
   ACE_NEW_RETURN (this->distributer_sender_mmdevice_,
                   TAO_MMDevice (&this->sender_endpoint_strategy_),
@@ -183,8 +176,7 @@ Distributer::init (int argc,
     this->distributer_sender_mmdevice_;
 
   AVStreams::MMDevice_var distributer_sender_mmdevice =
-    this->distributer_sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->distributer_sender_mmdevice_->_this ();
 
   ACE_NEW_RETURN (this->distributer_receiver_mmdevice_,
                   TAO_MMDevice (&this->receiver_endpoint_strategy_),
@@ -192,36 +184,28 @@ Distributer::init (int argc,
 
 
   AVStreams::MMDevice_var distributer_receiver_mmdevice =
-    this->distributer_receiver_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->distributer_receiver_mmdevice_->_this ();
 
   // Bind to receivers.
   this->connection_manager_.bind_to_receivers (this->distributer_name_,
-                                               distributer_sender_mmdevice.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                               distributer_sender_mmdevice.in ());
 
   // Connect to receivers
-  this->connection_manager_.connect_to_receivers (distributer_sender_mmdevice.in ()
-												ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->connection_manager_.connect_to_receivers (distributer_sender_mmdevice.in ());
 
   // Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->distributer_name_,
-                                            distributer_receiver_mmdevice.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                            distributer_receiver_mmdevice.in ());
 
   // Connect to sender.
-  this->connection_manager_.connect_to_sender (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->connection_manager_.connect_to_sender ();
 
   return 0;
 }
 
 int
-Distributer::done (void) const
+Distributer::done () const
 {
   return this->done_;
 }
@@ -233,88 +217,56 @@ Distributer::done (int done)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       // Initialize the Distributer
       int result =
-        DISTRIBUTER::instance ()->init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        DISTRIBUTER::instance ()->init (argc, argv);
 
       if (result != 0)
         return result;
 
       while (!DISTRIBUTER::instance ()->done ())
         {
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->perform_work ();
         }
 
       // Hack for now....
       ACE_OS::sleep (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"main");
+      ex._tao_print_exception ("main");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   DISTRIBUTER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unmanaged_Singleton <Distributer,ACE_Null_Mutex>;
-template class TAO_AV_Endpoint_Reactive_Strategy_A<Distributer_Sender_StreamEndPoint,   TAO_VDev, AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy  <Distributer_Sender_StreamEndPoint,   TAO_VDev, AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy_B<Distributer_Receiver_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy  <Distributer_Receiver_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unmanaged_Singleton <Distributer,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<Distributer_Sender_StreamEndPoint,   TAO_VDev, AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy  <Distributer_Sender_StreamEndPoint,   TAO_VDev, AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<Distributer_Receiver_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy  <Distributer_Receiver_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

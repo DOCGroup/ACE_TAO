@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -78,35 +76,26 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (ast, 
-           ast_root, 
-           "$Id$")
-
-AST_Root::AST_Root (void)
-	: COMMON_Base (),
-    AST_Decl (),
-	  UTL_Scope (),
-    AST_Module ()
-{
-}
+AST_Decl::NodeType const
+AST_Root::NT = AST_Decl::NT_root;
 
 AST_Root::AST_Root (UTL_ScopedName *n)
-	: COMMON_Base (),
+  : COMMON_Base (),
     AST_Decl (AST_Decl::NT_root,
               n),
-	  UTL_Scope (AST_Decl::NT_root),
+    UTL_Scope (AST_Decl::NT_root),
     AST_Module (n)
 {
 }
 
-AST_Root::~AST_Root (void)
+AST_Root::~AST_Root ()
 {
 }
 
 // Overrides the one in UTL_Scope - this one doesn't
 // count the predefined types.
 unsigned long
-AST_Root::nmembers (void)
+AST_Root::nmembers ()
 {
   unsigned long retval = 0;
 
@@ -118,10 +107,10 @@ AST_Root::nmembers (void)
         {
           continue;
         }
-        
+
       ++retval;
     }
-    
+
   return retval;
 }
 
@@ -129,23 +118,11 @@ AST_Root::nmembers (void)
 AST_Sequence *
 AST_Root::fe_add_sequence (AST_Sequence *t)
 {
-  if (t == 0)
+  if (t == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier ("local type"),
-                  0);
-
-  UTL_ScopedName *sn = 0;
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  t->set_name (sn);
   this->add_to_local_types (t);
   return t;
 }
@@ -154,23 +131,11 @@ AST_Root::fe_add_sequence (AST_Sequence *t)
 AST_String *
 AST_Root::fe_add_string (AST_String *t)
 {
-  if (t == 0)
+  if (t == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier ("local type"),
-                  0);
-
-  UTL_ScopedName *sn = 0;
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  t->set_name (sn);
   this->add_to_local_types (t);
   return t;
 }
@@ -179,23 +144,11 @@ AST_Root::fe_add_string (AST_String *t)
 AST_Array *
 AST_Root::fe_add_array (AST_Array *t)
 {
-  if (t == 0)
+  if (t == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier ("local type"),
-                  0);
-
-  UTL_ScopedName *sn = 0;
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  t->set_name (sn);
   this->add_to_local_types (t);
   return t;
 }
@@ -219,78 +172,51 @@ void
 AST_Root::destroy ()
 {
   long i = 0;
-  long j = 0;
-  AST_Decl *d = 0;
-    
-  // Just destroy and delete the non-predefined types in the
-  // scope, in case we are processing multiple IDL files.
+  AST_Decl *d = nullptr;
+
+  // Just destroy and delete everything but the CORBA
+  // module, and the 'void' keyword, in case we are
+  // processing multiple IDL files.
   // Final cleanup will be done in fini().
-  for (i = this->pd_decls_used; i > 0; --i)
+  long end = this->pd_decls_used;
+
+  for (i = 2; i < end; ++i)
     {
-      d = this->pd_decls[i - 1];
-      
-      // We want to keep the predefined types we add to global
-      // scope around and not add them each time.
-      if (d->node_type () == AST_Decl::NT_pre_defined)
-        {
-          // This needs to be j = i, but it has been temporarily
-          // changed for the CoSMIC release. Need to actually
-          // track down the source of the problem with tao_picml.
-          j = i;
-          break;
-        }
+      d = this->pd_decls[i];
 
       d->destroy ();
       delete d;
-      d = 0;
+      d = nullptr;
       --this->pd_decls_used;
     }
-    
-  for (i = this->pd_referenced_used; i > j; --i)
+
+  // Same goes for the references and the name
+  // references, leave the first 2.
+
+  // This array of pointers holds references, no need
+  // for destruction. The array itself will be cleaned
+  // up when AST_Root::fini() calls UTL_Scope::destroy ().
+  for (i = 2; i < this->pd_referenced_used; ++i)
     {
-      d = this->pd_referenced[i - 1];    
-      d = 0;
-      --this->pd_referenced_used;
+      this->pd_referenced[i] = nullptr;
     }
-    
-  for (i = this->pd_name_referenced_used; i > j; --i)
+
+  this->pd_referenced_used = 2;
+
+  for (i = 2; i < this->pd_name_referenced_used; ++i)
     {
-      Identifier *id = this->pd_name_referenced[i - 1];
+      Identifier *id = this->pd_name_referenced[i];
       id->destroy ();
-      id = 0;
-      --this->pd_name_referenced_used;
+      delete id;
+      id = nullptr;
     }
+
+  this->pd_name_referenced_used = 2;
 }
 
 void
-AST_Root::fini (void)
+AST_Root::fini ()
 {
-  long i = 0;
-  
-  for (i = this->pd_referenced_used; i > 0; --i)
-    {
-      AST_Decl *d = this->pd_referenced[i - 1];
-      
-      if (d->node_type () == AST_Decl::NT_pre_defined)
-        {
-          break;
-        }
-
-      d = 0;
-    }
-    
-  for (i = this->pd_name_referenced_used; i > 0; --i)
-    {
-      Identifier *id = this->pd_name_referenced[i - 1];
-      id->destroy ();
-      id = 0;
-    }
-
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
 }
-
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Root, AST_Module)
-IMPL_NARROW_FROM_DECL(AST_Root)
-IMPL_NARROW_FROM_SCOPE(AST_Root)

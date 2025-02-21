@@ -1,35 +1,29 @@
-// $Id$
-
 #include "ast_component.h"
 #include "ast_attribute.h"
+#include "ast_provides.h"
+#include "ast_uses.h"
+#include "ast_publishes.h"
+#include "ast_emits.h"
+#include "ast_consumes.h"
+#include "ast_mirror_port.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "utl_err.h"
 #include "global_extern.h"
+#include "fe_extern.h"
 
-ACE_RCSID (ast, 
-           ast_component, 
-           "$Id$")
-
-AST_Component::AST_Component (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    UTL_Scope (),
-    AST_Interface (),
-    pd_base_component (0)
-{
-}
+AST_Decl::NodeType const
+AST_Component::NT = AST_Decl::NT_component;
 
 AST_Component::AST_Component (UTL_ScopedName *n,
                               AST_Component *base_component,
-                              AST_Interface **supports,
+                              AST_Type **supports,
                               long n_supports,
                               AST_Interface **supports_flat,
                               long n_supports_flat)
-  : COMMON_Base (I_FALSE,
-                 I_FALSE),
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_component,
               n),
     AST_Type (AST_Decl::NT_component,
@@ -40,22 +34,28 @@ AST_Component::AST_Component (UTL_ScopedName *n,
                    n_supports,
                    supports_flat,
                    n_supports_flat,
-                   I_FALSE,
-                   I_FALSE),
+                   false,
+                   false),
     pd_base_component (base_component)
 {
+  FE_Utils::tmpl_mod_ref_check (this, base_component);
+
+  if (!this->imported ())
+    {
+      idl_global->component_seen_ = true;
+    }
 }
 
-AST_Component::~AST_Component (void)
+AST_Component::~AST_Component ()
 {
 }
 
 void
 AST_Component::redefine (AST_Interface *from)
 {
-  AST_Component *c = AST_Component::narrow_from_decl (from);
+  AST_Component *c = dynamic_cast<AST_Component*> (from);
 
-  if (c == 0)
+  if (c == nullptr)
     {
       idl_global->err ()->redef_error (from->local_name ()->get_string (),
                                        this->local_name ()->get_string ());
@@ -66,115 +66,101 @@ AST_Component::redefine (AST_Interface *from)
   this->AST_Interface::redefine (from);
 
   this->pd_base_component = c->pd_base_component;
-  this->pd_provides = c->pd_provides;
-  this->pd_uses = c->pd_uses;
-  this->pd_emits = c->pd_emits;
-  this->pd_publishes = c->pd_publishes;
-  this->pd_consumes = c->pd_consumes;
 }
 
 AST_Decl *
 AST_Component::look_in_inherited (UTL_ScopedName *e,
-                                  idl_bool treat_as_ref)
+                                  bool full_def_only)
 {
-  AST_Decl *d = 0;
-  
-  if (this->pd_base_component != 0)
+  AST_Decl *d = nullptr;
+
+  if (this->pd_base_component != nullptr)
     {
-      d = this->pd_base_component->lookup_by_name (e, treat_as_ref);
+      d =
+        this->pd_base_component->lookup_by_name_r (
+          e,
+          full_def_only);
     }
-  
+
   return d;
 }
 
 // Look through supported interface list.
 AST_Decl *
 AST_Component::look_in_supported (UTL_ScopedName *e,
-                                  idl_bool treat_as_ref)
+                                  bool full_def_only)
 {
-  AST_Decl *d = 0;
-  AST_Interface **is = 0;
+  AST_Decl *d = nullptr;
+  AST_Type **is = nullptr;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
-      idl_global->err ()->fwd_decl_lookup (this,
-                                           e);
-      return 0;
+      idl_global->err ()->fwd_decl_lookup (this, e);
+      return nullptr;
     }
 
   // OK, loop through supported interfaces.
-
-  // (Don't leave the inheritance hierarchy, no module or global ...)
-  // Find all and report ambiguous results as error.
 
   for (nis = this->n_supports (), is = this->supports ();
        nis > 0;
        nis--, is++)
     {
-      d = (*is)->lookup_by_name (e,
-                                 treat_as_ref,
-                                 0 /* not in parent */);
-      if (d != 0)
+      if ((*is)->node_type () == AST_Decl::NT_param_holder)
+        {
+          continue;
+        }
+
+      AST_Interface *i =
+        dynamic_cast<AST_Interface*> (*is);
+
+      d = (i)->lookup_by_name_r (e, full_def_only);
+
+      if (d != nullptr)
         {
           break;
         }
     }
-    
+
   return d;
 }
 
 AST_Component *
-AST_Component::base_component (void) const
+AST_Component::base_component () const
 {
   return this->pd_base_component;
 }
 
-AST_Interface **
-AST_Component::supports (void) const
+AST_Type **
+AST_Component::supports () const
 {
   return this->inherits ();
 }
 
-long 
-AST_Component::n_supports (void) const
+long
+AST_Component::n_supports () const
 {
   return this->n_inherits ();
 }
 
-ACE_Unbounded_Queue<AST_Component::port_description> &
-AST_Component::provides (void)
+AST_Decl *
+AST_Component::special_lookup (UTL_ScopedName *e,
+                               bool full_def_only,
+                               AST_Decl *&/*final_parent_decl*/)
 {
-  return this->pd_provides;
-}
+  AST_Decl *d = this->look_in_inherited (e, full_def_only);
 
-ACE_Unbounded_Queue<AST_Component::port_description> &
-AST_Component::uses (void)
-{
-  return this->pd_uses;
-}
+  if (d == nullptr)
+    {
+      d = this->look_in_supported (e, full_def_only);
+    }
 
-ACE_Unbounded_Queue<AST_Component::port_description> &
-AST_Component::emits (void)
-{
-  return this->pd_emits;
-}
-
-ACE_Unbounded_Queue<AST_Component::port_description> &
-AST_Component::publishes (void)
-{
-  return this->pd_publishes;
-}
-
-ACE_Unbounded_Queue<AST_Component::port_description> &
-AST_Component::consumes (void)
-{
-  return this->pd_consumes;
+  return d;
 }
 
 void
-AST_Component::destroy (void)
+AST_Component::destroy ()
 {
   this->AST_Interface::destroy ();
 }
@@ -188,7 +174,7 @@ AST_Component::dump (ACE_OSTREAM_TYPE &o)
 
   this->dump_i (o, " ");
 
-  if (this->pd_base_component != 0)
+  if (this->pd_base_component != nullptr)
     {
       this->dump_i (o, ": ");
       this->pd_base_component->local_name ()->dump (o);
@@ -223,18 +209,62 @@ AST_Component::ast_accept (ast_visitor *visitor)
   return visitor->visit_component (this);
 }
 
-idl_bool
-AST_Component::redef_clash (void)
+AST_Provides *
+AST_Component::fe_add_provides (AST_Provides *p)
 {
-  if (this->AST_Interface::redef_clash ())
-    {
-      return 1;
-    }
+  return dynamic_cast<AST_Provides*> (this->fe_add_ref_decl (p));
+}
+
+AST_Uses *
+AST_Component::fe_add_uses (AST_Uses *u)
+{
+  return dynamic_cast<AST_Uses*> (this->fe_add_ref_decl (u));
+}
+
+AST_Publishes *
+AST_Component::fe_add_publishes (AST_Publishes *p)
+{
+  return dynamic_cast<AST_Publishes*> (this->fe_add_ref_decl (p));
+}
+
+AST_Emits *
+AST_Component::fe_add_emits (AST_Emits *e)
+{
+  return dynamic_cast<AST_Emits*> (this->fe_add_ref_decl (e));
+}
+
+AST_Consumes *
+AST_Component::fe_add_consumes (AST_Consumes *c)
+{
+  return dynamic_cast<AST_Consumes*> (this->fe_add_ref_decl (c));
+}
+
+AST_Extended_Port *
+AST_Component::fe_add_extended_port (AST_Extended_Port *p)
+{
+  return dynamic_cast<AST_Extended_Port*> (this->fe_add_ref_decl (p));
+}
+
+AST_Mirror_Port *
+AST_Component::fe_add_mirror_port (AST_Mirror_Port *p)
+{
+  return dynamic_cast<AST_Mirror_Port*> (this->fe_add_ref_decl (p));
+}
+
+int
+AST_Component::be_add_uses (AST_Uses *i,
+                            AST_Uses *ix)
+{
+  // Add it to scope.
+  this->add_to_scope (i,
+                      ix);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (i,
+                           false,
+                           i->local_name (),
+                           ix);
 
   return 0;
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Component, AST_Interface)
-IMPL_NARROW_FROM_DECL(AST_Component)
-IMPL_NARROW_FROM_SCOPE(AST_Component)

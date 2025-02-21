@@ -4,8 +4,6 @@
 /**
  *  @file    IIOP_SSL_Acceptor.h
  *
- *  $Id$
- *
  *  SSL-aware IIOP specific acceptor processing
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
@@ -18,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IIOP_SSL_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,9 +24,10 @@
 
 #include "tao/IIOP_Acceptor.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
-
   /**
    * @class IIOP_SSL_Acceptor
    *
@@ -43,22 +42,20 @@ namespace TAO
   class IIOP_SSL_Acceptor : public TAO_IIOP_Acceptor
   {
   public:
-
     typedef ACE_Strategy_Acceptor<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_BASE_ACCEPTOR;
     typedef TAO_Creation_Strategy<IIOP_SSL_Connection_Handler> TAO_IIOP_SSL_CREATION_STRATEGY;
     typedef TAO_Concurrency_Strategy<IIOP_SSL_Connection_Handler> TAO_IIOP_SSL_CONCURRENCY_STRATEGY;
     typedef TAO_Accept_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_ACCEPT_STRATEGY;
 
     /// Constructor.
-    IIOP_SSL_Acceptor (CORBA::Boolean flag = 0);
+    IIOP_SSL_Acceptor ();
 
     /// Destructor.
-    ~IIOP_SSL_Acceptor (void);
+    ~IIOP_SSL_Acceptor ();
 
-    virtual int close (void);
+    virtual int close ();
 
   private:
-
     /// The concrete acceptor, as a pointer to it's base class.
     TAO_IIOP_SSL_BASE_ACCEPTOR base_acceptor_;
 
@@ -72,10 +69,10 @@ namespace TAO
     TAO_IIOP_SSL_CONCURRENCY_STRATEGY *concurrency_strategy_;
     TAO_IIOP_SSL_ACCEPT_STRATEGY *accept_strategy_;
     //@}
-
   };
-
 } // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

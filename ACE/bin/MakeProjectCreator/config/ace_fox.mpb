@@ -1,0 +1,11 @@
+// -*- MPC -*-
+project {
+  requires += fox
+  // Depends on configuration from include/makeinclude/platform_*.GNU
+
+  verbatim(gnuace,local) {
+    CPPFLAGS += $(PLATFORM_FOX_CPPFLAGS)
+    LIBS += $(PLATFORM_FOX_LIBS)
+    LDFLAGS += $(PLATFORM_FOX_LDFLAGS)
+  }
+}

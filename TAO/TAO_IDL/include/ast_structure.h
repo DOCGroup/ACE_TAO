@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -81,22 +79,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "ace/Unbounded_Queue.h"
 
-class TAO_IDL_FE_Export AST_Structure : public virtual AST_ConcreteType,
-                                        public virtual UTL_Scope
+class TAO_IDL_FE_Export AST_Structure
+  : public virtual AST_ConcreteType,
+    public virtual UTL_Scope
 {
 public:
-  AST_Structure (void);
-
   AST_Structure (UTL_ScopedName *n,
-                 idl_bool local,
-                 idl_bool abstract);
+                 bool local,
+                 bool abstract);
 
   AST_Structure (AST_Decl::NodeType nt,
                  UTL_ScopedName *n,
-                 idl_bool local,
-                 idl_bool abstract);
+                 bool local,
+                 bool abstract);
 
-  virtual ~AST_Structure (void);
+  virtual ~AST_Structure ();
 
   // This serves for both structs and unions.
   static void fwd_redefinition_helper (AST_Structure *&i,
@@ -105,79 +102,95 @@ public:
   // Overridden for unions.
   virtual void redefine (AST_Structure *from);
 
-  // Narrowing.
-  DEF_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope);
-  DEF_NARROW_FROM_DECL(AST_Structure);
-  DEF_NARROW_FROM_SCOPE(AST_Structure);
-
-  virtual int member_count (void);
+  virtual int member_count ();
   // Return the count of members.
 
-  virtual size_t nfields (void) const;
+  virtual ACE_CDR::ULong nfields () const;
   // Return the count of actual fields.
 
   virtual int field (AST_Field **&result,
-                     size_t slot) const;
+                     ACE_CDR::ULong slot) const;
   // Get an individual field node.
 
-  virtual idl_bool is_local (void);
+  virtual bool is_local ();
   // Overwrite the is_local method.
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
 
-  virtual int contains_wstring (void);
+  virtual int contains_wstring ();
   // Do we contain a wstring at some nesting level?
 
   // Is this struct or union defined? This predicate returns FALSE when a
   // forward declaration is not defined yet, and TRUE in
   // all other cases.
-  idl_bool is_defined (void)
-  {
-    return this->size_type () != AST_Type::SIZE_UNKNOWN;
-  }
+  virtual bool is_defined ();
+
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
+  virtual bool legal_for_primary_key () const;
+
+  // Accessors for the member.
+  AST_StructureFwd *fwd_decl () const;
+  void fwd_decl (AST_StructureFwd *node);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Accessor for the member.
+  ACE_Unbounded_Queue<AST_Field *> &fields ();
+
+  static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const;
+
+  virtual AST_Field *fe_add_field (AST_Field *f);
+
+  /// Easy Member Access
+  ///{
+  virtual AST_Decl *operator[] (const size_t index);
+  virtual AST_Decl *operator[] (const char* name);
+  ///}
+
 protected:
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   // Scope Management Protocol.
 
   virtual AST_Union *fe_add_union (AST_Union *u);
 
   virtual AST_Structure *fe_add_structure (AST_Structure *s);
 
-  virtual AST_Field *fe_add_field (AST_Field *f);
-
   virtual AST_Enum *fe_add_enum (AST_Enum *e);
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
 
-protected:
   ACE_Unbounded_Queue<AST_Field *> fields_;
   // Container for this struct's field nodes. Excludes nodes included
   // in member_count, i.e., enum values of an enum declared inside
   // the struct.
 
 private:
-  int compute_member_count (void);
+  int compute_member_count ();
   // Count the number of members.
 
   int member_count_;
   // Number of members.
 
-  idl_bool local_struct_;
+  int local_struct_;
   // We also need to determine whether we contain any local type.
+
+  AST_StructureFwd *fwd_decl_;
+  // The forward declaration we may have been created from.
 };
 
 #endif           // _AST_STRUCTURE_AST_STRUCTURE_HH

@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Acceptor_Impl.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  *  @author Ossama Othman <othman@cs.wustl.edu>
@@ -24,6 +22,8 @@
 
 #include "tao/Basic_Types.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations.
 class TAO_ORB_Core;
 
@@ -39,8 +39,7 @@ public:
   /**
    * Constructor.
    */
-  TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
-                         CORBA::Boolean flag = 0);
+  TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
 
   /// Create a SVC_HANDLER  and set the ORB_Core pointer on it.
   int make_svc_handler (SVC_HANDLER *&sh);
@@ -48,9 +47,6 @@ public:
 protected:
   /// Pointer to the ORB Core.
   TAO_ORB_Core *orb_core_;
-
-  /// Should we use the Lite version for any protocol?
-  CORBA::Boolean lite_flag_;
 };
 
 /**
@@ -72,8 +68,7 @@ public:
    * TAO_Server_Strategy_Factory, it activates the Svc_Handler to run
    * in its own thread.
    */
-  int activate_svc_handler (SVC_HANDLER *svc_handler,
-                            void *arg);
+  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
 
 protected:
   /// Pointer to the ORB Core.
@@ -84,14 +79,13 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class TAO_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-
   /// Constructor.
   TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
 
-  /// Initialize the <peer_acceptor_> with <local_addr>.  If the
+  /// Initialize the <peer_acceptor_> with @a local_addr.  If the
   /// process runs out of handles, purge some "old" connections.
   int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-            int restart = 0);
+            bool restart = false);
 
   /// Delegates to the <accept> method of the PEER_ACCEPTOR. If the
   /// process runs out of handles, purge some "old" connections.
@@ -105,13 +99,9 @@ protected:
   TAO_ORB_Core *orb_core_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Acceptor_Impl.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Acceptor_Impl.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/Acceptor_Impl.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ACCEPTOR_IMPL_H */

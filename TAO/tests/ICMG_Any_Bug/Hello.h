@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef HELLO_H
 #define HELLO_H
@@ -15,18 +12,14 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-
   /// Constructor
   Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
-  virtual Test::HelloWorld_ptr get_helloworld (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Test::HelloWorld_ptr get_helloworld ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-
   PortableServer::POA_var poa_;
 
   CORBA::ORB_var orb_;

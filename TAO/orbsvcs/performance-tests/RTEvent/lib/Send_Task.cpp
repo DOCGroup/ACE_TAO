@@ -1,8 +1,6 @@
 /**
  * @file Send_Task.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -13,11 +11,7 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (TAO_PERF_RTEC,
-           Send_Task,
-           "$Id$")
-
-Send_Task::Send_Task (void)
+Send_Task::Send_Task ()
   : iterations_ (0)
   , period_in_usecs_ (0)
   , startup_sleep_ (0)
@@ -43,19 +37,19 @@ Send_Task::init (int iterations,
   this->event_type_ = event_type;
   this->event_source_ = event_source;
   this->supplier_ =
-    TAO::Utils::Servant_Var<Supplier>::_duplicate (supplier);
+    PortableServer::Servant_var<Supplier>::_duplicate (supplier);
   this->barrier_ = barrier;
 }
 
 void
-Send_Task::stop (void)
+Send_Task::stop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->stop_ = 1;
 }
 
 int
-Send_Task::svc (void)
+Send_Task::svc ()
 {
   if (this->barrier_ == 0)
     return -1;
@@ -87,7 +81,6 @@ Send_Task::svc (void)
   event[0].header.source = this->event_source_;
   event[0].header.ttl    = 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   for (int i = start_i; i != this->iterations_; ++i)
     {
       if ((i + 1) % 1000 == 0)
@@ -111,24 +104,17 @@ Send_Task::svc (void)
       ACE_hrtime_t creation = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      creation);
-      ACE_TRY
+      try
         {
           // push one event...
-          this->supplier_->push (event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->supplier_->push (event);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Caught exception:");
+          ex._tao_print_exception ("Caught exception:");
         }
-      ACE_ENDTRY;
     }
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) - Thread finished\n"));
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

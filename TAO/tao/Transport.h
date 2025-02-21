@@ -4,8 +4,6 @@
 /**
  *  @file Transport.h
  *
- *  $Id$
- *
  *  Define the interface for the Transport component in TAO's
  *  pluggable protocol framework.
  *
@@ -18,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Transport_Cache_Manager.h"
+#include "tao/Transport_Cache_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +24,14 @@
 
 #include "tao/Transport_Timer.h"
 #include "tao/Incoming_Message_Queue.h"
+#include "tao/Incoming_Message_Stack.h"
+#include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
+#include "ace/Basic_Stats.h"
+
+struct iovec;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Target_Specification;
@@ -34,14 +39,15 @@ class TAO_Operation_Details;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 class TAO_Connection_Handler;
-class TAO_Pluggable_Messaging;
+class TAO_GIOP_Message_Base;
 class TAO_Codeset_Translator_Base;
 
 class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
 class TAO_Stub;
-struct iovec;
+class TAO_MMAP_Allocator;
+class TAO_ServerRequest;
 
 namespace TAO
 {
@@ -55,6 +61,90 @@ namespace TAO
       TAO_SERVER_ROLE = 1,
       TAO_CLIENT_ROLE = 2
     };
+
+  namespace Transport
+  {
+    /// Transport-level statistics. Initially introduced to support
+    /// the "Transport Current" functionality.
+    class Stats;
+
+  /**
+   * @struct Drain_Constraints
+   *
+   * @brief Encapsulate the flushing control parameters.
+   *
+   * At several points, the ORB needs to flush data from a transport to the
+   * underlying I/O mechanisms.  How this data is flushed depends on the
+   * context where the request is made, the ORB configuration and the
+   * application level policies in effect.
+   *
+   * Some examples:
+   *
+   * # When idle, the ORB will want to send data on any socket that has
+   *   space available.  In this case, the queue must be drained on
+   *   a best-effort basis, without any blocking.
+   * # If the ORB is configured to handle nested upcalls, any two-way
+   *   request should block and push data to the underlying socket as fast
+   *   as possible.
+   * # In the same use-case, but now with a timeout policy in
+   *   effect, the ORB will need to send the data use I/O operations with
+   *   timeouts (as implemented by ACE::sendv()
+   * # When the ORB is configured to support nested upcalls, any two-way,
+   *   reliable oneway or similar should wait using the reactor or
+   *   Leader-Follower implementation.  While still respecting the timeout
+   *   policies.
+   *
+   * Instead of sprinkling if() statements throughput the critical path
+   * trying to determine how the I/O operations should be performed, we
+   * pass the information encapsulated in this class.  The caller into the
+   * Transport object determines the right parameters to use, and the
+   * Transport object simply obeys those instructions.
+   */
+  class Drain_Constraints
+  {
+  public:
+    /// Default constructor
+    Drain_Constraints()
+      : timeout_(0)
+      , block_on_io_(false)
+    {
+    }
+
+    /// Constructor
+    Drain_Constraints(
+        ACE_Time_Value * timeout,
+        bool block_on_io)
+      : timeout_(timeout)
+      , block_on_io_(block_on_io)
+    {
+    }
+
+    /**
+     * If true, then the ORB should block on I/O operations instead of
+     * using non-blocking I/O.
+     */
+    bool block_on_io() const
+    {
+      return block_on_io_;
+    }
+
+    /**
+     * The maximum time to block on I/O operations (or nested loops) based
+     * on the current timeout policies.
+     */
+    ACE_Time_Value * timeout() const
+    {
+      return timeout_;
+    }
+
+  private:
+    Drain_Constraints (const Drain_Constraints &) = delete;
+    Drain_Constraints &operator= (const Drain_Constraints &) = delete;
+
+    ACE_Time_Value * timeout_;
+    bool block_on_io_;
+  };
+  }
 }
 
 /**
@@ -65,7 +155,7 @@ namespace TAO
  * The transport object is created in the Service handler
  * constructor and deleted in the Service Handler's destructor!!
  *
- * The main responsability of a Transport object is to encapsulate a
+ * The main responsibility of a Transport object is to encapsulate a
  * connection, and provide a transport independent way to send and
  * receive data.  Since TAO is heavily based on the Reactor for all if
  * not all its I/O the Transport class is usually implemented with a
@@ -129,7 +219,7 @@ namespace TAO
  * - A queue of pending messages
  * - A message currently being transmitted
  * - A per-transport 'send strategy' to choose between blocking on
- *   write, blocking on the reactor or blockin on leader/follower.
+ *   write, blocking on the reactor or blocking on leader/follower.
  * - A per-message 'waiting object'
  * - A per-message timeout
  *
@@ -147,20 +237,20 @@ namespace TAO
  *    same time ie. the handle should not be shared between threads at
  *    any instant.
  *  - Reads on the handle could give one or more messages.
- *  - Minimise locking and copying overhead when trying to attack the
+ *  - Minimize locking and copying overhead when trying to attack the
  *    above.
  *
- * <H3> Parsing messages (GIOP) & processing the message:</H3>
+ * <H3>Parsing messages (GIOP) & processing the message:</H3>
  *
  * The messages should be checked for validity and the right
  * information should be sent to the higher layer for processing. The
  * process of doing a sanity check and preparing the messages for the
  * higher layers of the ORB are done by the messaging protocol.
  *
- * <H3> Design forces and Challenges </H3>
+ * <H3>Design forces and Challenges </H3>
  *
  * To keep things as efficient as possible for medium sized requests,
- * it would be good to minimise data copying and locking along the
+ * it would be good to minimize data copying and locking along the
  * incoming path ie. from the time of reading the data from the handle
  * to the application. We achieve this by creating a buffer on stack
  * and reading the data from the handle into the buffer. We then pass
@@ -174,18 +264,20 @@ namespace TAO
  *
  * We solve the problems as follows
  *
- *  (a) First do a read with the buffer on stack. Query the underlying
- *      messaging object whether the message has any incomplete
- *      portion. If so, we just grow the buffer for the missing size
- *      and read the rest of the message. We free the handle and then
- *      send the message to the higher layers of the ORB for
- *      processing.
+ *   (a) First do a read with the buffer on stack. Query the underlying
+ *       messaging object whether the message has any incomplete
+ *       portion. If so, data will be copied into new buffer being able
+ *       to hold full message and is queued; succeeding events will read
+ *       data from socket and write directly into this buffer.
+ *       Otherwise, if if the message in local buffer is complete, we free
+ *       the handle and then send the message to the higher layers of the
+ *       ORB for processing.
  *
- *   (b) If we block (ie. if we receive a EWOULDBLOCK) while trying to
- *       do the above (ie. trying to read after growing the buffer
- *       size) we put the message in a queue and return back to the
- *       reactor. The reactor would call us back when the handle
- *       becomes read ready.
+ *   (b) If buffer with incomplete message has been enqueued, while trying
+ *       to do the above, the reactor will call us back when the handle
+ *       becomes read ready. The read-operation will copy data directly
+ *       into the enqueued buffer.  If the message has bee read completely
+ *       the message is sent to the higher layers of the ORB for processing.
  *
  *   (c) If we get multiple messages (possible if the client connected
  *       to the server sends oneways or AMI requests), we parse and
@@ -197,7 +289,7 @@ namespace TAO
  *       message from the queue and processes that. Once the queue
  *       is drained the last thread resumes the handle.
  *
- * <H3> Sending Replies </H3>
+ * <H3>Sending Replies </H3>
  *
  * We could use the outgoing path of the ORB to send replies. This
  * would allow us to reuse most of the code in the outgoing data
@@ -208,7 +300,7 @@ namespace TAO
  * Reactor could potentially handle other messages (incoming or
  * outgoing) and the stack starts growing leading to crashes.
  *
- * <H4> Solution to the nesting problem </H4>
+ * <H4>Solution to the nesting problem </H4>
  *
  * The solution that we (plan to) adopt is pretty straight
  * forward. The thread sending replies will not block to send the
@@ -216,22 +308,20 @@ namespace TAO
  * careful usages of the terms "blocking in the Reactor" as opposed to
  * "return back to the Reactor".
  *
- *
  * <B>See Also:</B>
  *
- * http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
- *
+ * https://htmlpreview.github.io/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/pluggable_protocols/index.html
  */
 class TAO_Export TAO_Transport
 {
 public:
-
   /// Default creator, requires the tag value be supplied.
   TAO_Transport (CORBA::ULong tag,
-                 TAO_ORB_Core *orb_core);
+                 TAO_ORB_Core *orb_core,
+                 size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
   /// Destructor
-  virtual ~TAO_Transport (void);
+  virtual ~TAO_Transport ();
 
   /// Return the protocol tag.
   /**
@@ -239,10 +329,10 @@ public:
    * protocol. New protocol tags can be obtained free of charge from
    * the OMG, check the documents in corbafwd.h for more details.
    */
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// Access the ORB that owns this connection.
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   /// Get the TAO_Tranport_Mux_Strategy used by this object.
   /**
@@ -255,7 +345,7 @@ public:
    * connection is more efficient and reduces the possibilities of
    * priority inversions.
    */
-  TAO_Transport_Mux_Strategy *tms (void) const;
+  TAO_Transport_Mux_Strategy *tms () const;
 
   /// Return the TAO_Wait_Strategy used by this object.
   /**
@@ -265,13 +355,40 @@ public:
    * multiple events concurrently or using the Leader/Followers
    * protocol.
    */
-  TAO_Wait_Strategy *wait_strategy (void) const;
+  TAO_Wait_Strategy *wait_strategy () const;
+
+  enum Drain_Result_Enum
+    {
+      DR_ERROR = -1,
+      DR_OK = 0,
+      DR_QUEUE_EMPTY = 1, // used internally, not returned from drain_queue()
+      DR_WOULDBLOCK = 2
+    };
+
+  /// The handle_output and drain_queue* functions return objects of this
+  /// struct instead of the enum value directly so the compiler will catch
+  /// any uses that assign the return value to an int.
+  struct Drain_Result
+  {
+    Drain_Result (Drain_Result_Enum dre) : dre_(dre) {}
+    Drain_Result_Enum dre_;
+
+    bool operator== (Drain_Result rhs) const
+    {
+      return this->dre_ == rhs.dre_;
+    }
+
+    bool operator!= (Drain_Result rhs) const
+    {
+      return this->dre_ != rhs.dre_;
+    }
+  };
 
   /// Callback method to reactively drain the outgoing data queue
-  int handle_output (void);
+  Drain_Result handle_output (TAO::Transport::Drain_Constraints const & c);
 
   /// Get the bidirectional flag
-  int bidirectional_flag (void) const;
+  int bidirectional_flag () const;
 
   /// Set the bidirectional flag
   void bidirectional_flag (int flag);
@@ -280,7 +397,7 @@ public:
   void cache_map_entry (TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
 
   /// Get the Cache Map entry
-  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
+  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry ();
 
   /// Set and Get the identifier for this transport instance.
   /**
@@ -288,26 +405,30 @@ public:
    * the <code>this</code> pointer for the instance on which
    * it's called.
    */
-  size_t id (void) const;
+  size_t id () const;
   void id (size_t id);
 
   /**
    * Methods dealing with the role of the connection, e.g., CLIENT or SERVER.
    * See CORBA 2.6 Specification, Section 15.5.1 for origin of definitions.
    */
-  TAO::Connection_Role opened_as (void) const;
+  TAO::Connection_Role opened_as () const;
   void opened_as (TAO::Connection_Role);
 
   /// Get and Set the purging order. The purging strategy uses the set
   /// version to set the purging order.
-  unsigned long purging_order (void) const;
+  unsigned long purging_order () const;
   void purging_order(unsigned long value);
 
   /// Check if there are messages pending in the queue
   /**
-   * @return 1 if the queue is empty
+   * @return true if the queue is empty
    */
-  int queue_is_empty (void);
+  bool queue_is_empty ();
+
+  /// Register with the reactor via the wait strategy
+  bool register_if_necessary ();
+
 
   /// Added event handler to the handlers set.
   /**
@@ -321,7 +442,7 @@ public:
   /// Add event handlers corresponding to transports that have RW wait
   /// strategy to the handlers set.
   /**
-   * Called by the cache when the ORB is shuting down.
+   * Called by the cache when the ORB is shutting down.
    *
    * @param handlers The TAO_Connection_Handler_Set into which the
    *        transport should place its handler if the transport has RW
@@ -344,7 +465,10 @@ public:
    * thread-per-connection mode.  In that case putting the connection
    * in the Reactor would produce unpredictable results anyway.
    */
-  virtual int register_handler (void);
+  virtual int register_handler ();
+
+  /// Remove the handler from the reactor.
+  virtual int remove_handler ();
 
   /// Write the complete Message_Block chain to the connection.
   /**
@@ -359,9 +483,7 @@ public:
    * transformations of the data, such as SSLIOP or protocols that
    * compress the stream.
    *
-   * @param mblk contains the data that must be sent.  For each
-   * message block in the cont() chain all the data between rd_ptr()
-   * and wr_ptr() should be delivered to the remote peer.
+   * @param iov contains the data that must be sent.
    *
    * @param timeout is the maximum time that the application is
    * willing to wait for the data to be sent, useful in platforms that
@@ -384,9 +506,28 @@ public:
    * down).  In that case, it returns -1 and sets errno to
    * <code>ENOENT</code>.
    */
-  virtual ssize_t send (iovec *iov, int iovcnt,
+  virtual ssize_t send (iovec *iov,
+                        int iovcnt,
                         size_t &bytes_transferred,
-                        const ACE_Time_Value *timeout = 0) = 0;
+                        ACE_Time_Value const * timeout) = 0;
+
+#if TAO_HAS_SENDFILE == 1
+  /// Send data through zero-copy write mechanism, if available.
+  /**
+   * This method sends the data in the I/O vector through the platform
+   * sendfile() function to perform a zero-copy write, if available.
+   * Otherwise, the default fallback implementation simply delegates
+   * to the TAO_Transport::send() method.
+   *
+   * @note This method is best used when sending very large blocks of
+   *       data.
+   */
+  virtual ssize_t sendfile (TAO_MMAP_Allocator * allocator,
+                            iovec * iov,
+                            int iovcnt,
+                            size_t &bytes_transferred,
+                            TAO::Transport::Drain_Constraints const & dc);
+#endif  /* TAO_HAS_SENDFILE==1 */
 
   /// Read len bytes from into buf.
   /**
@@ -394,8 +535,8 @@ public:
    * thread can execute it on the same instance concurrently.
    *
    * @param buffer ORB allocated buffer where the data should be
-   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
-   * not clear this this is the best place to specify this.  The actual
+   * @param timeout The ACE_Time_Value *s is just a place holder for now. It is
+   * not clear this this is the best place to specify this. The actual
    * timeout values will be kept in the Policies.
    */
   virtual ssize_t recv (char *buffer,
@@ -409,18 +550,16 @@ public:
    * strategies implement them correctly.
    */
   //@{
-
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now.
-  bool idle_after_send (void);
+  bool idle_after_send ();
 
   /// Request is sent and the reply is received. Idle the transport
   /// now.
-  bool idle_after_reply (void);
+  bool idle_after_reply ();
 
   /// Call the implementation method after obtaining the lock.
-  virtual void close_connection (void);
-
+  virtual void close_connection ();
   //@}
 
   /** @name Template methods
@@ -431,12 +570,11 @@ public:
    * following methods with the semantics documented below.
    */
   /**
-   * Initialising the messaging object. This would be used by the
+   * Initializing the messaging object. This would be used by the
    * connector side. On the acceptor side the connection handler
    * would take care of the messaging objects.
    */
-  virtual int messaging_init (CORBA::Octet major,
-                              CORBA::Octet minor) = 0;
+  void messaging_init (TAO_GIOP_Message_Version const &version);
 
   /// Extracts the list of listen points from the @a cdr stream. The
   /// list would have the protocol specific details of the
@@ -453,21 +591,20 @@ public:
    * valid certificates. There are no pre_connect_hooks () since the
    * transport doesn't exist before a connection establishment. :-)
    *
-   *
-   * @@NOTE: The methods are not made const with a reason.
+   * @note The methods are not made const with a reason.
    */
-  virtual bool post_connect_hook (void);
+  virtual bool post_connect_hook ();
 
   /// Memory management routines.
-  /*
+  /**
    * Forwards to event handler.
    */
-  ACE_Event_Handler::Reference_Count add_reference (void);
-  ACE_Event_Handler::Reference_Count remove_reference (void);
+  ACE_Event_Handler::Reference_Count add_reference ();
+  ACE_Event_Handler::Reference_Count remove_reference ();
 
   /// Return the messaging object that is used to format the data that
   /// needs to be sent.
-  virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
+  TAO_GIOP_Message_Base * messaging_object ();
 
   /** @name Template methods
    *
@@ -477,7 +614,6 @@ public:
    * following methods with the semantics documented below.
    */
   //@{
-
   /// Return the event handler used to receive notifications from the
   /// Reactor.
   /**
@@ -495,26 +631,38 @@ public:
    *
    * @todo This method has to be renamed to event_handler()
    */
-  virtual ACE_Event_Handler * event_handler_i (void) = 0;
+  virtual ACE_Event_Handler * event_handler_i () = 0;
 
   /// Is this transport really connected
-  bool is_connected (void) const;
+  bool is_connected () const;
+
+  /// Was a connection seen as closed during a read
+  bool connection_closed_on_read () const;
 
   /// Perform all the actions when this transport get opened
   bool post_open (size_t id);
 
+  /// do what needs to be done when closing the transport
+  void pre_close ();
+
   /// Get the connection handler for this transport
-  TAO_Connection_Handler * connection_handler (void);
+  TAO_Connection_Handler * connection_handler ();
 
   /// Accessor for the output CDR stream
-  TAO_OutputCDR &out_stream (void);
+  TAO_OutputCDR &out_stream ();
+
+  /// Accessor for synchronizing Transport OutputCDR access
+  TAO_SYNCH_MUTEX &output_cdr_lock ();
+
+  /// Can the transport be purged?
+  bool can_be_purged ();
+
+  virtual void set_bidir_context_info (TAO_Operation_Details &opdetails);
 
 protected:
-
-  virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
+  virtual TAO_Connection_Handler * connection_handler_i () = 0;
 
 public:
-
   /// This is a request for the transport object to write a
   /// LocateRequest header before it is sent out.
   int generate_locate_request (TAO_Target_Specification &spec,
@@ -545,20 +693,9 @@ public:
    * @param max_wait_time In some cases the I/O is synchronous, e.g. a
    * thread-per-connection server or when Wait_On_Read is enabled.  In
    * those cases a maximum read time can be specified.
-   *
-   * @param block Is deprecated and ignored.
-   *
    */
   virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time = 0,
-                            int block = 0);
-
-  enum
-    {
-      TAO_ONEWAY_REQUEST = 0,
-      TAO_TWOWAY_REQUEST = 1,
-      TAO_REPLY
-    };
+                            ACE_Time_Value *max_wait_time = 0);
 
   /// Prepare the waiting and demuxing strategy to receive a reply for
   /// a new request.
@@ -589,10 +726,8 @@ public:
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
-                            int message_semantics,
+                            TAO_Message_Semantics message_semantics,
                             ACE_Time_Value *max_time_wait) = 0;
-
-
 
   /// This method formats the stream and then sends the message on the
   /// transport.
@@ -605,9 +740,9 @@ public:
    */
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
+                            TAO_ServerRequest *request = 0,
+                            TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
                             ACE_Time_Value *max_time_wait = 0) = 0;
-
 
   /// Sent the contents of @a message_block
   /**
@@ -625,81 +760,62 @@ public:
    *             block, used in the implementation of timeouts.
    */
   virtual int send_message_shared (TAO_Stub *stub,
-                                   int message_semantics,
+                                   TAO_Message_Semantics message_semantics,
                                    const ACE_Message_Block *message_block,
                                    ACE_Time_Value *max_wait_time);
 
 protected:
-
-  /// Called by the handle_input_i(). This method is used to parse
-  /// message read by the handle_input_i() call. It also decides
-  /// whether the message  needs consolidation before processing.
-  int parse_consolidate_messages (ACE_Message_Block &bl,
-                                  TAO_Resume_Handle &rh,
-                                  ACE_Time_Value *time = 0);
-
-
-  /// Method does parsing of the message if we have a fresh message in
-  /// the @a message_block or just returns if we have read part of the
-  /// previously stored message.
-  int parse_incoming_messages (ACE_Message_Block &message_block);
-
-  /// Return if we have any missing data in the queue of messages
-  /// or determine if we have more information left out in the
-  /// presently read message to make it complete.
-  size_t missing_data (ACE_Message_Block &message_block);
-
-  /// Consolidate the currently read message or consolidate the last
-  /// message in the queue. The consolidation of the last message in
-  /// the queue is done by calling consolidate_message_queue ().
-  virtual int consolidate_message (ACE_Message_Block &incoming,
-                                   ssize_t missing_data,
-                                   TAO_Resume_Handle &rh,
-                                   ACE_Time_Value *max_wait_time);
-
-  /// @@Bala: Docu???
-  int consolidate_fragments (TAO_Queued_Data *qd,
-                             TAO_Resume_Handle &rh);
-
-  /// First consolidate the message queue.  If the message is still not
-  /// complete, try to read from the handle again to make it
-  /// complete. If these dont help put the message back in the queue
-  /// and try to check the queue if we have message to process. (the
-  /// thread  needs to do some work anyway :-))
-  int consolidate_message_queue (ACE_Message_Block &incoming,
-                                 ssize_t missing_data,
-                                 TAO_Resume_Handle &rh,
-                                 ACE_Time_Value *max_wait_time);
-
-  /// Called by parse_consolidate_message () if we have more messages
-  /// in one read. Queue up the messages and try to process one of
-  /// them, atleast at the head of them.
-  int consolidate_extra_messages (ACE_Message_Block &incoming,
-                                  TAO_Resume_Handle &rh);
-
   /// Process the message by sending it to the higher layers of the
   /// ORB.
   int process_parsed_messages (TAO_Queued_Data *qd,
                                TAO_Resume_Handle &rh);
 
-  /// Make a queued data from the @a incoming message block
-  TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
-
   /// Implement send_message_shared() assuming the handler_lock_ is
   /// held.
   int send_message_shared_i (TAO_Stub *stub,
-                             int message_semantics,
+                             TAO_Message_Semantics message_semantics,
                              const ACE_Message_Block *message_block,
                              ACE_Time_Value *max_wait_time);
 
   /// Queue a message for @a message_block
-  int queue_message_i (const ACE_Message_Block *message_block);
+  /// @param max_wait_time The maximum time that the operation can
+  ///            block, used in the implementation of timeouts.
+  /// @param back If true, the message will be pushed to the back of the queue.
+  ///        If false, the message will be pushed to the front of the queue.
+  int queue_message_i (const ACE_Message_Block *message_block,
+                       ACE_Time_Value *max_wait_time, bool back=true);
+
+  /**
+   * @brief Re-factor computation of I/O timeouts based on operation
+   * timeouts.
+   * Depending on the wait strategy, we need to timeout I/O operations or
+   * not.  For example, if we are using a non-blocking strategy, we want
+   * to pass 0 to all I/O operations, and rely on the ACE_NONBLOCK
+   * settings on the underlying sockets.  However, for blocking strategies
+   * we want to pass the operation timeouts, to respect the application
+   * level policies.
+   *
+   * This function was introduced as part of the fixes for bug 3647.
+   */
+  ACE_Time_Value const *io_timeout(
+      TAO::Transport::Drain_Constraints const & dc) const;
 
 public:
   /// Format and queue a message for @a stream
-  int format_queue_message (TAO_OutputCDR &stream);
+  /// @param max_wait_time The maximum time that the operation can
+  ///            block, used in the implementation of timeouts.
+  int format_queue_message (TAO_OutputCDR &stream,
+                            ACE_Time_Value *max_wait_time,
+                            TAO_Stub* stub);
 
-  /// Send a message block chain,
+  /**
+   * This is a very specialized interface to send a simple chain of
+   * messages through the Transport.  The only place we use this interface
+   * is in GIOP_Message_Base.cpp, to send error messages (i.e., an
+   * indication that we received a malformed GIOP message,) and to close
+   * the connection.
+   *
+   */
   int send_message_block_chain (const ACE_Message_Block *message_block,
                                 size_t &bytes_transferred,
                                 ACE_Time_Value *max_wait_time = 0);
@@ -707,15 +823,16 @@ public:
   /// Send a message block chain, assuming the lock is held
   int send_message_block_chain_i (const ACE_Message_Block *message_block,
                                   size_t &bytes_transferred,
-                                  ACE_Time_Value *max_wait_time);
-  /// Cache management
-  int purge_entry (void);
+                                  TAO::Transport::Drain_Constraints const & dc);
 
   /// Cache management
-  int make_idle (void);
+  int purge_entry ();
 
   /// Cache management
-  int update_transport (void);
+  int make_idle ();
+
+  /// Cache management
+  int update_transport ();
 
   /// The timeout callback, invoked when any of the timers related to
   /// this transport expire.
@@ -734,20 +851,19 @@ public:
    *       messages (oneways) that have been sitting for too long on
    *       the queue.
    */
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void* act);
+  int handle_timeout (const ACE_Time_Value &current_time, const void* act);
 
   /// Accessor to recv_buffer_size_
-  size_t recv_buffer_size (void);
+  size_t recv_buffer_size () const;
 
   /// Accessor to sent_byte_count_
-  size_t sent_byte_count (void);
+  size_t sent_byte_count () const;
 
   /// CodeSet Negotiation - Get the char codeset translator factory
-  TAO_Codeset_Translator_Base *char_translator (void) const;
+  TAO_Codeset_Translator_Base *char_translator () const;
 
   /// CodeSet Negotiation - Get the wchar codeset translator factory
-  TAO_Codeset_Translator_Base *wchar_translator (void) const;
+  TAO_Codeset_Translator_Base *wchar_translator () const;
 
   /// CodeSet negotiation - Set the char codeset translator factory
   void char_translator (TAO_Codeset_Translator_Base *);
@@ -767,47 +883,45 @@ public:
   /// Return true if the tcs has been set
   CORBA::Boolean is_tcs_set() const;
 
-  /// Set the state of the first_request_ flag to 0
-  void first_request_sent();
+  /// Set the state of the first_request_ to flag.
+  void first_request_sent (bool flag = false);
+
+  /// Get the first request flag
+  bool first_request () const;
 
   /// Notify all the components inside a Transport when the underlying
   /// connection is closed.
-  void send_connection_closed_notifications (void);
+  void send_connection_closed_notifications ();
+
+  /// Transport statistics
+  TAO::Transport::Stats* stats () const;
 
 private:
-
   /// Helper method that returns the Transport Cache Manager.
-  TAO::Transport_Cache_Manager &transport_cache_manager (void);
+  TAO::Transport_Cache_Manager &transport_cache_manager ();
 
   /// Send some of the data in the queue.
   /**
    * As the outgoing data is drained this method is invoked to send as
    * much of the current message as possible.
-   *
-   * Returns 0 if there is more data to send, -1 if there was an error
-   * and 1 if the message was completely sent.
    */
-  int drain_queue (void);
+  Drain_Result drain_queue (TAO::Transport::Drain_Constraints const & dc);
 
   /// Implement drain_queue() assuming the lock is held
-  int drain_queue_i (void);
-
-  /// This class needs priviledged access to
-  /// - queue_is_empty_i()
-  /// - drain_queue_i()
-  friend class TAO_Block_Flushing_Strategy;
+  Drain_Result drain_queue_i (TAO::Transport::Drain_Constraints const & dc);
 
   /// Check if there are messages pending in the queue
   /**
    * This version assumes that the lock is already held.  Use with
    * care!
    *
-   * @return 1 if the queue is empty
+   * @return true if the queue is empty
    */
-  int queue_is_empty_i (void);
+  bool queue_is_empty_i () const;
 
   /// A helper routine used in drain_queue_i()
-  int drain_queue_helper (int &iovcnt, iovec iov[]);
+  Drain_Result drain_queue_helper (int &iovcnt, iovec iov[],
+      TAO::Transport::Drain_Constraints const & dc);
 
   /// These classes need privileged access to:
   /// - schedule_output_i()
@@ -820,10 +934,10 @@ private:
   friend class TAO_Thread_Per_Connection_Handler;
 
   /// Schedule handle_output() callbacks
-  int schedule_output_i (void);
+  int schedule_output_i ();
 
   /// Cancel handle_output() callbacks
-  int cancel_output_i (void);
+  int cancel_output_i ();
 
   /// Cleanup the queue.
   /**
@@ -838,7 +952,7 @@ private:
   void cleanup_queue_i ();
 
   /// Check if the buffering constraints have been reached
-  int check_buffering_constraints_i (TAO_Stub *stub, int &must_flush);
+  bool check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush);
 
   /// Send a synchronous message, i.e. block until the message is on
   /// the wire
@@ -846,9 +960,15 @@ private:
                                   ACE_Time_Value *max_wait_time);
 
   /// Send a reply message, i.e. do not block until the message is on
-  /// the wire, but just return after adding them  to the queue.
+  /// the wire, but just return after adding them to the queue.
   int send_reply_message_i (const ACE_Message_Block *message_block,
                             ACE_Time_Value *max_wait_time);
+
+  /// Send an asynchronous message, i.e. do not block until the message is on
+  /// the wire
+  int send_asynchronous_message_i (TAO_Stub *stub,
+                                   const ACE_Message_Block *message_block,
+                                   ACE_Time_Value *max_wait_time);
 
   /// A helper method used by send_synchronous_message_i() and
   /// send_reply_message_i(). Reusable code that could be used by both
@@ -857,19 +977,46 @@ private:
                                    ACE_Time_Value *max_wait_time);
 
   /// Check if the flush timer is still pending
-  int flush_timer_pending (void) const;
+  int flush_timer_pending () const;
 
   /// The flush timer expired or was explicitly cancelled, mark it as
   /// not pending
-  void reset_flush_timer (void);
+  void reset_flush_timer ();
 
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
+
+  /// Is invoked by handle_input operation. It consolidate message on
+  /// top of incoming_message_stack.  The amount of missing data is
+  /// known and recv operation copies data directly into message buffer,
+  /// as much as a single recv-invocation provides.
+  int handle_input_missing_data (TAO_Resume_Handle &rh,
+                                 ACE_Time_Value *max_wait_time,
+                                 TAO_Queued_Data *q_data);
+
+  /// Is invoked by handle_input operation. It parses new messages from input stream
+  /// or consolidates messages whose header has been partially read, the message
+  /// size being unknown so far. It parses as much data as a single recv-invocation provides.
+  int handle_input_parse_data (TAO_Resume_Handle &rh,
+                               ACE_Time_Value *max_wait_time);
+
+  /// Is invoked by handle_input_parse_data. Parses all messages remaining
+  /// in @a message_block.
+  int handle_input_parse_extra_messages (ACE_Message_Block &message_block);
+
+  /// @return -1 error, otherwise 0
+  int consolidate_enqueue_message (TAO_Queued_Data *qd);
+
+  /// @return -1 error, otherwise 0
+  int consolidate_process_message (TAO_Queued_Data *qd, TAO_Resume_Handle &rh);
 
   /*
    * Process the message that is in the head of the incoming queue.
    * If there are more messages in the queue, this method calls
    * this->notify_reactor () to wake up a thread
+   * @retval -1 on error
+   * @retval 0 if successfully processing enqueued messages
+   * @retval 1 if no message present in queue
    */
   int process_queue_head (TAO_Resume_Handle &rh);
 
@@ -877,36 +1024,53 @@ private:
    * This call prepares a new handler for the notify call and sends a
    * notify () call to the reactor.
    */
-  int notify_reactor (void);
+  int notify_reactor ();
+
+protected:
+  /*
+   * Same as notify_reactor above but does NOT first check for a
+   * registered TAO_Wait_Strategy.
+   */
+  int notify_reactor_now ();
+
+private:
+  TAO_Transport (const TAO_Transport &) = delete;
+  TAO_Transport &operator= (const TAO_Transport &) = delete;
 
   /// Assume the lock is held
-  void send_connection_closed_notifications_i (void);
-
-  /// Process a non-version specific fragment by either consolidating
-  /// the fragments or enqueuing the queueable message
-  void process_fragment (TAO_Queued_Data* fragment_message,
-                         TAO_Queued_Data* queueable_message,
-                         CORBA::Octet major,
-                         CORBA::Octet minor,
-                         TAO_Resume_Handle &rh);
+  void send_connection_closed_notifications_i ();
 
   /// Allocate a partial message block and store it in our
   /// partial_message_ data member.
-  void allocate_partial_message_block (void);
+  void allocate_partial_message_block ();
 
-  /// Prohibited
-  ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
+  /**
+   * Return true if blocking I/O should be used for sending synchronous
+   * (two-way, reliable oneways, etc.) messages.  This is determined based
+   * on the current flushing and waiting strategies.
+   */
+  bool using_blocking_io_for_synch_messages() const;
+
+  /**
+   * Return true if blocking I/O should be used for sending asynchronous
+   * (AMI calls, non-blocking oneways, responses to operations, etc.)
+   * messages.  This is determined based on the current flushing strategy.
+   */
+  bool using_blocking_io_for_asynch_messages() const;
+
+  /*
+   * Specialization hook to add concrete private methods from
+   * TAO's protocol implementation onto the base Transport class
+   */
 
 protected:
-
   /// IOP protocol tag.
-  CORBA::ULong tag_;
+  CORBA::ULong const tag_;
 
   /// Global orbcore resource.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
-  /// Our entry in the cache. We dont own this. It is here for our
+  /// Our entry in the cache. We don't own this. It is here for our
   /// convenience. We cannot just change things around.
   TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
 
@@ -944,10 +1108,14 @@ protected:
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
 
-  /// Queue of the incoming messages..
+  /// Queue of the consolidated, incoming messages..
   TAO_Incoming_Message_Queue incoming_message_queue_;
 
-  /// The queue will start draining no later than <queing_deadline_>
+  /// Stack of incoming fragments, consolidated messages
+  /// are going to be enqueued in "incoming_message_queue_"
+  TAO::Incoming_Message_Stack incoming_message_stack_;
+
+  /// The queue will start draining no later than <queeing_deadline_>
   /// *if* the deadline is
   ACE_Time_Value current_deadline_;
 
@@ -992,7 +1160,15 @@ protected:
   /// buffer the requests in this transport until the connection is ready
   bool is_connected_;
 
+  /// Track if connection was seen as closed during a read so that
+  /// invocation can optionally be retried using a different profile.
+  /// Note that this could result in violate the "at most once" CORBA
+  /// semantics.
+  bool connection_closed_on_read_;
+
 private:
+  /// Our messaging object.
+  TAO_GIOP_Message_Base *messaging_object_;
 
   /// @@Phil, I think it would be nice if we could think of a way to
   /// do the following.
@@ -1010,7 +1186,7 @@ private:
   TAO_Codeset_Translator_Base *char_translator_;
   TAO_Codeset_Translator_Base *wchar_translator_;
 
-  /// The tcs_set_ flag indicates that negotiation has occured and so the
+  /// The tcs_set_ flag indicates that negotiation has occurred and so the
   /// translators are correct, since a null translator is valid if both ends
   /// are using the same codeset, whatever that codeset might be.
   CORBA::Boolean tcs_set_;
@@ -1019,14 +1195,97 @@ private:
   /// is necessary since codeset context information is necessary only on the
   /// first request. After that, the translators are fixed for the life of the
   /// connection.
-  CORBA::Boolean first_request_;
+  bool first_request_;
 
   /// Holds the partial GIOP message (if there is one)
   ACE_Message_Block* partial_message_;
+
+#if TAO_HAS_SENDFILE == 1
+  /// mmap()-based allocator used to allocator output CDR buffers.
+  /**
+   * If this pointer is non-zero, sendfile() will be used to send data
+   * in a TAO_OutputCDR stream instance.
+   */
+  TAO_MMAP_Allocator * const mmap_allocator_;
+#endif  /* TAO_HAS_SENDFILE==1 */
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+  /// Statistics
+  TAO::Transport::Stats* stats_;
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
+
+  /// Indicate that flushing needs to be done in post_open()
+  bool flush_in_post_open_;
+
+  /// lock for synchronizing Transport OutputCDR access
+  mutable TAO_SYNCH_MUTEX output_cdr_mutex_;
 };
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+namespace TAO
+{
+  namespace Transport
+  {
+    /*
+     * @class Stats
+     *
+     * @brief Used to collect stats on a transport.
+     *
+     * The base class in (potentially) extensible hierarchy used to
+     * specialize the information available for a specific protocol.
+     *
+     * This class is necessary for the implementation of the Transport
+     * Current feature.
+     *
+     * <B>See Also:</B>
+     *
+     * https://htmlpreview.github.io/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
+     *
+     */
+    class TAO_Export Stats
+    {
+    public:
+      Stats ();
+      virtual ~Stats ();
+
+      void messages_sent (size_t message_length);
+      CORBA::LongLong messages_sent () const;
+      CORBA::LongLong bytes_sent () const;
+
+      void messages_received (size_t message_length);
+      CORBA::LongLong messages_received () const;
+      CORBA::LongLong bytes_received () const;
+
+      void opened_since (const ACE_Time_Value& tv);
+      const ACE_Time_Value& opened_since () const;
+
+    private:
+      /// Mutex guarding the internal state of the statistics
+      mutable TAO_SYNCH_MUTEX stat_mutex_;
+
+      /// The bytes_rcvd_.samples_count() could have been used instead,
+      /// however there was a suspicion that 32 bits would be
+      /// insufficient.
+      CORBA::LongLong messages_rcvd_;
+
+      /// The bytes_sent_.samples_count() could have been used instead,
+      /// however there was a suspicion that 32 bits would be
+      /// insufficient.
+      CORBA::LongLong messages_sent_;
+
+      ACE_Basic_Stats bytes_rcvd_;
+      ACE_Basic_Stats bytes_sent_;
+
+      ACE_Time_Value  opened_since_;
+    };
+  }
+}
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Transport.inl"
+# include "tao/Transport.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -3,8 +3,6 @@
 /**
  *  @file    FT_FaultDetectorFactory_i.h
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  It declares the implementation of FaultDetectorFactory which
  *  creates and manages FaultDetectors as an agent for
@@ -23,19 +21,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//////////////////////////////////
-// Classes declared in this header
-namespace TAO
-{
-  class  FT_FaultDetectorFactory_i;
-}
-
 /////////////////////////////////
 // Includes needed by this header
 #include <ace/Vector_T.h>
 #include <orbsvcs/FT_FaultDetectorFactoryS.h>
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <ace/Thread_Manager.h>
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////
 // Forward references
@@ -80,7 +74,6 @@ namespace TAO
  *  It then closes the ACE_Thread_Manager to ensure that all
  *  detector threads have departed before the factory itself is
  *  deleted.
- *
  */
 
 namespace TAO
@@ -114,20 +107,20 @@ namespace TAO
      * @param argv traditional C argv
      * @return zero for success; nonzero is process return code for failure.
      */
-    int parse_args (int argc, char * argv[]);
+    int parse_args (int argc, ACE_TCHAR * argv[]);
 
     /**
      * Initialize this object.
      * @param orb our ORB -- we keep var to it.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb);
 
     /**
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini ();
 
     /**
      * Idle-time activity.
@@ -135,7 +128,7 @@ namespace TAO
      * @param result is set to process return code if return value is non-zero.
      * @return zero to continue; nonzero to exit
      */
-    int idle(int & result ACE_ENV_ARG_DECL);
+    int idle(int & result);
 
 
     /**
@@ -159,50 +152,24 @@ namespace TAO
     ///////////////////////////////////////////////
     // CORBA interface FaultDetectorFactory methods
     virtual void change_properties (
-        const PortableGroup::Properties & property_set
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::InvalidProperty
-      ));
+        const PortableGroup::Properties & property_set);
 
-    virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual void shutdown ();
 
     /////////////////////////////////////////
     // CORBA interface GenericFactory methods
     virtual CORBA::Object_ptr create_object (
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
-      PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-      , PortableGroup::NoFactory
-      , PortableGroup::ObjectNotCreated
-      , PortableGroup::InvalidCriteria
-      , PortableGroup::InvalidProperty
-      , PortableGroup::CannotMeetCriteria
-    ));
+      PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id);
 
     virtual void delete_object (
-      const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-      , PortableGroup::ObjectNotFound
-    ));
+      const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id);
 
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
 
-    virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Boolean is_alive ();
 
     /////////////////////////
     // Implementation methods
@@ -225,7 +192,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /**
      * Protect internal state.
      * Mutex should be locked by corba methods, or by
@@ -234,8 +200,7 @@ namespace TAO
      * Implementation methods should assume the mutex is
      * locked if necessary.
      */
-    ACE_SYNCH_MUTEX internals_;
-    typedef ACE_Guard<ACE_SYNCH_MUTEX> InternalGuard;
+    TAO_SYNCH_MUTEX internals_;
 
     /**
      * The orb
@@ -261,7 +226,7 @@ namespace TAO
     /**
      * A file to which the factory's IOR should be written.
      */
-    const char * ior_output_file_;
+    const ACE_TCHAR * ior_output_file_;
 
     /**
      * A name to be used to register the factory with the name service.
@@ -343,6 +308,8 @@ namespace TAO
     int quit_requested_;
   };
 }   // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* FT_FAULTDETECTORFACTORY_I_H_  */

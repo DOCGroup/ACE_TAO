@@ -1,18 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Scheduler_Utilities.h
-//
-// = AUTHOR
-//     Chris Gill <cdgill@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Scheduler_Utilities.h
+ *
+ *  @author  Chris Gill <cdgill@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_SCHEDULER_UTILITIES_H
 #define ACE_SCHEDULER_UTILITIES_H
@@ -26,20 +21,21 @@
 
 #include "orbsvcs/Sched/sched_export.h"
 
+/**
+ * @class ACE_RT_Info
+ *
+ * @brief Offers a convenient C++ interface to the IDL RT_Info structure.
+ *
+ * For performance reasons the RT_Info data is represented as an
+ * IDL structure, this permits sending complete RT_Info's from the
+ * client to the server.  Unfortunately this precludes the usage
+ * of member functions and constructors, this class serves as a
+ * helper to implement those without loosing the performance on
+ * IDL.
+ */
 class TAO_RTSched_Export ACE_RT_Info : public RtecScheduler::RT_Info
 {
-  // = TITLE
-  //   Offers a convenient C++ interface to the IDL RT_Info structure.
-  //
-  // = DESCRIPTION
-  //   For performance reasons the RT_Info data is represented as an
-  //   IDL structure, this permits sending complete RT_Info's from the
-  //   client to the server.  Unfortunately this precludes the usage
-  //   of member functions and constructors, this class serves as a
-  //   helper to implement those without loosing the performance on
-  //   IDL.
 public:
-
   /// Construct a helper class instance from values for
   /// the fields of the IDL struct it wraps.
   ACE_RT_Info (const char* entry_point,
@@ -57,11 +53,10 @@ public:
   /// Add a dependency of one RT_Info upon another.
   int add_dependency(RtecScheduler::handle_t dep,
                      int number_of_calls = 1);
-
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Scheduler_Utilities.i"
+#include "orbsvcs/Scheduler_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

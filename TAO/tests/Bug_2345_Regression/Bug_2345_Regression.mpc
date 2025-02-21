@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project(*Server) : taoserver, imr_client, avoids_corba_e_micro {
+  Source_Files {
+    server.cpp
+  }
+}

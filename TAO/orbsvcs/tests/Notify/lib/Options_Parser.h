@@ -2,11 +2,7 @@
 /**
  *  @file Options_Parser.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_OPTIONS_PARSER_H
@@ -19,20 +15,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Arg_Shifter.h"
 #include "orbsvcs/CosNotificationC.h"
+#include "ace/Arg_Shifter.h"
 
 /**
  * @class TAO_Notify_Tests_Options_Parser
  *
  * @brief Common Options parsing code.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Options_Parser
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_Options_Parser (void);
+  /// Constructor
+  TAO_Notify_Tests_Options_Parser ();
 
   /// Destructor
   ~TAO_Notify_Tests_Options_Parser ();

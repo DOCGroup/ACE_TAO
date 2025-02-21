@@ -1,0 +1,126 @@
+// -*- MPC -*-
+project(Simple1) : aceexe {
+  exename = Simple1
+  Source_Files {
+    Simple1.cpp
+  }
+}
+
+project(Simple2) : aceexe {
+  exename = Simple2
+  Source_Files {
+    Simple2.cpp
+  }
+}
+
+project(Change Mask) : aceexe {
+  exename = Change_Mask
+  Source_Files {
+    Change_Mask.cpp
+  }
+}
+
+project(Change Instance Default) : aceexe {
+  exename = Change_Instance_Default
+  Source_Files {
+    Change_Instance_Default.cpp
+  }
+}
+
+project(Wrap Macros) : aceexe {
+  exename = Wrap_Macros
+  Source_Files {
+    Wrap_Macros.cpp
+  }
+}
+
+project(Wrap Macros Alt) : aceexe {
+  exename = Wrap_Macros_Alt
+  Source_Files {
+    Wrap_Macros_Alt.cpp
+  }
+}
+
+project(Trace Return) : aceexe {
+  exename = Trace_Return
+  Source_Files {
+    Trace_Return.cpp
+  }
+}
+
+project(Use Stderr) : aceexe {
+  exename = Use_Stderr
+  Source_Files {
+    Use_Stderr.cpp
+  }
+}
+
+project(Howto Syslog) : aceexe {
+  exename = Howto_Syslog
+  Source_Files {
+    Howto_Syslog.cpp
+  }
+}
+
+project(Use Syslog) : aceexe {
+  exename = Use_Syslog
+  Source_Files {
+    Use_Syslog.cpp
+  }
+}
+
+project(Use Ostream) : aceexe {
+  exename = Use_Ostream
+  Source_Files {
+    Use_Ostream.cpp
+  }
+}
+
+project(Use Multiple Sinks) : aceexe {
+  exename = Use_Multiple_Sinks
+  Source_Files {
+    Use_Multiple_Sinks.cpp
+  }
+}
+
+project(Use Callback) : aceexe {
+  exename = Use_Callback
+  Source_Files {
+    Use_Callback.cpp
+  }
+}
+
+project(Use Callback2) : aceexe {
+  exename = Use_Callback2
+  Source_Files {
+    Use_Callback2.cpp
+  }
+}
+
+project(Use Logger) : aceexe {
+  exename = Use_Logger
+  Source_Files {
+    Use_Logger.cpp
+  }
+}
+
+project(Use Logging Server) : aceexe {
+  exename = Use_Logging_Server
+  Source_Files {
+    Use_Logging_Server.cpp
+  }
+}
+
+project(Use LogManager) : aceexe {
+  exename = Use_LogManager
+  Source_Files {
+    Use_LogManager.cpp
+  }
+}
+
+project(Use Logging Strategy) : aceexe {
+  exename = Use_Logging_Strategy
+  Source_Files {
+    Use_Logging_Strategy.cpp
+  }
+}

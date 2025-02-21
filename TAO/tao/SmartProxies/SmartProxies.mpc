@@ -1,0 +1,8 @@
+project(SmartProxies) : taolib, tao_output, install, tao_versioning_idl_defaults {
+  sharedname   = TAO_SmartProxies
+  dynamicflags += TAO_SMARTPROXIES_BUILD_DLL
+
+  specific {
+    install_dir = tao/SmartProxies
+  }
+}

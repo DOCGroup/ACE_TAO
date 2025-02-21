@@ -1,23 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    union.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has 
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    union.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
 
 
 // Implicit default case
@@ -38,9 +32,9 @@ union Data switch (DataType)
 
 // Explicit default case
 
-module Necessary 
+module Necessary
 {
-  // It is important to have a module, in which 
+  // It is important to have a module, in which
   // the following union is declared.
 
   typedef long Result;
@@ -52,26 +46,54 @@ module Necessary
     };
 
   union WhichResult switch (Kind )
-    {   
+    {
       case e_Result: Result  m_Result;
       default: long m_Unused;
     };
 };
 
+// Union with negative cases
+union foo switch (short)
+{
+  case -3:
+  case  4:
+  case -1: string foo_str_member;
+  default: long   foo_iface_member;
+  case  0: long   foo_iface_member2;
+};
+
 // Make sure that CORBA_Any::to_* is used everywhere.
 module UnionDiscTest
-  {
-   	union BooleanUnion switch (boolean) 
-      {
-      	case TRUE: string value;
-   		};
+{
+  union BooleanUnion switch (boolean)
+    {
+      case TRUE: string value;
+    };
 
-    union CharUnion switch (char)
-      {
-        case 'a': string value;
-      };
-	};
+  union CharUnion switch (char)
+    {
+      case 'a': string value;
+    };
+};
 
+module AllBoolUnions
+{
+  union OneBranchT switch (boolean) { case TRUE: octet val; };
+  union OneBranchF switch (boolean) { case FALSE: octet val; };
+  union OneBranchD switch (boolean) { default: octet val; };
+  union OneBranchTF switch (boolean) { case TRUE: case FALSE: octet val; };
+  union OneBranchFT switch (boolean) { case FALSE: case TRUE: octet val; };
+  union OneBranchTD switch (boolean) { case TRUE: default: octet val; };
+  union OneBranchDT switch (boolean) { default: case TRUE: octet val; };
+  union OneBranchFD switch (boolean) { case FALSE: default : octet val; };
+  union OneBranchDF switch (boolean) { default: case FALSE: octet val; };
+  union TwoBranchesTF switch (boolean) { case TRUE: octet val1; case FALSE: char val2; };
+  union TwoBranchesFT switch (boolean) { case FALSE: octet val1; case TRUE: char val2; };
+  union TwoBranchesTD switch (boolean) { case TRUE: octet val1; default: char val2; };
+  union TwoBranchesDT switch (boolean) { default: octet val1; case TRUE: char val2; };
+  union TwoBranchesFD switch (boolean) { case FALSE: octet val1; default: char val2; };
+  union TwoBranchesDF switch (boolean) { default: octet val1; case FALSE: char val2; };
+};
 
 // Nested unions
 
@@ -94,7 +116,7 @@ enum disc_outer
 };
 
 union inner1 switch (disc1)
-{ 
+{
   case one: short s;
   case two: long l;
 };
@@ -111,64 +133,64 @@ union outer switch (disc_outer)
   case out2: inner2 second;
 };
 
-module UnionTest3 
+module UnionTest3
 {
-   enum ValChoice 
+   enum ValChoice
      {
-    	 intVal,
-    	 realVal
-   	 };
+       intVal,
+       realVal
+     };
 
-   union ValType switch(ValChoice) 
+   union ValType switch(ValChoice)
      {
        case intVal: long integerValue;
        case realVal: double realValue;
-   	 };
+     };
 
-   struct UpType 
+   struct UpType
      {
        ValType high;
        ValType low;
-   	 };
+     };
 
-   struct DownType 
+   struct DownType
      {
        ValType high;
        ValType low;
-   	 };
+     };
 
-   enum IndChoice 
+   enum IndChoice
      {
        up_Level,
        down_Level
-   	 };
+     };
 
-   union IndType switch(IndChoice) 
+   union IndType switch(IndChoice)
      {
        case up_Level: UpType up;
        case down_Level: DownType down;
-   	 };
+     };
 };
 
 // Make sure inner union is generated in header file with
 // proper scoping (or lack thereof) in its name, depending
 // on the platform.
-enum XType 
-{ 
-  X_A 
+enum XType
+{
+  X_A
 };
 
-enum ZType 
-{ 
-  Z_A 
+enum ZType
+{
+  Z_A
 };
 
-union X switch (XType) 
+union X switch (XType)
 {
   case X_A:
-    struct Y 
+    struct Y
       {
-        union Z switch (ZType) 
+        union Z switch (ZType)
         {
           case Z_A: long a;
         } u;
@@ -195,77 +217,91 @@ union FieldValue switch (FieldType)
 
 struct Field
 {
-    FieldValue value;
+  FieldValue value;
 };
 
-// Tricky case of lookup for a recursive union. When defined
-// inside another datatype like this, the union is referenced
-// inside itself before the closing brace is seen, but not
-// declared yet.
-struct Element
-{
-  union ValueUnion switch (short)
-  {
-    case 0:
-      long lvalue;
-    case 1:
-      sequence<ValueUnion> VUValue;
-  } Value;
-};
-
-// A fix to the IDL compiler's typecoce generation created
+// A fix to the IDL compiler's typecode generation created
 // a problem with unions that have more than one member,
 // where any member except the last is itself a scoped type.
 // This is the simplest example that will reproduce the problem,
 // if it ever reappears.
-enum TestOneEnum 
-{ 
-  TALL, 
+enum TestOneEnum
+{
+  TALL,
   SCHORT
 };
 
-enum TestTwoEnum 
-{ 
-  LIGHT, 
+enum TestTwoEnum
+{
+  LIGHT,
   DARK
 };
 
-union TestUnion switch (short) 
+union TestUnion switch (short)
 {
   case 1: TestOneEnum oneEnum;
   case 2: TestTwoEnum twoEnum;
 };
 
-// Test for various kinds of declarations inside a union,
-// similar to the example in enum_in_struct.idl.
+typedef long U41[2][3];
+typedef long U42[2];
 
-union decl_heavy_union switch (short)
-{
-  case 1:
-    enum which
-    {
-      ZERO,
-      ONE,
-      TWO
-    } m_which;
-  case 2: 
-    enum en 
-    {
-      a, 
-      b, 
-      c
-    } m_en_arr[10];
-  case 3: 
-    struct st 
-    {
-      long a; 
-      char b;
-    } m_st_arr[10];
-  case 4: 
-    union un switch (long) 
-    {
-      case 1: long a; 
-      case 2: char b;
-    } m_un_arr[10];
+union U85 switch (long) {
+  case 1: U41 b_85_1;
+  case 2: U42 b_85_2;
 };
 
+typedef string UString[2];
+union U86 switch (long) {
+  case 1: string b_86_1;
+  case 2: long b_86_2;
+};
+union U88 switch (long) {
+  case 1: UString b_86_1;
+  case 2: long b_86_2;
+};
+
+struct UBar {
+  long foo;
+};
+typedef UBar UBarArray[2];
+
+union U87 switch (long) {
+  case 1: UBar b_87_1;
+  case 2: long b_87_2;
+};
+union U89 switch (long) {
+  case 1: UBarArray b_87_1;
+  case 2: long b_87_2;
+};
+
+enum U90
+{
+  U90_1,
+  U90_2
+};
+
+typedef U90 U90Array[2];
+
+union U91 switch (long) {
+  case 1: U90Array b_91_1;
+  case 2: long b_92_2;
+};
+
+union U92 switch (long) {
+  case 1: UBar b_92_1;
+  case 2: long b_92_2;
+  default: UBar b_92_3;
+};
+
+union U93 switch (long) {
+  case 1: UBarArray b_93_1;
+  case 2: long b_93_2;
+  default: UBarArray b_93_3;
+};
+
+union U94 switch (long) {
+  case 1: U90Array b_94_1;
+  case 2: long b_94_2;
+  default: U90Array b_94_3;
+};

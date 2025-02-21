@@ -1,0 +1,51 @@
+project(*core_idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb \
+                -Wb,export_macro=TAO_IORTable_Export \
+                -Wb,export_include=tao/IORTable/iortable_export.h \
+                -Wb,stub_export_file=iortable_export.h \
+                -Wb,include_guard=TAO_IORTABLE_SAFE_INCLUDE \
+                -Wb,safe_include=tao/IORTable/IORTable.h \
+                -iC tao/IORTable -Gxhst
+    IORTable.pidl
+  }
+
+  specific {
+    install_dir = tao/IORTable
+  }
+}
+
+project(IORTable) : taolib, portableserver, tao_output, install, taoidldefaults {
+  after       += *core_idl
+  sharedname   = TAO_IORTable
+  dynamicflags += TAO_IORTable_BUILD_DLL
+
+  Source_Files {
+    IORTable.cpp
+    IOR_Table_Impl.cpp
+    Table_Adapter.cpp
+    IORTableC.cpp
+  }
+
+  Header_Files {
+    IORTable.h
+    IOR_Table_Impl.h
+    Table_Adapter.h
+    iortable_export.h
+    IORTableC.h
+    IORTableS.h
+  }
+
+  Resource_Files {
+    TAO_IORTable.rc
+  }
+
+  Pkgconfig_Files {
+    TAO_IORTable.pc.in
+  }
+
+  specific {
+    install_dir = tao/IORTable
+  }
+}

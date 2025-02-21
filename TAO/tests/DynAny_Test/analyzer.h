@@ -4,8 +4,6 @@
 /**
  *  @file    analyzer.h
  *
- *  $Id$
- *
  *  This file contains a DynAny analyzer that dumps the contents of a DynAny
  *  to the ace logging using ACE_DEBUG.
  *
@@ -15,21 +13,28 @@
 
 #ifndef ANALYZER_H
 #define ANALYZER_H
+
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "tao/ORB.h"
 
 class DynAnyAnalyzer
 {
 public:
-  DynAnyAnalyzer(CORBA::ORB_ptr orb, DynamicAny::DynAnyFactory_ptr dynany_factory, int debug);
+  DynAnyAnalyzer (CORBA::ORB_ptr orb,
+                  DynamicAny::DynAnyFactory_ptr dynany_factory,
+                  int debug);
 
-  void tab(int t);
+  void tab (int t);
 
-  ~DynAnyAnalyzer();
+  ~DynAnyAnalyzer ();
 
-  void resetTab();
+  void resetTab ();
 
-  void analyze(DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL);
+  void analyze (DynamicAny::DynAny_ptr da);
+
+  void analyze_basic_seq (CORBA::TypeCode_ptr tc,
+                          DynamicAny::DynAny_ptr da);
 
 private:
   CORBA::ORB_var orb_;

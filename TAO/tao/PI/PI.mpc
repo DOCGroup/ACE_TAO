@@ -1,0 +1,132 @@
+project(*idl) : tao_versioning_idl_defaults, install, pidl_install {
+  custom_only = 1
+  idlflags += -SS -Sci -Gp -Gd \
+              -Wb,export_macro=TAO_PI_Export \
+              -Wb,export_include=tao/PI/pi_export.h \
+              -iC tao/PI
+  IDL_Files {
+    idlflags += -Sorb -GX \
+                -Wb,unique_include=tao/PI/PI.h
+    PI_include.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Sorb -Sal -GX \
+                -Wb,include_guard=TAO_PI_SAFE_INCLUDE \
+                -Wb,safe_include=tao/PI/PI.h
+    idlflags -= -Sa -St
+    ORBInitInfo.pidl
+  }
+
+  IDL_Files {
+    idlflags += -GA -Sorb -Sal \
+                -Wb,include_guard=TAO_PI_SAFE_INCLUDE \
+                -Wb,safe_include=tao/PI/PI.h
+    idlflags -= -Sa -St
+    ORBInitializer.pidl
+    ClientRequestInterceptor.pidl
+    ClientRequestInfo.pidl
+    RequestInfo.pidl
+    PIForwardRequest.pidl
+    PICurrent.pidl
+    ProcessingModePolicy.pidl
+  }
+
+  IDL_Files {
+    idlflags += -GA -Sorb -Sal
+    idlflags -= -Sa -St
+    Interceptor.pidl
+  }
+
+  IDL_Files {
+    idlflags += -GA -Sal \
+                -Wb,include_guard=TAO_PI_SAFE_INCLUDE \
+                -Wb,safe_include=tao/PI/PI.h
+    idlflags -= -Sa -St
+    InvalidSlot.pidl
+  }
+
+  PidlInstallWithoutBuilding_Files {
+    PolicyFactory.pidl
+  }
+
+  specific {
+    install_dir = tao/PI
+  }
+}
+
+project(PI) : taolib, tao_output, codecfactory, install, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_PI
+  dynamicflags += TAO_PI_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    PI_includeC.cpp
+    ORBInitInfoC.cpp
+    ORBInitializerC.cpp
+    ClientRequestInterceptorC.cpp
+    ClientRequestInfoC.cpp
+    RequestInfoC.cpp
+    PIForwardRequestC.cpp
+    PICurrentC.cpp
+    ProcessingModePolicyC.cpp
+    InterceptorC.cpp
+    InvalidSlotC.cpp
+    ClientRequestInfoA.cpp
+    ClientRequestInterceptorA.cpp
+    InterceptorA.cpp
+    InvalidSlotA.cpp
+    ORBInitializerA.cpp
+    PICurrentA.cpp
+    PIForwardRequestA.cpp
+    PolicyFactoryA.cpp
+    ProcessingModePolicyA.cpp
+    RequestInfoA.cpp
+  }
+
+  Header_Files {
+    *.h
+    ClientRequestInfoA.h
+    ClientRequestInfoC.h
+    ClientRequestInterceptorA.h
+    ClientRequestInterceptorC.h
+    InterceptorA.h
+    InterceptorC.h
+    InvalidSlotA.h
+    InvalidSlotC.h
+    ORBInitializerA.h
+    ORBInitializerC.h
+    ORBInitInfoA.h
+    ORBInitInfoC.h
+    PICurrentA.h
+    PICurrentC.h
+    PIForwardRequestA.h
+    PIForwardRequestC.h
+    PI_includeA.h
+    PI_includeC.h
+    ProcessingModePolicyA.h
+    ProcessingModePolicyC.h
+    RequestInfoA.h
+    RequestInfoC.h
+    ClientRequestInfoS.h
+    ClientRequestInterceptorS.h
+    InterceptorS.h
+    InvalidSlotS.h
+    ORBInitializerS.h
+    ORBInitInfoS.h
+    PICurrentS.h
+    PIForwardRequestS.h
+    PI_includeS.h
+    ProcessingModePolicyS.h
+    RequestInfoS.h
+  }
+
+  Template_Files {
+    *_T.cpp
+  }
+
+  specific {
+    install_dir = tao/PI
+  }
+}

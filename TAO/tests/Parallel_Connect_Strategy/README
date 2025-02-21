@@ -1,0 +1,35 @@
+/**
+
+
+
+@page Parallel Connect Strategy Test README File
+
+This test is intended to demonstrate that the Parallel Connect
+strategy improves performance of connection establishment regardless
+of the wait strategy involved.
+
+The measurements are timed invocations based on the ACE_High_Res_Timer.
+
+Sample run_test.pl output:
+LF wait strategy test
+Starting invocation 1 - call completed in 6347 usec
+Starting invocation 2 - call completed in 406 usec
+
+LF wait strategy, corbaloc test
+Narrowing IOR - call completed in 5172 usec
+Starting invocation 1 - call completed in 193 usec
+Starting invocation 2 - call completed in 170 usec
+
+Reactive wait strategy test
+Starting invocation 1 - call completed in 4469 usec
+Starting invocation 2 - call completed in 361 usec
+
+Blocked wait strategy test
+Starting invocation 1 - call completed in 189015027 usec
+Starting invocation 2 - call completed in 408 usec
+
+No parallel connect test
+Starting invocation 1 - call completed in 189014806 usec
+Starting invocation 2 - call completed in 189012352 usec
+
+*/

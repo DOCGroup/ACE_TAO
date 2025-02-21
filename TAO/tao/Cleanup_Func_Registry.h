@@ -4,8 +4,6 @@
 /**
  *  @file   Cleanup_Func_Registry.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 // ===================================================================
@@ -15,13 +13,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
 #include "ace/Array_Base.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Cleanup_Func_Registry
@@ -37,50 +39,39 @@ class TAO_Export TAO_Cleanup_Func_Registry
   friend class TAO_ORB_Core;
 
 public:
-
-  /// Constructor
-  TAO_Cleanup_Func_Registry (void);
-
-  /// Destructor
-  ~TAO_Cleanup_Func_Registry (void);
+  /// Constructor.
+  TAO_Cleanup_Func_Registry () = default;
 
   /// Return the number of registered cleanup functions.
-  size_t size (void) const;
+  size_t size () const;
 
 protected:
-
   /// Register a cleanup function.  The number of slot the cleanup
   /// function is placed is in will match the one reserved for the
   /// corresponding thread specific object in the ORB Core TSS
-  /// resources.  The slot_id is returned via the second reference
+  /// resources.  The @a slot_id is returned via the second reference
   /// argument.  This method returns 0 on failure, and -1 on failure.
-  int register_cleanup_function (ACE_CLEANUP_FUNC func,
-                                 size_t &slot_id);
+  int register_cleanup_function (ACE_CLEANUP_FUNC func, size_t &slot_id);
 
   /// Invoke the corresponding cleanup function on each
   /// thread-specific object.
   void cleanup (ACE_Array_Base<void *> &ts_objects);
 
 private:
-
-  /// Prevent copying through the copy constructor and the assignment
-  /// operator.
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Cleanup_Func_Registry &))
-
-private:
+  TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &) = delete;
+  TAO_Cleanup_Func_Registry &operator= (const TAO_Cleanup_Func_Registry &) = delete;
 
   /// Array of registered cleanup functions.  The number of
   /// registered cleanup functions should be the same as the number
   /// of registered thread-specific objects in the ORB Core TSS
   /// resources.
   ACE_Array_Base<ACE_CLEANUP_FUNC> cleanup_funcs_;
-
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Cleanup_Func_Registry.inl"
+# include "tao/Cleanup_Func_Registry.inl"
 #endif  /* __ACE_INLINE__ */
 
 

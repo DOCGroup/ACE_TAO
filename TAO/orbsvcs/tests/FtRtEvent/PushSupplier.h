@@ -3,8 +3,6 @@
 /**
  *  @file   PushSupplier.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -19,8 +17,6 @@
 #include "ace/Reactor.h"
 #include "ace/Time_Value.h"
 
-class ACE_Reactor;
-
 class PushSupplier_impl :
    public virtual ACE_Event_Handler
  , public virtual POA_RtecEventComm::PushSupplier
@@ -29,22 +25,16 @@ public:
   PushSupplier_impl(CORBA::ORB_ptr orb);
   ~PushSupplier_impl();
 
-  int init(RtecEventChannelAdmin::EventChannel_ptr ACE_ENV_ARG_DECL);
+  int init(RtecEventChannelAdmin::EventChannel_ptr);
 
-    virtual void  disconnect_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+    virtual void  disconnect_push_supplier ();
 private:
-
   class ReactorTask : public ACE_Task_Base
   {
   public:
     // ctor
-    ReactorTask(ACE_Event_Handler* handler) : handler_(handler){}
-    virtual int svc (void);
+    ReactorTask(ACE_Event_Handler* handler) : reactor_(0), handler_(handler){}
+    virtual int svc ();
     // The thread entry point.
 
     ACE_Reactor* reactor_;

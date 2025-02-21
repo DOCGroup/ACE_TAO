@@ -1,6 +1,15 @@
 // -*- MPC -*-
-// $Id$
+project : orbsvcsexe, install, concurrency_serv, naming, utils, svc_utils {
+  exename  = tao_cosconcurrency
 
-project : orbsvcsexe, core, concurrency, naming, utils {
-  exename  = Concurrency_Service
+  specific {
+    install_dir = tao/docs/concurrencysvc
+  }
+
+  InstallData_Files {
+    README
+  }
+
+  Documentation_Files {
+  }
 }

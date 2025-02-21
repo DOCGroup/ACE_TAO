@@ -4,8 +4,6 @@
 /**
  *  @file LifespanStrategyPersistent.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -14,13 +12,15 @@
 #define TAO_LIFESPANSTRATEGYPERSISTENT_H
 #include /**/ "ace/pre.h"
 
-#include "LifespanStrategy.h"
+#include "tao/PortableServer/LifespanStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Object_KeyC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ServerObject_i;
 
@@ -34,36 +34,38 @@ namespace TAO
     public:
       LifespanStrategyPersistent ();
 
-      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
+      void strategy_init(TAO_Root_POA *poa) override;
 
-      virtual void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
+      void notify_startup () override;
 
-      virtual void notify_shutdown (ACE_ENV_SINGLE_ARG_DECL);
+      void notify_shutdown () override;
 
-      char key_type (void) const;
+      char key_type () const;
 
-      virtual CORBA::Boolean is_persistent (void) const;
+      CORBA::Boolean is_persistent () const override;
 
-      CORBA::ULong key_length (void) const;
+      CORBA::ULong key_length () const override;
 
-      virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
+      void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) override;
 
-      virtual bool
+      bool
       validate (CORBA::Boolean is_persistent,
-                const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
+                const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const override;
 
       /// Check the state of the POA.
-      virtual void check_state (ACE_ENV_SINGLE_ARG_DECL);
+      void check_state () override;
 
-      virtual ::PortableServer::LifespanPolicyValue type() const;
+      bool use_imr () const override;
 
-      virtual bool use_imr () const;
+      CORBA::Object_ptr imr_key_to_object(const TAO::ObjectKey &key, const char *type_id) const override;
 
     private:
       bool use_imr_;
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_LIFESPANSTRATEGYPERSISTENT_H */

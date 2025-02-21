@@ -1,0 +1,5 @@
+// -*- MPC -*-
+feature(tao_no_iiop) : taoidldefaults {
+  idlflags += -DTAO_LACKS_IIOP
+  macros += TAO_HAS_IIOP=0
+}

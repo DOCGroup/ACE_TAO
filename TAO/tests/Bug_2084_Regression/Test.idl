@@ -1,0 +1,27 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  // Use "long long" to support platforms with 64-bit thread IDs.
+  typedef long long ThreadId;
+
+  /// A very simple interface
+  interface Hello
+  {
+    /// Return a simple string
+    string get_string (in ThreadId caller_threadid);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+
+  /// The server side
+  interface EventNode
+  {
+     void registerHello (in Hello h);
+     oneway void shutdown ();
+  };
+};

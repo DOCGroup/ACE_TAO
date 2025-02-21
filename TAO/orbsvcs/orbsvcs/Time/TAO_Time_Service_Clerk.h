@@ -4,15 +4,11 @@
 /**
  *  @file    TAO_Time_Service_Clerk.h
  *
- *  $Id$
- *
  *  This class implements the CosTime::TimeService IDL interface.
- *
  *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_TIME_SERVICE_CLERK_H
 #define TAO_TIME_SERVICE_CLERK_H
@@ -21,8 +17,10 @@
 #include "ace/Reactor.h"
 
 #include "orbsvcs/TimeServiceS.h"
-#include "Timer_Helper.h"
-#include "time_export.h"
+#include "orbsvcs/Time/Timer_Helper.h"
+#include "orbsvcs/Time/time_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Time_Service_Clerk
@@ -36,30 +34,26 @@
  * manages the UTOs and the TIOs. The notion of time returned
  * here is the globally synchronized time.
  */
-class TAO_Time_Export TAO_Time_Service_Clerk : public POA_CosTime::TimeService
+class TAO_Time_Serv_Export TAO_Time_Service_Clerk : public POA_CosTime::TimeService
 {
 public:
-
   /// Helper class to help in the updation of time.
   friend class Timer_Helper;
 
   /// Unbounded set of IORs.
   typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
 
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Time_Service_Clerk (int timer_value,
                           int timer_value_usecs,
                           const IORS& server);
 
   /// Destructor.
-  ~TAO_Time_Service_Clerk (void);
+  ~TAO_Time_Service_Clerk ();
 
   /// This operation returns the global time and an estimate of
   /// inaccuracy in a UTO.
-  virtual CosTime::UTO_ptr universal_time (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTime::TimeUnavailable));
+  virtual CosTime::UTO_ptr universal_time ();
 
   /**
    * This operation returns the global time in a UTO only if the time
@@ -67,39 +61,31 @@ public:
    * operation is not implemented and throws a CORBA::NO_IMPLEMENT
    * exception, if called.
    */
-  virtual CosTime::UTO_ptr secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTime::TimeUnavailable));
+  virtual CosTime::UTO_ptr secure_universal_time ();
 
   /// This creates a new UTO based on the given parameters.
   virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
                                                TimeBase::InaccuracyT inaccuracy,
-                                               TimeBase::TdfT tdf
-                                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                               TimeBase::TdfT tdf);
 
   /// This creates a new UTO given a time in the UtcT form.
-  virtual CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc
-                                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc);
 
   /// This creates a new TIO with the given parameters.
   virtual CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
-                                         TimeBase::TimeT upper
-                                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TimeBase::TimeT upper);
 
   /// Return the globally synchronized time.
-  virtual CORBA::ULongLong get_time (void);
+  virtual CORBA::ULongLong get_time ();
 
   /// Returns the time displacement factor.
-  CORBA::Short time_displacement_factor (void);
+  CORBA::Short time_displacement_factor ();
 
   /// Set the TDF.
   void time_displacement_factor (CORBA::Short);
 
   /// Get method for inaccuracy.
-  TimeBase::InaccuracyT inaccuracy (void);
+  TimeBase::InaccuracyT inaccuracy ();
 
   /// Set method for inaccuracy.
   void inaccuracy (TimeBase::InaccuracyT inaccuracy);
@@ -108,7 +94,6 @@ public:
   CORBA::ULongLong time_;
 
 private:
-
   /// Time displacement factor in minutes.
   CORBA::Short time_displacement_factor_;
 
@@ -131,6 +116,8 @@ private:
    */
   Timer_Helper helper_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TIME_SERVICE_CLERK_H */

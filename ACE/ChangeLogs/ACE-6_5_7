@@ -1,0 +1,594 @@
+commit 7f7cb130adab3ed4aebb8126f8dfe7919c76dc6a
+Merge: 145d27ad230 ef30d348937
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 21 07:56:40 2019 +0100
+
+    Merge pull request #1000 from simpsont-oci/avoid_unmanaged_strings_in_ace_env_helper
+    
+    Avoid the use of unmanaged strings in ACE_Env_Helper
+
+commit 665de49ce183334451968244a5975aba3e1a87fd
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Wed Nov 20 13:27:22 2019 +0100
+
+    Fixed typo in "Build Czar Duties" documentation
+
+commit ef30d3489375812369b540e90a2fcd3dabdab9a6
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Tue Nov 19 15:06:13 2019 -0600
+
+    Avoid the use of unmanaged strings in ACE_Env_Helper
+
+commit 8734d4a2cc37e8ee976ddc71d04d5ffdd4c1b690
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 15 10:59:57 2019 -0600
+
+    ACE NEWS updates
+
+commit 51dcd23895db3c5f8c1152f34a3d10b42a157b91
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Nov 11 12:59:46 2019 -0600
+
+    IPv6 compatibility for recvmsg with control buffer on Windows
+    
+    also exclude test from safety profile
+
+commit f5a02f0558d8ba0e701433aa6e6213582b9814f6
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 8 12:22:59 2019 -0600
+
+    gperf: Readd comma
+
+commit 79d47bc8e5e40b2e853e269626533d5b2caa9d23
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 8 12:08:22 2019 -0600
+
+    Respond to Review
+
+commit c34dc01f7e5d5ce097671eb3406e2e0a1c297b00
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Nov 6 17:52:46 2019 -0600
+
+    Fixup ace news item
+
+commit 80d19c5d2e3cc20bc4ed2884441ca9918e971d1a
+Merge: c597e4db31f 910153366e7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Nov 6 17:50:53 2019 -0600
+
+    Merge remote-tracking branch 'upstream/master' into tao_idl_crash_with_wstring_literals
+
+commit e3b1e0e7e8d9853fdb722c26f93ba5b89680b257
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Nov 6 17:42:14 2019 -0600
+
+    gperf: use basename for command line comment instead
+
+commit 910153366e7ccd88d3d1aafa3b83ce03da96e80a
+Merge: ff01c2cfd61 ea79999156f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 6 20:27:11 2019 +0000
+
+    Merge pull request #990 from jwillemsen/master
+    
+    Minor const and initialisation changes
+
+commit ea79999156f6175ed974fa09673c5a61d58bddae
+Merge: d9abaa91f7e 2f4f63116b2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 6 15:04:05 2019 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit d9abaa91f7eba82e4310704298815a3b57c665b3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 6 15:03:48 2019 +0100
+
+    Const changes and directly assign a variable
+    
+        * ACE/ace/OS_NS_sys_stat.inl:
+
+commit 9556fa1030b34ca3cc8397b06e5d416316392799
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Thu Sep 26 16:27:34 2019 +0800
+
+    Use ACE_OS::stat for ACE_OS::filesize.
+    
+    The original ACE_OS::filesize opens file with O_RDONLY, which would
+    fail to open CACHE.DATA of InterSystems Caché in AIX.
+    
+    To open it successfully, it requires O_CIO additionally which is not
+    portable even for AIX.
+
+commit 9a1af321f712858b566cf4de8c1599003a779568
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Wed Nov 6 17:24:20 2019 +0800
+
+    Change all create arguments to bool in Configuration.{h,cpp}
+
+commit e90e6fd00df1f33823155e7dbed3030d45c46554
+Author: Yisheng Leng <lengyisheng@gmail.com>
+Date:   Tue Nov 5 21:25:07 2019 +0800
+
+    Add access control argument for ACE_Configuration_Win32Registry
+
+commit 5bbe4cbb0f1ab9e5278a1336019bf02780bb2398
+Merge: ccbfafb0f0c 94174706136
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Nov 4 14:10:21 2019 -0600
+
+    Merge remote-tracking branch 'upstream/master' into igtd/monotonic
+
+commit ccbfafb0f0cdb8836d92739ed34ff7fbf2be3cd3
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Nov 4 12:20:05 2019 -0600
+
+    update ACE-monotonic-timer.html
+
+commit 66d0236c4b6e2e6c3137327cc3fa74f610970b9b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Nov 4 11:50:14 2019 -0600
+
+    Update ACE Tests to Use Monontonic Support Macros
+
+commit 0c7398870b14b2d171768dc37b17c2ac3d519bca
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Nov 4 11:40:09 2019 -0600
+
+    Move macros around
+
+commit 94174706136daf40bab3e8e5247e6b3dd97239c4
+Merge: dcbb7778f1c 74c88299c7f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Nov 3 15:01:40 2019 +0000
+
+    Merge pull request #987 from jwillemsen/jwi-ciupdates
+    
+    Use CI builds with ubuntu 18.04
+
+commit bcf3ff76e0bb45c2604de9c040a2826c1dad42b2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Nov 2 18:07:04 2019 +0100
+
+    Removed empty lines
+    
+        * ACE/ace/ace_wchar.cpp:
+
+commit dcbb7778f1c86c562efbf4e87f404a11592f3a48
+Merge: e9d96fe285d 4a6b7a40a7f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 1 17:48:48 2019 -0500
+
+    Merge pull request #985 from iguessthislldo/igtd/gnuace
+    
+    gnuace: declare various warnings to be phony
+
+commit e9d96fe285da3eaa43a5ccc333b04ab3ea4b9725
+Merge: d7cbc42882d 5fbe4885c11
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 1 14:42:40 2019 -0500
+
+    Merge pull request #986 from mitza-oci/master
+    
+    fixed warning on MinGW
+
+commit 22f69106176b2c93590bdfd78caba97ffd6d66a7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 1 14:11:50 2019 -0500
+
+    Update NEWS Files
+
+commit d06f3ff74fb73da2a7151778810934542557af88
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 1 13:29:43 2019 -0500
+
+    Add --only-record-arguments to gperf
+    
+    If desired, this options keeps gperf from printing the whole path of the
+    gperf executable in the result. It only prints the arguments.
+
+commit 5fbe4885c115e5d32cc99d4df9b37e932c095870
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 1 10:30:36 2019 -0500
+
+    fixed warning on MinGW
+
+commit 2a52aeb7cb43925057420642cbfc786309c25f02
+Merge: 4da653590b7 d7cbc42882d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 31 23:54:56 2019 -0500
+
+    Merge remote-tracking branch 'upstream/master' into igtd/monotonic
+
+commit 4da653590b7958edd4ffc226aff777e087ffd571
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 31 23:50:57 2019 -0500
+
+    Account for defining ACE_LACKS_CONDATTR_SETCLOCK after config-posix.h
+
+commit 32432daaa208f84880723e3eba77a9b78f518bd2
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 31 23:39:22 2019 -0500
+
+    Update ACE NEWS File for PR974
+
+commit f4c9b4371b5f83e0716af1c6b14e1d8792363099
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 31 23:35:14 2019 -0500
+
+    Add Monotonic Macros To ACE-monotonic-timer.html
+
+commit 67ac5424c626470af1cd0007cf29a163d31aada4
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 31 23:02:25 2019 -0500
+
+    Add missing ACE Test to gitignore
+
+commit 0a77e562843406483d1dbe51df3f44600c4b1907
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 31 23:01:49 2019 -0500
+
+    Respond to Review of PR974
+
+commit 4a6b7a40a7fcc21494a345fe621548cdf3909d5a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 31 21:44:37 2019 -0500
+
+    gnuace: declare various warnings to be phony
+
+commit d7cbc42882d28bbf0b130c2e3b4cf9ef353f3227
+Merge: dbe88daa3f7 b6dfbe5321c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 29 18:10:28 2019 -0500
+
+    Merge pull request #972 from iguessthislldo/igtd/include
+    
+    fuzz.pl: Disable check_include by Default
+
+commit f60d209703ac4e1d375a9670d2a655edd57185a8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 29 12:34:40 2019 +0100
+
+    Fixed typos
+    
+        * ACE/ace/Service_Gestalt.h:
+        * TAO/docs/notification/reliability.html:
+        * TAO/orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        * TAO/orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/README:
+
+commit c19116daac3a607a607f2889940d2b0fa68c860a
+Merge: be76d8095c4 a46d0f7bf0f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Oct 25 16:23:48 2019 -0500
+
+    Merge pull request #973 from mitza-oci/rcvmsg-windows
+    
+    sendmsg/recvmsg: Added support for msg_control on Windows
+
+commit ec96709678b7751361d0f938045d6a9190ca71be
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 24 12:11:33 2019 -0500
+
+    gnuace: declare makefile_name.local to be phony
+    
+    I wanted to use make --touch on OpenDDS, which worked but it created all
+    these makefile_name.local files everywhere. To stop that,
+    makefile_name.local has to be declared as phony because it's not a real
+    file. Props to @mitza-oci for making this more clear to me.
+
+commit 85f3741cc5fa939162ae6445d67290b986ba76d9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Oct 23 18:05:56 2019 -0500
+
+    Expose Monotonic Time Support in Macros
+    
+    Expose support `ACE_Monotonic_Time_Policy` using
+    `ACE_HAS_MONOTONIC_TIME_POLICY` and support for monotonic conditions
+    using `ACE_HAS_MONOTONIC_CONDITIONS`.
+    
+    Also refactored macros to try to simplify them while retaining
+    compatibility.
+
+commit a46d0f7bf0fe857c0ffa4f5c943581f2e7faf0c3
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Oct 22 16:36:37 2019 -0500
+
+    removed comments that are no longer valid
+
+commit f751b074626c91f252d41fa40ad98eee6d85e5b2
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Oct 21 11:01:02 2019 -0500
+
+    sendmsg with msg_control: added Windows platform support
+
+commit c815b4b4820a4f79cb0d91702b29e4cb741f3f29
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Oct 21 10:31:14 2019 -0500
+
+    sendmsg/recvmsg with msg_control: added Windows platform support
+
+commit b6dfbe5321c2d6986a1373aa6d86c76ca7880505
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 17 11:30:44 2019 -0500
+
+    fuzz.pl: Disable check_include by default
+
+commit 8d92cf5c5e3e0eefd578b418601c7c9d5886b7ff
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Oct 10 18:17:50 2019 -0500
+
+    Added NEWS for PR936
+
+commit d9d6d1ed5f8b17f6120eaec3dbd2251eb7d697e1
+Author: Benjamin Oldenburg <benjamin.oldenburg@ordis.co.th>
+Date:   Mon Oct 7 01:28:21 2019 +0700
+
+    fixed Stack_Trace.cpp
+    
+    (cherry picked from commit f2e5a03abba643eb6da996c5db23ad51bc49b9df)
+
+commit 6c906c74591eb984562f16e3fed95549337c64b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 3 12:19:57 2019 +0200
+
+    Use DOC as license identifier as it is defined on https://spdx.org/licenses/
+    
+        * ACE/rpmbuild/ace-tao.spec:
+
+commit 7bf9e27617d9cd491f28b993f7d7ea43740bb7fe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 24 17:14:13 2019 +0200
+
+    Workaround is still necessary with clang9
+    
+        * ACE/tests/Compiler_Features_32_Test.cpp:
+
+commit 7752af533d100f7a465eb8d1491c46121965f13a
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Thu Sep 12 14:35:04 2019 +0800
+
+    Fix GetExitCodeProcess error log.
+
+commit 6872d45a2c4666e1325f3018b7cbc2399a8d9015
+Merge: be1666daae8 53c89e4a39f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 2 18:52:42 2019 +0200
+
+    Merge pull request #955 from jwillemsen/jwi-logprocessthread
+    
+     Log process and thread id when we get an unhandled exception
+
+commit 9ebc2eb464ba77ca2b591819d4383e6decba2e1e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 30 15:37:47 2019 +0200
+
+    Doxygen change
+    
+        * ACE/ace/NT_Service.h:
+
+commit 53c89e4a39fbb641385d5c24694b7208ec9f19fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 30 15:24:50 2019 +0200
+
+    Log process and thread id when we get an unhandled exception, should make it a little bit easier to determine what has failed
+    
+        * ACE/ace/Object_Manager.cpp:
+
+commit 145dbd60969fc394c2c40ae0c44cec49e2740a82
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Aug 28 11:04:01 2019 -0500
+
+    Revert part of #943, whitespace is significant in the auto_run_tests output, this is parsed by other scripts.
+
+commit d1239f84141e33ac6eb308c5405215d373ffe52a
+Merge: b34cbdc1fc9 ba5f278c1a4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 23 14:22:00 2019 -0500
+
+    Merge pull request #943 from iguessthislldo/igtd/misc
+    
+    Get Correct Program Return Code in auto_run_tests.pl
+
+commit 69bca4721b8f5539ab448f23f081c8a8564505c7
+Merge: 4f267ca9fba 3a937e3df57
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 22 08:24:12 2019 +0200
+
+    Merge pull request #945 from mgrojo/service_repository_optimization
+    
+    Optimization: avoid nested iteration in ACE_Service_Repository::find_i
+
+commit 4f267ca9fba199e69012cbcd0a81d006c33f8af6
+Merge: 97fd702a008 6dfcfd2b0e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 22 08:23:48 2019 +0200
+
+    Merge pull request #948 from jwillemsen/jwi-selectowner
+    
+    Initialise owner_ member in the constructor and use false instead of …
+
+commit 97fd702a008988326840cb4433733a0066d9aa33
+Merge: eeaf44e8152 cf0b9f6d5bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 21 21:55:06 2019 +0200
+
+    Merge pull request #947 from jwillemsen/jwi-selectnotifyrenewbool
+    
+    Changed suppress_notify_renew flag from int to bool
+
+commit 6dfcfd2b0e216b2582e67197438c3c65f68592d6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 21 21:22:16 2019 +0200
+
+    Fixed compile error
+
+commit 6fc9b1c5ca0aba893beed2b7dbfee3e7d80c5be6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 21 18:07:50 2019 +0200
+
+    Initialise owner_ member in the constructor and use false instead of 0 for bool
+    
+        * ACE/ace/Select_Reactor_Base.inl:
+
+commit cf0b9f6d5bf174c7a663300c26f19febbe6aeef8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 21 17:28:41 2019 +0200
+
+    Changed suppress_notify_renew flag from int to bool
+    
+        * ACE/ace/Select_Reactor_Base.h:
+        * ACE/ace/Select_Reactor_Base.inl:
+        * ACE/ace/Select_Reactor_T.cpp:
+        * ACE/ace/TP_Reactor.cpp:
+
+commit 109a80d2ce3fac73c5c1b6202c0cd6ccf696e0f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 21 17:24:06 2019 +0200
+
+    Changed the owner flag of the dev poll reactor from int to bool
+    
+        * ACE/ace/Dev_Poll_Reactor.cpp:
+        * ACE/ace/Dev_Poll_Reactor.h:
+        * ACE/ace/Dev_Poll_Reactor.inl:
+        * ACE/ace/TP_Reactor.h:
+
+commit 3a937e3df5717132cfd2b7459396ee4e5567868c
+Author: mgrojo <mgrojo@gmail.com>
+Date:   Wed Aug 21 15:32:18 2019 +0200
+
+    Optimization: avoid nested iteration in ACE_Service_Repository::find_i
+    
+    This method was performing two iterations: the first using an index, and
+    the second in the call to this->service_array_.find, which uses an
+    iterator over the Array_Map looking for the element with that index.
+    
+    This simplifies and optimizes this method by iterating for the element
+    once using directly the map iterator.
+
+commit 59f4874b3b6c23f1080fbf1c40b060d31a0c7557
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 21 14:59:30 2019 +0200
+
+    List fix for glibc 2.30 and newer
+    
+        * ACE/NEWS:
+
+commit ea0c67bb9ccf7b22e086f33bdb89f5aa12fc5a4f
+Merge: 95f7d48b61f e7e38f991ff
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 21 07:41:08 2019 +0200
+
+    Merge pull request #939 from saininav/master
+    
+    config-linux-common.h: fix glibc build failure
+
+commit e7e38f991ff56b3c628c1cb0b891be8a4c125b1d
+Author: Naveen Saini <naveen.kumar.saini@intel.com>
+Date:   Wed Aug 14 13:15:09 2019 +0800
+
+    config-linux-common.h: fix glibc build failure
+    
+    Recent glibc v2.30 dropped XSI STREAMS declarations,
+    which causing below build failure.
+    
+    poky/build/tmp/work/corei7-64-poky-linux/ace/6.5.6-r0/ACE_wrappers/ace/os_include/os_stropts.h:56:17: fatal error: stropts.h: No such file or directory
+       56 | #  include /**/ <stropts.h>
+          |                 ^~~~~~~~~~~
+    compilation terminated.
+    
+    Added _XOPEN_STREAMS not defined checks for newer GLIBC releases.
+    
+    For more information about glibc v2.30 change, please check:
+    https://sourceware.org/git/?p=glibc.git;a=commit;h=a0a0dc83173ce11ff45105fd32e5d14356cdfb9c
+    
+    Signed-off-by: Naveen Saini <naveen.kumar.saini@intel.com>
+
+commit ba5f278c1a407202299edb2c0900b41c0d624855
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Aug 20 17:05:32 2019 -0500
+
+    Fix auto_run_tests.pl for ace tests
+
+commit 5ba5d502c8aa6528c6769c9896926c43020d7a6e
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Aug 20 16:53:34 2019 -0500
+
+    Use system() properly in auto_run_tests.pl
+
+commit 95f7d48b61fdc441730b92b0938a6e8fb467fcd0
+Merge: 8c89d27a112 2e5328d8784
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 20 08:10:50 2019 +0200
+
+    Merge pull request #942 from jwillemsen/jwi-sendfiledocu
+    
+    Removed old comments before constructor/destructor
+
+commit 8c89d27a11283659a6e172f6ea4cadde2f35eca3
+Merge: e760efd9217 f5bce1948ce
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Aug 19 16:40:14 2019 -0500
+
+    Merge pull request #936 from mitza-oci/master
+    
+    gnuace updates
+
+commit cdc108a61cb7e4a26932f5f4073c556260935c27
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 19 19:06:27 2019 +0200
+
+    Removed old style documentation which was just about mentioning where constructors/destructors are
+
+commit 814e79122b919520b7a337408d8b66f9f30d38bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 19 17:25:34 2019 +0200
+
+    Removed old comments before constructor/destructor
+
+commit 0acedb74f7bec47143ca8bcf542c8ae3cea15edb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 19 11:25:47 2019 +0200
+
+    Corrected documentation of ACE_OS::sendfile to resolve issue #937
+    
+        * ACE/ace/OS_NS_sys_sendfile.h:
+
+commit f5bce1948ce26dcc100594ec4c5404ce45ee17dd
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Aug 14 13:39:18 2019 -0500
+
+    gnuace: use list of generated files from GENERATED_DIRTY for ADDITIONAL_IDL_TARGETS
+
+commit 4177cff887a8e91dfd53d083ef00ceb5daed5fc6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 6 13:48:08 2019 -0500
+
+    gnuace: check requires/avoids make variables when a custom-only project has a postbuild step
+
+commit 836737a1e6d9437bfcbb399a92b82b999c81ff85
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 2 14:26:22 2019 -0500
+
+    gnuace's ADDITIONAL_IDL_TARGETS (used by "make idl_stubs"): corrected location of generated header for IDL files in other directories
+
+commit a83f4025539d021514e44f5e7b86f9ed1280a2d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 30 10:26:59 2019 +0200
+
+    Update for next release
+    
+        * ACE/bin/copy-local-script.sh:
+
+commit ee392af47bd4f83401676de666e839668910fcb3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 30 10:11:24 2019 +0200
+
+    Prepare for x.5.7 and make x.5.6 public
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

@@ -1,22 +1,16 @@
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/OctetSeq
-//
-// = FILENAME
-//    octetseq.cpp
-//
-// = DESCRIPTION
-//   TAO optimizes octet sequences, this test verifies that the
-//   optimizations do not break any code and that they effectively
-//   improve performance.
-//
-// = AUTHORS
-//    Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    OctetSeq.cpp
+ *
+ * TAO optimizes octet sequences, this test verifies that the
+ * optimizations do not break any code and that they effectively
+ * improve performance.
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -25,8 +19,6 @@
 #include "tao/CDR.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID(OctetSeq, OctetSeq, "$Id$")
 
 static int
 test_write_octet (TAO_OutputCDR &cdr,
@@ -95,7 +87,7 @@ int
 run (char* buf, size_t bufsize,
      size_t n, size_t lo, size_t s,
      int quiet,
-     const char* name,
+     const ACE_TCHAR* name,
      Writer writer, Reader reader)
 {
   size_t count = 0;
@@ -161,16 +153,11 @@ run (char* buf, size_t bufsize,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int n = 64;
       int lo = 128;
@@ -179,7 +166,7 @@ main (int argc, char *argv[])
 
       int quiet = 0;
 
-      ACE_Get_Opt get_opt (argc, argv, "qn:l:h:s:");
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("qn:l:h:s:"));
       int opt;
 
       while ((opt = get_opt ()) != EOF)
@@ -238,26 +225,19 @@ main (int argc, char *argv[])
 
       if (run (buf, hi,
                n, lo, s, quiet,
-               "OCTET", test_write_octet, test_read_octet) != 0)
+               ACE_TEXT ("OCTET"), test_write_octet, test_read_octet) != 0)
         return 1;
 
       if (run (buf, hi,
                n, lo, s, quiet,
-               "CHAR", test_write_char, test_read_char) != 0)
+               ACE_TEXT ("CHAR"), test_write_char, test_read_char) != 0)
         return 1;
       delete[] buf;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "OctetSeq");
+      ex._tao_print_exception ("OctetSeq");
     }
-  ACE_ENDTRY;
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Unbounded_Sequence<CORBA::Char>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Unbounded_Sequence<CORBA::Char>
-#endif  /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

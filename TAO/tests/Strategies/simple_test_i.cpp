@@ -1,17 +1,12 @@
-// $Id$
-
 #include "simple_test_i.h"
 #include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
-#include "simple_test_i.i"
+#include "simple_test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tests, simple_test_i, "$Id$")
-
 CORBA::Boolean
-Simple_Server_i::print_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Simple_Server_i::print_status ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -20,8 +15,7 @@ Simple_Server_i::print_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

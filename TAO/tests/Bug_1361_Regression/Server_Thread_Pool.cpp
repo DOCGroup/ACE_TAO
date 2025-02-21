@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_Thread_Pool.h"
 #include "TestC.h"
 #include "ace/OS_NS_unistd.h"
@@ -14,35 +12,38 @@ Thread_Pool::close (u_long)
   return 0;
 }
 
-Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
+Thread_Pool::Thread_Pool (CORBA::ORB_ptr orb,
+                          ACE_Thread_Manager *thr_mgr,
                           int n_threads)
   : ACE_Task<ACE_SYNCH> (thr_mgr),
+  orb_(CORBA::ORB::_duplicate(orb)),
   nt_(n_threads)
 {
   if (this->activate (THR_NEW_LWP,
                       n_threads) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "activate failed \n"));
+                "activate failed\n"));
 }
 
-Thread_Pool::~Thread_Pool (void)
+Thread_Pool::~Thread_Pool ()
 {
 }
 
 int
-Thread_Pool::shutdown (void)
+Thread_Pool::shutdown ()
 {
   thr_mgr_->cancel_grp (grp_id_);
 
-  for (int i = 0; i < nt_; i++)
+  int n_threads = nt_.value ();
+  for (int i = 0; i < n_threads; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) eof, sending block for thread=%d\n",
                   i + 1));
       ACE_Message_Block *mb1;
       ACE_NEW_RETURN (mb1,
-                      ACE_Message_Block ((char*)0),
+                      ACE_Message_Block ((char*) Test::Echo::_nil ()),
                       -1);
       mb1->length (0);
 
@@ -62,9 +63,9 @@ Thread_Pool::shutdown (void)
 int
 Thread_Pool::put (Test::Echo_ptr echoptr)
 {
-  char * charData = (char *)echoptr;
+  char * charData = (char *) Test::Echo::_duplicate (echoptr);
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN(mb, ACE_Message_Block(charData), -1);
   return this->put (mb);
 }
@@ -80,7 +81,7 @@ Thread_Pool::put (ACE_Message_Block *mb,
 // for all other threads to complete this iteration.
 
 int
-Thread_Pool::svc (void)
+Thread_Pool::svc ()
 {
   // Note that the <ACE_Task::svc_run> method automatically adds us to
   // the Thread_Manager when the thread begins.
@@ -92,7 +93,7 @@ Thread_Pool::svc (void)
 
   for (;; count++)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
 #if 0
       ACE_DEBUG ((LM_DEBUG,
@@ -111,30 +112,33 @@ Thread_Pool::svc (void)
 #if 0
       if (mb->length() == 0)
         {
+          //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) in iteration %d, got NULL message, exiting\n",
                       count));
+          //FUZZ: enable check_for_NULL
           break;
         }
 #endif
 
       Test::Echo_var echo = (Test::Echo_ptr)mb->base();
 
-      // Echo_var is responsible for deallocating this.
-      // mb->release ();
+      mb->release ();
 
       if (CORBA::is_nil(echo.in()))
         {
+          //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) in iteration %d, got NULL message, exiting\n",
                       count));
+          //FUZZ: enable check_for_NULL
           break;
         }
 
       // Keep calling a few times after receiving exceptions
       for(int exception_count = 50; exception_count; --exception_count)
         {
-          ACE_TRY_NEW_ENV
+          try
             {
               // keep calling until get an exception
               while (true)
@@ -145,30 +149,30 @@ Thread_Pool::svc (void)
                       Test::Payload pload (10);
                       pload.length (10);
                       ACE_OS::memset (pload.get_buffer(), pload.length(), 0);
-                      echo->echo_payload (pload
-                                          ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
-
+                      echo->echo_payload (pload);
                     }
                   else
 #endif /*if 0*/
                     {
                       Test::Payload_var pout;
-                      echo->echo_payload_out (pout.out()
-                                              ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                      echo->echo_payload_out (pout.out());
 
                       // time_t last_success = ACE_OS::time();
                     }
               }
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception&)
             {
-	      // Just forget the exception and continue
+              // Just forget the exception and continue
             }
-          ACE_ENDTRY;
         }
 
+    }
+
+  --nt_;
+  if (nt_ == 0)
+    {
+      orb_->shutdown (false);
     }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us

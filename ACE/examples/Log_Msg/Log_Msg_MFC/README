@@ -1,0 +1,42 @@
+
+
+                     MFC Logging Example documentation
+                     =================================
+                            by Craig Rodrigues <crodrigu@bbn.com>
+                    2002/08/02
+
+The example in this directory is a Microsoft Foundation Class (MFC)
+example which illustrates how to write an ACE_Log_Msg_Callback which
+can send debug output to the Microsoft debugger console.
+
+This is very useful when debugging an MFC GUI-based application which
+uses ACE.
+
+NOTES
+=====
+ - Make sure that $ACE_ROOT/ace/acemfcd.lib is built before building this
+   example.  Follow the instructions in $ACE_ROOT/ACE-INSTALL.html for building
+   ACE with Visual C++.  Do a Batch Build of ACE, and make sure that you build
+   the target "ACE DLL - Win32 MFC Debug".
+
+ - We must call ACE::init() and ACE::fini() in the right places
+   otherwise we will get strange crashes and memory leaks
+   when invoking ACE_Log_Msg::instance().
+   A good place to invoke these methods is in the method which overrides
+   CWinApp::InitInstance().
+   In this example, we invoke these methods in CLog_Msg_MFCApp::InitInstance().
+
+ - We must set the ACE_Log_Msg singleton to use our callback with:
+    ACE_Log_Msg::instance()->msg_callback( &m_mfc_logger );
+    ACE_Log_Msg::instance()->set_flags( ACE_Log_Msg::MSG_CALLBACK );
+
+   This is also done in CLog_Msg_MFCApp::InitInstance().
+
+
+THANKS
+======
+Thanks to the following people who provided assistance on the ACE
+mailing list:
+Chris Hafey <chafey@stentor.com>
+Don Hinton <dhinton@ieee.org>
+

@@ -2,11 +2,7 @@
 /**
  *  @file Peer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_PEER_H
@@ -22,39 +18,36 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/SString.h"
-
-class ACE_Arg_Shifter;
+#include "ace/Arg_Shifter.h"
 
 /**
  * @class TAO_Notify_Tests_Peer
  *
  * @brief
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Peer
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_Peer (void);
+  /// Constructor
+  TAO_Notify_Tests_Peer ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Peer ();
 
   /// Init
-  void init (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED);
+  void init (PortableServer::POA_ptr poa);
 
   /// Init this object.
   virtual int init_state (ACE_Arg_Shifter& arg_shifter);
 
   /// Set POA
-  void set_poa (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL);
+  void set_poa (PortableServer::POA_ptr poa);
 
   // Accessor to set/get our name.
   void set_name (ACE_CString& name);
-  const ACE_CString& get_name (void);
+  const ACE_CString& get_name ();
 
 protected:
-
   /// My name.
   ACE_CString name_;
 

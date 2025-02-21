@@ -1,0 +1,19 @@
+
+
+Real-Time Event Service Address Server test
+
+This directory contains a simple test intended to be run manually across
+hosts of different architectures. The server reports the IP address served
+as does the client. These should match.
+
+To run the server:
+
+./server -o <ior_file>
+
+To run the client:
+./client -k file://<ior_file>
+
+Default IOR file is ./as.ior
+
+There is no run_test.pl script as this test is only interesting when run
+across multiple hosts.

@@ -1,7 +1,5 @@
 #! /bin/sh
 #
-# $Id$
-#
 
 . parameters
 

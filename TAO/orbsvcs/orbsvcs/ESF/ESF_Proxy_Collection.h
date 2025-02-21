@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Proxy_Collection.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -18,6 +17,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include /**/ "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Target> class TAO_ESF_Worker;
 
@@ -59,7 +62,7 @@ template<class Target> class TAO_ESF_Worker;
  * cleanup operations).
  *
  * The class must also collaborate with other components of the
- * EC to efficiently and safely perform memory managment of the
+ * EC to efficiently and safely perform memory management of the
  * members in the collection.
  *
  * The PROXY object must be reference counted with the following
@@ -122,20 +125,18 @@ class TAO_ESF_Proxy_Collection
 {
 public:
   /// destructor
-  virtual ~TAO_ESF_Proxy_Collection (void);
+  virtual ~TAO_ESF_Proxy_Collection ();
 
   /**
    * Iterate over the collection and invoke worker->work() for each
    * member of the collection.
    * This encapsulates
    */
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker
-                         ACE_ENV_ARG_DECL) = 0;
+  virtual void for_each (TAO_ESF_Worker<PROXY> *worker) = 0;
 
   /// Insert a new element into the collection.  The collection assumes
   /// ownership of the element.
-  virtual void connected (PROXY *proxy
-                          ACE_ENV_ARG_DECL) = 0;
+  virtual void connected (PROXY *proxy) = 0;
 
   /**
    * Insert an element into the collection.  No errors can be raised
@@ -144,26 +145,18 @@ public:
    * <proxy->_decr_refcnt()> if the element is already present in the
    * collection.
    */
-  virtual void reconnected (PROXY *proxy
-                            ACE_ENV_ARG_DECL) = 0;
+  virtual void reconnected (PROXY *proxy) = 0;
 
   /// Remove an element from the collection.
-  virtual void disconnected (PROXY *proxy
-                             ACE_ENV_ARG_DECL) = 0;
+  virtual void disconnected (PROXY *proxy) = 0;
 
   /// The EC is shutting down, must release all the elements.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void shutdown () = 0;
 };
 
-// ****************************************************************
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Proxy_Collection.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Proxy_Collection.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Proxy_Collection.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ESF_PROXY_COLLECTION_H */

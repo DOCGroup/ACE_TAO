@@ -1,5 +1,3 @@
-//$Id$
-
 #include "MIF_Scheduler.h"
 #include "Kokyu_qosC.h"
 #include "utils.h"
@@ -14,46 +12,46 @@ MIF_Sched_Param_Policy::MIF_Sched_Param_Policy ()
 MIF_Sched_Param_Policy::MIF_Sched_Param_Policy (
     const MIF_Sched_Param_Policy &rhs
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (),
-  ACE_NESTED_CLASS (CORBA, Policy) (),
-  ACE_NESTED_CLASS (CORBA, LocalObject) (),
+  : CORBA::Object (),
+  CORBA::Policy (),
   MIF_Scheduling::SchedulingParameterPolicy (),
-  TAO_Local_RefCounted_Object (),
+  CORBA::LocalObject (),
   value_ (rhs.value_)
 {
 }
 
 MIF_Scheduling::SchedulingParameter
-MIF_Sched_Param_Policy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Sched_Param_Policy::value ()
 {
   return this->value_;
 }
 
 void
-MIF_Sched_Param_Policy::value (const MIF_Scheduling::SchedulingParameter& value ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Sched_Param_Policy::value (const MIF_Scheduling::SchedulingParameter& value)
 {
   this->value_ = value;
 }
 
 CORBA::Policy_ptr
-MIF_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Sched_Param_Policy::copy ()
 {
   MIF_Sched_Param_Policy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
-		    MIF_Sched_Param_Policy (*this),
+                    MIF_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return tmp;
 }
 
+CORBA::PolicyType
+MIF_Sched_Param_Policy::policy_type ()
+{
+  return 0;
+}
+
 void
-MIF_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Sched_Param_Policy::destroy ()
 {
 }
 
@@ -61,13 +59,11 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb,
                               Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type,
                               int ace_sched_policy,
                               int ace_sched_scope)
-  : orb_ (orb),
+  : orb_ (CORBA::ORB::_duplicate (orb)),
     disp_impl_type_ (disp_impl_type),
     ace_sched_policy_ (ace_sched_policy),
     ace_sched_scope_ (ace_sched_scope)
 {
-  ACE_DECLARE_NEW_ENV;
-
   Kokyu::DSRT_ConfigInfo config;
 
   config.impl_type_ = this->disp_impl_type_;
@@ -77,20 +73,16 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb,
   Kokyu::DSRT_Dispatcher_Factory<MIF_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
     tmp( Kokyu::DSRT_Dispatcher_Factory<MIF_Scheduler_Traits>::
          create_DSRT_dispatcher (config) );
-  kokyu_dispatcher_ = tmp;
+  kokyu_dispatcher_ = std::move(tmp);
 
   CORBA::Object_var object =
-    orb->resolve_initial_references ("RTScheduler_Current"
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    orb->resolve_initial_references ("RTScheduler_Current");
 
   this->current_ =
-    RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    RTScheduling::Current::_narrow (object.in ());
 
   IOP::CodecFactory_var codec_factory;
-  CORBA::Object_var obj = orb->resolve_initial_references ("CodecFactory"
-                                                           ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = orb->resolve_initial_references ("CodecFactory");
 
   if (CORBA::is_nil(obj.in ()))
     {
@@ -109,21 +101,20 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb,
   codec_ = codec_factory->create_codec (encoding);
 }
 
-MIF_Scheduler::~MIF_Scheduler (void)
+MIF_Scheduler::~MIF_Scheduler ()
 {
   //  delete kokyu_dispatcher_;
 }
 
 void
-MIF_Scheduler::shutdown (void)
+MIF_Scheduler::shutdown ()
 {
   kokyu_dispatcher_->shutdown ();
   ACE_DEBUG ((LM_DEBUG, "kokyu DSRT dispatcher shutdown\n"));
 }
 
 MIF_Scheduling::SchedulingParameterPolicy_ptr
-MIF_Scheduler::create_scheduling_parameter (const MIF_Scheduling::SchedulingParameter & value ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Scheduler::create_scheduling_parameter (const MIF_Scheduling::SchedulingParameter & value)
 {
   MIF_Scheduling::SchedulingParameterPolicy_ptr sched_param_policy;
   ACE_NEW_THROW_EX (sched_param_policy,
@@ -144,10 +135,7 @@ void
 MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType& guid,
                                              const char *,
                                              CORBA::Policy_ptr sched_policy,
-                                             CORBA::Policy_ptr
-                                             ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
+                                             CORBA::Policy_ptr)
 {
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -181,27 +169,19 @@ void
 MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
                                                            const char *name,
                                                            CORBA::Policy_ptr sched_param,
-                                                           CORBA::Policy_ptr implicit_sched_param
-                                                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
+                                                           CORBA::Policy_ptr implicit_sched_param)
 {
   this->begin_new_scheduling_segment (guid,
                                       name,
                                       sched_param,
-                                      implicit_sched_param
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                      implicit_sched_param);
 }
 
 void
 MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& guid,
                                           const char* name,
                                           CORBA::Policy_ptr sched_policy,
-                                          CORBA::Policy_ptr implicit_sched_param
-                                          ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
+                                          CORBA::Policy_ptr implicit_sched_param)
 {
   ACE_UNUSED_ARG ((name));
   ACE_UNUSED_ARG ((implicit_sched_param));
@@ -229,9 +209,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
 void
 MIF_Scheduler::end_scheduling_segment (
                     const RTScheduling::Current::IdType &guid,
-                    const char *
-                    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                    const char *)
 {
 #ifdef KOKYU_DSRT_LOGGING
   int int_guid;
@@ -248,24 +226,17 @@ void
 MIF_Scheduler::end_nested_scheduling_segment (
                    const RTScheduling::Current::IdType &,
                    const char *,
-                   CORBA::Policy_ptr
-                   ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                   CORBA::Policy_ptr)
 {
-
 }
 
 
 void
-MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -278,24 +249,24 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   IOP::ServiceContext sc;
   sc.context_id = Client_Interceptor::SchedulingInfo;
 
-  CORBA::Policy_ptr sched_policy =
-    this->current_->scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Policy_var sched_policy =
+    this->current_->scheduling_parameter();
+
+  RTScheduling::Current::IdType_var guid = this->current_->id ();
   /*
-  int guid;
   ACE_OS::memcpy (&guid,
-                  this->current_->id ()->get_buffer (),
-                  this->current_->id ()->length ());
+                  guid->get_buffer (),
+                  guid->length ());
   */
   CORBA::Short importance;
-  if (CORBA::is_nil (sched_policy))
+  if (CORBA::is_nil (sched_policy.in ()))
     {
       importance = 0;
     }
   else
     {
       MIF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
-        MIF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
+        MIF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy.in ());
 
       MIF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
       importance = sched_param->importance;
@@ -303,22 +274,22 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 #ifdef KOKYU_DSRT_LOGGING
       int int_guid;
       ACE_OS::memcpy (&int_guid,
-                      this->current_->id ()->get_buffer (),
-                      this->current_->id ()->length ());
+                      guid->get_buffer (),
+                      guid->length ());
       ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T): send_request importance from current = %d, guid = %d\n",
                   importance, int_guid));
 #endif
 
       //Fill the guid in the SC Qos struct
-      sc_qos.guid.length (this->current_->id ()->length ());
-      guid_copy (sc_qos.guid, *(this->current_->id ()));
+      sc_qos.guid.length (guid->length ());
+      guid_copy (sc_qos.guid, guid.in ());
       sc_qos.importance = importance;
       CORBA::Any sc_qos_as_any;
       sc_qos_as_any <<= sc_qos;
 
-      sc.context_data =
-        reinterpret_cast<CORBA::OctetSeq &> (*codec_->encode (sc_qos_as_any));
+      CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
+      sc.context_data = cdtmp.in ();
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
@@ -326,24 +297,22 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 #endif
 
       // Add this context to the service context list.
-      ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ri->add_request_service_context (sc, 0);
     }
 
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("(%t|%T): send_request : ")
-              ACE_LIB_TEXT ("about to call scheduler to inform block\n")
-              ));
+              ACE_TEXT ("(%t|%T): send_request : ")
+              ACE_TEXT ("about to call scheduler to inform block\n")));
 #endif
 
-  kokyu_dispatcher_->update_schedule (*(this->current_->id ()),
-                                        Kokyu::BLOCK);
+  kokyu_dispatcher_->update_schedule (guid.in (),
+                                      Kokyu::BLOCK);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("(%t|%T): send_request interceptor done\n")));
+              ACE_TEXT ("(%t|%T): send_request interceptor done\n")));
 #endif
 }
 
@@ -352,12 +321,9 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 RTScheduling::Current::IdType_out guid_out,
                                 CORBA::String_out /*name*/,
                                 CORBA::Policy_out sched_param_out,
-                                CORBA::Policy_out /*implicit_sched_param_out*/
-                                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+                                CORBA::Policy_out /*implicit_sched_param_out*/)
 {
-  Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
+  const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):entered MIF_Scheduler::receive_request\n"));
@@ -365,8 +331,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
   RTScheduling::Current::IdType guid;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -382,9 +347,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
     return;
 
   IOP::ServiceContext_var sc =
-    ri->get_request_service_context (Server_Interceptor::SchedulingInfo
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->get_request_service_context (Server_Interceptor::SchedulingInfo);
 
   CORBA::Short importance;
 
@@ -399,7 +362,8 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                                  sc->context_data.get_buffer (),
                                                  0);
       CORBA::Any sc_qos_as_any;
-      sc_qos_as_any = *codec_->decode (oc_seq);
+      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
+      sc_qos_as_any = scqostmp.in ();
       //Don't store in a _var, since >>= returns a pointer to an
       //internal buffer and we are not supposed to free it.
       sc_qos_as_any >>= sc_qos_ptr;
@@ -409,7 +373,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       guid_copy (guid, sc_qos_ptr->guid);
 
       ACE_NEW (guid_out.ptr (),
-	       RTScheduling::Current::IdType);
+               RTScheduling::Current::IdType);
       guid_out.ptr ()->length (guid.length ());
       *(guid_out.ptr ()) = guid;
 
@@ -439,15 +403,12 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 }
 
 void
-MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::Short importance = 0;
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -459,11 +420,12 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
   IOP::ServiceContext sc;
   sc.context_id = Server_Interceptor::SchedulingInfo;
 
-  CORBA::Policy_ptr sched_policy =
-    this->current_->scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Policy_var sched_policy =
+    this->current_->scheduling_parameter();
 
-  if (CORBA::is_nil (sched_policy))
+  RTScheduling::Current::IdType_var guid = this->current_->id ();
+
+  if (CORBA::is_nil (sched_policy.in ()))
   {
 #ifdef KOKYU_DSRT_LOGGING
     ACE_DEBUG ((LM_DEBUG,
@@ -480,31 +442,31 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
                   "importance set in sched params\n"));
 #endif
       MIF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
-        MIF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
+        MIF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy.in ());
 
       MIF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
 
       importance = sched_param->importance;
 
       //Fill the guid in the SC Qos struct
-      sc_qos.guid.length (this->current_->id ()->length ());
-      guid_copy (sc_qos.guid, *(this->current_->id ()));
+      sc_qos.guid.length (guid->length ());
+      guid_copy (sc_qos.guid, guid.in ());
       sc_qos.importance = importance;
       CORBA::Any sc_qos_as_any;
       sc_qos_as_any <<= sc_qos;
 
-      sc.context_data = reinterpret_cast<CORBA::OctetSeq &> (*codec_->encode (sc_qos_as_any));
+      CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
+      sc.context_data = cdtmp.in ();
 
       // Add this context to the service context list.
-      ri->add_reply_service_context (sc, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ri->add_reply_service_context (sc, 1);
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):reply sc added\n"));
 #endif
     }
 
-  kokyu_dispatcher_->update_schedule (*(this->current_->id ()),
+  kokyu_dispatcher_->update_schedule (guid.in (),
                                       Kokyu::BLOCK);
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -513,46 +475,31 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 }
 
 void
-MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  send_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  send_reply (ri);
 }
 
 void
-MIF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr
-			  ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-		   PortableInterceptor::ForwardRequest))
+MIF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
 {
 }
 
 void
-MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  send_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  send_reply (ri);
 }
 
 void
-MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   RTScheduling::Current::IdType guid;
   CORBA::Short importance=0;
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var target = ri->target ();
 
   ACE_CString opname = operation.in ();
 #ifdef KOKYU_DSRT_LOGGING
@@ -565,9 +512,7 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
   // Check that the reply service context was received as
   // expected.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (Client_Interceptor::SchedulingInfo
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->get_reply_service_context (Client_Interceptor::SchedulingInfo);
 
   if (sc.ptr () == 0)
     {
@@ -582,9 +527,10 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 
       //Don't store in a _var, since >>= returns a pointer to an internal buffer
       //and we are not supposed to free it.
-      Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
+      const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
       CORBA::Any sc_qos_as_any;
-      sc_qos_as_any = *codec_->decode (oc_seq);
+      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
+      sc_qos_as_any = scqostmp.in ();
       sc_qos_as_any >>= sc_qos_ptr;
       importance = sc_qos_ptr->importance;
       guid.length (sc_qos_ptr->guid.length ());
@@ -603,139 +549,58 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 }
 
 void
-MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
-                                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  receive_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  receive_reply (ri);
 }
 
 void
-MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
-                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  receive_reply (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  receive_reply (ri);
 }
 
 void
-MIF_Scheduler::cancel (const RTScheduling::Current::IdType &
-                       ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Scheduler::cancel (const RTScheduling::Current::IdType &)
 {
 }
 
 CORBA::PolicyList*
-MIF_Scheduler::scheduling_policies (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Scheduler::scheduling_policies ()
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
-MIF_Scheduler::scheduling_policies (const CORBA::PolicyList &
-                                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::PolicyList*
-MIF_Scheduler::poa_policies (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Scheduler::poa_policies ()
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 char *
-MIF_Scheduler::scheduling_discipline_name (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+MIF_Scheduler::scheduling_discipline_name ()
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 RTScheduling::ResourceManager_ptr
 MIF_Scheduler::create_resource_manager (const char *,
-                                        CORBA::Policy_ptr
-                                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                                        CORBA::Policy_ptr)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 MIF_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
                                          const char *,
-                                         CORBA::Policy_ptr
-                                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                                         CORBA::Policy_ptr)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Kokyu::DSRT_Dispatcher_Factory<MIF_Scheduler_Traits>;
-template class Kokyu::DSRT_Dispatcher<MIF_Scheduler_Traits>;
-template class Kokyu::DSRT_Dispatcher_Impl<MIF_Scheduler_Traits>;
-template class Kokyu::DSRT_Direct_Dispatcher_Impl<MIF_Scheduler_Traits>;
-template class Kokyu::DSRT_CV_Dispatcher_Impl<MIF_Scheduler_Traits>;
-template class Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>;
-template class Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>;
-template class Kokyu::Sched_Ready_Queue<MIF_Scheduler_Traits, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Manager_Ex<MIF_Scheduler_Traits::Guid_t, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits> > *, Kokyu::Sched_Ready_Queue<MIF_Scheduler_Traits, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>::Guid_Hash, ACE_Equal_To<MIF_Scheduler_Traits::Guid_t>, ACE_Null_Mutex>;
-
-template class ACE_RB_Tree<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>;
-
-template class ACE_RB_Tree_Iterator<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Entry<MIF_Scheduler_Traits::Guid_t, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits> > *>;
-
-template class ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits> >;
-
-template class Kokyu::MIF_Comparator<MIF_Scheduler_Traits::QoSDescriptor_t>;
-
-template class ACE_Hash_Map_Iterator_Base_Ex<MIF_Scheduler_Traits::Guid_t, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits> > *, Kokyu::Sched_Ready_Queue<MIF_Scheduler_Traits, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>::Guid_Hash, ACE_Equal_To<MIF_Scheduler_Traits::Guid_t>, ACE_Null_Mutex>;
-
-template class ACE_RB_Tree_Reverse_Iterator<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>;
-
-template class ACE_RB_Tree_Iterator_Base<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Kokyu::DSRT_Dispatcher_Factory<MIF_Scheduler_Traits>
-#pragma instantiate Kokyu::DSRT_Dispatcher<MIF_Scheduler_Traits>
-#pragma instantiate Kokyu::DSRT_Dispatcher_Impl<MIF_Scheduler_Traits>
-#pragma instantiate Kokyu::DSRT_Direct_Dispatcher_Impl<MIF_Scheduler_Traits>
-#pragma instantiate Kokyu::DSRT_CV_Dispatcher_Impl<MIF_Scheduler_Traits>
-#pragma instantiate Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>
-#pragma instantiate Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>
-
-#pragma instantiate Kokyu::Sched_Ready_Queue<MIF_Scheduler_Traits, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Manager_Ex<MIF_Scheduler_Traits::Guid_t, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits> > *, Kokyu::Sched_Ready_Queue<MIF_Scheduler_Traits, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>::Guid_Hash, ACE_Equal_To<MIF_Scheduler_Traits::Guid_t>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_RB_Tree<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>
-
-#pragma instantiate ACE_RB_Tree_Iterator<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>
-
-ACE_Hash_Map_Entry<MIF_Scheduler_Traits::Guid_t, ACE_RB_Tree_Node<Koky\
-u::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<\
-MIF_Scheduler_Traits> >
-
-#pragma instantiate ACE_Hash_Map_Entry<MIF_Scheduler_Traits::Guid_t, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits> > *>
-
-#pragma instantiate ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits> >
-
-#pragma instantiate Kokyu::MIF_Comparator<MIF_Scheduler_Traits::QoSDescriptor_t>
-
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<MIF_Scheduler_Traits::Guid_t, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits> > *, Kokyu::Sched_Ready_Queue<MIF_Scheduler_Traits, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>::Guid_Hash, ACE_Equal_To<MIF_Scheduler_Traits::Guid_t>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_RB_Tree_Reverse_Iterator<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>
-
-#pragma instantiate ACE_RB_Tree_Iterator_Base<Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::DSRT_Dispatch_Item_var<MIF_Scheduler_Traits>, Kokyu::Comparator_Adapter_Generator<MIF_Scheduler_Traits>::MoreEligible, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

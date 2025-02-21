@@ -1,5 +1,3 @@
-// $Id$
-
 #include "stdafx.h"
 #include "NamingViewer.h"
 #include "NamingTreeCtrl.h"
@@ -17,32 +15,32 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CNamingTreeCtrl
 
-CNamingTreeCtrl::CNamingTreeCtrl (void)
+CNamingTreeCtrl::CNamingTreeCtrl ()
 {
   m_ContextPopup.LoadMenu (IDR_CONTEXT_POPUP);
   m_ObjectPopup.LoadMenu (IDR_OBJECT_POPUP);
 }
 
-CNamingTreeCtrl::~CNamingTreeCtrl (void)
+CNamingTreeCtrl::~CNamingTreeCtrl ()
 {
 }
 
 BEGIN_MESSAGE_MAP(CNamingTreeCtrl, CTreeCtrl)
-	//{{AFX_MSG_MAP(CNamingTreeCtrl)
-	ON_WM_RBUTTONDOWN()
-	ON_COMMAND(ID_CONTEXT_POPUP_VIEWREFERENCE, OnContextPopupViewreference)
-	ON_NOTIFY_REFLECT(TVN_ITEMEXPANDING, OnItemexpanding)
-	ON_COMMAND(ID_CONTEXT_POPUP_REFRESH, OnContextPopupRefresh)
-	ON_COMMAND(ID_CONTEXT_POPUP_UNBIND, OnContextPopupUnbind)
-	ON_COMMAND(ID_CONTEXT_POPUP_DESTROY, OnContextPopupDestroy)
-	ON_COMMAND(ID_CONTEXT_POPUP_BIND_CONTEXT, OnContextPopupBindContext)
-	ON_COMMAND(ID_CONTEXT_POPUP_BINDOBJECT, OnContextPopupBindobject)
-	ON_WM_DESTROY()
-	ON_COMMAND(ID_CONTEXTPOPUP_BINDNEWCONTEXT, OnContextpopupBindnewcontext)
-	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
-	ON_COMMAND(ID_OBJECTPOPUP_UNBIND, OnObjectpopupUnbind)
-	ON_COMMAND(ID_OBJECTPOPUP_VIEWREFRENCE, OnObjectpopupViewrefrence)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CNamingTreeCtrl)
+  ON_WM_RBUTTONDOWN()
+  ON_COMMAND(ID_CONTEXT_POPUP_VIEWREFERENCE, OnContextPopupViewreference)
+  ON_NOTIFY_REFLECT(TVN_ITEMEXPANDING, OnItemexpanding)
+  ON_COMMAND(ID_CONTEXT_POPUP_REFRESH, OnContextPopupRefresh)
+  ON_COMMAND(ID_CONTEXT_POPUP_UNBIND, OnContextPopupUnbind)
+  ON_COMMAND(ID_CONTEXT_POPUP_DESTROY, OnContextPopupDestroy)
+  ON_COMMAND(ID_CONTEXT_POPUP_BIND_CONTEXT, OnContextPopupBindContext)
+  ON_COMMAND(ID_CONTEXT_POPUP_BINDOBJECT, OnContextPopupBindobject)
+  ON_WM_DESTROY()
+  ON_COMMAND(ID_CONTEXTPOPUP_BINDNEWCONTEXT, OnContextpopupBindnewcontext)
+  ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
+  ON_COMMAND(ID_OBJECTPOPUP_UNBIND, OnObjectpopupUnbind)
+  ON_COMMAND(ID_OBJECTPOPUP_VIEWREFRENCE, OnObjectpopupViewrefrence)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -72,10 +70,10 @@ void CNamingTreeCtrl::OnRButtonDown (UINT nFlags, CPoint point)
     {
       if(!m_ObjectPopup.GetSubMenu(0)->TrackPopupMenu(
 #if defined (TPM_RIGHTBUTTON)
-		                                              TPM_RIGHTBUTTON |
+                                                      TPM_RIGHTBUTTON |
 #endif
-                                            		  TPM_LEFTALIGN,
-		                                              Point.x, Point.y, this))
+                                                      TPM_LEFTALIGN,
+                                                      Point.x, Point.y, this))
         {
           TRACE0("TrackPopupMenu Failed");
         }
@@ -84,10 +82,10 @@ void CNamingTreeCtrl::OnRButtonDown (UINT nFlags, CPoint point)
     {
       if(!m_ContextPopup.GetSubMenu(0)->TrackPopupMenu(
 #if defined (TPM_RIGHTBUTTON)
-		                                              TPM_RIGHTBUTTON |
+                                                       TPM_RIGHTBUTTON |
 #endif
-		                                               TPM_LEFTALIGN,
-		                                               Point.x, Point.y, this))
+                                                       TPM_LEFTALIGN,
+                                                       Point.x, Point.y, this))
         {
           TRACE0("TrackPopupMenu Failed");
         }
@@ -96,8 +94,8 @@ void CNamingTreeCtrl::OnRButtonDown (UINT nFlags, CPoint point)
 
 void CNamingTreeCtrl::OnContextPopupViewreference()
 {
-	// TODO: Add your command handler code here
-	ViewIORDialog Dialog(m_pORB, GetTreeObject()->Object());
+  // TODO: Add your command handler code here
+  ViewIORDialog Dialog(m_pORB, GetTreeObject()->Object());
   Dialog.DoModal();
 }
 
@@ -108,7 +106,7 @@ void CNamingTreeCtrl::SetpORB(CORBA::ORB_ptr pORB)
 
 CNamingObject* CNamingTreeCtrl::GetTreeObject(HTREEITEM hItem)
 {
-  if(hItem == NULL)
+  if(hItem == 0)
   {
     hItem = GetSelectedItem();
     if(!hItem)
@@ -122,12 +120,11 @@ CNamingObject* CNamingTreeCtrl::GetTreeObject(HTREEITEM hItem)
 
 void CNamingTreeCtrl::ClearChildren(HTREEITEM hItem)
 {
-  if(hItem == NULL)
+  if(hItem == 0)
   {
     HTREEITEM hItem = GetRootItem();
     if(hItem)
     {
-
       //CORBA::Object_var Object = (CORBA::Object_ptr)GetItemData(hItem);
       ClearChildren(hItem);
       delete GetTreeObject(hItem);
@@ -192,9 +189,9 @@ void CNamingTreeCtrl::ListContext(HTREEITEM hItem)
 
 void CNamingTreeCtrl::OnItemexpanding(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
-	// TODO: Add your control notification handler code here
-	*pResult = 0;
+  NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
+  // TODO: Add your control notification handler code here
+  *pResult = 0;
   // If this item has a child, it has already been listed so nothing to do..
   if(GetChildItem(pNMTreeView->itemNew.hItem))
   {
@@ -205,17 +202,17 @@ void CNamingTreeCtrl::OnItemexpanding(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CNamingTreeCtrl::OnContextPopupRefresh()
 {
-	// TODO: Add your command handler code here
-	HTREEITEM hItem = GetSelectedItem();
+  // TODO: Add your command handler code here
+  HTREEITEM hItem = GetSelectedItem();
   ClearChildren(hItem);
   ListContext(hItem);
 }
 
 void CNamingTreeCtrl::OnContextPopupUnbind()
 {
-	// TODO: Add your command handler code here
+  // TODO: Add your command handler code here
   if(MessageBox(ACE_TEXT ("Are you sure you want to unbind this object?"),
-	            ACE_TEXT ("Confirm"), MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
+                ACE_TEXT ("Confirm"), MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
   {
     return;
   }
@@ -257,9 +254,9 @@ void CNamingTreeCtrl::Resolve(CosNaming::NamingContext_ptr pRootContext)
 
 void CNamingTreeCtrl::OnContextPopupDestroy()
 {
-	// TODO: Add your command handler code here
+  // TODO: Add your command handler code here
   if(MessageBox(ACE_TEXT ("Are you sure you want to destroy this context?"),
-	            ACE_TEXT ("Confirm"), MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
+                ACE_TEXT ("Confirm"), MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
   {
     return;
   }
@@ -292,7 +289,7 @@ void CNamingTreeCtrl::OnContextPopupDestroy()
 
 void CNamingTreeCtrl::OnContextPopupBindContext()
 {
-	// TODO: Add your command handler code here
+  // TODO: Add your command handler code here
   CBindDialog Dialog(true, m_pORB);
   if(Dialog.DoModal() != IDOK)
   {
@@ -302,12 +299,12 @@ void CNamingTreeCtrl::OnContextPopupBindContext()
   {
     CNamingObject* pObject = GetTreeObject();
     CosNaming::NamingContext_var Context = pObject->NamingContext();
-    if(CORBA::is_nil(Context))
+    if(CORBA::is_nil(Context.in ()))
     {
       return;
     }
     CosNaming::NamingContext_var NewContext = CosNaming::NamingContext::_narrow(Dialog.GetObject());
-    if(CORBA::is_nil(NewContext))
+    if(CORBA::is_nil(NewContext.in ()))
     {
       AfxMessageBox(ACE_TEXT ("Object is not a CosNaming::NamingContext"));
       return;
@@ -323,7 +320,7 @@ void CNamingTreeCtrl::OnContextPopupBindContext()
 
 void CNamingTreeCtrl::OnContextPopupBindobject()
 {
-	// TODO: Add your command handler code here
+  // TODO: Add your command handler code here
   CBindDialog Dialog(false, m_pORB);
   if(Dialog.DoModal() != IDOK)
   {
@@ -334,7 +331,7 @@ void CNamingTreeCtrl::OnContextPopupBindobject()
     HTREEITEM hItem = GetSelectedItem();
     CNamingObject* pObject = GetTreeObject(hItem);
     CosNaming::NamingContext_var Context = pObject->NamingContext();
-    if(CORBA::is_nil(Context))
+    if(CORBA::is_nil(Context.in ()))
     {
       return;
     }
@@ -349,33 +346,31 @@ void CNamingTreeCtrl::OnContextPopupBindobject()
 
 void CNamingTreeCtrl::OnDestroy()
 {
-	CTreeCtrl::OnDestroy();
-	
-	// TODO: Add your message handler code here
-	ClearChildren();
-	
+  CTreeCtrl::OnDestroy();
+
+  // TODO: Add your message handler code here
+  ClearChildren();
 }
 
 
 void CNamingTreeCtrl::OnContextpopupBindnewcontext()
 {
-	// TODO: Add your command handler code here
+  // TODO: Add your command handler code here
   HTREEITEM hItem = GetSelectedItem();
   CNamingObject* pObject = GetTreeObject(hItem);
   CosNaming::NamingContext_var Context = pObject->NamingContext();
-  if(CORBA::is_nil(Context))
+  if(CORBA::is_nil(Context.in ()))
   {
     return;
   }
-	CBindNewContext Dialog;
+  CBindNewContext Dialog;
   if(Dialog.DoModal() != IDOK)
   {
     return;
   }
   try
   {
-    CosNaming::NamingContext_var NewContext;
-    NewContext = Context->new_context();
+    CosNaming::NamingContext_var NewContext = Context->new_context();
     Context->bind_context(Dialog.GetName(), NewContext);
     OnContextPopupRefresh();
   }
@@ -387,21 +382,21 @@ void CNamingTreeCtrl::OnContextpopupBindnewcontext()
 
 void CNamingTreeCtrl::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	// TODO: Add your control notification handler code here
-	CNamingObject* pObject = GetTreeObject();
+  // TODO: Add your control notification handler code here
+  CNamingObject* pObject = GetTreeObject();
   // Only display non contexts
   if(!pObject->IsContext())
   {
     ViewIORDialog Dialog(m_pORB, pObject->Object());
     Dialog.DoModal();
   }
-	
-	*pResult = 0;
+
+  *pResult = 0;
 }
 
 void CNamingTreeCtrl::OnCopy()
 {
-	// TODO: Add your command handler code here
+  // TODO: Add your command handler code here
   CNamingObject* pObject = GetTreeObject();
   try
   {
@@ -424,22 +419,22 @@ void CNamingTreeCtrl::OnCopy()
 
 LRESULT CNamingTreeCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	// TODO: Add your specialized code here and/or call the base class
-	if(message == WM_HOTKEY)
+  // TODO: Add your specialized code here and/or call the base class
+  if(message == WM_HOTKEY)
   {
     // To trap control-c (for copying) we registered a hotkey.  For some reason
     // MFC wasn't calling my OnHotKey() function that I registered so I am forcing
     // it this way.  Anyone know the right way to do this?
     OnCopy();
   }
-	return CTreeCtrl::WindowProc(message, wParam, lParam);
+  return CTreeCtrl::WindowProc(message, wParam, lParam);
 }
 
 void CNamingTreeCtrl::OnObjectpopupUnbind()
 {
-	// TODO: Add your command handler code here
+  // TODO: Add your command handler code here
   if(MessageBox(ACE_TEXT ("Are you sure you want to unbind this object?"),
-	            ACE_TEXT ("Confirm"), MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
+                ACE_TEXT ("Confirm"), MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
   {
     return;
   }
@@ -462,13 +457,13 @@ void CNamingTreeCtrl::OnObjectpopupUnbind()
   catch(CORBA::Exception& ex)
   {
     MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
-  }	
+  }
 }
 
 void CNamingTreeCtrl::OnObjectpopupViewrefrence()
 {
-	// TODO: Add your command handler code here
-	ViewIORDialog Dialog(m_pORB, GetTreeObject()->Object());
+  // TODO: Add your command handler code here
+  ViewIORDialog Dialog(m_pORB, GetTreeObject()->Object());
   Dialog.DoModal();
 }
 

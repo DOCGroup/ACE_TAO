@@ -1,0 +1,56 @@
+// -*- MPC -*-
+project(*ATM_client) : aceexe {
+  exename = ATM-client
+  Source_Files {
+    CPP-ATM-client.cpp
+  }
+}
+
+project(*ATM_server) : aceexe {
+  exename = ATM-server
+  Source_Files {
+    CPP-ATM-server.cpp
+  }
+}
+
+project(*CPP_client) : aceexe {
+  exename = CPP-client
+  Source_Files {
+    CPP-client.cpp
+  }
+}
+
+project(*CPP_server) : aceexe {
+  exename = CPP-server
+  Source_Files {
+    CPP-server.cpp
+  }
+}
+
+project(*db_client) : aceexe {
+  exename = db-client
+  Source_Files {
+    db-client.cpp
+  }
+}
+
+project(*db_server) : aceexe {
+  exename = db-server
+  Source_Files {
+    db-server.cpp
+  }
+}
+
+project(*ftp_client) : aceexe {
+  exename = ftp-client
+  Source_Files {
+    ftp-client.cpp
+  }
+}
+
+project(*ftp_server) : aceexe {
+  exename = ftp-server
+  Source_Files {
+    ftp-server.cpp
+  }
+}

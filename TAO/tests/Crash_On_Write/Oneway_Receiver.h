@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef ONEWAY_RECEIVER_H
 #define ONEWAY_RECEIVER_H
@@ -14,11 +11,10 @@ class Oneway_Receiver
 {
 public:
   /// Constructor
-  Oneway_Receiver (void);
+  Oneway_Receiver ();
 
   // = The skeleton methods
-  virtual void receive_oneway (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_oneway ();
 };
 
 #include /**/ "ace/post.h"

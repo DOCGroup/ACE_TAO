@@ -1,0 +1,16 @@
+// -*- MPC -*-
+project : aceexe {
+  avoids += ace_for_tao
+  exename = leader_follower
+  source_files {
+    leader_follower.cpp
+  }
+}
+
+project(*RT_CORBA) : aceexe {
+  avoids += ace_for_tao
+  exename = RT_CORBA_Leader_Follower
+  source_files {
+    RT_CORBA_Leader_Follower.cpp
+  }
+}

@@ -1,0 +1,38 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  idlflags += -GT
+
+  IDL_Files {
+    Foo.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): csd_threadpool, taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi {
+  exename = server_main
+  after += *idl
+
+  Source_Files {
+    FooC.cpp
+    FooS.cpp
+    Foo_i.cpp
+    ServerApp.cpp
+    server_main.cpp
+    OrbShutdownTask.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoexe, anytypecode {
+  exename = client_main
+  after += *idl
+
+  Source_Files {
+    FooC.cpp
+    ClientApp.cpp
+    client_main.cpp
+  }
+  IDL_Files {
+  }
+}

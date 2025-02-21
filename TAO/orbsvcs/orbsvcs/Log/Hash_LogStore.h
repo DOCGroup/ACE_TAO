@@ -1,14 +1,12 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Hash_LogStore.h
  *
- *  $Id$
- *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *  @David A. Hanvey <d.hanvey@qub.ac.uk>
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 //=============================================================================
 
@@ -27,9 +25,14 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_LogMgr_i;
 class TAO_Hash_LogRecordStore;
 
@@ -37,10 +40,8 @@ class TAO_Log_Serv_Export TAO_Hash_LogStore
   : public TAO_LogStore
 {
 public:
-  // = Initialization and Termination Methods
-
   /// Constructor.
-  TAO_Hash_LogStore (CORBA::ORB_ptr orb, TAO_LogMgr_i* mgr);
+  TAO_Hash_LogStore (TAO_LogMgr_i* mgr);
 
   /// Destructor.
   virtual ~TAO_Hash_LogStore ();
@@ -48,47 +49,35 @@ public:
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
-    list_logs (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+    list_logs ();
 
   /// Lists all log ids.
   virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+    list_logs_by_id ();
 
   /// Returns a reference to the log with the supplied id.
   virtual DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id
-              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+    find_log (DsLogAdmin::LogId id);
 
   /// Returns true if log exists, otherwise false
-  virtual bool exists (DsLogAdmin::LogId id ACE_ENV_ARG_DECL);
+  virtual bool exists (DsLogAdmin::LogId id);
 
   /// Remove the given entry from the hash table.
-  virtual int remove (DsLogAdmin::LogId id ACE_ENV_ARG_DECL);
+  virtual int remove (DsLogAdmin::LogId id);
 
   /// @brief Create log
   virtual void
     create (DsLogAdmin::LogFullActionType full_action,
             CORBA::ULongLong max_size,
             const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-            DsLogAdmin::LogId_out id_out
-            ACE_ENV_ARG_DECL);
+            DsLogAdmin::LogId_out id_out);
 
   /// @brief Create log
   virtual void
     create_with_id (DsLogAdmin::LogId id,
                     DsLogAdmin::LogFullActionType full_action,
                     CORBA::ULongLong max_size,
-                    const DsLogAdmin::CapacityAlarmThresholdList* thresholds
-                    ACE_ENV_ARG_DECL);
+                    const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
 
   /// @brief Get log record store
   ///
@@ -97,11 +86,10 @@ public:
   /// @param id log id
   ///
   virtual TAO_LogRecordStore*
-    get_log_record_store (DsLogAdmin::LogId id
-                          ACE_ENV_ARG_DECL);
+    get_log_record_store (DsLogAdmin::LogId id);
 
 private:
-  ACE_SYNCH_RW_MUTEX	lock_;
+  ACE_SYNCH_RW_MUTEX  lock_;
 
   /// Define the HASHMAP.
   typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
@@ -115,10 +103,10 @@ private:
   /// taken by create_with_id().
   DsLogAdmin::LogId     next_id_;
 
-  CORBA::ORB_var        orb_;
-
-  TAO_LogMgr_i*         mgr_;
+  TAO_LogMgr_i*         logmgr_i_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

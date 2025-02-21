@@ -4,8 +4,6 @@
 /**
  *  @file   Hash_Naming_Context.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
@@ -16,8 +14,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Naming_Context_Interface.h"
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/SString.h"
@@ -27,13 +25,11 @@
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-// Note: 'interface' has been defined as struct on WinCE platform and
-//       gives a compiler error.  This undef has been found harmless on
-//       Windows and solaris platforms; however, if this generates
-//       error, then proper ifdef must be added around following block.
 #if defined (interface)
-#undef interface
+# undef interface
 #endif  // interface
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Bindings_Map
@@ -48,20 +44,18 @@
  */
 class TAO_Naming_Serv_Export TAO_Bindings_Map
 {
-
 public:
-
   /// Destructor.
-  virtual ~TAO_Bindings_Map (void);
+  virtual ~TAO_Bindings_Map ();
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  virtual size_t current_size (void) = 0;
+  virtual size_t current_size () = 0;
 
   /**
    * Add a binding with the specified parameters to the table.
    * Return 0 on success and -1 on failure, 1 if there already is a
-   * binding with <id> and <kind>.
+   * binding with @a id and @a kind.
    */
   virtual int bind (const char *id,
                     const char *kind,
@@ -69,7 +63,7 @@ public:
                     CosNaming::BindingType type) = 0;
 
   /**
-   * Overwrite a binding containing <id> and <kind> (or create a new
+   * Overwrite a binding containing @a id and @a kind (or create a new
    * one if one doesn't exist) with the specified parameters.  Returns
    * -1 on failure.
    */
@@ -78,23 +72,22 @@ public:
                       CORBA::Object_ptr obj,
                       CosNaming::BindingType type) = 0;
 
-  /// Remove a binding containing <id> and <kind> from the table.
+  /// Remove a binding containing @a id and @a kind from the table.
   /// Return 0 on success and -1 on failure.
   virtual int unbind (const char * id,
                       const char * kind) = 0;
 
   /**
-   * Find the binding containing <id> and <kind> in the table, and
+   * Find the binding containing @a id and @a kind in the table, and
    * pass binding's type and object back to the caller by reference.
    * Return 0 on success and -1 on failure.   Note: a 'duplicated' object
-   * reference is assigned to <obj>, so the caller is responsible for
+   * reference is assigned to @a obj, so the caller is responsible for
    * its deallocation.
    */
   virtual int find (const char * id,
                     const char * kind,
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) = 0;
-
 };
 
 /**
@@ -114,34 +107,33 @@ public:
 class TAO_Naming_Serv_Export TAO_Hash_Naming_Context :public TAO_Naming_Context_Impl
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                            const char *poa_id);
 
-  /// Set our <interface_> pointer.
+  /// Set our interface_ pointer.
   void interface (TAO_Naming_Context *i);
 
   /// Destructor.
-  virtual ~TAO_Hash_Naming_Context (void);
+  virtual ~TAO_Hash_Naming_Context ();
 
   // = Accessors.
 
-  /// Get the pointer to our <interface>.
-  TAO_Naming_Context *interface (void);
+  /// Get the pointer to our interface.
+  TAO_Naming_Context *interface ();
 
   /// Returns true if this Naming Context is a root Naming Context for
   /// the server, and false otherwise.
-  int root (void);
+  int root ();
 
   /// Returns true if this context had <destroy> operation invoked on
   /// it, and false otherwise.
-  int destroyed (void);
+  int destroyed ();
 
   // = CosNaming::NamingContext idl interface methods.
 
   /**
-   * Create a binding for name <n> and object <obj> in the naming
+   * Create a binding for name @a n and object @a obj in the naming
    * context.  Compound names are treated as follows: ctx->bind (<c1;
    * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
    * obj) if the there already exists a binding for the specified
@@ -150,18 +142,16 @@ public:
    * participate in name resolution later.
    */
   virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj
-                     ACE_ENV_ARG_DECL);
+                     CORBA::Object_ptr obj);
 
   /**
-   * This is similar to <bind> operation above, except for when the
+   * This is similar to bind() operation above, except for when the
    * binding for the specified name already exists in the specified
    * context.  In that case, the existing binding is replaced with the
    * new one.
    */
   virtual void rebind (const CosNaming::Name &n,
-                       CORBA::Object_ptr obj
-                       ACE_ENV_ARG_DECL);
+                       CORBA::Object_ptr obj);
 
   /**
    * This is the version of <bind> specifically for binding naming
@@ -169,8 +159,7 @@ public:
    * compound names are passed to be resolved.
    */
   virtual void bind_context (const CosNaming::Name &n,
-                             CosNaming::NamingContext_ptr nc
-                             ACE_ENV_ARG_DECL);
+                             CosNaming::NamingContext_ptr nc);
 
   /**
    * This is a version of <rebind> specifically for naming contexts,
@@ -178,8 +167,7 @@ public:
    * names are passed.
    */
    virtual void rebind_context (const CosNaming::Name &n,
-                               CosNaming::NamingContext_ptr nc
-                               ACE_ENV_ARG_DECL);
+                               CosNaming::NamingContext_ptr nc);
 
   /**
    * Return object reference that is bound to the name.  Compound name
@@ -188,16 +176,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n
-                                     ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n
-                       ACE_ENV_ARG_DECL);
+  virtual void unbind (const CosNaming::Name &n);
 
   /**
    * This operation creates a new context and binds it to the name
@@ -205,21 +191,22 @@ public:
    * implemented by the same server as the context in which it was
    * bound (the name argument excluding the last component).
    */
-  virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n
-                                                         ACE_ENV_ARG_DECL);
+  virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n);
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
    * bindings in which the given context is bound to some names, to
    * avoid dangling references when invoking <destroy> operation.
-   * NOTE: <destory> is a no-op on the root context.
+   * NOTE: <destroy> is a no-op on the root context.
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void destroy ();
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
+
+  TAO_SYNCH_RW_MUTEX &lock ();
 
 protected:
   // = Helper method used by other methods.
@@ -231,8 +218,7 @@ protected:
    * component that doesn't need to be resolved), and returns a
    * pointer to the target context.
    */
-  CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name
-                                            ACE_ENV_ARG_DECL);
+  CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name);
 
   /**
    * Pointer to the data structure used to store this Naming Context's
@@ -250,7 +236,7 @@ protected:
   TAO_Naming_Context *interface_;
 
   /// Lock used to serialize access to the underlying data structure.
-  TAO_SYNCH_RECURSIVE_MUTEX lock_;
+  TAO_SYNCH_RW_MUTEX lock_;
 
   /**
    * Flag indicating whether this Naming Context is no longer valid.
@@ -270,6 +256,8 @@ protected:
    */
   ACE_CString poa_id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

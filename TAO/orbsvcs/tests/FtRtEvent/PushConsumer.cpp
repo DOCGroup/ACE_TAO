@@ -1,14 +1,7 @@
-// $Id$
-
 #include "ace/OS_NS_sys_time.h"
 #include "PushConsumer.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
-#include "tao/PI_Server/PI_Server.h"
-#include <stdio.h>
-
-ACE_RCSID (FtRtEvent,
-           PushConsumer,
-           "$Id$")
+#include "ace/OS_NS_stdio.h"
 
 PushConsumer_impl::PushConsumer_impl(CORBA::ORB_ptr orb)
 : orb_(CORBA::ORB::_duplicate(orb))
@@ -17,12 +10,7 @@ PushConsumer_impl::PushConsumer_impl(CORBA::ORB_ptr orb)
 
 
 void
-PushConsumer_impl::push (const RtecEventComm::EventSet & event
-             ACE_ENV_ARG_DECL_NOT_USED
-             )
-             ACE_THROW_SPEC ((
-             CORBA::SystemException
-             ))
+PushConsumer_impl::push (const RtecEventComm::EventSet & event)
 {
   CORBA::ULong x;
   ACE_Time_Value time_val = ACE_OS::gettimeofday ();
@@ -31,27 +19,20 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
     TimeBase::TimeT elaps =
       time_val.sec () * 10000000 + time_val.usec ()* 10 - event[0].header.ec_send_time;
     event[0].data.any_value >>= x;
-    printf("Received data : %d,  single trip time = %d usec\n", x, static_cast<int> (elaps/10));
+    ACE_OS::printf("Received data : %d,  single trip time = %d usec\n", x, static_cast<int> (elaps/10));
   }
 }
 
 
 void
-PushConsumer_impl::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-                       ACE_THROW_SPEC ((
-                       CORBA::SystemException
-                       ))
+PushConsumer_impl::disconnect_push_consumer ()
 {
   PortableServer::Current_var current =
-    resolve_init<PortableServer::Current>(orb_.in(), "POACurrent" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    resolve_init<PortableServer::Current>(orb_.in(), "POACurrent");
 
-  PortableServer::POA_var poa = current->get_POA(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var poa = current->get_POA();
 
-  PortableServer::ObjectId_var oid = current->get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::ObjectId_var oid = current->get_object_id();
 
-  poa->deactivate_object(oid.in ()
-                         ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object(oid.in ());
 }

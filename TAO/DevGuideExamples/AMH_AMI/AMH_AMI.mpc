@@ -1,0 +1,49 @@
+project(*idl): taoidldefaults, amh, ami {
+  idlflags += -Wb,pch_include=amh_ami_pch.h
+  IDL_Files {
+    middle.idl
+    inner.idl
+  }
+  custom_only = 1
+}
+
+project(*Client): taoclient, messaging {
+  after += *idl
+  IDL_Files {
+  }
+
+  Source_Files {
+    middleC.cpp
+    client.cpp
+  }
+}
+
+project(*Middle_Server): messaging, taoserver, amh {
+  after += *idl
+  exename = middle_server
+  IDL_Files {
+  }
+
+  Source_Files {
+    middleS.cpp
+    middleC.cpp
+    innerS.cpp
+    innerC.cpp
+    middle_i.cpp
+    middle_server.cpp
+    inner_cb.cpp
+  }
+}
+
+project(*Inner_Server): messaging, taoserver, ami {
+  after += *idl
+  exename = inner_server
+  IDL_Files {
+  }
+  Source_Files {
+    innerS.cpp
+    innerC.cpp
+    inner_i.cpp
+    inner_server.cpp
+  }
+}

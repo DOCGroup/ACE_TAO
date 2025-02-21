@@ -4,10 +4,7 @@
 /**
  *  @file    TAO_TIO.h
  *
- *  $Id$
- *
  *  This class implements the CosTime::TIO IDL interface.
- *
  *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
@@ -19,8 +16,10 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/TimeServiceS.h"
-#include "TAO_UTO.h"
-#include "time_export.h"
+#include "orbsvcs/Time/TAO_UTO.h"
+#include "orbsvcs/Time/time_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_TIO
@@ -32,21 +31,18 @@
  * operation to create a UTO from the value of it's time
  * interval.
  */
-class TAO_Time_Export TAO_TIO : public POA_CosTime::TIO
+class TAO_Time_Serv_Export TAO_TIO : public POA_CosTime::TIO
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_TIO (TimeBase::TimeT lower,
            TimeBase::TimeT upper);
 
   /// Destructor.
-  ~TAO_TIO (void);
+  ~TAO_TIO ();
 
   /// This is the get method for the attribute time interval.
-  virtual TimeBase::IntervalT  time_interval (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TimeBase::IntervalT  time_interval ();
 
   /**
    * This operation returns a value of type OverlapType depending on
@@ -57,9 +53,7 @@ public:
    * intervals.
    */
   virtual CosTime::OverlapType spans (CosTime::UTO_ptr time,
-                                      CosTime::TIO_out overlap
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                      CosTime::TIO_out overlap);
 
   /**
    * This operation returns a value of type OverlapType depending on
@@ -69,23 +63,22 @@ public:
    * out parameter contains the gap between the two intervals.
    */
   virtual CosTime::OverlapType overlaps (CosTime::TIO_ptr interval,
-                                         CosTime::TIO_out overlap
-                                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         CosTime::TIO_out overlap);
 
   /**
    * Returns a UTO in which the inaccuracy interval is equal to the
    * time interval in the TIO and time value is the midpoint of the
    * interval.
    */
-  virtual CosTime::UTO_ptr time (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTime::UTO_ptr time ();
 
 private:
   /// This attribute returns an IntervalT structure with the values of
   /// its fields filled in with the corresponding values from the TIO.
   TimeBase::IntervalT attr_time_interval;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TIO_H */

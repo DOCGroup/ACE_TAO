@@ -1,0 +1,127 @@
+
+
+Purpose:
+        This test demonstrates bug 2604 (see Bugzilla for details), which
+        involves per_client activation failures with the ImR.
+
+Strategy:
+        The test simulates normal client/ImR/server interactions in the
+        per_client activation mode.  The only difference is that the server is
+        started 'manually' (by the shell, not the ImR Activator) twice before
+        the client starts.  Once the client starts up, if the ImR gets confused
+        and tries to ping one of the old servers, the test will fail.  If the
+        ImR correctly launches a new server and pings it, the test passes.
+
+To run:
+        ./run_test.pl
+
+Analysis of result:
+        Perl script will always return zero on success, non-zero on failure.
+
+Example output from a passing test:
+
+>>> /tao_builds/mitza/1.4a/ACE_wrappers/TAO/orbsvcs/ImplRepo_Service/./ImplRepo_Service -d 2 -ORBObjRefStyle url -t 30 -v 1000 -o /tao_builds/mitza/1.4a/ACE_wrappers/TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/imr.ior
+        timeout = 5
+Implementation Repository: Running
+        Ping Interval : 1000ms
+        Startup Timeout : 30s
+        Persistence : Disabled
+        Multicast : Disabled
+        Debug : 2
+        Locked : False
+
+>>> /tao_builds/mitza/1.4a/ACE_wrappers/TAO/orbsvcs/ImplRepo_Service/./ImR_Activator -l -d 2 -ORBObjRefStyle url -o /tao_builds/mitza/1.4a/ACE_wrappers/TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/activator.ior -ORBInitRef ImplRepoService=file:///tao_builds/mitza/1.4a/ACE_wrappers/TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/imr.ior
+        timeout = 5
+ImR Activator: Starting oci1329
+ImR Activator: Contacting ImplRepoService...
+ImR: Activator registered for oci1329.
+ImR Activator: Registered with ImR.
+ImR Activator: The Activator IOR is: <IOR:012a2a2a2b00000049444c3a496d706c656d656e746174696f6e5265706f7369746f72792f416374697661746f723a312e30002a0100000000000000980000000101022a130000006f6369313332392e6f63697765622e636f6d002aa3a92a2a3e00000014010f004e55500000001e0000000001000000526f6f74504f4100496d525f416374697661746f72000000000001000000496d525f416374697661746f722a2a020000000000000008000000012a2a2a004f41540100000018000000012a2a2a0100010001000000010001050901010000000000>
+>>> /tao_builds/mitza/1.4a/ACE_wrappers/bin/tao_imr
+ImR: Cannot find server <MessengerService>
+ImR: Add/Update server <MessengerService>.
+ImR: Adding server <MessengerService>.
+ImR: Server: MessengerService
+        Activator: oci1329
+        Command Line: ././MessengerServer -ORBObjRefStyle url -ORBEndpoint iiop://:8923/portspan=3
+        Working Directory:
+        Activation: PER_CLIENT
+        Start Limit: 2
+
+Successfully registered <MessengerService>.
+>>> /tao_builds/mitza/1.4a/ACE_wrappers/bin/tao_imr -ORBInitRef ImplRepoService=file:///tao_builds/mitza/1.4a/ACE_wrappers/TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/imr.ior add MessengerService -a per_client -r 1 -l oci1329 -c "././MessengerServer -ORBObjRefStyle url -ORBEndpoint iiop://:8923/portspan=3"
+ImR: List servers.
+ImR_Locator_i::list: Filling ServerList with 1 servers
+Server <MessengerService>
+  Activator: oci1329
+  Command Line: ././MessengerServer -ORBObjRefStyle url -ORBEndpoint iiop://:8923/portspan=3
+  Working Directory:
+  Activation Mode: PER_CLIENT
+  Number of retries: 1
+  No running info available for PER_CLIENT mode
+
+>>> ././MessengerServer -orbuseimr 1 -ORBObjRefStyle url -ORBInitRef ImplRepoService=file:///tao_builds/mitza/1.4a/ACE_wrappers/TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/imr.ior
+        timeout = 30
+(20213|2808477376) Server Process started
+ImR: Server MessengerService is running at corbaloc:iiop:1.2@oci1329.ociweb.com:58317/.
+ImR: Server MessengerService callback at corbaloc:iiop:1.2@oci1329.ociweb.com:58317/%14%01%0f%00RST%9d%db%c0D%86L%0d%00%00%00%00%00%01%00%00%00%01%00%00%00.
+ImR - Ignoring server_is_running due to no waiting PER_CLIENT clients.
+(20213|2808477376) Messenger server ready.
+>>> ././MessengerServer -orbuseimr 1 -ORBObjRefStyle url -ORBInitRef ImplRepoService=file:///tao_builds/mitza/1.4a/ACE_wrappers/TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/imr.ior
+        timeout = 30
+(20214|2808850112) Server Process started
+ImR: Server MessengerService is running at corbaloc:iiop:1.2@oci1329.ociweb.com:43532/.
+ImR: Server MessengerService callback at corbaloc:iiop:1.2@oci1329.ociweb.com:43532/%14%01%0f%00RST%9d%db%c0D%98h%0e%00%00%00%00%00%01%00%00%00%01%00%00%00.
+ImR - Ignoring server_is_running due to no waiting PER_CLIENT clients.
+(20214|2808850112) Messenger server ready.
+ImR: Activating server <MessengerService>.
+ImR: Starting server <MessengerService>. Attempt 1/2.
+ImR Activator: Starting server <MessengerService>...
+        command line : <././MessengerServer -ORBObjRefStyle url -ORBEndpoint iiop://:8923/portspan=3>
+        directory : <>
+ImR Activator: Register death handler for process 20216.
+ImR Activator: Successfully started <MessengerService>.
+ImR: Waiting for <MessengerService> to start...
+(20216|2809108160) Server Process started
+ImR: Server MessengerService is running at corbaloc:iiop:1.2@oci1329.ociweb.com:8923/.
+ImR: Server MessengerService callback at corbaloc:iiop:1.2@oci1329.ociweb.com:8923/%14%01%0f%00RST%9e%db%c0D%deh%03%00%00%00%00%00%01%00%00%00%01%00%00%00.
+ImR: Connected to server <MessengerService>
+(20216|2809108160) Messenger server ready.
+ImR: <MessengerService> Ping successful. alive=true
+ImR: Successfully activated <MessengerService> at
+        corbaloc:iiop:1.2@oci1329.ociweb.com:8923/
+ImR: Forwarding invocation on <MessengerService> to <corbaloc:iiop:1.2@oci1329.ociweb.com:8923/%14%01%0f%00NUP%00%00%00!%00%00%00%00%01%00%00%00RootPOA%00MessengerService%00%00%00%00%00%01%00%00%00object>
+Message from: TAO User
+Subject: TAO Test
+Message: Hello!
+Message was sent
+Client got reply: A reply from the server.
+Message from: TAO User
+Subject: TAO Test
+Message: A reply from the server.
+Message was sent
+Client got reply: A reply from the server.
+Message from: TAO User
+Subject: TAO Test
+Message: A reply from the server.
+Message was sent
+Client got reply: A reply from the server.
+Message from: TAO User
+Subject: TAO Test
+Message: A reply from the server.
+Message was sent
+Client got reply: A reply from the server.
+Message from: TAO User
+Subject: TAO Test
+Message: A reply from the server.
+Message was sent
+Client got reply: A reply from the server.
+Message from: TAO User
+Subject: TAO Test
+Message: A reply from the server.
+ImR: Server <MessengerService> is shutting down.
+Message was sent
+Client got reply: A reply from the server.
+mitza@oci1329:/tao_builds/mitza/1.4a/ACE_wrappers/TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression$ (20216|2809108160) Messenger server shutting down.
+
+(Note that the end of the output overlaps the shell printing the next prompt.)

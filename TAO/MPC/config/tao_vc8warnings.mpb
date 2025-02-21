@@ -1,0 +1,24 @@
+// -*- MPC -*-
+// This file contains optional features that disable VC8 warnings that were
+// not present in earlier versions. Some people may consider these superfluous
+// or have already checked code to be sure it causes no trouble. So these
+// warnings are disabled by default. To enable them, generate your projects
+// with the feature set to 0.
+
+feature(vc8_avoid_dominance_warnings) {
+  specific(prop:microsoft) {
+    DisableSpecificWarnings += 4250
+  }
+}
+
+feature(!vc8_stl_deprecated_warnings) {
+  specific(prop:microsoft) {
+    DisableSpecificWarnings += 4996
+  }
+}
+
+feature(vc8_avoid_unimpl_exception_spec_warnings) {
+  specific(prop:microsoft) {
+    DisableSpecificWarnings += 4290
+  }
+}

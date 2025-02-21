@@ -1,12 +1,9 @@
 // -*- MPC -*-
-// $Id$
-
-project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent_serv, naming, minimum_corba, pi_server {
+project (FtRtEvent) : orbsvcslib, orbsvcs_output, install, ftorbutils, rtevent_serv, naming, avoids_minimum_corba, pi_server, tao_versioning_idl_defaults {
   sharedname   = TAO_FtRtEvent
-
-  idlflags     += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h
-  dynamicflags = TAO_FTRTEVENT_BUILD_DLL
-  tagchecks    = FtRtEvent
+  idlflags    += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h
+  dynamicflags += TAO_FTRTEVENT_BUILD_DLL
+  tagchecks   += FtRtEvent
 
   IDL_Files {
     idlflags += -GC
@@ -33,15 +30,18 @@ project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent_serv, naming, minimu
     }
   }
 
+  Header_Files {
+    FtRtEvent/Utils
+  }
+
   Template_Files {
   }
 }
 
-project (FTRT_ClientORB) :  messaging, orbsvcslib, pi, core {
+project (FTRT_ClientORB) :  messaging, orbsvcslib, orbsvcs_output, pi, install, svc_utils {
   sharedname   = TAO_FTRT_ClientORB
-  dynamicflags = TAO_FTRT_BUILD_DLL
-  tagchecks    = FTRT_ClientORB
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/ClientORB
+  dynamicflags += TAO_FTRT_BUILD_DLL
+  tagchecks   += FTRT_ClientORB
 
   IDL_Files {
   }
@@ -52,6 +52,10 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, pi, core {
     }
   }
 
+  Header_Files {
+    FtRtEvent/ClientORB
+  }
+
   Inline_Files {
   }
 
@@ -59,11 +63,10 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, pi, core {
   }
 }
 
-project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, rtevent_serv, utils, pi_server, corba_messaging {
+project (FTRT_EventChannel) :  orbsvcslib, orbsvcs_output, install, ftrtevent, rtevent_serv, utils, pi_server, corba_messaging {
   sharedname   = TAO_FTRT_EventChannel
-  dynamicflags = TAO_FTRTEC_BUILD_DLL
-  tagchecks    = FTRT_EventChannel
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel
+  dynamicflags += TAO_FTRTEC_BUILD_DLL
+  tagchecks   += FTRT_EventChannel
   after       += FTORB_Utils
 
   IDL_Files {

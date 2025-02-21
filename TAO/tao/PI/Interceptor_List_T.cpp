@@ -1,45 +1,50 @@
-// $Id$
-
-#include "InterceptorC.h"
-#include "ORBInitInfoC.h"
-#include "tao/SystemException.h"
+#include "tao/PI/PI_includeC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 
 #include "ace/os_include/os_stddef.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  template <typename InterceptorType>
-  Interceptor_List<InterceptorType>::Interceptor_List (void)
+  template <typename InterceptorType, typename DetailsType>
+  Interceptor_List<InterceptorType,DetailsType>::Interceptor_List ()
   {
   }
 
-  template <typename InterceptorType>
-  typename Interceptor_List<InterceptorType>::InterceptorType_ptr_type
-  Interceptor_List<InterceptorType>::interceptor (size_t index)
+  template <typename InterceptorType, typename DetailsType>
+  typename Interceptor_List<InterceptorType,DetailsType>::RegisteredInterceptor&
+  Interceptor_List<InterceptorType,DetailsType>::registered_interceptor (
+    size_t index)
   {
-    return this->interceptors_[index].in ();
+    return this->interceptors_[index];
   }
 
-  template <typename InterceptorType>
+  template <typename InterceptorType, typename DetailsType>
+  typename Interceptor_List<InterceptorType,DetailsType>::InterceptorType_ptr_type
+  Interceptor_List<InterceptorType,DetailsType>::interceptor (size_t index)
+  {
+    return this->interceptors_[index].interceptor_.in ();
+  }
+
+  template <typename InterceptorType, typename DetailsType>
   size_t
-  Interceptor_List<InterceptorType>::size (void)
+  Interceptor_List<InterceptorType,DetailsType>::size () const
   {
     return this->interceptors_.size ();
   }
 
-  template <typename InterceptorType>
+  template <typename InterceptorType, typename DetailsType>
   void
-  Interceptor_List<InterceptorType>::add_interceptor (
-    InterceptorType_ptr_type interceptor
-    ACE_ENV_ARG_DECL)
+  Interceptor_List<InterceptorType,DetailsType>::add_interceptor (
+    InterceptorType_ptr_type interceptor)
   {
     if (!CORBA::is_nil (interceptor))
       {
-        const size_t old_len = this->interceptors_.size ();
+        size_t const old_len = this->interceptors_.size ();
 
         // Don't bother checking the name for duplicates if no
         // interceptors have been registered.  This saves an
@@ -48,11 +53,79 @@ namespace TAO
           {
             /// If the Interceptor is not anonymous, make sure an
             /// Interceptor with the same isn't already registered.
-            CORBA::String_var name =
-              interceptor->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
+            CORBA::String_var name = interceptor->name ();
 
-            if (ACE_OS::strlen (name.in ()) != 0)
+            if (std::strlen (name.in ()) != 0)
+              {
+                // @@ This simple search algorithm isn't the greatest
+                //    thing in the world, but since we only register
+                //    interceptors when bootstrapping an ORB, there will
+                //    be no runtime penalty.
+                //
+                //    Another source of inefficiency is that
+                //    Interceptors duplicate their name each time the
+                //    name() accessor is called!  This can slow down
+                //    bootstrap time noticeably when registering a huge
+                //    number of interceptors.  We could cache the names
+                //    somewhere, but since this is only a bootstrapping
+                //    issue there's no rush to implement such a scheme.
+
+                // Prevent interceptors with the same name from being
+                // registered.  Anonymous interceptors are okay.
+                for (size_t i = 0; i < old_len; ++i)
+                  {
+                    CORBA::String_var existing_name =
+                      this->interceptor (i)->name ();
+
+                    if (ACE_OS::strcmp (existing_name.in (), name.in ()) == 0)
+                      {
+                        throw PortableInterceptor::ORBInitInfo::DuplicateName ();
+                      }
+                  }
+              }
+          }
+
+        /// Increase the length of the Interceptor sequence by one.
+        size_t const new_len = old_len + 1;
+        this->interceptors_.size (new_len);
+
+        // Add the interceptor
+        this->interceptors_[old_len].interceptor_ =
+          InterceptorType::_duplicate (interceptor);
+      }
+    else
+      {
+        throw
+            CORBA::INV_OBJREF (
+                CORBA::SystemException::_tao_minor_code (
+                    0,
+                    EINVAL
+                  ),
+                CORBA::COMPLETED_NO);
+      }
+  }
+
+  template <typename InterceptorType, typename DetailsType>
+  void
+  Interceptor_List<InterceptorType,DetailsType>::add_interceptor (
+    InterceptorType_ptr_type interceptor,
+    const CORBA::PolicyList& policies
+    )
+  {
+    if (!CORBA::is_nil (interceptor))
+      {
+        size_t const old_len = this->interceptors_.size ();
+
+        // Don't bother checking the name for duplicates if no
+        // interceptors have been registered.  This saves an
+        // allocation.
+        if (old_len > 0)
+          {
+            /// If the Interceptor is not anonymous, make sure an
+            /// Interceptor with the same isn't already registered.
+            CORBA::String_var name = interceptor->name ();
+
+            if (std::strlen (name.in ()) != 0)
               {
                 // @@ This simple search algorithm isn't the greatest
                 //    thing in the world, but since we only register
@@ -77,42 +150,48 @@ namespace TAO
                     if (ACE_OS::strcmp (existing_name.in (),
                                         name.in ()) == 0)
                       {
-                        ACE_THROW (PortableInterceptor::ORBInitInfo::DuplicateName ());
+                        throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }
                   }
               }
           }
 
+        // Create a DetailsType object, and attempt to apply the policies.
+        DetailsType details;
+        details.apply_policies(policies);
+
         /// Increase the length of the Interceptor sequence by one.
-        const size_t new_len = old_len + 1;
+        size_t const new_len = old_len + 1;
         this->interceptors_.size (new_len);
 
         // Add the interceptor
-        this->interceptors_[old_len] = InterceptorType::_duplicate (interceptor);
+        this->interceptors_[old_len].interceptor_ =
+          InterceptorType::_duplicate (interceptor);
+
+        // Set the details
+        this->interceptors_[old_len].details_ = details;
       }
     else
       {
-        ACE_THROW (
+        throw
             CORBA::INV_OBJREF (
                 CORBA::SystemException::_tao_minor_code (
                     0,
                     EINVAL
                   ),
-                CORBA::COMPLETED_NO
-              )
-            );
+                CORBA::COMPLETED_NO);
       }
   }
 
-  template <typename InterceptorType>
+  template <typename InterceptorType, typename DetailsType>
   void
-  Interceptor_List<InterceptorType>::destroy_interceptors (
-    ACE_ENV_SINGLE_ARG_DECL)
+  Interceptor_List<InterceptorType,DetailsType>::destroy_interceptors (
+    void)
   {
-    const size_t len = this->interceptors_.size ();
+    size_t const len = this->interceptors_.size ();
     size_t ilen = len;
 
-    ACE_TRY
+    try
       {
         for (size_t k = 0; k < len; ++k)
           {
@@ -121,8 +200,7 @@ namespace TAO
             // invocation occurs afterwards.
             --ilen;
 
-            this->interceptor (k)->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->interceptor (k)->destroy ();
 
             // Since Interceptor::destroy() can throw an exception,
             // decrease the size of the interceptor array incrementally
@@ -132,18 +210,18 @@ namespace TAO
             this->interceptors_.size (ilen);
           }
       }
-    ACE_CATCHALL
+    catch (...)
       {
         // Exceptions should not be propagated beyond this call.
         if (TAO_debug_level > 3)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - Exception in ")
                         ACE_TEXT ("Interceptor_List")
-                        ACE_TEXT ("::destroy_interceptors () \n")));
+                        ACE_TEXT ("::destroy_interceptors ()\n")));
           }
       }
-    ACE_ENDTRY;
-    ACE_CHECK;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
-project(POA*): taoserver {
+project(POA*): taoserver, avoids_corba_e_micro {
   exename = Identity
 }

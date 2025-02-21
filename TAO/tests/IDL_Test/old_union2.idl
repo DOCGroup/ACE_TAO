@@ -1,0 +1,42 @@
+
+//=============================================================================
+/**
+ *  @file    old_union2.idl
+ *
+ *  Further tests of union IDL constructs
+ *
+ *
+ *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+
+module OldUnion2
+{
+  enum FooDisc
+  {
+    FOO1,
+    FOO2
+  };
+
+  union Foo switch (FooDisc)
+  {
+    case FOO1: long x;
+    case FOO2: string y;
+  };
+
+  struct Bar
+  {
+    enum BarDisc
+    {
+      BAR1,
+      BAR2
+    } kind;
+
+    union Foo switch (BarDisc)
+    {
+      case BAR1: long x;
+      case BAR2: long y;
+    } addr;
+  };
+};

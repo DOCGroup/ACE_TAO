@@ -1,0 +1,32 @@
+// -*- MPC -*-
+project(*idl) : taoclient {
+  IDL_Files {
+    CCS.idl
+  }
+  custom_only = 1
+}
+
+project(*client) : taoclient, avoids_corba_e_micro, avoids_corba_e_compact {
+  after += *idl
+  source_files {
+    client.cpp
+    CCSC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*server) : taoserver, avoids_corba_e_micro, avoids_corba_e_compact {
+  requires += dummy_label
+  after += *idl
+  source_files {
+    server.cpp
+    icp.cpp
+    CCSC.cpp
+    CCSS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+

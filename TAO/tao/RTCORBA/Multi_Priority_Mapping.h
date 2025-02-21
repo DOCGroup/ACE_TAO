@@ -1,34 +1,31 @@
-// $Id$
-// Multi_Priority_Mapping.h,v 1.0
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Multi_Priority_Mapping.h
-//
-// = DESCRIPTION
-//   Declares a priority mapping to support cross platform communication.
-//
-// = AUTHOR
-//   Brian Mendel (brian.r.mendel@boeing.com)
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file   Multi_Priority_Mapping.h
+ *
+ * Declares a priority mapping to support cross platform communication.
+ *
+ *  @author Brian Mendel (brian.r.mendel@boeing.com)
+ */
+//=============================================================================
+
 
 #ifndef TAO_MULTI_PRIORITY_MAPPING_H
 #define TAO_MULTI_PRIORITY_MAPPING_H
 
 #include "tao/orbconf.h"
 
-#include "tao/RTCORBA/Priority_Mapping.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
+#include "tao/RTCORBA/Priority_Mapping.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Multi_Priority_Mapping
@@ -41,7 +38,8 @@
  * ACE_SCHED_FIFO, ACE_SCHED_RR) and the valid range of CORBA
  * priorities (0...32767)
  */
-class TAO_RTCORBA_Export TAO_Multi_Priority_Mapping : public TAO_Priority_Mapping
+class TAO_RTCORBA_Export TAO_Multi_Priority_Mapping
+: public TAO_Priority_Mapping
 {
 public:
   /// Default constructor
@@ -61,7 +59,7 @@ public:
                               int policy = ACE_SCHED_FIFO);
 
   /// The destructor
-  virtual ~TAO_Multi_Priority_Mapping (void);
+  virtual ~TAO_Multi_Priority_Mapping ();
 
   virtual CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,
@@ -71,10 +69,9 @@ public:
                 RTCORBA::Priority &corba_priority);
 
 private:
-
+  /// The base settings
   int base_native_priority_;
   int base_corba_priority_;
-  // The base settings
 
   const int priority_spacing_;
   const int priorities_contiguous_;
@@ -82,10 +79,12 @@ private:
   /// The scheduling policy
   int policy_;
 
-  int min_;
-  int max_;
-  // The range
+  /// The range
+  int const min_;
+  int const max_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

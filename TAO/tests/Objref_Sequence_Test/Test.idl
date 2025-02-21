@@ -1,4 +1,3 @@
-//$Id$
 /// Simple interface to send object references back and forth
 interface Server;
 

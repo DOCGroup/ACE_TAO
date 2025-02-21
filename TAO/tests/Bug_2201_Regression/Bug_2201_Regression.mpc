@@ -1,0 +1,7 @@
+// -*- MPC -*-
+project(*Test): taoclient {
+  exename = test
+  Source_Files {
+    test.cpp
+  }
+}

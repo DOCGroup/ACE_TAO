@@ -1,0 +1,6 @@
+#ifndef FOOEXCEPTION_IDL
+#define FOOEXCEPTION_IDL
+
+exception FooException {};
+
+#endif

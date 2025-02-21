@@ -1,0 +1,75 @@
+/**
+
+
+
+@page Bug_2654_Regression README File
+
+This test is for Bug 2654. Since bug 2654 is very difficult to
+reproduce with an ordinary TAO build, hooks have been added to
+tao/IIOP_Connector.cpp to enable slight delays durring the connection
+process. See the bugzilla entry for more details. Enable the
+INDUCE_BUG_2654_A flag and disable the fix (find "Fix for bug 2654")
+in IIOP_Connector.cpp to see a pure virtual call. Otherwise the test
+should always run to completion.
+
+The essense of this test is the relationship between reference counted
+ACE_Event_Handlers and the entities that refer to them. During the
+development of the fix for bug 2654, the
+ACE_Event_Handler::[add|remove]_reference methods were modified to
+take the name of a calling function as a string and to print out the
+current count as well as the identity of the caller. The following
+code shows how this was done. Obviously all code that called add or
+remove ref had to be modified to pass the caller name.
+
+ACE_Event_Handler::Reference_Count
+ACE_Event_Handler::add_reference (const char * caller)
+{
+  int reference_counting_required =
+    this->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+  if (reference_counting_required)
+    {
+      Reference_Count result =
+        ++this->reference_count_;
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t)EH[0x%x]::add_ref called by %s, now %d\n",
+                  this,caller, result));
+      return result;
+    }
+  else
+    return 1;
+}
+
+ACE_Event_Handler::Reference_Count
+ACE_Event_Handler::remove_reference (const char * caller)
+{
+  int reference_counting_required =
+    this->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+  if (reference_counting_required)
+    {
+      Reference_Count result =
+        --this->reference_count_;
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t)EH[0x%x]::remove_ref called by %s, now %d\n",
+                  this, caller, result));
+
+      if (result == 0)
+        delete this;
+
+      return result;
+    }
+  else
+    {
+      return 1;
+    }
+}
+
+To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 module Test
 {
@@ -12,6 +9,7 @@ module Test
     /// Get the number of calls that every thread would make...
     long get_call_count ();
 
+    oneway void shutdown ();
   };
 
   interface Sender {
@@ -24,5 +22,7 @@ module Test
 
     /// Send a ready message
     oneway void send_ready_message (in Receiver callback);
+
+    oneway void shutdown ();
     };
 };

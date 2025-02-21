@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef JAVA_BIG_REQUEST_PAYLOAD_RECEIVER_H
 #define JAVA_BIG_REQUEST_PAYLOAD_RECEIVER_H
@@ -20,15 +17,11 @@ public:
   Payload_Receiver (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void more_data (const Test::Payload &payload
-                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Test::Payload_Receiver::Invalid_Payload));
+  virtual void more_data (const Test::Payload &payload);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
-  int get_count (void) const;
+  int get_count () const;
 
 public:
   int count_;

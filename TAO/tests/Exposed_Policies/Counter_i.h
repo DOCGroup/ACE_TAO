@@ -1,20 +1,14 @@
-//$Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Exposed_Policies
-//
-// = FILENAME
-//    Counter_i.h
-//
-// = DESCRIPTION
-//     This class implements the Counter IDL interface.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Counter_i.h
+ *
+ *   This class implements the Counter IDL interface.
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef COUNTER_I_H_
 #define COUNTER_I_H_
@@ -27,25 +21,19 @@
 class Counter_Servant : public POA_Counter
 {
 public:
-
   // = Ctor-Dtor Declaration
-
   Counter_Servant (Policy_Tester *policy_tester);
-  virtual ~Counter_Servant (void);
+  virtual ~Counter_Servant () = default;
 
   // = Counter Interface Methods Overloading.
 
-  virtual void increment (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void increment ();
 
-  virtual CORBA::Long get_count (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long get_count ();
 
-  virtual void reset (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void reset ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 protected:
   CORBA::Long count_;

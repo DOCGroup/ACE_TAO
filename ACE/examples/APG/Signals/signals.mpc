@@ -1,0 +1,35 @@
+// -*- MPC -*-
+project(SigAction) : aceexe {
+  exename = SigAction
+  Source_Files {
+    SigAction.cpp
+  }
+}
+
+project(SigGuard) : aceexe {
+  exename = SigGuard
+  Source_Files {
+    SigGuard.cpp
+  }
+}
+
+project(SigHandler) : aceexe {
+  exename = SigHandler
+  Source_Files {
+    SigHandler.cpp
+  }
+}
+
+project(SigHandlers) : aceexe {
+  exename = SigHandlers
+  Source_Files {
+    SigHandlers.cpp
+  }
+}
+
+project(SigInfo) : aceexe {
+  exename = SigInfo
+  Source_Files {
+    SigInfo.cpp
+  }
+}

@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ECG_UDP_EH.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Marina Spivak (marina@atdesk.com)
@@ -20,12 +19,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_serv_export.h"
-#include "ECG_Adapters.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include "orbsvcs/Event/ECG_Adapters.h"
 #include "ace/SOCK_Dgram.h"
 
-class TAO_ECG_UDP_Receiver;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_ECG_UDP_Receiver;
 
 /**
  * @class TAO_ECG_UDP_EH
@@ -43,19 +43,18 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_EH :
 , public TAO_ECG_Handler_Shutdown
 {
 public:
-
   /// Initialization and termination methods.
   //@{
   /// Constructor.
-  /// Messages received by this EH will be forwarded to the <recv>.
+  /// Messages received by this EH will be forwarded to the @a recv.
   /*
    * See comments for <receiver_> data member on why raw pointer is
-   * used for the <recv> argument.
+   * used for the @a recv argument.
    */
   TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
-  virtual ~TAO_ECG_UDP_EH (void);
+  virtual ~TAO_ECG_UDP_EH ();
 
   /// Open the datagram and register itself with this->reactor().
   /// To insure proper resource clean up, if open () is successful,
@@ -66,7 +65,7 @@ public:
 
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
-  virtual int shutdown (void);
+  virtual int shutdown ();
   //@}
 
   /// Main method - reactor callback.  Notify <receiver_> that
@@ -78,10 +77,9 @@ public:
    * type safety", allowing the user to setup options and gain access
    * to low-level features.
    */
-  ACE_SOCK_Dgram &dgram (void);
+  ACE_SOCK_Dgram &dgram ();
 
 private:
-
   /// The datagram used to receive the data.
   ACE_SOCK_Dgram dgram_;
 
@@ -98,8 +96,10 @@ private:
   TAO_ECG_Dgram_Handler* receiver_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "ECG_UDP_EH.i"
+#include "orbsvcs/Event/ECG_UDP_EH.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

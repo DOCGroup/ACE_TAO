@@ -1,0 +1,17 @@
+project(*server): notification_serv, taoexe, threads {
+  exename = server
+  libs += Bug_3252
+  after += *lib
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*lib): portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  libout = .
+  sharedname = Bug_3252
+  dynamicflags += BUG_3252_REGRESSION_BUILD_DLL
+  Source_Files {
+    DllOrb.cpp
+  }
+}

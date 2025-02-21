@@ -1,23 +1,13 @@
 /**
  * @file IdAssignmentPolicy.pidl
  *
- * $Id$
- *
- * @brief Pre-compiled IDL source for the PortableServer module.
- *
- * tao_idl.exe \
- *     -o orig -Gp -Gd -Ge 1 -Sci -Sc -GA -I$(TAO_ROOT)
- *          -Wb,export_macro=TAO_PortableServer_Export \
- *          -Wb,export_include="portableserver_export.h" \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          IdAssignmentPolicy.pidl
+ * @brief PIDL source for the PortableServer module.
  */
 
 #ifndef _PORTABLESERVER_IDASSIGNMENTPOLICY_IDL_
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY_IDL_
 
-#include <Policy.pidl>
+#include "tao/Policy.pidl"
 
 #pragma prefix "omg.org"
 
@@ -31,10 +21,14 @@ module PortableServer
     SYSTEM_ID
   };
 
+#if !defined (CORBA_E_MICRO)
+
   local interface IdAssignmentPolicy : CORBA::Policy
   {
     readonly attribute IdAssignmentPolicyValue value;
   };
+
+#endif
 };
 
 #endif // _PORTABLESERVER_IDASSIGNMENTPOLICY_IDL_

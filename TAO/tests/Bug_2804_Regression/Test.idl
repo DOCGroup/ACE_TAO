@@ -1,0 +1,38 @@
+
+#include "tao/OctetSeq.pidl"
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  exception Recursive_Type_In_Any_Test_Failed {};
+  exception Demarshaling_From_Any_Failed {};
+
+  enum ValueSort3 {
+    SYMBOL_TYPE,
+    SYMBOL_SEQ_TYPE
+  };
+
+  struct Symbol;
+  typedef sequence<Symbol> SymbolSeq;
+
+  struct Symbol {
+    SymbolSeq args;
+  };
+
+  union NonRecursiveUnionWithStringStruct3 switch (ValueSort3) {
+  case SYMBOL_TYPE:
+    Symbol symbol_val;
+  case SYMBOL_SEQ_TYPE:
+    SymbolSeq symbol_seq_val;
+  };
+
+  /// Simple test interface.
+  interface Hello
+  {
+    /// Return the any provided as the "in" argument.
+    any get_any (in any the_any);
+
+    /// Shutdown the server ORB.
+    oneway void shutdown ();
+  };
+};

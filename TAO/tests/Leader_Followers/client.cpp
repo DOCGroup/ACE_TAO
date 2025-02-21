@@ -1,17 +1,14 @@
-// $Id$
 
-// ================================================================
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     See README.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *   See README.
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
@@ -21,10 +18,8 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Leader_Followers, client, "$Id$")
-
 // Name of file contains ior.
-static const char *IOR = "file://ior";
+static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 
 // Number of client threads.
 static int number_of_client_threads = 3;
@@ -43,9 +38,9 @@ static u_long event_loop_timeout = 7000;
 static int shutdown_server = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:c:e:w:t:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:c:e:w:t:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,19 +51,19 @@ parse_args (int argc, char **argv)
         break;
 
       case 'c':
-        number_of_client_threads = ::atoi (get_opts.opt_arg ());
+        number_of_client_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'e':
-        number_of_event_loop_threads = ::atoi (get_opts.opt_arg ());
+        number_of_event_loop_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        event_loop_timeout = ::atoi (get_opts.opt_arg ());
+        event_loop_timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'w':
-        remote_work = ::atoi (get_opts.opt_arg ());
+        remote_work = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
@@ -108,11 +103,9 @@ public:
     {
     }
 
-  int svc (void)
+  int svc ()
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      ACE_TRY
+      try
         {
           u_long work_from_this_thread = 0;
           ACE_Time_Value sleep_for_this_thread;
@@ -135,9 +128,7 @@ public:
                       "Client: Invoking server from thread %t for time %d @ %T\n",
                       work_from_this_thread));
 
-          CORBA::ULong result = this->test_->method (work_from_this_thread
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          CORBA::ULong result = this->test_->method (work_from_this_thread);
 
           if (work_from_this_thread != result)
             {
@@ -148,15 +139,12 @@ public:
 
           ACE_DEBUG ((LM_DEBUG, "Client: client loop finished for thread %t @ %T\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception caught in thread:");
+          ex._tao_print_exception ("Exception caught in thread:");
           return -1;
         }
-      ACE_ENDTRY;
 
-      ACE_CHECK_RETURN (-1);
 
       return 0;
     }
@@ -184,11 +172,9 @@ public:
     {
     }
 
-  int svc (void)
+  int svc ()
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      ACE_TRY
+      try
         {
           u_long event_loop_timeout_for_this_thread = 0;
 
@@ -206,20 +192,16 @@ public:
           ACE_Time_Value timeout (0,
                                   event_loop_timeout_for_this_thread * 1000);
 
-          this->orb_->run (timeout ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->orb_->run (timeout);
 
           ACE_DEBUG ((LM_DEBUG, "Client: Event loop finished for thread %t @ %T\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception caught in thread:");
+          ex._tao_print_exception ("Exception caught in thread:");
           return -1;
         }
-      ACE_ENDTRY;
 
-      ACE_CHECK_RETURN (-1);
 
       return 0;
     }
@@ -236,19 +218,13 @@ private:
 };
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -257,13 +233,10 @@ main (int argc, char **argv)
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (IOR);
 
       // Try to narrow the object reference to a <server> reference.
-      test_var server = test::_narrow (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var server = test::_narrow (object.in ());
 
       Client_Task client_task (server.in ());
 
@@ -293,19 +266,15 @@ main (int argc, char **argv)
       // Shutdown server.
       if (shutdown_server)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -1,27 +1,16 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    cdr_op_ch.cpp
-//
-// = DESCRIPTION
-//    Concrete visitor for valueboxes.
-//    This one provides code generation for the CDR operators.
-//
-// = AUTHOR
-//    Gary Maxey
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    cdr_op_ch.cpp
+ *
+ *  Concrete visitor for valueboxes.
+ *  This one provides code generation for the CDR operators.
+ *
+ *  @author Gary Maxey
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuebox, 
-           cdr_op_ch, 
-           "$Id$")
+#include "valuebox.h"
 
 be_visitor_valuebox_cdr_op_ch::be_visitor_valuebox_cdr_op_ch (
     be_visitor_context *ctx
@@ -30,7 +19,7 @@ be_visitor_valuebox_cdr_op_ch::be_visitor_valuebox_cdr_op_ch (
 {
 }
 
-be_visitor_valuebox_cdr_op_ch::~be_visitor_valuebox_cdr_op_ch (void)
+be_visitor_valuebox_cdr_op_ch::~be_visitor_valuebox_cdr_op_ch ()
 {
 }
 
@@ -45,19 +34,20 @@ be_visitor_valuebox_cdr_op_ch::visit_valuebox (be_valuebox *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
+
+  *os << be_global->core_versioning_begin () << be_nl;
 
   *os << be_global->stub_export_macro () << " "
-      << "CORBA::Boolean operator<< (TAO_OutputCDR &, const "
+      << "::CORBA::Boolean operator<< (TAO_OutputCDR &, const "
       << node->full_name () << " *);" << be_nl;
 
   *os << be_global->stub_export_macro () << " "
-      << "CORBA::Boolean operator>> (TAO_InputCDR &, "
+      << "::CORBA::Boolean operator>> (TAO_InputCDR &, "
       << node->full_name () << " *&);";
 
-  node->cli_hdr_cdr_op_gen (1);
+  *os << be_global->core_versioning_end () << be_nl;
+
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }
-

@@ -1,0 +1,19 @@
+// -*- MPC -*-
+project(csd_test_server): csd_pt_test_exe, avoids_corba_e_micro {
+  exename=server_main
+
+  Source_Files {
+    ServerApp.cpp
+    server_main.cpp
+  }
+}
+
+project(csd_test_client): csd_pt_test_exe, avoids_corba_e_micro {
+  exename=client_main
+
+  Source_Files {
+    ClientApp.cpp
+    client_main.cpp
+  }
+}
+

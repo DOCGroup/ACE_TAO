@@ -2,8 +2,6 @@
 /**
  *  @file   Supplier.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  *  IIOP Gateway
@@ -28,19 +26,18 @@ class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
   /// Constructor
-  Supplier (void);
+  Supplier ();
 
   /// Run the test
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
 
   // = The RtecEventComm::PushSupplier methods
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 #endif /* SUPPLIER_H */

@@ -1,7 +1,5 @@
-// $Id$
-
 ACE_INLINE
-Receiver_Stats::Receiver_Stats (void)
+Receiver_Stats::Receiver_Stats ()
   : samples_count_ (0)
   , min_ (0)
   , min_at_ (0)
@@ -13,7 +11,7 @@ Receiver_Stats::Receiver_Stats (void)
 }
 
 ACE_INLINE ACE_UINT32
-Receiver_Stats::samples_count (void) const
+Receiver_Stats::samples_count () const
 {
   return this->samples_count_;
 }
@@ -30,11 +28,7 @@ Receiver_Stats::sample (ACE_UINT64 value)
       this->max_ = value;
       this->max_at_ = this->samples_count_;
       this->sum_ = value;
-#if defined ACE_LACKS_LONGLONG_T
-      this->sum2_ = value * ACE_U64_TO_U32 (value);
-#else  /* ! ACE_LACKS_LONGLONG_T */
       this->sum2_ = value * value;
-#endif /* ! ACE_LACKS_LONGLONG_T */
     }
   else
     {
@@ -50,10 +44,6 @@ Receiver_Stats::sample (ACE_UINT64 value)
         }
 
       this->sum_  += value;
-#if defined ACE_LACKS_LONGLONG_T
-      this->sum2_ += value * ACE_U64_TO_U32 (value);
-#else  /* ! ACE_LACKS_LONGLONG_T */
       this->sum2_ += value * value;
-#endif /* ! ACE_LACKS_LONGLONG_T */
     }
 }

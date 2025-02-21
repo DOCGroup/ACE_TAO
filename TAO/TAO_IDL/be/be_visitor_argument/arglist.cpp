@@ -1,27 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    arglist.cpp
-//
-// = DESCRIPTION
-//    Visitor that generates the parameters in an Operation signature
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    arglist.cpp
+ *
+ *  Visitor that generates the parameters in an Operation signature
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_argument, 
-           arglist, 
-           "$Id$")
-
+#include "argument.h"
 
 // ************************************************************
 // be_visitor_args_arglist for parameter list in method declarations and
@@ -29,11 +17,12 @@ ACE_RCSID (be_visitor_argument,
 // ************************************************************
 
 be_visitor_args_arglist::be_visitor_args_arglist (be_visitor_context *ctx)
-  : be_visitor_args (ctx)
+  : be_visitor_args (ctx),
+    unused_ (false)
 {
 }
 
-be_visitor_args_arglist::~be_visitor_args_arglist (void)
+be_visitor_args_arglist::~be_visitor_args_arglist ()
 {
 }
 
@@ -43,7 +32,7 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
   this->ctx_->node (node);
 
   // Retrieve the type.
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -65,7 +54,13 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  *os << " " << node->local_name ();
+  if (this->ctx_->state () != TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH)
+    {
+      *os << " " << (unused_ ? "/* " : "" )
+          << node->local_name ()->get_string ()
+          << (unused_ ? " */" : "");
+    }
+
   return 0;
 }
 
@@ -91,7 +86,7 @@ int be_visitor_args_arglist::visit_array (be_array *node)
 
 int be_visitor_args_arglist::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -215,10 +210,11 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
         }
     }
   else if (pt == AST_PredefinedType::PT_pseudo
-           || pt == AST_PredefinedType::PT_object)
+           || pt == AST_PredefinedType::PT_object
+           || pt == AST_PredefinedType::PT_abstract)
     {
       // The only PT_pseudo that doesn't take a _ptr suffix.
-      idl_bool is_tckind =
+      bool is_tckind =
         (ACE_OS::strcmp (node->local_name ()->get_string (), "TCKind") == 0);
 
       switch (this->direction ())
@@ -271,6 +267,22 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
 
 int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 {
+  // There seems to be one case where the two conditions below
+  // are true - in generating get/set operations for an
+  // inherited valuetype member, which is included from
+  // another IDL file, and whose type is an anonymous
+  // sequence. There is also no better place to make the
+  // call to create_name() - the node constructor sets the
+  // 'anonymous' flag to false, the typedef that resets it
+  // to true is created afterward. And any member of an
+  // included IDL declaration is not processed as part of
+  // the AST traversal. If create_name() is never called,
+  // then 'type_name' below will output 'sequence'.
+  if (node->imported () && node->anonymous ())
+    {
+      (void) node->create_name (nullptr);
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
@@ -282,7 +294,15 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
       *os << this->type_name (node) << " &";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out");
+      if (be_global->alt_mapping () && node->unbounded ())
+        {
+          *os << this->type_name (node) << " &";
+        }
+      else
+        {
+          *os << this->type_name (node, "_out");
+        }
+
       break;
     }
 
@@ -292,6 +312,23 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 int be_visitor_args_arglist::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  bool wide = (node->width () != (long) sizeof (char));
+
+  if (!wide && bound == 0 && be_global->alt_mapping ())
+    {
+      switch (this->direction ())
+        {
+          case AST_Argument::dir_IN:
+            *os << "const std::string";
+            break;
+          default:
+            *os << "std::string &";
+            break;
+        }
+
+      return 0;
+    }
 
   if (node->width () == (long) sizeof (char))
     {
@@ -304,7 +341,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
           *os << "char *&";
           break;
         case AST_Argument::dir_OUT:
-          *os << "CORBA::String_out";
+          *os << "::CORBA::String_out";
           break;
         }
     }
@@ -313,13 +350,13 @@ int be_visitor_args_arglist::visit_string (be_string *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const CORBA::WChar *";
+          *os << "const ::CORBA::WChar *";
           break;
         case AST_Argument::dir_INOUT:
-          *os << "CORBA::WChar *&";
+          *os << "::CORBA::WChar *&";
           break;
         case AST_Argument::dir_OUT:
-          *os << "CORBA::WString_out";
+          *os << "::CORBA::WString_out";
           break;
         }
     }
@@ -380,7 +417,7 @@ int be_visitor_args_arglist::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -397,7 +434,7 @@ int be_visitor_args_arglist::visit_valuetype_fwd (be_valuetype_fwd *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " *";
+      *os << this->type_name (node) << " *";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " *&";
@@ -452,4 +489,10 @@ int be_visitor_args_arglist::emit_common (be_type *node)
     }
 
   return 0;
+}
+
+void
+be_visitor_args_arglist::unused (bool val)
+{
+  this->unused_ = val;
 }

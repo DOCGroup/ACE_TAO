@@ -1,5 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
-project(POA*): taoexe, portableserver {
+project(POA*): taoserver {
+  exename = Non_Servant_Upcalls
 }

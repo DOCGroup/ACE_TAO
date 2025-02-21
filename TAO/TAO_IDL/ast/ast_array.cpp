@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -72,51 +70,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_array.h"
 #include "ast_expression.h"
+#include "ast_param_holder.h"
 #include "ast_visitor.h"
+
 #include "utl_exprlist.h"
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (ast, 
-           ast_array, 
-           "$Id$")
-
-// Constructor(s) and destructor.
-
-AST_Array::AST_Array (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    pd_n_dims (0),
-    pd_dims (0),
-    pd_base_type (0)
-{
-}
+AST_Decl::NodeType const
+AST_Array::NT = AST_Decl::NT_array;
 
 AST_Array::AST_Array (UTL_ScopedName *n,
-                      unsigned long nd,
+                      ACE_CDR::ULong nd,
                       UTL_ExprList *ds,
-                      idl_bool local,
-                      idl_bool abstract)
+                      bool local,
+                      bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_array,
               n,
-              I_TRUE),
+              true),
     AST_Type (AST_Decl::NT_array,
               n),
     AST_ConcreteType (AST_Decl::NT_array,
                       n),
     pd_n_dims (nd),
-    pd_base_type (0)
+    pd_base_type (nullptr),
+    owns_base_type_ (false)
 {
   this->pd_dims = this->compute_dims (ds,
                                       nd);
 }
 
-AST_Array::~AST_Array (void)
+AST_Array::~AST_Array ()
 {
 }
 
@@ -126,25 +113,37 @@ AST_Array::~AST_Array (void)
 // into an array.
 AST_Expression **
 AST_Array::compute_dims (UTL_ExprList *ds,
-                         unsigned long nds)
+                         ACE_CDR::ULong nds)
 {
-  if (ds == 0)
+  if (ds == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
-  AST_Expression **result = 0;
+  AST_Expression **result = nullptr;
   ACE_NEW_RETURN (result,
                   AST_Expression *[nds],
-                  0);
+                  nullptr);
 
   UTL_ExprlistActiveIterator iter (ds);
 
-  for (unsigned long i = 0;
+  for (ACE_CDR::ULong i = 0;
        !iter.is_done () && i < nds;
        iter.next (), i++)
     {
-      result[i] = iter.item ();
+      AST_Expression *orig = iter.item ();
+      AST_Param_Holder *ph = orig->param_holder ();
+
+      AST_Expression::ExprType ex_type =
+        (ph == nullptr ? orig->ev ()->et : ph->info ()->const_type_);
+
+      AST_Expression *copy = nullptr;
+      ACE_NEW_RETURN (copy,
+                      AST_Expression (orig,
+                                      ex_type),
+                      nullptr);
+
+      result[i] = copy;
     }
 
   return result;
@@ -162,7 +161,7 @@ AST_Array::dump (ACE_OSTREAM_TYPE &o)
 
   this->local_name ()->dump (o);
 
-  for (unsigned long i = 0; i < this->pd_n_dims; i++)
+  for (ACE_CDR::ULong i = 0; i < this->pd_n_dims; i++)
     {
       this->dump_i (o, "[");
 
@@ -180,7 +179,7 @@ AST_Array::ast_accept (ast_visitor *visitor)
 
 // Compute the size type of the node in question.
 int
-AST_Array::compute_size_type (void)
+AST_Array::compute_size_type ()
 {
   AST_Type *type = this->base_type ();
 
@@ -188,7 +187,7 @@ AST_Array::compute_size_type (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_array::compute_size_type - "
-                         "bad base type\n"), 
+                         "bad base type\n"),
                         -1);
     }
 
@@ -201,20 +200,20 @@ AST_Array::compute_size_type (void)
 }
 
 // Data accessors.
-unsigned long
-AST_Array::n_dims (void)
+ACE_CDR::ULong
+AST_Array::n_dims ()
 {
   return this->pd_n_dims;
 }
 
 AST_Expression **
-AST_Array::dims (void)
+AST_Array::dims ()
 {
   return this->pd_dims;
 }
 
 AST_Type *
-AST_Array::base_type (void)
+AST_Array::base_type () const
 {
   return this->pd_base_type;
 }
@@ -223,18 +222,62 @@ void
 AST_Array::set_base_type (AST_Type *nbt)
 {
   this->pd_base_type = nbt;
-
   this->is_local_ = nbt->is_local ();
+  AST_Decl::NodeType bnt = nbt->node_type ();
+
+  if (bnt == AST_Decl::NT_sequence
+      || bnt == AST_Decl::NT_param_holder)
+    {
+      this->owns_base_type_ = true;
+    }
+}
+
+bool
+AST_Array::legal_for_primary_key () const
+{
+  return this->base_type ()->legal_for_primary_key ();
+}
+
+void
+AST_Array::destroy ()
+{
+  if (this->owns_base_type_)
+    {
+      this->pd_base_type->destroy ();
+      delete this->pd_base_type;
+      this->pd_base_type = nullptr;
+    }
+
+  for (ACE_CDR::ULong i = 0; i < this->pd_n_dims; ++i)
+    {
+      this->pd_dims[i]->destroy ();
+      delete this->pd_dims[i];
+      this->pd_dims[i] = nullptr;
+    }
+
+  delete [] this->pd_dims;
+  this->pd_dims = nullptr;
+  this->pd_n_dims = 0;
+
+  this->AST_ConcreteType::destroy ();
 }
 
 void
 AST_Array::set_dims (AST_Expression **ds,
-                     unsigned long nds)
+                     ACE_CDR::ULong nds)
 {
   this->pd_dims = ds;
   this->pd_n_dims = nds;
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Array, AST_ConcreteType)
-IMPL_NARROW_FROM_DECL(AST_Array)
+AST_Annotation_Appls &
+AST_Array::base_type_annotations ()
+{
+  return base_type_annotations_;
+}
+
+void
+AST_Array::base_type_annotations (const AST_Annotation_Appls &annotations)
+{
+  base_type_annotations_ = annotations;
+}

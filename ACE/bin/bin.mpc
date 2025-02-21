@@ -1,0 +1,11 @@
+//  -*- MPC -*-
+project(bin) : aceexe, script {
+  exename = envinfo
+  Source_Files {
+    envinfo.cpp
+  }
+  Script_Files {
+    auto_run_tests.pl
+    ace_tests.lst
+  }
+}

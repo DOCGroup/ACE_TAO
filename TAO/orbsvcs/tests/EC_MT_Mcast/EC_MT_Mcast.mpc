@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
-project(EC_MT_Mcast): rteventexe, rtevent_serv, messaging {
+project(EC_MT_Mcast): rteventexe, rtevent_serv, messaging, strategies {
   exename  = MCast
 }

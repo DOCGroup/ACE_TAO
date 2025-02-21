@@ -1,17 +1,13 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "testS.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (UNKNOWN_Exception, server, "$Id$")
-
-const char *ior_output_file = "ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static int done = 0;
 
 void
-throw_exception (void)
+throw_exception ()
 {
   throw 1;
 }
@@ -20,20 +16,16 @@ class test_i :
   public POA_test
 {
 public:
-
   test_i (CORBA::ORB_ptr orb);
 
-  void normal_method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void normal_method ();
 
-  void unknown_exception_in_method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void unknown_exception_in_method ();
 
-  void unknown_exception_during_deactivation (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void unknown_exception_during_deactivation ();
 
-  void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void _add_ref ();
+  void _remove_ref ();
 
   CORBA::ORB_var orb_;
 
@@ -47,16 +39,14 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::normal_method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::normal_method ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::normal_method() called\n"));
 }
 
 void
-test_i::unknown_exception_in_method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::unknown_exception_in_method ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::unknown_exception_in_method() called\n"));
@@ -68,8 +58,7 @@ test_i::unknown_exception_in_method (void)
 }
 
 void
-test_i::unknown_exception_during_deactivation (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::unknown_exception_during_deactivation ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::unknown_exception_during_deactivation() called\n"));
@@ -84,7 +73,7 @@ test_i::unknown_exception_during_deactivation (void)
 }
 
 void
-test_i::_add_ref (ACE_ENV_SINGLE_ARG_DECL)
+test_i::_add_ref ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::_add_ref() called; current refcount = %d\n",
@@ -92,7 +81,7 @@ test_i::_add_ref (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-test_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+test_i::_remove_ref ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::_remove_ref() called; current refcount = %d\n",
@@ -109,21 +98,20 @@ test_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
     }
 }
 
+//FUZZ: disable check_for_lack_ACE_OS
 class test_factory_i :
   public POA_test_factory
 {
 public:
-
   test_factory_i (CORBA::ORB_ptr orb);
 
-  test_ptr create_test (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  test_ptr create_test ();
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
   CORBA::ORB_var orb_;
 };
+//FUZZ: enable check_for_lack_ACE_OS
 
 test_factory_i::test_factory_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -131,8 +119,7 @@ test_factory_i::test_factory_i (CORBA::ORB_ptr orb)
 }
 
 test_ptr
-test_factory_i::create_test (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_factory_i::create_test ()
 {
   test_i *servant =
     new test_i (this->orb_.in ());
@@ -140,27 +127,37 @@ test_factory_i::create_test (void)
   PortableServer::ServantBase_var safe_servant (servant);
   ACE_UNUSED_ARG (safe_servant);
 
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
+
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (poa_object.in ());
+
+  PortableServer::ObjectId_var id_act =
+    root_poa->activate_object (servant);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object.in ());
 
   return test._retn ();
 }
 
 void
-test_factory_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_factory_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "factory_i::shutdown() called\n"));
 
   done = 1;
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -184,14 +181,12 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         "");
+        CORBA::ORB_init (argc,argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -212,8 +207,13 @@ main (int argc, char *argv[])
         PortableServer::ServantBase_var safe_servant (servant);
         ACE_UNUSED_ARG (safe_servant);
 
+        PortableServer::ObjectId_var id_act =
+          root_poa->activate_object (servant);
+
+        CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+
         test_factory_var test_factory =
-          servant->_this ();
+          test_factory::_narrow (object.in ());
 
         CORBA::String_var ior =
           orb->object_to_string (test_factory.in ());
@@ -244,6 +244,10 @@ main (int argc, char *argv[])
           ACE_ASSERT (outstanding_requests == 0);
 
           orb->perform_work ();
+
+          // On some systems this loop must yield or else the other threads
+          // will not get a chance to run.
+          ACE_OS::thr_yield ();
         }
     }
   catch (...)

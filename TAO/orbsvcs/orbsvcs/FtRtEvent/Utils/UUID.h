@@ -3,8 +3,6 @@
 /**
  *  @file   UUID.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -12,8 +10,8 @@
 #define UUID_H
 #include /**/ "ace/pre.h"
 
-#include "ftrtevent_export.h"
-#include "ace/OS.h"
+#include "orbsvcs/FtRtEvent/Utils/ftrtevent_export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/SString.h"
 
 #if defined(TAO_EXPORT_MACRO)
@@ -21,13 +19,10 @@
 #endif
 #define TAO_EXPORT_MACRO  FtRtEvent_Export
 
-#if defined(TAO_EXPORT_NESTED_CLASSES)
-#if defined(TAO_EXPORT_NESTED_MACRO)
-#undef TAO_EXPORT_NESTED_MACRO
-#endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#define TAO_EXPORT_NESTED_MACRO FtRtEvent_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace TAO_FtRt
+{
 /**
  * This is an implementation of Global Unique Identifier
  * which follows the document draft-leach-uuids-guids-01.txt. The
@@ -42,20 +37,20 @@ class TAO_FtRtEvent_Export  UUID
   public:
     enum
     {
-      BINRARY_LENGTH= 16,
+      BINARY_LENGTH= 16,
 
       // the required length for the string representation including the termination '\0'
       STRING_LENGTH = 37
     };
 
     /* Construct an Global Unique Identifier. */
-    UUID(void);
+    UUID();
 
     /* This is used to create an uninitialized UUID. */
     UUID(int);
 
     /*
-     * Construct an UUID from the binary represetation. If you want to avoid a memory
+     * Construct an UUID from the binary representation. If you want to avoid a memory
      * copy operation for this constructor. You can safely reinterpret_cast the 16
      * bytes buffer into the UUID object and use all the member functions provided in
      * this class except is_valid() which is only useful if a UUID object is
@@ -67,7 +62,7 @@ class TAO_FtRtEvent_Export  UUID
      * Construct an UUID from the string representation. Use is_valid() to test if the
      * construction is successful or not.
      */
-    UUID(const char *);
+    UUID(const ACE_TCHAR *);
 
     /* Construct an uuid from the string representation. */
     bool from_string(const char *string_rep);
@@ -80,7 +75,7 @@ class TAO_FtRtEvent_Export  UUID
      * representation. This is done by testing whether the time_hi and time_mid fields
      * of the timestamp are 0. By current time, those two field shouldn't be 0 at all.
      */
-    bool is_valid(void) const;
+    bool is_valid() const;
 
     /*
      * convert to a string representation the buffer size provided must be at least
@@ -92,7 +87,7 @@ class TAO_FtRtEvent_Export  UUID
 
     /*
      * convert to a string representation the buffer size provided must be at least
-     * BINRARY_LENGTH
+     * BINARY_LENGTH
      */
     void to_binary(unsigned char *binary_rep) const;
 
@@ -106,12 +101,14 @@ class TAO_FtRtEvent_Export  UUID
         ACE_UINT32  low;
         ACE_UINT32  hi;
       } timestamp;
-      unsigned char uuid[BINRARY_LENGTH];
+      unsigned char uuid[BINARY_LENGTH];
     } rep_;
 };
+}
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "UUID.inl"
+#include "orbsvcs/FtRtEvent/Utils/UUID.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

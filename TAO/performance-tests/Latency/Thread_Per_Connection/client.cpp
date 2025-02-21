@@ -1,24 +1,21 @@
-// $Id$
-
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/OS_NS_errno.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Thread_Per_Connection_Latency, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 1000;
 int do_shutdown = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xk:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -47,17 +44,17 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
@@ -74,22 +71,19 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
@@ -118,33 +112,32 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Threads finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       ACE_Basic_Stats totals;
-      task0.accumulate_and_dump (totals, "Task[0]", gsf);
-      task1.accumulate_and_dump (totals, "Task[1]", gsf);
-      task2.accumulate_and_dump (totals, "Task[2]", gsf);
-      task3.accumulate_and_dump (totals, "Task[3]", gsf);
+      task0.accumulate_and_dump (totals, ACE_TEXT("Task[0]"), gsf);
+      task1.accumulate_and_dump (totals, ACE_TEXT("Task[1]"), gsf);
+      task2.accumulate_and_dump (totals, ACE_TEXT("Task[2]"), gsf);
+      task3.accumulate_and_dump (totals, ACE_TEXT("Task[3]"), gsf);
 
-      totals.dump_results ("Total", gsf);
+      totals.dump_results (ACE_TEXT("Total"), gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
                                              test_end - test_start,
                                              totals.samples_count ());
 
       if (do_shutdown)
         {
-          roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          roundtrip->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

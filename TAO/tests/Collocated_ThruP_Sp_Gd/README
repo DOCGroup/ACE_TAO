@@ -1,0 +1,5 @@
+This test is build with idlflag -Sp and Gd, to disable Thru_poa collocation,
+but enable direct collocation.
+Running this test with -ORBCollocationStrategy Thru_poa should result in an Exception.
+
+

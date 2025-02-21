@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef BIG_ONEWAYS_SESSION_CONTROL_H
 #define BIG_ONEWAYS_SESSION_CONTROL_H
@@ -20,19 +17,17 @@ public:
   Session_Control (CORBA::ULong session_count);
 
   /// Destructor
-  virtual ~Session_Control (void);
+  virtual ~Session_Control ();
 
   /// Return 1 when all sessions have finished
-  int all_sessions_finished (void) const;
+  int all_sessions_finished () const;
 
   // = The skeleton methods
-  virtual void session_finished (CORBA::Boolean success
-                                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void session_finished (CORBA::Boolean success);
 
 private:
   /// Synchronize the internal state
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 
   /// The type of test
   CORBA::ULong session_count_;

@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -76,28 +74,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (ast, 
-           ast_union_label, 
-           "$Id$")
-
-AST_UnionLabel::AST_UnionLabel (void)
-  : pd_label_kind (UL_default),
-          pd_label_val (0)
-{
-}
-
 AST_UnionLabel::AST_UnionLabel (UnionLabel lk,
                                 AST_Expression *lv)
   : pd_label_kind (lk),
-          pd_label_val (lv)
+    pd_label_val (lv)
 {
-    if (lv != 0)
+    if (lv != nullptr)
       {
         lv->evaluate (AST_Expression::EK_const);
       }
 }
 
-AST_UnionLabel::~AST_UnionLabel (void)
+AST_UnionLabel::~AST_UnionLabel ()
 {
 }
 
@@ -123,16 +111,28 @@ AST_UnionLabel::ast_accept (ast_visitor *visitor)
   return visitor->visit_union_label (this);
 }
 
+void
+AST_UnionLabel::destroy ()
+{
+  // Otherwise (default label) our label value is 0.
+  if (UL_label == this->pd_label_kind)
+    {
+      this->pd_label_val->destroy ();
+      delete this->pd_label_val;
+      this->pd_label_val = nullptr;
+    }
+}
+
 // Data accessors.
 
 AST_UnionLabel::UnionLabel
-AST_UnionLabel::label_kind (void)
+AST_UnionLabel::label_kind ()
 {
   return this->pd_label_kind;
 }
 
 AST_Expression *
-AST_UnionLabel::label_val (void)
+AST_UnionLabel::label_val ()
 {
   return this->pd_label_val;
 }

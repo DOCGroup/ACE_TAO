@@ -1,0 +1,147 @@
+<!--  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>MPC Definitions for the Stock Quoter Publisher/Subscriber Real-time CORBA Service</title>
+</head>
+
+<body
+ text = "#000000"
+ link = "#000fff"
+ vLink= "#ff0f0f"
+ aLink = "#0000ff"
+ bgColor = "#ffffff">
+
+<hr><h2>MPC Definitions for the Stock Quoter Publisher/Subscriber Real-time CORBA Service</h2><hr>
+
+<P> Note: For more information about how to write and use mpc files, please refer to
+<A HREF="http://download.ociweb.com/MPC/MakeProjectCreator.pdf">here</A>. <P>
+
+This MPC file (StockQuoter.mpc) contains all the projects used by the Stock Quoter Publisher/Subscriber
+Real-time CORBA Service. <P>
+
+<li><h4>Defining the RTCORBA_Quoter_Common project</h4></li>
+
+<PRE>
+project(RTCORBA_Quoter_Common): rt_server, taolib, valuetype {
+  sharedname = RTCORBA_Quoter_Common
+  idlflags += -Wb,stub_export_macro=RTCORBA_Quoter_Common_Export \
+              -Wb,stub_export_include=Common_Export.h \
+   
+  dynamicflags = RTCORBA_QUOTER_COMMON_BUILD_DLL
+
+  IDL_Files {
+    Distributor.idl
+    Broker.idl
+    Common.idl
+  }
+
+  Source_Files {
+    DistributorC.cpp
+    BrokerC.cpp
+    CommonC.cpp
+    Stock_PriorityMapping.cpp
+  }
+
+  Header_Files {
+    DistributorC.h
+    BrokerC.h
+    CommonC.h
+    CommonS.h
+    Stock_PriorityMapping.h
+  }
+}
+</PRE>
+
+This project is used as a Common project which contains all the idl stub definitions, the common skeleton
+definition, and the Stock_PriorityMapping definition.<P>
+
+<li><h4>Defining the Admin project</h4></li>
+
+<PRE>
+project(RTCORBA_Quoter_Admin): valuetype, rt_client, naming, stl {
+  after = RTCORBA_Quoter_Common
+  libs += RTCORBA_Quoter_Common
+  
+  Idl_Files {
+  }
+
+  Source_Files {
+     Admin.cpp
+  }
+
+  Header_Files {
+  }
+}
+</PRE>
+
+This project is used as a system administrator to start, stop the Stock Distributor server
+and change the notification rate of it. <P>
+
+<li><h4>Defining the Distributor project</h4></li>
+
+<PRE>
+project(RTCORBA_Quoter_Distributor): valuetype, rt_server, naming, utils, stl {
+  libs +=  RTCORBA_Quoter_Common
+  after += RTCORBA_Quoter_Common
+
+  IDL_Files {
+  }
+
+  Source_Files {
+      DistributorS.cpp
+      Distributor.cpp
+      Distributor_i.cpp               
+      Stock_Database.cpp
+      CommonS.cpp
+  }
+
+  Header_Files {
+      Distributor_i.h
+      Stock_Database.h
+      DistributorS.h
+   }
+}
+</PRE>
+
+This project is used as a Stock Distributor server which monitors a real-time stock feed database
+and whenever the value of a stock changes, it publishes an event to interested Stock Broker clients. It can
+alse provide the detailed information about a stock required by a Stock Broker client.<P>
+
+<li><h4>Defining the Broker project</h4></li>
+
+<PRE>
+project(RTCORBA_Quoter_Broker): valuetype, rt_server, naming, utils, stl {
+  libs +=  RTCORBA_Quoter_Common
+  after += RTCORBA_Quoter_Common
+
+  IDL_Files {
+  }
+
+  Source_Files {
+      BrokerS.cpp
+      StockNameConsumer_i.cpp
+      Broker.cpp
+      Broker_i.cpp
+      CommonS.cpp
+    }
+
+  Header_Files {
+      StockNameConsumer_i.h
+      Broker_i.h
+      Stock_Database.h
+      BrokerS.h
+  }
+}
+</PRE>
+
+This project is used as a Stock Broker client which subscribes with a Stock Distributor server
+to receive notification events whenever a stock value of interest to them changes. It can
+alse receive the detailed information about a stock by invoke a Stock Distributor server.<P>
+
+<hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>
+
+</body>
+
+</html>

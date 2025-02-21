@@ -3,8 +3,6 @@
 /**
  *  @file Task_Stats.h
  *
- *  $Id$
- *
  *  Utility Stats class that maintains the readings.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -15,6 +13,7 @@
 
 #include "ace/OS_NS_time.h"
 #include "ace/Singleton.h"
+#include "ace/High_Res_Timer.h"
 #include "tao/orbconf.h"
 #include "tao/debug.h"
 #include "notify_test_export.h"
@@ -23,12 +22,11 @@
  * @class Base_Time
  *
  * @brief maintains readings recorded by tasks.
- *
  */
 class TAO_NOTIFY_TEST_Export Base_Time
 {
  public:
-  Base_Time (void);
+  Base_Time ();
   ACE_hrtime_t base_time_;
 };
 
@@ -38,19 +36,18 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
  * @class Task_Stats
  *
  * @brief maintains readings recorded by tasks.
- *
  */
 class TAO_NOTIFY_TEST_Export Task_Stats
 {
  public:
   /// Constructor
-  Task_Stats (void);
+  Task_Stats ();
 
   /// Destructor
-  ~Task_Stats (void);
+  ~Task_Stats ();
 
   /// Useful Global Scale Factor
-  static ACE_UINT32 gsf_;
+  static ACE_High_Res_Timer::global_scale_factor_type gsf_;
 
   /// Init
   int init (size_t max_samples);
@@ -78,10 +75,10 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   ACE_UINT64 end_time_;
 
   /// The maximum number of samples
-  ACE_UINT32 max_samples_;
+  size_t max_samples_;
 
   /// The number of samples
-  ACE_UINT32 samples_count_;
+  size_t samples_count_;
 
   /// The samples : the time of invocation. and the recorded exec. time .
   ACE_UINT64 *time_inv_;

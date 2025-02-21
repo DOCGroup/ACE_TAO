@@ -1,19 +1,12 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/Param_Test
-//
-// = FILENAME
-//   anyop.cpp
-//
-// = DESCRIPTION
-//
-// = AUTHORS
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   anyop.cpp
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "param_testC.h"
 
@@ -23,27 +16,19 @@
 // Not normally needed, but we create an object reference in this test,
 // and we have to narrow it.
 #include "tao/Object_T.h"
-
+#include "tao/Stub.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Param_Test, 
-           anyop, 
-           "$Id$")
-
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int n = 1024;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      ACE_Get_Opt get_opt (argc, argv, "dn:");
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:"));
       int opt;
 
       while ((opt = get_opt ()) != EOF)
@@ -96,16 +81,10 @@ main (int argc, char *argv[])
 
           {
             CORBA::Object_var obj =
-              orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar"
-                                     ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar");
 
-            Param_Test_var param_test = 
-              TAO::Narrow_Utils<Param_Test>::unchecked_narrow (
-                  obj.in (),
-                  _TAO_Param_Test_Proxy_Broker_Factory_function_pointer
-                );
-            ACE_TRY_CHECK;
+            Param_Test_var param_test =
+              TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in ());
             TAO_Stub *stub = param_test->_stubobj ();
             stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
 
@@ -119,8 +98,7 @@ main (int argc, char *argv[])
                             "Cannot extract Param_Test (oh the horror)\n"));
               }
             CORBA::Boolean equiv =
-              param_test->_is_equivalent (o ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              param_test->_is_equivalent (o);
 
             if (!equiv)
               {
@@ -176,18 +154,9 @@ main (int argc, char *argv[])
             if (!(any >>= o)
                 || i != o)
               {
-#if defined (ACE_LACKS_LONGLONG_T)
-                char bufferi[32];
-                char buffero[32];
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for CORBA::ULongLong (%s,%s)\n",
-                            i.as_string (bufferi),
-                            o.as_string (buffero)));
-#else
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::ULongLong (%Q,%Q)\n",
                             i, o));
-#endif
               }
           }
 
@@ -197,8 +166,7 @@ main (int argc, char *argv[])
 
             CORBA::Double o;
 
-            if (!(any >>= o)
-                || i != o)
+            if (!(any >>= o) || !ACE::is_equal (i, o))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::Double (%f,%f)\n",
@@ -251,8 +219,9 @@ main (int argc, char *argv[])
                 || ACE_OS::strcmp (i, o) != 0)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "Failure for char* (%s,%s)\n",
-                            i, o));
+                            "Failure for char* (%C,%C)\n",
+                            i,
+                            o));
               }
           }
 
@@ -271,16 +240,16 @@ main (int argc, char *argv[])
             i->d = 3.1416;
 
             any <<= *i;
-            Param_Test::Fixed_Struct *o;
-            
+            const Param_Test::Fixed_Struct *o = 0;
+
             if (!(any >>= o)
                 || o->l != i->l
                 || o->c != i->c
                 || o->s != i->s
                 || o->o != i->o
-                || o->f != i->f
+                || !ACE::is_equal (o->f, i->f)
                 || o->b != i->b
-                || o->d != i->d)
+                || !ACE::is_equal (o->d, i->d))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for Fixed_Struct "
@@ -288,15 +257,15 @@ main (int argc, char *argv[])
               }
 
             any <<= i;
-            
+
             if (!(any >>= o)
                 || o->l != i->l
                 || o->c != i->c
                 || o->s != i->s
                 || o->o != i->o
-                || o->f != i->f
+                || !ACE::is_equal (o->f, i->f)
                 || o->b != i->b
-                || o->d != i->d)
+                || !ACE::is_equal (o->d, i->d))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for Fixed_Struct "
@@ -312,14 +281,14 @@ main (int argc, char *argv[])
                             CORBA::LongSeq (len),
                             -1);
             i->length (len);
-        
+
             for (CORBA::ULong k = 0; k < len; ++k)
               {
                 (*i)[k] = k;
               }
 
             any <<= *i;
-            CORBA::LongSeq *o;
+            const CORBA::LongSeq *o = 0;
 
             if (!(any >>= o)
                 || (*i)[0] != (*o)[0]
@@ -345,13 +314,11 @@ main (int argc, char *argv[])
           }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "IDL Types");
+      ex._tao_print_exception ("IDL Types");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

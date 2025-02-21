@@ -1,0 +1,28 @@
+// -*- MPC -*-
+project(*HA Status) : aceexe, avoids_ace_for_tao {
+  exename = HA_Status
+  Source_Files {
+    HA_Status.cpp
+  }
+}
+
+project(Get Opt) : aceexe {
+  exename = Get_Opt
+  Source_Files {
+    Get_Opt.cpp
+  }
+}
+
+project(Get Opt Long) : aceexe {
+  exename = Get_Opt_Long
+  Source_Files {
+    Get_Opt_Long.cpp
+  }
+}
+
+project(ARGV Example) : aceexe {
+  exename = ARGV_Example
+  Source_Files {
+    ARGV_Example.cpp
+  }
+}

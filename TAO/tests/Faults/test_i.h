@@ -1,17 +1,12 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/MT_Server
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_FAILURE_TEST_I_H
 #define TAO_FAILURE_TEST_I_H
@@ -29,87 +24,77 @@ class Callback_i
   //   receives a callback object.
   //
 public:
+  /// ctor
   Callback_i (CORBA::ORB_ptr orb);
-  // ctor
 
-  void shutdown (CORBA::Boolean is_clean
-                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // The callback method
+  /// The callback method
+  void shutdown (CORBA::Boolean is_clean);
 
 private:
+  /// The orb
   CORBA::ORB_var orb_;
-  // The orb
 };
 
+/**
+ * @class Simple_Server_i
+ *
+ * @brief Simpler Server implementation
+ *
+ * Implements the Simple_Server interface in test.idl
+ */
 class Simple_Server_i : public POA_Simple_Server
 {
-  // = TITLE
-  //   Simpler Server implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //
 public:
+  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb);
-  // ctor
 
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Boolean do_callback,
                            CORBA::Boolean is_clean,
-                           Callback_ptr callback
-                           ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                           Callback_ptr callback);
 
-  void shutdown_now (CORBA::Boolean is_clean
-                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown_now (CORBA::Boolean is_clean);
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
 private:
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 };
 
+/**
+ * @class Middle_i
+ *
+ * @brief Another implementation of the simple server...
+ *
+ * Implements the Simple_Server interface in test.idl
+ */
 class Middle_i : public virtual POA_Simple_Server
 {
-  // = TITLE
-  //   Another implementation of the simple server...
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //
 public:
+  /// ctor
   Middle_i (CORBA::ORB_ptr orb,
             Simple_Server_ptr server);
-  // ctor
 
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Boolean do_callback,
                            CORBA::Boolean is_clean,
-                           Callback_ptr callback
-                           ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                           Callback_ptr callback);
 
-  void shutdown_now (CORBA::Boolean is_clean
-                     ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown_now (CORBA::Boolean is_clean);
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
 private:
-  CORBA::ORB_ptr orb_;
-  // The ORB
+  /// The ORB
+  CORBA::ORB_var orb_;
 
+  /// The real server
   Simple_Server_var server_;
-  // The real server
 };
 
 #if defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_FAILURE_TEST_I_H */

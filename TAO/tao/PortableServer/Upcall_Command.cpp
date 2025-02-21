@@ -1,13 +1,9 @@
-// $Id$
+#include "tao/PortableServer/Upcall_Command.h"
 
-#include "Upcall_Command.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-ACE_RCSID (PortableServer,
-           Upcall_Command,
-           "$Id$")
-
-
-TAO::Upcall_Command::~Upcall_Command (void)
+TAO::Upcall_Command::~Upcall_Command ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

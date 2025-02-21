@@ -1,0 +1,29 @@
+
+
+Smart Pointers Example
+----------------------
+
+This example shows the use of the various smart pointer classes
+available in ACE.
+
+There are two programs in this example. Each program implements a
+similar set of classes, but with a different style of using smart
+pointers.
+
+The Widget example is written such that objects may only pass raw
+pointers between them, and use smart pointers to manage the object
+lifetimes. An advantage of this style is the fine-grained control
+over the type of smart pointer used in each situation. For example,
+if you know that in a particular section of code there is no
+concurrency involved, you can strategise ACE_Refcounted_Auto_Ptr on
+ACE_Null_Mutex to eliminate locking overhead. Disadvantages of this
+style include greater programming complexity and certain ownership
+use cases not being easily supported.
+
+The Gadget example is written such that objects are always passed
+around using one of the ACE_Strong_Bound_Ptr/ACE_Weak_Bound_Ptr
+pair of smart pointers. The advantage of this style is the
+reduction in complexity of object lifetime management (almost as
+"good" as Java ;-) The disadvantage is that you pay a cost for the
+reference counting and locking overhead even in situations where it
+may not be strictly necessary.

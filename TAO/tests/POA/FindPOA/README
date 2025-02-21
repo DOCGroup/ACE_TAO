@@ -1,0 +1,43 @@
+
+
+FindPOA test:
+============
+
+Executable:	FindPOA
+
+
+Description:
+===========
+
+This is a program to test the find_POA() method of the POA. It makes
+use of TAO_Adapter_Activator.
+
+Adapter activators are associated with POAs. An adapter activator
+supplies a POA with the ability to create child POAs on demand, as a
+side-effect of receiving a request that names the child POA (or one of
+its children), or when find_POA() is called with an activate parameter
+value of TRUE. An application server that creates all its needed POAs
+at the beginning of execution does not need to use or provide an
+adapter activator; it is necessary only for the case in which POAs
+need to be created during request processing.
+
+The test program tests the "find_POA" method in RootPOA with a single
+POA named "firstPOA" and then with a POA namestring "secondPOA".  In
+the second case the secondPOA is non-existent and is created.
+
+To check the findPOA method the names of the POA are queried and
+printed on the screen. POAs hold only the name relative to its
+parent. For eg. the name of secondPOA is just "secondPOA" and NOT
+"/firstPOA/secondPOA".
+
+To Test:
+========
+	1. Just run the FindPOA program.
+
+	2. You should see the following as the output:
+
+		<Empty string for RootPOA>
+		firstPOA
+		secondPOA
+
+	3. There might be other diagnostic messages.

@@ -1,0 +1,56 @@
+// -*- MPC -*-
+project(Client) : aceexe {
+  exename = Client
+  Source_Files {
+    Client.cpp
+  }
+}
+
+project(HAStatus) : aceexe {
+  exename = HAStatus
+  Source_Files {
+    HAStatus.cpp
+  }
+}
+
+project(HAStatus AC) : aceexe {
+  exename = HAStatus-AC
+  Source_Files {
+    HAStatus-AC.cpp
+  }
+}
+
+project(Reschedule) : aceexe {
+  exename = Reschedule
+  Source_Files {
+    Reschedule.cpp
+  }
+}
+
+project(Schedule Timers) : aceexe {
+  exename = Schedule_Timers
+  Source_Files {
+    Schedule_Timers.cpp
+  }
+}
+
+project(Timer Cancel) : aceexe {
+  exename = Timer_Cancel
+  Source_Files {
+    Timer_Cancel.cpp
+  }
+}
+
+project(*Timers) : aceexe {
+  exename = Timers
+  Source_Files {
+    Timers.cpp
+  }
+}
+
+project(Timer State Data) : aceexe {
+  exename = Timer_State_Data
+  Source_Files {
+    Timer_State_Data.cpp
+  }
+}

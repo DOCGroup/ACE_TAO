@@ -1,0 +1,13 @@
+// -*- MPC -*-
+project(*Server): csd_threadpool, messaging, taoserver, pi, avoids_corba_e_micro {
+  exename = server_main
+
+  Source_Files {
+    Foo_i.cpp
+    Callback_i.cpp
+    ServerApp.cpp
+    server_main.cpp
+    ClientTask.cpp
+    OrbShutdownTask.cpp
+  }
+}

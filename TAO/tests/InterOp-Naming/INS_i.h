@@ -1,21 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/InterOp-Naming
-//
-// = FILENAME
-//    INS_i.h
-//
-// = DESCRIPTION
-//    This class implements the INS interface.
-//
-// = AUTHOR
-//    Vishal Kachroo <vishal@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    INS_i.h
+ *
+ *  This class implements the INS interface.
+ *
+ *  @author Vishal Kachroo <vishal@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef INS_I_H
 #define INS_I_H
@@ -24,26 +18,22 @@
 
 class INS_i : public POA_INS
 {
-
 public:
-  // = Initialization and termination methods.
-  INS_i (void);
-  // Constructor.
+  /// Constructor.
+  INS_i ();
 
-  ~INS_i (void);
-  // Destructor.
+  /// Destructor.
+  ~INS_i ();
 
-  char * test_ins (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC (( CORBA::SystemException ));
-  // test the INS.
+  /// test the INS.
+  char * test_ins ();
 
+  /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
 
 private:
+  /// ORB pointer.
   CORBA::ORB_var orb_;
-  // ORB pointer.
-
 };
 
 #endif /* INS_I_H */

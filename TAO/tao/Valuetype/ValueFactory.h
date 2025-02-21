@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file     ValueFactory.h
- *
- *  $Id$
  *
  *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
@@ -15,22 +13,22 @@
 
 #include /**/ "ace/pre.h"
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Value_VarOut_T.h"
+#include "tao/Valuetype/Value_VarOut_T.h"
 
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
-#include "ace/CORBA_macros.h"
-#include "ace/Atomic_Op.h"
-#include "tao/Environment.h"
+#include <atomic>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -49,32 +47,29 @@ namespace CORBA
 
   typedef ValueFactoryBase_var ValueFactory_var;
 
-
   class TAO_Valuetype_Export ValueFactoryBase
   {
   public:
-    ValueFactoryBase (void);
-    virtual ~ValueFactoryBase (void);
+    ValueFactoryBase ();
+    virtual ~ValueFactoryBase ();
 
     // non-virtual is non-standard
-    void _add_ref (void);
-    void _remove_ref (void);
+    void _add_ref ();
+    void _remove_ref ();
 
     // private: %!
     /// In a derived class T use return type TAO_OBV_CREATE_RETURN_TYPE (T)
     /// (see at definition below)
-    virtual CORBA::ValueBase * create_for_unmarshal (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+    virtual CORBA::ValueBase * create_for_unmarshal () = 0;
 
-    // Not pure virtual because this will be overridden only by valuetypes
-    // that support an abstract interface.
-    virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract (void);
+    /// Not pure virtual because this will be overridden only by valuetypes
+    /// that support an abstract interface.
+    virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract ();
 
   private:
     /// Reference counter.
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> _tao_reference_count_;
+    std::atomic<uint32_t> refcount_;
   };
-
 }  // End CORBA namespace
 
 namespace TAO
@@ -93,7 +88,10 @@ namespace TAO
     static void release (CORBA::ValueFactoryBase *);
   };
 }
-// Use this macro for writing code that is independend from
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+// Use this macro for writing code that is independent from
 // the compiler support of covariant return types of pointers to
 // virtual inherited classes.
 // (e.g. in egcs-2.90.29 980515 (egcs-1.0.3 release) its not yet implemented)

@@ -1,16 +1,15 @@
-// $Id$
-
 #include "airplane_client_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(ImplRepo, airplane_client_i, "$Id$")
 
 // Constructor.
-Airplane_Client_i::Airplane_Client_i (void)
-  : server_key_ (ACE::strnew ("key0")),
+Airplane_Client_i::Airplane_Client_i ()
+  : argc_ (0),
+    argv_ (0),
+    server_key_ (ACE::strnew (ACE_TEXT("key0"))),
     loop_count_ (10),
     server_ (Paper_Airplane_Server::_nil ())
 {
@@ -20,9 +19,9 @@ Airplane_Client_i::Airplane_Client_i (void)
 // Parses the command line arguments and returns an error status.
 
 int
-Airplane_Client_i::parse_args (void)
+Airplane_Client_i::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:k:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -35,6 +34,7 @@ Airplane_Client_i::parse_args (void)
         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'k':  // ior provide on command line
+        delete [] this->server_key_;
         this->server_key_ = ACE::strnew (get_opts.opt_arg ());
         break;
       case '?':
@@ -55,27 +55,27 @@ Airplane_Client_i::parse_args (void)
 
 // Retreives <count> paper airplanes from the server.
 
-void
+int
 Airplane_Client_i::get_planes (size_t count)
 {
+  int rc = 0;
   for (size_t i = 0; i < count; i++)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           CORBA::String_var response =
-            this->server_->get_plane (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->server_->get_plane ();
 
-          ACE_DEBUG ((LM_DEBUG, "Plane %d is %s\n", i, response.in ()));
+          ACE_DEBUG ((LM_DEBUG, "Plane %d is %C\n", i, response.in ()));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR, "Plane %d exception:\n", i));
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "get_planes");
+          ex._tao_print_exception ("get_planes");
+          rc = 1;
         }
-      ACE_ENDTRY;
     }
+  return rc;
 }
 
 
@@ -84,12 +84,10 @@ Airplane_Client_i::get_planes (size_t count)
 int
 Airplane_Client_i::run ()
 {
-  this->get_planes (this->loop_count_);
-
-  return 0;
+  return this->get_planes (this->loop_count_);
 }
 
-Airplane_Client_i::~Airplane_Client_i (void)
+Airplane_Client_i::~Airplane_Client_i ()
 {
   // Free resources
   CORBA::release (this->server_);
@@ -99,20 +97,17 @@ Airplane_Client_i::~Airplane_Client_i (void)
 
 
 int
-Airplane_Client_i::init (int argc, char **argv)
+Airplane_Client_i::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "internet"
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    "internet");
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -125,22 +120,19 @@ Airplane_Client_i::init (int argc, char **argv)
                           -1);
 
       CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->server_key_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (this->server_key_);
 
-      this->server_ = Paper_Airplane_Server::_narrow (server_object.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->server_ = Paper_Airplane_Server::_narrow (server_object.in());
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
           "Error: invalid server key <%s>\n", this->server_key_), -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Airplane_Client_i::init");
+      ex._tao_print_exception ("Airplane_Client_i::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -3,8 +3,6 @@
 /**
  *  @file   EC_Kokyu_Dispatching.h
  *
- *  $Id$
- *
  *  @author Bryan Thrall (thrall@cs.wustl.edu)
  *
  * Based on previous work by Carlos O'Ryan (coryan@cs.wustl.edu) and
@@ -18,19 +16,21 @@
 #define TAO_EC_KOKYU_DISPATCHING_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Dispatching.h"
-#include "EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "rtkokyu_event_export.h"
+#include "orbsvcs/Event/rtkokyu_event_export.h"
 
 #include "ace/Thread_Manager.h"
 
 #include "Kokyu/Kokyu.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 
@@ -60,23 +60,21 @@ public:
                             int sched_scope);
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info
-                     ACE_ENV_ARG_DECL);
+                     TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info
-                            ACE_ENV_ARG_DECL);
+                            TAO_EC_QOS_Info& qos_info);
 
 private:
   ACE_Allocator *allocator_;
 
-  void setup_lanes (void);
+  void setup_lanes ();
 
   /// The dispatcher
   Kokyu::Dispatcher_Auto_Ptr dispatcher_;
@@ -98,12 +96,11 @@ public:
   TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
-  virtual int execute (void);
+  virtual int execute ();
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Shutdown_Command (void);
-
+  virtual ~TAO_EC_Kokyu_Shutdown_Command ();
 };
 
 // ****************************************************************
@@ -118,11 +115,11 @@ public:
                              ACE_Allocator* allocator);
 
   /// Command callback
-  virtual int execute (void);
+  virtual int execute ();
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Push_Command (void);
+  virtual ~TAO_EC_Kokyu_Push_Command ();
 
 private:
   /// The proxy
@@ -135,8 +132,10 @@ private:
   RtecEventComm::EventSet event_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Kokyu_Dispatching.i"
+#include "orbsvcs/Event/EC_Kokyu_Dispatching.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

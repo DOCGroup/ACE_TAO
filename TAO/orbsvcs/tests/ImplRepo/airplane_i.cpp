@@ -1,26 +1,19 @@
-// $Id$
-
 #include "airplane_i.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID (ImplRepo, 
-           airplane_i, 
-           "$Id$")
-
 // Constructor
-
-  Airplane_i::Airplane_i ()
+Airplane_i::Airplane_i ()
 {
   // Seed the random number generator
-  ACE_OS::srand (ACE_OS::time (0L));
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0L)));
 }
 
 
 // Destructor
 
-Airplane_i::~Airplane_i (void)
+Airplane_i::~Airplane_i ()
 {
   // Nothing
 }
@@ -29,8 +22,7 @@ Airplane_i::~Airplane_i (void)
 // Returns a random plane and page number
 
 char *
-Airplane_i::get_plane (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Airplane_i::get_plane ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Airplane_i::get_plane\n"));

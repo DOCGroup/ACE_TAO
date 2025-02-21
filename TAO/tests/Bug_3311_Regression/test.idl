@@ -1,0 +1,20 @@
+// Oh ho, oh ho, what are we gonna do?
+union CityBlue
+  switch (unsigned long long)
+{
+  case 1:
+    long ucb_long;
+  default:
+    short ucb_short;
+};
+
+// Power, passion, plays a double hand
+union CityMan
+  switch (long long)
+{
+  case 1:
+    long ucm_long;
+  default:
+    short ucm_short;
+};
+

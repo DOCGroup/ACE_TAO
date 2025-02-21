@@ -1,0 +1,73 @@
+
+
+File: DevGuideExamples/Multithreading/ThreadPerConnection/README
+
+
+This directory contains a CORBA example illustrating a simple client and
+a server with an interface Messenger.  This example is based on the
+Getting Started example, but adds concurrent request processing
+capabilities to the server using the thread-per-connection concurrency
+model.
+
+
+How to Run
+----------
+
+To start the server :
+------------------
+./MessengerServer -ORBSvcConf server.conf
+
+
+To start the client:
+------------------
+./MessengerClient
+
+
+Tip:
+----
+Run several clients simultaneously against the server.  Each client
+should establish a separate connection to the server and each client's
+requests should be handled on a separate thread in the server.  To
+verify this, the server returns the thread ID that handled the request
+in the reply message that is printed by the client.
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+
+Here is sample output from the Perl script:
+
+Starting MessengerServer
+IOR written to file Messenger.ior
+
+
+Starting 4 MessengerClients.
+Each client should get a new connection
+and its own thread in the server.
+
+Reply: Message handled on thread 992
+Reply: Message handled on thread 1952
+Reply: Message handled on thread 1676
+Reply: Message handled on thread 1016
+
+
+NOTE:
+
+  Since the Perl script starts several clients simultaneously, output
+  may become garbled since each client writes its output to stdout.
+
+
+NOTE:
+
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
+   perl ../run_test.pl
+
+
+

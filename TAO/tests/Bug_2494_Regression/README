@@ -1,0 +1,34 @@
+
+
+Description:
+
+        This test a modification of MT_Server.  In this case the client is also
+multi-threaded.  The client sends very large strings to the server, which it
+echoes back, for the sake of keeping the server busy doing I/O.  When the
+client is abruptly killed, the server should close the connection and continue
+running.
+
+Expected output:
+        The server prints out the IOR of the object it serves and the
+results of server shutdown (aborted or shutdown cleanly).
+
+        Regression:
+Activated as
+<IOR:012a2a2a1600000049444c3a53696d706c655f5365727665723a312e30002a2a0100000000000000740000000101022a130000006f6369313332392e6f63697765622e636f6d002a19842a2a1b00000014010f0052535420c93244520b04000000000001000000010000002a020000000000000008000000012a2a2a004f41540100000018000000012a2a2a0100010001000000010001050901010000000000>
+***Client has been killed***
+ACE_ASSERT (32395|3067820976): file Transport.cpp, line 172 assertion
+failed for 'this->head_ == 0'.Aborting...
+ERROR: cannot find file
+</tao_builds/mitza/1.4a/ACE_wrappers/TAO/tests/Bug_2494_Regression/server_terminated>
+-- server has not shut down cleanly.
+(perl script returns 1)
+
+        Correct run:
+Activated as
+<IOR:012a2a2a1600000049444c3a53696d706c655f5365727665723a312e30002a2a0100000000000000740000000101022a130000006f6369313332392e6f63697765622e636f6d002a34842a2a1b00000014010f0052535488d03244438d04000000000001000000010000002a020000000000000008000000012a2a2a004f41540100000018000000012a2a2a0100010001000000010001050901010000000000>
+***Client has been killed***
+event loop finished
+(perl script returns 0)
+
+How to run:
+        Use the run_test.pl script to run it.

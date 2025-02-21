@@ -1,31 +1,25 @@
-//$Id$
-
 #include "Server_i.h"
 #include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/OS_NS_stdio.h"
 
 // Constructor.
-
-Server_i::Server_i (void)
+Server_i::Server_i ()
   : ior_output_file_ (0),
     ins_ (0)
 {
-  // no-op.
 }
 
 // Destructor.
-
-Server_i::~Server_i (void)
+Server_i::~Server_i ()
 {
 }
 
 // Parse the command-line arguments and set options.
-
 int
-Server_i::parse_args (void)
+Server_i::parse_args ()
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ni:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:ni:"));
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -43,7 +37,7 @@ Server_i::parse_args (void)
         break;
 
       case 'i': // For Testing the InterOperable Naming Service.
-        this->ins_ = CORBA::string_dup (get_opts.opt_arg ());
+        this->ins_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
         break;
 
       case '?':  // display help for use of the server.
@@ -68,32 +62,27 @@ Server_i::parse_args (void)
 int
 Server_i::add_IOR_to_table (CORBA::String_var ior)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Adding (KEY:IOR) %s:%s\n",
+                    "Adding (KEY:IOR) %C:%C\n",
                     this->ins_,
                     ior.in ()));
 
       CORBA::Object_var table_object =
         this->orb_manager_.orb ()->resolve_initial_references (
-            "IORTable"
-            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+            "IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        IORTable::Table::_narrow (table_object.in ());
 
-      adapter->bind (this->ins_, ior.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      adapter->bind (this->ins_, ior.in ());
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Exception caugh in add_IOR_to_table");
+      ex._tao_print_exception ("Exception caugh in add_IOR_to_table");
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -101,21 +90,19 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
 // Initialize the server.
 int
 Server_i::init (int argc,
-                char *argv[]
-                ACE_ENV_ARG_DECL)
+                ACE_TCHAR *argv[])
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
-  if (this->orb_manager_.init_child_poa (argc,
-                                         argv,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+  int result = this->orb_manager_.init_child_poa (argc,
+                                                  argv,
+                                                  "child_poa");
+
+  if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-
-  ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -130,16 +117,14 @@ Server_i::init (int argc,
   // Stash our ORB pointer for later reference.
   this->servant_.orb (orb.in ());
 
-  ACE_TRY
+  try
     {
       CORBA::String_var str  =
         this->orb_manager_.activate_under_child_poa ("INS_servant",
-                                                     &this->servant_
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                     &this->servant_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The IOR is: <%s>\n",
+                  "The IOR is: <%C>\n",
                   str.in ()));
 
       if (this->ins_)
@@ -157,21 +142,23 @@ Server_i::init (int argc,
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "\tException in activation of POA");
+      ex._tao_print_exception (
+        "\tException in activation of POA");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
+Server_i::run ()
 {
   // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
+  int result = this->orb_manager_.run ();
+
+  if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
                       -1);

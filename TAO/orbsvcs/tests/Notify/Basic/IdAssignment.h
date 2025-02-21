@@ -1,17 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   IdAssignment.h
-//
-// = DESCRIPTION
-//   Test to check if ec, admin  are assigned id's correctly.
-//
-// = AUTHORS
-//   Chanaka Liyanaarachchi <chanaka@ociweb.com> and Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   IdAssignment.h
+ *
+ * Test to check if ec, admin  are assigned id's correctly.
+ *
+ *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com> and Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef IDASSIGNMENT_H
 #define IDASSIGNMENT_H
@@ -21,51 +18,47 @@
 class IdAssignment
 {
 public:
-  IdAssignment (void);
-  ~IdAssignment (void);
+  IdAssignment ();
+  ~IdAssignment ();
 
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
   void init (int argc,
-             char *argv[]
-             ACE_ENV_ARG_DECL);
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
+             ACE_TCHAR *argv[]);
+  void run_test ();
 
 private:
-  CosNotifyChannelAdmin::ChannelID create_ec (ACE_ENV_SINGLE_ARG_DECL);
-  void destroy_ec (CosNotifyChannelAdmin::ChannelID id
-                   ACE_ENV_ARG_DECL);
+  CosNotifyChannelAdmin::ChannelID create_ec ();
+  void destroy_ec (CosNotifyChannelAdmin::ChannelID id);
 
   CosNotifyChannelAdmin::AdminID create_supplier_admin (
-      CosNotifyChannelAdmin::ChannelID channel_id
-      ACE_ENV_ARG_DECL
-    );
+      CosNotifyChannelAdmin::ChannelID channel_id);
   CosNotifyChannelAdmin::AdminID create_consumer_admin (
-      CosNotifyChannelAdmin::ChannelID channel_id
-      ACE_ENV_ARG_DECL
-    );
+      CosNotifyChannelAdmin::ChannelID channel_id);
 
   void destroy_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id,
-                               CosNotifyChannelAdmin::AdminID admin_id
-                               ACE_ENV_ARG_DECL);
+                               CosNotifyChannelAdmin::AdminID admin_id);
   void destroy_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id,
-                               CosNotifyChannelAdmin::AdminID admin_id
-                               ACE_ENV_ARG_DECL);
+                               CosNotifyChannelAdmin::AdminID admin_id);
+
+  bool default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID channel_id);
+  bool default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID channel_id);
+
 
   // = Data members.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
 
+  /// Number of iterations for the test.
   int iter_;
-  // Number of iterations for the test.
 
+  /// Numbers of EC's to create.
   int ec_count_;
-  // Numbers of EC's to create.
 
+  /// Number of consumer admins to create per ec.
   int consumer_admin_count_;
-  // Number of consumer admins to create per ec.
 
+  /// Number of consumer admins to create per ec.
   int supplier_admin_count_;
-  // Number of consumer admins to create per ec.
 };
 
 #endif /* IDASSIGNMENT_H */

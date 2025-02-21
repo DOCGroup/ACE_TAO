@@ -1,0 +1,41 @@
+
+
+OMG Naming Service
+
+File: DevGuideExamples/NamingService/Naming_Server/README
+
+The example in NamingService/Naming_Client is modified to utilize
+the TAO_Naming_Server class.  This class enables the Naming Service
+to easily be collocated within an application.  In this example,
+the Naming Service is collocated with a server that supports the
+Messenger Interface described in GettingStartedUNIX (or GettingStartedVC).
+
+The Server code is stored in:
+
+DevGuideExamples/NamingService/Naming_Server/MessengerServer.cpp
+
+
+How to Run
+----------
+
+To start the server:
+------------------
+./MessengerServer -o ns.ior
+
+To start the client:
+------------------
+./MessengerClient  -ORBInitRef NameService=file://ns.ior
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the three steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+
+
+NOTE: This example has been changed from the example that appears in the
+dev-guide in order to pass command line parameters to the thread
+that runs the naming server.

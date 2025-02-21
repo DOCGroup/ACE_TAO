@@ -1,57 +1,45 @@
 // -*- C++ -*-
-
-#include "FT_Invocation_Endpoint_Selectors.h"
+#include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
 
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
 #include "tao/Base_Transport_Property.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/debug.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
-ACE_RCSID (FaultTolerance,
-           FT_Invocation_Endpoint_Selectors,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector (void)
+TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector ()
   : TAO_Default_Endpoint_Selector ()
 {
 }
 
-TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector (void)
+TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector ()
 {
 }
 
 void
 TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *val
-    ACE_ENV_ARG_DECL)
+    ACE_Time_Value *val)
 {
-  bool retval =
-    this->select_primary (r,
-                          val
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  bool retval = this->select_primary (r, val);
 
   if (retval)
     return;
 
-  retval =
-    this->select_secondary (r,
-                            val
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  retval = this->select_secondary (r, val);
 
-  if (retval == false)
-    {
-      // If we get here, we completely failed to find an endpoint selector
-      // that we know how to use, so throw an exception.
-      ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
-                                   CORBA::COMPLETED_NO));
-    }
+  // If we get here and still haven't found a primary or
+  // secondary then we used to throw a TRANSIENT exception here.
+  // But that would prevent any request interception points
+  // being called. They may know how to fix the problem so
+  // we wait to throw the exception in
+  // Synch_Twoway_Invocation::remote_twoway and
+  // Synch_Oneway_Invocation::remote_oneway instead.
 
   return;
 }
@@ -59,9 +47,14 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
 bool
 TAO_FT_Invocation_Endpoint_Selector::select_primary (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *max_wait_time
-    ACE_ENV_ARG_DECL)
+    ACE_Time_Value *max_wait_time)
 {
+  // Set lock, as forward_profiles might be deleted concurrently.
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                            guard,
+                            const_cast <TAO_SYNCH_MUTEX &> (r->stub ()->profile_lock ()),
+                            false));
+
   // Grab the forwarded list
   TAO_MProfile *prof_list =
     const_cast<TAO_MProfile *> (r->stub ()->forward_profiles ());
@@ -69,14 +62,18 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
   TAO_MProfile &basep = r->stub ()->base_profiles ();
 
   if (prof_list ==0)
-    prof_list = &basep;
+    {
+      prof_list = &basep;
+      // No need to hold stub lock any more. We needed it only to use
+      // forward_profiles.
+      guard.release ();
+    }
 
   if (prof_list == 0)
     return false;
 
-  // Did not succeed. Try to look for primaries all over the place
-  CORBA::ULong sz =
-    prof_list->size ();
+  // Try to look for primaries all over the place
+  CORBA::ULong const sz = prof_list->size ();
 
   // Iterate through the list in a circular fashion. Stop one before
   // the list instead of trying the same thing again.
@@ -87,21 +84,17 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
       TAO_Profile *tmp = prof_list->get_profile (i);
 
       bool retval =
-        this->check_profile_for_primary (tmp
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+        this->check_profile_for_primary (tmp);
 
-      // Choose a non-primary
+      // Found a primary
       if (retval == true && tmp != 0)
         {
           retval =
             this->try_connect (r,
                                tmp,
-                               max_wait_time
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
+                               max_wait_time);
 
-          if (retval == true)
+          if (retval)
             return true;
         }
     }
@@ -112,9 +105,14 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
 bool
 TAO_FT_Invocation_Endpoint_Selector::select_secondary (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *max_wait_time
-    ACE_ENV_ARG_DECL)
+    ACE_Time_Value *max_wait_time)
 {
+  // Set lock, as forward_profiles might be deleted concurrently.
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                            guard,
+                            const_cast <TAO_SYNCH_MUTEX &> (r->stub ()->profile_lock ()),
+                            false));
+
   // Grab the forwarded list
   TAO_MProfile *prof_list =
     const_cast<TAO_MProfile *> (r->stub ()->forward_profiles ());
@@ -123,13 +121,17 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
     r->stub ()->base_profiles ();
 
   if (prof_list ==0)
-    prof_list = &basep;
+    {
+      prof_list = &basep;
+      // No need to hold stub lock any more. We needed it only to use
+      // forward_profiles.
+      guard.release ();
+    }
 
   if (prof_list == 0)
     return false;
 
-  CORBA::ULong sz =
-    prof_list->size ();
+  CORBA::ULong const sz = prof_list->size ();
 
   for (CORBA::ULong i = 0;
        i != sz;
@@ -139,19 +141,15 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
         prof_list->get_profile (i);
 
       bool retval =
-        this->check_profile_for_primary (tmp
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+        this->check_profile_for_primary (tmp);
 
-      // Choose a non-primary
+      // Found a non-primary
       if (retval == false && tmp != 0)
         {
           retval =
             this->try_connect (r,
                                tmp,
-                               max_wait_time
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
+                               max_wait_time);
 
           if (retval == true)
             return true;
@@ -165,8 +163,7 @@ bool
 TAO_FT_Invocation_Endpoint_Selector::try_connect (
     TAO::Profile_Transport_Resolver *r,
     TAO_Profile *profile,
-    ACE_Time_Value *max_wait_time
-    ACE_ENV_ARG_DECL)
+    ACE_Time_Value *max_wait_time)
 {
   r->profile (profile);
 
@@ -182,9 +179,7 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
 
       bool retval =
         r->try_connect (&desc,
-                        max_wait_time
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                        max_wait_time);
 
       // @@ Good place to handle timeouts.. We can omit timeouts and
       // go ahead looking for other things... There are some small
@@ -204,10 +199,9 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
 
 bool
 TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
-    TAO_Profile *pfile
-    ACE_ENV_ARG_DECL_NOT_USED)
+    TAO_Profile *pfile)
 {
-  if (pfile == 0)
+  if (!pfile)
     return false;
 
   IOP::TaggedComponent tagged_component;
@@ -223,9 +217,11 @@ TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_FT (%P|%t) - Got a primary component\n")));
     }
 
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

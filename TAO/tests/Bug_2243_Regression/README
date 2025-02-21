@@ -1,0 +1,8 @@
+
+
+This test contains regression tests for fixes to bug #2243
+
+    ORB::object_to_string() returns NULL
+
+See the bugzilla record for details. This test is derived
+from, and based upon, the ORB_init test.

@@ -1,24 +1,17 @@
-// $Id$
-
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (Xt_Stopwatch,
-           server,
-           "$Id$")
-
-#include "tao/XtResource_Loader.h"
+#include "tao/XtResource/XtResource_Loader.h"
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
 #include "timer.h"
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -37,12 +30,12 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // We do the command line parsing first
   if (parse_args (argc, argv) != 0)
@@ -51,29 +44,26 @@ main (int argc, char *argv[])
   XtAppContext app;
   Widget toplevel = XtAppInitialize (&app,
                                      "Stopwatch",
-                                     NULL,
+                                     0,
                                      0,
                                      &argc,
                                      argv,
-                                     NULL,
-                                     NULL,
+                                     0,
+                                     0,
                                      0);
 
   TAO::XtResource_Loader xt_loader (app);
 
   Stopwatch_display stopwatch (toplevel);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -81,12 +71,10 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       stopwatch.manage ();
 
@@ -95,15 +83,18 @@ main (int argc, char *argv[])
 
       Stopwatch_imp server_impl (orb.in (), &timer);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&server_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Stopwatch_var server =
-        server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Stopwatch::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -118,8 +109,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
       }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       XtRealizeWidget (toplevel);
       /* Looks like there seems to be a problem with ST cases using
@@ -134,13 +124,11 @@ main (int argc, char *argv[])
       orb->run ();
 #endif /*ACE_HAS_THREADS*/
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

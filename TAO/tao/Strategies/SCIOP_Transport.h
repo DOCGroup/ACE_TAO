@@ -1,13 +1,11 @@
-// $Id$
+// -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   SCIOP_Transport.h
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Transport
- *  @author  Originally by Fred Kuhns <fredk@cs.wustl.edu>
- *  @author  Modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 
@@ -15,7 +13,7 @@
 #define TAO_SCIOP_TRANSPORT_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,15 +21,17 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
+#include "tao/Transport.h"
 #include "tao/IIOPC.h"
 #include "ace/SOCK_SEQPACK_Association.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 class TAO_SCIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
-class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
 
 /**
@@ -46,20 +46,17 @@ class TAO_Acceptor;
 class TAO_Strategies_Export TAO_SCIOP_Transport : public TAO_Transport
 {
 public:
-
   /// Constructor.
   TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
-                      TAO_ORB_Core *orb_core,
-                      CORBA::Boolean flag);
+                       TAO_ORB_Core *orb_core);
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  virtual ~TAO_SCIOP_Transport (void);
+  virtual ~TAO_SCIOP_Transport ();
 
   /** @name Overridden Template Methods
    *
@@ -67,11 +64,7 @@ protected:
    * details.
    */
   //@{
-
-  virtual ACE_Event_Handler * event_handler_i (void);
-
-  /// Access the underlying messaging object
-  virtual TAO_Pluggable_Messaging *messaging_object (void);
+  virtual ACE_Event_Handler * event_handler_i ();
 
   virtual ssize_t send (iovec *iov, int iovcnt,
                         size_t &bytes_transferred,
@@ -81,11 +74,6 @@ protected:
                         size_t len,
                         const ACE_Time_Value *s = 0);
 
-  virtual int send_message_shared (TAO_Stub *stub,
-                                   int message_semantics,
-                                   const ACE_Message_Block *message_block,
-                                   ACE_Time_Value *max_wait_time);
-
 
 public:
   /// @todo These methods IMHO should have more meaningful
@@ -93,32 +81,25 @@ public:
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &association,
-                            int message_semantics,
+                            TAO_Message_Semantics message_semantics,
                             ACE_Time_Value *max_wait_time);
 
   virtual int send_message (TAO_OutputCDR &association,
                             TAO_Stub *stub = 0,
-                            int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
+                            TAO_ServerRequest *request = 0,
+                            TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
                             ACE_Time_Value *max_time_wait = 0);
 
   /*virtual int send_reply (TAO_OutputCDR &stream,
                           TAO_Adapter *poa = 0);*/
 
-  virtual int generate_request_header (TAO_Operation_Details &opdetails,
-                                       TAO_Target_Specification &spec,
-                                       TAO_OutputCDR &msg);
-
-  virtual int messaging_init (CORBA::Octet major,
-                              CORBA::Octet minor);
-
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
-  virtual TAO_Connection_Handler * connection_handler_i (void);
+  virtual TAO_Connection_Handler * connection_handler_i ();
 
   //@}
 
 private:
-
   /// Set the Bidirectional context info in the service context list
   void set_bidir_context_info (TAO_Operation_Details &opdetails);
 
@@ -128,14 +109,12 @@ private:
   int get_listen_point (IIOP::ListenPointList &listen_point_list,
                         TAO_Acceptor *acceptor);
 private:
-
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_SCIOP_Connection_Handler *connection_handler_;
-
-  /// Our messaging object.
-  TAO_Pluggable_Messaging *messaging_object_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */
 

@@ -1,0 +1,60 @@
+
+
+Loader Example
+--------------
+
+This example illustrates how to dynamically link and load servants
+into a POA in a platform-independent manner using the ACE_DLL feature
+and standard CORBA Servant Manager features.  In the example, the POA
+is configured with the USE_SERVANT_MANAGER policy value, which relies
+on an application supplied Servant Manager object to supply
+object/server associations.
+
+If the POA has the RETAIN value for the servant retention, the POA
+expects the Servant Manager to implement the Servant Activator
+interface.  Conversely, when the POA is created with the NON_RETAIN
+value for servant retention, the Servant Manager must implement the
+Servant_Locator interface.
+
+This example illustrates both Servant Activator and Servant_Locator
+interfaces.  The servant object is created by a factory function that
+resides in a DLL that is linked and loaded into the server's address
+space on-demand when client requests arrive.  The ObjectID in each
+client request indicates which DLL name and which factory function to
+use to create the servant.
+
+For the Servant_Activator example, once the servant is loaded, the
+Object-to-Servant association is added to the Active Object Map
+maintained by the POA.  This association becomes invalid when the POA
+is destroyed or/and the Object is deactivated.  In contrast, for the
+Servant_Locator example operation request from the client causes the
+servant to be linked, processed, destroyed, and unlinked.
+
+For all examples, the dynamic configuration granularity is at the POA
+level,i.e., a Servant Activator or Servant Locator is associated with
+a DLL that is linked and loaded into memory and servant objects
+obtained on-demand. The factory function within the DLL decides the
+servant to be supplied based on the ObjectId and supplies the
+appropriate servant to the Servant Manager interface. Theres also an
+providence made for an garbage_collection function which can be used
+to destroy the servant. Both the factory function as well as the
+garbage collection function can be implemented by the application
+developer in the preferred manner.
+
+Note that the server need not be statically linked with the DLL.  The
+DLL name and the factory function used to obtain the servant can be
+provided to the server at run-time.  This gives us the flexibility of
+modifying and linking the servant without having to statically link
+the server along with the DLL.
+
+Execution:
+---------
+
+        Run the run_test_pl perl script.
+
+example:
+        run_test_pl -f ior_file
+
+The output will demonstrate the different actions performed by the
+Servant_Manager via the Servant_Activator and the Servant_Locator
+interfaces.

@@ -1,0 +1,4 @@
+version=4
+opts=uversionmangle=s/-rc/~rc/g,dversionmangle=s/\+dfsg$// \
+ https://download.dre.vanderbilt.edu/previous_versions/ACE\-src-(\d\.\d\.\d[-a-z0-9]*)\.tar\.gz \
+  debian /bin/sh debian/get-orig-source.sh

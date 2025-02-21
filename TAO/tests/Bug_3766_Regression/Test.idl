@@ -1,0 +1,27 @@
+#ifndef TEST_IDL_
+#define TEST_IDL_
+
+struct FixedLengthInfo
+{
+  long a;
+  long b;
+  long c;
+};
+
+struct VariableLengthInfo
+{
+  long a;
+  long b;
+  long c;
+  string d;
+};
+
+interface Test
+{
+  void do_something_FixedLength(out FixedLengthInfo my_info);
+  void do_something_VariableLength(out VariableLengthInfo my_info);
+
+  oneway void shutdown ();
+};
+
+#endif /* TEST_IDL_ */

@@ -1,6 +1,4 @@
-// $Id$
-
-project(*IDL): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
+project(*IDL): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   IDL_Files {
     Test.idl
   }
@@ -8,10 +6,11 @@ project(*IDL): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   custom_only = 1
 }
 
-project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
+project(*server): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
-  includes += ../lib $(TAO_ROOT)/orbsvcs
+  libpaths += ../lib
+  includes += ../lib
 
   Source_Files {
     server.cpp
@@ -26,10 +25,11 @@ project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   }
 }
 
-project(*client): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
+project(*client): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
-  includes += ../lib $(TAO_ROOT)/orbsvcs
+  libpaths += ../lib
+  includes += ../lib
 
   Source_Files {
     client.cpp

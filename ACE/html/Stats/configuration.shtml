@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                      "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+  <HEAD>
+    <TITLE>Configuration</TITLE>
+    <LINK href="Stats.css" rel="stylesheet" type="text/css">
+  </HEAD>
+
+  <BODY>
+
+    <!--#include file="navigation.html"-->
+
+    <P>All the experiments run the system described below.
+      The machine is running Linux
+      (<!--#include file="data/linuxversion.txt"-->),
+      and we use GCC (<!--#include file="data/gccversion.txt"-->),
+      to compile ACE+TAO+CIAO+DAnCE, with static libraries
+      and optimizations enabled.
+    </P>
+
+    <TABLE border="2">
+<!--      <THEAD>
+	<TR><TH>Name</TH><TH>Obtained Using</TH></TR>
+	<TR><TH colspan="2">Details</TH></TR>
+      </THEAD>
+-->
+      <TBODY>
+	<TR><TD>ACE+TAO+CIAO+DAnCE Configuration</TD><TD>config.h</TD></TR>
+	<TR><TD colspan="2">
+<PRE>
+<!--#include file="data/config.h.txt"-->
+</PRE>
+	  </TD>
+	</TR>
+	<TR><TD>ACE+TAO+CIAO+DAnCE Configuration</TD><TD>platform_macros.GNU</TD></TR>
+	<TR><TD colspan="2">
+<PRE>
+<!--#include file="data/platform_macros.GNU.txt"-->
+</PRE>
+	  </TD>
+	</TR>
+	</TR>
+	<TR><TD>ACE+TAO+CIAO+DAnCE Configuration</TD><TD>default.features</TD></TR>
+	<TR><TD colspan="2">
+<PRE>
+<!--#include file="data/default.features.txt"-->
+</PRE>
+	  </TD>
+	</TR>
+	<TR><TD>CPU Information</TD><TD>/proc/cpuinfo</TD></TR>
+	<TR><TD colspan="2">
+<PRE>
+<!--#include file="data/cpuinfo.txt"-->
+</PRE>
+	  </TD>
+	</TR>
+	<TR><TD>Available Memory</TD><TD>/proc/meminfo</TD></TR>
+	<TR><TD colspan="2">
+<PRE>
+<!--#include file="data/meminfo.txt"-->
+</PRE>
+	  </TD>
+	</TR>
+	<TR><TD>OS Version</TD><TD>uname -a</TD></TR>
+	<TR><TD colspan="2">
+<PRE>
+<!--#include file="data/uname.txt"-->
+</PRE>
+	  </TD>
+	</TR>
+	<TR><TD>Compiler Version</TD><TD>gcc -v</TD></TR>
+	<TR><TD colspan="2">
+<PRE>
+<!--#include file="data/gcc.txt"-->
+</PRE>
+	  </TD>
+	</TR>
+	<TR><TD>Library Version</TD><TD>/lib/libc.so.6</TD></TR>
+	<TR><TD colspan="2">
+<PRE>
+<!--#include file="data/libc.txt"-->
+</PRE>
+	  </TD>
+	</TR>
+      </TBODY>
+    </TABLE>
+
+<!--#include file="footer.html"-->
+
+  </BODY>
+</HTML>

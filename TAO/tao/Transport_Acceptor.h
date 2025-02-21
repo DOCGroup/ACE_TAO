@@ -4,8 +4,6 @@
 /**
  *  @file Transport_Acceptor.h
  *
- *  $Id$
- *
  *  Interface for the Acceptor component of the TAO pluggable protocol
  *  framework.
  *
@@ -18,17 +16,23 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Acceptor.h"
 #include "tao/Basic_Types.h"
 
 // Forward declarations.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Addr;
 class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_MProfile;
 class TAO_Endpoint;
@@ -72,10 +76,14 @@ public:
   TAO_Acceptor (CORBA::ULong tag);
 
   /// Destructor
-  virtual ~TAO_Acceptor (void);
+  virtual ~TAO_Acceptor ();
 
   /// The tag, each concrete class will have a specific tag value.
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
+
+  /// Set the amount of time to delay accepting new connections in the
+  /// event that we encounter an error that may be transient.
+  void set_error_retry_delay (time_t delay);
 
   /// Method to initialize acceptor for address.
   virtual int open (TAO_ORB_Core *orb_core,
@@ -96,7 +104,7 @@ public:
                             const char *options = 0) = 0;
 
   /// Closes the acceptor
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * Create the corresponding profile for this endpoint.
@@ -110,14 +118,14 @@ public:
                               CORBA::Short priority) = 0;
 
   /// Return 1 if the @a endpoint has the same address as the acceptor.
-  virtual int is_collocated (const TAO_Endpoint* endpoint) = 0;
+  virtual int is_collocated (const TAO_Endpoint *endpoint) = 0;
 
   /**
    * Returns the number of endpoints this acceptor is listening on.  This
    * is used for determining how many profiles will be generated
    * for this acceptor.
    */
-  virtual CORBA::ULong endpoint_count (void) = 0;
+  virtual CORBA::ULong endpoint_count () = 0;
 
   /**
    * This method fetches the @a key from the @a profile. Protocols that
@@ -129,13 +137,60 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key) = 0;
 
+  /// This method is not directly associated with the method of the same
+  /// name on the ACE_Acceptor template class. However, it is called by
+  /// the TAO_Strategy_Acceptor method of the same name.
+  int handle_accept_error (ACE_Event_Handler* base_acceptor);
+
+  /// Perform the handle_timeout functionality to put this acceptor back
+  /// into the reactor to try accepting again.
+  int handle_expiration (ACE_Event_Handler* base_acceptor);
+
 private:
   /// IOP protocol tag.
-  CORBA::ULong tag_;
+  CORBA::ULong const tag_;
+
+  time_t error_retry_delay_;
 };
 
+/// This is a drop-in replacement class for the ACE_Strategy_Acceptor.
+/// It provides all of the same functionality and the additional
+/// functionality of handling accept() errors with some sort of
+/// configured action.  All of the actual code is in the TAO_Acceptor
+/// to avoid multiply-instantiated code that would be, in effect,
+/// identical.
+///
+/// It is not declared nested within TAO_Acceptor as I originally wanted
+/// because it caused an internal compiler error for the Tornado 2.2.1
+/// compiler.
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
+class TAO_Strategy_Acceptor:
+  public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+{
+public:
+  TAO_Strategy_Acceptor (TAO_Acceptor* acceptor)
+   : acceptor_ (acceptor)
+  {
+  }
+
+  virtual int handle_accept_error ()
+  {
+    return this->acceptor_->handle_accept_error (this);
+  }
+
+  virtual int handle_timeout (const ACE_Time_Value&, const void*)
+  {
+    return this->acceptor_->handle_expiration (this);
+  }
+
+private:
+  TAO_Acceptor* acceptor_;
+};
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Transport_Acceptor.inl"
+# include "tao/Transport_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

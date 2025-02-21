@@ -1,0 +1,11 @@
+
+
+This is a test of the nested upcall feature in TAO using mt_noupcall.
+start off by calling the server and providing a callback object and a
+time-to-live number.  The server will callback the client (using the
+callback object) and decrement the time-to-live number.
+
+With mt_noupcall enabled the client should drop the nested upcall from the
+server and which leads to a timeout exception in the server and than in the
+client.
+

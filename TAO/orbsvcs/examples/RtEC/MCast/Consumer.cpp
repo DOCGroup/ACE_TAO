@@ -1,29 +1,20 @@
-// $Id$
-
 #include "Consumer.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-ACE_RCSID (EC_Examples, 
-           Consumer, 
-           "$Id$")
-
-Consumer::Consumer (void)
+Consumer::Consumer ()
   : event_count_ (0)
 {
 }
 
 void
-Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                   ACE_ENV_ARG_DECL)
+Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   this->proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
 
   RtecEventComm::PushConsumer_var me =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   // Simple subscription, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
@@ -41,44 +32,35 @@ Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
   h1.type   = ACE_ES_EVENT_UNDEFINED;  // first free event type
   h1.source = ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
-  this->proxy_->connect_push_consumer (me.in (), qos
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_->connect_push_consumer (me.in (), qos);
 }
 
 void
-Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Consumer::disconnect ()
 {
-  ACE_TRY
+  try
     {
       // Disconnect from the proxy
-      this->proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->proxy_->disconnect_push_supplier ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions
     }
-  ACE_ENDTRY;
   this->proxy_ = RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 
   // Deactivate this object
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   // Get the Object Id used for the servant..
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
   // Deactivate the object
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (oid.in ());
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer::push (const RtecEventComm::EventSet& events)
 {
   if (events.length () == 0)
     {
@@ -97,13 +79,7 @@ Consumer::push (const RtecEventComm::EventSet& events
 }
 
 void
-Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer::disconnect_push_consumer ()
 {
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

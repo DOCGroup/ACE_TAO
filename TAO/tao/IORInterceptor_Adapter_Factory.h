@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    IORInterceptor_Adapter_Factory.h
- *
- *  $Id$
  *
  *  @author  George Edwards <g.edwards@vanderbilt.edu>
  */
@@ -21,7 +19,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/orbconf.h"
+#include "tao/TAO_Export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IORInterceptor_Adapter;
 
@@ -38,13 +39,12 @@ class TAO_Export TAO_IORInterceptor_Adapter_Factory
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_IORInterceptor_Adapter_Factory (void);
+  virtual ~TAO_IORInterceptor_Adapter_Factory ();
 
-  virtual TAO_IORInterceptor_Adapter * create (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  virtual TAO_IORInterceptor_Adapter * create () = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

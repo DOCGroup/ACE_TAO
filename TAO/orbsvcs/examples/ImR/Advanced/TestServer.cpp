@@ -1,4 +1,3 @@
-//$Id$
 #include "TestServer.h"
 
 #include "ManagerC.h"
@@ -42,88 +41,121 @@ string getWorkingPath(char delim, bool toLower)
 
 string normalizePath(const string& dir, char delim, bool toLower)
 {
-  if (dir.empty() == true) return string();
+  if (dir.empty ())
+    {
+      return string ();
+    }
+
   char buffer[PATH_MAX + 2];
 
   string::size_type i = 0;
- 
-  for (; ACE_OS::ace_isspace(dir[i]); i++);
+
+  for (; ACE_OS::ace_isspace (dir[i]); i++)
+    {
+      // No action.
+    }
 
   string::size_type begin = i;
 
   int j = 0;
-  for (; i < dir.size(); i++)
-  {
-    if (dir[i] == '\\' || dir[i] == '/')
-    {
-      // skip redundant
-      if (dir[i + 1] == '\\' || dir[i + 1] == '/')
-      {
-      }
-      // Convert to proper delim
-      else
-      {
-        buffer[j] = delim; j++;
-      }
-    }
-    else if (dir[i] == '.')
-    {
-      // If specifying current, skip
-      if (dir[i + 1] == '\\' || dir[i + 1] == '/' || dir[i + 1] == '\0')
-      {
-        if (i == begin) // relative start
-        {
-          string curDir = getWorkingPath();
-          ACE_OS::strncpy(buffer, curDir.c_str(), sizeof(buffer));
-          j = curDir.length();
-        }
-        else
-        {
-          i += 2;
-        }
-      }
-      // If specifying parent, go back
-      else if (dir[i + 1] == '.')
-      {
-        if (i == begin) // relative start
-        {
-          string curDir = getWorkingPath();
-          ACE_OS::strncpy(buffer, curDir.c_str(), sizeof(buffer));
-          j = curDir.length();
-        }
-        int k = j;
-        for (; buffer[k] != delim; k--);
-        k--;
-        for (; buffer[k] != delim; k--);
-        j = (k + 1);
-        i+=2;
-      }
-      else
-      {
-        if (toLower)
-          buffer[j] = ::tolower(dir[i]);
-        else
-          buffer[j] = dir[i];
-        j++;
-      }
-    }
-    // normal character
-    else
-    {
-      if (toLower)
-        buffer[j] = ::tolower(dir[i]);
-      else
-        buffer[j] = dir[i];
-      j++;
-    }
-  }
 
-  if (buffer[j - 1] == delim) j--;
+  for (; i < dir.size (); i++)
+    {
+      if (dir[i] == '\\' || dir[i] == '/')
+        {
+          // skip redundant
+          if (dir[i + 1] == '\\' || dir[i + 1] == '/')
+            {
+            }
+          // Convert to proper delim
+          else
+            {
+              buffer[j] = delim; j++;
+            }
+        }
+      else if (dir[i] == '.')
+        {
+          // If specifying current, skip
+          if (dir[i + 1] == '\\' || dir[i + 1] == '/' || dir[i + 1] == '\0')
+            {
+              if (i == begin) // relative start
+                {
+                  string curDir = getWorkingPath ();
+                  ACE_OS::strncpy( buffer, curDir.c_str (), sizeof (buffer));
+                  j = curDir.length();
+                }
+              else
+                {
+                  i += 2;
+                }
+            }
+          // If specifying parent, go back
+          else if (dir[i + 1] == '.')
+            {
+              if (i == begin) // relative start
+                {
+                  string curDir = getWorkingPath ();
+                  ACE_OS::strncpy (buffer, curDir.c_str (), sizeof( buffer));
+                  j = curDir.length();
+                }
+
+              int k = j;
+
+              for (; buffer[k] != delim; k--)
+                {
+                  // No action.
+                }
+
+              k--;
+
+              for (; buffer[k] != delim; k--)
+                {
+                  // No action.
+                }
+
+              j = (k + 1);
+              i += 2;
+            }
+          else
+            {
+              if (toLower)
+                {
+                  buffer[j] = ACE_OS::ace_tolower (dir[i]);
+                }
+              else
+                {
+                  buffer[j] = dir[i];
+                }
+
+              j++;
+            }
+        }
+      // normal character
+      else
+        {
+          if (toLower)
+            {
+              buffer[j] = ACE_OS::ace_tolower (dir[i]);
+            }
+          else
+            {
+              buffer[j] = dir[i];
+            }
+
+          j++;
+        }
+    }
+
+  if (buffer[j - 1] == delim)
+    {
+      j--;
+    }
+
   buffer[j] ='\0';
   return string(buffer);
 }
 
-TestServer::TestServer(CORBA::ORB_ptr orb, int argc, char* argv[])
+TestServer::TestServer (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
 : serverID_(1)
 , serverInstanceID_(-1)
 , useIORTable_(false)
@@ -137,12 +169,14 @@ TestServer::TestServer(CORBA::ORB_ptr orb, int argc, char* argv[])
 , numPOAS_(0)
 , numObjsPerPOA_(0)
 , useItLoseItSecs_(0)
+, managerIor_("file://manager.ior")
+, outputIor_("imr_test.ior")
 , orb_(CORBA::ORB::_duplicate(orb))
 , iorTable_(IORTable::Table::_nil())
 , root_(PortableServer::POA::_nil())
 , mgr_(PortableServer::POAManager::_nil())
 {
-  parseCommands(argc, argv);
+  parseCommands (argc, argv);
 
   verifyEnvironment();
 
@@ -156,27 +190,26 @@ TestServer::TestServer(CORBA::ORB_ptr orb, int argc, char* argv[])
 
 TestServer::~TestServer()
 {
-  root_->destroy(1, 1);
 }
 
 //  TestServer::parseCommands
 //  Reads params from command line
 //
-int TestServer::parseCommands(int argc, char* argv[])
+int TestServer::parseCommands (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:m:i:"));
   int c;
-  while ((c = get_opts()) != -1)
+  while ((c = get_opts ()) != -1)
   {
     switch (c)
     {
     case 'w':
-      expectedDir_ = normalizePath(get_opts.opt_arg());
+      expectedDir_ = normalizePath(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg()));
       break;
 
     case 'e':
       {
-        string name = get_opts.opt_arg();
+        string name = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
         string::size_type i = name.find_first_of("=");
         string value = name.substr(i +  1, name.length() - 1);
         name.resize(i);
@@ -190,21 +223,21 @@ int TestServer::parseCommands(int argc, char* argv[])
 
     case 't':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         useIORTable_ = (opt && opt[0] != '0');
         break;
       }
 
     case 'q':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         retryQuery_ = (opt && opt[0] != '0');
         break;
       }
 
     case 'o':
       {
-        const char* opt = get_opts.opt_arg();
+        const ACE_TCHAR* opt = get_opts.opt_arg();
         writeIORFile_ = (opt && opt[0] != '0');
         break;
       }
@@ -242,7 +275,15 @@ int TestServer::parseCommands(int argc, char* argv[])
       break;
 
     case 'b':
-      baseDir_ =  get_opts.opt_arg();
+      baseDir_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
+      break;
+
+    case 'm':
+      managerIor_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
+      break;
+
+    case 'i':
+      outputIor_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
       break;
 
     case '?':
@@ -279,9 +320,8 @@ bool TestServer::verifyEnvironment() const
   string currentDir = getWorkingPath();
   if (expectedDir_.empty() == false && currentDir != expectedDir_)
   {
-    cout << "Error: directory paths ("
-      << currentDir << ", " << expectedDir_
-      << ") do not match." << endl;
+    ACE_DEBUG((LM_DEBUG, "Error: directory paths (%C,%C) do not match.\n",
+               currentDir.c_str(), expectedDir_.c_str()));
     err |= true;
   }
 
@@ -289,18 +329,16 @@ bool TestServer::verifyEnvironment() const
   for (string::size_type i = 0; i < expectedEnv_.size(); i++)
   {
     const char* realValue = ACE_OS::getenv(expectedEnv_[i].first.c_str()) ;
-    if (realValue == NULL)
+    if (realValue == 0)
     {
-      cout << "Error: env variable '"
-        << expectedEnv_[i].first
-        << "' not found." << endl;
+      ACE_DEBUG((LM_DEBUG, "Error, env variable '%C' not found\n",
+                 expectedEnv_[i].first.c_str()));
       err |= true;
     }
     else if (expectedEnv_[i].second != realValue)
     {
-      cout << "Error: env variable '" << expectedEnv_[i].first << "' values ("
-        << realValue << ", " << expectedEnv_[i].second
-        << ") do not match." << endl;
+      ACE_DEBUG((LM_DEBUG, "Error, env variable '%C' values (%C,%C) do not match.\n",
+                 expectedEnv_[i].first.c_str(), realValue, expectedEnv_[i].second.c_str()));
       err |= true;
     }
   }
@@ -343,7 +381,8 @@ void TestServer::run()
   if (registerWithManager() == false)
     return;
 
-  cout << "* Server (" << serverID_ << "." << serverInstanceID_ << ") started." << endl;
+  ACE_DEBUG((LM_DEBUG, "* Server (%d.%d) started.\n",
+             serverID_, serverInstanceID_));
 
   if (useIORTable_ == true)
   {
@@ -352,7 +391,7 @@ void TestServer::run()
     iorTable_ = IORTable::Table::_narrow(obj.in());
   }
 
-  servant_.reset(new Messenger_i(orb_.in(), serverInstanceID_));
+  servant_ = new Messenger_i(orb_.in(), serverInstanceID_);
 
   buildObjects();
 
@@ -372,13 +411,13 @@ void TestServer::run()
 
   if (orb_->orb_core()->has_shutdown() != 0)
   {
-    cout << "* Server (" << serverID_ << "."
-      << serverInstanceID_ << ") ended." << endl;
+    ACE_DEBUG((LM_DEBUG, "* Server (%d.%d) ended.\n",
+               serverID_, serverInstanceID_));
   }
   else
   {
-    cout << "* Server (" << serverID_ << "."
-      << serverInstanceID_ << ") self terminated." << endl;
+    ACE_DEBUG((LM_DEBUG, "* Server (%d.%d) self terminated.\n",
+               serverID_, serverInstanceID_));
   }
 }
 
@@ -392,7 +431,7 @@ bool TestServer::registerWithManager()
   if (writeIORFile_ == false)
   {
     // Get the manager's ref
-    CORBA::Object_var obj = orb_->string_to_object("file://manager.ior");
+    CORBA::Object_var obj = orb_->string_to_object(managerIor_.c_str());
     if (CORBA::is_nil(obj.in()))
     {
       cerr << "Server Error: Could not get Manager IOR." << endl;
@@ -410,7 +449,7 @@ bool TestServer::registerWithManager()
       int diff = manager->endRetry();
       if (diff != 0)
       {
-        cout << "* Server Error: Not all retry attempts were made." << endl;
+        ACE_DEBUG((LM_DEBUG, "* Server Error: Not all retry attempts were made.\n"));
       }
       return false;
     }
@@ -419,8 +458,8 @@ bool TestServer::registerWithManager()
       serverInstanceID_  = manager->registerServer();
       if (serverInstanceID_ == -1)
       {
-        cout << "* Server (" << serverID_ << "."
-          << serverInstanceID_ << ") could not register." << endl;
+        ACE_DEBUG((LM_DEBUG, "* Server (%d,%d) could not register.\n",
+                   serverID_, serverInstanceID_));
         return false;
       }
     }
@@ -435,7 +474,7 @@ bool TestServer::registerWithManager()
 void TestServer::buildObjects()
 {
   // Append to existing file
-  ofstream iorFile("imr_test.ior", ios::app);
+  ofstream iorFile(outputIor_.c_str(), ios::app);
 
   // Create number of requested POAS
   for (int i = 0; i < numPOAS_; i++)
@@ -454,7 +493,7 @@ void TestServer::buildObjects()
       poaName = poaStream.str();
     }
 
-    cout << "* Creating POA:  " <<  poaName << endl;
+    ACE_DEBUG((LM_DEBUG, "* Creating POA: %C\n", poaName.c_str()));
 
     PortableServer::POA_var sub_poa = root_->create_POA(poaName.c_str(), mgr_.in(), policies);
 
@@ -469,10 +508,10 @@ void TestServer::buildObjects()
         objStream << "OBJ_" << serverID_ << "_" << (i + 1) << "_" << (j + 1);
         objName = objStream.str();
       }
-      cout << "* Activating Obj:  " << objName << endl;
+      ACE_DEBUG((LM_DEBUG, "* Activating Obj: %C\n", objName.c_str()));
 
       PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId(objName.c_str());
-      sub_poa->activate_object_with_id(oid.in(), servant_.get());
+      sub_poa->activate_object_with_id(oid.in(), servant_.in());
 
       // Output the stringified ID to the file for the client
       if (! useIORTable_)
@@ -508,7 +547,7 @@ void TestServer::buildObjects()
           corbaloc += key;
 
           // Write out corbaloc
-          iorFile << corbaloc << endl;
+          iorFile << corbaloc.c_str() << endl;
         }
       }
     }

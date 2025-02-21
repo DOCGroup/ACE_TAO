@@ -1,21 +1,13 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Advanced/ch_21
-//
-// = FILENAME
-//    icp.cpp
-//
-// = AUTHORS
-//   Source code used in TAO has been modified and adapted from the code
-//   provided in the book, "Advanced CORBA Programming with C++" by Michi
-//   Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading,
-//   MA.
-//
-//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    icp.cpp
+ *
+ *  @author Source code used in TAO has been modified and adapted from the codeprovided in the book
+ *  @author "Advanced CORBA Programming with C++" by MichiHenning and Steve Vinoski. Copyright 1999. Addison-Wesley
+ *  @author Reading
+ *  @author MA.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+ */
+//=============================================================================
 
 
 
@@ -123,15 +115,10 @@ ICP_offline(unsigned long id)
 //      exact temperature:      40%
 
 static
-short
-vary_temp(short temp)
+long
+vary_temp(long temp)
 {
-    #if defined (__BORLANDC__) || defined (_MSC_VER)
-      long r = rand() % 50;
-    #else
-      long r = lrand48() % 50;
-    #endif
-
+    long r = ACE_OS::rand() % 50;
     long delta;
     if (r < 5)
         delta = 3;
@@ -141,15 +128,9 @@ vary_temp(short temp)
         delta = 1;
     else
         delta = 0;
-    #if defined (__BORLANDC__) || defined (_MSC_VER)
-      if (rand() % 2)
-    #else
-      if (lrand48() % 2)
-  #endif
-
+    if (ACE_OS::rand() % 2)
         delta = -delta;
     return temp + delta;
-
 }
 
 //----------------------------------------------------------------
@@ -163,8 +144,7 @@ public:
                 const StateMap::iterator & pos
             ) : m_pos(pos) {}
     bool    operator()(
-                pair<const unsigned long, DeviceState> & p
-            ) const
+                pair<const unsigned long, DeviceState> & p) const
             {
                 return(
                         p.second.type == thermostat
@@ -192,7 +172,7 @@ private:
 // determined by vary_temp().
 
 static
-short
+long
 actual_temp(const StateMap::iterator & pos)
 {
     long sum = 0;
@@ -213,20 +193,6 @@ actual_temp(const StateMap::iterator & pos)
 }
 
 //---------------------------------------------------------------
-
-
-#if (_MSC_VER < 1300)
-namespace std
-{
-    size_t min (const size_t len1, const size_t len2)
-    {
-      return ( len1 < len2 ? len1:len2 );
-    }
-}
-#endif/*_MSC_VER*/
-
-
-//----------------------------------------------------------------
 
 // ICP_get() returns an attribute value of the device with the
 // given id. The attribute is named by the attr parameter. The
@@ -263,24 +229,24 @@ ICP_get(
 
     // Depending on the attribute, return the
     // corresponding piece of state.
-    if (strcmp(attr, "model") == 0) {
-        strncpy((char *)value, pos->second.model, len);
-    } else if (strcmp(attr, "location") == 0) {
-        strncpy((char *)value, pos->second.location.c_str(), len);
-    } else if (strcmp(attr, "nominal_temp") == 0) {
+    if (ACE_OS::strcmp(attr, "model") == 0) {
+        ACE_OS::strncpy((char *)value, pos->second.model, len);
+    } else if (ACE_OS::strcmp(attr, "location") == 0) {
+      ACE_OS::strncpy((char *)value, pos->second.location.c_str(), len);
+    } else if (ACE_OS::strcmp(attr, "nominal_temp") == 0) {
         if (pos->second.type != thermostat)
             return -1;                      // Must be thermostat
-        memcpy(
+        ACE_OS::memcpy(
             value, &pos->second.nominal_temp,
-            std::min(len, sizeof(pos->second.nominal_temp))
+            (std::min)(len, sizeof(pos->second.nominal_temp))
         );
-    } else if (strcmp(attr, "temperature") == 0) {
-        short temp = actual_temp(pos);
-        memcpy(value, &temp, std::min(len, sizeof(temp)));
-    } else if (strcmp(attr, "MIN_TEMP") == 0) {
-        memcpy(value, &MIN_TEMP, std::min(len, sizeof(MIN_TEMP)));
-    } else if (strcmp(attr, "MAX_TEMP") == 0) {
-        memcpy(value, &MAX_TEMP, std::min(len, sizeof(MAX_TEMP)));
+    } else if (ACE_OS::strcmp(attr, "temperature") == 0) {
+        long temp = actual_temp(pos);
+        ACE_OS::memcpy(value, &temp, (std::min) (len, sizeof(temp)));
+    } else if (ACE_OS::strcmp(attr, "MIN_TEMP") == 0) {
+        ACE_OS::memcpy(value, &MIN_TEMP, (std::min) (len, sizeof(MIN_TEMP)));
+    } else if (ACE_OS::strcmp(attr, "MAX_TEMP") == 0) {
+        ACE_OS::memcpy(value, &MAX_TEMP, (std::min) (len, sizeof(MAX_TEMP)));
     } else {
         return -1;                          // No such attribute
     }
@@ -308,15 +274,15 @@ ICP_set(unsigned long id, const char * attr, const void * value)
         return -1;                          // No such device
 
     // Change either location or nominal temp, depending on attr.
-    if (strcmp(attr, "location") == 0) {
+    if (ACE_OS::strcmp(attr, "location") == 0) {
         pos->second.location.assign(
             (const char *)value, MAXSTR - 1
         );
-    } else if (strcmp(attr, "nominal_temp") == 0) {
+    } else if (ACE_OS::strcmp(attr, "nominal_temp") == 0) {
         if (pos->second.type != thermostat)
             return -1;                      // Must be thermostat
         short temp;
-        memcpy(&temp, value, sizeof(temp));
+        ACE_OS::memcpy(&temp, value, sizeof(temp));
         if (temp < MIN_TEMP || temp > MAX_TEMP)
             return -1;
         pos->second.nominal_temp = temp;
@@ -347,7 +313,7 @@ ICP_Persist(const char * file) : m_filename(file)
     std::ifstream db(m_filename.c_str(), std::ios::in|std::ios::out);//, 0666);
     if (!db) {
         std::cerr << "Error opening " << m_filename << std::endl;
-        exit(1);
+        ACE_OS::exit(1);
     }
 
     // Read device details, one attribute per line.
@@ -373,7 +339,7 @@ ICP_Persist(const char * file) : m_filename(file)
     // db.close();
     // if (!db) {
     //    cerr << "Error closing " << m_filename << endl;
-    //    exit(1);
+    //    ACE_OS::exit(1);
     // }
 }
 
@@ -386,7 +352,7 @@ ICP_Persist::
     std::ofstream db(m_filename.c_str());
     if (!db) {
         std::cerr << "Error opening " << m_filename << std::endl;
-        exit(1);
+        ACE_OS::exit(1);
     }
 
     // Write the state details for each device.
@@ -400,7 +366,7 @@ ICP_Persist::
     }
     if (!db) {
         std::cerr << "Error writing " << m_filename << std::endl;
-        exit(1);
+        ACE_OS::exit(1);
     }
 
     // db.close();
@@ -412,9 +378,6 @@ ICP_Persist::
 
 // Instantiate a single global instance of the class.
 static ICP_Persist mydb("/tmp/CCS_DB");
-
-
-
 
 
 

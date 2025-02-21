@@ -3,9 +3,7 @@
 // Based on NamingViewer Version 1.0 by Chris Hafey (chris@stentorsoft.com)
 //
 // @author:  Charlie Frasch (cfrasch@atdesk.com)
-//
-// $Id$
-
+#include "ace/Init_ACE.h"
 #include "pch.h"
 #include "wx/resource.h"
 #include "wxNamingViewerFrame.h"
@@ -41,14 +39,12 @@ public:
   virtual int OnExit();
 };
 
-
 IMPLEMENT_APP(WxNamingViewer)
 
 // Need this to keep C++Builder 4 happy
 #ifdef __BORLANDC__
 extern WINAPI WinMain( HINSTANCE, HINSTANCE, LPSTR, int);
 #endif
-
 
 int WxNamingViewer::OnExit()
 {

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef TAO_TUTORIALS_QUOTER_EVENT_SERVICE_STOCK_CONSUMER_H
 #define TAO_TUTORIALS_QUOTER_EVENT_SERVICE_STOCK_CONSUMER_H
@@ -18,10 +15,8 @@ public:
   void disconnect ();
   // Disconnect from the event channel.
 
-  void push (const CORBA::Any& data ACE_ENV_ARG_DECL_NOT_USED)
-    throw (CORBA::SystemException);
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    throw (CORBA::SystemException);
+  void push (const CORBA::Any& data);
+  void disconnect_push_consumer ();
 
 private:
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;

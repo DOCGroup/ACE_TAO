@@ -1,0 +1,16 @@
+//  -*- MPC -*-
+project(ACEXML_Parser): acelib, ace_output, install {
+  avoids       += ace_for_tao
+  sharedname    = ACEXML_Parser
+  after        += ACEXML
+  libs         += ACEXML
+  dynamicflags += ACEXML_PARSER_BUILD_DLL
+
+  specific {
+    install_dir = ACEXML/parser/parser
+  }
+
+  Pkgconfig_Files {
+    ACEXML_Parser.pc.in
+  }
+}

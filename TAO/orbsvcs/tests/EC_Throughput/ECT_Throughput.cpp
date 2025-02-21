@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ECT_Throughput.h"
 
 #include "orbsvcs/Event_Utilities.h"
@@ -15,18 +13,15 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_errno.h"
-
-ACE_RCSID (EC_Throughput,
-           ECT_Throughput,
-           "$Id$")
+#include "ace/OS_NS_unistd.h"
+#include <memory>
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -36,7 +31,7 @@ main (int argc, char *argv [])
 
 // ****************************************************************
 
-ECT_Throughput::ECT_Throughput (void)
+ECT_Throughput::ECT_Throughput ()
   : n_consumers_ (1),
     n_suppliers_ (1),
     burst_count_ (10),
@@ -56,27 +51,24 @@ ECT_Throughput::ECT_Throughput (void)
 {
 }
 
-ECT_Throughput::~ECT_Throughput (void)
+ECT_Throughput::~ECT_Throughput ()
 {
 }
 
 int
-ECT_Throughput::run (int argc, char* argv[])
+ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Calibrate the high resolution timer *before* starting the
       // test.
       ACE_High_Res_Timer::calibrate ();
 
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -84,15 +76,12 @@ ECT_Throughput::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (this->parse_args (argc, argv))
         return 1;
@@ -129,9 +118,8 @@ ECT_Throughput::run (int argc, char* argv[])
                       this->supplier_type_count_,
                       this->supplier_type_shift_,
 
-                      this->pid_file_name_?this->pid_file_name_:"nil",
-                      this->ec_concurrency_hwm_
-                      ) );
+                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil"),
+                      this->ec_concurrency_hwm_));
         }
 
       if (this->pid_file_name_ != 0)
@@ -148,10 +136,9 @@ ECT_Throughput::run (int argc, char* argv[])
       int priority =
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
          + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
-      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
+      // Enable FIFO scheduling
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   priority,
                                                   ACE_SCOPE_PROCESS)) != 0)
@@ -185,14 +172,11 @@ ECT_Throughput::run (int argc, char* argv[])
         runtime_infos);
 #endif
       RtecScheduler::Scheduler_var scheduler =
-        scheduler_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        scheduler_impl._this ();
 
 #if 0
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -200,8 +184,7 @@ ECT_Throughput::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       // This is the name we (potentially) register the Scheduling
       // Service in the Naming Service.
@@ -210,19 +193,15 @@ ECT_Throughput::run (int argc, char* argv[])
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
       CORBA::String_var str =
-        this->orb_->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->object_to_string (scheduler.in ());
       ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
                   str.in ()));
 
       // Register the servant with the Naming Context....
-      naming_context->rebind (schedule_name, scheduler.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      naming_context->rebind (schedule_name, scheduler.in ());
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 #endif /* 0 */
-
-      auto_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl;
 
       TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                             root_poa.in ());
@@ -230,31 +209,24 @@ ECT_Throughput::run (int argc, char* argv[])
       TAO_EC_Event_Channel *ec =
         new TAO_EC_Event_Channel (attr);
 
-      ec->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec->activate ();
 
-      auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
-      ec_impl = auto_ec_impl;
+      std::unique_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl (ec);
 
       RtecEventChannelAdmin::EventChannel_var channel =
-        ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl->_this ();
 
       this->connect_consumers (scheduler.in (),
-                               channel.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                               channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
       this->connect_suppliers (scheduler.in (),
-                               channel.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                               channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
 
-      this->activate_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->activate_suppliers ();
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
 
@@ -269,31 +241,25 @@ ECT_Throughput::run (int argc, char* argv[])
 
       this->dump_results ();
 
-      this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->disconnect_consumers ();
 
       ACE_DEBUG ((LM_DEBUG, "consumers disconnected\n"));
 
-      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->disconnect_suppliers ();
 
       ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
 
-      channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      channel->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "channel destroyed\n"));
 
       {
         // Deactivate the EC
         PortableServer::POA_var poa =
-          ec_impl->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          ec_impl->_default_POA ();
         PortableServer::ObjectId_var id =
-          poa->servant_to_id (ec_impl.get () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          poa->servant_to_id (ec_impl.get ());
+        poa->deactivate_object (id.in ());
 
         ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
       }
@@ -301,34 +267,28 @@ ECT_Throughput::run (int argc, char* argv[])
       {
         // Deactivate the Scheduler
         PortableServer::POA_var poa =
-          scheduler_impl._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          scheduler_impl._default_POA ();
         PortableServer::ObjectId_var id =
-          poa->servant_to_id (&scheduler_impl ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          poa->servant_to_id (&scheduler_impl);
+        poa->deactivate_object (id.in ());
 
         ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ECT_Throughput::run");
+      ex._tao_print_exception ("ECT_Throughput::run");
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR ((LM_ERROR, "non-corba exception raised\n"));
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 void
-ECT_Throughput::shutdown_consumer (void*
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+ECT_Throughput::shutdown_consumer (void*)
 {
   // int ID =
   //   (reinterpret_cast<Test_Consumer**> (consumer_cookie)
@@ -342,15 +302,14 @@ ECT_Throughput::shutdown_consumer (void*
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) shutting down the ORB\n"));
-      // Not needed: this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      // Not needed: this->orb_->shutdown (false);
     }
 }
 
 void
 ECT_Throughput::connect_consumers
      (RtecScheduler::Scheduler_ptr scheduler,
-      RtecEventChannelAdmin::EventChannel_ptr channel
-      ACE_ENV_ARG_DECL)
+      RtecEventChannelAdmin::EventChannel_ptr channel)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -373,17 +332,14 @@ ECT_Throughput::connect_consumers
                                     buf,
                                     start,
                                     this->consumer_type_count_,
-                                    channel
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                    channel);
     }
 }
 
 void
 ECT_Throughput::connect_suppliers
      (RtecScheduler::Scheduler_ptr scheduler,
-      RtecEventChannelAdmin::EventChannel_ptr channel
-      ACE_ENV_ARG_DECL)
+      RtecEventChannelAdmin::EventChannel_ptr channel)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -401,14 +357,12 @@ ECT_Throughput::connect_suppliers
                                     this->burst_pause_,
                                     start,
                                     this->supplier_type_count_,
-                                    channel
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                    channel);
     }
 }
 
 void
-ECT_Throughput::activate_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECT_Throughput::activate_suppliers ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -427,57 +381,56 @@ ECT_Throughput::activate_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-ECT_Throughput::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+ECT_Throughput::disconnect_suppliers ()
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->suppliers_[i]->disconnect ();
     }
 }
 
 void
-ECT_Throughput::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+ECT_Throughput::disconnect_consumers ()
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->consumers_[i]->disconnect ();
     }
 }
 
 void
-ECT_Throughput::dump_results (void)
+ECT_Throughput::dump_results ()
 {
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Throughput_Stats consumers;
   for (int j = 0; j < this->n_consumers_; ++j)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02d", j);
+      ACE_TCHAR buf[BUFSIZ];
+      ACE_OS::sprintf (buf, ACE_TEXT("consumer_%02d"), j);
 
       this->consumers_[j]->dump_results (buf, gsf);
       this->consumers_[j]->accumulate (consumers);
     }
-  consumers.dump_results ("ECT_Consumer/totals", gsf);
+  consumers.dump_results (ACE_TEXT("ECT_Consumer/totals"), gsf);
 
   ACE_Throughput_Stats suppliers;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "supplier_%02d", i);
+      ACE_TCHAR buf[BUFSIZ];
+      ACE_OS::sprintf (buf, ACE_TEXT("supplier_%02d"), i);
 
       this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (suppliers);
     }
-  suppliers.dump_results ("ECT_Supplier/totals", gsf);
+  suppliers.dump_results (ACE_TEXT("ECT_Supplier/totals"), gsf);
 }
 
 int
-ECT_Throughput::parse_args (int argc, char *argv [])
+ECT_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dc:s:u:n:t:b:h:l:p:w:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dc:s:u:n:t:b:h:l:p:w:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -511,7 +464,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
         case 'h':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->consumer_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -524,7 +477,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
         case 'l':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
+                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->supplier_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -637,27 +590,3 @@ ECT_Throughput::parse_args (int argc, char *argv [])
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;
-template class auto_ptr<POA_RtecScheduler::Scheduler>;
-template class ACE_Auto_Basic_Ptr<POA_RtecEventChannelAdmin::EventChannel>;
-template class auto_ptr<POA_RtecEventChannelAdmin::EventChannel>;
-template class ACE_Auto_Basic_Ptr<TAO_Module_Factory>;
-template class auto_ptr<TAO_Module_Factory>;
-template class ACE_Auto_Basic_Ptr<TAO_EC_Factory>;
-template class auto_ptr<TAO_EC_Factory>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>
-#pragma instantiate auto_ptr<POA_RtecScheduler::Scheduler>
-#pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecEventChannelAdmin::EventChannel>
-#pragma instantiate auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Module_Factory>
-#pragma instantiate auto_ptr<TAO_Module_Factory>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_EC_Factory>
-#pragma instantiate auto_ptr<TAO_EC_Factory>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

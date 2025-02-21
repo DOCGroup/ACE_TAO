@@ -1,40 +1,24 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    tie_sh.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for TIE class for an Interface in the header
-//    file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    tie_sh.cpp
+ *
+ *  Visitor generating code for TIE class for an Interface in the header
+ *  file.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           tie_sh, 
-           "$Id$")
-
-// ************************************************************
-// Interface visitor for server header.
-// ************************************************************
+#include "interface.h"
 
 be_visitor_interface_tie_sh::be_visitor_interface_tie_sh (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_tie_sh::~be_visitor_interface_tie_sh (void)
+be_visitor_interface_tie_sh::~be_visitor_interface_tie_sh ()
 {
 }
 
@@ -83,45 +67,42 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
     }
 
   // Now generate the class definition.
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// TIE class: Refer to CORBA v2.2, Section 20.34.4" << be_nl;
   *os << "template <class T>" << be_nl;
   *os << "class " << " " << tiename << " : public " << namebuf << be_nl;
   *os << "{" << be_nl
       << "public:" << be_idt_nl
+      << "/// the T& ctor" << be_nl
       << tiename << " (T &t);" << be_nl
-      << "// the T& ctor" << be_nl
+      << "/// ctor taking a POA" << be_nl
       << tiename << " (T &t, PortableServer::POA_ptr poa);" << be_nl
-      << "// ctor taking a POA" << be_nl
-      << tiename << " (T *tp, CORBA::Boolean release = 1);" << be_nl
-      << "// ctor taking pointer and an ownership flag" << be_nl
+      << "/// ctor taking pointer and an ownership flag" << be_nl
+      << tiename << " (T *tp, ::CORBA::Boolean release = true);" << be_nl
+      << "/// ctor with T*, ownership flag and a POA" << be_nl
       << tiename << " (" << be_idt << be_idt_nl
       << "T *tp," << be_nl
       << "PortableServer::POA_ptr poa," << be_nl
-      << "CORBA::Boolean release = 1" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "// ctor with T*, ownership flag and a POA" << be_nl
-      << "~" << tiename << " (void);" << be_nl
-      << "// dtor" << be_nl << be_nl
+      << "::CORBA::Boolean release = true);" << be_uidt
+      << be_uidt_nl
+      << "/// dtor" << be_nl
+      << "~" << tiename << " ();" << be_nl
       << "// TIE specific functions" << be_nl
-      << "T *_tied_object (void);" << be_nl
-      << "// return the underlying object" << be_nl
+      << "/// return the underlying object" << be_nl
+      << "T *_tied_object ();" << be_nl
+      << "/// set the underlying object" << be_nl
       << "void _tied_object (T &obj);" << be_nl
-      << "// set the underlying object" << be_nl
-      << "void _tied_object (T *obj, CORBA::Boolean release = 1);" << be_nl
-      << "// set the underlying object and the ownership flag" << be_nl
-      << "CORBA::Boolean _is_owner (void);" << be_nl
-      << "// do we own it" << be_nl
-      << "void _is_owner (CORBA::Boolean b);" << be_nl
-      << "// set the ownership" << be_nl << be_nl
+      << "/// set the underlying object and the ownership flag" << be_nl
+      << "void _tied_object (T *obj, ::CORBA::Boolean release = true);" << be_nl
+      << "/// do we own it" << be_nl
+      << "::CORBA::Boolean _is_owner ();" << be_nl
+      << "/// set the ownership" << be_nl_2
+      << "void _is_owner (::CORBA::Boolean b);" << be_nl
       << "// overridden ServantBase operations" << be_nl
-      << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");" << be_uidt;
+      << "PortableServer::POA_ptr _default_POA ();";
 
-  int status = 
+  int status =
     node->traverse_inheritance_graph (
               be_visitor_interface_tie_sh::method_helper,
               os
@@ -140,10 +121,9 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "private:" << be_idt_nl
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
-      << "CORBA::Boolean rel_;" << be_nl << be_nl
-      << "// copy and assignment are not allowed" << be_nl
-      << tiename << " (const " << tiename << " &);" << be_nl
-      << "void operator= (const " << tiename << " &);" << be_uidt_nl
+      << "::CORBA::Boolean rel_;" << be_nl_2
+      << tiename << " (const " << tiename << " &) = delete;" << be_nl
+      << "void operator= (const " << tiename << " &) = delete;" << be_uidt_nl
       << "};";
 
   return 0;
@@ -161,7 +141,7 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
                                             TAO_OutStream *os)
 {
   // Any methods from abstract parents have already been
-  // "added" to the derived interface scope by the overridden 
+  // "added" to the derived interface scope by the overridden
   // visit_scope() method in be_visitor_interface, so we can skip
   // this base interface, if it is abstract.
   if (node->is_abstract ())
@@ -170,15 +150,15 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
     }
 
   be_visitor_context ctx;
-  ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SH);
   ctx.stream (os);
+  ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SH);
   be_visitor_interface_tie_sh visitor (&ctx);
 
   if (visitor.visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_tie_sh::"
-                         "method_helper\n"), 
+                         "method_helper\n"),
                         -1);
     }
 

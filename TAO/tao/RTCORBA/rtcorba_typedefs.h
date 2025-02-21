@@ -4,8 +4,6 @@
 /**
  *  @file rtcorba_typedefs.h
  *
- *  $Id$
- *
  *  TAO specific typedef's moved away from the generated code.
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
@@ -21,6 +19,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward references.
 class TAO_Priority_Mapping_Manager;
@@ -52,6 +54,7 @@ namespace RTCORBA
   // End TAO-specific typedef
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_RTCORBA_TYPEDEFS_H*/

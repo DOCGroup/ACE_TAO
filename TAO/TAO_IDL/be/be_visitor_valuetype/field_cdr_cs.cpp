@@ -1,27 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    field_cdr_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Field in the client stubs file.
-//
-// = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    derived from be_visitor_field/cdr_op_cs.cpp
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    field_cdr_cs.cpp
+ *
+ *  Visitor generating code for Field in the client stubs file.
+ *
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_visitor_field/cdr_op_cs.cpp
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_valuetype,
-           field_cdr_op_cs,
-           "$Id$")
+#include "valuetype.h"
 
 // **********************************************
 //  Visitor for field in the client inline file.
@@ -36,14 +24,14 @@ be_visitor_valuetype_field_cdr_cs::be_visitor_valuetype_field_cdr_cs (
 {
 }
 
-be_visitor_valuetype_field_cdr_cs::~be_visitor_valuetype_field_cdr_cs (void)
+be_visitor_valuetype_field_cdr_cs::~be_visitor_valuetype_field_cdr_cs ()
 {
 }
 
 int
 be_visitor_valuetype_field_cdr_cs::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -74,9 +62,10 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -93,7 +82,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays ...
       // We have to generate a name for us that has an underscore
@@ -103,7 +92,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -152,7 +141,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
 
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias () // not a typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // This is the case for anonymous arrays.
       be_visitor_context ctx (*this->ctx_);
@@ -178,9 +167,10 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -214,7 +204,7 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
     }
 
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -239,9 +229,10 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -259,10 +250,10 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
           << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "TAO::Objref_Traits< ::" << node->name () 
+      *os << "TAO::Objref_Traits< ::" << node->name ()
           << ">::marshal (" << be_idt << be_idt_nl
           << this->pre_ << f->local_name ()
-          << this->post_ << ".in (), " << be_nl
+          << this->post_ << ".in ()," << be_nl
           << "strm" << be_uidt_nl
           << ")" << be_uidt;
       break;
@@ -288,9 +279,10 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -305,13 +297,13 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> " << this->pre_ << f->local_name ()
-          << this->post_ << ").out ()";
+          << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "TAO::Objref_Traits< ::" << node->name () 
+      *os << "TAO::Objref_Traits< ::" << node->name ()
           << ">::marshal (" << be_idt << be_idt_nl
           << this->pre_ << f->local_name ()
-          << this->post_ << ".in (), " << be_nl
+          << this->post_ << ".in ()," << be_nl
           << "strm" << be_uidt_nl
           << ")" << be_uidt;
       break;
@@ -343,9 +335,10 @@ be_visitor_valuetype_field_cdr_cs::valuetype_common (be_type *)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -394,9 +387,10 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype_fwd (be_valuetype_fwd *)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -411,11 +405,11 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype_fwd (be_valuetype_fwd *)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> " << this->pre_ << f->local_name ()
-          << this->post_ << ").out ()";
+          << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << " << this->pre_ << f->local_name ()
-          << this->post_ << ").in ()";
+          << this->post_ << ".in ())";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done because a valuetype cannot be declared inside a
@@ -463,9 +457,10 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -489,22 +484,32 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm >> CORBA::Any::to_char ("
+          *os << "(strm >> ::ACE_InputCDR::to_char ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm >> CORBA::Any::to_wchar ("
+          *os << "(strm >> ::ACE_InputCDR::to_wchar ("
               << this->pre_ << f->local_name () << this->post_ << "))";
             }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm >> CORBA::Any::to_octet ("
+          *os << "(strm >> ::ACE_InputCDR::to_octet ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm >> CORBA::Any::to_boolean ("
+          *os << "(strm >> ::ACE_InputCDR::to_boolean ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "(strm >> ::ACE_InputCDR::to_uint8 ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "(strm >> ::ACE_InputCDR::to_int8 ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else
@@ -522,22 +527,32 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm << CORBA::Any::from_char ("
+          *os << "(strm << ::ACE_OutputCDR::from_char ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm << CORBA::Any::from_wchar ("
+          *os << "(strm << ::ACE_OutputCDR::from_wchar ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm << CORBA::Any::from_octet ("
+          *os << "(strm << ::ACE_OutputCDR::from_octet ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm << CORBA::Any::from_boolean ("
+          *os << "(strm << ::ACE_OutputCDR::from_boolean ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "(strm << ::ACE_OutputCDR::from_uint8 ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "(strm << ::ACE_OutputCDR::from_int8 ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else
@@ -567,9 +582,10 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -603,7 +619,7 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
     }
 
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     // Not a typedef AND
     // node is defined inside the valuetype.
     {
@@ -626,14 +642,15 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_valuetype_field_cdr_cs::visit_string (be_string *)
+be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -647,12 +664,48 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << this->pre_ << f->local_name ()
-          << this->post_ << ".out ())";
+      if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (str->width () == (long) sizeof (char))
+            {
+              *os << "(strm >> ACE_InputCDR::to_string ("
+                  << this->pre_ << f->local_name () << this->post_
+                  << ".out (), " << str->max_size ()->ev ()->u.ulval << "))";
+            }
+          else
+            {
+              *os << "(strm >> ACE_InputCDR::to_wstring ("
+                  << this->pre_ << f->local_name () << this->post_
+                  << ".out (), " << str->max_size ()->ev ()->u.ulval << "))";
+            }
+        }
+      else
+        {
+          *os << "(strm >> " << this->pre_ << f->local_name ()
+              << this->post_ << ".out ())";
+        }
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << this->pre_ << f->local_name ()
-          << this->post_ << ".in ())";
+      if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
+        {
+          if (str->width () == (long) sizeof (char))
+            {
+              *os << "(strm << ACE_OutputCDR::from_string ("
+                  <<  this->pre_ << f->local_name () << this->post_
+                  << ".in (), " << str->max_size ()->ev ()->u.ulval << "))";
+            }
+          else
+            {
+              *os << "(strm << ACE_OutputCDR::from_wstring ("
+                  <<  this->pre_ << f->local_name () << this->post_
+                  << ".in (), " << str->max_size ()->ev ()->u.ulval << "))";
+            }
+        }
+      else
+        {
+          *os << "(strm << " << this->pre_ << f->local_name ()
+              << this->post_ << ".in ())";
+        }
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done.
@@ -670,14 +723,16 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *)
 }
 
 int
-be_visitor_valuetype_field_cdr_cs::visit_structure (be_structure *node)
+be_visitor_valuetype_field_cdr_cs::visit_structure (
+  be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -711,7 +766,7 @@ be_visitor_valuetype_field_cdr_cs::visit_structure (be_structure *node)
     }
 
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -747,7 +802,7 @@ be_visitor_valuetype_field_cdr_cs::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -757,9 +812,10 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -793,7 +849,7 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
     }
 
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -833,7 +889,7 @@ be_visitor_valuetype_field_cdr_decl::be_visitor_valuetype_field_cdr_decl (
 int
 be_visitor_valuetype_field_cdr_decl::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -865,9 +921,10 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f = this->ctx_->be_node_as_field ();
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (!f)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
@@ -877,8 +934,8 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
     }
 
   // Retrieve the valuetype scope in which the code is generated.
-  be_decl *sc = this->ctx_->scope ();
-  be_valuetype *vt = be_valuetype::narrow_from_decl (sc);
+  be_decl *sc = this->ctx_->scope ()->decl ();
+  be_valuetype *vt = dynamic_cast<be_valuetype*> (sc);
 
   if (!vt)
     {
@@ -897,7 +954,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()))
+      && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays ...
       // We have to generate a name for us that has an underscope
@@ -907,7 +964,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -952,8 +1009,6 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
                          "visit_array - "),
                         -1);
     }
-
-  ACE_NOTREACHED (return 0);
 }
 
 int
@@ -971,6 +1026,6 @@ be_visitor_valuetype_field_cdr_decl::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

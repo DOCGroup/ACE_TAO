@@ -1,10 +1,8 @@
-// $Id$
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Dispatching.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
@@ -18,11 +16,13 @@
 
 #include "orbsvcs/CosEventCommC.h"
 
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_ProxyPushSupplier;
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -44,33 +44,29 @@ class TAO_Event_Serv_Export TAO_CEC_Dispatching
 {
 public:
   /// destructor...
-  virtual ~TAO_CEC_Dispatching (void);
+  virtual ~TAO_CEC_Dispatching ();
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.
-  virtual void activate (void) = 0;
+  virtual void activate () = 0;
 
   /**
    * Deactivate any internal threads and cleanup internal data
    * structures, it should only return once the threads have finished
    * their jobs.
    */
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 
-  /// The consumer represented by <proxy> should receive <event>.
+  /// The consumer represented by @a proxy should receive @a event.
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
-                     const CORBA::Any &event
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                     const CORBA::Any &event) = 0;
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                            CORBA::Any &event
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                            CORBA::Any &event) = 0;
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       const TAO_CEC_TypedEvent &typed_event
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                       const TAO_CEC_TypedEvent &typed_event) = 0;
   virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                              TAO_CEC_TypedEvent &typed_event
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                              TAO_CEC_TypedEvent &typed_event) = 0;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 };
 
@@ -89,26 +85,24 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_Dispatching : public TAO_CEC_Dispat
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_CEC_Reactive_Dispatching (void);
+  TAO_CEC_Reactive_Dispatching ();
 
   // = The CEC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
-                     const CORBA::Any &event
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     const CORBA::Any &event);
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                            CORBA::Any &event
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                            CORBA::Any &event);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       const TAO_CEC_TypedEvent &typed_event
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       const TAO_CEC_TypedEvent &typed_event);
   virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                              TAO_CEC_TypedEvent &typed_event
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              TAO_CEC_TypedEvent &typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

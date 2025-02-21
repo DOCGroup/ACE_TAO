@@ -1,15 +1,10 @@
 /**
  * @file Echo.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Echo.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(Bug_1270_Regression, Echo, "$Id$")
 
 Echo::Echo(CORBA::ORB_ptr orb,
            int abort_counter)
@@ -19,9 +14,7 @@ Echo::Echo(CORBA::ORB_ptr orb,
 }
 
 void
-Echo::echo_payload(Test::Payload const &
-                   ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC((CORBA::SystemException))
+Echo::echo_payload(Test::Payload const &)
 {
   this->abort_counter_--;
 
@@ -31,13 +24,8 @@ Echo::echo_payload(Test::Payload const &
       // Sleep for 15 seconds, forcing a flow control of some kind.
       ACE_OS::sleep(15);
 
-      // Run the ORB for a while, to generate a short-lived release of
-      // the flow control.
-      ACE_Time_Value tv(0, 10000);
-      this->orb_->perform_work(tv);
-
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload, aborting\n"));
       // Kill the app
-      ACE_OS::abort();
+      ACE::terminate_process (ACE_OS::getpid ());
     }
 }

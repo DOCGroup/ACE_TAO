@@ -1,0 +1,22 @@
+typedef sequence<any> AnySeq;
+
+struct Container
+{
+  any contents;
+};
+
+struct Inner
+{
+  long value1;
+  long value2;
+  long value3;
+  long value4;
+  long value5;
+};
+
+interface Test
+{
+  AnySeq RunTest(in AnySeq params);
+  void shutdown ();
+};
+

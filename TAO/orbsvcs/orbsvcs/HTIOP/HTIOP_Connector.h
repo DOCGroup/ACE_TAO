@@ -1,13 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    HTIOP_Connector.h
  *
- *  $Id$
- *
  *  HTIOP specific connector processing
- *
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
@@ -24,15 +21,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
 #include "tao/Transport_Connector.h"
 
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
-#include "ace/OS.h"
 
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
   namespace HTBP
@@ -40,8 +36,11 @@ namespace ACE
     class Environment;
   }
 }
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -73,7 +72,7 @@ namespace TAO
       Connector (ACE::HTBP::Environment *ht_env);
 
       /// Destructor.
-      ~Connector (void);
+      ~Connector ();
 
       /// @}
 
@@ -82,17 +81,16 @@ namespace TAO
       /// Transport_Connector.h
       /// {@
       int open (TAO_ORB_Core *orb_core);
-      int close (void);
+      int close ();
 
       TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
       virtual int check_prefix (const char *endpoint);
 
-      virtual char object_key_delimiter (void) const;
+      virtual char object_key_delimiter () const;
       /// @}
 
     protected:
-
       // = The TAO_Connector methods, please check the documentation on
       // Transport_Connector.h
       int set_validate_endpoint (TAO_Endpoint *ep);
@@ -104,7 +102,7 @@ namespace TAO
 
       /// More TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h
-      virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+      virtual TAO_Profile *make_profile ();
 
       /// Cancel the passed cvs handler from the connector
       /// Its not clear what it means to cancel in HTIOP, since there's no
@@ -112,7 +110,6 @@ namespace TAO
       virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
     private:
-
       /// Return the remote endpoint, a helper function
       Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
@@ -127,5 +124,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 #endif  /* HTIOP_CONNECTOR_H */

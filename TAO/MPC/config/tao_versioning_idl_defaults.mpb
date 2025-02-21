@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// This base project is only meant to be used by the core TAO
+// libraries and the orbsvcs libraries.
+
+project : taoidldefaults {
+  idlflags += -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
+              -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
+}

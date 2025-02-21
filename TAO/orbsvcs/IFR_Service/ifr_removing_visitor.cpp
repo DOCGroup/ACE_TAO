@@ -1,19 +1,14 @@
 /* -*- c++ -*- */
-// $Id$
-
+#include "orbsvcs/Log_Macros.h"
 #include "ifr_removing_visitor.h"
 #include "utl_scope.h"
 #include "ast_root.h"
 
-ACE_RCSID (IFR_Service,
-           ifr_removing_visitor,
-           "$Id$")
-
-ifr_removing_visitor::ifr_removing_visitor (void)
+ifr_removing_visitor::ifr_removing_visitor ()
 {
 }
 
-ifr_removing_visitor::~ifr_removing_visitor (void)
+ifr_removing_visitor::~ifr_removing_visitor ()
 {
 }
 
@@ -29,8 +24,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
 
       AST_Decl *d = 0;
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           // Continue until each element is visited.
           while (!si.is_done ())
@@ -39,7 +33,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
 
               if (d == 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_scope -")
                       ACE_TEXT (" bad node in this scope\n")
@@ -56,32 +50,27 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
                 }
 
               CORBA::Contained_var top_level =
-                be_global->repository ()->lookup_id (d->repoID ()
-                                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                be_global->repository ()->lookup_id (d->repoID ());
 
               if (!CORBA::is_nil (top_level.in ()))
                 {
                   // All we have to do is call destroy() on each IR object
                   // in the global scope, because destroy() works on all
                   // the contents recursively.
-                  top_level->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  top_level->destroy ();
                 }
 
               si.next ();
             }
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (
-              ACE_ANY_EXCEPTION,
-              ACE_TEXT ("ifr_removing_visitor::visit_scope")
-            );
+          ex._tao_print_exception (
+            ACE_TEXT (
+              "ifr_removing_visitor::visit_scope"));
 
           return -1;
         }
-      ACE_ENDTRY;
     }
 
   return 0;
@@ -90,17 +79,14 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
 int
 ifr_removing_visitor::visit_root (AST_Root *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::Container_var new_scope =
-        CORBA::Container::_narrow (be_global->repository ()
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::Container::_narrow (be_global->repository ());
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_root -")
               ACE_TEXT (" scope push failed\n")
@@ -111,7 +97,7 @@ ifr_removing_visitor::visit_root (AST_Root *node)
 
       if (this->visit_scope (node) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_root -")
               ACE_TEXT (" visit_scope failed\n")
@@ -124,7 +110,7 @@ ifr_removing_visitor::visit_root (AST_Root *node)
 
       if (be_global->ifr_scopes ().pop (tmp) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_root -")
               ACE_TEXT (" scope pop failed\n")
@@ -133,14 +119,12 @@ ifr_removing_visitor::visit_root (AST_Root *node)
           );
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_root"));
+      ex._tao_print_exception (ACE_TEXT ("visit_root"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

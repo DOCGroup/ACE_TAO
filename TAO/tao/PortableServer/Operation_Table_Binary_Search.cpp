@@ -1,12 +1,7 @@
-// $Id$
-
-#include "Operation_Table_Binary_Search.h"
+// -*- C++ -*-
+#include "tao/PortableServer/Operation_Table_Binary_Search.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID(PortableServer,
-          Operation_Table_Binary_Search,
-          "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -29,14 +24,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-
-TAO_Binary_Search_OpTable::TAO_Binary_Search_OpTable (void)
-{
-}
-
-TAO_Binary_Search_OpTable::~TAO_Binary_Search_OpTable (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Binary_Search_OpTable::find (const char *opname,
@@ -47,8 +35,8 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 
   TAO_operation_db_entry const * const entry = lookup (opname);
 
-  if (entry == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+  if (entry == nullptr)
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Binary_Search_Table:find failed\n")),
                       -1);
   // Valid entry. Figure out the skel_ptr.
@@ -56,7 +44,6 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 
   return 0;
 }
-
 
 int
 TAO_Binary_Search_OpTable::find (const char *opname,
@@ -68,8 +55,8 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 
   TAO_operation_db_entry const * const entry = lookup (opname);
 
-  if (entry == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+  if (entry == nullptr)
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Binary_Search_Table:find failed\n")),
                       -1);
 
@@ -87,8 +74,9 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 
 int
 TAO_Binary_Search_OpTable::bind (const char *,
-                                 const TAO::Operation_Skeletons )
+                                 const TAO::Operation_Skeletons)
 {
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

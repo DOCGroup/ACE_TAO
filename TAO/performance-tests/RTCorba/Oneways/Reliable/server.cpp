@@ -1,26 +1,22 @@
-// $Id$
-
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(Reliable, server, "$Id$")
-
 // IOR file name
-static const char *ior_output_file = "test.ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'f':
+      case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
 
@@ -28,25 +24,25 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-f <ior file> "
+                           "-o <ior file> "
                            "\n",
                            argv [0]),
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-set_rt_mode (void)
+set_rt_mode ()
 {
   int policy = ACE_SCHED_FIFO;
   int priority =
     (ACE_Sched_Params::priority_min (policy)
      + ACE_Sched_Params::priority_max (policy)) / 2;
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   int result =
     ACE_OS::sched_params (ACE_Sched_Params (policy,
                                             priority,
@@ -85,20 +81,17 @@ set_rt_mode (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = set_rt_mode ();
   if (result != 0)
     return result;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         argv);
 
       // Get the command line options.
       if (parse_args (argc, argv) != 0)
@@ -109,32 +102,24 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       Test_i server_impl (orb.in ());
 
       Test_var server =
-        server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server_impl._this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Activated as <%s>\n",
+                  "Activated as <%C>\n",
                   ior.in ()));
 
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -151,26 +136,19 @@ main (int argc, char *argv[])
 
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (true, true);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "server");
+      ex._tao_print_exception ("server");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

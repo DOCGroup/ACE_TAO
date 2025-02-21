@@ -1,22 +1,26 @@
-// $Id$
 
-
-#include "Protocol_Factory.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_AV_Flow_Protocol_Factory
-TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory (void)
+TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory ()
+ : ref_count (0)
 {
 }
 
-TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory (void)
+TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory ()
 {
 }
 
 int
 TAO_AV_Flow_Protocol_Factory::init (int /* argc */,
-                                    char * /* argv */ [])
+                                    ACE_TCHAR * /* argv */ [])
 {
   return -1;
 }
@@ -37,7 +41,7 @@ TAO_AV_Flow_Protocol_Factory::make_protocol_object (TAO_FlowSpec_Entry * /* entr
 }
 
 const char *
-TAO_AV_Flow_Protocol_Factory::control_flow_factory (void)
+TAO_AV_Flow_Protocol_Factory::control_flow_factory ()
 {
   return 0;
 }
@@ -45,11 +49,10 @@ TAO_AV_Flow_Protocol_Factory::control_flow_factory (void)
 //----------------------------------------------------------------------
 // TAO_AV_Protocol_Object
 //----------------------------------------------------------------------
-TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (void)
+TAO_AV_Protocol_Object::TAO_AV_Protocol_Object ()
   :transport_ (0),
-   callback_ (0) 
+   callback_ (0)
 {
-  // no-op.
 }
 
 TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
@@ -57,7 +60,6 @@ TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
   :transport_ (transport),
    callback_ (callback)
 {
-  // no-op.
 }
 
 int
@@ -69,18 +71,18 @@ TAO_AV_Protocol_Object::open (TAO_AV_Callback *callback,
   return 0;
 }
 
-TAO_AV_Protocol_Object::~TAO_AV_Protocol_Object (void)
+TAO_AV_Protocol_Object::~TAO_AV_Protocol_Object ()
 {
 }
 
 int
-TAO_AV_Protocol_Object::start (void)
+TAO_AV_Protocol_Object::start ()
 {
   return this->callback_->handle_start ();
 }
 
 int
-TAO_AV_Protocol_Object::stop (void)
+TAO_AV_Protocol_Object::stop ()
 {
   return this->callback_->handle_stop ();
 }
@@ -93,13 +95,13 @@ TAO_AV_Protocol_Object::set_policies (const TAO_AV_PolicyList &policy_list)
 }
 
 TAO_AV_PolicyList
-TAO_AV_Protocol_Object::get_policies (void)
+TAO_AV_Protocol_Object::get_policies ()
 {
   return this->policy_list_;
 }
 
 TAO_AV_Transport*
-TAO_AV_Protocol_Object::transport (void)
+TAO_AV_Protocol_Object::transport ()
 {
   return this->transport_;
 }
@@ -121,14 +123,8 @@ TAO_AV_Protocol_Object::handle_control_input (ACE_Message_Block *,
                                               const ACE_Addr &)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_Protocol_Object::handle_control_input\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Protocol_Object::handle_control_input\n"));
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<TAO_AV_Transport_Factory>;
-template class ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<TAO_AV_Transport_Factory>
-#pragma instantiate ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>
-#endif
+TAO_END_VERSIONED_NAMESPACE_DECL

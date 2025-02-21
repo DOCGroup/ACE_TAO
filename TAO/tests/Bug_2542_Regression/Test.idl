@@ -1,0 +1,7 @@
+valuetype LongValue long;
+
+valuetype Value
+{
+      public LongValue l;
+};
+

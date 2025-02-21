@@ -1,28 +1,23 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    TypedefDef_i.h
-//
-// = DESCRIPTION
-//    TypedefDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    TypedefDef_i.h
+ *
+ *  TypedefDef servant class.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_TYPEDEFDEF_I_H
 #define TAO_TYPEDEFDEF_I_H
 
-#include "Contained_i.h"
-#include "IDLType_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Contained_i.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,6 +27,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_TypedefDef_i : public virtual TAO_Contained_i,
                                                public virtual TAO_IDLType_i
@@ -44,24 +41,20 @@ class TAO_IFRService_Export TAO_TypedefDef_i : public virtual TAO_Contained_i,
   //    struct, union, enum, alias, native, and valuebox.
   //
 public:
+  /// Constructor
   TAO_TypedefDef_i (TAO_Repository_i *repo);
-  // Constructor
 
-  virtual ~TAO_TypedefDef_i (void);
-  // Destructor
+  /// Destructor
+  virtual ~TAO_TypedefDef_i ();
 
-  virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From Contained_i's pure virtual function.
-
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From Contained_i's pure virtual function.
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe_i ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

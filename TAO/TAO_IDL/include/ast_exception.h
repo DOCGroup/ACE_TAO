@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -80,21 +78,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Exception : public virtual AST_Structure
 {
 public:
-  AST_Exception (void);
-
   AST_Exception (UTL_ScopedName *n,
-                 idl_bool local,
-                 idl_bool abstract);
+                 bool local,
+                 bool abstract);
 
-  virtual ~AST_Exception (void);
+  virtual ~AST_Exception ();
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Check if we or the parameter node is in recursion.
-
-  // Narrowing
-  DEF_NARROW_METHODS1(AST_Exception, AST_Structure);
-  DEF_NARROW_FROM_DECL(AST_Exception);
-  DEF_NARROW_FROM_SCOPE(AST_Exception);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -102,15 +93,10 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-private:
-  friend int tao_yyparse (void);
+  // Cleanup.
+  virtual void destroy ();
 
-  // Scope Management Protocol.
-  virtual AST_Field *fe_add_field (AST_Field *f);
-  virtual AST_Union *fe_add_union (AST_Union *u);
-  virtual AST_Structure *fe_add_structure (AST_Structure *s);
-  virtual AST_Enum *fe_add_enum (AST_Enum *e);
-  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  static AST_Decl::NodeType const NT;
 };
 
 #endif           // _AST_EXCEPTION_AST_EXCEPTION_HH

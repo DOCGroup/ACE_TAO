@@ -1,8 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_ProxyConsumer.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,13 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
@@ -62,67 +62,57 @@ public:
   TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
-  virtual ~TAO_EC_ProxyPushConsumer (void);
+  virtual ~TAO_EC_ProxyPushConsumer ();
 
   /// Activate in the POA
   virtual void activate (
-          RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
-          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+          RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy) = 0;
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void deactivate ();
 
   /// Disconnect this from
-  virtual void disconnect_push_consumer (
-            ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void disconnect_push_consumer () = 0;
 
-  /// Return 0 if no supplier is connected...
-  CORBA::Boolean is_connected (void) const;
+  /// Return false if no supplier is connected...
+  CORBA::Boolean is_connected () const;
 
   /// Return the consumer object reference. It returns nil() if it has
   /// not connected yet.
-  RtecEventComm::PushSupplier_ptr supplier (void) const;
+  RtecEventComm::PushSupplier_ptr supplier () const;
 
   /// The QoS (subscription) used to connect to the EC.
-  const RtecEventChannelAdmin::SupplierQOS& publications (void) const;
+  const RtecEventChannelAdmin::SupplierQOS& publications () const;
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
    * it is disconnected then it returns true and sets the
-   * <disconnected> flag.
+   * @a disconnected flag.
    */
-  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// Concrete implementations can use this methods to keep track of
   /// the consumers interested in this events.
-  virtual void connected (TAO_EC_ProxyPushSupplier* supplier
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier
-                             ACE_ENV_ARG_DECL);
+  virtual void connected (TAO_EC_ProxyPushSupplier* supplier);
+  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier);
 
   /// Usually implemented as no-ops, but some configurations may
   /// require this methods.
-  virtual void connected (TAO_EC_ProxyPushConsumer* consumer
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (TAO_EC_ProxyPushConsumer* consumer
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer
-                             ACE_ENV_ARG_DECL);
+  virtual void connected (TAO_EC_ProxyPushConsumer* consumer);
+  virtual void reconnected (TAO_EC_ProxyPushConsumer* consumer);
+  virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer);
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown ();
 
   /// The QoS (subscription) used to connect to the EC, assumes the
   /// locks are held, use with care!
-  const RtecEventChannelAdmin::SupplierQOS& publications_i (void) const;
+  const RtecEventChannelAdmin::SupplierQOS& publications_i () const;
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
 
 protected:
@@ -135,29 +125,29 @@ protected:
   // The guard needs access to the following protected methods.
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Return the current filter, assumes the locks are held.
-  TAO_EC_Supplier_Filter *filter_i (void) const;
+  TAO_EC_Supplier_Filter *filter_i () const;
 
   /// Release the filter and the supplier
-  void cleanup_i (void);
+  void cleanup_i ();
 
-  /// The supplier admin, used for activation and memory managment.
+  /// The supplier admin, used for activation and memory management.
   TAO_EC_Event_Channel_Base* event_channel_;
 
   /// The locking strategy.
   ACE_Lock* lock_;
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong ec_refcount_;
 
   /// The supplier....
   RtecEventComm::PushSupplier_var supplier_;
 
   /// If the flag is not zero then we are connected, notice that the
   /// supplier can be nil.
-  int connected_;
+  bool connected_;
 
   /// The publication and QoS information...
   RtecEventChannelAdmin::SupplierQOS qos_;
@@ -170,12 +160,10 @@ protected:
 
 private:
   /// Template method hooks.
-  virtual void shutdown_hook (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void refcount_zero_hook (void);
+  virtual void shutdown_hook ();
+  virtual void refcount_zero_hook ();
 
-  virtual PortableServer::ObjectId
-            object_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  virtual PortableServer::ObjectId object_id () = 0;
 };
 
 // ****************************************************************
@@ -200,10 +188,10 @@ public:
                                   TAO_EC_ProxyPushConsumer *proxy);
 
   /// Destructor
-  ~TAO_EC_ProxyPushConsumer_Guard (void);
+  ~TAO_EC_ProxyPushConsumer_Guard ();
 
-  /// Returns 1 if the reference count successfully acquired
-  int locked (void) const;
+  /// Returns true if the reference count successfully acquired
+  bool locked () const;
 
   TAO_EC_Supplier_Filter *filter;
 
@@ -215,18 +203,20 @@ private:
   CORBA::ULong &refcount_;
 
   /// The event channel used to destroy the proxy
-  TAO_EC_Event_Channel_Base *event_channel_;
+  // TAO_EC_Event_Channel_Base *event_channel_;
 
   /// The proxy whose lifetime is controlled by the reference count
   TAO_EC_ProxyPushConsumer *proxy_;
 
-  /// This flag is set to 1 if the reference count was successfully
+  /// This flag is set to true if the reference count was successfully
   /// acquired.
-  int locked_;
+  bool locked_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_ProxyConsumer.i"
+#include "orbsvcs/Event/EC_ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

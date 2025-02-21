@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Introduction - A very simple client</title>
-    <!-- $Id$ -->
+    <!--  -->
   </head>
 
   <BODY text = "#000000"
@@ -88,7 +88,7 @@
       this:
     </P>
 <PRE>
-$ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
+$ $TAO_ROOT/TAO_IDL/tao_idl Quoter.idl
 </PRE>
     <P>The complete documentation of the IDL compiler and its options
       are included in
@@ -97,7 +97,7 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
     </P>
 
     <P>TAO generates 9 files for each IDL file.
-      <CODE>QuoterC.h</CODE>, <CODE>QuoterC.i</CODE>
+      <CODE>QuoterC.h</CODE>, <CODE>QuoterC.inl</CODE>
       and <CODE>QuoterC.cpp</CODE> contain the client-side interfaces.
       Notice that the inline functions are in a separate file so you
       can optionally compile them out-of-line for smaller code.
@@ -105,13 +105,13 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
       generated from <CODE>QuoterC.cpp</CODE>.
     </P>
     <P>
-      Similarly, <CODE>QuoterS.h</CODE>, <CODE>QuoterS.i</CODE>
+      Similarly, <CODE>QuoterS.h</CODE>,
       and <CODE>QuoterS.cpp</CODE> contain the server-side
       <EM>skeletons</EM>. Servers must link the object files generated
       from <CODE>QuoterS.cpp</CODE> <STRONG>and</STRONG> <CODE>QuoterC.cpp</CODE>.
     </P>
     <P>
-      Finally, <CODE>QuoterS_T.h</CODE>, <CODE>QuoterS_T.i</CODE>
+      Finally, <CODE>QuoterS_T.h</CODE>, <CODE>QuoterS_T.inl</CODE>
       and <CODE>QuoterS_T.cpp</CODE> contain the <EM>TIE</EM> classes.
       These are the standard (after the CORBA 2.2 spec) skeletons based
       on composition instead of inheritance.
@@ -149,9 +149,9 @@ int main (int argc, char* argv[])
                        "" /* the ORB name, it can be anything! */);
 </PRE>
     <P>IDL supports variable-length types whose sizes are not known
-      at compile time, hence they must be dynamically allocated at run 
+      at compile time, hence they must be dynamically allocated at run
       time. <CODE>_var</CODE> types relieve us of the explicit memory
-      management of the variable-length types and thus hide the 
+      management of the variable-length types and thus hide the
       differences between fixed and variable-length structured types.
     </P>
     <P>Since the ORB initialization can fail, and in fact, any CORBA
@@ -165,7 +165,7 @@ int main (int argc, char* argv[])
     </P>
 <PRE>
   }
-  catch (CORBA::Exception &ex) {
+  catch (const CORBA::Exception &ex) {
     std::cerr << "CORBA exception raised!" << std::endl;
   }
   return 0;
@@ -189,7 +189,7 @@ int main (int argc, char* argv[])
 
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (const CORBA::Exception &ex) {
     std::cerr << "CORBA exception raised!" << std::endl;
   }
   return 0;
@@ -225,9 +225,9 @@ int main (int argc, char* argv[])
     Quoter::Stock_Factory_var factory =
       Quoter::Stock_Factory::_narrow (factory_object.in ());
 </PRE>
-    <P>The <CODE>_narrow()</CODE> is used to test if a reference 
-      is of the specified type. If the reference is of the specified 
-      type, it returns a non-nil reference, else it returns a nil. 
+    <P>The <CODE>_narrow()</CODE> is used to test if a reference
+      is of the specified type. If the reference is of the specified
+      type, it returns a non-nil reference, else it returns a nil.
     </P>
     <P>There are a few interesting things about TAO:  First, it supports
       the <CODE>file:</CODE> scheme for object references, so the first
@@ -282,7 +282,7 @@ int main (int argc, char* argv[])
     </P>
     <P>You don't need to do everything.
       The <A HREF="../Quoter.idl">Quoter.idl</A> file and
-      a <A HREF="GNUmakefile.Quoter_Simple_Client">Makefile</A> 
+      a <A HREF="Quoter_Simple_Client.mpc">MPC file</A>
       are provided.  Just
       implement the <CODE>client.cpp</CODE> file.
       Cut & paste the ORB initialization code, and anything you find

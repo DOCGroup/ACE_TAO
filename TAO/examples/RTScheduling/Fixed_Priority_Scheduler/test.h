@@ -1,4 +1,3 @@
-//$Id$
 #ifndef TEST_H
 #define TEST_H
 #include /**/ "ace/pre.h"
@@ -16,36 +15,30 @@ class Task_Stats;
 class DT_Test :public ACE_Task <ACE_SYNCH>
 {
  public:
-  
-  DT_Test (void);
-  
-  void check_supported_priorities (void);
-  
-  int init (int argc, char *argv []
-	    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  DT_Test ();
 
-  void run (int argc, char *argv [] 
-	  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void check_supported_priorities ();
+
+  int init (int argc, ACE_TCHAR *argv []);
+
+  void run (int argc, ACE_TCHAR *argv []);
 
   void dt_creator (FP_DT_Creator* dt_creator);
-  FP_DT_Creator* dt_creator (void);
+  FP_DT_Creator* dt_creator ();
 
-  Fixed_Priority_Scheduler* scheduler (void);
+  Fixed_Priority_Scheduler* scheduler ();
 
-  int activate_task (void);
+  int activate_task ();
 
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   ACE_hrtime_t base_t;
-  
-  void register_synch_obj (ACE_ENV_SINGLE_ARG_DECL);
 
   protected:
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
 
 
-  
  private:
   /// = Policies
   long thr_sched_policy_;
@@ -54,13 +47,12 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   CORBA::ORB_var orb_;
   int max_priority_;
   int min_priority_;
-  RTScheduling::Current_var current_; 
+  RTScheduling::Current_var current_;
   FP_DT_Creator* dt_creator_;
-  Fixed_Priority_Scheduler* scheduler_;
+  PortableServer::Servant_var<Fixed_Priority_Scheduler> scheduler_;
   RTCORBA::RTORB_var rt_orb_;
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
-  
 };
 
 typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;

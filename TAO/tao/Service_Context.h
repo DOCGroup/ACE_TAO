@@ -1,14 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
 // -*- C++ -*-
 
 // ===================================================================
 /**
  *  @file   Service_Context.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
- *
  */
 // ===================================================================
 
@@ -22,6 +18,16 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace CSD
+  {
+    class FW_Server_Request_Wrapper;
+  }
+}
 
 /**
  * @class TAO_Service_Context
@@ -52,9 +58,13 @@
 class TAO_Export TAO_Service_Context
 {
 public:
-  /// Constructor
-  TAO_Service_Context (void);
+  /// Declare FW_Server_Request_Wrapper a friend
+  /// This friendship makes the FW_Server_Request_Wrapper be able to
+  /// clone the TAO_Service_Context data member in TAO_ServerRequest.
+  friend class TAO::CSD::FW_Server_Request_Wrapper;
 
+  /// Constructor
+  TAO_Service_Context ();
 
   /// = Generic components
 
@@ -68,8 +78,7 @@ public:
   /// If the replace flag is true, update the specified context.
   /// Return 0 if the component was present and the replace flag
   /// was not set to true.
-  int set_context (const IOP::ServiceContext &context,
-                   CORBA::Boolean replace);
+  int set_context (const IOP::ServiceContext &context, CORBA::Boolean replace);
 
   /// Insert the component into the list, but efficiently stealing the
   /// contents of the octet sequence.
@@ -100,21 +109,21 @@ public:
   /// list.
   void set_context (IOP::ServiceContext &context, TAO_OutputCDR &cdr);
 
-  /// Is the <id> available in the underlying service context list? If
-  /// so return 1, else return 0
-  int is_service_id (IOP::ServiceId id);
+  /// Is the @a id available in the underlying service context list? If
+  /// so return true, else return false
+  bool is_service_id (IOP::ServiceId id);
 
   /// = Marshaling and demarshaling the list
   int encode (TAO_OutputCDR& cdr) const;
   int decode (TAO_InputCDR& cdr);
 
   /// Return the underlying service context list
-  IOP::ServiceContextList &service_info (void);
-  const IOP::ServiceContextList &service_info (void) const;
+  IOP::ServiceContextList &service_info ();
 
-  // @@ Note: The above method is only for backward comptiblity. We
-  // need to get this removed once RT folks have their service
-  // addition info done through this interface
+  /// @note This method is only for backward comptiblity. We
+  /// need to get this removed once RT folks have their service
+  /// addition info done through this interface
+  const IOP::ServiceContextList &service_info () const;
 
 private:
   /// Helper methods to implement set_context()
@@ -136,6 +145,8 @@ private:
   /// The ServiceContextList info.
   IOP::ServiceContextList service_context_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Service_Context.inl"

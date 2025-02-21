@@ -4,8 +4,6 @@
 /**
  *  @file    SSLIOP_Util.h
  *
- *  $Id$
- *
  *  Utility class used by the SSLIOP pluggable protocol.
  *
  *  @author  Ossama Othman <ossama@uci.edu>
@@ -24,7 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_IIOP_Properties;
@@ -40,21 +40,18 @@ namespace TAO
      *        classes in the SSLIOP pluggable protocol.
      *
      * Methods useful to many classes in the SSLIOP pluggable protocol
-     * are centrally located in this uility class.
+     * are centrally located in this utility class.
      */
     class Util
     {
     public:
-
       /// Access Current.
-      static TAO::SSLIOP::Current_ptr current (
-        TAO_ORB_Core *orb_core);
-
+      static TAO::SSLIOP::Current_ptr current (TAO_ORB_Core *orb_core);
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,0 +1,337 @@
+
+===========================================================================
+Directory: $TAO_ROOT/tests/CSD_Strategy_Tests/TP_Test_4
+
+Uses Libs: $TAO_ROOT/tests/CSD_Strategy_Tests/TP_Test_Lib
+           $TAO_ROOT/tests/CSD_Strategy_Tests/TP_Foo_C
+
+===========================================================================
+Executable: server_main
+
+Description: The test server application.
+
+Command-Line:
+
+      % server_main [options]
+
+      where, [options] includes the following:
+
+            -p <ior_filename_prefix>
+            -s <num_servants>
+            -n <num_csd_threads>
+            -t <num_orb_threads>
+            -r <num_remote_clients>
+            -c <num_collocated_clients>
+            -k <collocated_client_kind>
+            -?
+
+Command-Line Arguments:
+
+    -p <ior_filename_prefix>
+
+        If not specified, the <ior_filename_prefix> defaults to "foo".
+        This value is used as the prefix for the filename(s) to which
+        the server application will write stringified object reference(s).
+        Each "IOR file" contains the (stringified) object reference
+        associated with a distinct servant object within the server
+        application.  These files are the way that the client application(s)
+        are able to "locate" the object reference(s) upon which they will
+        invoke (CORBA) operations.  In essence, the filesystem is used
+        as a "poor-man" Naming Service.
+
+        The filenames are of the form, "prefix_%02d.ior", using a unique
+        integer "id" for each file - starting with an "id" of 1.  Thus,
+        if the server application was told to create 3 servants (via the
+        -s <num_servants> option), and the <ior_filename_prefix> is "foo",
+        then three files will be written by the server application:
+
+                foo_01.ior
+                foo_02.ior
+                foo_03.ior
+
+
+    -s <num_servants>
+
+        The <num_servants> must be an integer value greater than 0.
+
+        If not specified, the <num_servants> defaults to 1.  This is used
+        to inform the server application of the number of distinct servant
+        objects that it should create.
+
+
+    -n <num_csd_threads>
+
+        The <num_csd_threads> must be an integer value greater than 0.
+
+        If not specified, the <num_csd_threads> defaults to 1.  This is
+        used to inform the server application of the number of worker
+        threads that should be activated by the Thread Pool CSD Strategy.
+        The worker threads are responsible for servicing the strategy's
+        request queue.  This can also be called the "size of the thread
+        pool".
+
+
+    -t <num_orb_threads>
+
+        The <num_orb_threads> must be an integer value greater than 0.
+
+        If not specified, the <num_orb_threads> defaults to 1.  This option
+        is used to tell the server application how many distinct threads
+        should be used to run the ORB event loop.  The "mainline thread"
+        will always run the ORB event loop itself, so that accounts for
+        one of the num_orb_threads.  If num_orb_threads is greater than 1,
+        then (num_orb_threads - 1) threads will be activated by the server
+        application, and each of these threads will run the ORB event loop.
+        The end result is that there will be <num_orb_threads> distinct
+        threads (including the mainline thread) running the ORB event loop.
+
+
+    -r <num_remote_clients>
+
+        The <num_remote_clients> must be an integer value greater than,
+        or equal to, 0.  In addition, the sum of the <num_remote_clients>
+        and the <num_collocated_clients> (see the -c option) must be
+        greater than 0.  Both cannot be 0, since the server application
+        would interpret this to mean that no clients will ever use it,
+        and that's kind of pointless.
+
+        If not specified, the <num_remote_clients> defaults to 1.  This
+        option informs the server application how many remote clients it
+        can expect to "hear" from over the course of its lifetime.  Each
+        distinct test client, remote or collocated, is required to invoke
+        the done() operation on one of the servant objects.  The server
+        application decides to shut itself down gracefully when it has
+        received one done() invocation for each remote client and for
+        each collocated client.  Once all of the expected done() calls
+        have been made, the server application assumes that no more clients
+        will need its services, and thus it shuts itself down.  This is
+        used to support the automated test scenarios implemented within
+        the run_test.pl script.  It provides a way for a test scenario to
+        automate the graceful shutdown of the server by telling the server
+        how many clients to expect (remote + collocated).
+
+
+    -c <num_collocated_clients>
+
+        The <num_collocated_clients> must be an integer value greater than,
+        or equal to, 0.  In addition, the sum of the <num_collocated_clients>
+        and the <num_remote_clients> (see the -r option) must be
+        greater than 0.  Both cannot be 0, since the server application
+        would interpret this to mean that no clients will ever use it,
+        and that's kind of pointless.
+
+        If not specified, the <num_collocated_clients> defaults to 0.  This
+        option informs the server application how many collocated clients
+        should "live", collocated, within the server application.  Each
+        collocated client will execute its logic in a distinct thread
+        within the server application.  As an example, if the server
+        application was told to use a <num_collocated_clients> value of 40,
+        then the server application will activate 40 threads - each
+        carrying out the logic of one "client".  This client "logic" is
+        identical to the logic carried out by a single remote client
+        application (client_main) process.  As with remote clients,
+        each collocated client will invoke the done() operation on
+        one of the servants (via an object ref) when the client logic
+        has been completed.  See the "-r <num_remote_clients>" option
+        for more information about the done() operation, and its purpose.
+
+        For this particular server application (TP_Test_4), each
+        collocated client will perform the normal client logic as well
+        as carry out a set of "custom" requests on the collocated servant.
+        Custom operations not defined in IDL.
+
+
+    -k <collocated_client_kind>
+
+        This is reserved for future use.  It currently doesn't get used
+        for anything.
+
+
+    -?
+
+        This is used to request the "Usage Statement" for the Server
+        Application (ie, "server_main -?" prints the usage statement).
+
+
+===========================================================================
+Executable: client_main
+
+Description: The test client application.
+
+Command-Line:
+
+      % client_main [options]
+
+      where, [options] includes the following:
+
+            -i <ior>
+            -n <client_id>
+            -k <collocated_client_kind>
+            -?
+
+
+Command-Line Arguments:
+
+    -i <ior>
+
+        The <ior> is required, and must be a valid IOR.  In our case, where
+        the server application saves stringified object references to files,
+        we supply the client application with an <ior> in the following
+        form: "file://foo_01.ior".  See the server application's description
+        of its "-p <ior_filename_prefix>" option for more information.
+
+        The client application will use the <ior> to obtain an object
+        reference using the CORBA::ORB::string_to_object() method.  This
+        is the object reference upon which the client logic will invoke
+        operations.  The object reference will be associated with a
+        distinct servant object within the server application.
+
+
+    -n <client_id>
+
+        The <client_id> is required, and must be an integer value greater
+        than 0.
+
+        As part of the logic used to check actual vs. expected results,
+        each client is assigned a unique id.  As a side-note, each
+        collocated client within the server application (if there are
+        any) will also be assigned a unique client_id.  For any given
+        test scenario run by the run_test.pl script, each client (remote
+        and/or collocated) will be assigned a unique client_id.
+
+        The server application assigns client_ids to its collocated clients
+        based upon its knowledge of how many remote clients will be used
+        in the test scenario (see the "-r <num_remote_clients>" option
+        for the server application).  The server application assumes that
+        the run_test.pl will assign client_ids to remote clients starting
+        with 1, and up to the <num_remote_clients>.  Thus, the server
+        application assigns client_ids to collocated clients starting
+        with (<num_remote_clients> + 1), and incrementing by 1 for each
+        additional collocated client_id.
+
+
+    -k <collocated_client_kind>
+
+        This is reserved for future use.  It currently doesn't get used
+        for anything.
+
+
+    -?
+
+        This is used to request the "Usage Statement" for the Client
+        Application (ie, "client_main -?" prints the usage statement).
+
+
+===========================================================================
+Executable: run_test.pl (PERL script).
+
+Description: Script used to run a specific test scenario.  This includes
+             the launching of a server application process and client
+             applications processes as called for by the specific scenario.
+
+Command-Line:
+
+      % run_test.pl <scenario>
+
+      where, <scenario> can be one of the following values:
+
+            "big"
+            "a"
+            "b"
+
+      If a <scenario> is not specified on the run_test.pl command-line,
+      then a default scenario is used.
+
+
+Scenarios:
+
+    -----------------------------------------------------------------------
+    Default: (when no <scenario> is specified on the command-line)
+
+        $iorfname_prefix        = "servant";
+        $num_servants           = 1;
+        $num_orb_threads        = 1;
+        $num_remote_clients     = 1;
+        $num_csd_threads        = 1;
+        $num_collocated_clients = 0;
+
+    -----------------------------------------------------------------------
+    "remote":
+
+        Uses the Default values, with the following overrides:
+
+            $num_remote_clients = 40;
+
+    -----------------------------------------------------------------------
+    "collocated":
+
+        Uses the Default values, with the following overrides:
+
+            $num_remote_clients = 0;
+            $num_collocated_clients = 1;
+
+    -----------------------------------------------------------------------
+    "collocated_big":
+
+        Uses the Default values, with the following overrides:
+
+            $num_remote_clients = 0;
+            $num_csd_threads = 5;
+            $num_collocated_clients = 40;
+
+    -----------------------------------------------------------------------
+    "remote_orbthreads":
+
+        Uses the Default values, with the following overrides:
+
+            $num_orb_threads = 5;
+            $num_remote_clients = 40;
+
+    -----------------------------------------------------------------------
+    "remote_servants":
+
+        Uses the Default values, with the following overrides:
+
+            $num_servants = 5;
+            $num_remote_clients = 40;
+
+    -----------------------------------------------------------------------
+    "remote_csdthreads":
+
+        Uses the Default values, with the following overrides:
+
+            $num_csd_threads = 5;
+            $num_remote_clients = 40;
+
+    -----------------------------------------------------------------------
+    "remote_big":
+
+        Uses the Default values, with the following overrides:
+
+            $num_csd_threads = 5;
+            $num_servants = 10;
+            $num_orb_threads = 4;
+            $num_remote_clients = 40;
+
+    -----------------------------------------------------------------------
+    "big":
+
+        Uses the Default values, with the following overrides:
+
+            $num_csd_threads = 5;
+            $num_servants = 10;
+            $num_orb_threads = 4;
+            $num_remote_clients = 40;
+            $num_collocated_clients = 40;
+
+    -----------------------------------------------------------------------
+    "usage":
+
+        This is not really a test scenario, but it will cause the
+        run_test.pl script to print a "Usage Statement", which includes
+        a list of the supported <scenario> values.
+
+    -----------------------------------------------------------------------
+
+
+===========================================================================

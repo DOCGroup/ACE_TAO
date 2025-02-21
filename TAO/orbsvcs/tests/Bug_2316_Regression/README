@@ -1,0 +1,26 @@
+
+
+This client and server in this test both load the UIPMC protocol plug in
+(see svc.conf).
+
+The client creates a MIOP object ref and tests that it can be marshalled
+and demarshalled without problems by passing it over the wire to the server.
+
+_Expected successful result_:
+
+E:\worcvs\tao14\prism\tests\tao277_regression>run_test.pl
+Test passed !!
+
+_Expected regression result_:
+
+E:\worcvs\tao14\prism\tests\tao277_regression>run_test.pl
+TAO (1808|644) ERROR: Could not create all profiles while extracting object
+TAO (1808|644) ERROR: reference from the CDR stream.
+Test Failed - Regression. Sending UIPMC object ref to server failed with:
+(1924|1884) EXCEPTION, Exception :
+
+system exception, ID 'IDL:omg.org/CORBA/MARSHAL:1.0'
+TAO exception, minor code = 0 (unknown location; unspecified errno), completed =
+ NO
+
+ERROR: Test failed - client returned 1

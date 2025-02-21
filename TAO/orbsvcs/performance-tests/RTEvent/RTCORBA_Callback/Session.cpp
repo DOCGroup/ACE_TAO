@@ -1,12 +1,5 @@
-//
-// $Id$
-//
 #include "Session.h"
 #include "Implicit_Deactivator.h"
-
-ACE_RCSID (TAO_RTEC_Perf_RTCORBA_Callback, 
-           Session, 
-           "$Id$")
 
 Session::Session (Test::Callback_ptr cb,
                   PortableServer::POA_ptr poa)
@@ -16,25 +9,19 @@ Session::Session (Test::Callback_ptr cb,
 }
 
 void
-Session::sample (Test::Timestamp the_timestamp
-                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Session::sample (Test::Timestamp the_timestamp)
 {
-  this->cb_->sample (the_timestamp
-                     ACE_ENV_ARG_PARAMETER);
+  this->cb_->sample (the_timestamp);
 }
 
 void
-Session::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Session::shutdown ()
 {
-  Implicit_Deactivator deactivator (this
-                                    ACE_ENV_ARG_PARAMETER);
+  Implicit_Deactivator deactivator (this);
 }
 
 PortableServer::POA_ptr
-Session::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Session::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

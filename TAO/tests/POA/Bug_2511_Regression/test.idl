@@ -1,0 +1,6 @@
+interface test
+{
+  void normal ();
+  void exceptional ();
+  void notexisting ();
+};

@@ -1,0 +1,14 @@
+This test attempts to overwhelm a multithreaded naming server by running
+more client connections than there are server threads
+
+After an initialization phase the 'hammer' threads will start requesting
+Various group membership lists as well as periodically requesting for a
+group that doesn't exist. The default root for the persistence files is
+the current work directory. The test should also be run on nfs mounted
+storage as well as local to test the retry mechanism.
+
+Command Line Options
+-p <path>     Set the path to the root of the persistence files
+-n <count>    Set the number of name service threads. Default 10
+-h <count>    Set the number of 'hammer' threads. Default 15
+-debug        Enable verbose name service logging

@@ -4,8 +4,6 @@
 /**
  *  @file    IFR_Service_Utils_T.h
  *
- *  $Id$
- *
  *  Template methods useful to IFR Service.
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -31,16 +29,17 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Repository_i;
 
 template<typename T>
 class TAO_IFR_Generic_Utils
 {
 public:
-  static void destroy_special (const char *section_name,
+  static void destroy_special (const ACE_TCHAR *section_name,
                                TAO_Repository_i *repo,
-                               ACE_Configuration_Section_Key &key
-                               ACE_ENV_ARG_DECL);
+                               ACE_Configuration_Section_Key &key);
 
   static void set_initializers (const T &initializers,
                                 ACE_Configuration *config,
@@ -55,8 +54,7 @@ class TAO_IFR_Desc_Utils
 public:
   static void fill_desc_begin (T_desc &desc,
                                TAO_Repository_i *repo,
-                               ACE_Configuration_Section_Key &key
-                               ACE_ENV_ARG_DECL);
+                               ACE_Configuration_Section_Key &key);
 };
 
 template<typename T_strseq>
@@ -100,17 +98,16 @@ public:
                           CORBA::Boolean is_multiple,
                           TAO_Repository_i *repo,
                           CORBA::DefinitionKind port_kind,
-                          ACE_Configuration_Section_Key &key
-                          ACE_ENV_ARG_DECL);
+                          ACE_Configuration_Section_Key &key);
 
   static void set_is_multiple (CORBA::Boolean is_multiple,
                                ACE_Configuration *config,
                                ACE_Configuration_Section_Key &key);
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "IFR_Service_Utils_T.cpp"
-#endif /* defined REQUIRED SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.cpp"
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

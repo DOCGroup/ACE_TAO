@@ -1,30 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    typedef.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has 
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    typedef.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 
 // Must keep unaliasing until all levels of typedef
 // are removed.
 
-// This is also a test of arrays of arrays. Once 
-// upon a time, the generated CDR operators of such 
+// This is also a test of arrays of arrays. Once
+// upon a time, the generated CDR operators of such
 // animals wouldn't compile on all platforms.
 
 typedef char TAO_A5[5];
@@ -45,21 +40,21 @@ typedef TAO_V5 TAO_Z5[5];
 
 // Need to make sure that the arg traits specializations for each
 // typedef has a unique #ifndef guard.
-module TestModule 
+module TestModule
 {
- 	typedef string<32> typedef_1;	
-	typedef string<32> typedef_2;
+  typedef string<32> typedef_1;
+  typedef string<32> typedef_2;
 
-	interface TestInterface 
-	{		
-		void set_typedef_1 (in TestModule::typedef_1 typ1);
+  interface TestInterface
+  {
+    void set_typedef_1 (in TestModule::typedef_1 typ1);
     void set_typedef_2 (in TestModule::typedef_2 typ2);
-  };	
+  };
 };
 
 // Caught failure of arg traits generation for the 2nd typedef.
 module bug_2124
-{   
+{
    typedef string<10> MyString;
    typedef MyString OtherString;
 
@@ -71,7 +66,7 @@ module bug_2124
 };
 
 // Caught a case where the #ifdef guards were different, but the
-// generated string typename was.
+// generated string typename was the same.
 module bug_2122
 {
    module One
@@ -80,7 +75,7 @@ module bug_2122
 
       interface Whatever
       {
-         void someOp( in MyString s );
+         void someOp (in MyString s);
       };
    };
 
@@ -90,7 +85,7 @@ module bug_2122
 
       interface WhoCares
       {
-         void someOp( in MyString s );
+         void someOp (in MyString s);
       };
    };
 
@@ -100,10 +95,28 @@ module bug_2122
 
       interface WhoCares
       {
-         void someOp( in MyString s );
+         void someOp (in MyString s);
       };
    };
 };
+
+// An anonymous string of the same bound will be found in
+// another IDL file not included in this one (anonymous.idl).
+// The typecode for the anonymous string should not give us
+// 'already found' link errors.
+module First
+{
+  typedef string<32> FirstString;
+};
+
+// The anonymous base type is shared by these typedefs, but it
+// must be destroyed only once.
+module CommaList
+{
+  typedef sequence<double> Foo;
+  typedef sequence<double> Dubble, Dubbel, Toil, Trouble;
+};
+
 
 
 

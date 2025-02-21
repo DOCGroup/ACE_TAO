@@ -1,0 +1,59 @@
+<!-- Document Type Definition for XML ACE Service Config files -->
+
+<!-- An ACE_Svc_Conf document contains zero or more entries    -->
+<!--   The entries are processed in the order they appear      -->
+<!--   in the ACE_Svc_Conf file.                               -->
+<!ELEMENT ACE_Svc_Conf (dynamic|static|suspend|resume|remove|stream|streamdef)*>
+
+<!-- Streams are separate into two elements.  One defines how  -->
+<!-- the stream should be constructed and the other defines    -->
+<!-- what to do with it.  The identity of a stream is defined  -->
+<!-- in the first dynamic/static element.  -->
+<!ELEMENT streamdef ((dynamic|static),module)>
+<!-- @@ Do we ever need to suspend/resume/remove modules when  -->
+<!--    constructing a stream?  Should we leave only dynamic   -->
+<!--    and static here?  -->
+<!ELEMENT module (dynamic|static|suspend|resume|remove)+>
+
+<!-- A 'stream' element controls the stream object -->
+<!-- @@ Likewise, we are reusing the 'module' element here.    -->
+<!--    Do we ever need to insert new modules into a stream?   -->
+<!--    Nanbor: I guess we can do that.  -->
+<!ELEMENT stream (module)>
+<!ATTLIST stream id IDREF #REQUIRED>
+
+<!-- A 'dynamic' entry. -->
+<!-- @@ The kind of attributes the corresponding initializer   -->
+<!--    should take seems to be determined by the 'type'       -->
+<!--    attribute.  Should we further partition the dynamic    -->
+<!--    element definition into several elements?  E.g. into   -->
+<!--    dyn_service_object/dyn_module/dyn_stream?              -->
+<!--    Nanbor: Will that be too confusing? -->
+<!ELEMENT dynamic (initializer)>
+<!ATTLIST dynamic id ID #REQUIRED
+                  status (active|inactive) "active"
+                  type (module|service_object|stream) #REQUIRED>
+
+<!-- Initializing function for dynamic entry.  -->
+<!ELEMENT initializer EMPTY>
+<!ATTLIST initializer init CDATA #REQUIRED
+                      path CDATA #IMPLIED
+                      params CDATA #IMPLIED>
+
+<!-- A 'static' entry takes an ID attribute and an optional -->
+<!-- parameter lists.  -->
+<!ELEMENT static EMPTY>
+<!ATTLIST static id ID #REQUIRED
+                 params CDATA #IMPLIED>
+
+<!-- A 'suspend' entry takes an ID attribute.  -->
+<!ELEMENT suspend EMPTY>
+<!ATTLIST suspend id IDREF #REQUIRED>
+
+<!-- A 'resume' entry takes an ID attribute.  -->
+<!ELEMENT resume EMPTY>
+<!ATTLIST resume id IDREF #REQUIRED>
+
+<!-- A 'remove' entry takes an ID attribute.  -->
+<!ELEMENT remove EMPTY>
+<!ATTLIST remove id IDREF #REQUIRED>

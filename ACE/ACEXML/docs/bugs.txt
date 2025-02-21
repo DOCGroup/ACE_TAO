@@ -1,0 +1,20 @@
+/**
+
+
+
+@page acexml_bugs ACEXML Known Bugs
+
+<ul>
+  <li>ACEXML currently do not validate an XML files.  The validator
+      hooks have not fully integrated into the parser yet.
+
+  <li>Need to verify predefined entities are working correctly.  Check
+      out the SAXPrint example.
+
+  <li>Currently, replacement of parameterized reference (PEReference) is
+      not working.
+
+</ul>
+
+
+*/

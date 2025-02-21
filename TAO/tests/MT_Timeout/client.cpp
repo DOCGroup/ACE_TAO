@@ -1,18 +1,14 @@
-// $Id$
-
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Client_Leaks, client, "$Id$")
-
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int iterations = 500;
 int threads = 4;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -41,29 +37,26 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Test::Sleep_Service_var sleep_service =
-        Test::Sleep_Service::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Sleep_Service::_narrow(tmp.in ());
 
       if (CORBA::is_nil (sleep_service.in ()))
         {
@@ -95,14 +88,11 @@ main (int argc, char *argv[])
       ACE_Thread_Manager::instance ()->wait ();
 
       // Get back in sync with the server..
-      sleep_service->go_to_sleep (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sleep_service->go_to_sleep (0);
 
-      sleep_service->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sleep_service->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "Task 0: Successful calls = %d, timed out calls = %d\n",
@@ -119,11 +109,13 @@ main (int argc, char *argv[])
       if (task0.too_big_difference_calls () > iterations/20
           || task1.too_big_difference_calls () > iterations/20)
         {
+          //FUZZ: disable check_for_lack_ACE_OS
           ACE_DEBUG ((LM_DEBUG,
                       "Warning: Too many calls have a too big difference between "
                       "timeout and elapsed time (task0: %d, task1: %d)\n",
                       task0.too_big_difference_calls (),
                       task1.too_big_difference_calls ()));
+          //FUZZ: enable check_for_lack_ACE_OS
         }
       else  if (task0.too_big_difference_calls () != 0
                 || task1.too_big_difference_calls () != 0)
@@ -149,18 +141,14 @@ main (int argc, char *argv[])
                       "expected for task 1\n"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
-
-
 
 
 

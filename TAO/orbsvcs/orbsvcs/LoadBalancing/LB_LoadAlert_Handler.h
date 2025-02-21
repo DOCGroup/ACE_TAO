@@ -4,8 +4,6 @@
 /**
  * @file   LB_LoadAlert_Handler.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 // ============================================================================
@@ -26,6 +24,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_LB_LoadAlert_Handler
  *
@@ -40,30 +40,21 @@ class TAO_LB_LoadAlert_Handler
   : public virtual POA_CosLoadBalancing::AMI_LoadAlertHandler
 {
 public:
+  virtual void enable_alert ();
 
-  virtual void enable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void enable_alert_excep (::Messaging::ExceptionHolder *);
 
-  virtual void enable_alert_excep (
-      CosLoadBalancing::AMI_LoadAlertExceptionHolder *
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disable_alert ();
 
-  virtual void disable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void disable_alert_excep (
-      CosLoadBalancing::AMI_LoadAlertExceptionHolder *
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disable_alert_excep (::Messaging::ExceptionHolder *);
 
 protected:
-
   /// Protected destructor to enforce propery memory management
   /// through reference counting.
-  ~TAO_LB_LoadAlert_Handler (void);
-
+  ~TAO_LB_LoadAlert_Handler ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

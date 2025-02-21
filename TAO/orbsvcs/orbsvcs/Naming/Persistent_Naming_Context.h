@@ -1,22 +1,22 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Persistent_Naming_Context.h
- *
- *  $Id$
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
 
-
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_H
 #define TAO_PERSISTENT_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
-#include "Hash_Naming_Context.h"
-#include "Persistent_Entries.h"
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/Hash_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Entries.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Persistent_Bindings_Map
@@ -29,20 +29,18 @@
  * from persistent storage) to make bindings persistent and
  * supports TAO_Bindings_Map interface.  Used by TAO_Persistent_Naming_Context.
  */
-class TAO_Naming_Serv_Export TAO_Persistent_Bindings_Map : public TAO_Bindings_Map
+class TAO_Naming_Serv_Export TAO_Persistent_Bindings_Map
+  : public TAO_Bindings_Map
 {
 public:
-
   /// Underlying data structure - typedef for ease of use.
   typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId> HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb);
 
-  /// Allocate hash map of size <hash_map_size> from persistent storage
-  /// using the <alloc>.
+  /// Allocate hash map of size @a hash_map_size from persistent storage
+  /// using the @a alloc.
   int open (size_t hash_map_size,
             ACE_Allocator *alloc);
 
@@ -53,7 +51,7 @@ public:
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
-  virtual ~TAO_Persistent_Bindings_Map (void);
+  virtual ~TAO_Persistent_Bindings_Map ();
 
   /**
    * This method removes the hash map from persistent storage/frees up
@@ -61,25 +59,25 @@ public:
    * cleaning up the insides. (We could add <close> to clean entries,
    * but not the data inside the entries.
    */
-  void destroy (void);
+  void destroy ();
 
   // = Accessor methods.
 
   /// Get a pointer to the underlying hash map.
-  HASH_MAP *map (void);
+  HASH_MAP *map ();
 
   /// Return the size of the underlying hash table.
-  size_t total_size (void);
+  size_t total_size ();
 
   /// Return the size of the underlying hash table.
-  virtual size_t current_size (void);
+  virtual size_t current_size ();
 
   // = Name bindings manipulation methods.
 
   /**
    * Add a binding with the specified parameters to the table.
    * Return 0 on success and -1 on failure, 1 if there already is a
-   * binding with <id> and <kind>.
+   * binding with @a id and @a kind.
    */
   virtual int bind (const char *id,
                     const char *kind,
@@ -87,7 +85,7 @@ public:
                     CosNaming::BindingType type);
 
   /**
-   * Overwrite a binding containing <id> and <kind> (or create a new
+   * Overwrite a binding containing @a id and @a kind (or create a new
    * one if one doesn't exist) with the specified parameters.  Return
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
@@ -117,7 +115,6 @@ public:
                     CosNaming::BindingType &type);
 
 protected:
-
   /**
    * Helper to the <open> method.  By isolating placement new into a
    * separate method, we can deal with memory allocation failures more
@@ -163,14 +160,6 @@ public:
   /// Underlying data structure - typedef for ease of use.
   typedef TAO_Persistent_Bindings_Map::HASH_MAP HASH_MAP;
 
-  // = Initialization and termination methods.
-
-  /// Constructor.  MUST be followed up by <init> to allocate the
-  /// underlying data structure from persistent storage!
-  TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
-                                 const char *poa_id,
-                                 TAO_Persistent_Context_Index *context_index);
-
   /// Allocate the underlying data structure from persistent storage.
   /// Returns 0 on success and -1 on failure.
   int init (size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
@@ -178,16 +167,18 @@ public:
   /**
    * Constructor that takes in preallocated data structure and takes
    * ownership of it.  This constructor is for 'recreating' servants
-   * from persistent state.
+   * from persistent state. If no map is provided, it MUST be followed
+   * up by <init> to allocate the underlying data structure from
+   * persistent storage!
    */
   TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
                                  const char *poa_id,
                                  TAO_Persistent_Context_Index *context_index,
-                                 HASH_MAP * map,
-                                 ACE_UINT32 *counter);
+                                 HASH_MAP * map = 0,
+                                 ACE_UINT32 *counter = 0);
 
   /// Destructor.
-  virtual ~TAO_Persistent_Naming_Context (void);
+  virtual ~TAO_Persistent_Naming_Context ();
 
   // = Utility methods.
   /**
@@ -200,8 +191,7 @@ public:
   static CosNaming::NamingContext_ptr make_new_context (PortableServer::POA_ptr poa,
                                                         const char *poa_id,
                                                         size_t context_size,
-                                                        TAO_Persistent_Context_Index *ind
-                                                        ACE_ENV_ARG_DECL);
+                                                        TAO_Persistent_Context_Index *ind);
 
   // = Methods not implemented in TAO_Hash_Naming_Context.
 
@@ -210,21 +200,19 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (ACE_ENV_SINGLE_ARG_DECL);
+  virtual CosNaming::NamingContext_ptr new_context ();
 
   /**
-   * Returns at most the requested number of bindings <how_many> in
-   * <bl>.  If the naming context contains additional bindings, they
+   * Returns at most the requested number of bindings @a how_many in
+   * @a bl.  If the naming context contains additional bindings, they
    * are returned with a BindingIterator.  In the naming context does
-   * not contain any additional bindings <bi> returned as null.
+   * not contain any additional bindings @a bi returned as null.
    */
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi
-                     ACE_ENV_ARG_DECL);
+                     CosNaming::BindingIterator_out &bi);
 
 protected:
-
   /**
    * Set <destroyed_> flag (inherited from TAO_Hash_Naming_Context) to
    * <level>.  Legal values for <destroyed_> are 0, 1, and 2.  The
@@ -262,6 +250,8 @@ protected:
    */
   TAO_Persistent_Context_Index *index_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PERSISTENT_NAMING_CONTEXT_H */

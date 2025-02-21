@@ -1,12 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Property_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROPERTY_T_H
@@ -14,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,25 +21,26 @@
 
 #include "orbsvcs/CosNotificationC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_PropertySeq;
 
 /**
  * @class TAO_Notify_PropertyBase_T
  *
  * @brief
- *
  */
 template <class TYPE>
 class TAO_Notify_PropertyBase_T
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial);
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_PropertyBase_T (const char* name);
 
-  /// Copy Constuctor
+  /// Copy Constructor
   TAO_Notify_PropertyBase_T (const TAO_Notify_PropertyBase_T &rhs);
 
   /// Destructor
@@ -61,16 +59,16 @@ public:
   void assign (const TYPE& value);
 
   /// Return the value.
-  const TYPE& value (void) const;
+  const TYPE& value () const;
 
   /// Return the name
-  const char * name (void) const;
+  const char * name () const;
 
   /// Is the current value valid
-  CORBA::Boolean is_valid (void) const;
+  CORBA::Boolean is_valid () const;
 
   /// Invalidate this property's value.
-  void invalidate (void);
+  void invalidate ();
 
 protected:
   /// The Property name.
@@ -89,16 +87,15 @@ protected:
  * @class TAO_Notify_Property_T
  *
  * @brief
- *
  */
 template <class TYPE>
 class TAO_Notify_Property_T : public TAO_Notify_PropertyBase_T<TYPE>
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Property_T (const char* name, const TYPE& initial);
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Property_T (const char* name);
 
   /// Init this Property from the sequence.
@@ -115,16 +112,15 @@ public:
  * @class TAO_Notify_StructProperty_T
  *
  * @brief
- *
  */
 template <class TYPE>
 class TAO_Notify_StructProperty_T
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_StructProperty_T (const char* name, const TYPE& initial);
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_StructProperty_T (const char* name);
 
   /// Init this Property from the sequence.
@@ -132,13 +128,13 @@ public:
   int set (const TAO_Notify_PropertySeq& property_seq);
 
   /// Return the name
-  const char * name (void) const;
+  const char * name () const;
 
   /// Return the value.
-  const TYPE& value (void) const;
+  const TYPE& value () const;
 
   /// Is the current value valid
-  CORBA::Boolean is_valid (void) const;
+  CORBA::Boolean is_valid () const;
 
 protected:
   /// The Property name.
@@ -151,17 +147,13 @@ protected:
   CORBA::Boolean valid_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Property_T.inl"
+#include "orbsvcs/Notify/Property_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Property_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Property_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/Notify/Property_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PROPERTY_T_H */

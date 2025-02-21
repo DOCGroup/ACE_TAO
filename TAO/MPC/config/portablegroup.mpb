@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : naming, messaging, iormanip, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, svc_utils {
+  libs      += TAO_PortableGroup
+  after     += PortableGroup
+  tagchecks += PortableGroup
+}

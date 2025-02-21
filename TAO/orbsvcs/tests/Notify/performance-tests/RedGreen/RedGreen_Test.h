@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   RedGreen_Test.h
-//
-// = DESCRIPTION
-//   Performance test to show improvement in Notify performance by picking the
-//   correcting configuration.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   RedGreen_Test.h
+ *
+ * Performance test to show improvement in Notify performance by picking the
+ * correcting configuration.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_RedGreen_Test_CLIENT_H
 #define NOTIFY_RedGreen_Test_CLIENT_H
@@ -22,6 +19,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Task.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 
@@ -33,123 +31,126 @@
 class RedGreen_Test_StructuredPushConsumer;
 class RedGreen_Test_StructuredPushSupplier;
 
+/**
+ * @class Worker
+ *
+ * @brief Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
-  Worker (void);
-  // Constructor.
+  /// Constructor.
+  Worker ();
 
   void orb (CORBA::ORB_ptr orb);
 
-  virtual int svc (void);
-  // The thread entry point.
+  /// The thread entry point.
+  virtual int svc ();
 
   // Shutdown ORB
-  void done (void);
+  void done ();
 
 private:
+  /// The orb
   CORBA::ORB_var orb_;
-  // The orb
 };
 
+/**
+ * @class RedGreen_Test
+ *
+ * @brief RedGreen_Test
+ *
+ * Shows how consumers RedGreen_Test for events.
+ */
 class RedGreen_Test
 {
-  // = TITLE
-  //   RedGreen_Test
-  // = DESCRIPTION
-  //   Shows how consumers RedGreen_Test for events.
-
  public:
-  // = Initialization and Termination.
-  RedGreen_Test (void);
-  ~RedGreen_Test (void);
+  // = Initialization
+  RedGreen_Test ();
 
   int parse_args (int argc,
-                  char *argv[]);
+                  ACE_TCHAR *argv[]);
 
-  void dump_results (void);
+  void dump_results ();
 
+  /// Initialize the Client.
   void init (int argc,
-             char *argv []
-             ACE_ENV_ARG_DECL);
-  // Initialize the Client.
+             ACE_TCHAR *argv []);
 
-  void run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the demo.
+  /// Run the demo.
+  void run ();
 
-  void done (void);
-  // Called when all events we are waiting for have occured.
+  /// Called when all events we are waiting for have occurred.
+  void done ();
+
+  /// Destroy from the EC
+  void destroy_ec ();
 
   int burst_size_;
   Worker worker_;
   int nthreads_;
 
  protected:
+  /// Initializes the ORB.
   void init_ORB (int argc,
-                 char *argv []
-                 ACE_ENV_ARG_DECL);
-  // Initializes the ORB.
+                 ACE_TCHAR *argv []);
 
-  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
-  // Try to get hold of a running naming service.
+  /// Try to get hold of a running naming service.
+  void resolve_naming_service ();
 
-  void resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL);
-  // Try to resolve the Notify factory from the Naming service.
+  /// Try to resolve the Notify factory from the Naming service.
+  void resolve_Notify_factory ();
 
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
-  // Create an EC.
+  /// Create an EC.
+  void create_EC ();
 
-  void create_supplieradmin(ACE_ENV_SINGLE_ARG_DECL);
-  // Create the Supplier Admin.
+  /// Create the Supplier Admin.
+  void create_supplieradmin();
 
-  void create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL);
-  // Create the Consumer Admin.
+  /// Create the Consumer Admin.
+  void create_consumeradmin ();
 
-  void create_consumers (ACE_ENV_SINGLE_ARG_DECL);
-  // Create and initialize the consumers.
+  /// Create and initialize the consumers.
+  void create_consumers ();
 
-  void create_suppliers (ACE_ENV_SINGLE_ARG_DECL);
-  // create and initialize the suppliers.
+  /// create and initialize the suppliers.
+  void create_suppliers ();
 
-  void send_events (ACE_ENV_SINGLE_ARG_DECL);
-  // send the events.
+  /// send the events.
+  void send_events ();
 
   // = Data Members.
+  /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
-  // Reference to the root poa.
 
+  /// The ORB that we use.
   CORBA::ORB_var orb_;
-  // The ORB that we use.
 
+  /// Handle to the name service.
   CosNaming::NamingContext_var naming_context_;
-  // Handle to the name service.
 
+  /// Channel factory.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
-  // Channel factory.
 
+  /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
-  // The one channel that we create using the factory.
 
+  /// The group operator between admin-proxy's.
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop_;
-  // The group operator between admin-proxy's.
 
+  /// Initial qos specified to the factory when creating the EC.
   CosNotification::QoSProperties initial_qos_;
-  // Initial qos specified to the factory when creating the EC.
 
+  /// Initial admin props specified to the factory when creating the EC.
   CosNotification::AdminProperties initial_admin_;
-  // Initial admin props specified to the factory when creating the EC.
 
+  /// The consumer admin used by consumers.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The consumer admin used by consumers.
 
+  /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The supplier admin used by suppliers.
 
   RedGreen_Test_StructuredPushConsumer* normal_consumer_;
   RedGreen_Test_StructuredPushConsumer* slow_consumer_;
@@ -167,75 +168,60 @@ class RedGreen_Test_StructuredPushConsumer
   // = DESCRIPTION
   //   Consumer for the RedGreen_Test example.
   //
-
- public:
-  // = Initialization and Termination code
+public:
+  /// Constructor.
   RedGreen_Test_StructuredPushConsumer (RedGreen_Test* RedGreen_Test);
-  // Constructor.
 
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                ACE_ENV_ARG_DECL);
-  // Connect the Consumer to the EventChannel.
-  // Creates a new proxy supplier and connects to it.
+  /// Connect the Consumer to the EventChannel.
+  /// Creates a new proxy supplier and connects to it.
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
-  virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL);
-  // Disconnect from the supplier.
+  /// Disconnect from the supplier.
+  virtual void disconnect ();
 
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (
-      void
-    );
-  // Accessor for the Proxy that we're connected to.
+  /// Accessor for the Proxy that we're connected to.
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier ();
 
+  /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
-  // Accumulate the throughput statistics into <throughput>
 
-  void dump_stats (const char* msg, ACE_UINT32 gsf);
-  // Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into <throughput>
+  void dump_stats (const ACE_TCHAR* msg,
+                   ACE_High_Res_Timer::global_scale_factor_type gsf);
 
 protected:
   // = Data members
+  /// The proxy that we are connected to.
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
-  // The proxy that we are connected to.
 
+  /// The proxy_supplier id.
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
-  // The proxy_supplier id.
 
+  /// callback <done>
   RedGreen_Test* RedGreen_Test_;
-  // callback <done>
 
+  /// Protect internal state
   TAO_SYNCH_MUTEX lock_;
-  // Protect internal state
 
   int push_count_;
 
+  /// Used for reporting stats
   ACE_Throughput_Stats throughput_;
-  // Used for reporting stats
 
   // = Methods
-  virtual ~RedGreen_Test_StructuredPushConsumer (void);
-  // Destructor
+  /// Destructor
+  virtual ~RedGreen_Test_StructuredPushConsumer ();
 
   // = NotifyPublish method
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosNotifyComm::InvalidEventType));
+      const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosEventComm::Disconnected));
+      const CosNotification::StructuredEvent & notification);
 
-  virtual void disconnect_structured_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_structured_push_consumer ();
 };
 
 /*****************************************************************/
@@ -246,13 +232,8 @@ public:
   SlowConsumer (RedGreen_Test* RedGreen_Test);
 
   virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosEventComm::Disconnected));
+      const CosNotification::StructuredEvent & notification);
 };
-
 
 /*****************************************************************/
 class RedGreen_Test_StructuredPushSupplier
@@ -264,58 +245,49 @@ class RedGreen_Test_StructuredPushSupplier
   // = DESCRIPTION
   //   Supplier for the RedGreen_Test example.
   //
- public:
-  // = Initialization and Termination code
-  RedGreen_Test_StructuredPushSupplier (void);
-  // Constructor.
+public:
+  /// Constructor.
+  RedGreen_Test_StructuredPushSupplier ();
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
-  // Connect the Supplier to the EventChannel.
-  // Creates a new proxy supplier and connects to it.
+  /// Connect the Supplier to the EventChannel.
+  /// Creates a new proxy supplier and connects to it.
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
-  // Disconnect from the supplier.
+  /// Disconnect from the supplier.
+  void disconnect ();
 
-  virtual void send_event (CosNotification::StructuredEvent& event
-                           ACE_ENV_ARG_DECL);
-  // Send one event.
+  /// Send one event.
+  virtual void send_event (CosNotification::StructuredEvent& event);
 
+  /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
-  // Accumulate the throughput statistics into <throughput>
 
-  void dump_stats (const char* msg, ACE_UINT32 gsf);
-  // Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into <throughput>
+  void dump_stats (const ACE_TCHAR* msg,
+                   ACE_High_Res_Timer::global_scale_factor_type gsf);
 
 protected:
   // = Data members
+  /// The proxy that we are connected to.
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_;
-  // The proxy that we are connected to.
 
+  /// This supplier's id.
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
-  // This supplier's id.
 
+  /// Measure the elapsed time spent while sending the events.
   ACE_Throughput_Stats throughput_;
-  // Measure the elapsed time spent while sending the events.
 
   // = Protected Methods
+  /// Destructor
   virtual ~RedGreen_Test_StructuredPushSupplier ();
-  // Destructor
 
   // = NotifyRedGreen_Test
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosNotifyComm::InvalidEventType));
+      const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_structured_push_supplier ();
 };
 
 /*****************************************************************/

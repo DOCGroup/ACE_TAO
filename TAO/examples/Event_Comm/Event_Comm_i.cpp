@@ -1,37 +1,30 @@
-// $Id$
-
 #include "Event_Comm_i.h"
-#if defined (ACE_HAS_REGEX)
-# include "ace/OS_NS_regex.h"
-#endif
+#include "ace/OS_NS_regex.h"
 
-ACE_RCSID(Event_Comm, Event_Comm_i, "$Id$")
-
-
+/**
+ * Keeps track of context information associated with
+ * a <Event_Comm::Consumer> entry.
+ */
 class Consumer_Entry
 {
-  // = TITLE
-  //   Keeps track of context information associated with
-  //   a <Event_Comm::Consumer> entry.
 public:
-  // = Initialization and termination methods.
   Consumer_Entry (Event_Comm::Consumer *consumer,
                   const char *filtering_criteria);
   // Constructor.
 
-  ~Consumer_Entry (void);
+  ~Consumer_Entry ();
   // Descriptor.
 
   // = Set/get filtering criteria.
   void criteria (const char *criteria);
-  const char *criteria (void);
+  const char *criteria ();
 
   // = Set/get Event_Comm::Consumer object reference.
-  Event_Comm::Consumer *consumer (void);
+  Event_Comm::Consumer *consumer ();
   void consumer (Event_Comm::Consumer *);
 
   // = Set/get the compiled regular expression buffer.
-  const char *regexp (void);
+  const char *regexp ();
   void regexp (char *);
 
 private:
@@ -57,7 +50,7 @@ Consumer_Entry::criteria (const char *criteria)
 }
 
 const char *
-Consumer_Entry::criteria (void)
+Consumer_Entry::criteria ()
 {
   return this->filtering_criteria_;
 }
@@ -65,7 +58,7 @@ Consumer_Entry::criteria (void)
 // = Set/get Event_Comm::Consumer object reference.
 
 Event_Comm::Consumer *
-Consumer_Entry::consumer (void)
+Consumer_Entry::consumer ()
 {
   return this->consumer_;
 }
@@ -77,7 +70,7 @@ Consumer_Entry::consumer (Event_Comm::Consumer *consumer)
 }
 
 const char *
-Consumer_Entry::regexp (void)
+Consumer_Entry::regexp ()
 {
   return this->compiled_regexp_;
 }
@@ -128,7 +121,7 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
   this->consumer_ = Event_Comm::Consumer::_duplicate (this->consumer_);
 }
 
-Consumer_Entry::~Consumer_Entry (void)
+Consumer_Entry::~Consumer_Entry ()
 {
   ACE_OS::free ((void *) this->filtering_criteria_);
   ACE_OS::free ((void *) this->compiled_regexp_);
@@ -160,12 +153,7 @@ The filtering criteria will not work.\n"));
 
 void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
-                       const char *filtering_criteria
-                       ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   Event_Comm::Notifier::CannotSubscribe
-                   ))
+                       const char *filtering_criteria)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
@@ -198,7 +186,8 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
           // Inform the caller that the <Event_Comm::Consumer> * is
           // already being used.
 
-          ACE_THROW (Event_Comm::Notifier::CannotSubscribe ("Duplicate consumer and filtering criteria found.\n"));
+          throw Event_Comm::Notifier::CannotSubscribe (
+            "Duplicate consumer and filtering criteria found.\n");
         }
     }
 
@@ -214,7 +203,8 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
     {
       // Prevent memory leaks.
       delete nr_entry;
-      ACE_THROW (Event_Comm::Notifier::CannotSubscribe ("Failed to add Consumer to internal map\n"));
+      throw Event_Comm::Notifier::CannotSubscribe (
+        "Failed to add Consumer to internal map\n");
     }
 }
 
@@ -222,12 +212,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
 void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
-                         const char *filtering_criteria
-                         ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   Event_Comm::Notifier::CannotUnsubscribe
-                   ))
+                         const char *filtering_criteria)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::unsubscribe for %x\n",
@@ -265,22 +250,22 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
           // @@ This is a hack, we need a better approach!
           if (this->map_.unbind (me->ext_id_,
                                  nr_entry) == -1)
-            ACE_THROW (Event_Comm::Notifier::CannotUnsubscribe ("Internal map unbind failed."));
+            throw Event_Comm::Notifier::CannotUnsubscribe (
+              "Internal map unbind failed.");
           else
             delete nr_entry;
         }
     }
 
   if (found == 0)
-    ACE_THROW (Event_Comm::Notifier::CannotUnsubscribe ("The Consumer and filtering criteria were not found."));
+    throw Event_Comm::Notifier::CannotUnsubscribe (
+      "The Consumer and filtering criteria were not found.");
 }
 
 // Disconnect all the consumers, giving them the <reason>.
 
 void
-Notifier_i::disconnect (const char *reason
-                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Notifier_i::disconnect (const char *reason)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_disconnect = %s\n",
@@ -303,17 +288,14 @@ Notifier_i::disconnect (const char *reason
       ACE_DEBUG ((LM_DEBUG,
                   "disconnecting client %x\n",
                   consumer_ref));
-      ACE_TRY
+      try
         {
-          consumer_ref->disconnect (reason
-                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          consumer_ref->disconnect (reason);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception\n");
+          ex._tao_print_exception ("Unexpected exception\n");
         }
-      ACE_ENDTRY;
 
       delete me->int_id_;
       count++;
@@ -333,9 +315,7 @@ Notifier_i::disconnect (const char *reason
 // Notify all consumers whose filtering criteria match the event.
 
 void
-Notifier_i::push (const Event_Comm::Event &event
-                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Notifier_i::push (const Event_Comm::Event &event)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_notification = %s\n",
@@ -369,19 +349,15 @@ Notifier_i::push (const Event_Comm::Event &event
                       (const char *) event.tag_,
                       me->int_id_->criteria (),
                       consumer_ref));
-          ACE_TRY
+          try
             {
-              consumer_ref->push (event
-                                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              consumer_ref->push (event);
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "Unexpected exception\n");
+              ex._tao_print_exception ("Unexpected exception\n");
               continue;
             }
-          ACE_ENDTRY;
           count++;
         }
     }
@@ -397,18 +373,20 @@ Notifier_i::push (const Event_Comm::Event &event
 
 // -------------
 
-ShutdownCallback::~ShutdownCallback (void)
+ShutdownCallback::~ShutdownCallback ()
 {
 }
 
 // -------------
 
-Consumer_i::Consumer_i (void)
+//FUZZ: disable check_for_lack_ACE_OS
+Consumer_i::Consumer_i ()
   : shutdown (0)
 {
 }
+//FUZZ: enable check_for_lack_ACE_OS
 
-Consumer_i::~Consumer_i (void)
+Consumer_i::~Consumer_i ()
 {
 }
 
@@ -416,9 +394,7 @@ Consumer_i::~Consumer_i (void)
 // occurred.
 
 void
-Consumer_i::push (const Event_Comm::Event &event
-                  ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer_i::push (const Event_Comm::Event &event)
 {
   const char *tmpstr = event.tag_;
 
@@ -431,9 +407,7 @@ Consumer_i::push (const Event_Comm::Event &event
 // <Event_Comm::Notifier>.
 
 void
-Consumer_i::disconnect (const char *reason
-                        ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Consumer_i::disconnect (const char *reason)
 {
   ACE_DEBUG ((LM_DEBUG,
               "**** got disconnected due to %s\n",
@@ -450,24 +424,3 @@ Consumer_i::set (ShutdownCallback *_shutdown)
   shutdown = _shutdown;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Map_Manager<Event_Comm::Consumer *,
-  Consumer_Entry *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<Event_Comm::Consumer *, Consumer_Entry *,
-  ACE_Null_Mutex>;
-template class ACE_Map_Entry<Event_Comm::Consumer *, Consumer_Entry *>;
-template class ACE_Map_Reverse_Iterator<Event_Comm::Consumer *,
-  Consumer_Entry *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<Event_Comm::Consumer *,
-  Consumer_Entry *, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Map_Manager<Event_Comm::Consumer *, Consumer_Entry *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<Event_Comm::Consumer *, Consumer_Entry *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<Event_Comm::Consumer *, Consumer_Entry *>
-#pragma instantiate ACE_Map_Reverse_Iterator<Event_Comm::Consumer *, Consumer_Entry *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<Event_Comm::Consumer *, Consumer_Entry *, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

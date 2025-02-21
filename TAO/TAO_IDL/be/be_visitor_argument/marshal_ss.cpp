@@ -1,28 +1,16 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    marshal_ss.cpp
-//
-// = DESCRIPTION
-//    Visitor that generates code that passes the argument variable to the
-//    marshal operations.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    marshal_ss.cpp
+ *
+ *  Visitor that generates code that passes the argument variable to the
+ *  marshal operations.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_argument,
-           marshal_ss,
-           "$Id$")
-
+#include "argument.h"
 
 // ************************************************************************
 // Visitor to generate code for passing argument to the marshal/demarshal
@@ -36,21 +24,22 @@ be_visitor_args_marshal_ss (be_visitor_context *ctx)
 }
 
 be_visitor_args_marshal_ss::
-~be_visitor_args_marshal_ss (void)
+~be_visitor_args_marshal_ss ()
 {
 }
 
-int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
+int be_visitor_args_marshal_ss::visit_argument (
+  be_argument *node)
 {
   this->ctx_->node (node);
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_argument - "
-                         "Bad argument type\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("Bad argument type\n")),
                         -1);
     }
 
@@ -86,18 +75,18 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_argument - "
-                         "Bad substate\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("Bad substate\n")),
                         -1);
     }
 
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_argument - "
-                         "cannot accept visitor\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("cannot accept visitor\n")),
                         -1);
     }
 
@@ -128,9 +117,9 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_argument - "
-                         "Bad substate\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("Bad substate\n")),
                         -1);
     }
 
@@ -140,17 +129,17 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
 int be_visitor_args_marshal_ss::visit_array (be_array *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  const char *lname = arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "_tao_forany_" << arg->local_name ();
-          break;
         case AST_Argument::dir_INOUT:
-          *os << "_tao_forany_" << arg->local_name ();
+          *os << "_tao_forany_" << lname;
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -163,19 +152,17 @@ int be_visitor_args_marshal_ss::visit_array (be_array *)
         case AST_Argument::dir_IN:
           break;
         case AST_Argument::dir_INOUT:
-          *os << "_tao_forany_" << arg->local_name ();
-          break;
         case AST_Argument::dir_OUT:
-          *os << "_tao_forany_" << arg->local_name ();
+          *os << "_tao_forany_" << lname;
           break;
         }
     }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_array - "
-                         "Bad substate\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_array - ")
+                         ACE_TEXT ("Bad substate\n")),
                         -1);
     }
 
@@ -185,7 +172,9 @@ int be_visitor_args_marshal_ss::visit_array (be_array *)
 int be_visitor_args_marshal_ss::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  const char *lname = arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -193,7 +182,7 @@ int be_visitor_args_marshal_ss::visit_enum (be_enum *)
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          *os << arg->local_name ();
+          *os << lname;
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -207,211 +196,64 @@ int be_visitor_args_marshal_ss::visit_enum (be_enum *)
           break;
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
-          *os << arg->local_name ();
+          *os << lname;
           break;
         }
     }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_enum - "
-                         "Bad substate\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_enum - ")
+                         ACE_TEXT ("Bad substate\n")),
                         -1);
     }
 
   return 0;
 }
 
-int be_visitor_args_marshal_ss::visit_interface (be_interface *)
+int be_visitor_args_marshal_ss::visit_interface (
+  be_interface *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_marshal_ss::visit_interface_fwd (be_interface_fwd *)
+int be_visitor_args_marshal_ss::visit_interface_fwd (
+  be_interface_fwd *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_marshal_ss::visit_valuebox (be_valuebox *)
+int be_visitor_args_marshal_ss::visit_valuebox (
+  be_valuebox *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_marshal_ss::visit_valuetype (be_valuetype *)
+int be_visitor_args_marshal_ss::visit_valuetype (
+  be_valuetype *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_marshal_ss::visit_valuetype_fwd (be_valuetype_fwd *)
+int be_visitor_args_marshal_ss::visit_valuetype_fwd (
+  be_valuetype_fwd *)
 {
   return this->emit_common ();
 }
 
 int be_visitor_args_marshal_ss::visit_predefined_type (
-    be_predefined_type *node
-  )
+  be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
-
-  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
-    {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-        case AST_Argument::dir_INOUT:
-          switch (node->pt ())
-            {
-            case AST_PredefinedType::PT_pseudo:
-            case AST_PredefinedType::PT_object:
-              *os << arg->local_name () << ".out ()";
-              break;
-            case AST_PredefinedType::PT_any:
-            case AST_PredefinedType::PT_long:
-            case AST_PredefinedType::PT_ulong:
-            case AST_PredefinedType::PT_longlong:
-            case AST_PredefinedType::PT_ulonglong:
-            case AST_PredefinedType::PT_short:
-            case AST_PredefinedType::PT_ushort:
-            case AST_PredefinedType::PT_float:
-            case AST_PredefinedType::PT_double:
-            case AST_PredefinedType::PT_longdouble:
-              *os << arg->local_name ();
-              break;
-            case AST_PredefinedType::PT_char:
-              *os << "CORBA::Any::to_char (" << arg->local_name () << ")";
-              break;
-            case AST_PredefinedType::PT_wchar:
-              *os << "CORBA::Any::to_wchar (" << arg->local_name () << ")";
-              break;
-            case AST_PredefinedType::PT_boolean:
-              *os << "CORBA::Any::to_boolean (" << arg->local_name () << ")";
-              break;
-            case AST_PredefinedType::PT_octet:
-              *os << "CORBA::Any::to_octet (" << arg->local_name () << ")";
-              break;
-            default:
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_args_marshal_ss::"
-                                 "visit_predefined_type - "
-                                 "Bad predefined type\n"),
-                                -1);
-            }
-          break;
-        case AST_Argument::dir_OUT:
-          break;
-        }
-    }
-  else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
-    {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-          break;
-        case AST_Argument::dir_INOUT:
-          switch (node->pt ())
-            {
-            case AST_PredefinedType::PT_pseudo:
-            case AST_PredefinedType::PT_object:
-              *os << arg->local_name () << ".in ()";
-              break;
-            case AST_PredefinedType::PT_any:
-              *os << arg->local_name ();
-              break;
-            case AST_PredefinedType::PT_long:
-            case AST_PredefinedType::PT_ulong:
-            case AST_PredefinedType::PT_longlong:
-            case AST_PredefinedType::PT_ulonglong:
-            case AST_PredefinedType::PT_short:
-            case AST_PredefinedType::PT_ushort:
-            case AST_PredefinedType::PT_float:
-            case AST_PredefinedType::PT_double:
-            case AST_PredefinedType::PT_longdouble:
-              *os << arg->local_name ();
-              break;
-            case AST_PredefinedType::PT_char:
-              *os << "CORBA::Any::from_char (" << arg->local_name () << ")";
-              break;
-            case AST_PredefinedType::PT_wchar:
-              *os << "CORBA::Any::from_wchar (" << arg->local_name () << ")";
-              break;
-            case AST_PredefinedType::PT_boolean:
-              *os << "CORBA::Any::from_boolean (" << arg->local_name () << ")";
-              break;
-            case AST_PredefinedType::PT_octet:
-              *os << "CORBA::Any::from_octet (" << arg->local_name () << ")";
-              break;
-            default:
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_operation_rettype_compiled_marshal_ss::"
-                                 "visit_array - "
-                                 "Bad predefined type\n"),
-                                -1);
-            }
-          break;
-        case AST_Argument::dir_OUT:
-          switch (node->pt ())
-            {
-            case AST_PredefinedType::PT_pseudo:
-            case AST_PredefinedType::PT_object:
-              *os << arg->local_name () << ".in ()";
-              break;
-            case AST_PredefinedType::PT_any:
-              *os << arg->local_name () << ".in ()";
-              break;
-            case AST_PredefinedType::PT_long:
-            case AST_PredefinedType::PT_ulong:
-            case AST_PredefinedType::PT_longlong:
-            case AST_PredefinedType::PT_ulonglong:
-            case AST_PredefinedType::PT_short:
-            case AST_PredefinedType::PT_ushort:
-            case AST_PredefinedType::PT_float:
-            case AST_PredefinedType::PT_double:
-            case AST_PredefinedType::PT_longdouble:
-              *os << arg->local_name ();
-              break;
-            case AST_PredefinedType::PT_char:
-              *os << "CORBA::Any::from_char (" << arg->local_name () << ")";
-              break;
-            case AST_PredefinedType::PT_wchar:
-              *os << "CORBA::Any::from_wchar (" << arg->local_name () << ")";
-              break;
-            case AST_PredefinedType::PT_boolean:
-              *os << "CORBA::Any::from_boolean (" << arg->local_name () << ")";
-              break;
-            case AST_PredefinedType::PT_octet:
-              *os << "CORBA::Any::from_octet (" << arg->local_name () << ")";
-              break;
-            default:
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  "be_visitor_operation_rettype_compiled_marshal_ss::"
-                  "visit_array - "
-                  "Bad predefined type\n"
-                ),
-                -1
-              );
-            }
-          break;
-        }
-    }
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_array - "
-                         "Bad substate\n"),
-                        -1);
-    }
-
-  return 0;
+  return this->gen_pd_arg (node, false);
 }
 
 int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  const char *lname = arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -419,7 +261,7 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          *os << arg->local_name ();
+          *os << lname;
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -432,19 +274,19 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
         case AST_Argument::dir_IN:
           break;
         case AST_Argument::dir_INOUT:
-          *os << arg->local_name ();
+          *os << lname;
           break;
         case AST_Argument::dir_OUT:
-          *os << arg->local_name () << ".in ()";
+          *os << lname << ".in ()";
           break;
         }
     }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_interface - "
-                         "Bad substate\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("Bad substate\n")),
                         -1);
     }
 
@@ -454,7 +296,12 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
 int be_visitor_args_marshal_ss::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  const char *lname = arg->local_name ()->get_string ();
+  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  bool wide =
+    (node->width () != static_cast<long> (sizeof (char)));
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -462,26 +309,17 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          // we need to make a distinction between bounded and unbounded strings
-          if (node->max_size ()->ev ()->u.ulval == 0)
+          if (bound == 0)
             {
-              *os << arg->local_name () << ".out ()";
+              *os << lname << ".out ()";
             }
           else
             {
-              if (node->width () == (long) sizeof (char))
-                {
-                  *os << "CORBA::Any::to_string (";
-                }
-              else
-                {
-                  *os << "CORBA::Any::to_wstring (";
-                }
-
-              *os << arg->local_name () << ".out (), "
-                  << node->max_size ()->ev ()->u.ulval
-                  << ")";
+              *os << "::ACE_InputCDR::to_"
+                  << (wide ? "w" : "" ) << "string ("
+                  << lname << ".out (), " << bound << ")";
             }
+
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -489,40 +327,33 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
-      // we need to make a distinction between bounded and unbounded strings
-      if (node->max_size ()->ev ()->u.ulval == 0)
+      // We need to make a distinction between
+      // bounded and unbounded strings.
+      if (bound == 0)
         {
-          // unbounded
           switch (this->direction ())
             {
             case AST_Argument::dir_IN:
               break;
             case AST_Argument::dir_INOUT:
             case AST_Argument::dir_OUT:
-              *os << arg->local_name () << ".in ()";
+              *os << lname << ".in ()";
               break;
             }
         }
       else
         {
-          // bounded
           switch (this->direction ())
             {
             case AST_Argument::dir_IN:
               break;
             case AST_Argument::dir_INOUT:
             case AST_Argument::dir_OUT:
-              if (node->width () == (long) sizeof (char))
-                {
-                  *os << "CORBA::Any::from_string ((char *)";
-                }
-              else
-                {
-                  *os << "CORBA::Any::from_wstring ((CORBA::WChar *)";
-                }
+              *os << "::ACE_OutputCDR::from_"
+                  << (wide ? "w" : "" ) << "string (("
+                  << (wide ? "CORBA::WChar" : "char") << " *)"
+                  << lname << ".in (), " << bound << ")";
 
-              *os << arg->local_name () << ".in (), "
-                  << node->max_size ()->ev ()->u.ulval << ")";
               break;
             }
         }
@@ -530,9 +361,9 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_string - "
-                         "Bad substate\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_string - ")
+                         ACE_TEXT ("Bad substate\n")),
                         -1);
     }
 
@@ -556,13 +387,14 @@ int be_visitor_args_marshal_ss::visit_typedef (be_typedef *node)
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_typedef - "
-                         "accept on primitive type failed\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_typedef - ")
+                         ACE_TEXT ("accept on primitive ")
+                         ACE_TEXT ("type failed\n")),
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -610,7 +442,9 @@ int
 be_visitor_args_marshal_ss::emit_common ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  const char *lname = arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -618,7 +452,7 @@ be_visitor_args_marshal_ss::emit_common ()
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          *os << arg->local_name () << ".out ()";
+          *os << lname << ".out ()";
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -632,15 +466,16 @@ be_visitor_args_marshal_ss::emit_common ()
           break;
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
-          *os << arg->local_name () << ".in ()";
+          *os << lname << ".in ()";
           break;
         }
     }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::emit_common - "
-                         "Bad substate\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss")
+                         ACE_TEXT ("::emit_common - ")
+                         ACE_TEXT ("Bad substate\n")),
                         -1);
     }
 
@@ -652,7 +487,10 @@ int
 be_visitor_args_marshal_ss::emit_common2 (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_argument *arg = this->ctx_->be_node_as_argument ();
+  be_argument *arg =
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  const char *lname = arg->local_name ()->get_string ();
+  AST_Type::SIZE_TYPE st = node->size_type ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -660,7 +498,7 @@ be_visitor_args_marshal_ss::emit_common2 (be_type *node)
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          *os << arg->local_name ();
+          *os << lname;
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -673,21 +511,21 @@ be_visitor_args_marshal_ss::emit_common2 (be_type *node)
         case AST_Argument::dir_IN:
           break;
         case AST_Argument::dir_INOUT:
-          *os << arg->local_name ();
+          *os << lname;
           break;
         case AST_Argument::dir_OUT:
-          if (node->size_type () == AST_Type::VARIABLE)
-            *os << arg->local_name () << ".in ()";
-          else
-            *os << arg->local_name ();
+          *os << lname
+              << (st == AST_Type::VARIABLE ? ".in ()" : "");
+
           break;
         }
     }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::emit_common2 - "
-                         "Bad substate\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss")
+                         ACE_TEXT ("::emit_common2 - ")
+                         ACE_TEXT ("Bad substate\n")),
                         -1);
     }
 

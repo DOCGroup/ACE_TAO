@@ -2,81 +2,80 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# $Id$
 # -*- perl -*-
 
-use lib '../../../bin';
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-unlink $iorfile;
+my $server = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
+
+$iorbase = "test.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+
 $status = 0;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("Collocated_Test");
-}
-else {
-    $SV = new PerlACE::Process ("Collocated_Test");
-}
+$SV = $server->CreateProcess ("Collocated_Test");
 
 print STDERR "======== Running in Default Mode \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile");
-$sv = $SV->SpawnWaitKill (60);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 print STDERR "======== Running with per-orb \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation per-orb");
-$sv = $SV->SpawnWaitKill (60);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -ORBCollocation per-orb");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 print STDERR "======== Running with no collocation \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation no");
-$sv = $SV->SpawnWaitKill (60);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -ORBCollocation no");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 print STDERR "======== Running in default mode and two ORBS \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -n ");
-$sv = $SV->SpawnWaitKill (60);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -n ");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 print STDERR "======== Running in per-orb mode and two ORBS \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
-$sv = $SV->SpawnWaitKill (60);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -n -ORBCollocation per-orb");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
 
 print STDERR "======== Running in no collocation mode and two ORBS \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
-$sv = $SV->SpawnWaitKill (60);
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -n -ORBCollocation no");
+$sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
     $status = 1;
 }
-unlink $iorfile;
+$server->DeleteFile($iorbase);
+$server->GetStderrLog();
 
 exit $status;

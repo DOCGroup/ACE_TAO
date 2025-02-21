@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notify_Structured_Push_Consumer.h"
 #include "goC.h"
 #include "Notify_Test_Client.h"
@@ -11,7 +9,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_strings.h"
 
-static const char* ior = "file://supplier.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
 static CORBA::Short discard_policy = CosNotification::FifoOrder;
 CORBA::Long max_events_per_consumer = 4;
 static Notify_Structured_Push_Consumer* consumer_1;
@@ -19,14 +17,14 @@ static Notify_Structured_Push_Consumer* consumer_1;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:e:d:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:e:d:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -38,20 +36,20 @@ Consumer_Client::parse_args (int argc, char *argv[])
 
       case 'd':
       {
-        const char* discard = get_opts.optarg;
-        if (ACE_OS::strcasecmp (discard, "fifo") == 0)
+        const ACE_TCHAR *discard = get_opts.optarg;
+        if (ACE_OS::strcasecmp (discard, ACE_TEXT ("fifo")) == 0)
           {
             discard_policy = CosNotification::FifoOrder;
           }
-        else if (ACE_OS::strcasecmp (discard, "priority") == 0)
+        else if (ACE_OS::strcasecmp (discard, ACE_TEXT ("priority")) == 0)
           {
             discard_policy = CosNotification::PriorityOrder;
           }
-        else if (ACE_OS::strcasecmp (discard, "lifo") == 0)
+        else if (ACE_OS::strcasecmp (discard, ACE_TEXT ("lifo")) == 0)
           {
             discard_policy = CosNotification::LifoOrder;
           }
-        else if (ACE_OS::strcasecmp (discard, "deadline") == 0)
+        else if (ACE_OS::strcasecmp (discard, ACE_TEXT ("deadline")) == 0)
           {
             discard_policy = CosNotification::DeadlineOrder;
 #if !defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
@@ -80,22 +78,19 @@ Consumer_Client::parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 
 static CosNotifyChannelAdmin::ConsumerAdmin_ptr
-create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
-                      ACE_ENV_ARG_DECL)
+create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::ConsumerAdmin_var admin =
     ec->new_for_consumers (CosNotifyChannelAdmin::OR_OP,
-                           adminid
-                           ACE_ENV_ARG_PARAMETER);
+                           adminid);
 
-  ACE_CHECK_RETURN (0);
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
 }
@@ -103,8 +98,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
-                  Notify_Test_Client* client
-                  ACE_ENV_ARG_DECL)
+                  Notify_Test_Client* client)
 {
   ACE_DEBUG ((LM_DEBUG, "Max Events per Consumer = %d...\n", max_events_per_consumer));
 
@@ -116,40 +110,34 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                                           max_events_per_consumer,
                                           *client),
                     CORBA::NO_MEMORY ());
-  consumer_1->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer_1->init (client->root_poa ());
 
-  consumer_1->_connect (admin ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer_1->_connect (admin);
 }
 
 // ******************************************************************
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       Consumer_Client client;
 
-      status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      status = client.init (argc, argv);
 
       if (status == 0)
         {
           CosNotifyChannelAdmin::EventChannel_var ec =
-            client.create_event_channel ("MyEventChannel", 1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            client.create_event_channel ("MyEventChannel", 1);
 
           CORBA::ORB_ptr orb = client.orb ();
           CORBA::Object_var object =
-                              orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                              orb->string_to_object (ior);
 
-          sig_var sig = sig::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          sig_var sig = sig::_narrow (object.in ());
 
           if (CORBA::is_nil (sig.in ()))
             {
@@ -160,37 +148,30 @@ int main (int argc, char* argv[])
             }
 
           CosNotifyChannelAdmin::ConsumerAdmin_var admin =
-            create_consumeradmin (ec.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            create_consumeradmin (ec.in ());
 
           if (!CORBA::is_nil (admin.in ()))
             {
-              create_consumers (admin.in (), &client ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              create_consumers (admin.in (), &client);
               // Tell the supplier to go
-              sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              sig->go ();
 
               ACE_DEBUG((LM_DEBUG, "Consumer waiting for events...\n"));
 
-              client.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
-              ACE_TRY_CHECK;
- 
-              ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
-              consumer_1->disconnect(ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              client.ORB_run();
 
-              sig->done (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
+              consumer_1->disconnect();
+
+              sig->done ();
             }
         }
     }
-  ACE_CATCH (CORBA::Exception, e)
+  catch (const CORBA::Exception& e)
     {
-      ACE_PRINT_EXCEPTION (e, "Error: ");
+      e._tao_print_exception ("Error: ");
       status = 1;
     }
-  ACE_ENDTRY;
 
   return status;
 }

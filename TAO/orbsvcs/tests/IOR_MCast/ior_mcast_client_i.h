@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #if !defined (IOR_MCAST_CLIENT_I_H)
 #define IOR_MCAST_CLIENT_I_H
 
@@ -18,19 +16,18 @@ class ior_mcast_Client_i
 
  public:
   // = COnstructor and destructor.
-  ior_mcast_Client_i (void);
-  ~ior_mcast_Client_i (void);
+  ior_mcast_Client_i ();
+  ~ior_mcast_Client_i ();
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run ();
   // Execute the client example code.
 
-  int init (int& argc, char *argv[] ACE_ENV_ARG_DECL);
+  int init (int& argc, ACE_TCHAR *argv[]);
   // Initialize the client communication endpoint with the server.
 
  private:
   // mcast_ior
   ACE_CString mcast_url_;
-
 };
 
 #endif /* IOR_MCAST_CLIENT_I_H */

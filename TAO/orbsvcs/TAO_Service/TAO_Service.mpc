@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
-project : taoexe, core {
-  exename = TAO_Service
+project : taoexe, install, svc_utils {
+  exename = tao_service
 }

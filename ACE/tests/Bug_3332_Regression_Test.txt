@@ -1,0 +1,48 @@
+Bug_3332_Regression_Test: (RB_Tree nodes are swapped and "in use" nodes
+are deleted instead of the dropped node being unbound). This is an example
+of the tests output when the problem occurs:
+
+May 27 16:41:50.843 2008@LM_DEBUG@(976|2568) Starting Bug_3332_Regression_Test test at Tue May 27 2008 16:41:50.843000
+May 27 16:41:50.843 2008@LM_DEBUG@Creating Tree
+May 27 16:41:50.843 2008@LM_DEBUG@Validating Tree
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node a=1 @ 0098F1A0
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node f=6 @ 0098F1E8
+May 27 16:41:50.843 2008@LM_ERROR@: entry g=7 has moved from 0098F2C0 to 0098F1E8
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node c=3 @ 0098F230
+May 27 16:41:50.843 2008@LM_ERROR@: entry d=4 has moved from 0098F398 to 0098F230
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node e=5 @ 0098F278
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node g=7 @ 0098F1E8
+May 27 16:41:50.843 2008@LM_ERROR@: entry h=8 has moved from 0098F350 to 0098F1E8
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node b=2 @ 0098F308
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node h=8 @ 0098F1E8
+May 27 16:41:50.843 2008@LM_ERROR@: entry i=9 has moved from 0098F3E0 to 0098F1E8
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node d=4 @ 0098F230
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node i=9 @ 0098F1E8
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node l=12 @ 0098F428
+May 27 16:41:50.843 2008@LM_ERROR@: entry m=13 has moved from 0098F500 to 0098F428
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node j=10 @ 0098F470
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node k=11 @ 0098F4B8
+May 27 16:41:50.843 2008@LM_DEBUG@Deleting node m=13 @ 0098F428
+May 27 16:41:50.843 2008@LM_DEBUG@Finished
+May 27 16:41:50.843 2008@LM_DEBUG@(976|2568) Ending Bug_3332_Regression_Test test at Tue May 27 2008 16:41:50.843000
+
+and this is what it looks like when it passes the test:
+
+May 28 09:04:11.239 2008@LM_DEBUG@(4012|2900) Starting Bug_3332_Regression_Test test at Wed May 28 2008 09:04:11.239000
+May 28 09:04:11.239 2008@LM_DEBUG@Creating Tree
+May 28 09:04:11.239 2008@LM_DEBUG@Validating Tree
+May 28 09:04:11.239 2008@LM_DEBUG@Deleting node a=1 @ 0098F1B8
+May 28 09:04:11.239 2008@LM_DEBUG@Deleting node f=6 @ 0098F200
+May 28 09:04:11.239 2008@LM_DEBUG@Deleting node c=3 @ 0098F248
+May 28 09:04:11.239 2008@LM_DEBUG@Deleting node e=5 @ 0098F290
+May 28 09:04:11.239 2008@LM_DEBUG@Deleting node g=7 @ 0098F2D8
+May 28 09:04:11.239 2008@LM_DEBUG@Deleting node b=2 @ 0098F320
+May 28 09:04:11.255 2008@LM_DEBUG@Deleting node h=8 @ 0098F368
+May 28 09:04:11.255 2008@LM_DEBUG@Deleting node d=4 @ 0098F3B0
+May 28 09:04:11.255 2008@LM_DEBUG@Deleting node i=9 @ 0098F3F8
+May 28 09:04:11.255 2008@LM_DEBUG@Deleting node l=12 @ 0098F440
+May 28 09:04:11.255 2008@LM_DEBUG@Deleting node j=10 @ 0098F488
+May 28 09:04:11.255 2008@LM_DEBUG@Deleting node k=11 @ 0098F4D0
+May 28 09:04:11.255 2008@LM_DEBUG@Deleting node m=13 @ 0098F518
+May 28 09:04:11.255 2008@LM_DEBUG@Finished
+May 28 09:04:11.255 2008@LM_DEBUG@(4012|2900) Ending Bug_3332_Regression_Test test at Wed May 28 2008 09:04:11.255000

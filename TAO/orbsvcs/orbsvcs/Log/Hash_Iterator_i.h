@@ -1,17 +1,13 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Hash_Iterator_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::Iterator interface.
- *
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *
  */
 //=============================================================================
 
@@ -34,6 +30,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Hash_Iterator_i
  *
@@ -43,11 +41,10 @@ class TAO_Log_Serv_Export TAO_Hash_Iterator_i
   : public TAO_Iterator_i
 {
 public:
-
-  // = Initialization and Termination methods.
-
   /// Constructor.
-  TAO_Hash_Iterator_i (ACE_Reactor* reactor,
+  TAO_Hash_Iterator_i (PortableServer::POA_ptr poa,
+                       ACE_Reactor* reactor,
+                       TAO_Hash_LogRecordStore* recordstore,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
                        CORBA::ULong start,
@@ -55,22 +52,21 @@ public:
                        CORBA::ULong max_rec_list_len);
 
   /// Destructor.
-  virtual ~TAO_Hash_Iterator_i (void);
+  virtual ~TAO_Hash_Iterator_i ();
 
   /// Gets a list of LogRecords.
   virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
-                                       CORBA::ULong how_many
-                                       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidParam));
+                                       CORBA::ULong how_many);
 
 private:
+  /// Pointer to record store
+  TAO_Hash_LogRecordStore* recordstore_;
 
   /// Current Iterator.
-  TAO_Hash_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_;
+  TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_;
 
   /// End Iterator.
-  TAO_Hash_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_end_;
+  TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end_;
 
   /// Position.
   CORBA::ULong current_position_;
@@ -81,6 +77,8 @@ private:
   /// Max rec list length.
   CORBA::ULong max_rec_list_len_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

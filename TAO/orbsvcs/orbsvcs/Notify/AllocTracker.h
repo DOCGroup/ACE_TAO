@@ -1,9 +1,8 @@
-// $Id$
 #ifndef ALLOC_TRACKER_H
 #define ALLOC_TRACKER_H
 #include /**/"ace/pre.h"
 
-#include "notify_export.h"
+#include "orbsvcs/Notify/notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -12,7 +11,6 @@
 //#define DEBUG_MEMORY_USE
 #if defined(_MSC_VER) && defined (_DEBUG) && defined (DEBUG_MEMORY_USE)
 namespace CRT{
-
 /// \brief dump heap allocation stats
 ///
 /// This works only on microsoft/windows compilers
@@ -47,7 +45,7 @@ public:
     _CrtMemState diff;
     _CrtMemDifference (&diff, &before_, &after);
 
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) %s: New heap blocks: %d; bytes: %d\n"),
       name_.c_str (),
       static_cast<int> (diff.lCounts[_NORMAL_BLOCK]),
@@ -72,7 +70,7 @@ private:
 };
 } //namespace
 #define ACE_WIN32_HEAP_MONITOR(name) \
-  CrtHeapDumper heap_check___(name); \
+  CRT::CrtHeapDumper heap_check___(name); \
   ACE_UNUSED_ARG (heap_check___)
 #else // _MSC_VER etc
  #define ACE_WIN32_HEAP_MONITOR(name)

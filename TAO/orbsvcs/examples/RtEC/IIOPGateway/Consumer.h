@@ -2,8 +2,6 @@
 /**
  *  @file   Consumer.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  *  Consumer
@@ -29,22 +27,19 @@ class Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
   /// Constructor
-  Consumer (void);
+  Consumer ();
 
   /// Run the test
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
 
   // = The RtecEventComm::PushConsumer methods
 
   // The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count_;

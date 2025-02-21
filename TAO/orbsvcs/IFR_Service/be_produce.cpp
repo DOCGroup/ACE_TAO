@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -67,163 +65,97 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // BE_produce.cc - Produce the work of the BE - does nothing in the
 //                 dummy BE
 
+#include "orbsvcs/Log_Macros.h"
 #include "global_extern.h"
 #include "TAO_IFR_BE_Export.h"
 #include "be_extern.h"
+#include "fe_extern.h"
 #include "ast_root.h"
 #include "ifr_visitor_macro.h"
 #include "ifr_removing_visitor.h"
 #include "ifr_adding_visitor.h"
 
-ACE_RCSID (be,
-           be_produce,
-           "$Id$")
-
 // Clean up before exit, whether successful or not.
-// Need not be exported since it is called only from this file.
-void
-BE_cleanup (void)
+TAO_IFR_BE_Export void
+BE_cleanup ()
 {
   idl_global->destroy ();
-
-  // Remove the holding scope entry from the repository.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      if (be_global->repository ())
-        {
-          CORBA::Contained_var result =
-            be_global->repository ()->lookup_id (be_global->holding_scope_name ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (!CORBA::is_nil (result.in ()))
-            {
-              CORBA::ModuleDef_var scope =
-                CORBA::ModuleDef::_narrow (result.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              scope->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("BE_cleanup"));
-    }
-  ACE_ENDTRY;
 }
 
 // Abort this run of the BE.
 TAO_IFR_BE_Export void
-BE_abort (void)
+BE_abort ()
 {
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
               ACE_TEXT ("Fatal Error - Aborting\n")));
 
-  BE_cleanup ();
-
-  ACE_OS::exit (1);
-}
-
-void
-BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
-{
-  CORBA::ModuleDef_ptr scope = CORBA::ModuleDef::_nil ();
-
-  // If we are multi-threaded, it may already be created.
-  CORBA::Contained_var result =
-    be_global->repository ()->lookup_id (be_global->holding_scope_name ()
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (CORBA::is_nil (result.in ()))
-    {
-      scope =
-        be_global->repository ()->create_module (
-                                      be_global->holding_scope_name (),
-                                      be_global->holding_scope_name (),
-                                      "1.0"
-                                      ACE_ENV_ARG_PARAMETER
-                                    );
-      ACE_CHECK;
-    }
-  else
-    {
-      scope = CORBA::ModuleDef::_narrow (result.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-
-  be_global->holding_scope (scope);
+  // BE_cleanup will be called after the exception is caught.
+  throw Bailout ();
 }
 
 int
-BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_DECL)
+BE_ifr_repo_init ()
 {
-  CORBA::Object_var object =
-    be_global->orb ()->resolve_initial_references ("InterfaceRepository"
-                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  try
+  {
+    CORBA::Object_var object =
+      be_global->orb ()->resolve_initial_references ("InterfaceRepository");
 
-  if (CORBA::is_nil (object.in ()))
-    {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          ACE_TEXT ("Null objref from resolve_initial_references\n")
-        ),
-        -1
-      );
-    }
+    if (CORBA::is_nil (object.in ()))
+      {
+        ORBSVCS_ERROR_RETURN ((
+            LM_ERROR,
+            ACE_TEXT ("Null objref from resolve_initial_references\n")
+          ),
+          -1
+        );
+      }
 
-  CORBA::Repository_var repo =
-    CORBA::Repository::_narrow (object.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    CORBA::Repository_var repo =
+      CORBA::Repository::_narrow (object.in ());
 
-  if (CORBA::is_nil (repo.in ()))
-    {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          ACE_TEXT ("CORBA::Repository::_narrow failed\n")
-        ),
-        -1
-      );
-    }
+    if (CORBA::is_nil (repo.in ()))
+      {
+        ORBSVCS_ERROR_RETURN ((
+            LM_ERROR,
+            ACE_TEXT ("CORBA::Repository::_narrow failed\n")
+          ),
+          -1
+        );
+      }
 
-  be_global->repository (repo._retn ());
+    be_global->repository (repo._retn ());
+  }
+  catch (const CORBA::ORB::InvalidName &)
+  {
+    ORBSVCS_ERROR ((LM_ERROR,
+                ACE_TEXT ("resolution of Interface Repository failed\n")));
+    throw Bailout ();
+  }
 
   return 0;
 }
 
 // Do the work of this BE. This is the starting point for code generation.
 TAO_IFR_BE_Export void
-BE_produce (void)
+BE_produce ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int status = BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int status = BE_ifr_repo_init ();
 
       if (status != 0)
         {
           return;
         }
 
-      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       // Get the root node.
       AST_Decl *d = idl_global->root ();
-      AST_Root *root = AST_Root::narrow_from_decl (d);
+      AST_Root *root = dynamic_cast<AST_Root*> (d);
 
       if (root == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%N:%l) BE_produce - ")
                       ACE_TEXT ("No Root\n")));
 
@@ -240,40 +172,35 @@ BE_produce (void)
           // only visit_scope() for the removing visitor.
           if (visitor.visit_scope (root) == -1)
             {
-              ACE_ERROR ((
+              ORBSVCS_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) BE_produce -")
-                  ACE_TEXT (" failed to accept removing visitor\n")
-                ));
+                  ACE_TEXT (" failed to accept removing visitor\n")));
 
               BE_abort ();
             }
         }
       else
         {
-          ifr_adding_visitor visitor (d);
+          ifr_adding_visitor visitor (d, 0, be_global->allow_duplicate_typedefs ());
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 
           if (root->ast_accept (&visitor) == -1)
             {
-              ACE_ERROR ((
+              ORBSVCS_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) BE_produce -")
-                  ACE_TEXT (" failed to accept adding visitor\n")
-                ));
+                  ACE_TEXT (" failed to accept adding visitor\n")));
 
               BE_abort ();
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("BE_produce"));
-
+      ex._tao_print_exception (ACE_TEXT ("BE_produce"));
     }
-  ACE_ENDTRY;
 
   // Clean up.
   BE_cleanup ();

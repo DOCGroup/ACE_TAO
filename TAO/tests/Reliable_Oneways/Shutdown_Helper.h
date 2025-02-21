@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef SHUTDOWN_HELPER_H
 #define SHUTDOWN_HELPER_H
@@ -17,11 +14,10 @@ public:
   Shutdown_Helper (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };

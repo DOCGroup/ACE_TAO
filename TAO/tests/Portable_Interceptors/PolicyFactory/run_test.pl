@@ -4,28 +4,24 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # -*- perl -*-
 #
-# $Id$
 
-use lib  '../../../../bin';
-use PerlACE::Run_Test;
+use lib  "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-$status = 0;
+my $status = 0;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server");
-}
-else {
-    $SV = new PerlACE::Process ("server");    
-}
+my $process = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
+$SV = $process->CreateProcess ("server");
 
 print STDERR "\n\n==== Running PolicyFactory test\n";
 
 $SV->Spawn ();
 
-$server = $SV->WaitKill (5);
+$process_status = $SV->WaitKill ($process->ProcessStartWaitInterval());
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($process_status != 0) {
+    print STDERR "ERROR: server returned $process_status\n";
     $status = 1;
 }
 

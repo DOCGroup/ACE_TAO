@@ -4,8 +4,6 @@
 /**
  *  @file  enum_typecode.h
  *
- *  $Id$
- *
  *  Enumeration TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
@@ -19,7 +17,6 @@
 
 namespace TAO
 {
-
   /**
    * @class be_visitor_enum_typecode
    *
@@ -31,7 +28,6 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
-
     /// Constructor.
     be_visitor_enum_typecode (be_visitor_context * ctx);
 
@@ -46,12 +42,9 @@ namespace TAO
     virtual int visit_enum (be_enum * node);
 
   private:
-
     /// Generate structure field related TypeCode code.
     int visit_members (be_enum * node);
-
   };
-
 }
 
 #endif  /* TAO_BE_VISITOR_ENUM_TYPECODE_H */

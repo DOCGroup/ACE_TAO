@@ -1,22 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//   TAO services
-//
-// = FILENAME
-//   ProxyPushSupplier_i
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// = DESCRIPTION
-//   This has the implementation of the
-//   CosEventChannelAdmin::ProxyPushSupplier interface.
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file   ProxyPushSupplier_i.h
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *
+ * This has the implementation of the
+ * CosEventChannelAdmin::ProxyPushSupplier interface.
+ */
+//=============================================================================
+
 
 #ifndef _PROXYPUSHSUPPLIER_H
 #define _PROXYPUSHSUPPLIER_H
@@ -38,38 +32,32 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ProxyPushSupplier_i :
   //   This implementation of the ProxyPushSupplier uses the
   //   RtecEventChannelAdmin::ProxyPushSupplier.
 public:
-  // = Initialization and termination methods.
+  /// Constructor.
   TAO_CosEC_ProxyPushSupplier_i (const RtecEventChannelAdmin::ConsumerQOS &qos,
                                  RtecEventChannelAdmin::ProxyPushSupplier_ptr pps);
-  // Constructor.
 
-  ~TAO_CosEC_ProxyPushSupplier_i (void);
-  // Destructor.
+  /// Destructor.
+  ~TAO_CosEC_ProxyPushSupplier_i () = default;
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  // Ends the event communication and disposes this object.
+  /// Ends the event communication and disposes this object.
+  virtual void disconnect_push_supplier ();
 
-  virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer
-                                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosEventChannelAdmin::AlreadyConnected,
-                       CosEventChannelAdmin::TypeError));
-  // Connects the <push_consumer> to the Event Channel.
+  /// Connects the <push_consumer> to the Event Channel.
+  virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer);
 
 private:
-  int connected (void);
-  // Returns 0 if a push_consumer is already connected to this
-  // ProxyPushSupplier, otherwise it returns a 1.
+  /// Returns 0 if a push_consumer is already connected to this
+  /// ProxyPushSupplier, otherwise it returns a 1.
+  int connected ();
 
+  /// The ConsumerQOS specified by the user of this class.
   const RtecEventChannelAdmin::ConsumerQOS &qos_;
-  // The ConsumerQOS specified by the user of this class.
 
+  /// The Rtec ProxyPushSupplier specified by the user of this class.
   RtecEventChannelAdmin::ProxyPushSupplier_var pps_;
-  // The Rtec ProxyPushSupplier specified by the user of this class.
 
+  /// The Rtec PushConsumer wrapper used by the Rtec ProxyPushSupplier.
   TAO_CosEC_PushConsumerWrapper *wrapper_;
-  // The Rtec PushConsumer wrapper used by the Rtec ProxyPushSupplier.
 };
 
 #include /**/ "ace/post.h"

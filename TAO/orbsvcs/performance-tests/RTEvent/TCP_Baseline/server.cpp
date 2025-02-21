@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_Class.h"
 
 #include "ace/Task.h"
@@ -11,32 +9,28 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (TAO_PERF_RTEC_TCP_Baseline,
-           server,
-           "$Id$")
-
 int use_rt   = 0;
 int nthreads = 1;
-char const * hi_endpoint = "localhost:12345";
-char const * lo_endpoint = "localhost:23456";
+ACE_TCHAR const * hi_endpoint = ACE_TEXT ("localhost:12345");
+ACE_TCHAR const * lo_endpoint = ACE_TEXT ("localhost:23456");
 
 int
-parse_args (int argc, char *argv[]);
+parse_args (int argc, ACE_TCHAR *argv[]);
 
 class Task : public ACE_Task_Base
 {
 public:
-  Task(char const * endpoint);
+  Task (ACE_TCHAR const *endpoint);
 
   virtual int svc();
 
 private:
-  char const * endpoint_;
+  ACE_TCHAR const *endpoint_;
 
   ACE_Reactor reactor_;
 };
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;
@@ -44,8 +38,8 @@ int main (int argc, char *argv[])
   if (parse_args (argc, argv) != 0)
     return 1;
 
-  Task hi_task(hi_endpoint);
-  Task lo_task(lo_endpoint);
+  Task hi_task (hi_endpoint);
+  Task lo_task (lo_endpoint);
 
   hi_task.activate(rt_class.thr_sched_class() | THR_NEW_LWP | THR_JOINABLE,
                    1, 1, rt_class.priority_high());
@@ -139,11 +133,11 @@ Svc_Handler::handle_close(ACE_HANDLE h, ACE_Reactor_Mask m)
 
 // ****************************************************************
 
-Task::Task(char const * endpoint)
-  : endpoint_(endpoint)
-  , reactor_(new ACE_TP_Reactor)
+Task::Task(ACE_TCHAR const * endpoint)
+  : endpoint_ (endpoint)
+  , reactor_ (new ACE_TP_Reactor)
 {
-  ACE_INET_Addr local_sap(endpoint_);
+  ACE_INET_Addr local_sap (endpoint_);
   Acceptor * acceptor = new Acceptor;
 
   if(acceptor->open(local_sap, &reactor_, ACE_NONBLOCK) == -1)
@@ -163,9 +157,9 @@ Task::svc()
 // ****************************************************************
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "h:l:n:r");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h:l:n:r"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -198,11 +192,6 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,17 +1,13 @@
-// $Id$
-
 #include "EventChannel_Command.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(lib, TAO_EventChannel_Command, "$Id$")
 
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"
-#include "ace/Dynamic_Service.h"
-#include "../../../orbsvcs/Notify/Service.h"
+#include "orbsvcs/Notify/Service.h"
 
-TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command (void)
+TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command ()
   : collocated_ (0)
 {
 }
@@ -21,13 +17,13 @@ TAO_Notify_Tests_EventChannel_Command::~TAO_Notify_Tests_EventChannel_Command ()
 }
 
 const char*
-TAO_Notify_Tests_EventChannel_Command::get_name (void)
+TAO_Notify_Tests_EventChannel_Command::get_name ()
 {
   return TAO_Notify_Tests_EventChannel_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_EventChannel_Command::name (void)
+TAO_Notify_Tests_EventChannel_Command::name ()
 {
   return TAO_Notify_Tests_Name::event_channel_command;
 }
@@ -37,47 +33,47 @@ TAO_Notify_Tests_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp ("-Create") == 0) // -Create ec_name factory_name [COLLOCATED]
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Create")) == 0) // -Create ec_name factory_name [COLLOCATED]
         {
           this->command_ = CREATE;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
-          this->factory_ = arg_shifter.get_current ();
+          this->factory_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
           arg_shifter.consume_arg ();
 
-          if (arg_shifter.cur_arg_strncasecmp ("COLLOCATED") == 0)
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("COLLOCATED")) == 0)
             {
               this->collocated_ = 1;
             }
 
-          if (arg_shifter.cur_arg_strncasecmp ("COLOCATED") == 0) // grandfather in misspelled
+          if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("COLOCATED")) == 0) // grandfather in misspelled
             {
               this->collocated_ = 1;
               ACE_DEBUG ((LM_WARNING, "TAO_Notify_Tests_EventChannel_Command::init --"
                           " warning: deprecated misspelled COLOCATED option used.\n"));
             }
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Destroy") == 0) // -Destroy ec_name
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Destroy")) == 0) // -Destroy ec_name
         {
           this->command_ = DESTROY;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS ec_name [Qos Options]
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Set_QoS")) == 0) // -Set_QoS ec_name [Qos Options]
         {
           this->command_ = SET_QOS;
 
           arg_shifter.consume_arg ();
 
-          this->name_ = arg_shifter.get_current ();
+          this->name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
 
@@ -88,19 +84,12 @@ TAO_Notify_Tests_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf ()
 {
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
   // The Service Object.
-  TAO_Notify_Service* notify_service;
-
-  notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
-
-  if (notify_service == 0)
-    {
-      notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
-    }
+  TAO_Notify_Service* notify_service = TAO_Notify_Service::load_default ();
 
   if (notify_service == 0)
     {
@@ -119,40 +108,31 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (ACE_ENV_SINGLE_ARG
 
   LOOKUP_MANAGER->resolve (naming);
 
-  notify_service->init_service (orb.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  notify_service->init_service (orb.in ());
 
   // Activate the factory
   notify_factory =
-    notify_service->create (poa.in ()
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    notify_service->create (poa.in ());
 
   // Register with the Naming Service
   CosNaming::Name_var name =
-    naming->to_name (TAO_Notify_Tests_Name::event_channel_factory
-                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    naming->to_name (TAO_Notify_Tests_Name::event_channel_factory);
 
   naming->rebind (name.in (),
-                  notify_factory.in ()
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                  notify_factory.in ());
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::handle_create ()
 {
   if (this->collocated_ == 1)
     {
-      this->create_collocated_ecf (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->create_collocated_ecf ();
     }
 
   CosNotifyChannelAdmin::EventChannelFactory_var ec_factory;
 
-  LOOKUP_MANAGER->resolve (ec_factory , TAO_Notify_Tests_Name::event_channel_factory ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (ec_factory , TAO_Notify_Tests_Name::event_channel_factory);
 
   CosNotification::QoSProperties qos;
   CosNotification::AdminProperties admin;
@@ -161,61 +141,54 @@ TAO_Notify_Tests_EventChannel_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
   CosNotifyChannelAdmin::EventChannel_var ec =
     ec_factory->create_channel (qos,
                                 admin,
-                                this->id_
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                this->id_);
 
-  LOOKUP_MANAGER->_register (ec.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->_register (ec.in(), this->name_.c_str ());
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::handle_destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::handle_destroy ()
 {
   ACE_DEBUG ((LM_DEBUG, "Destroying event channel %s\n", this->name_.c_str ()));
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  LOOKUP_MANAGER->resolve (ec, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (ec, this->name_.c_str ());
 
-  ec->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ec->destroy ();
 }
 void
-TAO_Notify_Tests_EventChannel_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::handle_set_qos ()
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  LOOKUP_MANAGER->resolve (ec, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (ec, this->name_.c_str ());
 
-  ec->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ec->set_qos (this->qos_);
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_EventChannel_Command::handle_status ()
 {
   //@@ TODO: Implement
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_EventChannel_Command::execute_i ()
 {
   if (this->command_ == CREATE)
     {
-      this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_create ();
     }
   else if (this->command_ == DESTROY)
     {
-      this->handle_destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_destroy ();
     }
   else if (this->command_ == SET_QOS)
     {
-      this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_set_qos ();
     }
   else if (this->command_ == DUMP_STATE)
     {
-      this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->handle_status ();
     }
 }

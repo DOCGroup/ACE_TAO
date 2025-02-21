@@ -1,0 +1,64 @@
+// -*- MPC -*-
+project(*cancel) : aceexe, avoids_ace_for_tao {
+  exename = test_cancel
+  Source_Files {
+    test_cancel.cpp
+  }
+}
+
+project(*end_event_loops) : aceexe, avoids_ace_for_tao {
+  exename = test_end_event_loop
+  Source_Files {
+    test_end_event_loop.cpp
+  }
+}
+
+project(*multiple_loops) : aceexe, avoids_ace_for_tao {
+  exename = test_multiple_loops
+  Source_Files {
+    test_multiple_loops.cpp
+  }
+}
+
+project(*post_completions) : aceexe, avoids_ace_for_tao {
+  exename = test_post_completions
+  Source_Files {
+    post_completions.cpp
+  }
+}
+
+project(*proactor) : aceexe, avoids_ace_for_tao {
+  exename = test_proactor
+  Source_Files {
+    test_proactor.cpp
+  }
+}
+
+// project(*proactor2) : aceexe, avoids_ace_for_tao {
+//   exename = test_proactor2
+//   Source_Files {
+//     test_proactor2.cpp
+//   }
+// }
+
+// project(*proactor3) : aceexe, avoids_ace_for_tao {
+//   exename = test_proactor3
+//   Source_Files {
+//     test_proactor3.cpp
+//   }
+// }
+
+project(*timeout) : aceexe, avoids_ace_for_tao {
+  exename = test_timeout
+  Source_Files {
+    test_timeout.cpp
+  }
+}
+
+project(*udp_proactor) : aceexe, avoids_ace_for_tao {
+  exename = test_udp_proactor
+  Source_Files {
+    test_udp_proactor.cpp
+  }
+}
+

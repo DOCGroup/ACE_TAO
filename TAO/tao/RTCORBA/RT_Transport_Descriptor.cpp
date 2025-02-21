@@ -1,16 +1,14 @@
-// $Id$
-
-#include "RT_Transport_Descriptor.h"
+#include "tao/RTCORBA/RT_Transport_Descriptor.h"
 #include "ace/OS_Memory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "RT_Transport_Descriptor.inl"
+#include "tao/RTCORBA/RT_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RTCORBA, TAO_RT_Transport_Descriptor, "$Id$")
-
-#include "RT_Transport_Descriptor_Property.h"
+#include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
 #include "tao/Endpoint.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
 {
@@ -32,7 +30,7 @@ TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
 }
 
 TAO_Transport_Descriptor_Interface *
-TAO_RT_Transport_Descriptor::duplicate (void)
+TAO_RT_Transport_Descriptor::duplicate ()
 {
   // Get a copy of the underlying endpoint
   TAO_Endpoint *endpoint =
@@ -61,7 +59,7 @@ TAO_RT_Transport_Descriptor::duplicate (void)
       // Note that we cannot use <insert> because that will reverse the stack.
       if (new_descriptor->property_list_ == 0)
         new_descriptor->property_list_ = new_property;
-      else
+      else if (current_new_property != 0)
         current_new_property->next_ = new_property;
 
       current_new_property = new_property;
@@ -78,11 +76,11 @@ TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Inter
     dynamic_cast<const TAO_RT_Transport_Descriptor*> (other_prop);
 
   if (rhs == 0)
-    return 0;
+    return false;
 
   // Check if endpoint is equivalent.
   if (this->endpoint_->is_equivalent (rhs->endpoint_) == 0)
-    return 0;
+    return false;
 
   // Check the property_list_.
   TAO_RT_Transport_Descriptor_Property *current =
@@ -93,22 +91,23 @@ TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Inter
 
   while (current || rhs_current)
     {
-      if (rhs_current == 0 ||
-          current == 0)
-        return 0;
+      if (rhs_current == 0 || current == 0)
+        return false;
 
       if (current->is_equivalent (rhs_current) == 0)
-        return 0;
+        return false;
 
       current = current->next_;
       rhs_current = rhs_current->next_;
     }
 
-  return 1;
+  return true;
 }
 
 u_long
-TAO_RT_Transport_Descriptor::hash (void) const
+TAO_RT_Transport_Descriptor::hash () const
 {
   return this->endpoint_->hash ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

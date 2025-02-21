@@ -1,0 +1,69 @@
+
+
+Event Notification Service
+
+
+File: examples/NotifyService/RTNotify/README
+
+This directory contains a simple example of using the Notification Service
+with Real-Time CORBA.
+
+This example extends the basic Messenger notify service example to illustrate
+how the Notification channel can be used with RT CORBA features.  The supplier
+and consumer both set up their proxies to use a thread pool with lanes and
+the Notify_Service executable is configured to load the RT_Notification library
+and associated features.  A priority is set in the supplier and propagetd through
+the channel into the consumer.
+
+The MessengerServer in this example plays the role of a server for
+the MessengerClient and the role of a supplier for the MessengerConsumer.
+The flow of messages is shown below:
+
+MessengerClient->MessengerSupplier->NotificationChannel->MessengerConsumer.
+
+
+The Client code is stored in:
+
+examples/NotifyService/Messenger/MessengerClient.cpp
+
+The Server code is stored in:
+
+examples/NotifyService/Messenger/MessengerServer.cpp
+
+The Consumer code is stored in:
+
+examples/NotifyService/Messenger/MessengerConsumer.cpp
+
+
+How to Run
+----------
+
+To start the Naming Service:
+----------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior&
+
+To start the Notification Service:
+---------------------------------
+$TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -ORBInitRef NameService=file://ns.iori -ORBSvcConf notify.conf &
+
+To start the server/supplier
+----------------------------
+./MessengerServer -ORBInitRef NameService=file://ns.ior -ORBSvcConf nsclient.conf
+
+To start the consumer
+---------------------
+./MessengerConsumer -ORBInitRef NameService=file://ns.ior -ORBSvcConf nsclient.conf
+
+To start the client
+-------------------
+./MessengerClient -ORBInitRef NameService=file://ns.ior
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl

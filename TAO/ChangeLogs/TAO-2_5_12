@@ -1,0 +1,349 @@
+commit 30dc9807c9d6c752e0bc0d528ae2e7c57c53f716
+Merge: d25bf627beb a5bb8cb886e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 6 13:05:15 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit d25bf627bebf25507b2f4c7e3023ec2c1bd0ed7b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 6 13:05:07 2020 +0200
+
+    Use https
+    
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/usage-bugzilla.html:
+        * ACE/html/Stats/img.html:
+        * TAO/docs/TAO-metrics.html:
+        * TAO/docs/releasenotes/index.html:
+
+commit 28e4e2fbcd7b9b80ffb295ae469366c198c61d61
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 6 10:42:48 2020 +0200
+
+    Fixed typo and removed blank lines
+    
+        * TAO/tests/IDL_Test/README:
+        * TAO/tests/IDL_Test/enum_in_struct.idl:
+        * TAO/tests/IDL_Test/typecode.idl:
+
+commit f54ee35e7280cba29259b321cdaed3e32cec5609
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 6 10:34:48 2020 +0200
+
+    Also use Objects as part of an operation but as a result don't generate Any operations anymore in a separate file
+    
+        * TAO/tests/IDL_Test/IDL_Test.mpc:
+        * TAO/tests/IDL_Test/keywords.idl:
+
+commit d1e01360b3348b5df10def429aa4a3f3083efee5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 6 09:53:27 2020 +0200
+
+    Add keyword escaping example and use that also for private/public
+    
+        * TAO/tests/IDL_Test/keywords.idl:
+
+commit ae13700f76493361f0c82ac49d87567f9ac18cf9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 5 12:10:20 2020 +0200
+
+    Upgrade to latest doxygen
+    
+        * ACE/etc/ace.doxygen:
+        * ACE/etc/ace_inet.doxygen:
+        * ACE/etc/ace_qos.doxygen:
+        * ACE/etc/ace_rmcast.doxygen:
+        * ACE/etc/ace_ssl.doxygen:
+        * ACE/etc/acexml.doxygen:
+        * TAO/etc/tao.doxygen:
+        * TAO/etc/tao_anytypecode.doxygen:
+        * TAO/etc/tao_av.doxygen:
+        * TAO/etc/tao_compression.doxygen:
+        * TAO/etc/tao_cosevent.doxygen:
+        * TAO/etc/tao_cosnaming.doxygen:
+        * TAO/etc/tao_cosnotification.doxygen:
+        * TAO/etc/tao_costime.doxygen:
+        * TAO/etc/tao_costrader.doxygen:
+        * TAO/etc/tao_dynamicany.doxygen:
+        * TAO/etc/tao_dynamicinterface.doxygen:
+        * TAO/etc/tao_esf.doxygen:
+        * TAO/etc/tao_ifr.doxygen:
+        * TAO/etc/tao_implrepo.doxygen:
+        * TAO/etc/tao_iormanip.doxygen:
+        * TAO/etc/tao_iortable.doxygen:
+        * TAO/etc/tao_pi.doxygen:
+        * TAO/etc/tao_pi_server.doxygen:
+        * TAO/etc/tao_portablegroup.doxygen:
+        * TAO/etc/tao_portableserver.doxygen:
+        * TAO/etc/tao_rtcorba.doxygen:
+        * TAO/etc/tao_rtevent.doxygen:
+        * TAO/etc/tao_rtportableserver.doxygen:
+        * TAO/etc/tao_security.doxygen:
+        * TAO/etc/tao_smartproxies.doxygen:
+        * TAO/etc/tao_ssliop.doxygen:
+        * TAO/etc/tao_strategies.doxygen:
+        * TAO/etc/tao_transportcurrent.doxygen:
+        * TAO/etc/tao_ziop.doxygen:
+
+commit 0c65b800b02daee58d9f0187442bf829a3ff0a69
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 2 18:24:09 2020 +0200
+
+    Perl shebang changes
+    
+        * TAO/orbsvcs/examples/Notify/MC/TkMonitor/monitor.pl:
+        * TAO/orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/compare_histo.pl:
+        * TAO/orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/generate_gnuplot.pl:
+        * TAO/tests/Bug_2702_Regression/fakeserver2.pl:
+
+commit ab4ee33c0aa8253f8d6f9ea03840a645f8ac8523
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 2 16:24:16 2020 +0200
+
+    Fixed typo and layout issues
+    
+        * TAO/tests/AMH_Exceptions/server.cpp:
+        * TAO/tests/AMH_Oneway/server.cpp:
+        * TAO/tests/AlternateIIOP/README:
+        * TAO/tests/Big_Oneways/README:
+        * TAO/tests/Big_Oneways/Session.h:
+
+commit 6f78b0285ec9a20ccc8c626ff99e5df711a25e18
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 08:46:41 2020 +0200
+
+    Remove usage of narrow_from_decl/narrow_from_scope and replace them with dynamic_cast
+
+commit 0eff81cbdb5089fc417afd9aeddf20a626e7512a
+Merge: ad651b66893 3a00d263bcd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 08:21:19 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit ad651b668932c63e66cdc4b6a29961059a802edf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 19:38:47 2020 +0200
+
+    Reduced indent of bullets in several readme files
+
+commit 7c83db6c282edbe68cd43e5cb7a21d2a121407bc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 19:22:35 2020 +0200
+
+    Removed old cidlc comments
+    
+        * TAO/TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/component_svth.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/component_svts.cpp:
+        * TAO/TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO/TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_home/home_exs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO/TAO_IDL/be_include/be_global.h:
+
+commit 064720271e9e6c629aeba94bcf012bf4c77ebc7e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 30 11:11:34 2020 +0200
+
+    Removed unnecessary semicolon after ACE_UNIMPLEMENTED_FUNC
+    
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+
+commit 8154ac1e47daf9cd93dadf61561d854b29f4f574
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 28 16:52:09 2020 +0200
+
+    Const change
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+
+commit ad42f8ce4169c55170a5aa6ff87ba7d76dd8ead5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 28 16:51:58 2020 +0200
+
+    Layout change
+    
+        * TAO/TAO_IDL/be/be_interface.cpp:
+
+commit e3c786e54c4aab48cf39949f69bc18fc3dee1055
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 28 16:51:47 2020 +0200
+
+    Generate also a private move constructor/assignment and use ACE_UNIMPLEMENTED_FUNC in order to get `= delete` with C++11 and newer
+    
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+
+commit 87008d7060ffffb9ee9c5c264c250dc90e48e1b2
+Merge: ce68efbcbd0 b4840dd0504
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 26 08:24:10 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit 2f35a199f9d5c6074e8f6450c3973ea6a10af5ff
+Merge: 9c8bbd22dac 548012c88c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 26 08:22:22 2020 +0200
+
+    Merge pull request #1214 from jwillemsen/jwi-githubactionwindows
+    
+    Replace azure pipelines with github actions for CI testing on Windows
+
+commit e0a6ada7a4296a0abc33cd98ba3e36df03eb9c5b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 25 18:17:15 2020 +0200
+
+    Layout changes
+    
+        * TAO/tao/Strategies/SCIOP_Acceptor.h:
+
+commit ec41c7dc9431f851d4b9231f8fb7a1c54054a4cd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 25 15:21:04 2020 +0200
+
+    Const changes and removed some unnessary casts
+    
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/RTCORBA/RT_ORB_Loader.cpp:
+        * TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+        * TAO/tao/default_resource.cpp:
+        * TAO/tao/default_server.cpp:
+
+commit bda85e4db023e38cf6f314e7c80698be40ee4bce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 25 14:32:50 2020 +0200
+
+    Use bool for found_a_port
+    
+        * TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+
+commit c3c16c78dfec71183de20d1ec95e3cda0aeee557
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 17:29:22 2020 +0200
+
+    Fixed typo
+    
+        * ACE/ace/Obstack_T.h:
+        * TAO/docs/releasenotes/trader.html:
+        * TAO/orbsvcs/tests/Property/client.cpp:
+        * TAO/orbsvcs/tests/Simple_Naming/README:
+
+commit 69d236085b3493ec61ef3a092b9cfe7585629c66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 22 15:37:33 2020 +0200
+
+    Windows only on pull request
+    
+        * .github/workflows/windows.yml:
+        * TAO/examples/Simple/Simple_util.h:
+
+commit 2e743e10ceb17abf3eeb02ed74bbe65839fff6b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 22 12:55:49 2020 +0200
+
+    Fixed typo in comment
+    
+        * TAO/tests/AMI/run_test.pl:
+
+commit c61b0db31cda9725e27e512b8a847651fb7708d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 16:06:33 2020 +0200
+
+    Upgrade doxygen files to latest doxygen version
+
+commit bbe905207b94a34fb3000be67ba9c02e2de6dbd4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 15:24:36 2020 +0200
+
+    Layout changes
+    
+        * TAO/tao/AnyTypeCode/Any_Array_Impl_T.cpp:
+        * TAO/tao/AnyTypeCode/Any_Array_Impl_T.h:
+        * TAO/tao/AnyTypeCode/Any_Special_Impl_T.h:
+        * TAO/tao/AnyTypeCode/Enum_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Enum_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/Struct_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/TypeCode_Case_Base_T.cpp:
+        * TAO/tao/AnyTypeCode/TypeCode_Case_T.cpp:
+        * TAO/tao/AnyTypeCode/Union_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Union_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/Value_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Value_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/append.cpp:
+        * TAO/tao/CORBANAME_Parser.cpp:
+        * TAO/tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+        * TAO/tao/CSD_Framework/CSD_POA.cpp:
+        * TAO/tao/Connector_Registry.cpp:
+        * TAO/tao/DynamicAny/DynCommon.cpp:
+        * TAO/tao/DynamicAny/DynStruct_i.cpp:
+        * TAO/tao/DynamicAny/DynUnion_i.cpp:
+        * TAO/tao/DynamicAny/DynValueBox_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * TAO/tao/RTScheduling/RTScheduler_Manager.inl:
+        * TAO/tao/RTScheduling/Request_Interceptor.cpp:
+        * TAO/tao/Strategies/COIOP_Profile.h:
+        * TAO/tao/Strategies/SCIOP_Profile.cpp:
+        * TAO/tao/Strategies/SCIOP_Profile.h:
+        * TAO/tao/Strategies/SHMIOP_Profile.cpp:
+        * TAO/tao/Strategies/SHMIOP_Profile.h:
+        * TAO/tao/Strategies/UIOP_Connector.h:
+        * TAO/tao/Transport_Connector.cpp:
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+commit fefa0d5f1850d0f1e633c4182702698ce64f6eb8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 14:41:22 2020 +0200
+
+    Layout and true/false changes
+    
+        * ACE/ace/INET_Addr.cpp:
+        * TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * TAO/tao/DynamicInterface/DII_Arguments.cpp:
+        * TAO/tao/DynamicInterface/Server_Request.cpp:
+
+commit 3568c72dc8476bc3a521150fff2e8bb6f193a7d8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 12:39:12 2020 +0200
+
+    Layout and docu changes
+    
+        * TAO/tao/Object.cpp:
+        * TAO/tao/Service_Callbacks.cpp:
+        * TAO/tao/Service_Callbacks.h:
+
+commit 4a682e2b0a5795e8c5812b7604d366f04f37e60d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 11:13:28 2020 +0200
+
+    Removed some empty lines
+    
+        * TAO/tao/On_Demand_Fragmentation_Strategy.h:
+
+commit fcdeaf9ba2ff504e3d3f4ac2f9c06657d498b39f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 11:05:51 2020 +0200
+
+    Add missing changelogs
+
+commit dbbd86832258985b5cf9533d85738e38df37ee66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 10:14:35 2020 +0200
+
+    Make ACE 6.5.11 and TAO 2.5.11 public available and prepare for next release
+    
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

@@ -1,0 +1,6 @@
+interface Test
+{
+  void the_operation(out long x);
+
+  oneway void shutdown ();
+};

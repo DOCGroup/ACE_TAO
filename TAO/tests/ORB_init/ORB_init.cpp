@@ -1,15 +1,9 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/SystemException.h"
 
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (ORB_init,
-           ORB_init,
-           "$Id$")
 
 // Valid test IOR.
 // Do not attempt to narrow the object represented by this IOR, nor
@@ -19,20 +13,18 @@ static const char IOR[] =
 "IOR:010000001600000049444c3a43756269745f466163746f72793a312e30000000010000000000000090000000010102cd14000000616e647572696c2e6563652e7563692e6564750057fecdcd2d00000014010f004e5550000000130000000001000000006368696c645f706f61000000000001000000666163746f7279cdcdcd03000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd01000100000000000901010000000000004f41540400000001cd0000";
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       const char orbid[] = "mighty_orb";
 
       CORBA::ORB_ptr my_orb = CORBA::ORB::_nil();
 
       {
-        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid);
 
         my_orb = orb.in ();
 
@@ -48,8 +40,7 @@ main (int argc, char *argv[])
       // used in that scope.
       // -------------------------------------------------------------
 
-      orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb = CORBA::ORB_init (argc, argv, orbid);
 
       // This isn't portable, but TAO implements an ORB_ptr as a
       // pointer so we're okay.
@@ -60,7 +51,7 @@ main (int argc, char *argv[])
         {
           ACE_DEBUG ((LM_INFO,
                       "\n"
-                      "The ORB <%s> was successfully returned from a second\n"
+                      "The ORB <%C> was successfully returned from a second\n"
                       "call to CORBA::ORB_init() after it was released in\n"
                       "a previous scope.\n"
                         "\n",
@@ -70,7 +61,7 @@ main (int argc, char *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "\n"
-                             "ORB <%s> was not successfully returned from a\n"
+                             "ORB <%C> was not successfully returned from a\n"
                              "second call to CORBA::ORB_init() despite the\n"
                              "fact it wasn't explicitly destroyed.\n"
                              "\n",
@@ -83,11 +74,9 @@ main (int argc, char *argv[])
       // attempt to initialize a new ORB with the same ORBid.
       // -------------------------------------------------------------
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
-      orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb = CORBA::ORB_init (argc, argv, orbid);
 
       // This isn't portable, but TAO implements an ORB_ptr as a
       // pointer so we're okay.
@@ -98,7 +87,7 @@ main (int argc, char *argv[])
         {
           ACE_DEBUG ((LM_INFO,
                       "\n"
-                      "A new ORB with ORBid <%s> was successfully returned\n"
+                      "A new ORB with ORBid <%C> was successfully returned\n"
                       "from a second call to CORBA::ORB_init() after the\n"
                       "first ORB with the same ORBid was destroyed.\n"
                       "\n",
@@ -108,11 +97,11 @@ main (int argc, char *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       "\n"
-                      "ORB <%s> was not successfully destroyed.\n"
+                      "ORB <%C> was not successfully destroyed.\n"
                       "\n",
                       orbid));
 
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       // -------------------------------------------------------------
@@ -122,8 +111,7 @@ main (int argc, char *argv[])
       // -------------------------------------------------------------
 
       CORBA::Object_var object =
-        orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (IOR);
 
       // -------------------------------------------------------------
       // Initialize another two ORBs but don't explicitly destroy them
@@ -131,12 +119,10 @@ main (int argc, char *argv[])
       // clean-up.
       // -------------------------------------------------------------
       CORBA::ORB_var orb2 =
-        CORBA::ORB_init (argc, argv, "ORB number 2" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "ORB number 2");
 
       CORBA::ORB_var orb3 =
-        CORBA::ORB_init (argc, argv, "ORB number 3" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "ORB number 3");
 
       // -------------------------------------------------------------
       // Now try to perform an operation using the destroyed ORB
@@ -145,12 +131,10 @@ main (int argc, char *argv[])
       // ORB itself break when the last ORB is released.
       // -------------------------------------------------------------
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       // If we get here, then something went wrong.  A
       // CORBA::OBJECT_NOT_EXIST() exception should have been thrown!.
@@ -158,15 +142,15 @@ main (int argc, char *argv[])
                   "\n"
                   "CORBA::OBJECT_NOT_EXIST() exception was not thrown\n"
                   "during attempt to perform an ORB operation using\n"
-                  "destroyed ORB <%s>\n"
+                  "destroyed ORB <%C>\n"
                   "The CORBA::OBJECT_NOT_EXIST() exception should have\n"
                   "been thrown!\n"
                   "\n",
                   orbid));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, exc)
+  catch (const CORBA::OBJECT_NOT_EXIST& exc)
     {
       // Do something with the exception to make sure it actually
       // exists.  If it doesn't exist then there is something wrong
@@ -175,14 +159,13 @@ main (int argc, char *argv[])
                   "\n"
                   "Successfully caught CORBA system exception after the\n"
                   "last ORB was released with the following repository ID:\n"
-                  "  %s\n"
+                  "  %C\n"
                   "This exception was expected.  It is safe to ignore it.\n",
                   exc._rep_id ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught unexpected exception:");
+      ex._tao_print_exception ("Caught unexpected exception:");
 
 
       ACE_DEBUG ((LM_ERROR,
@@ -191,7 +174,6 @@ main (int argc, char *argv[])
 
       return 1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO,
               "\n"

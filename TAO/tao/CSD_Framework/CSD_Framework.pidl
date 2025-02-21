@@ -1,0 +1,38 @@
+// -*- IDL -*-
+/**
+ * @file CSD_Framework.pidl
+ *
+ * @brief Pre-compiled IDL source for the CSD_Framework module.
+ */
+
+#ifndef CSD_FRAMEWORK_PIDL
+#define CSD_FRAMEWORK_PIDL
+
+#include "tao/PortableServer/PortableServer_include.pidl"
+
+module CSD_Framework {
+
+  # pragma version CSD_Framework 2.3
+
+  /// This is a common base interface for all CSD strategy
+  /// implementations
+  local interface Strategy {
+
+    # pragma version Strategy 2.3
+
+    /// This is support for a legacy method of supplying a strategy to a
+    /// POA.
+    boolean apply_to(in PortableServer::POA p);
+  };
+
+  /// Specialized POA providing a method to supply a strategy object to
+  /// the POA.
+  local interface POA : PortableServer::POA {
+
+    # pragma version POA 2.3
+
+    void set_csd_strategy (in Strategy s);
+  };
+};
+
+#endif //CSD_FRAMEWORK_PIDL

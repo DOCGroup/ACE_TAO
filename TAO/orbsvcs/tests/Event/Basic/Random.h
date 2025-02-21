@@ -3,8 +3,6 @@
 /**
  *  @file   Random.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -23,28 +21,22 @@
 
 class RND_Driver;
 
+/**
+ * Simple consumer object
+ */
 class RND_Consumer
   : public POA_RtecEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //
 public:
   /// Constructor
   RND_Consumer (RND_Driver *driver);
 
-  void push (const RtecEventComm::EventSet &event
-             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push (const RtecEventComm::EventSet &event);
+  void disconnect_push_consumer ();
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+                const RtecEventChannelAdmin::ConsumerQOS &qos);
+  void disconnect ();
 
 protected:
   /// The driver
@@ -70,9 +62,7 @@ class RND_Timer : public RND_Consumer
 public:
   RND_Timer (RND_Driver *driver);
 
-  void push (const RtecEventComm::EventSet &event
-             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push (const RtecEventComm::EventSet &event);
 };
 
 inline
@@ -83,34 +73,29 @@ RND_Timer::RND_Timer (RND_Driver *driver)
 
 // ****************************************************************
 
+/**
+ * Simple supplier object
+ */
 class RND_Supplier
   : public POA_RtecEventComm::PushSupplier
   , public ACE_Task_Base
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //
 public:
   /// Constructor
   RND_Supplier (int verbose);
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+                const RtecEventChannelAdmin::SupplierQOS &qos);
+  void disconnect ();
 
   /// Push a single event...
-  void push_new_event (ACE_ENV_SINGLE_ARG_DECL);
-  void push (RtecEventComm::EventSet &event
-             ACE_ENV_ARG_DECL);
+  void push_new_event ();
+  void push (RtecEventComm::EventSet &event);
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
 
   /// Active method
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The supplier.
@@ -134,18 +119,16 @@ RND_Supplier::RND_Supplier (int verbose)
 class RND_Driver
 {
 public:
-  RND_Driver (void);
+  RND_Driver ();
 
   /// Run the test
-  int run (int argc, char *argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
 
   /// The main timer has expired
-  void timer (const RtecEventComm::Event &e
-              ACE_ENV_ARG_DECL);
+  void timer (const RtecEventComm::Event &e);
 
   /// One of the consumers has received an event
-  void event (const RtecEventComm::Event &e
-              ACE_ENV_ARG_DECL);
+  void event (const RtecEventComm::Event &e);
 
 private:
   RND_Driver (const RND_Driver &);

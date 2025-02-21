@@ -1,4 +1,3 @@
-// $Id$
 #ifndef NOTIFY_PUSH_SUPPLIER_H
 #define NOTIFY_PUSH_SUPPLIER_H
 
@@ -10,9 +9,7 @@ class Notify_Push_Supplier: public TAO_Notify_Tests_StructuredPushSupplier
 public:
   void _connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 CosNotifyChannelAdmin::EventChannel_ptr notify_channel,
-                bool useFilter
-                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                bool useFilter);
 };
 
 #endif /* NOTIFY_PUSH_SUPPLIER_H */

@@ -4,27 +4,24 @@
 /**
  * @file Codeset_Manager_Factory.cpp
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
- *
  */
 // =================================================================
 
-#include "Codeset_Manager_Factory.h"
+#include "tao/Codeset/Codeset_Manager_Factory.h"
 #include "ace/Service_Config.h"
-#include "Codeset_Manager_i.h"
+#include "tao/Codeset/Codeset_Manager_i.h"
 
-ACE_RCSID (Codeset, Codeset_Manager_Factory, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory ()
 {
 }
 
-int
-TAO_Codeset_Manager_Factory::is_default() const
+bool
+TAO_Codeset_Manager_Factory::is_default () const
 {
-  return 0;
+  return false;
 }
 
 
@@ -44,3 +41,5 @@ ACE_STATIC_SVC_DEFINE (TAO_Codeset_Manager_Factory,
                        &ACE_SVC_NAME (TAO_Codeset_Manager_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
+TAO_END_VERSIONED_NAMESPACE_DECL
+

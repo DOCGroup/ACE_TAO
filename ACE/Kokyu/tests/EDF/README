@@ -1,0 +1,26 @@
+
+
+This example is a very simple example, showing how to use the Kokyu
+dispatcher to dispatch command objects in a EDF manner. The test
+configures the Kokyu dispatcher with a single EDF lane. Typically this
+would be done by an EDF scheduler which assigns priorities to tasks
+based on the deadlines for tasks. To ensure that the command objects
+enqueued in the dispatcher are dispatched in the correct order, we
+enqueue the command objects and *then* activate the dispatcher. Only
+when the dispatcher is activated, the thread watching each dispatch
+queue starts running.
+
+To run this example,
+
+./test -p<fifo|rr|other>
+
+The following is the expected output
+
+Deadline of command1 is 1065966081
+Deadline of command2 is 1065966131
+Deadline of command3 is 1065966031
+command 3 executed
+command 1 executed
+command 2 executed
+
+Note that the deadlines are absolute deadlines.

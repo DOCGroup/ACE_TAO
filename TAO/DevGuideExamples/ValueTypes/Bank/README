@@ -1,0 +1,37 @@
+
+
+A simple example using valuetypes.
+
+
+How to Run
+----------
+
+Start the server :
+------------------
+./server
+
+
+Start the client:
+------------------
+./client
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+
+
+NOTE:
+
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
+   perl ../run_test.pl
+
+
+

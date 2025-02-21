@@ -1,11 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file ECG_Simple_Address_Server.h
  *
- *  $Id$
- *
  *  @author Marina Spivak (marina@atdesk.com)
- *
  */
 
 #ifndef TAO_ECG_SIMPLE_ADDRESS_SERVER_H
@@ -13,8 +11,10 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "EC_Lifetime_Utils_T.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
 #include "ace/INET_Addr.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_Simple_Address_Server
@@ -28,36 +28,36 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Simple_Address_Server :
   public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
-
   /// Create a new TAO_ECG_Simple_Address_Server object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_Simple_Address_Server objects are heap-allocated.)
-  static TAO_EC_Servant_Var<TAO_ECG_Simple_Address_Server> create (void);
+  static PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> create ();
 
   /// Destructor
-  virtual ~TAO_ECG_Simple_Address_Server (void);
+  virtual ~TAO_ECG_Simple_Address_Server ();
 
   int init (const char *arg);
 
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr
-                         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                         RtecUDPAdmin::UDP_Addr_out addr);
+  virtual void get_address (const RtecEventComm::EventHeader& header,
+                            RtecUDPAdmin::UDP_Address_out addr6);
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_Simple_Address_Server objects using the static create()
   /// method.
-  TAO_ECG_Simple_Address_Server (void);
+  TAO_ECG_Simple_Address_Server ();
 
 private:
   ACE_INET_Addr addr_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "ECG_Simple_Address_Server.i"
+#include "orbsvcs/Event/ECG_Simple_Address_Server.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,0 +1,32 @@
+// -*- MPC -*-
+project(*multiple_contexts) : aceexe, avoids_ace_for_tao {
+  requires += ace_other
+  exename = multiple_contexts
+  Source_Files {
+    test_multiple_contexts.cpp
+  }
+}
+
+project(*non_existent) : aceexe, avoids_ace_for_tao {
+  requires += ace_other
+  exename = non_existent
+  Source_Files {
+    test_non_existent.cpp
+  }
+}
+
+project(*writers) : aceexe, avoids_ace_for_tao {
+  requires += ace_other
+  exename = writers
+  Source_Files {
+    test_writers.cpp
+  }
+}
+
+project(*open) : aceexe, avoids_ace_for_tao {
+  requires += ace_other
+  exename = open
+  Source_Files {
+    test_open.cpp
+  }
+}

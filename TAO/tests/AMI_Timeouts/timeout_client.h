@@ -1,28 +1,17 @@
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI_Timeouts
-//
-// = FILENAME
-//    timeout_client.h
-//
-// = DESCRIPTION
-//    Tests timeouts with AMI.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
-
+//=============================================================================
+/**
+ *  @file    timeout_client.h
+ *
+ *  Tests timeouts with AMI.
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
 
 #include "ace/Task.h"
-
 #include "timeout_i.h"
 
-class TimeoutClient
-: public ACE_Task_Base
+class TimeoutClient : public ACE_Task_Base
 {
 public:
   TimeoutClient (CORBA::ORB_ptr orb,
@@ -33,13 +22,12 @@ public:
 
   ~TimeoutClient ();
 
-
 private:
   // Initialize the context of this class.
   int initialize ();
 
   // Run in a separate thread.
-  virtual int svc (void );
+  virtual int svc ();
 
   // Wrapps complex invocations logic.
   void send (CORBA::Boolean async,
@@ -52,7 +40,7 @@ private:
   // Test the accuracy of the timeouts.
   int accuracy_test ();
 
-  // Test if the timeout functionaltiy disturbs non-timeout invocations
+  // Test if the timeout functionality disturbs non-timeout invocations
   int none_test ();
 
 private:
@@ -77,5 +65,5 @@ private:
 
   const CORBA::Boolean INVOKE_ASYNCH;
 
-  unsigned int timeToWait_;
+  unsigned long timeToWait_;
 };

@@ -1,9 +1,5 @@
-// $Id$
-
 #include "test_i.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(Leader_Followers, test_i, "$Id$")
 
 test_i::test_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -11,17 +7,13 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }
 
 CORBA::ULong
-test_i::method (CORBA::ULong work
-                ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::method (CORBA::ULong work)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Server: Working for %d milli seconds @ %T\n",

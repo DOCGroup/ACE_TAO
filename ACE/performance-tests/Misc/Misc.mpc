@@ -1,0 +1,65 @@
+// -*- MPC -*-
+project(*basic_perf) : aceexe {
+  avoids += ace_for_tao
+  exename = basic_perf
+  Source_Files {
+    basic_func.cpp
+    basic_perf.cpp
+  }
+}
+
+project(*childbirth_time) : aceexe {
+  avoids += ace_for_tao
+  exename = childbirth_time
+  Source_Files {
+    childbirth_time.cpp
+  }
+}
+
+project(*context_switch_time) : aceexe {
+  avoids += ace_for_tao
+  exename = context_switch_time
+  Source_Files {
+    context_switch_time.cpp
+  }
+}
+
+project(*test_mutex) : aceexe {
+  avoids += ace_for_tao
+  exename = test_mutex
+  Source_Files {
+    test_mutex.cpp
+  }
+}
+
+project(*test_naming) : aceexe {
+  avoids += ace_for_tao
+  requires += ace_other
+  exename = test_naming
+  Source_Files {
+    test_naming.cpp
+  }
+}
+
+project(*test_singleton) : aceexe {
+  avoids += ace_for_tao
+  exename = test_singleton
+  Source_Files {
+    test_singleton.cpp
+  }
+}
+
+project(*preempt) : aceexe {
+  exename = preempt
+  Source_Files {
+    preempt.cpp
+  }
+}
+
+project(*test_guard) : aceexe {
+  avoids += ace_for_tao
+  exename = test_guard
+  Source_Files {
+    test_guard.cpp
+  }
+}

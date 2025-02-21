@@ -4,11 +4,8 @@
 /**
  *  @file    nestea_server_i.h
  *
- *  $Id$
- *
  *  Server that sets up the ORB and handles the registration and execution
  *  of the Nestea Bookshelf Server.
- *
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
@@ -31,28 +28,27 @@
 class Nestea_Server_i
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor
   Nestea_Server_i (const char *filename = "nestea.dat");
 
   /// Destructor
-  ~Nestea_Server_i (void);
+  ~Nestea_Server_i ();
 
   /// Initialize the Server state - parsing arguments and waiting
-  int init (int argc, char **argv ACE_ENV_ARG_DECL);
+  int init (int argc, ACE_TCHAR **argv);
 
   /// Run the orb
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run ();
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// Number of command line arguments.
   int argc_;
 
   /// The command line arguments.
-  char **argv_;
+  ACE_TCHAR **argv_;
 
   CORBA::ORB_var orb_;
 

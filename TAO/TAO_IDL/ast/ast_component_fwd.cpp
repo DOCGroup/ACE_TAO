@@ -1,25 +1,14 @@
-// $Id$
-
 #include "ast_component_fwd.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-ACE_RCSID( ast, 
-           ast_component_fwd, 
-           "$Id$")
-
-AST_ComponentFwd::AST_ComponentFwd (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_InterfaceFwd ()
-{
-}
+AST_Decl::NodeType const
+AST_ComponentFwd::NT = AST_Decl::NT_component_fwd;
 
 AST_ComponentFwd::AST_ComponentFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : COMMON_Base (I_TRUE,
-                 I_FALSE),
+  : COMMON_Base (true,
+                 false),
     AST_Decl (AST_Decl::NT_component_fwd,
               n),
     AST_Type (AST_Decl::NT_component_fwd,
@@ -29,7 +18,7 @@ AST_ComponentFwd::AST_ComponentFwd (AST_Interface *dummy,
 {
 }
 
-AST_ComponentFwd::~AST_ComponentFwd (void)
+AST_ComponentFwd::~AST_ComponentFwd ()
 {
 }
 
@@ -51,11 +40,13 @@ AST_ComponentFwd::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_ComponentFwd::destroy (void)
+AST_ComponentFwd::destroy ()
 {
   this->AST_InterfaceFwd::destroy ();
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1 (AST_ComponentFwd, AST_InterfaceFwd)
-IMPL_NARROW_FROM_DECL (AST_ComponentFwd)
+bool
+AST_ComponentFwd::is_fwd ()
+{
+  return true; // This is a fwd declared type
+}

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CRASH_TASK_H
 #define CRASH_TASK_H
@@ -21,7 +18,7 @@ public:
               const ACE_Time_Value &running_time);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Total running time for each thread

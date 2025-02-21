@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notify_Structured_Push_Consumer.h"
 #include "Notify_Test_Client.h"
 #include "common.h"
@@ -30,25 +28,19 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
 
 void
 Notify_Structured_Push_Consumer::_connect (
-                CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   CosNotifyComm::StructuredPushConsumer_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
       CosNotifyChannelAdmin::STRUCTURED_EVENT,
-      proxy_id_
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      proxy_id_);
 
   this->proxy_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
-      proxysupplier.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      proxysupplier.in ());
 
   if (use_ordering_)
   {
@@ -60,21 +52,16 @@ Notify_Structured_Push_Consumer::_connect (
     this->proxy_->set_qos (properties);
   }
 
-  this->proxy_->connect_structured_push_consumer (objref.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_->connect_structured_push_consumer (objref.in ());
 
   // give ownership to POA
-  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->_remove_ref ();
 }
 
 
 void
 Notify_Structured_Push_Consumer::push_structured_event (
-                          const CosNotification::StructuredEvent& event
-                          ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                          const CosNotification::StructuredEvent& event)
 {
   ACE_DEBUG((LM_DEBUG, "-"));
   if (count_ == 0)
@@ -90,7 +77,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: too many events received.\n")));
   }
- 
+
   if (this->count_ >= this->expected_)
   {
     this->client_.consumer_done (this);

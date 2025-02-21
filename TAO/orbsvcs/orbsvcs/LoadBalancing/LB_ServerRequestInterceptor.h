@@ -4,8 +4,6 @@
 /**
  * @file    LB_ServerRequestInterceptor.h
  *
- * $Id$
- *
  * @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -33,6 +31,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LB_LoadAlert;
 
@@ -47,10 +46,9 @@ class TAO_LB_LoadAlert;
  */
 class TAO_LoadBalancing_Export TAO_LB_ServerRequestInterceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_LB_ServerRequestInterceptor (TAO_LB_LoadAlert & load_alert);
 
@@ -62,56 +60,39 @@ public:
    * ServerRequestInterceptors.
    */
   //@{
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 
   virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
   //@}
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  ~TAO_LB_ServerRequestInterceptor (void);
+  ~TAO_LB_ServerRequestInterceptor ();
 
 private:
-
   TAO_LB_LoadAlert & load_alert_;
-
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

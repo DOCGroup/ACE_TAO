@@ -4,8 +4,6 @@
 /**
  * @file Timer_Helper.h
  *
- * $Id$
- *
  * This class is registered with the Reactor and extends from the
  * event handler.It is a friend of the TAO_Time_Service_Clerk and
  * helps to update the clerk's notion of globally synchronized
@@ -18,20 +16,21 @@
 
 
 #ifndef TIMER_HELPER_H
-#define	TIMER_HELPER_H
+#define TIMER_HELPER_H
 
 #include /**/ "ace/pre.h"
 
-
 #include "ace/Event_Handler.h"
 #include "ace/Containers.h"
-#include "time_export.h"
+#include "orbsvcs/Time/time_serv_export.h"
 
 #include "orbsvcs/TimeServiceS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Time_Service_Clerk;
 
@@ -45,15 +44,14 @@ class TAO_Time_Service_Clerk;
  * globally synchronized time by contacting the various Time
  * Servers.
  */
-class TAO_Time_Export Timer_Helper : public ACE_Event_Handler
+class TAO_Time_Serv_Export Timer_Helper : public ACE_Event_Handler
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  Timer_Helper (void);
+  Timer_Helper ();
 
   /// Destructor.
-  ~Timer_Helper (void);
+  ~Timer_Helper ();
 
   /// Constructor that sets the clerk.
   Timer_Helper (TAO_Time_Service_Clerk *clerk);
@@ -61,7 +59,7 @@ public:
   /// This method is called periodically by the Reactor to update the
   /// clerk's time.
   int handle_timeout (const ACE_Time_Value &time,
-		      const void *arg);
+                      const void *arg);
 
 protected:
   /// Clerk's instance that this class helps to update time.
@@ -70,6 +68,8 @@ protected:
   /// The set of server IORs.
   typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

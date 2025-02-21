@@ -1,20 +1,17 @@
-// $Id$
-
-#include "EC_Factory.h"
+#include "orbsvcs/Event/EC_Factory.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(Event, EC_Factory, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Factory::~TAO_EC_Factory (void)
+TAO_RTEvent_Serv_Export unsigned short TAO_EC_debug_level;
+
+TAO_EC_Factory::TAO_EC_Factory ()
+{
+  TAO_EC_debug_level = 0;
+}
+
+TAO_EC_Factory::~TAO_EC_Factory ()
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_EC_Factory>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_EC_Factory>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

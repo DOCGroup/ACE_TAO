@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -65,22 +63,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 #include "fe_declarator.h"
+
 #include "ast_array.h"
-#include "ast_type.h"
+#include "ast_param_holder.h"
+
 #include "utl_err.h"
 #include "global_extern.h"
 #include "nr_extern.h"
-#include "ace/config-all.h"
 
-ACE_RCSID (fe,
-           fe_declarator,
-           "$Id$")
+#include "ace/config-all.h"
 
 FE_Declarator::FE_Declarator (UTL_ScopedName *n,
                               DeclaratorType dt,
-			                        AST_Decl *cp)
+                              AST_Decl *cp)
  : pd_complex_part (cp),
-	 pd_decl_type (dt)
+   pd_decl_type (dt)
 {
   this->pd_name = n;
 }
@@ -90,37 +87,48 @@ FE_Declarator::FE_Declarator (UTL_ScopedName *n,
 AST_Type *
 FE_Declarator::compose (AST_Decl *d)
 {
+  AST_Type *ct = dynamic_cast<AST_Type*> (d);
+
+  if (ct == nullptr)
+    {
+      idl_global->err ()->not_a_type (d);
+      return nullptr;
+    }
+  else if (ct->node_type () == AST_Decl::NT_param_holder)
+    {
+      AST_Param_Holder *ph =
+        dynamic_cast<AST_Param_Holder*> (ct);
+
+      // Every other template parameter kind is legal.
+      if (ph->info ()->type_ == AST_Decl::NT_const)
+        {
+          idl_global->err ()->not_a_type (d);
+          return nullptr;
+        }
+    }
+
   AST_Decl::NodeType nt = d->node_type ();
 
-  if (nt == AST_Decl::NT_struct_fwd || nt == AST_Decl::NT_union_fwd)
+  if (nt == AST_Decl::NT_struct_fwd
+      || nt == AST_Decl::NT_union_fwd
+      || nt == AST_Decl::NT_struct
+      || nt == AST_Decl::NT_union)
     {
-      if (! AST_Type::narrow_from_decl (d)->is_defined ())
+      if (! ct->is_defined ())
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_ADD,
                                       d);
 
-          return 0;
+          return nullptr;
         }
     }
 
-  AST_Array	*arr = 0;
-  AST_Type *ct = 0;
+  AST_Array *arr = nullptr;
 
-  ct = AST_Type::narrow_from_decl (d);
-
-  if (ct == 0)
-    {
-      idl_global->err ()->not_a_type (d);
-      return 0;
-    }
-
-  // All uses of forward declared interfaces must
+  // All uses of forward declared types must
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
     {
-      char *current_prefix = 0;
-      idl_global->pragma_prefixes ().top (current_prefix);
-
       const char *original_prefix = d->prefix ();
       AST_Decl *scope = d;
 
@@ -129,8 +137,8 @@ FE_Declarator::compose (AST_Decl *d)
         {
           scope = ScopeAsDecl (scope->defined_in ());
 
-          // Are we at global scope.8
-          if (scope == 0)
+          // Are we at global scope?
+          if (scope == nullptr)
             {
               break;
             }
@@ -144,6 +152,14 @@ FE_Declarator::compose (AST_Decl *d)
           d->prefix (const_cast<char *> (original_prefix));
         }
 
+      // (JP) This could give a bogus error, since typeprefix can
+      // appear any time after the corresponding declaration.
+      // The right way to do this is with a separate traversal
+      // after the entire AST is built.
+      /*
+      char *current_prefix = 0;
+      idl_global->pragma_prefixes ().top (current_prefix);
+
       if (current_prefix != 0
           && ACE_OS::strcmp (current_prefix, d->prefix ()) != 0)
         {
@@ -152,48 +168,62 @@ FE_Declarator::compose (AST_Decl *d)
 
           return 0;
         }
+      */
     }
 
-  if (this->pd_decl_type == FD_simple || this->pd_complex_part == 0)
+  if (this->pd_decl_type == FD_simple || this->pd_complex_part == nullptr)
     {
       return ct;
     }
 
   if (this->pd_complex_part->node_type () == AST_Decl::NT_array)
     {
-      arr = AST_Array::narrow_from_decl (this->pd_complex_part);
+      arr = dynamic_cast<AST_Array*> (this->pd_complex_part);
+
+      // The base type of an array isn't set until after the array
+      // has been created, so the check below gets done at this point.
       arr->set_base_type (ct);
+      AST_Decl::NodeType nt = ct->unaliased_type ()->node_type ();
+
+      if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
+        {
+          idl_global->string_member_seen_ = true;
+        }
+
       return arr;
     }
 
   // We shouldn't get here.
-  return 0;
+  return nullptr;
 }
 
 void
-FE_Declarator::destroy (void)
+FE_Declarator::destroy ()
 {
-  this->pd_name->destroy ();
-  delete this->pd_name;
-  this->pd_name = 0;
+  if (pd_name)
+    {
+      this->pd_name->destroy ();
+      delete this->pd_name;
+      this->pd_name = nullptr;
+    }
 }
 
 // Data accessors.
 
 AST_Decl *
-FE_Declarator::complex_part (void)
+FE_Declarator::complex_part ()
 {
   return this->pd_complex_part;
 }
 
 UTL_ScopedName *
-FE_Declarator::name (void)
+FE_Declarator::name ()
 {
   return this->pd_name;
 }
 
 FE_Declarator::DeclaratorType
-FE_Declarator::decl_type (void)
+FE_Declarator::decl_type ()
 {
   return this->pd_decl_type;
 }

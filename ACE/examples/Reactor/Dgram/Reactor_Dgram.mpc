@@ -1,0 +1,15 @@
+// -*- MPC -*-
+project(*CO) : aceexe, avoids_ace_for_tao {
+  exename = codgram
+  Source_Files {
+    CODgram.cpp
+  }
+}
+
+project : aceexe {
+  exename = dgram
+  Source_Files {
+    Dgram.cpp
+  }
+}
+

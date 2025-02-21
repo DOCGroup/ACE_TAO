@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef SIMPLE_H
 #define SIMPLE_H
@@ -19,12 +16,11 @@ class Simple
 {
 public:
   /// Constructor
-  Simple (void);
+  Simple ();
 
   // = The skeleton methods
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
 };
 
 #if defined(_MSC_VER)

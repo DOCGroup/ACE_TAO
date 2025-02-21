@@ -1,16 +1,11 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Load_Balancing
-//
-// = FILENAME
-//    Identity_Server.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Identity_Server.cpp
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Identity_Server.h"
 #include "Identity_i.h"
@@ -18,7 +13,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Identity_Server::Identity_Server (void)
+Identity_Server::Identity_Server ()
   : group_factory_ior_ (0),
     random_objects_ (5),
     rr_objects_ (5)
@@ -26,9 +21,9 @@ Identity_Server::Identity_Server (void)
 }
 
 int
-Identity_Server::parse_args (int argc, char *argv[])
+Identity_Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "di:a:o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("di:a:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -66,17 +61,14 @@ Identity_Server::parse_args (int argc, char *argv[])
 
 int
 Identity_Server::init (int argc,
-                       char* argv[])
+                       ACE_TCHAR* argv[])
 {
   int result;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       result = this->orb_manager_.init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                        argv);
       if (result == -1)
         return result;
 
@@ -89,13 +81,9 @@ Identity_Server::init (int argc,
       // <Object_Group>s, one random and one rr.
       CORBA::ORB_var orb = orb_manager_.orb ();
       CORBA::Object_var obj =
-        orb->string_to_object (this->group_factory_ior_
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (this->group_factory_ior_);
       Load_Balancer::Object_Group_Factory_var factory =
-        Load_Balancer::Object_Group_Factory::_narrow (obj.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Load_Balancer::Object_Group_Factory::_narrow (obj.in ());
 
       if (CORBA::is_nil (factory.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -108,18 +96,14 @@ Identity_Server::init (int argc,
                   "Group with id <Identity, Random>\n"));
 
       Load_Balancer::Object_Group_var random_group =
-        factory->make_random ("Identity, Random"
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        factory->make_random ("Identity, Random");
 
       ACE_DEBUG ((LM_DEBUG,
                   "Identity_Server: Requesting new Round Robin "
                   "Object Group with id <Identity, Round Robin>\n"));
 
       Load_Balancer::Object_Group_var rr_group =
-        factory->make_round_robin ("Identity, Round Robin"
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        factory->make_round_robin ("Identity, Round Robin");
 
       // Create the requested number of <Identity> objects, and
       // register them with the random and round robin
@@ -130,87 +114,74 @@ Identity_Server::init (int argc,
                   "with <Identity, Random> Object Group\n",
                     random_objects_));
       create_objects (random_objects_,
-                      random_group.in ()
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                      random_group.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Identity_Server: Registering %d object(s) "
                   "with <Identity, Round Robin> Object Group\n",
                     random_objects_));
       create_objects (rr_objects_,
-                      rr_group.in ()
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                      rr_group.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Identity_Server::init");
+      ex._tao_print_exception ("Identity_Server::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 void
 Identity_Server::create_objects (size_t number_of_objects,
-                                 Load_Balancer::Object_Group_ptr group
-                                 ACE_ENV_ARG_DECL)
+                                 Load_Balancer::Object_Group_ptr group)
 {
   // Create the specified number of servants, and register each one
   // with the provided <Object_Group>.
   for (size_t i = 0; i < number_of_objects; ++i)
     {
       // Create an id for this servant.
-      char id[BUFSIZ];
+      ACE_TCHAR id[BUFSIZ];
       ACE_OS::sprintf (id,
-                       "Identity object " ACE_SIZE_T_FORMAT_SPECIFIER,
+                       ACE_TEXT("Identity object ") ACE_SIZE_T_FORMAT_SPECIFIER,
                        i);
 
       // Create and activate a servant.
-      Identity_i * identity_servant;
+      Identity_i * identity_servant = 0;
       ACE_NEW_THROW_EX (identity_servant,
-                        Identity_i (id),
+                        Identity_i (ACE_TEXT_ALWAYS_CHAR(id)),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
       PortableServer::ServantBase_var s = identity_servant;
-      orb_manager_.activate (identity_servant
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      orb_manager_.activate (identity_servant);
 
       Load_Balancer::Member member;
-      member.id = CORBA::string_dup (id);
-      member.obj = identity_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      member.id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(id));
+      member.obj = identity_servant->_this ();
 
       // Bind the servant in the <Object_Group>.
-      group->bind (member ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      group->bind (member);
     }
 }
 
 int
-Identity_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Identity_Server::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Identity_Server: Initialized \n"));
+              "Identity_Server: Initialized\n"));
 
   int result;
 
-  result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  result = this->orb_manager_.run ();
 
   return result;
 }
 
-Identity_Server::~Identity_Server (void)
+Identity_Server::~Identity_Server ()
 {
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Identity_Server server;
@@ -218,19 +189,15 @@ main (int argc, char *argv[])
   if (server.init (argc, argv) == -1)
     return 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      result = server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = server.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Identity_Server");
+      ex._tao_print_exception ("Identity_Server");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   if (result == -1)
     return 1;

@@ -1,17 +1,12 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/Object_Loader
-//
-// = FILENAME
-//   Loader.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Loader.h
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_OBJECT_LOADER_LOADER_H
 #define TAO_OBJECT_LOADER_LOADER_H
@@ -19,23 +14,21 @@
 #include "tao/Object_Loader.h"
 #include "OLT_Export.h"
 
+/**
+ * @class Loader
+ *
+ * @brief Implement the Test interface
+ */
 class OLT_Export Loader : public TAO_Object_Loader
 {
-  // = TITLE
-  //   Implement the Test interface
-  //
-  // = DESCRIPTION
-  //
 public:
-  Loader (void);
-  // ctor
+  /// ctor
+  Loader ();
 
+  /// Create a new instance
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           char *argv []
-                                           ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Create a new instance
+                                           ACE_TCHAR *argv[]);
 };
 
 // ACE_STATIC_SVC_DECLARE (Loader)

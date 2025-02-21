@@ -1,23 +1,26 @@
-// $Id$
-
-#include "Properties.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Properties.inl"
+#include "orbsvcs/Notify/Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify,
-           TAO_Notify_Properties,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Properties::TAO_Notify_Properties (void)
+TAO_Notify_Properties::TAO_Notify_Properties ()
   : factory_ (0)
   , builder_ (0)
-  , asynch_updates_ (0)
+  , orb_(0)
+  , dispatching_orb_ (0)
+  , asynch_updates_ (false)
   , allow_reconnect_ (false)
+  , validate_client_ (false)
+  , separate_dispatching_orb_ (false)
   , updates_ (1)
+  , defaultConsumerAdminFilterOp_ (CosNotifyChannelAdmin::OR_OP)
+  , defaultSupplierAdminFilterOp_ (CosNotifyChannelAdmin::OR_OP)
 {
   // In case no conf. file is specified, the EC will default to reactive concurrency.
   NotifyExt::ThreadPoolParams tp_params =
@@ -28,23 +31,25 @@ TAO_Notify_Properties::TAO_Notify_Properties (void)
   this->ec_qos_[0].value <<= tp_params;
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG, "in TAO_Properties ctos %x\n", this));
+    ORBSVCS_DEBUG ((LM_DEBUG, "in TAO_Properties ctos %x\n", this));
 }
 
 TAO_Notify_Properties::~TAO_Notify_Properties ()
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+TAO_Notify_Properties *
+TAO_Notify_Properties::instance ()
+{
+  return ACE_Unmanaged_Singleton<TAO_Notify_Properties,
+                                 TAO_SYNCH_MUTEX>::instance ();
+}
 
-template class TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>;
+void
+TAO_Notify_Properties::close ()
+{
+  ACE_Unmanaged_Singleton<TAO_Notify_Properties,
+                          TAO_SYNCH_MUTEX>::close ();
+}
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
-template class TAO_Singleton<TAO_Notify_Properties, ACE_Thread_Mutex> *TAO_Singleton<TAO_Notify_Properties, ACE_Thread_Mutex>::singleton_;
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

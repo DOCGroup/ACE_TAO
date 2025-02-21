@@ -1,18 +1,12 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS COS Event Channel tests
-//
-// = FILENAME
-//   Random.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Random.h
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef EC_RANDOM_H
 #define EC_RANDOM_H
@@ -32,37 +26,29 @@
 
 class RND_Driver;
 
+/// Simple consumer object
 class RND_Consumer
   : public POA_CosEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //
 public:
+  /// Constructor
   RND_Consumer (RND_Driver *driver);
-  // Constructor
 
-  void push (const CORBA::Any &event
-             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push (const CORBA::Any &event);
+  void disconnect_push_consumer ();
 
-  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin);
+  void disconnect ();
 
 protected:
+  /// The driver
   RND_Driver *driver_;
-  // The driver
 
+  /// The supplier.
   CosEventChannelAdmin::ProxyPushSupplier_var proxy_;
-  // The supplier.
 
+  /// Synch
   TAO_SYNCH_MUTEX lock_;
-  // Synch
 };
 
 inline
@@ -73,62 +59,39 @@ RND_Consumer::RND_Consumer (RND_Driver *driver)
 
 // ****************************************************************
 
-class RND_Timer : public RND_Consumer
-{
-public:
-  RND_Timer (RND_Driver *driver);
-
-  void push (const CORBA::Any &event
-             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-};
-
-inline
-RND_Timer::RND_Timer (RND_Driver *driver)
-  :  RND_Consumer (driver)
-{
-}
-
 // ****************************************************************
 
+/// Simple supplier object
 class RND_Supplier
   : public POA_CosEventComm::PushSupplier
   , public ACE_Task_Base
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //
 public:
-  RND_Supplier (void);
-  // Constructor
+  /// Constructor
+  RND_Supplier ();
 
-  void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin);
+  void disconnect ();
 
-  void push_new_event (ACE_ENV_SINGLE_ARG_DECL);
-  void push (CORBA::Any &event
-             ACE_ENV_ARG_DECL);
-  // Push a single event...
+  /// Push a single event...
+  void push_new_event ();
+  void push (CORBA::Any &event);
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier ();
 
-  virtual int svc (void);
-  // Active method
+  /// Active method
+  virtual int svc ();
 
 private:
+  /// The supplier.
   CosEventChannelAdmin::ProxyPushConsumer_var proxy_;
-  // The supplier.
 
+  /// Synch
   TAO_SYNCH_MUTEX lock_;
-  // Synch
 };
 
 inline
-RND_Supplier::RND_Supplier (void)
+RND_Supplier::RND_Supplier ()
 {
 }
 
@@ -137,41 +100,39 @@ RND_Supplier::RND_Supplier (void)
 class RND_Driver
 {
 public:
-  RND_Driver (void);
+  RND_Driver ();
 
-  int run (int argc, char *argv[]);
-  // Run the test
+  /// Run the test
+  int run (int argc, ACE_TCHAR *argv[]);
 
-  void timer (const CORBA::Any &e
-              ACE_ENV_ARG_DECL);
-  // The main timer has expired
+  /// The main timer has expired
+  void timer (const CORBA::Any &e);
 
-  void event (const CORBA::Any &e
-              ACE_ENV_ARG_DECL);
-  // One of the consumers has received an event
+  /// One of the consumers has received an event
+  void event (const CORBA::Any &e);
 
 private:
   RND_Driver (const RND_Driver &);
   RND_Driver& operator= (const RND_Driver &);
 
 private:
+  /// The supplier
   RND_Supplier supplier_;
-  // The supplier
 
+  /// Number of suppliers
   int nsuppliers_;
-  // Number of suppliers
 
+  /// The suppliers
   RND_Supplier **suppliers_;
-  // The suppliers
 
+  /// Number of consumers
   int nconsumers_;
-  // Number of consumers
 
+  /// The consumers
   RND_Consumer **consumers_;
-  // The consumers
 
+  /// Maximum recursion
   int max_recursion_;
-  // Maximum recursion
 
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   CosEventChannelAdmin::SupplierAdmin_var supplier_admin_;

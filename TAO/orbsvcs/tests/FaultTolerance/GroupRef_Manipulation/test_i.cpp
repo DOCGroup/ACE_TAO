@@ -1,10 +1,5 @@
 // -*- C++ -*-
-
 #include "test_i.h"
-
-ACE_RCSID (ForwardRequest,
-           test_i,
-           "$Id$")
 
 test_i::test_i (CORBA::Short num,
                 CORBA::ORB_ptr orb)
@@ -13,23 +8,21 @@ test_i::test_i (CORBA::Short num,
 {
 }
 
-test_i::~test_i (void)
+test_i::~test_i ()
 {
 }
 
 CORBA::Short
-test_i::number (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::number ()
 {
   return this->number_;
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Server is shutting down via object %d.\n",
               this->number_));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

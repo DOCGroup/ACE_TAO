@@ -1,39 +1,21 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    UTF8_Latin1_Translator.cpp
-//
-// = DESCRIPTION
-//    Defines the methods required to convert UTF-8 based unicode strings
-//    to the Latin-1 codeset.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
-#include "UTF8_Latin1_Translator.h"
+//=============================================================================
+/**
+ *  @file    UTF8_Latin1_Translator.cpp
+ *
+ *  Defines the methods required to convert UTF-8 based unicode strings
+ *  to the Latin-1 codeset.
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
+#include "tao/Codeset/UTF8_Latin1_Translator.h"
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"
 
-// ****************************************************************
-
-
-/////////////////////////////
-// UTF8_Latin1_Translator implementation
-
-TAO_UTF8_Latin1_Translator::TAO_UTF8_Latin1_Translator ()
-{
-}
-
-TAO_UTF8_Latin1_Translator::~TAO_UTF8_Latin1_Translator (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
 ACE_CDR::Boolean
@@ -47,10 +29,10 @@ TAO_UTF8_Latin1_Translator::read_char (ACE_InputCDR &cdr, ACE_CDR::Char &x)
       if (ox < 0xC0)
         {
           x = ox;
-          return 1;
+          return true;
         }
     }
-  return 0;
+  return false;
 }
 
 ACE_CDR::ULong
@@ -82,14 +64,11 @@ TAO_UTF8_Latin1_Translator::read_char_i (ACE_InputCDR &cdr, ACE_CDR::Char &x)
 
 ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
-                                    ACE_CDR::Char *&x)
+                                         ACE_CDR::Char *&x)
 {
   ACE_CDR::ULong len;
   if (!cdr.read_ulong (len))
     return 0;
-  if (static_cast<ACE_CDR::Short>(this->major_version(cdr)) == 1
-      && static_cast<ACE_CDR::Short>(this->minor_version(cdr)) == 2)
-    len--;
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
@@ -97,7 +76,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
   if (len > 0 && len <= cdr.length())
     {
       ACE_NEW_RETURN (x,
-                      ACE_CDR::Char [len+1],
+                      ACE_CDR::Char [len],
                       0);
       // pos keeps track of the character position, it will never be
       // greater than len
@@ -108,10 +87,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
           incr = this->read_char_i(cdr,x[pos++]);
         }
       if (incr > 0)
-        {
-          x[pos] = '\x00';
-          return 1;
-        }
+        return 1;
       delete [] x;
     }
   else if (len == 0)
@@ -126,6 +102,51 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
     }
   x = 0;
   return 0;
+}
+
+ACE_CDR::Boolean
+TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
+                                         std::string &x)
+{
+  ACE_CDR::ULong len;
+  if (!cdr.read_ulong (len))
+    return false;
+
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len > 0 && len <= cdr.length())
+    {
+      // detract terminating '\0' from length
+      len--;
+      try
+        {
+          x.resize (len);
+        }
+      catch (const std::bad_alloc&)
+        {
+          return false;
+        }
+
+      // pos keeps track of the character position, it will never be
+      // greater than len
+      size_t pos = 0;
+      ACE_CDR::ULong incr = 1;
+      for (ACE_CDR::ULong i = 0; incr > 0 && i < len; i += incr)
+        {
+          incr = this->read_char_i(cdr,x[pos++]);
+        }
+      if (incr > 0)
+      {
+        // read terminating '\0' from stream
+        ACE_CDR::Char c;
+        incr = this->read_char_i(cdr, c);
+        return (incr > 0);
+      }
+    }
+
+  x.clear ();
+  return false;
 }
 
 ACE_CDR::Boolean
@@ -215,13 +236,15 @@ TAO_UTF8_Latin1_Translator::write_char_array (ACE_OutputCDR & cdr,
                                          ACE_CDR::ULong length)
 {
   if (length == 0)
-    return 1;
+    return true;
 
   for (size_t i = 0; i < length; ++i)
     // We still have to write each char individually, as any translated
     // value may fail to fit in a single octet.
     if (this->write_char (cdr, x[i]) == 0)
-      return 0;
+      return false;
 
-  return 1;
+  return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

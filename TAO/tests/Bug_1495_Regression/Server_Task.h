@@ -2,8 +2,6 @@
  * @file Server_Task.h
  * @author Will Otte <w.otte@dre.vanderbilt.edu>
  *
- * $Id$
- *
  * Defines the Server_Task class that acts as a process colocated ORB server
  * for Bug_1495_Regression.
  */
@@ -16,24 +14,26 @@
 
 #include "tao/ORB.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Manual_Event;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /// Implements the Task to run the process colocated thread.
 class Server_Task : public ACE_Task_Base
 {
   public:
     /// Constructor
-    Server_Task (const char *output,
+    Server_Task (const ACE_TCHAR *output,
                  CORBA::ORB_ptr sorb,
                  ACE_Manual_Event &me,
                  ACE_Thread_Manager *thr_mgr);
 
     /// Thread entry point
-    int svc (void);
+    int svc ();
 
   private:
     /// Output file for the server IOR
-    const char *output_;
+    const ACE_TCHAR *output_;
 
     /// Manual thread event to signal the main thread to create
     /// the client thread.

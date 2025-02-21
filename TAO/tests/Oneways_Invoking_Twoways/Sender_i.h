@@ -1,9 +1,6 @@
-// This may look like C, but it's really -*- C++ -*-
 // ===================================================================
 /**
  *  @file   Sender_i.h
- *
- *  $Id$
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  **/
@@ -30,23 +27,20 @@ public:
             CORBA::ULong no);
 
   ///Destructor
-  virtual ~Sender_i (void);
+  virtual ~Sender_i ();
 
   // = The skeleton methods
-  virtual void active_objects (CORBA::Short ao
-                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void active_objects (CORBA::Short ao);
 
-  virtual void send_ready_message (Test::Receiver_ptr receiver
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_ready_message (Test::Receiver_ptr receiver);
 
-  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void ping ();
+
+  virtual void shutdown ();
 
 private:
   /// Our local ORB ptr
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
 
   /// Number of invocations to be made on the receiver
   CORBA::ULong number_;

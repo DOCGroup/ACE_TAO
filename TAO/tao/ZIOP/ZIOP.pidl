@@ -1,0 +1,66 @@
+#include "tao/Policy.pidl"
+#include "tao/IOP.pidl"
+#include "tao/Compression/Compression_include.pidl"
+
+module ZIOP
+{
+  struct CompressionData {
+    Compression::CompressorId compressor;
+    unsigned long original_length;
+    Compression::Buffer data;
+   };
+
+    //
+    // ORB Policies for ZIOP
+    //
+
+    /**
+     * Tag Id for CompressionEnablingPolicy
+     */
+    const CORBA::PolicyType COMPRESSION_ENABLING_POLICY_ID = 64;
+
+    /**
+    * The ZIOP CompressionEnablingPolicy. Has an boolean attribute indicating
+     * if compression is enabled or not.
+     */
+    typedef boolean CompressionEnablingPolicyValue;
+
+    local interface CompressionEnablingPolicy : CORBA::Policy
+    {
+        readonly attribute CompressionEnablingPolicyValue compression_enabled;
+    };
+
+    /**
+     * Tag Id for CompressorIdPolicy
+     */
+    const CORBA::PolicyType COMPRESSOR_ID_LEVEL_LIST_POLICY_ID = 65;
+
+    /**
+     * The ZIOP CompressorIdListPolicy. Has an CompressorId attribute indicating
+     * the compression algorithm to be used.
+     */
+    local interface CompressorIdLevelListPolicy : CORBA::Policy
+    {
+        readonly attribute Compression::CompressorIdLevelList compressor_ids;
+    };
+
+    const CORBA::PolicyType COMPRESSION_LOW_VALUE_POLICY_ID = 66;
+
+    typedef unsigned long CompressionLowValuePolicyValue;
+
+    local interface CompressionLowValuePolicy : CORBA::Policy
+    {
+        readonly attribute CompressionLowValuePolicyValue low_value;
+    };
+
+    /**
+     * The ZIOP CompressionMinRatioPolicy. If the compression ratio is smaller
+     * than this setting, a message is send uncompressed.
+     */
+    const CORBA::PolicyType COMPRESSION_MIN_RATIO_POLICY_ID = 67;
+
+    local interface CompressionMinRatioPolicy : CORBA::Policy
+    {
+        readonly attribute Compression::CompressionRatio ratio;
+    };
+};

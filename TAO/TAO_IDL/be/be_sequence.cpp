@@ -1,23 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_sequence.cpp
-//
-// = DESCRIPTION
-//    Extension of class AST_Sequence that provides additional means for C++
-//    mapping.
-//
-// = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_sequence.cpp
+ *
+ *  Extension of class AST_Sequence that provides additional means for C++
+ *  mapping.
+ *
+ *  @author Copyright 1994-1995 by Sun Microsystems
+ *  @author Inc. and Aniruddha Gokhale
+ */
+//=============================================================================
 
 #include "be_sequence.h"
 #include "be_typedef.h"
@@ -25,8 +17,10 @@
 #include "be_interface_fwd.h"
 #include "be_predefined_type.h"
 #include "be_field.h"
+#include "be_string.h"
 #include "be_visitor.h"
 #include "be_helper.h"
+#include "be_extern.h"
 
 #include "utl_identifier.h"
 #include "idl_defines.h"
@@ -35,38 +29,16 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be,
-           be_sequence,
-           "$Id$")
-
-
-be_sequence::be_sequence (void)
-  : COMMON_Base (),
-    AST_Decl (),
-    AST_Type (),
-    AST_ConcreteType (),
-    AST_Sequence (),
-    UTL_Scope (),
-    be_scope (),
-    be_decl (),
-    be_type (),
-    mt_ (be_sequence::MNG_UNKNOWN),
-    field_node_ (0)
-{
-  // Always the case.
-  this->has_constructor (I_TRUE);
-}
-
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
                           UTL_ScopedName *n,
-                          idl_bool local,
-                          idl_bool abstract)
+                          bool local,
+                          bool abstract)
   : COMMON_Base (t->is_local () || local,
                  abstract),
     AST_Decl (AST_Decl::NT_sequence,
               n,
-              I_TRUE),
+              true),
     AST_Type (AST_Decl::NT_sequence,
               n),
     AST_ConcreteType (AST_Decl::NT_sequence,
@@ -83,10 +55,10 @@ be_sequence::be_sequence (AST_Expression *v,
     be_type (AST_Decl::NT_sequence,
              n),
     mt_ (be_sequence::MNG_UNKNOWN),
-    field_node_ (0)
+    field_node_ (nullptr)
 {
   // Always the case.
-  this->has_constructor (I_TRUE);
+  this->has_constructor (true);
 
   // Don't want to set any bits below for imported nodes.
   if (this->imported ())
@@ -97,6 +69,7 @@ be_sequence::be_sequence (AST_Expression *v,
   // This one gets set for all sequences, in addition to any specialized
   // one that may get set below.
   idl_global->seq_seen_ = true;
+  idl_global->var_size_decl_seen_ = true;
 
   // Don't need the return value - just set the member.
   (void) this->managed_type ();
@@ -122,22 +95,10 @@ be_sequence::be_sequence (AST_Expression *v,
         break;
     }
 
-  AST_Decl::NodeType nt = t->node_type ();
-  AST_Typedef *td = 0;
-  AST_Type *pbt = 0;
-
-  if (nt == AST_Decl::NT_typedef)
+  AST_Type *const base_type = primitive_base_type ();
+  if (base_type && base_type->node_type () == AST_Decl::NT_pre_defined)
     {
-      td = AST_Typedef::narrow_from_decl (t);
-      pbt = td->primitive_base_type ();
-      nt = pbt->node_type ();
-    }
-
-  if (nt == AST_Decl::NT_pre_defined)
-    {
-      AST_PredefinedType *pdt =
-        AST_PredefinedType::narrow_from_decl (pbt ? pbt : t);
-
+      AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (base_type);
       switch (pdt->pt ())
         {
           case AST_PredefinedType::PT_octet:
@@ -149,12 +110,33 @@ be_sequence::be_sequence (AST_Expression *v,
     }
 }
 
+be_type *
+be_sequence::base_type () const
+{
+  return
+    dynamic_cast<be_type*> (
+      this->AST_Sequence::base_type ());
+}
+
+be_type *
+be_sequence::primitive_base_type () const
+{
+  be_type *type_node = base_type ();
+  if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
+    {
+      be_typedef *const typedef_node = dynamic_cast<be_typedef *> (type_node);
+      if (!typedef_node) return nullptr;
+      type_node = typedef_node->primitive_base_type ();
+    }
+  return type_node;
+}
+
 // Helper to create_name.
 char *
-be_sequence::gen_name (void)
+be_sequence::gen_name ()
 {
   char namebuf [NAMEBUFSIZE];
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Reset the buffer.
   ACE_OS::memset (namebuf,
@@ -162,9 +144,9 @@ be_sequence::gen_name (void)
                   NAMEBUFSIZE);
 
   // Retrieve the base type.
-  bt = be_type::narrow_from_decl (this->base_type ());
+  bt = dynamic_cast<be_type*> (this->base_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_sequence::"
@@ -180,9 +162,9 @@ be_sequence::gen_name (void)
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
       // Our base type is an anonymous sequence.
-      be_sequence *seq = be_sequence::narrow_from_decl (bt);
+      be_sequence *seq = dynamic_cast<be_sequence*> (bt);
 
-      if (seq == 0)
+      if (seq == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_sequence::"
@@ -201,12 +183,13 @@ be_sequence::gen_name (void)
       // template and non-template implementations of IDL sequences.
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
-      parent->add_sequence (seq);
+      char *seq_name = seq->gen_name ();
 
       ACE_OS::sprintf (namebuf,
                        "_tao_seq_%s_%s",
-                       seq->gen_name (),
+                       seq_name,
                        fn ? fn->local_name ()->get_string () : "");
+      ACE::strdelete (seq_name);
     }
   else
     {
@@ -216,33 +199,35 @@ be_sequence::gen_name (void)
     }
 
   // Append the size (if any).
-  if (this->unbounded () == I_FALSE)
+  if (this->unbounded () == false)
     {
       char ulval_str [NAMEBUFSIZE];
       ACE_OS::sprintf (ulval_str,
-                       "_%lu",
+                       "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        this->max_size ()->ev ()->u.ulval);
       ACE_OS::strcat (namebuf,
                       ulval_str);
     }
 
-  return ACE_OS::strdup (namebuf);
+  return ACE::strnew (namebuf);
 }
 
 // Create a name for ourselves.
 int
 be_sequence::create_name (be_typedef *node)
 {
-  static char *namebuf = 0;
-  UTL_ScopedName *n = 0;
+  static char *namebuf = nullptr;
+  UTL_ScopedName *n = nullptr;
 
   // Scope in which we are defined.
-  be_decl *scope = 0;
+  be_decl *scope = nullptr;
 
   // If there is a typedef node, we use its name as our name.
   if (node)
     {
-      this->set_name (node->name ());
+      this->set_name (
+          dynamic_cast<UTL_ScopedName *> (node->name ()->copy ())
+        );
     }
   else
     {
@@ -252,22 +237,22 @@ be_sequence::create_name (be_typedef *node)
       // Now see if we have a fully scoped name and if so, generate one.
       UTL_Scope *us = this->defined_in ();
 
-      scope = be_scope::narrow_from_scope (us)->decl ();
+      scope = dynamic_cast<be_scope*> (us)->decl ();
 
-      if (scope != 0)
+      if (scope != nullptr)
         {
           // Make a copy of the enclosing scope's name.
           n = (UTL_ScopedName *) scope->name ()->copy ();
 
-          Identifier *id = 0;
+          Identifier *id = nullptr;
           ACE_NEW_RETURN (id,
                           Identifier (namebuf),
                           -1);
 
-          UTL_ScopedName *conc_name = 0;
+          UTL_ScopedName *conc_name = nullptr;
           ACE_NEW_RETURN (conc_name,
                           UTL_ScopedName (id,
-                                          0),
+                                          nullptr),
                           -1);
 
           // Add our local name as the last component.
@@ -283,7 +268,7 @@ be_sequence::create_name (be_typedef *node)
           return -1;
         }
 
-      ACE_OS::free (namebuf);
+      ACE::strdelete (namebuf);
     }
 
   return 0;
@@ -291,34 +276,27 @@ be_sequence::create_name (be_typedef *node)
 
 // Does this sequence have a managed type sequence element?
 be_sequence::MANAGED_TYPE
-be_sequence::managed_type (void)
+be_sequence::managed_type ()
 {
   if (this->mt_ == be_sequence::MNG_UNKNOWN) // Not calculated yet.
     {
       // Base types.
-      be_type *bt = 0;
-      be_type *prim_type = 0;
-
-      bt = be_type::narrow_from_decl (this->base_type ());
-
-      if (bt->node_type () == AST_Decl::NT_typedef)
-        {
-          // Get the primitive base type of this typedef node.
-          be_typedef *t = be_typedef::narrow_from_decl (bt);
-          prim_type = t->primitive_base_type ();
-        }
-      else
-        {
-          prim_type = bt;
-        }
+      be_type *const base_type = primitive_base_type ();
+      if (!base_type)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO_IDL (%N:%l) "
+                           "dynamic_cast<be_type*> "
+                           "failed\n"),
+                          be_sequence::MNG_UNKNOWN);
 
       // Determine if we need a managed type and which one.
-      switch (prim_type->node_type ())
+      switch (base_type->node_type ())
         {
           case AST_Decl::NT_interface:
           case AST_Decl::NT_interface_fwd:
           case AST_Decl::NT_component:
           case AST_Decl::NT_component_fwd:
+          case AST_Decl::NT_connector:
             this->mt_ = be_sequence::MNG_OBJREF;
             break;
           case AST_Decl::NT_valuebox:
@@ -336,16 +314,16 @@ be_sequence::managed_type (void)
             break;
           case AST_Decl::NT_pre_defined:
             {
-              be_predefined_type *bpd =
-                be_predefined_type::narrow_from_decl (prim_type);
+              be_predefined_type * const bpd =
+                dynamic_cast<be_predefined_type*> (base_type);
+
               AST_PredefinedType::PredefinedType pt = bpd->pt ();
 
               switch (pt)
                 {
                   case AST_PredefinedType::PT_pseudo:
-                    this->mt_ = be_sequence::MNG_PSEUDO;
-                    break;
                   case AST_PredefinedType::PT_object:
+                  case AST_PredefinedType::PT_abstract:
                     this->mt_ = be_sequence::MNG_PSEUDO;
                     break;
                   case AST_PredefinedType::PT_value:
@@ -369,9 +347,9 @@ be_sequence::managed_type (void)
 AST_Sequence *
 be_sequence::fe_add_sequence (AST_Sequence *t)
 {
-  if (t == 0)
+  if (t == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   this->add_to_local_types (t);
@@ -380,9 +358,43 @@ be_sequence::fe_add_sequence (AST_Sequence *t)
 
 // Overridden method
 be_decl *
-be_sequence::decl (void)
+be_sequence::decl ()
 {
   return this;
+}
+
+// Overridden method
+void
+be_sequence::gen_ostream_operator (TAO_OutStream *os,
+                                   bool /* use_underscore */)
+{
+  *os << be_nl
+      << "std::ostream& operator<< (" << be_idt << be_idt_nl
+      << "std::ostream &strm," << be_nl
+      << "const " << this->name () << " &_tao_sequence" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "strm << \"" << this->name () << "[\";" << be_nl_2;
+
+  if (be_global->alt_mapping ())
+    {
+      *os << "for (CORBA::ULong i = 0; i < _tao_sequence.size (); ++i)";
+    }
+  else
+    {
+      *os << "for (CORBA::ULong i = 0; i < _tao_sequence.length (); ++i)";
+    }
+
+  *os << be_idt_nl
+      << "{" << be_idt_nl
+      << "if (i != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "strm << \", \";" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "strm << _tao_sequence[i];" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return strm << \"]\";" << be_uidt_nl
+      << "}" << be_nl;
 }
 
 int
@@ -400,10 +412,8 @@ be_sequence::instance_name ()
                   '\0',
                   NAMEBUFSIZE);
 
-  be_type *bt = 0;
-  bt = be_type::narrow_from_decl (this->base_type ());
-
-  if (bt == 0)
+  be_type *const prim_type = primitive_base_type ();
+  if (!prim_type)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_visitor_sequence_ch::"
@@ -411,18 +421,6 @@ be_sequence::instance_name ()
                   "Bad element type\n"));
 
       return namebuf;
-    }
-
-  // Generate the class name.
-
-  // The base type after removing all the aliases.
-  be_type  *prim_type = bt;
-
-  if (bt->node_type () == AST_Decl::NT_typedef)
-    {
-      // Get the primitive base type of this typedef node.
-      be_typedef *t = be_typedef::narrow_from_decl (bt);
-      prim_type = t->primitive_base_type ();
     }
 
   // Generate the appropriate sequence type.
@@ -433,13 +431,14 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Unbounded_Object_Sequence_%s",
+                           "_TAO_unbounded_object_reference_sequence_%s",
                            prim_type->local_name ()->get_string ());
         }
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Bounded_Object_Sequence_%s_%lu",
+                           "_TAO_bounded_object_reference_sequence_%s_"
+                           ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                            prim_type->local_name ()->get_string (),
                            this->max_size ()->ev ()->u.ulval);
         }
@@ -449,13 +448,14 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Unbounded_Valuetype_Sequence_%s",
+                           "_TAO_unbounded_valuetype_sequence_%s",
                            prim_type->local_name ()->get_string ());
         }
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Bounded_Valuetype_Sequence_%s_%lu",
+                           "_TAO_bounded_valuetype_sequence_%s_"
+                           ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                            prim_type->local_name ()->get_string (),
                            this->max_size ()->ev ()->u.ulval);
         }
@@ -465,12 +465,12 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         {
           ACE_OS::sprintf (namebuf,
-                           "TAO_Unbounded_String_Sequence");
+                           "::TAO::unbounded_basic_string_sequence<char>");
         }
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Bounded_String_Sequence_%s",
+                           "_TAO_unbounded_string_sequence_%s",
                            prim_type->local_name ()->get_string ());
         }
 
@@ -479,12 +479,12 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         {
           ACE_OS::sprintf (namebuf,
-                           "TAO_Unbounded_WString_Sequence");
+                           "::TAO::unbounded_basic_string_sequence<CORBA::WChar>");
         }
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Bounded_WString_Sequence_%s",
+                           "_TAO_bounded_wstring_sequence_%s",
                            prim_type->local_name ()->get_string ());
         }
 
@@ -495,27 +495,28 @@ be_sequence::instance_name ()
           // TAO provides extensions for octet sequences, first find out
           // if the base type is an octet (or an alias for octet)
           be_predefined_type *predef =
-            be_predefined_type::narrow_from_decl (prim_type);
+            dynamic_cast<be_predefined_type*> (prim_type);
 
-          if (predef != 0
+          if (predef != nullptr
               && predef->pt() == AST_PredefinedType::PT_octet)
             {
               ACE_OS::sprintf (namebuf,
-                               "TAO_Unbounded_Sequence<CORBA::Octet>");
+                               "::TAO::unbounded_value_sequence<CORBA::Octet>");
             }
           else
             {
               ACE_OS::sprintf (namebuf,
-                               "_TAO_Unbounded_Sequence_%s",
+                               "_TAO_unbounded_value_sequence_%s",
                                prim_type->local_name ()->get_string ());
             }
         }
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Bounded_Sequence_%s_%lu",
-                            prim_type->local_name ()->get_string (),
-                            this->max_size ()->ev ()->u.ulval);
+                           "_TAO_bounded_value_sequence_%s_"
+                           ACE_UINT32_FORMAT_SPECIFIER_ASCII,
+                           prim_type->local_name ()->get_string (),
+                           this->max_size ()->ev ()->u.ulval);
         }
 
       break;
@@ -529,15 +530,24 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
                                   const char * linebreak,
                                   AST_Decl *ctx_scope)
 {
-  be_type *elem = be_type::narrow_from_decl (this->base_type ());
+  be_type *elem = dynamic_cast<be_type*> (this->base_type ());
+  /*
+  if (be_global->alt_mapping () && this->unbounded ())
+    {
+      *os << "std::vector<" << elem->nested_type_name (ctx_scope)
+          << ">";
 
+      return 0;
+    }
+*/
   // Generate the appropriate base class type.
   switch (this->managed_type ())
     {
     case be_sequence::MNG_OBJREF:
+    case be_sequence::MNG_PSEUDO:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Object_Sequence<" << linebreak
+          *os << "::TAO::unbounded_object_reference_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak
               << be_nl;
@@ -547,7 +557,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         }
       else
         {
-          *os << "TAO_Bounded_Object_Sequence<" << linebreak
+          *os << "::TAO::bounded_object_reference_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak << be_nl;
           *os << elem->nested_type_name (ctx_scope, "_var") << ","
@@ -557,30 +567,10 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         }
 
       break;
-    case be_sequence::MNG_PSEUDO:
-      if (this->unbounded ())
-        {
-          *os << "TAO_Unbounded_Pseudo_Sequence<" << linebreak
-              << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << linebreak << be_uidt_nl
-              << ">" << be_uidt;
-        }
-      else
-        {
-          *os << "TAO_Bounded_Pseudo_Sequence<" << linebreak
-              << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << linebreak
-              << be_nl
-              << this->max_size ()->ev ()->u.ulval << linebreak
-              << be_uidt_nl
-              << ">" << be_uidt;
-        }
-
-      break;
     case be_sequence::MNG_VALUE:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Valuetype_Sequence<" << linebreak
+          *os << "::TAO::unbounded_valuetype_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak
               << be_nl;
@@ -590,7 +580,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         }
       else
         {
-          *os << "TAO_Bounded_Valuetype_Sequence<" << linebreak
+          *os << "::TAO::bounded_valuetype_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak
               << be_nl;
@@ -602,27 +592,115 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
 
       break;
     case be_sequence::MNG_STRING:
-      if (this->unbounded ())
-        {
-          *os << "TAO_Unbounded_String_Sequence";
-        }
-      else
-        {
-          *os << "TAO_Bounded_String_Sequence<"
-              << this->max_size ()->ev ()->u.ulval << ">";
-        }
+      {
+        be_type *const prim_type = primitive_base_type ();
+        if (!prim_type)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_sequence::"
+                               "gen_base_class_name - "
+                               "Bad element type\n"),
+                              -1);
+          }
+        if (prim_type->node_type () == AST_Decl::NT_string)
+          {
+            be_string *str =
+              dynamic_cast<be_string*> (prim_type);
+            if (!str)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_sequence::"
+                                   "gen_base_class_name - "
+                                   "bad string node\n"),
+                                  -1);
+              }
+
+            // We need to make a distinction between bounded and
+            // unbounded strings.
+            if (str->max_size ()->ev ()->u.ulval != 0)
+              {
+                if (this->unbounded ())
+                  {
+                    *os << "::TAO::unbounded_bd_string_sequence<char, "
+                        << str->max_size ()->ev ()->u.ulval << ">";
+                  }
+                else
+                  {
+                    *os << "::TAO::bounded_bd_string_sequence<char, "
+                        << this->max_size ()->ev ()->u.ulval << ", "
+                        << str->max_size ()->ev ()->u.ulval << ">";
+                  }
+              }
+            else
+              {
+                if (this->unbounded ())
+                  {
+                    *os << "::TAO::unbounded_basic_string_sequence<char>";
+                  }
+                else
+                  {
+                    *os << "::TAO::bounded_basic_string_sequence<char, "
+                        << this->max_size ()->ev ()->u.ulval << ">";
+                  }
+              }
+          }
+      }
 
       break;
     case be_sequence::MNG_WSTRING:
-      if (this->unbounded ())
-        {
-          *os << "TAO_Unbounded_WString_Sequence";
-        }
-      else
-        {
-          *os << "TAO_Bounded_WString_Sequence<"
-              << this->max_size ()->ev ()->u.ulval << ">";
-        }
+      {
+        be_type *const prim_type = primitive_base_type ();
+        if (!prim_type)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_sequence::"
+                               "gen_base_class_name - "
+                               "Bad element type\n"),
+                              -1);
+          }
+        if (prim_type->node_type () == AST_Decl::NT_wstring)
+          {
+            be_string *str =
+              dynamic_cast<be_string*> (prim_type);
+            if (!str)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_sequence::"
+                                   "gen_base_class_name - "
+                                   "bad string node\n"),
+                                  -1);
+              }
+
+            // We need to make a distinction between bounded and
+            // unbounded strings.
+            if (str->max_size ()->ev ()->u.ulval != 0)
+              {
+                if (this->unbounded ())
+                  {
+                    *os << "::TAO::unbounded_bd_string_sequence<CORBA::WChar, "
+                        << str->max_size ()->ev ()->u.ulval << ">";
+                  }
+                else
+                  {
+                    *os << "::TAO::bounded_bd_string_sequence<CORBA::WChar, "
+                        << this->max_size ()->ev ()->u.ulval << ", "
+                        << str->max_size ()->ev ()->u.ulval << ">";
+                  }
+              }
+            else
+              {
+                if (this->unbounded ())
+                  {
+                    *os << "::TAO::unbounded_basic_string_sequence<CORBA::WChar>";
+                  }
+                else
+                  {
+                    *os << "::TAO::bounded_basic_string_sequence<CORBA::WChar, "
+                        << this->max_size ()->ev ()->u.ulval << ">";
+                  }
+              }
+          }
+      }
 
       break;
     default: // Not a managed type.
@@ -631,7 +709,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           case AST_Decl::NT_array:
             if (this->unbounded ())
               {
-                *os << "TAO_Unbounded_Array_Sequence<" << linebreak
+                *os << "::TAO::unbounded_array_sequence<" << linebreak
                     << be_idt << be_idt_nl
                     << elem->nested_type_name (ctx_scope) << "," << linebreak
                     << be_nl;
@@ -643,7 +721,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
               }
             else
               {
-                *os << "TAO_Bounded_Array_Sequence<" << linebreak
+                *os << "::TAO::bounded_array_sequence<" << linebreak
                     << be_idt << be_idt_nl
                     << elem->nested_type_name (ctx_scope) << "," << linebreak
                     << be_nl;
@@ -658,25 +736,48 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
 
             break;
           default:
-            if (this->unbounded ())
-              {
-                *os << "TAO_Unbounded_Sequence<" << linebreak
-                    << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << linebreak
-                    << be_uidt_nl
-                    << ">" << be_uidt;
-              }
-            else
-              {
-                *os << "TAO_Bounded_Sequence<" << linebreak
-                    << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << "," << linebreak
-                    << be_nl
-                    << this->max_size ()->ev ()->u.ulval << linebreak
-                    << be_uidt_nl
-                    << ">" << be_uidt;
-              }
+            {
+              be_type *const base_type = primitive_base_type ();
+              if (!base_type)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_sequence::"
+                                     "gen_base_class_name - "
+                                     "Bad element type\n"),
+                                    -1);
+                }
 
+              const char *tag = "";
+              if (base_type->node_type () == AST_Decl::NT_pre_defined)
+                {
+                  be_predefined_type *const predefined_type =
+                    dynamic_cast<be_predefined_type*> (base_type);
+                  if (!predefined_type)
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%N:%l) be_sequence::"
+                                       "gen_base_class_name - "
+                                       "Bad element type\n"),
+                                      -1);
+                  switch (predefined_type->pt ())
+                    {
+                      case AST_PredefinedType::PT_uint8:
+                        tag = ", CORBA::IDLv4::UInt8_tag";
+                        break;
+                      case AST_PredefinedType::PT_int8:
+                        tag = ", CORBA::IDLv4::Int8_tag";
+                        break;
+                      default:
+                        break;
+                    }
+                }
+
+              *os
+                << "::TAO::" << (unbounded () ? "un" : "") << "bounded_value_sequence< "
+                << elem->nested_type_name (ctx_scope);
+              if (!unbounded ())
+                *os << "," << this->max_size ()->ev ()->u.ulval;
+              *os << tag << ">";
+            }
             break;
         }
 
@@ -687,7 +788,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
 }
 
 be_field *
-be_sequence::field_node (void) const
+be_sequence::field_node () const
 {
   return this->field_node_;
 }
@@ -700,27 +801,24 @@ be_sequence::field_node (be_field *node)
 
 // Overriden method.
 void
-be_sequence::compute_tc_name (void)
+be_sequence::compute_tc_name ()
 {
   // Sequence TypeCodes can only be accessed through an alias
   // TypeCode.  Generate a TypeCode name that is meant for internal
   // use alone.
 
-  Identifier * tao_id = 0;
+  Identifier * tao_id = nullptr;
   ACE_NEW (tao_id,
            Identifier ("TAO"));
 
-//   ACE_NEW (tao_id,
-//            Identifier (""));
-
   ACE_NEW (this->tc_name_,
            UTL_ScopedName (tao_id,
-                           0));
+                           nullptr));
 
   char bound[30] = { 0 };
 
   ACE_OS::sprintf (bound,
-                   "_%lu",
+                   "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                    this->max_size ()->ev ()->u.ulval);
 
   ACE_CString local_tc_name =
@@ -728,25 +826,25 @@ be_sequence::compute_tc_name (void)
     + ACE_CString (this->flat_name ())
     + ACE_CString (bound);
 
-  Identifier * typecode_scope = 0;
+  Identifier * typecode_scope = nullptr;
   ACE_NEW (typecode_scope,
            Identifier ("TypeCode"));
 
-  UTL_ScopedName * tc_scope_conc_name = 0;
+  UTL_ScopedName * tc_scope_conc_name = nullptr;
   ACE_NEW (tc_scope_conc_name,
            UTL_ScopedName (typecode_scope,
-                           0));
+                           nullptr));
 
   this->tc_name_->nconc (tc_scope_conc_name);
 
-  Identifier * id = 0;
+  Identifier * id = nullptr;
   ACE_NEW (id,
            Identifier (local_tc_name.c_str ()));
 
-  UTL_ScopedName * conc_name = 0;
+  UTL_ScopedName * conc_name = nullptr;
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
-                           0));
+                           nullptr));
 
   this->tc_name_->nconc (conc_name);
 }
@@ -766,13 +864,10 @@ be_sequence::smart_fwd_helper_name (AST_Decl *ctx_scope,
 }
 
 void
-be_sequence::destroy (void)
+be_sequence::destroy ()
 {
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_type::destroy ();
+  this->be_scope::destroy ();
+  this->be_type::destroy ();
+  this->AST_Sequence::destroy ();
 }
-
-// Narrowing
-IMPL_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type)
-IMPL_NARROW_FROM_DECL (be_sequence)

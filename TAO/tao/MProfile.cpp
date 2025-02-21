@@ -1,8 +1,5 @@
 // -*- C++ -*-
-//
-// $Id$
 #include "tao/MProfile.h"
-#include "tao/Environment.h"
 #include "tao/Profile.h"
 #include "tao/PolicyC.h"
 #include "tao/ORB_Constants.h"
@@ -10,35 +7,31 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
-
-ACE_RCSID (tao,
-           MProfile,
-           "$Id$")
+#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/MProfile.i"
+# include "tao/MProfile.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MProfile::~TAO_MProfile (void)
+TAO_MProfile::~TAO_MProfile ()
 {
-  if (this->policy_list_ != 0)
+  if (this->policy_list_ != nullptr)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      const CORBA::ULong len = this->policy_list_->length ();
+      CORBA::ULong const len = this->policy_list_->length ();
       for (CORBA::ULong i = 0; i < len; ++i)
         {
-          ACE_TRY
+          try
             {
-              (*this->policy_list_)[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              CORBA::Policy_ptr policy = (*this->policy_list_)[i];
+              policy->destroy ();
             }
-          ACE_CATCHANY
+          catch (const ::CORBA::Exception&)
             {
               // Ignore all exceptions to allow other policies to be
               // destroyed.
             }
-          ACE_ENDTRY;
         }
 
       delete this->policy_list_;
@@ -48,15 +41,15 @@ TAO_MProfile::~TAO_MProfile (void)
 }
 
 void
-TAO_MProfile::cleanup (void)
+TAO_MProfile::cleanup ()
 {
-  if (this->pfiles_ != 0)
+  if (this->pfiles_ != nullptr)
     {
       for (TAO_PHandle i = 0; i < this->last_; ++i)
         if (this->pfiles_[i])
           this->pfiles_[i]->_decr_refcnt ();
       delete [] this->pfiles_;
-      this->pfiles_ = 0;
+      this->pfiles_ = nullptr;
     }
 
   this->current_ = 0;
@@ -85,7 +78,7 @@ TAO_MProfile::set (CORBA::ULong sz)
         if (this->pfiles_[h])
           {
             this->pfiles_[h]->_decr_refcnt ();
-            this->pfiles_[h] = 0;
+            this->pfiles_[h] = nullptr;
           }
 
       // Next see if we can reuse our profile list memory
@@ -114,7 +107,7 @@ TAO_MProfile::set (CORBA::ULong sz)
   this->current_ = 0;
 
   for (TAO_PHandle i = 0; i != this->size_; ++i)
-    this->pfiles_[i] = 0;
+    this->pfiles_[i] = nullptr;
 
   return this->size_;
 }
@@ -139,7 +132,7 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
   for (TAO_PHandle h = 0; h < this->last_; ++h)
     {
       this->pfiles_[h] = mprofile.pfiles_[h];
-      if (this->pfiles_[h] != 0)
+      if (this->pfiles_[h] != nullptr)
         this->pfiles_[h]->_incr_refcnt ();
     }
 
@@ -154,7 +147,8 @@ TAO_MProfile::grow (CORBA::ULong sz)
     return 0;
 
   // get the additional space
-  TAO_Profile **new_pfiles, **old_pfiles;
+  TAO_Profile **new_pfiles = nullptr;
+  TAO_Profile **old_pfiles = nullptr;
   ACE_NEW_RETURN (new_pfiles,
                   TAO_Profile *[sz],
                   -1);
@@ -165,7 +159,7 @@ TAO_MProfile::grow (CORBA::ULong sz)
   for (TAO_PHandle h = 0; h < this->size_; ++h)
     {
       new_pfiles[h] = old_pfiles[h];
-      old_pfiles[h] = 0;
+      old_pfiles[h] = nullptr;
     }
 
   this->pfiles_ = new_pfiles;
@@ -188,7 +182,7 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
   pfiles_[last_++] = pfile;
 
   if (pfile && pfile->_incr_refcnt () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Unable to increment reference ")
                        ACE_TEXT ("count in add_profile!\n")),
                       -1);
@@ -201,7 +195,7 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
 {
   // this->size_ == total number of profiles we can hold
   // this->last_ == the index of the last profile
-  CORBA::ULong space = this->size_ - this->last_;
+  CORBA::ULong const space = this->size_ - this->last_;
 
   if (space < pfiles->last_)
     {
@@ -241,7 +235,7 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
       if (this->pfiles_[h]->is_equivalent (pfile))
         { // remove it!
           TAO_Profile *old = this->pfiles_[h];
-          this->pfiles_[h] = 0;
+          this->pfiles_[h] = nullptr;
           old->_decr_refcnt ();
           // shift other profiles up one
           // note, if h == last_ - 1 then do nothing.
@@ -274,7 +268,7 @@ TAO_MProfile::remove_profiles (const TAO_MProfile *pfiles)
 CORBA::Boolean
 TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 {
-  // Two profile lists are equivalent iff at least one of the profiles
+  // Two profile lists are equivalent if at least one of the profiles
   // from the first list is_equivalent to at least one of the profiles
   // from the second list!!
   for (TAO_PHandle h1 = 0; h1 < this->last_; ++h1)
@@ -286,8 +280,7 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 }
 
 CORBA::ULong
-TAO_MProfile::hash (CORBA::ULong max
-                    ACE_ENV_ARG_DECL)
+TAO_MProfile::hash (CORBA::ULong max)
 {
   CORBA::ULong hashval = 0;
 
@@ -296,9 +289,7 @@ TAO_MProfile::hash (CORBA::ULong max
 
   for (TAO_PHandle h = 0; h < this->last_ ; ++h)
     {
-      hashval += pfiles_[h]->hash (max
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      hashval += pfiles_[h]->hash (max);
     }
 
   // The above hash function return an ULong between 0 and max here we
@@ -309,54 +300,65 @@ TAO_MProfile::hash (CORBA::ULong max
 }
 
 void
-TAO_MProfile::create_policy_list (ACE_ENV_SINGLE_ARG_DECL)
+TAO_MProfile::create_policy_list ()
 {
   ACE_NEW_THROW_EX (this->policy_list_,
                     CORBA::PolicyList,
                     CORBA::NO_MEMORY (0,
-                                      CORBA::COMPLETED_NO)
-                    );
+                                      CORBA::COMPLETED_NO));
 }
 
 void
-TAO_MProfile::init_policy_list (ACE_ENV_SINGLE_ARG_DECL)
+TAO_MProfile::init_policy_list ()
 {
   // The first time this method is called
   // it causes the initialization of the policies
   // for the current profile.
 
-  this->get_current_profile ()->get_policies (*this->policy_list_
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->get_current_profile ()->get_policies (*this->policy_list_);
 
-  this->is_policy_list_initialized_ = 1;
+  this->is_policy_list_initialized_ = true;
 }
 
 CORBA::PolicyList *
-TAO_MProfile::policy_list (ACE_ENV_SINGLE_ARG_DECL)
+TAO_MProfile::policy_list ()
 {
   if (!this->is_policy_list_initialized_)
     {
       ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                         guard,
                         this->mutex_,
-                        0);
+                        nullptr);
 
-      if (this->policy_list_ == 0)
+      if (this->policy_list_ == nullptr)
         {
-          this->create_policy_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->create_policy_list ();
 
-          this->init_policy_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->init_policy_list ();
         }
     }
-  CORBA::PolicyList *ret_val = 0;
+  CORBA::PolicyList *ret_val = nullptr;
   ACE_NEW_THROW_EX (ret_val,
                     CORBA::PolicyList (*this->policy_list_),
                     CORBA::NO_MEMORY (0,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return ret_val;
 }
+
+int
+TAO_MProfile::give_shared_profile (TAO_Profile *pfile)
+{
+  for (unsigned i = 0; i < this->last_; i++)
+    if (pfile->tag() == this->pfiles_[i]->tag() &&
+        pfile->compare_key(this->pfiles_[i]))
+      {
+        this->pfiles_[i]->add_generic_endpoint(pfile->endpoint());
+        pfile->_decr_refcnt();
+        return i;
+      }
+  return this->give_profile(pfile, 0);
+}
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL

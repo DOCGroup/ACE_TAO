@@ -1,9 +1,8 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   IOR_Parser.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
@@ -20,7 +19,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/orbconf.h"
+#include "tao/TAO_Export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -45,22 +47,22 @@ class TAO_Export TAO_IOR_Parser : public ACE_Service_Object
 {
 public:
   /// The destructor
-  virtual ~TAO_IOR_Parser (void);
+  TAO_IOR_Parser () = default;
+  virtual ~TAO_IOR_Parser ();
 
-  /// Return 1 if @a ior_string starts with a prefix known to this IOR
+  /// Return true if @a ior_string starts with a prefix known to this IOR
   /// parser
-  virtual int match_prefix (const char *ior_string) const = 0;
+  virtual bool match_prefix (const char *ior_string) const = 0;
 
   /**
    * Parse the @a ior argument and return an object reference.
    * The call may raise the standard system exceptions (NO_MEMORY,
    * INV_OBJREF, etc.)
    */
-  virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb
-                                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IOR_PARSER_H */

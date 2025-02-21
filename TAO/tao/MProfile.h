@@ -4,8 +4,6 @@
 /**
  *  @file     MProfile.h
  *
- *  $Id$
- *
  *   Keep track of profile lists
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
@@ -17,25 +15,24 @@
 #define TAO_MPROFILE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Recursive_Thread_Mutex.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations
 class TAO_Profile;
 namespace CORBA
 {
   class PolicyList;
-
-  class Environment;
 }
 
 typedef CORBA::ULong TAO_PHandle;
@@ -56,7 +53,6 @@ typedef CORBA::ULong TAO_PHandle;
 class TAO_Export TAO_MProfile
 {
 public:
-  // = Initialization and termination methods.
   TAO_MProfile (CORBA::ULong sz = 0);
 
   /**
@@ -73,7 +69,7 @@ public:
 
   /// Destructor: decrements reference count on all references
   /// profiles!
-  ~TAO_MProfile (void);
+  ~TAO_MProfile ();
 
   /// Inits MProfile to hold sz TAO_Profiles.
   /// NOT THREAD SAFE
@@ -92,20 +88,20 @@ public:
   int grow (CORBA::ULong sz);
 
   /// Treat as a circular list.
-  TAO_Profile *get_cnext (void);
+  TAO_Profile *get_cnext ();
 
   /// Get next profile in list, return 0 at end of list.
-  TAO_Profile *get_next (void);
+  TAO_Profile *get_next ();
 
   /// Assume a circular list of profiles.
-  TAO_Profile *get_cprev (void);
+  TAO_Profile *get_cprev ();
 
   /// Get previous profile, stop at beginning of list and return 0.
-  TAO_Profile *get_prev (void);
+  TAO_Profile *get_prev ();
 
   /// Return a pointer to the current profile, will not increment
   /// reference pointer.
-  TAO_Profile *get_current_profile (void);
+  TAO_Profile *get_current_profile ();
 
   /// Return a pointer to the profile referenced by handle void.
   TAO_Profile *get_profile (TAO_PHandle handle);
@@ -113,24 +109,24 @@ public:
   // rem_profile (TAO_PHandle handle); let's wait.
 
   /// Returns the index for the current profile.
-  TAO_PHandle get_current_handle (void);
+  TAO_PHandle get_current_handle ();
 
   /// Returns the index for the current profile.
-  TAO_PHandle get_current_handle (void) const;
+  TAO_PHandle get_current_handle () const;
 
   /// Returns the number of profiles stored in the list (last_+1).
-  CORBA::ULong profile_count (void) const;
+  CORBA::ULong profile_count () const;
 
   /// return the maximum number of profiles that can be stored in this
   /// container, (size_+1)
-  CORBA::ULong size (void) const;
+  CORBA::ULong size () const;
 
   /// Return the profile at position <slot>.  If <slot> is out of range
   /// it returns 0.
   const TAO_Profile* get_profile (CORBA::ULong slot) const;
 
   /// Sets the current slot back to 0.
-  void rewind (void);
+  void rewind ();
 
   /// Return the index of this entry or -1 if it can not be added.
   /// reference count on profile in incremented!
@@ -138,7 +134,7 @@ public:
 
   /// Return the index of this entry or -1 if it can not be added.
   /// this object assumes ownership of this profile!!
-  int give_profile (TAO_Profile *pfile);
+  int give_profile (TAO_Profile *pfile, int share = 0);
 
   /// append the profiles in pfiles to this object.  The count
   /// will be incremented on the individual profile objects.
@@ -155,7 +151,7 @@ public:
   void forward_from (TAO_MProfile *mprofiles);
 
   /// Returns a pointer to the profile which was forwarded.
-  TAO_MProfile *forward_from (void);
+  TAO_MProfile *forward_from ();
 
   /**
    * Returns true of there is at least one profile in first which
@@ -170,29 +166,25 @@ public:
    * profile and the results are averaged together.
    * NON-THREAD SAFE.
    */
-  CORBA::ULong hash (CORBA::ULong max
-                     ACE_ENV_ARG_DECL);
+  CORBA::ULong hash (CORBA::ULong max);
 
 protected:
-
   /// This method handle the dynamic allocation of the data member
   /// <policy_list_>.
- void create_policy_list (ACE_ENV_SINGLE_ARG_DECL);
+ void create_policy_list ();
 
 public:
-
   /// Sets the policies list associated with the profiles
   /// owned by the TAO_MProfile.
   void policy_list (CORBA::PolicyList *policy_list);
 
   /// Gets the policies list associated with the profiles
   /// owned by the TAO_MProfile.
-  CORBA::PolicyList *policy_list (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::PolicyList *policy_list ();
 
 protected:
-
   /// Initialize the policy list, demarsharling the policy.
-  void init_policy_list (ACE_ENV_SINGLE_ARG_DECL);
+  void init_policy_list ();
 
 protected:
   /// Stores the policy list for the profile of this MProfile.
@@ -208,15 +200,20 @@ protected:
 protected:
   /// Return the complete list of profiles, this object retains
   /// ownership!
-  TAO_Profile **pfiles (void) const;
+  TAO_Profile **pfiles () const;
 
 
 private:
   /// Helper method to implement the destructor
-  void cleanup (void);
+  void cleanup ();
+
+  /// A helper to give_profile to be used when share is true. This
+  /// method is used primarily to help the corbaloc parser create a
+  /// single profile with multiple endpoints rather than constructing
+  /// multiple profiles with 1 endpoint per.
+  int give_shared_profile (TAO_Profile *pfile);
 
 private:
-
   /**
    * Used for chaning references when the current profile is
    * forwarded.  Note, this will only be valid for an MProfile which
@@ -240,8 +237,10 @@ private:
   TAO_PHandle last_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "tao/MProfile.i"
+# include "tao/MProfile.inl"
 #endif /*__ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

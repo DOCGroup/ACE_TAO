@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<!-- Converted from ./tests/MT_BiDir/server.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+<dynamic id="SSLIOP_Factory" type="Service_Object">
+   <initializer path="TAO_SSLIOP" init="_make_TAO_SSLIOP_Protocol_Factory" params="-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:ssl/server-key.pem -SSLCertificate PEM:ssl/server-cert.pem -SSLCAFile PEM:ssl/ca.pem"/>
+ </dynamic>
+<dynamic id="Advanced_Resource_Factory" type="Service_Object">
+   <initializer path="TAO_Strategies" init="_make_TAO_Advanced_Resource_Factory" params="-ORBProtocolFactory SSLIOP_Factory -ORBMuxedConnectionMax 1"/>
+ </dynamic>
+ <static id="Resource_Factory" params="-ORBConnectStrategy blocked"/>
+</ACE_Svc_Conf>

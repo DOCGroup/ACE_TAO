@@ -1,20 +1,20 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Bindings_Iterator_T.h
- *
- *  $Id$
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
 
-
 #ifndef TAO_BINDINGS_ITERATOR_T_H
 #define TAO_BINDINGS_ITERATOR_T_H
 #include /**/ "ace/pre.h"
 
-#include "Hash_Naming_Context.h"
+#include "orbsvcs/Naming/Hash_Naming_Context.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Bindings_Iterator
@@ -55,23 +55,19 @@ public:
    */
   TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
                          ITERATOR *hash_iter,
-                         PortableServer::POA_ptr poa,
-                         TAO_SYNCH_RECURSIVE_MUTEX &lock);
-
+                         PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~TAO_Bindings_Iterator (void);
+  ~TAO_Bindings_Iterator ();
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA ();
 
   // = Idl methods.
 
   /// This operation passes back the next unseen binding.  True is
   /// returned if a binding is passed back, and false is returned otherwise.
-  CORBA::Boolean next_one (CosNaming::Binding_out b
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Boolean next_one (CosNaming::Binding_out b);
 
   /**
    * This operation passes back at most <how_many> unseen bindings.
@@ -79,13 +75,10 @@ public:
    * returned if no bindings were passed back.
    */
   CORBA::Boolean next_n (CORBA::ULong how_many,
-                         CosNaming::BindingList_out bl
-                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                         CosNaming::BindingList_out bl);
 
   /// This operation destroys the iterator.
-  void destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy ();
 
   // = Helper method.
 
@@ -95,8 +88,7 @@ public:
    * in <hash_entry>.  Return 1 if everything went smoothly, 0 if an
    * allocation failed.
    */
-  static int populate_binding (TABLE_ENTRY *hash_entry,
-                               CosNaming::Binding &b);
+  static int populate_binding (TABLE_ENTRY *hash_entry, CosNaming::Binding &b);
 
 private:
   /**
@@ -107,7 +99,7 @@ private:
    * because immediate destruction of this servant might not be possible
    * due to pending requests in the POA.
    */
-  int destroyed_;
+  bool destroyed_;
 
   /**
    * Pointer to the Naming Context we are iterating over.  We need
@@ -119,21 +111,13 @@ private:
   /// A pointer to the hash map iterator.
   ITERATOR *hash_iter_;
 
-  /// Lock passed on from Naming Context to serialize access to the
-  /// internal data structure.
-  TAO_SYNCH_RECURSIVE_MUTEX &lock_;
-
   /// Implement a different _default_POA().
   PortableServer::POA_var poa_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Bindings_Iterator_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Bindings_Iterator_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/Naming/Bindings_Iterator_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_BINDINGS_ITERATOR_T_H */

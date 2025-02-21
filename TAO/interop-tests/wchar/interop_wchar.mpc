@@ -1,20 +1,31 @@
 // -*- MPC -*-
-// $Id$
+project(*IDL): taoidldefaults, anytypecode {
+  IDL_Files {
+    interop_wchar.idl
+  }
+  custom_only = 1
+}
 
-project(*Server): taoexe, portableserver {
-  exename = server
+project(*Server): taoserver, negotiate_codesets {
+  after += *IDL
   Source_Files {
     interop_wchar_i.cpp
     wchar_reference.cpp
     server.cpp
+    interop_wcharS.cpp
+    interop_wcharC.cpp
+  }
+  IDL_Files {
   }
 }
 
-project(*Client): taoexe {
-  exename = client
+project(*Client): taoclient, anytypecode {
+  after += *IDL
   Source_Files {
     interop_wcharC.cpp
     wchar_reference.cpp
     client.cpp
+  }
+  IDL_Files {
   }
 }

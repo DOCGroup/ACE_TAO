@@ -1,17 +1,17 @@
-// $Id$
 
-
-#include "QoS_UDP.h"
+#include "orbsvcs/AV/QoS_UDP.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
-#include "UDP.h"
+#include "orbsvcs/AV/UDP.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/MCast.h"
 #include "orbsvcs/AV/Fill_ACE_QoS.h"
 
+#include "ace/OS_NS_strings.h"
+
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/QoS_UDP.i"
+#include "orbsvcs/AV/QoS_UDP.inl"
 #endif /* __ACE_INLINE__ */
 
 //------------------------------------------------------------
@@ -20,6 +20,8 @@
 
 static int resv_error = 0;
 static int resv_confirm = 0;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 FillQoSParams (ACE_QoS_Params &qos_params,
@@ -35,12 +37,11 @@ FillQoSParams (ACE_QoS_Params &qos_params,
   return 0;
 }
 
-TAO_AV_UDP_QoS_Session_Helper::TAO_AV_UDP_QoS_Session_Helper (void)
+TAO_AV_UDP_QoS_Session_Helper::TAO_AV_UDP_QoS_Session_Helper ()
 {
-
 }
 
-TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper (void)
+TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper ()
 {
 }
 
@@ -60,26 +61,25 @@ TAO_AV_UDP_QoS_Session_Helper::set_qos (ACE_Flow_Spec &ace_flow_spec,
     {
       if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
                                                 &ace_flow_spec) !=0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Unable to fill simplex sender qos (%N|%l)\n"),
                           -1);
       else
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "Filled up the Sender QoS parameters\n"));
     }
   else if (handler->flowspec_entry ()->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
     {
       if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
                                                   &ace_flow_spec) !=0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Unable to fill simplex receiver qos (%N|%l)\n"),
                           -1);
       else
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "Filled up the Receiver QoS parameters\n"));
-
     }
 
   ACE_QoS_Manager qos_manager = handler->get_socket ()->qos_manager ();
@@ -89,11 +89,11 @@ TAO_AV_UDP_QoS_Session_Helper::set_qos (ACE_Flow_Spec &ace_flow_spec,
   if (handler->qos_session ()->qos (handler->get_socket (),
                                     &qos_manager,
                                     *ace_qos) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Unable to set QoS (%N|%l)\n"),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "Setting QOS succeeds\n"));
 
   return 0;
@@ -128,11 +128,11 @@ TAO_AV_UDP_QoS_Session_Helper::open_qos_session (TAO_AV_UDP_QoS_Flow_Handler *ha
   // Protocol]. Initialize the QoS session.
   if (qos_session->open (dest_addr,
                          IPPROTO_UDP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Error in opening the QoS session\n"),
                       0);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "QoS session opened successfully\n"));
 
   if (handler->flowspec_entry ()->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
@@ -164,7 +164,7 @@ TAO_AV_UDP_QoS_Session_Helper::activate_qos_handler (ACE_QoS_Session *qos_sessio
 
   // Initialize the Decorator.
   if (qos_decorator->init () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "QoS Decorator init () failed (%N|%l)\n"),
                       -1);
 
@@ -173,27 +173,26 @@ TAO_AV_UDP_QoS_Session_Helper::activate_qos_handler (ACE_QoS_Session *qos_sessio
                                                                   ACE_Event_Handler::QOS_MASK |
                                                                   ACE_Event_Handler::READ_MASK);
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Error in registering the Decorator with the Reactor (%N|%l)\n"),
                       -1);
 
   return 0;
-
 }
 
-TAO_AV_UDP_QoS_Flow_Handler::TAO_AV_UDP_QoS_Flow_Handler (void)
+TAO_AV_UDP_QoS_Flow_Handler::TAO_AV_UDP_QoS_Flow_Handler ()
 {
   ACE_NEW (this->transport_,
            TAO_AV_UDP_QoS_Transport (this));
 }
 
-TAO_AV_UDP_QoS_Flow_Handler::~TAO_AV_UDP_QoS_Flow_Handler (void)
+TAO_AV_UDP_QoS_Flow_Handler::~TAO_AV_UDP_QoS_Flow_Handler ()
 {
   delete this->transport_;
 }
 
 TAO_AV_Transport *
-TAO_AV_UDP_QoS_Flow_Handler::transport (void)
+TAO_AV_UDP_QoS_Flow_Handler::transport ()
 {
   return this->transport_;
 }
@@ -317,20 +316,18 @@ TAO_AV_UDP_QoS_Flow_Handler::translate (ACE_Flow_Spec *ace_flow_spec,
 int
 TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
 {
-
-  ACE_DECLARE_NEW_CORBA_ENV;
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::handle_qos\n"));
 
   if (this->qos_session_->update_qos () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Error in updating QoS\n"),
                       -1);
   else
   {
     if(TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "(%N,%l) Updating QOS succeeds.\n"));
   }
 
@@ -350,14 +347,14 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
             {
               if( TAO_debug_level > 0 )
               {
-                 ACE_DEBUG ((LM_DEBUG,
+                 ORBSVCS_DEBUG ((LM_DEBUG,
                              "(%N,%l) Resv Event Received\n"));
               }
               if (!CORBA::is_nil (this->negotiator_))
                 {
                   if( TAO_debug_level > 0 )
                   {
-                     ACE_DEBUG ((LM_DEBUG,
+                     ORBSVCS_DEBUG ((LM_DEBUG,
                                  "(%N,%l) Negotiator Specified\n"));
                   }
 
@@ -374,8 +371,7 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
 
                   AVStreams::Negotiator_var remote_negotiator;
                   this->negotiator_->negotiate (remote_negotiator.in (),
-                                                new_qos
-                                                ACE_ENV_ARG_PARAMETER);
+                                                new_qos);
                 }
             }
     }
@@ -402,7 +398,7 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
 {
   if( TAO_debug_level > 0 )
   {
-     ACE_DEBUG ((LM_DEBUG,
+     ORBSVCS_DEBUG ((LM_DEBUG,
                  "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::change_qos\n"));
   }
 
@@ -414,7 +410,7 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
 
   if (new_qos.QoSParams.length () != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "New QoS Params are not Empty\n"));
 
       ACE_Flow_Spec *ace_flow_spec;
@@ -433,13 +429,13 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
         {
           if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
                                                     ace_flow_spec) !=0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Unable to fill simplex sender qos\n"),
                               -1);
           else
             {
               if( TAO_debug_level > 0 )
-                ACE_DEBUG ((LM_DEBUG,
+                ORBSVCS_DEBUG ((LM_DEBUG,
                             "(%N,%l) Filled up the Sender QoS parameters\n"));
             }
         }
@@ -447,13 +443,13 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
         {
           if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
                                                       ace_flow_spec) !=0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Unable to fill simplex receiver qos\n"),
                               -1);
           else
             {
               if( TAO_debug_level > 0 )
-                ACE_DEBUG ((LM_DEBUG,
+                ORBSVCS_DEBUG ((LM_DEBUG,
                             "(%N,%l) Filled up the Receiver QoS parameters\n"));
             }
 
@@ -487,17 +483,15 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 int
 TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 {
-
   if (TAO_debug_level > 0)
     {
-        char buf [BUFSIZ];
-	ACE_INET_Addr *remote_addr = dynamic_cast<ACE_INET_Addr*> (address);
-	remote_addr->addr_to_string (buf,
-				     BUFSIZ);
+      ACE_TCHAR buf [BUFSIZ];
+      ACE_INET_Addr *remote_addr = dynamic_cast<ACE_INET_Addr*> (address);
+      remote_addr->addr_to_string (buf, BUFSIZ);
 
-	ACE_DEBUG ((LM_DEBUG,
-		    "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::set_remote_address %s\n",
-		    buf));
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::set_remote_address %s\n",
+                  buf));
     }
 
 
@@ -511,14 +505,13 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
     {
-
       TAO_AV_UDP_QoS_Session_Helper helper;
 
       this->qos_session_ = helper.open_qos_session (this,
                                                     *inet_addr);
 
       if (this->qos_session_ == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "QoS Session Open Failed (%N|%l)\n"),
                           -1);
 
@@ -527,15 +520,15 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 
       ACE_INET_Addr* src_addr;
       ACE_NEW_RETURN (src_addr,
-		      ACE_INET_Addr (local_addr.get_port_number (),
-				     local_addr.get_host_name ()),
-		      -1);
+                      ACE_INET_Addr (local_addr.get_port_number (),
+                      local_addr.get_host_name ()),
+                      -1);
 
       this->qos_session_->source_addr (src_addr);
 
       if (helper.activate_qos_handler (this->qos_session_,
                                        this) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Activating QoS Handler Failed (%N|%l)\n"),
                           -1);
     }
@@ -544,10 +537,10 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 
 
 ACE_HANDLE
-TAO_AV_UDP_QoS_Flow_Handler::get_handle (void) const
+TAO_AV_UDP_QoS_Flow_Handler::get_handle () const
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::get_handle:%d\n",
                 this->qos_sock_dgram_.get_handle ()));
 
@@ -558,7 +551,7 @@ TAO_AV_UDP_QoS_Flow_Handler::get_handle (void) const
 // TAO_AV_UDP_Transport
 //------------------------------------------------------------
 
-TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport (void)
+TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport ()
   :handler_ (0)
 {
 }
@@ -569,7 +562,7 @@ TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport (TAO_AV_UDP_QoS_Flow_Handler 
 {
 }
 
-TAO_AV_UDP_QoS_Transport::~TAO_AV_UDP_QoS_Transport (void)
+TAO_AV_UDP_QoS_Transport::~TAO_AV_UDP_QoS_Transport ()
 {
 }
 
@@ -587,19 +580,19 @@ TAO_AV_UDP_QoS_Transport::open (ACE_Addr * /*address*/)
 }
 
 int
-TAO_AV_UDP_QoS_Transport::close (void)
+TAO_AV_UDP_QoS_Transport::close ()
 {
   return 0;
 }
 
 int
-TAO_AV_UDP_QoS_Transport::mtu (void)
+TAO_AV_UDP_QoS_Transport::mtu ()
 {
   return ACE_MAX_DGRAM_SIZE;
 }
 
 ACE_Addr*
-TAO_AV_UDP_QoS_Transport::get_peer_addr (void)
+TAO_AV_UDP_QoS_Transport::get_peer_addr ()
 {
   return &this->peer_addr_;
 }
@@ -645,12 +638,12 @@ TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
                                                        this->handler_->qos_session ()->dest_addr (),
                                                        0,
                                                        0) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
+                ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    "Error in dgram_mcast.send () (%N|%l)\n"),
                                   -1);
               else
                 if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               "Using ACE_OS::sendto () : Bytes sent : %d",
                               bytes_sent));
 
@@ -675,12 +668,12 @@ TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
                                                this->handler_->qos_session ()->dest_addr (),
                                                0,
                                                0) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Error in dgram_mcast.send ()\n"),
                           -1);
       else
         if( TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "(%N,%l) Using ACE_OS::sendto () : Bytes sent : %d",
                       bytes_sent));
 
@@ -699,13 +692,13 @@ TAO_AV_UDP_QoS_Transport::send (const char *buf,
                                 ACE_Time_Value *)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "(%N,%l) TAO_AV_UDP_QoS_Transport::send "));
 
-  char addr [BUFSIZ];
+  ACE_TCHAR addr [BUFSIZ];
   this->peer_addr_.addr_to_string (addr,BUFSIZ);
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "(%N,%l) to %s\n",
                 addr));
 
@@ -730,13 +723,13 @@ TAO_AV_UDP_QoS_Transport::send (const iovec *iov,
                                            this->handler_->qos_session ()->dest_addr (),
                                            0,
                                            0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Error in dgram_mcast.send ()\n"),
                       -1);
   else
   {
     if( TAO_debug_level > 0)
-       ACE_DEBUG ((LM_DEBUG,
+       ORBSVCS_DEBUG ((LM_DEBUG,
                    "(%N,%l) Using ACE_OS::sendto () : Bytes sent : %d",
                    bytes_sent));
   }
@@ -779,11 +772,11 @@ TAO_AV_UDP_QoS_Transport::recv (iovec *iov,
 // TAO_AV_UDP_Acceptor
 //------------------------------------------------------------
 
-TAO_AV_UDP_QoS_Acceptor::TAO_AV_UDP_QoS_Acceptor (void)
+TAO_AV_UDP_QoS_Acceptor::TAO_AV_UDP_QoS_Acceptor ()
 {
 }
 
-TAO_AV_UDP_QoS_Acceptor::~TAO_AV_UDP_QoS_Acceptor (void)
+TAO_AV_UDP_QoS_Acceptor::~TAO_AV_UDP_QoS_Acceptor ()
 {
 }
 
@@ -793,15 +786,15 @@ TAO_AV_UDP_QoS_Acceptor::activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *hand
   int result = 0;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%N,%l) Acceptor Svc Handler QOS ENABLED \n"));
+    ORBSVCS_DEBUG ((LM_DEBUG,
+                "(%N,%l) Acceptor Svc Handler QOS ENABLED\n"));
 
   TAO_AV_UDP_QoS_Session_Helper helper;
 
   result = helper.activate_qos_handler (handler->qos_session (),
                                         handler);
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Error in registering the Decorator with the Reactor\n"),
                       -1);
 
@@ -818,7 +811,7 @@ TAO_AV_UDP_QoS_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   ACE_UNUSED_ARG (flow_comp);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "(%N,%l) TAO_AV_UDP_QoS_Acceptor::open "));
 
   this->av_core_ = av_core;
@@ -831,11 +824,11 @@ TAO_AV_UDP_QoS_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   ACE_INET_Addr *inet_addr = (ACE_INET_Addr *) entry->address ();
 //   inet_addr->set (inet_addr->get_port_number (),
 //                   inet_addr->get_host_name ());
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   inet_addr->addr_to_string (buf,
                              BUFSIZ);
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "(%N,%l) TAO_AV_UDP_QoS_Acceptor::open: %s",
                 buf));
 
@@ -872,7 +865,7 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 
   address->addr_to_string (buf,
                            BUFSIZ);*/
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "(%N,%l) ADDRESS IS %s:%d\n",
               buf, qos_acceptor_addr_.get_port_number() ));
 
@@ -886,7 +879,6 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 int
 TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   int result = 0;
 
   //  TAO_AV_Callback *callback = 0;
@@ -922,7 +914,6 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
     {
-
       TAO_AV_UDP_QoS_Session_Helper helper;
 
       int result = handler->get_socket ()->open (*inet_addr,
@@ -937,13 +928,13 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
                                                  1);
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO_AV_QOS_UDP_MCast_Acceptor data socket open failed (%N|%l)\n"),
                           -1);
 
       result = handler->get_socket ()->get_local_addr (*local_addr);
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Error in getting Local Address (%N|%l)\n"),
                           -1);
 
@@ -955,12 +946,12 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
       dest_addr.set  (local_addr->get_port_number (),
                       local_addr->get_host_name ());
 
-      char dest_buf [BUFSIZ];
+      ACE_TCHAR dest_buf [BUFSIZ];
       dest_addr.addr_to_string (dest_buf,
                                 BUFSIZ);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "Session Address is %s\n",
                     dest_buf));
 
@@ -968,14 +959,14 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
                                                     dest_addr);
 
       if (this->qos_session_ == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "QoS Session Open Failed (%N|%l)\n"),
                           -1);
 
       handler->qos_session (this->qos_session_);
 
       if (this->activate_svc_handler (handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Activate Svc Handler Failed (%N|%l)\n"),
                           -1);
 
@@ -985,7 +976,6 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
       if (qos_available == 0)
         {
-
           ACE_Flow_Spec *ace_flow_spec = 0;
           ACE_NEW_RETURN (ace_flow_spec,
                           ACE_Flow_Spec,
@@ -997,14 +987,13 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
           if (helper.set_qos (*ace_flow_spec,
                               handler) == -1)
 
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Set QoS Failed (%N|%l)\n"),
                               -1);
         }
     }
   else
     {
-
       int result = handler->get_socket ()->open (*inet_addr,
                                                  qos_params,
                                                  AF_INET,
@@ -1017,7 +1006,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
                                                  1);
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO_AV_QOS_UDP_MCast_Acceptor data socket open failed (%N|%l)\n"),
                           -1);
     }
@@ -1031,38 +1020,35 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
   AVStreams::Negotiator_ptr negotiator;
 
-  ACE_TRY_EX (negotiator)
+  try
     {
       CORBA::Any_ptr negotiator_any =
-        this->endpoint_->get_property_value ("Negotiator"
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (negotiator);
+        this->endpoint_->get_property_value ("Negotiator");
 
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%N,%l) Negotiator Not Found \n"));
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  "(%N,%l) Negotiator Not Found\n"));
     }
-  ACE_ENDTRY;
 
   this->endpoint_->set_flow_handler (this->flowname_.c_str (),flow_handler);
   this->entry_->protocol_object (object);
 
   result = handler->get_socket ()->get_local_addr (*local_addr);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
   local_addr->set (local_addr->get_port_number (),
                    local_addr->get_host_name ());
 
   if (TAO_debug_level > 0)
     {
-      char buf [BUFSIZ];
+      ACE_TCHAR buf [BUFSIZ];
       local_addr->addr_to_string (buf,
                                   BUFSIZ);
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Local Address is %s\n",
                   buf));
     }
@@ -1071,11 +1057,10 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
   this->entry_->handler (flow_handler);
 
   return 0;
-
 }
 
 int
-TAO_AV_UDP_QoS_Acceptor::close (void)
+TAO_AV_UDP_QoS_Acceptor::close ()
 {
   return 0;
 }
@@ -1083,11 +1068,11 @@ TAO_AV_UDP_QoS_Acceptor::close (void)
 //------------------------------------------------------------
 // TAO_AV_UDP_Connector
 //------------------------------------------------------------
-TAO_AV_UDP_QoS_Connector::TAO_AV_UDP_QoS_Connector (void)
+TAO_AV_UDP_QoS_Connector::TAO_AV_UDP_QoS_Connector ()
 {
 }
 
-TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector (void)
+TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector ()
 {
 }
 
@@ -1098,7 +1083,7 @@ TAO_AV_UDP_QoS_Connector::open (TAO_Base_StreamEndPoint *endpoint,
 
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Connector::open "));
 
   this->endpoint_ = endpoint;
@@ -1165,7 +1150,6 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 {
   ACE_UNUSED_ARG (flow_comp);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   int result = 0;
   this->entry_ = entry;
   this->flowname_ = entry->flowname ();
@@ -1178,8 +1162,8 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
     }
   else
     ACE_NEW_RETURN (local_addr,
-		    ACE_INET_Addr ("0"),
-		    -1);
+                    ACE_INET_Addr ("0"),
+                    -1);
 
   TAO_AV_Flow_Handler *flow_handler = 0;
 
@@ -1216,7 +1200,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                                          1);
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Data socket open failed (%N|%l)\n"),
                       -1);
 
@@ -1232,19 +1216,18 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
       session_addr->set (local_addr->get_port_number (),
                          local_addr->get_host_name ());
-
     }
   else
     {
       session_addr = inet_addr;
     }
 
-  char sess_buf [BUFSIZ];
+  ACE_TCHAR sess_buf [BUFSIZ];
   session_addr->addr_to_string (sess_buf,
                                 BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "Session Address is %s\n",
                 sess_buf));
 
@@ -1260,11 +1243,11 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                                                 *session_addr);
 
   if (this->qos_session_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "QoS Session Open Failed (%N|%l)\n"),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "QoS session opened successfully\n"));
 
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
@@ -1272,12 +1255,11 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
       //this->qos_session_->source_port (local_addr->get_port_number ());
       ACE_INET_Addr* src_addr;
       ACE_NEW_RETURN (src_addr,
-		      ACE_INET_Addr (local_addr->get_port_number (),
-				     local_addr->get_host_name ()),
-		      -1);
+                      ACE_INET_Addr (local_addr->get_port_number (),
+                      local_addr->get_host_name ()),
+                      -1);
 
       this->qos_session_->source_addr (src_addr);
-
     }
 
   handler->qos_session (this->qos_session_);
@@ -1291,7 +1273,6 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                                                             qos);
   if (qos_available == 0)
     {
-
       ACE_Flow_Spec* ace_flow_spec;
       ACE_NEW_RETURN (ace_flow_spec,
                       ACE_Flow_Spec,
@@ -1302,13 +1283,13 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
       if (helper.set_qos (*ace_flow_spec,
                           handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Unable to set QoS (%N|%l)\n"),
                           -1);
       else
       {
         if( TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                     "(%N,%l) Setting QOS succeeds.\n"));
       }
     }
@@ -1321,23 +1302,20 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   AVStreams::Negotiator_ptr negotiator;
 
-  ACE_TRY_EX (negotiator)
+  try
     {
       CORBA::Any_ptr negotiator_any =
-        this->endpoint_->get_property_value ("Negotiator"
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (negotiator);
+        this->endpoint_->get_property_value ("Negotiator");
 
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Negotiator not found for flow %s\n",
                   this->entry_->flowname ()));
     }
-  ACE_ENDTRY;
 
   flow_handler->protocol_object (object);
 
@@ -1346,7 +1324,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   result = handler->get_socket ()->get_local_addr (*local_addr);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Get local addr failed (%N|%l)\n"),
                       result);
 
@@ -1355,11 +1333,11 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   if (TAO_debug_level > 0)
     {
-      char buf[BUFSIZ];
+      ACE_TCHAR buf[BUFSIZ];
       local_addr->addr_to_string (buf,
                                   BUFSIZ);
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Local Address is %s\n",
                   buf));
     }
@@ -1383,7 +1361,7 @@ TAO_AV_UDP_QoS_Connector::activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *han
                                         handler);
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "(%N,%l) Error in registering the Decorator with the Reactor\n"),
                       -1);
 
@@ -1391,7 +1369,7 @@ TAO_AV_UDP_QoS_Connector::activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *han
 }
 
 int
-TAO_AV_UDP_QoS_Connector::close (void)
+TAO_AV_UDP_QoS_Connector::close ()
 {
   return 0;
 }
@@ -1400,14 +1378,14 @@ TAO_AV_UDP_QoS_Connector::close (void)
 // TAO_AV_UDP_Protocol_Factory
 //------------------------------------------------------------
 
-TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory (void)
+TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory\n"));
 }
 
-TAO_AV_UDP_QoS_Factory::~TAO_AV_UDP_QoS_Factory (void)
+TAO_AV_UDP_QoS_Factory::~TAO_AV_UDP_QoS_Factory ()
 {
 }
 
@@ -1415,7 +1393,7 @@ int
 TAO_AV_UDP_QoS_Factory::match_protocol (const char *protocol_string)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Factory::match_protocol\n"));
 
   if (ACE_OS::strcasecmp (protocol_string,"QoS_UDP") == 0)
@@ -1424,10 +1402,10 @@ TAO_AV_UDP_QoS_Factory::match_protocol (const char *protocol_string)
 }
 
 TAO_AV_Acceptor*
-TAO_AV_UDP_QoS_Factory::make_acceptor (void)
+TAO_AV_UDP_QoS_Factory::make_acceptor ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Factory::make_acceptor "));
 
   TAO_AV_Acceptor *acceptor = 0;
@@ -1438,10 +1416,10 @@ TAO_AV_UDP_QoS_Factory::make_acceptor (void)
 }
 
 TAO_AV_Connector*
-TAO_AV_UDP_QoS_Factory::make_connector (void)
+TAO_AV_UDP_QoS_Factory::make_connector ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Factory::make_connector "));
 
   TAO_AV_Connector *connector = 0;
@@ -1453,7 +1431,7 @@ TAO_AV_UDP_QoS_Factory::make_connector (void)
 
 int
 TAO_AV_UDP_QoS_Factory::init (int /* argc */,
-                              char * /* argv */ [])
+                              ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }
@@ -1462,20 +1440,20 @@ TAO_AV_UDP_QoS_Factory::init (int /* argc */,
 //------------------------------------------------------------
 // TAO_AV_UDP_Flow_Factory
 //------------------------------------------------------------
-TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory (void)
+TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory\n"));
 }
 
-TAO_AV_UDP_QoS_Flow_Factory::~TAO_AV_UDP_QoS_Flow_Factory (void)
+TAO_AV_UDP_QoS_Flow_Factory::~TAO_AV_UDP_QoS_Flow_Factory ()
 {
 }
 
 int
 TAO_AV_UDP_QoS_Flow_Factory::init (int /* argc */,
-                                   char * /* argv */ [])
+                                   ACE_TCHAR * /* argv */ [])
 {
   return 0;
 }
@@ -1510,6 +1488,8 @@ TAO_AV_UDP_QoS_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                  object);
   return object;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_UDP_QoS_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_QoS_Flow_Factory,

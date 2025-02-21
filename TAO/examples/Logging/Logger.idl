@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_LOGGER_IDL
 #define TAO_LOGGER_IDL
 
@@ -8,6 +6,7 @@
 #define TAO_MAXLOGMSGLEN 4 * 1024
 #endif /* TAO_MAXLOGMSGLEN */
 
+typedef string<TAO_MAXLOGMSGLEN> TAO_log_string;
 interface Logger
 {
   // = TITLE
@@ -78,27 +77,27 @@ interface Logger
 
   struct Log_Record
   {
-    Log_Priority type;                 // Type of logging message.
-    long time;                         // Timestamp of the sender.
-    long app_id;                       // Process id of the sender.
-    long host_addr;	               // IP address of the sender.
-    string<TAO_MAXLOGMSGLEN> msg_data; // The logging message.
+    Log_Priority type;       // Type of logging message.
+    long time;               // Timestamp of the sender.
+    long app_id;             // Process id of the sender.
+    long host_addr;          // IP address of the sender.
+    TAO_log_string msg_data; // The logging message.
   };
 
   oneway void log (in Log_Record log_rec);
   // Transmit a Log_Record to the logging server.
 
   oneway void logv (in Log_Record log_rec,
-		    in Verbosity_Level level);
+                    in Verbosity_Level level);
   // Log a message with a specific Verbosity level which may be
   // differeny from the <verbosity_level>
 
   void log_twoway (in Log_Record log_rec);
   // Like log (), but twoway such that applications will block until
-  // log messages are recieved by the logger
+  // log messages are received by the logger
 
   void logv_twoway (in Log_Record log_rec,
-		    in Verbosity_Level level);
+                    in Verbosity_Level level);
   // Like logv (), but twoway for the same reason as logv_twoway ()
 
   oneway void verbosity (in Verbosity_Level level);

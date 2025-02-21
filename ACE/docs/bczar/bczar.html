@@ -1,0 +1,483 @@
+<!--  -->
+<body>
+  <html>
+    <head>
+      <title>The realm of the build czar</title>
+    </head>
+    <h2>Build Czar Duties</h2>
+    <p>
+      The main duties of the Build Czar are summarized as follows
+      <li>
+        Continuously monitor the builds using the <a href="http://www.dre.vanderbilt.edu/scoreboard">
+          Scoreboard </a>
+      as one of the primary source of information.
+      <li>
+      Notify developers who broke compilation to fix the errors as soon as possible,
+      ideally by the next day. A red color in the "Compile" column is not at all
+      acceptable - the Build Czar needs to ensure that these problems are identified
+      and fixed in a timely manner. If possible, the Build Czar should let developers
+      know what the source of problems might be. It is quite possible that developers
+      who checked in the code or users who provided the patch may not have resources
+      to investigate the issues, so the Builds Czar's help is essential to keep
+      things moving ahead.
+      <li>
+      Keep an eye on the tests that are run in every build. Anything abnormal needs
+      to be notified to the right developer. The Build Czar should try helping the
+      developer by providing stack traces (in case of crashes) or other details like
+      printouts with debugging level turned on.
+      <li>
+        Some tests fail in the daily builds for many reasons like known bugs, transient
+        timeouts etc. Make sure that no new test failures show up. This <a href="mailto:jwillemsen@remedy.nl">
+          guy</a>
+      knows most of the information. Ask him to help you out with known problems.
+      Keep the builds ticking. Any red on the "Last Finished" column in the
+      Scoreboard should be fixed. The link to the "Build Name" indicates the machine
+      where the build is being run.
+      <li>
+      The builds don't cover all the possible configurations. If you get a bug report
+      about a compile error in a particular configuration, try setting up a build to
+      make sure that it doesn't show up again if it has been fixed.
+    </p>
+    <P>
+      The document <a href="./privileges.html">here </a>talks about the powers of a
+      build Czar.
+    </P>
+    <P>
+      The Build Czar is empowered to set up more builds on his own for his
+      convenience. This <a href="https://github.com/DOCGroup/autobuild/blob/master/README.md">
+        page </a>has a step by step instructions on how to do that.
+    </P>
+    <P>
+      The build czar can get the build configuration by looking at the config portion
+      of the scoreboard.
+    </P>
+    <p>Pro-active involvement by the build czar is necessary. Being a pro-active
+      build czar requires monitoring the git repository carefully and responding
+      quickly to suspected changes to keep the repo stays stable.</p>
+    <p>After an email from the Coverity scan project check the Coverity project and
+       check that there are no new errors reported. If so, contact the person who
+       introduced the error.</p>
+    <p>Check the daily test statistics email to determine any drop in test failures.
+       Do note that when there are a lot of compile errors the test results are really
+       unusable.</p>
+    <hr>
+    <h2>Recipe for Cutting a Minor Kit</h2>
+    <P>
+      The build czar is also in charge for the release of the micro. Cutting a micro is
+      as simple as cutting butter if things go well. Here is the procedure followed
+      while cutting a micro:
+      <ol>
+        <li>
+          The whole process takes somewhere between 2-3 hours.</li>
+        <li>
+          We suggest you take advantage of GNU Screen so that even if your SSH session is
+          interrupted, the cutting process can continue. This command must be installed on
+          the machines we use to cut the release.
+          <ul>
+            <li>
+              type <code>screen</code> to start screen.</li>
+            <li>
+              execute commands as normal. Note that Ctrl-A is special in screen, so you need
+              to type Ctrl-A-A to send a Ctrl-A to the shell</li>
+            <li>
+              should your session be interrupted, reconnect and type <code>screen -x</code></li>
+            <li>
+              when finished, just type exit twice</li>
+          </ul>
+          <li>
+            After login check that you can,
+            <br>
+            <code>ssh bczar@download.dre.vanderbilt.edu</code><br>
+            to ensure that this succeeds. If not fix the problem, if ok exit again back to
+        <li>
+          Prior to starting this, gather aggregate release notes from all developers.
+          This is usually in the form of an email plea asking to update all NEWS files in
+          the archive. These NEWS files are used as part of the release notes for the release.</li>
+        <li>
+          Make sure your release system has all the needed tools. This can be achieved on Fedora
+          using:
+          <ul>
+            <li><code>yum install perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool GitPython python3</code></li>
+            <li><code>yum update</code></li>
+          </ul>
+          or on OpenSuSE
+          <ul>
+            <li><code>zypper install perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool python-gitpython python3</code></li>
+            <li><code>zypper update</code></li>
+          </ul>
+          If you want to perform a full build with qt support, than run:
+          <ul>
+            <li><code>yum install deltarpm ntp rubygem-rmagick bison xerces-c-devel psmisc yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.8.0-openjdk perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx python3</code></li>
+          </ul>
+          For some optional i686 packages run
+          <ul>
+            <li><code>yum install openssl-devel.i686 xerces-c-devel.i686 glibc-devel.i686 glibc.i686 libstdc++.i686 ncurses-libs.i686 zlib.i686</code></li>
+          </ul>
+        </li>
+        <li>
+          Setup your ssh access to github according to the github <a href="https://help.github.com/articles/generating-ssh-keys/">ssh documentation</a>
+        </li>
+        <li>
+          Checkout a new workspace on a Fedora system with the last public release and with
+          all patches installed.
+        </li>
+        <ul>
+          <li>
+            The best place to create the workspace is under <code>/export/anduriltmp/bczar</code> (if you are on anduril). Don't
+            use the home directory itself, it is an NFS share and not really fast.
+          </li>
+          <li>
+            Checkout like this:
+            <ul>
+              <li>
+                <code>git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO</code></li>
+              <li>
+                <code>git clone https://github.com/DOCGroup/MPC.git MPC</code></li>
+            </ul>
+        </ul>
+        <li>
+          Set $DOC_ROOT to point to the new workspace you checked out.</li>
+        <li>
+          Change directories to <tt>$DOC_ROOT</tt>
+        </li>
+        <li>
+          Checkout the correct branch you want to release on, the default is <code>master</code>
+          but you can also check out an different branch <code>ace6tao2</code> for the ACE 6.x/TAO 2.x
+          releases.
+        </li>
+        <li>
+          Tag the release by executing<br>
+          <code>ACE/bin/make_release.py --micro --update --tag --push</code><br>
+          This will only take a couple minutes to complete and once done successfully,
+          you can carry on with BOTH creating the kits and generating the doxygen
+          documentation in parallel. NOTE that <code>--micro</code> should be replaced
+          with <code>--minor</code> or <code>--major</code> as appropriate.</li>
+        <br>
+        After the repository has been tagged check each file listed below to make
+        sure version numbers are updated as expected.<br>
+        <br>
+        In the <em>EXTREMELY</em> unlikely event that something goes wrong during the <em>
+          tagging</em> of the repo, the following files must be returned to the state
+        they were in before the release process started and then checked back into git:<br>
+        <ul>
+          <code>
+            <li>ACE/PROBLEM-REPORT-FORM</li>
+            <li>ACE/VERSION.txt</li>
+            <li>TAO/PROBLEM-REPORT-FORM</li>
+            <li>TAO/VERSION.txt</li>
+            <li>TAO/tao/Version.h</li>
+            <li>ace/Version.h</li>
+          </code>
+        </ul>
+    The tag will also need to be removed (both in Middleware and MPC):
+    ACE+TAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
+    Minor and Micro release numbers of the release that is to be restarted).<p>
+      E.g.:<br>
+      <code>cd ACE_TAO && git tag -d ACE+TAO-X_Y_Z<br />
+        cd MPC && git tag -d ACE+TAO-X_Y_Z<br />
+      </code>
+      <br>
+      Note that this <em>only</em> needs to be done if the <em>tagging</em> fails. If
+      kit creation fails, simply restart that process.
+      <li>
+        Create the kits by executing<br>
+        <code>ACE/bin/make_release.py --kit</code><br>
+        This will take somewhere around 1 hours to complete.
+        <ul>
+          <li>
+            These commands only tags and creates the kits for the software itself, not
+            documentation, this can be started in parallel with this activity.
+          </li>
+          <li>
+            The kits end up in <tt>$DOC_ROOT/packages</tt></li>
+        </ul>
+    <p>
+    To summarize, the following is a transcript of the steps up to this point
+    executing successfully:
+    <p><code>$ ssh ..<br>
+        No default printer<br>
+        screen<br>
+        cd $HOME<br>
+        rm -rf DOC_ROOT<br>
+        mkdir DOC_ROOT<br>
+        cd DOC_ROOT<br>
+        export DOC_ROOT=$PWD<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO<br>
+        git clone https://github.com/DOCGroup/MPC.git MPC<br>
+        cd ACE_TAO<br>
+        git checkout master</br>
+        ACE/bin/make_release.py --micro --update --verbose<br>
+        ACE/bin/make_release.py --micro --tag --verbose<br>
+        ACE/bin/make_release.py --micro --push --verbose<br>
+        ACE/bin/make_release.py --kit<br>
+      </code>
+    <p>
+      Feel free to cut and paste with suitable edits.
+      <li>
+        The packages end up by default under $DOC_ROOT/package-&lt;PID&gt;, you can
+        copy them to the webserver using the following commands. (Note that &lt;PID&gt;
+        needs to be the numerical pid of the process that created the kit, use<br>
+        <code>ls -ald</code>
+        to determine the correct filename.) At the moment you execute these commands
+        all users can download these packages.</li>
+      <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE*
+        bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
+      </code>
+      When releasing from a branch of master the resulting packages shouldn't be uploaded to
+      <code>ACE+TAO-distribution</code> but <b>only</b> the versioned packages should be
+      uploaded to <code>bczar@download.dre.vanderbilt.edu:/export/www/download.dre/previous_versions</code>
+      using
+      <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE*6*
+        bczar@download.dre.vanderbilt.edu:/export/www/download.dre/previous_versions</code>
+      <li>
+        After the repository is tagged you can also start generating the doxygen
+        documentation in parallel with the kit generation above.<br>
+        <ul>
+          <li>
+            Login to a release system you prepared with the same packages as above:<br>
+            <code>screen</code></li>
+          <li>
+            After login check that you can,
+            <br>
+            <code>ssh bczar@download.dre.vanderbilt.edu</code><br>
+            to ensure that this succeeds. If not fix the problem, if ok exit again back to
+            your release system. </li>
+          <li>
+            <code>cd /tmp</code><br>
+            and remove the contents of the doxygen directory and recreate it again with</li><br>
+          <code>rm -rf doxygen</code><br>
+          <code>mkdir doxygen</code><br>
+          <code>cd doxygen</code><br>
+          If you create the doxygen documentation on <code>naboo.dre.vanderbilt.edu</code>
+          than make sure you use <code>/web/users/isisbuilds/tmp/ACE_wrappers</code>
+          as working directory
+          <li>
+            Update the workspace with the right version tag (replace the X_Y_Z with the ACE
+            version number being released e.g. 7_0_5)
+            <br>
+            <code>git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-7_0_5 ACE_TAO</code><br>
+          </li>
+          <li>Change to the ACE_TAO directory using <br>
+          cd ACE_TAO</li>
+          <li>
+            Set the needed environment variables using<br>
+            <code>export ACE_ROOT=$PWD/ACE</code><br>
+        <code>export TAO_ROOT=$PWD/TAO</code><br>
+        <code>export CIAO_ROOT=</code><br>
+        <code>export DANCE_ROOT=</code><br>
+        <code>export DDS_ROOT=</code><br></li>
+          <li>
+            Check the doxygen version at the shell by executing the command:<br>
+            <code>doxygen --version</code>
+            This should be at least 1.6.2
+          </li>
+          <br>
+        Now you are ready to create documentation
+      </li>
+      <li>
+        <code>cd $ACE_ROOT</code><br>
+        <code>$ACE_ROOT/bin/generate_rel_manpages</code><br>
+        When this is ready copy the resulting files using<br>
+        <code>scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution</code>
+      </li></ul>
+            <code>
+        screen<br>
+        cd $HOME<br>
+        rm -rf doxygen<br>
+        mkdir doxygen<br>
+        cd doxygen<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-7_0_9 ACE_TAO<br>
+        cd ACE_TAO<br>
+        export ACE_ROOT=$PWD/ACE<br>
+        export TAO_ROOT=$PWD/TAO<br>
+        export CIAO_ROOT=<br>
+        export DANCE_ROOT=<br>
+        export DDS_ROOT=<br>
+        cd ACE<br>
+        $ACE_ROOT/bin/generate_rel_manpages<br>
+        scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution
+     </code>
+<br>
+      <li>
+        While doxygen churns, format a release announcement, including the release
+        notes gathered from developers.
+      <li>
+        On <b>naboo.dre.vanderbilt.edu</b> once the doxygen generation has finished, update the documentation at www.dre.vanderbilt.edu/Doxygen.</li>
+      <ul>
+        <li>
+          Create a temporary directory. eg. tmp and change Directory to this- </li>
+        <li>
+          scp file from the download server
+          </li>
+        <li>
+          Unzip and untar the files</li>
+        <li>back out of the temporary directory
+          </li>
+        <li>
+          Create directory 'Current Version No' for example 6.3.4 and change directory into this new one
+        <li>
+          Move contents of the temporary directory's html to this directory -</li>
+        <li>
+          Now back our of this directory and remove the already existing softlink to the "Micro" directory -</li>
+        <li>
+          Create softlink "Micro" linking it to new Documentation using -. If this is a minor release also update the <code>Stable</code> link.</li>
+        <li>
+        Remove the directory tmp</li>
+        <code>
+        cd /web/www/Doxygen<br>
+        mkdir tmp<br>
+        cd tmp<br>
+        scp bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution/ACE-html.tar.bz2 .<br>
+        bunzip2 ACE-html.tar.bz2;tar -xvf ACE-html.tar<br>
+        cd ..<br>
+        mkdir 7.0.8<br>
+        cd 7.0.8<br>
+        mv ../tmp/html .<br>
+        cd ..<br>
+        rm Micro<br>
+        ln -s 7.0.8/html Micro<br>
+        rm -rf tmp<br>
+        </code>
+
+      </ul><br>
+      <li>
+        On <b>download.dre.vanderbilt.edu</b> where the kit was uploaded to and once <b>BOTH</b> the kit
+        and doxygen generation have finished their work, you should also move the packages to the
+        previous versions directory with the appropriate decorators.
+        <ul>
+          <li>
+            <code>cd /export/www/download.dre/ACE+TAO-distribution</code></li>
+          <li>
+            Check that the packages in this directory are all from today</li>
+          <li>
+            Modify <b><code>/export/anduriltmp/bczar/copy_script.sh</code></b>
+          to use the correct ACE version X.Y.Z and run it.
+          <li>
+            Update the copy_script.sh file for the new micro release</li>
+        </ul><br>
+      <li>
+        Update ACE_wrappers/bin/copy-local-script.sh for use the latest version number and use this script to rename all packages
+        locally to include the version number. After this is done upload the versioned packages to the github release page
+      </li>
+      <li>
+        Validate the packages on the webserver whether they are really containing the new release. Make at least
+        one build where you run the TAO Hello world test and check if the libraries are having the
+        correct version number.</li>
+      <li>
+        Update the ACE_wrappers repo:<ul>
+        <li>docs/Download.html to show the new release.</li>
+      <li>
+        etc/index.hml to show the new doxygen package you installed</li>
+        <li>bin/diff-builds-and-group-fixed-tests-only.sh to give the correct default old_date for this release.</li></ul>
+      <li>
+        Update the ACE/NEWS and TAO/NEWS files to have a new section for the next release.</li>
+      <li>
+        Put the release details also on the github release page for this latest release, see https://github.com/DOCGroup/ACE_TAO/releases</li>
+      <li>
+        Update openSUSE Build service using<br>
+        <code>
+        osc checkout devel:libraries:ACE:micro ACE<br>
+        cd &quot;devel:libraries:ACE:micro/ACE&quot;<br>
+        osc rm ACE+TAO-src-*.tar.gz<br>
+        cp $DOC_ROOT/package-&lt;PID&gt;/ACE+TAO-src-*.tar.gz .<br>
+        osc commit<br>
+        </code>
+      </li>
+      <li>
+        Make a new pull request for homebrew-core to update ACE to the new release, see https://github.com/Homebrew/homebrew-core/blob/master/Formula/ace.rb
+      </li>
+      <li>
+        Make a new pull request to Microsoft vcpkg to update ACE to the new release, see https://github.com/Microsoft/vcpkg/tree/master/ports/ace
+      </li>
+      <li>
+        Mail the approved release announcement out to, at minimum the following:
+        <tt>tao-users@list.isis.vanderbilt.edu</tt>, <tt>tao-announce@list.isis.vanderbilt.edu</tt>,
+        <tt>ace-users@list.isis.vanderbilt.edu</tt>, <tt>ace-announce@list.isis.vanderbilt.edu</tt>.
+        Do this as yourself (not as bugzilla). <b>N.B.</b>
+      You will not be able to post to the users' lists unless you are subscribed to
+      them. Odds are you will not be able to post to the announce lists at all. Ask
+      someone else (like Doug or Johnny) to do this step.<br>
+      </ol>
+    </p>
+    <hr>
+    <h2>
+      Tips to being a Build Czar</h2>
+    <p><ol>
+      <li>Trust no one.</li>
+      <li>Be careful with <a href="http://www.dre.vanderbilt.edu/~schmidt/">this guy</a>, he
+      is notorious in breaking builds (and fixing them as well...rumour has it that
+      it's actually a super-scalar, super-pipelined processor capable of out-of-order
+      execution, in human incarnation).</li>
+      <li>Don't forgive people who break ACE :-)</li>
+      <li>If a build hasn't run in a long time (symptoms are a "red" in the Last Run
+      column of the build scoreboard), delete the .disable file in
+      /path/to/build/directory/BUILD_NAME/ by hand.</li>
+      <li>Think of the group who wrote the scoreboard update script, every time you
+      catch an otherwise not so obvious error with the help of the scoreboard. Tell <a href="mailto:devo-group@list.isis.vanderbilt.edu">
+        DEVO group</a> about it.</li>
+      <li>Compile once on Win32 and Linux before cutting a micro.</li>
+      <li>Trust the release script when making a release. Don't make tar balls by
+      hand.</li>
+      <li>When all hell breaks loose, don't wait for the nightly builds to monitor
+      improvement. Instead manually start the builds.</li>
+      <li>Don't hesitate to ask for help.</li>
+      <li>Install your public key to the different machines you have frequent access
+      to avoid typing password.</li>
+      <li>Update this page if you have any more tips for future build czars :-). This
+      page is in git under <code>ACE/docs/bczar/bczar.html</code></li>
+    </p></ol>
+    <hr>
+    <Center>
+      <h1>The Realm of the Build Czar</h1>
+    </Center>
+    <hr>
+    <h2>Build Czar Arthur</h2>
+    <p>Many years have passes since the days of the legendary Build Czar Arthur. His
+      duties were given to him by the mystical Lady of the Lake, who outlined the
+      first responsibilities of the Build Czar.</p>
+    <tt>
+      <br>
+      Then bespake the Lady of the Lake,<br>
+      And these were the words said shee:<br>
+      &quot;I knoweth of thy deeds, thou noble Arthur,<br>
+      but thy task hath not finished for thee&quot;<br>
+      <br>
+      &quot;Thou shalt feitch thy trusty steed,<br>
+      And cleanse thy builds againe;<br>
+      Then shallt thy ryde hath finnished,<br>
+      When new kits released thee cann.&quot;<br>
+      <br>
+      Then bespake him noble Arthur<br>
+      And these were the words said he:<br>
+      &quot;With what weapons shallt I use,<br>
+      To asure these from the devil free?&quot;<br>
+      <br>
+      Then appeered before noble Arthur,<br>
+      Uppon the ground a sacred scroll<br>
+      Conjurred by the Lady of the Lake<br>
+      Borne of the earth in a roll.<br>
+      <br>
+      She saies, &quot;Clasp this to thine selfe<br>
+      For thee shallt find need for it.<br>
+      It shall keep others in the cold,<br>
+      Only to be ressurected when thee sees fit.&quot;<br>
+      <br>
+      &quot;Others shall join thy person,<br>
+      To ryde with thee in thy quest;<br>
+      Thee shallt be thankful of theire help,<br>
+      And to alsoe hold them steadfast.&quot;<br>
+      <br>
+      &quot;But if theire talke too lodly rise,<br>
+      And causeth much damage to thine cuntry,<br>
+      He must come forth, and make proclamation,<br>
+      For the next one he shall be.&quot;<br>
+      <br>
+      So hath Arthur to the Lady spoke:<br>
+      &quot;For I sweare, and save my othe,<br>
+      While enimes and evils I seeke,<br>
+      I shall fight against them bothe.<br>
+      <br>
+    </tt>
+    <hr>
+  </html>
+</body>

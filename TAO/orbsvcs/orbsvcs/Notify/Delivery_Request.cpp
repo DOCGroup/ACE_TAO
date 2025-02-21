@@ -1,24 +1,26 @@
-// $Id$
-
-#include "Delivery_Request.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Delivery_Request.inl"
+#include "orbsvcs/Notify/Delivery_Request.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "Routing_Slip.h"
+#include "orbsvcs/Notify/Routing_Slip.h"
 
 #include "tao/debug.h"
 #include "tao/corba.h"
+
+#include "ace/Truncate.h"
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
-
 ///////////////////
 // Delivery_Request
 Delivery_Request::Delivery_Request (const Routing_Slip_Ptr & routing_slip, size_t request_id)
@@ -26,14 +28,14 @@ Delivery_Request::Delivery_Request (const Routing_Slip_Ptr & routing_slip, size_
   , request_id_ (request_id)
   , delivery_type_ (0)
 {
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Delivery_Request:: constructor\n")
       ));
 }
 
 Delivery_Request::~Delivery_Request ()
 {
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Delivery_Request:: destructor\n")
       ));
 }
@@ -60,7 +62,8 @@ Delivery_Request::marshal (TAO_OutputCDR & cdr)
   if (this->delivery_type_ != 0)
   {
     cdr.write_octet (this->delivery_type_);
-    size_t dest_count = this->destination_id_.size ();
+    CORBA::ULong dest_count =
+      ACE_Utils::truncate_cast<CORBA::ULong> (this->destination_id_.size ());
     cdr.write_ulong (dest_count);
     for (size_t ndest = 0; ndest < dest_count; ++ ndest)
     {
@@ -85,9 +88,9 @@ Delivery_Request::should_retry () const
 void
 Delivery_Request::dispatch (
   TAO_Notify_ProxySupplier * proxy_supplier,
-  bool filter ACE_ENV_ARG_DECL)
+  bool filter)
 {
-  this->routing_slip_->dispatch (proxy_supplier, filter ACE_ENV_ARG_PARAMETER);
+  this->routing_slip_->dispatch (proxy_supplier, filter);
 }
 
 const Routing_Slip_Ptr &
@@ -98,21 +101,4 @@ Delivery_Request::routing_slip () const
 
 } // namespace
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-//template class ACE_Auto_Basic_Ptr<TAO_Notify::Routing_Slip>;
-//template class ACE_Strong_Bound_Ptr<TAO_Notify::Routing_Slip, TAO_SYNCH_MUTEX>;
-//template class ACE_Auto_Basic_Ptr<TAO_Notify::Delivery_Request>;
-//template class ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX>;
-// Duplicated in Routing_Slip.cpp
-//template class ACE_Vector <TAO_Notify::Delivery_Request_Ptr>;
-//template class ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-//#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Notify::Routing_Slip>
-//#pragma instantiate ACE_Strong_Bound_Ptr<TAO_Notify::Routing_Slip,TAO_SYNCH_MUTEX>
-//#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Notify::Delivery_Request>
-//#pragma instantiate ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX>
-// Duplicated in Routing_Slip.cpp
-//#pragma instantiate ACE_Vector <TAO_Notify::Delivery_Request_Ptr>
-//#pragma instantiate ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX> >
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+TAO_END_VERSIONED_NAMESPACE_DECL

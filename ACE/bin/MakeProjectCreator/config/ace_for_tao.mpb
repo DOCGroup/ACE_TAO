@@ -1,0 +1,8 @@
+// -*- MPC -*-
+feature(ace_for_tao) {
+  macros   += ACE_LACKS_ACE_TOKEN ACE_LACKS_MSG_WFMO
+
+  after    += ACE_FOR_TAO
+  libs     += ACE_FOR_TAO
+
+}

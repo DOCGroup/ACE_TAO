@@ -3,8 +3,6 @@
 /**
  *  @file   Activator_NT_Service.h
  *
- *  $Id$
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  *  @author John Tucker <jtucker@infoglide.com>
@@ -17,7 +15,7 @@
 
 #include "ace/config-all.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
@@ -28,9 +26,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-static const char * IMR_ACTIVATOR_SERVICE_NAME = "TAOImRActivator";
-static const char * IMR_ACTIVATOR_DISPLAY_NAME = "TAO Implementation Repository Activator";
-static const char * IMR_ACTIVATOR_DESCRIPTION = "Implementation Repository Activator service for TAO";
+extern const ACE_TCHAR * IMR_ACTIVATOR_SERVICE_NAME;
+extern const ACE_TCHAR * IMR_ACTIVATOR_DISPLAY_NAME;
+extern const ACE_TCHAR * IMR_ACTIVATOR_DESCRIPTION;
 
 /**
  * @class Activator_NT_Service
@@ -51,15 +49,13 @@ public:
   virtual int handle_exception (ACE_HANDLE h);
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc (void);
+  virtual int svc ();
 private:
   friend class ACE_Singleton<Activator_NT_Service, MUTEX>;
 };
 
 typedef ACE_Singleton<Activator_NT_Service, ACE_Mutex> SERVICE;
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
 #endif /* Activator_NT_Service_H */
-
-

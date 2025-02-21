@@ -1,38 +1,26 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Advanced/ch_12
-//
-// = FILENAME
-//    client.cpp
-//
-// = AUTHORS
-//   Source code used in TAO has been modified and adapted from the
-//   code provided in the book, "Advanced CORBA Programming with C++"
-//   by Michi Henning and Steve Vinoski. Copyright
-//   1999. Addison-Wesley, Reading, MA.  Used with permission of
-//   Addison-Wesley.
-//
-//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  @author Source code used in TAO has been modified and adapted from thecode provided in the book
+ *  @author "Advanced CORBA Programming with C++"by Michi Henning and Steve Vinoski. Copyright1999. Addison-Wesley
+ *  @author Reading
+ *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+ */
+//=============================================================================
 
-#include    "CCSC.h"        // ORB-specific
 
-// The following headers are #included automatically by ACE+TAO.
-// Therefore, they don't need to be included explicitly.
-#include    <iostream>
-// #include    <fstream.h>
+#include "CCSC.h"        // ORB-specific
+#include <ace/streams.h>
 
 using namespace std;
 
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
-#if 0   // This inserter may or may not be needed for your ORB.
-
+// This inserter may or may not be needed for your ORB.
+#if 0
 static ostream &
 operator<< (ostream &os, const CORBA::Exception &e)
 {
@@ -47,8 +35,9 @@ operator<< (ostream &os, const CORBA::Exception &e)
         os << tc->id ();
     return os;
 }
-
 #endif
+
+#if !defined (GEN_OSTREAM_OPS)
 
 // Show the details for a thermometer or thermostat.
 
@@ -109,8 +98,9 @@ operator<< (std::ostream &os, const CCS::Controller::EChange &ec)
   return os;
 }
 
-// Change the temperature of a thermostat.
+#endif
 
+// Change the temperature of a thermostat.
 static void
 set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 {
@@ -136,7 +126,7 @@ set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 }
 
 int
-main (int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ULong i = 0;
   try
@@ -169,7 +159,7 @@ main (int argc, char * argv[])
       catch (const CORBA::SystemException &se)
         {
           std::cerr << "Cannot narrow controller reference: "
-               //<< se 
+               << se
                << std::endl;
           throw 0;
         }
@@ -205,7 +195,10 @@ main (int argc, char * argv[])
 
       // Show details for each device.
       for ( i = 0; i < list->length (); i++)
-        std::cout << list[i];
+        {
+          CCS::Thermometer_ptr ti = list[i];
+          std::cout << ti;
+        }
 
       std::cout << std::endl;
 
@@ -217,7 +210,8 @@ main (int argc, char * argv[])
       // Check that the location was updated
       std::cout << "New details for device "
            << anum << " are:" << std::endl;
-      std::cout << list[0u] << std::endl;
+      CCS::Thermometer_ptr tx = list[0u];
+      std::cout << tx << std::endl;
 
       // Find first thermostat in list.
       CCS::Thermostat_var tmstat;
@@ -289,8 +283,8 @@ main (int argc, char * argv[])
     }
   catch  (const CORBA::Exception & e)
     {
-      std::cerr << "Uncaught CORBA exception: " 
-                //<< e 
+      std::cerr << "Uncaught CORBA exception: "
+                << e
                 << std::endl;
       return 1;
     }

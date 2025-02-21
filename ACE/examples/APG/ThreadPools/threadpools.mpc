@@ -1,0 +1,35 @@
+// -*- MPC -*-
+project(Futures) : aceexe, avoids_ace_for_tao {
+  exename = Futures
+  Source_Files {
+    Futures.cpp
+  }
+}
+
+project(LF ThreadPool) : aceexe {
+  exename = LF_ThreadPool
+  Source_Files {
+    LF_ThreadPool.cpp
+  }
+}
+
+project(Task ThreadPool) : aceexe {
+  exename = Task_ThreadPool
+  Source_Files {
+    Task_ThreadPool.cpp
+  }
+}
+
+project(ThreadPool) : aceexe {
+  exename = ThreadPool
+  Source_Files {
+    ThreadPool.cpp
+  }
+}
+
+project(TP Reactor) : aceexe {
+  exename = TP_Reactor
+  Source_Files {
+    TP_Reactor.cpp
+  }
+}

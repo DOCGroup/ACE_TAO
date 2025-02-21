@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Gateway.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,10 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Gateway
@@ -36,29 +38,30 @@
  * transform them back into a push() call.
  * This is an abstract class to represent all the different
  * strategies for EC distribution.
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Gateway
   : public POA_RtecEventChannelAdmin::Observer
 {
 public:
   /// Default constructor.
-  TAO_EC_Gateway (void);
+  TAO_EC_Gateway ();
 
   /// Destructor
-  virtual ~TAO_EC_Gateway (void);
+  virtual ~TAO_EC_Gateway ();
 
   /// The gateway must disconnect from all the relevant event channels,
   /// or any other communication media (such as multicast groups).
-  virtual void close (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+  virtual void close () = 0;
 
   /// Obtain and modify the observer handle.
   void observer_handle (RtecEventChannelAdmin::Observer_Handle h);
-  RtecEventChannelAdmin::Observer_Handle observer_handle (void) const;
+  RtecEventChannelAdmin::Observer_Handle observer_handle () const;
 
 private:
   RtecEventChannelAdmin::Observer_Handle handle_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

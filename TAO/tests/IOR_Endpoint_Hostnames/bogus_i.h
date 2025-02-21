@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef bogus_h
 #define bogus_h
@@ -15,8 +12,7 @@ public:
   bogus ();
   virtual ~bogus ();
 
-  virtual void noop (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void noop ();
 };
 
 #include /**/ "ace/post.h"

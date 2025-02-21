@@ -1,20 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 
-<!-- $Id$ -->
+<!--  -->
 
 <html>
   <head>
-    <title>-ORBEndpoint Details</title>
+    <title>-ORBListenEndpoints Details</title>
     <!-- Changed by: , 12-Jun-2002 -->
   </head>
 
   <body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
-    <h1><A HREF="Options.html#-ORBEndpoint">-ORBEndpoint</A> Details</h1>
+    <h1><A HREF="Options.html#-ORBListenEndpoints">-ORBListenEndpoints</A> Details</h1>
     <P>
     <UL>
       <LI><A HREF="#Overview">Overview</A></LI>
       <LI><A HREF="#Options">Endpoint-Specific Options</A></LI>
-      <LI><A HREF="#Common Options">Common Endpoint-Specific Options</A></LI>
       <LI><A HREF="#IIOP">IIOP Endpoints</A></LI>
       <LI><A HREF="#SHMIOP">SHMIOP Endpoints</A></LI>
       <LI><A HREF="#UIOP">UIOP Endpoints</A></LI>
@@ -30,20 +29,20 @@
     <blockquote><CODE>
         protocol://V.v@addr1,...,W.w@addrN
       </CODE></blockquote>
-    where <CODE>V.v</CODE> and <CODE>W.w</CODE> are optional protcol
+    where <CODE>V.v</CODE> and <CODE>W.w</CODE> are optional protocol
     versions for each address.  An example of an IIOP endpoint is:
     <blockquote><CODE>
         iiop://<I><EM>hostname</EM></I>:<I><EM>port</EM></I>
       </CODE></blockquote>
     Sets of endpoints may be specified using multiple
-    <CODE>-ORBEndpoint</CODE> options or by delimiting endpoints with
+    <CODE>-ORBListenEndpoints</CODE> options or by delimiting endpoints with
     a semi-colon (;).  For example:
     <blockquote><CODE>
-        -ORBEndpoint iiop://localhost:9999 -ORBEndpoint uiop:///tmp/mylocalsock -ORBEndpoint shmiop://10002
+        -ORBListenEndpoints iiop://localhost:9999 -ORBListenEndpoints uiop:///tmp/mylocalsock -ORBListenEndpoints shmiop://10002
       </CODE></blockquote>
     is equivalent to:
     <blockquote><CODE>
-        -ORBEndpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002'
+        -ORBListenEndpoints 'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002'
       </CODE></blockquote>
     Notice the single quotes (') in the latter option specification.
     Single quotes are needed to prevent the shell from interpreting
@@ -52,7 +51,7 @@
       If an endpoint is specified without an <CODE>addr</CODE> such as
       the following:
     <blockquote><CODE>
-        -ORBEndpoint uiop:// -ORBEndpoint shmiop://
+        -ORBListenEndpoints uiop:// -ORBListenEndpoints shmiop://
       </CODE></blockquote>
     then a default endpoint will be created for the specified protocol.
     <P>
@@ -62,14 +61,14 @@
     <P>
     <h2><A NAME="Options">Endpoint-Specific Options</A></h2>
     <P>
-      The <CODE>-ORBEndpoint</CODE> options can accept
+      The <CODE>-ORBListenEndpoints</CODE> options can accept
       endpoint-specific options.  Specifically, such options will only
       apply to the endpoint for which they were specified.
     <P>
       An endpoint-specific option is used as follows:
     <BLOCKQUOTE>
       <CODE>
-        -ORBEndpoint iiop://foo:1234/option=value
+        -ORBListenEndpoints iiop://foo:1234/option=value
       </CODE>
     </BLOCKQUOTE>
     <P>
@@ -77,7 +76,7 @@
       with an ampersand '<CODE>&amp;</CODE>' as follows:
     <BLOCKQUOTE>
       <CODE>
-        -ORBEndpoint 'iiop://foo:1234/option1=value1&option2=value2'
+        -ORBListenEndpoints 'iiop://foo:1234/option1=value1&option2=value2'
       </CODE>
     </BLOCKQUOTE>
     <P>
@@ -85,7 +84,7 @@
       separated by a forward slash '<CODE>/</CODE>' in this case,
       i.e. for IIOP endpoints.  This character may differ for other
       types of pluggable protocol endpoints.  For example, UIOP
-      endpoint-specifc options are separated from the address by a
+      endpoint-specific options are separated from the address by a
       vertical bar '<CODE>|</CODE>'.  Also note that when using more
       than option, quotes should be used to prevent the shell from
       interpreting the ampersand '<CODE>&amp;</CODE>' as a command to
@@ -103,7 +102,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint iiop://V.v@hostname1:port1,...,W.w@hostname2:port2
+          -ORBListenEndpoints iiop://V.v@hostname1:port1,...,W.w@hostname2:port2
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -120,7 +119,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint iiop://hostname:port/foobar=50
+          -ORBListenEndpoints iiop://hostname:port/foobar=50
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -145,14 +144,14 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint iiop://foo2
+          -ORBListenEndpoints iiop://foo2
         </CODE>
     </BLOCKQUOTE>
     or:
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint iiop://foo2.bar.baz
+          -ORBListenEndpoints iiop://foo2.bar.baz
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -168,7 +167,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint iiop://foo2:1234
+          -ORBListenEndpoints iiop://foo2:1234
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -185,7 +184,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint iiop://foo2:my_protocol
+          -ORBListenEndpoints iiop://foo2:my_protocol
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -202,7 +201,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint iiop://
+          -ORBListenEndpoints iiop://
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -222,7 +221,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint iiop://:1234
+          -ORBListenEndpoints iiop://:1234
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -234,6 +233,41 @@
       would interpret <CODE>1234</CODE> as a hostname associated with
       a given network interface.
 
+    <P>
+    <P>
+      The hostname part of an endpoint can also be specified as a literal
+      IP address in 'dotted decimal address' form for IPv4 addresses:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://192.168.10.24:1234
+        </CODE>
+    </BLOCKQUOTE>
+
+      For IPv6 addresses a special form is required to specify decimal IP
+      addresses since the decimal separator for IPv6 addresses is identical
+      to the separator used for port numbers; i.e. a colon (':').
+      To be able to distinguish an endpoint specification for host 01ef::1
+      and port 123 and one for host 01ef::1:123 and no port number IPv6
+      decimal addresses need to enclosed by square brackets ('[' and ']'):
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://[01ef::1]:123
+          -ORBListenEndpoints iiop://[01ef::1:123]
+        </CODE>
+    </BLOCKQUOTE>
+
+      <B>NOTE:</B>
+      Since IPv6 endpoint are supported only for GIOP/IIOP versions >= 1.2
+      it is <FONT color='RED'>illegal</FONT> to combine version numbers
+      &lt; 1.2 and IPv6 decimal addresses:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBListenEndpoints iiop://1.1@[01ef::1]:123 <B><FONT color='RED'>--> ILLEGAL</FONT></B>
+        </CODE>
+    </BLOCKQUOTE>
     <P>
     <h3>IIOP Endpoint-Specific Options</h3>
     <P>
@@ -263,10 +297,10 @@
             ephemeral ports except within a restricted user-defined
             range.
             <P>
-            The format for <CODE>ORBEndpoint</CODE> with the
+            The format for <CODE>ORBListenEndpoints</CODE> with the
             <CODE>portspan</CODE> option is:
             <BLOCKQUOTE>
-              <CODE>-ORBEndpoint iiop://[</CODE><I>hostname</I><CODE>]:</CODE><I
+              <CODE>-ORBListenEndpoints iiop://[</CODE><I>hostname</I><CODE>]:</CODE><I
 >initialPort</I><CODE>/portspan=</CODE><I>span</I>
             </BLOCKQUOTE>
             where <I>initialPort</I> is the initial port number in the
@@ -300,10 +334,10 @@
             environments where the hostname in use is one whose IP
             address changes dynamically.
             <P>
-            The format for <CODE>ORBEndpoint</CODE> with the
+            The format for <CODE>ORBListenEndpoints</CODE> with the
             <CODE>hostname_in_ior</CODE> option is:
             <BLOCKQUOTE>
-              <CODE>-ORBEndpoint iiop://[</CODE><I>local_hostname</I><CODE>]:</CODE><I
+              <CODE>-ORBListenEndpoints iiop://[</CODE><I>local_hostname</I><CODE>]:</CODE><I
 >port</I><CODE>/hostname_in_ior=</CODE><I>overridden_hostname</I>
             </BLOCKQUOTE>
             where <I>local_hostname</I> and <I>port</I> are specified
@@ -311,23 +345,48 @@
             that should be put into generated IORs.
             </TD>
         </TR>
+        <TR>
+          <TD>
+            <CODE>reuse_addr</CODE>
+          </TD>
+          <TD>
+            <CODE>TAO 1.4.8</CODE>
+          </TD>
+          <TD>
+            Available in IIOP & SSLIOP the <CODE>reuse_addr</CODE> option allows one to
+            set the SO_REUSEADDR socket option on an endpoint. Doing so bypasses
+            the TCP TIME_WAIT and can be used to open an endpoint
+            on a port still in TIME_WAIT state. Use caution using this option. Its not
+            recommended for the general use-case. Setting
+            SO_REUSEADDR has been observed to cause unexpected side-effects on some
+            platforms (e.g. Solaris 5.7 x86 allows programs run as same or different
+            users to bind to the same port when SO_REUSEADDR is set by all users).
+            <P>
+            The format for <CODE>ORBListenEndpoints</CODE> with the
+            <CODE>reuse_addr</CODE> option is:
+            <BLOCKQUOTE>
+              <CODE>-ORBListenEndpoints iiop://[</CODE><I>local_hostname</I><CODE>]:</CODE><I
+>port</I><CODE>/reuse_addr=[0|1]</CODE>
+            </BLOCKQUOTE>
+            </TD>
+        </TR>
       </TABLE>
 
     <P>
     <h3>IIOP Endpoint Examples</h3>
     <P>
-      Here are some additional examples of IIOP endoints:
+      Here are some additional examples of IIOP endpoints:
     <UL>
-      <LI><CODE>-ORBEndpoint iiop://1.0@foo1:0</CODE>
-      <LI><CODE>-ORBEndpoint iiop://1.0@foo:0,1.1@bar,baz:3456</CODE>
-      <LI><CODE>-ORBEndpoint iiop://1.0@foo:0,1.1@bar,baz:3456/foobar=300</CODE></LI>
-      <LI><CODE>-ORBEndpoint iiop:///foobar=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
-      <LI><CODE>-ORBEndpoint iiop://:2020/foobar=12345</CODE>
-      <LI><CODE>-ORBEndpoint iiop://1.1@</CODE>
-      <LI><CODE>-ORBEndpoint iiop://1.1@:1234</CODE>
-      <LI><CODE>-ORBEndpoint iiop://1.1@,1.0@:1234,1.1@</CODE>
-      <LI><CODE>-ORBEndpoint iiop://1.1@foo:2020/portspan=30</CODE>
-      <LI><CODE>-ORBEndpoint iiop://foo:2020 -ORBEndpoint iiop://foo:10020 </CODE> </CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.0@foo1:0</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.0@foo:0,1.1@bar,baz:3456</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.0@foo:0,1.1@bar,baz:3456/foobar=300</CODE></LI>
+      <LI><CODE>-ORBListenEndpoints iiop:///foobar=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
+      <LI><CODE>-ORBListenEndpoints iiop://:2020/foobar=12345</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.1@:1234</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.1@,1.0@:1234,1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://1.1@foo:2020/portspan=30</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://foo:2020 -ORBListenEndpoints iiop://foo:10020 </CODE> </CODE>
     </UL>
 
     <hr>
@@ -343,7 +402,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint shmiop://V.v@port1,...,W.w@port2
+          -ORBListenEndpoints shmiop://V.v@port1,...,W.w@port2
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -370,7 +429,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint shmiop://
+          -ORBListenEndpoints shmiop://
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -382,14 +441,14 @@
     <P>
       Here are some additional examples of SHMIOP endoints:
     <UL>
-      <LI><CODE>-ORBEndpoint shmiop://1.0@0</CODE>
-      <LI><CODE>-ORBEndpoint shmiop://1.0@0,3456</CODE>
-      <LI><CODE>-ORBEndpoint shmiop://1.0@0,3456/foobar=300</CODE></LI>
-      <LI><CODE>-ORBEndpoint shmiop:///foobar=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
-      <LI><CODE>-ORBEndpoint shmiop://2020/foobar=12345</CODE>
-      <LI><CODE>-ORBEndpoint shmiop://1.1@</CODE>
-      <LI><CODE>-ORBEndpoint shmiop://1.1@1234</CODE>
-      <LI><CODE>-ORBEndpoint shmiop://1.1@,1.0@1234,1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.0@0</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.0@0,3456</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.0@0,3456/foobar=300</CODE></LI>
+      <LI><CODE>-ORBListenEndpoints shmiop:///foobar=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
+      <LI><CODE>-ORBListenEndpoints shmiop://2020/foobar=12345</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.1@1234</CODE>
+      <LI><CODE>-ORBListenEndpoints shmiop://1.1@,1.0@1234,1.1@</CODE>
     </UL><p>
 
     You <font color="red">must specify the hostname</font>, however,
@@ -401,7 +460,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBInitRef MyService=shmiop://1.1@hostname:port/service_name
+          -ORBInitRef MyService=corbaloc:shmiop:1.1@hostname:port/service_name
         </CODE>
     </BLOCKQUOTE>
 
@@ -418,7 +477,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint uiop://V.v@rendezvous_point1,...,W.w@rendezvous_point2
+          -ORBListenEndpoints uiop://V.v@rendezvous_point1,...,W.w@rendezvous_point2
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -429,13 +488,13 @@
 
     <P>
       Options are separated from the addresses by a vertical bar
-      '<CODE>|</CODE>'.  For instance, if an IIOP endpoint should have
+      '<CODE>|</CODE>'.  For instance, if an UIOP endpoint should have
       a property foobar of 50 associated with it, then the following
       endpoint specification could be used
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint 'uiop://1.0@/tmp/my_rendezvous_point|foobar=50'
+          -ORBListenEndpoints 'uiop://1.0@/tmp/my_rendezvous_point|foobar=50'
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -459,7 +518,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint uiop:///tmp/foobar
+          -ORBListenEndpoints uiop:///tmp/foobar
         </CODE>
     </BLOCKQUOTE>
     In this example, the optional protocol version and
@@ -470,7 +529,7 @@
       path could be:
     <BLOCKQUOTE>
       <P>
-        <CODE>-ORBEndpoint uiop://foobar</CODE> <FONT COLOR=RED>(DISCOURAGED)</FONT>
+        <CODE>-ORBListenEndpoints uiop://foobar</CODE> <FONT COLOR=RED>(DISCOURAGED)</FONT>
     </BLOCKQUOTE>
     <P>
       Again, rendezvous points with relative paths are discouraged
@@ -483,7 +542,7 @@
     <BLOCKQUOTE>
       <P>
         <CODE>
-          -ORBEndpoint uiop://
+          -ORBListenEndpoints uiop://
         </CODE>
     </BLOCKQUOTE>
     <P>
@@ -497,12 +556,12 @@
     <P>
       Here are some additional examples of UIOP endoints:
     <UL>
-      <LI><CODE>-ORBEndpoint uiop://1.0@/tmp/foo1</CODE>
-      <LI><CODE>-ORBEndpoint uiop://1.0@/tmp/foo,1.1@/home/bar/baz</CODE>
-      <LI><CODE>-ORBEndpoint 'uiop://1.1@/tmp/bar|foobar=300'</CODE></LI>
-      <LI><CODE>-ORBEndpoint 'uiop://|foobar=2'</CODE>
-      <LI><CODE>-ORBEndpoint uiop://1.1@</CODE>
-      <LI><CODE>-ORBEndpoint uiop://1.1@,1.0@/tmp/foo,1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints uiop://1.0@/tmp/foo1</CODE>
+      <LI><CODE>-ORBListenEndpoints uiop://1.0@/tmp/foo,1.1@/home/bar/baz</CODE>
+      <LI><CODE>-ORBListenEndpoints 'uiop://1.1@/tmp/bar|foobar=300'</CODE></LI>
+      <LI><CODE>-ORBListenEndpoints 'uiop://|foobar=2'</CODE>
+      <LI><CODE>-ORBListenEndpoints uiop://1.1@</CODE>
+      <LI><CODE>-ORBListenEndpoints uiop://1.1@,1.0@/tmp/foo,1.1@</CODE>
     </UL>
     <hr>
 
@@ -519,22 +578,57 @@
     <P>
       Since DIOP endpoints in TAO have the same form as
       <A HREF="#IIOP">IIOP</A> endpoints, a detailed description is
-      therefore omitted. DIOP has no support for endpoint-specific
-      options.
+      therefore omitted.
     <P>
       We recommend explicitly setting port numbers for endpoints
       since TAO does not support automatic selection of free endpoints for
       UDP sockets.  Instead, the ORB will try to use the same default port
       number in every case.
+    <P>
+
+    <h3>DIOP Endpoint-Specific Options</h3>
+    <P>
+    TAO supports the following endpoint-specific options that apply only
+    to DIOP endpoints:
+
+      <TABLE BORDER="2" CELLSPACING="2" CELLPADDING= "0">
+        <TR>
+          <TH>Option</TH>
+          <TH>Availability</TH>
+          <TH>Description</TH>
+        </TR>
+        <TR>
+          <TD>
+            <CODE>portspan</CODE>
+          </TD>
+          <TD>
+            <CODE>TAO 2.5.12</CODE>
+          </TD>
+          <TD>
+            The <CODE>portspan</CODE> option works identically to the
+            <A HREF="#IIOP">IIOP</A> <CODE>portspan</CODE> option documented above.
+            <P>
+            The format for <CODE>ORBListenEndpoints</CODE> with the
+            <CODE>portspan</CODE> option is:
+            <BLOCKQUOTE>
+              <CODE>-ORBListenEndpoints diop://[</CODE><I>hostname</I><CODE>]:</CODE><I
+>initialPort</I><CODE>/portspan=</CODE><I>span</I>
+            </BLOCKQUOTE>
+          </TD>
+        </TR>
+      </TABLE>
+    </P>
 
     <h3>DIOP Endpoint Examples</h3>
     <P>
       Here are some additional examples of DIOP endoints:
     <UL>
-      <LI><CODE>-ORBEndpoint diop://1.0@foo1:2345</CODE>
-      <LI><CODE>-ORBEndpoint diop://1.1@:1234</CODE>
+      <LI><CODE>-ORBListenEndpoints diop://1.0@foo1:2345</CODE>
+      <LI><CODE>-ORBListenEndpoints diop://1.1@:1234</CODE>
+      <LI><CODE>-ORBListenEndpoints diop://1.1@foo:2020/portspan=30</CODE>
     </UL>
 
+    <hr>
     <P>
     <h2><A NAME="SSLIOP">SSLIOP Endpoints</A></h2>
     TAO's SSLIOP pluggable protocol facilitates CORBA request
@@ -559,7 +653,7 @@
       port use the <CODE>ssl_port</CODE> endpoint option:
 
     <UL>
-      <LI><CODE>-ORBEndpoint iiop://foo:1234/ssl_port=1235</CODE>
+      <LI><CODE>-ORBListenEndpoints iiop://foo:1234/ssl_port=1235</CODE>
     </UL>
 
     In this case, an <A HREF="#IIOP">IIOP</A> endpoint would be opened
@@ -578,11 +672,6 @@
       SSLIOP pluggable protocol is used.
 
     <hr>
-
     <address><a href="mailto:ossama@dre.vanderbilt.edu">Ossama Othman</a></address>
-<!-- Created: Thu May 18 08:37:25 PDT 2000 -->
-<!-- hhmts start -->
-Last modified: Fri Jun 11 16:51:59 PDT 2004
-<!-- hhmts end -->
   </body>
 </html>

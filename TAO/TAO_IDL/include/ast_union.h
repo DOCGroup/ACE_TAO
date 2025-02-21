@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
 /*
 
 COPYRIGHT
@@ -80,49 +78,39 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Union : public virtual AST_Structure
 {
 public:
-  // Operations.
-
-  // Constructor(s).
-  AST_Union (void);
-
   AST_Union (AST_ConcreteType *disc_type,
              UTL_ScopedName *n,
-             idl_bool local,
-             idl_bool abstract);
+             bool local,
+             bool abstract);
 
-  // Destructor.
-  virtual ~AST_Union (void);
+  virtual ~AST_Union ();
 
   // This also calls the base class version.
   virtual void redefine (AST_Structure *from);
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the parameter node involved in some kind of recursion?
 
   // Data Accessors.
 
-  AST_ConcreteType *disc_type (void);
+  AST_ConcreteType *disc_type ();
 
-  AST_Expression::ExprType udisc_type (void);
-
-  // Narrowing.
-  DEF_NARROW_METHODS1(AST_Union, AST_Structure);
-  DEF_NARROW_FROM_DECL(AST_Union);
-  DEF_NARROW_FROM_SCOPE(AST_Union);
+  AST_Expression::ExprType udisc_type ();
 
   struct DefaultValue
   {
     union PermittedTypes
     {
-      char char_val;
+      ACE_CDR::Char char_val;
       ACE_CDR::WChar wchar_val;
-      unsigned long bool_val;
-      ACE_INT16 short_val;
-      ACE_UINT16 ushort_val;
-      ACE_INT32 long_val;
-      ACE_UINT32 ulong_val;
-      ACE_UINT32 enum_val;
-      // TO-DO - handle (u)longlong types.
+      ACE_CDR::Boolean bool_val;
+      ACE_CDR::Short short_val;
+      ACE_CDR::UShort ushort_val;
+      ACE_CDR::Long long_val;
+      ACE_CDR::ULong ulong_val;
+      ACE_CDR::ULong enum_val;
+      ACE_CDR::LongLong longlong_val;
+      ACE_CDR::ULongLong ulonglong_val;
     } u;
     long computed_;
     // computed == -1 => error condition
@@ -134,7 +122,7 @@ public:
   int default_value (DefaultValue &);
   // Get the default value.
 
-  virtual int default_index (void);
+  virtual int default_index ();
   // Return the default index used.
 
   // AST Dumping.
@@ -143,9 +131,22 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  static AST_Decl::NodeType const NT;
+
+  /**
+   * Get and Set Annotations on the discriminator
+   */
+  ///{
+  AST_Annotation_Appls &disc_annotations ();
+  void disc_annotations (const AST_Annotation_Appls &annotations);
+  ///}
+
 protected:
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
+
+  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
+  // Moved out of private section so it can be called from subclass.
 
 private:
   // Data.
@@ -163,7 +164,7 @@ private:
   AST_UnionBranch *lookup_branch (AST_UnionBranch *branch);
 
   // Look up the branch with the "default" label.
-  AST_UnionBranch *lookup_default (void);
+  AST_UnionBranch *lookup_default ();
 
   // Look up a branch given a branch with a label. This is used to
   // check for duplicate labels.
@@ -173,23 +174,23 @@ private:
   // check for duplicate enum labels.
   AST_UnionBranch *lookup_enum (AST_UnionBranch *b);
 
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
+  friend class ast_visitor_tmpl_module_inst;
+
   // Scope Management Protocol.
 
   virtual AST_Union *fe_add_union (AST_Union *u);
-
-  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
 
   virtual AST_Structure *fe_add_structure (AST_Structure *s);
 
   virtual AST_Enum *fe_add_enum (AST_Enum *e);
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
-  
-  virtual int compute_default_value (void);
+
+  virtual int compute_default_value ();
   // Compute the default value (if any).
 
-  int compute_default_index (void);
+  int compute_default_index ();
   // Count the default index.
 
   DefaultValue default_value_;
@@ -197,6 +198,11 @@ private:
 
   int default_index_;
   // Default label index (zero based indexing).
+
+  /**
+   * Annotations on the discriminator
+   */
+  AST_Annotation_Appls disc_annotations_;
 };
 
 #endif           // _AST_UNION_AST_UNION_HH

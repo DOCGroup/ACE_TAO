@@ -1,8 +1,6 @@
 /**
  * @file Loopback_Pair.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -32,7 +30,7 @@ public:
    * We need a default constructor because this class is often used in
    * arrays.
    */
-  Loopback_Pair (void);
+  Loopback_Pair ();
 
   /**
    * @param experiment_id For tests that run multiple experiments
@@ -53,18 +51,17 @@ public:
              PortableServer::POA_ptr consumer_poa);
 
   /// Connect to the event channel
-  void connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
 
   //@{
   /** @name Accessors
    */
-  Loopback_Supplier *loopback_supplier (void) const;
+  Loopback_Supplier *loopback_supplier () const;
 
-  Loopback_Consumer *loopback_consumer (void) const;
+  Loopback_Consumer *loopback_consumer () const;
   //@}
 
 private:

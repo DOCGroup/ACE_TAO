@@ -4,8 +4,6 @@
 /**
  *  @file   ORB_Core_TSS_Resources.h
  *
- *  $Id$
- *
  *  @author DOC Center - Washington University at St. Louis
  *  @author DOC Laboratory - University of California at Irvine
  */
@@ -16,20 +14,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Array_Base.h"
 #include "tao/orbconf.h"
+#include "ace/Array_Base.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "PICurrent_Impl.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 /**
  * @class TAO_ORB_Core_TSS_Resources
@@ -43,21 +39,21 @@ class TAO_ORB_Core;
 class TAO_Export TAO_ORB_Core_TSS_Resources
 {
 public:
-
   /// Constructor
-  TAO_ORB_Core_TSS_Resources (void);
+  TAO_ORB_Core_TSS_Resources ();
 
   /// destructor
-  ~TAO_ORB_Core_TSS_Resources (void);
+  ~TAO_ORB_Core_TSS_Resources ();
+
+  /// Cleans TSS resources.
+  void fini ();
 
 private:
-
   /// The ORB Core TSS resources should not be copied
   TAO_ORB_Core_TSS_Resources (const TAO_ORB_Core_TSS_Resources&);
   void operator= (const TAO_ORB_Core_TSS_Resources&);
 
 public:
-
   /**
    * @todo
    * The rest of the resources are not currently in use, just a plan
@@ -85,14 +81,9 @@ public:
   /// cleanup functions for the TSS objects stored in the TSS object
   /// array in this class.
   TAO_ORB_Core *orb_core_;
-
-#if TAO_HAS_INTERCEPTORS == 1
-  /// The thread-specific portion of the PICurrent object.
-  TAO::PICurrent_Impl pi_current_;
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 };
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ORB_CORE_H */

@@ -1,16 +1,11 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Load_Balancing
-//
-// = FILENAME
-//    Identity_Client.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Identity_Client.cpp
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Identity_Client.h"
 #include "IdentityC.h"
@@ -21,7 +16,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-Identity_Client::Identity_Client (void)
+Identity_Client::Identity_Client ()
   : group_factory_ior_ (0),
     number_of_invocations_ (5),
     use_random_ (0)
@@ -29,9 +24,9 @@ Identity_Client::Identity_Client (void)
 }
 
 int
-Identity_Client::parse_args (int argc, char *argv[])
+Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "di:n:r");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("di:n:r"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -70,17 +65,13 @@ Identity_Client::parse_args (int argc, char *argv[])
 
 int
 Identity_Client::init (int argc,
-                       char* argv[])
+                       ACE_TCHAR* argv[])
 {
   int result;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      result = this->orb_manager_.init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = this->orb_manager_.init (argc, argv);
       if (result == -1)
         return result;
 
@@ -89,39 +80,33 @@ Identity_Client::init (int argc,
       if (result < 0)
         return result;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Identity_Client::init");
+      ex._tao_print_exception ("Identity_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
+Identity_Client::run ()
 {
-  ACE_DEBUG ((LM_DEBUG, "Identity_Client: Initialized \n"));
+  ACE_DEBUG ((LM_DEBUG, "Identity_Client: Initialized\n"));
 
   // Contact the <Object_Group_Factory> to obtain an <Object_Group>.
   CORBA::ORB_var orb = orb_manager_.orb ();
   CORBA::Object_var obj =
-    orb->string_to_object (this->group_factory_ior_
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    orb->string_to_object (this->group_factory_ior_);
   Load_Balancer::Object_Group_Factory_var factory =
-    Load_Balancer::Object_Group_Factory::_narrow (obj.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    Load_Balancer::Object_Group_Factory::_narrow (obj.in ());
 
   if (CORBA::is_nil (factory.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Identity_Client: problems using the factory ior\n"),
                       -1);
 
-  const char *group_name;
+  const char *group_name = 0;
   if (this->use_random_)
     group_name = "Identity, Random";
   else
@@ -129,15 +114,12 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Client: Requesting Object Group "
-              "with id <%s>\n", group_name));
+              "with id <%C>\n", group_name));
   Load_Balancer::Object_Group_var object_group =
-    factory->resolve (group_name
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    factory->resolve (group_name);
 
   // List <Object_Group>'s id.
-  CORBA::String_var id = object_group->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::String_var id = object_group->id ();
 
   if (ACE_OS::strcmp (id.in (), group_name) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -147,19 +129,18 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 
   // List all <Object_Group>s members.
   ACE_DEBUG ((LM_DEBUG,
-              "Identity_Client: Requesting member list of <%s> Object Group\n",
+              "Identity_Client: Requesting member list of <%C> Object Group\n",
               group_name));
 
   Load_Balancer::Member_ID_List_var id_list =
-    object_group->members (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    object_group->members ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Client: The Group contains %d members:\n",
               id_list->length ()));
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
-    ACE_DEBUG ((LM_DEBUG, "                 <%s>\n",
-                (id_list[i]).in ()));
+    ACE_DEBUG ((LM_DEBUG, "                 <%C>\n",
+                static_cast<char const*>((id_list[i]))));
 
   // Perform <number_of_invocations_> method calls on <Identity>
   // objects, which are members of the <Object_Group>.  Before each
@@ -170,7 +151,7 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Client: Performing %d invocation(s), "
-              "consulting the <%s> Group\n"
+              "consulting the <%C> Group\n"
               "                 for Identity object "
               "to use before each invocation\n",
               this->number_of_invocations_,
@@ -178,20 +159,15 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 
   for (size_t ind = 0; ind < this->number_of_invocations_; ++ind)
     {
-      obj = object_group->resolve (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      obj = object_group->resolve ();
 
-      identity_object = Identity::_narrow (obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      identity_object = Identity::_narrow (obj.in ());
       if (CORBA::is_nil (identity_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Identity_Client: cannot narrow an object received from"
                            "<Object_Group::resolve> to <Identity>\n"),
                           -1);
-      identity_object->get_name (identity.out ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      identity_object->get_name (identity.out ());
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -200,12 +176,12 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-Identity_Client::~Identity_Client (void)
+Identity_Client::~Identity_Client ()
 {
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Identity_Client client;
@@ -213,19 +189,15 @@ main (int argc, char *argv[])
   if (client.init (argc, argv) == -1)
     return 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      result = client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = client.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Identity_Client");
+      ex._tao_print_exception ("Identity_Client");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   if (result == -1)
     return 1;

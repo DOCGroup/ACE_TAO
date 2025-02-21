@@ -1,0 +1,8 @@
+
+
+This program tests the application controlled membership support
+of the FT_Naming_Service. The aim is to allow the application
+to create object groups and add them to the naming service. When
+the client resolves an object group from the naming service, the
+load balancing strategy is applied.  Currently the test only supports
+the RoundRobin load balancing strategy.

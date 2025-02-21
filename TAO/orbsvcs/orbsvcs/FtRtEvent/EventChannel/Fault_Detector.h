@@ -4,8 +4,6 @@
 /**
  *  @file   Fault_Detector.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -21,6 +19,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_Fault_Listener;
 
@@ -42,13 +42,12 @@ private:
   virtual int parse_conf(int argc, ACE_TCHAR** argv);
 
 protected:
-
   class ReactorTask : public ACE_Task_Base
   {
   public:
     // ctor
     ReactorTask();
-    virtual int svc (void);
+    virtual int svc ();
     ACE_Reactor reactor_;
   };
 
@@ -56,5 +55,7 @@ protected:
   ReactorTask reactor_task_;
   TAO_FTEC_Fault_Listener* listener_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif //FAULT_DETECTOR_H

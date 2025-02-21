@@ -1,5 +1,3 @@
-// $Id$
-
 Goals:
 ------
 The goal of this test is to verify that federation of Event Channels
@@ -50,8 +48,3 @@ Manually:
 As many times as desired (using a different ior file name each time) do
 $gateway-ec -ORBsvcconf gateway.conf -i ec.ior
 $application -ORBInitRef Event_Service=file://ec.ior -d
-
-
-
-
-

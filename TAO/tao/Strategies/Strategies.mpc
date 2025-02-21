@@ -1,0 +1,44 @@
+project(*core_idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Sci -SS -Gp -Gd -Sorb -DCORBA3 \
+                -Wb,export_macro=TAO_Strategies_Export \
+                -Wb,export_include=tao/Strategies/strategies_export.h \
+                -iC tao/Strategies
+    idlflags -= -St
+    uiop_endpoints.pidl
+    sciop_endpoints.pidl
+    COIOP_Endpoints.pidl
+  }
+
+  specific {
+    install_dir = tao/Strategies
+  }
+}
+
+project(Strategies) : taolib, tao_output, install, pi, anytypecode, core_strategies, taoidldefaults {
+  after       += *core_idl
+  sharedname   = TAO_Strategies
+  dynamicflags += TAO_STRATEGIES_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    uiop_endpointsC.cpp
+    sciop_endpointsC.cpp
+    COIOP_EndpointsC.cpp
+  }
+
+  Header_Files {
+    *.h
+    uiop_endpointsC.h
+    sciop_endpointsC.h
+    COIOP_EndpointsC.h
+    uiop_endpointsS.h
+    sciop_endpointsS.h
+    COIOP_EndpointsS.h
+  }
+
+  specific {
+    install_dir = tao/Strategies
+  }
+}

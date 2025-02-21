@@ -1,17 +1,15 @@
-#include "LB_CPU_Utilization_Monitor.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/sys/os_loadavg.h"
 
-ACE_RCSID (LoadBalancing,
-           LB_CPU_Utilization_Monitor,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-double calc_cpu_loading (void)
+double calc_cpu_loading ()
 {
   static char buf[1024];
   static unsigned long prev_idle = 0;
@@ -28,17 +26,17 @@ double calc_cpu_loading (void)
 
   double percent_cpu_load = 0.0;
 
-  if ((file_ptr = fopen("/proc/stat", "r")) == 0)
+  if ((file_ptr = ACE_OS::fopen("/proc/stat", "r")) == 0)
           return percent_cpu_load;
 
-  while ((fgets (buf, sizeof (buf), file_ptr)) != 0)
+  while ((ACE_OS::fgets (buf, sizeof (buf), file_ptr)) != 0)
   {
     item = ACE_OS::strtok (buf, " \t\n");
     arg = ACE_OS::strtok (0, "\n");
 
     if (item == 0 || arg == 0)
             continue;
-    if (item[0] == 'c' && strlen (item) == 3)
+    if (item[0] == 'c' && ACE_OS::strlen (item) == 3)
     {
       sscanf (arg, "%lu %lu %lu %lu", &user, &nice, &sys, &idle);
       break;
@@ -47,7 +45,7 @@ double calc_cpu_loading (void)
 
   }
 
-  fclose (file_ptr);
+  ACE_OS::fclose (file_ptr);
 
   delta_idle = idle - prev_idle;
   double total;
@@ -61,9 +59,7 @@ double calc_cpu_loading (void)
   prev_total = total;
 
   return percent_cpu_load;
-
 }
-
 
 TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * location_id,
                                                                 const char * location_kind)
@@ -103,13 +99,12 @@ TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * loc
     }
 }
 
-TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor (void)
+TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor ()
 {
 }
 
 CosLoadBalancing::Location *
-TAO_LB_CPU_Utilization_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_LB_CPU_Utilization_Monitor::the_location ()
 {
   CosLoadBalancing::Location * location;
   ACE_NEW_THROW_EX (location,
@@ -119,23 +114,20 @@ TAO_LB_CPU_Utilization_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return location;
 }
 
 CosLoadBalancing::LoadList *
-TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_LB_CPU_Utilization_Monitor::loads ()
 {
   CORBA::Float load = 0;
 
-#if defined (linux) || defined (sun)
-
+#if defined (ACE_LINUX)
   double load_double = calc_cpu_loading ();
   load = load_double;
 
-  CosLoadBalancing::LoadList * tmp;
+  CosLoadBalancing::LoadList * tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (
@@ -143,7 +135,6 @@ TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   CosLoadBalancing::LoadList_var load_list = tmp;
 
@@ -152,15 +143,17 @@ TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   load_list[0].id = CosLoadBalancing::LoadAverage;
   load_list[0].value = load;
 
-  ACE_DEBUG ((LM_DEBUG, "%2f\n", load_list[0].value));
+  ORBSVCS_DEBUG ((LM_DEBUG, "%2f\n", load_list[0].value));
 
   return load_list._retn ();
 
 #else
 
   ACE_UNUSED_ARG (load);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 
-#endif  /* linux || sun */
+#endif  /* linux */
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,12 +1,6 @@
 #include "Simple.h"
 #include "LB_server.h"
 
-
-ACE_RCSID (Application_Controlled,
-           Simple,
-           "$Id$")
-
-
 Simple::Simple (CORBA::Object_ptr object_group,
                 CosLoadBalancing::LoadManager_ptr lm,
                 CORBA::ORB_ptr orb,
@@ -21,61 +15,50 @@ Simple::Simple (CORBA::Object_ptr object_group,
 }
 
 CORBA::Short
-Simple::number (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Simple::number ()
 {
   return this->number_;
 }
 
 char *
-Simple::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Simple::get_string ()
 {
   return CORBA::string_dup (this->location_);
 }
 
 void
-Simple::remove_member (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Simple::remove_member ()
 {
-  ACE_TRY
+  try
     {
       PortableGroup::Location location (1);
       location.length (1);
       location[0].id = CORBA::string_dup (this->location_);
       this->lm_->remove_member (this->object_group_.in (),
-                                location
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                location);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%s>\n",
                       this->location_));
-
     }
-  ACE_CATCH (PortableGroup::ObjectNotFound, ex)
+  catch (const PortableGroup::ObjectNotFound& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception in remove_member");
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      ex._tao_print_exception ("Caught exception in remove_member");
+      throw CORBA::INTERNAL ();
     }
-  ACE_CATCH (PortableGroup::MemberNotFound, ex)
+  catch (const PortableGroup::MemberNotFound& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception in remove_member");
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      ex._tao_print_exception ("Caught exception in remove_member");
+      throw CORBA::INTERNAL ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught while destroying member\n");
+      ex._tao_print_exception ("Exception caught while destroying member\n");
     }
-  ACE_ENDTRY;
 
 }
 
 void
-Simple::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Simple::shutdown ()
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (false);
 }

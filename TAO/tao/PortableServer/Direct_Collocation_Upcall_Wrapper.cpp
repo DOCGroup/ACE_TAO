@@ -1,70 +1,54 @@
-// $Id$
-
-#include "Direct_Collocation_Upcall_Wrapper.h"
+// -*- C++ -*-
+#include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-# include "ForwardRequestC.h"
+# include "tao/PortableServer/ForwardRequestC.h"
 #endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include "tao/Abstract_Servant_Base.h"
-#include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "tao/Object.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 
-ACE_RCSID (PortableServer,
-           Direct_Collocation_Upcall_Wrapper,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::Direct_Collocation_Upcall_Wrapper::upcall (
   CORBA::Object_ptr obj,
   CORBA::Object_out forward_obj,
+  bool & is_forwarded,
   TAO::Argument ** args,
-  int num_args,
+  int,
   const char * op,
   size_t op_len,
-  TAO::Collocation_Strategy strategy
-  ACE_ENV_ARG_DECL
-)
-ACE_THROW_SPEC ((CORBA::Exception))
+  TAO::Collocation_Strategy strategy)
 {
   TAO_Abstract_ServantBase * const servant = obj->_servant ();
 
   TAO_Collocated_Skeleton collocated_skel;
-  int const status = servant->_find (op,
-                                     collocated_skel,
-                                     strategy,
-                                     op_len);
 
-  if (status == -1)
+  if (servant->_find (op, collocated_skel, strategy, op_len) == -1)
     {
-      ACE_THROW (CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
+      throw ::CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
-  ACE_TRY
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  try
     {
-      collocated_skel (servant,
-                       args,
-                       num_args
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+#endif /* TAO_HAS_MINIMUM_CORBA && !CORBA_E_COMPACT && !CORBA_E_MICRO*/
+      collocated_skel (servant, args);
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     }
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  ACE_CATCH (PortableServer::ForwardRequest, forward_request)
+  catch (const ::PortableServer::ForwardRequest& forward_request)
     {
       forward_obj =
         CORBA::Object::_duplicate (forward_request.forward_reference.in ());
-      return;
+      is_forwarded = true;
     }
 #else
-  ACE_CATCHANY
-    {
-      ACE_UNUSED_ARG (forward_obj);
-      ACE_RE_THROW;
-    }
-#endif /* TAO_HAS_MINIMUM_CORBA */
-  ACE_ENDTRY;
-  ACE_CHECK;
+  ACE_UNUSED_ARG (forward_obj);
+  ACE_UNUSED_ARG (is_forwarded);
+#endif /* TAO_HAS_MINIMUM_CORBA && !CORBA_E_COMPACT && !CORBA_E_MICRO*/
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

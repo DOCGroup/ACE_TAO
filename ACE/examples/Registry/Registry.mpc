@@ -1,0 +1,15 @@
+// -*- MPC -*-
+project(*iterator) : aceexe, winregistry {
+  exename = iterator
+
+  Source_Files {
+    test_registry_iterator.cpp
+  }
+}
+project(*update) : aceexe, winregistry {
+  exename = update
+
+  Source_Files {
+    test_registry_update.cpp
+  }
+}

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef BIG_ONEWAYS_SESSION_TASK_H
 #define BIG_ONEWAYS_SESSION_TASK_H
@@ -22,7 +19,7 @@ public:
   Session_Task (Session *session);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Reference to the test interface

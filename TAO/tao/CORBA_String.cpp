@@ -1,5 +1,5 @@
-#include "CORBA_String.h"
-#include "Managed_Types.h"
+#include "tao/CORBA_String.h"
+#include "tao/String_Manager_T.h"
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
@@ -12,218 +12,7 @@
 # include "tao/CORBA_String.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           CORBA_String,
-           "$Id$")
-
-char *
-CORBA::string_dup (const char *str)
-{
-  if (!str)
-    {
-      errno = EINVAL;
-      return 0;
-    }
-
-  const size_t len = ACE_OS::strlen (str);
-
-  // This allocates an extra byte for the '\0';
-  char * copy = CORBA::string_alloc (static_cast<CORBA::ULong> (len));
-
-  // The memcpy() below assumes that the destination is a valid buffer.
-  if (copy == 0)
-    {
-      return 0;
-    }
-
-  ACE_OS::memcpy (copy,
-                  str,
-                  len + 1);
-  return copy;
-}
-
-char *
-CORBA::string_alloc (CORBA::ULong len)
-{
-  // Allocate 1 + strlen to accomodate the null terminating character.
-
-  char *s = 0;
-  ACE_NEW_RETURN (s,
-                  char[size_t (len + 1)],
-                  0);
-
-  s[0]= '\0';
-
-  return s;
-}
-
-void
-CORBA::string_free (char *str)
-{
-  delete [] str;
-}
-
-// ****************************************************************
-
-CORBA::WChar*
-CORBA::wstring_dup (const WChar *const str)
-{
-  if (!str)
-    {
-      errno = EINVAL;
-      return 0;
-    }
-
-  CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::strlen (str));
-
-  // The wscpy() below assumes that the destination is a valid buffer.
-  if (retval == 0)
-    {
-      return 0;
-    }
-
-  return ACE_OS::wscpy (retval,
-                        str);
-}
-
-CORBA::WChar*
-CORBA::wstring_alloc (CORBA::ULong len)
-{
-  CORBA::WChar *s = 0;
-  ACE_NEW_RETURN (s,
-                  CORBA::WChar [(size_t) (len + 1)],
-                  0);
-
-  return s;
-}
-
-void
-CORBA::wstring_free (CORBA::WChar *const str)
-{
-  delete [] str;
-}
-
-// ****************************************************************
-
-CORBA::String_var::String_var (char *p)
-  : ptr_ (p)
-{
-  // NOTE: According to the CORBA spec this string must *not* be
-  // copied, but it is non-compliant to use it/release it in the
-  // calling code.  argument is consumed. p should never be NULL
-}
-
-CORBA::String_var::String_var (const CORBA::String_var& r)
-{
-  this->ptr_ = CORBA::string_dup (r.ptr_);
-}
-
-CORBA::String_var::~String_var (void)
-{
-  CORBA::string_free (this->ptr_);
-  this->ptr_ = 0;
-}
-
-CORBA::String_var &
-CORBA::String_var::operator= (char *p)
-{
-  if (this->ptr_ != p)
-    {
-      CORBA::string_free (this->ptr_);
-      this->ptr_ = p;
-    }
-  return *this;
-}
-
-CORBA::String_var &
-CORBA::String_var::operator= (const char *p)
-{
-  CORBA::string_free (this->ptr_);
-
-  this->ptr_ = CORBA::string_dup (p);
-  return *this;
-}
-
-CORBA::String_var &
-CORBA::String_var::operator= (const CORBA::String_var& r)
-{
-  if (this != &r)
-    {
-      CORBA::string_free (this->ptr_);
-      this->ptr_ = CORBA::string_dup (r.ptr_);
-    }
-  return *this;
-}
-
-// ****************************************************************
-
-CORBA::WString_var::WString_var (CORBA::WChar *p)
-  : ptr_ (p)
-{
-  // NOTE: According to the CORBA spec this string must *not* be
-  // copied, but it is non-compliant to use it/release it in the
-  // calling code.  argument is consumed. p should never be NULL
-}
-
-CORBA::WString_var::WString_var (const CORBA::WString_var& r)
-{
-  this->ptr_ = CORBA::wstring_dup (r.ptr_);
-}
-
-CORBA::WString_var::~WString_var (void)
-{
-  CORBA::wstring_free (this->ptr_);
-  this->ptr_ = 0;
-}
-
-CORBA::WString_var &
-CORBA::WString_var::operator= (CORBA::WChar *p)
-{
-  if (this->ptr_ != p)
-    {
-      CORBA::wstring_free (this->ptr_);
-      this->ptr_ = p;
-    }
-  return *this;
-}
-
-CORBA::WString_var &
-CORBA::WString_var::operator= (const CORBA::WChar *p)
-{
-  CORBA::wstring_free (this->ptr_);
-
-  this->ptr_ = CORBA::wstring_dup (p);
-  return *this;
-}
-
-CORBA::WString_var &
-CORBA::WString_var::operator= (const CORBA::WString_var& r)
-{
-  if (this != &r)
-    {
-      CORBA::wstring_free (this->ptr_);
-      this->ptr_ = CORBA::wstring_dup (r.ptr_);
-    }
-  return *this;
-}
-
-// These methods moved to the CPP file to avoid cyclic dependencies.
-// ----------------------------------------------------
-//  String_out type
-// ----------------------------------------------------
-CORBA::String_out::String_out (TAO_String_Manager &s)
-  : ptr_ (s.out ())
-{
-}
-
-// ----------------------------------------------------
-//  WString_out type
-// ----------------------------------------------------
-CORBA::WString_out::WString_out (TAO_WString_Manager &s)
-  : ptr_ (s.out ())
-{
-}
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // *************************************************************
 // C++ iostream operators for (W)String_var and (W)String_out
@@ -242,9 +31,10 @@ istream &
 operator>> (istream &is, CORBA::String_var &sv)
 {
   is.seekg (0, ios::end);
-  sv = CORBA::string_alloc (is.tellg ());
+  std::streamsize const n = is.tellg ();
+  sv = CORBA::string_alloc (static_cast<CORBA::ULong> (n));
   is.seekg (0, ios::beg);
-  is >> sv.inout ();
+  is.read (sv.inout (), n);
   return is;
 }
 
@@ -259,11 +49,14 @@ istream &
 operator>> (istream &is, CORBA::String_out &so)
 {
   is.seekg (0, ios::end);
-  so = CORBA::string_alloc (is.tellg ());
+  std::streamsize const n = is.tellg ();
+  so = CORBA::string_alloc (static_cast<CORBA::ULong> (n));
   is.seekg (0, ios::beg);
-  is >> so.ptr ();
+  is.read (so.ptr (), n);
   return is;
 }
+
+#ifndef ACE_HAS_CPP20
 
 // Until we implement WString support for platforms with a
 // 4-byte wchar_t, we just define the following to emit
@@ -272,7 +65,8 @@ operator>> (istream &is, CORBA::String_out &so)
 ostream &
 operator<< (ostream &os, const CORBA::WString_var &wsv)
 {
-  const CORBA::ULong len = ACE_OS::strlen (wsv.in ());
+  CORBA::ULong const len =
+    static_cast <CORBA::ULong> (ACE_OS::strlen (wsv.in ()));
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -287,7 +81,7 @@ operator>> (istream &is, CORBA::WString_var &wsv)
 {
   is.seekg (0, ios::end);
   // @@ is.tellg()/sizeof(CORBA::WChar) instead?
-  const CORBA::ULong len = is.tellg ();
+  CORBA::ULong const len = static_cast<CORBA::ULong> (is.tellg ());
   wsv = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
@@ -311,9 +105,9 @@ ostream &
 operator<< (ostream &os, CORBA::WString_out &wso)
 {
   CORBA::WChar *tmp = wso.ptr ();
-  const CORBA::ULong len = ACE_OS::strlen (tmp);
+  const size_t len = ACE_OS::strlen (tmp);
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (size_t i = 0; i < len; ++i)
     {
       os << tmp[i];
     }
@@ -326,7 +120,7 @@ operator>> (istream &is, CORBA::WString_out &wso)
 {
   is.seekg (0, ios::end);
   // @@ is.tellg()/sizeof(CORBA::WChar) instead?
-  const CORBA::ULong len = is.tellg ();
+  const CORBA::ULong len = static_cast<CORBA::ULong> (is.tellg ());
   wso = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
@@ -346,4 +140,8 @@ operator>> (istream &is, CORBA::WString_out &wso)
   return is;
 }
 
+#endif /* ACE_HAS_CPP20 */
+
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CRASHED_CALLBACK_SERVICE_H
 #define CRASHED_CALLBACK_SERVICE_H
@@ -14,35 +11,31 @@ class Service
 {
 public:
   /// Constructor
-  Service (void);
+  Service ();
 
   /// Dump the results.
   /**
    * In case of failure this exposes any incomplete runs.
    */
-  void dump_results (void);
+  void dump_results ();
 
   // = The skeleton methods
-  virtual void run_test (Test::Crashed_Callback_ptr callback
-                         ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void run_test (Test::Crashed_Callback_ptr callback);
+
+  CORBA::ORB_var orb_;
 
 private:
   /// Call the are_you_there callback multiple times.
   /**
    * @return Number of exceptions raised
    */
-  int call_are_you_there (Test::Crashed_Callback_ptr callback
-                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+  int call_are_you_there (Test::Crashed_Callback_ptr callback);
 
   /// Call the test_oneway method mutiple times.
   /**
    * @return Number of exceptions raised
    */
-  int call_test_oneway (Test::Crashed_Callback_ptr callback
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+  int call_test_oneway (Test::Crashed_Callback_ptr callback);
 
 private:
   /// Count the number of tests executed

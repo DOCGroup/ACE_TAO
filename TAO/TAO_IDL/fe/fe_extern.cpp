@@ -1,6 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -70,75 +67,85 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 #include "fe_extern.h"
-#include "ast_root.h"
+
 #include "global_extern.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
-#include "ace/UUID.h"
 
-ACE_RCSID (fe,
-           fe_extern,
-           "$Id$")
+#include "ast_root.h"
 
-extern int tao_yyparse (void);
+#include "ace/OS_NS_stdio.h"
+
+extern int tao_yyparse ();
+
+#ifdef USE_MCPP_BUFFER_LEXING
+char *tao_preproc_buffer = 0;
+int tao_preproc_buffer_length = 0;
+int tao_preproc_buffer_pos = 0;
+#else
 extern FILE *tao_yyin;
+#endif /* USE_MCPP_BUFFER_LEXING */
 
 int
-FE_yyparse (void)
+FE_yyparse ()
 {
-  int result = tao_yyparse ();
+  int const result = tao_yyparse ();
 
-  if (idl_global->err_count () == 0)
+#ifdef USE_MCPP_BUFFER_LEXING
+  ACE_OS::free (tao_preproc_buffer);
+  tao_preproc_buffer_length = 0;
+  tao_preproc_buffer_pos = 0;
+#else
+  if (tao_yyin)
     {
-      idl_global->root ()->call_add ();
+      ACE_OS::fclose (tao_yyin);
     }
+#endif /* USE_MCPP_BUFFER_LEXING */
 
   return result;
 }
 
-void
-FE_set_yyin (File *f)
+extern int tao_yydebug;
+void FE_yydebug (bool value)
 {
-  tao_yyin = reinterpret_cast<FILE *> (f);
+  tao_yydebug = value;
 }
+
+#ifdef USE_MCPP_BUFFER_LEXING
+void
+FE_set_yyin (char * f)
+{
+  tao_preproc_buffer = f;
+  tao_preproc_buffer_length = ACE_OS::strlen (f);
+}
+#else
+void
+FE_set_yyin (FILE * f)
+{
+  tao_yyin = f;
+}
+#endif /* USE_MCPP_BUFFER_LEXING */
 
 // Constructor interfaces.
 
 UTL_Error *
-FE_new_UTL_Error (void)
+FE_new_UTL_Error ()
 {
-  UTL_Error *retval = 0;
+  UTL_Error *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   UTL_Error,
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 UTL_Indenter *
-FE_new_UTL_Indenter (void)
+FE_new_UTL_Indenter ()
 {
-  UTL_Indenter *retval = 0;
+  UTL_Indenter *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   UTL_Indenter,
-                  0);
+                  nullptr);
 
   return retval;
-}
-
-// Utility method.
-
-ACE_CString
-FE_generate_UUID (void)
-{
-  ACE_Utils::UUID uuid;
-  
-  // The 0xc0 arg triggers use of the thread id in creating the UUID,
-  // useful when the IDL compiler is run by multiple threads in the
-  // same process.
-  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid, 
-                                                        0x0001,
-                                                        0xc0);
-    
-  return *uuid.to_string ();
 }

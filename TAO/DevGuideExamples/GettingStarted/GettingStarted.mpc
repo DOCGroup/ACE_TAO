@@ -1,0 +1,35 @@
+project(*idl): taoidldefaults {
+  idlflags += -Wb,pch_include=started_pch.h
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver {
+  exename = MessengerServer
+  after += *idl
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient {
+  exename = MessengerClient
+  after += *idl
+  Source_Files {
+    MessengerClient.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}

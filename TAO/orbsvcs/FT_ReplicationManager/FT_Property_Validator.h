@@ -4,8 +4,6 @@
 /**
  * @file FT_Property_Validator.h
  *
- * $Id$
- *
  * @author Curt Hibbs <hibbs_c@ociweb.com>
  */
 //=============================================================================
@@ -22,6 +20,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -35,35 +35,25 @@ namespace TAO
   class FT_Property_Validator : public TAO_PG_Default_Property_Validator
   {
   public:
-
     /// Constructor.
-    FT_Property_Validator (void);
+    FT_Property_Validator ();
 
     /// Destructor.
-    virtual ~FT_Property_Validator (void);
+    virtual ~FT_Property_Validator ();
 
     /// Validate the given properties.  Throw an exception when the
     /// first invalid property is encountered.  The remaining properties
     /// will not be validated.
     virtual
-    void validate_property (const PortableGroup::Properties & props
-                            ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      PortableGroup::InvalidProperty,
-                      PortableGroup::UnsupportedProperty));
+    void validate_property (const PortableGroup::Properties & props);
 
     /// Validate the given properties/criteria.  All criteria
     /// will be validated regardless of whether or not an invalid
     /// property was encountered.
     virtual
-    void validate_criteria (const PortableGroup::Properties & criteria
-                            ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      PortableGroup::InvalidCriteria,
-                      PortableGroup::CannotMeetCriteria));
+    void validate_criteria (const PortableGroup::Properties & criteria);
 
   private:
-
     /**
     * @name Pre-initialize property Names.
     *
@@ -85,8 +75,9 @@ namespace TAO
     //@}
 
   };
-
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,0 +1,9 @@
+// -*- MPC -*-
+project(Netsvcs_Dump_Restore) : aceexe {
+  avoids  += ace_for_tao
+  exename  = dump_restore
+  Source_Files {
+    main.cpp
+    Dump_Restore.cpp
+  }
+}

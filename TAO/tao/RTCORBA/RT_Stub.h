@@ -1,11 +1,10 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    RT_Stub.h
  *
- *  $Id$
- *
  *  This file contains the declaration for the RTCORBA Stub.
- *
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
@@ -21,7 +20,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #include "tao/Stub.h"
 
@@ -29,13 +28,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward references.
 class TAO_PriorityModelPolicy;
 class TAO_PriorityBandedConnectionPolicy;
 class TAO_ClientProtocolPolicy;
 class TAO_PrivateConnectionPolicy;
-
-
 
 /**
  * @class TAO_RT_Stub
@@ -46,37 +45,32 @@ class TAO_PrivateConnectionPolicy;
 class TAO_RTCORBA_Export TAO_RT_Stub : public TAO_Stub
 {
 public:
-
   TAO_RT_Stub (const char *repository_id,
                const TAO_MProfile &profiles,
                TAO_ORB_Core *orb_core);
 
-  virtual ~TAO_RT_Stub (void);
+  virtual ~TAO_RT_Stub ();
 
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   /**
-   * Returns the effective policy if <type> is a known client-exposed
+   * Returns the effective policy if @a type is a known client-exposed
    * policy type.  Returns the effective override for all other policy
    * types.
    */
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type
-                                ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
 
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
-                                  CORBA::SetOverrideType set_add
-                                  ACE_ENV_ARG_DECL);
+                                  CORBA::SetOverrideType set_add);
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 private:
-
   /// Helper method used to parse the policies.
-  void parse_policies (ACE_ENV_SINGLE_ARG_DECL);
+  void parse_policies ();
 
   void exposed_priority_model (CORBA::Policy_ptr policy);
 
@@ -87,17 +81,17 @@ private:
   /// Returns the CORBA::Policy (which will be narrowed to be
   /// used as RTCORBA::PriorityModelPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_model (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr exposed_priority_model ();
 
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::PriorityBandedConnectionPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr exposed_priority_banded_connection ();
 
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::ClientProtocolPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_client_protocol (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr exposed_client_protocol ();
 
   // = Methods for obtaining effective policies.
   //
@@ -106,8 +100,8 @@ private:
   //   override for a given policy type, and then reconciling it with
   //   the policy value exported in the Object's IOR.
 
-  CORBA::Policy *effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL);
-  CORBA::Policy *effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr effective_priority_banded_connection ();
+  CORBA::Policy_ptr effective_client_protocol ();
 
   // The following attribute are used to cache
   // the different kind of policies and avoid to
@@ -120,19 +114,16 @@ private:
 
   CORBA::Policy_var client_protocol_policy_;
 
-  CORBA::Boolean are_policies_parsed_;
+  bool are_policies_parsed_;
 
 private:
-  // = Disallow copy constructor and assignment operator.
-  ACE_UNIMPLEMENTED_FUNC (TAO_RT_Stub (const TAO_RT_Stub &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_RT_Stub &operator = (const TAO_RT_Stub &))
-
-#if defined (__GNUG__)
-  // G++ (even 2.6.3) stupidly thinks instances can't be created.
-  // This de-warns.
-  friend class everyone_needs_a_friend;
-#endif /* __GNUG__ */
+  TAO_RT_Stub (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub (TAO_RT_Stub &&) = delete;
+  TAO_RT_Stub &operator = (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub &operator = (TAO_RT_Stub &&) = delete;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

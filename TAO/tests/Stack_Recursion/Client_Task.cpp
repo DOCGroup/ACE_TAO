@@ -1,12 +1,5 @@
-//
-// $Id$
-//
 
 #include "Client_Task.h"
-
-ACE_RCSID(Stack_Recursion,
-          Client_Task,
-          "$Id$")
 
 Client_Task::Client_Task (Test::Sender_ptr sender,
                           CORBA::Long event_count,
@@ -20,15 +13,13 @@ Client_Task::Client_Task (Test::Sender_ptr sender,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connections ();
 
       for (int i = 0; i != this->event_count_; ++i)
         {
@@ -38,35 +29,28 @@ Client_Task::svc (void)
                         "(%P|%t) In iteration [%d] ....\n",
                         i));
 #endif /*if 0*/
-          Test::Payload_var pl = new Test::Payload;
-          Test::Payload_out payload (pl.out ());
-          this->sender_->get_data (this->event_size_,
-                                   payload
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          Test::Payload_var pl;
+          this->sender_->get_data (this->event_size_, pl.out ());
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
 }
 
 
 void
-Client_Task::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connections ()
 {
   for (int i = 0 ; i != 100; i++)
     {
-      ACE_TRY
+      try
         {
-          this->sender_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
+          this->sender_->ping ();
         }
-      ACE_CATCHANY {} ACE_ENDTRY;
+      catch (const CORBA::Exception&){}
     }
 }

@@ -1,39 +1,38 @@
-//$Id$
 #include "tao/RTScheduling/RTScheduler.h"
 #include "testC.h"
 #include "test.h"
 
 int
-main (int argc, char* argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
-  ACE_TRY_NEW_ENV
+  try
     {
       orb = CORBA::ORB_init (argc,
-                             argv,
-                             ""
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             argv);
 
-      test_ptr foo_i;
-
-      ACE_NEW_RETURN (foo_i,
-                      test_impl,
-                      -1);
-
+      test_impl foo_i;
       int something = 28;
-      foo_i->bar ((CORBA::VoidData) &something);
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      foo_i.bar ((CORBA::VoidData) &something);
 
-      orb->shutdown ();
       orb->destroy ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Caught exception:");
+
+      try
+        {
+          orb->shutdown ();
+          orb->destroy ();
+        }
+      catch (const CORBA::Exception& ex)
+        {
+          ex._tao_print_exception ("Caught exception while shutting down:");
+          return 1;
+        }
       return 0;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

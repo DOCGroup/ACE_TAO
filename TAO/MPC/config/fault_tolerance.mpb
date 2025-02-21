@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project : naming, notification, portablegroup, messaging, ftorb, pi, pi_server {
+  after     += FaultTolerance
+  libs      += TAO_FaultTolerance
+  tagchecks += FaultTolerance
+}

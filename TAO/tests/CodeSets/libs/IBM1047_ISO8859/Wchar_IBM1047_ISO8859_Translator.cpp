@@ -1,37 +1,27 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Wchar_IBM1047_ISO8859_Translator.cpp
-//
-// = DESCRIPTION
-//    Defines the arrays required to convert between ISO8859 (aka
-//    Latin/1) and IBM1047 (aka EBCDIC).
-//
-// = AUTHOR
-//    Mahesh Vedantam (mahesh@ociweb.com)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Wchar_IBM1047_ISO8859_Translator.cpp
+ *
+ *  Defines the arrays required to convert between ISO8859 (aka
+ *  Latin/1) and IBM1047 (aka EBCDIC).
+ *
+ *  @author Mahesh Vedantam (mahesh@ociweb.com)
+ */
+//=============================================================================
+
 
 #include "Wchar_IBM1047_ISO8859_Translator.h"
 
-ACE_RCSID(IBM1047_ISO8859, Wchar_IBM1047_ISO8859_Translator, "$Id$")
-
 // ****************************************************************
 
-WIBM1047_ISO8859::WIBM1047_ISO8859 (void)
+WIBM1047_ISO8859::WIBM1047_ISO8859 ()
 {
-
 }
 
-WIBM1047_ISO8859::~WIBM1047_ISO8859 (void)
+WIBM1047_ISO8859::~WIBM1047_ISO8859 ()
 {
-
 }
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h

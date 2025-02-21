@@ -4,8 +4,6 @@
 /**
  *  @file    Pseudo_VarOut_T.h
  *
- *  $Id$
- *
  * @note This header should be included after all types to be passed
  * as template parameters to the TAO_Pseudo_{Var,Out}_T template
  * classes have been declared.  If the types in question are defined
@@ -25,7 +23,6 @@
  *
  *         -Ossama
  *
- *
  * @author Jeff Parsons
  */
 //=============================================================================
@@ -40,6 +37,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/varbase.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Pseudo_Var_T
  *
@@ -47,41 +48,44 @@
  * TypeCode, Object, AbstractBase, NamedValue, NVList,
  * Principal, Request, Context, ORB, LocalObject,
  * and Environment.
- *
  */
 template <typename T>
-class TAO_Pseudo_Var_T
+class TAO_Pseudo_Var_T : private TAO_Base_var
 {
 public:
-  TAO_Pseudo_Var_T (void);
-  TAO_Pseudo_Var_T (T *);
+  TAO_Pseudo_Var_T ();
+  TAO_Pseudo_Var_T (typename T::_ptr_type);
   TAO_Pseudo_Var_T (const TAO_Pseudo_Var_T<T> &);
 
-  ~TAO_Pseudo_Var_T (void);
+  ~TAO_Pseudo_Var_T ();
 
-  TAO_Pseudo_Var_T<T> & operator= (T *);
+  TAO_Pseudo_Var_T<T> & operator= (typename T::_ptr_type);
   TAO_Pseudo_Var_T<T> & operator= (const TAO_Pseudo_Var_T<T> &);
 
-  T * operator-> (void) const;
+  typename T::_ptr_type operator-> () const;
 
-  operator T * const & () const;
-  operator T *& ();
+  operator typename T::_ptr_type  const & () const;
+  operator typename T::_ptr_type & ();
 
-  typedef T *   _in_type;
-  typedef T *&  _inout_type;
-  typedef T *&  _out_type;
-  typedef T *   _retn_type;
+  typedef typename T::_ptr_type    _in_type;
+  typedef typename T::_ptr_type &  _inout_type;
+  typedef typename T::_ptr_type &  _out_type;
+  typedef typename T::_ptr_type    _retn_type;
 
-  _in_type      in (void) const;
-  _inout_type   inout (void);
-  _out_type     out (void);
-  _retn_type    _retn (void);
+  _in_type      in () const;
+  _inout_type   inout ();
+  _out_type     out ();
+  _retn_type    _retn ();
 
   // TAO extension.
-  _retn_type    ptr (void) const;
+  _retn_type    ptr () const;
+private:
+  // Unimplemented - prevents widening assignment.
+  TAO_Pseudo_Var_T (const TAO_Base_var &);
+  void operator= (const TAO_Base_var &);
 
 private:
-  T * ptr_;
+  typename T::_ptr_type ptr_;
 };
 
 /**
@@ -91,43 +95,36 @@ private:
  * TypeCode, Object, AbstractBase, NamedValue, NVList,
  * Principal, Request, Context, ORB, LocalObject,
  * and Environment.
- *
  */
-template <typename T, typename T_var>
+template <typename T>
 class TAO_Pseudo_Out_T
 {
 public:
-  TAO_Pseudo_Out_T (T *&);
-  TAO_Pseudo_Out_T (T_var &);
-  TAO_Pseudo_Out_T (const TAO_Pseudo_Out_T<T,T_var> &);
+  TAO_Pseudo_Out_T (typename T::_ptr_type &);
+  TAO_Pseudo_Out_T (typename T::_var_type &);
+  TAO_Pseudo_Out_T (const TAO_Pseudo_Out_T<T> &);
 
-  TAO_Pseudo_Out_T<T,T_var> & operator= (const TAO_Pseudo_Out_T<T,T_var> &);
-  TAO_Pseudo_Out_T<T,T_var> & operator= (T *);
+  TAO_Pseudo_Out_T<T> & operator= (const TAO_Pseudo_Out_T<T> &);
+  TAO_Pseudo_Out_T<T> & operator= (typename T::_ptr_type);
 
-  operator T *& ();
-
-  T *& ptr (void);
-
-  T * operator-> (void);
+  operator typename T::_ptr_type & ();
+  typename T::_ptr_type & ptr ();
+  typename T::_ptr_type operator-> ();
 
 private:
-  T *& ptr_;
+  typename T::_ptr_type & ptr_;
 
   /// Assignment from _var not allowed.
-  TAO_Pseudo_Out_T<T,T_var> & operator= (const T_var &);
+  TAO_Pseudo_Out_T<T> & operator= (const typename T::_var_type &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Pseudo_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Pseudo_VarOut_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Pseudo_VarOut_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

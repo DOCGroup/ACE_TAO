@@ -1,31 +1,33 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  * @file RIR_Narrow.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 //=============================================================================
+
 #ifndef TAO_UTILS_RIR_NARROW_H
 #define TAO_UTILS_RIR_NARROW_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PI/PI.h"
+#include "tao/ORB.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @class RIR_Narrow
      *
@@ -40,27 +42,24 @@ namespace TAO
 
       /// Use resolve_initial_references to find an object and then
       /// narrow it.
-      static _ptr_type narrow (CORBA::ORB_ptr orb,
-                               char const * id
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      static _ptr_type narrow (CORBA::ORB_ptr orb, char const * id);
 
       /// Use resolve_initial_references to find an object and then
       /// narrow it.
       static _ptr_type narrow (PortableInterceptor::ORBInitInfo_ptr orb,
-                               char const * id
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                               char const * id);
 
     private:
-      static _ptr_type narrow_object (CORBA::Object_ptr object
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      static _ptr_type narrow_object (CORBA::Object_ptr object);
     };
-
   } // namespace Utils
 } // namespace TAO
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "RIR_Narrow.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "tao/Utils/RIR_Narrow.cpp"
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_UTILS_RIR_NARROW_H*/

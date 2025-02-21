@@ -1,11 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ECG_Reconnect_ConsumerEC_Control.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
- *
  */
 
 #ifndef TAO_ECG_RECONNECT_CONSUMEREC_CONTROL_H
@@ -13,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ECG_ConsumerEC_Control.h"
+#include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +21,8 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ECG_Reconnect_ConsumerEC_Control;
 class TAO_EC_Gateway_IIOP;
@@ -77,31 +77,29 @@ public:
                                         CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_ECG_Reconnect_ConsumerEC_Control (void);
+  virtual ~TAO_ECG_Reconnect_ConsumerEC_Control ();
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_ConsumerControl
-  virtual int activate (void);
-  virtual int shutdown (void);
-  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway
-                                        ACE_ENV_ARG_DECL_NOT_USED);
+  virtual int activate ();
+  virtual int shutdown ();
+  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway);
   virtual void system_exception (TAO_EC_Gateway_IIOP *gateway,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_eventchannel (ACE_ENV_SINGLE_ARG_DECL);
+  void query_eventchannel ();
 
   /// Look if we can reconnect again.
-  void try_reconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void try_reconnect ();
 
   /// Reconnect to the consumer ec.
-  void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void reconnect ();
 
 private:
   /// The polling rate
@@ -136,6 +134,8 @@ private:
   long timer_id_;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

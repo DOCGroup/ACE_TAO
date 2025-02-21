@@ -1,0 +1,95 @@
+// -*- MPC -*-
+// $author: Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+// Contains project definitions for the Publish/Subscribe Real-time CORBA
+// Stock Quoter Service.
+
+project(RTCORBA_Quoter_Common): negotiate_codesets, rtportableserver, rtcorba, taolib, valuetype {
+   sharedname = RTCORBA_Quoter_Common
+   idlflags += -Wb,stub_export_macro=RTCORBA_Quoter_Common_Export \
+               -Wb,stub_export_include=Common_Export.h \
+
+   dynamicflags += RTCORBA_QUOTER_COMMON_BUILD_DLL
+
+   IDL_Files {
+      Distributor.idl
+      Broker.idl
+      Common.idl
+    }
+
+    Source_Files {
+      DistributorC.cpp
+      BrokerC.cpp
+      CommonC.cpp
+      Stock_PriorityMapping.cpp
+    }
+
+    Header_Files {
+      DistributorC.h
+      BrokerC.h
+      CommonC.h
+      CommonS.h
+      Stock_PriorityMapping.h
+    }
+}
+
+project(RTCORBA_Quoter_Admin): valuetype, rt_server, naming, stl {
+  after = RTCORBA_Quoter_Common
+  libs += RTCORBA_Quoter_Common
+  exename = admin
+
+  Idl_Files {
+  }
+
+  Source_Files {
+     Admin.cpp
+  }
+
+  Header_Files {
+  }
+}
+
+project(RTCORBA_Quoter_Distributor): valuetype, rt_server, naming, utils, stl, threads {
+  libs +=  RTCORBA_Quoter_Common
+  after += RTCORBA_Quoter_Common
+  exename = distributor
+
+  IDL_Files {
+  }
+
+  Source_Files {
+      DistributorS.cpp
+      Distributor.cpp
+      Distributor_i.cpp
+      CommonS.cpp
+  }
+
+  Header_Files {
+      Distributor_i.h
+      Stock_Database.h
+      DistributorS.h
+   }
+}
+
+project(RTCORBA_Quoter_Broker): valuetype, rt_server, naming, utils, stl, threads {
+  libs +=  RTCORBA_Quoter_Common
+  after += RTCORBA_Quoter_Common
+  exename = broker
+
+  IDL_Files {
+  }
+
+  Source_Files {
+      BrokerS.cpp
+      StockNameConsumer_i.cpp
+      Broker.cpp
+      Broker_i.cpp
+      CommonS.cpp
+    }
+
+  Header_Files {
+      StockNameConsumer_i.h
+      Broker_i.h
+      Stock_Database.h
+      BrokerS.h
+  }
+}

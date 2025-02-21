@@ -1,26 +1,15 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    operation.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Operation in the stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    operation.cpp
+ *
+ *  Visitor generating code for Operation in the stubs file.
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           operation,
-           "$Id$")
+#include "operation.h"
 
 // ************************************************************
 // Generic Operation visitor
@@ -31,7 +20,7 @@ be_visitor_operation::be_visitor_operation (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation::~be_visitor_operation (void)
+be_visitor_operation::~be_visitor_operation ()
 {
 }
 
@@ -41,8 +30,17 @@ be_visitor_operation::void_return_type (be_type *bt)
 {
   if (bt->node_type () == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType::PredefinedType pdt =
-        be_predefined_type::narrow_from_decl (bt)->pt ();
+      be_predefined_type * const bpd =
+        dynamic_cast<be_predefined_type*> (bt);
+
+      if (!bpd)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO_IDL (%N:%l) "
+                           "dynamic_cast<be_predefined_type*> "
+                           "failed\n"),
+                          0);
+
+      AST_PredefinedType::PredefinedType const pdt = bpd->pt ();
 
       if (pdt == AST_PredefinedType::PT_void)
         {
@@ -77,14 +75,14 @@ be_visitor_operation::count_non_out_parameters (be_operation *node)
        si.next ())
     {
       be_argument *bd =
-        be_argument::narrow_from_decl (si.item ());
+        dynamic_cast<be_argument*> (si.item ());
 
       // We do not generate insertion operators for valuetypes
       // yet. Do not include them in the count.
       be_valuetype *vt =
-        be_valuetype::narrow_from_decl (bd->field_type ());
+        dynamic_cast<be_valuetype*> (bd->field_type ());
 
-      if (bd && (bd->direction () != AST_Argument::dir_OUT) && !vt)
+      if ((bd->direction () != AST_Argument::dir_OUT) && vt == nullptr)
         {
           ++count;
         }
@@ -106,12 +104,12 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
       amh_underbar[3] == node_name[3]
       ) // node name starts with "AMH_"
     {
-      //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder \n"));
+      //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder\n"));
       const char *last_E = ACE_OS::strrchr (node->full_name (), 'E');
-      if (last_E != 0
+      if (last_E != nullptr
           && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
         {
-          //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder \n"));
+          //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder\n"));
           is_an_amh_exception_holder = 1;
         }
     }
@@ -119,256 +117,15 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
   return is_an_amh_exception_holder;
 }
 
-// Method to generate the throw specs for exceptions that are thrown by the
-// operation.
 int
-be_visitor_operation::gen_throw_spec (be_operation *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
-  const char *throw_spec_open = "throw (";
-  const char *throw_spec_close = ")";
-
-  if (!be_global->use_raw_throw ())
-    {
-      throw_spec_open = "ACE_THROW_SPEC ((";
-      throw_spec_close = "))";
-    }
-
-  UTL_Scope *scope = node->defined_in ();
-  be_interface *iface = be_interface::narrow_from_scope (scope);
-
-  /***************************************************************************/
-  // 2.6
-  // Generate the Right Throw Spec if it is an AMH ExceptionHolder
-  /***************************************************************************/
-  // Check if this is (IF and it's not VT) or (it is an AMH ExceptionHolder).
-  if (iface != 0)
-    {
-      int is_amh_exception_holder = this->is_amh_exception_holder (iface);
-      AST_Decl::NodeType nt = iface->node_type ();
-
-      if (nt != AST_Decl::NT_valuetype || is_amh_exception_holder)
-        {
-          *os << be_nl << throw_spec_open;
-          *os << be_idt_nl << "CORBA::SystemException";
-
-          if (node->exceptions ())
-            {
-              // Initialize an iterator to iterate thru the exception list.
-              for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
-                   !ei.is_done ();
-                   ei.next ())
-                {
-                  be_exception *excp =
-                    be_exception::narrow_from_decl (ei.item ());
-
-                  if (excp == 0)
-                    {
-                      ACE_ERROR_RETURN ((LM_ERROR,
-                                         "(%N:%l) be_visitor_operation"
-                                         "gen_throw_spec - "
-                                         "bad exception node\n"),
-                                        -1);
-
-                    }
-
-                  *os << "," << be_nl
-                      << "::" << excp->name ();
-                }
-            }
-
-          *os << be_uidt_nl << throw_spec_close << be_uidt;
-        }
-    }
-  /*******************************************************************************/
-  return 0;
-}
-
-int
-be_visitor_operation::gen_environment_decl (int argument_emitted,
-                                            be_operation *node)
-{
-  // Generate the CORBA::Environment parameter for the alternative mapping.
-  if (be_global->exception_support ())
-    {
-      return 0;
-    }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
-  // whether the operation node has parameters.
-  const char *env_decl = "ACE_ENV_SINGLE_ARG_DECL";
-
-  if (this->ctx_->sub_state ()
-        == TAO_CodeGen::TAO_AMH_RESPONSE_HANDLER_OPERATION
-      && node->argument_count () == 0)
-    {
-      // Response handler operations don't use the environment arg
-      // unless there are other args in the operation.
-      env_decl = "ACE_ENV_SINGLE_ARG_DECL";
-      this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-    }
-  else if (argument_emitted || node->argument_count () > 0)
-    {
-      env_decl = "ACE_ENV_ARG_DECL";
-    }
-
-  TAO_CodeGen::CG_STATE cgs = this->ctx_->state ();
-
-  if (node->argument_count () > 0
-      || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH
-      || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS)
-    {
-      *os << be_nl;
-    }
-
-  switch (this->ctx_->state ())
-    {
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-      // Last argument is always CORBA::Environment.
-      *os << env_decl << "_WITH_DEFAULTS";
-      break;
-    default:
-      *os << env_decl;
-      break;
-    }
-
-  return 0;
-}
-
-// Method that returns the appropriate CORBA::Environment variable.
-const char *
-be_visitor_operation::gen_environment_var (void)
-{
-  static const char *ace_try_env_decl = "ACE_DECLARE_NEW_CORBA_ENV;";
-  static const char *null_env_decl = "";
-
-  // Check if we are generating stubs/skeletons for
-  // true C++ exception support.
-  if (be_global->exception_support ())
-    {
-      return ace_try_env_decl;
-    }
-  else
-    {
-      return null_env_decl;
-    }
-}
-
-int
-be_visitor_operation::gen_raise_exception (be_type *return_type,
-                                           const char *exception_name,
+be_visitor_operation::gen_raise_exception (const char *exception_name,
                                            const char *exception_arguments)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (be_global->use_raw_throw ())
-    {
-      *os << "throw "
-          << exception_name << "(" << exception_arguments << ");\n";
-      return 0;
-    }
+  *os << "throw "
+      << exception_name << "(" << exception_arguments << ");";
 
-  int is_void =
-    return_type == 0 || this->void_return_type (return_type);
-
-  if (is_void)
-    {
-      *os << "ACE_THROW (";
-    }
-  else
-    {
-      *os << "ACE_THROW_RETURN (";
-    }
-
-  *os << exception_name << " (" << exception_arguments << ")";
-
-  if (is_void)
-    {
-      *os << ");";
-
-      return 0;
-    }
-
-  *os << ",";
-
-  // Non-void return type.
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_operation_rettype_return_cs visitor (&ctx);
-
-  if (return_type->accept (&visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation::"
-                         "gen_raise_exception - "
-                         "codegen for return var failed\n"),
-                        -1);
-    }
-
-  *os << ");";
-
-  return 0;
-}
-
-int
-be_visitor_operation::gen_check_exception (be_type *return_type)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (return_type == 0 || this->void_return_type (return_type))
-    {
-      *os << "ACE_CHECK;" << be_nl;
-      return 0;
-    }
-
-  // Non-void return type....
-  *os << "ACE_CHECK_RETURN (";
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_operation_rettype_return_cs visitor (&ctx);
-
-  if (return_type->accept (&visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation::"
-                         "gen_check_exception - "
-                         "codegen for return var failed\n"),
-                        -1);
-    }
-
-  *os << ");" << be_nl;
-  return 0;
-}
-
-int
-be_visitor_operation::gen_check_interceptor_exception (be_type *return_type)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (return_type == 0 || this->void_return_type (return_type))
-    {
-      *os << "TAO_INTERCEPTOR_CHECK;\n";
-      return 0;
-    }
-
-  // Non-void return type.
-  *os << "TAO_INTERCEPTOR_CHECK_RETURN (";
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_operation_rettype_return_cs visitor (&ctx);
-
-  if (return_type->accept (&visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation::"
-                         "gen_check_exception - "
-                         "codegen for return var failed\n"),
-                        -1);
-    }
-
-  *os << ");\n";
   return 0;
 }
 
@@ -378,17 +135,29 @@ be_visitor_operation::gen_stub_operation_body (
     be_type *return_type
   )
 {
-  be_interface *intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+  UTL_Scope *s =
+    this->ctx_->attribute ()
+      ? this->ctx_->attribute ()->defined_in ()
+      : node->defined_in ();
 
-  if (!intf)
+  be_interface *intf = dynamic_cast<be_interface*> (s);
+
+  if (intf == nullptr)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-                         "visit_operation - "
-                         "bad interface scope\n"),
-                        -1);
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
+
+      if (pt == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_operation::")
+                             ACE_TEXT ("gen_stub_operation_body - ")
+                             ACE_TEXT ("bad scope\n")),
+                            -1);
+        }
+      else
+        {
+          intf = this->ctx_->interface ();
+        }
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -398,9 +167,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (node->has_native ()) // native exists => no stub
     {
-      if (this->gen_raise_exception (return_type,
-                                     "CORBA::MARSHAL",
-                                     "") == -1)
+      if (this->gen_raise_exception ("::CORBA::MARSHAL", "") == -1)
         {
           ACE_ERROR_RETURN ((
               LM_ERROR,
@@ -419,56 +186,45 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (!node->is_abstract ())
     {
-      // If the object is lazily evaluated the proxy brker might well
+      // If the object is lazily evaluated the proxy broker might well
       // be null.  Initialize it now.
       *os << "if (!this->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
-          << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);"
-          << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
-          << be_idt_nl
-          << "{" << be_idt_nl
-          << intf->flat_name () << "_setup_collocation ();"
+          << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
     }
 
-  const char *env = this->gen_environment_var ();
-
-  if (ACE_OS::strcmp ("", env) != 0)
-    {
-      *os << env << be_nl;
-    }
-
   // Declare return type helper class.
-
   *os << "TAO::Arg_Traits< ";
 
   this->gen_arg_template_param_name (node,
                                      return_type,
                                      os);
 
-  *os << ">::ret_val _tao_retval;";
+  *os << ">::"
+      << (node->flags () == AST_Operation::OP_oneway &&
+          be_global->use_clonable_in_args() ? "clonable_" : "")
+      << "ret_val _tao_retval;";
 
   // Declare the argument helper classes.
   this->gen_stub_body_arglist (node, os);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "TAO::Argument *_the_tao_operation_signature [] =" << be_idt_nl
       << "{" << be_idt_nl
-      << "&_tao_retval";
+      << "std::addressof(_tao_retval)";
 
-  AST_Argument *arg = 0;
+  AST_Argument *arg = nullptr;
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
        arg_list_iter.next ())
     {
-      arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
+      arg = dynamic_cast<AST_Argument*> (arg_list_iter.item ());
 
       *os << "," << be_nl
-          << "&_tao_" << arg->local_name ();
+          << "std::addressof(_tao_" << arg->local_name () << ")";
     }
 
   *os << be_uidt_nl
@@ -483,82 +239,102 @@ be_visitor_operation::gen_stub_operation_body (
                         -1);
     }
 
-  // Use the name without the possible '_cxx_' here.
-  long tmp_len =
-    ACE_OS::strlen (node->original_local_name ()->get_string ());
-
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
-      << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
+      << "Invocation_Adapter _invocation_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
       << node->argument_count () + 1 << "," << be_nl
       << "\"";
 
-  // Check if we are an attribute node in disguise.
+  /// This logic handles the implied IDL for attributes.
+  /// The AMI ReplyHandler version of generated get/set ops
+  /// for attributes doesn't have the leading underscore.
+  bool const escape = (node->is_attr_op () && !intf->is_ami_rh ());
+  ACE_CString opname (escape ? "_" : "");
+
+  /// This logic handles regular IDL for attributes. The AMI
+  /// backend preprocessing visitor doesn't set the context
+  /// member for attributes, but sets flags in the interface
+  /// and operation nodes instead.
   if (this->ctx_->attribute ())
     {
-      // If we are a attribute node, add th elength of the operation
-      // name.
-      tmp_len += 5;
-
       // Now check if we are a "get" or "set" operation.
       if (node->nmembers () == 1)
         {
-          *os << "_set_";
+          opname += "_set_";
         }
       else
         {
-          *os << "_get_";
+          opname += "_get_";
         }
     }
 
-  // original_local_name() strips off the leading '_cxx_' if any.
-  *os << node->original_local_name () << "\"," << be_nl
-      << tmp_len << "," << be_nl
-      << "this->the" << intf->base_proxy_broker_name () << "_";
+  opname += node->original_local_name ()->get_string ();
+
+  /// Some compilers can't resolve the stream operator overload.
+  const char *lname = opname.c_str ();
+  ACE_CString::size_type len = opname.length ();
+
+  *os << lname << "\"," << be_nl
+      << len << "," << be_nl;
+
+  *os << "TAO::TAO_CO_NONE";
+  if (be_global->gen_direct_collocation())
+    {
+      *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
+    }
+  if (be_global->gen_thru_poa_collocation())
+    {
+      *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
+    }
 
   if (node->flags () == AST_Operation::OP_oneway)
     {
+      *os << "," << be_nl;
+      *os << "TAO::TAO_ONEWAY_INVOCATION";
+    }
+
+  if (node->has_in_arguments ())
+    {
+      *os << be_nl;
+    }
+  else
+    {
+      if (node->flags () != AST_Operation::OP_oneway)
+        {
+          *os << "," << be_nl;
+          *os << "TAO::TAO_TWOWAY_INVOCATION" << be_nl;
+        }
+
       *os << "," << be_nl
-          << "TAO::TAO_ONEWAY_INVOCATION";
+          << "TAO::TAO_SYNCHRONOUS_INVOCATION," << be_nl
+          << "false";
     }
 
   *os << be_uidt_nl
       << ");" << be_uidt;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   // Since oneways cannot raise user exceptions, we have that
   // case covered as well.
   if (node->exceptions ())
     {
-      *os << "_tao_call.invoke (" << be_idt << be_idt_nl
+      *os << "_invocation_call.invoke (" << be_idt << be_idt_nl
           << "_tao_" << node->flat_name ()
           << "_exceptiondata," << be_nl
-          << node->exceptions ()->length () << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << node->exceptions ()->length () << be_uidt_nl
           << ");" << be_uidt;
     }
   else
     {
-      *os << "_tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);";
-    }
-
-  *os << be_nl;
-
-  if (this->void_return_type (return_type))
-    {
-      *os << "ACE_CHECK;";
-    }
-  else
-    {
-      *os << "ACE_CHECK_RETURN (_tao_retval.excp ());";
+      *os << "_invocation_call.invoke (nullptr, 0);";
     }
 
   if (!this->void_return_type (return_type))
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "return _tao_retval.retn ();";
     }
 
@@ -599,18 +375,7 @@ be_visitor_operation::gen_raise_interceptor_exception (
 
   if (this->void_return_type (bt))
     {
-      if (be_global->use_raw_throw ())
-        {
-          *os << "throw " << excep << "(" << completion_status << ");";
-        }
-      else
-        {
-          *os << "TAO_INTERCEPTOR_THROW (" << be_idt << be_idt_nl
-              << excep << " (" << be_idt << be_idt_nl
-              << completion_status << be_uidt_nl
-              << ")" << be_uidt << be_uidt_nl
-              << ");" << be_uidt;
-        }
+      *os << "throw " << excep << "(" << completion_status << ");";
     }
   else
     {
@@ -641,9 +406,9 @@ be_visitor_operation::gen_raise_interceptor_exception (
 void
 be_visitor_operation::gen_stub_body_arglist (be_operation *node,
                                              TAO_OutStream *os,
-                                             idl_bool ami)
+                                             bool ami)
 {
-  AST_Argument *arg = 0;
+  AST_Argument *arg = nullptr;
   UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
 
   if (ami)
@@ -654,7 +419,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
 
   for (; ! arg_decl_iter.is_done (); arg_decl_iter.next ())
     {
-      arg = AST_Argument::narrow_from_decl (arg_decl_iter.item ());
+      arg = dynamic_cast<AST_Argument*> (arg_decl_iter.item ());
 
       *os << be_nl
           << "TAO::Arg_Traits< ";
@@ -669,6 +434,11 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
         {
           case AST_Argument::dir_IN:
             *os << "in";
+            if (be_global->use_clonable_in_args() &&
+                node->flags () == AST_Operation::OP_oneway)
+              {
+                *os << "_clonable";
+              }
             break;
           case AST_Argument::dir_INOUT:
             *os << "inout";
@@ -689,19 +459,21 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
                                                    AST_Type *bt,
                                                    TAO_OutStream *os)
 {
-  AST_Typedef *alias = 0;
+  AST_Typedef *alias = nullptr;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
-      alias = AST_Typedef::narrow_from_decl (bt);
+      alias = dynamic_cast<AST_Typedef*> (bt);
     }
 
   AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();
+  ACE_CDR::ULong bound = 0;
 
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
-      AST_String *s = AST_String::narrow_from_decl (bt->unaliased_type  ());
-      unsigned long bound = s->max_size ()->ev ()->u.ulval;
+      AST_String *s =
+        dynamic_cast<AST_String*> (bt->unaliased_type  ());
+      bound = s->max_size ()->ev ()->u.ulval;
 
       // If the (w)string is unbounded, code is generated below by the
       // last line of this method, whether bt is a typedef or not.
@@ -709,7 +481,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
         {
           *os << "::TAO::";
 
-          if (alias != 0)
+          if (alias != nullptr)
             {
               *os << alias->local_name () << "_" << bound;
             }
@@ -740,7 +512,8 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   // type, in order to disambiguate the template parameter.
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (ut);
+      AST_PredefinedType *pdt =
+        dynamic_cast<AST_PredefinedType*> (ut);
 
       switch (pdt->pt ())
         {
@@ -756,6 +529,12 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
           case AST_PredefinedType::PT_wchar:
             *os << "::ACE_InputCDR::to_wchar";
             return;
+          case AST_PredefinedType::PT_uint8:
+            *os << "::ACE_InputCDR::to_uint8";
+            return;
+          case AST_PredefinedType::PT_int8:
+            *os << "::ACE_InputCDR::to_int8";
+            return;
           case AST_PredefinedType::PT_void:
             break;
           default:
@@ -763,11 +542,46 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
             break;
         }
     }
-  else
+  else if (nt != AST_Decl::NT_string)
     {
+      // We are unbounded, since the bounded case is handled
+      // above. In this case, we want to generate 'char *'
+      // without the leading double colon.
       *os << "::";
     }
+
+  /// For now, keep a list of system operation or arg names
+  /// that may not be remapped. May decide later to regnerate
+  /// ORB code for alt mapping as well.
+  ACE_CString repo_id (scope->repoID ());
+  bool sys_val = (repo_id == "IDL:repository_id:1.0");
+
   // For types other than the 4 above, don't unalias the type name
   // in case it is a sequence or array.
-  *os << bt->name ();
+  if (nt == AST_Decl::NT_string && bound == 0)
+    {
+      if (be_global->alt_mapping () && !sys_val)
+        {
+          *os << "std::string";
+        }
+      else
+        {
+          *os << "char *";
+        }
+    }
+  else if (nt == AST_Decl::NT_sequence)
+    {
+      // In some cases (e.g., if the node is imported)
+      // the underlying sequence is still named 'sequence'.
+      *os << bt->name ();
+    }
+  else
+    {
+      *os << ut->name ();
+    }
+
+  if (nt == AST_Decl::NT_array)
+    {
+      *os << "_tag";
+    }
 }

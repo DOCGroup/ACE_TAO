@@ -1,0 +1,7 @@
+This test demonstrates that a client attempting to contact a stopped MANUAL server will
+not lock up the ImR. The test starts primary and backup Locators, then registers and
+starts a server with MANUAL activation mode. The server connects to the locator then
+shuts down. Next a client is started that attempts to contact the server via the locator.
+Since this is a disallowed implicit activation, a TRANSIENT exception is raised. The
+client tries again via the backup IMR. At this point the IMR would hang due to a retained
+server accessor in an inactive but final state. The fixed IMR continues to operate normally.

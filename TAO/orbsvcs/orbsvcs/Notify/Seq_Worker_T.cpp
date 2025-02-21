@@ -1,23 +1,21 @@
-// $Id$
-
 #ifndef TAO_Notify_SEQ_WORKER_T_CPP
 #define TAO_Notify_SEQ_WORKER_T_CPP
 
-#include "Seq_Worker_T.h"
+#include "orbsvcs/Notify/Seq_Worker_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Seq_Worker_T.inl"
+#include "orbsvcs/Notify/Seq_Worker_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Seq_Worker_T, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
-TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T (void)
+TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T ()
 {
 }
 
-template<class TYPE> ACE_TYPENAME TAO_Notify_Seq_Worker_T<TYPE>::SEQ*
-TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container ACE_ENV_ARG_DECL)
+template<class TYPE> typename TAO_Notify_Seq_Worker_T<TYPE>::SEQ*
+TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container)
 {
   SEQ* tmp;
   ACE_NEW_THROW_EX (tmp, //this->seq_,
@@ -26,11 +24,11 @@ TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container ACE_ENV_ARG_DECL)
 
   this->seq_ = tmp;
 
-  container.collection ()->for_each (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  container.collection ()->for_each (this);
 
   return this->seq_._retn ();
-
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_Notify_SEQ_WORKER_T_CPP */

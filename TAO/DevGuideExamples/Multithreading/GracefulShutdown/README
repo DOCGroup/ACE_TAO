@@ -1,0 +1,65 @@
+
+
+File: DevGuideExamples/Multithreading/GracefulShutdown/README
+
+This directory contains a CORBA example illustrating a simple client
+and a server with an interface Messenger.  This example extends the
+Getting Started example to show various techniques for gracefully
+shutting down a TAO server.
+
+
+How to Run
+----------
+
+To start the server :
+------------------
+./MessengerServer [options]
+
+where [options] can be one of the following:
+
+  -x     - (default) shutdown the ORB when the client invokes the
+           Messenger::shutdown() operation
+
+  -p <n> - use non-blocking ORB operations in a polling loop to shutdown
+           after <n> iterations
+
+  -t <n> - schedule a timer with the ORB's reactor to shutdown in
+           <n> seconds
+
+  -r <n> - use the overloaded version of CORBA::ORB::run() that takes
+           an ACE_Time_Value parameter indicating how long run()
+           should process events before returning, where <n> is the
+           number of seconds the ORB will run.
+
+  -c     - spawn a separate thread to shutdown the ORB on any
+           input from the console (terminal)
+
+
+
+To start the client:
+------------------
+./MessengerClient [-x]
+
+where -x indicates the client will invoke Messenger::shutdown()
+on the server to shut it down.
+
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+
+
+NOTE:
+
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
+   perl ../run_test.pl
+
+
+

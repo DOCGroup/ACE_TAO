@@ -1,31 +1,30 @@
-// $Id$
-
-#include "EC_Null_Factory.h"
-#include "EC_Reactive_Dispatching.h"
-#include "EC_Filter_Builder.h"
-#include "EC_Trivial_Supplier_Filter.h"
-#include "EC_ConsumerAdmin.h"
-#include "EC_SupplierAdmin.h"
-#include "EC_Default_ProxyConsumer.h"
-#include "EC_Default_ProxySupplier.h"
-#include "EC_ObserverStrategy.h"
-#include "EC_Null_Scheduling.h"
-#include "EC_Reactive_Timeout_Generator.h"
-#include "EC_ConsumerControl.h"
-#include "EC_SupplierControl.h"
-#include "EC_Event_Channel_Base.h" // @@ MSVC 6 bug
+#include "orbsvcs/Event/EC_Null_Factory.h"
+#include "orbsvcs/Event/EC_Reactive_Dispatching.h"
+#include "orbsvcs/Event/EC_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Trivial_Supplier_Filter.h"
+#include "orbsvcs/Event/EC_ConsumerAdmin.h"
+#include "orbsvcs/Event/EC_SupplierAdmin.h"
+#include "orbsvcs/Event/EC_Default_ProxyConsumer.h"
+#include "orbsvcs/Event/EC_Default_ProxySupplier.h"
+#include "orbsvcs/Event/EC_ObserverStrategy.h"
+#include "orbsvcs/Event/EC_Null_Scheduling.h"
+#include "orbsvcs/Event/EC_Reactive_Timeout_Generator.h"
+#include "orbsvcs/Event/EC_ConsumerControl.h"
+#include "orbsvcs/Event/EC_SupplierControl.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h" // @@ MSVC 6 bug
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 
 #include "tao/ORB_Core.h"
 
-ACE_RCSID(Event, EC_Null_Factory, "$Id$")
 
-TAO_EC_Null_Factory::TAO_EC_Null_Factory (void)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_EC_Null_Factory::TAO_EC_Null_Factory ()
 {
 }
 
-TAO_EC_Null_Factory::~TAO_EC_Null_Factory (void)
+TAO_EC_Null_Factory::~TAO_EC_Null_Factory ()
 {
 }
 
@@ -117,9 +116,9 @@ TAO_EC_Timeout_Generator*
 TAO_EC_Null_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
 {
   int argc = 0;
-  char **argv = 0;
+  ACE_TCHAR **argv = nullptr;
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv, "");
+    CORBA::ORB_init (argc, argv);
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();
   return new TAO_EC_Reactive_Timeout_Generator (reactor);
 }
@@ -189,7 +188,7 @@ TAO_EC_Null_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSup
 }
 
 ACE_Lock*
-TAO_EC_Null_Factory::create_consumer_lock (void)
+TAO_EC_Null_Factory::create_consumer_lock ()
 {
   return new ACE_Lock_Adapter<ACE_Null_Mutex> ();
 }
@@ -201,7 +200,7 @@ TAO_EC_Null_Factory::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_Lock*
-TAO_EC_Null_Factory::create_supplier_lock (void)
+TAO_EC_Null_Factory::create_supplier_lock ()
 {
   return new ACE_Lock_Adapter<ACE_Null_Mutex> ();
 }
@@ -236,3 +235,4 @@ TAO_EC_Null_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
   delete x;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

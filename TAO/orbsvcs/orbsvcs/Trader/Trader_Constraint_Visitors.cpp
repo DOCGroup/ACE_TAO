@@ -1,6 +1,6 @@
-// $Id$
+#include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
 
-#include "Trader_Constraint_Visitors.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Trader_Constraint_Evaluator::
 TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,
@@ -14,7 +14,7 @@ TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,
   // Create a map of property names to their values.
   for (int i = 0; i < length; i++)
     {
-      TAO_String_Hash_Key name = (const char*) offer->properties[i].name;
+      CORBA::String_var name = (const char*) offer->properties[i].name;
       this->props_.bind (name, i);
     }
 }
@@ -25,25 +25,20 @@ visit_property (TAO_Property_Constraint* literal)
 {
   int return_value = -1, prop_index = 0;
   // Handle case where property is not, in fact, mapped to a value
-  TAO_String_Hash_Key prop_name ((const char*) literal->name ());
+  CORBA::String_var prop_name ((const char*) literal->name ());
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-
       CORBA::Any *value = 0;
       // Retrieve the value of the property from the Property_Evaluator
-      ACE_TRY
+      try
         {
-          value = this->prop_eval_.property_value (prop_index ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          value = this->prop_eval_.property_value (prop_index);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           return -1;
         }
-      ACE_ENDTRY;
-      //      ACE_CHECK_RETURN (-1);
 
       if (value != 0)
         {
@@ -69,7 +64,7 @@ TAO_Trader_Constraint_Validator
       CORBA::TypeCode_ptr corba_type =
         CORBA::TypeCode::_duplicate (prop_seq[i].value_type.in ());
 
-      TAO_String_Hash_Key prop_name_str = (const char*) prop_seq[i].name;
+      CORBA::String_var prop_name_str = (const char*) prop_seq[i].name;
       this->type_map_.bind (prop_name_str, corba_type);
     }
 }
@@ -78,3 +73,5 @@ TAO_Trader_Constraint_Validator::
 ~TAO_Trader_Constraint_Validator ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

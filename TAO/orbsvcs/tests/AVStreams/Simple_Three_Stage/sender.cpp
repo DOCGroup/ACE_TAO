@@ -1,5 +1,3 @@
-// $Id$
-
 #include "sender.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
@@ -21,12 +19,10 @@ Sender_StreamEndPoint::get_callback (const char *,
   callback = &this->callback_;
 
   // Get the stream controller for this stream.
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Any_ptr streamctrl_any =
-        this->get_property_value ("Related_StreamCtrl"
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->get_property_value ("Related_StreamCtrl");
 
       AVStreams::StreamCtrl_ptr streamctrl;
       *streamctrl_any >>= streamctrl;
@@ -34,14 +30,12 @@ Sender_StreamEndPoint::get_callback (const char *,
       // Store reference to the streamctrl
       SENDER::instance ()->streamctrl (streamctrl);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender_StreamEndPoint::get_callback failed");
+      ex._tao_print_exception ("Sender_StreamEndPoint::get_callback failed");
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -56,7 +50,7 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
   return 0;
 }
 
-Sender::Sender (void)
+Sender::Sender ()
   : sender_mmdevice_ (0),
     streamctrl_ (0),
     frame_count_ (0),
@@ -86,10 +80,10 @@ Sender::streamctrl (AVStreams::StreamCtrl_ptr streamctrl)
 
 int
 Sender::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:r:d");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:r:d"));
 
   int c;
   while ((c= opts ()) != -1)
@@ -97,7 +91,7 @@ Sender::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = opts.opt_arg ();
+          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
           this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
@@ -115,8 +109,7 @@ Sender::parse_args (int argc,
 
 int
 Sender::init (int argc,
-              char **argv
-              ACE_ENV_ARG_DECL)
+              ACE_TCHAR *argv[])
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -145,7 +138,7 @@ Sender::init (int argc,
 
   if (this->input_file_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open input file %s\n",
+                       "Cannot open input file %C\n",
                        this->filename_.c_str ()),
                       -1);
   else
@@ -162,8 +155,7 @@ Sender::init (int argc,
     this->sender_mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
+    this->sender_mmdevice_->_this ();
 
   CosNaming::Name name (1);
   name.length (1);
@@ -172,16 +164,14 @@ Sender::init (int argc,
 
   // Register the sender object with the naming server.
   this->naming_client_->rebind (name,
-                                mmdevice.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                mmdevice.in ());
 
   return 0;
 }
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
+Sender::pace_data ()
 {
   // The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
@@ -196,7 +186,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
                 this->frame_rate_,
                 inter_frame_time.msec ()));
 
-  ACE_TRY
+  try
     {
       // The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
@@ -207,21 +197,19 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
           // Run the orb for the wait time so the sender can
           // continue other orb requests.
           ACE_Time_Value wait_time (5);
-          TAO_AV_CORE::instance ()->orb ()->run (wait_time
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          TAO_AV_CORE::instance ()->orb ()->run (wait_time);
         }
 
       // Continue to send data till the file is read to the end.
       while (1)
         {
           // Read from the file into a message block.
-          int n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                 1,
-                                 this->mb_.size (),
-                                 this->input_file_);
+          size_t n = ACE_OS::fread (this->mb_.wr_ptr (),
+                                    1,
+                                    this->mb_.size (),
+                                    this->input_file_);
 
-          if (n < 0)
+          if (n == 0 && ferror (this->input_file_))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Sender::pace_data fread failed\n"),
                               -1);
@@ -269,9 +257,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 
                   // Run the orb for the wait time so the sender can
                   // continue other orb requests.
-                  TAO_AV_CORE::instance ()->orb ()->run (wait_time
-                                                         ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  TAO_AV_CORE::instance ()->orb ()->run (wait_time);
                 }
             }
 
@@ -289,12 +275,11 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
                                -1);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent succesfully\n",
+                      "Sender::pace_data frame %d was sent successfully\n",
                       ++this->frame_count_));
 
           // Reset the message block.
           this->mb_.reset ();
-
         } // end while
 
       // If a stream was setup, destroy it.
@@ -302,100 +287,70 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
         {
           // File reading is complete, destroy the stream.
           AVStreams::flowSpec stop_spec;
-          this->streamctrl_->destroy (stop_spec
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->streamctrl_->destroy (stop_spec);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender::pace_data Failed\n");
+      ex._tao_print_exception ("Sender::pace_data Failed\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
-        = PortableServer::POA::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AV Stream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       // Initialize the Sender.
       int result = 0;
       result = SENDER::instance ()->init (argc,
-                                          argv
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                          argv);
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Sender::init failed\n"),
                           -1);
 
-      SENDER::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      SENDER::instance ()->pace_data ();
 
       ACE_Time_Value tv (10);
       orb->run (tv);
       // Hack for now....
       ACE_OS::sleep (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender Failed\n");
+      ex._tao_print_exception ("Sender Failed\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   SENDER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unmanaged_Singleton <Sender,ACE_Null_Mutex>;
-template class TAO_AV_Endpoint_Reactive_Strategy_A<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unmanaged_Singleton <Sender,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

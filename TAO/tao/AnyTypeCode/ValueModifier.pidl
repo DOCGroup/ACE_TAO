@@ -1,0 +1,21 @@
+// -*- IDL -*-
+
+/**
+ *  @file   ValueModifier.pidl
+ */
+
+#ifndef TAO_VALUEMODIFIER_PIDL
+#define TAO_VALUEMODIFIER_PIDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef short ValueModifier;
+  const ValueModifier VM_NONE = 0;
+  const ValueModifier VM_CUSTOM = 1;
+  const ValueModifier VM_ABSTRACT = 2;
+  const ValueModifier VM_TRUNCATABLE = 3;
+};
+
+#endif /* TAO_VALUEMODIFIER_PIDL */

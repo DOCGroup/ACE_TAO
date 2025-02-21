@@ -1,28 +1,24 @@
-// $Id$
-
-#include "EventType.h"
+#include "orbsvcs/Notify/EventType.h"
 
 #include "ace/ACE.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_string.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EventType.inl"
+#include "orbsvcs/Notify/EventType.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "Topology_Saver.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
 
-ACE_RCSID (Notify,
-           TAO_Notify_EventType,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_EventType
-TAO_Notify_EventType::special (void)
+TAO_Notify_EventType::special ()
 {
   return TAO_Notify_EventType ("*", "%ALL");
 }
 
-TAO_Notify_EventType::TAO_Notify_EventType (void)
+TAO_Notify_EventType::TAO_Notify_EventType ()
 {
 }
 
@@ -34,8 +30,8 @@ TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)
 
   if (this->is_special () == 1)
     {
-      this->event_type_.domain_name = (const char* )"*";
-      this->event_type_.type_name = (const char* )"%ALL";
+      this->event_type_.domain_name = CORBA::string_dup ("*");
+      this->event_type_.type_name = CORBA::string_dup ("%ALL");
     }
 
   this->recompute_hash ();
@@ -59,7 +55,7 @@ TAO_Notify_EventType::~TAO_Notify_EventType ()
 }
 
 void
-TAO_Notify_EventType::recompute_hash (void)
+TAO_Notify_EventType::recompute_hash ()
 {
   // @@ Pradeep: this code is bound to crash someday if the strings
   // are too long....  See if the hash_pjw () function can be modified
@@ -99,44 +95,33 @@ TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
 bool
 TAO_Notify_EventType::operator==(const TAO_Notify_EventType& event_type) const
 {
-  if (this->hash () != event_type.hash ())
-    return false;
-  else // compare the strings
-    return (ACE_OS::strcmp (this->event_type_.type_name, event_type.event_type_.type_name) == 0  &&
-            ACE_OS::strcmp (this->event_type_.domain_name, event_type.event_type_.domain_name) == 0
-           );
+  return (ACE_OS::strcmp (this->event_type_.domain_name,
+                          event_type.event_type_.domain_name) == 0 ||
+          this->domain_is_wildcard (this->event_type_.domain_name) ||
+          this->domain_is_wildcard (event_type.event_type_.type_name)) &&
+         (ACE_OS::strcmp (this->event_type_.type_name,
+                          event_type.event_type_.type_name) == 0 ||
+          this->type_is_wildcard (this->event_type_.type_name)   ||
+          this->type_is_wildcard (event_type.event_type_.type_name));
 }
 
 bool
 TAO_Notify_EventType::operator!=(const TAO_Notify_EventType& event_type) const
 {
-  if (this->hash () != event_type.hash ())
-    return true;
-  else // compare the strings
-    return (ACE_OS::strcmp (this->event_type_.type_name, event_type.event_type_.type_name) != 0  ||
-            ACE_OS::strcmp (this->event_type_.domain_name, event_type.event_type_.domain_name) != 0
-           );
+  return !(*this == event_type);
 }
 
 CORBA::Boolean
-TAO_Notify_EventType::is_special (void) const
+TAO_Notify_EventType::is_special () const
 {
-  if ((this->event_type_.domain_name == 0 ||
-             ACE_OS::strcmp (this->event_type_.domain_name, "") == 0 ||
-             ACE_OS::strcmp (this->event_type_.domain_name, "*") == 0) &&
-      (this->event_type_.type_name == 0 ||
-             ACE_OS::strcmp (this->event_type_.type_name, "") == 0 ||
-             ACE_OS::strcmp (this->event_type_.type_name, "*") == 0 ||
-             ACE_OS::strcmp (this->event_type_.type_name, "%ALL") == 0))
-    return 1;
-  else
-    return 0;
+  return (this->domain_is_wildcard (this->event_type_.domain_name) &&
+          this->type_is_wildcard (this->event_type_.type_name));
 }
 
 void
-TAO_Notify_EventType::dump (void) const
+TAO_Notify_EventType::dump () const
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "(%s,%s)",
               this->event_type_.domain_name.in (),
               this->event_type_.type_name.in ()));
@@ -155,22 +140,21 @@ bool TAO_Notify_EventType::init(const TAO_Notify::NVPList& attrs)
     result = true;
   }
   return result;
-
 }
 
   // TAO_Notify::Topology_Object
 
 void
-TAO_Notify_EventType::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventType::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   TAO_Notify::NVPList attrs;
   bool changed = true;
 
   attrs.push_back(TAO_Notify::NVP("Domain", this->event_type_.domain_name.in()));
   attrs.push_back(TAO_Notify::NVP("Type", this->event_type_.type_name.in()));
-  saver.begin_object(0, "subscription", attrs, changed ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  saver.begin_object(0, "subscription", attrs, changed);
 
-  saver.end_object(0, "subscription" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  saver.end_object(0, "subscription");
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

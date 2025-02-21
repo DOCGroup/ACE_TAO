@@ -1,0 +1,17 @@
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// A very simple interface
+  interface BoundSequences
+  {
+    typedef sequence<long, 10> SequenceOf10Long;
+    unsigned long SendSequenceOf10Long (in unsigned long LengthSent, in SequenceOf10Long inSeq);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};

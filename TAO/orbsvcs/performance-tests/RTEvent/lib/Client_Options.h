@@ -1,10 +1,7 @@
 /**
  * @file Client_Options.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 
 #ifndef TAO_RTEC_PERF_CLIENT_OPTIONS_H
@@ -17,7 +14,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Arg_Shifter;
+#include "ace/Arg_Shifter.h"
 
 /// Parse the command-line client_options for the tests.
 /**
@@ -28,9 +25,9 @@ class TAO_RTEC_Perf_Export Client_Options
 {
 public:
   /// Constructor
-  Client_Options (int &argc, char *argv[]);
+  Client_Options (int &argc, ACE_TCHAR *argv[]);
 
-  const char *ior;
+  const ACE_TCHAR *ior;
   int iterations;
   int nthreads;
   int high_priority_period;
@@ -48,11 +45,11 @@ public:
 
 private:
   int option (ACE_Arg_Shifter &arg_shifter,
-              const char *option_name,
+              const ACE_TCHAR *option_name,
               int &option_value);
 
   int boolean_option (ACE_Arg_Shifter &arg_shifter,
-                      const char *option_name,
+                      const ACE_TCHAR *option_name,
                       int &option_value);
 };
 

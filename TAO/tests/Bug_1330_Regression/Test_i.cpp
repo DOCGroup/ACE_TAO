@@ -1,21 +1,21 @@
-//
-// $Id$
-//
 #include "Test_i.h"
 
-Test_i::Test_i()
+Test_i::Test_i(CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
-   // Noop
 }
 
 Test_i::~Test_i()
 {
-   // Noop
 }
 
 void
-Test_i::test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Test_i::test_method ()
 {
-   // Noop
+}
+
+void
+Test_i::shutdown ()
+{
+  this->orb_->shutdown (false);
 }

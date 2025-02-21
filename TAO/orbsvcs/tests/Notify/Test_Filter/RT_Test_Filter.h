@@ -2,11 +2,7 @@
 /**
  *  @file RT_Test_Filter.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_RT_Test_FILTER_H
@@ -30,97 +26,46 @@
  * @class TAO_RT_Test_Filter
  *
  * @brief Implementation of CosNotifyFilter::Filter servant.
- *
  */
 class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_Filter
   : public POA_CosNotifyFilter::Filter
 {
 public:
-  /// Constuctor
-  TAO_Notify_Tests_RT_Test_Filter (void);
+  /// Constructor
+  TAO_Notify_Tests_RT_Test_Filter ();
 
   /// Destructor
   ~TAO_Notify_Tests_RT_Test_Filter ();
 
 protected:
-  virtual char * constraint_grammar (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual char * constraint_grammar ();
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidConstraint
-                     ));
+  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list);
 
   virtual void modify_constraints (const CosNotifyFilter::ConstraintIDSeq & del_list,
-                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list
-                                   ACE_ENV_ARG_DECL
-                                   )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidConstraint,
-                     CosNotifyFilter::ConstraintNotFound
-                     ));
+                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list);
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::ConstraintNotFound
-                     ));
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list);
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints ();
 
-  virtual void remove_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void remove_all_constraints ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void destroy ();
 
-  virtual CORBA::Boolean match (const CORBA::Any & filterable_data ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::UnsupportedFilterableData
-                     ));
+  virtual CORBA::Boolean match (const CORBA::Any & filterable_data);
 
-  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::UnsupportedFilterableData
-                     ));
+  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data);
 
-  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::UnsupportedFilterableData
-                     ));
+  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data);
 
-  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback);
 
-  virtual void detach_callback (CosNotifyFilter::CallbackID callback ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::CallbackNotFound
-                     ));
+  virtual void detach_callback (CosNotifyFilter::CallbackID callback);
 
-  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks ();
 
 protected:
-
   /// Lock to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;
 

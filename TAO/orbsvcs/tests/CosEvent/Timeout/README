@@ -1,0 +1,40 @@
+
+
+CosEvent timeout feature test
+
+*Purpose:
+
+Demonstrates the timeout feature (see cosevent.conf in this directory) of the
+CosEvent service.  This feature was created because the reactive consumer/
+supplier control is lacking in the following way.  A consumer may become
+unresponsive during a push() upcall.  If the consumer is at all multithreaded,
+then the reactive control's ping operation will still succeed.  Timeouts
+(via the Messaging library's relative round-trip timeout policy) allow the
+event service to disconnect an unresponsive client (consumer or supplier).
+Notice in run_test.pl that the CosEvent_Service executable's new -b option
+is used to enable callbacks on disconnect.  This was previously only availble
+through code.
+
+*Running:
+
+> run_test.pl
+
+*Sample output:
+
+Found the EchoEventChannel.
+Consumer connected
+Ready to receive events...
+Supplier starting...
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Received event containing 40 bytes.
+TestEventConsumer_i::push(): Simulating hung consumer
+TestEventConsumer_i::disconnect_push_consumer()
+TestEventConsumer_i::push(): Done

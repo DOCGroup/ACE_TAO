@@ -1,5 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
-project(POA*): taoexe, portableserver {
+project(POA*): taoserver {
+  exename = POA_Destruction
 }

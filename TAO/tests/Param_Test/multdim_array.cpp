@@ -1,32 +1,24 @@
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    multidim_array.cpp
-//
-// = DESCRIPTION
-//    tests multidimensional fixed size arrays
-//
-// = AUTHORS
-//      Bala
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    multdim_array.cpp
+ *
+ *  tests multidimensional fixed size arrays
+ *
+ *  @author   Bala
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "multdim_array.h"
 
 
-ACE_RCSID (Param_Test, 
-           multdim_array, 
-           "$Id$")
-
 // ************************************************************************
 //               Test_Multdim_Array
 // ************************************************************************
 
-Test_Multdim_Array::Test_Multdim_Array (void)
+Test_Multdim_Array::Test_Multdim_Array ()
   : opname_ (CORBA::string_dup ("test_multdim_array")),
     in_ (new Param_Test::Multdim_Array),
     inout_ (new Param_Test::Multdim_Array),
@@ -35,21 +27,20 @@ Test_Multdim_Array::Test_Multdim_Array (void)
 {
 }
 
-Test_Multdim_Array::~Test_Multdim_Array (void)
+Test_Multdim_Array::~Test_Multdim_Array ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Multdim_Array::opname (void) const
+Test_Multdim_Array::opname () const
 {
   return this->opname_;
 }
 
 void
-Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
-                                    ACE_ENV_ARG_DECL)
+Test_Multdim_Array::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= Param_Test::Multdim_Array_forany (this->in_.inout ());
   req->add_inout_arg ("s2") <<= Param_Test::Multdim_Array_forany (this->inout_.inout ());
@@ -57,8 +48,7 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Multdim_Array);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
 
   Param_Test::Multdim_Array_forany forany;
@@ -66,21 +56,19 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
   Param_Test::Multdim_Array_copy (this->ret_, forany.in ());
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= forany;
   Param_Test::Multdim_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= forany;
   Param_Test::Multdim_Array_copy (this->out_, forany.in ());
 }
 
 int
 Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/
-                                     ACE_ENV_ARG_DECL_NOT_USED/*env*/)
+/*env*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -99,7 +87,7 @@ Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/
 }
 
 int
-Test_Multdim_Array::reset_parameters (void)
+Test_Multdim_Array::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -135,29 +123,24 @@ Test_Multdim_Array::reset_parameters (void)
 }
 
 int
-Test_Multdim_Array::run_sii_test (Param_Test_ptr objref
-                                  ACE_ENV_ARG_DECL)
+Test_Multdim_Array::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_multdim_array (this->in_.in (),
                                                this->inout_.inout (),
-                                               this->out_.inout ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                               this->out_.inout ());
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Multdim_Array::run_sii_test\n");
+      ex._tao_print_exception ("Test_Multdim_Array::run_sii_test\n");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
-Test_Multdim_Array::check_validity (void)
+Test_Multdim_Array::check_validity ()
 {
   if (this->compare (this->in_.in (),
                      this->inout_.in ()) &&
@@ -196,7 +179,7 @@ Test_Multdim_Array::compare (const Param_Test::Multdim_Array_slice *a1,
 }
 
 void
-Test_Multdim_Array::print_values (void)
+Test_Multdim_Array::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG, "IN array\n"));
   this->print (this->in_.in ());
@@ -217,7 +200,7 @@ Test_Multdim_Array::print (const Param_Test::Multdim_Array_slice *a)
         {
           for (CORBA::ULong k=0; k < Param_Test::DIM1; k++)
             {
-              ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d #%d #%d = %d \n",i,j,k, a[i][j][k]));
+              ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d #%d #%d = %d\n",i,j,k, a[i][j][k]));
             }
         }
     }

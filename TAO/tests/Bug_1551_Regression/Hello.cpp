@@ -1,9 +1,5 @@
-// $Id$
-
 #include "Hello.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(Bug_1XXX_Regression, Hello, "$Id$")
 
 Hello::Hello(
     CORBA::ORB_ptr orb,
@@ -15,8 +11,7 @@ Hello::Hello(
 }
 
 void
-Hello::short_sleep (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Hello::short_sleep ()
 {
   long count = atomic_counter_--;
 
@@ -28,7 +23,7 @@ Hello::short_sleep (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 #endif /* 0 */
   if(simulate_crashes_ && count == 0)
   {
-    ACE_DEBUG((LM_DEBUG, "Aborting!"));
+    ACE_DEBUG((LM_DEBUG, "Aborting!\n"));
     ACE_Time_Value tv(5, 0);
     ACE_OS::sleep(tv);
     ACE_OS::abort();

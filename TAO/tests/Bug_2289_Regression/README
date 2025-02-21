@@ -1,0 +1,26 @@
+
+
+This test checks that collocation optimisation takes effect after a location forward is received to an in process servant.
+
+It comprises:
+1/ A trivial IDL interface (Test.idl) with a single method that passes a string and returns a boolean, this interface is implemented with a servant (MyInterfaceImpl) that returns true if the address of the string passed matches the address of a static string defined as a public member of the servant.
+2/ A server which initialises a listener and binds a file:// type IOR for the client's servant into its IORTable against a name.
+4/ A client which initialises an in process MyInterfaceImpl servant.
+
+The client uses a corbaloc based on the server's endpoint and the name that its (the client's) reference is bound against in the server IORTable.
+
+Narrowing this results in a remote is_a which causes the server ORB to send a locate_forward to the client directing it to the 'in process' servant.
+
+If the fix is present the client ORB will pass the string by reference and the addresses will be equal in the servant - if the fix is not present it will attempt to marshal and demarshal the string, the addresses will differ, causing the test to fail.
+
+__Regression Output__
+
+[sm@beatrice Bug_2289_Regression]$ ./run_test.pl
+Test failed
+ERROR: Bug #TAO135 Regression failed. Non zero result from client.
+
+__Successful Output__
+
+[sm@beatrice Bug_2289_Regression]$ ./run_test.pl
+Test succeeded
+INFO: /home/sm/doc_cvs/ACE_wrappers/TAO/tests/Bug_2289_Regression/server being killed.

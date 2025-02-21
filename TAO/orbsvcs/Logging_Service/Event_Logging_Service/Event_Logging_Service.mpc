@@ -1,5 +1,3 @@
-// $Id$
-project: namingexe, iortable, core, dseventlogadmin_serv {
-  exename   = Event_Logging_Service
-  includes += $(TAO_ROOT)/orbsvcs
+project: namingexe, iortable, install, dseventlogadmin_serv, valuetype {
+  exename   = tao_tls_event
 }

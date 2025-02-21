@@ -2,11 +2,7 @@
 /**
  *  @file Consumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_CONSUMER_H
@@ -24,21 +20,20 @@
  * @class TAO_Notify_Lanes_Consumer
  *
  * @brief Consumer
- *
  */
 
 class TAO_Notify_Lanes_Consumer
   : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Init
-  void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type);
 
   /// Run
-  void run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void run ();
 
 protected:
   // = Data members
@@ -63,48 +58,31 @@ protected:
 
   // = Methods
   /// Destructor
-  virtual ~TAO_Notify_Lanes_Consumer (void);
+  virtual ~TAO_Notify_Lanes_Consumer ();
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA ();
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
-  void connect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect ();
 
   /// Disconnect the supplier.
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
 
   /// Deactivate.
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate ();
 
   // = NotifyPublish method
   virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+        const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+        const CosNotification::StructuredEvent & notification);
 
-  virtual void disconnect_structured_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL
-        )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual void disconnect_structured_push_consumer ();
 };
 
 #include /**/ "ace/post.h"

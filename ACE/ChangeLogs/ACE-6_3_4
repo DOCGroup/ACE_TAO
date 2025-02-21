@@ -1,0 +1,945 @@
+commit c6660cf43b7c16d6c81305f20977cfbd76c5e3af
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun May 1 19:43:24 2016 +0200
+
+    Fixed some package versions
+        * ACE/debian/debian.control:
+
+commit 39242d47805863a72db25fbf05155fae730e1f18
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Sun May 1 10:27:39 2016 -0500
+
+    ACE NEWS notes for FACE and related changes.
+
+commit b3724ac55a936f7d5f26b240bbe916a4d1fb4b82
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun May 1 10:55:10 2016 +0200
+
+    Extended for next release
+        * ACE/NEWS:
+
+commit dcbc79712334675be313aff4eb765a0258ad1d89
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 30 16:06:50 2016 +0200
+
+    For generating the changelog we need ATC, after the release it will be AT
+        * ACE/bin/make_release.py:
+
+commit f2c5e9a13bb25a88b6e544b746f22ff848c0deb5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 30 16:06:36 2016 +0200
+
+    Further updates for just ACE+TAO
+        * ACE/docs/bczar/bczar.html:
+
+commit 111e39c2ae7030b7b6a98ef83d829f87483a3c5f
+Merge: 5a40406 49a522c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 29 20:52:19 2016 +0200
+
+    Merge pull request #245 from jwillemsen/master
+    
+    Update old link
+
+commit 49a522c19971e2415cf226130e3253cf5c7f307b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 29 20:51:55 2016 +0200
+
+    Update old link
+        * ACE/README:
+
+commit 5a40406d5e278ca5b1a21546a16bbf41cb212e42
+Merge: 63daa16 6937515
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 29 15:07:56 2016 +0200
+
+    Merge pull request #244 from jwillemsen/master
+    
+    Smaller fixes
+
+commit 693751565927619899458e123e7583212ff2cdab
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 29 15:07:19 2016 +0200
+
+    html fix
+        * ACE/ACE-INSTALL.html:
+
+commit 7234133a3993fe13928cf1d57e2a1b4f1795fd1d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 29 15:06:16 2016 +0200
+
+    Removed CIAO note
+        * ACE/ACE-INSTALL.html:
+
+commit 770adb8cfb469c6cfab8f92db0fbd9be1398a9f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 29 15:04:25 2016 +0200
+
+    Removed CIAO
+        * ACE/debian/TODO:
+
+commit c4b644ea20cde1f3bd2d5b8ba5eb3f2831ab05dc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 29 15:04:19 2016 +0200
+
+    Added Oracle studio note
+        * ACE/NEWS:
+
+commit 63daa16fb3015ec70bdff6316358c6e5d608b0b1
+Merge: 22e9f9e 2e7b1174
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 26 19:04:08 2016 +0200
+
+    Merge pull request #234 from jodar1/solaris_studio_12_4_fix
+    
+    Fix compile for Solaris Studio 12.4
+
+commit a930e628e416378275575509f683e94d3df6c1b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 20 17:46:29 2016 +0200
+
+    Rename ATCD to ACE_TAO
+        * ACE/bin/make_release.py:
+        * ACE/docs/bczar/bczar.html:
+
+commit 61e0940169fc638c1f8a056bd8ade03902f8e6af
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 20 17:22:17 2016 +0200
+
+    Updates for change of ATCD to ACE_TAO
+        * ACE/ACE-INSTALL.html:
+        * ACE/bin/make_release.py:
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * README.md:
+        * TAO/TAO-INSTALL.html:
+        * TAO/tao/Transport.h:
+        * TAO/tao/Transport_Selection_Guard.h:
+
+commit 343814d6ca96e8ec289f926a33558c71d008a96a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 20 16:30:02 2016 +0200
+
+    Just ACE+TAO
+        * ACE/debian/ace.dsc:
+
+commit 943b5a07d9539e13f2edaaaec752181a30696e6c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 19 19:43:24 2016 +0200
+
+    Removed CIAO parts
+
+commit 597bfb305cc6e67107744267f3039dfb3568882b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 19 19:42:53 2016 +0200
+
+    Only package ACE+TAO
+
+commit 2e7b11740589636e90a1e15659bbb56735c19d28
+Author: jodar1 <magusjodar@gmail.com>
+Date:   Wed Apr 13 16:24:36 2016 -0500
+
+    Move Solaris compile fix to config-suncc-common.h
+    
+    Moved the fix "Fix compile for Solaris Studio 12.4" from
+    config-sunos5.10.h to config-suncc-common.h so that it is in a
+    more generic location.
+
+commit a120bcc99fe25bbfd758c8a0a11129a57af8a097
+Author: jodar1 <magusjodar@gmail.com>
+Date:   Wed Apr 13 00:04:07 2016 -0500
+
+    Fix compile for Solaris Studio 12.4
+    
+    Solaris Studio 12.4 now implements symbol lookup correctly.
+    Added #define ACE_ANY_OPS_USE_NAMESPACE to
+    config-sunos5.10.h when 12.4 or later compiler is detected.
+
+commit be35e7d22d2b9fb267e1189c41044668f51de151
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 30 14:38:37 2016 +0200
+
+    Added C++11 test for using incomplete types and std::is_base_of
+        * ACE/tests/Compiler_Features_36_Test.cpp:
+          Added.
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit 7c1b9e8c25f8bcb87a23200ec28735a025f1f418
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 11:46:58 2016 +0200
+
+    Doxygen improvements
+        * ACE/ace/NT_Service.h:
+
+commit f92358aa9a0c9655535859f0cbafa008c258c0ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 11:46:50 2016 +0200
+
+    Layout changes
+        * ACE/ace/NT_Service.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+
+commit 8d1d08489414f0f21fae3c030e7088143a717104
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 11:40:05 2016 +0200
+
+    Set errno when OpenSCManager fails
+
+commit afe1c095ef60bdc488a13f432c2ea6a78416e421
+Merge: 74d3a1e 8b8a9c0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 09:42:53 2016 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 74d3a1efa0a88718bca2298c898afc19495fad90
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 09:42:47 2016 +0100
+
+    Minor documentation changes
+        * ACE/etc/index.html:
+        * TAO/docs/implrepo/paper.html:
+        * TAO/docs/implrepo/usersguide.html:
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+
+commit 7e8599505e3157894e371656ce234e9c8c28c4bb
+Author: Steve Huston <shuston@riverace.com>
+Date:   Tue Mar 22 19:40:15 2016 -0400
+
+    Remove AI_ADDRCONFIG use from ACE_INET_Addr::set; see Bugzilla 4211
+
+commit 56e63aca8ebe8bbe7ad4df8ee9114c1877122b73
+Merge: 0fd33b0 b7ecf6b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 22 18:51:10 2016 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 0fd33b0e6d61d504985dcf5dd209b45ff720ddee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 22 18:50:36 2016 +0100
+
+    Remove last night snapshot link
+        * ACE/etc/index.html:
+        * TAO/docs/implrepo/index.html:
+
+commit 355b5ae287d6ee5a5b08aaf524d4b7788cab5271
+Merge: dc4277f 121ffbd
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Mar 10 14:32:00 2016 -0600
+
+    Merge pull request #210 from pmesnier/master
+    
+    Collection of commits to bring over features and fixes from OCI TAO
+
+commit ccc51dec6401208cc1e9f116de56e20b7d438fd7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Mar 5 11:11:48 2016 +0100
+
+    Don't check fuzz.pl itself
+        * ACE/bin/fuzz.pl:
+
+commit 363f918df7e4f55baf465d66053805d0ff856bef
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Mar 5 11:06:56 2016 +0100
+
+    Extend $Id check
+        * ACE/bin/fuzz.pl:
+
+commit f68ad1ebb25927d2b6650091f3bc23ae6888a495
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Mar 3 16:55:46 2016 -0600
+
+    Bring over recent fixes and enhancements to the FaultTolerant / LoadBalancing naming service extension from OCI's TAO release.
+    Fixes deadlocks that could occur as a result of file access errors, such as the transient "bad file decriptor" (ebadf) error that seems to pop up fairly regularly
+    when using NFS. Also optimized the file locking strategy to not always setting to MODIFY access state, which then required a file update on every access
+
+commit 29b7225cf09b0decc46339ab6ae606a4937d246d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 4 14:10:19 2016 +0100
+
+    Removed atcdstats
+        * ACE/docs/bczar/bczar.html:
+
+commit bfacd0ef8960fa0652730eb7d5aef99301de4035
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 4 14:10:10 2016 +0100
+
+    Corrected link to Remedy log
+        * ACE/html/Stats/img.html:
+
+commit 1e0c30421900f52991720b0da2a5901bb15449e1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 4 10:53:00 2016 +0100
+
+    Updated links
+        * ACE/ACE-INSTALL.html:
+        * ACE/bin/cleanbuilds.sh:
+        * ACE/bin/diff-builds.pl:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * ACE/html/Stats/img.html:
+        * ACE/protocols/tests/INet/MT_Get/Main.cpp:
+
+commit 9b502667266da5fcd9996c0ba08569693b2c8e83
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 3 19:55:01 2016 +0100
+
+    Fixed typos
+        * ACE/examples/APG/ThreadPools/TP_Reactor.cpp:
+        * ACE/tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * ACE/tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * ACE/tests/Thread_Pool_Reactor_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEventComm.idl:
+        * TAO/orbsvcs/orbsvcs/CosNotification.idl:
+        * TAO/tests/Bug_3154_Regression/orbsvcs/CosNotification.idl:
+
+commit 78f7225ac29faac6e14cad0118e63b47000fe9b8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 1 15:42:47 2016 +0100
+
+    Removed not necessary return
+        * ACE/ace/TLI.cpp:
+
+commit b3ef468bef0e07f0a8a7b9e7c6bac906dda88f8d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 25 08:32:59 2016 +0100
+
+    Make the lock accessor const to prevent a const cast in user code
+        * ACE/ace/Service_Repository.h:
+        * ACE/ace/Service_Repository.inl:
+
+commit 427213f11a79f9d63f7584e844735067ed1a7541
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 12 18:43:57 2016 +0100
+
+    Fixed typo
+        * ACE/ace/Service_Config.h:
+        * ACE/ace/Svc_Conf_Param.h:
+        * ACE/apps/gperf/src/Key_List.cpp:
+
+commit 1c665dcf1b0c1a300c9faeb8b0a8c59df5eb348d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 12 15:39:52 2016 +0100
+
+    Fixed comment
+        * ACE/ace/Service_Repository.h:
+
+commit b61579224c35cbefe2a34a6315bea999cf6ff67e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 12 15:37:31 2016 +0100
+
+    Added a lock accessor to the ACE Service Repository which is now of
+    type ACE_SYNCH_RECURSIVE_MUTEX so that user code that iterates the
+    service repository can lock its content during iteration to make sure
+    it doesn't get a corrupted state when another thread tries to change
+    its state
+        * ACE/ace/Service_Repository.cpp:
+        * ACE/ace/Service_Repository.h:
+        * ACE/ace/Service_Repository.inl:
+        * ACE/tests/Service_Config_Test.cpp:
+
+commit ae65ab947f05f6ef56abfbb2fc2fae6f5b19fe2b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 12 15:35:39 2016 +0100
+
+    Doxygen change
+        * ACE/ace/ARGV.h:
+
+commit 550ed403e65faad8ca8238e224ee85920407ad68
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 8 09:13:35 2016 +0100
+
+    Tweaked code to not call unsupported methods
+        * ACE/ace/Dev_Poll_Reactor.cpp:
+        * ACE/ace/Select_Reactor_Base.cpp:
+        * ACE/ace/config-face-safety.h:
+
+commit 1bc4b9466bed1380c4e1b9b674eb9e3537f59bb2
+Merge: 14b43a6 61662ab
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Feb 7 13:25:47 2016 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 14b43a6a8fde151ce7566b6f461ce2f07db7c901
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Feb 7 13:25:40 2016 +0100
+
+    Undef F_SETFD when it is defined
+        * ACE/ace/config-face-safety.h:
+
+commit 61662aba4bbd20e7d43412ebb1125b72b0df50e7
+Merge: b4f48de 3d47257
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 6 12:21:58 2016 +0100
+
+    Merge pull request #194 from jwillemsen/master
+    
+    Log an error when resume_handler returns -1
+
+commit 3d4725726516e2625a67d62310c219bd71fff152
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 6 10:34:27 2016 +0100
+
+    Zap empty lines
+        * ACE/tests/Capabilities_Test.cpp:
+        * ACE/tests/Log_Msg_Test.cpp:
+        * ACE/tests/Missing_Svc_Conf_Test.cpp:
+
+commit ea901e0854b29e1744ff55b225b190241ce3832c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 6 10:34:18 2016 +0100
+
+    Check return value of ACE_OS::fcntl
+        * ACE/ace/Dev_Poll_Reactor.cpp:
+        * ACE/ace/Select_Reactor_Base.cpp:
+
+commit b4f48de243d3610f0463b58cc4cac3fc720f3eb3
+Merge: b5eb8e9 2ecdb1b
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Feb 2 09:32:50 2016 -0600
+
+    Merge pull request #193 from mitza-oci/master
+    
+    Added support for FreeBSD 10.2 with clang.
+
+commit 6fca736365e690631dfe92d1f854371fd36ee409
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 31 18:33:28 2016 +0100
+
+    Updated copyright year
+        * ACE/COPYING:
+        * CIAO/COPYING:
+        * DAnCE/COPYING:
+        * TAO/COPYING:
+
+commit 2ecdb1be613c090a38df9444557ff19f32fc008d
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Jan 29 20:54:39 2016 +0000
+
+    Added support for FreeBSD 10.2 with clang.
+
+commit 871fe1257fbf46f3e3259ccceeaaf924ba9d56b1
+Author: Zex Li <top_zlynch@yahoo.com>
+Date:   Mon Jan 25 16:13:14 2016 +0800
+
+    extend defined(ACE_NLOGGING) range
+
+commit 1cbb66f0811a5b1496435f5627ac23debdb5ea28
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 20 17:20:20 2016 +0100
+
+    Updated packages
+        * ACE/docs/bczar/bczar.html:
+
+commit e707d29c516aee52cfee2bfe2ea676c87d554381
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Jan 5 12:59:32 2016 -0600
+
+    VxWorks: implemented ACE_OS::getmacaddress in terms of a sysctl.
+
+commit 01649e2dbed53c38dd5fcfb5195ed71b823fc16f
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Jan 5 12:58:23 2016 -0600
+
+    Updated recent changes to build on VxWorks 6 and 7
+
+commit e08b738cad85d27960c00c1cb47c1c6760cff980
+Author: Oliver Bruns <obruns@gmail.com>
+Date:   Fri Dec 18 09:34:18 2015 +0100
+
+    reword the news item about OpenSSL compatibility
+    
+    Explicitly mention the breaking change that may hit library users that
+    have used ACE_SSL_Context::set_mode() with any of the enum members
+    removed in "Remove version specific OpenSSL methods" (28b1055680a).
+    
+    Suggest they use ACE_SSL_Context::filter_versions() instead.
+
+commit d0525114b39f7f10615dcd8957426927ff2e74a5
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Dec 2 14:54:46 2015 -0600
+
+    ACE/protocols workspace excludes tests and examples subdirs, they have separate workspaces.
+
+commit 0f04199e373455feae1a54fecbaaff648bcfe972
+Author: Jeff Schmitz <schmitzj@ociweb.com>
+Date:   Tue Dec 1 11:42:09 2015 -0600
+
+     Don't print out PID error message at spawn.  File not found is acceptable, and not an error.
+
+commit e02016e7e64e1b26956e620bc4f4bbb285fa6a60
+Author: Jeff Schmitz <schmitzj@ociweb.com>
+Date:   Tue Dec 1 11:41:53 2015 -0600
+
+    Include Malloc_Base, appears to be needed when ACE_HAS_ALLOC_HOOKS in a static libs only build.
+
+commit 4862e2075f896ac11b7a5547a2cc0550ccb8365f
+Author: Jeff Schmitz <schmitzj@ociweb.com>
+Date:   Tue Dec 1 11:41:37 2015 -0600
+
+    Updates for PerlACE configuration.
+
+commit 41ee8b0eb9f2a8543e19f7697802db4ce4b61d4a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Dec 1 09:56:42 2015 -0600
+
+    Fixed bugs in ACE_OS::getaddrinfo_emulation
+
+commit 632965675959305bcccba0b67cc594b2b794d5a7
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Dec 1 08:55:47 2015 -0600
+
+    Fix for platforms with ACE_LACKS_WCSRTOMBS defined.
+
+commit fb2cf85d82d55d52e1dc3fe50e1aec35d3fc7b3f
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Nov 30 16:37:10 2015 -0600
+
+    IDL_SERVER_INL_EXT is no longer used, shouldn't be added by depgen.
+
+commit d024dcdc9784645f4db3ecd49a8edccc087b6510
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Nov 30 15:00:30 2015 -0600
+
+    Fixed coverity defects
+
+commit b46349941bf532c2004fd25c53198e1489da19cb
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Nov 30 13:26:44 2015 -0600
+
+    ACE_INET_Addr::set - use inet_pton to detect cases that are numeric addresses and don't need hostname resolution.
+
+commit cd6ca119a66ee97d0314a6bfb7e972ca72a5d76c
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Nov 30 13:25:08 2015 -0600
+
+    Updated snprintf_emulation for different floating point representations and rounding
+
+commit b5ca81e6f992987f63935479b9e08633f7cec85a
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Nov 24 12:10:28 2015 -0600
+
+    Enable IDL dependencies tracking by default. This solves build issues that occur when base IDL file changes are not detected when building dependent IDLs
+
+commit b0fef1babb63beb2dfd784d3d7bc73ac5f8773f1
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Nov 24 14:31:19 2015 -0600
+
+    Workaround for a bug in 64-bit libc on MinGW-W64.
+
+commit 38b9b82393e2944cb783c7fd2b2d62f8d3c63bce
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Nov 24 11:01:31 2015 -0600
+
+    Solaris 9 lacks getaddrinfo()/getnameinfo(), Solaris 10 has them.
+    
+    Actually they are present on Solaris 9 but just return an error.
+
+commit 5444deb74872256b158cc66f35836c81cb92c071
+Merge: 87b1f9e 9397808
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 24 19:30:37 2015 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 87b1f9e8dc33b6d5b33b21301ed24c54ccbc20ab
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 24 19:30:31 2015 +0100
+
+    Fixed SunCC warning
+        * ACE/ace/SSL/SSL_Context.h:
+
+commit c3bc17b3b12272e3990c049aced6b1c486b57c4d
+Author: David Arnold <da4089@users.noreply.github.com>
+Date:   Tue Nov 24 15:26:15 2015 +1100
+
+    Fix tyop.
+
+commit b3ba2bc3a64285af31e37655d5589c00729b2c3f
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 19 13:04:14 2015 -0600
+
+    Fixed fuzz error.
+
+commit 984fcc6833d78d6ab53be30d00618786c4c348de
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 19 11:15:24 2015 -0600
+
+    Updated fix for SunCC's broken std::allocator.
+
+commit f2c23532a66ef1deeaeb70c8afc06e38dd083cb2
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 19 09:35:03 2015 -0600
+
+    Fixed a warning on HP aCC.
+
+commit acb5b1f1f00653bcdf840afa6dc042a0b880a454
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 19 08:13:23 2015 +0100
+
+    Updated because of SSL changes
+        * ACE/NEWS:
+        * TAO/docs/Security/SSLIOP-USAGE.html:
+
+commit bd92965826e261883518e7f9adf0c7a4e714288f
+Merge: c65ba18 28b1055
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 19 08:11:34 2015 +0100
+
+    Merge pull request #156 from kroeckx/master
+    
+    Remove version specific OpenSSL methods
+
+commit ff86a86d8d764eedce8292539b57f214e1567775
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Nov 18 12:55:12 2015 -0600
+
+    Fixed compiler warnings on multiple platforms.
+
+commit 8e76aa4e2af079127718bb2a80cc49bc3993ac92
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Nov 18 12:54:32 2015 -0600
+
+    sigset_t can't be portably used with Log_Msg varargs.
+
+commit 7937dcbd45abadeff47a8bef65a5eeccf51e343c
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Nov 17 16:56:20 2015 -0600
+
+    Restored Solaris/SunCC compatibility.
+
+commit d25e42f5fe65078a497d58cd9b1889d65c7cb55b
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Nov 17 16:30:59 2015 -0600
+
+    Fixed compile error on HP aCC.  "return" should be there in any case.
+
+commit f371934843144c0d374bb08ebb261a5db29d59fe
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Nov 17 16:42:45 2015 -0600
+
+    Restored Android NDK compatibility.
+
+commit 7272ad8a6bdcc60c540c786b3b9d414eb8fa5432
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Nov 16 15:47:05 2015 -0600
+
+    Fixed a misplaced versioned namespace macro.
+
+commit c4bf9be78b11fdce5c5e86f31c65cade2d86a115
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 12 16:19:31 2015 -0600
+
+    Add required #include.
+
+commit 3910f0188c0363b6c8b200f2bc2da9b9bc01c35f
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 12 15:59:58 2015 -0600
+
+    In sendfile_emulation(), fall back on read() if the descriptor is for a file that can't be used with mmap().
+
+commit 52f30d9ddbfeac44a5197732ac65ee2c1ffadc39
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 12 15:59:41 2015 -0600
+
+    Use configurable temporary directory.
+
+commit ea348e2824a71fee2d77f4b4a0ee825b8bf41413
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 12 15:59:26 2015 -0600
+
+    Use ACE_LOCALHOST instead of localhost.
+
+commit 668e65031b13eaaff8bd6e7ae926e2f8dea77969
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 12 12:59:02 2015 -0600
+
+    Fixed an unused variable warning on LynxOS.
+
+commit 9aaabf63f46d80b59f2b98a30933c140c8f51a12
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 12 11:23:12 2015 -0600
+
+    Fixed uninit variable warnings.
+
+commit ba6531d244b0ab03186baeecd0a49fa6f4a50295
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Nov 12 11:19:31 2015 -0600
+
+    Fixed fuzz checks and wchar build problems.
+
+commit 74f5d92308ff3d0ae6012b2e4e4d3986c8ff5e8d
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Nov 11 16:15:52 2015 -0600
+
+    LynxOS-178 has some issues in its thread specific storage.
+
+commit 6226b0eec95959b716a46120699d6357a20dad70
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Nov 11 16:15:36 2015 -0600
+
+    This test can't run when ACE_LACKS_FILELOCKS.
+
+commit 00adbac035685313a98e62a9d77a4363c160f807
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Nov 11 16:15:17 2015 -0600
+
+    Changed one more use of sprintf to snprintf.
+
+commit 5c3b3e6647172eecea421195f8bd16ee86a0563b
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Nov 11 16:14:44 2015 -0600
+
+    Split up the MT_Reference_Counted_Event_Handler_Test on LynxOS due to resource limitations.
+
+commit a947a64782a4ce2ec50253a52cb5bd82aa5c11e2
+Author: Jeff Schmitz <schmitzj@ociweb.com>
+Date:   Wed Nov 11 16:14:15 2015 -0600
+
+    remove undef of ACE_LACKS_PTHREAD
+
+commit 1277b80ea4b527fde5c53821a319b6b2d6b664ca
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Nov 11 10:41:17 2015 -0600
+
+    VC14 is more pedantic about using reinterpret_cast inapropriately.
+
+commit f08cd1be887d98f00a4d3da4ef29a0d29e0604e1
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Nov 10 17:27:35 2015 -0600
+
+    Removed dollar-Id-dollar svn keywords.
+
+commit 4e1a68c7927dddd05718b9b48f2dc09c05da699c
+Merge: 134efc6 bbffa96
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Nov 10 17:10:56 2015 -0600
+
+    Merge remote-tracking branch 'upstream/master' into merge-face-safety
+
+commit 134efc60d0247ec787998f0d8309d62f35377a8a
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Tue Nov 10 15:29:15 2015 -0600
+
+    Add braces to silence a compiler warning.
+
+commit cfe7407383a7e6d2ebe0d62b30a72f3dc5371cd0
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Nov 10 15:24:40 2015 -0600
+
+    Updated ACE tests for FACE safety profiles.
+
+commit 9975e8b418d17abdad05f3b0359eff2a033a9e1b
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Nov 10 11:22:11 2015 -0600
+
+    Clear the dummy reference value used when searching for an entry to remove. If the items stored in the set are of a reference counted type, then this is necessary to ensure there are no lingering references to otherwise cleaned up objects.
+
+commit a0ba0ac4bce4a104064772b4545eb05edeeb52a3
+Author: Jeff Schmitz <schmitzj@ociweb.com>
+Date:   Tue Nov 10 10:59:29 2015 -0600
+
+    Process_Unix.pm:
+    
+    Change No PID found at Spawn log message to not say Warning.
+
+commit 1496b403bc437498b237d19a8c957f791c7d5b2b
+Author: Jeff Schmitz <schmitzj@ociweb.com>
+Date:   Mon Nov 9 18:20:58 2015 -0600
+
+    Process_Unix.pm: Don't try to read PID when no remote process.
+
+commit 05e86a3125024bc134ebeb774b92046a6710abeb
+Author: Jeff Schmitz <schmitzj@ociweb.com>
+Date:   Mon Nov 9 13:21:57 2015 -0600
+
+    Process_Unix.pm:
+    
+    If remote PID is unknown, still kill child remote shell process.
+    Kill remote shell process after killing remote process (and time has passed).
+
+commit 6008d58edcaffd00ea595b2bfa30d0c5bb618d66
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Nov 9 13:11:27 2015 -0600
+
+    Fixed bugs in ACE_OS::getaddrinfo_emulation.
+
+commit 91122f6a6236f5422b1034faac1569498cbc05a9
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Nov 9 09:33:59 2015 -0600
+
+    ACE_OS::gai_strerror now returns ACE_TCHAR to support Win32 API.
+
+commit 7a73321bc41400f959725679f0c2a272d959c7ff
+Author: Jeff Schmitz <schmitzj@ociweb.com>
+Date:   Mon Nov 9 09:33:41 2015 -0600
+
+    If reading PID file fails, try again at kill time.
+
+commit 28b1055680abb28bda864bb9b49a811da20fe630
+Author: Kurt Roeckx <kurt@roeckx.be>
+Date:   Sat Nov 7 15:25:07 2015 +0100
+
+    Remove version specific OpenSSL methods
+    
+    The SSLv23_* methods are the only one that support multiple versions.
+
+commit ac5e1702c9f9bee9f1f7bfce8c1a6f3847ea6b4b
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Nov 6 17:07:11 2015 -0600
+
+    Merged branch ace-face-safety (FACE Safety Profile import from OCITAO).
+
+commit 5272b5b81f92c298cb998b5bb0b0dbca3e7f29fe
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Nov 2 08:58:31 2015 -0600
+
+    Remove 'extern "C"' wrapper around include of pthread.h.
+
+commit ea0f3967eaaa0759dab2a4647929f4395829064b
+Merge: aec6786 1f1a09e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 2 08:53:13 2015 +0100
+
+    Merge pull request #153 from ops/master
+    
+    Removed references to CIAO and DAnCE.
+
+commit aec6786c48a63fdd46a3c6c814ab435a1f7423c3
+Merge: 58294d3 2f4a437
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 2 08:52:19 2015 +0100
+
+    Merge pull request #154 from jwillemsen/master
+    
+    Adapt for msvc deprecated API
+
+commit 2f4a4371d730e3c3296bb4a0b296225ef6aa8094
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 31 16:22:48 2015 +0100
+
+    Fixed error
+        * ACE/ace/OS_NS_stdlib.inl:
+
+commit 58294d3bc7baa77170515de396e06acefa551c1b
+Merge: ef36446 be3e623
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Oct 27 17:29:01 2015 -0500
+
+    Merge pull request #152 from mitza-oci/master
+    
+    Updates for VxWorks 7 RTP and Kernel.
+
+commit 1f1a09ed605554ccb13283c481e012f75d154542
+Author: Olli Savia <ops@iki.fi>
+Date:   Mon Oct 26 19:43:55 2015 +0200
+
+    Changed ACE+TAO-src.tar.bz2 references to ACE+TAO-src.tar.gz
+
+commit 034b71c01b7e63d1fcf0ccf9a1bbee9662a5392a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Oct 23 15:47:44 2015 -0500
+
+    Allow TAO_IDL_BE and tao_idl projects to be skipped based on an MPC feature.
+    
+    This restores the previous behavior for cross-compiles on an opt-in basis.
+    VxWorks 7.0 opts-in to skipping TAO_IDL_BE and tao_idl.
+
+commit bdc1c03e90a2614bafdc096239cc350b2fc1db54
+Author: Olli Savia <ops@iki.fi>
+Date:   Fri Oct 23 19:17:58 2015 +0300
+
+    Use ACE+TAO-src as source tarball instead of ACE+TAO+CIAO-src
+
+commit bed309e768386bca039c4e664be4b7752872c61e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 23 12:34:57 2015 +0200
+
+    Fixed typo
+        * ACE/ace/OS_NS_unistd.inl:
+
+commit a47c449c94b15eb6f0a1f35fc1bd447759c6813c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 23 11:24:24 2015 +0200
+
+    Fix
+        * ACE/ace/OS_NS_stdlib.inl:
+
+commit 3e436af379301233f1671c6f8014a5af6f041c84
+Merge: 3a6a827 ef36446
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 23 11:22:58 2015 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 3a6a8278ce57490b41c0d3b0e7593b2bc84db1df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 23 11:18:11 2015 +0200
+
+    Adapt for msvc deprecated API and use their ISO alternative
+        * ACE/ace/OS_NS_stdio.inl:
+        * ACE/ace/OS_NS_stdlib.inl:
+        * ACE/ace/OS_NS_sys_stat.inl:
+        * ACE/ace/OS_NS_unistd.inl:
+        * ACE/ace/config-win32-msvc-14.h:
+
+commit 497c6bd8b62d45cd6b662d804c505c89277c61fe
+Author: Olli Savia <ops@iki.fi>
+Date:   Thu Oct 22 22:21:52 2015 +0300
+
+    spec-file no longer contains CIAOVER or DANCEVER
+
+commit cdb7a80c1ec79785679d848cd0e319f22c0af4c2
+Author: Olli Savia <ops@iki.fi>
+Date:   Thu Oct 22 20:51:03 2015 +0300
+
+    Removed references to CIAO and DAnCE. This package contains only ACE and TAO.
+
+commit e4a7003f84f3e5ca19805f2763d5840b41257a11
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Oct 21 14:36:39 2015 -0500
+
+    Updates for VxWorks 7 RTP and Kernel.
+
+commit c2c8c2d9888ae9bdc02cd829bf5640d6dba65b4a
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Oct 21 15:11:51 2015 -0400
+
+    add .sh files to "don't convert endings" pattern for zip distro.
+
+commit 786e9a3cec07acca3722420d83ba52a7452c8fb9
+Merge: 9d67b71 2472a1e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 13:43:20 2015 +0200
+
+    Merge pull request #146 from likema/feature/ssl-context-close
+    
+    Add static ACE_SSL_Context::close for deleting it.
+
+commit 03ac88c8c4208951933a9fe9fa9b301813d6525d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 09:11:26 2015 +0200
+
+    Make x.3.3 public available and prepare for the next release
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * CIAO/NEWS:
+        * DAnCE/NEWS:
+        * TAO/NEWS:
+
+commit 2472a1ec5e335f0032869ebc11ad269e0d64fcbc
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Thu Sep 17 11:37:06 2015 +0800
+
+    Add static ACE_SSL_Context::close for deleting it.
+    
+    Because ACE_SSL_Context is a unmanaged singleton, it would not
+    destruct without calling static close method explicitly.

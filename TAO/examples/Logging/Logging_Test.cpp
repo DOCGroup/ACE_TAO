@@ -1,13 +1,8 @@
-// $Id$
-
 #include "Logging_Test_i.h"
 
-ACE_RCSID(Logger, Logging_Test, "$Id$")
-
 // This function runs the Logging service test.
-
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Logger_Client logger_client;
 
@@ -18,5 +13,4 @@ main (int argc, char **argv)
     return 1;
 
   return logger_client.run ();
-
 }

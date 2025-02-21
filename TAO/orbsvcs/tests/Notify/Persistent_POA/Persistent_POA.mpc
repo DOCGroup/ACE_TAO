@@ -1,0 +1,14 @@
+// -*- MPC -*-
+project(*notify_supplier): notifytest {
+  exename = Structured_Supplier
+
+  IDL_Files {
+    gendir = .
+    commandflags += -o .
+    ../Blocking/go.idl
+  }
+
+  Source_Files {
+    Structured_Supplier.cpp
+  }
+}

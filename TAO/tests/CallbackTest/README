@@ -1,0 +1,24 @@
+/**
+
+
+
+@page Callback Test README File
+
+  This is a test to test client callbacks in various IP connection setups.
+
+  - run_test.pl tests the default endpoint setup;
+
+  - run_test_ipv6.pl tests the situation where both
+    server and client are forced to use only IPv6
+    endpoints;
+
+  - run_test_mixed_ip.pl tests the situation where the server is forced to
+    use an IPv6 endpoint and the client an IPv4 endpoint.
+
+	To run the test use the run_testXXX.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/

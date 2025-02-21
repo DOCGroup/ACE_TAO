@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Inversion.h"
 #include "Consumer.h"
 #include "Supplier.h"
@@ -8,12 +6,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 
-ACE_RCSID (EC_Tests_Performance, 
-           Inversion, 
-           "$Id$")
-
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   EC_Inversion driver;
   return driver.run (argc, argv);
@@ -21,21 +15,21 @@ main (int argc, char *argv [])
 
 // ****************************************************************
 
-EC_Inversion::EC_Inversion (void)
+EC_Inversion::EC_Inversion ()
   :  same_events_ (0)
 {
 }
 
 int
-EC_Inversion::parse_args (int &argc, char *argv [])
+EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv [])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (arg, "-same_events") == 0)
+      if (ACE_OS::strcmp (arg, ACE_TEXT("-same_events")) == 0)
         {
           arg_shifter.consume_arg ();
           this->same_events_ = 1;
@@ -56,11 +50,10 @@ EC_Inversion::parse_args (int &argc, char *argv [])
 }
 
 void
-EC_Inversion::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Inversion::connect_consumers ()
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_consumers ();
 
   ACE_ConsumerQOS_Factory qos0;
   qos0.start_disjunction_group (2);
@@ -69,8 +62,7 @@ EC_Inversion::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 
   this->consumers_[0]->connect (consumer_admin.in (),
                                 qos0.get_ConsumerQOS (),
-                                ACE_ES_EVENT_UNDEFINED + 1
-                                ACE_ENV_ARG_PARAMETER);
+                                ACE_ES_EVENT_UNDEFINED + 1);
 
   for (int i = 1; i < this->n_consumers_; ++i)
     {
@@ -85,19 +77,17 @@ EC_Inversion::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 
       this->consumers_[i]->connect (consumer_admin.in (),
                                     qos1.get_ConsumerQOS (),
-                                    base_event + 1
-                                    ACE_ENV_ARG_PARAMETER);
+                                    base_event + 1);
     }
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Inversion (%P|%t) connected consumer(s)\n"));
 }
 
 void
-EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Inversion::connect_suppliers ()
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_suppliers ();
 
   ACE_SupplierQOS_Factory qos0;
   qos0.insert (1, ACE_ES_EVENT_UNDEFINED, 0, 1);
@@ -105,8 +95,7 @@ EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 
   this->suppliers_[0]->connect (supplier_admin.in (),
                                 qos0.get_SupplierQOS (),
-                                ACE_ES_EVENT_UNDEFINED + 1
-                                ACE_ENV_ARG_PARAMETER);
+                                ACE_ES_EVENT_UNDEFINED + 1);
 
   for (int j = 1; j != this->n_suppliers_; ++j)
     {
@@ -120,8 +109,7 @@ EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 
       this->suppliers_[j]->connect (supplier_admin.in (),
                                     qos1.get_SupplierQOS (),
-                                    base_event + 1
-                                    ACE_ENV_ARG_PARAMETER);
+                                    base_event + 1);
     }
 
   if (this->verbose ())
@@ -129,7 +117,7 @@ EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Inversion::activate_tasks (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Inversion::activate_tasks ()
 {
   int priority;
 
@@ -174,9 +162,3 @@ EC_Inversion::activate_tasks (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         }
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

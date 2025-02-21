@@ -1,5 +1,6 @@
 // -*- C++ -*-
-// $Id$
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   ACE_INLINE
@@ -11,9 +12,11 @@ namespace TAO
   }
 
   ACE_INLINE
-  Reply_Guard::~Reply_Guard (void)
+  Reply_Guard::~Reply_Guard ()
   {
-    this->invocation_->reply_received (this->status_);
+#if TAO_HAS_INTERCEPTORS == 1
+    this->invocation_->invoke_status (this->status_);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
   }
 
   ACE_INLINE void
@@ -22,3 +25,5 @@ namespace TAO
     this->status_ = s;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

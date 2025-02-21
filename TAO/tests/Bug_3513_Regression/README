@@ -1,0 +1,28 @@
+
+
+This is a compile only test. If it compiles, it's passed. It checks that you can have an include for PortableServer.pidl, and other 'unsafe' files, in a user file if it is guarded or ifdef'd out.
+
+If it's failing you'll see something like the follwing if you build it:
+
+g++ -fvisibility=hidden -fvisibility-inlines-hidden -W -Wall -Wpointer-arith  -ggdb -pipe -D_REENTRANT -DACE_HAS_AIO_CALLS -D_GNU_SOURCE   -I/home/sm/doccvs/ACE_wrappers -DACE_HAS_EXCEPTIONS -DACE_NO_INLINE -I../../.. -I../..  -c -o .obj/testC.o testC.cpp
+In file included from testC.h:68,
+                 from testC.cpp:32:
+../../tao/PortableServer/PortableServerC.h:37:2: error: #error You should not include PortableServer/PortableServerC.h, use tao/PortableServer/PortableServer.h
+In file included from testC.h:69,
+                 from testC.cpp:32:
+../../tao/ObjRefTemplate/ObjectReferenceTemplateC.h:37:2: error: #error You should not include ObjRefTemplate/ObjectReferenceTemplateC.h, use tao/ObjRefTemplate/ObjectReferenceTemplate.h
+In file included from testC.h:72,
+                 from testC.cpp:32:
+../../tao/CodecFactory/IOP_CodecC.h:37:2: error: #error You should not include CodecFactory/IOP_CodecC.h, use tao/CodecFactory/CodecFactory.h
+In file included from testC.h:73,
+                 from testC.cpp:32:
+../../tao/RTCORBA/RTCORBAC.h:37:2: error: #error You should not include RTCORBA/RTCORBAC.h, use tao/RTCORBA/RTCORBA.h
+In file included from testC.h:74,
+                 from testC.cpp:32:
+../../tao/RTPortableServer/RTPortableServerC.h:37:2: error: #error You should not include RTPortableServer/RTPortableServerC.h, use tao/RTPortableServer/RTPortableServer.h
+In file included from testC.h:75,
+                 from testC.cpp:32:
+../../tao/RTScheduling/RTSchedulerC.h:37:2: error: #error You should not include RTScheduling/RTSchedulerC.h, use tao/RTScheduling/RTScheduler.h
+make[1]: *** [.obj/testC.o] Error 1
+...
+etc...

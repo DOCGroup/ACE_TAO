@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Server_Task.h"
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
@@ -12,9 +10,9 @@
 int niterations = 250000;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -28,7 +26,7 @@ parse_args (int argc, char *argv[])
         // This is a hack but that is okay!
         return 0;
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -40,8 +38,7 @@ set_priority()
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority);
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -59,17 +56,15 @@ set_priority()
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   //Use Real-time Scheduling class if possible
   set_priority();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var sorb =
-        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc,argv) == -1)
         return -1;
@@ -106,10 +101,9 @@ main (int argc, char *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions..
     }
-  ACE_ENDTRY;
   return 0;
 }

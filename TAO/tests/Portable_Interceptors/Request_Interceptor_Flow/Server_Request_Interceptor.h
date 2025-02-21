@@ -4,8 +4,6 @@
 /**
  * @file Server_Request_Interceptor.h
  *
- * $Id$
- *
  * Implementation header for the server request interceptor for the
  * request interceptor flow test.
  *
@@ -22,12 +20,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
-#include "tao/PI_Server/PI_Server.h"
-#include "tao/LocalObject.h"
-
 #include "Request_Interceptor.h"
 
+#include "tao/PI_Server/PI_Server.h"
+#include "tao/PortableInterceptorC.h"
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -43,11 +40,10 @@
  */
 class Server_Request_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object,
+    public virtual ::CORBA::LocalObject,
     public virtual Request_Interceptor
 {
 public:
-
   /// Constructor.  Accepts the name of the interceptor.
   Server_Request_Interceptor (const char *name);
 
@@ -61,45 +57,28 @@ public:
    */
   //@{
   virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
   //@}
 
 private:
-
   /// Returns 1 if the server-side test is currently being run, and 0
   /// otherwise.
   CORBA::Boolean server_side_test (
-    PortableInterceptor::ServerRequestInfo_ptr info
-    ACE_ENV_ARG_DECL);
+    PortableInterceptor::ServerRequestInfo_ptr info);
 
 private:
-
   /// Variable used to keep track of the scenario count.  Used to get
   /// around the inability to call RequestInfo::arguments() in the
   /// receive_service_contexts() interception point.

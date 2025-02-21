@@ -1,6 +1,16 @@
-// $Id$
+project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  idl_files {
+    Gateway.idl
+    ObjectReferenceFactory.idl
+    sum_server.idl
+  }
+  custom_only = 1
+}
 
-project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, pi_server, minimum_corba {
+project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after   += *idl
+  exename  = gateway_server
+
   source_files {
     GatewayC.cpp
     GatewayS.cpp
@@ -9,13 +19,12 @@ project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, pi_server, minimum
     Object_Factory_i.cpp
   }
   idl_files {
-    Gateway.idl
   }
 }
 
-project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, minimum_corba, iorinterceptor {
+project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corba, iorinterceptor, avoids_corba_e_compact, avoids_corba_e_micro {
   exename   = server
-  after    += *Gateway
+  after += *idl
   source_files {
     server.cpp
     GatewayC.cpp
@@ -28,20 +37,16 @@ project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, minimum_corba, iori
     ObjectReferenceFactoryC.cpp
   }
   idl_files {
-    ObjectReferenceFactory.idl
-    sum_server.idl
   }
 }
 
-project(*Client) : orbsvcsexe, event, minimum_corba {
-  after += *Server
+project(*Client) : orbsvcsexe, event, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after   += *idl
+  exename  = client
   source_files {
     client.cpp
     sum_serverC.cpp
   }
+  idl_files {
+  }
 }
-
-
-
-
-

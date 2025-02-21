@@ -1,0 +1,142 @@
+
+
+This test creates 2 ORBs. The first ORB uses global gestalt and the second
+one uses -ORBGestalt LOCAL. Both of the ORBs try to load the same service
+dynamically. This should be legal unless there is something wrong in the
+service loader and unless it tries to do same things twice for the same ORB.
+
+
+__Regression__
+
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl
+
+Running PI_Server test
+Initialize ORB instances...
+After ORB_init...
+PI_Server test succeeded
+
+Running RTCORBA test
+Initialize ORB instances...
+After ORB_init...
+RTCORBA test succeeded
+
+Running RTScheduler test
+Initialize ORB instances...
+(24989|140643851700000) EXCEPTION, Caught Exception in do_main:
+
+user exception, ID 'IDL:omg.org/PortableInterceptor/ORBInitInfo/InvalidName:1.0'
+ERROR: server returned 1
+
+Running EndpointPolicy test
+Initialize ORB instances...
+After ORB_init...
+EndpointPolicy test succeeded
+
+Running DiffservPolicy test
+Initialize ORB instances...
+After ORB_init...
+DiffservPolicy test succeeded
+Error: TAO/tests/Bug_3755_Ext_Regression/run_test.pl returned with status 256
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl Time:5s Result:256
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -bidir
+
+Running BiDir_GIOP test
+Initialize ORB instances...
+(24994|140265197463328) EXCEPTION, Caught Exception in do_main:
+
+system exception, ID 'IDL:omg.org/CORBA/BAD_INV_ORDER:1.0'
+OMG minor code (16), described as 'Registration of PolicyFactory failed because a factory already exists for the given type.', completed = NO
+
+ERROR: server returned 1
+Error: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -bidir returned with status 256
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -bidir Time:1s Result:256
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -messaging
+
+Running Messaging test
+Initialize ORB instances...
+After ORB_init...
+Messaging test succeeded
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -messaging Time:1s Result:0
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -csd
+
+Running CSD_Framework test
+Initialize ORB instances...
+After ORB_init...
+CSD_Framework test succeeded
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -csd Time:1s Result:0
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -ziop
+
+Running ZIOP test
+Initialize ORB instances...
+After ORB_init...
+ZIOP test succeeded
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -ziop Time:1s Result:0
+
+
+__Success__
+
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl
+
+Running PI_Server test
+Initialize ORB instances...
+After ORB_init...
+PI_Server test succeeded
+
+Running RTCORBA test
+Initialize ORB instances...
+After ORB_init...
+RTCORBA test succeeded
+
+Running RTScheduler test
+Initialize ORB instances...
+After ORB_init...
+RTScheduler test succeeded
+
+Running EndpointPolicy test
+Initialize ORB instances...
+After ORB_init...
+EndpointPolicy test succeeded
+
+Running DiffservPolicy test
+Initialize ORB instances...
+After ORB_init...
+DiffservPolicy test succeeded
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl Time:5s Result:0
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -bidir
+
+Running BiDir_GIOP test
+Initialize ORB instances...
+After ORB_init...
+BiDir_GIOP test succeeded
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -bidir Time:1s Result:0
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -messaging
+
+Running Messaging test
+Initialize ORB instances...
+After ORB_init...
+Messaging test succeeded
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -messaging Time:1s Result:0
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -csd
+
+Running CSD_Framework test
+Initialize ORB instances...
+After ORB_init...
+CSD_Framework test succeeded
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -csd Time:1s Result:0
+auto_run_tests: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -ziop
+
+Running ZIOP test
+Initialize ORB instances...
+After ORB_init...
+ZIOP test succeeded
+
+auto_run_tests_finished: TAO/tests/Bug_3755_Ext_Regression/run_test.pl -ziop Time:1s Result:0

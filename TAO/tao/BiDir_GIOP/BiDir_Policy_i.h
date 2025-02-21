@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-// $Id$
-//
+// -*- C++ -*-
 
 // ===================================================================
 /**
  *  @file BiDir_Policy_i.h
- *
- *  $Id$
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
@@ -15,19 +11,21 @@
 #ifndef TAO_BIDIR_POLICY_I_H
 #define TAO_BIDIR_POLICY_I_H
 #include /**/ "ace/pre.h"
-#include "bidirgiop_export.h"
+#include "tao/BiDir_GIOP/bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "BiDirGIOP.h"
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
+# pragma warning(push)
+# pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_BidirectionalPolicy
@@ -38,51 +36,41 @@
  * clients can be made bi-directional or not. Further, this policy
  * also needs to be set by the server to use the connections
  * established by the clients to send requests.
- *
  */
-
-class TAO_BiDirGIOP_Export TAO_BidirectionalPolicy
-  : public virtual BiDirPolicy::BidirectionalPolicy,
-    public virtual TAO_Local_RefCounted_Object
+class TAO_BidirectionalPolicy
+  : public virtual BiDirPolicy::BidirectionalPolicy
+  , public virtual ::CORBA::LocalObject
 {
-
 public:
-
   /// Constructor.
   TAO_BidirectionalPolicy (const BiDirPolicy::BidirectionalPolicyValue val);
 
   /// Copy constructor.
   TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy &rhs);
 
-  /// Returns a copy of <this>.
-  virtual TAO_BidirectionalPolicy *clone (void) const;
+  /// Returns a copy of this.
+  virtual TAO_BidirectionalPolicy *clone () const;
 
   /// = The BiDir::BidirectionalPolicy methods
-  virtual BiDirPolicy::BidirectionalPolicyValue value (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  BiDirPolicy::BidirectionalPolicyValue value () override;
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Policy_ptr copy () override;
 
-  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy () override;
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 private:
-
   /// The attribute
   BiDirPolicy::BidirectionalPolicyValue value_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
-#pragma warning(pop)
+# pragma warning(pop)
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"

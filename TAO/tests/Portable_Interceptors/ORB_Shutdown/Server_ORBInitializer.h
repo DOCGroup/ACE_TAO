@@ -4,8 +4,6 @@
 /**
  * @file Server_ORBInitializer.h
  *
- * $Id$
- *
  * Implementation header for the PortableInterceptor ORB::shutdown()
  * test server side ORB initializer.
  *
@@ -39,27 +37,20 @@ class Server_Request_Interceptor;
 /// Server side ORB initializer.
 class Server_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Server_ORBInitializer (bool & destroy_called);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
-
   /// Flag that states whether this interceptor's @c destroy() method
   /// was called.
   bool & destroy_called_;
-
 };
 
 #if defined(_MSC_VER)

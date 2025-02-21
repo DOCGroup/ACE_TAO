@@ -1,21 +1,15 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//    growth.cpp
-//
-// = DESCRIPTION
-//   Helps in measuring how the growth strategy affects the
-//   performance of CDR streams.
-//
-// = AUTHORS
-//    Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    growth.cpp
+ *
+ * Helps in measuring how the growth strategy affects the
+ * performance of CDR streams.
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -25,8 +19,6 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID(CDR, growth, "$Id$")
 
 static int
 test_write (TAO_OutputCDR &cdr, int n)
@@ -63,7 +55,7 @@ test_read (TAO_InputCDR &cdr, int n)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int n = 100;
   int low = 64;
@@ -71,16 +63,16 @@ main (int argc, char *argv[])
   int s = 4;
   int quiet = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, "dn:l:h:s:q");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:l:h:s:q"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
         {
-	case 'd':
-	  TAO_debug_level++;
-	  break;
+        case 'd':
+          TAO_debug_level++;
+          break;
         case 'n':
           n = ACE_OS::atoi (get_opt.opt_arg ());
           break;
@@ -100,7 +92,7 @@ main (int argc, char *argv[])
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
-		      "-d debug"
+                      "-d debug"
                       "-l low "
                       "-h high "
                       "-s step "
@@ -121,7 +113,7 @@ main (int argc, char *argv[])
       ACE_High_Res_Timer writing;
       ACE_High_Res_Timer reading;
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG, "\nx= %d\n", x));
+        ACE_DEBUG ((LM_DEBUG, "\nx= %d\n", x));
 
       for (int i = 0; i < n; ++i)
         {

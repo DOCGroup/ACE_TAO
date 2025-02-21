@@ -1,0 +1,10 @@
+
+
+This is a unit test for setting DiffServ Codepoint both in the
+requests sent and the replies received.
+
+To run (on Unix):
+-----------------
+
+$ ./server -ORBdebuglevel 1 -p 20000
+$ ./client -ORBdebuglevel 1 -n 10 -k file://simple_servant.ior

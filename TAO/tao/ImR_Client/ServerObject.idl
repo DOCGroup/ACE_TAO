@@ -1,0 +1,25 @@
+// -*- IDL -*-
+
+#ifndef TAO_IMRCLIENT_SERVEROBJECT_PIDL
+#define TAO_IMRCLIENT_SERVEROBJECT_PIDL
+
+module ImplementationRepository
+{
+  /**
+   * @brief Server Side IR Object
+   *
+   * This object, which exists on the servers that use the
+   * Implementation Repository (IR), is used to control or check the
+   * status of the server by the IR.
+   */
+  interface ServerObject
+  {
+    /// Check the liveness of a server.
+    void ping ();
+
+    /// Try to shutdown the server gracefully.
+    oneway void shutdown ();
+  };
+};
+
+#endif /* TAO_IMRCLIENT_SERVEROBJECT_PIDL */

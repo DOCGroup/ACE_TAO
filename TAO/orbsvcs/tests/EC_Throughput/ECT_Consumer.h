@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 //
 // ============================================================================
 //
@@ -24,6 +23,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
+#include "ace/Throughput_Stats.h"
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
 {
@@ -39,31 +39,28 @@ class Test_Consumer : public POA_RtecEventComm::PushConsumer
 public:
   Test_Consumer (ECT_Driver* driver,
                  void* cookie,
-                 int n_suppliers);
+                 int n_suppliers,
+                 int stall_length = 0);
 
   void connect (RtecScheduler::Scheduler_ptr scheduler,
                 const char* name,
                 int type_start,
                 int type_count,
-                RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+                RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the consumer to the EC.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
   // Disconnect from the EC.
 
-  void dump_results (const char* name,
-                     ACE_UINT32 global_scale_factor);
+  void dump_results (const ACE_TCHAR* name,
+                     ACE_Basic_Stats::scale_factor_type global_scale_factor);
   // Print out the results
 
   void accumulate (ACE_Throughput_Stats& stats) const;
   // Add our throughput and latency statistics to <stats>
 
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:
@@ -91,6 +88,10 @@ private:
 
   int shutdown_count_;
   // How many shutdown events we have received.
+
+  int stall_length_;
+  // How long (in seconds) we wait to continue processing
+  // after receiving the first push.
 };
 
 #endif /* ECT_CONSUMER_H */

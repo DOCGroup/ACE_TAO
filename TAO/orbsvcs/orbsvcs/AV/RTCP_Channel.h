@@ -1,16 +1,15 @@
-// $Id$
-
 #ifndef RTCP_CHANNEL_INCLUDE
 #define RTCP_CHANNEL_INCLUDE
 
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "orbsvcs/AV/RTP.h"
+#include "orbsvcs/AV/RTCP_Packet.h"
+
 #include "ace/Message_Block.h"
 #include "ace/SString.h"
 
-#include "RTP.h"
-#include "RTCP_Packet.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class RTCP_Channel_In
@@ -32,7 +31,7 @@ public:
                   const ACE_Addr *addr);
 
   /// Destructor
-  ~RTCP_Channel_In(void);
+  ~RTCP_Channel_In();
 
   /// This operation takes the incoming ACE_Message_Block, converts it to an
   /// RTP_Packet and calls updateStatistics.  It also uses compares the peer_addr
@@ -41,13 +40,13 @@ public:
                         const ACE_Addr *peer_addr);
 
   /// Takes statistics of incoming RTP traffic and creates a receiver report block.
-  RR_Block *getRRBlock(void);
+  RR_Block *getRRBlock();
 
   /// Returns the delay since last sender report.
-  ACE_UINT32 dlsr (void);
+  ACE_UINT32 dlsr ();
 
   /// Returns the last sender report timestamp.
-  ACE_UINT32 lsr (void);
+  ACE_UINT32 lsr ();
 
   /// Updates channel information with incoming sender report.
   int updateStatistics(RTCP_SR_Packet *sr);
@@ -56,14 +55,14 @@ public:
   int updateStatistics(RTCP_RR_Packet *rr);
 
   /// Returns 1 if data has been sent since the last report, 0 if not.
-  int sender (void) { return this->data_since_last_report_; }
+  int sender () { return this->data_since_last_report_; }
 
   /// Returns 1 if this is an active source, 0 if not.
-  int active (void) { return this->active_; }
+  int active () { return this->active_; }
 
 private:
   /// Don't want default constructor.
-  RTCP_Channel_In(void);
+  RTCP_Channel_In();
 
   /// Don't want copy constructor.
   RTCP_Channel_In(const RTCP_Channel_In &ch);
@@ -167,31 +166,31 @@ class RTCP_Channel_Out
 {
 public:
   /// Constructor.
-  RTCP_Channel_Out(void);
+  RTCP_Channel_Out();
 
   /// Destructor.
-  ~RTCP_Channel_Out(void);
+  ~RTCP_Channel_Out();
 
   /// Update the channel statistics each time an RTP packet is sent.
   void updateStatistics (RTP_Packet *pkt);
 
   /// Returns the timestamp of the last RTP packet sent.
-  ACE_UINT32 timestamp (void);
+  ACE_UINT32 timestamp ();
 
   /// Returns the number of packets sent.
-  ACE_UINT32 packets_sent (void);
+  ACE_UINT32 packets_sent ();
 
   /// Returns the number of octets sent.
-  ACE_UINT32 octets_sent (void);
+  ACE_UINT32 octets_sent ();
 
   /// Sets the canonical name of the source.
   void cname (const char *cname) { this->cname_ = cname; }
 
   /// Returns the canonical name of the source.
-  const char *cname (void) { return this->cname_.c_str(); }
+  const char *cname () { return this->cname_.c_str(); }
 
   /// Returns whether or not this source is active.
-  char active (void);
+  char active ();
 
 private:
   /// Holds the canonical name for this channel.
@@ -206,15 +205,14 @@ private:
   /// The timestamp of the last RTP packet sent.
   unsigned int timestamp_;
 
-  /// The initial offset of the timestamp.
-  unsigned int timestamp_offset_;
-
   /// The total number of packets sent.
   unsigned int packets_sent_;
 
   /// The total numbef of octets sent.
   unsigned int octets_sent_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* RTCP_CHANNEL_INCLUDE */

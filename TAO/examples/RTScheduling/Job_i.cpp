@@ -1,10 +1,10 @@
-//$Id$
 #include "Job_i.h"
-
-#include "tao/debug.h"
-#include "ace/Arg_Shifter.h"
 #include "DT_Creator.h"
 #include "Task_Stats.h"
+
+#include "tao/debug.h"
+
+#include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Countdown_Time.h"
@@ -16,22 +16,21 @@ Job_i::Job_i (DT_Creator* dt_creator)
   // create the stat object.
   ACE_NEW (task_stats_, Task_Stats);
   task_stats_->init (100);
-
 }
 
-Job_i::~Job_i (void)
+Job_i::~Job_i ()
 {
   delete task_stats_;
 }
 
 const ACE_CString&
-Job_i::name (void)
+Job_i::name ()
 {
   return job_name_;
 }
 
 const ACE_CString&
-Job_i::poa (void)
+Job_i::poa ()
 {
   return POA_name_;
 }
@@ -39,10 +38,12 @@ Job_i::poa (void)
 int
 Job_i::init (ACE_Arg_Shifter& arg_shifter)
 {
-  job_name_ = arg_shifter.get_current (); // Read the name of the Job
+  // Read the name of the Job
+  job_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
   arg_shifter.consume_arg ();
 
-  POA_name_ = arg_shifter.get_current (); // Read the name of the POA
+  // Read the name of the POA
+  POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
   arg_shifter.consume_arg ();
 
   return 0;
@@ -50,112 +51,114 @@ Job_i::init (ACE_Arg_Shifter& arg_shifter)
 
 void
 Job_i::work (CORBA::ULong work,
-	     CORBA::Short importance
-	     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+       CORBA::Short importance)
 {
   static CORBA::ULong prime_number = 9619;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"test_i::method: %d units of work\n",
-		work));
+    "Job_i::work: %d units of work\n",
+    work));
+
+  CORBA::Object_var object =
+    this->dt_creator_->orb ()->resolve_initial_references (
+                                         "RTScheduler_Current");
+
+  RTScheduling::Current_var current =
+    RTScheduling::Current::_narrow (object.in ());
+  RTScheduling::Current::IdType_var guid = current->id ();
 
   if (guid_ == 0)
     ACE_OS::memcpy (&guid_,
-		    dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
-		    sizeof (dt_creator_->current ()->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
-
-
+                    guid->get_buffer (),
+                    sizeof (guid->length ()));
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"%t Guid is %d, Importance is %d\n",
-		guid_,
-		importance));
+    "%t Guid is %d, Importance is %d\n",
+    guid_,
+    importance));
 
-  char msg [BUFSIZ];
+  ACE_TCHAR msg [BUFSIZ];
   ACE_OS::sprintf (msg,
-                   "Guid is "
+                   ACE_TEXT("Guid is ")
                    ACE_SIZE_T_FORMAT_SPECIFIER
-                   "\n", guid_);
+                   ACE_TEXT("\n"), guid_);
 
-  dt_creator_->log_msg (msg);
+  dt_creator_->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
   for (; work != 0; work--)
     {
       //    ACE_hrtime_t now = ACE_OS::gethrtime ();
 
-      ACE_Time_Value run_time = ACE_OS::gettimeofday () - *(dt_creator_->base_time ());
+      ACE_Time_Value *base_time = dt_creator_->base_time ();
+      if (base_time == 0)
+        return;
+
+      ACE_Time_Value run_time = ACE_OS::gettimeofday () - *(base_time);
       TASK_STATS::instance ()->sample (run_time.sec (), guid_);
 
       ACE_Time_Value count_down_time (1);
       ACE_Countdown_Time count_down (&count_down_time);
 
       while (count_down_time > ACE_Time_Value::zero)
-	      {
-	        ACE::is_prime (prime_number,
-			      2,
-			      prime_number / 2);
-	        count_down.update ();
-	      }
+        {
+          ACE::is_prime (prime_number,
+            2,
+            prime_number / 2);
+          count_down.update ();
+        }
 
       run_time = ACE_OS::gettimeofday () - *(dt_creator_->base_time ());
       TASK_STATS::instance ()->sample (run_time.sec (), guid_);
 
       CORBA::Policy_var sched_param;
-      sched_param = CORBA::Policy::_duplicate (dt_creator_->sched_param (importance));
+      sched_param = dt_creator_->sched_param (importance);
       const char * name = 0;
-      dt_creator_->current ()->update_scheduling_segment (name,
-							  sched_param.in (),
-							  sched_param.in ()
-							  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      current->update_scheduling_segment (name,
+                sched_param.in (),
+                sched_param.in ());
     }
 }
 
 void
 Job_i::post_work (int /*guid*/,
-		  int /*importance*/)
+      int /*importance*/)
 {
 }
 
 int
-Job_i::guid (void)
+Job_i::guid ()
 {
   return this->guid_;
 }
 
 void
-Job_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Job_i::shutdown ()
 {
   dt_creator_->job_ended ();
 }
 
 void
-Job_i::dump_stats (void)
+Job_i::dump_stats ()
 {
-  char fname [BUFSIZ];
+  ACE_TCHAR fname [BUFSIZ];
   ACE_OS::sprintf (fname,
-                   "Job_"
+                   ACE_TEXT("Job_")
                    ACE_SIZE_T_FORMAT_SPECIFIER
-                   ".dat",
+                   ACE_TEXT(".dat"),
                    guid_);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"File name %s\n",
-		fname));
+    "File name %s\n",
+    fname));
 
-
-  char msg [BUFSIZ];
+  ACE_TCHAR msg [BUFSIZ];
   ACE_OS::sprintf (msg,
-                   "#Schedule Output for DT "
+                   ACE_TEXT("#Schedule Output for DT ")
                    ACE_SIZE_T_FORMAT_SPECIFIER,
                    guid_);
 
-  task_stats_->dump_samples (fname,
-			     msg,
-			     ACE_High_Res_Timer::global_scale_factor ());
+  task_stats_->dump_samples (fname, msg);
 }

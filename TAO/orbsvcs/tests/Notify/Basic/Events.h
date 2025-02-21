@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Events.h
-//
-// = DESCRIPTION
-//   Test to check if events are received by all 3 types of consumers.
-//   This is intended to be a simple test without any filters with default subscription (all events).
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Events.h
+ *
+ * Test to check if events are received by all 3 types of consumers.
+ * This is intended to be a simple test without any filters with default subscription (all events).
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_TESTS_EventS_H
 #define NOTIFY_TESTS_EventS_H
@@ -31,16 +28,12 @@ class Events;
 class Event_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
+  /// Constructor.
   Event_StructuredPushConsumer (Events *test_client);
-  // Contructor.
 
   // = StructuredPushSupplier methods.
   virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosEventComm::Disconnected));
+      const CosNotification::StructuredEvent & notification);
 
 protected:
   Events * test_client_;
@@ -51,11 +44,11 @@ protected:
 class Event_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier
 {
 public:
+  /// Constructor.
   Event_StructuredPushSupplier (Events * test_client);
-  // Constructor.
 
-  virtual ~Event_StructuredPushSupplier (void);
-  // Destructor.
+  /// Destructor.
+  virtual ~Event_StructuredPushSupplier ();
 
 protected:
   Events* test_client_;
@@ -67,56 +60,55 @@ class Events : public Notify_Test_Client
 {
 public:
   // Initialization and termination code.
-  Events (void);
-  virtual ~Events (void);
+  Events ();
+  virtual ~Events ();
 
   int parse_args (int argc,
-                  char *argv[]) ;
+                  ACE_TCHAR *argv[]) ;
 
+  /// Initialization.
   int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
-  // Initialization.
+            ACE_TCHAR *argv []);
 
-  void on_event_received (void);
-  // Called when an event is received.
+  /// Called when an event is received.
+  void on_event_received ();
 
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the test.
+  /// Run the test.
+  void run_test ();
 
-  void end_test (ACE_ENV_SINGLE_ARG_DECL);
-  // End the test.
+  /// End the test.
+  void end_test ();
 
-  int check_results (void);
-  // check if we got the expected results.
+  /// check if we got the expected results.
+  int check_results ();
 
 protected:
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
-  // Create EC
+  /// Create EC
+  void create_EC ();
 
+  /// Number of events received so far.
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
-  // Number of events received so far.
 
   /// Use the default admins.
   int use_default_admin_;
 
+  /// Number of events to send
   int event_count_;
-  // Number of events to send
 
+  /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
-  // The one channel that we create using the factory.
 
+  /// The consumer admin used by consumers.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The consumer admin used by consumers.
 
+  /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The supplier admin used by suppliers.
 
+  /// Consumer
   TAO_Notify_Tests_StructuredPushConsumer* consumer_;
-  // Consumer
 
+  /// Supplier
   TAO_Notify_Tests_StructuredPushSupplier* supplier_;
-  // Supplier
 
 private:
   friend class Event_StructuredPushSupplier;

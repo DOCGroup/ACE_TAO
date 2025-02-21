@@ -1,7 +1,4 @@
 #!/bin/sh
-#
-# $Id$
-#
 
 HP_CONSUMERS="1 5 10 20"
 # The number of high priority consumers.

@@ -1,0 +1,83 @@
+This is a test of the ImplRepo being accessed by a variable number of clients trying to send a request
+to a server registered with the ImplRepo and launched using the activator.
+
+1. Syntax
+
+run_test.pl [-clients <num>]
+      [-imrdebug <level>]
+      [-activationmode <mode>]
+      [-msecs_between_clients <msecs>]
+      [-server_init_delay <seconds>]
+      [-server_reply_delay <seconds>]
+      [-rt_timeout <round-trip-timeout-msecs>]
+      [-max_rt_tries <max-client-requests>]
+      [-no_imr]
+
+2. Description of command line arguments
+
+- clients <num>
+        The number of clients to spawn.
+
+- imrdebug <level>
+        The debug level for the ImR Locator/Activator, default of 1
+
+- activationmode <mode>
+        The server activation mode, normal|manual|per_client|auto_start
+
+- msecs_between_clients <msecs>
+        The number of milliseconds to wait between client spawns.
+        This can be used to avoid a rapid succession of a large number
+        clients connecting to the ImplRepo.
+
+- server_init_delay <secs>
+        The number of seconds to delay the server before it creates a
+        POA.
+
+- server_reply_delay <secs>
+        The number of seconds to wait until a server replies to a
+        request.
+
+- rt_timeout <round-trip-timeout-msecs>
+        The number of milliseconds to set for the client's round trip
+        timeout policy.
+
+- max_rt_tries <max-client-requests>
+        If the round trip timeout policy setting causes an exception,
+        the client will attempt to try the request again. This
+        argument controls the maximum number of requests that the
+        client will make.
+        You can use this argument along with low value of rt_timeout
+        o cause a rapid number of request attempts.
+
+- no_imr
+       Passing this argument will assume the ImplRepo is already
+       running with compatible arguments needed for the test. It may
+       be helpful to run the ImplRepo in the debugger will running
+       this test.
+
+- ? (or any other argument)
+       Shows argument usage and default values.
+
+3. Examples
+
+Because the ImplRepo is a single threaded application, recursion can
+take place while multiple clients attempt to make a request with the
+server while the ImplRepo is pinging for status from the server. If
+enough clients are making requests then it is possible to have a large
+enough recursion depth to cause a stack overflow.
+
+This test can be used to illustrate this problem. To quickly see the
+problem with a limited number of clients, you can adjust the stack
+size to a small value before running the test. For example, if you are
+using Linux and running the bash shell, you can run the ulimit command
+to specify the stack size. Under Linux 2.6.38 using g++ 4.5.2 it was
+found that by setting the stack size to 200KBs by running
+
+ulimit -s 200
+
+and then invoke the test as
+
+./run_test.pl -clients 100 -server_init_delay 50 -msecs_between_clients 500
+
+caused a seg fault with ImR_Locator_i::activate_server_by_name() being
+recursively called 26 levels deep.

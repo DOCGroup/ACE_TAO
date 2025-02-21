@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef AMI_BUFFERING_ADMIN_H
 #define AMI_BUFFERING_ADMIN_H
@@ -17,21 +14,15 @@ public:
   AMI_Buffering_Admin (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::ULong request_count (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong request_count ();
 
-  virtual CORBA::ULong bytes_received_count (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong bytes_received_count ();
 
-  virtual void request_received (CORBA::ULong payload_length
-                                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void request_received (CORBA::ULong payload_length);
 
-  virtual void flush (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void flush ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to shutdown the application.

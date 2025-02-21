@@ -1,32 +1,30 @@
-//$Id$
-
 #include "MIF_DT_Creator.h"
 #include "test.h"
 #include "MIF_Task.h"
 
-MIF_DT_Creator::MIF_DT_Creator (void)
+MIF_DT_Creator::MIF_DT_Creator ()
 {
   DT_TEST::instance ()->dt_creator (this);
 }
 
 Thread_Task*
 MIF_DT_Creator::create_thr_task (int importance,
-				 int start_time,
-				 int load,
-				 int iter,
-				 int dist,
-				 char *job_name)
+                                 time_t start_time,
+                                 int load,
+                                 int iter,
+                                 int dist,
+                                 char *job_name)
 {
   MIF_Task* task;
   ACE_NEW_RETURN (task,
-		  MIF_Task (importance,
-			    start_time,
-			    load,
-			    iter,
-			    dist,
-			    job_name,
-			    this),
-		  0);
+                  MIF_Task (importance,
+                            start_time,
+                            load,
+                            iter,
+                            dist,
+                            job_name,
+                            this),
+                  0);
   return task;
 }
 
@@ -37,48 +35,59 @@ MIF_DT_Creator::sched_param (int importance)
 }
 
 void
-MIF_DT_Creator::yield (int suspend_time,
-		       Thread_Task*)
+MIF_DT_Creator::yield (time_t suspend_time,
+                       Thread_Task*)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
+      CORBA::Object_var object =
+        this->orb_->resolve_initial_references ("RTScheduler_Current");
+      RTScheduling::Current_var current =
+        RTScheduling::Current::_narrow (object.in ());
+
+      ACE_Time_Value const sus_time_value (suspend_time);
       ACE_Time_Value now (ACE_OS::gettimeofday ());
-      while (((now - *base_time_) < suspend_time) || (suspend_time == 1))
+      while (((now - *base_time_) < sus_time_value) || (suspend_time == 1))
         {
-          
           ACE_OS::sleep (1);
           CORBA::Policy_var sched_param;
-          sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
+          sched_param = this->sched_param (100);
           const char * name = 0;
-          current_->update_scheduling_segment (name,
-                                               sched_param.in (),
-                                               sched_param.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          current->update_scheduling_segment (name,
+                                              sched_param.in (),
+                                              sched_param.in ());
           now = ACE_OS::gettimeofday ();
           if (suspend_time == 1)
             break;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
 }
 
 int
-MIF_DT_Creator::total_load (void)
+MIF_DT_Creator::total_load ()
 {
   return 1000;
 }
 
 void
-MIF_DT_Creator::wait (void)
+MIF_DT_Creator::wait ()
 {
   while (active_dt_count_ > 0 || active_job_count_ > 0)
     {
+      try
+        {
+          (void)this->orb_->work_pending ();
+        }
+      catch (const CORBA::BAD_INV_ORDER &)
+        {
+          // If there is BAD_INV_ORDER exception there is
+          // no point in running this loop any more.
+          break;
+        }
       yield(1,0);
     }
 }

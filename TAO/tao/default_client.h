@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file     default_client.h
- *
- *  $Id$
  *
  *  @author  Chris Cleeland
  */
@@ -22,6 +20,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Client_Strategy_Factory.h"
+#include "tao/Invocation_Retry_Params.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Default_Client_Strategy_Factory
@@ -35,12 +36,11 @@ class TAO_Export TAO_Default_Client_Strategy_Factory
   : public TAO_Client_Strategy_Factory
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_Default_Client_Strategy_Factory (void);
+  TAO_Default_Client_Strategy_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Client_Strategy_Factory (void);
+  virtual ~TAO_Default_Client_Strategy_Factory ();
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
@@ -51,14 +51,16 @@ public:
 
   // = Check Client_Strategy_Factory.h for the documentation of the
   //   following methods.
-  virtual ACE_Lock* create_profile_lock (void);
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
-  virtual ACE_Lock *create_transport_mux_strategy_lock (void);
-  virtual int reply_dispatcher_table_size (void) const;
-  virtual int allow_callback (void);
+  virtual ACE_Lock *create_transport_mux_strategy_lock ();
+  virtual int reply_dispatcher_table_size () const;
+  virtual int allow_callback ();
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
-  virtual ACE_Lock *create_ft_service_retention_id_lock (void);
+  virtual bool use_cleanup_options () const;
+  virtual Connect_Strategy connect_strategy () const;
+  virtual const TAO::Invocation_Retry_Params &invocation_retry_params () const;
+  virtual Messaging::SyncScope sync_scope () const;
 
 protected:
   void report_option_value_error (const ACE_TCHAR* option_name,
@@ -70,9 +72,6 @@ private:
     TAO_NULL_LOCK,
     TAO_THREAD_LOCK
   };
-
-  /// the lock type for forwarding IIOP Profile
-  Lock_Type profile_lock_type_;
 
   enum Transport_Mux_Strategy
   {
@@ -94,13 +93,6 @@ private:
   /// The wait-for-reply strategy.
   Wait_Strategy wait_strategy_;
 
-  enum Connect_Strategy
-  {
-    TAO_BLOCKED_CONNECT,
-    TAO_REACTIVE_CONNECT,
-    TAO_LEADER_FOLLOWER_CONNECT
-  };
-
   /// The connection initiation strategy.
   Connect_Strategy connect_strategy_;
 
@@ -109,10 +101,22 @@ private:
 
   /// Type of lock for the muxed_strategy
   Lock_Type muxed_strategy_lock_type_;
+
+  /// Cleanupoptions for RW strategy
+  bool use_cleanup_options_;
+
+  /// Retry options when exceptions occur
+  TAO::Invocation_Retry_Params invocation_retry_params_;
+
+  /// The default sync scope used with oneways when a policy does not
+  /// override
+  Messaging::SyncScope sync_scope_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Client_Strategy_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Client_Strategy_Factory)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_CLIENT_H */

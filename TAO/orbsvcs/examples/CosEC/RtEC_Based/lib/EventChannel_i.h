@@ -1,22 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO services
-//
-// = FILENAME
-//   EventChannel_i
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// = DESCRIPTION
-//   This has the implementation of the
-//   CosEventChannelAdmin::EventChannel interface.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   EventChannel_i.h
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *
+ * This has the implementation of the
+ * CosEventChannelAdmin::EventChannel interface.
+ */
+//=============================================================================
+
 
 #ifndef EVENTCHANNEL_I_H
 #define EVENTCHANNEL_I_H
@@ -41,51 +35,46 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_EventChannel_i :
   //   the real-time implementation.
   //
 public:
-  // = Initialization and termination methods.
-  TAO_CosEC_EventChannel_i (void);
-  // Constructor.
+  /// Constructor.
+  TAO_CosEC_EventChannel_i ();
 
-  ~TAO_CosEC_EventChannel_i (void);
-  // Destructor.
+  /// Destructor.
+  ~TAO_CosEC_EventChannel_i () = default;
 
+  /// Activates the ConsumerAdmin and SupplierAdmin servants.  Returns
+  /// -1 on error, 0 on success.
   int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
             const RtecEventChannelAdmin::SupplierQOS &supplierqos,
-            RtecEventChannelAdmin::EventChannel_ptr rtec
-            ACE_ENV_ARG_DECL);
-  // Activates the ConsumerAdmin and SupplierAdmin servants.  Returns
-  // -1 on error, 0 on success.
+            RtecEventChannelAdmin::EventChannel_ptr rtec);
 
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  // The for_consumers method will return the same ConsumerAdmin_ptr
-  // everytime its called.
+  /// The for_consumers method will return the same ConsumerAdmin_ptr
+  /// everytime its called.
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  // The for_suppliers method will return the same SupplierAdmin_ptr
-  // everytime its called.
+  /// The for_suppliers method will return the same SupplierAdmin_ptr
+  /// everytime its called.
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  // Destroys this Event Channel object.
+  /// Destroys this Event Channel object.
+  virtual void destroy ();
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
-  // destroys this Event Channel object and <delete>s this object.
+  /// destroys this Event Channel object and <delete>s this object.
+  void shutdown ();
 
 private:
+  /// ConsumerAdmin servant object.
   TAO_CosEC_ConsumerAdmin_i* consumer_admin_;
-  // ConsumerAdmin servant object.
 
+  /// SupplierAdmin servant object.
   TAO_CosEC_SupplierAdmin_i* supplier_admin_;
-  // SupplierAdmin servant object.
 
+  /// The reference to the ConsumerAdmin interface returned after
+  /// activating the servant in the ORB.
   CosEventChannelAdmin::ConsumerAdmin_var consumeradmin_;
-  // The reference to the ConsumerAdmin interface returned after
-  // activating the servant in the ORB.
 
+  /// The reference to the SupplierAdmin interface returned after
+  /// activating the servant in the ORB.
   CosEventChannelAdmin::SupplierAdmin_var supplieradmin_;
-  // The reference to the SupplierAdmin interface returned after
-  // activating the servant in the ORB.
 };
 
 #include /**/ "ace/post.h"

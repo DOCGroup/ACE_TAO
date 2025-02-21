@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_CALLBACK_I_H
 #define TAO_CALLBACK_I_H
 
@@ -14,17 +12,15 @@ public:
   Callback_i (int expected_samples);
 
   /// Return 1 when all the samples have been received
-  int done (void);
+  int done ();
 
   /// Get access to the history
-  ACE_Sample_History &sample_history (void);
+  ACE_Sample_History &sample_history ();
 
   /// Implement the CORBA methods
   //@{
   void response (Test::TimeStamp,
-                 const Test::Payload &
-                 ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                 const Test::Payload &);
   //@}
 
 private:

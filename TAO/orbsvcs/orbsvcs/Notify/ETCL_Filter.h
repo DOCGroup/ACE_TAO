@@ -2,18 +2,14 @@
 /**
  *  @file ETCL_Filter.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ETCL_FILTER_H
 #define TAO_Notify_ETCL_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +19,8 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "orbsvcs/CosNotifyFilterS.h"
-#include "Notify_Constraint_Interpreter.h"
+#include "orbsvcs/Notify/Notify_Constraint_Interpreter.h"
+#include "orbsvcs/Notify/Topology_Object.h"
 #include "ace/Null_Mutex.h"
 
 #if defined(_MSC_VER)
@@ -31,122 +28,108 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Notify_ETCL_Filter;
+
+class TAO_Notify_Constraint_Expr : public TAO_Notify::Topology_Object
+{
+public:
+  friend class TAO_Notify_ETCL_Filter;
+
+  TAO_Notify_Constraint_Expr ();
+  virtual ~TAO_Notify_Constraint_Expr ();
+
+  void save_persistent (
+    TAO_Notify::Topology_Saver& saver);
+
+
+  void load_attrs(
+    const TAO_Notify::NVPList& attrs);
+
+  TAO_Notify::Topology_Object* load_child (
+    const ACE_CString &type,
+    CORBA::Long id,
+    const TAO_Notify::NVPList& attrs);
+
+
+private:
+  /// Release this object.
+  virtual void release ();
+
+  // = DESCRIPTION
+  //   Structure for associating ConstraintInfo with an interpreter.
+  //
+  CosNotifyFilter::ConstraintExp constr_expr;
+  // Constraint Expression.
+
+  TAO_Notify_Constraint_Interpreter interpreter;
+  // Constraint Interpreter.
+};
+
 /**
  * @class TAO_ETCL_Filter
  *
  * @brief Implementation of CosNotifyFilter::Filter servant.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter
-  : public POA_CosNotifyFilter::Filter
+  : public POA_CosNotifyFilter::Filter,
+    public TAO_Notify::Topology_Object
 {
 public:
-  /// Constuctor
-  TAO_Notify_ETCL_Filter (void);
+  /// Constructor
+  TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
+                          const char *constraint_grammar,
+                          const TAO_Notify_Object::ID& id);
 
   /// Destructor
   virtual ~TAO_Notify_ETCL_Filter ();
 
-protected:
-  virtual char * constraint_grammar (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
+  void load_attrs(const TAO_Notify::NVPList& attrs);
+  TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
+    CORBA::Long id, const TAO_Notify::NVPList& attrs);
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidConstraint
-                     ));
+protected:
+  virtual char * constraint_grammar ();
+
+  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list);
 
   virtual void modify_constraints (const CosNotifyFilter::ConstraintIDSeq & del_list,
-                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list
-                                   ACE_ENV_ARG_DECL
-                                   )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidConstraint,
-                     CosNotifyFilter::ConstraintNotFound
-                     ));
+                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list);
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::ConstraintNotFound
-                     ));
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list);
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints ();
 
-  virtual void remove_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void remove_all_constraints ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void destroy ();
 
-  virtual CORBA::Boolean match (const CORBA::Any & filterable_data ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::UnsupportedFilterableData
-                     ));
+  virtual CORBA::Boolean match (const CORBA::Any & filterable_data);
 
-  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::UnsupportedFilterableData
-                     ));
+  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data);
 
-  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::UnsupportedFilterableData
-                     ));
+  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data);
 
-  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback);
 
-  virtual void detach_callback (CosNotifyFilter::CallbackID callback ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::CallbackNotFound
-                     ));
+  virtual void detach_callback (CosNotifyFilter::CallbackID callback);
 
-  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks ();
 
 private:
-  void add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidConstraint
-                     ));
+  /// Release this object.
+  virtual void release ();
 
-  void remove_all_constraints_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  void add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq);
+  void add_constraint_i (const CosNotifyFilter::ConstraintInfo& constraint,
+    CosNotifyFilter::ConstraintID cnstr_id = 0);
 
-  struct TAO_Notify_Constraint_Expr
-  {
-    // = DESCRIPTION
-    //   Structure for associating ConstraintInfo with an interpreter.
-    //
-    CosNotifyFilter::ConstraintExp constr_expr;
-    // Constraint Expression.
+  TAO_Notify_Constraint_Expr*
+    add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id);
 
-    TAO_Notify_Constraint_Interpreter interpreter;
-    // Constraint Interpreter.
-  };
+  void remove_all_constraints_i ();
 
   /// Lock to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;
@@ -156,12 +139,20 @@ private:
 
   /// A list of the constraints stored in this filter.
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
-                                ACE_NESTED_CLASS (TAO_Notify_ETCL_Filter, TAO_Notify_Constraint_Expr*),
+                                TAO_Notify_Constraint_Expr*,
                                 ACE_SYNCH_NULL_MUTEX>
   CONSTRAINT_EXPR_LIST;
 
   CONSTRAINT_EXPR_LIST constraint_expr_list_;
+
+  PortableServer::POA_var poa_;
+
+  TAO_Notify_Object::ID id_;
+
+  ACE_CString grammar_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

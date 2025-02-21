@@ -4,8 +4,6 @@
 /**
  *  @file    Request.h
  *
- *  $Id$
- *
  *  Header file for CORBA's Dynamic Invocation Interface "Request"
  *  type.
  *
@@ -27,23 +25,24 @@
 
 // To force execution of the static constructor
 // that registers the dynamic service object.
-#include "Dynamic_Adapter_Impl.h"
+#include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
 
-#include "ExceptionList.h"
+#include "tao/DynamicInterface/ExceptionList.h"
 
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence.h"
 #include "tao/CDR.h"
-#include "tao/NVList.h"
+#include "tao/GIOPC.h"
+#include "tao/AnyTypeCode/NVList.h"
+
+#if defined (TAO_HAS_AMI)
+#include "tao/Messaging/Messaging.h"
+#endif /* TAO_HAS_AMI */
 
 #include "ace/SString.h"
+#include <atomic>
 
-
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -67,35 +66,30 @@ namespace CORBA
   class TAO_DynamicInterface_Export Request
   {
   public:
-
     /// Return the target of this request.
-    CORBA::Object_ptr target (void) const;
+    CORBA::Object_ptr target () const;
 
     /// Return the operation name for the request.
-    const CORBA::Char *operation (void) const;
+    const CORBA::Char *operation () const;
 
     /// Return the arguments for the request.
-    CORBA::NVList_ptr arguments (void);
+    CORBA::NVList_ptr arguments ();
 
     /// Return the result for the request.
-    CORBA::NamedValue_ptr result (void);
+    CORBA::NamedValue_ptr result ();
 
     /// Return the exceptions resulting from this request.
-    CORBA::ExceptionList_ptr exceptions (void);
+    CORBA::ExceptionList_ptr exceptions ();
 
     /// Accessor for the Context member.
-    CORBA::Context_ptr ctx (void) const;
+    CORBA::Context_ptr ctx () const;
 
     /// Mutator for the Context member.
     void ctx (CORBA::Context_ptr);
 
     /// Return a list of the request's result's contexts.  Since TAO
     /// does not implement Contexts, this will always be 0.
-    CORBA::ContextList_ptr contexts (void);
-
-    // @deprecated  Return the <Environment> for this request.
-    // CORBA::Environment_ptr env (void);
-
+    CORBA::ContextList_ptr contexts ();
 
     /**
      * @name Argument manipulation helper functions.
@@ -105,11 +99,11 @@ namespace CORBA
      * <<=.
      */
     //@{
-    CORBA::Any &add_in_arg (void);
+    CORBA::Any &add_in_arg ();
     CORBA::Any &add_in_arg (const char* name);
-    CORBA::Any &add_inout_arg (void);
+    CORBA::Any &add_inout_arg ();
     CORBA::Any &add_inout_arg (const char* name);
-    CORBA::Any &add_out_arg (void);
+    CORBA::Any &add_out_arg ();
     CORBA::Any &add_out_arg (const char* name);
     //@}
 
@@ -117,21 +111,21 @@ namespace CORBA
     void set_return_type (CORBA::TypeCode_ptr tc);
 
     /// Returns reference to Any for extraction using >>=.
-    CORBA::Any &return_value (void);
+    CORBA::Any &return_value ();
 
     /// Perform method resolution and invoke an appropriate method.
     /**
      * If the method returns successfully, its result is placed in
      * the result argument specified on @c create_request. The behavior
      * is undefined if this @c Request has already been used with a
-     * previous call to @c invoke>, @c send>, or
-     * @send_multiple_requests.
+     * previous call to @c invoke, @c send, or
+     * @c send_multiple_requests.
      *
      * @note A default argument is set, but please note that this not
      *       recommended as the user may not be able to propagate the
      *       exceptions.
      */
-    void invoke (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    void invoke ();
 
     /// Send a oneway request.
     /**
@@ -139,7 +133,7 @@ namespace CORBA
      *       recommended as the user may not be able to propagate the
      *       exceptions.
      */
-    void send_oneway (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    void send_oneway ();
 
     /**
      * @name The 'deferred synchronous' methods.
@@ -147,73 +141,78 @@ namespace CORBA
      * The 'deferred synchronous' methods.
      */
     //@{
-    void send_deferred (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-    void get_response (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-    CORBA::Boolean poll_response (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    void send_deferred ();
+    void get_response ();
+    CORBA::Boolean poll_response ();
     //@}
 
     /// Callback method for deferred synchronous requests.
-    void handle_response (TAO_InputCDR &incoming,
-                          CORBA::ULong reply_status
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void handle_response (TAO_InputCDR &incoming, GIOP::ReplyStatusType reply_status);
+
+#if defined (TAO_HAS_AMI)
+    /// The 'asynchronous' send method. The object is a DSI based callback
+    /// handler. This handler must implement Messaging::ReplyHandler
+    void sendc (CORBA::Object_ptr handler);
+
+    static void _tao_reply_stub (
+                    TAO_InputCDR &_tao_reply_cdr,
+                    Messaging::ReplyHandler_ptr _tao_reply_handler,
+                    CORBA::ULong reply_status);
+#endif /* TAO_HAS_AMI */
 
     /// Pseudo object methods.
     static CORBA::Request* _duplicate (CORBA::Request*);
-    static CORBA::Request* _nil (void);
+    static CORBA::Request* _nil ();
 
     // = Reference counting.
-    CORBA::ULong _incr_refcnt (void);
-    CORBA::ULong _decr_refcnt (void);
+    CORBA::ULong _incr_refcount ();
+    CORBA::ULong _decr_refcount ();
 
     /// Set the lazy evaluation flag.
     void _tao_lazy_evaluation (bool lazy_evaluation);
 
     /// Get the byte order member.
-    int _tao_byte_order (void) const;
+    int _tao_byte_order () const;
 
     /// Set the byte order member.
     void _tao_byte_order (int byte_order);
 
-    // Hold on to a user exception in case we are part of a TAO
-    // gateway.
+    /// Hold on to a user exception in case we are part of a TAO
+    /// gateway.
     void raw_user_exception (TAO_InputCDR &cdr);
 
     /// Accessor for the input stream containing the exception.
-    ACE_CString &raw_user_exception (void);
-
+    ACE_CString &raw_user_exception ();
 
     /// Proprietary method to check whether a response has been
     /// received.
-    CORBA::Boolean response_received (void);
+    CORBA::Boolean response_received ();
 
     // Useful for template programming.
     typedef CORBA::Request_ptr _ptr_type;
     typedef CORBA::Request_var _var_type;
+    typedef CORBA::Request_out _out_type;
 
   private:
     friend class ::TAO_Dynamic_Adapter_Impl;
 
     // The following are not allowed except when called from the
     // friend class.
-
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
              const CORBA::Char *op,
              CORBA::NVList_ptr args,
              CORBA::NamedValue_ptr result,
              CORBA::Flags flags,
-             CORBA::ExceptionList_ptr exceptions
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+             CORBA::ExceptionList_ptr exceptions);
 
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
-             const CORBA::Char *op
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+             const CORBA::Char *op);
 
-    ~Request (void);
+    ~Request ();
 
   private:
-
     /// Target object.
     CORBA::Object_ptr target_;
 
@@ -245,15 +244,15 @@ namespace CORBA
     CORBA::Context_ptr ctx_;
 
     /// Reference counting.
-    CORBA::ULong refcount_;
+    std::atomic<uint32_t> refcount_;
 
-    /// Protect the refcount_ and response_received_.
+    /// Protect the response_received_.
     TAO_SYNCH_MUTEX lock_;
 
     /// If not zero then the NVList is not evaluated by default.
     bool lazy_evaluation_;
 
-    /// Set to TRUE upon completion of invoke() or handle_response().
+    /// Set to true upon completion of invoke() or handle_response().
     CORBA::Boolean response_received_;
 
     /// Can be reset by a gateway when passing along a request.
@@ -262,12 +261,13 @@ namespace CORBA
     /// Stores user exception as a CDR stream when this request is
     /// used in a TAO gateway.
     ACE_CString raw_user_exception_;
-
   };
 } // End CORBA namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Request.inl"
+# include "tao/DynamicInterface/Request.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

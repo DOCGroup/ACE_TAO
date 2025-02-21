@@ -1,6 +1,5 @@
 // -*- C++ -*-
-//
-// $Id$
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 TAO::SSLIOP::Current::tss_slot (size_t slot)
@@ -18,7 +17,7 @@ TAO::SSLIOP::Current::implementation (TAO::SSLIOP::Current_Impl *impl)
 }
 
 ACE_INLINE TAO::SSLIOP::Current_Impl *
-TAO::SSLIOP::Current::implementation (void)
+TAO::SSLIOP::Current::implementation ()
 {
   if (this->orb_core_ == 0)
     return 0;
@@ -34,3 +33,5 @@ TAO::SSLIOP::Current::implementation (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

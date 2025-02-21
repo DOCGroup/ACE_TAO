@@ -1,0 +1,36 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  avoids += ace_for_tao
+  IDL_Files {
+    go.idl
+  }
+  custom_only = 1
+}
+
+project(*Supplier): notifytest {
+  avoids += ace_for_tao
+  exename = Supplier
+
+  after += *idl
+  Source_Files {
+    goC.cpp
+    goS.cpp
+    Supplier.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Consumer): notifytest {
+  avoids += ace_for_tao
+  exename = Consumer
+
+  after += *idl
+  Source_Files {
+    goC.cpp
+    Notify_Push_Consumer.cpp
+    Consumer.cpp
+  }
+  IDL_Files {
+  }
+}

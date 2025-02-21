@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Dynamic_Adapter.h
- *
- *  $Id$
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
@@ -20,11 +18,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
-#include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -53,8 +50,6 @@ namespace CORBA
   typedef ServerRequest *ServerRequest_ptr;
 
   typedef ULong Flags;
-
-  class Environment;
 }
 
 /**
@@ -70,10 +65,9 @@ namespace CORBA
 class TAO_Export TAO_Dynamic_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Dynamic_Adapter (void);
+  virtual ~TAO_Dynamic_Adapter ();
 
   // CORBA::Object::_create_request and CORBA::Object::_request.
-
   virtual void create_request (CORBA::Object_ptr obj,
                                CORBA::ORB_ptr orb,
                                const char *operation,
@@ -81,13 +75,11 @@ public:
                                CORBA::NamedValue_ptr result,
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags
-                               ACE_ENV_ARG_DECL) = 0;
+                               CORBA::Flags req_flags) = 0;
 
   virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
-                                      const char *op
-                                      ACE_ENV_ARG_DECL) = 0;
+                                      const char *op) = 0;
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
@@ -104,10 +96,10 @@ public:
   virtual void server_request_release (CORBA::ServerRequest_ptr req) = 0;
 
   // CORBA::ORB::create_exception_list.
-  virtual void create_exception_list (CORBA::ExceptionList_ptr &
-                                      ACE_ENV_ARG_DECL) = 0;
+  virtual void create_exception_list (CORBA::ExceptionList_ptr &) = 0;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DYNAMIC_ADAPTER_H */

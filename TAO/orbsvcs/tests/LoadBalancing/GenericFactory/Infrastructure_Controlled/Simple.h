@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef SIMPLE_H
 #define SIMPLE_H
 
@@ -16,13 +13,10 @@ class Simple
   : public virtual POA_Test::Simple
 {
 public:
-
-  Simple (void);
+  Simple ();
   /// Constructor
 
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  virtual char * get_string ();
 };
 
 #if defined(_MSC_VER)

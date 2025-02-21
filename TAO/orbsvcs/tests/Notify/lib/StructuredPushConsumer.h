@@ -2,11 +2,7 @@
 /**
  *  @file StructuredPushConsumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_STRUCTUREDPUSHCONSUMER_H
@@ -36,7 +32,7 @@ public:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushConsumer_Traits
 {
 public:
-  TAO_Notify_Tests_StructuredPushConsumer_Traits (void);
+  TAO_Notify_Tests_StructuredPushConsumer_Traits ();
 
   typedef CosNotifyComm::StructuredPushConsumer INTERFACE;
   typedef CosNotifyComm::StructuredPushConsumer_ptr PTR;
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_StructuredPushConsumer_Trai
  * @class TAO_Notify_Tests_StructuredPushConsumer
  *
  * @brief StructuredPushConsumer Implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer_Base
 {
@@ -66,34 +61,25 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushConsumer : public TA
   typedef Peer_Traits::Proxy_Traits Proxy_Traits;
 
 public:
-  /// Constuctor
-  TAO_Notify_Tests_StructuredPushConsumer (void);
+  /// Constructor
+  TAO_Notify_Tests_StructuredPushConsumer ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_StructuredPushConsumer ();
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL);
+  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_from_proxy ();
 
   // = StructuredPushConsumer methods
-  virtual void disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void disconnect_structured_push_consumer ();
 
  /// Default does nothing.
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+        const CosNotification::StructuredEvent & notification);
 };
 
 #if defined (__ACE_INLINE__)

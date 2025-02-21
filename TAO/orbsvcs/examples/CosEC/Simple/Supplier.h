@@ -1,18 +1,12 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS COS Event Channel examples
-//
-// = FILENAME
-//   Supplier
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Supplier.h
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
@@ -23,26 +17,26 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Supplier
+ *
+ * @brief Simple supplier object
+ *
+ * This class is a supplier of events.
+ */
 class Supplier : public POA_CosEventComm::PushSupplier
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //   This class is a supplier of events.
-  //
 public:
-  Supplier (void);
-  // Constructor
+  /// Constructor
+  Supplier ();
 
-  int run (int argc, char* argv[]);
-  // Run the test
+  /// Run the test
+  int run (int argc, ACE_TCHAR* argv[]);
 
   // = The CosEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // The skeleton methods.
+  /// The skeleton methods.
+  virtual void disconnect_push_supplier ();
 
 private:
 };

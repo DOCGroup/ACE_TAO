@@ -1,20 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    objref.h
-//
-// = DESCRIPTION
-//     Tests object references
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    objref.h
+ *
+ *   Tests object references
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_OBJREF_H
 #define PARAM_TEST_OBJREF_H
@@ -27,53 +21,51 @@
 class Test_ObjRef
 {
 public:
-  Test_ObjRef (void);
-  // ctor
+  /// ctor
+  Test_ObjRef ();
 
-  ~Test_ObjRef (void);
-  // dtor
+  /// dtor
+  ~Test_ObjRef ();
 
-  int run_sii_test (Param_Test_ptr objref
-                    ACE_ENV_ARG_DECL);
-  // run the SII test
+  /// run the SII test
+  int run_sii_test (Param_Test_ptr objref);
 
-  const char *opname (void) const;
-  // return operation name
+  /// return operation name
+  const char *opname () const;
 
-  int init_parameters (Param_Test_ptr objref
-                       ACE_ENV_ARG_DECL);
-  // set values for parameters
+  /// set values for parameters
+  int init_parameters (Param_Test_ptr objref);
 
-  int reset_parameters (void);
-  // reset values for CORBA
+  /// reset values for CORBA
+  int reset_parameters ();
 
-  CORBA::Boolean check_validity (void);
-  // check if results are valid
+  /// check if results are valid
+  CORBA::Boolean check_validity ();
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
-  void print_values (void);
-  // print all the values
+  /// print all the values
+  void print_values ();
 
-  void dii_req_invoke (CORBA::Request * ACE_ENV_ARG_DECL_NOT_USED);
-  // invoke DII request with appropriate exception handling.
+  /// invoke DII request with appropriate exception handling.
+  void dii_req_invoke (CORBA::Request *);
 
 private:
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// in parameter
   Coffee_var in_;
-  // in parameter
 
+  /// inout parameter
   Coffee_var inout_;
-  // inout parameter
 
+  /// out parameter
   Coffee_var out_;
-  // out parameter
 
+  /// return value
   Coffee_var ret_;
-  // return value
 };
 
 #endif /* PARAM_TEST_OBJREF_H */

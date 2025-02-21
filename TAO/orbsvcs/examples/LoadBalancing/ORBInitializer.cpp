@@ -6,13 +6,7 @@
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "tao/ORB_Constants.h"
 
-
-ACE_RCSID (LoadBalancing,
-           ORBInitializer,
-           "$Id$")
-
-
-ORBInitializer::ORBInitializer (void)
+ORBInitializer::ORBInitializer ()
   : load_alert_ (),
     interceptor_ (0)
 {
@@ -20,19 +14,14 @@ ORBInitializer::ORBInitializer (void)
 
 void
 ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
 ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   ACE_NEW_THROW_EX (this->interceptor_,
                     ServerRequestInterceptor,
                     CORBA::NO_MEMORY (
@@ -40,14 +29,11 @@ ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var sr_interceptor =
     this->interceptor_;
 
-  info->add_server_request_interceptor (sr_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (sr_interceptor.in ());
 
   PortableInterceptor::ServerRequestInterceptor_ptr reject_interceptor;
   ACE_NEW_THROW_EX (reject_interceptor,
@@ -57,25 +43,22 @@ ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var safe_reject_interceptor =
     reject_interceptor;
 
-  info->add_server_request_interceptor (safe_reject_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (safe_reject_interceptor.in ());
 }
 
 
 TAO_LB_LoadAlert &
-ORBInitializer::load_alert (void)
+ORBInitializer::load_alert ()
 {
   return this->load_alert_;
 }
 
 ServerRequestInterceptor *
-ORBInitializer::interceptor (void) const
+ORBInitializer::interceptor () const
 {
   return this->interceptor_;
 }

@@ -1,47 +1,32 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//    tc.cpp
-//
-// = DESCRIPTION
-//   Verify that the basic typecodes are able to interpret their CDR
-//   buffers.
-//
-// = AUTHORS
-//    Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    tc.cpp
+ *
+ * Verify that the basic typecodes are able to interpret their CDR
+ * buffers.
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
 
-#include "tao/TypeCode.h"
+
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
 
-
-ACE_RCSID (CDR,
-           tc,
-           "$Id$")
-
 // In this version of TAO typecodes are based on CDR, we have to
 // verify that CDR offers the services needed for Typecode...
-
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       static const CORBA::TypeCode_ptr tcs[]=
       {
@@ -111,8 +96,7 @@ main (int argc, char *argv[])
         {
           CORBA::TypeCode_ptr tc = *i;
 
-          CORBA::TCKind k = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          CORBA::TCKind k = tc->kind ();
 
           switch (k)
             {
@@ -123,21 +107,17 @@ main (int argc, char *argv[])
             case CORBA::tk_alias:
             case CORBA::tk_except:
               {
-                const char *id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                const char *id = tc->id ();
 
-                const char *name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                const char *name = tc->name ();
 
                 CORBA::ULong length = 0;
-                // tc->length (TAO_TRY_ENV);
-                // ACE_TRY_CHECK;
 
                 if (TAO_debug_level > 0)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                                "ID = '%s'\n"
-                                "%{%{ NAME = %s%$"
+                                "ID = '%C'\n"
+                                "%{%{ NAME = %C%$"
                                 " KIND = %d%$"
                                 " LENGTH = %d"
                                 "%}%}\n",
@@ -159,12 +139,11 @@ main (int argc, char *argv[])
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TC");
+      ex._tao_print_exception ("TC");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

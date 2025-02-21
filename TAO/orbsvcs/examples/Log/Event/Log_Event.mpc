@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Consumer) : orbsvcsexe, dseventlogadmin, event_skel, naming {
   exename = Event_Consumer
   source_files {

@@ -1,53 +1,34 @@
-// -*- C++ -*-
-//
-// $Id$
-
-#include "LocalObject.h"
+#include "tao/LocalObject.h"
 
 #if !defined (__ACE_INLINE__)
-# include "LocalObject.i"
+# include "tao/LocalObject.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "SystemException.h"
-#include "debug.h"
-#include "ORB_Constants.h"
+#include "tao/SystemException.h"
+#include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
 
-ACE_RCSID (tao,
-           LocalObject,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::LocalObject::~LocalObject (void)
+CORBA::LocalObject::~LocalObject ()
 {
-}
-
-void
-CORBA::LocalObject::_add_ref (void)
-{
-  // Do nothing as per CCM spec.
-}
-
-void
-CORBA::LocalObject::_remove_ref (void)
-{
-  // Do nothing as per CCM spec.
 }
 
 // Quickly hash an object reference's representation data.  Used to
 // create hash tables.
 
 CORBA::ULong
-CORBA::LocalObject::_hash (CORBA::ULong maximum
-                           ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::LocalObject::_hash (CORBA::ULong maximum)
 {
-  // Note that we reinterpret_cast to an "unsigned long" instead of
+  // Note that we reinterpret_cast to an "ptrdiff_t" instead of
   // CORBA::ULong since we need to first cast to an integer large
   // enough to hold an address to avoid compile-time warnings on some
   // 64-bit platforms.
 
-  const CORBA::ULong hash =
+  CORBA::ULong const hash =
     static_cast<CORBA::ULong> (reinterpret_cast<ptrdiff_t> (this));
 
   return hash % maximum;
@@ -60,24 +41,22 @@ CORBA::LocalObject::_hash (CORBA::ULong maximum
 // such as strcmp(), to allow more comparison algorithms.
 
 CORBA::Boolean
-CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj
-                                    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC (())
+CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj)
 {
-  return (other_obj == this) ? 1 : 0;
+  return (other_obj == this) ? true : false;
 }
 
 // TAO's extensions
 
 
 TAO::ObjectKey *
-CORBA::LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_key ()
 {
   if (TAO_debug_level > 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Cannot get _key from a LocalObject!\n")));
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot get _key from a LocalObject!\n")));
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -87,23 +66,36 @@ CORBA::LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
 // the latter case, return FALSE.
 
 CORBA::Boolean
-CORBA::LocalObject::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::LocalObject::_non_existent ()
 {
   // Always return false.
-  return 0;
+  return false;
 }
 
+char *
+CORBA::LocalObject::_repository_id ()
+{
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot get _repository_id from a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
+}
+
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
 void
 CORBA::LocalObject::_create_request (CORBA::Context_ptr,
                                      const char *,
                                      CORBA::NVList_ptr,
                                      CORBA::NamedValue_ptr,
                                      CORBA::Request_ptr &,
-                                     CORBA::Flags
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::Flags)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
-                                  CORBA::COMPLETED_NO));
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _create_request for a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
 }
 
 void
@@ -114,124 +106,111 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
                                      CORBA::ExceptionList_ptr,
                                      CORBA::ContextList_ptr,
                                      CORBA::Request_ptr &,
-                                     CORBA::Flags
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::Flags)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
-                                  CORBA::COMPLETED_NO));
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _create_request for a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
 }
 
 CORBA::Request_ptr
-CORBA::LocalObject::_request (const char *
-                              ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_request (const char *)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _request for a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
 }
 
 CORBA::Object_ptr
-CORBA::LocalObject::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_get_component ()
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
-}
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _get_component for a LocalObject!\n")));
 
-char *
-CORBA::LocalObject::_repository_id (ACE_ENV_SINGLE_ARG_DECL)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::InterfaceDef_ptr
-CORBA::LocalObject::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_get_interface ()
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
-}
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _get_interface for a LocalObject!\n")));
 
-CORBA::ImplementationDef_ptr
-CORBA::LocalObject::_get_implementation (ACE_ENV_SINGLE_ARG_DECL)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
+#endif
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
-CORBA::LocalObject::_get_policy (CORBA::PolicyType
-                                 ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_get_policy (CORBA::PolicyType)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _get_policy for a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::Policy_ptr
-CORBA::LocalObject::_get_cached_policy (TAO_Cached_Policy_Type
-                                        ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_get_cached_policy (TAO_Cached_Policy_Type)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _get_cached_policy for a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Object_ptr
 CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
-                                           CORBA::SetOverrideType
-                                           ACE_ENV_ARG_DECL)
+                                           CORBA::SetOverrideType)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _set_policy_overrides for a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::PolicyList *
-CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &
-                                           ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _get_policy_overrides for a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::Boolean
-CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out
-                                          ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _validate_connection for a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 CORBA::ORB_ptr
-CORBA::LocalObject::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_get_orb ()
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  if (TAO_debug_level > 0)
+    TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - Cannot call _get_orb for a LocalObject!\n")));
+
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
-// ****************************************************************
-
-void
-TAO_Local_RefCounted_Object::_add_ref (void)
-{
-  ++this->refcount_;
-}
-
-void
-TAO_Local_RefCounted_Object::_remove_ref (void)
-{
-  const CORBA::ULong new_count = --this->refcount_;
-
-  if (new_count == 0)
-    delete this;
-}
-
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,20 @@
+// Test Bug 2582
+
+enum EncodingID_T
+  {
+    ENCODING_XML
+  };
+
+struct Encoding_T
+{
+  EncodingID_T           id;
+};
+
+typedef EncodingID_T EncodingID2_T;
+
+interface FieldDevice_T
+{
+  EncodingID2_T getEncodingID();
+  Encoding_T getEncoding();
+};
+

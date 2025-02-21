@@ -1,0 +1,5 @@
+// -*- MPC -*-
+project : inet, ssl {
+  after    += INet_SSL
+  libs     += ACE_INet_SSL
+}

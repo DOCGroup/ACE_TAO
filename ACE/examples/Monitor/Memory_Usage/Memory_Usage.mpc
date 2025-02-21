@@ -1,0 +1,8 @@
+project (*) : aceexe, ace_mc, avoids_ace_for_tao, mc_test_utils {
+  exename = memory_usage
+
+  source_files {
+    memory_usage.cpp
+  }
+}
+

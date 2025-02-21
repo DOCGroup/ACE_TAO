@@ -1,0 +1,146 @@
+
+
+TAO Security
+
+DevGuideExamples/Security/PolicyControllingApp/README
+
+This directory contains an illustration of a security aware
+application that modifies security service policies.  Similar
+to the security unaware application example, these examples
+vary the client and server's configurations. However, there
+are also different paths through the client application that
+demonstrate different policy settings.
+
+For readability, long text lines from the example's service
+configuration files are split into multiple lines.  A backslash
+indicates the end of partial line except for the final fragment.
+The backslashes should be removed and the fragments joined for
+use with the example programs.
+
+For simplicity, the pass phrases have been stripped from the
+private keys included with these examples in the 1.2a release.
+This *should not* be construed as a recommended practice.  Instead,
+OCI strongly recommends that the security requirements of each
+real-world application be evaluated carefully and that appropriate
+procedures and practice be established accordingly.  Private keys
+without pass phrase protection are easily compromised and may
+allow an unauthorized party to masquerade as an authorized system
+user.
+
+Prior to running the server in these examples, the SSL_CERT_FILE
+environment variable must be set, e.g.,
+	# /bin/bash
+	export SSL_CERT_FILE=cacert.pem
+or
+	rem Windows
+	set SSL_CERT_FILE=cacert.pem
+
+Example 1: Client sets Quality of Protection to NoProtection
+------------------------------------------------------------
+The server is configured to accept both secured and unsecured
+invocations (by setting -SSLNoProtection).  The client is
+configured to make secured invocations only.  The client
+application sets the quality of protection policy to
+no protection to make an unsecured invocation to the server.
+
+The server's configuration is:
+
+#
+# server.conf
+#
+dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() \
+	"-SSLNoProtection \
+	 -SSLAuthenticate SERVER_AND_CLIENT \
+	 -SSLPrivateKey PEM:server_key.pem \
+	 -SSLCertificate PEM:server_cert.pem"
+
+static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
+#
+# end of server.conf
+#
+
+The client's configuration is:
+
+#
+# client.conf
+#
+dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() \
+	"-SSLAuthenticate NONE \
+	 -SSLPrivateKey PEM:client_key.pem \
+	 -SSLCertificate PEM:client_cert.pem"
+
+static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
+#
+# end of client.conf
+#
+
+To run the server:
+	./MessengerServer -ORBSvcConf server.conf
+
+To run the client:
+	./MessengerClient -e 1 -ORBSvcConf client.conf
+
+Note: as presented in the 1.2a Developer's Guide, the client code
+for this first example also manipulates the establish trust
+policy.  After the text went to print, changes in TAO have required
+a change to this example such that the establish trust policy can't
+be modified as shown in the text without causing an exception.  This
+example has been modified accordingly to execute without causing an
+exception.
+
+Example 2: Client sets Quality of Protection to IntegrityAndConfidentiality
+and EstablishTrust to authenticate the server
+---------------------------------------------------------------------------
+The server is configured to accept secured invocations only.  The client
+is configured to issue unsecured invocations by default (-SSLNoProtection is
+set).  The client sets the quality of protection policy to integrity and
+confidentiality and establish trust policy to authenticate the server.  This
+can only be achieved via a secured invocation.
+
+The server's configuration is:
+
+#
+# server1.conf
+#
+dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() \
+	"-SSLAuthenticate SERVER_AND_CLIENT \
+	 -SSLPrivateKey PEM:server_key.pem \
+	 -SSLCertificate PEM:server_cert.pem"
+
+static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
+#
+# end of server1.conf
+#
+
+The client's configuration is:
+
+#
+# client1.conf
+#
+dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() \
+	"-SSLNoProtection \
+	 -SSLAuthenticate NONE \
+	 -SSLPrivateKey PEM:client_key.pem \
+	 -SSLCertificate PEM:client_cert.pem"
+
+static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
+#
+# end of client1.conf
+#
+
+To run the server:
+	./MessengerServer -ORBSvcConf server1.conf
+
+To run the client:
+	./MessengerClient -e 2 -ORBSvcConf client1.conf
+
+
+--------------------------------------------------
+Files: DevGuideExamples/Security/PolicyControllingApp
+
+Messenger.idl		- Messenger interface definition.
+Messenger_i.h		- Messenger servant class definition.
+Messenger_i.cpp		- Messenger servant implementation.
+MessengerServer.cpp	- MessengerServer process main.
+MessengerClient.cpp	- MessengerClient process main.
+

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 // -*- C++ -*-
 
 #if !defined BUG_1330_REGRESSION_TEST_I_H
@@ -12,14 +9,13 @@ class Test_i: public POA_Test
 {
 public:
    /// Constructor
-   Test_i (void);
+   Test_i ();
 
    /// Destructor
-   ~Test_i (void);
+   ~Test_i ();
 
    /// A method
-   void test_method(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-     ACE_THROW_SPEC ((CORBA::SystemException));
+   void test_method();
 };
 
 #endif /* ! BUG_1330_REGRESSION_TEST_I_H */

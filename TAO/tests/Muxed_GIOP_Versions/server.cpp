@@ -1,23 +1,18 @@
-// $Id$
-
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/Synch_T.h"
 
-ACE_RCSID(MT_Server, server, "server.cpp,v 1.7 2002/01/29 20:21:08 okellogg Exp")
-
-const char *ior_output_file = 0;
-const char *corbaloc_arg = "corbaloc:iiop:1.0@localhost:12000/ObjectName";
+const ACE_TCHAR *ior_output_file = 0;
+const ACE_TCHAR *corbaloc_arg = ACE_TEXT("corbaloc:iiop:1.0@localhost:12000/ObjectName");
 int niterations = 5;
 
 int nthreads = 4;
 int nclient_threads = nthreads;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c:l:i:o:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:l:i:o:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,56 +51,52 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
 /*****************************************************/
 
+/**
+ * Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
   /// ctor
   Worker (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
-
   /// The orb
   CORBA::ORB_var orb_;
 };
 
 /*****************************************************/
 
+/**
+ * Run a client thread
+ *
+ * Use the ACE_Task_Base class to run client threads
+ */
 class SelfClient : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
 public:
   SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server, int niterations);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void validate_connection ();
   // Validate the connection
 
 private:
-
   /// The server.
   Simple_Server_var server_;
 
@@ -115,22 +106,20 @@ private:
   int niterations_;
 
 
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 /***************************************************/
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -138,12 +127,10 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -155,15 +142,18 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var owner_transfer(server_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (server_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Simple_Server_var server =
-        server_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Simple_Server::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -178,8 +168,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
@@ -202,13 +191,11 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) event loop finished\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -221,19 +208,16 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_Time_Value tv (140, 0);
-      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run (tv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -248,41 +232,37 @@ SelfClient::SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server,
 }
 
 void
-SelfClient::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+SelfClient::validate_connection ()
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
   // run on minimum CORBA builds too!
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, mutex_);
 
   for (int j = 0; j != 100; ++j)
     {
-      ACE_TRY
+      try
         {
-          this->server_->test_method (j ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_->test_method (j);
         }
-      ACE_CATCHANY {} ACE_ENDTRY;
+      catch (const CORBA::Exception&){}
     }
 }
 
 int
-SelfClient::svc (void)
+SelfClient::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       for (int i = 0; i < this->niterations_; ++i)
         {
-          ACE_TRY_EX (CORBALOC)
+          try
             {
               CORBA::Object_var probably_not_exist =
-                orb_->string_to_object (corbaloc_arg
-                                        ACE_ENV_ARG_PARAMETER);
+                orb_->string_to_object (corbaloc_arg);
 
-              ACE_TRY_CHECK_EX (CORBALOC);
 
               if (CORBA::is_nil (probably_not_exist.in()))
                 {
@@ -291,43 +271,34 @@ SelfClient::svc (void)
               else
                 {
                   Simple_Server_var newserver =
-                    Simple_Server::_narrow (probably_not_exist.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK_EX (CORBALOC);
+                    Simple_Server::_narrow (probably_not_exist.in ());
 
                   // should throw an exception
                   if (CORBA::is_nil (newserver.in()))
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  "(%P|%t)  Not found it \n"));
-
+                                  "(%P|%t)  Not found it\n"));
                     }
                   else
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                  "(%P|%t) Found it \n"));
+                                  "(%P|%t) Found it\n"));
                     }
                 }
 
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "MT_SelfClient: exception raised");
+              ex._tao_print_exception ("MT_SelfClient: exception raised");
             }
-          ACE_ENDTRY;
 
           // Just make a call
-          this->server_->test_method (i ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
+          this->server_->test_method (i);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_SelfClient: exception raised");
+      ex._tao_print_exception ("MT_SelfClient: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }

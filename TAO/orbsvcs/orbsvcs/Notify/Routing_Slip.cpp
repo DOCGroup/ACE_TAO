@@ -1,21 +1,21 @@
-// $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Notify/Routing_Slip.h"
 
-#include "Routing_Slip.h"
-
-#include "Delivery_Request.h"
-#include "Worker_Task.h"
-#include "ProxyConsumer.h"
-#include "ProxySupplier.h"
-#include "Event_Persistence_Strategy.h"
-#include "Routing_Slip_Persistence_Manager.h"
-#include "Routing_Slip_Queue.h"
-#include "Method_Request_Lookup.h"
-#include "Method_Request_Dispatch.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Event_Persistence_Strategy.h"
+#include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
+#include "orbsvcs/Notify/Routing_Slip_Queue.h"
+#include "orbsvcs/Notify/Method_Request_Lookup.h"
+#include "orbsvcs/Notify/Method_Request_Dispatch.h"
 
 #include "tao/debug.h"
 #include "tao/corba.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Truncate.h"
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
@@ -23,6 +23,8 @@
 #endif //DEBUG_LEVEL
 
 #define QUEUE_ALLOWED 1
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -51,51 +53,50 @@ size_t Routing_Slip::count_enter_deleting_ = 0;
 size_t Routing_Slip::count_enter_terminal_ = 0;
 
 Routing_Slip_Ptr
-Routing_Slip::create (const TAO_Notify_Event::Ptr& event ACE_ENV_ARG_DECL)
+Routing_Slip::create (const TAO_Notify_Event::Ptr& event)
 {
   Routing_Slip * prs;
   ACE_NEW_THROW_EX (prs, Routing_Slip (event), CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Routing_Slip_Ptr());
   Routing_Slip_Ptr result(prs);
   result->this_ptr_ = result; // let the pointers touch so they use the same ref count
 
   // note we don't care about ultra-precise stats, so no guard for these
   if (DEBUG_LEVEL > 8 && ((result->sequence_ % 100) == 0))
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Routing_Slip_Statistics\n")
-      ACE_TEXT ("  enter_transient              \t%d\n")
-      ACE_TEXT ("  continue_transient           \t%d\n")
-      ACE_TEXT ("  enter_reloaded               \t%d\n")
-      ACE_TEXT ("  enter_new                    \t%d\n")
-      ACE_TEXT ("  continue_new                 \t%d\n")
-      ACE_TEXT ("  enter_complete_while_new     \t%d\n")
-      ACE_TEXT ("  enter_saving                 \t%d\n")
-      ACE_TEXT ("  enter_saved                  \t%d\n")
-      ACE_TEXT ("  enter_updating               \t%d\n")
-      ACE_TEXT ("  enter_changed_while_saving   \t%d\n")
-      ACE_TEXT ("  continue_changed_while_saving\t%d\n")
-      ACE_TEXT ("  enter_changed                \t%d\n")
-      ACE_TEXT ("  continue_changed             \t%d\n")
-      ACE_TEXT ("  enter_complete               \t%d\n")
-      ACE_TEXT ("  enter_deleting               \t%d\n")
-      ACE_TEXT ("  enter_terminal               \t%d\n")
-      , static_cast<int> (count_enter_transient_)
-      , static_cast<int> (count_continue_transient_)
-      , static_cast<int> (count_enter_reloaded_)
-      , static_cast<int> (count_enter_new_)
-      , static_cast<int> (count_continue_new_)
-      , static_cast<int> (count_enter_complete_while_new_)
-      , static_cast<int> (count_enter_saving_)
-      , static_cast<int> (count_enter_saved_)
-      , static_cast<int> (count_enter_updating_)
-      , static_cast<int> (count_enter_changed_while_saving_)
-      , static_cast<int> (count_continue_changed_while_saving_)
-      , static_cast<int> (count_enter_changed_)
-      , static_cast<int> (count_continue_changed_)
-      , static_cast<int> (count_enter_complete_)
-      , static_cast<int> (count_enter_deleting_)
-      , static_cast<int> (count_enter_terminal_)
+      ACE_TEXT ("  enter_transient              \t%B\n")
+      ACE_TEXT ("  continue_transient           \t%B\n")
+      ACE_TEXT ("  enter_reloaded               \t%B\n")
+      ACE_TEXT ("  enter_new                    \t%B\n")
+      ACE_TEXT ("  continue_new                 \t%B\n")
+      ACE_TEXT ("  enter_complete_while_new     \t%B\n")
+      ACE_TEXT ("  enter_saving                 \t%B\n")
+      ACE_TEXT ("  enter_saved                  \t%B\n")
+      ACE_TEXT ("  enter_updating               \t%B\n")
+      ACE_TEXT ("  enter_changed_while_saving   \t%B\n")
+      ACE_TEXT ("  continue_changed_while_saving\t%B\n")
+      ACE_TEXT ("  enter_changed                \t%B\n")
+      ACE_TEXT ("  continue_changed             \t%B\n")
+      ACE_TEXT ("  enter_complete               \t%B\n")
+      ACE_TEXT ("  enter_deleting               \t%B\n")
+      ACE_TEXT ("  enter_terminal               \t%B\n")
+      , count_enter_transient_
+      , count_continue_transient_
+      , count_enter_reloaded_
+      , count_enter_new_
+      , count_continue_new_
+      , count_enter_complete_while_new_
+      , count_enter_saving_
+      , count_enter_saved_
+      , count_enter_updating_
+      , count_enter_changed_while_saving_
+      , count_continue_changed_while_saving_
+      , count_enter_changed_
+      , count_continue_changed_
+      , count_enter_complete_
+      , count_enter_deleting_
+      , count_enter_terminal_
       ));
   }
   return result;
@@ -110,17 +111,15 @@ Routing_Slip::create (
   Routing_Slip_Ptr result;
   ACE_Message_Block * event_mb = 0;
   ACE_Message_Block * rs_mb = 0;
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
     {
       if (rspm->reload (event_mb, rs_mb))
       {
         TAO_InputCDR cdr_event (event_mb);
         TAO_Notify_Event::Ptr event (TAO_Notify_Event::unmarshal (cdr_event));
-        if (event.get () != 0)
+        if (event.isSet())
         {
-          result = create (event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          result = create (event);
           TAO_InputCDR cdr_rs (rs_mb);
           if ( result->unmarshal (ecf, cdr_rs))
           {
@@ -128,7 +127,7 @@ Routing_Slip::create (
           }
           else
           {
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
               ACE_TEXT ("(%P|%t) Routing_Slip::create: Unmarshalling failed for routing slip.\n")
               ));
             result.reset ();
@@ -136,19 +135,18 @@ Routing_Slip::create (
         }
         else
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
             ACE_TEXT ("(%P|%t) Routing_Slip::create: Unmarshalling failed for event.\n")
             ));
         }
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Routing_Slip::create: Exception reloading event.\n")
         ));
     }
-  ACE_ENDTRY;
   delete event_mb;
   delete rs_mb;
 
@@ -158,6 +156,7 @@ Routing_Slip::create (
 void
 Routing_Slip::set_rspm (Routing_Slip_Persistence_Manager * rspm)
 {
+  delete this->rspm_;
   this->rspm_ = rspm;
   if (rspm_ != 0)
   {
@@ -175,9 +174,9 @@ Routing_Slip::Routing_Slip(
   , complete_requests_ (0)
   , rspm_ (0)
 {
-  Routing_Slip_Guard guard (sequence_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, sequence_lock_);
   this->sequence_ = ++routing_slip_sequence_;
-  if (DEBUG_LEVEL > 1) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 1) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: constructor\n"),
       this->sequence_
       ));
@@ -185,10 +184,11 @@ Routing_Slip::Routing_Slip(
 
 Routing_Slip::~Routing_Slip ()
 {
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: destructor\n"),
       this->sequence_
       ));
+   delete this->rspm_;
 }
 
 bool
@@ -219,7 +219,7 @@ Routing_Slip::event () const
 void
 Routing_Slip::wait_persist ()
 {
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   while (!this->is_safe_)
   {
     this->until_safe_.wait ();
@@ -227,23 +227,22 @@ Routing_Slip::wait_persist ()
 }
 
 void
-Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV_ARG_DECL)
+Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
 {
   ACE_ASSERT(pc != 0);
 
   TAO_Notify_ProxyConsumer::Ptr pcgrd(pc);
 
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  size_t request_id = delivery_requests_.size ();
+  size_t const request_id = delivery_requests_.size ();
 
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: lookup, completed %d of %d\n"),
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%B: lookup, completed %B of %B\n"),
       this->sequence_,
-      static_cast<int> (request_id),
-      static_cast<int> (this->complete_requests_),
-      static_cast<int> (this->delivery_requests_.size ())
-      ));
+      request_id,
+      this->complete_requests_,
+      this->delivery_requests_.size ()));
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
   this->delivery_requests_.push_back (request);
@@ -263,7 +262,7 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV
     {
       enter_state_new (guard);
     }
-    else if (this->event_->reliable().value() == CosNotification::Persistent)
+    else if (this->event_->reliable().value() == true)
     {
       enter_state_new (guard);
     }
@@ -272,8 +271,14 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV
       enter_state_transient (guard);
     }
   }
-  guard.release ();
-  pc->execute_task (method ACE_ENV_ARG_PARAMETER);
+  else
+  {
+    // We only need to release the guard if the state is rssCREATING.
+    // By calling enter_state_*, we are guaranteed that the guard has
+    // been released.
+    guard.release ();
+  }
+  pc->execute_task (method);
 }
 #if 0 // forward
 void
@@ -283,12 +288,13 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   ACE_ASSERT (this->state_ == rssCREATING);
 
   TAO_Notify_ProxySupplier::Ptr psgrd(ps);
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   enter_state_transient (guard);
+  guard.acquire();
   size_t request_id = delivery_requests_.size ();
 
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: Forward %s; completed %d of %d\n"),
       this->sequence_,
       static_cast<int> (request_id),
@@ -305,7 +311,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
       TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %d to "
                     "proxy supplier %d\n",
                     this->sequence_,
@@ -316,7 +322,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   else
     {
       if (DEBUG_LEVEL > 5)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %d to "
                     "proxy supplier %d; already shut down\n",
                     this->sequence_,
@@ -329,25 +335,23 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
 void
 Routing_Slip::dispatch (
   TAO_Notify_ProxySupplier* ps,
-  bool filter
-  ACE_ENV_ARG_DECL)
+  bool filter)
 {
   // cannot be the first action
   ACE_ASSERT (this->state_ != rssCREATING);
 
   TAO_Notify_ProxySupplier::Ptr psgrd(ps);
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   size_t request_id = delivery_requests_.size ();
 
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: Dispatch %s; completed %d of %d\n"),
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%B: Dispatch %s; completed %B of %B\n"),
       this->sequence_,
-      static_cast<int> (request_id),
+      request_id,
       filter ? ACE_TEXT ("Filter") : ACE_TEXT ("No Filter"),
-      static_cast<int> (this->complete_requests_),
-      static_cast<int> (this->delivery_requests_.size ())
-      ));
+      this->complete_requests_,
+      this->delivery_requests_.size ()));
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
   if (! ps->has_shutdown() )
@@ -356,23 +360,22 @@ Routing_Slip::dispatch (
       TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %d to "
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %B to "
                     "proxy supplier %d\n",
                     this->sequence_,
-                    static_cast<int> (request_id),
+                    request_id,
                     ps->id()));
-      ps->execute_task (method ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ps->execute_task (method);
     }
   else
     {
       if (DEBUG_LEVEL > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %d to "
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %B to "
                     "proxy supplier %d; already shut down\n",
                     this->sequence_,
-                    static_cast<int> (request_id),
+                    request_id,
                     ps->id()));
     }
 }
@@ -383,19 +386,18 @@ Routing_Slip::dispatch (
 void
 Routing_Slip::delivery_request_complete (size_t request_id)
 {
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   ACE_ASSERT (request_id < this->delivery_requests_.size ());
   // reset the pointer to allow the delivery_request to be deleted.
   this->delivery_requests_[request_id].reset ();
   this->complete_requests_ += 1;
 
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Routing Slip #%d: delivery_request_complete #%d: completed %d of %d\n"),
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) Routing Slip #%d: delivery_request_complete #%B: completed %B of %B\n"),
       this->sequence_,
-      static_cast<int> (request_id),
-      static_cast<int> (this->complete_requests_),
-      static_cast<int> (this->delivery_requests_.size ())
-      ));
+      request_id,
+      this->complete_requests_,
+      this->delivery_requests_.size ()));
   State state = this->state_;
   switch (state)
   {
@@ -436,7 +438,7 @@ Routing_Slip::delivery_request_complete (size_t request_id)
     }
     default:
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Notification Service Routing Slip: Unexpected delivery_request_complete in state %d\n"),
         static_cast<int> (this->state_)
         ));
@@ -448,13 +450,13 @@ Routing_Slip::delivery_request_complete (size_t request_id)
 void
 Routing_Slip::at_front_of_persist_queue ()
 {
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   State state = this->state_;
   switch (state)
   {
     case rssNEW:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: NEW Reached front of queue\n"),
         this->sequence_
         ));
@@ -463,17 +465,18 @@ Routing_Slip::at_front_of_persist_queue ()
     }
     case rssCOMPLETE_WHILE_NEW:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: COMPLETE_WHILE_NEW Reached front of queue\n"),
         this->sequence_
         ));
+      guard.release ();
       this->persistent_queue_.complete ();
       enter_state_terminal (guard);
       break;
     }
     case rssCHANGED:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: CHANGED Reached front of queue\n"),
         this->sequence_
         ));
@@ -482,7 +485,7 @@ Routing_Slip::at_front_of_persist_queue ()
     }
     case rssCOMPLETE:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: COMPLETE Reached front of queue\n"),
         this->sequence_
         ));
@@ -491,7 +494,7 @@ Routing_Slip::at_front_of_persist_queue ()
     }
     default:
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Routing Slip %d: Unexpected at_front_of_persist_queue in state %d\n"),
         this->sequence_,
         static_cast<int> (this->state_)
@@ -506,8 +509,7 @@ Routing_Slip::persist_complete ()
 {
   // keep this object around til this method returns.
   Routing_Slip_Ptr me(this->this_ptr_);
-  Routing_Slip_Guard guard (this->internals_);
-  ACE_ASSERT (guard.locked ());
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   // allow the ConsumerProxy to return from the CORBA push call.
   if (! is_safe_)
@@ -521,7 +523,7 @@ Routing_Slip::persist_complete ()
   {
     case rssSAVING:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: SAVING persist complete\n"),
         this->sequence_
         ));
@@ -535,7 +537,7 @@ Routing_Slip::persist_complete ()
     }
     case rssUPDATING:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: UPDATING persist complete\n"),
         this->sequence_
         ));
@@ -544,7 +546,7 @@ Routing_Slip::persist_complete ()
     }
     case rssDELETING:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: DELETING persist complete\n"),
         this->sequence_
         ));
@@ -553,10 +555,11 @@ Routing_Slip::persist_complete ()
     }
     default:
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Notification Service Routing Slip: Unexpected transition in state %d\n"),
         static_cast<int> (this->state_)
         ));
+      guard.release ();
       break;
     }
   }
@@ -577,7 +580,6 @@ Routing_Slip::add_to_persist_queue(Routing_Slip_Guard & guard)
 {
   guard.release ();
   this->persistent_queue_.add (this->this_ptr_);
-  guard.acquire (); // necessary?
 }
 
 ////////////////////
@@ -587,7 +589,7 @@ void
 Routing_Slip::enter_state_new (Routing_Slip_Guard & guard)
 {
   ++count_enter_new_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state NEW\n"),
       this->sequence_
       ));
@@ -603,13 +605,14 @@ Routing_Slip::continue_state_new (Routing_Slip_Guard & guard)
   {
     this->enter_state_complete_while_new (guard);
   }
+  guard.release ();
 }
 void
 Routing_Slip::enter_state_complete_while_new (Routing_Slip_Guard & guard)
 {
   ++count_enter_complete_while_new_;
   ACE_UNUSED_ARG (guard);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state COMPLETE_WHILE_NEW\n"),
       this->sequence_
       ));
@@ -626,20 +629,19 @@ void
 Routing_Slip::enter_state_reloaded (Routing_Slip_Guard & guard)
 {
   ++count_enter_reloaded_;
-  ACE_UNUSED_ARG (guard);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #&d: enter state RELOADED\n"),
       this->sequence_
       ));
   this->state_ = rssRELOADED;
+  guard.release();
 }
 
 void
 Routing_Slip::enter_state_transient (Routing_Slip_Guard & guard)
 {
   ++count_enter_transient_;
-  ACE_UNUSED_ARG (guard);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state TRANSIENT\n"),
       this->sequence_
       ));
@@ -653,6 +655,10 @@ Routing_Slip::enter_state_transient (Routing_Slip_Guard & guard)
   {
     enter_state_terminal (guard);
   }
+  else
+  {
+    guard.release ();
+  }
 }
 
 void
@@ -663,6 +669,10 @@ Routing_Slip::continue_state_transient (Routing_Slip_Guard & guard)
   {
     enter_state_terminal (guard);
   }
+  else
+  {
+    guard.release ();
+  }
 }
 void
 Routing_Slip::enter_state_saving (Routing_Slip_Guard & guard)
@@ -672,12 +682,13 @@ Routing_Slip::enter_state_saving (Routing_Slip_Guard & guard)
   {
     // Note This should actually be a throw (out of memory)
     // but we cheat and make this a transient event.
+    guard.release ();
     this->persistent_queue_.complete ();
     enter_state_transient (guard);
   }
   else
   {
-    if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+    if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state SAVING\n"),
         this->sequence_
         ));
@@ -693,8 +704,6 @@ Routing_Slip::enter_state_saving (Routing_Slip_Guard & guard)
 
     guard.release ();
     this->rspm_->store (*event_mb, *rs_mb);
-
-    guard.acquire (); // necessary?
   }
 }
 
@@ -702,19 +711,19 @@ void
 Routing_Slip::enter_state_saved (Routing_Slip_Guard & guard)
 {
   ++count_enter_saved_;
-  ACE_UNUSED_ARG (guard);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state SAVED\n"),
       this->sequence_
       ));
   this->state_ = rssSAVED;
+  guard.release ();
 }
 
 void
 Routing_Slip::enter_state_updating (Routing_Slip_Guard & guard)
 {
   ++count_enter_updating_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state UPDATING\n"),
       this->sequence_
       ));
@@ -727,7 +736,6 @@ Routing_Slip::enter_state_updating (Routing_Slip_Guard & guard)
 
   ACE_ASSERT (this->rspm_ != 0);
   this->rspm_->update (*rs_mb);
-  guard.acquire (); // necessary?
 }
 
 
@@ -735,26 +743,26 @@ void
 Routing_Slip::enter_state_changed_while_saving (Routing_Slip_Guard & guard)
 {
   ++count_enter_changed_while_saving_;
-  ACE_UNUSED_ARG (guard);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state CHANGED_WHILE_SAVING\n"),
       this->sequence_
       ));
   this->state_ = rssCHANGED_WHILE_SAVING;
+  guard.release ();
 }
 
 void
 Routing_Slip::continue_state_changed_while_saving (Routing_Slip_Guard & guard)
 {
-  ACE_UNUSED_ARG (guard);
   // no action necessary
+  guard.release ();
 }
 
 void
 Routing_Slip::enter_state_changed (Routing_Slip_Guard & guard)
 {
   ++count_enter_changed_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state CHANGED\n"),
       this->sequence_
       ));
@@ -776,53 +784,57 @@ Routing_Slip::continue_state_changed (Routing_Slip_Guard & guard)
   {
     enter_state_complete (guard);
   }
+  else
+  {
+    guard.release ();
+  }
 }
 
 void
 Routing_Slip::enter_state_complete (Routing_Slip_Guard & guard)
 {
   ++count_enter_complete_;
-  ACE_UNUSED_ARG (guard);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state COMPLETE\n"),
       this->sequence_
       ));
   this->state_ = rssCOMPLETE;
+  guard.release ();
 }
 
 void
 Routing_Slip::enter_state_deleting (Routing_Slip_Guard & guard)
 {
   ++count_enter_deleting_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state DELETING\n"),
       this->sequence_
       ));
   this->state_ = rssDELETING;
   guard.release ();
   this->rspm_->remove ();
-  guard.acquire (); // necessary?
 }
 
 void
 Routing_Slip::enter_state_terminal (Routing_Slip_Guard & guard)
 {
   ++count_enter_terminal_;
-  ACE_UNUSED_ARG (guard);
   ACE_ASSERT( this->is_safe_);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state TERMINAL\n"),
       this->sequence_
       ));
   this->state_ = rssTERMINAL;
   this->this_ptr_.reset ();
+  guard.release ();
 }
 
 void
 Routing_Slip::marshal (TAO_OutputCDR & cdr)
 {
   size_t request_count = this->delivery_requests_.size();
-  cdr.write_ulong (request_count - this->complete_requests_);
+  cdr.write_ulong (
+    ACE_Utils::truncate_cast<CORBA::ULong> (request_count - this->complete_requests_));
   for (size_t nreq = 0; nreq < request_count; ++nreq)
   {
     Delivery_Request * request = this->delivery_requests_[nreq].get ();
@@ -843,8 +855,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
     ACE_CDR::Octet code = 0;
     while (cdr.read_octet(code))
     {
-      ACE_DECLARE_NEW_ENV;
-      ACE_TRY
+      try
       {
         if (code == TAO_Notify_Method_Request_Dispatch::persistence_code)
         {
@@ -853,15 +864,12 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
             prequest,
             Delivery_Request(this_ptr_, this->delivery_requests_.size ()),
             CORBA::NO_MEMORY ());
-          ACE_TRY_CHECK;
           Delivery_Request_Ptr request(prequest);
           TAO_Notify_Method_Request_Dispatch_Queueable * method =
             TAO_Notify_Method_Request_Dispatch::unmarshal (
               request,
               ecf,
-              cdr
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+              cdr);
           if (method != 0)
           {
             this->delivery_requests_.push_back (request);
@@ -875,9 +883,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
               TAO_Notify_Method_Request_Lookup::unmarshal (
                 request,
                 ecf,
-                cdr
-                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK
+                cdr);
           if (method != 0)
           {
             this->delivery_requests_.push_back (request);
@@ -885,28 +891,27 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
           }
         }
       }
-      ACE_CATCHANY;
+      catch (const CORBA::Exception&)
       {
         // @@todo should we log this?
         // just ignore failures
       }
-      ACE_ENDTRY;
     }
   }
   return this->delivery_requests_.size () > 0;
 }
 
 void
-Routing_Slip::reconnect (ACE_ENV_SINGLE_ARG_DECL)
+Routing_Slip::reconnect ()
 {
   Routing_Slip_Guard guard (this->internals_);
   enter_state_saved (guard);
-  guard.release ();
+
   //@@todo is there a worker_task available to do this?
-  size_t count = this->delivery_methods_.size ();
+  size_t const count = this->delivery_methods_.size ();
   for (size_t nmethod = 0; nmethod < count; ++nmethod)
   {
-    this->delivery_methods_[nmethod]->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->delivery_methods_[nmethod]->execute ();
   }
   this->delivery_methods_.clear ();
 }
@@ -925,32 +930,6 @@ Routing_Slip::should_retry () const
   return this->state_ != rssTRANSIENT;
 }
 
-
-
 } // namespace
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Ptr<TAO_Notify::Routing_Slip>;
-template class ACE_Strong_Bound_Ptr<TAO_Notify::Routing_Slip, TAO_SYNCH_MUTEX>;
-template class ACE_Auto_Basic_Ptr<TAO_Notify::Delivery_Request>;
-template class ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX>;
-template class ACE_Vector <TAO_Notify::Delivery_Request_Ptr>;
-template class ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX> >;
-template class ACE_Vector <TAO_Notify::Delivery_Request *>;
-template class ACE_Array_Base<TAO_Notify::Delivery_Request *>;
-template class ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>;
-template class ACE_Array_Base<TAO_Notify_Method_Request_Dispatch_No_Copy*>;
-template class ACE_Vector<TAO_Notify_Method_Request_Dispatch_No_Copy*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Notify::Routing_Slip>
-#pragma instantiate ACE_Strong_Bound_Ptr<TAO_Notify::Routing_Slip,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Notify::Delivery_Request>
-#pragma instantiate ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Vector <TAO_Notify::Delivery_Request_Ptr>
-#pragma instantiate ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX> >
-#pragma instantiate ACE_Vector <TAO_Notify::Delivery_Request *>
-#pragma instantiate ACE_Array_Base<TAO_Notify::Delivery_Request *>
-#pragma instantiate ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>
-#pragma instantiate ACE_Array_Base<TAO_Notify_Method_Request_Dispatch_No_Copy*>
-#pragma instantiate ACE_Vector<TAO_Notify_Method_Request_Dispatch_No_Copy*>
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -3,8 +3,6 @@
 /**
  *  @file    FT_Creator.h
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  Main wrapped around TAO_Object_Group_Creator
  *
@@ -14,8 +12,10 @@
 
 #ifndef FT_CREATOR_H
 #define FT_CREATOR_H
-#include <ace/ACE.h>
+
 #include /**/ "ace/pre.h"
+
+#include <ace/ACE.h>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,13 +38,13 @@ namespace FTAPP
 
     /////////////////
     // initialization
-    int parse_args (int argc, char *argv[]);
+    int parse_args (int argc, ACE_TCHAR *argv[]);
 
-    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb);
 
     ////////////
     // execution
-    int run (ACE_ENV_SINGLE_ARG_DECL);
+    int run ();
 
     ////////////
     // shut down
@@ -64,10 +64,9 @@ namespace FTAPP
     ////////////////
     // Data members
    private:
-
     TAO::Object_Group_Creator creator_;
     CORBA::ORB_var orb_;
-    const char * registry_ior_;
+    const ACE_TCHAR * registry_ior_;
     StringVec create_roles_;
     StringVec unregister_roles_;
 
@@ -98,16 +97,13 @@ namespace FTAPP
     /**
      * sequence number applied to created IOGRs
      */
-    unsigned long iogr_seq_;
+    size_t iogr_seq_;
 
     /**
      * prefix for names
      */
-    const char * prefix_;
-
-
+    ACE_CString prefix_;
   };
-
 } // namespace TAO
 
 #include /**/ "ace/post.h"

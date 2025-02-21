@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    BiDir_Adapter.h
- *
- *  $Id$
  *
  *  @author  Balachandran Natarajan <parsons@cs.wustl.edu>
  */
@@ -19,16 +17,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/TAO_Export.h"
+#include "tao/orbconf.h"
 
-class TAO_ORB_Core;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Policy_Validator;
-
-namespace CORBA
-{
-  class ORB;
-  typedef ORB *ORB_ptr;
-}
 
 /**
  * @class TAO_BiDir_Adapter
@@ -41,14 +35,14 @@ namespace CORBA
 class TAO_Export TAO_BiDir_Adapter : public ACE_Service_Object
 {
 public:
-
   /// The virtual destructor
-  virtual ~TAO_BiDir_Adapter (void);
+  virtual ~TAO_BiDir_Adapter ();
 
-  virtual void load_policy_validators (TAO_Policy_Validator &validator ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-
+  virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_BIDIR_ADAPTER_H */

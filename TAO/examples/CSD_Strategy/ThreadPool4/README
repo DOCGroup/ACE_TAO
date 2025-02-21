@@ -1,0 +1,23 @@
+
+
+Description:
+
+This is another test showing the use of a Custom Servant Dispatching
+(CSD) Strategy.  This test uses the reference implementation, known as the
+Thread Pool CSD Strategy.  This tests collocated requests.
+
+The server application creates two servants, each with a different child
+POA.  One of the POAs has a CSD Strategy applied to it, and the other does
+not.  Also created are two collocated callback servants to test the
+passing of object references as arguments in collocated requests.
+
+The server activates a new thread for each of the two collocated "clients".
+
+To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+        The script returns 0 if the test was successful.
+
+
+

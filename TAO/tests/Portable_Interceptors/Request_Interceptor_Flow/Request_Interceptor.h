@@ -4,8 +4,6 @@
 /**
  * @file Request_Interceptor.h
  *
- * $Id$
- *
  * Implementation header for the request interceptor base class for
  * the request interceptor flow test.
  *
@@ -22,12 +20,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Atomic_Op.h"
-
-#include "tao/PortableInterceptorC.h"
 #include "tao/PI/PI.h"
+#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/CORBA_String.h"
+
+#include "ace/Atomic_Op.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -44,7 +42,6 @@ class Request_Interceptor
   : public virtual PortableInterceptor::Interceptor
 {
 public:
-
   /// Constructor.
   Request_Interceptor (const char *name);
 
@@ -58,15 +55,12 @@ public:
    */
   //@{
   /// Return the name of this Requestinterceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name ();
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy ();
   //@}
 
 protected:
-
   /// The name of this interceptor.
   CORBA::String_var name_;
 
@@ -79,7 +73,6 @@ protected:
   /// called.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
     ending_interception_point_count_;
-
 };
 
 #if defined(_MSC_VER)

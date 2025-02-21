@@ -1,9 +1,8 @@
-#include "ValueFactory.h"
+// -*- C++ -*-
+#include "tao/Valuetype/ValueFactory.h"
 #include "ace/Guard_T.h"
 
-ACE_RCSID (Valuetype,
-           ValueFactory,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Static operations in namespace CORBA.
 
@@ -27,25 +26,25 @@ CORBA::remove_ref (CORBA::ValueFactoryBase *val)
 
 // ===========================================================
 
-CORBA::ValueFactoryBase::ValueFactoryBase (void)
-  : _tao_reference_count_ (1)
+CORBA::ValueFactoryBase::ValueFactoryBase ()
+  : refcount_ (1)
 {
 }
 
-CORBA::ValueFactoryBase::~ValueFactoryBase (void)
+CORBA::ValueFactoryBase::~ValueFactoryBase ()
 {
-}
-
-void
-CORBA::ValueFactoryBase::_add_ref (void)
-{
-  ++this->_tao_reference_count_;
 }
 
 void
-CORBA::ValueFactoryBase::_remove_ref (void)
+CORBA::ValueFactoryBase::_add_ref ()
 {
-  const CORBA::ULong new_count = --this->_tao_reference_count_;
+  ++this->refcount_;
+}
+
+void
+CORBA::ValueFactoryBase::_remove_ref ()
+{
+  CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
     delete this;
@@ -53,7 +52,7 @@ CORBA::ValueFactoryBase::_remove_ref (void)
 
 // No-op. This should never be called, but it can't be pure virtual.
 CORBA::AbstractBase *
-CORBA::ValueFactoryBase::create_for_unmarshal_abstract (void)
+CORBA::ValueFactoryBase::create_for_unmarshal_abstract ()
 {
   return 0;
 }
@@ -81,3 +80,5 @@ namespace TAO
     CORBA::remove_ref (p);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

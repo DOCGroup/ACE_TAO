@@ -4,11 +4,7 @@
 /**
  *  @file   Basic_Log_Test.h
  *
- *  $Id$
- *
  *  An test of using the Basic_Logging_Service
- *
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
@@ -28,18 +24,16 @@ class BasicLog_Test
    //  This class exercises various methods of the DsLogAdmin::BasicLog
    //  interface.
  public:
-
-
   enum
   { MAX_LOG_SIZE = 8192 };
 
-  BasicLog_Test(void);
+  BasicLog_Test();
   // constructor
 
-  ~BasicLog_Test(void);
+  ~BasicLog_Test();
   // destructor
 
-  int init(int argc, char *argv[]);
+  int init(int argc, ACE_TCHAR *argv[]);
 
   int
   test_CreateLog(CORBA::ULongLong maxSize = MAX_LOG_SIZE);
@@ -48,7 +42,7 @@ class BasicLog_Test
 
 int display_records ();
 
-int 
+int
 delete_records (CORBA::ULongLong numberOfRecords);
 
  int
@@ -77,7 +71,7 @@ delete_records (CORBA::ULongLong numberOfRecords);
 
   int test_logCompaction(CORBA::ULong record_life = 1);
   // 1. get number of records in log. Should have records from prior test.
-  //	If not write some.
+  //  If not write some.
   // 2. get maximum record life.
   // 3. set maximum record life. Wait record_life seconds.
   // 4. get maximum record life.
@@ -91,7 +85,7 @@ delete_records (CORBA::ULongLong numberOfRecords);
   // 4. retrieve the records backwards. Compare to records writen.
   // 5. repeat 3 and 4 using iterator.
 
-  int test_query(CORBA::ULong numberOfRecords  = 1000 );
+  int test_query(CORBA::ULong numberOfRecords  = 1000);
   // 1. write the records with NVList.
   // 2. query the records and compare the records
 
@@ -111,21 +105,21 @@ private:
   BasicLog_Test& operator=(const BasicLog_Test&);
 
   int
-    init_factory (ACE_ENV_SINGLE_ARG_DECL);
+    init_factory ();
 
   int
-    parse_args(int argc, char *argv[]);
+    parse_args(int argc, ACE_TCHAR *argv[]);
   // command line argument parser
 
-  int write_records(CORBA::ULongLong numberOfRecordsToWrite ACE_ENV_ARG_DECL_NOT_USED);
+  int write_records(CORBA::ULongLong numberOfRecordsToWrite);
   // writes enough records to fill the log. Default write enough to fill log. Hopefully, not infinite.
 
   void
-    resolve_basic_factory (ACE_ENV_SINGLE_ARG_DECL);
+    resolve_basic_factory ();
   // resolve log factory
 
   void
-    resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+    resolve_naming_service ();
   // resolve nameing service
 
   void
@@ -133,7 +127,7 @@ private:
   // destroys the is log is it exists
 
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   // command line
 
   char* logServiceIor_;
@@ -152,9 +146,8 @@ private:
 
   static const char* basic_log_factory_name_;
 
-  static const char* naming_sevice_name_;
+  static const char* naming_service_name_;
   // strings for log factory and naming service
-
 };
 
 #endif  /* TAO_BASIC_LOG_TEST_H */

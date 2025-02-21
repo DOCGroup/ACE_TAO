@@ -4,8 +4,6 @@
 /**
  *  @file   Replication_Strategy.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -19,6 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTEC {
   struct ManagerInfo;
@@ -36,10 +35,10 @@ public:
    * used for basic replication strategy. It throws FTRT::OutOfSequence when the
    * incoming request is not valid.
    */
-    virtual void check_validity(ACE_ENV_SINGLE_ARG_DECL);
+    virtual void check_validity();
 
     typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-      (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);
+      (const FtRtecEventChannelAdmin::ObjectId&);
 
   /**
    * Replicate a request.
@@ -50,24 +49,23 @@ public:
    */
     virtual void replicate_request(const FTRT::State& state,
                                    RollbackOperation rollback,
-                                   const FtRtecEventChannelAdmin::ObjectId& oid
-                                   ACE_ENV_ARG_DECL)=0;
+                                   const FtRtecEventChannelAdmin::ObjectId& oid)=0;
 
   /**
    * Inform the backup replicas that a new replica has joined the object
    * group.
    */
   virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version
-                          ACE_ENV_ARG_DECL)=0;
+                          CORBA::ULong object_group_ref_version)=0;
 
-    virtual Replication_Strategy* make_primary_strategy();
+  virtual Replication_Strategy* make_primary_strategy();
 
-  virtual int  acquire_read (void)=0;
-  virtual int  acquire_write (void)=0;
-  virtual int  release (void)=0;
-
+  virtual int  acquire_read () = 0;
+  virtual int  acquire_write () = 0;
+  virtual int  release () = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
 

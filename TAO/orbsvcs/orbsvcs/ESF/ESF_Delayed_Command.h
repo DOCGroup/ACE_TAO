@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Delayed_Command.h
- *
- *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
@@ -17,6 +16,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include /**/ "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ESF_Connected_Command
@@ -99,7 +102,7 @@ private:
  *
  * @brief Implements a Command object that invokes the
  * disconnected_i() method on the target, passing an argument of type
- * Object. 
+ * Object.
  *
  * <H2>Memory Managment</H2>
  * It does not assume ownership of Object nor the Target
@@ -165,18 +168,12 @@ private:
   Target *target_;
 };
 
-// ****************************************************************
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ESF_Delayed_Command.i"
+#include "orbsvcs/ESF/ESF_Delayed_Command.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Delayed_Command.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Delayed_Command.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "orbsvcs/ESF/ESF_Delayed_Command.cpp"
 
 #endif /* TAO_ESF_DELAYED_COMMAND_H */

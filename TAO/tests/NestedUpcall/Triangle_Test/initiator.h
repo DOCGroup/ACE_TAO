@@ -1,22 +1,15 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    initiator.h
-//
-// = DESCRIPTION
-//      This class implements a simple server for the
-//      Nested Upcalls - Triangle test
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    initiator.h
+ *
+ *    This class implements a simple server for the
+ *    Nested Upcalls - Triangle test
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #ifndef _TRIANGLE_TEST_INITITATOR_SERVER_H
 #define _TRIANGLE_TEST_INITITATOR_SERVER_H
@@ -31,63 +24,62 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "Initiator_i.h"
 
+/**
+ * @class Initiator_Server
+ *
+ * @brief This is the server for the Initiator in the test.
+ *
+ * See the README file for more information.
+ */
 class Initiator_Server
 {
-  // = TITLE
-  //   This is the server for the Initiator in the test.
-  //
-  // = DESCRIPTION
-  //   See the README file for more information.
-
 public:
+  /// Default constructor
+  Initiator_Server ();
 
-  Initiator_Server (void);
-  // Default constructor
+  /// Destructor
+  ~Initiator_Server ();
 
-  ~Initiator_Server (void);
-  // Destructor
+  /// read in the IOR's for the two objects A and B
+  int read_ior (ACE_TCHAR *filename, unsigned int A_B);
 
-  int read_ior (char *filename, unsigned int A_B);
-  // read in the IOR's for the two objects A and B
-
+  /// Initialize the Initiator_Server state - parsing arguments and ...
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL);
-  // Initialize the Initiator_Server state - parsing arguments and ...
+            ACE_TCHAR **argv);
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run the orb
+  /// Run the orb
+  int run ();
 
 private:
-  int parse_args (void);
-  // Parses the commandline arguments.
+  /// Parses the commandline arguments.
+  int parse_args ();
 
+  /// The IOR of object A
   char * object_A_key_;
-  // The IOR of object A
 
+  /// The IOR of object B
   char * object_B_key_;
-  // The IOR of object B
 
+  /// reference to object A
   Object_A_var object_A_var_;
-  // reference to object A
 
+  /// reference to object B
   Object_B_var object_B_var_;
-  // reference to object B
 
+  /// The ORB manager
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager
 
+  /// Implementation object of the Initiator
   Initiator_i *initiator_i_ptr_;
-  // Implementation object of the Initiator
 
+  /// Number of commandline arguments.
   int argc_;
-  // Number of commandline arguments.
 
-  char **argv_;
-  // commandline arguments.
+  /// commandline arguments.
+  ACE_TCHAR **argv_;
 
+  /// IOR of my servant.
   CORBA::String_var str_;
-  // IOR of my servant.
 };
 
 #endif /* _TRIANGLE_TEST_INITITATOR_SERVER_H */

@@ -1,0 +1,29 @@
+
+module Test
+{
+  struct BadDay;
+  typedef sequence<BadDay> SeqBadDay;
+
+  struct BadDay
+  {
+    SeqBadDay the_seq;
+  };
+
+  interface GoodDay
+  {
+    string get_string ();
+
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+
+    struct RoughWeek
+    {
+      BadDay isitok;
+      SeqBadDay bad;
+    };
+
+    RoughWeek this_week ();
+  };
+};

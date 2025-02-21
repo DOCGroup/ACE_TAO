@@ -1,0 +1,30 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file Foo.idl
+ *
+ * IDL for the Bug_1107_Regression test.
+ *
+ * @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
+module Foo
+{
+  interface Bar
+  {
+    /// Exception that indicates that no security attributes were
+    /// available during the upcall.  If this exception is thrown,
+    /// then is most likely a problem with the underlying security
+    /// mechanism(s).
+    exception NoSecurityAttributes {};
+
+    /// Test method.
+    void baz () raises (NoSecurityAttributes);
+
+    /// Shutdown the server.
+    oneway void shutdown ();
+  };
+
+};

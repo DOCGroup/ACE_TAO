@@ -1,14 +1,12 @@
-//$Id$
+#include "tao/ORBInitializer_Registry_Adapter.h"
 
-#include "ORBInitializer_Registry_Adapter.h"
-
-ACE_RCSID (tao,
-           ORBInitializer_Registry_Adapter,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  ORBInitializer_Registry_Adapter::~ORBInitializer_Registry_Adapter (void)
+  ORBInitializer_Registry_Adapter::~ORBInitializer_Registry_Adapter ()
   {
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

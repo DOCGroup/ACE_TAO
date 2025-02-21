@@ -1,53 +1,39 @@
-// $Id$
+#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
 
-#include "CEC_SupplierControl.h"
-
-ACE_RCSID(CosEvent, CEC_SupplierControl, "$Id$")
-
-TAO_CEC_SupplierControl::TAO_CEC_SupplierControl (void)
-{
-}
-
-TAO_CEC_SupplierControl::~TAO_CEC_SupplierControl (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_CEC_SupplierControl::activate (void)
+TAO_CEC_SupplierControl::activate ()
 {
   return 0;
 }
 
 int
-TAO_CEC_SupplierControl::shutdown (void)
+TAO_CEC_SupplierControl::shutdown ()
 {
   return 0;
 }
 
 void
-TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPushConsumer *
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPushConsumer *)
 {
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 void
-TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *)
 {
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 void
-TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPullConsumer *
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPullConsumer *)
 {
 }
 
 void
 TAO_CEC_SupplierControl::system_exception (TAO_CEC_ProxyPullConsumer *,
-                                           CORBA::SystemException &
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+                                           CORBA::SystemException &)
 {
 }
 
@@ -62,3 +48,4 @@ TAO_CEC_SupplierControl::successful_transmission (PortableServer::ServantBase*)
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

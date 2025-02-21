@@ -1,7 +1,15 @@
-// $Id$
-project(*server) : portableserver, orbsvcsexe, minimum_corba, iortable, pi_server, imr_client {
+project(*idl): taoidldefaults {
   IDL_Files {
     test.idl
+  }
+
+  custom_only = 1
+}
+
+project(*server) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable, imr_client, avoids_corba_e_micro {
+  after += *idl
+  exename = server
+  IDL_Files {
   }
 
   Source_Files {
@@ -12,9 +20,10 @@ project(*server) : portableserver, orbsvcsexe, minimum_corba, iortable, pi_serve
   }
 }
 
-project(*client) : portableserver, orbsvcsexe, minimum_corba, iortable {
+project(*client) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable {
+  after += *idl
+  exename = client
   IDL_Files {
-    test.idl
   }
 
   Source_Files {

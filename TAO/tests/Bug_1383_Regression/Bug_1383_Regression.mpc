@@ -1,0 +1,39 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    callee.idl
+    simple.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, iortable, iormanip {
+  after += *idl
+  Source_Files {
+    simple_i.cpp
+    SimpleServer.cpp
+  }
+  Source_Files {
+    calleeC.cpp
+    simpleC.cpp
+    simpleS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, portableserver, iormanip {
+  after += *idl
+  Source_Files {
+    SimpleClient.cpp
+    Callee_i.cpp
+  }
+  Source_Files {
+    calleeC.cpp
+    calleeS.cpp
+    simpleC.cpp
+  }
+  IDL_Files {
+  }
+}
+

@@ -1,40 +1,26 @@
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    array_ch.cpp
-//
-// = DESCRIPTION
-//    Visitor for Array code generation in client header
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    array_ch.cpp
+ *
 
-ACE_RCSID (be_visitor_array,
-           array_ch,
-           "$Id$")
+ *
+ *  Visitor for Array code generation in client header
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
-// ************************************************************************
-//  visitor for array declaration in client header
-// ************************************************************************
+#include "array.h"
 
 be_visitor_array_ch::be_visitor_array_ch (be_visitor_context *ctx)
   : be_visitor_array (ctx)
 {
 }
 
-be_visitor_array_ch::~be_visitor_array_ch (void)
-{
-}
-
 int be_visitor_array_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *scope = this->ctx_->scope ();
+  be_decl *scope = this->ctx_->scope ()->decl ();
 
   // Nothing to do if we are imported or code is already generated.
   if (node->imported () || node->cli_hdr_gen ())
@@ -45,8 +31,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   this->ctx_->node (node);
 
   // Retrieve the type.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  AST_Decl::NodeType nt = bt->node_type ();
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -57,11 +42,9 @@ int be_visitor_array_ch::visit_array (be_array *node)
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-               << "// " __FILE__ << ":" << __LINE__;
+  AST_Decl::NodeType nt = bt->node_type ();
 
-  // Generate the ifdefined macro.
-  os->gen_ifdef_macro (node->flat_name ());
+  TAO_INSERT_COMMENT (os);
 
   // If we contain an anonymous sequence,
   // generate code for the sequence here.
@@ -82,8 +65,8 @@ int be_visitor_array_ch::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
-      && bt->is_child (this->ctx_->scope ()))
+  if (this->ctx_->alias () == nullptr // Not a typedef.
+      && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);
@@ -122,7 +105,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl << be_nl 
+  *os << be_nl_2
       << "typedef ";
 
   if (bt->accept (this) == -1)
@@ -138,7 +121,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   be_typedef *td = this->ctx_->tdef ();
 
-  if (td == 0)
+  if (td == nullptr)
     {
       // We are dealing with an anonymous array case. Generate a typedef with
       // an _ prepended to the name.
@@ -177,7 +160,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
                   '\0',
                   2);
 
-  if (this->ctx_->tdef ())
+  if (this->ctx_->tdef () != nullptr)
     {
       anon_p[0] = '\0';
     }
@@ -192,26 +175,26 @@ int be_visitor_array_ch::visit_array (be_array *node)
   if (node->gen_dimensions (os, 1) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ch::"
-                         "visit_array - "
-                         "gen slice dimensions failed\n"),
+                         ACE_TEXT ("be_visitor_array_ch::")
+                         ACE_TEXT ("visit_array - ")
+                         ACE_TEXT ("gen slice dimensions failed\n")),
                         -1);
     }
 
   *os << ";";
-  
+
   *os << be_nl
-      << "struct " << anon_p << node->nested_type_name (scope, "_tag") 
-      << " {};";
+      << "struct " << anon_p << node->nested_type_name (scope, "_tag")
+      << " {};" << be_nl;
 
   // No _var or _out class for an anonymous (non-typedef'd) array.
-  if (td != 0)
+  if (td != nullptr)
     {
       // Generate _var class decl.
       // An _out decl is generated only for a variable size array.
       if (node->size_type () == AST_Type::VARIABLE)
         {
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "typedef" << be_idt_nl
               << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
@@ -220,7 +203,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
               << ">" << be_uidt_nl
               << node->local_name () << "_var;" << be_uidt;
 
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "typedef" << be_idt_nl
               << "TAO_Array_Out_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
@@ -232,7 +215,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
       else
         {
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "typedef" << be_idt_nl
               << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
@@ -241,14 +224,14 @@ int be_visitor_array_ch::visit_array (be_array *node)
               << ">" << be_uidt_nl
               << node->local_name () << "_var;" << be_uidt;
 
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "typedef" << be_idt_nl << node->local_name () << be_nl
               << node->local_name () << "_out;" << be_uidt;
         }
     }
 
   // Generate _forany decl.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "typedef" << be_idt_nl
       << "TAO_Array_Forany_T<" << be_idt << be_idt_nl
       << anon_p << node->local_name () << "," << be_nl
@@ -257,11 +240,11 @@ int be_visitor_array_ch::visit_array (be_array *node)
       << ">" << be_uidt_nl
       << anon_p << node->local_name () << "_forany;" << be_uidt;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   // The _alloc, _dup, copy, and free methods. If the node is nested, the
   // methods become static
-  const char *storage_class = 0;
+  ACE_CString storage_class;
 
   if (node->is_nested ())
     {
@@ -271,79 +254,79 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
       else
         {
-          storage_class = "TAO_NAMESPACE_STORAGE_CLASS ";
+          storage_class = "extern ";
+          storage_class = storage_class + be_global->stub_export_macro ();
+          storage_class = storage_class + " ";
         }
     }
   else
     {
-      storage_class = "TAO_EXPORT_MACRO ";
+      storage_class = be_global->stub_export_macro ();
+      storage_class = storage_class + " ";
     }
 
-  if (td != 0)
+  if (td != nullptr)
     {
       // Typedefed array.
-      *os << storage_class << node->nested_type_name (scope, "_slice")
+      *os << storage_class.c_str() << node->nested_type_name (scope, "_slice")
           << " *" << be_nl;
-      *os << node->nested_type_name (scope, "_alloc") << " (void);"
-          << be_nl << be_nl;
-      *os << storage_class << "void" << be_nl
+      *os << node->nested_type_name (scope, "_alloc") << " ();"
+          << be_nl_2;
+      *os << storage_class.c_str() << "void" << be_nl
           << node->nested_type_name (scope, "_free")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice")
-          << " *_tao_slice " << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-      *os << storage_class << node->nested_type_name (scope, "_slice")
+          << " *_tao_slice);" << be_uidt
+          << be_uidt_nl << be_nl;
+      *os << storage_class.c_str() << node->nested_type_name (scope, "_slice")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_dup")
           << " (" << be_idt << be_idt_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
-          << " *_tao_slice" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-      *os << storage_class << "void" << be_nl
+          << " *_tao_slice);" << be_uidt
+          << be_uidt_nl << be_nl;
+      *os << storage_class.c_str() << "void" << be_nl
           << node->nested_type_name (scope, "_copy")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice") << " *_tao_to," << be_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
-          << " *_tao_from" << be_uidt_nl
-          << ");" << be_uidt;
+          << " *_tao_from);" << be_uidt
+          << be_uidt;
     }
   else
     {
       // Anonymous array.
-      *os << storage_class << node->nested_type_name (scope, "_slice", "_")
+      *os << storage_class.c_str() << node->nested_type_name (scope, "_slice", "_")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_alloc", "_")
-          << " (void);" << be_nl << be_nl;
-      *os << storage_class << "void" << be_nl
+          << " ();" << be_nl_2;
+      *os << storage_class.c_str() << "void" << be_nl
           << node->nested_type_name (scope, "_free", "_")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_slice" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-      *os << storage_class << node->nested_type_name (scope, "_slice", "_")
+          << " *_tao_slice);" << be_uidt
+          << be_uidt_nl << be_nl;
+      *os << storage_class.c_str() << node->nested_type_name (scope, "_slice", "_")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_dup", "_")
           << " (" << be_idt << be_idt_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_slice" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-      *os << storage_class << "void" << be_nl
+          << " *_tao_slice);" << be_uidt
+          << be_uidt_nl << be_nl;
+      *os << storage_class.c_str() << "void" << be_nl
           << node->nested_type_name (scope, "_copy", "_")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_to," << be_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_from" << be_uidt_nl
-          << ");" << be_uidt;
+          << " *_tao_from);" << be_uidt
+          << be_uidt;
     }
 
-  // Generate the endif macro.
-  os->gen_endif ();
-
-  node->cli_hdr_gen (1);
+  node->cli_hdr_gen (true);
   return 0;
 }

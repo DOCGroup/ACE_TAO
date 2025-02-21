@@ -1,21 +1,14 @@
-//$Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    RT_Properties.h
-//
-// = DESCRIPTION
-//     Defines a series of "real time" property that an Object
-//     or a POA created on a RT-ORB can have.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    RT_Properties.h
+ *
+ *   Defines a series of "real time" property that an Object
+ *   or a POA created on a RT-ORB can have.
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef RT_PROPERTIES_H_
 #define RT_PROPERTIES_H_
@@ -26,27 +19,25 @@ class RT_Properties
 {
 public:
   // -- Ctor/Dtor --
-  RT_Properties (void);
-  ~RT_Properties (void);
+  RT_Properties ();
+  ~RT_Properties () = default;
 
-  static RT_Properties * read_from (const char *file_name
-                                    ACE_ENV_ARG_DECL);
+  static RT_Properties * read_from (const ACE_TCHAR *file_name);
 
   // -- Accessor Methods --
   void priority (RTCORBA::Priority priority);
-  RTCORBA::Priority priority (void);
+  RTCORBA::Priority priority ();
 
   void priority_bands (const RTCORBA::PriorityBands& priority_bands);
-  const RTCORBA::PriorityBands& priority_bands (void);
+  const RTCORBA::PriorityBands& priority_bands ();
 
-  void ior_source (const char *s);
-  const char* ior_source (void);
+  void ior_source (const ACE_TCHAR *s);
+  const ACE_TCHAR* ior_source ();
 
 private:
-
   RTCORBA::Priority priority_;
   RTCORBA::PriorityBands priority_bands_;
-  char ior_source_[256];
+  ACE_TString ior_source_;
 };
 
 #endif /* RT_PROPERTIES_H_ */

@@ -1,4 +1,3 @@
-// $Id$
 // wxBindNewContext.h
 
 #ifndef i_wxBindNewContext_h

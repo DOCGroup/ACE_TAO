@@ -1,11 +1,6 @@
-//
-// $Id$
-//
 #include "Startup_Callback.h"
 
-ACE_RCSID(Client_Leaks, Startup_Callback, "$Id$")
-
-Startup_Callback::Startup_Callback (void)
+Startup_Callback::Startup_Callback ()
 {
 }
 
@@ -22,9 +17,7 @@ Startup_Callback::process_has_started (Test::Process_out the_process)
 }
 
 void
-Startup_Callback::started (Test::Process_ptr process
-                           ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Startup_Callback::started (Test::Process_ptr process)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->process_ = Test::Process::_duplicate (process);

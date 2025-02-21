@@ -1,8 +1,8 @@
 #include "TimeStamp.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_strings.h"
 
-// $Id$
 //TimeStamp Protocol Object
 
 TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (TAO_AV_Callback *callback,
@@ -19,10 +19,10 @@ TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (TAO_AV_Callback *callback,
 
 
 int
-TimeStamp_Protocol_Object::handle_input (void)
+TimeStamp_Protocol_Object::handle_input ()
 {
-  int n = this->transport_->recv (this->frame_->rd_ptr (),
-                                  this->frame_->size ());
+  ssize_t n = this->transport_->recv (this->frame_->rd_ptr (),
+                                      this->frame_->size ());
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_Flow_Handler::handle_input recv failed\n"),-1);
   if (n == -1)
@@ -33,7 +33,7 @@ TimeStamp_Protocol_Object::handle_input (void)
 }
 
 //  int
-//  TimeStamp_Protocol_Object::handle_input (void)
+//  TimeStamp_Protocol_Object::handle_input ()
 //  {
 //    iovec iov;
 //    int iovcnt;
@@ -51,12 +51,12 @@ TimeStamp_Protocol_Object::handle_input (void)
 //                n,
 //                frame_size));
 
-//        ACE_Message_Block* mb;
+//        ACE_Message_Block* mb = 0;
 //        ACE_NEW_RETURN (mb,
 //                    ACE_Message_Block(frame_size),
 //                    -1);
 
-//        ACE_OS_String::memmove (mb->rd_ptr (), iov.iov_base, frame_size);
+//        ACE_OS::memmove (mb->rd_ptr (), iov.iov_base, frame_size);
 //        mb->wr_ptr (mb->rd_ptr () + frame_size);
 
 //        //      iov_base += frame_size;
@@ -83,22 +83,21 @@ TimeStamp_Protocol_Object::handle_input (void)
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "(%N|%l) Frame Size %d\n",
 //                    n));
-//      ACE_OS_String::memmove (this->frame_->rd_ptr (), iov.iov_base, n);
+//      ACE_OS::memmove (this->frame_->rd_ptr (), iov.iov_base, n);
 //      this->frame_->wr_ptr (this->frame_->rd_ptr () + n);
 //        }
 //      else
 //        {
-
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "(%N|%l) Frame Size %d\n",
 //                  n));
 
-//      ACE_Message_Block* mb;
+//      ACE_Message_Block* mb = 0;
 //      ACE_NEW_RETURN (mb,
 //                      ACE_Message_Block (frame_size),
 //                      -1);
 
-//      ACE_OS_String::memmove (mb->rd_ptr (), iov.iov_base, n);
+//      ACE_OS::memmove (mb->rd_ptr (), iov.iov_base, n);
 //      mb->wr_ptr (mb->rd_ptr () + n);
 //      prev->cont (mb);
 //        }
@@ -137,12 +136,12 @@ TimeStamp_Protocol_Object::send_frame (ACE_Message_Block *frame,
               "Time Stamp %u usecs\n",
               val_1));
 
-  ACE_OS_String::memcpy (timestamp->wr_ptr (), &now, sizeof (now));
+  ACE_OS::memcpy (timestamp->wr_ptr (), &now, sizeof (now));
   timestamp->wr_ptr (sizeof (now));
 
   frame->cont (timestamp);
 
-  int result = this->transport_->send (frame);
+  ssize_t result = this->transport_->send (frame);
   if (result < 0)
     return result;
   return 0;
@@ -168,23 +167,23 @@ TimeStamp_Protocol_Object::send_frame (const char* buf,
 
 /// end the stream.
 int
-TimeStamp_Protocol_Object::destroy (void)
+TimeStamp_Protocol_Object::destroy ()
 {
   this->callback_->handle_destroy ();
   return 0;
 }
 
 
-TimeStamp_Protocol_Factory::TimeStamp_Protocol_Factory (void)
+TimeStamp_Protocol_Factory::TimeStamp_Protocol_Factory ()
 {
 }
 
-TimeStamp_Protocol_Factory::~TimeStamp_Protocol_Factory (void)
+TimeStamp_Protocol_Factory::~TimeStamp_Protocol_Factory ()
 {
 }
 
 int
-TimeStamp_Protocol_Factory::init (int, char **)
+TimeStamp_Protocol_Factory::init (int, ACE_TCHAR **)
 {
   ACE_DEBUG ((LM_DEBUG,
               "TimeStamp_Protocol_Factory::init\n"));
@@ -232,8 +231,6 @@ ACE_STATIC_SVC_DEFINE (TimeStamp_Protocol_Factory,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
-
-
 
 
 

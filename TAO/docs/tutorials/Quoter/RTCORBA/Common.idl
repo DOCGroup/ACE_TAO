@@ -1,0 +1,73 @@
+/**
+ * @file Common.idl
+ * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
+
+ *
+ * Contains common IDL definitions in the Publish/Subscribe Real-time CORBA
+ * Stock Quoter Service.
+ */
+
+#ifndef QUOTER_COMMON_IDL
+#define QUOTER_COMMON_IDL
+
+#include "tao/StringSeq.pidl"
+
+module Stock
+{
+  exception Invalid_Stock
+  {
+  };
+
+  /// Contains information about a single stock.
+  struct StockInfo
+  {
+    string name;
+    long high;
+    long low;
+    long last;
+  };
+
+  /// Used to communicate an available update.
+  valuetype StockNames
+  {
+    public CORBA::StringSeq names;
+  };
+
+  valuetype Cookie
+  {
+    public string cookie_id;
+  };
+
+  interface Trigger
+  {
+    void start ();
+    void stop ();
+  };
+
+  /**
+   * @class StockNameConsumer
+   * @brief Callback interface used by the distributor to notify brokers of updates.
+   */
+  interface StockNameConsumer
+  {
+    void push_StockName (in StockNames the_stocknames);
+
+    attribute Cookie cookie_;
+  };
+
+  /**
+   * @class StockQuoter
+   * @brief Provides an interface for brokers to get detailed stock information.
+   */
+  interface StockQuoter
+  {
+    /// Returns detailed stock information to brokers.
+    /// @param stockname A valid name for a stock.
+    /// @returns Completed stockinfo struct.
+    StockInfo get_stock_info (in string stock_name) raises (Invalid_Stock);
+  };
+};
+
+#endif

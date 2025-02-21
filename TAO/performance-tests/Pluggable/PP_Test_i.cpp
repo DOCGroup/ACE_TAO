@@ -1,23 +1,16 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/Pluggable
-//
-// = FILENAME
-//    PP_Test_i.cpp
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PP_Test_i.cpp
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Constants.h"
 #include "PP_Test_i.h"
-
-ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -67,16 +60,15 @@ Pluggable_Test_Factory_i::Pluggable_Test_Factory_i (CORBA::ORB_ptr orb)
 
 // Factory Destructor
 
-Pluggable_Test_Factory_i::~Pluggable_Test_Factory_i (void)
+Pluggable_Test_Factory_i::~Pluggable_Test_Factory_i ()
 {
 }
 
 Pluggable_Test_ptr
-Pluggable_Test_Factory_i::make_pluggable_test (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+Pluggable_Test_Factory_i::make_pluggable_test ()
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_MAKE_PLUGGABLE_START);
-  return my_pluggable_test_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return my_pluggable_test_._this ();
 }
 
 // Constructor
@@ -88,15 +80,14 @@ PP_Test_i::PP_Test_i (CORBA::ORB_ptr orb)
 
 // Destructor
 
-PP_Test_i::~PP_Test_i (void)
+PP_Test_i::~PP_Test_i ()
 {
 }
 
 // Oneway send
 
 void
-PP_Test_i::send_oneway (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+PP_Test_i::send_oneway ()
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_ONEWAY_START);
 }
@@ -104,16 +95,14 @@ PP_Test_i::send_oneway (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Twoway send
 
 void
-PP_Test_i::send_void (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+PP_Test_i::send_void ()
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_VOID_START);
 }
 
 // Shutdown.
 
-void PP_Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+void PP_Test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",

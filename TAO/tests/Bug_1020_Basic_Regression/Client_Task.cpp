@@ -1,10 +1,4 @@
-//
-// $Id$
-//
-
 #include "Client_Task.h"
-
-ACE_RCSID(Muxing, Client_Task, "$Id$")
 
 Client_Task::Client_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -12,20 +6,16 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb)
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

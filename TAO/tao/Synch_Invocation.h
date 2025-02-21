@@ -1,11 +1,7 @@
 // -*- C++ -*-
-//
 //=============================================================================
 /**
  *  @file    Synch_Invocation.h
- *
- *  $Id$
- *
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
@@ -20,17 +16,23 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/orbconf.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Operation_Details;
 class TAO_Synch_Reply_Dispatcher;
 class TAO_InputCDR;
-class ACE_Time_Value;
 class TAO_Bind_Dispatcher_Guard;
 
 namespace TAO
 {
   class Profile_Transport_Resolver;
+  class Invocation_Retry_State;
 
   /**
    * @class Synch_Twoway_Invocation
@@ -38,7 +40,7 @@ namespace TAO
    * @brief All the action for a synchronous twoway invocation happen
    * here.
    *
-   * An object of this is type is created by TAO::Invocation_Adapter
+   * An object of this type is created by TAO::Invocation_Adapter
    * and invokes a method on this class. The method takes care of
    * creating and sending a request, waiting for a reply and
    * demarshalling the reply for the client.
@@ -69,38 +71,35 @@ namespace TAO
     /// remote object.
     /**
      * There is a exception declaration in this method which ensures
-     * that the exceptions propogated by the remote objects are
+     * that the exceptions propagated by the remote objects are
      * converted a CORBA exceptions for the clients. This method does
      * a bunch of things necessary to create and send the
      * invocation. This method is also nerve centre for the
      * interceptor invocation points.
      */
-    Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time
-                                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::Exception));
+    Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time);
+
+    /**
+     * Indicate that retry state should be tracked and controlled
+     * in the presence of exceptions.
+     */
+    void set_retry_state (Invocation_Retry_State *retry_state);
 
   protected:
-
     /**
      * This method is selectively made virtual, so that inherited
      * classes can overload the  user exception handling type. For
      * example the DII needs a totally different method of
      * user exception exception handling
      */
-    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr
-                                                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::Exception));
+    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr);
 
     /// Helper method used to handle location forwarded replies.
-    Invocation_Status location_forward (TAO_InputCDR &cdr
-                                        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    Invocation_Status location_forward (TAO_InputCDR &cdr);
 
     /// Helper method used to handle system exceptions from the remote
     /// objects.
-    Invocation_Status handle_system_exception (TAO_InputCDR &cdr
-                                               ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    Invocation_Status handle_system_exception (TAO_InputCDR &cdr);
 
     /// As the name suggests waits for a reply from the remote ORB.
     /**
@@ -108,21 +107,17 @@ namespace TAO
      */
     Invocation_Status wait_for_reply (ACE_Time_Value *max_wait_time,
                                       TAO_Synch_Reply_Dispatcher &rd,
-                                      TAO_Bind_Dispatcher_Guard &bd
-                                      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                                      TAO_Bind_Dispatcher_Guard &bd);
+
+    Invocation_Retry_State *retry_state_;
 
   private:
-
     /// Helper method that checks the reply status of the
     /// replies and takes appropriate action.
     /**
      * This method returns an exception when there is an error.
      */
-    Invocation_Status check_reply_status (
-        TAO_Synch_Reply_Dispatcher &rd
-        ACE_ENV_ARG_DECL);
-
+    Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd);
   };
 
   /**
@@ -140,7 +135,6 @@ namespace TAO
    * - For some SYNC_SCOPE policies namely SYNC_WITH_TARGET and
    *   SYNC_WITH_SERVER the invocation classes have to treat the
    *   invocation as a twoway invocation (more or less)
-   *
    */
   class TAO_Export Synch_Oneway_Invocation
     : public Synch_Twoway_Invocation
@@ -162,9 +156,7 @@ namespace TAO
 
     /// Method used by the adapter to kickstart an oneway invocation
     /// to the remote object.
-    Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time
-                                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::Exception));
+    Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time);
   };
 
   /**
@@ -176,30 +168,26 @@ namespace TAO
   class TAO_Export Reply_Guard
   {
   public:
+    Reply_Guard (Invocation_Base *s, Invocation_Status is);
 
-    Reply_Guard (Invocation_Base *s,
-                 Invocation_Status is);
-
-    /// The destructor calls Invocation_Base::reply_received with the
-    /// right reply status, which is useful for PI's.
-    ~Reply_Guard (void);
+    /// The destructor calls Invocation_Base::invoke_status with the
+    /// right invoke status, which is useful for PI's.
+    ~Reply_Guard ();
 
     /// Mutator to set the invocation status.
     void set_status (Invocation_Status s);
 
   private:
-
     Reply_Guard (Reply_Guard const &);
     Reply_Guard & operator= (Reply_Guard const &);
 
   private:
-
     Invocation_Base * const invocation_;
     Invocation_Status status_;
   };
-
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Synch_Invocation.inl"

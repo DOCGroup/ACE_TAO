@@ -1,0 +1,331 @@
+commit 52ef6e819cc16c7670e91bf21f999c5c3177fc89
+Merge: 2b9b8e7bca7 8c195d9a185
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 2 17:19:04 2019 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 8c195d9a185d1b2621472583f6f480667fabeca7
+Merge: 4ed4298e82c 00d297c6000
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 29 14:19:50 2019 +0100
+
+    Merge pull request #845 from jwillemsen/jwi-vs2019
+    
+    Use Visual Studio 2019 draft azure devops image
+
+commit 00d297c6000912ff90c8e81b9ca775ca50c7b924
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 29 08:47:27 2019 +0100
+
+    List Visual Studio 2019
+    
+        * ACE/ACE-INSTALL.html:
+        * TAO/TAO-INSTALL.html:
+
+commit 2b9b8e7bca7f7238049f9dffedadc2cc45e43f11
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 19 15:15:43 2019 +0100
+
+    Fixed typo in comment
+    
+        * TAO/orbsvcs/tests/HTIOP/BiDirectional/client.cpp:
+        * TAO/orbsvcs/tests/Security/BiDirectional/client.cpp:
+        * TAO/orbsvcs/tests/Security/MT_BiDir_SSL/client.cpp:
+        * TAO/tests/BiDirectional/client.cpp:
+        * TAO/tests/BiDirectional_DelayedUpcall/client.cpp:
+        * TAO/tests/BiDirectional_NestedUpcall/client.cpp:
+        * TAO/tests/Bug_3068_Regression/client.cpp:
+        * TAO/tests/MT_BiDir/client.cpp:
+
+commit a3e8e77b2ef997f46332e6f4ecfa9fdc403cd08e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 13 15:35:02 2019 +0100
+
+    Removed empty line
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit 946d6369b0d8fa43bc0c79a3f1d50da6fdd278df
+Merge: 5daaa27eda7 8c633401a82
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 1 14:57:36 2019 -0800
+
+    Merge pull request #822 from iguessthislldo/igtd/tao_idl_fixes
+    
+     TAO_IDL: Fix Memory Leaks Caused By Annotations
+
+commit 8c633401a82e43bcb35ad39e7d773ca06936dc33
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Feb 1 13:53:46 2019 -0600
+
+    Update NEWS, annotations.md for Annotation Changes
+
+commit 10736ed1d9330f46a4a963993279c25399699946
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Feb 1 13:32:32 2019 -0600
+
+    TAO_IDL: Simplify Annotations API
+    
+    Move UTL_find_annotation() into AST_Annotation_AST as find()
+
+commit c71dc63961a23c20a47cac0e1334d8775587f12b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jan 31 16:44:12 2019 -0600
+
+    annotations.md: Small Change to Annotations API
+
+commit d5fdc518fa8ee1bd9c86891b42ce0ad7b32259ff
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jan 31 16:36:19 2019 -0600
+
+    TAO_IDL: Fix Memory Leaks Caused By Annotations
+    
+    At least as far as Valgrind running annotest_idl is concerned. The
+    majority of fixes were many missing destroys and deletes. The biggest
+    change is AST_Annotation_Appls are now stored in a class of that
+    name and managed using ACE_Bounded_Strong_Ptr because they can be shared
+    between AST_Decls.
+
+commit 8c3146a6f94d0aa074d8925b6f4a06f569ee5a6c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 29 11:11:49 2019 +0100
+
+    Removed noop comments, no need for that. Removed empty lines, some old commented out code and some unicode fixs
+    
+        * ACE/ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ACE/ACEXML/common/DefaultHandler.cpp:
+        * ACE/ACEXML/examples/SAXPrint/SAXPrint_Handler.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+        * TAO/examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * TAO/examples/Event_Comm/Notifier_Server.cpp:
+        * TAO/examples/OBV/Simple_util.cpp:
+        * TAO/examples/Persistent_Grid/Grid_i.cpp:
+        * TAO/examples/Persistent_Grid/Simple_util.cpp:
+        * TAO/examples/PluggableUDP/tests/Performance/UDP_i.cpp:
+        * TAO/examples/Simple/bank/AccountManager_i.cpp:
+        * TAO/examples/Simple/bank/Account_i.cpp:
+        * TAO/examples/Simple/grid/Grid_i.cpp:
+        * TAO/examples/Simple/time-date/Time_Date_Client_i.cpp:
+        * TAO/examples/Simple/time/Time_i.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * TAO/orbsvcs/Time_Service/Clerk_i.cpp:
+        * TAO/orbsvcs/Time_Service/Server_i.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+        * TAO/orbsvcs/tests/Bug_2247_Regression/test_i.cpp:
+        * TAO/orbsvcs/tests/Bug_2248_Regression/test_i.cpp:
+        * TAO/orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp:
+        * TAO/tao/LF_Multi_Event.cpp:
+        * TAO/tao/Transport.cpp:
+        * TAO/tests/Big_Reply/Big_Reply_i.cpp:
+        * TAO/tests/Bug_2935_Regression/sink_i.cpp:
+        * TAO/tests/Bug_3276_Regression/test_i.cpp:
+        * TAO/tests/CSD_Collocation/Collocation_Tester.cpp:
+        * TAO/tests/CSD_Collocation/Diamond_i.cpp:
+        * TAO/tests/Collocation/Collocation_Tester.cpp:
+        * TAO/tests/Collocation/Diamond_i.cpp:
+        * TAO/tests/DIOP/UDP_i.cpp:
+        * TAO/tests/InterOp-Naming/INS_i.cpp:
+        * TAO/tests/InterOp-Naming/Server_i.cpp:
+        * TAO/tests/MProfile/test_i.cpp:
+        * TAO/tests/MProfile_Connection_Timeout/test_i.cpp:
+        * TAO/tests/MProfile_Forwarding/Servant_Locator.cpp:
+        * TAO/tests/MProfile_Forwarding/test_i.cpp:
+        * TAO/tests/OBV/Simple/Simple_util.cpp:
+        * TAO/tests/RTCORBA/MT_Client_Protocol_Priority/test.idl:
+        * TAO/tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
+        * TAO/tests/Smart_Proxies/Collocation/Diamond_i.cpp:
+
+commit d0a3854868948c7dce47b7841a4dfb8df6d70460
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 27 18:51:09 2019 +0100
+
+    Revert "Fixed memory leak of annotation_appls_"
+
+commit 485ab65f3d0876152c9021d695f49a3f3f56c016
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 27 11:21:31 2019 +0100
+
+    Fixed memory leak of annotation_appls_
+    
+        * TAO/TAO_IDL/ast/ast_decl.cpp:
+
+commit 961b2a7b155a23daa95467ae3b2ee6a7bc3cb884
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 25 18:30:56 2019 +0100
+
+    Fix broken links and some doxygen enhancements
+    
+        * ACE/ACE-INSTALL.html:
+        * ACE/ACEXML/common/URL_Addr.h:
+        * ACE/examples/Web_Crawler/URL_Addr.h:
+        * TAO/docs/releasenotes/index.html:
+
+commit 09c2d013627c467c8a47cc27d1d41322df95a925
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 14:53:47 2019 +0100
+
+    Get rid of old emulated exception macros
+
+commit d893aeca9d82ea9aad38fb3a8640282e44ecf9ae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 14:36:41 2019 +0100
+
+    Updated some links to the OMG website
+
+commit d6c2132d85cadfc4318fbfe950ee7fd7e8869339
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 13:24:10 2019 +0100
+
+    Minor enhancements and fixes
+
+commit 66eaf237a23da01878840d97d33e115f8b3a2931
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 13:08:39 2019 +0100
+
+    Use TAO_ROOT instead of ACE_ROOT/TAO
+
+commit 8cfa9d0c4573c2d2de94f1cdbb12f1da409992d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 12:58:59 2019 +0100
+
+    Fixed broken links
+
+commit f942d55ac692343086cd6c3d3d0ac5477714dbb6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 12:42:41 2019 +0100
+
+    Fixed broken links
+
+commit 6f2f966de47619c67fa97c7cfdbb76476efe8f2d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 12:32:21 2019 +0100
+
+    Fixed broken links and updated email address D. Schmidt to the correct one
+
+commit 2625a420c002ef62f65a614cb99549daf03efcd2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:49:43 2019 +0100
+
+    Fixed various broken links
+
+commit 163b2346ec203758a6ee9135986a3a282ecaacdd
+Merge: 2b072ace999 31614d6781c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:14:01 2019 +0100
+
+    Merge branch 'master' into jwi-docucleanup
+
+commit 31614d6781c67d1ada07703c1f09dcf24e9f2202
+Merge: 2788d314447 ed8c137ff92
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:13:12 2019 +0100
+
+    Merge pull request #799 from jwillemsen/jwi-type
+    
+    Typo and logging fixed
+
+commit 2b072ace999e019e903379787b8ae13efb2eca5c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:10:09 2019 +0100
+
+    Updated several broken links
+
+commit d255148732f20ba5f25040ccd2d7221a3445f04c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:01:05 2019 +0100
+
+    Fixed broken links
+    
+        * ACE/ACE-INSTALL.html:
+        * TAO/docs/Security/index.html:
+        * TAO/docs/pluggable_protocols/index.html:
+
+commit 6810d927e782296b7c6606d625915c8bc72ff8df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 10:58:23 2019 +0100
+
+    Remove link to wustl website which is now broken
+    
+        * TAO/TAO_IDL/be/be_helper.cpp:
+
+commit dcfe399129e863c8dc46c6635e2266260befc265
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 10:54:07 2019 +0100
+
+    Fixed links to gperf pdf
+    
+        * ACE/apps/gperf/README:
+        * TAO/docs/compiler.html:
+
+commit a057027d628260ceffaa2ec8718d3981e1edab93
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 10:38:05 2019 +0100
+
+    Removed references to comp.soft-sys.ace as way to post issues, the mail forward is not working and github issues is the better place
+    
+        * ACE/ACE-INSTALL.html:
+        * ACE/README:
+        * ACE/contrib/FaCE/README:
+        * ACE/docs/ACE-bug-process.html:
+        * TAO/README:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/rtcorba/status.html:
+        * TAO/orbsvcs/ImplRepo_Service/README:
+
+commit 08bb96f546c2bf9c6dd0767babc69d2377234f47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 09:27:53 2019 +0100
+
+    Make x.5.4 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/copy-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit ed8c137ff9267c34729167b441307323aec5a7ab
+Merge: fe8227ca130 f52ebbaaaf9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 23 16:50:16 2019 +0100
+
+    Merge branch 'jwi-type2' into jwi-type
+
+commit f52ebbaaaf92f2384125be0ac64f70ef02792145
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 23 16:50:06 2019 +0100
+
+    Fixed typo
+    
+        * TAO/tests/Oneway_Timeouts/client.cpp:
+
+commit 8042beae2214ee193143a0cfe91d5089c9169892
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 23 16:49:52 2019 +0100
+
+    Const change
+    
+        * TAO/tao/Transport.cpp:
+
+commit fe8227ca130cce43657dcdcca667dd5fc0ab0da3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 23 12:27:31 2019 +0100
+
+    Add <> around tag value when logging
+    
+        * TAO/tao/Connector_Registry.cpp:
+
+commit 19fddb754fccbf6c85db7bca6ec871694606a32b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 23 12:27:13 2019 +0100
+
+    Fixed typo in logging
+    
+        * TAO/tao/Transport.cpp:

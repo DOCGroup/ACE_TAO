@@ -1,19 +1,13 @@
-// $Id$
+#include "orbsvcs/Trader/Constraint_Interpreter.h"
+#include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
+#include "orbsvcs/Trader/Constraint_Tokens.h"
 
-#include "Constraint_Interpreter.h"
-#include "Trader_Constraint_Visitors.h"
-
-ACE_RCSID (Trader, 
-           Constraint_Interpreter, 
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
     const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
     const char* constraints
-    ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                   CORBA::NO_MEMORY))
   : TAO_Interpreter ()
 {
   // @@ Throwing Exception from constructor is very nasty situation to
@@ -26,43 +20,38 @@ TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
       ACE_NEW_THROW_EX (this->root_,
                         TAO_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       if (this->build_tree (constraints) != 0)
-        ACE_THROW (CosTrading::IllegalConstraint (constraints));
+        throw CosTrading::IllegalConstraint (constraints);
 
       if (type_checker.validate (this->root_) == -1)
-        ACE_THROW (CosTrading::IllegalConstraint (constraints));
+        throw CosTrading::IllegalConstraint (constraints);
     }
 }
 
 TAO_Constraint_Interpreter::
 TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
-                           const char* constraints
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                   CORBA::NO_MEMORY))
+                           const char* constraints)
 {
   if (TAO_Interpreter::is_empty_string (constraints))
     {
       ACE_NEW_THROW_EX (this->root_,
                         TAO_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       if (this->build_tree (constraints) != 0)
-        ACE_THROW (CosTrading::IllegalConstraint (constraints));
+        throw CosTrading::IllegalConstraint (constraints);
 
       if (validator.validate (this->root_) == -1)
-        ACE_THROW (CosTrading::IllegalConstraint (constraints));
+        throw CosTrading::IllegalConstraint (constraints);
     }
 }
 
-TAO_Constraint_Interpreter::~TAO_Constraint_Interpreter (void)
+TAO_Constraint_Interpreter::~TAO_Constraint_Interpreter ()
 {
 }
 
@@ -81,11 +70,7 @@ TAO_Constraint_Interpreter::evaluate (TAO_Constraint_Evaluator& evaluator)
 
 TAO_Preference_Interpreter::TAO_Preference_Interpreter (
     const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-    const char* preference
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                   CORBA::NO_MEMORY))
+    const char* preference)
     : TAO_Interpreter ()
 {
   TAO_Trader_Constraint_Validator type_checker (ts);
@@ -95,24 +80,20 @@ TAO_Preference_Interpreter::TAO_Preference_Interpreter (
       ACE_NEW_THROW_EX (this->root_,
                         TAO_Noop_Constraint (TAO_FIRST),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       if (this->build_tree (preference) != 0)
-        ACE_THROW (CosTrading::Lookup::IllegalPreference (preference));
+        throw CosTrading::Lookup::IllegalPreference (preference);
 
       if (type_checker.validate (this->root_) == -1)
-        ACE_THROW (CosTrading::Lookup::IllegalPreference (preference));
+        throw CosTrading::Lookup::IllegalPreference (preference);
     }
 }
 
 TAO_Preference_Interpreter::
 TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
-                           const char* preference
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                   CORBA::NO_MEMORY))
+                           const char* preference)
     : TAO_Interpreter ()
 {
   if (TAO_Interpreter::is_empty_string (preference))
@@ -120,15 +101,14 @@ TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
       ACE_NEW_THROW_EX (this->root_,
                         TAO_Noop_Constraint (TAO_FIRST),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       if (this->build_tree (preference) != 0)
-        ACE_THROW (CosTrading::Lookup::IllegalPreference (preference));
+        throw CosTrading::Lookup::IllegalPreference (preference);
 
       if (validator.validate (this->root_) == -1)
-        ACE_THROW (CosTrading::Lookup::IllegalPreference (preference));
+        throw CosTrading::Lookup::IllegalPreference (preference);
     }
 }
 
@@ -185,7 +165,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
                    offer_iter.done () == 0;
                    offer_iter.advance (), i++)
                 {
-                  Preference_Info* current_offer;
+                  Preference_Info* current_offer = 0;
                   offer_iter.next (current_offer);
 
                   // Maintain the sorted order in the first partition.
@@ -244,17 +224,9 @@ remove_offer (CosTrading::Offer*& offer)
 
 
 size_t
-TAO_Preference_Interpreter::num_offers (void)
+TAO_Preference_Interpreter::num_offers ()
 {
   return this->offers_.size ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<TAO_Preference_Interpreter::Preference_Info>;
-template class ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info>;
-template class ACE_Unbounded_Queue_Iterator<TAO_Preference_Interpreter::Preference_Info>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<TAO_Preference_Interpreter::Preference_Info>
-#pragma instantiate ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Preference_Interpreter::Preference_Info>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+TAO_END_VERSIONED_NAMESPACE_DECL

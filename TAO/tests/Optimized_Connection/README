@@ -1,0 +1,26 @@
+/**
+
+
+
+@page Optimized_Connection Test README File
+
+        This is a test of the Optimized Connection Endpoint Selector.
+The OC provides the means to set a connection timeout.
+
+	Instead of a server we use a invalid IOR. The hostname defined in
+the IOR has to meet the following criteria:
+* It needs to be invalid, else the connection isn't attempted.
+* It respond to the connection request.
+* Most popular web-sites meet this criteria.
+
+Normally this will result in the client waiting for a TCP timeout. However
+in this test we configure a 1300 milliseconds timeout.
+
+        If in future the IOR host starts responding(results in test failure),
+please regenerate a valid one using the ../Hello/server.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.

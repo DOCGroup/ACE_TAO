@@ -1,14 +1,10 @@
-
 // -*- C++ -*-
 
 // ===================================================================
 /**
  *  @file   RT_Protocols_Hooks.h
  *
- *  $Id$
- *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
- *
  */
 // ===================================================================
 
@@ -21,8 +17,9 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "Priority_Mapping_Manager.h"
-#include "Network_Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/rtcorba_export.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 
 #include "tao/Protocols_Hooks.h"
 
@@ -32,68 +29,47 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_RTCORBA_Export TAO_RT_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
   /// Constructor
-  TAO_RT_Protocols_Hooks (void);
+  TAO_RT_Protocols_Hooks ();
 
   /// Destructor
-  virtual ~TAO_RT_Protocols_Hooks (void);
+  virtual ~TAO_RT_Protocols_Hooks ();
 
   /// Initialize the protocols hooks instance.
-  void init_hooks (TAO_ORB_Core *orb_core
-                   ACE_ENV_ARG_DECL);
+  void init_hooks (TAO_ORB_Core *orb_core);
 
   CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
-                                              TAO_Stub *stub
-                                              ACE_ENV_ARG_DECL);
+                                              TAO_Stub *stub);
 
   CORBA::Boolean set_server_network_priority (IOP::ProfileId protocol_tag,
-                                              CORBA::Policy *policy
-                                              ACE_ENV_ARG_DECL);
+                                              CORBA::Policy *policy);
 
-  void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties);
 
-  void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties);
 
-  void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties);
 
-  void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties);
 
-  void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
-                                                ACE_ENV_ARG_DECL);
+  void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties);
 
-  CORBA::Long get_dscp_codepoint (void);
-
-  void rt_service_context (TAO_Stub *stub,
-                           TAO_Service_Context &service_context,
-                           CORBA::Boolean restart
-                           ACE_ENV_ARG_DECL);
-
-  void add_rt_service_context_hook (TAO_Service_Context &service_context,
-                                    CORBA::Policy *model_policy,
-                                    CORBA::Short &client_priority
-                                    ACE_ENV_ARG_DECL);
+  CORBA::Long get_dscp_codepoint ();
 
   void get_selector_hook (CORBA::Policy *model_policy,
                           CORBA::Boolean
@@ -104,7 +80,7 @@ public:
                                        CORBA::Short priority,
                                        CORBA::Short &min_priority,
                                        CORBA::Short &max_priority,
-                                       int &in_range);
+                                       bool &in_range);
 
   /**
    * Accessor and modifier to the current thread priority, used to
@@ -112,68 +88,54 @@ public:
    * some critical components.
    */
   //@{
-  int get_thread_CORBA_priority (CORBA::Short &
-                                 ACE_ENV_ARG_DECL);
+  int get_thread_CORBA_priority (CORBA::Short &priority);
 
-  int get_thread_native_priority (CORBA::Short &
-                                  ACE_ENV_ARG_DECL);
+  int get_thread_native_priority (CORBA::Short &);
 
-  int get_thread_CORBA_and_native_priority (CORBA::Short &,
-                                            CORBA::Short &
-                                            ACE_ENV_ARG_DECL);
+  int get_thread_CORBA_and_native_priority (CORBA::Short &, CORBA::Short &);
 
-  int set_thread_CORBA_priority (CORBA::Short
-                                 ACE_ENV_ARG_DECL);
+  int get_thread_implicit_CORBA_priority (CORBA::Short&);
 
-  int set_thread_native_priority (CORBA::Short
-                                  ACE_ENV_ARG_DECL);
+  int set_thread_CORBA_priority (CORBA::Short);
 
+  int restore_thread_CORBA_and_native_priority (CORBA::Short, CORBA::Short);
   //@}
 
 protected:
+  int set_thread_native_priority (CORBA::Short);
 
   RTCORBA::ProtocolProperties_ptr server_protocol_properties (IOP::ProfileId protocol_tag,
-                                                              CORBA::Policy_ptr policy
-                                                              ACE_ENV_ARG_DECL);
+                                                              CORBA::Policy_ptr policy);
 
   RTCORBA::ProtocolProperties_ptr client_protocol_properties (IOP::ProfileId protocol_tag,
-                                                              CORBA::Policy_ptr policy
-                                                              ACE_ENV_ARG_DECL);
+                                                              CORBA::Policy_ptr policy);
 
-  RTCORBA::ProtocolProperties_ptr server_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag
-                                                                           ACE_ENV_ARG_DECL);
+  RTCORBA::ProtocolProperties_ptr server_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag);
 
-  RTCORBA::ProtocolProperties_ptr client_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag
-                                                                           ACE_ENV_ARG_DECL);
+  RTCORBA::ProtocolProperties_ptr client_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag);
 
   RTCORBA::ProtocolProperties_ptr client_protocol_properties_at_object_level (IOP::ProfileId protocol_tag,
-                                                                              TAO_Stub *stub
-                                                                              ACE_ENV_ARG_DECL);
+                                                                              TAO_Stub *stub);
 
   void extract_protocol_properties (TAO_IIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                    ACE_ENV_ARG_DECL);
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   void extract_protocol_properties (TAO_UIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                    ACE_ENV_ARG_DECL);
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   void extract_protocol_properties (TAO_SHMIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                    ACE_ENV_ARG_DECL);
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   void extract_protocol_properties (TAO_DIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                    ACE_ENV_ARG_DECL);
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   void extract_protocol_properties (TAO_SCIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                    ACE_ENV_ARG_DECL);
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   CORBA::Boolean set_network_priority (IOP::ProfileId protocol_tag,
-                                       RTCORBA::ProtocolProperties_ptr protocol_properties
-                                       ACE_ENV_ARG_DECL);
+                                       RTCORBA::ProtocolProperties_ptr protocol_properties);
 
+protected:
   TAO_ORB_Core *orb_core_;
 
   // Save a reference to the priority mapping manager.
@@ -185,6 +147,9 @@ protected:
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

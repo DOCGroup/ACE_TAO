@@ -1,0 +1,45 @@
+// -*- MPC -*-
+project(*IDL): taoidldefaults {
+  IDL_Files {
+    ThreeTier.idl
+  }
+  custom_only = 1
+}
+
+project(*sink): taoserver {
+  exename = sink
+  after += *IDL
+  Source_Files {
+    ThreeTierC.cpp
+    ThreeTierS.cpp
+    sink_i.cpp
+    sink.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*middle) : taoserver {
+  exename = middle
+  after += *IDL
+  Source_Files {
+    ThreeTierC.cpp
+    ThreeTierS.cpp
+    middle_i.cpp
+    middle.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*source): taoclient {
+  exename = source
+  after += *IDL
+  Source_Files {
+    ThreeTierC.cpp
+    source.cpp
+    source_i.cpp
+  }
+  IDL_Files {
+  }
+}

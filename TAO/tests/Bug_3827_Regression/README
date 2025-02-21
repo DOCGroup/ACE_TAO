@@ -1,0 +1,18 @@
+
+
+Valuetype factory related operations from different threads
+after orb was just shutdown could result in SIGSEGV.
+
+_Expected Success Output_
+$> ./run_test.pl
+(29829|140197396228368) Event loop started
+(29829|140197437130512) Shutting down / destroying ORB
+(29829|140197396228368) Event loop finished
+
+_Expected Regression Output_
+$> ./run_test.pl
+(751|139948587792656) Event loop started
+(751|139948628694800) Shutting down / destroying ORB
+(751|139948587792656) Event loop finished
+ERROR: <test> exited with signal 11 : SEGV
+ERROR: server returned 255

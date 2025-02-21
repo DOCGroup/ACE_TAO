@@ -4,8 +4,6 @@
 /**
  *  @file   EventChannelFactory_i.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -29,25 +27,11 @@ public:
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-    ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , PortableGroup::NoFactory
-    , PortableGroup::ObjectNotCreated
-    , PortableGroup::InvalidCriteria
-    , PortableGroup::InvalidProperty
-    , PortableGroup::CannotMeetCriteria
-    )) ;
+    );
 
   virtual void delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-    ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , PortableGroup::ObjectNotFound
-    ));
+    );
 
 private:
   CORBA::Object_ptr create_process (

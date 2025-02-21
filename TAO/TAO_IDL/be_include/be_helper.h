@@ -1,90 +1,98 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_helper.h
-//
-// = DESCRIPTION
-//    Defines the abstract class for outputting the C++ mapping. This is a
-//    helper class to the singleton TAO_CodeGen class
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-//    Improvements by Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_helper.h
+ *
+ *  Defines the abstract class for outputting the C++ mapping. This is a
+ *  helper class to the singleton TAO_CodeGen class
+ *
+ *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
+ */
+//=============================================================================
 
 #ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H
 
 #include "ace/CDR_Base.h"
+#include "ace/SString.h"
+
+#include "ace/OS_NS_stdio.h"
+#include <type_traits>
 
 class Identifier;
 class UTL_IdList;
 class AST_Expression;
 
-// a dummy structure to inform TAO_OutStream's << operator to  put a newline
+// A dummy structure to inform TAO_OutStream's << operator to  put a newline
 // and use the current indentation for the succeeding line
 struct TAO_NL
 {
-public:
-  TAO_NL (void);
+  TAO_NL ();
 };
 
+struct TAO_NL_2
+{
+  TAO_NL_2 ();
+};
+
+/**
+ * Operates like a manipulator, increasing the indentation level.
+ *
+ * Increase the indentation level, if the "do_now" parameter is
+ * not zero then the <indent> method is called on the stream.
+ */
 struct TAO_INDENT
 {
-  // = TITLE
-  //   Operates like a manipulator, increasing the indentation level.
-  //
-  // = DESCRIPTION
-  //   Increase the indentation level, if the "do_now" parameter is
-  //   not zero then the <indent> method is called on the stream.
-  //
   TAO_INDENT (int do_now = 0);
 
   const int do_now_;
 };
 
+/**
+ * Operates like a manipulator, decreasing the indentation level.
+ *
+ * Decrease the indentation level, if the "do_now" parameter is
+ * not zero then the <indent> method is called on the stream.
+ */
 struct TAO_UNINDENT
 {
-  // = TITLE
-  //   Operates like a manipulator, decreasing the indentation level.
-  //
-  // = DESCRIPTION
-  //   Decrease the indentation level, if the "do_now" parameter is
-  //   not zero then the <indent> method is called on the stream.
-  //
   TAO_UNINDENT (int do_now = 0);
 
   const int do_now_;
 };
 
 extern const TAO_NL be_nl;
+extern const TAO_NL_2 be_nl_2;
 extern const TAO_INDENT be_idt;
 extern const TAO_INDENT be_idt_nl;
 extern const TAO_UNINDENT be_uidt;
 extern const TAO_UNINDENT be_uidt_nl;
 
+// A structure to inform TAO_OutStream's << operator to
+// conditionally output a newline and some form of "ACE_CHECK".
+struct TAO_ACE_CHECK
+{
+  TAO_ACE_CHECK (const char *retval = 0,
+                 bool do_return = false);
+
+  const char *retval_;
+  bool do_return_;
+};
+
+/**
+ * @class TAO_OutStream
+ *
+ * Defines an interface by which the backend code generator can
+ * print its output to the underlying I/O handle. This is a
+ * helper class that will be used by the TAO_CodeGen
+ * class. However, this is an abstract class and classes that
+ * understand specific front ends must derive from this class.
+ */
 class TAO_OutStream
 {
-  // =TITLE
-  //   TAO_OutStream
-  //
-  // =DESCRIPTION
-  //    Defines an interface by which the backend code generator can
-  //    print its output to the underlying I/O handle. This is a
-  //    helper class that will be used by the TAO_CodeGen
-  //    class. However, this is an abstract class and classes that
-  //    understand specific front ends must derive from this class.
 public:
-
-  // Enumerated type to indicate the stream type
+  /// Enumerated type to indicate the stream type
   enum STREAM_TYPE
     {
       TAO_CLI_HDR,
@@ -98,129 +106,133 @@ public:
       TAO_SVR_TMPL_INL,
       TAO_SVR_IMPL,
       TAO_SVR_TMPL_IMPL,
-      TAO_GPERF_INPUT
+      TAO_GPERF_INPUT,
+      CIAO_SVNT_HDR,
+      CIAO_SVNT_IMPL,
+      CIAO_SVNT_T_HDR,
+      CIAO_SVNT_T_IMPL,
+      CIAO_EXEC_HDR,
+      CIAO_EXEC_IMPL,
+      CIAO_EXEC_IDL,
+      CIAO_EXEC_SVNT,
+      CIAO_CONN_HDR,
+      CIAO_CONN_IMPL,
+      CIAO_AMI4CCM_CONN_IDL,
+      CIAO_AMI_RH_IMPL_HDR,
+      CIAO_AMI_RH_IMPL_SRC
     };
 
-  TAO_OutStream (void);
-  // constructor.
+  TAO_OutStream ();
 
-  virtual ~TAO_OutStream (void);
-  // destructor.
+  virtual ~TAO_OutStream ();
 
+  /// Open the underlying low-level handle for output.
   int open (const char *fname,
             TAO_OutStream::STREAM_TYPE st = TAO_OutStream::TAO_CLI_HDR);
-  // open the underlying low-level handle for output.
 
+  /// Set the stream type
   void stream_type (TAO_OutStream::STREAM_TYPE);
-  // set the stream type
 
-  TAO_OutStream::STREAM_TYPE stream_type (void);
-  // return the stream type
+  /// Return the stream type
+  TAO_OutStream::STREAM_TYPE stream_type ();
 
-  FILE *file (void);
-  // Return the underlying lowlevel file pointer.
+  /// Return the underlying lowlevel file pointer.
+  FILE *&file ();
 
+  /// Increment the indentation level and by default actually indent the output
+  /// accordingly
   int incr_indent (unsigned short flag = 1);
-  // increment the indentation level and by default actually indent the output
-  // accordingly
 
+  /// Decrease the indentation level and by default actually indent the output
+  /// accordingly
   int decr_indent (unsigned short flag = 1);
-  // decrease the indentation level and by default actually indent the output
-  // accordingly
 
-  int reset (void);
-  // reset indentation level to 0
+  /// Reset indentation level to 0
+  int reset ();
 
-  int indent (void);
-  // indent starting next line
+  /// Indent starting next line
+  int indent ();
 
-  int nl (void);
-  // put a newline and indent on the next line
+  /// Put a newline and indent on the next line
+  int nl ();
 
-  int print (const char *format, ...);
-  // "printf" style variable argument print
+  /// "printf" style variable argument print
+  int print (const char *format, ...)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
+  /// Generate a #if !defined, #defined macro
   int gen_ifdef_macro (const char *flat_name,
                        const char *suffix = 0,
                        bool add_stream_type_suffix = true);
-  // generate a #if !defined, #defined macro
 
-  int gen_endif (void);
-  // generate an endif statement
-
-  int gen_ifdef_AHETI (void);
-  // generate the ACE_HAS_EXPLICIT... ifdef
-
-  int gen_elif_AHETI (void);
-  // generate the ACE_HAS_EXPLICIT... elif
-
-  int gen_endif_AHETI (void);
-  // generate the ACE_HAS_EXPLICIT... endif
+  /// Generate an endif statement
+  int gen_endif ();
 
   // =overloaded operators
+  // Avoid duplication for the underlying type of size_t
+  template <typename Dummy = TAO_OutStream &>
+  typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
+                          !std::is_same<ACE_CDR::ULongLong, size_t>::value &&
+                          !std::is_same<ACE_CDR::ULong, size_t>::value,
+                          TAO_OutStream &>::type
+  operator << (const size_t num)
+  {
+    ACE_OS::fprintf (this->fp_,
+                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
+                     num);
+
+    return *this;
+  }
 
   TAO_OutStream &operator<< (const char *str);
-  // output the char string and return a reference to ourselves
-
+  TAO_OutStream &operator<< (char ch);
+  TAO_OutStream &operator<< (const ACE_CString &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
-  // output the integer and return a reference to ourselves
-
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
-  // output the integer and return a reference to ourselves
-
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);
-  // output the integer and return a reference to ourselves
-
   TAO_OutStream &operator<< (const ACE_CDR::Long num);
-  // output the integer and return a reference to ourselves
-
-#if defined (ACE_WIN64)
   TAO_OutStream &operator<< (const ACE_CDR::ULongLong num);
-  // output the integer and return a reference to ourselves
-
   TAO_OutStream &operator<< (const ACE_CDR::LongLong num);
-  // output the integer and return a reference to ourselves
-#endif /* ACE_WIN64 */
-
-  TAO_OutStream &operator<< (const unsigned long num);
-  // output the integer and return a reference to ourselves
-
-  TAO_OutStream &operator<< (const long num);
-  // output the integer and return a reference to ourselves
 
   // = MANIPULATORS
 
   TAO_OutStream &operator<< (const TAO_NL& nl);
+  TAO_OutStream &operator<< (const TAO_NL_2& nl_twice);
   TAO_OutStream &operator<< (const TAO_INDENT& i);
   TAO_OutStream &operator<< (const TAO_UNINDENT& i);
 
   // The following will be provided by specialized classes
 
+  /// Output an Identifier node
   TAO_OutStream &operator<< (Identifier *id);
-  // output an Identifier node
 
+  /// Output a scoped name
   TAO_OutStream &operator<< (UTL_IdList *idl);
-  // output a scoped name
 
+  /// Output an AST_Expression node
   TAO_OutStream &operator<< (AST_Expression *expr);
-  // output an AST_Expression node
 
-  // provided by specialized classes
-  virtual TAO_OutStream &print (Identifier *id) = 0;
+  TAO_OutStream &print (Identifier *id);
 
-  virtual TAO_OutStream &print (UTL_IdList *idl) = 0;
+  TAO_OutStream &print (UTL_IdList *idl);
 
-  virtual TAO_OutStream &print (AST_Expression *idl) = 0;
+  TAO_OutStream &print (AST_Expression *idl);
+
+  void insert_comment (const char *file, int line);
+#define TAO_INSERT_COMMENT(STRM) (STRM)->insert_comment (__FILE__, __LINE__)
 
 protected:
+  /// The underlying low-level I/O handle
   FILE *fp_;
-  // the underlying low-level I/O handle
 
+  /// Stream type
   TAO_OutStream::STREAM_TYPE st_;
-  // stream type
 
+  /// Indentation level
   int indent_level_;
-  // indentation level
+
+  /// Used to set tab spaces.
+  ACE_CString tab_unit_str_;
 };
 
 #endif // if !defined

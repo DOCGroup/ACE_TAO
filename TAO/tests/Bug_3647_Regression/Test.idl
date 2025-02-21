@@ -1,0 +1,47 @@
+/**
+ * @namespace Bug_3647_Regression
+ *
+ * Keep the types in this test to its own namespace.
+ *
+ * Keeping each test in its own namespace makes it easier to generate
+ * Doxygen documentation for all the tests.  Also, it makes it clear as to
+ * what types are local vs. coming from the library vs. generated.
+ */
+
+module Bug_3647_Regression
+{
+  typedef sequence<octet> Payload;
+
+  interface Backend
+  {
+    /// This operation is called during the startup, to make sure all
+    /// servers are talking to each other and communication has been
+    /// established.
+    void startup_test();
+
+    /// When called this will just consume the data.  The idea is to
+    /// generate network/traffic load.
+    oneway void ping(in Payload the_payload);
+
+    /// When called this will cause the single thread in the server to
+    /// block for the specified number of seconds.
+    oneway void freeze(in unsigned long seconds);
+
+    /// Shutdown the server
+    oneway void shutdown();
+  };
+
+  interface Middle
+  {
+    /// This operation is called during the startup, to make sure all
+    /// servers are talking to each other and communication has been
+    /// established.
+    void startup_test();
+
+    /// When called this operation should return immediately.
+    void ping();
+
+    /// Shutdown the server
+    oneway void shutdown();
+  };
+};

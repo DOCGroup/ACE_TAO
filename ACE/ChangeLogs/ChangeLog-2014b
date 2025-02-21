@@ -1,0 +1,301 @@
+Tue Nov 25 14:52:51 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Fixed cygwin setup instructions as reported by
+          Koh Onishi <k_onishi at mtj dot biglobe dot ne dot jp> in
+          bugzilla 4066
+
+Tue Nov 25 09:18:14 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Task.h:
+        * ace/Task.inl:
+          Making the lock_ member mutable removes the need for
+          const_cast<>()-ing in guard expressions.
+
+Mon Nov 24 11:20:09 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Abstract_Timer_Queue.h:
+          Doxygen fix
+
+Mon Nov 24 10:49:54 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Task.inl:
+          Removed unnecessary lock.
+
+Fri Nov 14 15:03:21 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc14nmake.mpb:
+          Disable warnings 4456, 4458, and 4459 with Visual Studio 2015
+          when we are using nmake
+
+Fri Nov 14 08:14:39 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Make 6.3.0 public
+
+        * bin/MakeProjectCreator/config/vc12.features:
+        * bin/MakeProjectCreator/config/vc14.features:
+          Missing features files
+
+        * bin/MakeProjectCreator/config/vc_warnings.mpb:
+          Disable warnings 4456, 4458, and 4459 with Visual Studio 2015
+
+Fri Nov 14 08:38:16 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.3.0 released.
+
+Thu Nov 13 11:31:37 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-lite.h: Adjust ACE_DECLARE_STL_REVERSE_ITERATORS to
+          work with Solaris Studio 12.4.
+
+        * NEWS: Note support for Solaris Studio 12.4.
+
+Mon Nov 10 15:45:42 UTC 2014  Johnny Willemsen  <willemsen_j@remedy.nl>
+
+        * ace/CDR_Stream.h:
+          Doxygen fixes
+
+Mon Nov 10 12:39:18 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * NEWS:
+          Updated.
+
+Thu Nov  6 19:45:38 UTC 2014  Johnny Willemsen  <willemsen_j@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc_warnings.mpb:
+          Visual Studio 2013 Update 3 gives a lot of warnings on deprecated
+          ascii winsock calls but they just work, so no need to change our
+          code. Added new feature vc_avoid_winsock_warnings which is enabled
+          by default, this adds _WINSOCK_DEPRECATED_NO_WARNINGS to the
+          compiler falgs. If you want to see all warnings, set
+          vc_avoid_winsock_warnings to 0 in your default.features file before
+          generatin the project files
+
+Tue Nov  4 14:37:56 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace_inet.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Set UML_LOOK to NO, with UML look all members/methods are shown
+          in the diagrams making them unusable
+
+Mon Nov  3 12:50:28 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/WIN32_Asynch_IO.cpp:
+          Do not pass holder for bytes written when using OVERLAPPED IO.
+          Pass NULL instead. Recommended by MSDN.
+
+        * tests/Proactor_File_Test.cpp:
+          Circumvent problems with unreliable Async IO on older Win32
+          (WinXP, Win2003/2008).
+
+Fri Oct 31 14:10:52 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          No need for lsb
+
+Fri Oct 31 13:49:11 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/WIN32_Asynch_IO.h:
+        * ace/WIN32_Asynch_IO.cpp:
+          Changed ACE_WIN32_Asynch_Write classes to not use shared_write() method
+          for Stream and File IO but use specific write() implementations instead.
+          This fixes Asynch File IO support (specifically writing) for Windows.
+          Fixes Bugzilla #3762 and #3992.
+
+        * tests/Proactor_File_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added new example/regression test for Asynch File IO using Proactor.
+
+Wed Oct 29 20:22:38 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd: Change LDFLAGS for HP-UX to do install_rpath correctly.
+          Fixes Bugzilla #4170.
+
+Tue Oct 28 09:51:14 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/docs/templates/gnu.txt:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * include/makeinclude/wrapper_macros.GNU:
+          Added (optional) support for per project output directories for
+          object files. Fixes Bugzilla #3868.
+
+Tue Oct 28 08:00:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_4189_Regression_Test.cpp:
+          Use PF_INET, that is the default argument of ACE_SOCK_Dgram_Bcast
+
+Mon Oct 27 18:06:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Don't define SO_REUSEPORT when it is not defined, the code
+          that uses this as argument to call ACE_OS::setsockopt only works
+          when this has been defined. Defining it here to a dummy value
+          causes us to call the Windows API with an invalid argument
+
+Mon Oct 27 12:32:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+        * ace/os_include/sys/os_types.h:
+          Introduce new ACE_LACKS_PID_T which is set on Windows, but
+          not with MinGW
+
+Mon Oct 27 07:57:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.inl:
+          Removed the ignore of SO_REUSEADDR on windows, this is needed
+          for ACE_SOCK_Dgram_Bcast to work, see bugzilla 4189. Also removed
+          the Windows specific change of SO_REUSEPORT to SO_REUSEADDR, this
+          are different flags that we should not merge at this level.
+
+Fri Oct 24 18:41:42 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_4189_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          New test for bugzilla 4189, on Windows it is not possible
+          at this moment to open a ACE_SOCK_Dgram_Bcast multiple times
+          on the same port, even when reuse_addr has been set to 1
+
+Thu Oct 23 19:41:00 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * tests/Naming_Test.cpp: Fixed data type warning for conversion on
+          %d formatting for Mingw.
+
+Tue Oct 21 15:45:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/ETCL/ETCL_l.cpp:
+          Scoreboard cleanup.
+
+Mon Oct 20 15:37:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ACEXML/common/XMLFilterImpl.h:
+        * ACEXML/common/XMLFilterImpl.cpp:
+        * ACEXML/parser/parser/Entity_Manager.h:
+        * ace/ETCL/ETCL_l.cpp:
+        * protocols/ace/RMCast/Flow.h:
+        * protocols/ace/RMCast/Flow.cpp:
+        * protocols/ace/RMCast/Reassemble.h:
+        * protocols/ace/RMCast/Reassemble.cpp:
+        * protocols/ace/TMCast/TransactionController.hpp:
+          Clean up unused member warnings identified by clang 6.0.
+
+        * bin/PerlACE/Process_Unix.pm:
+          increase the valgrind wait factor to accommodate slower machines.
+
+Mon Oct 13 18:59:00 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * apps/mkcsregdb/mkcsregdb.cpp: Fix data type error on Windows.
+
+Mon Oct 13 17:24:21 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Added package for killall
+
+Sat Oct 11 21:09:07 UTC 2014  Steve Huston  <shuston@.riverace.com>
+
+        * ace/Process.cpp (ACE_Process_Options::setenv (const ACE_TCHAR *, ...):
+          Avoid the secret, magic number buried in ACE_OS::vsprintf() for
+          platforms that support ACE_OS::vsnprintf. Allows full use of
+          DEFAULT_COMMAND_LINE_BUF_LEN as well as customizing that value
+          to a higher size. Thanks to John Lilley for this improvement.
+
+Sat Oct 11 20:45:03 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * apps/drwho/File_Manager.cpp: Fixed const-ness compile warning.
+
+Thu Oct  9 16:21:38 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Add description of the below changes.
+
+        * ace/OS_NS_stdlib.{h inl cpp}:
+        * ace/OS_NS_stdio.{h inl}:
+        * ace/README:
+          Added new feature config macros ACE_DISABLE_MKTEMP and
+          ACE_DISABLE_TEMPNAM. These disable the ACE wrappers for
+          mktemp() and tempnam(), respectively. Those functions are
+          considered insecure and better replaced by the use of mkstemp().
+
+        * ace/FILE_Addr.cpp (set): Call to set(const ACE_FILE_Addr&) using
+          the default "any" address will now fail if ACE_DISABLE_MKTEMP is
+          set.
+
+        * ace/FILE_Connector.cpp (connect): Specifying 'any' for the
+          address now uses ACE_OS::mkstemp(). Contrast this with setting a
+          ACE_FILE_Addr with 'any', above.
+
+        * ace/MMAP_Memory_Pool.cpp (constructor): Using the 'unique' option
+          will no longer work if ACE_DISABLE_MKTEMP is set.
+
+        * tests/MM_Shared_Memory_Test.cpp:
+          Will not work if ACE_DISABLE_MKTEMP is set.
+
+        * tests/Naming_Test.cpp:
+          Changed to avoid use of ACE_OS::tempnam.
+
+        * tests/Svc_Handler_Test.cpp: Modified to work with or without
+          ACE_DISABLE_MKTEMP.
+
+        * apps/mkcsregdb/mkcsregdb.cpp:
+        * apps/drwho/File_Manager.cpp:
+          Use ACE_OS::mkstemp.
+
+        * examples/OS/Process/imore.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client.cpp:
+          Won't work if ACE_DISABLE_TEMPNAM is set.
+
+Tue Oct  7 21:55:51 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        Set of changes applicable to VxWorks, particularly 6.9. These changes
+        were contributed by Jeff Fowler and Gordon Hulpieu at NetApp. Feel
+        free to contact me with any issues.
+
+        * ace/OS_NS_Thread.{h cpp inl}: Change from using the VxWorks TCB
+          spare4 value to a new static member of ACE_TSS_Emulation. This
+          mechanism covers both VxWorks multicore (SMP) using the __thread
+          attribute and single core using Task Var. This change gets ACE out
+          of the way of the applications that use spare4 for their own
+          purposes.
+          Also fixes for various compiler warnings.
+
+        * ace/OS_NS_sys_socket.inl (accept): Add IPv6 case to the
+          ACE_HAS_BROKEN_ACCEPT_ADDR case.
+
+        * ace/config-vxworks6.9.h: Correct the ACE_HAS_BROKEN_ACCEPT_ADDR
+          setting for VxWorks 6.9+.
+
+        * ace/OS_NS_dlfcn.inl (dlsym): For VxWorks, use the symFind() call
+          instead of the deprecated symFindByName().
+
+        * ace/Process.cpp: Fix a weird compile diagnostic by adding what should
+          be a needless space.
+
+        * include/makeinclude/platform_vxworks6.9.GNU: Update MUNCH_FLAGS
+          for this version.
+
+Tue Sep 30 13:34:34 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Add -Wnon-virtual-dtor to the default CCFLAGS
+
+Fri Sep 26 09:58:57 UTC 2014  Olli Savia  <ops@iki.fi>
+
+        * tests/Message_Block_Large_Copy_Test.cpp:
+          Fixed compile error on LynxOS.
+
+Wed Sep 24 19:51:44 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.2.8 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

@@ -4,8 +4,6 @@
 /**
  *  @file   LB_server.h
  *
- *  $Id$
- *
  *  @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
@@ -15,6 +13,7 @@
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "ace/Get_Opt.h"
 
 // Forward Declaration of the kind of servant we would like to handle
 // by the server.
@@ -34,36 +33,37 @@ class Basic;
 class LB_server
 {
 public:
-
   /// Constructor
-  LB_server (int argc, char **argv);
+  LB_server (int argc, ACE_TCHAR **argv);
 
   /// destroys LoadManager, ORB and POA.
-  int destroy (void);
+  int destroy ();
 
   /// start the ORB.
-  int start_orb_and_poa (void);
+  int start_orb_and_poa ();
 
   /// Get the LoadManager Interface.
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
 
   /// Create the Object Group using the Load Manager Reference.
-  int create_object_group (void);
+  int create_object_group ();
 
   /// register the servants with the object group.
   int register_servant (Basic *servant, const char *loc);
 
   /// for servants to register to the initialised ORB.
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   /// for servants to get the reference for object_group.
-  CORBA::Object_ptr object_group (void);
+  CORBA::Object_ptr object_group ();
 
   /// for servants to get the reference for object_group.
-  CosLoadBalancing::LoadManager_ptr load_manager (void);
+  CosLoadBalancing::LoadManager_ptr load_manager ();
 
 private:
+    int parse_args (int, ACE_TCHAR **);
 
+private:
   /// Load Manager
   CosLoadBalancing::LoadManager_var lm_;
 
@@ -81,6 +81,7 @@ private:
 
   CORBA::ORB_var orb_;
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   PortableServer::POA_var root_poa_;
+  const ACE_TCHAR *ior_output_file_;
 };

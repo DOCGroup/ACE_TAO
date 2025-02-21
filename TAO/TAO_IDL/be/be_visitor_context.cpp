@@ -1,69 +1,37 @@
-//
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_visitor_context.cpp
-//
-// = DESCRIPTION
-//     Maintains the context information for visitors
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
-
-#include "be_argument.h"
-#include "be_array.h"
-#include "be_attribute.h"
-#include "be_constant.h"
-#include "be_enum.h"
-#include "be_enum_val.h"
-#include "be_exception.h"
-#include "be_field.h"
-#include "be_interface.h"
-#include "be_interface_fwd.h"
-#include "be_module.h"
-#include "be_operation.h"
-#include "be_predefined_type.h"
-#include "be_root.h"
-#include "be_sequence.h"
-#include "be_string.h"
-#include "be_structure.h"
-#include "be_typedef.h"
-#include "be_union.h"
-#include "be_union_branch.h"
+//=============================================================================
+/**
+ *  @file    be_visitor_context.cpp
+ *
+ *   Maintains the context information for visitors
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
 
 #include "be_visitor_context.h"
+#include "be_extern.h"
+#include "be_helper.h"
 
-ACE_RCSID (be, 
-           be_visitor_context, 
-           "$Id$")
-
-
-// constructor
-be_visitor_context::be_visitor_context (void)
-  : state_ (TAO_CodeGen::TAO_INITIAL),
+be_visitor_context::be_visitor_context ()
+  : ast_visitor_context (),
+    state_ (TAO_CodeGen::TAO_INITIAL),
     sub_state_ (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN),
-    os_ (0),
-    scope_ (0),
-    node_ (0),
-    alias_ (0),
-    tdef_ (0),
-    attr_ (0),
-    exception_ (0),
-    comma_ (0),
-    interface_ (0)
+    os_ (nullptr),
+    scope_ (nullptr),
+    node_ (nullptr),
+    alias_ (nullptr),
+    tdef_ (nullptr),
+    attr_ (nullptr),
+    exception_ (false),
+    comma_ (false),
+    interface_ (nullptr)
 {
 }
 
 be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
-  : state_ (ctx.state_),
+  : ast_visitor_context (ctx),
+    state_ (ctx.state_),
     sub_state_ (ctx.sub_state_),
     os_ (ctx.os_),
     scope_ (ctx.scope_),
@@ -73,7 +41,8 @@ be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
     attr_ (ctx.attr_),
     exception_ (ctx.exception_),
     comma_ (ctx.comma_),
-    interface_ (ctx.interface_)
+    interface_ (ctx.interface_),
+    port_prefix_ (ctx.port_prefix_)
 {
 }
 
@@ -91,31 +60,37 @@ be_visitor_context::operator= (const be_visitor_context &ctx)
   this->exception_ = ctx.exception_;
   this->comma_ = ctx.comma_;
   this->interface_ = ctx.interface_;
+  this->template_args_ = ctx.template_args_;
+  this->template_params_ = ctx.template_params_;
+  this->port_prefix_ = ctx.port_prefix_;
 
   return *this;
 }
 
-be_visitor_context::~be_visitor_context (void)
+be_visitor_context::~be_visitor_context ()
 {
-  // we do not own anything
+  // We do not own anything.
 }
 
 //= helpers
 
 void
-be_visitor_context::reset (void)
+be_visitor_context::reset ()
 {
   this->state_ = TAO_CodeGen::TAO_INITIAL;
   this->sub_state_ = TAO_CodeGen::TAO_SUB_STATE_UNKNOWN;
-  this->os_ = 0;
-  this->scope_ = 0;
-  this->node_ = 0;
-  this->alias_ = 0;
-  this->tdef_ = 0;
-  this->attr_ = 0;
-  this->exception_ = 0;
-  this->comma_ = 0;
-
+  this->os_ = nullptr;
+  this->scope_ = nullptr;
+  this->node_ = nullptr;
+  this->alias_ = nullptr;
+  this->tdef_ = nullptr;
+  this->attr_ = nullptr;
+  this->exception_ = false;
+  this->comma_ = false;
+  this->interface_ = nullptr;
+  this->template_args_ = nullptr;
+  this->template_params_ = nullptr;
+  this->port_prefix_ = "";
 }
 
 void
@@ -125,19 +100,20 @@ be_visitor_context::stream (TAO_OutStream *os)
 }
 
 TAO_OutStream *
-be_visitor_context::stream (void)
+be_visitor_context::stream ()
 {
-  return this->os_;
+  static TAO_OutStream null_stream;
+  return os_ ? os_ : &null_stream;
 }
 
 void
-be_visitor_context::scope (be_decl *s)
+be_visitor_context::scope (be_scope *s)
 {
   this->scope_ = s;
 }
 
-be_decl *
-be_visitor_context::scope (void)
+be_scope *
+be_visitor_context::scope ()
 {
   return this->scope_;
 }
@@ -149,7 +125,7 @@ be_visitor_context::node (be_decl *n)
 }
 
 be_decl *
-be_visitor_context::node (void)
+be_visitor_context::node ()
 {
   return this->node_;
 }
@@ -161,7 +137,7 @@ be_visitor_context::state (TAO_CodeGen::CG_STATE st)
 }
 
 TAO_CodeGen::CG_STATE
-be_visitor_context::state (void)
+be_visitor_context::state ()
 {
   return this->state_;
 }
@@ -173,7 +149,7 @@ be_visitor_context::sub_state (TAO_CodeGen::CG_SUB_STATE st)
 }
 
 TAO_CodeGen::CG_SUB_STATE
-be_visitor_context::sub_state (void)
+be_visitor_context::sub_state ()
 {
   return this->sub_state_;
 }
@@ -185,7 +161,7 @@ be_visitor_context::tdef (be_typedef *node)
 }
 
 be_typedef *
-be_visitor_context::tdef (void)
+be_visitor_context::tdef ()
 {
   return this->tdef_;
 }
@@ -197,7 +173,7 @@ be_visitor_context::alias (be_typedef *node)
 }
 
 be_typedef *
-be_visitor_context::alias (void)
+be_visitor_context::alias ()
 {
   return this->alias_;
 }
@@ -209,31 +185,31 @@ be_visitor_context::attribute (be_attribute *node)
 }
 
 be_attribute *
-be_visitor_context::attribute (void)
+be_visitor_context::attribute ()
 {
   return this->attr_;
 }
 
 void
-be_visitor_context::exception (idl_bool ib)
+be_visitor_context::exception (bool ib)
 {
   this->exception_ = ib;
 }
 
-idl_bool
-be_visitor_context::exception (void)
+bool
+be_visitor_context::exception ()
 {
   return this->exception_;
 }
 
 void
-be_visitor_context::comma (idl_bool ib)
+be_visitor_context::comma (bool ib)
 {
   this->comma_ = ib;
 }
 
-idl_bool
-be_visitor_context::comma (void)
+bool
+be_visitor_context::comma ()
 {
   return this->comma_;
 }
@@ -245,373 +221,48 @@ be_visitor_context::interface (be_interface *interface)
 }
 
 be_interface *
-be_visitor_context::interface (void) const
+be_visitor_context::interface () const
 {
   return this->interface_;
 }
 
-// ****************************************************************
-
-be_argument *
-be_visitor_context::be_node_as_argument (void)
+ACE_CString &
+be_visitor_context::port_prefix ()
 {
-  if (this->node_ != 0)
+  return this->port_prefix_;
+}
+
+const char *
+be_visitor_context::export_macro () const
+{
+  switch (this->state_)
     {
-      return be_argument::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
+      // If -GA is used, but the anyop macro hasn't been set,
+      // default to the stub macro.
+      case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+        return (be_global->gen_anyop_files ()
+                ? this->non_null_export_macro ()
+                : be_global->stub_export_macro ());
+      case TAO_CodeGen::TAO_ARRAY_CH:
+      case TAO_CodeGen::TAO_INTERFACE_CH:
+      case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
+      case TAO_CodeGen::TAO_ROOT_CH:
+        return be_global->stub_export_macro ();
+      case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
+      case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+      case TAO_CodeGen::TAO_ROOT_SH:
+        return be_global->skel_export_macro ();
+      default:
+        return "";
     }
 }
 
-be_array *
-be_visitor_context::be_node_as_array (void)
+const char *
+be_visitor_context::non_null_export_macro () const
 {
-  if (this->node_ != 0)
-    {
-      return be_array::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
+  const char *anyop_export = be_global->anyop_export_macro ();
 
-be_attribute *
-be_visitor_context::be_node_as_attribute (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_attribute::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_constant *
-be_visitor_context::be_node_as_constant (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_constant::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_enum *
-be_visitor_context::be_node_as_enum (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_enum::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_enum_val *
-be_visitor_context::be_node_as_enum_val (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_enum_val::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_exception *
-be_visitor_context::be_node_as_exception (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_exception::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_field *
-be_visitor_context::be_node_as_field (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_field::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_interface *
-be_visitor_context::be_node_as_interface (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_interface::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_interface_fwd *
-be_visitor_context::be_node_as_interface_fwd (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_interface_fwd::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_module *
-be_visitor_context::be_node_as_module (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_module::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_operation *
-be_visitor_context::be_node_as_operation (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_operation::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_predefined_type *
-be_visitor_context::be_node_as_predefined_type (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_predefined_type::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_root *
-be_visitor_context::be_node_as_root (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_root::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_sequence *
-be_visitor_context::be_node_as_sequence (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_sequence::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_string *
-be_visitor_context::be_node_as_string (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_string::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_structure *
-be_visitor_context::be_node_as_structure (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_structure::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_typedef *
-be_visitor_context::be_node_as_typedef (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_typedef::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_union *
-be_visitor_context::be_node_as_union (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_union::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_union_branch *
-be_visitor_context::be_node_as_union_branch (void)
-{
-  if (this->node_ != 0)
-    {
-      return be_union_branch::narrow_from_decl (this->node_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_enum *
-be_visitor_context::be_scope_as_enum (void)
-{
-  if (this->scope_ != 0)
-    {
-      return be_enum::narrow_from_decl (this->scope_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_exception *
-be_visitor_context::be_scope_as_exception (void)
-{
-  if (this->scope_ != 0)
-    {
-      return be_exception::narrow_from_decl (this->scope_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_interface *
-be_visitor_context::be_scope_as_interface (void)
-{
-  if (this->scope_ != 0)
-    {
-      return be_interface::narrow_from_decl (this->scope_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_module *
-be_visitor_context::be_scope_as_module (void)
-{
-  if (this->scope_ != 0)
-    {
-      return be_module::narrow_from_decl (this->scope_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_operation *
-be_visitor_context::be_scope_as_operation (void)
-{
-  if (this->scope_ != 0)
-    {
-      return be_operation::narrow_from_decl (this->scope_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_root *
-be_visitor_context::be_scope_as_root (void)
-{
-  if (this->scope_ != 0)
-    {
-      return be_root::narrow_from_decl (this->scope_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_structure *
-be_visitor_context::be_scope_as_structure (void)
-{
-  if (this->scope_ != 0)
-    {
-      return be_structure::narrow_from_decl (this->scope_);
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_union *
-be_visitor_context::be_scope_as_union (void)
-{
-  if (this->scope_ != 0)
-    {
-      return be_union::narrow_from_decl (this->scope_);
-    }
-  else
-    {
-      return 0;
-    }
+  return (ACE_OS::strcmp (anyop_export, "") == 0
+          ? be_global->stub_export_macro ()
+          : anyop_export);
 }

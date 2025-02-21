@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 /// A module to keep the namespace clean
 module Test {
@@ -9,7 +6,7 @@ module Test {
   /// we stick the native high resolution timer value there.
   typedef unsigned long long TimeStamp;
 
-  /// Simulated 
+  /// Simulated
   typedef sequence<octet> Payload;
 
   /// Define the callback interface

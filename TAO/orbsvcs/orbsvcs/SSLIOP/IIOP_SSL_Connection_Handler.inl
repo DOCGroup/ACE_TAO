@@ -1,6 +1,5 @@
 // -*- C++ -*-
-//
-// $Id$
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::Null_SSL_State_Guard::Null_SSL_State_Guard (
@@ -21,9 +20,11 @@ TAO::Null_SSL_State_Guard::Null_SSL_State_Guard (
 }
 
 ACE_INLINE
-TAO::Null_SSL_State_Guard::~Null_SSL_State_Guard (void)
+TAO::Null_SSL_State_Guard::~Null_SSL_State_Guard ()
 {
   // Restore the previous TSS SSL state.
   this->current_->teardown (this->previous_current_impl_,
                             this->setup_done_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

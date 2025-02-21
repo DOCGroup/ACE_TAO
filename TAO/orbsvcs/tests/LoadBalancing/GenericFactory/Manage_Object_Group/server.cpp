@@ -2,14 +2,10 @@
 #include "Basic.h"
 #include "Simple.h"
 
-ACE_RCSID (Manage_object_group,
-           server,
-           "$Id$")
-
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       const char *location1 = "MyLocation 1";
 
@@ -32,21 +28,21 @@ main (int argc, char *argv[])
 
 
       ACE_NEW_RETURN (basic_servant1,
-		      Basic (lb_server.get_basic_object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
+                      Basic (lb_server.get_basic_object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
                              1,
-			     location1),
-		      1);
+                             location1),
+                      1);
       PortableServer::ServantBase_var basic_owner_transfer1(basic_servant1);
 
       ACE_NEW_RETURN (simple_servant1,
-		      Simple (lb_server.get_simple_object_group (),
-			      lb_server.load_manager (),
-			      lb_server.orb (),
+                      Simple (lb_server.get_simple_object_group (),
+                              lb_server.load_manager (),
+                              lb_server.orb (),
                               1,
-			      location1),
-		      1);
+                              location1),
+                      1);
       PortableServer::ServantBase_var simple_owner_transfer1(simple_servant1);
 
       if (lb_server.register_basic_servant (basic_servant1, location1) == -1)
@@ -72,21 +68,21 @@ main (int argc, char *argv[])
         }
 
       ACE_NEW_RETURN (basic_servant2,
-		      Basic (lb_server.get_basic_object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
+                      Basic (lb_server.get_basic_object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
                              2,
-			     location1),
-		      1);
+                             location1),
+                      1);
       PortableServer::ServantBase_var basic_owner_transfer2(basic_servant2);
 
       ACE_NEW_RETURN (simple_servant2,
-		      Simple (lb_server.get_simple_object_group (),
-			      lb_server.load_manager (),
-			      lb_server.orb (),
+                      Simple (lb_server.get_simple_object_group (),
+                              lb_server.load_manager (),
+                              lb_server.orb (),
                               2,
-			      location1),
-		      1);
+                              location1),
+                      1);
       PortableServer::ServantBase_var simple_owner_transfer2(simple_servant2);
 
       if (lb_server.register_basic_servant (basic_servant2, location1) == -1)
@@ -111,22 +107,18 @@ main (int argc, char *argv[])
           return 1;
         }
 
-      lb_server.orb ()->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      //lb_server.orb ()->shutdown (0);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
       if (lb_server.destroy () == -1)
         return 1;
-
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "lb_server exception");
+      ex._tao_print_exception ("lb_server exception");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

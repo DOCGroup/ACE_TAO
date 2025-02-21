@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file    Operation_Table_Perfect_Hash.h
- *
- *  $Id$
  *
  *  @author Aniruddha Gokhale
  */
@@ -15,13 +13,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Operation_Table.h"
+#include "tao/PortableServer/Operation_Table.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Perfect_Hash_OpTable
@@ -39,35 +39,31 @@ class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable
   : public TAO_Operation_Table
 {
 public:
-  /// Do nothing constructor.
-  TAO_Perfect_Hash_OpTable (void);
-
-  /// Do nothing destrctor.
-  virtual ~TAO_Perfect_Hash_OpTable (void);
+  /// Do nothing destructor.
+  ~TAO_Perfect_Hash_OpTable () override = default;
 
   /// See the documentation in the base class for details.
-  virtual int find (const char *opname,
-                    TAO_Skeleton &skelfunc,
-                    const unsigned int length = 0);
+  int find (const char *opname,
+            TAO_Skeleton &skelfunc,
+            const unsigned int length = 0) override;
 
-  virtual int find (const char *opname,
-                    TAO_Collocated_Skeleton &skelfunc,
-                    TAO::Collocation_Strategy s,
-                    const unsigned int length = 0);
+  int find (const char *opname,
+            TAO_Collocated_Skeleton &skelfunc,
+            TAO::Collocation_Strategy s,
+            const unsigned int length = 0) override;
 
-  virtual int bind (const char *opname,
-                    const TAO::Operation_Skeletons skel_ptr);
+  int bind (const char *opname,
+            const TAO::Operation_Skeletons skel_ptr) override;
 
 private:
   // = Methods that should defined by the subclasses. GPERF program
   //   will generate these routines.
-
   virtual unsigned int hash (const char *str, unsigned int len) = 0;
 
-  virtual const TAO_operation_db_entry* lookup (const char *str,
-                                                unsigned int len) = 0;
+  virtual const TAO_operation_db_entry* lookup (const char *str, unsigned int len) = 0;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_OPERATION_TABLE_PERFECT_HASH_H */

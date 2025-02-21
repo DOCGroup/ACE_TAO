@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project (*Client) : taoclient, valuetype {
    exename    = test
    Source_Files {

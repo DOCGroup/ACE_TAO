@@ -1,0 +1,186 @@
+
+
+This directory contains the HTTP Tunneling, Bidirectional, Protocol
+implementation. This is a new streaming abstraction layered over an
+HTTP document request/reply mechanism. It is designed to allow clients
+that are inside a of a corporate firewall to communicate with servers
+that are outside, hence HTTP Tunneling. Also, once a connection is
+established, the outside peer is able to send asynchronous messages to
+the inside peer, hence Bidirectional.
+
+HTBP provides Acceptor, Connector, and Stream classes that follow the
+interface defined for the ACE_Acceptor and ACE_Connector
+templates. This means that HTBP can be used right away with
+applications designed to use these templates.
+
+Bidirectionality is achieved in the context of the proxy's restriction
+by using two channels between the peers. One channel is defined for
+data flow from the inside to the outside, data flow from the outside
+in occurs on the other channel. In-to-out data is passed in the form
+of a PUT command with the data payload marshalled into an
+"application/gzip" buffer. On this channel, the outside peer always
+responds with a simple document which serves as an ack. On the
+out-to-in channel, the inside client must send a token request in the
+form of a GET command. This request goes unfulfilled until the outside
+peer has data to send, which it does by supplying an HTML document
+that again encapsulates the data so that it may pass through the proxy
+uncorrupted.
+
+The connections from the inside peer to the proxy, or from the proxy
+to the outside peer may be closed by the proxy at any time. The inside
+peer will automatically reconnect as needed when this happens. Since
+the outside peer cannot actively connect to the proxy, it will queue
+outbound messages as long as it can until a new out-to-in channel is
+made available, at which time it will flush its queue. The sense of
+channels may change over time, as the proxy may choose any local
+connection to the server to send any request (GET or POST).
+
+The outside peer is identified using an ordinary INET addr, however
+the inside peer uses a simple, transient unique ID to identify
+itself. Inside peers will never have any type of persistent identity.
+The unique ID used to identify the inside peer is usually a UUID value
+as composed by ACE_UUID_Generator. However, a domain based unique ID
+may also be obtainedusing HTBP::ID_Requestor::get_HTID(). If no domain
+based ID generator is configured, get_HTID() will return a UUID value.
+
+As there are a variety of HTTP proxies available, HTBP uses a
+pluggable filter class that defines the particular characteristics of
+a proxy and is responsible for marshalling and unmarshalling binary
+data. As of now there is a single filter available that works with a
+defaulted Squid proxy and may also be used as a null filter, directly
+connecting the inside and outside peers. This mode is useful for
+testing.
+
+CONFIGURING HTBP
+This is done through the ACE_Configuration framework. On windows
+platforms, the Windows Registry may be used, whereas on non-windows, a
+flat file is used to configure. Configuration data may also be
+persisted in a memory mapped file.
+
+The configuration map contains a single section, HTBP, that contains
+all the configurable parameters in name=value form. The following is
+an example of a configuration file:
+
+[htbp]
+proxy_host=<hostname>               This is the hostname of the http
+                                    proxy through which all requests
+                                    will be sent.
+proxy_port=<port>                   This is the proxy's port.
+htid_url=<url>                      If a domain based unique id is
+                                    required, this is the URL of the
+                                    ID generator.
+htid_via_proxy=<1|0>                If the htid_url must be reached
+                                    via the proxy, set this to 1.
+                                    Default is 0, meaning the ID
+                                    generator is directly accessible.
+
+COMPANION DIRECTORIES:
+$ACE_ROOT/tests/HTBP.               These are the test drivers, which
+                                    also serve as example code.
+$TAO_ROOT/orbsvcs/orbsvcs/HTIOP     This is a TAO pluggable protocol
+                                    based on HTBP.
+$TAO_ROOT/orbsvcs/tests/HTIOP       The tests for HTIOP.
+
+
+BACKGROUND INFORMATION
+
+HT Addresses
+
+The class HT_Addr is a subclass of ACE_INET_Addr class. The interface
+for the HT_Addr is a common interface to be used with the inside and
+outside peers. The inside peer is identified by a HTID while the
+outside peer is identified with an ip address.  Constructors are
+provided to initialize the inside and outside peers in addition to the
+default and copy constructors.  addr_to_string and string_to_addr
+methods from the base class are overridden to help convert the HT_Addr
+to a string and vice versa. Finally, the class provides accessor
+methods for the default local address and the default proxy addresses.
+
+The local address is the address of the inside peer and is obtained
+using the singleton HTID_Requestor class. The HTID_Requestor class
+sends a request to the web server that is running at the htid_url to
+get the HTID unique to each inside peer.
+
+The proxy address is of ACE_INET_Addr type as it is no different to a
+regular server. It is obtained using the singleton HT_Environment
+class. The HT_Environment class helps read the HT configuration file
+and provides acccessors to the proxy address, port and the htid url.
+
+The code below illustrates the initialization of a local or inside,
+remote or outside and the proxy addresses using the classes
+aforementioned.
+
+ HT_Addr local(HTID_REQUESTOR::instance()->get_HTID());
+
+    char hostname [1000];
+    if (ACE_OS::hostname (hostname,
+		      1000) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Could not get the host name\n"));
+      return -1;
+    }
+
+    HT_Addr remote (8088, hostname);
+
+    char proxy_address [1000];
+    HT_ENVIRONMENT::instance ()->get_proxy_address (proxy_address);
+
+    unsigned int proxy_port;
+    HT_ENVIRONMENT::instance ()->get_proxy_port (proxy_port);
+
+    ACE_INET_Addr proxy(port, proxy_address);
+
+
+HT Streams
+
+The class HT_Stream is a sibling of the ACE_SOCK_IO class. It is used
+to send and receive messages between two peers identified by their HT
+addresses.  It is made a sibling of the ACE_SOCK_IO class rather than
+a decendant. This is due to the requirement in the HTBP protocol to
+wrap all messages with an HTTP request or reply wrapper, and to send
+application data in only one direction on one stream.
+
+HT Sessions
+
+A session is an entity that combines two HT_Streams that connect
+directly to a proxy to manage communication with a remote peer. The
+session may persist longer than either stream, assuming that the proxy
+is libel to close a connection at any time. This means that the
+session needs to be able to reconnect to the remote peer. This also
+means that the session needs to be aware of its location.  If it is
+outside the proxy and looses a stream, nothing can really be done. If
+it is inside, then the next time a stream is required, then it must
+reconnect before returning the stream. The session does not queue
+outbound messages. It will be the responsibility of the application or
+a higher level protocol wrapper.
+
+Each session is identified by a special type,
+HT_Session_Id_t. HT_Session_Id_t is a class with three members, the
+local address, the peer address and an id of type ACE_UINT32. A
+session map, ....
+
+Besides the default constructor and copy constructors, two other
+constructors are provided to initialize a session and are shown below.
+
+
+  /// Constructor (sets the underlying session id with <sid>).
+  HT_Session (const HT_Addr& peer,
+	    const HT_Addr& local = HT_Addr::default_local(),
+	    ACE_UINT32 sid = 0,
+              ACE_INET_Addr *proxy = 0,
+              int take_proxy = 0);
+
+  HT_Session (const HT_Session_Id_t &id,
+              ACE_INET_Addr *proxy = 0,
+              int take_proxy = 0);
+
+
+
+If a session id (sid) is not provided by the user, it is generated
+using the static method HT_Session::next_session_id().
+
+The following code illustrates the usage of HT_Stream and HT_Session
+classes.
+
+HT_Filters
+<TBD>

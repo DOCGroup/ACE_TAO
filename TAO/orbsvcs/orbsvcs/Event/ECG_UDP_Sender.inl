@@ -1,12 +1,12 @@
-/* -*- C++ -*- */
-// $Id$
-
+// -*- C++ -*-
 #include "ace/Null_Mutex.h"
 
-ACE_INLINE TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_INLINE PortableServer::Servant_var<TAO_ECG_UDP_Sender>
 TAO_ECG_UDP_Sender::create (CORBA::Boolean crc)
 {
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> s;
+  PortableServer::Servant_var<TAO_ECG_UDP_Sender> s;
   ACE_NEW_RETURN (s,
                   TAO_ECG_UDP_Sender (crc),
                   s);
@@ -24,7 +24,7 @@ TAO_ECG_UDP_Sender::TAO_ECG_UDP_Sender (CORBA::Boolean crc)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_ECG_UDP_Sender::mtu (void) const
+TAO_ECG_UDP_Sender::mtu () const
 {
   return this->cdr_sender_.mtu ();
 }
@@ -44,7 +44,7 @@ TAO_ECG_UDP_Sender::get_local_addr (ACE_INET_Addr& addr)
 
 ACE_INLINE
 TAO_ECG_UDP_Sender_Disconnect_Command::
-TAO_ECG_UDP_Sender_Disconnect_Command (void)
+TAO_ECG_UDP_Sender_Disconnect_Command ()
   : proxy_ ()
 {
 }
@@ -77,7 +77,7 @@ TAO_ECG_UDP_Sender_Disconnect_Command::operator= (
 }
 
 ACE_INLINE void
-TAO_ECG_UDP_Sender_Disconnect_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ECG_UDP_Sender_Disconnect_Command::execute ()
 {
   if (CORBA::is_nil (this->proxy_.in ()))
     // We are not connected.
@@ -86,6 +86,7 @@ TAO_ECG_UDP_Sender_Disconnect_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
   RtecEventChannelAdmin::ProxyPushSupplier_var release_proxy =
     this->proxy_._retn ();
 
-  release_proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  release_proxy->disconnect_push_supplier ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,17 +1,12 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/OBV/TC_Alignment
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_OBV_TC_ALIGNMENT_TEST_I_H
 #define TAO_OBV_TC_ALIGNMENT_TEST_I_H
@@ -39,12 +34,9 @@ class test_i :public virtual POA_test
 public:
   test_i (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Any *get_value (CORBA::Long offset
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Any *get_value (CORBA::Long offset);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_ptr orb_;

@@ -1,0 +1,13 @@
+// -*- MPC -*-
+project(*Server): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+
+   exename  = server
+   
+   Source_Files {
+     server.cpp
+     Servant_Activator.cpp
+     Servant_Locator.cpp
+     Servant_Manager.cpp
+     Server_Manager.cpp
+  }
+}

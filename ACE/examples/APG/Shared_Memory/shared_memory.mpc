@@ -1,0 +1,35 @@
+// -*- MPC -*-
+project(*Hash Map) : aceexe, avoids_ace_for_tao {
+  exename = Hash_Map
+  Source_Files {
+    Hash_Map.cpp
+  }
+}
+
+project(Malloc) : aceexe, avoids_ace_for_tao {
+  exename = Malloc
+  Source_Files {
+    Malloc.cpp
+  }
+}
+
+project(Mem Map) : aceexe, avoids_ace_for_tao {
+  exename = Mem_Map
+  Source_Files {
+    Mem_Map.cpp
+  }
+}
+
+project(PI Malloc) : aceexe, avoids_ace_for_tao {
+  exename = PI_Malloc
+  Source_Files {
+    PI_Malloc.cpp
+  }
+}
+
+project(Pool Growth) : aceexe, avoids_ace_for_tao {
+  exename = Pool_Growth
+  Source_Files {
+    Pool_Growth.cpp
+  }
+}

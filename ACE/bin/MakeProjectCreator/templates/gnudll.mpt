@@ -1,0 +1,4 @@
+// -*- MPC -*-
+conditional_include "common"
+
+targetoutdir =

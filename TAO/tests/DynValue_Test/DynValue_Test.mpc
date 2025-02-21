@@ -1,0 +1,26 @@
+project(*IDL): dynamicany {
+  IDL_Files {
+    DynValue_Test.idl
+    idlflags += -SS
+  }
+  custom_only = 1
+}
+
+
+project(DynValue_Test): dynamicany, typecodefactory {
+  exename = DynValue_Test
+  after += *IDL
+  Source_Files {
+    main.cpp
+    ValueTypes_impl.cpp
+    Analyzer.cpp
+    DynValue_TestC.cpp
+  }
+  Header_Files {
+    ValueTypes_impl.h
+    Analyzer.h
+    DynValue_TestC.h
+  }
+  IDL_Files {
+  }
+}

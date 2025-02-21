@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 //
 // ============================================================================
 //
@@ -34,7 +33,7 @@ class Test_Supplier : public ACE_Task<ACE_SYNCH>
 public:
   Test_Supplier (ECT_Driver *driver);
 
-  int svc (void);
+  int svc ();
   // Run the test, just forwards to the driver
 
   void connect (RtecScheduler::Scheduler_ptr scheduler,
@@ -45,25 +44,24 @@ public:
                 int burst_pause,
                 int type_start,
                 int type_count,
-                RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+                RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the supplier to the EC.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect ();
   // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void disconnect_push_supplier ();
   // The methods in the skeleton.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy (void);
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy ();
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 
-  void dump_results (const char* name,
-                     ACE_UINT32 global_scale_factor);
+  void dump_results (const ACE_TCHAR* name,
+                     ACE_Basic_Stats::scale_factor_type global_scale_factor);
   // Dump the results...
 
   void accumulate (ACE_Throughput_Stats& stats) const;

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "Stock_Consumer.h"
 #include <orbsvcs/CosNamingC.h>
@@ -9,13 +6,12 @@
 #include "ace/OS_NS_string.h"
 #include "tao/Exception.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try {
     // First initialize the ORB, that will remove some arguments...
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv,
-                       "" /* the ORB name, it can be anything! */);
+      CORBA::ORB_init (argc, argv);
     CORBA::Object_var poa_object =
       orb->resolve_initial_references ("RootPOA");
     PortableServer::POA_var poa =
@@ -63,10 +59,10 @@ int main (int argc, char* argv[])
 
     stock_consumer_i.disconnect ();
 
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (const CORBA::Exception &ex) {
     cerr << "CORBA exception raised!" << ex << endl;
   }
   return 0;

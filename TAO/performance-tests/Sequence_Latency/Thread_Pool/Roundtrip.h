@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef ROUNDTRIP_H
 #define ROUNDTRIP_H
@@ -23,40 +20,27 @@ public:
 
   // = The skeleton methods
   Test::Timestamp test_octet_method (const Test::octet_load& ol,
-                                     Test::Timestamp send_time
-                                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                     Test::Timestamp send_time);
 
   Test::Timestamp test_long_method (const Test::long_load& ol,
-                                    Test::Timestamp send_time
-                                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                    Test::Timestamp send_time);
 
   Test::Timestamp test_short_method (const Test::short_load& ol,
-                                     Test::Timestamp send_time
-                                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                     Test::Timestamp send_time);
 
   Test::Timestamp test_char_method (const Test::char_load& ol,
-                                     Test::Timestamp send_time
-                                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                     Test::Timestamp send_time);
 
   Test::Timestamp test_longlong_method (const Test::longlong_load& ol,
-                                        Test::Timestamp send_time
-                                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                        Test::Timestamp send_time);
 
   Test::Timestamp test_double_method (const Test::double_load& ol,
-                                      Test::Timestamp send_time
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                      Test::Timestamp send_time);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };

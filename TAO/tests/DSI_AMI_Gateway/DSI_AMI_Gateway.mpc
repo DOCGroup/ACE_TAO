@@ -1,0 +1,45 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
+  after += *idl
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+  Source_Files {
+    testC.cpp
+    testS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    testC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Gateway): taoserver, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
+  exename = gateway
+  after += *idl
+  Source_Files {
+    test_dsi.cpp
+    gateway.cpp
+    My_DII_Reply_Handler.cpp
+  }
+  IDL_Files {
+  }
+}

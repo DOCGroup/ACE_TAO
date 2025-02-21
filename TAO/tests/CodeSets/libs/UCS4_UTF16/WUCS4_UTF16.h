@@ -4,10 +4,6 @@
 /**
  *  @file    WUCS4_UTF16.h
  *
- *  $Id$
- *
- *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================
@@ -40,10 +36,10 @@ class UCS4_UTF16_Export WUCS4_UTF16 : public ACE_WChar_Codeset_Translator
 {
 public:
   /// A do nothing constructor.
-  WUCS4_UTF16 (void);
+  WUCS4_UTF16 ();
 
   /// Virtual destruction
-  virtual ~WUCS4_UTF16 (void);
+  virtual ~WUCS4_UTF16 ();
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
@@ -85,7 +81,6 @@ private:
       const ACE_CDR::WChar *x,
       ACE_CDR::ULong length,
       ACE_CDR::ULong transmission_length);
-
 };
 
 #include /**/ "ace/post.h"

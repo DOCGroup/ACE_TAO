@@ -2,13 +2,9 @@
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (PortableGroup,
-           FT_Property_Validator,
-           "$Id$")
-
-
-TAO::FT_Property_Validator::FT_Property_Validator (void)
+TAO::FT_Property_Validator::FT_Property_Validator ()
   : replication_style_ (1),
     membership_style_ (1),
     consistency_style_ (1),
@@ -36,18 +32,14 @@ TAO::FT_Property_Validator::FT_Property_Validator (void)
 }
 
 
-TAO::FT_Property_Validator::~FT_Property_Validator (void)
+TAO::FT_Property_Validator::~FT_Property_Validator ()
 {
 }
 
 
 void
 TAO::FT_Property_Validator::validate_property (
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
+    const PortableGroup::Properties & props)
 {
   const CORBA::ULong len = props.length ();
 
@@ -65,8 +57,7 @@ TAO::FT_Property_Validator::validate_property (
                   && value != FT::ACTIVE
                   && value != FT::ACTIVE_WITH_VOTING
                   && value != FT::SEMI_ACTIVE))
-            ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                       property.val));
+            throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
       else if (property.nam == this->membership_style_)
         {
@@ -74,8 +65,7 @@ TAO::FT_Property_Validator::validate_property (
           if (!(property.val >>= value)
               || (value != PortableGroup::MEMB_APP_CTRL
                   && value != PortableGroup::MEMB_INF_CTRL))
-            ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                       property.val));
+            throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
       else if (property.nam == this->consistency_style_)
         {
@@ -83,8 +73,7 @@ TAO::FT_Property_Validator::validate_property (
           if (!(property.val >>= value)
               || (value != FT::CONS_APP_CTRL
                   && value != FT::CONS_INF_CTRL))
-            ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                       property.val));
+            throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
       else if (property.nam == this->fault_monitoring_style_)
         {
@@ -93,8 +82,7 @@ TAO::FT_Property_Validator::validate_property (
               || (value != FT::PULL
                   && value != FT::PUSH
                   && value != FT::NOT_MONITORED))
-            ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                       property.val));
+            throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
       else if (property.nam == this->fault_monitoring_granularity_)
         {
@@ -103,22 +91,21 @@ TAO::FT_Property_Validator::validate_property (
               || (value != FT::MEMB
                   && value != FT::LOC
                   && value != FT::LOC_AND_TYPE))
-            ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                       property.val));
+            throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
       else if (property.nam == this->factories_)
         {
           const PortableGroup::FactoriesValue * factories;
           if (!(property.val >>= factories))
-            ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                       property.val));
+            throw PortableGroup::InvalidProperty (property.nam, property.val);
           else
             {
               const CORBA::ULong flen = factories->length ();
 
               if (flen == 0)
-                ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                           property.val));
+                throw PortableGroup::InvalidProperty (
+                  property.nam,
+                  property.val);
 
               for (CORBA::ULong j = 0; j < flen; ++j)
                 {
@@ -127,8 +114,9 @@ TAO::FT_Property_Validator::validate_property (
 
                   if (CORBA::is_nil (factory_info.the_factory.in ())
                       || factory_info.the_location.length () == 0)
-                    ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                               property.val));
+                    throw PortableGroup::InvalidProperty (
+                      property.nam,
+                      property.val);
                 }
             }
         }
@@ -137,11 +125,7 @@ TAO::FT_Property_Validator::validate_property (
 
 void
 TAO::FT_Property_Validator::validate_criteria (
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::CannotMeetCriteria))
+    const PortableGroup::Properties & props)
 {
   const CORBA::ULong len = props.length ();
   PortableGroup::Criteria invalid_criteria;
@@ -200,7 +184,7 @@ TAO::FT_Property_Validator::validate_criteria (
         }
         else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue * factories;
+          const PortableGroup::FactoriesValue * factories = 0;
           if (!(property.val >>= factories))
             invalid_criteria[p++] = property;
           else
@@ -237,6 +221,8 @@ TAO::FT_Property_Validator::validate_criteria (
       // deallocations should occur.
       invalid_criteria.length (p);
 
-      ACE_THROW (PortableGroup::InvalidCriteria (invalid_criteria));
+      throw PortableGroup::InvalidCriteria (invalid_criteria);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

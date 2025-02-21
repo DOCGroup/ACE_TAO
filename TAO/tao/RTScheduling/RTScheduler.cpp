@@ -1,11 +1,11 @@
-// $Id$
+#include "tao/RTScheduling/RTScheduler.h"
+#include "tao/RTScheduling/RTScheduler_Loader.h"
 
-#include "RTScheduler.h"
-#include "RTScheduler_Loader.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (RTScheduler, RTScheduler, "$Id$")
-
-TAO_RTScheduler_Initializer::TAO_RTScheduler_Initializer (void)
+TAO_RTScheduler_Initializer::TAO_RTScheduler_Initializer ()
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RTScheduler_Loader);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

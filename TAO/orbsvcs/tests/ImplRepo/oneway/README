@@ -1,0 +1,7 @@
+
+
+This test serves a dual purpose, verifying that the new feature allowing a
+default sync scope to be set via the resource factory, as well as a regression
+identified as bu4149 indicating that a sync scope of SYNC_WITH_SERVER doesn't
+send an acknowledgement until after all forwarding is done as require by the
+CORBA spec.

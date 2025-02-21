@@ -1,17 +1,15 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "testC.h"
 
 static int iterations = 5;
 static int shutdown_server = 0;
 
-static const char *ior = 0;
+static const ACE_TCHAR *ior = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -22,7 +20,7 @@ parse_args (int argc, char **argv)
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
@@ -50,16 +48,12 @@ parse_args (int argc, char **argv)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
@@ -67,14 +61,10 @@ main (int argc, char **argv)
         return result;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       test_var test =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        test::_narrow (object.in ());
 
       if (CORBA::is_nil (test.in ()))
         {
@@ -86,22 +76,21 @@ main (int argc, char **argv)
 
       for (int i = 0; i < iterations; i++)
         {
-          test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->method ();
         }
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
+
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception!");
+      ex._tao_print_exception ("Unexpected exception!");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

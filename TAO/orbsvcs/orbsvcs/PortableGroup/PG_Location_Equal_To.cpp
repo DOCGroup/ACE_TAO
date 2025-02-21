@@ -1,11 +1,6 @@
 // -*- C++ -*-
-
-#include "PG_Location_Equal_To.h"
-
-ACE_RCSID (PortableGroup,
-           PG_Location_Equal_To,
-           "$Id$")
+#include "orbsvcs/PortableGroup/PG_Location_Equal_To.h"
 
 #if !defined (__ACE_INLINE__)
-#include "PG_Location_Equal_To.inl"
+#include "orbsvcs/PortableGroup/PG_Location_Equal_To.inl"
 #endif  /* !__ACE_INLINE__ */

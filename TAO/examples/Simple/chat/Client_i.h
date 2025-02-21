@@ -1,22 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/tests/Simple/chat
-//
-// = FILENAME
-//    Client_i.h
-//
-// = DESCRIPTION
-//    Definition of the Chat Client class, Client_i.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Client_i.h
+ *
+ *  Definition of the Chat Client class, Client_i.
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CLIENT_I_H
 #define CLIENT_I_H
@@ -32,61 +25,61 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Utils/ORB_Manager.h"
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
 
+/**
+ * @class Client_i
+ *
+ * @brief Chat Client class.
+ *
+ * Connects to the Chat server and registers the Receiver_i
+ * object with the chat server.  It also takes in user chat
+ * messages and sends them to the server.
+ */
 class Client_i : public ACE_Event_Handler
 {
-  // = TITLE
-  //    Chat Client class.
-  //
-  // = DESCRIPTION
-  //    Connects to the Chat server and registers the Receiver_i
-  //    object with the chat server.  It also takes in user chat
-  //    messages and sends them to the server.
 public:
-  // = Initialization and termination methods.
-  Client_i (void);
-  // Constructor.
+  /// Constructor.
+  Client_i ();
 
-  ~Client_i (void);
-  // Destructor.
+  /// Initialize the client communication with the server.
+  int init (int argc, ACE_TCHAR *argv[]);
 
-  int init (int argc, char *argv[]);
-  // Initialize the client communication with the server.
+  /// Start the ORB object.
+  int run ();
 
-  int run (void);
-  // Start the ORB object.
-
+  /// Handle the user input.
   virtual int handle_input (ACE_HANDLE);
-  // Handle the user input.
 
- private:
-  int parse_args (int argc, char *argv[]);
-  // Parse the command line arguments.
-  // Returns 0 on success, -1 on error.
+private:
+  /// Parse the command line arguments.
+  /// Returns 0 on success, -1 on error.
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  int read_ior (const char *filename);
-  // Function to read the server ior from a file.
+  /// Function to read the server ior from a file.
+  int read_ior (const ACE_TCHAR *filename);
 
-  char *ior_;
-  // IOR of the obj ref of the server.
+  /// IOR of the obj ref of the server.
+  ACE_CString ior_;
 
-  const char* ior_file_name_;
-  // The filename that stores the ior of the server
+  /// The filename that stores the ior of the server
+  const ACE_TCHAR* ior_file_name_;
 
-  const char* nickname_;
-  // Nickname of the user chatting.
+  /// Nickname of the user chatting.
+  ACE_CString nickname_;
 
+  /// Our orb.
   TAO_ORB_Manager orb_manager_;
-  // Our orb.
 
+  /// Server object ptr.
   Broadcaster_var server_;
-  // Server object ptr.
 
-  Receiver_i receiver_i_;
-  // The receiver object.
+  /// The receiver object.
+  typedef TAO_Intrusive_Ref_Count_Handle<Receiver_i> Receiver_i_var;
+  Receiver_i_var receiver_i_;
 
+  /// Pointer to the receiver object registered with the ORB.
   Receiver_var receiver_var_;
-  // Pointer to the receiver object registered with the ORB.
 };
 
 #define QUIT_STRING "quit"

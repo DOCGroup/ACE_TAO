@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef HELLO_H
 #define HELLO_H
@@ -16,8 +13,7 @@ public:
   /// Constructor
   Hello(CORBA::ORB_ptr orb, bool simulate_crashes);
 
-  virtual void short_sleep (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void short_sleep ();
 
 private:
   CORBA::ORB_var orb_;

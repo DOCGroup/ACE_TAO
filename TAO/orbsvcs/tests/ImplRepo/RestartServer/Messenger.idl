@@ -1,0 +1,14 @@
+interface Messenger
+{
+  boolean send_message (in    string user_name,
+                        in    string subject,
+                        inout string message);
+
+  // After replying, abort process in
+  // delay_secs seconds.
+  void abort (in short delay_secs);
+
+  // Perform a graceful shutdown.
+  oneway void shutdown ();
+};
+

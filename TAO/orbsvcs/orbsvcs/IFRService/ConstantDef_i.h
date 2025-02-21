@@ -1,27 +1,21 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ConstantDef_i.h
-//
-// = DESCRIPTION
-//    ConstantDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file    ConstantDef_i.h
+ *
+ *  ConstantDef servant class.
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef TAO_CONSTANTDEF_I_H
 #define TAO_CONSTANTDEF_I_H
 
-#include "Contained_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Contained_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,93 +26,55 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class TAO_ConstantDef_i
+ *
+ * @brief TAO_ConstantDef_i
+ *
+ * Represents a named constant.
+ */
 class TAO_IFRService_Export TAO_ConstantDef_i : public virtual TAO_Contained_i
 {
-  // = TITLE
-  //    TAO_ConstantDef_i
-  //
-  // = DESCRIPTION
-  //    Represents a named constant.
-  //
 public:
+  /// Constructor
     TAO_ConstantDef_i (TAO_Repository_i *repo);
-  // Constructor
 
-  virtual ~TAO_ConstantDef_i (void);
-  // Destructor
+  /// Destructor
+  virtual ~TAO_ConstantDef_i ();
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  /// Return our definition kind.
+  virtual CORBA::DefinitionKind def_kind ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Return our definition kind.
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe ();
 
-  virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From Contained_i's pure virtual function.
+  virtual CORBA::TypeCode_ptr type ();
 
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::TypeCode_ptr type_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From Contained_i's pure virtual function.
+  virtual CORBA::IDLType_ptr type_def ();
 
-  virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::IDLType_ptr type_def_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void type_def (CORBA::IDLType_ptr type_def);
 
-  CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void type_def_i (CORBA::IDLType_ptr type_def);
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Any *value ();
 
-  virtual CORBA::IDLType_ptr type_def (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Any *value_i ();
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void value (const CORBA::Any &value);
 
-  CORBA::IDLType_ptr type_def_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void type_def (
-      CORBA::IDLType_ptr type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void type_def_i (
-      CORBA::IDLType_ptr type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual CORBA::Any *value (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Any *value_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void value (
-      const CORBA::Any &value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void value_i (
-      const CORBA::Any &value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void value_i (const CORBA::Any &value);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

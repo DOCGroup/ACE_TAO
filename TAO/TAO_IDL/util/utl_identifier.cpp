@@ -1,5 +1,3 @@
-// $Id$
-
 /*
 
 COPYRIGHT
@@ -68,24 +66,68 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "utl_err.h"
 #include "utl_string.h"
+#include "fe_private.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID (util, 
-           utl_identifier, 
-           "$Id$")
-
-Identifier::Identifier (void)
-  : pv_string (0),
-    escaped_ (0)
+Identifier::Identifier ()
+  : pv_string (nullptr),
+    escaped_ (false)
 {
 }
 
 Identifier::Identifier (const char *s)
+  : pv_string (nullptr),
+    escaped_ (false)
 {
-  idl_bool shift = 0;
-  this->escaped_ = 0;
+  preprocess_and_replace_string (s);
+}
+
+Identifier::Identifier (const Identifier &other)
+  : pv_string (nullptr),
+    escaped_ (other.escaped ())
+{
+  *this = other;
+}
+
+Identifier::~Identifier ()
+{
+  if (this->pv_string != nullptr)
+    {
+      ACE::strdelete (this->pv_string);
+    }
+}
+
+// Operations.
+
+char *
+Identifier::get_string ()
+{
+  return this->pv_string;
+}
+
+const char *
+Identifier::get_string () const
+{
+  return this->pv_string;
+}
+
+void
+Identifier::replace_string (const char * s)
+{
+  if (pv_string)
+    {
+      delete [] this->pv_string;
+    }
+  this->pv_string = s ? ACE::strnew (s) : nullptr;
+}
+
+void
+Identifier::preprocess_and_replace_string (const char * s)
+{
+  bool shift = false;
 
   if (*s == '_')
     {
@@ -95,126 +137,89 @@ Identifier::Identifier (const char *s)
           idl_global->err ()->error0 (UTL_Error::EIDL_UNDERSCORE);
         }
 
-      shift = 1;
-      this->escaped_ = 1;
+      shift = true;
+      this->escaped_ = true;
+      ACE_CString str (s);
+      const char *c_prefix = "_cxx_";
 
-      ACE_CString str (s,
-                       0,
-                       0);
-
-      if (str.find ("_cxx_") == 0
-          || str.find ("_tc_") == 0
+      if (str.find ("_tc_") == 0
           || str.find ("_tao_") == 0)
         {
-          shift = 0;
+          shift = false;
+        }
+      else if (str.find (c_prefix) == 0)
+        {
+          str = str.substr (ACE_OS::strlen (c_prefix));
+          const char *eh_suffix = "_excep";
+          ACE_CString::size_type pos =
+            str.length () - ACE_OS::strlen (eh_suffix);
+
+          // If we have an AMI exception holder suffix, strip it off.
+          if (str.find (eh_suffix) == pos)
+            {
+              str = str.substr (0, pos);
+            }
+
+          TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
+          unsigned int len =
+            static_cast<unsigned int> (str.length ());
+          const TAO_IDL_CPP_Keyword_Entry *entry =
+            cpp_key_tbl.lookup (str.c_str (), len);
+
+          if (entry != nullptr)
+            {
+              shift = false;
+            }
         }
     }
 
-  if (shift)
-    {
-      this->pv_string = ACE::strnew (s + 1);
-    }
-  else
-    {
-      this->pv_string = ACE::strnew (s);
-    }
-}
-
-Identifier::~Identifier (void)
-{
-  if (this->pv_string != 0)
-    {
-      ACE::strdelete (this->pv_string);
-      this->pv_string = 0;
-    }
-}
-
-// Operations.
-
-char *
-Identifier::get_string (void)
-{
-  return this->pv_string;
-}
-
-void
-Identifier::replace_string (const char * s)
-{
-  if (this->pv_string != 0)
-    {
-      delete [] this->pv_string;
-    }
-
-  this->pv_string = ACE::strnew (s);
+  replace_string (shift ? s + 1 : s);
 }
 
 // Compare two Identifier *
-long
+bool
 Identifier::compare (Identifier *o)
 {
-  if (o == 0)
+  if (!o ||
+      !o->pv_string ||
+      !this->pv_string ||
+      this->escaped_ ^ o->escaped_)
     {
-      return I_FALSE;
-    };
-
-  if (this->pv_string == 0 || o->get_string () == 0)
-    {
-      return I_FALSE;
+      return false;
     }
 
-  if (this->escaped_ ^ o->escaped_)
-    {
-      return I_FALSE;
-    }
-
-  return (ACE_OS::strcmp (this->pv_string, o->get_string ()) == 0);
+  return !ACE_OS::strcmp (this->pv_string, o->pv_string);
 }
 
 // Report the appropriate error if the two identifiers differ only in case.
-long
+bool
 Identifier::case_compare (Identifier *o)
 {
-  UTL_String member (this->pv_string);
-  UTL_String other (o->get_string ());
-
-  long result = member.compare (&other);
-
-  member.destroy ();
-  other.destroy ();
-
-  return result;
+  return UTL_String::compare (this->pv_string, o->pv_string);
 }
 
 // Report no error if the two identifiers differ only in case.
-long
+bool
 Identifier::case_compare_quiet (Identifier *o)
 {
-  UTL_String member (this->pv_string);
-  UTL_String other (o->pv_string);
-
-  long result = member.compare_quiet (&other);
-
-  member.destroy ();
-  other.destroy ();
-
-  return result;
+  return UTL_String::compare_quiet (this->pv_string, o->pv_string);
 }
 
 Identifier *
-Identifier::copy (void)
+Identifier::copy ()
 {
-  Identifier *retval = 0;
+  Identifier *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   Identifier (this->pv_string),
-                  0);
+                  nullptr);
 
   retval->escaped_ = this->escaped_;
 
   return retval;
 }
 
-idl_bool
-Identifier::escaped (void) const
+bool
+Identifier::escaped () const
 {
   return this->escaped_;
 }
@@ -223,15 +228,32 @@ Identifier::escaped (void) const
 void
 Identifier::dump (ACE_OSTREAM_TYPE &o)
 {
-  if (this->pv_string == 0)
+  if (this->pv_string == nullptr)
     {
       return;
     }
 
-  o << this->pv_string;
+  /*
+   * Annotation ids are prefixed with '@' to effectively create an alternative
+   * namespace for them. This hides that hack from dumping.
+   */
+  o << ((pv_string[0] == '@') ? pv_string + 1 : pv_string);
 }
 
 void
-Identifier::destroy (void)
+Identifier::destroy ()
 {
+}
+
+bool
+Identifier::operator== (const Identifier &other) const
+{
+  return !ACE_OS::strcmp (pv_string, other.get_string ());
+}
+
+Identifier &
+Identifier::operator= (const Identifier &other)
+{
+  replace_string (other.get_string ());
+  return *this;
 }

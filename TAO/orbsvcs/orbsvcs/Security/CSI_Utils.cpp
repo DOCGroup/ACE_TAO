@@ -1,17 +1,9 @@
-// $Id$
-
-#include "CSI_Utils.h"
+#include "orbsvcs/Security/CSI_Utils.h"
 #include "orbsvcs/CSIC.h"
-
 #include "tao/CDR.h"
-
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (Security,
-           CSI_Utils,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::CSI_Utils::create_sas_service_context (
@@ -64,3 +56,5 @@ TAO::CSI_Utils::extract_sas_service_context (
 
   return (cdr >> sas_context);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

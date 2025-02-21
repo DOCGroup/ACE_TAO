@@ -1,14 +1,14 @@
-#include "Reactive_Connect_Strategy.h"
-#include "Connection_Handler.h"
-#include "ORB_Core.h"
-#include "debug.h"
-#include "Transport.h"
+// -*- C++ -*-
+#include "tao/Reactive_Connect_Strategy.h"
+#include "tao/Connection_Handler.h"
+#include "tao/ORB_Core.h"
+#include "tao/debug.h"
+#include "tao/Transport.h"
+#include "tao/LF_Multi_Event.h"
 
 #include "ace/Synch_Options.h"
 
-ACE_RCSID(tao,
-          Reactive_Connect_Strategy,
-          "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Reactive_Connect_Strategy::TAO_Reactive_Connect_Strategy (
     TAO_ORB_Core *orb_core)
@@ -16,7 +16,7 @@ TAO_Reactive_Connect_Strategy::TAO_Reactive_Connect_Strategy (
 {
 }
 
-TAO_Reactive_Connect_Strategy::~TAO_Reactive_Connect_Strategy (void)
+TAO_Reactive_Connect_Strategy::~TAO_Reactive_Connect_Strategy ()
 {
 }
 
@@ -24,7 +24,7 @@ void
 TAO_Reactive_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
                                              ACE_Synch_Options &options)
 {
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       options.set (ACE_Synch_Options::USE_REACTOR,
                    *timeout);
@@ -38,30 +38,35 @@ TAO_Reactive_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
 }
 
 int
-TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
-                                     ACE_Time_Value *max_wait_time)
+TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
+                                       TAO_Transport *,
+                                       ACE_Time_Value * max_wait_time)
 {
+  int result = 0;
+  if (ev == nullptr)
+    return -1;
+
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      //FUZZ: disable check_for_lack_ACE_OS
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Waiting in the Reactor for ")
                   ACE_TEXT ("connection completion - wait ()\n")));
+      //FUZZ: enable check_for_lack_ACE_OS
     }
 
-  int result = 0;
+  TAO_Leader_Follower &leader_follower = this->orb_core_->leader_follower ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      while (ch->keep_waiting ())
+      while (ev->keep_waiting (leader_follower))
         {
           result =
-            this->orb_core_->run (max_wait_time, 1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->orb_core_->run (max_wait_time, 1);
 
           // Did we timeout? If so, stop running the loop.
           if (result == 0 &&
-              max_wait_time != 0 &&
+              max_wait_time != nullptr &&
               *max_wait_time == ACE_Time_Value::zero)
             {
               errno = ETIME;
@@ -74,14 +79,13 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
             break;
         }
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
       result = -1;
     }
-  ACE_ENDTRY;
 
   // Set the result.
-  if (ch->error_detected () && result != -1)
+  if (result != -1 && ev->error_detected (leader_follower))
     {
       result = -1;
     }
@@ -89,14 +93,4 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
   return result;
 }
 
-
-int
-TAO_Reactive_Connect_Strategy::wait (TAO_Transport *t,
-                                     ACE_Time_Value *val)
-{
-  if (t == 0)
-    return -1;
-
-  return this->wait (t->connection_handler (),
-                     val);
-}
+TAO_END_VERSIONED_NAMESPACE_DECL

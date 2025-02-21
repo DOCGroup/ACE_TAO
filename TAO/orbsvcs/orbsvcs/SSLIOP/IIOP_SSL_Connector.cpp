@@ -1,8 +1,8 @@
-#include "IIOP_SSL_Connector.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connector.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "tao/Environment.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
@@ -10,46 +10,19 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Transport.h"
-
+#include "tao/Transport_Descriptor_Interface.h"
 #include "ace/Strategies_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RCSID (SSLIOP,
-           IIOP_SSL_Connector,
-           "$Id$")
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Connect_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector_Base<TAO::IIOP_SSL_Connection_Handler>;
-template class ACE_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_NonBlocking_Connect_Handler<TAO::IIOP_SSL_Connection_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector_Base<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_Connector>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO::IIOP_SSL_Connection_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
-TAO::IIOP_SSL_Connector::IIOP_SSL_Connector (CORBA::Boolean flag)
-  : TAO_IIOP_Connector (flag),
+TAO::IIOP_SSL_Connector::IIOP_SSL_Connector ()
+  : TAO_IIOP_Connector (),
     connect_strategy_ (),
-    base_connector_ ()
+    base_connector_ (0)
 {
 }
 
-TAO::IIOP_SSL_Connector::~IIOP_SSL_Connector (void)
+TAO::IIOP_SSL_Connector::~IIOP_SSL_Connector ()
 {
 }
 
@@ -67,8 +40,7 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY (orb_core->thr_mgr (),
-                                             orb_core,
-                                             this->lite_flag_),
+                                             orb_core),
                   -1);
 
   // Our activation strategy
@@ -86,7 +58,7 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO::IIOP_SSL_Connector::close (void)
+TAO::IIOP_SSL_Connector::close ()
 {
   delete this->base_connector_.creation_strategy ();
   delete this->base_connector_.concurrency_strategy ();
@@ -105,21 +77,23 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   if (iiop_endpoint == 0)
     return -1;
 
-  const ACE_INET_Addr &remote_address =
-    iiop_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
   // remote ACE_INET_Addr.
-  if (remote_address.get_type () != AF_INET)
+  if (remote_address.get_type () != AF_INET
+#if defined (ACE_HAS_IPV6)
+      && remote_address.get_type () != AF_INET6
+#endif /* ACE HAS_IPV6 */
+     )
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_SSL connection failed.\n")
-                      ACE_TEXT ("TAO (%P|%t) This is most likely ")
-                      ACE_TEXT ("due to a hostname lookup ")
-                      ACE_TEXT ("failure.\n")));
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_SSL connection failed.\n")
+                      ACE_TEXT ("TAO (%P|%t) - This is most likely ")
+                      ACE_TEXT ("due to a hostname lookup failure.\n")));
         }
 
       return -1;
@@ -144,15 +118,14 @@ TAO::IIOP_SSL_Connector::make_connection (
     iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
-                ACE_TEXT ("making a new connection \n")));
+                ACE_TEXT ("making a new connection\n")));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
-  this->active_connect_strategy_->synch_options (max_wait_time,
-                                                 synch_options);
+  this->active_connect_strategy_->synch_options (max_wait_time, synch_options);
 
   // If we don't need to block for a transport just set the timeout to
   // be zero.
@@ -168,27 +141,7 @@ TAO::IIOP_SSL_Connector::make_connection (
 
   // Connect.
   int result =
-    this->base_connector_.connect (svc_handler,
-                                   remote_address,
-                                   synch_options);
-
-  // The connect() method creates the service handler and bumps the
-  // #REFCOUNT# up one extra.  There are three possibilities from
-  // calling connect(): (a) connection succeeds immediately - in this
-  // case, the #REFCOUNT# on the handler is two; (b) connection
-  // completion is pending - in this case, the #REFCOUNT# on the
-  // handler is also two; (c) connection fails immediately - in this
-  // case, the #REFCOUNT# on the handler is one since close() gets
-  // called on the handler.
-  //
-  // The extra reference count in
-  // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
-  // the case when connection completion is pending and we are going
-  // to wait on a variable in the handler to changes, signifying
-  // success or failure.  Note, that this increment cannot be done
-  // once the connect() returns since this might be too late if
-  // another thread pick up the completion and potentially deletes the
-  // handler before we get a chance to increment the reference count.
+    this->base_connector_.connect (svc_handler, remote_address, synch_options);
 
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
@@ -205,11 +158,12 @@ TAO::IIOP_SSL_Connector::make_connection (
           // get a connected transport or not. In case of non block we get
           // a connected or not connected transport
           if (!this->wait_for_connection_completion (r,
+                                                     desc,
                                                      transport,
                                                      max_wait_time))
             {
               if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - IIOP_SSL_Connector::"
+                ORBSVCS_ERROR ((LM_ERROR, "TAO (%P|%t) - IIOP_SSL_Connector::"
                                       "make_connection, "
                                       "wait for completion failed\n"));
             }
@@ -227,7 +181,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       // Give users a clue to the problem.
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_ERROR,
+          ORBSVCS_DEBUG ((LM_ERROR,
                       "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                       "connection to <%s:%d> failed (%p)\n",
                       iiop_endpoint->host (), iiop_endpoint->port (),
@@ -237,10 +191,15 @@ TAO::IIOP_SSL_Connector::make_connection (
       return 0;
     }
 
+  if (svc_handler->keep_waiting (this->orb_core ()->leader_follower ()))
+    {
+      svc_handler->connection_pending ();
+    }
+
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                 "new connection to <%s:%d> on Transport[%d]\n",
                 iiop_endpoint->host (), iiop_endpoint->port (),
@@ -253,14 +212,14 @@ TAO::IIOP_SSL_Connector::make_connection (
       transport);
 
   // Failure in adding to cache.
-  if (retval != 0)
+  if (retval == -1)
     {
       // Close the handler.
       svc_handler->close ();
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                       "could not add the new connection to cache\n"));
         }
@@ -281,7 +240,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - IIOP_SSL_Connector [%d]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",
@@ -290,6 +249,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       return 0;
     }
 
+  svc_handler_auto_ptr.release ();
   return transport;
 }
 
@@ -306,3 +266,5 @@ TAO::IIOP_SSL_Connector::cancel_svc_handler (
 
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

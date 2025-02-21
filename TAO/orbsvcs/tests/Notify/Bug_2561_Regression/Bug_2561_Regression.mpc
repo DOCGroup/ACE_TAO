@@ -1,0 +1,33 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  custom_only = 1
+  IDL_Files {
+    go.idl
+  }
+}
+
+project(*Ntf Supp): notifytest {
+  exename = Supplier
+  after  += *idl
+
+  Source_Files {
+    goC.cpp
+    goS.cpp
+    Supplier.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Ntf Cons): notifytest {
+  exename = Consumer
+  after  += *idl
+
+  Source_Files {
+    goC.cpp
+    Notify_Push_Consumer.cpp
+    Consumer.cpp
+  }
+  IDL_Files {
+  }
+}

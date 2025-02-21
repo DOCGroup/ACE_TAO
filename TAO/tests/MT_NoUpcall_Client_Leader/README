@@ -1,0 +1,29 @@
+
+
+The test simulates a case when an incomming requests is being detected while a
+client-leader thread is waiting in the reactor event loop for its own reply.
+
+The server uses MT_NOUPCALL client connection handling strategy. The defect was
+in the fact that while the above described incomming request was correctly not
+being handled, the corresponding transport handle remained suspended. This
+caused the reactor to exclude that handle from the read mask and it never gave
+other followers a chance to read from that handle. Eventually, these requests
+remained "ignored"
+
+The resolution is to resume the handle *and* notify the reactor when an
+incomming requests is being detected, while a client-leader thread is waiting
+in the reactor event loop for its own reply. Thus, if any follower threads are
+available, they can pick it up and process it eventually.
+
+A rapidly increasing spin prevention back-off delay helps to mitigate the
+negative influence of this solution over the processor utilization.
+
+Run the test by starting the server:
+
+  ./server -ORBSvcConf mt_noupcall.conf
+
+And the client:
+
+  ./client
+
+If any requests get "ignored" the server process will hang indefinitely.

@@ -1,8 +1,6 @@
-// $Id$
-
 #include "server.h"
 
-FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
+FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint ()
   :TAO_FlowConsumer ("Data",FTP_SERVER::instance ()->protocols (), FTP_SERVER::instance ()->format ())
 {
   AVStreams::protocolSpec protocols (2);
@@ -10,19 +8,15 @@ FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
   protocols [0] = CORBA::string_dup ("TCP");
   protocols [1] = CORBA::string_dup ("UDP");
   protocols [2] = CORBA::string_dup ("RTP/UDP");
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->set_protocol_restriction (protocols
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->set_protocol_restriction (protocols);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint\n");
+      ex._tao_print_exception (
+        "FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
@@ -35,12 +29,12 @@ FTP_Server_FlowEndPoint::get_callback (const char *,
   return 0;
 }
 
-FTP_Server_Callback::FTP_Server_Callback (void)
+FTP_Server_Callback::FTP_Server_Callback ()
 {
 }
 
 int
-FTP_Server_Callback::handle_stop (void)
+FTP_Server_Callback::handle_stop ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop\n"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
@@ -68,14 +62,14 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-FTP_Server_Callback::handle_end_stream (void)
+FTP_Server_Callback::handle_end_stream ()
 {
   CORBA::ORB_var orb = TAO_AV_CORE::instance ()->orb ();
   orb->shutdown ();
   return 0;
 }
 
-Server::Server (void)
+Server::Server ()
   :orb_ (TAO_AV_CORE::instance ()->orb ()),
    poa_ (TAO_AV_CORE::instance ()->poa ())
 {
@@ -84,7 +78,7 @@ Server::Server (void)
 }
 
 AVStreams::protocolSpec
-Server::protocols (void)
+Server::protocols ()
 {
   AVStreams::protocolSpec protocols (2);
   protocols.length (2);
@@ -94,24 +88,23 @@ Server::protocols (void)
 }
 
 const char*
-Server::format (void)
+Server::format ()
 {
   return "UNS:ftp";
 }
 
 int
 Server::init (int argc,
-              char **argv)
+              ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableServer::POAManager_var mgr
         = this->poa_->the_POAManager ();
 
       mgr->activate ();
 
-      int result = this->parse_args (argc,argv);
+      int result = this->parse_args (argc, argv);
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
 
@@ -119,23 +112,20 @@ Server::init (int argc,
       if (my_naming_client_.init (this->orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
+                           "the TAO_Naming_Client.\n"),
                           -1);
 
       ACE_NEW_RETURN (this->streamendpoint_b_, TAO_StreamEndPoint_B, -1);
 
       ACE_NEW_RETURN (this->fep_b_, FTP_Server_FlowEndPoint, -1);
 
-      sep_b_ = this->streamendpoint_b_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-     
-      fep_b_obj_ = this->fep_b_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK; 
+      sep_b_ = this->streamendpoint_b_->_this ();
 
-      CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in() ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
+      fep_b_obj_ = this->fep_b_->_this ();
 
-     ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));   
+      CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in());
+
+     ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %C\n", s1.in() ));
 
 
       // Register the mmdevice with the naming service.
@@ -145,45 +135,35 @@ Server::init (int argc,
 
       // Register the video control object with the naming server.
       this->my_naming_client_->rebind (server_sep_b_name,
-                                       sep_b_.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-
+                                       sep_b_.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 int
-Server::run (void)
+Server::run ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::run\n");
+      ex._tao_print_exception ("server::run\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 int
-Server::parse_args (int argc,char **argv)
+Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc,argv,"f:p:");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:p:"));
 
   int c;
   while ((c = opts ()) != -1)
@@ -198,7 +178,7 @@ Server::parse_args (int argc,char **argv)
             }
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
+          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,"Usage: server -f filename\n"),-1);
@@ -214,43 +194,37 @@ Server::parse_args (int argc,char **argv)
 }
 
 FILE*
-Server::file (void)
+Server::file ()
 {
   return this->fp_;
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   int result = 0;
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      poa.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
-  result = FTP_SERVER::instance ()->init (argc,argv);
+  result = FTP_SERVER::instance ()->init (argc, argv);
 
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"SERVER::init failed\n"),1);
@@ -265,14 +239,6 @@ main (int argc,
   return result;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unmanaged_Singleton <Server,ACE_Null_Mutex>;
-template class TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-s#pragma instantiate ACE_Unmanaged_Singleton <Server,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Unmanaged_Singleton<Server, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Server, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

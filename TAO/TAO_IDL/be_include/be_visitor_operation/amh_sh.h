@@ -2,8 +2,6 @@
 /**
 *  @file   amh_sh.h
 *
-*  $Id$
-*
 *  Creates code for AMH operations.
 *
 *  @author Mayur Deshpande <mayur@ics.uci.edu>
@@ -23,7 +21,7 @@ class be_visitor_amh_operation_sh : public be_visitor_operation
 {
 public:
   be_visitor_amh_operation_sh (be_visitor_context *ctx);
-  ~be_visitor_amh_operation_sh (void);
+  ~be_visitor_amh_operation_sh ();
 
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);

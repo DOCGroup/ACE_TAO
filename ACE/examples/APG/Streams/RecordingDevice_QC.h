@@ -1,0 +1,3 @@
+class QuickCam : public RecordingDevice
+  {
+  };

@@ -1,3 +1,8 @@
+WARNING! This document is historical but left out of the historical directory
+because it describes the basic architecture of the compiler that mostly still
+apply as of writing. Refer to the code itself for up to date information such
+as what AST Nodes are in use.
+
 OMG INTERFACE DEFINITION LANGUAGE COMPILER FRONT END PROTOCOLS
 ==============================================================
 
