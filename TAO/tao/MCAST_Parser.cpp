@@ -447,7 +447,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
         ACE_OS::atoi (mcast_name_cstring.substring (0, pos_colon2).c_str ());
 
       if (the_port >= 0 && the_port <= ACE_MAX_DEFAULT_PORT)
-        this->mcast_port_ = the_port;
+        this->mcast_port_ = static_cast<unsigned short> (the_port);
     }
 
   mcast_name_cstring =

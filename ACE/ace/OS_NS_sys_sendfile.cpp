@@ -32,7 +32,7 @@ ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
   //    file is truncated.
   void *buf = ACE_OS::mmap (0, count, PROT_READ, MAP_SHARED, in_fd, *offset);
   const bool use_read = buf == MAP_FAILED && errno == ENODEV;
-  ACE_OFF_T prev_pos;
+  ACE_OFF_T prev_pos = -1;
 
   if (use_read)
     {

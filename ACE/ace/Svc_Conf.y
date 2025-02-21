@@ -39,6 +39,11 @@ static ACE_Module_Type *
 // that want to play nice with ACE
 #define YYSTYPE_IS_DECLARED
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4702)
+#endif
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 %}
@@ -364,5 +369,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* SVC_CONF_Y_DEBUGGING */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif  /* ACE_USES_CLASSIC_SVC_CONF == 1 */

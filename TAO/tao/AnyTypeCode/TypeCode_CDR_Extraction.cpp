@@ -1518,13 +1518,13 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
   }
 
   for (size_t i = 0; i < direct_infos.size(); ++i) {
-    CORBA::TypeCode_ptr& tc = direct_infos[i].type;
+    CORBA::TypeCode_ptr& tc_direct = direct_infos[i].type;
 
     TAO::TypeCodeFactory::TC_Info_List recursive_tc;
-    if (find_recursive_tc(tc->id(), recursive_tc, indirect_infos)) {
+    if (find_recursive_tc(tc_direct->id(), recursive_tc, indirect_infos)) {
       size_t const len = recursive_tc.size ();
 
-      switch (tc->kind()) {
+      switch (tc_direct->kind()) {
       case CORBA::tk_struct:
         {
           // Set remaining parameters.
@@ -1538,10 +1538,10 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
             member_array_type,
             TAO::True_RefCount_Policy> typecode_type;
 
-          typecode_type * const tc_struct = dynamic_cast<typecode_type *>(tc);
-          for (size_t i = 0; i < len; ++i)
+          typecode_type * const tc_struct = dynamic_cast<typecode_type *>(tc_direct);
+          for (size_t j = 0; j < len; ++j)
             {
-              TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
+              TAO::TypeCodeFactory::TC_Info & info = recursive_tc[j];
 
               TAO::TypeCode::Indirected_Type * const rtc =
                   dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
@@ -1564,10 +1564,10 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
                                        TAO::True_RefCount_Policy>
             typecode_type;
 
-          typecode_type * const tc_union = dynamic_cast<typecode_type *>(tc);
-          for (size_t i = 0; i < len; ++i)
+          typecode_type * const tc_union = dynamic_cast<typecode_type *>(tc_direct);
+          for (size_t j = 0; j < len; ++j)
             {
-              TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
+              TAO::TypeCodeFactory::TC_Info & info = recursive_tc[j];
 
               TAO::TypeCode::Indirected_Type * const rtc =
                 dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
@@ -1593,10 +1593,10 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
                                        TAO::True_RefCount_Policy>
             typecode_type;
 
-          typecode_type * const tc_value = dynamic_cast<typecode_type *>(tc);
-          for (size_t i = 0; i < len; ++i)
+          typecode_type * const tc_value = dynamic_cast<typecode_type *>(tc_direct);
+          for (size_t j = 0; j < len; ++j)
             {
-              TAO::TypeCodeFactory::TC_Info & info = recursive_tc[i];
+              TAO::TypeCodeFactory::TC_Info & info = recursive_tc[j];
 
               TAO::TypeCode::Indirected_Type * const rtc =
                 dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
