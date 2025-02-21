@@ -48,7 +48,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The following yylex() declarations require support for reentrant
 // parser generation (e.g. from GNU Bison).
-#define YY_DECL extern "C" int ace_yylex (YYSTYPE *ace_yylval, void *YYLEX_PARAM)
+#define ACE_YY_DECL extern "C" int ace_yylex (ACE_YYSTYPE *ace_yylval, void *ACE_YYLEX_PARAM)
 
 // Forward declarations
 class ACE_Location_Node;
@@ -56,9 +56,9 @@ class ACE_Parse_Node;
 class ACE_Static_Node;
 class ACE_Service_Type_Factory;
 
-// The following definition for the YYSTYPE must occur before
+// The following definition for the ACE_YYSTYPE must occur before
 // YY_DECL is declared since YY_DECL expands to function
-// prototypes that use YYSTYPE.
+// prototypes that use ACE_YYSTYPE.
 typedef union
 {
   int type_;
@@ -67,21 +67,21 @@ typedef union
   ACE_Static_Node *static_node_;
   ACE_Service_Type_Factory *svc_record_;
   ACE_TCHAR *ident_;
-} YYSTYPE;
+} ACE_YYSTYPE;
 
-#define YYSTYPE_IS_DECLARED
+#define ACE_YYSTYPE_IS_DECLARED
 
 // Forward declaration
 struct ace_yy_buffer_state;
 
 /// Performs the lexical analysis
-YY_DECL;
+ACE_YY_DECL;
 
 /// Name of input stream
 extern FILE *ace_yyin;
 
 /// Error handling routines required by YACC or BISON
-extern void ace_yyerror (ACE_TCHAR const *);
+extern void ace_yyerror (void *ACE_YYLEX_PARAM, ACE_TCHAR const *);
 extern void ace_yyerror (int yyerrno, int yylineno, ACE_TCHAR const *);
 
 /// Holds the lexeme for the current token
