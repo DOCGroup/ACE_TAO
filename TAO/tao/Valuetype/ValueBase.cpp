@@ -405,7 +405,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
     }
 
   // Obtain the actual ValueType from the factory
-  if (factory.in() == 0 || !(valuetype = factory->create_for_unmarshal ()))
+  if (factory.in() == 0 || (valuetype = factory->create_for_unmarshal ()) == 0)
     {
       if (TAO_debug_level)
         {
@@ -738,9 +738,9 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
 
       return false;
     }
-#endif
-
+#else
     return false;
+#endif
   }
 }
 
@@ -1399,9 +1399,8 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase ()
 
 // Copy constructor
 CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase
-  (const DefaultValueRefCountBase& rhs)
-  : ValueBase (rhs),
-    refcount_ (1)
+  (const DefaultValueRefCountBase &)
+  : refcount_ (1)
 
 {
 }

@@ -77,7 +77,7 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
   // Loop until success or failure.
   for (;;)
     {
-      handle = ACE_OS::open (remote_sap.get_path_name(), flags, perms, sa);
+      handle = ACE_OS::open (remote_sap.get_path_name(), flags, static_cast<mode_t> (perms), sa);
       if (handle != ACE_INVALID_HANDLE)
         // Success!
         break;
