@@ -127,7 +127,12 @@ inline struct tm *ace_localtime_r_helper (const time_t *clock, struct tm *res)
  */
 inline double ace_difftime(time_t t1, time_t t0)
 {
+# if defined (difftime)
   return difftime (t1, t0);
+# undef difftime
+# else
+  return ACE_STD_NAMESPACE::difftime (t1, t0);
+# endif
 }
 
 # if defined (ACE_WIN32)

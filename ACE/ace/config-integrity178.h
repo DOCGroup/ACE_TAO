@@ -71,10 +71,9 @@
 # define ACE_LACKS_TRUNCATE
 #endif
 
-// Exclude unavailable functions provided by the GHNet-178 libraries.
-// The GHNet-178 TCP/IP stack includes libsocket.a for socket functions and
-// libnet.a for network utilities functions. When ACE_LACKS_GHNET178 is
-// defined, another network library must be provided for socket functions at the least.
+// Support turning off network utility functions from GHNet-178's libnet.a.
+// However, socket functions from GHNet-178's libsocket.a must be available.
+#if defined ACE_NO_GHNET178_LIBNET
 /***** Network utility functions *****/
 # define ACE_LACKS_GETADDRINFO
 # define ACE_LACKS_GAI_STRERROR

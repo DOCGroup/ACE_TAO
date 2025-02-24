@@ -12,7 +12,7 @@
 class ACE_Single_Input_Reactor : public ACE_Reactor_Impl {
 public:
   int open (size_t size,
-            int restart = 0,
+            bool restart = 0,
             ACE_Sig_Handler * = nullptr,
             ACE_Timer_Queue * = nullptr,
             int disable_notify_pipe = 0,
@@ -87,7 +87,7 @@ public:
 
   int resume_handlers () override;
   int resumable_handler () override;
-  int uses_event_associations () override;
+  bool uses_event_associations () override;
 
   long schedule_timer (ACE_Event_Handler *event_handler,
                        const void *arg,
@@ -131,7 +131,7 @@ public:
   int handler (int signum,
                ACE_Event_Handler **event_handler = nullptr) override;
 
-  int initialized () override;
+  bool initialized () override;
   size_t size () const override;
   ACE_Lock &lock () override;
   void wakeup_all_threads () override;
@@ -139,8 +139,8 @@ public:
   int owner (ACE_thread_t new_owner, ACE_thread_t *old_owner = nullptr) override;
   int owner (ACE_thread_t *owner) override;
 
-  int restart () override;
-  int restart (int) override;
+  bool restart () override;
+  bool restart (bool) override;
 
   void requeue_position (int) override;
   int requeue_position () override;

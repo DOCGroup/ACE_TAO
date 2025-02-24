@@ -2753,7 +2753,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   //FUZZ: enable check_for_lack_ACE_OS
 # elif defined (INTEGRITY)
   Error err;
-  ACE_OSCALL (::ExitTask (thr_id, (Value)signum), Error, InvalidObject, err);
+  ACE_OSCALL (::ExitTask (thr_id, (Value)signum), Error, err);
   return err == Success ? 0 : -1;
 # else
   ACE_UNUSED_ARG (thr_id);
@@ -3308,6 +3308,11 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
 # elif defined (ACE_HAS_VXTHREADS)
   return mutex_init (m, lock_type, name, arg);
+# elif defined (INTEGRITY)
+  ACE_UNUSED_ARG (lock_type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  return ACE_OS::mutex_init (m);
 # endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);

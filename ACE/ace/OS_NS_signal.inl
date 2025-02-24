@@ -70,7 +70,8 @@ sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
   else
     osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
-#elif defined (ACE_LACKS_SIGACTION)
+#elif defined (ACE_LACKS_SIGACTION) || (defined (INTEGRITY) && defined (ACE_LACKS_POSIX))
+  // INTEGRITY has the sigaction struct but the sigaction call may still be unavailable.
   ACE_UNUSED_ARG (nsa);
   ACE_UNUSED_ARG (osa);
   ACE_NOTSUP_RETURN (-1);

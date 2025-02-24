@@ -1255,7 +1255,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
     result = -1;
   else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
     result = -1;
-#     if defined (ACE_VXWORKS) || defined (ACE_MQX)
+#     if defined (ACE_VXWORKS) || defined (ACE_MQX) || defined (INTEGRITY)
   else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
 #     else
   else if (ACE_OS::event_init (&cv->waiters_done_) == -1)

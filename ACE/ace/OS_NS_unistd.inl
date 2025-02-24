@@ -84,7 +84,7 @@ ACE_OS::getpagesize ()
   ::GetSystemInfo (&sys_info);
   return (long) sys_info.dwPageSize;
 #elif defined (_SC_PAGESIZE)
-  return ::sysconf (_SC_PAGESIZE);
+  return ACE_OS::sysconf (_SC_PAGESIZE);
 #elif defined (ACE_HAS_GETPAGESIZE)
   return ::getpagesize ();
 #else

@@ -9,7 +9,7 @@
 #include "Flag_Manip.h"
 #endif
 
-int ACE_Single_Input_Reactor::initialized ()
+bool ACE_Single_Input_Reactor::initialized ()
 {
   return 1;
 }
@@ -49,7 +49,7 @@ ACE_Lock &ACE_Single_Input_Reactor::lock ()
   return lock;
 }
 
-int ACE_Single_Input_Reactor::open (size_t, int, ACE_Sig_Handler *, ACE_Timer_Queue *, int, ACE_Reactor_Notify *)
+int ACE_Single_Input_Reactor::open (size_t, bool, ACE_Sig_Handler *, ACE_Timer_Queue *, int, ACE_Reactor_Notify *)
 {
   return 0;
 }
@@ -209,7 +209,7 @@ int ACE_Single_Input_Reactor::resumable_handler ()
   return 0;
 }
 
-int ACE_Single_Input_Reactor::uses_event_associations ()
+bool ACE_Single_Input_Reactor::uses_event_associations ()
 {
   return 0;
 }
@@ -300,12 +300,12 @@ int ACE_Single_Input_Reactor::owner (ACE_thread_t *)
   return 0;
 }
 
-int ACE_Single_Input_Reactor::restart ()
+bool ACE_Single_Input_Reactor::restart ()
 {
   return 0;
 }
 
-int ACE_Single_Input_Reactor::restart (int)
+bool ACE_Single_Input_Reactor::restart (bool)
 {
   return 0;
 }

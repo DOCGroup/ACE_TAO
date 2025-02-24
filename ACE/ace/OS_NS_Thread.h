@@ -250,6 +250,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #     define THR_CANCEL_DISABLE      0
 #     define THR_CANCEL_ENABLE       0
+#     define THR_CANCEL_DEFERRED     0
+#     define THR_CANCEL_ASYNCHRONOUS 0
 #     define THR_DETACHED            0
 #     define THR_BOUND               0
 #     define THR_NEW_LWP             0
@@ -397,7 +399,7 @@ public:
   /// Queue up threads waiting for the condition to become signaled.
   ACE_sema_t sema_;
 
-#     if defined (ACE_VXWORKS) || defined (ACE_MQX) || || defined (INTEGRITY)
+#     if defined (ACE_VXWORKS) || defined (ACE_MQX) || defined (INTEGRITY)
   /**
    * A semaphore used by the broadcast/signal thread to wait for all
    * the waiting thread(s) to wake up and be released from the
