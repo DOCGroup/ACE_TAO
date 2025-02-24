@@ -428,8 +428,8 @@ TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
   {
     const char *s_if = tmp[i].get_host_addr (buf, sizeof (buf));
     ACE_ASSERT (s_if != 0);
-    ACE_CString tmp (s_if);
-    local_ips.push_back (tmp);
+    ACE_CString tmp_if (s_if);
+    local_ips.push_back (tmp_if);
   }
   delete[] tmp;
 }

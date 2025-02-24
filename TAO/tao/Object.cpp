@@ -884,10 +884,10 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       // get a profile container to store all profiles in the IOR.
       TAO_MProfile mp (profile_count);
 
-      TAO_ORB_Core *orb_core = cdr.orb_core ();
-      if (orb_core == 0)
+      TAO_ORB_Core *orb_core2 = cdr.orb_core ();
+      if (orb_core2 == 0)
         {
-          orb_core = TAO_ORB_Core_instance ();
+          orb_core2 = TAO_ORB_Core_instance ();
           if (TAO_debug_level > 0)
             {
               TAOLIB_DEBUG ((LM_WARNING,
@@ -904,7 +904,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       try
         {
           TAO_Connector_Registry *connector_registry =
-            orb_core->connector_registry ();
+            orb_core2->connector_registry ();
 
           for (CORBA::ULong i = 0; i != profile_count && cdr.good_bit (); ++i)
             {
@@ -933,7 +933,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
                                 false);
             }
 
-          objdata = orb_core->create_stub (type_hint.in (), mp);
+          objdata = orb_core2->create_stub (type_hint.in (), mp);
         }
       catch (const ::CORBA::Exception& ex)
         {
@@ -948,7 +948,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
       TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
-      x = orb_core->create_object (safe_objdata.get ());
+      x = orb_core2->create_object (safe_objdata.get ());
       if (!x)
         {
           return false;

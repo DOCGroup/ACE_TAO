@@ -250,7 +250,7 @@ AST_Module::look_in_prev_mods_local (Identifier *e,
         {
           AST_Decl *d = iter.item ();
           if ((!ignore_fwd || !d->is_fwd ())
-              && !!(d = d->adjust_found (ignore_fwd, false))
+              && 0 != (d = d->adjust_found (ignore_fwd, false))
               && e->case_compare (d->local_name ()))
             {
               return d;

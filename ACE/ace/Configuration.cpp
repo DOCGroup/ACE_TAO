@@ -1877,9 +1877,9 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
       ACE_TCHAR* pers_name =
  (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, t_name);
-      ACE_Configuration_ExtId item_name (pers_name);
+      ACE_Configuration_ExtId item_name_pers (pers_name);
       ACE_Configuration_Value_IntId item_value (value);
-      if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
+      if (section_int.value_hash_map_->bind (item_name_pers, item_value, allocator_))
         {
           allocator_->free (pers_name);
           return -1;
@@ -1934,9 +1934,9 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       ACE_OS::strcpy (pers_name, t_name);
       ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
-      ACE_Configuration_ExtId item_name (pers_name);
+      ACE_Configuration_ExtId item_name_pers (pers_name);
       ACE_Configuration_Value_IntId item_value (pers_value, length);
-      if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
+      if (section_int.value_hash_map_->bind (item_name_pers, item_value, allocator_))
         {
           allocator_->free (pers_value);
           allocator_->free (pers_name);

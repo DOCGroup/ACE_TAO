@@ -462,16 +462,16 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
                     {
                       buf = policy_value_seq[i].pvalue.get_buffer ();
 
-                      TAO_InputCDR in_cdr (
+                      TAO_InputCDR in_cdr_policy (
                         reinterpret_cast <const char*>  (buf),
                         policy_value_seq[i].pvalue.length ());
 
-                      if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
+                      if (!(in_cdr_policy >> ACE_InputCDR::to_boolean (byte_order)))
                         throw ::CORBA::INV_OBJREF ();
 
-                      in_cdr.reset_byte_order (static_cast <int> (byte_order));
+                      in_cdr_policy.reset_byte_order (static_cast <int> (byte_order));
 
-                      if (!policy->_tao_decode (in_cdr))
+                      if (!policy->_tao_decode (in_cdr_policy))
                         throw ::CORBA::INV_OBJREF ();
 
                       // Increase the policy length with 1 when we know we support

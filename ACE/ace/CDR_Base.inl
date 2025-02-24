@@ -281,8 +281,9 @@ ACE_INLINE void
 ACE_CDR::Fixed::digit (int n, int val)
 {
   const int idx = 15 - (n + 1) / 2;
-  this->value_[idx] = (n % 2) ? (this->value_[idx] & 0xf0) | val
-                              : ((val << 4) | (this->value_[idx] & 0xf));
+  const int byte = (n % 2) ? (this->value_[idx] & 0xf0) | val
+                           : ((val << 4) | (this->value_[idx] & 0xf));
+  this->value_[idx] = static_cast<ACE_CDR::Octet> (byte);
 }
 
 ACE_INLINE
@@ -541,7 +542,7 @@ ACE_INLINE ACE_CDR::Fixed
 ACE_CDR::Fixed::operator- () const
 {
   Fixed f = *this;
-  f.value_[15] = (f.value_[15] & 0xf0) | (f.sign () ? POSITIVE : NEGATIVE);
+  f.value_[15] = static_cast<ACE_CDR::Octet> ((f.value_[15] & 0xf0) | (f.sign () ? POSITIVE : NEGATIVE));
   return f;
 }
 
