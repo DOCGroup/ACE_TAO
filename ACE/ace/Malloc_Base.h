@@ -186,7 +186,9 @@ public:
   static T* allocate(std::size_t n)
   {
     void* raw_mem = ACE_Allocator::instance()->malloc(n * sizeof(T));
+#if !defined (ACE_NO_GHS_EXCEPT)
     if (!raw_mem) throw std::bad_alloc();
+#endif
     return static_cast<T*>(raw_mem);
   }
 
