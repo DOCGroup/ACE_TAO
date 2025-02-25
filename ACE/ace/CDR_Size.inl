@@ -152,6 +152,7 @@ ACE_SizeCDR::write_string (const std::string &x)
                              x.empty () ? 0 : x.c_str ());
 }
 
+#if !defined (ACE_LACKS_STD_STRING_VIEW)
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_string_view (const std::string_view &x)
 {
@@ -160,6 +161,7 @@ ACE_SizeCDR::write_string_view (const std::string_view &x)
   return this->write_string (len,
                              x.empty () ? 0 : x.data ());
 }
+#endif
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean
@@ -408,12 +410,14 @@ operator<< (ACE_SizeCDR &ss, const std::string& x)
   return ss.good_bit ();
 }
 
+#if !defined (ACE_LACKS_STD_STRING_VIEW)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_SizeCDR &ss, const std::string_view& x)
 {
   ss.write_string_view (x);
   return ss.good_bit ();
 }
+#endif
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean

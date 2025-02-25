@@ -115,7 +115,7 @@ ACE_OS::open (const char *filename,
 #elif defined (INTEGRITY)
 # if defined (INTEGRITY178B)
   ACE_UNUSED_ARG (sa);
-  ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
+  ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE);
 # else
   ACE_UNUSED_ARG (sa);
   if(!strcmp(filename,ACE_DEV_NULL)) {

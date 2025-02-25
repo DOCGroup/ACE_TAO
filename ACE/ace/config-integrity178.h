@@ -108,6 +108,11 @@
 #define ACE_LACKS_DLFCN_H
 #define ACE_LACKS_REGEX_H
 
+/****** C++17 Defines *****/
+#define ACE_LACKS_STD_WSTRING
+#define ACE_LACKS_STD_STRING_VIEW
+#define ACE_FALLTHROUGH
+
 // INTEGRITY has this concept of thread-specific storage in its native API.
 // It's mentioned as Task-specific data in its document.
 // INTEGRITY-178B does not seem to have thread-specific storage. TSS is just
