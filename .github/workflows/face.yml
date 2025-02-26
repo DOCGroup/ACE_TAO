@@ -20,11 +20,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - CC: gcc-10
-            CXX: g++-10
-            PackageDeps: g++-10
+          - CC: gcc
+            CXX: g++
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-24.04
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.feature }}
     env:
@@ -41,15 +40,6 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
-    - name: Add Repo
-      run: |
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-        sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
-      if: matrix.Repo != ''
-    - name: Add packages
-      run: |
-        sudo apt-get --yes update
-        sudo apt-get --yes install ${{ matrix.PackageDeps }}
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#define ACE_FACE_SAFETY_BASE' > ${env:ACE_ROOT}/ace/config.h
