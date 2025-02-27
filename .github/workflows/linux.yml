@@ -24,114 +24,69 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - CC: gcc-7
-            CXX: g++-7
-            PackageDeps: g++-7
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
-            CheckPkgConfig: 1
-          - CC: gcc-8
-            CXX: g++-8
-            PackageDeps: g++-8
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
           - CC: gcc-9
             CXX: g++-9
             PackageDeps: g++-9
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - CC: gcc-10
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - CC: gcc-11
             CXX: g++-11
             PackageDeps: g++-11
             optional_macros: c++std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-22.04
+            os: ubuntu-24.04
           - CC: gcc-12
             CXX: g++-12
             PackageDeps: g++-12
             optional_macros: c++std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-22.04
+            os: ubuntu-24.04
           - CC: gcc-13
             CXX: g++-13
             PackageDeps: g++-13
             optional_macros: c++std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-24.04
-          - CC: clang-6.0
-            CXX: clang++-6.0
-            PackageDeps: clang-6.0
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-20.04
-          - CC: clang-7
-            CXX: clang++-7
-            PackageDeps: clang-7
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-20.04
-          - CC: clang-8
-            CXX: clang++-8
-            PackageDeps: clang-8
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-20.04
-          - CC: clang-9
-            CXX: clang++-9
-            PackageDeps: clang-9
-            Repo: llvm-toolchain-$(lsb_release -cs)-9
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-20.04
-          - CC: clang-10
-            CXX: clang++-10
-            PackageDeps: clang-10
-            Repo: llvm-toolchain-$(lsb_release -cs)-10
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-20.04
-          - CC: clang-11
-            CXX: clang++-11
-            PackageDeps: clang-11
-            Repo: llvm-toolchain-$(lsb_release -cs)-11
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-20.04
+          - CC: gcc-14
+            CXX: g++-14
+            PackageDeps: g++-14
+            optional_macros: c++std=c++23
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-24.04
           - CC: clang-12
             CXX: clang++-12
             PackageDeps: clang-12
-            Repo: llvm-toolchain-$(lsb_release -cs)-12
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - CC: clang-13
             CXX: clang++-13
-            PackageDeps: clang-13
-            Repo: llvm-toolchain-$(lsb_release -cs)-13
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - CC: clang-14
             CXX: clang++-14
-            PackageDeps: clang-14
-            Repo: llvm-toolchain-$(lsb_release -cs)-14
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-22.04
+            os: ubuntu-24.04
+            PackageDeps: clang-14
           - CC: clang-15
             CXX: clang++-15
-            PackageDeps: clang-15
-            Repo: llvm-toolchain-$(lsb_release -cs)-15
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-22.04
+            os: ubuntu-24.04
+            PackageDeps: clang-15
           - CC: clang-16
             CXX: clang++-16
-            PackageDeps: clang-16
-            Repo: llvm-toolchain-$(lsb_release -cs)-16
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-22.04
+            os: ubuntu-24.04
           - feature: CORBA/e micro
             CC: gcc-10
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             optional_feature: corba_e_micro=1
             optional_macros: corba_e_micro=1
           - feature: CORBA/e compact
@@ -139,7 +94,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             optional_feature: corba_e_compact=1
             optional_macros: corba_e_compact=1
           - feature: ACE for TAO
@@ -147,7 +102,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             optional_feature: ace_for_tao=1
             optional_macros: ace_for_tao=1
           - feature: wchar
@@ -155,7 +110,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             optional_feature: uses_wchar=1
             optional_macros: inline=0
           - feature: CodeQL
@@ -163,7 +118,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-24.04
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.feature }}
     env:

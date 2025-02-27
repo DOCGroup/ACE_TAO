@@ -85,7 +85,7 @@ UTL_String::strcmp_caseless (
   int difference;
 
   // Advance until (difference between the strings is found) or (End of String)
-  while (!(difference= static_cast<int> (*lhs) - static_cast<int> (*rhs)) && *lhs)
+  while (0 == (difference = static_cast<int> (*lhs) - static_cast<int> (*rhs)) && *lhs)
     {
       ++lhs;
       ++rhs;
@@ -105,8 +105,8 @@ UTL_String::strcmp_caseless (
       ++rhs;
 
       // Continue caseless compare until (difference between strings) or (End of String)
-      while (!(difference= static_cast<int> (ACE_OS::ace_toupper (*lhs)) -
-                           static_cast<int> (ACE_OS::ace_toupper (*rhs))) && *lhs)
+      while (0 == (difference = static_cast<int> (ACE_OS::ace_toupper (*lhs)) -
+                                static_cast<int> (ACE_OS::ace_toupper (*rhs))) && *lhs)
         {
           ++lhs;
           ++rhs;
@@ -170,7 +170,7 @@ UTL_String::compare_quiet (const char *lhs, const char *rhs)
 void
 UTL_String::get_canonical_rep (const char *src, char *dest)
 {
-  while (!!(*dest++= static_cast<char> (ACE_OS::ace_toupper (*src++))))
+  while (0 != (*dest++ = static_cast<char> (ACE_OS::ace_toupper (*src++))))
     {}
 }
 

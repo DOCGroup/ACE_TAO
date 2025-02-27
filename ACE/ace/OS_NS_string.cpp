@@ -101,7 +101,7 @@ ACE_OS::strerror (int errnum)
   errno = 0;
   char *errmsg = 0;
 
-#if defined (ACE_HAS_TR24731_2005_CRT)
+# if defined (ACE_HAS_TR24731_2005_CRT)
   errmsg = ret_errortext;
   ACE_SECURECRTCALL (strerror_s (ret_errortext, sizeof(ret_errortext), errnum),
                      char *, 0, errmsg);
@@ -109,10 +109,11 @@ ACE_OS::strerror (int errnum)
     g = EINVAL;
 
   return errmsg;
-#elif defined (ACE_WIN32)
+# else
+#  if defined (ACE_WIN32)
   if (errnum < 0 || errnum >= _sys_nerr)
     errno = EINVAL;
-#endif /* ACE_WIN32 */
+#  endif /* ACE_WIN32 */
   errmsg = ::strerror (errnum);
 
   if (errno == EINVAL || errmsg == 0 || errmsg[0] == 0)
@@ -122,6 +123,7 @@ ACE_OS::strerror (int errnum)
       g = EINVAL;
     }
   return errmsg;
+# endif /* ACE_HAS_TR24731_2005_CRT */
 #endif /* ACE_LACKS_STRERROR */
 }
 

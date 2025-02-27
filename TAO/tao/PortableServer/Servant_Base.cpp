@@ -56,15 +56,13 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ServantBase_Timeprobe_Description,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table* optable)
-  : TAO_Abstract_ServantBase ()
-  , ref_count_ (1)
+  : ref_count_ (1)
   , optable_ (optable)
 {
 }
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
-  : TAO_Abstract_ServantBase ()
-  , ref_count_ (1)
+  : ref_count_ (1)
   , optable_ (rhs.optable_)
 {
 }

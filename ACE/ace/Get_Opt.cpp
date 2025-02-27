@@ -487,7 +487,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
   // when the long option is found, but won't allow the caller to pass it on
   // the command line (how could they?).  The special case is 0, but since
   // we always return it, we let the caller worry about that.
-  if (ACE_OS::ace_isalnum (short_option) != 0)
+  if (ACE_OS::ace_isalnum (static_cast<ACE_TCHAR> (short_option)) != 0)
     {
       // If the short_option already exists, make sure it matches, otherwise
       // add it.

@@ -39,9 +39,8 @@ TAO_LF_CH_Event::state_changed_i (LFS_STATE new_state)
       if (TAO_debug_level > 9)
         {
           size_t id = 0;
-          TAO_Connection_Handler *ch = nullptr;
-          if ((ch = dynamic_cast<TAO_Connection_Handler *> (this))
-              && ch->transport ())
+          TAO_Connection_Handler *const ch = dynamic_cast<TAO_Connection_Handler *> (this);
+          if (ch && ch->transport ())
             {
               id = ch->transport ()->id ();
             }
@@ -137,9 +136,8 @@ TAO_LF_CH_Event::set_state (LFS_STATE new_state)
       if (TAO_debug_level > 9)
         {
           size_t id = 0;
-          TAO_Connection_Handler *ch = nullptr;
-          if ((ch = dynamic_cast<TAO_Connection_Handler *> (this)) &&
-              ch->transport ())
+          TAO_Connection_Handler *const ch = dynamic_cast<TAO_Connection_Handler *> (this);
+          if (ch && ch->transport ())
             {
               id = ch->transport ()->id ();
             }

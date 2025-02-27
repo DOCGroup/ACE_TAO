@@ -330,12 +330,11 @@ TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
 }
 
 time_t
-TAO::Storable_FlatFileStream::last_changed()
+TAO::Storable_FlatFileStream::last_changed ()
 {
-  ACE_stat st;
-  int result = 0;
-  bool do_stat = filelock_.handle_ == ACE_INVALID_HANDLE;
-  if (!do_stat)
+  time_t mtime = 0;
+  int result = -1;
+  if (filelock_.handle_ != ACE_INVALID_HANDLE)
     {
       bool retry = false;
       result = -1;
@@ -344,11 +343,14 @@ TAO::Storable_FlatFileStream::last_changed()
            attempts--)
         {
           if (retry)
-            this->reopen();
+            this->reopen ();
           retry = true;
 
-          result = ACE_OS::fstat(filelock_.handle_, &st);
-          if (result != 0)
+          ACE_stat st;
+          result = ACE_OS::fstat (filelock_.handle_, &st);
+          if (result == 0)
+            mtime = st.st_mtime;
+          else
             {
               if (TAO_debug_level > 0)
                 {
@@ -356,18 +358,19 @@ TAO::Storable_FlatFileStream::last_changed()
                                  ACE_TEXT ("TAO (%P|%t) - ")
                                  ACE_TEXT ("Storable_FlatFileStream::last_changed, ")
                                  ACE_TEXT ("File %C, handle %d,  %p\n"),
-                                 file_.c_str (), filelock_.handle_,  ACE_TEXT("fstat")));
+                                 file_.c_str (), filelock_.handle_,  ACE_TEXT ("fstat")));
                 }
               if (errno != EBADF)
-                {
-                  break;
-                }
+                break;
             }
         }
     }
   else
     {
+      ACE_stat st;
       result = ACE_OS::stat (file_.c_str (), &st);
+      if (result == 0)
+        mtime = st.st_mtime;
     }
   if (result != 0)
     {
@@ -375,11 +378,11 @@ TAO::Storable_FlatFileStream::last_changed()
                      ACE_TEXT ("TAO (%P|%t) - ")
                      ACE_TEXT ("Storable_FlatFileStream::last_changed, ")
                      ACE_TEXT ("Error getting file information for %C, handle %d, %p\n"),
-                     this->file_.c_str(), filelock_.handle_, ACE_TEXT("fstat")));
+                     this->file_.c_str(), filelock_.handle_, ACE_TEXT ("fstat")));
       throw Storable_Exception (this->file_);
     }
 
-  return st.st_mtime;
+  return mtime;
 }
 
 void

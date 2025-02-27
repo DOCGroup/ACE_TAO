@@ -335,9 +335,10 @@ public:
          {
            MAX_DIGITS = 31,
            MAX_STRING_SIZE = 4 + MAX_DIGITS, // includes -, 0, ., terminator
-           POSITIVE = 0xc,
-           NEGATIVE = 0xd
          };
+
+         static const Octet POSITIVE = 0xc;
+         static const Octet NEGATIVE = 0xd;
 
          static Fixed from_integer (LongLong val = 0);
          static Fixed from_integer (ULongLong val);

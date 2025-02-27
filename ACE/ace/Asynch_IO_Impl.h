@@ -46,7 +46,7 @@ class ACE_Proactor_Impl;
 class ACE_Export ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Result_Impl ();
+  virtual ~ACE_Asynch_Result_Impl () = default;
 
   /// Number of bytes transferred by the operation.
   virtual size_t bytes_transferred () const = 0;
@@ -96,8 +96,7 @@ public:
   virtual int post_completion (ACE_Proactor_Impl *proactor) = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Result_Impl ();
+  ACE_Asynch_Result_Impl () = default;
 };
 
 /**
@@ -110,7 +109,7 @@ protected:
 class ACE_Export ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Operation_Impl ();
+  virtual ~ACE_Asynch_Operation_Impl () = default;
 
   /**
    * Initializes the factory with information which will be used with
@@ -136,8 +135,7 @@ public:
   virtual ACE_Proactor* proactor () const = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Operation_Impl ();
+  ACE_Asynch_Operation_Impl () = default;
 };
 
 /**
@@ -150,7 +148,7 @@ protected:
 class ACE_Export ACE_Asynch_Read_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_Stream_Impl ();
+  virtual ~ACE_Asynch_Read_Stream_Impl () = default;
 
   /// This starts off an asynchronous read. Upto @a bytes_to_read will
   /// be read and stored in the @a message_block.
@@ -173,8 +171,7 @@ public:
 #endif /* defined (ACE_WIN32) */
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Read_Stream_Impl ();
+  ACE_Asynch_Read_Stream_Impl () = default;
 };
 
 /**
@@ -187,7 +184,7 @@ protected:
 class ACE_Export ACE_Asynch_Read_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_Stream_Result_Impl ();
+  virtual ~ACE_Asynch_Read_Stream_Result_Impl () = default;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
@@ -200,8 +197,7 @@ public:
   virtual ACE_HANDLE handle () const = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Read_Stream_Result_Impl ();
+  ACE_Asynch_Read_Stream_Result_Impl () = default;
 };
 
 /**
@@ -214,7 +210,7 @@ protected:
 class ACE_Export ACE_Asynch_Write_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_Stream_Impl ();
+  virtual ~ACE_Asynch_Write_Stream_Impl () = default;
 
   /// This starts off an asynchronous write.  Upto @a bytes_to_write
   /// will be written from the @a message_block.
@@ -237,8 +233,7 @@ public:
 #endif /* defined (ACE_WIN32) */
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Write_Stream_Impl ();
+  ACE_Asynch_Write_Stream_Impl () = default;
 };
 
 /**
@@ -251,7 +246,7 @@ protected:
 class ACE_Export ACE_Asynch_Write_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_Stream_Result_Impl ();
+  virtual ~ACE_Asynch_Write_Stream_Result_Impl () = default;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
@@ -264,8 +259,7 @@ public:
   virtual ACE_HANDLE handle () const = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Write_Stream_Result_Impl ();
+  ACE_Asynch_Write_Stream_Result_Impl () = default;
 };
 
 /**
@@ -278,7 +272,7 @@ protected:
 class ACE_Export ACE_Asynch_Read_File_Impl : public virtual ACE_Asynch_Read_Stream_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_File_Impl ();
+  virtual ~ACE_Asynch_Read_File_Impl () = default;
 
   /**
    * This starts off an asynchronous read.  Upto @a bytes_to_read will
@@ -330,8 +324,7 @@ public:
 #endif /* defined (ACE_WIN32) */
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Read_File_Impl ();
+  ACE_Asynch_Read_File_Impl () = default;
 };
 
 /**
@@ -344,11 +337,10 @@ class ACE_Export ACE_Asynch_Read_File_Result_Impl : public virtual ACE_Asynch_Re
 {
 public:
   /// Destructor.
-  virtual ~ACE_Asynch_Read_File_Result_Impl ();
+  virtual ~ACE_Asynch_Read_File_Result_Impl () = default;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Read_File_Result_Impl ();
+  ACE_Asynch_Read_File_Result_Impl () = default;
 };
 
 /**
@@ -361,7 +353,7 @@ protected:
 class ACE_Export ACE_Asynch_Write_File_Impl : public virtual ACE_Asynch_Write_Stream_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_File_Impl ();
+  virtual ~ACE_Asynch_Write_File_Impl () = default;
 
   /**
    * This starts off an asynchronous write.  Upto @a bytes_to_write
@@ -413,8 +405,7 @@ public:
 #endif /* defined (ACE_WIN32) */
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Write_File_Impl ();
+  ACE_Asynch_Write_File_Impl () = default;
 };
 
 /**
@@ -427,11 +418,10 @@ protected:
 class ACE_Export ACE_Asynch_Write_File_Result_Impl : public virtual ACE_Asynch_Write_Stream_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_File_Result_Impl ();
+  virtual ~ACE_Asynch_Write_File_Result_Impl () = default;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Write_File_Result_Impl ();
+  ACE_Asynch_Write_File_Result_Impl () = default;
 };
 
 /**
@@ -444,7 +434,7 @@ protected:
 class ACE_Export ACE_Asynch_Accept_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Accept_Impl ();
+  virtual ~ACE_Asynch_Accept_Impl () = default;
 
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
@@ -466,8 +456,7 @@ public:
                       int addr_family) = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Accept_Impl ();
+  ACE_Asynch_Accept_Impl () = default;
 };
 
 /**
@@ -480,7 +469,7 @@ protected:
 class ACE_Export ACE_Asynch_Accept_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Accept_Result_Impl ();
+  virtual ~ACE_Asynch_Accept_Result_Impl () = default;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous accept.
@@ -496,8 +485,7 @@ public:
   virtual ACE_HANDLE accept_handle () const = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Accept_Result_Impl ();
+  ACE_Asynch_Accept_Result_Impl () = default;
 };
 
 
@@ -511,7 +499,7 @@ protected:
 class ACE_Export ACE_Asynch_Connect_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Connect_Impl ();
+  virtual ~ACE_Asynch_Connect_Impl () = default;
 
   /**
    * This starts off an asynchronous connect
@@ -525,8 +513,7 @@ public:
                        int   signal_number) = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Connect_Impl ();
+  ACE_Asynch_Connect_Impl () = default;
 };
 
 /**
@@ -539,14 +526,13 @@ protected:
 class ACE_Export ACE_Asynch_Connect_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Connect_Result_Impl ();
+  virtual ~ACE_Asynch_Connect_Result_Impl () = default;
 
   /// I/O handle for the connection.
   virtual ACE_HANDLE connect_handle () const = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Connect_Result_Impl ();
+  ACE_Asynch_Connect_Result_Impl () = default;
 };
 
 
@@ -560,7 +546,7 @@ protected:
 class ACE_Asynch_Transmit_File_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Transmit_File_Impl ();
+  virtual ~ACE_Asynch_Transmit_File_Impl () = default;
 
   /// This starts off an asynchronous transmit file.
   virtual int transmit_file (ACE_HANDLE file,
@@ -575,8 +561,7 @@ public:
                              int signal_number) = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Transmit_File_Impl ();
+  ACE_Asynch_Transmit_File_Impl () = default;
 };
 
 /**
@@ -589,7 +574,7 @@ protected:
 class ACE_Export ACE_Asynch_Transmit_File_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Transmit_File_Result_Impl ();
+  virtual ~ACE_Asynch_Transmit_File_Result_Impl () = default;
 
   /// Socket used for transmitting the file.
   virtual ACE_HANDLE socket () const = 0;
@@ -612,8 +597,7 @@ public:
   virtual u_long flags () const = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Transmit_File_Result_Impl ();
+  ACE_Asynch_Transmit_File_Result_Impl () = default;
 };
 
 
@@ -627,7 +611,7 @@ protected:
 class ACE_Export ACE_Asynch_Read_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_Dgram_Impl ();
+  virtual ~ACE_Asynch_Read_Dgram_Impl () = default;
 
   /** This starts off an asynchronous read.  Upto
    * <message_block->total_size()> will be read and stored in the
@@ -664,8 +648,7 @@ public:
                         int signal_number) = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Read_Dgram_Impl ();
+  ACE_Asynch_Read_Dgram_Impl () = default;
 };
 
 /**
@@ -678,7 +661,7 @@ protected:
 class ACE_Export ACE_Asynch_Read_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_Dgram_Result_Impl ();
+  virtual ~ACE_Asynch_Read_Dgram_Result_Impl () = default;
 
   /// Message block which contains the read data
   virtual ACE_Message_Block *message_block () const = 0;
@@ -697,8 +680,7 @@ public:
   virtual ACE_HANDLE handle () const = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Read_Dgram_Result_Impl ();
+  ACE_Asynch_Read_Dgram_Result_Impl () = default;
 };
 
 /**
@@ -711,7 +693,7 @@ protected:
 class ACE_Export ACE_Asynch_Write_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_Dgram_Impl ();
+  virtual ~ACE_Asynch_Write_Dgram_Impl () = default;
 
   /** This starts off an asynchronous send.  Upto
    * <message_block->total_length()> will be sent.  @a message_block's
@@ -748,8 +730,7 @@ public:
                         int signal_number) = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Write_Dgram_Impl ();
+  ACE_Asynch_Write_Dgram_Impl () = default;
 };
 
 /**
@@ -762,7 +743,7 @@ protected:
 class ACE_Export ACE_Asynch_Write_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_Dgram_Result_Impl ();
+  virtual ~ACE_Asynch_Write_Dgram_Result_Impl () = default;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
@@ -778,15 +759,10 @@ public:
   virtual ACE_HANDLE handle () const = 0;
 
 protected:
-  /// Do-nothing constructor.
-  ACE_Asynch_Write_Dgram_Result_Impl ();
+  ACE_Asynch_Write_Dgram_Result_Impl () = default;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "ace/Asynch_IO_Impl.inl"
-#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 #include /**/ "ace/post.h"

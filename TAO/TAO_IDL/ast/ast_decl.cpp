@@ -386,7 +386,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
   if (this->node_type () == AST_Decl::NT_module)
     {
       AST_Module *m = dynamic_cast<AST_Module*> (this);
-      while (!!(m = m->previous_opening ()))
+      while (0 != (m = m->previous_opening ()))
         {
           for (UTL_ScopeActiveIterator si (m, UTL_Scope::IK_decls);
                !si.is_done ();
@@ -873,7 +873,7 @@ AST_Decl::has_ancestor (AST_Decl *s)
       AST_Module *m = dynamic_cast<AST_Module*> (s);
       if (m)
         {
-          while (!!(m = m->previous_opening ()))
+          while (0 != (m = m->previous_opening ()))
             {
               if (static_cast<AST_Decl *> (m) == s)
                 {

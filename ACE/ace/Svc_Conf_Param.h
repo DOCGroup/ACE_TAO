@@ -124,11 +124,11 @@ public:
 
 // Parameter that is passed down to the yyparse() function, and
 // eventually to yylex().
-#define YYPARSE_PARAM ace_svc_conf_parameter
+#define ACE_YYPARSE_PARAM ace_svc_conf_parameter
 
-#define YYLEX_PARAM YYPARSE_PARAM
+#define ACE_YYLEX_PARAM ACE_YYPARSE_PARAM
 
-#define ACE_SVC_CONF_PARAM (static_cast<ACE_Svc_Conf_Param *> (YYLEX_PARAM))
+#define ACE_SVC_CONF_PARAM (static_cast<ACE_Svc_Conf_Param *> (ACE_YYLEX_PARAM))
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
