@@ -116,19 +116,16 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
 
           * reinterpret_cast<unsigned long*> (target) = a;
 #else
-          ACE_UINT32 a = * reinterpret_cast<const ACE_UINT32*> (orig);
-          ACE_UINT32 b = * reinterpret_cast<const ACE_UINT32*> (orig + 4);
+          ACE_UINT32 const a = *reinterpret_cast<const ACE_UINT32 *> (orig);
+          ACE_UINT32 const b = *reinterpret_cast<const ACE_UINT32 *> (orig + 4);
 
-          ACE_UINT32 a1 = (a & 0x00ff00ffU) << 8;
-          ACE_UINT32 b1 = (b & 0x00ff00ffU) << 8;
-          ACE_UINT32 a2 = (a & 0xff00ff00U) >> 8;
-          ACE_UINT32 b2 = (b & 0xff00ff00U) >> 8;
+          ACE_UINT32 const a1 = (a & 0x00ff00ffU) << 8;
+          ACE_UINT32 const b1 = (b & 0x00ff00ffU) << 8;
+          ACE_UINT32 const a2 = (a & 0xff00ff00U) >> 8;
+          ACE_UINT32 const b2 = (b & 0xff00ff00U) >> 8;
 
-          a = (a1 | a2);
-          b = (b1 | b2);
-
-          * reinterpret_cast<ACE_UINT32*> (target) = a;
-          * reinterpret_cast<ACE_UINT32*> (target + 4) = b;
+          *reinterpret_cast<ACE_UINT32 *> (target) = a1 | a2;
+          *reinterpret_cast<ACE_UINT32 *> (target + 4) = b1 | b2;
 #endif
           orig += 8;
           target += 8;
