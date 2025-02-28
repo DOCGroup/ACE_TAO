@@ -21,28 +21,28 @@
 // Exclude unavailable functions in libraries such as libposix_178b_be.a or file systems libraries.
 // Newly introduced macros w.r.t. this ACE version are annotated in the comments.
 #if defined ACE_LACKS_POSIX
-# define ACE_LACKS_FSTAT // new
+# define ACE_LACKS_FSTAT
 # define ACE_LACKS_LSTAT
-# define ACE_LACKS_STAT // new
+# define ACE_LACKS_STAT
 # define ACE_LACKS_UMASK
-# define ACE_LACKS_GETTIMEOFDAY // new
-# define ACE_LACKS_ALARM // new
-# define ACE_LACKS_DUP // new
+# define ACE_LACKS_GETTIMEOFDAY
+# define ACE_LACKS_ALARM
+# define ACE_LACKS_DUP
 # define ACE_LACKS_DUP2
-# define ACE_LACKS_FTRUNCATE // new
-# define ACE_LACKS_GETHOSTNAME // new
-# define ACE_LACKS_SLEEP // new
-# define ACE_LACKS_SELECT // new
+# define ACE_LACKS_FTRUNCATE
+# define ACE_LACKS_GETHOSTNAME
+# define ACE_LACKS_SLEEP
+# define ACE_LACKS_SELECT
 # define ACE_LACKS_READV
 # define ACE_LACKS_WRITEV
-# define ACE_LACKS_KILL // new
+# define ACE_LACKS_KILL
 # define ACE_LACKS_SIGEMPTYSET // new
 # define ACE_LACKS_SIGFILLSET // new
 # define ACE_LACKS_SIGISMEMBER // new
 # define ACE_LACKS_SIGADDSET // new
 # define ACE_LACKS_SIGDELSET // new
-# define ACE_LACKS_SIGPROCMASK // new
-# define ACE_LACKS_TIME // new
+# define ACE_LACKS_SIGPROCMASK
+# define ACE_LACKS_TIME
 # define ACE_LACKS_MMAP
 # define ACE_LACKS_SETEGID
 # define ACE_LACKS_SETUID
@@ -69,6 +69,7 @@
 # define ACE_LACKS_ISATTY
 # define ACE_LACKS_STRCASECMP
 # define ACE_LACKS_TRUNCATE
+# define ACE_LACKS_GETOPT
 #endif
 
 // Support turning off network utility functions from GHNet-178's libnet.a.
