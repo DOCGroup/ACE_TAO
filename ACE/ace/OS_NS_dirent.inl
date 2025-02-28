@@ -20,8 +20,10 @@ closedir (ACE_DIR *d)
   delete d;
 # elif defined (ACE_HAS_WCLOSEDIR_EQUIVALENT) && defined (ACE_USES_WCHAR)
   ACE_HAS_WCLOSEDIR_EQUIVALENT (d);
-# else /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
+# elif !defined (ACE_LACKS_CLOSEDIR) /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
   ::closedir (d);
+# else
+  ACE_UNUSED_ARG (d);
 # endif /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
 
 #else /* ACE_HAS_DIRENT */
@@ -33,13 +35,16 @@ ACE_INLINE ACE_DIR *
 opendir (const ACE_TCHAR *filename)
 {
 #if defined (ACE_HAS_DIRENT)
-#    if (defined (ACE_WIN32) || defined(ACE_MQX)) && defined (ACE_LACKS_OPENDIR)
+#  if (defined (ACE_WIN32) || defined(ACE_MQX)) && defined (ACE_LACKS_OPENDIR)
   return ::ACE_OS::opendir_emulation (filename);
 #  elif defined (ACE_HAS_WOPENDIR_EQUIVALENT) && defined (ACE_USES_WCHAR)
   return ACE_HAS_WOPENDIR_EQUIVALENT (filename);
-#    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
+#  elif !defined (ACE_LACKS_OPENDIR)
   return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));
-#    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
+#  else
+  ACE_UNUSED_ARG (filename);
+  ACE_NOTSUP_RETURN (0);
+#  endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
 #else
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (0);
@@ -54,8 +59,11 @@ readdir (ACE_DIR *d)
      return ACE_OS::readdir_emulation (d);
 #  elif defined (ACE_HAS_WREADDIR_EQUIVALENT) && defined (ACE_USES_WCHAR)
      return ACE_HAS_WREADDIR_EQUIVALENT (d);
-#  else /* ACE_WIN32 && ACE_LACKS_READDIR */
+#  elif !defined (ACE_LACKS_READDIR)
      return ::readdir (d);
+#  else
+  ACE_UNUSED_ARG (d);
+  ACE_NOTSUP_RETURN (0);
 #  endif /* ACE_WIN32 && ACE_LACKS_READDIR */
 #else
   ACE_UNUSED_ARG (d);

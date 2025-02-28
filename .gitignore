@@ -17,6 +17,11 @@
 *S_T.inl
 *.bmak
 *.recipe
+*.gpj
+*.int
+*.cmd
+*.custom_build_rule
+*.empty_html_file
 
 .depend.*
 GNUmakefile*
@@ -32,6 +37,9 @@ lib*.dylib
 *~
 ipch/
 *.vsidx
+.vs/
+Static_Release/
+Static_Debug/
 
 /ACE/ace/config.h
 /ACE/bin/MakeProjectCreator/config/default.features
