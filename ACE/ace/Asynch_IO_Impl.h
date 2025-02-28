@@ -43,7 +43,7 @@ class ACE_Proactor_Impl;
  * @brief Abstract base class for the all the classes that provide
  * concrete implementations for ACE_Asynch_Result.
  */
-class ACE_Export ACE_Asynch_Result_Impl
+class ACE_Asynch_Result_Impl
 {
 public:
   virtual ~ACE_Asynch_Result_Impl () = default;
@@ -106,7 +106,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Operation.
  */
-class ACE_Export ACE_Asynch_Operation_Impl
+class ACE_Asynch_Operation_Impl
 {
 public:
   virtual ~ACE_Asynch_Operation_Impl () = default;
@@ -145,7 +145,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Read_Stream
  */
-class ACE_Export ACE_Asynch_Read_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
+class ACE_Asynch_Read_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
   virtual ~ACE_Asynch_Read_Stream_Impl () = default;
@@ -181,7 +181,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Read_Stream::Result class.
  */
-class ACE_Export ACE_Asynch_Read_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
+class ACE_Asynch_Read_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
   virtual ~ACE_Asynch_Read_Stream_Result_Impl () = default;
@@ -207,7 +207,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Write_Stream class.
  */
-class ACE_Export ACE_Asynch_Write_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
+class ACE_Asynch_Write_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
   virtual ~ACE_Asynch_Write_Stream_Impl () = default;
@@ -243,7 +243,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Write_Stream::Result.
  */
-class ACE_Export ACE_Asynch_Write_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
+class ACE_Asynch_Write_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
   virtual ~ACE_Asynch_Write_Stream_Result_Impl () = default;
@@ -269,7 +269,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Read_File::Result.
  */
-class ACE_Export ACE_Asynch_Read_File_Impl : public virtual ACE_Asynch_Read_Stream_Impl
+class ACE_Asynch_Read_File_Impl : public virtual ACE_Asynch_Read_Stream_Impl
 {
 public:
   virtual ~ACE_Asynch_Read_File_Impl () = default;
@@ -333,7 +333,7 @@ protected:
  * @brief This is the abstract base class for all the concrete
  * implementation classes for ACE_Asynch_Read_File::Result.
  */
-class ACE_Export ACE_Asynch_Read_File_Result_Impl : public virtual ACE_Asynch_Read_Stream_Result_Impl
+class ACE_Asynch_Read_File_Result_Impl : public virtual ACE_Asynch_Read_Stream_Result_Impl
 {
 public:
   /// Destructor.
@@ -350,7 +350,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Write_File.
  */
-class ACE_Export ACE_Asynch_Write_File_Impl : public virtual ACE_Asynch_Write_Stream_Impl
+class ACE_Asynch_Write_File_Impl : public virtual ACE_Asynch_Write_Stream_Impl
 {
 public:
   virtual ~ACE_Asynch_Write_File_Impl () = default;
@@ -415,7 +415,7 @@ protected:
  * implementation classes that provide different implementations
  * for the ACE_Asynch_Write_File::Result.
  */
-class ACE_Export ACE_Asynch_Write_File_Result_Impl : public virtual ACE_Asynch_Write_Stream_Result_Impl
+class ACE_Asynch_Write_File_Result_Impl : public virtual ACE_Asynch_Write_Stream_Result_Impl
 {
 public:
   virtual ~ACE_Asynch_Write_File_Result_Impl () = default;
@@ -431,7 +431,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Accept.
  */
-class ACE_Export ACE_Asynch_Accept_Impl : public virtual ACE_Asynch_Operation_Impl
+class ACE_Asynch_Accept_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
   virtual ~ACE_Asynch_Accept_Impl () = default;
@@ -466,7 +466,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Accept.
  */
-class ACE_Export ACE_Asynch_Accept_Result_Impl : public virtual ACE_Asynch_Result_Impl
+class ACE_Asynch_Accept_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
   virtual ~ACE_Asynch_Accept_Result_Impl () = default;
@@ -496,7 +496,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Connect.
  */
-class ACE_Export ACE_Asynch_Connect_Impl : public virtual ACE_Asynch_Operation_Impl
+class ACE_Asynch_Connect_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
   virtual ~ACE_Asynch_Connect_Impl () = default;
@@ -523,7 +523,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Connect.
  */
-class ACE_Export ACE_Asynch_Connect_Result_Impl : public virtual ACE_Asynch_Result_Impl
+class ACE_Asynch_Connect_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
   virtual ~ACE_Asynch_Connect_Result_Impl () = default;
@@ -571,7 +571,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Transmit_File::Result.
  */
-class ACE_Export ACE_Asynch_Transmit_File_Result_Impl : public virtual ACE_Asynch_Result_Impl
+class ACE_Asynch_Transmit_File_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
   virtual ~ACE_Asynch_Transmit_File_Result_Impl () = default;
@@ -608,7 +608,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Read_Dgram
  */
-class ACE_Export ACE_Asynch_Read_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
+class ACE_Asynch_Read_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
   virtual ~ACE_Asynch_Read_Dgram_Impl () = default;
@@ -658,7 +658,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Read_Dgram::Result class.
  */
-class ACE_Export ACE_Asynch_Read_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
+class ACE_Asynch_Read_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
   virtual ~ACE_Asynch_Read_Dgram_Result_Impl () = default;
@@ -690,7 +690,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Write_Dgram class.
  */
-class ACE_Export ACE_Asynch_Write_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
+class ACE_Asynch_Write_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
   virtual ~ACE_Asynch_Write_Dgram_Impl () = default;
@@ -740,7 +740,7 @@ protected:
  * classes that provide different implementations for the
  * ACE_Asynch_Write_Dgram::Result class.
  */
-class ACE_Export ACE_Asynch_Write_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
+class ACE_Asynch_Write_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
   virtual ~ACE_Asynch_Write_Dgram_Result_Impl () = default;
