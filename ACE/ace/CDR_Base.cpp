@@ -116,19 +116,16 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
 
           * reinterpret_cast<unsigned long*> (target) = a;
 #else
-          ACE_UINT32 a = * reinterpret_cast<const ACE_UINT32*> (orig);
-          ACE_UINT32 b = * reinterpret_cast<const ACE_UINT32*> (orig + 4);
+          ACE_UINT32 const a = *reinterpret_cast<const ACE_UINT32 *> (orig);
+          ACE_UINT32 const b = *reinterpret_cast<const ACE_UINT32 *> (orig + 4);
 
-          ACE_UINT32 a1 = (a & 0x00ff00ffU) << 8;
-          ACE_UINT32 b1 = (b & 0x00ff00ffU) << 8;
-          ACE_UINT32 a2 = (a & 0xff00ff00U) >> 8;
-          ACE_UINT32 b2 = (b & 0xff00ff00U) >> 8;
+          ACE_UINT32 const a1 = (a & 0x00ff00ffU) << 8;
+          ACE_UINT32 const b1 = (b & 0x00ff00ffU) << 8;
+          ACE_UINT32 const a2 = (a & 0xff00ff00U) >> 8;
+          ACE_UINT32 const b2 = (b & 0xff00ff00U) >> 8;
 
-          a = (a1 | a2);
-          b = (b1 | b2);
-
-          * reinterpret_cast<ACE_UINT32*> (target) = a;
-          * reinterpret_cast<ACE_UINT32*> (target + 4) = b;
+          *reinterpret_cast<ACE_UINT32 *> (target) = a1 | a2;
+          *reinterpret_cast<ACE_UINT32 *> (target + 4) = b1 | b2;
 #endif
           orig += 8;
           target += 8;
@@ -210,10 +207,10 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
           a = (a1 | a2);
           b = (b1 | b2);
 
-          ACE_UINT32 c1 = static_cast<ACE_UINT16> (a >> 16);
-          ACE_UINT32 c2 = static_cast<ACE_UINT16> (a & 0xffff);
-          ACE_UINT32 c3 = static_cast<ACE_UINT16> (b >> 16);
-          ACE_UINT32 c4 = static_cast<ACE_UINT16> (b & 0xffff);
+          ACE_UINT16 c1 = static_cast<ACE_UINT16> (a >> 16);
+          ACE_UINT16 c2 = static_cast<ACE_UINT16> (a & 0xffff);
+          ACE_UINT16 c3 = static_cast<ACE_UINT16> (b >> 16);
+          ACE_UINT16 c4 = static_cast<ACE_UINT16> (b & 0xffff);
 
 #if defined(ACE_LITTLE_ENDIAN)
           * reinterpret_cast<ACE_UINT16*> (target) = c2;
@@ -769,7 +766,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::LongLong val)
       if (high)
         f.value_[idx--] |= digit << 4;
       else
-        f.value_[idx] = digit;
+        f.value_[idx] = static_cast<Octet> (digit);
       high = !high;
       ++f.digits_;
       if (val >= 10 || val <= -10)
@@ -796,7 +793,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::ULongLong val)
       if (high)
         f.value_[idx--] |= digit << 4;
       else
-        f.value_[idx] = digit;
+        f.value_[idx] = static_cast<Octet> (digit);
       high = !high;
       ++f.digits_;
       if (val >= 10)
@@ -928,7 +925,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
       if (high)
         f.value_[idx--] |= digit << 4;
       else
-        f.value_[idx] = digit;
+        f.value_[idx] = static_cast<Octet> (digit);
       ++f.digits_;
     }
 
@@ -946,9 +943,9 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (const Octet *array, int len,
   Fixed f;
   ACE_OS::memcpy (f.value_ + 16 - len, array, len);
   ACE_OS::memset (f.value_, 0, 16 - len);
-  f.scale_ = scale;
+  f.scale_ = static_cast<Octet> (scale);
 
-  f.digits_ = len * 2 - 1;
+  f.digits_ = static_cast<Octet> (len * 2 - 1);
   if (len > 1 && (array[0] >> 4) == 0)
     --f.digits_;
 
@@ -1195,11 +1192,11 @@ int ACE_CDR::Fixed::lshift (int digits)
       shifted = 2 * bytes;
     }
 
-  this->digits_ += shifted;
+  this->digits_ += static_cast<Octet> (shifted);
   if (this->digits_ > MAX_DIGITS)
     this->digits_ = MAX_DIGITS;
 
-  this->scale_ += shifted;
+  this->scale_ += static_cast<Octet> (shifted);
   if (this->scale_ > MAX_DIGITS)
     this->scale_ = MAX_DIGITS;
 
@@ -1286,7 +1283,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
       digit_offset = this->digits_ - MAX_DIGITS;
       this->digits_ = MAX_DIGITS;
       if (this->scale_ > digit_offset)
-        this->scale_ -= digit_offset;
+        this->scale_ -= static_cast<Octet> (digit_offset);
     }
 
   for (int i = 0; i < this->digits_; ++i)
@@ -1305,7 +1302,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
     this->scale_ -= rhs.scale_;
   else if (rhs.scale_)
     {
-      const Octet shifted = this->lshift (rhs.scale_ - this->scale_);
+      const Octet shifted = static_cast<Octet> (this->lshift (rhs.scale_ - this->scale_));
       this->scale_ -= shifted;
     }
 
@@ -1360,7 +1357,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
   const int shift = q.lshift (MAX_DIGITS);
   if (shift)
     {
-      const Octet scale = r.lshift (shift);
+      const Octet scale = static_cast<Octet> (r.lshift (shift));
       r.scale_ = 0;
       Fixed r2;
       r = r.div_helper2 (rhs_no_scale, r2);
@@ -1395,8 +1392,8 @@ ACE_CDR::Fixed ACE_CDR::Fixed::div_helper2 (const Fixed &rhs, Fixed &r) const
         top.digit (i, 0);
       for (int i = dig; i < this->digits_; ++i)
         bot.digit (i, 0);
-      bot.digits_ = dig;
-      top.scale_ += dig;
+      bot.digits_ = static_cast<Octet> (dig);
+      top.scale_ += bot.digits_;
       top.normalize (this->scale_);
 
       Fixed rtop;
@@ -1433,7 +1430,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::div_helper1 (const Fixed &rhs, Fixed &r) const
 ACE_CDR::Fixed ACE_CDR::Fixed::join (int digits, const Fixed &bot) const
 {
   Fixed res = bot;
-  res.digits_ = this->digits_ + digits;
+  res.digits_ = static_cast<Octet> (this->digits_ + digits);
   for (int i = digits; i < MAX_DIGITS && i - digits < this->digits_; ++i)
     res.digit (i, this->digit (i - digits));
   return res;

@@ -39,6 +39,11 @@ static ACE_Module_Type *
 // that want to play nice with ACE
 #define YYSTYPE_IS_DECLARED
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4702)
+#endif
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 %}
@@ -58,7 +63,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 %type <location_node_> svc_initializer
 
 // Generate a pure (reentrant) parser -- GNU Bison only
-%pure_parser
+%define api.pure
+%param {void *YYLEX_PARAM}
 
 %%
 
@@ -154,7 +160,6 @@ stream_modules
     }
    module_list '}'
     {
-      ACE_UNUSED_ARG ($2);
       $$ = $3;
     }
   | /* EMPTY */ { $$ = 0; }
@@ -185,8 +190,7 @@ module
 
       if (((ACE_Stream_Type *) sn->record (ACE_SVC_CONF_PARAM->config)->type ())->push (mt) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Problem with static\n")));
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("Problem with static\n")));
           ACE_SVC_CONF_PARAM->yyerrno++;
         }
     }
@@ -220,10 +224,10 @@ module
         dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (stream->record (ACE_SVC_CONF_PARAM->config)->type ()));
       if (!st || (mt != 0 && st->remove (mt) == -1))
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
-                      module->name (),
-                      stream->name ()));
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
+                         module->name (),
+                         stream->name ()));
           ACE_SVC_CONF_PARAM->yyerrno++;
         }
     }
@@ -308,15 +312,15 @@ yyerror (int yyerrno, int yylineno, ACE_TCHAR const * s)
   ACE_UNUSED_ARG (s);
 #endif /* ACE_NLOGGING */
 
-  ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("ACE (%P|%t) [error %d] on line %d: %C\n"),
-              yyerrno,
-              yylineno,
-              s));
+  ACELIB_ERROR ((LM_ERROR,
+                 ACE_TEXT ("ACE (%P|%t) [error %d] on line %d: %C\n"),
+                 yyerrno,
+                 yylineno,
+                 s));
 }
 
 void
-yyerror (ACE_TCHAR const * s)
+yyerror (void *, ACE_TCHAR const * s)
 {
   yyerror (-1, -1, s);
 }
@@ -337,11 +341,11 @@ ace_get_module (ACE_Service_Type const * sr,
 
   if (sr == 0 || st == 0 || mt == 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("cannot locate Module_Type %s ")
-                  ACE_TEXT ("in STREAM_Type %s\n"),
-                  svc_name,
-                  (sr ? sr->name () : ACE_TEXT ("(nil)"))));
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("cannot locate Module_Type %s ")
+                     ACE_TEXT ("in STREAM_Type %s\n"),
+                     svc_name,
+                     (sr ? sr->name () : ACE_TEXT ("(nil)"))));
       ++yyerrno;
     }
 
@@ -365,5 +369,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* SVC_CONF_Y_DEBUGGING */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif  /* ACE_USES_CLASSIC_SVC_CONF == 1 */

@@ -1711,11 +1711,11 @@ UTL_Scope::add_to_local_types (AST_Decl *e)
 
 // Has this node been referenced here before?
 bool
-UTL_Scope::referenced (AST_Decl *e,
+UTL_Scope::referenced (AST_Decl *const e,
                        Identifier *id)
 {
   Identifier *test = e->local_name ();
-  AST_Decl::NodeType nt = e->node_type ();
+  AST_Decl::NodeType const nt = e->node_type ();
 
   AST_Decl **tmp = this->pd_referenced;
   for (long i = this->pd_referenced_used;
@@ -1756,7 +1756,6 @@ UTL_Scope::referenced (AST_Decl *e,
           // scope, then it's a type name for something else
           // that was, and it can appear any number of times
           // in this scope without a clash.
-          AST_Decl::NodeType nt = e->node_type ();
           if (   nt != AST_Decl::NT_module
               && nt != AST_Decl::NT_param_holder
               && e->defined_in () == this

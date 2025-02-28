@@ -115,8 +115,7 @@ ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result
     u_long offset_high,
     int priority,
     int signal_number)
-  : ACE_Asynch_Result_Impl (),
-    OVERLAPPED (),
+  : OVERLAPPED (),
     handler_proxy_ (handler_proxy),
     act_ (act),
     bytes_transferred_ (0),
