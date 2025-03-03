@@ -17,6 +17,7 @@
 *S_T.inl
 *.bmak
 *.recipe
+.DS_Store
 
 .depend.*
 GNUmakefile*

@@ -313,6 +313,10 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (sa);
+  if (sa.if_name_)
+    {
+      this->set_interface_name (sa.if_name_->c_str ());
+    }
 }
 
 // Initializes a ACE_INET_Addr from a PORT_NUMBER and a 32 bit Internet
@@ -1001,6 +1005,25 @@ ACE_INET_Addr::set_interface (const char *intf_name)
     return 0;
 }
 #endif /* ACE_LINUX && ACE_HAS_IPV6 */
+
+std::shared_ptr<const std::string>
+ACE_INET_Addr::get_interface_name () const
+{
+  return this->if_name_;
+}
+
+void
+ACE_INET_Addr::set_interface_name (const char * if_name)
+{
+  if (if_name == nullptr)
+    {
+      this->if_name_.reset ();
+    }
+  else
+    {
+      this->if_name_ = std::make_shared<const std::string> (if_name);
+    }
+}
 
 const char *
 ACE_INET_Addr::get_host_addr (char *dst, int size) const
