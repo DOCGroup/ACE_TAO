@@ -3,7 +3,7 @@
 #include "Null_Mutex.h"
 #include "Lock_Adapter_T.h"
 
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (ACE_VXWORKS)
 #include "OS_NS_stropts.h"
 #else
 #include "Flag_Manip.h"
@@ -25,7 +25,7 @@ int ACE_Single_Input_Reactor::register_handler (ACE_Event_Handler *event_handler
   event_handler->add_reference ();
   // disable ACE_NONBLOCK, see ACE_IPC_SAP::disable()
   const auto handle = event_handler->get_handle ();
-#if defined ACE_WIN32 || defined VXWORKS
+#if defined ACE_WIN32 || defined ACE_VXWORKS
   u_long nonblock = 0;
   ACE_OS::ioctl (handle, FIONBIO, &nonblock);
 #else

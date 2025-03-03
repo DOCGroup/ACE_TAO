@@ -19,7 +19,6 @@
 *.recipe
 *.gpj
 *.int
-*.cmd
 *.custom_build_rule
 *.empty_html_file
 

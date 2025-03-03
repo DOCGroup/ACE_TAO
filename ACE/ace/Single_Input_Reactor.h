@@ -9,7 +9,8 @@
 ///
 /// When used by TAO, this reactor is suitable for running on a dedicated thread which will
 /// only handle the acceptor's socket (see -ORBConcurrency thread-per-connection).
-class ACE_Single_Input_Reactor : public ACE_Reactor_Impl {
+class ACE_Export ACE_Single_Input_Reactor : public ACE_Reactor_Impl
+{
 public:
   int open (size_t size,
             bool restart = 0,

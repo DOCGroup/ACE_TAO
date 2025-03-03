@@ -126,7 +126,6 @@ typedef void (*__sighandler_t) (int);
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_GETPPID
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#define ACE_USE_RCSID 0
 #define ACE_LACKS_CUSERID
 
 #define ACE_DEFAULT_THREAD_PRIORITY 127

@@ -122,7 +122,7 @@ run_main (int, ACE_TCHAR *[])
   // Set the thread hook!
   ACE_Thread_Hook::thread_hook (new My_Thread_Hook);
 
-  int n_threads = 3; //ACE_MAX_THREADS;
+  int n_threads = ACE_MAX_THREADS;
   int n_iterations = ACE_MAX_ITERATIONS;
 
   Barrier_Task barrier_task (ACE_Thread_Manager::instance (),

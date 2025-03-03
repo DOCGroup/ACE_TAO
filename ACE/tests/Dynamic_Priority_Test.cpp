@@ -49,7 +49,7 @@
 
 #if defined (VXWORKS) || defined (INTEGRITY)
 # include "ace/OS_NS_string.h"
-#endif /* VXWORKS */
+#endif
 
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
