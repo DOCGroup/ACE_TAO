@@ -1707,14 +1707,18 @@ ACE_InputCDR::read_string (std::string& x)
   // the memory is allocated.
   if (len > 0 && len <= this->length())
     {
+#if !defined (ACE_NO_GHS_EXCEPT)
       try
         {
+#endif
           x.resize (len-1); // no need to include the terminating '\0' here
+#if !defined (ACE_NO_GHS_EXCEPT)
         }
       catch (const std::bad_alloc&)
         {
           return false;
         }
+#endif
 
       if (len == 0 || this->read_char_array (&x[0], len-1))
       {
@@ -1763,15 +1767,18 @@ ACE_InputCDR::read_wstring (std::wstring& x)
           len /=
             ACE_Utils::truncate_cast<ACE_CDR::ULong> (
               ACE_OutputCDR::wchar_maxbytes_);
-
+#if !defined (ACE_NO_GHS_EXCEPT)
           try
             {
+#endif
               x.resize (len);
+#if !defined (ACE_NO_GHS_EXCEPT)
             }
           catch (const std::bad_alloc&)
             {
               return false;
             }
+#endif
 
           if (this->read_wchar_array (&x[0], len))
             {
@@ -1780,14 +1787,18 @@ ACE_InputCDR::read_wstring (std::wstring& x)
         }
       else
         {
-          try
+#if !defined (ACE_NO_GHS_EXCEPT)
+        try
             {
+#endif
               x.resize (len-1); // no need to include the terminating '\0' here
+#if !defined (ACE_NO_GHS_EXCEPT)
             }
           catch (const std::bad_alloc&)
             {
               return false;
             }
+#endif
 
           if (len == 1 || this->read_wchar_array (&x[0], len-1))
             {

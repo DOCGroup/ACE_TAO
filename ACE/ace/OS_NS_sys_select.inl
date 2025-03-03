@@ -34,6 +34,7 @@ ACE_OS::select (int width,
   ACE_UNUSED_ARG (wfds);
   ACE_UNUSED_ARG (efds);
   ACE_UNUSED_ARG (timeout);
+  ACE_UNUSED_ARG (timep);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_MQX)
   ACE_SOCKCALL_RETURN (::select (width, rfds, wfds, efds, timeout->msec()),
