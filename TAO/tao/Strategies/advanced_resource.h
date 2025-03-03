@@ -64,7 +64,7 @@ public:
     TAO_REACTOR_WFMO      = 3,
     TAO_REACTOR_MSGWFMO   = 4,
     TAO_REACTOR_TP        = 5,
-    TAO_REACTOR_DEV_POLL  = 6
+    TAO_REACTOR_DEV_POLL  = 6,
     TAO_REACTOR_SINGLE_INPUT,
   };
 
