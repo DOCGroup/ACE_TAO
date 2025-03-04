@@ -293,7 +293,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
     private:
       struct TaskInfo
       {
-        TaskInfo () : id(0), tss_base(0), valid(false) {}
+        TaskInfo ()
+          : id {}
+          , tss_base {}
+          , valid {}
+        {}
 
         ACE_hthread_t id;
         void **tss_base;

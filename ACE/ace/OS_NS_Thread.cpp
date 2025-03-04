@@ -3339,7 +3339,10 @@ private:
 
   struct StackInfo
   {
-    StackInfo () : id(0), occupied(false) {}
+    StackInfo ()
+      : id {}
+      , occupied {}
+    {}
 
     ACE_hthread_t id;
     bool occupied;
