@@ -22,17 +22,6 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int /* signum */, siginfo_t * /* 
 
 /************************************************************/
 
-ACE_INLINE
-ACE_WFMO_Reactor_Handler_Repository::Common_Info::Common_Info ()
-  : io_entry_ (false),
-    event_handler_ (nullptr),
-    io_handle_ (ACE_INVALID_HANDLE),
-    network_events_ (0),
-    delete_event_ (false),
-    delete_entry_ (false),
-    close_masks_ (ACE_Event_Handler::NULL_MASK)
-{
-}
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Common_Info::reset ()
@@ -111,12 +100,6 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump () const
 }
 
 /************************************************************/
-
-ACE_INLINE
-ACE_WFMO_Reactor_Handler_Repository::Current_Info::Current_Info ()
-  : suspend_entry_ (false)
-{
-}
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (bool io_entry,

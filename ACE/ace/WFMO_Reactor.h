@@ -119,21 +119,21 @@ public:
   public:
     /// This indicates whether this entry is for I/O or for a regular
     /// event
-    bool io_entry_;
+    bool io_entry_ {};
 
     /// The associated Event_Handler
-    ACE_Event_Handler *event_handler_;
+    ACE_Event_Handler *event_handler_ {};
 
     /// The I/O handle related to the Event_Handler.  This entry is
     /// only valid if the io_entry_ flag is true.
-    ACE_HANDLE io_handle_;
+    ACE_HANDLE io_handle_ { ACE_INVALID_HANDLE };
 
     /**
      * This is the set of events that the Event_Handler is
      * interested in. This entry is only valid if the io_entry_ flag
      * is true.
      */
-    long network_events_;
+    long network_events_ {};
 
     /**
      * This flag indicates that WFMO_Reactor created the event on
@@ -141,20 +141,20 @@ public:
      * Event_Handler removes itself from WFMO_Reactor.  This entry
      * is only valid if the io_entry_ flag is true.
      */
-    bool delete_event_;
+    bool delete_event_ {};
 
     /// This is set when the entry needed to be deleted.
-    bool delete_entry_;
+    bool delete_entry_ {};
 
     /**
      * These are the masks related to handle_close() for the
      * Event_Handler.  This is only valid when delete_entry_ is
      * set.
      */
-    ACE_Reactor_Mask close_masks_;
+    ACE_Reactor_Mask close_masks_ { ACE_Event_Handler::NULL_MASK };
 
-    /// Constructor used for initializing the structure
-    Common_Info ();
+    /// Default constructor
+    Common_Info () = default;
 
     /// Reset the state of the structure
     void reset ();
@@ -185,10 +185,10 @@ public:
   {
   public:
     /// This is set when the entry needed to be suspended.
-    bool suspend_entry_;
+    bool suspend_entry_ {};
 
     /// Default constructor
-    Current_Info ();
+    Current_Info () = default;
 
     /// Reset the state of the structure
     void reset ();
@@ -1253,14 +1253,14 @@ protected:
   virtual int change_owner ();
 
   /// Handle signals without requiring global/static variables.
-  ACE_Sig_Handler *signal_handler_;
+  ACE_Sig_Handler *signal_handler_ {};
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
   bool delete_signal_handler_;
 
   /// Defined as a pointer to allow overriding by derived classes...
-  ACE_Timer_Queue *timer_queue_;
+  ACE_Timer_Queue *timer_queue_ {};
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
@@ -1270,7 +1270,7 @@ protected:
   bool delete_handler_rep_;
 
   /// Used when <notify> is called.
-  ACE_Reactor_Notify *notify_handler_;
+  ACE_Reactor_Notify *notify_handler_ {};
 
   /// Keeps track of whether we should delete the notify handler.
   bool delete_notify_handler_;
@@ -1311,7 +1311,7 @@ protected:
   ACE_Auto_Event waiting_to_change_state_;
 
   /// Count of currently active threads
-  size_t active_threads_;
+  size_t active_threads_ {};
 
   /**
    * The thread which is "owner" of the WFMO_Reactor. The owner
