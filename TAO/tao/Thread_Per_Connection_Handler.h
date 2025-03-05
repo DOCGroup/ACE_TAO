@@ -46,6 +46,8 @@ public:
 
   ~TAO_Thread_Per_Connection_Handler ();
 
+  int activate_ch (long flags, int n_threads);
+
   /// Template hook method that the thread uses...
   /**
    * Please see the documentation in ace/Task.h for details.

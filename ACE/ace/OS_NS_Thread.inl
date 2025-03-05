@@ -2794,15 +2794,11 @@ ACE_OS::thr_self ()
 #endif /* ACE_HAS_THREADS */
 }
 
-ACE_INLINE const char*
+ACE_INLINE const char *
 ACE_OS::thr_name ()
 {
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_VXTHREADS)
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_VXTHREADS)
   return ::taskName (ACE_OS::thr_self ());
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif
 #else
   ACE_NOTSUP_RETURN (0);
 #endif
