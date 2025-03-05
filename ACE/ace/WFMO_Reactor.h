@@ -1177,7 +1177,7 @@ protected:
 
   /// Event handling workhorse
   virtual int event_handling (ACE_Time_Value *max_wait_time = nullptr,
-                              int alertable = nullptr);
+                              int alertable = 0);
 
   /// Bit masking workhorse
   virtual int mask_ops_i (ACE_HANDLE io_handle,
