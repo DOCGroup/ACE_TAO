@@ -13,8 +13,8 @@
 
 <HR><P> <H3>Porting ACE and TAO to a New OS Platform</H3><P>
 
-<A HREF="https://www.dre.vanderbilt.edu/ACE">ACE</A> and  <A
-HREF="https://www.dre.vanderbilt.edu/TAO">TAO</A> have been
+<A HREF="https://www.cs.wm.edu/~dcschmidt/ACE.html">ACE</A> and  <A
+HREF="https://www.cs.wm.edu/~dcschmidt/TAO.html">TAO</A> have been
 ported to <A HREF="https://www.dre.vanderbilt.edu/versions.html">many
 OS platforms</A>.  Porting ACE and TAO to new platforms is
 fairly easy.  The following document describes the step-by-step
@@ -45,7 +45,7 @@ following:
 A <CODE>config-*.h</CODE> header file exists in <A
 HREF="../ace/">$ACE_ROOT/ace</A> for each platform to which ACE has
 been ported.  This file contains the portability macros for each
-particular configuration of ACE.  A complete description of the
+particular configuration of ACE.  A description of most of the
 existent macros can be found in the <A
 HREF="../ace/README">$ACE_ROOT/ace/README</A> file. <P>
 
@@ -134,9 +134,7 @@ order to compile ACE and TAO:
 
 <UL>
 <LI> <B>Templates</B> -- The C++ compiler must support templates.
-    However, it need not support template member functions and of
-    the advanced concepts outlined in <A
-    HREF="http://www.moderncppdesign.com/"> Modern C++ Design</A>. <P>
+    Any template feature as part of C++17 may be used</A>. <P>
 
 <LI> <B>Multiple inheritance and dynamic binding</B> -- The C++
     compiler must support multiple inheritance and dynamic
@@ -149,40 +147,16 @@ order to compile ACE and TAO:
     casts, so the C++ compiler  must support them, which implies
     support for RTTI.<P>
 
-</UL>
+<LI> <B>Exceptions</B> -- The ACE library requires C++ exception support.<P>
 
-The following is a list of which C++ features that ACE and TAO can
-take advantage of if a compiler supports them:
-
-<UL>
-<LI> <B>Exceptions</B> -- The ACE library itself is ``exception
-    neutral,'' <EM>i.e.,</EM> it does not catch or throw C++
-    exceptions.  However, you can use exceptions in code
-    that uses ACE including throwing exceptions inside call back
-    methods, as long as you provide the code to handle it.
-    TAO requires the use of C++ exceptions,
-    <CODE>ACE_HAS_EXCEPTIONS</CODE> must be defined. <P>
-
-<LI> <B>STL</B> -- Unfortunately many of the platforms that ACE
-        supports don't have an STL library.  Moreover, different versions
-        of STL behave differently.  ACE therefore does not depends on
-        STL and does not use it internally.  If your target
-        platform(s) support STL you should be able to
-        use it with ACE and TAO without problems, though your C++
-        compiler may have problems with it (this is beyond the scope
-        of ACE, however). <P>
-
-        If you are considering STL, you might consider
-        <A HREF="http://www.stlport.org/">STLport</a>,
-        which is a port of the SGI STL to numerous platforms that ACE and
-        TAO also support. <P>
+<LI> <B>STL</B> -- ACE requires C++17 or newer, any C++17 STL feature can be used in ACE<P>
 
 </UL>
 
 <P><HR><P>
 
 Back to the <A
-HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-documentation.html">ACE
+HREF="https://www.cs.wm.edu/~dcschmidt/ACE-documentation.html">ACE
 documentation</A> page.<BR>
 Back to <A HREF="index.html">ACE Documentation Home</A>.
 
