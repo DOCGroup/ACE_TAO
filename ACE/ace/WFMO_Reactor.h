@@ -658,9 +658,9 @@ public:
   };
 
   /// Initialize ACE_WFMO_Reactor with the default size.
-  ACE_WFMO_Reactor (ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0,
-                    ACE_Reactor_Notify * = 0);
+  ACE_WFMO_Reactor (ACE_Sig_Handler * = nullptr,
+                    ACE_Timer_Queue * = nullptr,
+                    ACE_Reactor_Notify * = nullptr);
 
   /**
    * Initialize ACE_WFMO_Reactor with the specified size.
@@ -673,9 +673,9 @@ public:
    */
   ACE_WFMO_Reactor (size_t size,
                     int unused = 0,
-                    ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0,
-                    ACE_Reactor_Notify * = 0);
+                    ACE_Sig_Handler * = nullptr,
+                    ACE_Timer_Queue * = nullptr,
+                    ACE_Reactor_Notify * = nullptr);
 
   /**
    * Initialize ACE_WFMO_Reactor with the specified size.
@@ -688,10 +688,10 @@ public:
    */
   virtual int open (size_t size = ACE_WFMO_Reactor::DEFAULT_SIZE,
                     bool restart = false,
-                    ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0,
+                    ACE_Sig_Handler * = nullptr,
+                    ACE_Timer_Queue * = nullptr,
                     int disable_notify_pipe = 0,
-                    ACE_Reactor_Notify * = 0);
+                    ACE_Reactor_Notify * = nullptr);
 
   /// Returns -1 (not used in this implementation);
   virtual int current_info (ACE_HANDLE, size_t & /* size */);
@@ -718,7 +718,7 @@ public:
    * use handle_events (ACE_Time_Value::zero) to get basically the
    * same effect, i.e., it won't block the caller if there are no events.
    */
-  virtual int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero);
+  virtual int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
@@ -743,8 +743,8 @@ public:
    * <handle_events> is that in the alertable case, TRUE is passed to
    * <WaitForMultipleObjects> for the <bAlertable> option.
    */
-  virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
-  virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = 0);
+  virtual int handle_events (ACE_Time_Value *max_wait_time = nullptr);
+  virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = nullptr);
 
   /**
    * This method is just like the one above, except the
@@ -836,15 +836,15 @@ public:
    */
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
-                                ACE_Sig_Action *new_disp = 0,
-                                ACE_Event_Handler **old_sh = 0,
-                                ACE_Sig_Action *old_disp = 0);
+                                ACE_Sig_Action *new_disp = nullptr,
+                                ACE_Event_Handler **old_sh = nullptr,
+                                ACE_Sig_Action *old_disp = nullptr);
 
   /// Registers @a new_sh to handle a set of signals @a sigset using the
   /// @a new_disp.
   virtual int register_handler (const ACE_Sig_Set &sigset,
                                 ACE_Event_Handler *new_sh,
-                                ACE_Sig_Action *new_disp = 0);
+                                ACE_Sig_Action *new_disp = nullptr);
 
   /**
    * Removes @a event_handler from the ACE_WFMO_Reactor.  Note that
@@ -890,7 +890,7 @@ public:
    */
   virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp,
-                              ACE_Sig_Action *old_disp = 0,
+                              ACE_Sig_Action *old_disp = nullptr,
                               int sigkey = -1);
 
   /// Calls remove_handler() for every signal in @a sigset.
@@ -1034,9 +1034,9 @@ public:
    * else will wait until the relative time specified in @a timeout
    * elapses).
    */
-  virtual int notify (ACE_Event_Handler * = 0,
+  virtual int notify (ACE_Event_Handler * = nullptr,
                       ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value * = 0);
+                      ACE_Time_Value * = nullptr);
 
   /**
    * Set the maximum number of times that the
@@ -1065,7 +1065,7 @@ public:
    * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
+  virtual int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   // = Assorted helper methods.
@@ -1083,7 +1083,7 @@ public:
    */
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
-                       ACE_Event_Handler **event_handler = 0);
+                       ACE_Event_Handler **event_handler = nullptr);
 
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
@@ -1091,7 +1091,7 @@ public:
    * this @a handler if <event_handler> != 0.
    */
   virtual int handler (int signum,
-                       ACE_Event_Handler ** = 0);
+                       ACE_Event_Handler ** = nullptr);
 
   /// Returns true if WFMO_Reactor has been successfully initialized, else
   /// false.
@@ -1176,8 +1176,8 @@ protected:
                                   ACE_Reactor_Mask mask);
 
   /// Event handling workhorse
-  virtual int event_handling (ACE_Time_Value *max_wait_time = 0,
-                              int alertable = 0);
+  virtual int event_handling (ACE_Time_Value *max_wait_time = nullptr,
+                              int alertable = nullptr);
 
   /// Bit masking workhorse
   virtual int mask_ops_i (ACE_HANDLE io_handle,
