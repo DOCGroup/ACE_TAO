@@ -162,13 +162,6 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
 
 /************************************************************/
 
-ACE_INLINE
-ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::To_Be_Added_Info ()
-  : event_handle_ (ACE_INVALID_HANDLE),
-    suspend_entry_ (false)
-{
-}
-
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_handle,
                                                             bool io_entry,
@@ -232,13 +225,6 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump () const
 }
 
 /************************************************************/
-
-ACE_INLINE
-ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::Suspended_Info ()
-  : event_handle_ (ACE_INVALID_HANDLE),
-    resume_entry_ (false)
-{
-}
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::reset ()

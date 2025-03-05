@@ -88,7 +88,7 @@ class ACE_Export ACE_Wakeup_All_Threads_Handler : public ACE_Event_Handler
 {
 public:
   /// Called when the <ACE_WFMO_Reactor->wakeup_all_threads_>
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 };
 
 /**
@@ -221,13 +221,13 @@ public:
   {
   public:
     /// Handle for the event
-    ACE_HANDLE event_handle_;
+    ACE_HANDLE event_handle_ { ACE_INVALID_HANDLE };
 
     /// This is set when the entry needed to be suspended.
-    bool suspend_entry_;
+    bool suspend_entry_ {};
 
     /// Default constructor
-    To_Be_Added_Info ();
+    To_Be_Added_Info () = default;
 
     /// Reset the state of the structure
     void reset ();
@@ -262,13 +262,13 @@ public:
   {
   public:
     /// Handle for the event
-    ACE_HANDLE event_handle_;
+    ACE_HANDLE event_handle_ { ACE_INVALID_HANDLE };
 
     /// This is set when the entry needed to be resumed.
-    bool resume_entry_;
+    bool resume_entry_ {};
 
-    /// Constructor used for initializing the structure
-    Suspended_Info ();
+    /// Default constructor
+    Suspended_Info () = default;
 
     /// Reset the state of the structure
     void reset ();
