@@ -531,7 +531,7 @@ typedef int ACE_THR_FUNC_RETURN;
 # elif defined (ACE_WIN32)
 typedef DWORD ACE_THR_FUNC_RETURN;
 #define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
-# elif defined(INTEGRITY)
+# elif defined (INTEGRITY)
 // INTEGRITY-178 Task's entry point function doesn't return anything.
 // For INTEGRITY, we are also using Task API in which entry point function doesn't return.
 // This is used by ACE's internal thread adapter function but will be ignored by

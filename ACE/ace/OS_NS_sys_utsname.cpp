@@ -230,11 +230,11 @@ ACE_OS::uname (ACE_utsname *name)
   strcpy (name->version, "5.0.0");
   strcpy (name->machine, "a standard name");
 #    else
-  strcpy(name->sysname,"INTEGRITY");
-  const int status = ::gethostname(name->nodename, __SYS_NMLN);
-  strcpy(name->release,"minor");
-  strcpy(name->version,"11.4.6");
-  strcpy(name->machine,"a standard name");
+  strcpy (name->sysname,"INTEGRITY");
+  const int status = ::gethostname (name->nodename, __SYS_NMLN);
+  strcpy (name->release,"minor");
+  strcpy (name->version,"11.4.6");
+  strcpy (name->machine,"a standard name");
 #    endif /* INTEGRITY178B */
   return status;
 #  endif /* ACE_LACKS_GETHOSTNAME */

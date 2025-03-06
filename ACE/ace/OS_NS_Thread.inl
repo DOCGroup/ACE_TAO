@@ -1443,10 +1443,12 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   s->sema_ = 0;
   return result;
 # elif defined (INTEGRITY)
-  // INTEGRITY has CloseSemaphore kernel call that closes the semaphore object.
-  // However, we are imitating INTEGRITY-178 behavior which does not support this operation.
+#   if !defined (INTEGRITY178B)
+  return ::CloseSemaphore (*s) == Success ? 0 : -1;
+#   else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
+#   endif
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (s);

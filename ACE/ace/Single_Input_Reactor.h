@@ -13,7 +13,7 @@ class ACE_Export ACE_Single_Input_Reactor : public ACE_Reactor_Impl
 {
 public:
   int open (size_t size,
-            bool restart = 0,
+            bool restart = false,
             ACE_Sig_Handler * = nullptr,
             ACE_Timer_Queue * = nullptr,
             int disable_notify_pipe = 0,
@@ -29,7 +29,7 @@ public:
 
   int close () override;
 
-  int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero) override;
+  int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero) override;
 
   int handle_events (ACE_Time_Value *max_wait_time = nullptr) override;
   int alertable_handle_events (ACE_Time_Value *max_wait_time = nullptr) override;
