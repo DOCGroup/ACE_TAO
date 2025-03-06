@@ -22,22 +22,11 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int /* signum */, siginfo_t * /* 
 
 /************************************************************/
 
-ACE_INLINE
-ACE_WFMO_Reactor_Handler_Repository::Common_Info::Common_Info ()
-  : io_entry_ (false),
-    event_handler_ (0),
-    io_handle_ (ACE_INVALID_HANDLE),
-    network_events_ (0),
-    delete_event_ (false),
-    delete_entry_ (false),
-    close_masks_ (ACE_Event_Handler::NULL_MASK)
-{
-}
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Common_Info::reset ()
 {
-  this->event_handler_ = 0;
+  this->event_handler_ = nullptr;
   this->io_entry_ = false;
   this->io_handle_ = ACE_INVALID_HANDLE;
   this->network_events_ = 0;
@@ -112,12 +101,6 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump () const
 
 /************************************************************/
 
-ACE_INLINE
-ACE_WFMO_Reactor_Handler_Repository::Current_Info::Current_Info ()
-  : suspend_entry_ (false)
-{
-}
-
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (bool io_entry,
                                                         ACE_Event_Handler *event_handler,
@@ -178,13 +161,6 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
 }
 
 /************************************************************/
-
-ACE_INLINE
-ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::To_Be_Added_Info ()
-  : event_handle_ (ACE_INVALID_HANDLE),
-    suspend_entry_ (false)
-{
-}
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_handle,
@@ -249,13 +225,6 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump () const
 }
 
 /************************************************************/
-
-ACE_INLINE
-ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::Suspended_Info ()
-  : event_handle_ (ACE_INVALID_HANDLE),
-    resume_entry_ (false)
-{
-}
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::reset ()
@@ -804,8 +773,7 @@ ACE_WFMO_Reactor::resume_handler (const ACE_Handle_Set &handles)
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->handler_rep_.resume_handler_i (h,
-                                             changes_required) == -1)
+    if (this->handler_rep_.resume_handler_i (h, changes_required) == -1)
       return -1;
 
   // Wake up all threads in WaitForMultipleObjects so that they can
@@ -927,7 +895,7 @@ ACE_WFMO_Reactor::owner (ACE_thread_t new_owner, ACE_thread_t *old_owner)
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
   this->new_owner_ = new_owner;
 
-  if (old_owner != 0)
+  if (old_owner != nullptr)
     *old_owner = this->owner_i ();
 
   // Wake up all threads in WaitForMultipleObjects so that they can
@@ -1054,12 +1022,11 @@ ACE_WFMO_Reactor::remove_handler (const ACE_Sig_Set &sigset)
 ACE_INLINE int
 ACE_WFMO_Reactor::handler (int signum, ACE_Event_Handler **eh)
 {
-  ACE_Event_Handler *handler =
-    this->signal_handler_->handler (signum);
+  ACE_Event_Handler *handler = this->signal_handler_->handler (signum);
 
-  if (handler == 0)
+  if (handler == nullptr)
     return -1;
-  else if (eh != 0)
+  else if (eh != nullptr)
     *eh = handler;
   return 0;
 }
@@ -1071,9 +1038,7 @@ ACE_WFMO_Reactor::mask_ops (ACE_Event_Handler *event_handler,
 {
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
 
-  return this->mask_ops_i (event_handler->get_handle (),
-                           mask,
-                           operation);
+  return this->mask_ops_i (event_handler->get_handle (), mask, operation);
 }
 
 ACE_INLINE int
@@ -1083,9 +1048,7 @@ ACE_WFMO_Reactor::mask_ops (ACE_HANDLE io_handle,
 {
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
 
-  return this->mask_ops_i (io_handle,
-                           mask,
-                           operation);
+  return this->mask_ops_i (io_handle, mask, operation);
 }
 
 ACE_INLINE void
