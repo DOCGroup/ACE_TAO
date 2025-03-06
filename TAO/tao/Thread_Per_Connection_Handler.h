@@ -57,8 +57,7 @@ public:
   virtual int close (u_long);
 
 private:
-  /// Pointer to protocol specific code that does the bunch of the
-  /// job.
+  /// Pointer to protocol-specific code that does a bunch of the job.
   TAO_Connection_Handler *ch_;
 };
 

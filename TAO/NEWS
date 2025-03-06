@@ -9,6 +9,8 @@ USER VISIBLE CHANGES BETWEEN TAO-4.0.2 and TAO-4.0.3
 . When no preferred interfaces are provided we don't query for all IP interfaces
   as that could be slow
 
+. Threads created by TAO_Thread_Per_Connection_Handler now have names
+
 USER VISIBLE CHANGES BETWEEN TAO-4.0.1 and TAO-4.0.2
 ====================================================
 
