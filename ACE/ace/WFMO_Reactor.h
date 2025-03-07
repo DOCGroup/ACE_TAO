@@ -1240,7 +1240,7 @@ protected:
                                    ACE_HANDLE io_handle,
                                    WSANETWORKEVENTS &events);
 
-  /// Used to caluculate the next timeout
+  /// Used to calculate the next timeout
   virtual int calculate_timeout (ACE_Time_Value *time);
 
   /// Update the state of the handler repository
