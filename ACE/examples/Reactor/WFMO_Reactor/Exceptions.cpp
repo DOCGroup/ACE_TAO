@@ -39,6 +39,8 @@ public:
 
   int handle_signal (int, siginfo_t * = 0, ucontext_t * = 0)
   {
+    ACE_DEBUG ((LM_DEBUG,
+                "Event_Handler::handle_signal called\n"));
     char *cause_exception = 0;
     char a = *cause_exception;
     ACE_UNUSED_ARG(a);

@@ -509,9 +509,9 @@ public:
    * 0, the caller will block until action is possible, else will wait
    * until the relative time specified in @a timeout elapses).
    */
-  virtual int notify (ACE_Event_Handler *event_handler = 0,
+  virtual int notify (ACE_Event_Handler *event_handler = nullptr,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value *timeout = 0);
+                      ACE_Time_Value *timeout = nullptr);
 
   /// No-op.
   virtual int dispatch_notifications (int &number_of_active_handles,
@@ -533,7 +533,7 @@ public:
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
 
   /// Read one of the notify call on the @a handle into the
-  /// <buffer>. This could be because of a thread trying to unblock
+  /// @a buffer. This could be because of a thread trying to unblock
   /// the <Reactor_Impl>
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
@@ -1240,7 +1240,7 @@ protected:
                                    ACE_HANDLE io_handle,
                                    WSANETWORKEVENTS &events);
 
-  /// Used to caluculate the next timeout
+  /// Used to calculate the next timeout
   virtual int calculate_timeout (ACE_Time_Value *time);
 
   /// Update the state of the handler repository
