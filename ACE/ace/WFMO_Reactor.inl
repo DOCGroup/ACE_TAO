@@ -5,6 +5,8 @@
 #include "ace/Sig_Handler.h"
 #include "ace/OS_NS_errno.h"
 
+#if defined (ACE_WIN32)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /************************************************************/
@@ -18,10 +20,7 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int /* signum */, siginfo_t * /* 
   return 0;
 }
 
-#if defined (ACE_WIN32)
-
 /************************************************************/
-
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Common_Info::reset ()
@@ -1135,19 +1134,7 @@ ACE_WFMO_Reactor::size () const
   // Size of repository minus the 2 used for internal purposes
   return this->handler_rep_.max_size_ - 2;
 }
-#else
-ACE_INLINE bool
-ACE_WFMO_Reactor_Handler_Repository::changes_required ()
-{
-  return false;
-}
-
-ACE_INLINE int
-ACE_WFMO_Reactor_Handler_Repository::make_changes ()
-{
-  return 0;
-}
-
-#endif /* ACE_WIN32 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_WIN32 */

@@ -297,7 +297,7 @@ public:
   ACE_WFMO_Reactor_Handler_Repository (ACE_WFMO_Reactor &wfmo_reactor);
 
   /// Destructor.
-  virtual ~ACE_WFMO_Reactor_Handler_Repository () = default;
+  virtual ~ACE_WFMO_Reactor_Handler_Repository ();
 
   /// Initialize the repository of the appropriate @a size.
   int open (size_t size);
