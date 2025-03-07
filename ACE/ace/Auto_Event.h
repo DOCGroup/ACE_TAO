@@ -39,19 +39,19 @@ public:
   /// Constructor which will create auto event
   ACE_Auto_Event_T (int initial_state = 0,
                     int type = USYNC_THREAD,
-                    const char *name = 0,
-                    void *arg = 0);
+                    const char *name = nullptr,
+                    void *arg = nullptr);
 
 #if defined (ACE_HAS_WCHAR)
   /// Constructor which will create auto event (wchar_t version)
   ACE_Auto_Event_T (int initial_state,
                     int type,
                     const wchar_t *name,
-                    void *arg = 0);
+                    void *arg = nullptr);
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event_T () = default;
+  ~ACE_Auto_Event_T () override = default;
 
   /// Dump the state of an object.
   void dump () const;
@@ -67,8 +67,8 @@ public:
   /// Constructor which will create auto event
   ACE_Auto_Event (int initial_state = 0,
                   int type = USYNC_THREAD,
-                  const char *name = 0,
-                  void *arg = 0)
+                  const char *name = nullptr,
+                  void *arg = nullptr)
   : ACE_Auto_Event_T<ACE_System_Time_Policy> (initial_state, type, name, arg)
   {
   }
@@ -78,16 +78,14 @@ public:
   ACE_Auto_Event (int initial_state,
                   int type,
                   const wchar_t *name,
-                  void *arg = 0)
+                  void *arg = nullptr)
   : ACE_Auto_Event_T<ACE_System_Time_Policy> (initial_state, type, name, arg)
   {
   }
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event ()
-  {
-  }
+  ~ACE_Auto_Event () override = default;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

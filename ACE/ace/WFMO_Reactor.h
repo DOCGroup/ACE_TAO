@@ -533,7 +533,7 @@ public:
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
 
   /// Read one of the notify call on the @a handle into the
-  /// <buffer>. This could be because of a thread trying to unblock
+  /// @a buffer. This could be because of a thread trying to unblock
   /// the <Reactor_Impl>
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
