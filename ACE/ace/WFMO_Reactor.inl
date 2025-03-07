@@ -1148,11 +1148,6 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes ()
   return 0;
 }
 
-ACE_INLINE
-ACE_WFMO_Reactor_Handler_Repository::~ACE_WFMO_Reactor_Handler_Repository ()
-{
-}
-
 #endif /* ACE_WIN32 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
