@@ -79,7 +79,10 @@ public:
   ACE_CDR::Boolean write_wstring (ACE_CDR::ULong length,
                                   const ACE_CDR::WChar *x);
   ACE_CDR::Boolean write_string (const std::string &x);
+#if !defined (ACE_LACKS_STD_STRING_VIEW)
   ACE_CDR::Boolean write_string_view (const std::string_view &x);
+#endif
+
 #if !defined(ACE_LACKS_STD_WSTRING)
   ACE_CDR::Boolean write_wstring (const std::wstring &x);
 #endif
@@ -231,8 +234,10 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const ACE_CDR::WChar* x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const std::string& x);
+#if !defined (ACE_LACKS_STD_STRING_VIEW)
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const std::string_view& x);
+#endif
 #if !defined(ACE_LACKS_STD_WSTRING)
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const std::wstring& x);
