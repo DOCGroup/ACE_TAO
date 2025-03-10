@@ -1,0 +1,15 @@
+This test verifies the proper behavior of the -ORBListenerInterfaces option on IPv4 and IPv6 with values *=ip_addr,
+*=interface_name, and CopyPreferredInterfaces. The latter requires also using the -ORBPreferredInterface option.
+It does so by doing the following:
+
+1. Calling the local helper utility if_addrs_helper to determine the system name of the loopback interface and
+   ethernet-like interface(s) with routable IPv4 and IPv6 addresses, as well as the correct IP addresses for those
+   interfaces.
+
+2. Creating a matrix of tests across these interfaces, IP addresses, and the *=ip_addr, *=interface_name, and
+   CopyPreferredInterfaces option values.
+
+3. Executing the matrix of tests and asserting a specific failure (but no other failures) for loopback interfaces and
+   no failures for non-loopback interfaces. Specifically, for loopback interfaces, the server process should never
+   receive the instruction to shut down from the client, and so the test should time out waiting on the server process
+   and elect to kill it.
