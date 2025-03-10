@@ -20,8 +20,10 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_DEBUG ((LM_DEBUG,("In SEH_TRY\n")));
 
+      // Intentionally cause an access violation exception
       char *cause_exception {};
-      char a = *cause_exception;
+      *cause_exception = 'x';  // Should raise an exception
+
       // If we get here without an exception, SEH isn't working
       ACE_ERROR ((LM_ERROR, "No exception was raised from null pointer dereference\n"));
       result = -1;
