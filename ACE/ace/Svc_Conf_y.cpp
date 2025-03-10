@@ -113,6 +113,11 @@ static ACE_Module_Type *
 #pragma warning(disable:4702)
 #endif
 
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfree-nonheap-object"
+#endif
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 
@@ -574,11 +579,11 @@ static const ace_yytype_int8 ace_yytranslate[] =
 /* ACE_YYRLINE[ACE_YYN] -- Source line where rule number ACE_YYN was defined.  */
 static const ace_yytype_int16 ace_yyrline[] =
 {
-       0,    72,    72,    81,    85,    89,    90,    91,    92,    93,
-      94,    98,   108,   115,   122,   129,   136,   140,   140,   147,
-     150,   157,   156,   165,   169,   177,   181,   184,   197,   206,
-     215,   237,   244,   248,   253,   259,   263,   267,   274,   278,
-     282,   289,   290,   294,   295,   296
+       0,    77,    77,    86,    90,    94,    95,    96,    97,    98,
+      99,   103,   113,   120,   127,   134,   141,   145,   145,   152,
+     155,   162,   161,   170,   174,   182,   186,   189,   202,   211,
+     220,   242,   249,   253,   258,   264,   268,   272,   279,   283,
+     287,   294,   295,   299,   300,   301
 };
 #endif
 
@@ -1694,6 +1699,10 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef _MSC_VER
 #pragma warning(pop)
+#endif
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
 #endif
 
 #endif  /* ACE_USES_CLASSIC_SVC_CONF == 1 */

@@ -44,6 +44,11 @@ static ACE_Module_Type *
 #pragma warning(disable:4702)
 #endif
 
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfree-nonheap-object"
+#endif
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 %}
@@ -372,6 +377,10 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef _MSC_VER
 #pragma warning(pop)
+#endif
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
 #endif
 
 #endif  /* ACE_USES_CLASSIC_SVC_CONF == 1 */
