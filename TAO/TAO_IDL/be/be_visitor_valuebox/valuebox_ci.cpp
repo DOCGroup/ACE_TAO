@@ -714,9 +714,7 @@ be_visitor_valuebox_ci::emit_copy_constructor ()
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (const " << vb_node->full_name () << "& val)" << be_idt_nl
-      << ": ::CORBA::ValueBase (val)," << be_nl
-      << "  ::CORBA::DefaultValueRefCountBase (val)"
-      << be_uidt_nl
+      << ": ::CORBA::ValueBase (val)" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val._pd_value;" << be_uidt_nl
       << "}" << be_nl_2;
