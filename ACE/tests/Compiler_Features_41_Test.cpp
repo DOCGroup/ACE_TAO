@@ -20,11 +20,14 @@ run_main (int, ACE_TCHAR *[])
 
       char *cause_exception {};
       char a = *cause_exception;
+      // If we get here without an exception, SEH isn't working
+      ACE_ERROR ((LM_ERROR, "No exception was raised from null pointer dereference\n"));
       result = -1;
     }
   ACE_SEH_FINALLY
     {
       ACE_DEBUG ((LM_DEBUG,("In SEH_FINALLY\n")));
+      // If we're here due to an exception, that's the expected behavior - test passes
     }
 
   ACE_DEBUG ((LM_DEBUG,("After SEH_FINALLY\n")));
