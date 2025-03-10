@@ -842,6 +842,30 @@ project(Compiler_Features_38_Test) : acetest {
   }
 }
 
+<<<<<<< HEAD
+=======
+project(Compiler_Features_39_Test) : acetest {
+  exename = Compiler_Features_39_Test
+  Source_Files {
+    Compiler_Features_39_Test.cpp
+  }
+}
+
+project(Compiler_Features_40_Test) : acetest {
+  exename = Compiler_Features_40_Test
+  Source_Files {
+    Compiler_Features_40_Test.cpp
+  }
+}
+
+project(Compiler_Features_41_Test) : acetest {
+  exename = Compiler_Features_41_Test
+  Source_Files {
+    Compiler_Features_41_Test.cpp
+  }
+}
+
+>>>>>>> 7bb1334218 (New test for __try/__finally)
 project(Config Test) : acetest {
   avoids += ace_for_tao
   exename = Config_Test
