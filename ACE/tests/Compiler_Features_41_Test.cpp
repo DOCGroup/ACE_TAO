@@ -21,7 +21,6 @@ run_main (int, ACE_TCHAR *[])
       char *cause_exception {};
       char a = *cause_exception;
       result = -1;
-
     }
   ACE_SEH_FINALLY
     {
