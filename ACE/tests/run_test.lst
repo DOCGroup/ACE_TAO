@@ -109,12 +109,7 @@ Compiler_Features_35_Test
 Compiler_Features_36_Test
 Compiler_Features_37_Test
 Compiler_Features_38_Test
-<<<<<<< HEAD
-=======
-Compiler_Features_39_Test
-Compiler_Features_40_Test
 Compiler_Features_41_Test
->>>>>>> 7bb1334218 (New test for __try/__finally)
 Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !ACE_FOR_TAO
 DLL_Test: !STATIC Linux
