@@ -55,12 +55,27 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ServantBase_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table *optable)
+TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table* optable)
   : ref_count_ (1)
   , optable_ (optable)
 {
 }
 
+TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
+  : ref_count_ (1)
+  , optable_ (rhs.optable_)
+{
+}
+
+TAO_ServantBase &
+TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
+{
+  if (this != std::addressof(rhs))
+  {
+    this->optable_ = rhs.optable_;
+  }
+  return *this;
+}
 
 PortableServer::POA_ptr
 TAO_ServantBase::_default_POA ()
