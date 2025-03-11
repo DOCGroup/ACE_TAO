@@ -287,8 +287,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       ACE_thread_mutex_t &lock_;
     };
 
-#     if !defined (ACE_MAX_THREADS)
-#       define ACE_MAX_THREADS 64
+#     if !defined (ACE_MAX_NUM_THREADS)
+#      define ACE_MAX_NUM_THREADS 64
 #     endif
 
 #     if defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -311,7 +311,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       // Using std::map caused a memory issue, so we're using an array.
       // Downside is the number of threads is fixed.
       // May try ACE's map.
-      typedef TaskInfo TSS_Table[ACE_MAX_THREADS];
+      typedef TaskInfo TSS_Table[ACE_MAX_NUM_THREADS];
 
     public:
       // Return a reference to the TSS base address of a given thread.
@@ -320,14 +320,14 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       void **&get (ACE_hthread_t id)
       {
         LockGuard guard (lock_);
-        unsigned first_slot = ACE_MAX_THREADS;
-        for (unsigned i = 0; i < ACE_MAX_THREADS; ++i)
+        unsigned first_slot = ACE_MAX_NUM_THREADS;
+        for (unsigned i = 0; i < ACE_MAX_NUM_THREADS; ++i)
           {
             TaskInfo &ti = integrity_ts_storage_[i];
             if (!ti.valid)
               {
                 // Use a slot from an already finished thread.
-                if (first_slot == ACE_MAX_THREADS)
+                if (first_slot == ACE_MAX_NUM_THREADS)
                   first_slot = i;
               }
             else if (ti.id == id)
@@ -341,8 +341,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
         // If we go here, the calling thread doesn't have an entry yet.
         // Use the first available slot.
 
-        // Should NOT create more than ACE_MAX_THREADS Tasks!
-          ACE_ASSERT (first_slot != ACE_MAX_THREADS);
+        // Should NOT create more than ACE_MAX_NUM_THREADS Tasks!
+          ACE_ASSERT (first_slot != ACE_MAX_NUM_THREADS);
 
         TaskInfo &my_ti = integrity_ts_storage_[first_slot];
         my_ti.id = id;
@@ -355,7 +355,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       bool erase (ACE_hthread_t id)
       {
         LockGuard guard (lock_);
-        for (unsigned i = 0; i < ACE_MAX_THREADS; ++i)
+        for (unsigned i = 0; i < ACE_MAX_NUM_THREADS; ++i)
           {
             TaskInfo &ti = integrity_ts_storage_[i];
             if (ti.id == id)

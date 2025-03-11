@@ -1707,12 +1707,12 @@ ACE_InputCDR::read_string (std::string& x)
   // the memory is allocated.
   if (len > 0 && len <= this->length())
     {
-#if defined (ACE_STD_ALLOCATOR_THROWS)
+#if !defined (ACE_STD_ALLOCATOR_NOTHROW)
       try
         {
 #endif
           x.resize (len-1); // no need to include the terminating '\0' here
-#if defined (ACE_STD_ALLOCATOR_THROWS)
+#if !defined (ACE_STD_ALLOCATOR_NOTHROW)
         }
       catch (const std::bad_alloc&)
         {
@@ -1767,12 +1767,12 @@ ACE_InputCDR::read_wstring (std::wstring& x)
           len /=
             ACE_Utils::truncate_cast<ACE_CDR::ULong> (
               ACE_OutputCDR::wchar_maxbytes_);
-#if defined (ACE_STD_ALLOCATOR_THROWS)
+#if !defined (ACE_STD_ALLOCATOR_NOTHROW)
           try
             {
 #endif
               x.resize (len);
-#if defined (ACE_STD_ALLOCATOR_THROWS)
+#if !defined (ACE_STD_ALLOCATOR_NOTHROW)
             }
           catch (const std::bad_alloc&)
             {
@@ -1787,12 +1787,12 @@ ACE_InputCDR::read_wstring (std::wstring& x)
         }
       else
         {
-#if defined (ACE_STD_ALLOCATOR_THROWS)
+#if !defined (ACE_STD_ALLOCATOR_NOTHROW)
         try
             {
 #endif
               x.resize (len-1); // no need to include the terminating '\0' here
-#if defined (ACE_STD_ALLOCATOR_THROWS)
+#if !defined (ACE_STD_ALLOCATOR_NOTHROW)
             }
           catch (const std::bad_alloc&)
             {
