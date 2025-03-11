@@ -92,7 +92,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
   dynamicflags += TAO_BUILD_DLL
 
   Source_Files(TAO_COMPONENTS) {
-    Abstract_Servant_Base.cpp
     Acceptor_Filter.cpp
     Acceptor_Registry.cpp
     Adapter.cpp
