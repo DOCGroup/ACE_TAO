@@ -258,12 +258,12 @@ ACE_Object_Manager::init ()
 #     endif /* ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
-#if defined (_DEBUG) && (defined (_MSC_VER) || defined (__INTEL_COMPILER) || defined (__MINGW32__))
+#if defined (_DEBUG) && defined (ACE_HAS_CRTSETREPORTMODE)
           _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
           _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
           _CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
           _CrtSetReportFile( _CRT_ASSERT, _CRTDBG_FILE_STDERR );
-#endif /* _DEBUG && _MSC_VER || __INTEL_COMPILER || __MINGW32__ */
+#endif /* _DEBUG && ACE_HAS_CRTSETREPORTMODE */
 
           // The system does not display the critical-error-handler message box
           SetErrorMode(SEM_FAILCRITICALERRORS);
@@ -276,30 +276,24 @@ ACE_Object_Manager::init ()
           _set_abort_behavior( 0,  _CALL_REPORTFAULT);
 #endif /* !ACE_LACKS_SET_ABORT_BEHAVIOR */
 
-  // Note the following fix was derived from that proposed by Jochen Kalmbach
-  // http://blog.kalmbachnet.de/?postid=75
-  // See also:
-  // http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=101337
-  //
-  // Starting with VC8 (VS2005), Microsoft changed the behaviour of the CRT in some
-  // security related and special situations. The are many situations in which our
-  // ACE_UnhandledExceptionFilter will never be called. This is a major change to
-  // the previous versions of the CRT and is not very well documented.
-  // The CRT simply forces the call to the default-debugger without informing the
-  // registered unhandled exception filter. Jochen's solution is to stop the CRT
-  // from calling SetUnhandledExceptionFilter() after we have done so above.
-  // NOTE this only works for intel based windows builds.
-
-#  if (_MSC_VER) \
-      || (__MINGW32_MAJOR_VERSION > 3)  || \
-          ((__MINGW32_MAJOR_VERSION == 3) && \
-           (__MINGW32_MINOR_VERSION >= 15)) // VC++ || MingW32 >= 3.15
-#    ifdef _M_IX86
+          // Note the following fix was derived from that proposed by Jochen Kalmbach
+          // http://blog.kalmbachnet.de/?postid=75
+          // See also:
+          // http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=101337
+          //
+          // Starting with VC8 (VS2005), Microsoft changed the behaviour of the CRT in some
+          // security related and special situations. The are many situations in which our
+          // ACE_UnhandledExceptionFilter will never be called. This is a major change to
+          // the previous versions of the CRT and is not very well documented.
+          // The CRT simply forces the call to the default-debugger without informing the
+          // registered unhandled exception filter. Jochen's solution is to stop the CRT
+          // from calling SetUnhandledExceptionFilter() after we have done so above.
+          // NOTE this only works for intel based windows builds.
+#  if defined (ACE_HAS_SETUNHANDLEDEXCEPTIONFILTER) && defined (_M_IX86)
           HMODULE hKernel32 = ACE_TEXT_LoadLibrary (ACE_TEXT ("kernel32.dll"));
           if (hKernel32)
             {
-              void *pOrgEntry =
-                reinterpret_cast<void*> (GetProcAddress (hKernel32, "SetUnhandledExceptionFilter"));
+              void *pOrgEntry = reinterpret_cast<void*> (GetProcAddress (hKernel32, "SetUnhandledExceptionFilter"));
               if (pOrgEntry)
                 {
                   unsigned char newJump[ 100 ];
@@ -320,8 +314,7 @@ ACE_Object_Manager::init ()
                     &bytesWritten);
                 }
             }
-#    endif // _M_IX86
-#  endif // (_MSC_VER)
+#  endif // ACE_HAS_SETUNHANDLEDEXCEPTIONFILTER && _M_IX86
 #endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS */
 
 #     if !defined (ACE_LACKS_ACE_SVCCONF)
