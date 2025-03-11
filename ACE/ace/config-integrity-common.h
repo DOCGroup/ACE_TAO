@@ -28,7 +28,7 @@
 
 #define ACE_MT_SAFE 1
 #define ACE_HAS_THREADS
-#define ACE_DEFAULT_THREADS 64
+#define ACE_MAX_THREADS 64
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -151,6 +151,10 @@ extern "C" {
 #define ACE_LACKS_TELLDIR
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_GETHOSTENT
+
+#if _HAS_EXCEPTIONS
+# define ACE_STD_ALLOCATOR_THROWS
+#endif
 
 // When config.h defines ACE_NO_GHS_LIBIO, the functions provided by the
 // INTEGRITY-178 Low-Level I/O Library (libio_178b_be.a) are not called by ACE.

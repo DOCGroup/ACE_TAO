@@ -3326,10 +3326,10 @@ static ACE_mutex_t integrity_task_args_lock;
 #     define ACE_INT178_DEFAULT_STACK_SIZE 0x10000 // 64 KB
 #   endif
 
-// We can have a maximum of ACE_DEFAULT_THREADS Tasks including the Initial Task (i.e. main thread).
+// We can have a maximum of ACE_MAX_THREADS Tasks including the Initial Task (i.e. main thread).
 // The Initial Task already has a stack provided by the OS.
 // Here, we reserve the stacks for the Tasks dynamically created by SetupTask().
-#   define NUM_DYNAMIC_THREADS (ACE_DEFAULT_THREADS - 1)
+#   define NUM_DYNAMIC_THREADS (ACE_MAX_THREADS - 1)
 
 class ACE_Int178_Stack_Manager
 {
