@@ -18,8 +18,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -66,7 +64,7 @@ typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
     TAO::Argument **);
 
-class TAO_Export TAO_Abstract_ServantBase
+class TAO_Abstract_ServantBase
 {
 public:
   virtual ~TAO_Abstract_ServantBase () = default;
