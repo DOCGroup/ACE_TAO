@@ -832,19 +832,19 @@ Key_List::output_keyword_table (void)
     ACE_OS::printf ("      ");
 
 
-  int column;
+  int column_defaults;
 
-  for (column = 1; slot < head->hash_value; column++)
+  for (column_defaults = 1; slot < head->hash_value; column_defaults++)
     {
       ACE_OS::printf ("%s\"\",%s%s%s",
                       l_brace,
                       option.fill_default (),
                       r_brace,
-                      column % 9 ? "" : "\n      ");
+                      column_defaults % 9 ? "" : "\n      ");
       slot++;
     }
 
-  if (0 < head->hash_value && column % 10)
+  if (0 < head->hash_value && column_defaults % 10)
     ACE_OS::printf ("\n");
 
   // Generate an array of reserved words at appropriate locations.
