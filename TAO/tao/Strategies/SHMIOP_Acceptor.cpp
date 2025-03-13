@@ -407,9 +407,9 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
 
-  ACE_CString options (str);
+  ACE_CString const options (str);
 
-  size_t len = options.length ();
+  size_t const len = options.length ();
 
   const char option_delimiter = '&';
 
@@ -424,68 +424,45 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
     if (options[i] == option_delimiter)
       ++option_count;
 
-  // The idea behind the following loop is to split the options into
-  // (option, name) pairs.
-  // For example,
-  //    `option1=foo&option2=bar'
-  // will be parsed into:
-  //    `option1=foo'
-  //    `option2=bar'
+  ACE_CString::size_type const begin = 0;
+  ACE_CString::size_type const end = (option_count > 1) ? options.find (option_delimiter, begin) : len;
 
-  ACE_CString::size_type begin = 0;
-  ACE_CString::size_type end = 0;
-
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  if (end == begin)
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP option.\n")),
+                         -1);
+  else if (end != ACE_CString::npos)
     {
-      if (j < option_count - 1)
-        end = options.find (option_delimiter, begin);
-      else
-        end = len;
+      ACE_CString const opt = options.substring (begin, end - begin);
 
-      if (end == begin)
+      ACE_CString::size_type const slot = opt.find ("=");
+
+      if (slot == len - 1
+          || slot == ACE_CString::npos)
         TAOLIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP option.\n")),
-                          -1);
-      else if (end != ACE_CString::npos)
-        {
-          ACE_CString opt = options.substring (begin, end - begin);
+                              ACE_TEXT ("TAO (%P|%t) SHMIOP option <%C> is ")
+                              ACE_TEXT ("missing a value.\n"),
+                              opt.c_str ()),
+                             -1);
 
-          ACE_CString::size_type const slot = opt.find ("=");
+      ACE_CString const name = opt.substring (0, slot);
 
-          if (slot == len - 1
-              || slot == ACE_CString::npos)
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) SHMIOP option <%C> is ")
-                               ACE_TEXT ("missing a value.\n"),
-                               opt.c_str ()),
-                              -1);
+      if (name.length () == 0)
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP ")
+                              ACE_TEXT ("option name.\n")),
+                             -1);
 
-          ACE_CString name = opt.substring (0, slot);
-          ACE_CString value = opt.substring (slot + 1);
+      if (name == "priority")
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint format: ")
+                              ACE_TEXT ("endpoint priorities no longer supported.\n")),
+                             -1);
 
-          begin = end + 1;
-
-          if (name.length () == 0)
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP ")
-                               ACE_TEXT ("option name.\n")),
-                              -1);
-
-          if (name == "priority")
-            {
-              TAOLIB_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported.\n")),
-                                -1);
-            }
-          else
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%C>\n"),
-                               name.c_str ()),
-                              -1);
-        }
-      else
-        break;  // No other options.
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%C>\n"),
+                            name.c_str ()),
+                           -1);
     }
   return 0;
 }
