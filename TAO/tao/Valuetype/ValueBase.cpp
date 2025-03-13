@@ -1401,13 +1401,6 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
 {
 }
 
-// Copy constructor
-CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase
-  (const DefaultValueRefCountBase &)
-  : refcount_ (1)
-
-{
-}
 
 void
 CORBA::DefaultValueRefCountBase::_tao_add_ref (void)

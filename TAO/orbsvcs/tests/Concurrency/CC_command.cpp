@@ -109,7 +109,7 @@ int CC_Start_Cmd::execute(void)
 
   ACE_Process new_process;
   ACE_Process_Options options;
-  options.command_line(ACE_TEXT_CHAR_TO_TCHAR(cmd_line));
+  options.command_line(ACE_TEXT("%C"), cmd_line);
 
   if(new_process.spawn(options) == -1)
     {

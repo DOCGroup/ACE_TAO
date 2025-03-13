@@ -3,6 +3,7 @@ project(ace_svcconf_gen) {
   requires += ace_svcconf_gen
   custom_only = 1
   verbatim(gnuace, local) {
+    "all: Svc_Conf_y.cpp Svc_Conf_Token_Table.h"
     "Svc_Conf_y.cpp Svc_Conf_Token_Table.h: Svc_Conf.y"
     "ifeq ($(notdir $(YACC)), bison)"
     "	$(YACC) -l --header=Svc_Conf_Token_Table.h Svc_Conf.y"
@@ -20,7 +21,7 @@ project(ace_svcconf_gen) {
     "	sed -e 's/yy/ace_yy/g' -e's/YY/ACE_YY/g' -i Svc_Conf_Token_Table.h"
     "	$(RM) -f Svc_Conf.tab.c Svc_Conf_y.cpp.orig"
     "else"
-    "	@echo 'ERROR: You must use bison 1.35 or higher to process this file'"
+    "	@echo 'ERROR: You must use bison 3.8.2 or higher to process this file'"
     "	@/bin/false"
     "endif"
   }
