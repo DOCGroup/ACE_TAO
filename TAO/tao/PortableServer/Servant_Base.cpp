@@ -63,11 +63,21 @@ TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table *optable)
 {
 }
 
+// Avoid an invalid GCC warning about initializing TAO_Abstract_ServantBase
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra"
+#endif
+
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
   : ref_count_ (1)
   , optable_ (rhs.optable_)
 {
 }
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
 TAO_ServantBase &
 TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
