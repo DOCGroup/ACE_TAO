@@ -86,10 +86,9 @@ ACE_ICMP_Socket::open (ACE_Addr const & local,
   ACE_TRACE ("ACE_ICMP_Socket::open");
 
   // Check if icmp protocol is supported on this host
-  int proto_number = -1;
-  protoent *proto = 0;
+  protoent *const proto = ACE_OS::getprotobyname ("icmp");
 
-  if (! (proto = ACE_OS::getprotobyname ("icmp")))
+  if (!proto)
     {
       ACELIB_ERROR_RETURN
         ((LM_ERROR,
@@ -99,7 +98,8 @@ ACE_ICMP_Socket::open (ACE_Addr const & local,
           ACE_TEXT ("or not supported.")),
          -1);
     }
-  proto_number = proto->p_proto;
+
+  int const proto_number = proto->p_proto;
 
   if (proto_number != IPPROTO_ICMP || proto_number != protocol)
     {
