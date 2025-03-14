@@ -162,6 +162,10 @@ protected:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#if defined(__ACE_INLINE__)
+#include "tao/Abstract_Servant_Base.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_ABSTRACT_SERVANT_BASE_H_ */
