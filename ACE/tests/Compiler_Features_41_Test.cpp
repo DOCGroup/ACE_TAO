@@ -5,6 +5,14 @@
 
 #include "test_config.h"
 
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
+void test()
+{
+  volatile int* pInt = 0x0000000;
+  *pInt = 20;
+}
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -20,9 +28,9 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_DEBUG ((LM_DEBUG,("In SEH_TRY\n")));
 
-      // Intentionally cause an access violation exception
-      char *cause_exception {};
-      *cause_exception = 'x';  // Should raise an exception
+      // Intentionally cause an access violation exception, use a helper function
+      // as non-call SEH isn't supported with clang based windows compilers
+      test();
 
       // If we get here without an exception, SEH isn't working
       ACE_ERROR ((LM_ERROR, "No exception was raised from null pointer dereference\n"));
