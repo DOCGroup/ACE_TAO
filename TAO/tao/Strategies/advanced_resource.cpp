@@ -25,6 +25,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Service_Config.h"
 #include "ace/Select_Reactor.h"
+#include "ace/Single_Input_Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/TP_Reactor.h"
@@ -196,6 +197,8 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
             this->report_option_value_error (
                 ACE_TEXT("TkReactor not supported by Advanced_Resources_Factory. Please use TAO_TkResource_Loader instead."),
                          current_arg);
+          else if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("single_input")) == 0)
+            this->reactor_type_ = TAO_REACTOR_SINGLE_INPUT;
           else
             this->report_option_value_error (ACE_TEXT("-ORBReactorType"), current_arg);
 
@@ -472,6 +475,10 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
                       0);
       break;
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
+
+    case TAO_REACTOR_SINGLE_INPUT:
+      ACE_NEW_RETURN (impl, ACE_Single_Input_Reactor, 0);
+      break;
 
     default:
     case TAO_REACTOR_TP:

@@ -70,7 +70,8 @@ sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
   else
     osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
-#elif defined (ACE_LACKS_SIGACTION)
+#elif defined (ACE_LACKS_SIGACTION) || (defined (INTEGRITY) && defined (ACE_LACKS_POSIX))
+  // INTEGRITY has the sigaction struct but the sigaction call may still be unavailable.
   ACE_UNUSED_ARG (nsa);
   ACE_UNUSED_ARG (osa);
   ACE_NOTSUP_RETURN (-1);
@@ -85,7 +86,11 @@ ACE_INLINE int
 sigaddset (sigset_t *s, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::sigaddset");
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGADDSET)
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;
@@ -106,7 +111,11 @@ sigaddset (sigset_t *s, int signum)
 ACE_INLINE int
 sigdelset (sigset_t *s, int signum)
 {
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGDELSET)
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;
@@ -127,7 +136,10 @@ sigdelset (sigset_t *s, int signum)
 ACE_INLINE int
 sigemptyset (sigset_t *s)
 {
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGEMPTYSET)
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;
@@ -143,7 +155,10 @@ sigemptyset (sigset_t *s)
 ACE_INLINE int
 sigfillset (sigset_t *s)
 {
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGFILLSET)
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;
@@ -159,7 +174,11 @@ sigfillset (sigset_t *s)
 ACE_INLINE int
 sigismember (sigset_t *s, int signum)
 {
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGISMEMBER)
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;

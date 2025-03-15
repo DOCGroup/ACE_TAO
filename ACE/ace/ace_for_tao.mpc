@@ -152,6 +152,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Sched_Params.cpp
     Select_Reactor_Base.cpp
     Signal.cpp
+    Single_Input_Reactor.cpp
     Sig_Handler.cpp
     Sig_Adapter.cpp
     SOCK.cpp
