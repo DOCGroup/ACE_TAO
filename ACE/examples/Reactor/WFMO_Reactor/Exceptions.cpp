@@ -39,9 +39,16 @@ public:
 
   int handle_signal (int, siginfo_t * = 0, ucontext_t * = 0)
   {
+<<<<<<< HEAD
     char *cause_exception = 0;
     char a = *cause_exception;
     ACE_UNUSED_ARG(a);
+=======
+    ACE_DEBUG ((LM_DEBUG,
+                "Event_Handler::handle_signal called\n"));
+    volatile int* pInt = 0x0000000;
+    *pInt = 20;
+>>>>>>> 37af450bf4 (Added more logging, use a code construct which isn't optimized away in release mode)
     return 0;
   }
 
