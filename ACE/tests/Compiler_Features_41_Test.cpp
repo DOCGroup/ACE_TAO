@@ -8,6 +8,7 @@
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 void test()
 {
+  ACE_DEBUG ((LM_DEBUG,("In test\n")));
   volatile int* pInt = 0x0000000;
   *pInt = 20;
 }
