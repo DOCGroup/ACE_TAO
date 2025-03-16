@@ -41,9 +41,8 @@ public:
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Event_Handler::handle_signal called\n"));
-    char *cause_exception = 0;
-    char a = *cause_exception;
-    ACE_UNUSED_ARG(a);
+    volatile int* pInt = 0x0000000;
+    *pInt = 20;
     return 0;
   }
 
