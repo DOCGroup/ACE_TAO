@@ -50,7 +50,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
 ACE_Object_Manager_Base::ACE_Object_Manager_Base ()
   : object_manager_state_ (OBJ_MAN_UNINITIALIZED)
   , dynamically_allocated_ (false)
-  , next_ (0)
+  , next_ (nullptr)
 {
 }
 
@@ -84,7 +84,7 @@ ACE_OS_Object_Manager_Internal_Exit_Hook ()
     ACE_OS_Object_Manager::instance ()->fini ();
 }
 
-ACE_OS_Object_Manager *ACE_OS_Object_Manager::instance_ = 0;
+ACE_OS_Object_Manager *ACE_OS_Object_Manager::instance_ {};
 
 void *ACE_OS_Object_Manager::preallocated_object[
   ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
@@ -98,7 +98,7 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
   , seh_except_handler_ (ACE_SEH_Default_Exception_Handler)
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 {
-  // If instance_ was not 0, then another ACE_OS_Object_Manager has
+  // If instance_ was not nullptr, then another ACE_OS_Object_Manager has
   // already been instantiated (it is likely to be one initialized by
   // way of library/DLL loading).  Let this one go through
   // construction in case there really is a good reason for it (like,
@@ -109,7 +109,7 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
   // ACE_Object_Manager::instance().
 
   // Be sure that no further instances are created via instance ().
-  if (instance_ == 0)
+  if (instance_ == nullptr)
     instance_ = this;
 
   init ();
@@ -145,10 +145,9 @@ ACE_OS_Object_Manager::seh_except_selector ()
 ACE_SEH_EXCEPT_HANDLER
 ACE_OS_Object_Manager::seh_except_selector (ACE_SEH_EXCEPT_HANDLER n)
 {
-  ACE_OS_Object_Manager *instance =
-    ACE_OS_Object_Manager::instance ();
+  ACE_OS_Object_Manager *instance = ACE_OS_Object_Manager::instance ();
 
-  ACE_SEH_EXCEPT_HANDLER retv = instance->seh_except_selector_;
+  ACE_SEH_EXCEPT_HANDLER const retv = instance->seh_except_selector_;
   instance->seh_except_selector_ = n;
   return retv;
 }
@@ -162,10 +161,9 @@ ACE_OS_Object_Manager::seh_except_handler ()
 ACE_SEH_EXCEPT_HANDLER
 ACE_OS_Object_Manager::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
 {
-  ACE_OS_Object_Manager *instance =
-    ACE_OS_Object_Manager::instance ();
+  ACE_OS_Object_Manager *instance = ACE_OS_Object_Manager::instance ();
 
-  ACE_SEH_EXCEPT_HANDLER retv = instance->seh_except_handler_;
+  ACE_SEH_EXCEPT_HANDLER const retv = instance->seh_except_handler_;
   instance->seh_except_handler_ = n;
   return retv;
 }
@@ -186,14 +184,13 @@ ACE_OS_Object_Manager::instance ()
   // This function should be called during construction of static
   // instances, or before any other threads have been created in the
   // process.  So, it's not thread safe.
-
-  if (instance_ == 0)
+  if (instance_ == nullptr)
     {
-      ACE_OS_Object_Manager *instance_pointer = 0;
+      ACE_OS_Object_Manager *instance_pointer {};
 
       ACE_NEW_RETURN (instance_pointer,
                       ACE_OS_Object_Manager,
-                      0);
+                      nullptr);
       // I (coryan) removed it, using asserts in the OS layer
       // brings down the Log msg stuff
       // ACE_ASSERT (instance_pointer == instance_);
@@ -277,9 +274,8 @@ ACE_OS_Object_Manager::init ()
 #     pragma clang diagnostic push
 #     pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #   endif /* __clang__ */
-      ACE_OS::win32_versioninfo_.dwOSVersionInfoSize =
-        sizeof (ACE_TEXT_OSVERSIONINFO);
-      ACE_TEXT_GetVersionEx (&ACE_OS::win32_versioninfo_);
+      ACE_OS::win32_versioninfo_.dwOSVersionInfoSize = sizeof (ACE_TEXT_OSVERSIONINFO);
+      ACE_TEXT_GetVersionEx (std::addressof(ACE_OS::win32_versioninfo_));
 #   if defined(__clang__)
 #     pragma clang diagnostic pop
 #   endif /* __clang__ */
@@ -299,7 +295,7 @@ ACE_OS_Object_Manager::init ()
 int
 ACE_OS_Object_Manager::fini ()
 {
-  if (instance_ == 0  ||  shutting_down_i ())
+  if (instance_ == nullptr ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
     return object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
@@ -316,7 +312,7 @@ ACE_OS_Object_Manager::fini ()
   if (next_)
     {
       next_->fini ();
-      next_ = 0;  // Protect against recursive calls.
+      next_ = nullptr;  // Protect against recursive calls.
     }
 
   // Call all registered cleanup hooks, in reverse order of
@@ -406,7 +402,7 @@ ACE_OS_Object_Manager::fini ()
     }
 
   if (this == instance_)
-    instance_ = 0;
+    instance_ = nullptr;
 
   return 0;
 }
@@ -495,11 +491,10 @@ ACE_OS_Object_Manager_Manager::ACE_OS_Object_Manager_Manager ()
 
 ACE_OS_Object_Manager_Manager::~ACE_OS_Object_Manager_Manager ()
 {
-  if (ACE_OS::thr_equal (ACE_OS::thr_self (),
-                         saved_main_thread_id_))
+  if (ACE_OS::thr_equal (ACE_OS::thr_self (), saved_main_thread_id_))
     {
       delete ACE_OS_Object_Manager::instance_;
-      ACE_OS_Object_Manager::instance_ = 0;
+      ACE_OS_Object_Manager::instance_ = nullptr;
     }
   // else if this destructor is not called by the main thread, then do
   // not delete the ACE_OS_Object_Manager.  That causes problems, on
