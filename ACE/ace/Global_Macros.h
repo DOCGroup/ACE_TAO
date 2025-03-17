@@ -691,30 +691,30 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 
 # define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+     if (POINTER == nullptr) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
 # define ACE_ALLOCATOR(POINTER,ALLOCATOR) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; } \
+     if (POINTER == nullptr) { errno = ENOMEM; return; } \
    } while (0)
 # define ACE_ALLOCATOR_NORETURN(POINTER,ALLOCATOR) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; } \
+     if (POINTER == nullptr) { errno = ENOMEM; } \
    } while (0)
 
 # define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     if (POINTER == nullptr) { errno = ENOMEM; return RET_VAL;} \
      else { (void) new (POINTER) CONSTRUCTOR; } \
    } while (0)
 # define ACE_NEW_MALLOC(POINTER,ALLOCATOR,CONSTRUCTOR) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return;} \
+     if (POINTER == nullptr) { errno = ENOMEM; return;} \
      else { (void) new (POINTER) CONSTRUCTOR; } \
    } while (0)
 # define ACE_NEW_MALLOC_NORETURN(POINTER,ALLOCATOR,CONSTRUCTOR) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM;} \
+     if (POINTER == nullptr) { errno = ENOMEM;} \
      else { (void) new (POINTER) CONSTRUCTOR; } \
    } while (0)
 
@@ -722,14 +722,14 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #if defined ACE_LACKS_ARRAY_PLACEMENT_NEW
 # define ACE_NEW_MALLOC_ARRAY_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT,RET_VAL) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     if (POINTER == nullptr) { errno = ENOMEM; return RET_VAL;} \
      else { for (u_int i = 0; i < COUNT; ++i) \
               {(void) new (POINTER) CONSTRUCTOR; ++POINTER;} \
             POINTER -= COUNT;} \
    } while (0)
 # define ACE_NEW_MALLOC_ARRAY(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return;} \
+     if (POINTER == nullptr) { errno = ENOMEM; return;} \
      else { for (u_int i = 0; i < COUNT; ++i) \
               {(void) new (POINTER) CONSTRUCTOR; ++POINTER;} \
             POINTER -= COUNT;} \
@@ -737,12 +737,12 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #else /* ! defined ACE_LACKS_ARRAY_PLACEMENT_NEW */
 # define ACE_NEW_MALLOC_ARRAY_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT,RET_VAL) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     if (POINTER == nullptr) { errno = ENOMEM; return RET_VAL;} \
      else { (void) new (POINTER) CONSTRUCTOR [COUNT]; } \
    } while (0)
 # define ACE_NEW_MALLOC_ARRAY(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT) \
    do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return;} \
+     if (POINTER == nullptr) { errno = ENOMEM; return;} \
      else { (void) new (POINTER) CONSTRUCTOR [COUNT]; } \
    } while (0)
 #endif /* defined ACE_LACKS_ARRAY_PLACEMENT_NEW */

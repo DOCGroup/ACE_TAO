@@ -118,7 +118,7 @@ class ACE_Object_Manager_Preallocations
 {
 public:
   ACE_Object_Manager_Preallocations ();
-  ~ACE_Object_Manager_Preallocations ();
+  ~ACE_Object_Manager_Preallocations () = default;
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -144,10 +144,6 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations ()
   // Add to the list of static configured services.
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_ACE_Service_Manager);
-}
-
-ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations ()
-{
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Object_Manager_Preallocations)

@@ -127,10 +127,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Explicitly initialize.
-  virtual int init ();
+  int init () override;
 
   /// Explicitly destroy.
-  virtual int fini ();
+  int fini () override;
 
   /**
    * Returns 1 before the ACE_OS_Object_Manager has been
