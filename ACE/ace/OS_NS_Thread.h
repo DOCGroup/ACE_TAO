@@ -40,10 +40,8 @@
 # endif /* VxWorks and ! SMP */
 #endif
 
-# if defined (INTEGRITY)
+# if defined (ACE_INTEGRITY)
 #   include "ace/Log_Msg.h"
-
-#   include <map>
 # endif
 
 # if defined (ACE_EXPORT_MACRO)
@@ -230,7 +228,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_EXPLICIT_SCHED      0
 #     define THR_SCOPE_PROCESS       0
 #     define THR_SCOPE_SYSTEM        0
-#   elif defined (INTEGRITY)
+#   elif defined (ACE_INTEGRITY)
     typedef Task ACE_thread_t;
     typedef Task ACE_hthread_t;
     typedef u_int ACE_OS_thread_key_t;
@@ -297,15 +295,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
     private:
       struct TaskInfo
       {
-        TaskInfo ()
-          : id {}
-          , tss_base {}
-          , valid {}
-        {}
-
-        ACE_hthread_t id;
-        void **tss_base;
-        bool valid;
+        ACE_hthread_t id {};
+        void **tss_base {};
+        bool valid {};
       };
 
       // Using std::map caused a memory issue, so we're using an array.
@@ -372,7 +364,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       ACE_thread_mutex_t lock_;
     };
 #     endif
-#   endif /* ACE_HAS_PTHREADS / STHREADS / VXWORKS / WTHREADS / INTEGRITY **********/
+#   endif /* ACE_HAS_PTHREADS / STHREADS / VXWORKS / WTHREADS / ACE_INTEGRITY **********/
 
 #   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
 
@@ -407,7 +399,7 @@ public:
   /// Queue up threads waiting for the condition to become signaled.
   ACE_sema_t sema_;
 
-#     if defined (ACE_VXWORKS) || defined (ACE_MQX) || defined (INTEGRITY)
+#     if defined (ACE_VXWORKS) || defined (ACE_MQX) || defined (ACE_INTEGRITY)
   /**
    * A semaphore used by the broadcast/signal thread to wait for all
    * the waiting thread(s) to wake up and be released from the

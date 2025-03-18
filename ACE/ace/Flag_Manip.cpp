@@ -81,7 +81,7 @@ ACE::set_flags (ACE_HANDLE handle, int flags)
   switch (flags)
     {
     case ACE_NONBLOCK:
-#   if defined (INTEGRITY) && defined (ACE_LACKS_IOCTL)
+#   if defined (ACE_INTEGRITY) && defined (ACE_LACKS_IOCTL)
       ACE_UNUSED_ARG (handle);
       return 0;
 #   else
@@ -131,7 +131,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
   switch (flags)
     {
     case ACE_NONBLOCK:
-#   if defined (INTEGRITY) && defined (ACE_LACKS_IOCTL)
+#   if defined (ACE_INTEGRITY) && defined (ACE_LACKS_IOCTL)
       ACE_UNUSED_ARG (handle);
       return 0;
 #   else

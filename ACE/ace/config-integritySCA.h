@@ -14,7 +14,7 @@
 // All network utility and socket functions from the GHnet stack
 // are also assumed to be available.
 
-#define ghs
+#define ACE_INTEGRITY
 
 /* compilation defines */
 #define ACE_LACKS_GETPGID
@@ -36,7 +36,6 @@
   #define ACE_HAS_EXCEPTIONS
 #endif
 #define ACE_NEW_THROWS_EXCEPTIONS
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #define ACE_HAS_TEMPLATE_TYPEDEFS
@@ -45,9 +44,6 @@
 #define ACE_NEEDS_FUNC_DEFINITIONS
 #define _REENTRANT
 #define ACE_MT_SAFE 1
-
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
 
 #define ACE_HAS_SHM_OPEN
 

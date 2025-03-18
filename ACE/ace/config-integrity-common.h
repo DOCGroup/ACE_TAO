@@ -1,7 +1,7 @@
 #ifndef ACE_CONFIG_INTEGRITY_COMMON_H
 #define ACE_CONFIG_INTEGRITY_COMMON_H
 
-#define ghs
+#define ACE_INTEGRITY
 
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID
@@ -16,7 +16,6 @@
 #define ACE_LACKS_GETEGID
 #define ACE_LACKS_GETGID
 
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #define ACE_HAS_TEMPLATE_TYPEDEFS
@@ -29,9 +28,6 @@
 #define ACE_MT_SAFE 1
 #define ACE_HAS_THREADS
 #define ACE_MAX_NUM_THREADS 64
-
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
 
 #define ACE_HAS_STRERROR
 #define ACE_HAS_SIG_ATOMIC_T

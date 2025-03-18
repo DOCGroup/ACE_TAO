@@ -43,7 +43,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-# if defined (INTEGRITY)
+# if defined (ACE_INTEGRITY)
 #   define ACE_MAX_USERID 32
 # elif defined (ACE_WIN32)
 #   define ACE_MAX_USERID 32
@@ -53,7 +53,7 @@ extern "C"
 #  else
 #   define ACE_MAX_USERID 9
 #  endif
-# endif /* INTEGRITY */
+# endif /* ACE_INTEGRITY */
 
 #if defined (BUFSIZ)
 #  define ACE_STREAMBUF_SIZE BUFSIZ

@@ -239,7 +239,7 @@ ACE_Object_Manager::init ()
 #endif /* ! ACE_LACKS_ACE_TOKEN && ACE_HAS_TOKENS_LIBRARY */
           ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
                                   ACE_PROACTOR_EVENT_LOOP_LOCK)
-#if defined (INTEGRITY) && defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#if defined (ACE_INTEGRITY) && defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_PREALLOCATE_OBJECT (ACE_INTEGRITY_TSS_Impl,
                                   ACE_INTEGRITY_TSS_IMPL)
 #endif

@@ -280,7 +280,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
      && ACE_HAS_VERSIONED_NAMESPACE == 1) \
-    && defined (ghs) \
+    && defined (__ghs__) \
     && defined (ACE_HAS_PENTIUM) \
     && !defined (ACE_WIN32)
 #define ACE_GETHRTIME_NAME ACE_PREPROC_CONCATENATE(ACE_,ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _gethrtime))

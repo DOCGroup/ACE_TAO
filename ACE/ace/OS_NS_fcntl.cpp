@@ -112,8 +112,8 @@ ACE_OS::open (const char *filename,
   ACE_UNUSED_ARG (perms);
   ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
-#elif defined (INTEGRITY)
-# if defined (INTEGRITY178B)
+#elif defined (ACE_INTEGRITY)
+# if defined (ACE_INTEGRITY178B)
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE);
 # else

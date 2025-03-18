@@ -1788,7 +1788,7 @@ ACE_InputCDR::read_wstring (std::wstring& x)
       else
         {
 #if !defined (ACE_STD_ALLOCATOR_NOTHROW)
-        try
+          try
             {
 #endif
               x.resize (len-1); // no need to include the terminating '\0' here

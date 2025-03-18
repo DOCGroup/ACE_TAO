@@ -11,15 +11,14 @@
 
 #include "config-integrity-common.h"
 
-// The macro INTEGRITY178B is used in places where the existing INTEGRITY or ghs macros
+// The macro ACE_INTEGRITY178B is used in places where the existing ACE_INTEGRITY or ghs macros
 // are not sufficient due to differences between this version of INTEGRITY-178 and the
 // INTEGRITY version that was used by this version of ACE. For example, INTEGRITY-178
 // does not have AllocateNullConsoleDescriptor function (see OS_NS_fcntl.cpp).
-// NOTE: if INTEGRITY178B is defined, then INTEGRITY is also defined.
-#define INTEGRITY178B
+// NOTE: if ACE_INTEGRITY178B is defined, then ACE_INTEGRITY is also defined.
+#define ACE_INTEGRITY178B
 
 // Exclude unavailable functions in libraries such as libposix_178b_be.a or file systems libraries.
-// Newly introduced macros w.r.t. this ACE version are annotated in the comments.
 #if defined ACE_LACKS_POSIX
 # define ACE_LACKS_FSTAT
 # define ACE_LACKS_LSTAT
@@ -36,11 +35,11 @@
 # define ACE_LACKS_READV
 # define ACE_LACKS_WRITEV
 # define ACE_LACKS_KILL
-# define ACE_LACKS_SIGEMPTYSET // new
-# define ACE_LACKS_SIGFILLSET // new
-# define ACE_LACKS_SIGISMEMBER // new
-# define ACE_LACKS_SIGADDSET // new
-# define ACE_LACKS_SIGDELSET // new
+# define ACE_LACKS_SIGEMPTYSET
+# define ACE_LACKS_SIGFILLSET
+# define ACE_LACKS_SIGISMEMBER
+# define ACE_LACKS_SIGADDSET
+# define ACE_LACKS_SIGDELSET
 # define ACE_LACKS_SIGPROCMASK
 # define ACE_LACKS_TIME
 # define ACE_LACKS_MMAP

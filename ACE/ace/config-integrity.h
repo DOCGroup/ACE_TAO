@@ -17,17 +17,17 @@
 #include "config-integrity-common.h"
 
 #define ACE_HAS_TSS_EMULATION
-// Even though INTEGRITY has support for thread-specific storage (see TaskKey API),
-// we are not using it since we are imitating the behavior of INTEGRITY-178 which
-// does not have thread-specific storage.
+
+// INTEGRITY has support for thread-specific storage (see TaskKey API), however,
+// we are using ACE's TSS emulation in this implementation.
 //#define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 #if defined ACE_LACKS_POSIX
-# define ACE_LACKS_SIGEMPTYSET // new
-# define ACE_LACKS_SIGFILLSET // new
-# define ACE_LACKS_SIGISMEMBER // new
-# define ACE_LACKS_SIGADDSET // new
-# define ACE_LACKS_SIGDELSET // new
+# define ACE_LACKS_SIGEMPTYSET
+# define ACE_LACKS_SIGFILLSET
+# define ACE_LACKS_SIGISMEMBER
+# define ACE_LACKS_SIGADDSET
+# define ACE_LACKS_SIGDELSET
 # define ACE_LACKS_SIGPROCMASK
 # define ACE_LACKS_TEMPNAM
 # define ACE_LACKS_STRPTIME

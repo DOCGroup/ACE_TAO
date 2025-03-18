@@ -243,22 +243,22 @@
 #if !defined (ACE_UNUSED_ARG)
 # if defined (__GNUC__) || defined (__BORLANDC__)
 #   define ACE_UNUSED_ARG(a) (void) (a)
-# elif defined (ghs) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
+# elif defined (__ghs__) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,
 // such as with GreenHills (ghs) 1.8.8.
 #  define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
-# else /* ghs ..... */
+# else /* __ghs__ ..... */
 #  define ACE_UNUSED_ARG(a) (a)
-# endif /* ghs ..... */
+# endif /* __ghs__ ..... */
 #endif /* !ACE_UNUSED_ARG */
 
-#if defined (_MSC_VER) || defined (ghs) || defined(__BORLANDC__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__IAR_SYSTEMS_ICC__)
+#if defined (_MSC_VER) || defined (__ghs__) || defined(__BORLANDC__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__IAR_SYSTEMS_ICC__)
 # define ACE_NOTREACHED(a)
-#else  /* ghs || ..... */
+#else  /* __ghs__ || ..... */
 # define ACE_NOTREACHED(a) a
-#endif /* ghs || ..... */
+#endif /* __ghs__ || ..... */
 
 #if !defined ACE_FALLTHROUGH
 #  define ACE_FALLTHROUGH [[fallthrough]]
@@ -531,7 +531,7 @@ typedef int ACE_THR_FUNC_RETURN;
 # elif defined (ACE_WIN32)
 typedef DWORD ACE_THR_FUNC_RETURN;
 #define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
-# elif defined (INTEGRITY)
+# elif defined (ACE_INTEGRITY)
 // INTEGRITY-178 Task's entry point function doesn't return anything.
 // For INTEGRITY, we are also using Task API in which entry point function doesn't return.
 // This is used by ACE's internal thread adapter function but will be ignored by

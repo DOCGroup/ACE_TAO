@@ -99,7 +99,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 #endif  /* ACE_LACKS_INET_ATON */
 }
 
-#if defined (INTEGRITY) && defined (ACE_LACKS_INET_NTOA)
+#if defined (ACE_INTEGRITY) && defined (ACE_LACKS_INET_NTOA)
 char* ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntoa");
@@ -115,6 +115,6 @@ char* ACE_OS::inet_ntoa (const struct in_addr addr)
            (ipaddr & 0x000000ff));
   return addrstr;
 }
-#endif /* INTEGRITY && ACE_LACKS_INET_NTOA */
+#endif /* ACE_INTEGRITY && ACE_LACKS_INET_NTOA */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
