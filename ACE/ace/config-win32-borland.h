@@ -115,7 +115,6 @@
 #if !defined (__MINGW64__)
 # define ACE_USES_EXPLICIT_STD_NAMESPACE
 # define ACE_LACKS_PID_T
-# define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
 #endif
 
 #if defined (ACE_HAS_BCC64)
