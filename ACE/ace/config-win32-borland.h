@@ -98,38 +98,20 @@
 
 #undef ACE_LACKS_REWINDDIR
 
-#if !defined (__MINGW64__)
-# define ACE_HAS_WOPENDIR_EQUIVALENT ::wopendir
-# define ACE_HAS_WCLOSEDIR_EQUIVALENT ::wclosedir
-# define ACE_HAS_WREADDIR_EQUIVALENT ::wreaddir
-# define ACE_HAS_WREWINDDIR_EQUIVALENT ::wrewinddir
-#else
-# define ACE_HAS_WOPENDIR_EQUIVALENT ::_wopendir
-# define ACE_HAS_WCLOSEDIR_EQUIVALENT ::_wclosedir
-# define ACE_HAS_WREADDIR_EQUIVALENT ::_wreaddir
-# define ACE_HAS_WREWINDDIR_EQUIVALENT ::_wrewinddir
-#endif
+#define ACE_HAS_WOPENDIR_EQUIVALENT ::_wopendir
+#define ACE_HAS_WCLOSEDIR_EQUIVALENT ::_wclosedir
+#define ACE_HAS_WREADDIR_EQUIVALENT ::_wreaddir
+#define ACE_HAS_WREWINDDIR_EQUIVALENT ::_wrewinddir
 
 #define ACE_LACKS_STRRECVFD
 
-#if !defined (__MINGW64__)
-# define ACE_USES_EXPLICIT_STD_NAMESPACE
-# define ACE_LACKS_PID_T
-#endif
-
-#if defined (ACE_HAS_BCC64)
-# define ACE_HAS_TIME_T_LONG_MISMATCH
-#endif
+#define ACE_HAS_TIME_T_LONG_MISMATCH
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_USER_MODE_MASKS 1
 #define ACE_LACKS_ACE_IOSTREAM 1
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
-#if defined (ACE_HAS_BCC32)
-# define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Lu"
-# define ACE_INT64_FORMAT_SPECIFIER_ASCII "%Ld"
-#endif
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -147,47 +129,27 @@
 #define ACE_LACKS_ISCTYPE
 #define ACE_LACKS_STRTOK_R
 #define ACE_LACKS_ASCTIME_R
-
-#if (__BORLANDC__ <= 0x740)
-# define ACE_LACKS_LOCALTIME_R
-# define ACE_LACKS_GMTIME_R
-#endif
-
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 #define ACE_STRCASECMP_EQUIVALENT ::stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 #define ACE_WTOF_EQUIVALENT ::_wtof
 #define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
 #define ACE_HAS_ITOA
-
-#if defined (ACE_HAS_BCC64)
-# if (__BORLANDC__ <= 0x730)
-#  define ACE_LACKS_SWAB
-# endif
-#endif
-
-#if defined (ACE_HAS_BCC32)
-# define ACE_SIZEOF_LONG_DOUBLE 10
-# define ACE_NEEDS_DL_UNDERSCORE
-#endif
-
 #define ACE_HAS_BUILTIN_BSWAP16
 #define ACE_HAS_BUILTIN_BSWAP32
 #define ACE_HAS_BUILTIN_BSWAP64
 #define ACE_LACKS_INLINE_ASSEMBLY
 
-#if defined(__MINGW64__)
-# define ACE_LACKS_GID_T
-# undef ACE_LACKS_USECONDS_T
-# define ACE_HAS_POSIX_TIME
-# define ACE_LACKS_TIMESPEC_T
-# define ACE_LACKS_UID_T
-# define ACE_LACKS_GMTIME_R
-# define ACE_LACKS_LOCALTIME_R
-# define ACE_LACKS_NLINK_T
-# define ACE_HAS_3_PARAM_WCSTOK
-# define ACE_LACKS_STRPTIME
-#endif
+#define ACE_LACKS_GID_T
+#undef ACE_LACKS_USECONDS_T
+#define ACE_HAS_POSIX_TIME
+#define ACE_LACKS_TIMESPEC_T
+#define ACE_LACKS_UID_T
+#define ACE_LACKS_GMTIME_R
+#define ACE_LACKS_LOCALTIME_R
+#define ACE_LACKS_NLINK_T
+#define ACE_HAS_3_PARAM_WCSTOK
+#define ACE_LACKS_STRPTIME
 
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11

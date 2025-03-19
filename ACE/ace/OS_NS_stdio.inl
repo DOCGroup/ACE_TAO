@@ -901,11 +901,11 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_TEMPNAM)
-  return ACE_STD_NAMESPACE::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx));
+  return ::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx));
 #elif defined (ACE_TEMPNAM_EQUIVALENT)
   return ACE_TEMPNAM_EQUIVALENT (dir, pfx);
 #else /* ACE_LACKS_TEMPNAM */
-  return ACE_STD_NAMESPACE::tempnam (dir, pfx);
+  return ::tempnam (dir, pfx);
 #endif /* ACE_LACKS_TEMPNAM */
 }
 

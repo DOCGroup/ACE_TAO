@@ -94,12 +94,6 @@ ACE_USES_ASM_SYMBOL_IN_DLSYM            Platform uses assembly symbols
                                         instead of C symbols in
                                         dlsym()
 ACE_USES_STATIC_MFC                     When linking MFC as a static library is desired
-ACE_USES_EXPLICIT_STD_NAMESPACE         Set this when ::fclose doesn't
-                                        work and you have to
-                                        explicitly specify the std
-                                        namespace.   This is needed
-                                        with the Borland 6 and earlier
-                                        compilers.
 ACE_USES_GPROF                          ACE calls getitimer before spawning
                                         a new thread and setitimer
                                         after spawning the thread in
