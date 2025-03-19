@@ -24,12 +24,7 @@ my_map<key, value>::~my_map ()
 {
  for (size_t i = 0; i != capacity_; ++i)
  {
-#if defined (ACE_HAS_BCC32)
-   using std::pair;
-   (nodes_ + i)->~pair<key, value>();
-#else
    (nodes_ + i)->~value_type ();
-#endif
  }
 }
 

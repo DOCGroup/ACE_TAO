@@ -106,7 +106,7 @@ inline ACE_HANDLE ace_fileno_helper (FILE *fp)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 # else
-  return (ACE_HANDLE)(intptr_t)ACE_STD_NAMESPACE::fileno (fp);
+  return (ACE_HANDLE)(intptr_t)::fileno (fp);
 # endif /* defined (fileno) */
 }
 #endif /* !ACE_FILENO_EQUIVALENT */

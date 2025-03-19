@@ -83,7 +83,7 @@ inline int ace_rand_r_helper (unsigned *seed)
   return rand_r (seed);
 #  undef rand_r
 #  else
-  return ACE_STD_NAMESPACE::rand_r (seed);
+  return ::rand_r (seed);
 #  endif /* rand_r */
 }
 #endif /* !ACE_LACKS_RAND_R */
