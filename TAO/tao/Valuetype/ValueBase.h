@@ -335,11 +335,11 @@ namespace CORBA
 
   protected:
     DefaultValueRefCountBase ();
-    DefaultValueRefCountBase (const DefaultValueRefCountBase&);
+    DefaultValueRefCountBase (const DefaultValueRefCountBase &) = delete;
     virtual ~DefaultValueRefCountBase ();
 
   private:
-    void operator= (const DefaultValueRefCountBase &);
+    DefaultValueRefCountBase &operator= (const DefaultValueRefCountBase &) = delete;
 
   private: // data
     /// Reference counter.

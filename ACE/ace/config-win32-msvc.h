@@ -110,6 +110,8 @@
 #define ACE_ISCTYPE_EQUIVALENT ::_isctype
 
 #define ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS
+#define ACE_HAS_CRTSETREPORTMODE
+#define ACE_HAS_SETUNHANDLEDEXCEPTIONFILTER
 
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)

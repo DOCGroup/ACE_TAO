@@ -41,11 +41,6 @@ public:
 
 IMPLEMENT_APP(WxNamingViewer)
 
-// Need this to keep C++Builder 4 happy
-#ifdef __BORLANDC__
-extern WINAPI WinMain( HINSTANCE, HINSTANCE, LPSTR, int);
-#endif
-
 int WxNamingViewer::OnExit()
 {
   ACE::fini();
