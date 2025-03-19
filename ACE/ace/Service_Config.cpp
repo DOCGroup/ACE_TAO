@@ -299,13 +299,13 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   // user forgets to define an object of type ACE_Service_Config).
   ACE_Service_Repository::instance (ACE_Service_Gestalt::MAX_SERVICES);
 
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Initialize the ACE_Reactor (the ACE_Reactor should be the
   // same size as the ACE_Service_Repository).
   ACE_Reactor::instance ();
 
   // There's no point in dealing with this on NT since it doesn't
   // really support signals very well...
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Only attempt to register a signal handler for positive
   // signal numbers.
   if (ACE_Service_Config::signum_ > 0)
