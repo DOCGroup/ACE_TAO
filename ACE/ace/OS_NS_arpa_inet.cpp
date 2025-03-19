@@ -106,7 +106,6 @@ char* ACE_OS::inet_ntoa (const struct in_addr addr)
 
   static char addrstr[INET_ADDRSTRLEN + 1] = { 0 };
   ACE_UINT32 ipaddr = ntohl (addr.s_addr);
-  // printf("Socket address %X, IP address %X.\n",addr.s_addr,ipaddr);
   sprintf (addrstr,
            "%d.%d.%d.%d",
            ((ipaddr & 0xff000000) >> 24) & 0x000000ff,
