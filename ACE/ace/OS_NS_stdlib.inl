@@ -323,7 +323,7 @@ ACE_OS::putenv (const char *string)
 #elif defined (ACE_PUTENV_EQUIVALENT)
   return ACE_PUTENV_EQUIVALENT (const_cast <char *> (string));
 #else
-  return ACE_STD_NAMESPACE::putenv (const_cast <char *> (string));
+  return ::putenv (const_cast <char *> (string));
 #endif /* ACE_LACKS_PUTENV && ACE_HAS_SETENV */
 }
 
@@ -336,7 +336,7 @@ ACE_OS::setenv(const char *envname, const char *envval, int overwrite)
   ACE_UNUSED_ARG (overwrite);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ACE_STD_NAMESPACE::setenv (envname, envval, overwrite);
+  return ::setenv (envname, envval, overwrite);
 #endif
 }
 
@@ -351,7 +351,7 @@ ACE_OS::unsetenv(const char *name)
   ::unsetenv (name);
   return 0;
 #else
-  return ACE_STD_NAMESPACE::unsetenv (name);
+  return ::unsetenv (name);
 # endif /* ACE_HAS_VOID_UNSETENV */
 #endif /* ACE_LACKS_UNSETENV */
 }
