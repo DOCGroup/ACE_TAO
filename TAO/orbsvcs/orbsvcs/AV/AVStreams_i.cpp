@@ -2025,8 +2025,9 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
 
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "\n(%P|%t) TAO_StreamEndPoint::request_connection called"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) TAO_StreamEndPoint::request_connection called\n"));
+    }
 
   int result = 0;
   try
@@ -2035,24 +2036,31 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
       if (qos.length () > 0)
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG, "QoS is Specified\n"));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG, "QoS is Specified\n"));
+            }
 
           int result = this->translate_qos (qos, network_qos);
           if (result != 0)
-            if (TAO_debug_level > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG, "QoS translation failed\n"));
+            {
+              if (TAO_debug_level > 0)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG, "QoS translation failed\n"));
+                }
+            }
 
           this->qos ().set (network_qos);
         }
 
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "\n(%P|%t) TAO_StreamEndPoint::request_connection: "
-                    "flowspec has length = %d and the strings are:\n",
-                    flow_spec.length ()));
-      CORBA::ULong i;
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "(%P|%t) TAO_StreamEndPoint::request_connection: "
+                          "flowspec has length = %d and the strings are:\n",
+                          flow_spec.length ()));
+        }
 
-      for (i=0;i<flow_spec.length ();i++)
+      for (CORBA::ULong i = 0; i < flow_spec.length (); ++i)
         {
           TAO_Forward_FlowSpec_Entry *entry = 0;
           ACE_NEW_RETURN (entry,
@@ -2061,23 +2069,29 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
 
           CORBA::String_var string_entry = CORBA::string_dup (flow_spec[i]);
 
-          if(TAO_debug_level > 0)
-             ORBSVCS_DEBUG(( LM_DEBUG,
-                         "%N:%l Parsing flow spec: [%s]\n",
-                         string_entry.in ()));
-
-          if (entry->parse (string_entry.in ()) == -1)
-          {
-            if (TAO_debug_level > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          "%N:%l Error parsing flow_spec: [%s]\n",
-                          string_entry.in ()));
-            return 0;
-          }
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "TAO_StreamEndPoint::request_connection flow spec [%s]\n",
-                        entry->entry_to_string ()));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "%N:%l Parsing flow spec: [%C]\n",
+                              string_entry.in ()));
+            }
+
+          if (entry->parse (string_entry) == -1)
+            {
+              if (TAO_debug_level > 0)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  "%N:%l Error parsing flow_spec: [%C]\n",
+                                  string_entry.in ()));
+                }
+              return 0;
+            }
+          if (TAO_debug_level > 0)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "TAO_StreamEndPoint::request_connection flow spec [%C]\n",
+                              entry->entry_to_string ()));
+            }
 
           this->forward_flow_spec_set.insert (entry);
         }
@@ -2088,12 +2102,14 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
                                                              flow_spec);
 
       if (result < 0)
-        return 0;
+        {
+          return 0;
+        }
 
       // Make the upcall to the app
       result = this->handle_connection_requested (flow_spec);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("TAO_StreamEndpoint::request_connection");
       return 0;
