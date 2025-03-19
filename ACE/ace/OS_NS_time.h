@@ -131,7 +131,7 @@ inline double ace_difftime(time_t t1, time_t t0)
   return difftime (t1, t0);
 # undef difftime
 # else
-  return ACE_STD_NAMESPACE::difftime (t1, t0);
+  return ::difftime (t1, t0);
 # endif
 }
 
