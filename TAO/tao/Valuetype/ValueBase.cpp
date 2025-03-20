@@ -1367,45 +1367,14 @@ namespace CORBA
 
 // member functions for CORBA::DefaultValueRefCountBase ============
 
-// destructor
-CORBA::DefaultValueRefCountBase::~DefaultValueRefCountBase ()
-{
-}
-
 void
 CORBA::DefaultValueRefCountBase::_add_ref ()
-{
-  this->_tao_add_ref ();
-}
-
-void
-CORBA::DefaultValueRefCountBase::_remove_ref ()
-{
-  this->_tao_remove_ref ();
-}
-
-CORBA::ULong
-CORBA::DefaultValueRefCountBase::_refcount_value ()
-{
-  return this->_tao_refcount_value ();
-}
-
-// ===========================================================
-
-CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase ()
-  : refcount_ (1)
-{
-}
-
-
-void
-CORBA::DefaultValueRefCountBase::_tao_add_ref ()
 {
   ++this->refcount_;
 }
 
 void
-CORBA::DefaultValueRefCountBase::_tao_remove_ref ()
+CORBA::DefaultValueRefCountBase::_remove_ref ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -1414,7 +1383,7 @@ CORBA::DefaultValueRefCountBase::_tao_remove_ref ()
 }
 
 CORBA::ULong
-CORBA::DefaultValueRefCountBase::_tao_refcount_value () const
+CORBA::DefaultValueRefCountBase::_refcount_value ()
 {
   return this->refcount_;
 }
