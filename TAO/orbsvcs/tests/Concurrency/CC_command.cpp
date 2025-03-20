@@ -100,21 +100,16 @@ int CC_Start_Cmd::execute()
 
   ACE_OS::printf ("Executing start command (script file: %s)\n", cfg_name_);
 
-  char cmd_line[1024];
-  int success = ACE_OS::sprintf(&cmd_line[0], "%s -c %s",
-                                "./CC_client", cfg_name_);
-  if(success>=1024 || success==-1)
-    ACE_ERROR_RETURN((LM_ERROR, "Creation of process failed: %s\n",
-                      cmd_line), 0);
-
   ACE_Process new_process;
   ACE_Process_Options options;
-  options.command_line(ACE_TEXT("%C"), cmd_line);
+  ACE_TString const cfg_name(ACE_TEXT_CHAR_TO_TCHAR(cfg_name_));
+  ACE_TCHAR const *const argv[] = {ACE_TEXT("./CC_client"), ACE_TEXT("-c"), cfg_name.c_str(), nullptr};
+  options.command_line(argv);
 
   if(new_process.spawn(options) == -1)
     {
-      ACE_ERROR_RETURN((LM_ERROR, "Creation of process failed: %C\n",
-                        cmd_line), 0);
+      ACE_ERROR_RETURN((LM_ERROR, "Creation of process failed: ./CC_client -c %C\n",
+                        cfg_name_), 0);
     }
   return 1; // CC_SUCCESS
 }
