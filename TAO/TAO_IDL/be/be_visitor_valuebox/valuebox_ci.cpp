@@ -90,7 +90,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << vb_node->local_name () << "& val)" << be_idt_nl
       << ": ::CORBA::ValueBase (val)," << be_nl
-      << "  ::CORBA::DefaultValueRefCountBase (val)"
+      << "  ::CORBA::DefaultValueRefCountBase ()"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name ()
@@ -717,7 +717,7 @@ be_visitor_valuebox_ci::emit_copy_constructor ()
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (const " << vb_node->full_name () << "& val)" << be_idt_nl
       << ": ::CORBA::ValueBase (val)," << be_nl
-      << "  ::CORBA::DefaultValueRefCountBase (val)"
+      << "  ::CORBA::DefaultValueRefCountBase ()"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val._pd_value;" << be_uidt_nl
@@ -737,7 +737,7 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << vb_node->full_name () << "& val)" << be_idt_nl
       << ": ::CORBA::ValueBase (val)," << be_nl
-      << "  ::CORBA::DefaultValueRefCountBase (val)"
+      << "  ::CORBA::DefaultValueRefCountBase ()"
       << be_uidt_nl
       << "{" << be_idt_nl
       << node->full_name () << "* p = 0;" << be_nl

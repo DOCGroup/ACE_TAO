@@ -117,16 +117,16 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
     TAOLIB_DEBUG ((LM_DEBUG,
                 "Client_Interceptor::send_poll\n"));
 
-    TAO_RTScheduler_Current_i *current = 0;
+  TAO_RTScheduler_Current_i *current = 0;
 
-    TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
-    current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
-    if (current != 0)
-      {
-        RTScheduling::Scheduler_var scheduler = current->scheduler ();
-        scheduler->send_poll (ri);
-      }
+  current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
+  if (current != 0)
+    {
+      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      scheduler->send_poll (ri);
+    }
 }
 
 void

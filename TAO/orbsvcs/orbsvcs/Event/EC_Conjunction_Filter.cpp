@@ -151,8 +151,8 @@ TAO_EC_Conjunction_Filter::clear (void)
     {
       *j = 0;
     }
-  int b = static_cast<int> (this->n_ % bits_per_word);
-  Word last = ~0 << b;
+  size_t const b = this->n_ % bits_per_word;
+  Word last = ~0u << b;
   *j = last;
 
   this->event_.length (0);

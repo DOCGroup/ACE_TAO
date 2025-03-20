@@ -70,7 +70,7 @@ class TAO_Export TAO_Abstract_ServantBase
 {
 public:
   /// Destructor
-  virtual ~TAO_Abstract_ServantBase (void);
+  virtual ~TAO_Abstract_ServantBase ();
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char* logical_type_id) = 0;
@@ -137,7 +137,7 @@ public:
 
 protected:
   /// Default constructor, only derived classes can be created.
-  TAO_Abstract_ServantBase (void);
+  TAO_Abstract_ServantBase ();
 
   /// Copy constructor, protected so no instances can be created.
   TAO_Abstract_ServantBase (const TAO_Abstract_ServantBase &);

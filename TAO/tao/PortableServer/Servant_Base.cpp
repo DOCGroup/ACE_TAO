@@ -57,11 +57,17 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ServantBase_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table* optable)
+TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table *optable)
   : ref_count_ (1)
   , optable_ (optable)
 {
 }
+
+// Avoid an invalid GCC warning about initializing TAO_Abstract_ServantBase
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra"
+#endif
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
   : ref_count_ (1)
@@ -69,13 +75,14 @@ TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
 {
 }
 
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
 TAO_ServantBase &
 TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
 {
-  if (this != &rhs)
-  {
-    this->optable_ = rhs.optable_;
-  }
+  this->optable_ = rhs.optable_;
   return *this;
 }
 
