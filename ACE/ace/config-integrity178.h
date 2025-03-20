@@ -11,8 +11,8 @@
 
 #include "config-integrity-common.h"
 
-// The macro ACE_INTEGRITY178B is used in places where the existing ACE_INTEGRITY or ghs macros
-// are not sufficient due to differences between this version of INTEGRITY-178 and the
+// The macro ACE_INTEGRITY178B is used in places where the ACE_INTEGRITY macro
+// is not sufficient due to differences between this version of INTEGRITY-178 and the
 // INTEGRITY version that was used by this version of ACE. For example, INTEGRITY-178
 // does not have AllocateNullConsoleDescriptor function (see OS_NS_fcntl.cpp).
 // NOTE: if ACE_INTEGRITY178B is defined, then ACE_INTEGRITY is also defined.
@@ -113,11 +113,11 @@
 #define ACE_LACKS_STD_STRING_VIEW
 #define ACE_FALLTHROUGH
 
-// INTEGRITY has this concept of thread-specific storage in its native API.
+// INTEGRITY has the concept of thread-specific storage in its native API.
 // It's mentioned as Task-specific data in its document.
 // INTEGRITY-178B does not seem to have thread-specific storage. TSS is just
 // mentioned in some places in the manuals but there are no APIs.
-//#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+// We, therefore, use ACE's TSS emulation.
 #define ACE_HAS_TSS_EMULATION
 
 #endif /* ACE_CONFIG_INTEGRITY178_H */

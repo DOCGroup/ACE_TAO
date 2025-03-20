@@ -18,30 +18,15 @@
 
 /* compilation defines */
 #define ACE_LACKS_GETPGID
-#define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREUID
 #define ACE_LACKS_SETREGID
-#define ACE_LACKS_SETSID
-// These may not be applicable to the ACE code,
-// i.e., defining them doesn't do anything
-//#define ACE_LACKS_SETEGID
-//#define ACE_LACKS_SETUID
-//#define ACE_LACKS_SETEUID
-//#define ACE_LACKS_GETEUID
-//#define ACE_LACKS_GETUID
-//#define ACE_LACKS_GETEGID
-//#define ACE_LACKS_GETGID
+#define ACE_LACKS_PWD_FUNCTIONS
+#define ACE_LACKS_ALPHASORT
 
 #ifndef ACE_HAS_EXCEPTIONS
-  #define ACE_HAS_EXCEPTIONS
+# define ACE_HAS_EXCEPTIONS
 #endif
 #define ACE_NEW_THROWS_EXCEPTIONS
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_TEMPLATES_REQUIRE_SOURCE 1
-#define ACE_HAS_TEMPLATE_TYPEDEFS
-#define TAO_USE_SEQUENCE_TEMPLATES
-#define ACE_HAS_USING_KEYWORD
-#define ACE_NEEDS_FUNC_DEFINITIONS
 #define _REENTRANT
 #define ACE_MT_SAFE 1
 
@@ -59,7 +44,7 @@
 
 /* SCA STUFF */
 #if defined(INTEGRITY_VERSION) && (INTEGRITY_VERSION >= 40108)
-#define ACE_HAS_SIG_ATOMIC_T
+# define ACE_HAS_SIG_ATOMIC_T
 #endif /* INTEGRITY_VERSION */
 
 #define ACE_HAS_SIGWAIT
@@ -75,7 +60,7 @@
 
 #define ACE_HAS_THREADS
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE
 /***** End Threading Defines *****/
 
 /***** Hardware Defines *****/
@@ -130,7 +115,6 @@
 #define ACE_LACKS_PIPE
 #define ACE_LACKS_SYS_PARAM_H
 #define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_UTSNAME_T
 #define ACE_LACKS_UMASK
 #define ACE_LACKS_ISATTY
 #define ACE_LACKS_GETOPT
@@ -145,10 +129,12 @@
 #define ACE_LACKS_MALLOC_H /* netbsd's just includes stdlib.h */
 #define ACE_LACKS_MEMORY_H /* netbsd's just includes string.h */
 #define ACE_LACKS_READV
+#define ACE_LACKS_MSYNC
 /* below refers to fcntl style locking */
 #define ACE_LACKS_FILELOCKS
 
 #define ACE_LACKS_REALPATH
+#define ACE_LACKS_SWAB
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 /***** Not tied to standards AFAIK ****/
@@ -160,12 +146,6 @@
 #define ACE_LACKS_SYS_SEM_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_SHM_H
-
-/***** STUFF INTEGRITY 4.0.8 APPEARS TO SUPPORT ****/
-/* note, possibly untested with ace */
-
-/***** TAO STUFF ****/
-#define TAO_USE_DOTTED_DECIMAL_ADDRESSES 1
 
 #include <INTEGRITY.h>
 
@@ -183,11 +163,9 @@ typedef void (*__sighandler_t)(int);
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_GETPPID
 #define NSIG (SIGRTMAX+1)
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #define ACE_LACKS_CUSERID
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 0x5000
-#define fileno(file) ((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled
-#define ACE_HAS_ATTR_SETSCHED
+//#define fileno(file) ((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled
 #define ACE_DEFAULT_THREAD_PRIORITY 127
 #define PRI_FIFO_MIN 1
 #define PRI_FIFO_MAX 127
@@ -198,7 +176,6 @@ typedef void (*__sighandler_t)(int);
 #define PRI_OTHER_MIN 1
 #define PRI_OTHER_MAX 127
 #define ACE_THR_PRI_OTHER_DEF 127
-#define ACE_PTHREAD_RETURN_ON_EXIT
 #undef ACE_LACKS_UNLINK
 
 #define ACE_HAS_TIMED_MESSAGE_BLOCKS

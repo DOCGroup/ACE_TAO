@@ -1031,10 +1031,6 @@ ACE_OS::swab (const void *src,
 #  else
   ::swab (from, to, length);
 #  endif /* ACE_HAS_INT_SWAB */
-#elif defined (ACE_HAS_CONST_CHAR_SWAB)
-  const char *from = static_cast<const char*> (src);
-  char *to = static_cast<char *> (dest);
-  ::swab (from, to, length);
 #else
   ::swab (src, dest, length);
 #endif /* ACE_LACKS_SWAB */

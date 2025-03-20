@@ -228,7 +228,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_EXPLICIT_SCHED      0
 #     define THR_SCOPE_PROCESS       0
 #     define THR_SCOPE_SYSTEM        0
-#   elif defined (ACE_INTEGRITY)
+#   elif defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
     typedef Task ACE_thread_t;
     typedef Task ACE_hthread_t;
     typedef u_int ACE_OS_thread_key_t;
@@ -334,8 +334,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
         // Use the first available slot.
 
         // Should NOT create more than ACE_MAX_NUM_THREADS Tasks!
-          ACE_ASSERT (first_slot != ACE_MAX_NUM_THREADS);
-
+        ACE_ASSERT (first_slot != ACE_MAX_NUM_THREADS);
+        if (first_slot == ACE_MAX_NUM_THREADS)
+          {
+            ACE_OS::exit (EXIT_FAILURE);
+          }
+        
         TaskInfo &my_ti = integrity_ts_storage_[first_slot];
         my_ti.id = id;
         my_ti.valid = true;
@@ -364,7 +368,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       ACE_thread_mutex_t lock_;
     };
 #     endif
-#   endif /* ACE_HAS_PTHREADS / STHREADS / VXWORKS / WTHREADS / ACE_INTEGRITY **********/
+#   endif /* VXWORKS / WTHREADS / INTEGRITY **********/
 
 #   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
 

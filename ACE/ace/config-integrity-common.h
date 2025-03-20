@@ -8,21 +8,14 @@
 #define ACE_LACKS_SETREUID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETSID
-#define ACE_LACKS_SETEGID
-#define ACE_LACKS_SETUID
-#define ACE_LACKS_SETEUID
-#define ACE_LACKS_GETEUID
-#define ACE_LACKS_GETUID
 #define ACE_LACKS_GETEGID
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_GETUID
+#define ACE_LACKS_SETUID
+#define ACE_LACKS_GETEUID
+#define ACE_LACKS_SETEUID
 #define ACE_LACKS_GETGID
 
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_TEMPLATES_REQUIRE_SOURCE 1
-#define ACE_HAS_TEMPLATE_TYPEDEFS
-#define TAO_USE_SEQUENCE_TEMPLATES
-#define ACE_HAS_USING_KEYWORD
-#define ACE_HAS_TYPENAME_KEYWORD
-#define ACE_NEEDS_FUNC_DEFINITIONS
 #define _REENTRANT
 
 #define ACE_MT_SAFE 1
@@ -101,12 +94,6 @@
 
 #define ACE_LACKS_IOSTREAM_TOTALLY
 
-// Add the following macros to config.h to
-// build with --no-exceptions option in MULTI IDE
-//#define ACE_INTEGRITY_NO_EXCEPT
-
-#define TAO_USE_DOTTED_DECIMAL_ADDRESSES 1
-
 #include <INTEGRITY.h>
 
 #include <time.h>
@@ -121,7 +108,6 @@ typedef void (*__sighandler_t) (int);
 #include <sys/uio.h> // needed to define iovec
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_GETPPID
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #define ACE_LACKS_CUSERID
 
 #define ACE_DEFAULT_THREAD_PRIORITY 127
@@ -134,7 +120,6 @@ typedef void (*__sighandler_t) (int);
 #define PRI_OTHER_MIN 1
 #define PRI_OTHER_MAX 127
 #define ACE_THR_PRI_OTHER_DEF 127
-#define ACE_PTHREAD_RETURN_ON_EXIT
 #undef ACE_LACKS_UNLINK
 
 #define ACE_HAS_TIMED_MESSAGE_BLOCKS

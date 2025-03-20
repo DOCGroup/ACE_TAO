@@ -11,7 +11,7 @@
 
 bool ACE_Single_Input_Reactor::initialized ()
 {
-  return 1;
+  return true;
 }
 
 size_t ACE_Single_Input_Reactor::size () const
@@ -211,7 +211,7 @@ int ACE_Single_Input_Reactor::resumable_handler ()
 
 bool ACE_Single_Input_Reactor::uses_event_associations ()
 {
-  return 0;
+  return false;
 }
 
 long ACE_Single_Input_Reactor::schedule_timer (ACE_Event_Handler *, const void *, const ACE_Time_Value &, const ACE_Time_Value &)
@@ -302,12 +302,12 @@ int ACE_Single_Input_Reactor::owner (ACE_thread_t *)
 
 bool ACE_Single_Input_Reactor::restart ()
 {
-  return 0;
+  return false;
 }
 
 bool ACE_Single_Input_Reactor::restart (bool)
 {
-  return 0;
+  return false;
 }
 
 void ACE_Single_Input_Reactor::requeue_position (int)

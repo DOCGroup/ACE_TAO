@@ -3301,7 +3301,7 @@ ACE_OS::set_scheduling_params (const ACE_Sched_Params &/*sched_params*/, ACE_id_
   ACE_NOTSUP_RETURN (-1);
 }
 
-#if defined (ACE_INTEGRITY)
+#if defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
 namespace ACE_OS {
 // Workaround for INTEGRITY-178's SetupTask's lack of argument for Task's thread function.
 // INTEGRITY-178's SetupTask function that creates a Task, i.e. thread, does not have an argument
@@ -3440,7 +3440,7 @@ extern "C" void integrity_task_adapter ()
 }
 
 }
-#endif /* ACE_INTEGRITY */
+#endif /* ACE_INTEGRITY && !ACE_HAS_PTHREADS */
 
 int
 ACE_OS::thr_create (ACE_THR_FUNC func,

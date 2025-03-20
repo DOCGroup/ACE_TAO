@@ -492,7 +492,7 @@
 // The C99 security-improved run-time returns an error value on failure;
 // 0 on success.
 #if defined (ACE_HAS_TR24731_2005_CRT)
-#  define ACE_SECURECRTCALL(X,TYPE,FAILVALUE,RESULT) \
+# define ACE_SECURECRTCALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
     errno_t ___ = X; \
     if (___ != 0) { errno = ___; RESULT = FAILVALUE; } \
@@ -524,22 +524,22 @@ typedef ACE_HANDLE ACE_SOCKET;
 // indicate that the actual thread function doesn't return anything. The
 // rest of ACE uses a real type so there's no a ton of conditional code
 // everywhere to deal with the possibility of no return type.
-# if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
-#define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
-# elif defined (ACE_WIN32)
+# define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
+#elif defined (ACE_WIN32)
 typedef DWORD ACE_THR_FUNC_RETURN;
-#define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
-# elif defined (ACE_INTEGRITY)
+# define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
+#elif defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
 // INTEGRITY-178 Task's entry point function doesn't return anything.
 // For INTEGRITY, we are also using Task API in which entry point function doesn't return.
 // This is used by ACE's internal thread adapter function but will be ignored by
 // the actual entry point passed to INTEGRITY's and INTEGRITY-178 Task calls.
 typedef int ACE_THR_FUNC_RETURN;
-# else
+#else
 typedef void* ACE_THR_FUNC_RETURN;
-# endif /* ACE_VXWORKS */
+#endif /* ACE_VXWORKS */
 typedef ACE_THR_FUNC_RETURN (*ACE_THR_FUNC)(void *);
 
 #ifdef __cplusplus

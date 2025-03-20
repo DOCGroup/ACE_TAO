@@ -54,7 +54,7 @@ ACE_TSS_Emulation::tss_base ()
 #    elif defined (ACE_INTEGRITY)
   ACE_INTEGRITY_TSS_Impl *const obj = static_cast<ACE_INTEGRITY_TSS_Impl*> (ACE_Object_Manager::preallocated_object[ACE_Object_Manager::ACE_INTEGRITY_TSS_IMPL]);
   void **&base = obj->get (CurrentTask ());
-  return base;
+    return base;
 #    else
   // Uh oh.
   ACE_NOTSUP_RETURN (0);
