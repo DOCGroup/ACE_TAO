@@ -11,15 +11,15 @@
 //=============================================================================
 
 #ifndef ACE_OS_NS_TIME_H
-# define ACE_OS_NS_TIME_H
+#define ACE_OS_NS_TIME_H
 
-# include /**/ "ace/pre.h"
+#include /**/ "ace/pre.h"
 
-# include "ace/config-all.h"
+#include "ace/config-all.h"
 
-# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
-# endif /* ACE_LACKS_PRAGMA_ONCE */
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Basic_Types.h"
 #include "ace/os_include/os_time.h"
@@ -48,7 +48,7 @@ static constexpr ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
  * use timezone first here in this inline function, and then undefine
  * timezone.
  */
-inline long ace_timezone()
+inline long ace_timezone ()
 {
 #if defined (ACE_WIN32)
   TIME_ZONE_INFORMATION tz;
@@ -85,7 +85,7 @@ inline char *ace_asctime_r_helper (const struct tm *t, char *buf)
 {
 #  if defined (asctime_r)
   return asctime_r (t, buf);
-#  undef asctime_r
+#    undef asctime_r
 #  else
   return ::asctime_r (t, buf);
 #  endif /* asctime_r */
@@ -97,7 +97,7 @@ inline struct tm *ace_gmtime_r_helper (const time_t *clock, struct tm *res)
 {
 #  if defined (gmtime_r)
   return gmtime_r (clock, res);
-#  undef gmtime_r
+#    undef gmtime_r
 #  else
   return ::gmtime_r (clock, res);
 #  endif /* gmtime_r */
@@ -109,7 +109,7 @@ inline struct tm *ace_localtime_r_helper (const time_t *clock, struct tm *res)
 {
 #  if defined (localtime_r)
   return localtime_r (clock, res);
-#  undef localtime_r
+#    undef localtime_r
 #  else
   return ::localtime_r (clock, res);
 #  endif /* localtime_r */
@@ -125,28 +125,28 @@ inline struct tm *ace_localtime_r_helper (const time_t *clock, struct tm *res)
  * use difftime first here in this inline function, and then undefine
  * it.
  */
-inline double ace_difftime(time_t t1, time_t t0)
+inline double ace_difftime (time_t t1, time_t t0)
 {
-# if defined (difftime)
+#if defined (difftime)
   return difftime (t1, t0);
-# undef difftime
-# else
+#  undef difftime
+#else
   return ::difftime (t1, t0);
-# endif
+#endif
 }
 
-# if defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 typedef unsigned __int64 ACE_hrtime_t;
-# elif defined (_TNS_R_TARGET)
+#elif defined (_TNS_R_TARGET)
 typedef long long ACE_hrtime_t;
-# else /* !ACE_WIN32 */
-#   if defined (ACE_HAS_HI_RES_TIMER)
+#else /* !ACE_WIN32 */
+#  if defined (ACE_HAS_HI_RES_TIMER)
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
   typedef hrtime_t ACE_hrtime_t;
-#   else  /* ! ACE_HAS_HI_RES_TIMER */
+#  else  /* ! ACE_HAS_HI_RES_TIMER */
   typedef ACE_UINT64 ACE_hrtime_t;
-#   endif /* ! ACE_HAS_HI_RES_TIMER */
-# endif /* ACE_WIN32 */
+#  endif /* ! ACE_HAS_HI_RES_TIMER */
+#endif /* ACE_WIN32 */
 
 #define ACE_HRTIME_CONVERSION(VAL) (VAL)
 #define ACE_HRTIME_TO_U64(VAL) (VAL)
@@ -154,12 +154,12 @@ typedef long long ACE_hrtime_t;
 namespace ACE_OS
 {
   enum ACE_HRTimer_Op
-    {
-      ACE_HRTIMER_START = 0x0,  // Only use these if you can stand
-      ACE_HRTIMER_INCR = 0x1,   // for interrupts to be disabled during
-      ACE_HRTIMER_STOP = 0x2,   // the timed interval!!!!
-      ACE_HRTIMER_GETTIME = 0xFFFF
-    };
+  {
+    ACE_HRTIMER_START = 0x0,  // Only use these if you can stand
+    ACE_HRTIMER_INCR = 0x1,   // for interrupts to be disabled during
+    ACE_HRTIMER_STOP = 0x2,   // the timed interval!!!!
+    ACE_HRTIMER_GETTIME = 0xFFFF
+  };
 
   //@{ @name A set of wrappers for operations on time.
 
@@ -224,7 +224,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   struct tm *localtime_r (const unsigned long *clock,
-                       struct tm *res);
+                          struct tm *res);
 #endif
 
 
@@ -234,7 +234,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int nanosleep (const struct timespec *requested,
-                 struct timespec *remaining = 0);
+                 struct timespec *remaining = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strftime (char *s,
@@ -252,7 +252,7 @@ namespace ACE_OS
                   const char *format,
                   struct tm *tm);
 
-# if defined (ACE_LACKS_STRPTIME)
+#if defined (ACE_LACKS_STRPTIME)
   extern ACE_Export
   char *strptime_emulation (const char *buf,
                             const char *format,
@@ -261,10 +261,10 @@ namespace ACE_OS
   extern ACE_Export
   int strptime_getnum (const char *buf, int *num, int *bi,
                        int *fi, int min, int max);
-# endif /* ACE_LACKS_STRPTIME  */
+#endif /* ACE_LACKS_STRPTIME  */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  time_t time (time_t *tloc = 0);
+  time_t time (time_t *tloc = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long timezone ();
@@ -278,24 +278,23 @@ namespace ACE_OS
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
-    && defined (__ghs__) \
-    && defined (ACE_HAS_PENTIUM) \
-    && !defined (ACE_WIN32)
-#define ACE_GETHRTIME_NAME ACE_PREPROC_CONCATENATE(ACE_,ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _gethrtime))
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1) \
+     && defined (__ghs__) \
+     && defined (ACE_HAS_PENTIUM) \
+     && !defined (ACE_WIN32)
+#  define ACE_GETHRTIME_NAME ACE_PREPROC_CONCATENATE (ACE_, ACE_PREPROC_CONCATENATE (ACE_VERSIONED_NAMESPACE_NAME, _gethrtime))
 #else
-# define ACE_GETHRTIME_NAME ACE_gethrtime
+#  define ACE_GETHRTIME_NAME ACE_gethrtime
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
 
-# if defined (ACE_HAS_INLINED_OSCALLS)
-#   if defined (ACE_INLINE)
-#     undef ACE_INLINE
-#   endif /* ACE_INLINE */
-#   define ACE_INLINE inline
-#   include "ace/OS_NS_time.inl"
-# endif /* ACE_HAS_INLINED_OSCALLS */
+#if defined (ACE_HAS_INLINED_OSCALLS)
+#  if defined (ACE_INLINE)
+#    undef ACE_INLINE
+#  endif /* ACE_INLINE */
+#  define ACE_INLINE inline
+#  include "ace/OS_NS_time.inl"
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
-# include /**/ "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_OS_NS_TIME_H */
