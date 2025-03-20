@@ -328,13 +328,13 @@ namespace CORBA
 
   protected:
     DefaultValueRefCountBase () = default;
-    DefaultValueRefCountBase (const DefaultValueRefCountBase &) = delete;
-    DefaultValueRefCountBase (DefaultValueRefCountBase &&) = delete;
     ~DefaultValueRefCountBase () override = default;
 
   private:
     DefaultValueRefCountBase &operator= (const DefaultValueRefCountBase &) = delete;
     DefaultValueRefCountBase &operator= (DefaultValueRefCountBase &&) = delete;
+    DefaultValueRefCountBase (const DefaultValueRefCountBase &) = delete;
+    DefaultValueRefCountBase (DefaultValueRefCountBase &&) = delete;
 
   private: // data
     /// Reference counter.
