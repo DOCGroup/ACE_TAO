@@ -339,7 +339,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
           {
             ACE_OS::exit (EXIT_FAILURE);
           }
-        
+
         TaskInfo &my_ti = integrity_ts_storage_[first_slot];
         my_ti.id = id;
         my_ti.valid = true;
