@@ -6,6 +6,9 @@
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/Basic_Types.h"
+#if defined (ACE_INTEGRITY) && defined (ACE_LACKS_INET_NTOA)
+# include "ace/OS_NS_Thread.h"
+#endif
 
 #include <cstdlib>
 
@@ -104,7 +107,10 @@ char* ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntoa");
 
+  static ACE_thread_mutex_t mutex;
   static char addrstr[INET_ADDRSTRLEN + 1] = { 0 };
+
+  LockGuard guard (mutex);
   ACE_UINT32 ipaddr = ntohl (addr.s_addr);
   sprintf (addrstr,
            "%d.%d.%d.%d",

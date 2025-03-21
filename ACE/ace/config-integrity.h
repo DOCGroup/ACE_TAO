@@ -59,7 +59,6 @@
 
 #define NSIG (SIGRTMAX+1)
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 0x5000
-#define fileno(file) ((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled
 
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 

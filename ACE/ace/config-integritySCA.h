@@ -26,7 +26,6 @@
 #ifndef ACE_HAS_EXCEPTIONS
 # define ACE_HAS_EXCEPTIONS
 #endif
-#define ACE_NEW_THROWS_EXCEPTIONS
 #define _REENTRANT
 #define ACE_MT_SAFE 1
 
@@ -108,14 +107,10 @@
 #define ACE_LACKS_UMASK
 #define ACE_LACKS_SEEK
 #define ACE_LACKS_IPC_H
-#define ACE_LACKS_SEEK
-#define ACE_LACKS_SHARED_MEMORY
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_SETGID
-#define ACE_LACKS_PIPE
 #define ACE_LACKS_SYS_PARAM_H
 #define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_UMASK
 #define ACE_LACKS_ISATTY
 #define ACE_LACKS_GETOPT
 #define ACE_LACKS_STRCASECMP
@@ -165,7 +160,6 @@ typedef void (*__sighandler_t)(int);
 #define NSIG (SIGRTMAX+1)
 #define ACE_LACKS_CUSERID
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 0x5000
-//#define fileno(file) ((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled
 #define ACE_DEFAULT_THREAD_PRIORITY 127
 #define PRI_FIFO_MIN 1
 #define PRI_FIFO_MAX 127

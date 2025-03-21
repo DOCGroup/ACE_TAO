@@ -387,7 +387,7 @@ ACE_OS::getcwd (char *buf, size_t size)
 #if defined (ACE_LACKS_GETCWD)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (size);
-  ACE_NOTSUP_RETURN ((char*)-1);
+  ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_GETCWD_EQUIVALENT)
   return ACE_GETCWD_EQUIVALENT (buf, static_cast<int> (size));
 #elif defined (ACE_WIN32)

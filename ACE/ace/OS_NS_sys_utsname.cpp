@@ -226,12 +226,16 @@ ACE_OS::uname (ACE_utsname *name)
 #    if defined (ACE_INTEGRITY178B)
   strcpy (name->sysname, "INTEGRITY-178B");
   const int status = ::gethostname (name->nodename, __SYS_NMLN);
+  if (status != 0)
+    return -1;
   strcpy (name->release, "minor");
   strcpy (name->version, "5.0.0");
   strcpy (name->machine, "a standard name");
 #    else
   strcpy (name->sysname, "INTEGRITY");
   const int status = ::gethostname (name->nodename, __SYS_NMLN);
+  if (status != 0)
+    return -1;
   strcpy (name->release, "minor");
   strcpy (name->version, "11.4.6");
   strcpy (name->machine, "a standard name");

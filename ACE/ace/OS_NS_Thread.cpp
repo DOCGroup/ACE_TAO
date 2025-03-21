@@ -1574,7 +1574,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // Not supporting it to mimic INTEGRITY-178 port.
   ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_WTHREADS || ACE_HAS_VXWORKS || ACE_PSOS */
+#   endif /* ACE_HAS_WTHREADS || ACE_VXWORKS || ACE_MQX */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (external_mutex);
@@ -4226,49 +4226,52 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 {
   ACE_UNUSED_ARG (status);
   if (ACE_OS::thr_cmp (thr_handle, ACE_OS::NULL_hthread))
-  {
-    ACE_NOTSUP_RETURN (-1);
-  }
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
 
   int retval = 0;
   ACE_hthread_t current;
   ACE_OS::thr_self (current);
 
   if (ACE_OS::thr_cmp (thr_handle, current))
-  {
-    retval = EDEADLK;
-  }
+    {
+      retval = EDEADLK;
+    }
   else
-  {
-    Semaphore join_sema = 0;
-    ACE_OS::mutex_lock (&integrity_task_args_lock);
-    auto it = integrity_join_semas.find (thr_handle);
-    if (it == integrity_join_semas.end ())
     {
-      errno = EINVAL;
-      return -1;
-    }
-
-    join_sema = it->second;
-    ACE_OS::mutex_unlock (&integrity_task_args_lock);
-
-    if (::WaitForSemaphore (join_sema) != Success)
-      retval = EINVAL;
-    else
-    {
-      // We can remove the entry but the Semaphore object is still there
-      // (there seems no API to delete it).
+      Semaphore join_sema = 0;
       ACE_OS::mutex_lock (&integrity_task_args_lock);
-      integrity_join_semas.erase (thr_handle);
+      auto it = integrity_join_semas.find (thr_handle);
+      if (it == integrity_join_semas.end ())
+        {
+          errno = EINVAL;
+          return -1;
+        }
+
+      join_sema = it->second;
       ACE_OS::mutex_unlock (&integrity_task_args_lock);
+
+      if (::WaitForSemaphore (join_sema) != Success)
+        retval = EINVAL;
+      else
+        {
+          // The joined thread has finished, we can delete the associated semaphore.
+          ACE_OS::mutex_lock (&integrity_task_args_lock);
+# if !defined (ACE_INTEGRITY178B)
+          // INTEGRITY provides API to close semaphore but INTEGRITY-178 does not
+          ::CloseSemaphore (it->second);
+# endif
+          integrity_join_semas.erase (it);
+          ACE_OS::mutex_unlock (&integrity_task_args_lock);
+        }
     }
-  }
 
   if (retval)
-  {
-    errno = retval;
-    retval = -1;
-  }
+    {
+      errno = retval;
+      retval = -1;
+    }
   return retval;
 }
 
