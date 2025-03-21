@@ -791,14 +791,12 @@ TAO_Default_Resource_Factory::get_reactor ()
   else
     this->dynamically_allocated_reactor_ = true;
 
-  ACE_Reactor::instance (reactor);
   return reactor;
 }
 
 void
 TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 {
-  ACE_Reactor::instance (0);
   if (this->dynamically_allocated_reactor_)
     {
       // backup timer queue

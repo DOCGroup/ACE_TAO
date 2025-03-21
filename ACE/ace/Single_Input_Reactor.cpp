@@ -34,12 +34,13 @@ int ACE_Single_Input_Reactor::register_handler (ACE_Event_Handler *event_handler
   return 0;
 }
 
-int ACE_Single_Input_Reactor::handle_events (ACE_Time_Value*)
+int ACE_Single_Input_Reactor::handle_events (ACE_Time_Value *)
 {
   const auto handler = event_handler_.handler ();
-  if (handler) {
-    handler->handle_input (handler->get_handle ());
-  }
+  if (handler)
+    {
+      return handler->handle_input (handler->get_handle ());
+    }
   return 0;
 }
 
@@ -154,7 +155,7 @@ int ACE_Single_Input_Reactor::remove_handler (const ACE_Handle_Set &, ACE_Reacto
   return 0;
 }
 
-int ACE_Single_Input_Reactor::remove_handler (int signum, ACE_Sig_Action *, ACE_Sig_Action *, int)
+int ACE_Single_Input_Reactor::remove_handler (int, ACE_Sig_Action *, ACE_Sig_Action *, int)
 {
   return 0;
 }
