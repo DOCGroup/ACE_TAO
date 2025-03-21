@@ -269,7 +269,7 @@ ACE_Task_Base::svc_run (void *args)
   int const svc_status = t->svc ();
 
 #if defined (ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN)
-  // Reinterpret case between integral types is not mentioned in the C++ spec
+  // Reinterpret cast between integral types is not mentioned in the C++ spec
   status = static_cast<ACE_THR_FUNC_RETURN> (svc_status);
 #else
   status = reinterpret_cast<ACE_THR_FUNC_RETURN> (svc_status);

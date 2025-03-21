@@ -135,6 +135,9 @@ ACE_OS::closesocket (ACE_HANDLE handle)
   //       process.
 
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
+#elif defined ACE_LACKS_CLOSE
+  ACE_UNUSED_ARG (handle);
+  ACE_NOTSUP_RETURN (-1);
 #else
   //FUZZ: disable check_for_lack_ACE_OS
   return ::close (handle);
@@ -892,6 +895,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
     }
   return ACE_OS::writev (handle, local_iov, n);
 
+
 #else
   return ACE_OS::writev (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */
@@ -942,7 +946,7 @@ ACE_OS::shutdown (ACE_HANDLE handle, int how)
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_SOCKCALL_RETURN (::shutdown ((ACE_SOCKET) handle, how), int, -1);
-#endif /* ACE_LACKS_SHUTDOWN */
+#endif
 }
 
 ACE_INLINE ACE_HANDLE

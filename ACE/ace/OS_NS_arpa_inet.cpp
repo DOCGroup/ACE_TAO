@@ -6,6 +6,9 @@
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/Basic_Types.h"
+#if defined (ACE_INTEGRITY) && defined (ACE_LACKS_INET_NTOA)
+# include "ace/OS_NS_Thread.h"
+#endif
 
 #include <cstdlib>
 
@@ -98,5 +101,25 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
   return ::inet_aton (host_name, addr);
 #endif  /* ACE_LACKS_INET_ATON */
 }
+
+#if defined (ACE_INTEGRITY) && defined (ACE_LACKS_INET_NTOA)
+char* ACE_OS::inet_ntoa (const struct in_addr addr)
+{
+  ACE_OS_TRACE ("ACE_OS::inet_ntoa");
+
+  static ACE_thread_mutex_t mutex;
+  static char addrstr[INET_ADDRSTRLEN + 1] = { 0 };
+
+  LockGuard guard (mutex);
+  ACE_UINT32 ipaddr = ntohl (addr.s_addr);
+  sprintf (addrstr,
+           "%d.%d.%d.%d",
+           ((ipaddr & 0xff000000) >> 24) & 0x000000ff,
+           (ipaddr & 0x00ff0000) >> 16,
+           (ipaddr & 0x0000ff00) >> 8,
+           (ipaddr & 0x000000ff));
+  return addrstr;
+}
+#endif /* ACE_INTEGRITY && ACE_LACKS_INET_NTOA */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

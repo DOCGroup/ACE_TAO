@@ -70,7 +70,8 @@ sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
   else
     osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
-#elif defined (ACE_LACKS_SIGACTION)
+#elif defined (ACE_LACKS_SIGACTION) || (defined (ACE_INTEGRITY) && defined (ACE_LACKS_POSIX))
+  // INTEGRITY has the sigaction struct but the sigaction call may still be unavailable.
   ACE_UNUSED_ARG (nsa);
   ACE_UNUSED_ARG (osa);
   ACE_NOTSUP_RETURN (-1);
@@ -85,7 +86,11 @@ ACE_INLINE int
 sigaddset (sigset_t *s, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::sigaddset");
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGADDSET)
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;
@@ -100,13 +105,17 @@ sigaddset (sigset_t *s, int signum)
   return 0 ;
 #else
   return ace_sigaddset_helper (s, signum);
-#endif /* ACE_LACKS_SIGSET */
+#endif
 }
 
 ACE_INLINE int
 sigdelset (sigset_t *s, int signum)
 {
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGDELSET)
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;
@@ -121,13 +130,16 @@ sigdelset (sigset_t *s, int signum)
   return 0;
 #else
   return ace_sigdelset_helper (s, signum);
-#endif /* ACE_LACKS_SIGSET */
+#endif
 }
 
 ACE_INLINE int
 sigemptyset (sigset_t *s)
 {
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGEMPTYSET)
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;
@@ -137,13 +149,16 @@ sigemptyset (sigset_t *s)
   return 0;
 #else
   return ace_sigemptyset_helper (s);
-#endif /* ACE_LACKS_SIGSET */
+#endif
 }
 
 ACE_INLINE int
 sigfillset (sigset_t *s)
 {
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGFILLSET)
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;
@@ -153,13 +168,17 @@ sigfillset (sigset_t *s)
   return 0 ;
 #else
   return ace_sigfillset_helper (s);
-#endif /* ACE_LACKS_SIGSET */
+#endif
 }
 
 ACE_INLINE int
 sigismember (sigset_t *s, int signum)
 {
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGISMEMBER)
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SIGSET)
   if (s == 0)
     {
       errno = EFAULT;
@@ -180,7 +199,7 @@ sigismember (sigset_t *s, int signum)
     }
 #  endif /* ACE_HAS_SIGISMEMBER_BUG */
   return ace_sigismember_helper (s, signum);
-#endif /* ACE_LACKS_SIGSET */
+#endif
 }
 
 ACE_INLINE ACE_SignalHandler
