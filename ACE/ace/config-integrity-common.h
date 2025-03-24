@@ -49,7 +49,6 @@
 #define ACE_LACKS_ITOW
 
 #define ACE_HAS_SIGWAIT
-#define ACE_HAS_PTHREAD_SIGMASK_PROTO
 
 #define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_USECONDS_T
@@ -90,13 +89,10 @@
 #define ACE_LACKS_SYS_SEM_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_SHM_H
-#define ACE_LACKS_MEMORY_H
 
 #define ACE_LACKS_IOSTREAM_TOTALLY
 
 #include <INTEGRITY.h>
-
-#include <time.h>
 
 typedef void (*__sighandler_t) (int);
 
@@ -105,7 +101,6 @@ typedef void (*__sighandler_t) (int);
 #endif
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
-#include <sys/uio.h> // needed to define iovec
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_GETPPID
 #define ACE_LACKS_CUSERID
@@ -123,10 +118,6 @@ typedef void (*__sighandler_t) (int);
 #undef ACE_LACKS_UNLINK
 
 #define ACE_HAS_TIMED_MESSAGE_BLOCKS
-
-extern "C" {
-  int unlink (const char *);
-}
 
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_LACKS_TELLDIR
@@ -160,7 +151,5 @@ extern "C" {
 # define ACE_LACKS_UNLINK
 # define ACE_LACKS_WRITE
 #endif
-
-#include <unistd.h>
 
 #endif

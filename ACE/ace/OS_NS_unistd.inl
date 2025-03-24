@@ -953,29 +953,24 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
   return ::nanosleep (&rqtp, 0);
   //FUZZ: enable check_for_lack_ACE_OS
 #else
-# if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
-#   if !defined (ACE_LACKS_SELECT)
+# if !defined (ACE_LACKS_SELECT)
+#  if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // Copy the timeval, because this platform doesn't declare the timeval
   // as a pointer to const.
   timeval tv_copy = tv;
-  //FUZZ: disable check_for_lack_ACE_OS
+  // FUZZ: disable check_for_lack_ACE_OS
   return ::select (0, 0, 0, 0, &tv_copy);
-  //FUZZ: enable check_for_lack_ACE_OS
-#   else
-  ACE_UNUSED_ARG (tv);
-  ACE_NOTSUP_RETURN (-1);
-#   endif
-# else  /* ! ACE_HAS_NONCONST_SELECT_TIMEVAL */
-#   if !defined (ACE_LACKS_SELECT)
-  const timeval *tvp = tv;
-  //FUZZ: disable check_for_lack_ACE_OS
+  // FUZZ: enable check_for_lack_ACE_OS
+#  else
+  const timeval* tvp = tv;
+  // FUZZ: disable check_for_lack_ACE_OS
   return ::select (0, 0, 0, 0, tvp);
-  //FUZZ: enable check_for_lack_ACE_OS
-#   else
+  // FUZZ: enable check_for_lack_ACE_OS
+#  endif
+# else
   ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
-#   endif
-# endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
+# endif
 #endif /* ACE_WIN32 */
 }
 

@@ -40,10 +40,6 @@
 # endif /* VxWorks and ! SMP */
 #endif
 
-# if defined (ACE_INTEGRITY)
-#   include "ace/Log_Msg.h"
-# endif
-
 # if defined (ACE_EXPORT_MACRO)
 #   undef ACE_EXPORT_MACRO
 # endif

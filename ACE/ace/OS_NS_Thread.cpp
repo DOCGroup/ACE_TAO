@@ -21,7 +21,7 @@
 #include <memory>
 #include <algorithm>
 
-#if defined (ACE_INTEGRITY)
+#if defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
 #  include <map>
 #endif
 
@@ -3326,8 +3326,8 @@ static ACE_mutex_t integrity_task_args_lock;
 // INTEGRITY-178 Task API requires a stack to be provided explicitly in the SetupTask call.
 // INTEGRITY doesn't need this.
 
-#   if !defined (ACE_INT178_DEFAULT_STACK_SIZE)
-#     define ACE_INT178_DEFAULT_STACK_SIZE 0x10000 // 64 KB
+#   if !defined (ACE_INTEGRITY178B_DEFAULT_STACK_SIZE)
+#     define ACE_INTEGRITY178B_DEFAULT_STACK_SIZE 0x10000 // 64 KB
 #   endif
 
 // We can have a maximum of ACE_MAX_NUM_THREADS Tasks including the Initial Task (i.e. main thread).
@@ -3338,7 +3338,7 @@ static ACE_mutex_t integrity_task_args_lock;
 class ACE_Int178_Stack_Manager
 {
 private:
-  typedef Address Int178_Stack[ACE_INT178_DEFAULT_STACK_SIZE / sizeof (Address)];
+  typedef Address Int178_Stack[ACE_INTEGRITY178B_DEFAULT_STACK_SIZE / sizeof (Address)];
   typedef Int178_Stack Int178_Stack_Pool[NUM_DYNAMIC_THREADS];
 
   struct StackInfo
@@ -3368,7 +3368,7 @@ public:
       }
 
     // We have created the maximum number of concurrent threads!
-    return 0;
+    return nullptr;
   }
 
   // Update the owner thread of a stack returned by a previous successfull call to acquire().
@@ -4015,7 +4015,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         stack = int178_stack_manager.acquire (slot);
         if (!stack)
           return -1;
-        stacksize = ACE_INT178_DEFAULT_STACK_SIZE;
+        stacksize = ACE_INTEGRITY178B_DEFAULT_STACK_SIZE;
       }
 
     // Don't let this Task run immediately; we have to set its entrypoint's argument below.
@@ -4222,9 +4222,8 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 #if defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
 int
 ACE_OS::thr_join (ACE_hthread_t thr_handle,
-                  ACE_THR_FUNC_RETURN* status)
+                  ACE_THR_FUNC_RETURN *)
 {
-  ACE_UNUSED_ARG (status);
   if (ACE_OS::thr_cmp (thr_handle, ACE_OS::NULL_hthread))
     {
       ACE_NOTSUP_RETURN (-1);
@@ -4277,10 +4276,9 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 
 int
 ACE_OS::thr_join (ACE_thread_t waiter_id,
-                  ACE_thread_t* thr_id,
+                  ACE_thread_t *,
                   ACE_THR_FUNC_RETURN* status)
 {
-  ACE_UNUSED_ARG (thr_id);
   return ACE_OS::thr_join (waiter_id, status);
 }
 #endif /* ACE_INTEGRITY && !ACE_HAS_PTHREADS */

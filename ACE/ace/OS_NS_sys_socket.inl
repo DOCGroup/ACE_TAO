@@ -135,7 +135,7 @@ ACE_OS::closesocket (ACE_HANDLE handle)
   //       process.
 
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
-#elif defined ACE_LACKS_CLOSE
+#elif defined (ACE_LACKS_CLOSE)
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
 #else

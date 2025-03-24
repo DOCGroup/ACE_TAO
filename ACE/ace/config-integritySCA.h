@@ -122,7 +122,6 @@
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_WRITEV
 #define ACE_LACKS_MALLOC_H /* netbsd's just includes stdlib.h */
-#define ACE_LACKS_MEMORY_H /* netbsd's just includes string.h */
 #define ACE_LACKS_READV
 #define ACE_LACKS_MSYNC
 /* below refers to fcntl style locking */
@@ -144,8 +143,6 @@
 
 #include <INTEGRITY.h>
 
-#include <time.h>
-
 typedef void (*__sighandler_t)(int);
 
 #ifdef ppc
@@ -154,7 +151,6 @@ typedef void (*__sighandler_t)(int);
 
 /* MIKEC Addtions */
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
-#include <sys/uio.h> // needed to define iovec
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_GETPPID
 #define NSIG (SIGRTMAX+1)
@@ -174,21 +170,11 @@ typedef void (*__sighandler_t)(int);
 
 #define ACE_HAS_TIMED_MESSAGE_BLOCKS
 
-extern "C" {
-int unlink(const char *);
-}
-
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_LACKS_TELLDIR
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_GETHOSTENT
-
-
 /* end MIKEC Addtions */
-
-// Hack to avoid ensure that things defined in ind_io.h
-// have the right linkage
-#include <unistd.h>
 
 #endif /* ACE_CONFIG_INTEGRITYSCA_H */
