@@ -3,6 +3,7 @@
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/OS_QoS.h"
 #include "ace/Global_Macros.h"
 #include "ace/os_include/netinet/os_in.h"
@@ -135,13 +136,8 @@ ACE_OS::closesocket (ACE_HANDLE handle)
   //       process.
 
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
-#elif defined (ACE_LACKS_CLOSE)
-  ACE_UNUSED_ARG (handle);
-  ACE_NOTSUP_RETURN (-1);
 #else
-  //FUZZ: disable check_for_lack_ACE_OS
-  return ::close (handle);
-  //FUZZ: enable check_for_lack_ACE_OS
+  return ACE_OS::close (handle);
 #endif /* ACE_WIN32 */
 }
 

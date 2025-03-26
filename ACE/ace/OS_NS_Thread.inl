@@ -2066,21 +2066,6 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 #   elif defined (ACE_VXWORKS)
   return ::semTake (s->sema_, WAIT_FOREVER);
 #   elif defined (ACE_INTEGRITY)
-#     if defined (ACE_INTEGRITY178B)
-  // It seems INTEGRITY178B's WaitForSemaphore does not check for the semaphore's value underflow,
-  // so we attempt to do it manually here. However, it does not prevent a race when two or more
-  // threads call this functions simultaneously and the calls to GetSemaphoreValue and WaitForSemaphore
-  // interleave. In that case, WaitForSemaphore might still get called when its value has reached the
-  // minimum negative value.
-  SignedValue curr_val;
-  if (::GetSemaphoreValue (*s, &curr_val) != Success)
-    return -1;
-
-  if (curr_val == LONG_MIN)
-    // If we have this many Tasks waiting for a semaphore, something seems incorrect.
-    return -1;
-#     endif
-
   return ::WaitForSemaphore (*s) == Success ? 0 : -1;
 #   endif /* ACE_HAS_PTHREADS */
 # else

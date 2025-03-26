@@ -224,15 +224,15 @@ ACE_OS::uname (ACE_utsname *name)
     return -1;
 
 # if defined (ACE_INTEGRITY178B)
-  strcpy (name->sysname, "INTEGRITY-178B");
-  strcpy (name->release, "minor");
-  strcpy (name->version, "5.0.0");
-  strcpy (name->machine, "a standard name");
+  ACE_OS::strcpy (name->sysname, "INTEGRITY-178B");
+  ACE_OS::strcpy (name->release, "minor");
+  ACE_OS::strcpy (name->version, "5.0.0");
+  ACE_OS::strcpy (name->machine, "a standard name");
 # else
-  strcpy (name->sysname, "INTEGRITY");
-  strcpy (name->release, "minor");
-  strcpy (name->version, "11.4.6");
-  strcpy (name->machine, "a standard name");
+  ACE_OS::strcpy (name->sysname, "INTEGRITY");
+  ACE_OS::strcpy (name->release, "minor");
+  ACE_OS::strcpy (name->version, "11.4.6");
+  ACE_OS::strcpy (name->machine, "a standard name");
 # endif /* ACE_INTEGRITY178B */
   return 0;
 #else
