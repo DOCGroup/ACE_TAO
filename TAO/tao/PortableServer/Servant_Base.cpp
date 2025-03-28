@@ -62,7 +62,15 @@ TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table *optable)
 }
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
-  : ref_count_ (1)
+  :
+#if defined __GNUC__ && __GNUC__ < 9
+  // GCC version 8 issues an invalid warning without the next non-comment line.
+  // Other compilers (MSVC) may warn when this line is present, since it will never be used for initialization.
+  // In copy constructor TAO_ServantBase::TAO_ServantBase(const TAO_ServantBase&):
+  // warning: base class class TAO_Abstract_ServantBase should be explicitly initialized in the copy constructor [-Wextra]
+  TAO_Abstract_ServantBase (),
+#endif
+  ref_count_ (1)
   , optable_ (rhs.optable_)
 {
 }
