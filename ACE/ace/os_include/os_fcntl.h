@@ -99,6 +99,8 @@ extern "C"
 
 #if defined (ACE_HAS_POSIX_NONBLOCK)
 #  define ACE_NONBLOCK O_NONBLOCK
+#elif defined (ACE_INTEGRITY178B)
+#  define ACE_NONBLOCK 1
 #else
 #  define ACE_NONBLOCK O_NDELAY
 #endif /* ACE_HAS_POSIX_NONBLOCK */

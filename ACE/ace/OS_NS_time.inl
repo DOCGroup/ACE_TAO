@@ -255,7 +255,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ::QueryPerformanceCounter (&freq);
 
   return freq.QuadPart;
-#elif defined (ghs) && defined (ACE_HAS_PENTIUM)
+#elif defined (__ghs__) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
   return ACE_GETHRTIME_NAME ();
@@ -278,14 +278,14 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 # endif
 
   return now;
-#elif defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))
+#elif defined (ACE_HAS_POWERPC_TIMER) && (defined (__ghs__) || defined (__GNUG__))
   // PowerPC w/ GreenHills or g++.
 
   ACE_UNUSED_ARG (op);
   u_long most;
   u_long least;
 
-#  if defined (ghs)
+#  if defined (__ghs__)
   ACE_OS::readPPCTimeBase (most, least);
 #  else
   u_long scratch;

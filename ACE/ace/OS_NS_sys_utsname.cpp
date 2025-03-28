@@ -213,17 +213,28 @@ ACE_OS::uname (ACE_utsname *name)
   ACE_OS::strcpy (name->machine, sysModel ());
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
-#elif defined (INTEGRITY)
-  if(!name) {
-    errno = EFAULT;
+#elif defined (ACE_INTEGRITY)
+  if (!name)
+    {
+      errno = EFAULT;
+      return -1;
+    }
+
+  if (ACE_OS::hostname (name->nodename, __SYS_NMLN) != 0)
     return -1;
-  }
-  strcpy(name->sysname,"INTEGRITY");
-  int status = gethostname(name->nodename,_SYS_NMLN);
-  strcpy(name->release,"4.0");
-  strcpy(name->version,"4.0.9");
-  strcpy(name->machine,"a standard name");
-  return status;
+
+# if defined (ACE_INTEGRITY178B)
+  ACE_OS::strcpy (name->sysname, "INTEGRITY-178B");
+  ACE_OS::strcpy (name->release, "minor");
+  ACE_OS::strcpy (name->version, "5.0.0");
+  ACE_OS::strcpy (name->machine, "a standard name");
+# else
+  ACE_OS::strcpy (name->sysname, "INTEGRITY");
+  ACE_OS::strcpy (name->release, "minor");
+  ACE_OS::strcpy (name->version, "11.4.6");
+  ACE_OS::strcpy (name->machine, "a standard name");
+# endif /* ACE_INTEGRITY178B */
+  return 0;
 #else
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);

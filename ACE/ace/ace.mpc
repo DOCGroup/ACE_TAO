@@ -216,6 +216,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Sig_Adapter.cpp
     Sig_Handler.cpp
     Signal.cpp
+    Single_Input_Reactor.cpp
     SOCK.cpp
     SOCK_Acceptor.cpp
     SOCK_CODgram.cpp
