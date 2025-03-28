@@ -3351,7 +3351,7 @@ private:
 public:
   // Get an unoccupied stack and return its address.
   // This is only called before a Task is created with SetupTask().
-  // Return the start address of a stack if one available. Otherwise, return 0.
+  // Return the start address of a stack if one available. Otherwise, return nullptr.
   // In case of success, also update @a slot to the index of the stack in the pool.
   void *acquire (unsigned &slot)
   {
@@ -3410,7 +3410,7 @@ extern "C" void integrity_task_adapter ()
 {
   const ACE_hthread_t curr_task = CurrentTask ();
 
-  ACE_Base_Thread_Adapter *thr_arg = 0;
+  ACE_Base_Thread_Adapter *thr_arg = nullptr;
   {
     // The thread argument should be ready when this function starts
     LockGuard guard (integrity_task_args_lock);
@@ -4027,12 +4027,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                           true /* allocTLS */, (Address) &integrity_task_adapter, false /* startIt */, 0 /* name */,
                           0 /* symbolFile */, thr_handle /* newTask */, 0 /* newActivity */);
 
-    // Set the owner of the acquired stack if one from the stack pool is being used.
-    if (slot != NUM_DYNAMIC_THREADS)
-      {
-        int178_stack_manager.owner (*thr_handle, slot);
-      }
-
 #   else
     ACE_UNUSED_ARG (stack);
     // INTEGRITY has kernel calls in which we can pass argument for the new Task's entry point,
@@ -4043,7 +4037,24 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   endif
 
     if (err_code != Success)
-      return -1;
+      {
+#   if defined (ACE_INTEGRITY178B)
+        // Cleanup the pre-allocated stack if one is assigned.
+        if (slot != NUM_DYNAMIC_THREADS)
+          {
+            int178_stack_manager.release (*thr_handle);
+          }
+#   endif
+        return -1;
+      }
+
+#   if defined (ACE_INTEGRITY178B)
+    // Set the owner of the acquired stack if one from the stack pool is being used.
+    if (slot != NUM_DYNAMIC_THREADS)
+      {
+        int178_stack_manager.owner (*thr_handle, slot);
+      }
+#    endif
 
     *thr_id = *thr_handle;
 

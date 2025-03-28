@@ -2361,7 +2361,7 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
   if (sig == 0)
     sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
-# if (defined(__FreeBSD__) && (__FreeBSD__ < 3)) || defined (ACE_HAS_WTHREADS) || defined (ACE_LACKS_SIGWAIT)
+# if defined (ACE_HAS_WTHREADS) || defined (ACE_LACKS_SIGWAIT)
     ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_PTHREADS)
@@ -2379,7 +2379,7 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
     // means forever.
     *sig = ::sigtimedwait (sset, 0, 0);
     return *sig;
-# endif /* __FreeBSD__ */
+# endif /* ACE_HAS_WTHREADS || ACE_LACKS_SIGWAIT */
 #else
     ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
