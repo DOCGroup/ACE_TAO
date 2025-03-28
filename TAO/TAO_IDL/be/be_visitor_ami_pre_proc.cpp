@@ -528,18 +528,18 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
               original_arg->direction () == AST_Argument::dir_INOUT)
             {
               // Create the argument.
-              be_argument *arg = 0;
+              be_argument *arg_new = 0;
               UTL_ScopedName *new_name =
                 (UTL_ScopedName *)original_arg->name ()->copy ();
-              ACE_NEW_RETURN (arg,
+              ACE_NEW_RETURN (arg_new,
                               be_argument (AST_Argument::dir_IN,
                                            original_arg->field_type (),
                                            new_name),
                               0);
 
-              arg->set_defined_in (op);
-              arg->set_name (new_name);
-              op->be_add_argument (arg);
+              arg_new->set_defined_in (op);
+              arg_new->set_name (new_name);
+              op->be_add_argument (arg_new);
             }
         } // end of while loop
     } // end of if
