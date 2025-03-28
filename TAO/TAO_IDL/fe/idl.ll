@@ -466,10 +466,10 @@ L"'"\\u([0-9a-fA-F]{1,4})"'" {
 "/*"            {
                   for (;;)
                     {
-                      char const c = yyinput ();
+                      char const c = static_cast<char> (yyinput ());
                       if (c == '*')
                         {
-                          char const next = yyinput ();
+                          char const next = static_cast<char> (yyinput ());
                           if (next == '/')
                             break;
                           else

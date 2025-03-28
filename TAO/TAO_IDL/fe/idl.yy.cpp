@@ -1,6 +1,6 @@
-#line 2 "fe/idl.yy.cpp"
+#line 1 "fe/idl.yy.cpp"
 
-#line 4 "fe/idl.yy.cpp"
+#line 3 "fe/idl.yy.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -1450,9 +1450,9 @@ static AST_Decl *           idl_find_node (const char *);
 #undef ECHO
 #endif
 
-#line 1456 "fe/idl.yy.cpp"
+#line 1455 "fe/idl.yy.cpp"
 /* SO we don't choke on files that use \r\n */
-#line 1458 "fe/idl.yy.cpp"
+#line 1457 "fe/idl.yy.cpp"
 
 #define INITIAL 0
 
@@ -1681,7 +1681,7 @@ YY_DECL
 #line 123 "fe/idl.ll"
 
 
-#line 1687 "fe/idl.yy.cpp"
+#line 1686 "fe/idl.yy.cpp"
 
     while ( /*CONSTCOND*/1 )        /* loops until end-of-file is reached */
         {
@@ -2547,10 +2547,10 @@ YY_RULE_SETUP
 {
                   for (;;)
                     {
-                      char const c = yyinput ();
+                      char const c = static_cast<char> (yyinput ());
                       if (c == '*')
                         {
-                          char const next = yyinput ();
+                          char const next = static_cast<char> (yyinput ());
                           if (next == '/')
                             break;
                           else
@@ -2588,7 +2588,7 @@ YY_RULE_SETUP
 #line 492 "fe/idl.ll"
 ECHO;
     YY_BREAK
-#line 2594 "fe/idl.yy.cpp"
+#line 2593 "fe/idl.yy.cpp"
             case YY_STATE_EOF(INITIAL):
                 yyterminate();
 
