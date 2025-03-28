@@ -18,7 +18,8 @@ USER VISIBLE CHANGES BETWEEN ACE-8.0.2 and ACE-8.0.3
 
 . Dropped support for Embarcadero C++ Builder bcc32c and bcc64 compilers
 
-. Updated support for Green Hills INTEGRITY and INTEGRITY-178 tuMP RTOS
+. Updated support for Green Hills INTEGRITY and INTEGRITY-178 tuMP RTOS.
+  Tested on INTEGRITY 11.4.6 and INTEGRITY-178 5.0.0.
 
 USER VISIBLE CHANGES BETWEEN ACE-8.0.1 and ACE-8.0.2
 ====================================================

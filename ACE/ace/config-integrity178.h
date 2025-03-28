@@ -69,6 +69,7 @@
 # define ACE_LACKS_STRCASECMP
 # define ACE_LACKS_TRUNCATE
 # define ACE_LACKS_GETOPT
+# define ACE_LACKS_SIGWAIT
 #endif
 
 // Support turning off network utility functions from GHNet-178's libnet.a.

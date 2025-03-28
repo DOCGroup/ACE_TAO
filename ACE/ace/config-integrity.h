@@ -49,6 +49,7 @@
 # define ACE_LACKS_ISATTY
 # define ACE_LACKS_STRCASECMP
 # define ACE_LACKS_TRUNCATE
+# define ACE_LACKS_SIGWAIT
 #endif
 
 #define ACE_LACKS_SENDMSG

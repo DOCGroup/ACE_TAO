@@ -54,7 +54,7 @@ ACE_TSS_Emulation::tss_base ()
 #    elif defined (ACE_INTEGRITY)
   ACE_INTEGRITY_TSS_Impl *const obj = static_cast<ACE_INTEGRITY_TSS_Impl*> (ACE_Object_Manager::preallocated_object[ACE_Object_Manager::ACE_INTEGRITY_TSS_IMPL]);
   void **&base = obj->get (CurrentTask ());
-    return base;
+  return base;
 #    else
   // Uh oh.
   ACE_NOTSUP_RETURN (0);
@@ -1442,14 +1442,12 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_OSCALL (::semDelete (s->sema_), int, result);
   s->sema_ = 0;
   return result;
-# elif defined (ACE_INTEGRITY)
-#   if !defined (ACE_INTEGRITY178B)
+# elif defined (ACE_INTEGRITY) && !defined (ACE_INTEGRITY178B)
   return ::CloseSemaphore (*s) == Success ? 0 : -1;
-#   else
+# else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
-#   endif
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2363,7 +2361,7 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
   if (sig == 0)
     sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
-# if (defined (__FreeBSD__) && (__FreeBSD__ < 3))
+# if (defined(__FreeBSD__) && (__FreeBSD__ < 3)) || defined (ACE_HAS_WTHREADS) || defined (ACE_LACKS_SIGWAIT)
     ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_PTHREADS)
@@ -2375,23 +2373,15 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
       errno = ::sigwait (sset, sig);
       return errno == 0  ?  *sig  :  -1;
 #   endif /* CYGWIN32 */
-# elif defined (ACE_HAS_WTHREADS)
-    ACE_UNUSED_ARG (sset);
-    ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_VXWORKS)
     // Second arg is a struct siginfo *, which we don't need (the
     // selected signal number is returned).  Third arg is timeout:  0
     // means forever.
     *sig = ::sigtimedwait (sset, 0, 0);
     return *sig;
-# elif defined (ACE_INTEGRITY)
-    ACE_UNUSED_ARG (sset);
-    ACE_UNUSED_ARG (sig);
-    ACE_NOTSUP_RETURN (-1);
 # endif /* __FreeBSD__ */
 #else
     ACE_UNUSED_ARG (sset);
-    ACE_UNUSED_ARG (sig);
     ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }

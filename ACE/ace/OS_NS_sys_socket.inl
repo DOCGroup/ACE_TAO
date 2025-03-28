@@ -890,8 +890,6 @@ ACE_OS::sendv (ACE_HANDLE handle,
       total = new_total;
     }
   return ACE_OS::writev (handle, local_iov, n);
-
-
 #else
   return ACE_OS::writev (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */

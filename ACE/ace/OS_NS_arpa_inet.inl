@@ -10,8 +10,6 @@ ACE_OS::inet_addr (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::inet_addr");
 #if defined (ACE_LACKS_INET_ADDR)
-# if defined (ACE_INTEGRITY)
-
   u_long ret = 0;
   u_int segment;
   bool valid = true;
@@ -48,10 +46,6 @@ ACE_OS::inet_addr (const char *name)
         }
     }
   return valid ? htonl (ret) : INADDR_NONE;
-# else
-  ACE_UNUSED_ARG (name);
-  ACE_NOTSUP_RETURN (0);
-# endif
 #elif defined (ACE_HAS_NONCONST_INET_ADDR)
   return ::inet_addr (const_cast <char*> (name));
 #else
