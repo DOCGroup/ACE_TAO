@@ -45,6 +45,4 @@ const char *exprtype_to_cpp_corba_type (AST_Expression::ExprType et)
     default:
       return 0;
     }
-
-  return 0;
 }

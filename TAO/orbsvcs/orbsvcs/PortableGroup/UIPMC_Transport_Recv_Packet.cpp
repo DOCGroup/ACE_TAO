@@ -86,9 +86,9 @@ namespace TAO_PG
 
     // Since fragments are enumerated from 0 to last_fragment_id_ this
     // is the heaviest but the most reliable check for packet completeness.
-    for (CORBA::ULong id = 0; id <= this->last_fragment_id_; ++id)
+    for (CORBA::ULong id2 = 0; id2 <= this->last_fragment_id_; ++id2)
       {
-        if (this->fragments_.find (id) == -1)
+        if (this->fragments_.find (id2) == -1)
           {
             // Mark the packet as if it timedout.
             this->started_ = ACE_Time_Value::zero;

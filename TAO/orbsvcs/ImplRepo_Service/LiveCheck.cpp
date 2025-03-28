@@ -405,8 +405,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
               {
                 this->liveliness_ = LS_TRANSIENT;
               }
-            ACE_Time_Value const next (ms / 1000, (ms % 1000) * 1000);
-            this->next_check_ = now + next;
+            this->next_check_ = now + ACE_Time_Value (ms / 1000, (ms % 1000) * 1000);
             if (ImR_Locator_i::debug () > 4)
               {
                 ORBSVCS_DEBUG ((LM_DEBUG,

@@ -140,9 +140,8 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
        i.next ())
     {
       AST_Decl *d = i.item ();
-      AST_Decl::NodeType nt = d->node_type ();
 
-      switch (nt)
+      switch (d->node_type ())
         {
           case AST_Decl::NT_op:
             {

@@ -169,7 +169,7 @@ TAO_IORManip_IIOP_Filter::fill_profile_info (
           if (delim != 0)
             {
               *delim = '\0';
-              pinfo.port_ = ACE_OS::atoi (delim + 1);
+              pinfo.port_ = static_cast<CORBA::UShort> (ACE_OS::atoi (delim + 1));
               status = 1;
             }
         }

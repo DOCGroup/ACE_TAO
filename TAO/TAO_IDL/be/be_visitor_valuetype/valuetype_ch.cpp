@@ -364,10 +364,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Step last: generate typecode declaration.
   if (be_global->tc_support ())
     {
-      be_visitor_context ctx (*this->ctx_);
-      be_visitor_typecode_decl visitor (&ctx);
+      be_visitor_context tc_ctx (*this->ctx_);
+      be_visitor_typecode_decl tc_visitor (&tc_ctx);
 
-      if (node->accept (&visitor) == -1)
+      if (node->accept (&tc_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_valuetype_ch::")
