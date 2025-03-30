@@ -1765,7 +1765,13 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
 
-  iovec *iov = const_cast<iovec *> (i);
+  const iovec *iov = i;
+  // as per its prototype, this function shall not modify i, even in case of
+  // partial send, when it is required to update iov->base
+  // in that case, this local copy will be used instead
+  // NOTE: the performance penalty of memory allocation only occurs if
+  // required
+  iovec *shadow_iovec = nullptr;
 
   for (int s = 0;
        s < iovcnt;
@@ -1807,11 +1813,39 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
       if (n != 0)
         {
+          if (shadow_iovec == nullptr)
+            {
+# ifdef ACE_HAS_ALLOC_HOOKS
+              ACE_ALLOCATOR_RETURN (shadow_iovec, (iovec *)
+                      ACE_Allocator::instance ()->malloc (iovcnt *
+                          sizeof (iovec)),
+                      -1);
+# else
+              ACE_NEW_RETURN (shadow_iovec,
+                      iovec[iovcnt],
+                      -1);
+# endif /* ACE_HAS_ALLOC_HOOKS */
+              ACE_OS::memcpy(shadow_iovec, iov, iovcnt * sizeof(iovec));
+              // from now on, shadow_iovec is the backend data used by iov
+              iov = shadow_iovec;
+            }
+
           char *base = reinterpret_cast<char *> (iov[s].iov_base);
-          iov[s].iov_base = base + n;
+          // updating the value requires a pointer to non-const, so directly
+          // rely on shadow_iovec
+          shadow_iovec[s].iov_base = base + n;
           // This blind cast is safe because n < iov_len, after above loop.
-          iov[s].iov_len = iov[s].iov_len - static_cast<u_long> (n);
+          shadow_iovec[s].iov_len = shadow_iovec[s].iov_len - static_cast<u_long> (n);
         }
+    }
+
+  if (shadow_iovec != nullptr)
+    {
+# ifdef ACE_HAS_ALLOC_HOOKS
+      ACE_Allocator::instance ()->free (shadow_iovec);
+# else
+      delete [] shadow_iovec;
+# endif /* ACE_HAS_ALLOC_HOOKS */
     }
 
   return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
@@ -1833,7 +1867,13 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
 
-  iovec *iov = const_cast<iovec *> (i);
+  const iovec *iov = i;
+  // as per its prototype, this function shall not modify i, even in case of
+  // partial send, when it is required to update iov->base
+  // in that case, this local copy will be used instead
+  // NOTE: the performance penalty of memory allocation only occurs if
+  // required
+  iovec *shadow_iovec = nullptr;
 
   for (int s = 0;
        s < iovcnt;
@@ -1879,11 +1919,39 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
       if (n != 0)
         {
+          if (shadow_iovec == nullptr)
+            {
+# ifdef ACE_HAS_ALLOC_HOOKS
+              ACE_ALLOCATOR_RETURN (shadow_iovec, (iovec *)
+                      ACE_Allocator::instance ()->malloc (iovcnt *
+                          sizeof (iovec)),
+                      -1);
+# else
+              ACE_NEW_RETURN (shadow_iovec,
+                      iovec[iovcnt],
+                      -1);
+# endif /* ACE_HAS_ALLOC_HOOKS */
+              ACE_OS::memcpy(shadow_iovec, iov, iovcnt * sizeof(iovec));
+              // from now on, shadow_iovec is the backend data used by iov
+              iov = shadow_iovec;
+            }
+
           char *base = reinterpret_cast<char *> (iov[s].iov_base);
-          iov[s].iov_base = base + n;
+          // updating the value requires a pointer to non-const, so directly
+          // rely on shadow_iovec
+          shadow_iovec[s].iov_base = base + n;
           // This blind cast is safe because n < iov_len, after above loop.
-          iov[s].iov_len = iov[s].iov_len - static_cast<u_long> (n);
+          shadow_iovec[s].iov_len = shadow_iovec[s].iov_len - static_cast<u_long> (n);
         }
+    }
+
+  if (shadow_iovec != nullptr)
+    {
+# ifdef ACE_HAS_ALLOC_HOOKS
+      ACE_Allocator::instance ()->free (shadow_iovec);
+# else
+      delete [] shadow_iovec;
+# endif /* ACE_HAS_ALLOC_HOOKS */
     }
 
   ACE::restore_non_blocking_mode (handle, val);
@@ -2142,7 +2210,13 @@ ACE::writev_n (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
 
-  iovec *iov = const_cast<iovec *> (i);
+  const iovec *iov = i;
+  // as per its prototype, this function shall not modify i, even in case of
+  // partial send, when it is required to update iov->base
+  // in that case, this local copy will be used instead
+  // NOTE: the performance penalty of memory allocation only occurs if
+  // required
+  iovec *shadow_iovec = nullptr;
 
   for (int s = 0;
        s < iovcnt;
@@ -2165,11 +2239,39 @@ ACE::writev_n (ACE_HANDLE handle,
 
       if (n != 0)
         {
+          if (shadow_iovec == nullptr)
+            {
+# ifdef ACE_HAS_ALLOC_HOOKS
+              ACE_ALLOCATOR_RETURN (shadow_iovec, (iovec *)
+                      ACE_Allocator::instance ()->malloc (iovcnt *
+                          sizeof (iovec)),
+                      -1);
+# else
+              ACE_NEW_RETURN (shadow_iovec,
+                      iovec[iovcnt],
+                      -1);
+# endif /* ACE_HAS_ALLOC_HOOKS */
+              ACE_OS::memcpy(shadow_iovec, iov, iovcnt * sizeof(iovec));
+              // from now on, shadow_iovec is the backend data used by iov
+              iov = shadow_iovec;
+            }
+
           char *base = reinterpret_cast<char *> (iov[s].iov_base);
-          iov[s].iov_base = base + n;
+          // updating the value requires a pointer to non-const, so directly
+          // rely on shadow_iovec
+          shadow_iovec[s].iov_base = base + n;
           // This blind cast is safe because n < iov_len, after above loop.
-          iov[s].iov_len = iov[s].iov_len - static_cast<u_long> (n);
+          shadow_iovec[s].iov_len = shadow_iovec[s].iov_len - static_cast<u_long> (n);
         }
+    }
+
+  if (shadow_iovec != nullptr)
+    {
+# ifdef ACE_HAS_ALLOC_HOOKS
+      ACE_Allocator::instance ()->free (shadow_iovec);
+# else
+      delete [] shadow_iovec;
+# endif /* ACE_HAS_ALLOC_HOOKS */
     }
 
   return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
