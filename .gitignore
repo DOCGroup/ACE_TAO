@@ -51,3 +51,6 @@ ipch/
 *.*codeanalysis*
 read.lock
 fileList.bin
+
+*.js
+*.wasm
