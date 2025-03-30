@@ -395,7 +395,11 @@ ACE_INET_Addr::set (u_short port_number,
 
   addrinfo hints;
   ACE_OS::memset (&hints, 0, sizeof hints);
+#if defined (ACE_WIN32)
+  hints.ai_family = AF_UNSPEC;
+#else
   hints.ai_family = address_family;
+#endif
   // The ai_flags used to contain AI_ADDRCONFIG as well but that prevented
   // lookups from completing if there is no, or only a loopback, IPv6
   // interface configured. See Bugzilla 4211 for more info.
@@ -426,17 +430,27 @@ ACE_INET_Addr::set (u_short port_number,
 
   this->set_type (res->ai_family);
 
-  for (addrinfo *curr = res; curr; curr = curr->ai_next)
+  // Perform two passes, first pass is for same address family, second pass is for other families
+  for (int i=0; i<2; i++)
     {
-      ip46 addr;
-      ACE_OS::memcpy (&addr, curr->ai_addr, curr->ai_addrlen);
+      for (addrinfo *curr = res; curr; curr = curr->ai_next)
+        {
+          ip46 addr;
+          if((curr->ai_family == address_family && i == 0) || (curr->ai_family != address_family && i == 1))
+            {
+              if(curr->ai_family == address_family)
+                this->set_type (curr->ai_family); //if the initial family is wrong, but a later one is correct
+
+              ACE_OS::memcpy (&addr, curr->ai_addr, curr->ai_addrlen);
 #ifdef ACE_HAS_IPV6
-      if (curr->ai_family == AF_INET6)
-        addr.in6_.sin6_port = encode ? ACE_NTOHS (port_number) : port_number;
-      else
+              if (curr->ai_family == AF_INET6)
+                addr.in6_.sin6_port = encode ? ACE_NTOHS (port_number) : port_number;
+              else
 #endif
-        addr.in4_.sin_port = encode ? ACE_NTOHS (port_number) : port_number;
-      this->inet_addrs_.push_back (addr);
+                addr.in4_.sin_port = encode ? ACE_NTOHS (port_number) : port_number;
+              this->inet_addrs_.push_back (addr);
+            }
+        }
     }
 
   ACE_OS::freeaddrinfo (res);
