@@ -848,9 +848,9 @@ TAO_CodeGen::start_anyop_header (const char *fname)
         {
           char* idl_name = idl_global->included_idl_files ()[j];
 
-          ACE_CString pidl_checker (idl_name);
+          ACE_CString const pidl_checker_included (idl_name);
           bool const got_pidl =
-            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+            (pidl_checker_included.substr (pidl_checker_included.length () - 5) == ".pidl");
 
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include, if it is not a .pidl file we don't generate

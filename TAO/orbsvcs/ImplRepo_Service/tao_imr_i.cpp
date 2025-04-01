@@ -515,23 +515,23 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
           char *arg = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
           CORBA::ULong last = this->peers_.length ();
           CORBA::ULong num = 0;
-          char *c = arg;
-          while (c != 0)
+          char *c2 = arg;
+          while (c2 != 0)
             {
               num++;
-              c = ACE_OS::strchr (c, ',');
-              if (c != 0)
-                c++;
+              c2 = ACE_OS::strchr (c2, ',');
+              if (c2 != 0)
+                c2++;
             }
           num += last;
           this->peers_.length (num);
           while (last < num)
             {
-              if ((c = ACE_OS::strchr (arg, ',')) != 0)
-                *c = 0;
+              if ((c2 = ACE_OS::strchr (arg, ',')) != 0)
+                *c2 = 0;
               this->peers_[last++] = CORBA::string_dup (arg);
-              if (c != 0)
-                arg = c+1;
+              if (c2 != 0)
+                arg = c2+1;
             }
           break;
         }
@@ -1071,7 +1071,7 @@ TAO_IMR_Op_Kill::run ()
 
   try
     {
-      imrext->kill_server (this->server_name_.c_str(), this->signum_);
+      imrext->kill_server (this->server_name_.c_str(), static_cast<CORBA::Short> (this->signum_));
     }
   catch (const ImplementationRepository::NotFound &)
     {
@@ -1232,7 +1232,7 @@ TAO_IMR_Op_Remove::run ()
             ImplementationRepository::AdministrationExt::_narrow (imr_);
           ACE_ASSERT (! CORBA::is_nil(ext));
           ext->force_remove_server (this->server_name_.c_str (),
-                                    this->signum_);
+                                    static_cast<CORBA::Short> (this->signum_));
         }
       else
         {

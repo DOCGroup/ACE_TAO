@@ -383,7 +383,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                   return packet;
                 }
               ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                                guard,
+                                guard2,
                                 this->complete_lock_,
                                 packet);
               if (this->complete_.is_empty () && !eager_dequeue)

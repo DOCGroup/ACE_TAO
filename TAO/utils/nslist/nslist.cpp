@@ -244,12 +244,12 @@ namespace
                 ACE_DEBUG ((LM_DEBUG, " (Binding Loop)\n"));
                 if (!noLoops)
                   {
-                    size_t count;
-                    for (count= 0; count < (level - backwards); ++count)
+                    size_t count_binding;
+                    for (count_binding= 0; count_binding < (level - backwards); ++count_binding)
                       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
                     ACE_DEBUG ((LM_DEBUG, "^"));
                     size_t chars;
-                    while (++count < level)
+                    while (++count_binding < level)
                       for (chars= 0; chars <= sizeMyTree; ++chars)
                         ACE_DEBUG ((LM_DEBUG, "-"));
                     for (chars= 0; chars < sizeMyNode; ++chars)
@@ -303,13 +303,13 @@ namespace
   void
   list_context (const CosNaming::NamingContext_ptr nc,
                 size_t level,
-                CORBA::ULong max_count)
+                CORBA::ULong max_bindings)
   {
     CosNaming::BindingIterator_var it;
     CosNaming::BindingList_var bl;
 
     NestedNamingContexts::add (nc);
-    nc->list (max_count, bl, it);
+    nc->list (max_bindings, bl, it);
 
     show_chunk (nc, bl.in (), level);
 
@@ -319,7 +319,7 @@ namespace
 
         do
           {
-            more = it->next_n (max_count, bl);
+            more = it->next_n (max_bindings, bl);
             show_chunk (nc, bl.in (), level);
           } while (more);
 
