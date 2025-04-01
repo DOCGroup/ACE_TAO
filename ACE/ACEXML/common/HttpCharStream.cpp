@@ -346,7 +346,7 @@ ACEXML_HttpCharStream::determine_encoding (void)
 
   size_t i = 0;
   for (; i < len && input[i] != static_cast<char> (EOF); ++i)
-    input[i] = this->stream_->peek_char (i);
+    input[i] = static_cast<char> (this->stream_->peek_char (i));
 
   if (i < len)
     return -1;
