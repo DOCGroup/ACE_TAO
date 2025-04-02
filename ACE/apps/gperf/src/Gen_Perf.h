@@ -27,17 +27,21 @@
 #include "Options.h"
 #include "Key_List.h"
 #include "Bool_Array.h"
-#include "ace/Copy_Disabled.h"
 
 /*
  * Provides high-level routines to manipulate the keyword list
  * structures the code generation output.
  */
-class Gen_Perf : private ACE_Copy_Disabled
+class Gen_Perf
 {
 public:
   /// Constructor.
   Gen_Perf ();
+
+  Gen_Perf (const Gen_Perf &) = delete;
+  Gen_Perf (Gen_Perf &&) = delete;
+  Gen_Perf &operator= (const Gen_Perf &) = delete;
+  Gen_Perf &operator= (Gen_Perf &&) = delete;
 
   /// Destructor
   ~Gen_Perf ();

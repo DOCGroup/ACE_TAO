@@ -183,9 +183,9 @@ FE_Declarator::compose (AST_Decl *d)
       // The base type of an array isn't set until after the array
       // has been created, so the check below gets done at this point.
       arr->set_base_type (ct);
-      AST_Decl::NodeType nt = ct->unaliased_type ()->node_type ();
+      AST_Decl::NodeType nt_unailiased = ct->unaliased_type ()->node_type ();
 
-      if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
+      if (nt_unailiased == AST_Decl::NT_string || nt_unailiased == AST_Decl::NT_wstring)
         {
           idl_global->string_member_seen_ = true;
         }

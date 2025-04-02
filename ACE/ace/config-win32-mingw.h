@@ -88,6 +88,8 @@
 #define ACE_LACKS_NLINK_T
 #define ACE_LACKS_UID_T
 #define ACE_LACKS_GID_T
+#define ACE_HAS_CRTSETREPORTMODE
+#define ACE_HAS_SETUNHANDLEDEXCEPTIONFILTER
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.

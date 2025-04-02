@@ -111,7 +111,7 @@ ACE_ALLOC_HOOK_DEFINE(ace_yy_buffer_state)
 // ******************************************************************
 
 int
-ace_yylex (YYSTYPE *ace_yylval, void *YYLEX_PARAM)
+ace_yylex (ACE_YYSTYPE *ace_yylval, void *ACE_YYLEX_PARAM)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                             ace_mon,
@@ -144,7 +144,7 @@ normalize (size_t length)
 // ******************************************************************
 
 int
-ACE_Svc_Conf_Lexer::yylex (YYSTYPE* ace_yylval,
+ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
                            ACE_Svc_Conf_Param* param)
 {
 #if defined (ACE_USES_WCHAR)
@@ -280,7 +280,7 @@ ACE_Svc_Conf_Lexer::input (ACE_Svc_Conf_Param* param,
 }
 
 int
-ACE_Svc_Conf_Lexer::scan (YYSTYPE* ace_yylval,
+ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                           ACE_Svc_Conf_Param* param)
 
 {

@@ -55,16 +55,22 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ServantBase_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table* optable)
-  : TAO_Abstract_ServantBase ()
-  , ref_count_ (1)
+TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table *optable)
+  : ref_count_ (1)
   , optable_ (optable)
 {
 }
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
-  : TAO_Abstract_ServantBase ()
-  , ref_count_ (1)
+  :
+#if defined __GNUC__ && __GNUC__ < 9
+  // GCC version 8 issues an invalid warning without the next non-comment line.
+  // Other compilers (MSVC) may warn when this line is present, since it will never be used for initialization.
+  // In copy constructor TAO_ServantBase::TAO_ServantBase(const TAO_ServantBase&):
+  // warning: base class class TAO_Abstract_ServantBase should be explicitly initialized in the copy constructor [-Wextra]
+  TAO_Abstract_ServantBase (),
+#endif
+  ref_count_ (1)
   , optable_ (rhs.optable_)
 {
 }
@@ -72,15 +78,8 @@ TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
 TAO_ServantBase &
 TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
 {
-  if (this != std::addressof(rhs))
-  {
-    this->optable_ = rhs.optable_;
-  }
+  this->optable_ = rhs.optable_;
   return *this;
-}
-
-TAO_ServantBase::~TAO_ServantBase ()
-{
 }
 
 PortableServer::POA_ptr
@@ -389,7 +388,7 @@ TAO_ServantBase::_get_interface ()
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ());
 
-  if (adapter == 0)
+  if (adapter == nullptr)
     {
       throw ::CORBA::INTF_REPOS ();
     }
@@ -446,8 +445,7 @@ TAO_ServantBase::_create_stub ()
 
   CORBA::ORB_ptr servant_orb = nullptr;
 
-  if (poa_current_impl != 0
-      && this == poa_current_impl->servant ())
+  if (poa_current_impl != nullptr && this == poa_current_impl->servant ())
     {
       servant_orb = poa_current_impl->orb_core ().orb () ;
 

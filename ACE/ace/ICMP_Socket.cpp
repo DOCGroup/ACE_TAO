@@ -86,10 +86,9 @@ ACE_ICMP_Socket::open (ACE_Addr const & local,
   ACE_TRACE ("ACE_ICMP_Socket::open");
 
   // Check if icmp protocol is supported on this host
-  int proto_number = -1;
-  protoent *proto = 0;
+  protoent *const proto = ACE_OS::getprotobyname ("icmp");
 
-  if (! (proto = ACE_OS::getprotobyname ("icmp")))
+  if (!proto)
     {
       ACELIB_ERROR_RETURN
         ((LM_ERROR,
@@ -99,7 +98,8 @@ ACE_ICMP_Socket::open (ACE_Addr const & local,
           ACE_TEXT ("or not supported.")),
          -1);
     }
-  proto_number = proto->p_proto;
+
+  int const proto_number = proto->p_proto;
 
   if (proto_number != IPPROTO_ICMP || proto_number != protocol)
     {
@@ -172,7 +172,7 @@ ACE_ICMP_Socket::calculate_checksum (unsigned short * paddress,
   // add back carry outs from top 16 bits to low 16 bits
   sum = (sum >> 16) + (sum & 0xffff); // add hi 16 to low 16
   sum += (sum >> 16);                 // add carry
-  answer = ~sum;                      // truncate to 16 bits
+  answer = static_cast<unsigned short> (~sum); // truncate to 16 bits
 
   return (answer);
 }

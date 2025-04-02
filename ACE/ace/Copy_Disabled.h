@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,12 +42,24 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * {
  * // code here
  * };
+ *
+ * @deprecated This class is deprecated. Instead of using inheritance,
+ * directly delete copy operations in your class:
+ *
+ * class Foo
+ * {
+ * public:
+ *   Foo(const Foo&) = delete;
+ *   Foo(Foo&&) = delete;
+ *   Foo& operator=(const Foo&) = delete;
+ *   Foo& operator=(Foo&&) = delete;
+ * };
  */
-class ACE_Export ACE_Copy_Disabled
+class [[deprecated]] ACE_Copy_Disabled
 {
 public:
   /// Default constructor
-  ACE_Copy_Disabled ();
+  ACE_Copy_Disabled () = default;
 
 private:
   ACE_Copy_Disabled (const ACE_Copy_Disabled &) = delete;

@@ -405,7 +405,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
     }
 
   // Obtain the actual ValueType from the factory
-  if (factory.in() == 0 || !(valuetype = factory->create_for_unmarshal ()))
+  if (factory.in() == 0 || (valuetype = factory->create_for_unmarshal ()) == 0)
     {
       if (TAO_debug_level)
         {
@@ -738,9 +738,9 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
 
       return false;
     }
-#endif
-
+#else
     return false;
+#endif
   }
 }
 
@@ -1367,53 +1367,14 @@ namespace CORBA
 
 // member functions for CORBA::DefaultValueRefCountBase ============
 
-// destructor
-CORBA::DefaultValueRefCountBase::~DefaultValueRefCountBase ()
-{
-}
-
 void
 CORBA::DefaultValueRefCountBase::_add_ref ()
-{
-  this->_tao_add_ref ();
-}
-
-void
-CORBA::DefaultValueRefCountBase::_remove_ref ()
-{
-  this->_tao_remove_ref ();
-}
-
-CORBA::ULong
-CORBA::DefaultValueRefCountBase::_refcount_value ()
-{
-  return this->_tao_refcount_value ();
-}
-
-// ===========================================================
-
-CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase ()
-  : refcount_ (1)
-{
-}
-
-// Copy constructor
-CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase
-  (const DefaultValueRefCountBase& rhs)
-  : ValueBase (rhs),
-    refcount_ (1)
-
-{
-}
-
-void
-CORBA::DefaultValueRefCountBase::_tao_add_ref ()
 {
   ++this->refcount_;
 }
 
 void
-CORBA::DefaultValueRefCountBase::_tao_remove_ref ()
+CORBA::DefaultValueRefCountBase::_remove_ref ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -1422,7 +1383,7 @@ CORBA::DefaultValueRefCountBase::_tao_remove_ref ()
 }
 
 CORBA::ULong
-CORBA::DefaultValueRefCountBase::_tao_refcount_value () const
+CORBA::DefaultValueRefCountBase::_refcount_value ()
 {
   return this->refcount_;
 }

@@ -207,8 +207,8 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
       if (host_addr.get_host_name (tmp_host,
                                    sizeof (tmp_host)) != 0)
       {
-        const char *tmp = host_addr.get_host_addr ();
-        if (tmp == 0)
+        const char *host_addr_str = host_addr.get_host_addr ();
+        if (host_addr_str == 0)
           {
             if (TAO_debug_level > 0)
               TAOLIB_DEBUG ((LM_DEBUG,
@@ -225,7 +225,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
                          CORBA::COMPLETED_NO);
           }
         else
-          this->endpoint_.host_ = tmp;
+          this->endpoint_.host_ = host_addr_str;
       }
       else
         {

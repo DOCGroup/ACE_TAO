@@ -127,7 +127,7 @@ public:
                      ALLOCATOR * allocatorPtr = (ALLOCATOR*)ALLOCATOR::instance());
 
   /// Destructor.
-  ~ACE_Metrics_Cache ();
+  ~ACE_Metrics_Cache () = default;
 
   // = Dispatching metrics.
 

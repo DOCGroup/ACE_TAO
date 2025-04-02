@@ -26,12 +26,12 @@ Criteria_Evaluator::~Criteria_Evaluator ()
 const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *
 Criteria_Evaluator::getInitialization ()
 {
-  const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr = 0;
+  const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr {};
 
   CORBA::Any_ptr any_ptr =
     this->getCriteriaMember ("initialization");
 
-  if (any_ptr == 0)
+  if (any_ptr == nullptr)
     throw LifeCycleService::Criteria_Evaluator::NotAvailable(
       "No initialization member found.\n");
 

@@ -21,6 +21,7 @@
 #include "ace/Reactor.h"
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/OS_NS_time.h"
+#include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -251,7 +252,7 @@ ACE::HTBP::Channel::consume_error ()
 
   if (this->leftovers_.length() > 0)
     {
-      result = ACE_MIN (n,this->leftovers_.length());
+      result = (std::min) (n,this->leftovers_.length());
       ACE_OS::memcpy (buf,this->leftovers_.rd_ptr(), result);
       this->leftovers_.rd_ptr(result);
       buf += result;
@@ -354,7 +355,7 @@ ACE::HTBP::Channel::recv (void *buf,
     return -1;
   if (this->leftovers_.length() > 0)
     {
-      result = ACE_MIN (n,this->leftovers_.length());
+      result = (std::min) (n,this->leftovers_.length());
       ACE_OS::memcpy (buf,this->leftovers_.rd_ptr(), result);
       this->leftovers_.rd_ptr(result);
       buf = (char *)buf + result;
@@ -384,7 +385,7 @@ ACE::HTBP::Channel::recv (void *buf,
   result = 0;
   if (this->leftovers_.length() > 0)
     {
-      result = ACE_MIN (n,this->leftovers_.length());
+      result = (std::min) (n,this->leftovers_.length());
       ACE_OS::memcpy (buf,this->leftovers_.rd_ptr(), result);
       this->leftovers_.rd_ptr(result);
       buf = (char *)buf + result;
@@ -418,7 +419,7 @@ ACE::HTBP::Channel::recvv (iovec iov[],
       std::unique_ptr<iovec[]> guard (iov2);
       for (int i = 0; i < iovcnt; i++)
         {
-          size_t n = ACE_MIN ((size_t) iov[i].iov_len ,
+          size_t n = (std::min) ((size_t) iov[i].iov_len ,
                               (size_t) this->leftovers_.length());
           if (n > 0)
             {

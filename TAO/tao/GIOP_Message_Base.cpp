@@ -12,7 +12,7 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/SystemException.h"
 #include "tao/ZIOP_Adapter.h"
-#include "ace/Min_Max.h"
+#include <algorithm>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -374,12 +374,11 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
           // so far, but allocate enough space to hold small GIOP
           // messages. This way we avoid expensive "grow" operation
           // for small messages.
-          size_t const default_buf_size = ACE_CDR::DEFAULT_BUFSIZE;
+          size_t constexpr default_buf_size = ACE_CDR::DEFAULT_BUFSIZE;
 
           // Make a node which has at least message block of the size
           // of MESSAGE_HEADER_LEN.
-          size_t const buf_size = ace_max (TAO_GIOP_MESSAGE_HEADER_LEN,
-                                           default_buf_size);
+          size_t constexpr buf_size = (std::max) (TAO_GIOP_MESSAGE_HEADER_LEN, default_buf_size);
 
           // POST: buf_size >= TAO_GIOP_MESSAGE_HEADER_LEN
 
@@ -474,7 +473,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       // from the <incoming> into the message block in <qd>
       size_t const available = incoming.length ();
       size_t const desired   = TAO_GIOP_MESSAGE_HEADER_LEN - len;
-      size_t const n_copy    = ace_min (available, desired);
+      size_t const n_copy    = (std::min) (available, desired);
 
       // paranoid check, but would cause endless looping
       if (n_copy == 0)

@@ -31,17 +31,21 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Options.h"
-#include "ace/Copy_Disabled.h"
 
 /**
  * Data and function members for defining values and operations of
  * a list node.
  */
-class List_Node : private ACE_Copy_Disabled
+class List_Node
 {
 public:
   /// Constructor.
   List_Node (char *key, int len);
+
+  List_Node (const List_Node &) = delete;
+  List_Node (List_Node &&) = delete;
+  List_Node &operator= (const List_Node &) = delete;
+  List_Node &operator= (List_Node &&) = delete;
 
   /// Destructor.
   ~List_Node ();

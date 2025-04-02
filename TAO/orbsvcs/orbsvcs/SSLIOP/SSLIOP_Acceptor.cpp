@@ -13,6 +13,8 @@
 #include "orbsvcs/SSLIOP/SSLIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
+#include <algorithm>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
@@ -485,8 +487,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
       ACE_INET_Addr a(addr);
 
       int found_a_port = 0;
-      ACE_UINT32 const last_port = ACE_MIN (requested_port + this->port_span_ - 1,
-                                            ACE_MAX_DEFAULT_PORT);
+      ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {

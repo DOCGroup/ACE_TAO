@@ -8,7 +8,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_Thread_Adapter.h"
-#include "ace/Min_Max.h"
 #include "ace/Object_Manager_Base.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
@@ -20,6 +19,7 @@
 #  include "ace/OS_NS_sys_resource.h" // syscall for gettid impl
 #endif
 #include <memory>
+#include <algorithm>
 
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
@@ -3494,23 +3494,23 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #     if defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS)
           /* For MIT pthreads... */
-          sparam.prio = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
+          sparam.prio = (std::min) (priority, PTHREAD_MAX_PRIORITY);
 #     elif defined(ACE_HAS_PTHREADS)
           // The following code forces priority into range.
           if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
             sparam.sched_priority =
-              ACE_MIN (ACE_THR_PRI_FIFO_MAX,
-                       ACE_MAX (ACE_THR_PRI_FIFO_MIN, priority));
+              (std::min) (ACE_THR_PRI_FIFO_MAX,
+                       (std::max) (ACE_THR_PRI_FIFO_MIN, priority));
           else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
             sparam.sched_priority =
-              ACE_MIN (ACE_THR_PRI_RR_MAX,
-                       ACE_MAX (ACE_THR_PRI_RR_MIN, priority));
+              (std::min) (ACE_THR_PRI_RR_MAX,
+                       (std::max) (ACE_THR_PRI_RR_MIN, priority));
           else // Default policy, whether set or not
             sparam.sched_priority =
-              ACE_MIN (ACE_THR_PRI_OTHER_MAX,
-                       ACE_MAX (ACE_THR_PRI_OTHER_MIN, priority));
+              (std::min) (ACE_THR_PRI_OTHER_MAX,
+                       (std::max) (ACE_THR_PRI_OTHER_MIN, priority));
 #     elif defined (PRIORITY_MAX)
-          sparam.sched_priority = ACE_MIN (priority,
+          sparam.sched_priority = (std::min) (priority,
                                            (long) PRIORITY_MAX);
 #     else
           sparam.sched_priority = priority;

@@ -521,11 +521,11 @@ namespace TAO
           // If we reach here, then we either have the MULTIPLE_ID policy
           // or we have the UNIQUE_ID policy and we are not in the active
           // object map.
-          PortableServer::ObjectId_var user_id;
+          PortableServer::ObjectId_var user_id_bound;
           if (this->active_object_map_->
               bind_using_system_id_returning_user_id (servant,
                                                       this->poa_->server_priority (),
-                                                      user_id.out ()) != 0)
+                                                      user_id_bound.out ()) != 0)
             {
               throw ::CORBA::OBJ_ADAPTER ();
             }
@@ -536,7 +536,7 @@ namespace TAO
 
           // Inform the custom servant dispatching (CSD) strategy that the
           // sevant is activated.
-          this->poa_->servant_activated_hook (servant, user_id.in ());
+          this->poa_->servant_activated_hook (servant, user_id_bound.in ());
 
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -548,7 +548,7 @@ namespace TAO
           // the reference count of the Servant passed to this function.
           servant->_add_ref ();
 
-          return user_id._retn ();
+          return user_id_bound._retn ();
         }
 
       /*
@@ -601,11 +601,11 @@ namespace TAO
           // If we reach here, then we either have the MULTIPLE_ID policy
           // or we have the UNIQUE_ID policy and we are not in the active
           // object map.
-          PortableServer::ObjectId_var system_id;
+          PortableServer::ObjectId_var system_id_bound;
           if (this->active_object_map_->
               bind_using_system_id_returning_system_id (servant,
                                                         priority,
-                                                        system_id.out ()) != 0)
+                                                        system_id_bound.out ()) != 0)
             {
               throw ::CORBA::OBJ_ADAPTER ();
             }
@@ -616,7 +616,7 @@ namespace TAO
 
           // Inform the custom servant dispatching (CSD) strategy that the
           // sevant is activated.
-          this->poa_->servant_activated_hook (servant, system_id.in ());
+          this->poa_->servant_activated_hook (servant, system_id_bound.in ());
 
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -628,7 +628,7 @@ namespace TAO
           // the reference count of the Servant passed to this function.
           servant->_add_ref ();
 
-          return system_id._retn ();
+          return system_id_bound._retn ();
         }
 
       // Otherwise, the ServantNotActive exception is raised.

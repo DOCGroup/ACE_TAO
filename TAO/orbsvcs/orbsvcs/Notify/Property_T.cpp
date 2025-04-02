@@ -113,7 +113,7 @@ TAO_Notify_StructProperty_T<TYPE>::set (
 
   if (property_seq.find (this->name_, value) == 0)
     {
-      const TYPE* extract_type = 0;
+      const TYPE* extract_type {};
 
       if ((value >>= extract_type)  && extract_type != 0) // make sure we get something valid.
         {

@@ -10,11 +10,10 @@
 
 # ACE/TAO #
 
-See [Douglas C. Schmidt website](https://www.dre.vanderbilt.edu/~schmidt)  for more information about ACE/TAO. The quality of ACE/TAO is monitored through our distributed [scoreboard](https://www.dre.vanderbilt.edu/scoreboard/)
+See [Douglas C. Schmidt website](https://www.cs.wm.edu/~dcschmidt/)  for more information about ACE/TAO. The quality of ACE/TAO is monitored through our distributed [scoreboard](https://www.dre.vanderbilt.edu/scoreboard/)
 
-[ACE](https://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and
-networked applications, [TAO](https://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++
-implementation of the OMG's [CORBA](https://www.omg.org/spec/CORBA/) standard. The main home page
-is [here](https://www.dre.vanderbilt.edu/~schmidt/).
+[ACE](https://www.cs.wm.edu/~dcschmidt/ACE.html) is a C++ framework for implementing distributed and
+networked applications, [TAO](https://www.cs.wm.edu/~dcschmidt/TAO.html) is a C++
+implementation of the OMG's [CORBA](https://www.omg.org/spec/CORBA/) standard.
 
 All support on github is **best effort**, when you require a guaranteed response consider hiring one of the [commercial companies](https://github.com/DOCGroup/ACE_TAO/wiki/ACE-and-TAO-Commercial-support) who provide support and services for ACE/TAO.

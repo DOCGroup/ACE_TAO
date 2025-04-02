@@ -1,6 +1,23 @@
 USER VISIBLE CHANGES BETWEEN ACE-8.0.2 and ACE-8.0.3
 ====================================================
 
+. Deprecated ACE_Copy_Disabled in favor of deleted copy/assignment
+
+. Replaced usage of ACE_MIN and ACE_MAX with std::min/std::max
+
+. Add support for abstract paths to ACE_UNIX_ADDR
+
+. Improve support for 64bit file sizes
+
+. Minor fixes to ACE logging classes
+
+. Use C++11 default for more classes
+
+. GCC versions less than 9 and Clang versions less than 12 are
+  no longer tested in GitHub Actions CI
+
+. Dropped support for Embarcadero C++ Builder bcc32c and bcc64 compilers
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.1 and ACE-8.0.2
 ====================================================
 

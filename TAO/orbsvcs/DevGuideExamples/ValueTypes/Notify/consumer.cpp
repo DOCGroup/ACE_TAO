@@ -118,7 +118,7 @@ public:
 
   virtual void push(const CORBA::Any& a)
   {
-    MyEvent* vt;
+    MyEvent* vt {};
     a >>= vt;
 
     std::cout << std::endl

@@ -21,8 +21,6 @@
 
 #include "tao/PortableServer/PortableServer.h"
 
-#include "ace/Copy_Disabled.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -30,11 +28,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief POA Abstraction.
  */
-class TAO_Notify_Serv_Export TAO_Notify_POA_Helper : private ACE_Copy_Disabled
+class TAO_Notify_Serv_Export TAO_Notify_POA_Helper
 {
 public:
   /// Default Constructor
   TAO_Notify_POA_Helper ();
+
+  TAO_Notify_POA_Helper (const TAO_Notify_POA_Helper &) = delete;
+  TAO_Notify_POA_Helper (TAO_Notify_POA_Helper &&) = delete;
+  TAO_Notify_POA_Helper &operator= (const TAO_Notify_POA_Helper &) = delete;
+  TAO_Notify_POA_Helper &operator= (TAO_Notify_POA_Helper &&) = delete;
 
   /// Create a new PortableServer::POA.
   void init (PortableServer::POA_ptr parent_poa, const char* poa_name);

@@ -37,7 +37,7 @@ class ACE_Cleanup_Strategy
 {
 public:
   /// Destructor.
-  virtual ~ACE_Cleanup_Strategy ();
+  virtual ~ACE_Cleanup_Strategy () = default;
 
   /// The method which will do the cleanup of the entry in the container.
   virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);

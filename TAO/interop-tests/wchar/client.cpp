@@ -159,7 +159,7 @@ run_one_test (interop::WChar_Passer_ptr server,
       }
     case ANY_WSTRING_FROM_SERVER:
       {
-        const CORBA::WChar *ws;
+        const CORBA::WChar *ws {};
         CORBA::Any_var test = server->any_from_server (data_set,
                                                        interop::is_wstring);
         if (test >>= ws)
@@ -172,7 +172,7 @@ run_one_test (interop::WChar_Passer_ptr server,
       {
         CORBA::Any a;
         a <<= ref.get_wstring(data_set);
-        const CORBA::WChar *ws;
+        const CORBA::WChar *ws {};
         CORBA::Any_var test = server->any_echo (a);
         if (test >>= ws)
           {

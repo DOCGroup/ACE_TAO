@@ -706,9 +706,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
 /// True if option enable, else false.
 int
-Options::operator[] (Option_Type option)
+Options::operator[] (Option_Type opt)
 {
-  return ACE_BIT_ENABLED (option_word_, option);
+  return ACE_BIT_ENABLED (option_word_, opt);
 }
 
 /// Enables option OPT.

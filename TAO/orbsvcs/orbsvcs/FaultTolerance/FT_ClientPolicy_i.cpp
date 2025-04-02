@@ -102,7 +102,7 @@ TAO_FT_Heart_Beat_Policy::heartbeat_policy_value ()
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val)
 {
-  const FT::HeartbeatPolicyValue *value = 0;
+  const FT::HeartbeatPolicyValue *value {};
   if ((val >>= value) == 0)
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 

@@ -319,37 +319,27 @@ namespace CORBA
    *
    * Default mix-in for reference count of a valuetype.
    */
-  class TAO_Valuetype_Export DefaultValueRefCountBase
-    : public virtual ValueBase
+  class TAO_Valuetype_Export DefaultValueRefCountBase : public virtual ValueBase
   {
   public:
-    virtual void _add_ref ();
-    virtual void _remove_ref ();
-    virtual CORBA::ULong _refcount_value ();
-
-    /// The _tao variants are inline for fast access from T_var
-    /// (if valuetype T is compiled with optimization for that.) %! (todo)
-    void _tao_add_ref ();
-    void _tao_remove_ref ();
-    CORBA::ULong _tao_refcount_value () const;
+    void _add_ref () override;
+    void _remove_ref () override;
+    CORBA::ULong _refcount_value () override;
 
   protected:
-    DefaultValueRefCountBase ();
-    DefaultValueRefCountBase (const DefaultValueRefCountBase&);
-    virtual ~DefaultValueRefCountBase ();
+    DefaultValueRefCountBase () = default;
+    ~DefaultValueRefCountBase () override = default;
 
   private:
-    void operator= (const DefaultValueRefCountBase &);
+    DefaultValueRefCountBase &operator= (const DefaultValueRefCountBase &) = delete;
+    DefaultValueRefCountBase &operator= (DefaultValueRefCountBase &&) = delete;
+    DefaultValueRefCountBase (const DefaultValueRefCountBase &) = delete;
+    DefaultValueRefCountBase (DefaultValueRefCountBase &&) = delete;
 
   private: // data
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
   }; // DefaultValueRefCountBase
-
-  //  which lock has the lowest memory overhead ?
-  // %! todo refcountbase w/o locking (now memory overhead)
-  // $! todo: debug aids for refcounts
-
 }  // End CORBA namespace
 
 # if defined (__ACE_INLINE__)

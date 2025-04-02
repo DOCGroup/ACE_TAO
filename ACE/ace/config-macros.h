@@ -622,12 +622,6 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy () \
 // Miscellaneous macros
 // ============================================================================
 
-#if defined (ACE_USES_EXPLICIT_STD_NAMESPACE)
-#  define ACE_STD_NAMESPACE std
-#else
-#  define ACE_STD_NAMESPACE
-#endif
-
 #if !defined (ACE_OS_String)
 #  define ACE_OS_String ACE_OS
 #endif /* ACE_OS_String */

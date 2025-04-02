@@ -75,8 +75,7 @@ namespace TAO
               throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
             }
 
-          CORBA::SystemException* exception =
-            TAO::create_system_exception (type_id.in ());
+          CORBA::SystemException* exception = TAO::create_system_exception (type_id.in ());
 
           if (!exception)
             {

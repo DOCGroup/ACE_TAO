@@ -18,8 +18,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -66,11 +64,10 @@ typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
     TAO::Argument **);
 
-class TAO_Export TAO_Abstract_ServantBase
+class TAO_Abstract_ServantBase
 {
 public:
-  /// Destructor
-  virtual ~TAO_Abstract_ServantBase ();
+  virtual ~TAO_Abstract_ServantBase () = default;
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char* logical_type_id) = 0;
@@ -137,13 +134,12 @@ public:
 
 protected:
   /// Default constructor, only derived classes can be created.
-  TAO_Abstract_ServantBase ();
+  TAO_Abstract_ServantBase () = default;
 
   /// Copy constructor, protected so no instances can be created.
-  TAO_Abstract_ServantBase (const TAO_Abstract_ServantBase &);
+  TAO_Abstract_ServantBase (const TAO_Abstract_ServantBase &) = default;
 
-  /// Assignment operator.
-  TAO_Abstract_ServantBase &operator= (const TAO_Abstract_ServantBase &);
+  TAO_Abstract_ServantBase &operator= (const TAO_Abstract_ServantBase &) = default;
 
   /// Dispatches a request to the object
   /**
@@ -161,10 +157,6 @@ protected:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined(__ACE_INLINE__)
-#include "tao/Abstract_Servant_Base.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

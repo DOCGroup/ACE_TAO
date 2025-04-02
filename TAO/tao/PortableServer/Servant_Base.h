@@ -65,7 +65,7 @@ public:
   typedef CORBA::Object_var _stub_var_type;
 
   /// Destructor.
-  virtual ~TAO_ServantBase ();
+  virtual ~TAO_ServantBase () = default;
 
   static void _is_a_skel (TAO_ServerRequest & req,
                           TAO::Portable_Server::Servant_Upcall* servant_upcall,
@@ -184,12 +184,10 @@ public:
 
 protected:
   /// Default constructor, only derived classes can be created.
-  explicit TAO_ServantBase (TAO_Operation_Table* optable = 0);
+  explicit TAO_ServantBase (TAO_Operation_Table *optable = nullptr);
 
-  /// Copy constructor, protected so no instances can be created.
   TAO_ServantBase (const TAO_ServantBase &);
 
-  /// Assignment operator.
   TAO_ServantBase &operator= (const TAO_ServantBase &);
 
   void synchronous_upcall_dispatch (

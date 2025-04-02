@@ -33,7 +33,7 @@ public:
 
   TAO_POA_Policy_Set (const TAO_POA_Policy_Set &rhs);
 
-  ~TAO_POA_Policy_Set ();
+  ~TAO_POA_Policy_Set () = default;
 
   /// Returns the policy at the specified index.
   /// CORBA::Policy::_nil () is returned if the policy doesn't exist

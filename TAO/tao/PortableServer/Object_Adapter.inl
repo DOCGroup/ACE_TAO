@@ -80,10 +80,7 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
     }
   else
     {
-      return this->find_transient_poa (system_name,
-                                       root,
-                                       poa_creation_time,
-                                       poa);
+      return this->find_transient_poa (system_name, root, poa_creation_time, poa);
     }
 }
 
@@ -92,12 +89,12 @@ TAO_Object_Adapter::bind_transient_poa (TAO_Root_POA *poa,
                                         poa_name_out system_name)
 {
   poa_name name;
-  int result = this->transient_poa_map_->bind_create_key (poa, name);
+  int const result = this->transient_poa_map_->bind_create_key (poa, name);
 
   if (result == 0)
     {
       ACE_NEW_RETURN (system_name,
-                      poa_name (name),
+                      poa_name (std::move(name)),
                       -1);
     }
 
@@ -109,9 +106,7 @@ TAO_Object_Adapter::bind_persistent_poa (const poa_name &folded_name,
                                          TAO_Root_POA *poa,
                                          poa_name_out system_name)
 {
-  return this->hint_strategy_->bind_persistent_poa (folded_name,
-                                                    poa,
-                                                    system_name);
+  return this->hint_strategy_->bind_persistent_poa (folded_name, poa, system_name);
 }
 
 ACE_INLINE int
@@ -124,8 +119,7 @@ ACE_INLINE int
 TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
                                            const poa_name &system_name)
 {
-  return this->hint_strategy_->unbind_persistent_poa (folded_name,
-                                                      system_name);
+  return this->hint_strategy_->unbind_persistent_poa (folded_name, system_name);
 }
 
 ACE_INLINE TAO_Root_POA *

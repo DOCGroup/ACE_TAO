@@ -5,8 +5,7 @@
 #include "ace/Malloc_Base.h"
 #include "ace/String_Base.h"
 #include "ace/OS_NS_string.h"
-
-#include <algorithm>  // For std::swap<>
+#include <algorithm>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/String_Base.inl"
@@ -221,10 +220,10 @@ ACE_String_Base<ACE_CHAR_T>::append (const ACE_CHAR_T* s,
     }
     else // case 2. Memory reallocation is needed
     {
-      const size_type new_buf_len =
-        ace_max(this->len_ + slen + 1, this->buf_len_ + this->buf_len_ / 2);
+      size_type const new_buf_len =
+        (std::max)(this->len_ + slen + 1, this->buf_len_ + this->buf_len_ / 2);
 
-      ACE_CHAR_T *t = 0;
+      ACE_CHAR_T *t {};
 
       ACE_ALLOCATOR_RETURN (t,
         (ACE_CHAR_T *) this->allocator_->malloc (new_buf_len * sizeof (ACE_CHAR_T)), *this);
@@ -389,7 +388,7 @@ ACE_String_Base<ACE_CHAR_T>::compare (const ACE_String_Base<ACE_CHAR_T> &s) cons
     return 0;
 
   // Pick smaller of the two lengths and perform the comparison.
-  size_type smaller_length = ace_min (this->len_, s.len_);
+  size_type const smaller_length = (std::min) (this->len_, s.len_);
 
   int result = ACE_OS::memcmp (this->rep_,
                                s.rep_,
