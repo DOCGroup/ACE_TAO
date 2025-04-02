@@ -607,6 +607,7 @@ get_ip_interfaces_getifaddrs (size_t &count,
               addrs[count].set ((u_short) 0,
                                 addr->sin_addr.s_addr,
                                 0);
+              addrs[count].set_interface_name (p_if->ifa_name);
               ++count;
             }
         }
@@ -619,8 +620,9 @@ get_ip_interfaces_getifaddrs (size_t &count,
           // Skip the ANY address
           if (!IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr))
             {
-              addrs[count].set(reinterpret_cast<struct sockaddr_in *> (addr),
-                               sizeof(sockaddr_in6));
+              addrs[count].set (reinterpret_cast<struct sockaddr_in *> (addr),
+                                sizeof(sockaddr_in6));
+              addrs[count].set_interface_name (p_if->ifa_name);
               ++count;
             }
         }
