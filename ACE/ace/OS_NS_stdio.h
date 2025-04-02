@@ -134,7 +134,7 @@ inline char *ace_cuserid(char *user)
 #endif /* !ACE_LACKS_CUSERID && !ACE_HAS_ALT_CUSERID && ... */
 
 # if defined (ACE_LACKS_FILELOCKS)
-#   if ! defined (ACE_VXWORKS) && !defined (INTEGRITY)
+#   if !defined (ACE_VXWORKS) && !defined (ACE_INTEGRITY)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
 // appear to support flock ().
 struct flock
