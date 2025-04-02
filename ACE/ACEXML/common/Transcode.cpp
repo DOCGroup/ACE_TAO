@@ -40,9 +40,9 @@ ACEXML_Transcoder::utf162utf8 (ACEXML_UTF16 src,
       if (src >= 0xD800 && src < 0xE000)
         return ACEXML_IS_SURROGATE;
 
-      *dst = 0xe0 | (static_cast<ACEXML_UTF8> (src) / 0x1000);
-      *(dst+1) = 0x80 | ((static_cast<ACEXML_UTF8> (src) % 0x1000) / 0x40);
-      *(dst+2) = 0x80 | (static_cast<ACEXML_UTF8> (src) % 0x40);
+      *dst = static_cast<ACEXML_UTF8> (0xe0 | (src / 0x1000));
+      *(dst+1) = static_cast<ACEXML_UTF8> (0x80 | (src % 0x1000 / 0x40));
+      *(dst+2) = static_cast<ACEXML_UTF8> (0x80 | (src % 0x40));
       return 3;
     }
 }
@@ -67,10 +67,10 @@ ACEXML_Transcoder::ucs42utf8 (ACEXML_UCS4 src,
       if (dst == 0)
         return ACEXML_INVALID_ARGS;
 
-      *dst = 0xf0 | (static_cast<ACEXML_UTF8> (src / 0x40000));
-      *(dst+1) = 0x80 | ((static_cast<ACEXML_UTF8> (src % 0x40000)) / 0x1000);
-      *(dst+2) = 0x80 | ((static_cast<ACEXML_UTF8> (src % 0x1000)) / 0x40);
-      *(dst+3) = 0x80 | (static_cast<ACEXML_UTF8> (src % 0x40));
+      *dst = static_cast<ACEXML_UTF8> (0xf0 | (src / 0x40000));
+      *(dst+1) = static_cast<ACEXML_UTF8> (0x80 | (src % 0x40000 / 0x1000));
+      *(dst+2) = static_cast<ACEXML_UTF8> (0x80 | (src % 0x1000 / 0x40));
+      *(dst+3) = static_cast<ACEXML_UTF8> (0x80 | (src % 0x40));
       return 4;
     }
   return ACEXML_NON_UNICODE;

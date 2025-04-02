@@ -49,21 +49,21 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
        i.next ())
     {
       AST_Decl *d = i.item ();
-      AST_Provides *p = dynamic_cast<AST_Provides*> (d);
+      AST_Provides *const provides = dynamic_cast<AST_Provides*> (d);
 
-      if (p != nullptr)
+      if (provides)
         {
           if (first)
             {
              os_  << ": facet_exec_" << port_nr << "_ (new ";
-             os_ << p->provides_type ()->local_name ();
+             os_ << provides->provides_type ()->local_name ();
              os_ << suffix << " ())" << be_nl;
              first = false;
             }
           else
             {
              os_  << ", facet_exec_" << port_nr << "_ (new ";
-             os_ << p->provides_type ()->local_name ();
+             os_ << provides->provides_type ()->local_name ();
              os_ << suffix << " ())" << be_uidt_nl;
             }
           port_nr++;

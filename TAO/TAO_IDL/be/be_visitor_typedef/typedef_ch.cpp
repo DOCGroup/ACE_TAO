@@ -201,17 +201,13 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       // we can have only one call to it from any instantiation per stream
       // output statement.
 
-      const char *static_decl = "";
-      AST_Module *scope = dynamic_cast<AST_Module*> (tdef->defined_in ());
+      AST_Module *tdef_scope = dynamic_cast<AST_Module *> (tdef->defined_in ());
 
       // If the typedef is not declared globally or in a module, the
       // associated array memory management function must be static.
-      if (scope == nullptr)
-        {
-          static_decl = "static ";
-        }
+      char const *const static_decl = tdef_scope ? "" : "static ";
 
-      const char *td_name = tdef->nested_type_name (scope);
+      char const *td_name = tdef->nested_type_name (tdef_scope);
 
       // If the array and the typedef are both declared inside
       // an interface or valuetype, for example, nested_type_name()

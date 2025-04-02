@@ -2505,10 +2505,10 @@ YY_RULE_SETUP
 {
                   for (;;)
                     {
-                      char const c = yyinput ();
+                      char const c = static_cast<char> (yyinput ());
                       if (c == '*')
                         {
-                          char const next = yyinput ();
+                          char const next = static_cast<char> (yyinput ());
                           if (next == '/')
                             break;
                           else
