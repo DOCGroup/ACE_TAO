@@ -16,8 +16,6 @@
 #define ACE_LACKS_SETEUID
 #define ACE_LACKS_GETGID
 
-#define _REENTRANT
-
 #define ACE_MT_SAFE 1
 #define ACE_HAS_THREADS
 #define ACE_MAX_NUM_THREADS 64

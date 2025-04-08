@@ -26,7 +26,6 @@
 #ifndef ACE_HAS_EXCEPTIONS
 # define ACE_HAS_EXCEPTIONS
 #endif
-#define _REENTRANT
 #define ACE_MT_SAFE 1
 
 #define ACE_HAS_SHM_OPEN
