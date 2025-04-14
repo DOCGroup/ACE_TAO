@@ -43,7 +43,6 @@
 #define TAO_USE_SEQUENCE_TEMPLATES
 #define ACE_HAS_USING_KEYWORD
 #define ACE_NEEDS_FUNC_DEFINITIONS
-#define _REENTRANT
 #define ACE_MT_SAFE 1
 
 // Compiler/platform has correctly prototyped header files.

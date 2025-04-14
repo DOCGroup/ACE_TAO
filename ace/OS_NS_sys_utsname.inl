@@ -18,16 +18,20 @@ namespace ACE_OS
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);
 # else
-  if(!name) {
-    errno = EFAULT;
+  if (!name)
+    {
+      errno = EFAULT;
+      return -1;
+    }
+
+  if (ACE_OS::hostname (name->nodename, __SYS_NMLN) != 0)
     return -1;
-  }
-  strcpy(name->sysname,"INTEGRITY-178B");
-  int status = gethostname(name->nodename, __SYS_NMLN);
-  strcpy(name->release,"minor");
-  strcpy(name->version,"5.0.0");
-  strcpy(name->machine,"a standard name");
-  return status;
+
+  ACE_OS::strcpy(name->sysname, "INTEGRITY-178B");
+  ACE_OS::strcpy(name->release, "minor");
+  ACE_OS::strcpy(name->version, "5.0.0");
+  ACE_OS::strcpy(name->machine, "a standard name");
+  return 0;
 # endif /* ACE_LACKS_GETHOSTNAME */
 #else
     ACE_OS_TRACE ("ACE_OS::uname");

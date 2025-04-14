@@ -39,8 +39,6 @@
 
 # if defined (INTEGRITY)
 #   include "ace/Log_Msg.h"
-
-#   include <map>
 # endif
 
 # if defined (ACE_EXPORT_MACRO)
@@ -423,138 +421,151 @@ public:
 #     define THR_INHERIT_SCHED       0
 #     define THR_SCOPE_PROCESS       0
 #     define THR_SCOPE_SYSTEM        0
+
 #   elif defined (INTEGRITY)
-    typedef Task ACE_thread_t;
-    typedef Task ACE_hthread_t;
-    typedef u_int ACE_OS_thread_key_t;
-#     if defined (ACE_HAS_TSS_EMULATION)
-    typedef u_int ACE_thread_key_t;
-#     else /* !ACE_HAS_TSS_EMULATION */
-    typedef ACE_OS_thread_key_t ACE_thread_key_t;
-#     endif
+#     if !defined (ACE_HAS_PTHREADS)
+typedef Task ACE_thread_t;
+typedef Task ACE_hthread_t;
+typedef u_int ACE_OS_thread_key_t;
+#       if defined (ACE_HAS_TSS_EMULATION)
+typedef u_int ACE_thread_key_t;
+#       else /* !ACE_HAS_TSS_EMULATION */
+typedef ACE_OS_thread_key_t ACE_thread_key_t;
+#       endif
 
-    typedef Semaphore ACE_sema_t;
+typedef Semaphore ACE_sema_t;
 
-    // We just use a counting semaphore with value of 1 as a mutex
-    typedef ACE_sema_t ACE_mutex_t;
+// We just use a counting semaphore with value of 1 as a mutex
+typedef ACE_sema_t ACE_mutex_t;
 
-    // Implement thread mutex with mutex?
-    typedef ACE_mutex_t ACE_thread_mutex_t;
+// Implement thread mutex with mutex?
+typedef ACE_mutex_t ACE_thread_mutex_t;
 
-#     define THR_CANCEL_DISABLE      0
-#     define THR_CANCEL_ENABLE       0
-#     define THR_DETACHED            0
-#     define THR_BOUND               0
-#     define THR_NEW_LWP             0
-#     define THR_DAEMON              0
-#     define THR_JOINABLE            0
-#     define THR_SUSPENDED           0
-#     define THR_SCHED_DEFAULT       0
-#     define THR_INHERIT_SCHED       0
-#     define THR_SCOPE_PROCESS       0
-#     define THR_SCOPE_SYSTEM        0
-#     define USYNC_THREAD            0
-#     define USYNC_PROCESS           1
+#       define THR_CANCEL_DISABLE      0
+#       define THR_CANCEL_ENABLE       0
+#       define THR_DETACHED            0
+#       define THR_BOUND               0
+#       define THR_NEW_LWP             0
+#       define THR_DAEMON              0
+#       define THR_JOINABLE            0
+#       define THR_SUSPENDED           0
+#       define THR_SCHED_DEFAULT       0
+#       define THR_INHERIT_SCHED       0
+#       define THR_SCOPE_PROCESS       0
+#       define THR_SCOPE_SYSTEM        0
+#       define USYNC_THREAD            0
+#       define USYNC_PROCESS           1
+#     endif /* ACE_HAS_PTHREADS */
 
-    // Forward declarations
-    namespace ACE_OS {
-      int thread_mutex_lock (ACE_thread_mutex_t *m);
-      int thread_mutex_unlock (ACE_thread_mutex_t *m);
-    }
+// Forward declarations
+namespace ACE_OS {
+  int thread_mutex_lock (ACE_thread_mutex_t *m);
+  int thread_mutex_unlock (ACE_thread_mutex_t *m);
+}
 
-    struct LockGuard
-    {
-      LockGuard (ACE_thread_mutex_t &lock) : lock_(lock)
+struct LockGuard
+{
+  LockGuard (ACE_thread_mutex_t &lock) : lock_(lock)
+  {
+    ACE_OS::thread_mutex_lock (&lock_);
+  }
+
+  ~LockGuard ()
+  {
+    ACE_OS::thread_mutex_unlock (&lock_);
+  }
+
+private:
+  ACE_thread_mutex_t &lock_;
+};
+
+#     if !defined (ACE_HAS_PTHREADS)
+#       if !defined (ACE_MAX_NUM_THREADS)
+#         define ACE_MAX_NUM_THREADS 64
+#       endif
+
+#       if defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+class ACE_INTEGRITY_TSS_Impl
+{
+private:
+  struct TaskInfo
+  {
+    TaskInfo () : id (0), tss_base (0), valid (false) {}
+
+    ACE_hthread_t id;
+    void **tss_base;
+    bool valid;
+  };
+
+  // Using std::map caused a memory issue, so we're using an array.
+  // Downside is the number of threads is fixed.
+  // May try ACE's map.
+  typedef TaskInfo TSS_Table[ACE_MAX_NUM_THREADS];
+
+public:
+  // Return a reference to the TSS base address of a given thread.
+  // If there exists an entry for the thread, just return the reference.
+  // If not, set an entry for it and return the reference.
+  void **&get (ACE_hthread_t id)
+  {
+    LockGuard guard (lock_);
+    unsigned first_slot = ACE_MAX_NUM_THREADS;
+    for (unsigned i = 0; i < ACE_MAX_NUM_THREADS; ++i)
       {
-        ACE_OS::thread_mutex_lock (&lock_);
-      }
-
-      ~LockGuard ()
-      {
-        ACE_OS::thread_mutex_unlock (&lock_);
-      }
-
-    private:
-      ACE_thread_mutex_t &lock_;
-    };
-
-#     if defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-    class ACE_INTEGRITY_TSS_Impl
-    {
-    private:
-      struct TaskInfo
-      {
-        TaskInfo () : id(0), tss_base(0), valid(false) {}
-
-        ACE_hthread_t id;
-        void **tss_base;
-        bool valid;
-      };
-
-      // Using std::map caused a memory issue, so we're using an array.
-      // Downside is the number of threads is fixed.
-      // May try ACE's map.
-      typedef TaskInfo TSS_Table[ACE_DEFAULT_THREADS];
-
-    public:
-      // Return a reference to the TSS base address of a given thread.
-      // If there exists an entry for the thread, just return the reference.
-      // If not, set an entry for it and return the reference.
-      void **&get (ACE_hthread_t id)
-      {
-        LockGuard guard (lock_);
-        unsigned first_slot = ACE_DEFAULT_THREADS;
-        for (unsigned i = 0; i < ACE_DEFAULT_THREADS; ++i)
+        TaskInfo &ti = integrity_ts_storage_[i];
+        if (!ti.valid)
           {
-            TaskInfo &ti = integrity_ts_storage_[i];
-            if (!ti.valid)
-              {
-                // Use a slot from an already finished thread.
-                if (first_slot == ACE_DEFAULT_THREADS)
-                  first_slot = i;
-              }
-            else if (ti.id == id)
-              {
-                // This is not the first call to this function from the same thread.
-                // Earlier call has already insert this entry.
-                // Just return now.
-                return ti.tss_base;
-              }
+            // Use a slot from an already finished thread.
+            if (first_slot == ACE_MAX_NUM_THREADS)
+              first_slot = i;
           }
-        // If we go here, the calling thread doesn't have an entry yet.
-        // Use the first available slot.
-
-        // Should NOT create more than ACE_DEFAULT_THREADS Tasks!
-        ACE_ASSERT (first_slot != ACE_DEFAULT_THREADS);
-
-        TaskInfo &my_ti = integrity_ts_storage_[first_slot];
-        my_ti.id = id;
-        my_ti.valid = true;
-        return my_ti.tss_base;
-      }
-
-      // Mark the entry for a thread invalid (e.g. the thread has finished or exited).
-      // Return true if success, false if there is no entry for the thread.
-      bool erase (ACE_hthread_t id)
-      {
-        LockGuard guard (lock_);
-        for (unsigned i = 0; i < ACE_DEFAULT_THREADS; ++i)
+        else if (ti.id == id)
           {
-            TaskInfo &ti = integrity_ts_storage_[i];
-            if (ti.id == id)
-              {
-                ti.valid = false;
-                return true;
-              }
+            // This is not the first call to this function from the same thread.
+            // Earlier call has already insert this entry.
+            // Just return now.
+            return ti.tss_base;
           }
-        return false;
+      }
+    // If we go here, the calling thread doesn't have an entry yet.
+    // Use the first available slot.
+
+    // Should NOT create more than ACE_MAX_NUM_THREADS Tasks!
+    ACE_ASSERT (first_slot != ACE_MAX_NUM_THREADS);
+    if (first_slot == ACE_MAX_NUM_THREADS)
+      {
+        ACE_OS::exit (EXIT_FAILURE);
       }
 
-    private:
-      TSS_Table integrity_ts_storage_;
-      ACE_thread_mutex_t lock_;
-    };
-#     endif
+    TaskInfo &my_ti = integrity_ts_storage_[first_slot];
+    my_ti.id = id;
+    my_ti.valid = true;
+    return my_ti.tss_base;
+  }
+
+  // Mark the entry for a thread invalid (e.g. the thread has finished or exited).
+  // Return true if success, false if there is no entry for the thread.
+  bool erase (ACE_hthread_t id)
+  {
+    LockGuard guard (lock_);
+    for (unsigned i = 0; i < ACE_MAX_NUM_THREADS; ++i)
+      {
+        TaskInfo &ti = integrity_ts_storage_[i];
+        if (ti.id == id)
+          {
+            ti.valid = false;
+            return true;
+          }
+      }
+    return false;
+  }
+
+private:
+  TSS_Table integrity_ts_storage_;
+  ACE_thread_mutex_t lock_;
+};
+#       endif /* ACE_HAS_TSS_EMULATION && !ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#     endif /* !ACE_HAS_PTHREADS */
 #   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS / INTEGRITY **********/
 
 // If we're using PACE then we don't want this class (since PACE
