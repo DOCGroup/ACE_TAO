@@ -23,6 +23,10 @@ ACE_RCSID (ace,
 #include "ace/Condition_T.h"
 #include "ace/Guard_T.h"
 
+#if defined (INTEGRITY) && !defined (ACE_HAS_PTHREADS)
+#  include <map>
+#endif
+
 extern "C" void
 ace_mutex_lock_cleanup_adapter (void *args)
 {
@@ -4040,7 +4044,7 @@ ACE_OS::set_scheduling_params (const ACE_Sched_Params &sched_params,
 #endif /* ! ACE_HAS_PRIOCNTL */
 }
 
-#if defined (INTEGRITY)
+#if defined (INTEGRITY) && !defined (ACE_HAS_PTHREADS)
 namespace ACE_OS {
 // Workaround for INTEGRITY-178's SetupTask's lack of argument for Task's thread function.
 // INTEGRITY-178's SetupTask function that creates a Task, i.e. thread, does not have an argument
@@ -4059,14 +4063,14 @@ static std::map<ACE_hthread_t, ACE_Base_Thread_Adapter*> integrity_task_args;
 static std::map<ACE_hthread_t, ACE_sema_t> integrity_join_semas;
 
 // Lock for the two data structures above.
-static ACE_mutex_t integrity_task_args_lock;
+static ACE_thread_mutex_t integrity_task_args_lock;
 
 # if defined (INTEGRITY178B)
 // INTEGRITY-178 Task API requires a stack to be provided explicitly in the SetupTask call.
 // INTEGRITY doesn't need this.
 
-#   if !defined (ACE_INT178_DEFAULT_STACK_SIZE)
-#     define ACE_INT178_DEFAULT_STACK_SIZE 0x10000 // 64 KB
+#   if !defined (ACE_INTEGRITY178B_DEFAULT_STACK_SIZE)
+#     define ACE_INTEGRITY178B_DEFAULT_STACK_SIZE 0x10000 // 64 KB
 #   endif
 
 // We can have a maximum of ACE_DEFAULT_THREADS Tasks including the Initial Task (i.e. main thread).
@@ -4077,7 +4081,7 @@ static ACE_mutex_t integrity_task_args_lock;
 class ACE_Int178_Stack_Manager
 {
 private:
-  typedef Address Int178_Stack[ACE_INT178_DEFAULT_STACK_SIZE / sizeof (Address)];
+  typedef Address Int178_Stack[ACE_INTEGRITY178B_DEFAULT_STACK_SIZE / sizeof (Address)];
   typedef Int178_Stack Int178_Stack_Pool[NUM_DYNAMIC_THREADS];
 
   struct StackInfo
@@ -4151,10 +4155,12 @@ extern "C" void integrity_task_adapter ()
 {
   const ACE_hthread_t curr_task = CurrentTask ();
 
-  // The thread argument should be ready when this function starts
-  ACE_OS::mutex_lock (&integrity_task_args_lock);
-  ACE_Base_Thread_Adapter *const thr_arg = integrity_task_args[curr_task];
-  ACE_OS::mutex_unlock (&integrity_task_args_lock);
+  ACE_Base_Thread_Adapter *thr_arg = 0;
+  {
+    // The thread argument should be ready when this function starts
+    LockGuard guard (integrity_task_args_lock);
+    thr_arg = integrity_task_args[curr_task];
+  }
 
   // Call the wrapper of the actual user-provided function
   (*thr_arg->entry_point ()) (thr_arg);
@@ -4165,13 +4171,14 @@ extern "C" void integrity_task_adapter ()
   obj->erase (curr_task);
 # endif
 
-  // , and its argument entry.
-  ACE_OS::mutex_lock (&integrity_task_args_lock);
-  integrity_task_args.erase (curr_task);
+  {
+    // , and its argument entry.
+    LockGuard guard (integrity_task_args_lock);
+    integrity_task_args.erase (curr_task);
 
-  // Signal any thread joining with this thread
-  ::ReleaseSemaphore (integrity_join_semas[curr_task]);
-  ACE_OS::mutex_unlock (&integrity_task_args_lock);
+    // Signal any thread joining with this thread
+    ::ReleaseSemaphore (integrity_join_semas[curr_task]);
+  }
 
 # if defined (INTEGRITY178B)
   // Release the stack so other thread can use it.
@@ -4181,7 +4188,7 @@ extern "C" void integrity_task_adapter ()
 }
 
 }
-#endif /* INTEGRITY */
+#endif /* INTEGRITY && !ACE_HAS_PTHREADS */
 
 int
 ACE_OS::thr_create (ACE_THR_FUNC func,
@@ -5072,7 +5079,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         stack = int178_stack_manager.acquire (slot);
         if (!stack)
           return -1;
-        stacksize = ACE_INT178_DEFAULT_STACK_SIZE;
+        stacksize = ACE_INTEGRITY178B_DEFAULT_STACK_SIZE;
       }
 
     // Don't let this Task run immediately; we have to set its entrypoint's argument below.
@@ -5080,12 +5087,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                           (Address) stack /* stack */, (Address) stacksize /* stackLength */, true /* enableClibrary */,
                           true /* allocTLS */, (Address) &integrity_task_adapter, false /* startIt */, 0 /* name */,
                           0 /* symbolFile */, thr_handle /* newTask */, 0 /* newActivity */);
-
-    // Set the owner of the acquired stack if one from the stack pool is being used.
-    if (slot != NUM_DYNAMIC_THREADS)
-      {
-        int178_stack_manager.owner (*thr_handle, slot);
-      }
 
 #   else
     ACE_UNUSED_ARG (stack);
@@ -5097,21 +5098,39 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   endif
 
     if (err_code != Success)
-      return -1;
+      {
+#   if defined (INTEGRITY178B)
+        // Cleanup the pre-allocated stack if one is assigned.
+        if (slot != NUM_DYNAMIC_THREADS)
+          {
+            int178_stack_manager.release (*thr_handle);
+          }
+#   endif
+        return -1;
+      }
+
+#   if defined (INTEGRITY178B)
+    // Set the owner of the acquired stack if one from the stack pool is being used.
+    if (slot != NUM_DYNAMIC_THREADS)
+      {
+        int178_stack_manager.owner (*thr_handle, slot);
+      }
+#    endif
 
     *thr_id = *thr_handle;
 
-    // Set the argument for the new Task's entrypoint, then run it.
-    mutex_lock (&integrity_task_args_lock);
-    integrity_task_args[*thr_handle] = thread_args;
+    {
+      // Set the argument for the new Task's entrypoint, then run it.
+      LockGuard guard (integrity_task_args_lock);
+      integrity_task_args[*thr_handle] = thread_args;
 
-    Semaphore sema;
-    if (::CreateSemaphore (0, &sema) != Success)
-      return -1;
-    integrity_join_semas[*thr_handle] = sema;
-    mutex_unlock (&integrity_task_args_lock);
+      Semaphore sema;
+      if (::CreateSemaphore (0, &sema) != Success)
+        return -1;
+      integrity_join_semas[*thr_handle] = sema;
+    }
 
-    return RunTask (*thr_handle) == Success ? 0 : -1;
+    return ::RunTask (*thr_handle) == Success ? 0 : -1;
 
 # endif /* ACE_HAS_STHREADS */
 #else
@@ -5199,14 +5218,15 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 # elif defined (INTEGRITY)
     ACE_UNUSED_ARG (status);
 
-    const ACE_hthread_t curr_task = CurrentTask ();
+    const ACE_hthread_t curr_task = ::CurrentTask ();
     ACE_INTEGRITY_TSS_Impl *const obj = static_cast<ACE_INTEGRITY_TSS_Impl*> (ACE_Object_Manager::preallocated_object[ACE_Object_Manager::ACE_INTEGRITY_TSS_IMPL]);
     obj->erase (curr_task);
 
-    // Signal any thread joining with this thread
-    ACE_OS::mutex_lock (&integrity_task_args_lock);
-    ::ReleaseSemaphore (integrity_join_semas[curr_task]);
-    ACE_OS::mutex_unlock (&integrity_task_args_lock);
+    {
+      // Signal any thread joining with this thread
+      LockGuard guard (integrity_task_args_lock);
+      ::ReleaseSemaphore (integrity_join_semas[curr_task]);
+    }
 
 #   if defined (INTEGRITY178B)
     // Release the assigned stack
@@ -5214,7 +5234,7 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 #   endif
 
     // Any stack usage from this call?
-    Exit (0);
+    ::Exit (0);
 # endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (status);
@@ -5292,9 +5312,8 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 # elif defined (INTEGRITY)
 int
 ACE_OS::thr_join (ACE_hthread_t thr_handle,
-                  ACE_THR_FUNC_RETURN* status)
+                  ACE_THR_FUNC_RETURN*)
 {
-  ACE_UNUSED_ARG (status);
   if (ACE_OS::thr_cmp (thr_handle, ACE_OS::NULL_hthread))
     {
       ACE_NOTSUP_RETURN (-1);
@@ -5311,26 +5330,30 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
   else
     {
       Semaphore join_sema = 0;
-      ACE_OS::mutex_lock (&integrity_task_args_lock);
-      auto it = integrity_join_semas.find (thr_handle);
-      if (it == integrity_join_semas.end ())
-        {
-          errno = EINVAL;
-          return -1;
-        }
+      std::map<ACE_hthread_t, ACE_sema_t>::iterator it = integrity_join_semas.end();
+      {
+        LockGuard guard (integrity_task_args_lock);
+        it = integrity_join_semas.find (thr_handle);
+        if (it == integrity_join_semas.end ())
+          {
+            errno = EINVAL;
+            return -1;
+          }
 
-      join_sema = it->second;
-      ACE_OS::mutex_unlock (&integrity_task_args_lock);
+        join_sema = it->second;
+      }
 
       if (::WaitForSemaphore (join_sema) != Success)
         retval = EINVAL;
       else
         {
-          // We can remove the entry but the Semaphore object is still there
-          // (there seems no API to delete it).
-          ACE_OS::mutex_lock (&integrity_task_args_lock);
-          integrity_join_semas.erase (thr_handle);
-          ACE_OS::mutex_unlock (&integrity_task_args_lock);
+          LockGuard guard (integrity_task_args_lock);
+          // The joined thread has finished, we can delete the associated semaphore.
+#   if !defined (INTEGRITY178B)
+          // INTEGRITY provides API to close semaphore but INTEGRITY-178 does not
+          ::CloseSemaphore (join_sema);
+#   endif
+          integrity_join_semas.erase (it);
         }
     }
 
@@ -5344,10 +5367,9 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 
 int
 ACE_OS::thr_join (ACE_thread_t waiter_id,
-                  ACE_thread_t* thr_id,
+                  ACE_thread_t*,
                   ACE_THR_FUNC_RETURN* status)
 {
-  ACE_UNUSED_ARG (thr_id);
   return ACE_OS::thr_join (waiter_id, status);
 }
 # endif /* VXWORKS || INTEGRITY */

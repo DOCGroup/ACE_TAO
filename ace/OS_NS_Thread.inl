@@ -1399,9 +1399,9 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_OSCALL (::semDelete (s->sema_), int, -1, result);
   s->sema_ = 0;
   return result;
-#   elif defined (INTEGRITY)
-  // INTEGRITY has CloseSemaphore kernel call that closes the semaphore object.
-  // However, we are imitating INTEGRITY-178 behavior which does not support this operation.
+#   elif defined (INTEGRITY) && !defined (INTEGRITY178B)
+  return ::CloseSemaphore (*s) == Success ? 0 : -1;
+#   else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_STHREADS */
@@ -2143,21 +2143,6 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 #   elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::semTake (s->sema_, WAIT_FOREVER), int, -1);
 #   elif defined (INTEGRITY)
-#     if defined (INTEGRITY178B)
-  // It seems INTEGRITY178B's WaitForSemaphore does not check for the semaphore's value underflow,
-  // so we attempt to do it manually here. However, it does not prevent a race when two or more
-  // threads call this functions simultaneously and the calls to GetSemaphoreValue and WaitForSemaphore
-  // interleave. In that case, WaitForSemaphore might still get called when its value has reached the
-  // minimum negative value.
-  SignedValue curr_val;
-  if (::GetSemaphoreValue (*s, &curr_val) != Success)
-    return -1;
-
-  if (curr_val == LONG_MIN)
-    // If we have this many Tasks waiting for a semaphore, something seems incorrect.
-    return -1;
-#     endif
-
   return ::WaitForSemaphore (*s) == Success ? 0 : -1;
 #   endif /* ACE_HAS_STHREADS */
 # else
@@ -2767,7 +2752,7 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   ACE_OSCALL_RETURN (::taskPriorityGet (ht_id, &priority), int, -1);
 # elif defined (INTEGRITY)
   Value active_prio;
-  Error err = GetActivePriority (ht_id, &active_prio);
+  const Error err = ::GetActivePriority (ht_id, &active_prio);
   if (err != Success)
     return -1;
   priority = static_cast<int> (active_prio);
@@ -3112,7 +3097,7 @@ ACE_OS::thr_self (void)
 # elif defined (VXWORKS)
   return ::taskName (::taskIdSelf ());
 # elif defined (INTEGRITY)
-  return CurrentTask ();
+  return ::CurrentTask ();
 # endif /* ACE_HAS_STHREADS */
 #else
   return 1; // Might as well make it the first thread ;-)
@@ -3138,7 +3123,7 @@ ACE_OS::thr_self (ACE_hthread_t &self)
 # elif defined (VXWORKS)
   self = ::taskIdSelf ();
 # elif defined (INTEGRITY)
-  self = CurrentTask ();
+  self = ::CurrentTask ();
 # endif /* ACE_HAS_STHREADS */
 #else
   self = 1; // Might as well make it the main thread ;-)
@@ -3440,7 +3425,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 # elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::taskSuspend (target_thread), int, -1);
 # elif defined (INTEGRITY)
-  return HaltTask (target_thread) == Success ? 0 : -1;
+  return ::HaltTask (target_thread) == Success ? 0 : -1;
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);

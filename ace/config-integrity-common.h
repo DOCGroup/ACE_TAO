@@ -17,11 +17,10 @@
 #define ACE_HAS_USING_KEYWORD
 #define ACE_HAS_TYPENAME_KEYWORD
 #define ACE_NEEDS_FUNC_DEFINITIONS
-#define _REENTRANT
 
 #define ACE_MT_SAFE 1
 #define ACE_HAS_THREADS
-#define ACE_DEFAULT_THREADS 64
+#define ACE_MAX_NUM_THREADS 64
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
