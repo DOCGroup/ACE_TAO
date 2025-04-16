@@ -53,7 +53,6 @@ ACE_OS::inet_addr (const char *name)
 #endif /* ACE_HAS_NONCONST_INET_ADDR */
 }
 
-#if !(defined (ACE_INTEGRITY) && defined (ACE_LACKS_INET_NTOA))
 ACE_INLINE char *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
@@ -65,7 +64,6 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
   return ::inet_ntoa (addr);
 # endif
 }
-#endif
 
 ACE_INLINE const char *
 ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)

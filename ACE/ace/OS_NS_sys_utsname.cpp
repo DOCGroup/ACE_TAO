@@ -214,13 +214,17 @@ ACE_OS::uname (ACE_utsname *name)
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
 #elif defined (ACE_INTEGRITY)
+# if defined (ACE_LACKS_GETHOSTNAME)
+  ACE_UNUSED_ARG (name);
+  ACE_NOTSUP_RETURN (-1);
+# else
   if (!name)
     {
       errno = EFAULT;
       return -1;
     }
 
-  if (ACE_OS::hostname (name->nodename, __SYS_NMLN) != 0)
+  if (::gethostname (name->nodename, __SYS_NMLN) != 0)
     return -1;
 
 # if defined (ACE_INTEGRITY178B)
@@ -233,8 +237,9 @@ ACE_OS::uname (ACE_utsname *name)
   ACE_OS::strcpy (name->release, "minor");
   ACE_OS::strcpy (name->version, "11.4.6");
   ACE_OS::strcpy (name->machine, "a standard name");
-# endif /* ACE_INTEGRITY178B */
+# endif
   return 0;
+# endif /* ACE_LACKS_GETHOSTNAME */
 #else
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);
