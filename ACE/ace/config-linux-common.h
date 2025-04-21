@@ -218,6 +218,8 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
+#define ACE_IOCTL_TYPE_ARG2 unsigned long
+
 /* ===========================================================================
  * By Kernel API Version
  * ===========================================================================

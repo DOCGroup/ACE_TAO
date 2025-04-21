@@ -146,7 +146,7 @@ TAO_MProfile::give_profile (TAO_Profile *pfile, int share)
 
   pfiles_[last_++] = pfile;
 
-  return last_ - 1;
+  return static_cast<int> (last_ - 1);
 }
 
 ACE_INLINE

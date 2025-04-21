@@ -13,9 +13,9 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename CHAR_TYPE>
-ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int& argc,
-                                                 const CHAR_TYPE** argv,
-                                                 const CHAR_TYPE** temp)
+ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int &argc,
+                                                 CHAR_TYPE const **argv,
+                                                 CHAR_TYPE const **temp)
   : argc_ (argc),
     total_size_ (argc),
     temp_ (temp),
@@ -28,13 +28,13 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int& argc,
 }
 
 template <typename CHAR_TYPE>
-ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int& argc,
-                                                 CHAR_TYPE** argv,
-                                                 CHAR_TYPE** temp)
+ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int &argc,
+                                                 CHAR_TYPE **argv,
+                                                 CHAR_TYPE **temp)
   : argc_ (argc),
     total_size_ (argc),
-    temp_ ((const CHAR_TYPE **) temp),
-    argv_ ((const CHAR_TYPE **) argv),
+    temp_ (temp),
+    argv_ (argv),
     current_index_ (0),
     back_ (argc - 1),
     front_ (0)
@@ -49,11 +49,11 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::init ()
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    this->temp_ = reinterpret_cast<const CHAR_TYPE **>
+    this->temp_ = reinterpret_cast<CHAR_TYPE **>
       (ACE_Allocator::instance ()->malloc (sizeof (CHAR_TYPE*) * this->total_size_));
 #else
     ACE_NEW (this->temp_,
-             const CHAR_TYPE *[this->total_size_]);
+             CHAR_TYPE *[this->total_size_]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
   if (this->temp_ != 0)
     {
@@ -86,20 +86,20 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T ()
 }
 
 template <typename CHAR_TYPE>
-const CHAR_TYPE *
+CHAR_TYPE const *
 ACE_Arg_Shifter_T<CHAR_TYPE>::get_current () const
 {
-  const CHAR_TYPE * retval = 0;
+  CHAR_TYPE const *retval = 0;
 
   if (this->is_anything_left ())
-    retval =  this->temp_[current_index_];
+    retval = this->temp_[current_index_];
 
   return retval;
 }
 
 template <typename CHAR_TYPE>
-const CHAR_TYPE *
-ACE_Arg_Shifter_T<CHAR_TYPE>::get_the_parameter (const CHAR_TYPE *flag)
+CHAR_TYPE const *
+ACE_Arg_Shifter_T<CHAR_TYPE>::get_the_parameter (CHAR_TYPE const *flag)
 {
   // the return 0's abound because this method
   // would otherwise be a deep if { } else { }
@@ -128,13 +128,13 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::get_the_parameter (const CHAR_TYPE *flag)
 
 template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter_T<CHAR_TYPE>::cur_arg_strncasecmp (const CHAR_TYPE *flag)
+ACE_Arg_Shifter_T<CHAR_TYPE>::cur_arg_strncasecmp (CHAR_TYPE const *flag)
 {
   if (!this->is_anything_left ())
     return -1;
 
   const size_t flag_length = ACE_OS::strlen (flag);
-  const CHAR_TYPE *arg = this->temp_[this->current_index_];
+  CHAR_TYPE const *arg = this->temp_[this->current_index_];
 
   if (ACE_OS::strncasecmp (arg, flag, flag_length) != 0)
     return -1;
@@ -220,4 +220,4 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::num_ignored_args () const
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ATOMIC_OP_T_CPP */
+#endif

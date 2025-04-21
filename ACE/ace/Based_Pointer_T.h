@@ -130,6 +130,9 @@ protected:
 
   /// Keep track of our offset from the base pointer.
   ptrdiff_t base_offset_;
+
+  static CONCRETE *based (ACE_Based_Pointer_Basic *p);
+  static CONCRETE const *based (ACE_Based_Pointer_Basic const *p);
 };
 
 /**

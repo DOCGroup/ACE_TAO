@@ -137,10 +137,10 @@ ACE_Sig_Action::handler ()
 }
 
 ACE_INLINE void
-ACE_Sig_Action::handler (ACE_SignalHandler handler)
+ACE_Sig_Action::handler (ACE_SignalHandler handler_arg)
 {
   ACE_TRACE ("ACE_Sig_Action::handler");
-  this->sa_.sa_handler = ACE_SignalHandlerV (handler);
+  this->sa_.sa_handler = ACE_SignalHandlerV (handler_arg);
 }
 
 ACE_INLINE void

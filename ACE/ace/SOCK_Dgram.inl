@@ -125,7 +125,7 @@ ACE_SOCK_Dgram::send (const void *buf,
 
   iovec buffer[1];
   buffer[0].iov_len = static_cast<u_long> (n);  // Betting on < 4G
-  buffer[0].iov_base = (char *) buf;
+  buffer[0].iov_base = (char *) const_cast<void *> (buf);
   size_t number_of_bytes_sent = 0;
   return this->send (buffer,
                      1,

@@ -45,21 +45,21 @@ ACE_Command_Base::ACE_Command_Base ()
 ACE_INLINE unsigned long
 ACE_Hash<char>::operator () (char t) const
 {
-  return t;
+  return static_cast<unsigned long> (t);
 }
 
 #if defined (ACE_HAS_WCHAR) && ! defined (ACE_LACKS_NATIVE_WCHAR_T)
 ACE_INLINE unsigned long
 ACE_Hash<wchar_t>::operator () (wchar_t t) const
 {
-  return t;
+  return static_cast<unsigned long> (t);
 }
 #endif /* ACE_HAS_WCHAR && ! ACE_LACKS_NATIVE_WCHAR_T */
 
 ACE_INLINE unsigned long
 ACE_Hash<signed char>::operator () (signed char t) const
 {
-  return t;
+  return static_cast<unsigned long> (t);
 }
 
 ACE_INLINE unsigned long

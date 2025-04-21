@@ -360,13 +360,13 @@ namespace TAO_OBV_GIOP_Flags
   const CORBA::Long Value_tag_base    = 0x7fffff00L;
   const CORBA::Long Value_tag_sigbits = 0x7fffff00L;
   const CORBA::Long Codebase_url      = 1;
-  const CORBA::Long Type_info_sigbits = 0x00000006L;
+  const CORBA::Long Type_info_sigbits = 6;
   const CORBA::Long Type_info_none    = 0;
   const CORBA::Long Type_info_single  = 2;
   const CORBA::Long Type_info_list    = 6;
-  const CORBA::Long Chunking_tag_sigbits = 0x00000008L;
-  const CORBA::Long Indirection_tag   = 0xFFFFFFFF;
-  const CORBA::Long Null_tag          = 0x00000000L;
+  const CORBA::Long Chunking_tag_sigbits = 8;
+  const CORBA::Long Indirection_tag   = -1;
+  const CORBA::Long Null_tag          = 0;
 
   TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long tag);
   TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::Long tag);

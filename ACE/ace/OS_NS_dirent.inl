@@ -112,8 +112,8 @@ alphasort (const void *a, const void *b)
 #  elif defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
   return ::alphasort (a, b);
 #  else
-  return ::alphasort ((const struct ACE_DIRENT **)a,
-                      (const struct ACE_DIRENT **)b);
+  return ::alphasort ((const struct ACE_DIRENT **) const_cast<void *> (a),
+                      (const struct ACE_DIRENT **) const_cast<void *> (b));
 #  endif
 #endif
 }

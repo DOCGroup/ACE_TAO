@@ -30,8 +30,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntarget_ = %d\n"), this->target_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("base_offset_ = %d\n"), this->base_offset_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("computed pointer = %x\n"),
-              (CONCRETE *)(ACE_COMPUTE_BASED_POINTER (this))));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("computed pointer = %x\n"), ACE_Based_Pointer_Basic::based (this)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -72,7 +71,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const void *base_add
     base_offset_ (0)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
-  this->base_offset_ = (char *) this - (char *) base_addr;
+  this->base_offset_ = (const char *) this - (const char *) base_addr;
 }
 
 template <class CONCRETE>

@@ -789,7 +789,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel (long timer_id,
   else
     {
       ACE_Timer_Node_T<TYPE> *temp =
-        this->remove (timer_node_slot);
+        this->remove (static_cast<size_t> (timer_node_slot));
 
       // Call the close hooks.
       int cookie = 0;

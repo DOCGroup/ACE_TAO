@@ -245,7 +245,7 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS> PEER_STREAM &
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::peer () const
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::peer");
-  return (PEER_STREAM &) this->peer_;
+  return const_cast<PEER_STREAM &> (this->peer_);
 }
 
 // Extract the underlying I/O descriptor.

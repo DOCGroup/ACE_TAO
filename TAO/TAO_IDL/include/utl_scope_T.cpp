@@ -93,11 +93,16 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
   // since fwd declared structs and unions must be defined in
   // the same translation unit.
   AST_InterfaceFwd *fd = t->fwd_decl ();
-  if (0 != fd)
+  if (fd)
     {
       fd->set_as_defined ();
       fd->disown_full_definition (); // This scope assumes ownership
     }
+
+/*   if (predef)
+    {
+      t->has_fwd_decl (true);
+    } */
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
