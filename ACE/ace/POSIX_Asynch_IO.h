@@ -32,7 +32,7 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Map_Manager.h"
 #include "ace/Event_Handler.h"
-#if defined(INTEGRITY)
+#if defined (ACE_INTEGRITY)
 #include "ace/ACE.h"
 #endif
 

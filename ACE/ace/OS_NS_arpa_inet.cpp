@@ -6,6 +6,9 @@
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/Basic_Types.h"
+#if defined (ACE_INTEGRITY) && defined (ACE_LACKS_INET_NTOA)
+# include "ace/OS_NS_Thread.h"
+#endif
 
 #include <cstdlib>
 

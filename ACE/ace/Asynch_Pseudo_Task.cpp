@@ -49,9 +49,9 @@ ACE_Asynch_Pseudo_Task::svc ()
 
   sigset_t RT_signals;
 
-  sigemptyset (&RT_signals);
+  ACE_OS::sigemptyset (&RT_signals);
   for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; si++)
-    sigaddset (&RT_signals, si);
+    ACE_OS::sigaddset (&RT_signals, si);
 
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &RT_signals, 0) != 0)
     ACELIB_ERROR ((LM_ERROR,

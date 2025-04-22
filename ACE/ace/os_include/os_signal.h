@@ -154,7 +154,7 @@ extern "C"
 #elif defined (ACE_WIN32)
    using ACE_SignalHandler = void (__cdecl *)(int);
    using ACE_SignalHandlerV = void (__cdecl *)(int);
-#elif defined (INTEGRITY)
+#elif defined (ACE_INTEGRITY)
    using ACE_SignalHandler = void (*)();
    using ACE_SignalHandlerV = void (*)(int);
 #else /* This is necessary for some older broken version of cfront */

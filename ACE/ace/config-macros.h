@@ -243,22 +243,22 @@
 #if !defined (ACE_UNUSED_ARG)
 # if defined (__GNUC__) || defined (__BORLANDC__)
 #   define ACE_UNUSED_ARG(a) (void) (a)
-# elif defined (ghs) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
+# elif defined (__ghs__) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,
 // such as with GreenHills (ghs) 1.8.8.
 #  define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
-# else /* ghs ..... */
+# else /* __ghs__ ..... */
 #  define ACE_UNUSED_ARG(a) (a)
-# endif /* ghs ..... */
+# endif /* __ghs__ ..... */
 #endif /* !ACE_UNUSED_ARG */
 
-#if defined (_MSC_VER) || defined (ghs) || defined(__BORLANDC__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__IAR_SYSTEMS_ICC__)
+#if defined (_MSC_VER) || defined (__ghs__) || defined(__BORLANDC__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__IAR_SYSTEMS_ICC__)
 # define ACE_NOTREACHED(a)
-#else  /* ghs || ..... */
+#else  /* __ghs__ || ..... */
 # define ACE_NOTREACHED(a) a
-#endif /* ghs || ..... */
+#endif /* __ghs__ || ..... */
 
 #if !defined ACE_FALLTHROUGH
 #  define ACE_FALLTHROUGH [[fallthrough]]
@@ -492,7 +492,7 @@
 // The C99 security-improved run-time returns an error value on failure;
 // 0 on success.
 #if defined (ACE_HAS_TR24731_2005_CRT)
-#  define ACE_SECURECRTCALL(X,TYPE,FAILVALUE,RESULT) \
+# define ACE_SECURECRTCALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
     errno_t ___ = X; \
     if (___ != 0) { errno = ___; RESULT = FAILVALUE; } \
@@ -520,20 +520,26 @@ typedef ACE_HANDLE ACE_SOCKET;
 // Define the type that's returned from the platform's native thread
 // functions. ACE_THR_FUNC_RETURN is the type defined as the thread
 // function's return type, except when the thread function doesn't return
-// anything (pSoS). The ACE_THR_FUNC_NO_RETURN_VAL macro is used to
+// anything (INTEGRITY). The ACE_THR_FUNC_NO_RETURN_VAL macro is used to
 // indicate that the actual thread function doesn't return anything. The
 // rest of ACE uses a real type so there's no a ton of conditional code
 // everywhere to deal with the possibility of no return type.
-# if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
-#define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
-# elif defined (ACE_WIN32)
+# define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
+#elif defined (ACE_WIN32)
 typedef DWORD ACE_THR_FUNC_RETURN;
-#define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
-# else
+# define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
+#elif defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
+// INTEGRITY-178 Task's entry point function doesn't return anything.
+// For INTEGRITY, we are also using Task API in which entry point function doesn't return.
+// This is used by ACE's internal thread adapter function but will be ignored by
+// the actual entry point passed to INTEGRITY's and INTEGRITY-178 Task calls.
+typedef int ACE_THR_FUNC_RETURN;
+#else
 typedef void* ACE_THR_FUNC_RETURN;
-# endif /* ACE_VXWORKS */
+#endif /* ACE_VXWORKS */
 typedef ACE_THR_FUNC_RETURN (*ACE_THR_FUNC)(void *);
 
 #ifdef __cplusplus

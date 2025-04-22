@@ -44,11 +44,11 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
                   change_type_str = "deleted";
                 }
               ORBSVCS_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) - FT_PG_Group_Factory: ")
-                            ACE_TEXT ("Setting list store as stale "),
-                            ACE_TEXT ("because of group with ID %lld "),
-                            ACE_TEXT ("was %C\n"),
-                            group_id, change_type_str.c_str ()));
+                              ACE_TEXT ("TAO (%P|%t) - FT_PG_Group_Factory: ")
+                              ACE_TEXT ("Setting list store as stale "),
+                              ACE_TEXT ("because of group with ID %lld "),
+                              ACE_TEXT ("was %C\n"),
+                              group_id, change_type_str.c_str ()));
             }
           this->list_store_->stale(true);
         }

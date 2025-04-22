@@ -10,8 +10,42 @@ ACE_OS::inet_addr (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::inet_addr");
 #if defined (ACE_LACKS_INET_ADDR)
-  ACE_UNUSED_ARG (name);
-  ACE_NOTSUP_RETURN (0);
+  u_long ret = 0;
+  u_int segment;
+  bool valid = true;
+
+  for (u_int i = 0; i < 4; ++i)
+    {
+      ret <<= 8;
+      if (*name != '\0')
+        {
+          segment = 0;
+
+          while (*name >= '0' && *name <= '9')
+            {
+              segment *= 10;
+              segment += *name++ - '0';
+            }
+          if (segment > 255)
+            {
+              valid = false;
+              break;
+            }
+          if (*name != '.' && *name != '\0')
+            {
+              valid = false;
+              break;
+            }
+
+          ret |= segment;
+
+          if (*name == '.')
+            {
+              ++name;
+            }
+        }
+    }
+  return valid ? htonl (ret) : INADDR_NONE;
 #elif defined (ACE_HAS_NONCONST_INET_ADDR)
   return ::inet_addr (const_cast <char*> (name));
 #else
@@ -23,12 +57,12 @@ ACE_INLINE char *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntoa");
-#if defined (ACE_LACKS_INET_NTOA)
+# if defined (ACE_LACKS_INET_NTOA)
   ACE_UNUSED_ARG (addr);
   ACE_NOTSUP_RETURN (0);
-#else
+# else
   return ::inet_ntoa (addr);
-#endif
+# endif
 }
 
 ACE_INLINE const char *

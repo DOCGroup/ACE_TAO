@@ -21,6 +21,10 @@
 #include <memory>
 #include <algorithm>
 
+#if defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
+#  include <map>
+#endif
+
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 {
@@ -201,7 +205,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
 u_int
 ACE_TSS_Emulation::total_keys ()
 {
-  ACE_OS_Recursive_Thread_Mutex_Guard (
+  ACE_OS_Recursive_Thread_Mutex_Guard guard (
     *static_cast <ACE_recursive_thread_mutex_t *>
                       (ACE_OS_Object_Manager::preallocated_object[
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
@@ -212,7 +216,7 @@ ACE_TSS_Emulation::total_keys ()
 int
 ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
 {
-  ACE_OS_Recursive_Thread_Mutex_Guard (
+  ACE_OS_Recursive_Thread_Mutex_Guard guard (
     *static_cast <ACE_recursive_thread_mutex_t *>
                       (ACE_OS_Object_Manager::preallocated_object[
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
@@ -253,7 +257,7 @@ ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
 int
 ACE_TSS_Emulation::release_key (ACE_thread_key_t key)
 {
-  ACE_OS_Recursive_Thread_Mutex_Guard (
+  ACE_OS_Recursive_Thread_Mutex_Guard guard (
     *static_cast <ACE_recursive_thread_mutex_t *>
                       (ACE_OS_Object_Manager::preallocated_object[
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
@@ -270,7 +274,7 @@ ACE_TSS_Emulation::release_key (ACE_thread_key_t key)
 int
 ACE_TSS_Emulation::is_key (ACE_thread_key_t key)
 {
-  ACE_OS_Recursive_Thread_Mutex_Guard (
+  ACE_OS_Recursive_Thread_Mutex_Guard guard (
     *static_cast <ACE_recursive_thread_mutex_t *>
                       (ACE_OS_Object_Manager::preallocated_object[
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
@@ -1151,11 +1155,11 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
         result = -1;
       // Wait for all the awakened threads to acquire their part of
       // the counting semaphore.
-#   if defined (ACE_VXWORKS) || defined (ACE_MQX)
+#   if defined (ACE_VXWORKS) || defined (ACE_MQX) || defined (ACE_INTEGRITY)
       else if (ACE_OS::sema_wait (&cv->waiters_done_) == -1)
 #   else
       else if (ACE_OS::event_wait (&cv->waiters_done_) == -1)
-#   endif /* ACE_VXWORKS */
+#   endif /* ACE_VXWORKS || ACE_MQX || ACE_INTEGRITY */
         result = -1;
       // This is okay, even without the <waiters_lock_> held because
       // no other waiter threads can wake up to access it.
@@ -1175,7 +1179,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_WTHREADS)
   ACE_OS::event_destroy (&cv->waiters_done_);
-#   elif defined (ACE_VXWORKS) || defined (ACE_MQX)
+#   elif defined (ACE_VXWORKS) || defined (ACE_MQX) || defined (ACE_INTEGRITY)
   ACE_OS::sema_destroy (&cv->waiters_done_);
 #   endif /* ACE_VXWORKS */
   int result = 0;
@@ -1225,7 +1229,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
     result = -1;
   else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
     result = -1;
-#   if defined (ACE_VXWORKS) || defined (ACE_MQX)
+#   if defined (ACE_VXWORKS) || defined (ACE_MQX) || defined (ACE_INTEGRITY)
   else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
 #   else
   else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
@@ -1255,7 +1259,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
     result = -1;
   else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
     result = -1;
-#     if defined (ACE_VXWORKS) || defined (ACE_MQX)
+#     if defined (ACE_VXWORKS) || defined (ACE_MQX) || defined (ACE_INTEGRITY)
   else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
 #     else
   else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
@@ -1386,7 +1390,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // If we're the last waiter thread during this particular broadcast
   // then let all the other threads proceed.
   else if (last_waiter)
-#   if defined (ACE_VXWORKS) || defined (ACE_MQX)
+#   if defined (ACE_VXWORKS) || defined (ACE_MQX) || defined (ACE_INTEGRITY)
     ACE_OS::sema_post (&cv->waiters_done_);
 #   else
     ACE_OS::event_signal (&cv->waiters_done_);
@@ -1564,7 +1568,13 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     return -1;
 
   return result;
-#   endif /* ACE_HAS_WTHREADS || ACE_HAS_VXWORKS */
+#   elif defined (ACE_INTEGRITY)
+  // INTEGRITY Semaphore has calls with timeout so this function could be emulated using it.
+  // INTEGRITY-178, on the other hand, does not have a similar kernel call.
+  // Not supporting it to mimic INTEGRITY-178 port.
+  ACE_UNUSED_ARG (timeout);
+  ACE_NOTSUP_RETURN (-1);
+#   endif /* ACE_HAS_WTHREADS || ACE_VXWORKS || ACE_MQX */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (external_mutex);
@@ -1916,6 +1926,15 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (lock_type);
 
   return (*m = ::semMCreate (lock_scope)) == 0 ? -1 : 0;
+# elif defined (ACE_INTEGRITY)
+  ACE_UNUSED_ARG (lock_scope);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (sa);
+  ACE_UNUSED_ARG (lock_type);
+
+  // Implement mutex using a counting semaphore with initial value of 1.
+  return ::CreateSemaphore (1, m) == Success ? 0 : -1;
 # endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);
@@ -1957,6 +1976,8 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   /* NOTREACHED */
 # elif defined (ACE_VXWORKS)
   return ::semDelete (*m) == OK ? 0 : -1;
+# elif defined (ACE_INTEGRITY)
+  return ACE_OS::sema_destroy (m);
 # endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
@@ -2050,6 +2071,8 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
   /* NOTREACHED */
 # elif defined (ACE_VXWORKS)
   return ::semTake (*m, WAIT_FOREVER) == OK ? 0 : -1;
+# elif defined (ACE_INTEGRITY)
+  return ::WaitForSemaphore (*m) == Success ? 0 : -1;
 # endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
@@ -2236,6 +2259,8 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
     else
     // got the semaphore
       return 0;
+# elif defined (ACE_INTEGRITY)
+  return ::TryToObtainSemaphore (*m) == Success ? 0 : -1;
 # endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
@@ -2307,6 +2332,23 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
   /* NOTREACHED */
 # elif defined (ACE_VXWORKS)
   return ::semGive (*m) == OK ? 0 : -1;
+# elif defined (ACE_INTEGRITY)
+  // Make sure the semaphore's value does not exceed its initial value, which is 1.
+  // This guards against incorrect unlocks from threads without holding the lock.
+  // This, however, does not prevent a race when two or more threads call this function
+  // simultaneously and the calls to GetSemaphoreValue and ReleaseSemaphore interleave.
+  // In that case, the semaphore's value could raise to above 1.
+  // So, only call unlock when know for sure the thread is holding the lock!
+  SignedValue curr_val;
+  if (::GetSemaphoreValue (*m, &curr_val) != Success)
+    return -1;
+
+  if (curr_val == 1)
+    {
+      errno = EPERM;
+      return -1;
+    }
+  return ::ReleaseSemaphore (*m) == Success ? 0 : -1;
 # endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
@@ -3259,6 +3301,150 @@ ACE_OS::set_scheduling_params (const ACE_Sched_Params &/*sched_params*/, ACE_id_
   ACE_NOTSUP_RETURN (-1);
 }
 
+#if defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
+namespace ACE_OS {
+// Workaround for INTEGRITY-178's SetupTask's lack of argument for Task's thread function.
+// INTEGRITY-178's SetupTask function that creates a Task, i.e. thread, does not have an argument
+// that can be passed to the newly created thread's entry point.
+// This works around that by storing the argument for each Task's entry point in a global map, keyed
+// by ACE_hthread_t of the corresponding Task. The value is a pointer to an ACE_Base_Thread_Adapter
+// instance that wraps the user-defined thread function and its argument.
+// This also works for INTEGRITY calls to create Tasks, such as CommonCreateTask, that don't receive
+// an argument for the Task's entry point. ACE_OS::thr_create currently uses CommonCreateTask
+// so this workaround is being used on INTEGRITY as well as INTEGRITY-178.
+
+static std::map<ACE_hthread_t, ACE_Base_Thread_Adapter*> integrity_task_args;
+
+// Semaphores used to coordinate joining thread with the joined thread.
+// There should be at most one joining thread.
+static std::map<ACE_hthread_t, ACE_sema_t> integrity_join_semas;
+
+// Lock for the two data structures above.
+static ACE_thread_mutex_t integrity_task_args_lock;
+
+# if defined (ACE_INTEGRITY178B)
+// INTEGRITY-178 Task API requires a stack to be provided explicitly in the SetupTask call.
+// INTEGRITY doesn't need this.
+
+#   if !defined (ACE_INTEGRITY178B_DEFAULT_STACK_SIZE)
+#     define ACE_INTEGRITY178B_DEFAULT_STACK_SIZE 0x10000 // 64 KB
+#   endif
+
+// We can have a maximum of ACE_MAX_NUM_THREADS Tasks including the Initial Task (i.e. main thread).
+// The Initial Task already has a stack provided by the OS.
+// Here, we reserve the stacks for the Tasks dynamically created by SetupTask().
+#   define NUM_DYNAMIC_THREADS (ACE_MAX_NUM_THREADS - 1)
+
+class ACE_Int178_Stack_Manager
+{
+private:
+  typedef Address Int178_Stack[ACE_INTEGRITY178B_DEFAULT_STACK_SIZE / sizeof (Address)];
+  typedef Int178_Stack Int178_Stack_Pool[NUM_DYNAMIC_THREADS];
+
+  struct StackInfo
+  {
+    ACE_hthread_t id {};
+    bool occupied {};
+  };
+  typedef StackInfo StackPoolInfo[NUM_DYNAMIC_THREADS];
+
+public:
+  // Get an unoccupied stack and return its address.
+  // This is only called before a Task is created with SetupTask().
+  // Return the start address of a stack if one available. Otherwise, return nullptr.
+  // In case of success, also update @a slot to the index of the stack in the pool.
+  void *acquire (unsigned &slot)
+  {
+    LockGuard guard (lock_);
+    for (unsigned i = 0; i < NUM_DYNAMIC_THREADS; ++i)
+      {
+        StackInfo &si = stack_pool_info_[i];
+        if (!si.occupied)
+          {
+            si.occupied = true;
+            slot = i;
+            return stack_pool_[i];
+          }
+      }
+
+    // We have created the maximum number of concurrent threads!
+    return nullptr;
+  }
+
+  // Update the owner thread of a stack returned by a previous successfull call to acquire().
+  // This is separate from acquire() because we have to pass a stack to a SetupTask() but
+  // only know the thread id after the call has returned.
+  void owner (ACE_hthread_t id, unsigned slot)
+  {
+    LockGuard guard (lock_);
+    stack_pool_info_[slot].id = id;
+  }
+
+  // Release the stack assigned to a thread so it can be reused.
+  // Return true if success, false if there is no thread with the given id.
+  bool release (ACE_hthread_t id)
+  {
+    LockGuard guard (lock_);
+    for (unsigned i = 0; i < NUM_DYNAMIC_THREADS; ++i)
+      {
+        StackInfo &si = stack_pool_info_[i];
+        if (si.id == id)
+          {
+            si.occupied = false;
+            return true;
+          }
+      }
+    return false;
+  }
+
+private:
+  Int178_Stack_Pool stack_pool_;
+  StackPoolInfo stack_pool_info_;
+  ACE_thread_mutex_t lock_;
+};
+
+static ACE_Int178_Stack_Manager int178_stack_manager;
+# endif /* ACE_INTEGRITY178B */
+
+extern "C" void integrity_task_adapter ()
+{
+  const ACE_hthread_t curr_task = CurrentTask ();
+
+  ACE_Base_Thread_Adapter *thr_arg = nullptr;
+  {
+    // The thread argument should be ready when this function starts
+    LockGuard guard (integrity_task_args_lock);
+    thr_arg = integrity_task_args[curr_task];
+  }
+
+  // Call the wrapper of the actual user-provided function
+  (*thr_arg->entry_point ()) (thr_arg);
+
+# if defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  // Now we can delete the TSS metadata entry for the Task
+  ACE_INTEGRITY_TSS_Impl *const obj = static_cast<ACE_INTEGRITY_TSS_Impl*> (ACE_Object_Manager::preallocated_object[ACE_Object_Manager::ACE_INTEGRITY_TSS_IMPL]);
+  obj->erase (curr_task);
+# endif
+
+  {
+    // , and its argument entry.
+    LockGuard guard (integrity_task_args_lock);
+    integrity_task_args.erase (curr_task);
+
+    // Signal any thread joining with this thread
+    ::ReleaseSemaphore (integrity_join_semas[curr_task]);
+  }
+
+# if defined (ACE_INTEGRITY178B)
+  // Release the stack so other thread can use it.
+  // This is at the end of the function so that the stack is really not used anymore.
+  int178_stack_manager.release (curr_task);
+# endif
+}
+
+}
+#endif /* ACE_INTEGRITY && !ACE_HAS_PTHREADS */
+
 int
 ACE_OS::thr_create (ACE_THR_FUNC func,
                     void *args,
@@ -3812,6 +3998,84 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       return 0;
     }
 
+# elif defined (ACE_INTEGRITY)
+    ACE_UNUSED_ARG (flags);
+
+    // From INTEGRITY-178 Kernel Reference Guide, Sec. 4 - Task Kernel Calls for SetupTask:
+    // "Priority must be less than or equal to the Priority of the source Task. Moreover, when the head
+    // is being used (e.g., when using malloc or the C++ new operator), Priority must be set to the
+    // Maximum Priority of the Initial Task so that the Maximum Priority of the new Task will be the
+    // same as that of the Initial Task."
+    // We start from the Initial Task and all new Tasks will use the same Maximum Priority.
+    Value max_parent_prio, unused_weight;
+    Error err_code = ::GetMaximumPriorityAndWeight (CurrentTask (), &max_parent_prio, &unused_weight);
+    if (err_code != Success)
+      return -1;
+
+    // Disregard the input priority value
+    priority = max_parent_prio;
+
+#   if defined (ACE_INTEGRITY178B)
+    // Use the pre-allocated stack if no stack provided
+    unsigned slot = NUM_DYNAMIC_THREADS;
+    if (!stack)
+      {
+        stack = int178_stack_manager.acquire (slot);
+        if (!stack)
+          return -1;
+        stacksize = ACE_INTEGRITY178B_DEFAULT_STACK_SIZE;
+      }
+
+    // Don't let this Task run immediately; we have to set its entrypoint's argument below.
+    err_code = ::SetupTask (AddressSpaceObjectNumber (1), priority /* priority */, 0 /* weight */, 0 /* timeslice */,
+                          (Address) stack /* stack */, (Address) stacksize /* stackLength */, true /* enableClibrary */,
+                          true /* allocTLS */, (Address) &integrity_task_adapter, false /* startIt */, 0 /* name */,
+                          0 /* symbolFile */, thr_handle /* newTask */, 0 /* newActivity */);
+
+#   else
+    ACE_UNUSED_ARG (stack);
+    // INTEGRITY has kernel calls in which we can pass argument for the new Task's entry point,
+    // e.g. CommonCreateTaskWithArgument.
+    // However, we are imitating INTEGRITY-178 and the call without entrypoint's argument is used.
+    err_code = ::CommonCreateTask (priority, (Address) &integrity_task_adapter /* entrypoint */,
+                                   (Address) stacksize, 0 /* name */, thr_handle /* newtask */);
+#   endif
+
+    if (err_code != Success)
+      {
+#   if defined (ACE_INTEGRITY178B)
+        // Cleanup the pre-allocated stack if one is assigned.
+        if (slot != NUM_DYNAMIC_THREADS)
+          {
+            int178_stack_manager.release (*thr_handle);
+          }
+#   endif
+        return -1;
+      }
+
+#   if defined (ACE_INTEGRITY178B)
+    // Set the owner of the acquired stack if one from the stack pool is being used.
+    if (slot != NUM_DYNAMIC_THREADS)
+      {
+        int178_stack_manager.owner (*thr_handle, slot);
+      }
+#    endif
+
+    *thr_id = *thr_handle;
+
+    {
+      // Set the argument for the new Task's entrypoint, then run it.
+      LockGuard guard (integrity_task_args_lock);
+      integrity_task_args[*thr_handle] = thread_args;
+
+      Semaphore sema;
+      if (::CreateSemaphore (0, &sema) != Success)
+        return -1;
+      integrity_join_semas[*thr_handle] = sema;
+    }
+
+    return RunTask (*thr_handle) == Success ? 0 : -1;
+
 # endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (func);
@@ -3883,6 +4147,26 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 # elif defined (ACE_HAS_VXTHREADS)
     ACE_UNUSED_ARG (status);
     ::taskDelete (ACE_OS::thr_self ());
+# elif defined (ACE_INTEGRITY)
+  ACE_UNUSED_ARG (status);
+
+  const ACE_hthread_t curr_task = CurrentTask ();
+  ACE_INTEGRITY_TSS_Impl* const obj = static_cast<ACE_INTEGRITY_TSS_Impl*> (ACE_Object_Manager::preallocated_object[ACE_Object_Manager::ACE_INTEGRITY_TSS_IMPL]);
+  obj->erase (curr_task);
+
+  {
+    // Signal any thread joining with this thread
+    LockGuard guard (integrity_task_args_lock);
+    ::ReleaseSemaphore (integrity_join_semas[curr_task]);
+  }
+
+#   if defined (ACE_INTEGRITY178B)
+  // Release the assigned stack
+  int178_stack_manager.release (curr_task);
+#   endif
+
+  // Any stack usage from this call?
+  Exit (0);
 # else
     ACE_UNUSED_ARG (status);
 # endif /* ACE_HAS_PTHREADS */
@@ -3955,6 +4239,71 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   return ACE_OS::thr_join (waiter_id, status);
 }
 #endif /* ACE_HAS_VXTHREADS */
+
+#if defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
+int
+ACE_OS::thr_join (ACE_hthread_t thr_handle,
+                  ACE_THR_FUNC_RETURN *)
+{
+  if (ACE_OS::thr_cmp (thr_handle, ACE_OS::NULL_hthread))
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
+
+  int retval = 0;
+  ACE_hthread_t current;
+  ACE_OS::thr_self (current);
+
+  if (ACE_OS::thr_cmp (thr_handle, current))
+    {
+      retval = EDEADLK;
+    }
+  else
+    {
+      Semaphore join_sema = 0;
+      std::map<ACE_hthread_t, ACE_sema_t>::iterator it = integrity_join_semas.end();
+      {
+        LockGuard guard (integrity_task_args_lock);
+        it = integrity_join_semas.find (thr_handle);
+        if (it == integrity_join_semas.end ())
+        {
+          errno = EINVAL;
+          return -1;
+        }
+
+        join_sema = it->second;
+      }
+
+      if (::WaitForSemaphore (join_sema) != Success)
+        retval = EINVAL;
+      else
+        {
+          LockGuard guard (integrity_task_args_lock);
+          // The joined thread has finished, we can delete the associated semaphore.
+# if !defined (ACE_INTEGRITY178B)
+          // INTEGRITY provides API to close semaphore but INTEGRITY-178 does not
+          ::CloseSemaphore (join_sema);
+# endif
+          integrity_join_semas.erase (it);
+        }
+    }
+
+  if (retval)
+    {
+      errno = retval;
+      retval = -1;
+    }
+  return retval;
+}
+
+int
+ACE_OS::thr_join (ACE_thread_t waiter_id,
+                  ACE_thread_t *,
+                  ACE_THR_FUNC_RETURN* status)
+{
+  return ACE_OS::thr_join (waiter_id, status);
+}
+#endif /* ACE_INTEGRITY && !ACE_HAS_PTHREADS */
 
 int
 ACE_OS::thr_key_detach (ACE_thread_key_t key)
