@@ -173,7 +173,7 @@ ACE_High_Res_Timer::global_scale_factor ()
      defined (ACE_HAS_PENTIUM)) && \
     !defined (ACE_HAS_HI_RES_TIMER) && \
     (defined (ACE_WIN32) || \
-     defined (ghs) || defined (__GNUG__) || \
+     defined (__ghs__) || defined (__GNUG__) || \
      defined (__INTEL_COMPILER))
   // Check if the global scale factor needs to be set, and do if so.
   if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
@@ -227,7 +227,7 @@ ACE_High_Res_Timer::global_scale_factor ()
 #endif /* (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
            ACE_HAS_PENTIUM) && \
           ! ACE_HAS_HI_RES_TIMER &&
-          ((WIN32) || ghs || __GNUG__) */
+          ((WIN32) || __ghs__ || __GNUG__) */
 
   return ACE_High_Res_Timer::global_scale_factor_;
 }

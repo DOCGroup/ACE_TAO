@@ -1511,6 +1511,12 @@ thread-pool reactor which is the default.</td>
               Linux. Be aware that dev_poll
               support is experimental!</td>
             </tr>
+            <tr>
+              <td><code>single_input</code></td>
+              <td>Use the ACE_Single_Input_Reactor that can be used on
+              systems without an I/O de-multiplex function, such as
+              <code>select</code>.</td>
+            </tr>
           </tbody>
         </table>
         </td>

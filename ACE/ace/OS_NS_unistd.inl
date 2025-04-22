@@ -84,7 +84,7 @@ ACE_OS::getpagesize ()
   ::GetSystemInfo (&sys_info);
   return (long) sys_info.dwPageSize;
 #elif defined (_SC_PAGESIZE)
-  return ::sysconf (_SC_PAGESIZE);
+  return ACE_OS::sysconf (_SC_PAGESIZE);
 #elif defined (ACE_HAS_GETPAGESIZE)
   return ::getpagesize ();
 #else
@@ -109,7 +109,10 @@ ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
-#if defined (ACE_CHDIR_EQUIVALENT)
+#if defined (ACE_LACKS_CHDIR)
+  ACE_UNUSED_ARG (path);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_CHDIR_EQUIVALENT)
   return ACE_CHDIR_EQUIVALENT (path);
 #else
   return ::chdir (path);
@@ -131,7 +134,10 @@ ACE_OS::chdir (const wchar_t *path)
 ACE_INLINE int
 ACE_OS::rmdir (const char *path)
 {
-#if defined (ACE_RMDIR_EQUIVALENT)
+#if defined (ACE_LACKS_RMDIR)
+  ACE_UNUSED_ARG (path);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_RMDIR_EQUIVALENT)
   return ACE_RMDIR_EQUIVALENT (path);
 #else
   return ::rmdir (path);
@@ -163,6 +169,9 @@ ACE_OS::close (ACE_HANDLE handle)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (handle), ace_result_), int, -1);
 #elif defined (ACE_MQX)
   return MQX_Filesystem::inst ().close (handle);
+#elif defined (ACE_LACKS_CLOSE)
+  ACE_UNUSED_ARG (handle);
+  ACE_NOTSUP_RETURN (-1);
 #else
   return ::close (handle);
 #endif /* ACE_WIN32 */
@@ -363,6 +372,8 @@ ACE_OS::ftruncate (ACE_HANDLE handle, ACE_OFF_T offset)
   else
     ACE_FAIL_RETURN (-1);
 #elif defined (ACE_LACKS_FTRUNCATE)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (offset);
   ACE_NOTSUP_RETURN (-1);
 #else
   return ::ftruncate (handle, offset);
@@ -373,7 +384,11 @@ ACE_INLINE char *
 ACE_OS::getcwd (char *buf, size_t size)
 {
   ACE_OS_TRACE ("ACE_OS::getcwd");
-#if defined (ACE_GETCWD_EQUIVALENT)
+#if defined (ACE_LACKS_GETCWD)
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (size);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_GETCWD_EQUIVALENT)
   return ACE_GETCWD_EQUIVALENT (buf, static_cast<int> (size));
 #elif defined (ACE_WIN32)
   return ::getcwd (buf, static_cast<int> (size));
@@ -648,6 +663,11 @@ ACE_OS::lseek (ACE_HANDLE handle, ACE_OFF_T offset, int whence)
       return static_cast<ACE_OFF_T> (-1);
     }
   return static_cast<ACE_OFF_T> (MQX_Filesystem::inst ().lseek (handle, offset, whence));
+#elif defined (ACE_LACKS_LSEEK)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (offset);
+  ACE_UNUSED_ARG (whence);
+  ACE_NOTSUP_RETURN (static_cast<off_t> (-1));
 #else
   return ::lseek (handle, offset, whence);
 #endif /* ACE_WIN32 */
@@ -694,6 +714,11 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   else
     ACE_FAIL_RETURN (-1);
 
+#elif defined (ACE_LACKS_READ)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_MQX)
   return MQX_Filesystem::inst ().read (handle, reinterpret_cast<unsigned char *> (buf), len);
 
@@ -928,19 +953,24 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
   return ::nanosleep (&rqtp, 0);
   //FUZZ: enable check_for_lack_ACE_OS
 #else
-# if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
+# if !defined (ACE_LACKS_SELECT)
+#  if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // Copy the timeval, because this platform doesn't declare the timeval
   // as a pointer to const.
   timeval tv_copy = tv;
-  //FUZZ: disable check_for_lack_ACE_OS
+  // FUZZ: disable check_for_lack_ACE_OS
   return ::select (0, 0, 0, 0, &tv_copy);
-  //FUZZ: enable check_for_lack_ACE_OS
-# else  /* ! ACE_HAS_NONCONST_SELECT_TIMEVAL */
-  const timeval *tvp = tv;
-  //FUZZ: disable check_for_lack_ACE_OS
+  // FUZZ: enable check_for_lack_ACE_OS
+#  else
+  const timeval* tvp = tv;
+  // FUZZ: disable check_for_lack_ACE_OS
   return ::select (0, 0, 0, 0, tvp);
-  //FUZZ: enable check_for_lack_ACE_OS
-# endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
+  // FUZZ: enable check_for_lack_ACE_OS
+#  endif
+# else
+  ACE_UNUSED_ARG (tv);
+  ACE_NOTSUP_RETURN (-1);
+# endif
 #endif /* ACE_WIN32 */
 }
 
@@ -996,10 +1026,6 @@ ACE_OS::swab (const void *src,
 #  else
   ::swab (from, to, length);
 #  endif /* ACE_HAS_INT_SWAB */
-#elif defined (ACE_HAS_CONST_CHAR_SWAB)
-  const char *from = static_cast<const char*> (src);
-  char *to = static_cast<char *> (dest);
-  ::swab (from, to, length);
 #else
   ::swab (src, dest, length);
 #endif /* ACE_LACKS_SWAB */
@@ -1010,7 +1036,10 @@ ACE_INLINE long
 ACE_OS::sysconf (int name)
 {
   ACE_OS_TRACE ("ACE_OS::sysconf");
-#if defined (ACE_LACKS_SYSCONF)
+#if defined (ACE_INTEGRITY)
+  if (name == _SC_PAGESIZE) return ACE_PAGE_SIZE;
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_SYSCONF)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);
 #else
@@ -1151,6 +1180,11 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
     ACE_FAIL_RETURN (-1);
 #elif defined (ACE_MQX)
   return MQX_Filesystem::inst ().write (handle, reinterpret_cast<const unsigned char *> (buf), nbyte);
+#elif defined (ACE_LACKS_WRITE)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (nbyte);
+  ACE_NOTSUP_RETURN (-1);
 #else
 # if defined (ACE_HAS_CHARPTR_SOCKOPT)
   return ::write (handle, static_cast <char *> (const_cast <void *> (buf)), nbyte);

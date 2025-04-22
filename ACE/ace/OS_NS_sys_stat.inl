@@ -19,6 +19,10 @@ namespace ACE_OS
     ACE_OS_TRACE ("ACE_OS::creat");
 #if defined (ACE_WIN32) || defined (ACE_MQX)
     return ACE_OS::open (filename, O_CREAT|O_TRUNC|O_WRONLY, mode);
+#elif defined (ACE_LACKS_CREAT)
+    ACE_UNUSED_ARG (filename);
+    ACE_UNUSED_ARG (mode);
+    ACE_NOTSUP_RETURN (-1);
 #else
     return ::creat (ACE_TEXT_ALWAYS_CHAR (filename), mode);
 #endif /* ACE_WIN32 */
@@ -61,6 +65,8 @@ namespace ACE_OS
     stp->st_mode = BASE_MODE | WRITE_MODE | TYPE_MODE;
     return 0;
 #elif defined (ACE_LACKS_FSTAT)
+    ACE_UNUSED_ARG (handle);
+    ACE_UNUSED_ARG (stp);
     ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_MQX)
     return MQX_Filesystem::inst ().fstat (handle, stp);
@@ -145,7 +151,11 @@ namespace ACE_OS
   ACE_INLINE int
   mkdir (const char *path, mode_t mode)
   {
-#if defined (ACE_MKDIR_LACKS_MODE)
+#if defined (ACE_LACKS_MKDIR)
+    ACE_UNUSED_ARG (path);
+    ACE_UNUSED_ARG (mode);
+    ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_MKDIR_LACKS_MODE)
     ACE_UNUSED_ARG (mode);
 #  if defined (ACE_MKDIR_EQUIVALENT)
     return ACE_MKDIR_EQUIVALENT (path);
@@ -190,6 +200,8 @@ namespace ACE_OS
   {
     ACE_OS_TRACE ("ACE_OS::stat");
 #if defined (ACE_LACKS_STAT)
+    ACE_UNUSED_ARG (file);
+    ACE_UNUSED_ARG (stp);
     ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_MQX)
     return MQX_Filesystem::inst ().stat (file, stp);
