@@ -29,11 +29,11 @@ TAO_Thread_Per_Connection_Handler::activate_ch (long flags,
 {
   if (TAO_debug_level)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Thread_Per_Connection_Handler::")
-                  ACE_TEXT ("activate %d threads, flags = %q\n"),
-                  n_threads,
-                  static_cast<ACE_INT64> (flags)));
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Thread_Per_Connection_Handler::")
+                     ACE_TEXT ("activate %d threads, flags = %q\n"),
+                     n_threads,
+                     static_cast<ACE_INT64> (flags)));
     }
 
   ACE_Vector<ACE_CString> names (n_threads);
