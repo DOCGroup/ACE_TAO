@@ -4028,9 +4028,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
     // Don't let this Task run immediately; we have to set its entrypoint's argument below.
     err_code = ::SetupTask (AddressSpaceObjectNumber (1), priority /* priority */, 0 /* weight */, 0 /* timeslice */,
-                          (Address) stack /* stack */, (Address) stacksize /* stackLength */, true /* enableClibrary */,
-                          true /* allocTLS */, (Address) &integrity_task_adapter, false /* startIt */, 0 /* name */,
-                          0 /* symbolFile */, thr_handle /* newTask */, 0 /* newActivity */);
+                            (Address) stack /* stack */, (Address) stacksize /* stackLength */, true /* enableClibrary */,
+                            true /* allocTLS */, (Address) &integrity_task_adapter, false /* startIt */,
+                            thr_name ? *thr_name : nullptr /* name */,
+                            0 /* symbolFile */, thr_handle /* newTask */, 0 /* newActivity */);
 
 #   else
     ACE_UNUSED_ARG (stack);
@@ -4038,7 +4039,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     // e.g. CommonCreateTaskWithArgument.
     // However, we are imitating INTEGRITY-178 and the call without entrypoint's argument is used.
     err_code = ::CommonCreateTask (priority, (Address) &integrity_task_adapter /* entrypoint */,
-                                   (Address) stacksize, 0 /* name */, thr_handle /* newtask */);
+                                   (Address) stacksize, thr_name ? *thr_name : nullptr /* name */,
+                                   thr_handle /* newtask */);
 #   endif
 
     if (err_code != Success)
