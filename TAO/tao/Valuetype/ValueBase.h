@@ -365,7 +365,7 @@ namespace TAO_OBV_GIOP_Flags
   const CORBA::Long Type_info_single  = 2;
   const CORBA::Long Type_info_list    = 6;
   const CORBA::Long Chunking_tag_sigbits = 8;
-  const CORBA::Long Indirection_tag   = -1;
+  const CORBA::Long Indirection_tag   = -1; // 0xffffffff
   const CORBA::Long Null_tag          = 0;
 
   TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long tag);

@@ -99,11 +99,6 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
       fd->disown_full_definition (); // This scope assumes ownership
     }
 
-/*   if (predef)
-    {
-      t->has_fwd_decl (true);
-    } */
-
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
                            false,

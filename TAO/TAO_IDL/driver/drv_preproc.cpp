@@ -888,7 +888,7 @@ namespace
       }
 
     *fi= '\0';
-    const size_t len = static_cast<size_t>(fi - incl_file);
+    size_t const len = static_cast<size_t> (fi - incl_file);
 
     if (len == 0)
     {

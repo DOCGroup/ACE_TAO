@@ -18,8 +18,8 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int &argc,
                                                  CHAR_TYPE const **temp)
   : argc_ (argc),
     total_size_ (argc),
-    temp_ (temp),
-    argv_ (argv),
+    temp_ (const_cast<CHAR_TYPE **> (temp)),
+    argv_ (const_cast<CHAR_TYPE **> (argv)),
     current_index_ (0),
     back_ (argc - 1),
     front_ (0)
