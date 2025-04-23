@@ -89,7 +89,7 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::ACE_Refcounted_Auto_Ptr (X *p)
 
 template <class X, class ACE_LOCK> inline
 ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::ACE_Refcounted_Auto_Ptr (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r)
-  : rep_ (AUTO_REFCOUNTED_PTR_REP::attach (((ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &) r).rep_))
+  : rep_ (AUTO_REFCOUNTED_PTR_REP::attach (const_cast<ACE_Refcounted_Auto_Ptr &> (r).rep_))
 {
 }
 

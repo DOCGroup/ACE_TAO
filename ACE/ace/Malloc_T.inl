@@ -90,7 +90,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::sync (ssize_t len,
                                                     int flags)
 {
   ACE_TRACE ("ACE_Malloc_T<MEMORY_POOL, ACE_LOCK, ACE_CB>::sync");
-  return this->memory_pool_.sync (len, flags);
+  return this->memory_pool_.sync (static_cast<size_t> (len), flags);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
@@ -107,7 +107,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::protect (ssize_t len,
                                                        int flags)
 {
   ACE_TRACE ("ACE_Malloc_T<MEMORY_POOL, ACE_LOCK, ACE_CB>::protect");
-  return this->memory_pool_.protect (len, flags);
+  return this->memory_pool_.protect (static_cast<size_t> (len), flags);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int

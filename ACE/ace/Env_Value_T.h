@@ -89,7 +89,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <> inline void
 ACE_Convert (const ACE_TCHAR *s, ACE_TCHAR *&v)
 {
-  v = (ACE_TCHAR *) s;
+  v = const_cast<ACE_TCHAR *> (s);
 }
 
 template <> inline void

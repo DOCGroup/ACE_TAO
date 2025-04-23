@@ -307,7 +307,7 @@ ACE_INLINE void
 ACE_Message_Block::wr_ptr (char *new_ptr)
 {
   ACE_TRACE ("ACE_Message_Block::wr_ptr");
-  this->wr_ptr_ = new_ptr - this->base ();
+  this->wr_ptr_ = static_cast<size_t> (new_ptr - this->base ());
 }
 
 // Return a pointer to 1 past the end of the data buffer.
@@ -345,7 +345,7 @@ ACE_INLINE void
 ACE_Message_Block::rd_ptr (char *new_ptr)
 {
   ACE_TRACE ("ACE_Message_Block::rd_ptr");
-  this->rd_ptr_ = new_ptr - this->base ();
+  this->rd_ptr_ = static_cast<size_t> (new_ptr - this->base ());
 }
 
 ACE_INLINE void
@@ -381,7 +381,7 @@ ACE_INLINE size_t
 ACE_Message_Block::space () const
 {
   ACE_TRACE ("ACE_Message_Block::space");
-  return this->mark () - this->wr_ptr ();
+  return static_cast<size_t> (this->mark () - this->wr_ptr ());
 }
 
 ACE_INLINE ACE_Data_Block *

@@ -56,7 +56,7 @@ ACE_INLINE ssize_t
 ACE_SPIPE_Stream::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int flags) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
-  return ACE_OS::putmsg (this->get_handle (), (strbuf *) cntl, (strbuf *) data, flags);
+  return ACE_OS::putmsg (this->get_handle (), (strbuf const *) cntl, (strbuf const *) data, flags);
 }
 
 ACE_INLINE ssize_t
@@ -70,7 +70,7 @@ ACE_INLINE ssize_t
 ACE_SPIPE_Stream::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int band, int flags) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
-  return ACE_OS::putpmsg (this->get_handle (), (strbuf *) cntl, (strbuf *) data, band, flags);
+  return ACE_OS::putpmsg (this->get_handle (), (strbuf const *) cntl, (strbuf const *) data, band, flags);
 }
 
 ACE_INLINE ssize_t

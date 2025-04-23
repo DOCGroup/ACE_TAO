@@ -431,7 +431,7 @@ ACE_String_Base<ACE_CHAR_T>::find (
   if (pointer == 0)
     return ACE_String_Base<ACE_CHAR_T>::npos;
   else
-    return pointer - this->rep_;
+    return static_cast<ACE_String_Base<ACE_CHAR_T>::size_type> (pointer - this->rep_);
 }
 
 template <class ACE_CHAR_T> typename ACE_String_Base<ACE_CHAR_T>::size_type
@@ -444,7 +444,7 @@ ACE_String_Base<ACE_CHAR_T>::find (
   if (pointer == 0)
     return ACE_String_Base<ACE_CHAR_T>::npos;
   else
-    return pointer - this->rep_;
+    return static_cast<ACE_String_Base<ACE_CHAR_T>::size_type> (pointer - this->rep_);
 }
 
 template <class ACE_CHAR_T> typename ACE_String_Base<ACE_CHAR_T>::size_type

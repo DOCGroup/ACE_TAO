@@ -65,7 +65,7 @@ inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
 #endif /* !ACE_LACKS_STRTOLL && !ACE_STRTOLL_EQUIVALENT */
 
 #if !defined (ACE_LACKS_STRTOULL) && !defined (ACE_STRTOULL_EQUIVALENT)
-inline ACE_INT64 ace_strtoull_helper (const char *s, char **ptr, int base)
+inline ACE_UINT64 ace_strtoull_helper (const char *s, char **ptr, int base)
 {
 # if defined (strtoull)
   return strtoull (s, ptr, base);

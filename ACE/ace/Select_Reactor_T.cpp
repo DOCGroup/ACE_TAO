@@ -506,12 +506,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
       // Set the default reactor size to be the current limit on the
       // number of file descriptors available to the process.  This
       // size is not necessarily the maximum limit.
-      if (this->open (ACE::max_handles (),
-                     0,
-                     sh,
-                     tq,
-                     disable_notify_pipe,
-                     notify) == -1)
+      if (this->open (static_cast<size_t> (ACE::max_handles ()),
+                      0,
+                      sh,
+                      tq,
+                      disable_notify_pipe,
+                      notify) == -1)
         ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("ACE_Select_Reactor_T::open ")
@@ -1048,15 +1048,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
   int const width = this->handler_rep_.max_handlep1 ();
 #endif  /* ACE_WIN32 */
 
-  ACE_Select_Reactor_Handle_Set fd_set;
-  fd_set.rd_mask_ = this->wait_set_.rd_mask_;
-  fd_set.wr_mask_ = this->wait_set_.wr_mask_;
-  fd_set.ex_mask_ = this->wait_set_.ex_mask_;
+  ACE_Select_Reactor_Handle_Set fds;
+  fds.rd_mask_ = this->wait_set_.rd_mask_;
+  fds.wr_mask_ = this->wait_set_.wr_mask_;
+  fds.ex_mask_ = this->wait_set_.ex_mask_;
 
   int const nfds = ACE_OS::select (width,
-                                   fd_set.rd_mask_,
-                                   fd_set.wr_mask_,
-                                   fd_set.ex_mask_,
+                                   fds.rd_mask_,
+                                   fds.wr_mask_,
+                                   fds.ex_mask_,
                                    this_timeout);
 
   // If timers are pending, override any timeout from the select()
@@ -1187,7 +1187,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
   (int number_of_active_handles,
    int &number_of_handlers_dispatched,
-   int mask,
+   ACE_Reactor_Mask mask,
    ACE_Handle_Set &dispatch_mask,
    ACE_Handle_Set &ready_mask,
    ACE_EH_PTMF callback)
@@ -1211,7 +1211,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
       // clear the bit from that dispatch mask,
       // so when we need to restart the iteration (rebuilding the iterator...)
       // we will not dispatch the already dispatched handlers
-      this->clear_dispatch_mask (handle, mask);
+      this->clear_dispatch_mask (handle, static_cast<ACE_Reactor_Mask> (mask));
 
       if (this->state_changed_)
         {

@@ -220,10 +220,17 @@ DRV_cpp_expand_output_arg (const char *filename)
                      + ACE_OS::strlen (filename)
                      + 1]);
 
+#ifdef __GNUC__
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#endif
       ACE_OS::sprintf (const_cast<ACE_TCHAR *> (
                          DRV_arglist[output_arg_index]),
                        ACE_TEXT_CHAR_TO_TCHAR (output_arg_format),
                        ACE_TEXT_CHAR_TO_TCHAR (filename));
+#ifdef __GNUC__
+#  pragma GCC diagnostic pop
+#endif
     }
 }
 
@@ -246,7 +253,7 @@ static bool
 DRV_get_line (FILE *file)
 {
   char *line = ACE_OS::fgets (drv_line,
-                              ACE_Utils::truncate_cast<int> (drv_line_size),
+                              static_cast<int> (drv_line_size),
                               file);
   if (!line || (!*line && feof (file)))
     {
@@ -290,7 +297,7 @@ DRV_get_line (FILE *file)
         }
 
       line = ACE_OS::fgets (drv_line + len,
-                            ACE_Utils::truncate_cast<int> (drv_line_size - len),
+                            static_cast<int> (drv_line_size - len),
                             file);
     } while (line && *line);
 
@@ -404,7 +411,7 @@ DRV_cpp_init ()
   ACE_ARGV platform_arglist (
     ACE_TEXT_CHAR_TO_TCHAR (platform_cpp_args));
 
-  for (int i = 0; i < platform_arglist.argc (); ++i)
+  for (size_t i = 0; i < static_cast<size_t> (platform_arglist.argc ()); ++i)
     {
       // Check for an argument that specifies
       // the preprocessor's output file.
@@ -413,7 +420,7 @@ DRV_cpp_init ()
         {
           output_arg_format =
             ACE::strnew (ACE_TEXT_ALWAYS_CHAR (platform_arglist[i]));
-          output_arg_index = DRV_argcount;
+          output_arg_index = static_cast<long> (DRV_argcount);
           DRV_cpp_putarg (nullptr);
         }
       else
@@ -881,7 +888,7 @@ namespace
       }
 
     *fi= '\0';
-    const size_t len = fi - incl_file;
+    size_t const len = static_cast<size_t> (fi - incl_file);
 
     if (len == 0)
     {

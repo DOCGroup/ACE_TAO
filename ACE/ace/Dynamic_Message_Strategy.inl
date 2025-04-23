@@ -44,7 +44,7 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_max (unsigned long ul)
   // dynamic_priority_max_ is initialized or changes, and is stored
   // as a class member rather than being a derived value.
   dynamic_priority_max_ = ul;
-  pending_shift_ = ACE_Time_Value (0, ul);
+  pending_shift_ = ACE_Time_Value (0, static_cast<suseconds_t> (ul));
 }
   // set maximum supported priority value
 
@@ -64,8 +64,8 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_offset (unsigned long ul)
   // initialized or changes, and are stored as a class member rather
   // than being derived each time one of their values is needed.
   dynamic_priority_offset_ = ul;
-  max_late_ = ACE_Time_Value (0, ul - 1);
-  min_pending_ = ACE_Time_Value (0, ul);
+  max_late_ = ACE_Time_Value (0, static_cast<suseconds_t> (ul - 1));
+  min_pending_ = ACE_Time_Value (0, static_cast<suseconds_t> (ul));
 }
   // set offset for boundary between signed range and unsigned range
 

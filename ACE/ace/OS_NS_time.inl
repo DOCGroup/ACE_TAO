@@ -28,7 +28,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 # if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   char *result = 0;
   ace_asctime_r_helper (t, buf);
-  ACE_OS::strsncpy (buf, result, buflen);
+  ACE_OS::strsncpy (buf, result, static_cast<size_t> (buflen));
   return buf;
 # else
 #   if defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
@@ -404,7 +404,14 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
   ACE_UNUSED_ARG (timeptr);
   ACE_NOTSUP_RETURN (0);
 #else
+#  ifdef __GNUC__
+#    pragma GCC diagnostic push
+#    pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#  endif
   return std::strftime (s, maxsize, format, timeptr);
+#  ifdef __GNUC__
+#    pragma GCC diagnostic pop
+#  endif
 #endif /* ACE_LACKS_STRFTIME */
 }
 

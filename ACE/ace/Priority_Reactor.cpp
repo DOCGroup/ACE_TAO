@@ -120,7 +120,7 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
 int
 ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
                                        int& number_dispatched,
-                                       int mask,
+                                       ACE_Reactor_Mask mask,
                                        ACE_Handle_Set& dispatch_mask,
                                        ACE_Handle_Set& ready_mask,
                                        ACE_EH_PTMF callback)
