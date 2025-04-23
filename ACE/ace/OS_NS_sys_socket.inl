@@ -711,7 +711,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  len,
                                  flags,
                                  const_cast<struct sockaddr *> (addr),
-                                 addrlen),
+                                 static_cast<socklen_t> (addrlen)),
                        ssize_t, -1);
 #endif /* ACE_LACKS_SENDTO */
 }
@@ -925,7 +925,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
                               level,
                               optname,
                               (ACE_SOCKOPT_TYPE1) optval,
-                              optlen),
+                              static_cast<socklen_t> (optlen)),
                 int,
                 -1,
                 result);

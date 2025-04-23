@@ -25,12 +25,12 @@ namespace TAO
   template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::Transport_Cache_Manager_T (
     int percent,
-    purging_strategy* purging_strategy,
+    purging_strategy *purging,
     size_t cache_maximum,
     bool locked,
     const char *orbid)
     : percent_ (percent)
-    , purging_strategy_ (purging_strategy)
+    , purging_strategy_ (purging)
     , cache_map_ (cache_maximum)
     , cache_lock_ (0)
     , cache_maximum_ (cache_maximum)
@@ -544,8 +544,8 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     cpscmp(const void* a, const void* b)
   {
-    const HASH_MAP_ENTRY** left  = (const HASH_MAP_ENTRY**)a;
-    const HASH_MAP_ENTRY** right = (const HASH_MAP_ENTRY**)b;
+    const HASH_MAP_ENTRY** left  = (const HASH_MAP_ENTRY**) const_cast<void *> (a);
+    const HASH_MAP_ENTRY** right = (const HASH_MAP_ENTRY**) const_cast<void *> (b);
 
     if ((*left)->int_id_.transport ()->purging_order () <
         (*right)->int_id_.transport ()->purging_order ())

@@ -19,7 +19,7 @@ ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority)
 {
   return ACE_BIT_ENABLED (this->priority_mask_ |
                           ACE_Log_Msg::process_priority_mask_,
-                          log_priority);
+                          static_cast<u_long> (log_priority));
 }
 
 ACE_INLINE

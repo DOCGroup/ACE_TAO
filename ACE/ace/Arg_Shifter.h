@@ -75,8 +75,8 @@ public:
    *    vector transparently.
    */
   ACE_Arg_Shifter_T (int &argc,
-                     const CHAR_TYPE **argv,
-                     const CHAR_TYPE **temp = 0);
+                     CHAR_TYPE const **argv,
+                     CHAR_TYPE const **temp = 0);
 
   /// Same behavior as the preceding constructor, but without the
   /// "const" qualifier.
@@ -122,7 +122,7 @@ public:
    * together '-foobarflagVALUE', the flag is NOT consumed
    * and the cur arg is left pointing to the entire flag/value pair
    */
-  const CHAR_TYPE *get_the_parameter (const CHAR_TYPE *flag);
+  CHAR_TYPE const *get_the_parameter (CHAR_TYPE const *flag);
 
   /**
    * Check if the current argument matches (case insensitive) @a flag
@@ -161,7 +161,7 @@ public:
    * Case C: If neither of Case A or B is met (no match)
    * then -1 is returned
    */
-  int cur_arg_strncasecmp (const CHAR_TYPE *flag);
+  int cur_arg_strncasecmp (CHAR_TYPE const *flag);
 
   /// Consume @a number argument(s) by sticking them/it on the end of
   /// the vector.
@@ -202,10 +202,10 @@ private:
   int total_size_;
 
   /// The temporary array over which we traverse.
-  const CHAR_TYPE **temp_;
+  CHAR_TYPE **temp_;
 
   /// The array in which the arguments are reordered.
-  const CHAR_TYPE **argv_;
+  CHAR_TYPE **argv_;
 
   /// The element in <temp_> we're currently examining.
   int current_index_;

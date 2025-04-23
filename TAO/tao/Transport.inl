@@ -242,7 +242,7 @@ TAO::Transport::Stats::bytes_sent (void) const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
 
-  return this->bytes_sent_.sum_;
+  return static_cast<CORBA::LongLong> (this->bytes_sent_.sum_);
 }
 
 ACE_INLINE void
@@ -267,7 +267,7 @@ TAO::Transport::Stats::bytes_received (void) const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
 
-  return this->bytes_rcvd_.sum_;
+  return static_cast<CORBA::LongLong> (this->bytes_rcvd_.sum_);
 }
 
 ACE_INLINE void

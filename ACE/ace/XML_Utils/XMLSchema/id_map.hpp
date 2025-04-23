@@ -56,7 +56,7 @@
     //XML document.
     class Unresolved_IDREF {
       public:
-        explicit Unresolved_IDREF(const std::basic_string<ACE_TCHAR> &message) : message(message)
+        explicit Unresolved_IDREF(const std::basic_string<ACE_TCHAR> &a_message) : message(a_message)
         {}
         ~Unresolved_IDREF(){}
         std::basic_string<ACE_TCHAR> get_message ( void )
@@ -106,10 +106,10 @@
 
     void resolve_single_idref (const std::basic_string<ACE_TCHAR>& idref, ::XSCRT::Type * element)
     {
-       ID_Map::id_iterator id_iterator = this->id_map_.find(idref);
-       if (id_iterator != this->id_map_.end())
+      ID_Map::id_iterator id_iter = this->id_map_.find(idref);
+      if (id_iter != this->id_map_.end())
        {
-         element->set_idref(idref, id_iterator->second);
+        element->set_idref(idref, id_iter->second);
        }
        else
        {
@@ -123,22 +123,22 @@
     void resolve_idref ( void )
     {
       // Declare iterators to navigate the maps
-      for (ID_Map::idref_iterator idref_iterator = this->idref_map_.begin();
-           idref_iterator != this->idref_map_.end();
-           ++idref_iterator)
+      for (ID_Map::idref_iterator idref_iter = this->idref_map_.begin();
+          idref_iter != this->idref_map_.end();
+          ++idref_iter)
       {
         //Find the ID that matches the IDREF element
-        ID_Map::id_iterator id_iterator = this->id_map_.find(idref_iterator->first);
-        if (id_iterator != this->id_map_.end())
+        ID_Map::id_iterator id_iter = this->id_map_.find(idref_iter->first);
+        if (id_iter != this->id_map_.end())
         {
           // Add the IDREF identifier and the reference to the
           // identified object
-          std::basic_string<ACE_TCHAR> temp_id = id_iterator->first;
-          idref_iterator->second->set_idref(temp_id, id_iterator->second);
+          std::basic_string<ACE_TCHAR> temp_id = id_iter->first;
+          idref_iter->second->set_idref(temp_id, id_iter->second);
         }
         else
         {
-          throw Unresolved_IDREF(idref_iterator->first);
+          throw Unresolved_IDREF(idref_iter->first);
         }
       }
     }

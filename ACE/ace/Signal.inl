@@ -137,13 +137,13 @@ ACE_Sig_Action::handler (void)
 }
 
 ACE_INLINE void
-ACE_Sig_Action::handler (ACE_SignalHandler handler)
+ACE_Sig_Action::handler (ACE_SignalHandler handler_arg)
 {
   ACE_TRACE ("ACE_Sig_Action::handler");
 #if !defined(ACE_HAS_TANDEM_SIGNALS)
-  this->sa_.sa_handler = ACE_SignalHandlerV (handler);
+  this->sa_.sa_handler = ACE_SignalHandlerV (handler_arg);
 #else
-  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (handler);
+  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (handler_arg);
 #endif /* !ACE_HAS_TANDEM_SIGNALS */
 }
 

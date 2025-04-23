@@ -107,8 +107,8 @@ public:
                                                   ACE_CDR::MAX_ALIGNMENT);
 
         // Get the read and write displacements in the incoming stream
-        size_t const rd_pos = mb->rd_ptr () - start;
-        size_t const wr_pos = mb->wr_ptr () - start;
+        size_t const rd_pos = static_cast<size_t> (mb->rd_ptr () - start);
+        size_t const wr_pos = static_cast<size_t> (mb->wr_ptr () - start);
 
         this->mb_ = ACE_Message_Block::duplicate (&msgb);
 

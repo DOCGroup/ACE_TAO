@@ -31,7 +31,7 @@ ACE_INLINE int
 ACE_IPC_SAP::control (int cmd, void *arg) const
 {
   ACE_TRACE ("ACE_IPC_SAP::control");
-  return ACE_OS::ioctl (this->handle_, cmd, arg);
+  return ACE_OS::ioctl (this->handle_, static_cast<ACE_IOCTL_TYPE_ARG2> (cmd), arg);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
