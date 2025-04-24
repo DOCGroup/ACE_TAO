@@ -4030,7 +4030,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     err_code = ::SetupTask (AddressSpaceObjectNumber (1), priority /* priority */, 0 /* weight */, 0 /* timeslice */,
                             (Address) stack /* stack */, (Address) stacksize /* stackLength */, true /* enableClibrary */,
                             true /* allocTLS */, (Address) &integrity_task_adapter, false /* startIt */,
-                            thr_name ? *thr_name : nullptr /* name */,
+                            thr_name ? const_cast<char *> (*thr_name) : nullptr /* name */,
                             0 /* symbolFile */, thr_handle /* newTask */, 0 /* newActivity */);
 
 #   else
@@ -4039,7 +4039,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     // e.g. CommonCreateTaskWithArgument.
     // However, we are imitating INTEGRITY-178 and the call without entrypoint's argument is used.
     err_code = ::CommonCreateTask (priority, (Address) &integrity_task_adapter /* entrypoint */,
-                                   (Address) stacksize, thr_name ? *thr_name : nullptr /* name */,
+                                   (Address) stacksize,
+                                   thr_name ? const_cast<char *> (*thr_name) : nullptr /* name */,
                                    thr_handle /* newtask */);
 #   endif
 

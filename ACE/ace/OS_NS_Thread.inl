@@ -2379,6 +2379,9 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
     // means forever.
     *sig = ::sigtimedwait (sset, 0, 0);
     return *sig;
+# else
+    ACE_UNUSED_ARG (sset);
+    ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_WTHREADS || ACE_LACKS_SIGWAIT */
 #else
     ACE_UNUSED_ARG (sset);

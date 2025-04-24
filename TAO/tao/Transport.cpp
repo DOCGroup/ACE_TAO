@@ -2464,9 +2464,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   switch (qd->msg_type ())
-  {
-    case GIOP::CloseConnection:
     {
+    case GIOP::CloseConnection:
       if (TAO_debug_level > 0)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
@@ -2478,11 +2477,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       // Return a "-1" so that the next stage can take care of
       // closing connection and the necessary memory management.
       return -1;
-    }
-    break;
     case GIOP::Request:
     case GIOP::LocateRequest:
-    {
       // Let us resume the handle before we go ahead to process the
       // request. This will open up the handle for other threads.
       rh.resume_handle ();
@@ -2493,32 +2489,29 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           // closing connection and the necessary memory management.
           return -1;
         }
-    }
-    break;
+      break;
     case GIOP::Reply:
     case GIOP::LocateReply:
-    {
-      rh.resume_handle ();
+      {
+        rh.resume_handle ();
 
-      TAO_Pluggable_Reply_Params params (this);
+        TAO_Pluggable_Reply_Params params (this);
 
-      if (this->messaging_object ()->process_reply_message (params, qd) == -1)
-        {
-          if (TAO_debug_level > 0)
-            {
-              TAOLIB_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
-                 ACE_TEXT ("error in process_reply_message - %m\n"),
-                 this->id ()));
-            }
+        if (this->messaging_object ()->process_reply_message (params, qd) == -1)
+          {
+            if (TAO_debug_level > 0)
+              {
+                TAOLIB_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+                  ACE_TEXT ("error in process_reply_message - %m\n"),
+                  this->id ()));
+              }
 
-          return -1;
-        }
-
-    }
-    break;
+            return -1;
+          }
+      }
+      break;
     case GIOP::CancelRequest:
-    {
       // The associated request might be incomplete residing
       // fragmented in messaging object. We must make sure the
       // resources allocated by fragments are released.
@@ -2539,10 +2532,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
 
       // Just continue processing, CancelRequest does not mean to cut
       // off the connection.
-    }
-    break;
+      break;
     case GIOP::MessageError:
-    {
       if (TAO_debug_level > 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
@@ -2551,14 +2542,9 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
              this->id ()));
         }
       return -1;
-    }
-    break;
     case GIOP::Fragment:
-    {
-      // Nothing to be done.
+      break;
     }
-    break;
-  }
 
   // If not, just return back..
   return 0;
