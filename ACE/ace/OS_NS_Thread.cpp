@@ -3884,7 +3884,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       if (thr_name && *thr_name && *thr_handle)
         {
-          SetThreadDescription (*thr_handle, ACE_TEXT_ALWAYS_WCHAR (*thr_name));
+          SetThreadDescription (*thr_handle, ACE_Ascii_To_Wide (*thr_name).wchar_rep ());
         }
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY && *thr_handle != 0)
