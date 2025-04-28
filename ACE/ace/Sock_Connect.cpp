@@ -1312,10 +1312,10 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 {
 #if defined (SIOCGIFNUM)
 # if defined (SIOCGLIFNUM) && !defined (ACE_LACKS_STRUCT_LIFNUM)
-  int cmd = SIOCGLIFNUM;
+  ACE_IOCTL_TYPE_ARG2 cmd = SIOCGLIFNUM;
   struct lifnum if_num = {AF_UNSPEC,0,0};
 # else
-  int cmd = SIOCGIFNUM;
+  ACE_IOCTL_TYPE_ARG2 cmd = SIOCGIFNUM;
   int if_num = 0;
 # endif /* SIOCGLIFNUM */
   if (ACE_OS::ioctl (handle, cmd, (caddr_t)&if_num) == -1)

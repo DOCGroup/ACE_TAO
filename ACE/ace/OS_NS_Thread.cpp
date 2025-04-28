@@ -3565,7 +3565,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                     void *stack,
                     size_t stacksize,
                     ACE_Base_Thread_Adapter *thread_adapter,
-                    const char** thr_name)
+                    const char **thr_name)
 {
   ACE_OS_TRACE ("ACE_OS::thr_create");
 
@@ -4113,6 +4113,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                 flags,
                                                 thr_id);
 
+      if (thr_name && *thr_name && *thr_handle)
+        {
+          SetThreadDescription (*thr_handle, ACE_Ascii_To_Wide (*thr_name).wchar_rep ());
+        }
+
       if (priority != ACE_DEFAULT_THREAD_PRIORITY && *thr_handle != 0)
         {
           // Set the priority of the new thread and then let it
@@ -4168,7 +4173,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // The call below to ::taskSpawn () causes VxWorks to assign a
       // unique task name of the form: "t" + an integer, because the
       // first argument is 0.
-      tid = ::taskSpawn (thr_name && *thr_name ? const_cast <char*> (*thr_name) : 0,
+      tid = ::taskSpawn (thr_name && *thr_name ? const_cast <char *> (*thr_name) : 0,
                          priority,
                          (int) flags,
                          stacksize,
@@ -4188,7 +4193,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       // The TID is defined to be the address of the TCB.
       int status = ::taskInit (tcb,
-                               thr_name && *thr_name ? const_cast <char*>(*thr_name) : 0,
+                               thr_name && *thr_name ? const_cast <char *> (*thr_name) : 0,
                                priority,
                                (int) flags,
                                (char *) stack + sizeof (WIND_TCB),

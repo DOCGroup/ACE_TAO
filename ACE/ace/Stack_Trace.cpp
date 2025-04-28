@@ -51,11 +51,14 @@ ACE_Stack_Trace::c_str () const
   return &this->buf_[0];
 }
 
+#if defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H) || defined(VXWORKS) || \
+    (defined(ACE_WIN32) && !defined (__MINGW32__) && !defined(__BORLANDC__))
 static inline size_t
 determine_starting_frame (ssize_t initial_frame, ssize_t offset)
 {
   return ACE_MAX( initial_frame + offset, static_cast<ssize_t>(0));
 }
+#endif
 
 #if defined(ACE_FACE_SAFETY_BASE) && !defined(ACE_FACE_DEV)
 void
