@@ -46,6 +46,8 @@ public:
 
   ~TAO_Thread_Per_Connection_Handler ();
 
+  int activate_ch (long flags, int n_threads);
+
   /// Template hook method that the thread uses...
   /**
    * Please see the documentation in ace/Task.h for details.
@@ -55,8 +57,7 @@ public:
   virtual int close (u_long);
 
 private:
-  /// Pointer to protocol specific code that does the bunch of the
-  /// job.
+  /// Pointer to protocol-specific code that does a bunch of the job.
   TAO_Connection_Handler *ch_;
 };
 

@@ -21,6 +21,9 @@ USER VISIBLE CHANGES BETWEEN ACE-8.0.2 and ACE-8.0.3
 . Updated support for Green Hills INTEGRITY and INTEGRITY-178 tuMP RTOS.
   Tested on INTEGRITY 11.4.6 and INTEGRITY-178 5.0.0.
 
+. Thread names given to ACE_OS::thr_create are now passed down to the OS
+  on Windows and on INTEGRITY.
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.1 and ACE-8.0.2
 ====================================================
 

@@ -35,6 +35,7 @@
 #define ACE_HAS_DIRENT
 
 #define ACE_PAGE_SIZE 4096
+#define ACE_IOCTL_TYPE_ARG2 unsigned long
 
 #define ACE_LACKS_KEY_T
 

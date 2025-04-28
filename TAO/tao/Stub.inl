@@ -39,7 +39,7 @@ TAO_Stub::reset_profiles_i ()
   if (this->forward_profiles_perm_)
     {
       // The *permanent* forward is being kept in the transient
-      // forward queue (??!). We have just nuked it. Put it back the way it was.
+      // forward queue (?). We have just nuked it. Put it back the way it was.
       // reset_base should have reset the profile success.
       // @todo We have knives in the spoon draw - TAO_Stub needs total rewrite.
       this->forward_profiles_ = this->forward_profiles_perm_;

@@ -530,7 +530,7 @@ public:
              int grp_id = -1,
              void *stack = 0,
              size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE,
-             const char** thr_name = 0);
+             const char **thr_name = 0);
 
   /**
    * Spawn a specified number of threads, all of which execute @a func
@@ -607,7 +607,7 @@ public:
                ACE_hthread_t thread_handles[] = 0,
                void *stack[] = 0,
                size_t stack_size[] = 0,
-               const char* thr_name[] = 0);
+               const char *thr_name[] = 0);
 
   /**
    * Spawn a specified number of threads, all of which execute @a func
@@ -690,7 +690,7 @@ public:
                size_t stack_size[] = 0,
                ACE_hthread_t thread_handles[] = 0,
                ACE_Task_Base *task = 0,
-               const char* thr_name[] = 0);
+               const char *thr_name[] = 0);
 
   /**
    * Called to clean up when a thread exits.
@@ -1108,14 +1108,14 @@ protected:
   int spawn_i (ACE_THR_FUNC func,
                void *arg,
                long flags,
-               ACE_thread_t * = 0,
+               ACE_thread_t *t_id = 0,
                ACE_hthread_t *t_handle = 0,
                long priority = ACE_DEFAULT_THREAD_PRIORITY,
                int grp_id = -1,
                void *stack = 0,
                size_t stack_size = 0,
                ACE_Task_Base *task = 0,
-               const char** thr_name = 0);
+               const char **thr_name = 0);
 
   /// Run the registered hooks when the thread exits.
   void run_thread_exit_hooks (int i);

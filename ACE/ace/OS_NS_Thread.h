@@ -1640,7 +1640,7 @@ namespace ACE_OS {
                   void *stack = 0,
                   size_t stacksize = ACE_DEFAULT_THREAD_STACKSIZE,
                   ACE_Base_Thread_Adapter *thread_adapter = 0,
-                  const char** thr_name = 0);
+                  const char **thr_name = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_equal (ACE_thread_t t1, ACE_thread_t t2);

@@ -577,7 +577,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                              void *stack,
                              size_t stack_size,
                              ACE_Task_Base *task,
-                             const char** thr_name)
+                             const char **thr_name)
 {
   // First, threads created by Thread Manager should not be daemon threads.
   // Using assertion is probably a bit too strong.  However, it helps
@@ -692,7 +692,7 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
                            int grp_id,
                            void *stack,
                            size_t stack_size,
-                           const char** thr_name)
+                           const char **thr_name)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn");
 
@@ -733,7 +733,7 @@ ACE_Thread_Manager::spawn_n (size_t n,
                              ACE_hthread_t thread_handles[],
                              void *stack[],
                              size_t stack_size[],
-                             const char* thr_name[])
+                             const char *thr_name[])
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -776,7 +776,7 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                              size_t stack_size[],
                              ACE_hthread_t thread_handles[],
                              ACE_Task_Base *task,
-                             const char* thr_name[])
+                             const char *thr_name[])
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
