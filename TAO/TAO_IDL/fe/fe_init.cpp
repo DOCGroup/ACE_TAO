@@ -496,30 +496,13 @@ FE_get_cpp_loc_from_env ()
 
   // Set cpp_loc to the built in location, unless it has been overriden by
   // environment variables.
-  if (preprocessor != 0)
+  if (preprocessor)
     {
       cpp_loc = preprocessor;
     }
   else
     {
-      // Check for the deprecated CPP_LOCATION environment variable
-      ACE_Env_Value<char*> cpp_path (ACE_TEXT ("CPP_LOCATION"),
-                                     (char *) nullptr);
-
-      if (cpp_path != 0)
-        {
-          ACE_ERROR ((LM_WARNING,
-                      "WARNING: The environment variable "
-                      "CPP_LOCATION has been deprecated.\n"
-                      "         Please use TAO_IDL_PREPROCESSOR "
-                      "instead.\n"));
-
-          cpp_loc = cpp_path;
-        }
-      else
-        {
-          cpp_loc = idl_global->cpp_location ();
-        }
+      cpp_loc = idl_global->cpp_location ();
     }
 
   return cpp_loc;
@@ -528,35 +511,5 @@ FE_get_cpp_loc_from_env ()
 const char *
 FE_get_cpp_args_from_env ()
 {
-  const char *cpp_args = nullptr;
-
-  // Added some customizable preprocessor options
-  ACE_Env_Value<char*> args1 (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"),
-                              (char *) nullptr);
-
-  if (args1 != 0)
-    {
-      cpp_args = args1;
-    }
-  else
-    {
-      // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment
-      // variable.
-      ACE_Env_Value<char*> args2 (ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS"),
-                                  (char *) nullptr);
-
-      if (args2 != 0)
-        {
-          ACE_ERROR ((LM_WARNING,
-                      "Warning: The environment variable "
-                      "TAO_IDL_DEFAULT_CPP_FLAGS has been "
-                      "deprecated.\n"
-                      "         Please use "
-                      "TAO_IDL_PREPROCESSOR_ARGS instead.\n"));
-
-          cpp_args = args2;
-        }
-    }
-
-  return cpp_args;
+  return ACE_Env_Value<char*> (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"), nullptr);
 }
