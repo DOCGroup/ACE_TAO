@@ -441,7 +441,7 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
 #    pragma GCC diagnostic push
 #    pragma GCC diagnostic ignored "-Wformat-nonliteral"
 #  endif
-  return std::strftime (s, maxsize, format, timeptr);
+  return ACE_STD_NAMESPACE::strftime (s, maxsize, format, timeptr);
 #  ifdef __GNUC__
 #    pragma GCC diagnostic pop
 #  endif
