@@ -41,13 +41,13 @@ public:
   ACE_Condition (const ACE_Null_Mutex &m,
                  const ACE_TCHAR * = 0,
                  void * = 0)
-    : mutex_ ((ACE_Null_Mutex &) m) {}
+    : mutex_ (const_cast<ACE_Null_Mutex &> (m)) {}
 
   ACE_Condition (const ACE_Null_Mutex &m,
                  const ACE_Condition_Attributes &,
                  const ACE_TCHAR * = 0,
                  void * = 0)
-  : mutex_ ((ACE_Null_Mutex &) m) {}
+  : mutex_ (const_cast<ACE_Null_Mutex &> (m)) {}
 
   ~ACE_Condition (void) {}
 

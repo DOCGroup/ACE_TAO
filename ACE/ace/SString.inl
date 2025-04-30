@@ -181,7 +181,7 @@ ACE_SString::find (const char *s, size_type pos) const
   if (pointer == 0)
     return ACE_SString::npos;
   else
-    return pointer - this->rep_;
+    return static_cast<ACE_SString::size_type> (pointer - this->rep_);
 }
 
 ACE_INLINE ACE_SString::size_type
@@ -192,7 +192,7 @@ ACE_SString::find (char c, size_type pos) const
   if (pointer == 0)
     return ACE_SString::npos;
   else
-    return pointer - this->rep_;
+    return static_cast<ACE_SString::size_type> (pointer - this->rep_);
 }
 
 ACE_INLINE ACE_SString::size_type

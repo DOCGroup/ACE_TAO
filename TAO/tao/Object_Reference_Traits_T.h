@@ -32,7 +32,7 @@ struct object_reference_traits_decorator
   inline static void zero_range(
       object_type ** begin, object_type ** end)
   {
-    ACE_OS::memset (begin, 0, (end - begin) * sizeof (object_type*));
+    ACE_OS::memset (begin, 0, static_cast<size_t> (end - begin) * sizeof (object_type*));
   }
 
   inline static void initialize_range(

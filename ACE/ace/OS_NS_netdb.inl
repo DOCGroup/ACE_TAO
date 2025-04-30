@@ -122,8 +122,8 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   //FUZZ: disable check_for_lack_ACE_OS
-  if (::gethostbyaddr_r ((char *) addr,
-                         length,
+  if (::gethostbyaddr_r (addr,
+                         static_cast<socklen_t> (length),
                          type,
                          result,
                          buffer,
@@ -809,7 +809,7 @@ ACE_OS::getnameinfo (const sockaddr *addr, ACE_SOCKET_LEN addr_len,
   return ACE_OS::getnameinfo_emulation (addr, addr_len, host, host_len);
 #else
   return ::getnameinfo (addr, addr_len, host, host_len,
-                        service, service_len, flags);
+                        service, service_len, static_cast<int> (flags));
 #endif
 }
 

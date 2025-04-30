@@ -26,7 +26,7 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
     // That first term will be lossy, so factor out global_scale_factor_:
     // tv.usec = (hrt - tv.sec * ACE_ONE_SECOND_IN_USECS * global_scale_factor_)/
     //           global_scale_factor
-    ACE_hrtime_t tmp = tv.sec ();
+    ACE_hrtime_t tmp = static_cast<ACE_hrtime_t> (tv.sec ());
     tmp *= ((ACE_UINT32) ACE_HR_SCALE_CONVERSION * global_scale_factor ());
     tv.usec ((suseconds_t) ((hrt - tmp) / global_scale_factor ()));
 #else

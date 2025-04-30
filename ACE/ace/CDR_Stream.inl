@@ -330,7 +330,7 @@ ACE_OutputCDR::write_fixed (const ACE_CDR::Fixed &x)
 {
   int n;
   const ACE_CDR::Octet *arr = x.to_octets (n);
-  return this->write_array (arr, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, n);
+  return this->write_array (arr, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, static_cast<ACE_CDR::ULong> (n));
 }
 
 ACE_INLINE ACE_CDR::Boolean

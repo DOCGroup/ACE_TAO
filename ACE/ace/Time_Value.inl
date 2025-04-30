@@ -150,7 +150,7 @@ ACE_Time_Value::get_msec () const
   // ACE_OS_TRACE ("ACE_Time_Value::get_msec");
   ACE_UINT64 ms = ACE_Utils::truncate_cast<ACE_UINT64> (this->tv_.tv_sec);
   ms *= 1000;
-  ms += (this->tv_.tv_usec / 1000);
+  ms += static_cast<ACE_UINT64> (this->tv_.tv_usec / 1000);
   return ms;
 }
 
@@ -216,12 +216,12 @@ ACE_Time_Value::usec (suseconds_t usec)
 }
 
 ACE_INLINE void
-ACE_Time_Value::to_usec (ACE_UINT64 & usec) const
+ACE_Time_Value::to_usec (ACE_UINT64 &usec) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::to_usec");
   usec = static_cast<ACE_UINT64> (this->tv_.tv_sec);
   usec *= 1000000;
-  usec += this->tv_.tv_usec;
+  usec += static_cast<ACE_UINT64> (this->tv_.tv_usec);
 }
 
 ACE_INLINE ACE_Time_Value

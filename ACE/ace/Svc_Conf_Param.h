@@ -63,25 +63,25 @@ public:
     };
 
   /// Constructor
-  ACE_Svc_Conf_Param (ACE_Service_Gestalt* config, FILE *file)
+  ACE_Svc_Conf_Param (ACE_Service_Gestalt *gestalt, FILE *file)
     : type (SVC_CONF_FILE),
       yyerrno (0),
       yylineno (1),
       buffer (0),
       obstack (),
-      config (config)
+      config (gestalt)
   {
     source.file = file;
   }
 
   /// Constructor
-  ACE_Svc_Conf_Param (ACE_Service_Gestalt* config, const ACE_TCHAR *directive)
+  ACE_Svc_Conf_Param (ACE_Service_Gestalt *gestalt, const ACE_TCHAR *directive)
     : type (SVC_CONF_DIRECTIVE),
       yyerrno (0),
       yylineno (1),
       buffer (0),
       obstack (),
-      config (config)
+      config (gestalt)
   {
     source.directive = directive;
   }

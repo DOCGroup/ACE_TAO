@@ -52,7 +52,7 @@ ACE_Log_Category_TSS::log_priority_enabled (ACE_Log_Priority log_priority)
 {
   return ACE_BIT_ENABLED (this->priority_mask_ |
                           category_->priority_mask(),
-                          log_priority);
+                          static_cast<u_long> (log_priority));
 }
 
 ACE_INLINE void

@@ -360,6 +360,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
             {
               idl_global->err ()->redef_error (i->full_name (),
                                                d->full_name ());
+              return;
             }
         }
       // If it is a forward declared interface..
@@ -368,22 +369,22 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           // Check if redefining in same scope. If a module is reopened,
           // a new pointer in created, and the first term below will be
           // true. In that case, the scoped names must be compared.
-          if (fd->defined_in () != s
-              && i->name ()->compare (fd->name ()) != 0)
+          if (d->defined_in () != s
+              && i->name ()->compare (d->name ()) != 0)
             {
               idl_global->err ()->error2 (UTL_Error::EIDL_SCOPE_CONFLICT,
                                           i,
-                                          fd);
+                                          d);
             }
           // All OK, do the redefinition.
           else
             {
-              AST_Decl::NodeType fd_nt = fd->node_type ();
+              AST_Decl::NodeType d_nt = d->node_type ();
               AST_Decl::NodeType i_nt = i->node_type ();
 
               // Only redefinition of the same kind.
-              if (i->is_local () != fd->is_local ()
-                  || i_nt != fd_nt
+              if (i->is_local () != d->is_local ()
+                  || i_nt != d_nt
                   || i->is_abstract () != fd->is_abstract ())
                 {
                   idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,

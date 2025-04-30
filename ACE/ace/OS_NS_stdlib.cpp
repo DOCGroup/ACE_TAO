@@ -149,7 +149,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
           return 0;
         }
       ACE_TCHAR * p = buf_p;
-      size_t len = start - str;
+      size_t const len = static_cast<size_t> (start - str);
       ACE_OS::strncpy (p, str, len);
       p += len;
       if (temp != 0)

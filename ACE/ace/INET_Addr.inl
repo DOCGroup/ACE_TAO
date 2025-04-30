@@ -50,11 +50,11 @@ ACE_INET_Addr::ip_addr_pointer (void) const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET)
-    return (void*)&this->inet_addr_.in4_.sin_addr;
+    return const_cast<in_addr *> (&this->inet_addr_.in4_.sin_addr);
   else
-    return (void*)&this->inet_addr_.in6_.sin6_addr;
+    return const_cast<in6_addr *> (&this->inet_addr_.in6_.sin6_addr);
 #else
-  return (void*)&this->inet_addr_.in4_.sin_addr;
+  return const_cast<in_addr *> (&this->inet_addr_.in4_.sin_addr);
 #endif
 }
 

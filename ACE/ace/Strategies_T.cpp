@@ -1308,7 +1308,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ACE_PEER_ACCEPTOR &
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor (void) const
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor");
-  return (ACE_PEER_ACCEPTOR &) this->peer_acceptor_;
+  return const_cast<ACE_PEER_ACCEPTOR &> (this->peer_acceptor_);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void

@@ -30,7 +30,7 @@ struct string_traits_decorator
   inline static void zero_range(
       char_type ** begin, char_type ** end)
   {
-    ACE_OS::memset (begin, 0, (end - begin) * sizeof (char_type*));
+    ACE_OS::memset (begin, 0, static_cast<size_t> (end - begin) * sizeof (char_type*));
   }
 
   inline static void initialize_range(
