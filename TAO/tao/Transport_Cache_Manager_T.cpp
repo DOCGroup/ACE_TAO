@@ -544,8 +544,8 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     cpscmp(const void* a, const void* b)
   {
-    const HASH_MAP_ENTRY** left  = (const HASH_MAP_ENTRY**) const_cast<void *> (a);
-    const HASH_MAP_ENTRY** right = (const HASH_MAP_ENTRY**) const_cast<void *> (b);
+    const HASH_MAP_ENTRY **left  = (const HASH_MAP_ENTRY **) const_cast<void *> (a);
+    const HASH_MAP_ENTRY **right = (const HASH_MAP_ENTRY **) const_cast<void *> (b);
 
     if ((*left)->int_id_.transport ()->purging_order () <
         (*right)->int_id_.transport ()->purging_order ())
