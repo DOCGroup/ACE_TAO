@@ -406,8 +406,14 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       // Reset the previous current pointer.
       tss->rtscheduler_previous_current_impl_ = 0;
     }
-  else TAOLIB_DEBUG ((LM_DEBUG,
-                   "Send Reply Current is 0\n"));
+  else
+    {
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                        "Send Reply Current is 0\n"));
+        }
+    }
 }
 
 void
