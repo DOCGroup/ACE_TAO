@@ -1375,25 +1375,19 @@ TAO_GIOP_Message_Base::get_parser (
           return
             const_cast<TAO_GIOP_Message_Generator_Parser_10 *> (
                                      &this->tao_giop_impl_.tao_giop_10);
-          break;
         case 1:
           return
             const_cast<TAO_GIOP_Message_Generator_Parser_11 *> (
                                      &this->tao_giop_impl_.tao_giop_11);
-          break;
         case 2:
           return
             const_cast<TAO_GIOP_Message_Generator_Parser_12 *> (
                                      &this->tao_giop_impl_.tao_giop_12);
-          break;
         default:
           throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
-          break;
         }
-      break;
     default:
       throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
-      break;
     }
 }
 

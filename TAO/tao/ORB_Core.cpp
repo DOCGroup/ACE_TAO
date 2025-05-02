@@ -3156,29 +3156,18 @@ TAO_ORB_Core::get_transport_queueing_strategy (TAO_Stub *,
                                                Messaging::SyncScope &scope)
 {
   switch (scope)
-  {
+    {
     case Messaging::SYNC_WITH_TRANSPORT:
     case Messaging::SYNC_WITH_SERVER:
     case Messaging::SYNC_WITH_TARGET:
-    {
       return this->flush_transport_queueing_strategy_;
-    }
-    break;
     case Messaging::SYNC_NONE:
-    {
       return this->eager_transport_queueing_strategy_;
-    }
-    break;
     case TAO::SYNC_DELAYED_BUFFERING:
-    {
       return this->delayed_transport_queueing_strategy_;
-    }
-    break;
     default:
-    {
       return 0;
     }
-  }
 }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

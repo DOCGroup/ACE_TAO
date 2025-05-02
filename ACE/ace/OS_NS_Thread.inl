@@ -2714,6 +2714,8 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
     *sig = ::sigtimedwait (sset, 0, 0);
     return *sig;
 # endif /* __FreeBSD__ */
+    ACE_UNUSED_ARG (sset);
+    ACE_NOTSUP_RETURN (-1);
 #else
     ACE_UNUSED_ARG (sset);
     ACE_UNUSED_ARG (sig);
@@ -3199,15 +3201,11 @@ ACE_OS::thr_self (void)
 #endif /* ACE_HAS_THREADS */
 }
 
-ACE_INLINE const char*
+ACE_INLINE const char *
 ACE_OS::thr_name (void)
 {
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_VXTHREADS)
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_VXTHREADS)
   return ::taskName (ACE_OS::thr_self ());
-#else
-  ACE_NOTSUP_RETURN (0);
-#endif
 #else
   ACE_NOTSUP_RETURN (0);
 #endif

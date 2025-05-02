@@ -17,7 +17,7 @@ ACE_Thread::spawn_n (size_t n,
                      void *stack[],
                      size_t stack_size[],
                      ACE_Thread_Adapter *thread_adapter,
-                     const char* thr_name[])
+                     const char *thr_name[])
 {
   ACE_TRACE ("ACE_Thread::spawn_n");
   size_t i;
@@ -53,7 +53,7 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
                      size_t stack_size[],
                      ACE_hthread_t thread_handles[],
                      ACE_Thread_Adapter *thread_adapter,
-                     const char* thr_name[])
+                     const char *thr_name[])
 {
   ACE_TRACE ("ACE_Thread::spawn_n");
   size_t i = 0;
