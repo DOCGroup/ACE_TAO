@@ -15,7 +15,7 @@ ACE_OS::posix_devctl (int filedes, int dcmd,
 #ifdef ACE_LACKS_POSIX_DEVCTL
   ACE_UNUSED_ARG (nbyte);
   ACE_UNUSED_ARG (dev_info_ptr);
-# if defined ACE_EMULATE_POSIX_DEVCTL && ACE_EMULATE_POSIX_DEVCTL
+# if defined ACE_EMULATE_POSIX_DEVCTL
   return ::ioctl (filedes, dcmd, dev_data_ptr);
 # else
   ACE_UNUSED_ARG (filedes);
