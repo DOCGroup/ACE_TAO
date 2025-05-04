@@ -1,0 +1,946 @@
+commit e3b027b753b21daf35682d34a1f0f1f4c7af40ff
+Merge: 5ba4a1922e3 473396d2e40
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Apr 28 08:13:27 2025 -0500
+
+    Merge pull request #2370 from mitza-oci/thread-names
+    
+    Support thread names on Windows and Integrity
+
+commit 473396d2e40479c20b3e3679aaa47a62b99e426e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 6 06:43:05 2025 -0600
+
+    Use new functions for named threads in TAO TPC
+    
+    Updated NEWS
+
+commit e719fa3e903502948973ac3fa8e4c57548ae1c4a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Apr 24 08:36:05 2025 -0500
+
+    Updates for Green Hills platform and compiler
+
+commit 5ba4a1922e38571ed6c42b5e6389351f5a62aa7d
+Merge: c00ce5e698e 5dcc846316d
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 23 08:21:36 2025 -0500
+
+    Merge pull request #2369 from mitza-oci/warnings
+    
+    Fixed warnings
+
+commit d0661480cfe8a41769dda49f9055bb3477053106
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Apr 22 14:47:41 2025 -0500
+
+    Updated logging
+
+commit 252ab63cb4bf1fc1de995e1e1b286da75479b4b3
+Merge: e1393dc0f2b c00ce5e698e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Apr 22 09:47:27 2025 -0500
+
+    Merge remote-tracking branch 'upstream/master' into thread-names
+
+commit c00ce5e698e23b4c255f3c086f4fb47d922229c1
+Merge: 83cb7a931d4 fa705dddcc0
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Apr 22 09:00:32 2025 -0500
+
+    Merge pull request #2340 from sonndinh/ACE-master-ghs
+    
+    Updated support for Green Hills INTEGRITY and INTEGRITY-178 RTOS
+
+commit 5dcc846316d1af77d483fd320369c99dced7342f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Apr 22 13:48:18 2025 +0000
+
+    PR review and CI test fixes
+
+commit 096cbb9fb55cf6c2577f62708149c3adf9933789
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Apr 21 21:04:22 2025 +0000
+
+    Fixed warnings
+    
+    Mostly type conversions, const correctness, etc.
+
+commit 060b22edd5889d79e437b4df640a02b47a7ca20d
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Apr 1 08:52:25 2025 -0500
+
+    Merge pull request #2364 from mitza-oci/a6t2-tao_idl-warnings
+    
+    fixed warnings
+
+commit 6cce4f60bf950f12dc84a7ba51f58f61aaaa34b6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 28 19:58:13 2025 +0000
+
+    Conditionally restore code that silences a GCC 8 warning
+
+commit c347c095ae7a29ad3f648c4ee45595b3a7ad4f2e
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Mar 24 17:08:29 2025 -0500
+
+    From review
+
+commit e1393dc0f2b2c192de216114557f3494ec19141a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Mar 5 10:26:31 2025 -0600
+
+    Support thread names in ACE
+    
+    Also, threads created by TAO have names
+
+commit d3b17294a82e9b8f5ffb951feaf13a60520ee2af
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 21 08:57:13 2025 -0500
+
+    Updates to Single_Input_Reactor and TAO resources
+
+commit f742de11678ccf06b0c27165c024a93aabc9703f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 20 15:26:26 2025 +0100
+
+    Move deleted to private
+    
+        * TAO/tao/Valuetype/ValueBase.h:
+
+commit 92797ad9a9f4f7f0a81dadeb86efc18c23074674
+Merge: c05a1ea5984 e1d8bbebd9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 20 15:16:42 2025 +0100
+
+    Merge branch 'master' into jwi-DefaultValueRefCountBase
+
+commit c05a1ea5984e2a9e806dd9000db4377f6fc88546
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 20 15:16:20 2025 +0100
+
+    Modernized DefaultValueRefCountBase, use default, uniform init, override, removed TAO specific extensions which are used nowhere
+    
+        * TAO/tao/Valuetype/ValueBase.cpp:
+        * TAO/tao/Valuetype/ValueBase.h:
+
+commit 18834d79f0fbc605227fd96baa5bd265e0ad11a6
+Merge: 9914124b5e8 e1d8bbebd9a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 20 08:54:49 2025 -0500
+
+    Merge remote-tracking branch 'upstream/master' into ACE-master-ghs
+
+commit e1d8bbebd9a9dd720ac1c1df8ae009cc5e611213
+Merge: c284df4dbce 347ae649959
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 20 08:18:16 2025 -0500
+
+    Merge pull request #2360 from mitza-oci/warnings
+    
+    Continued fixing warnings, cleaned up from previous PR
+
+commit 191b7f92f1502e0154bc0d2034444ff7a470a0c1
+Merge: e4092657236 c284df4dbce
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Mar 19 15:55:32 2025 -0500
+
+    Merge remote-tracking branch 'upstream/master' into ACE-master-ghs
+
+commit e4092657236b42cfc05f02df9732fd0d05928df0
+Merge: 0d8926913d6 09b0c9c261c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Mar 19 14:48:15 2025 -0500
+
+    Merge remote-tracking branch 'upstream/master' into ACE-master-ghs
+
+commit 347ae649959ed335c32e29469e730c45959792a7
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Mar 19 12:48:48 2025 -0500
+
+    cleaned up formatting, style, usage in this function
+
+commit 2e549ba5abde5855c41cb31c0858a34976817b94
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 19 09:01:59 2025 +0100
+
+    Embarcadero
+    
+        * TAO/docs/Security/SSLIOP-INSTALL.html:
+
+commit 7174fb6eacafefe0f27c5cd00cd06bfcaf5fdd3a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Mar 18 14:41:31 2025 -0500
+
+    Updated use of ACE_Process_Options in test
+    
+    (cherry picked from commit 05153bee668ddb0ddf6471dd347dcd67e701d5f3)
+
+commit c1794db8211e20d15636379e0bc333030b49a156
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 13 15:06:11 2025 -0500
+
+    Generated Valuebox class copy ctor can use DefaultValueRefCountBase defalt ctor
+    
+    (cherry picked from commit b171f30d012555b255054bc3f663229daa2fb43d)
+
+commit 2477f596878e2f366d2cb4466e1c9f06de92ddeb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 14 09:24:17 2025 -0500
+
+    fixed warnings
+    
+    (cherry picked from commit 1b1d8acfe6d7306ee5c6d59bf9768716aa9bbbc3)
+    
+    # Conflicts:
+    #       TAO/orbsvcs/orbsvcs/AV/AVStreams_i.cpp
+    #       TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.cpp
+
+commit 6d0dcad3aec422a60b87cfef1417c3e1a0297e2d
+Merge: d42dbb58cec 4d639ee2a7e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 13 08:45:35 2025 -0500
+
+    Merge pull request #2350 from mitza-oci/warnings
+    
+    Fixed compiler warnings
+
+commit 4d639ee2a7e8f0a302ecddedaf7c57ffadee2639
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Mar 12 12:19:05 2025 -0500
+
+    fixed warnings in TAO_Strategies
+
+commit 95b40d258d38ebdcd9aadcbc17713bca79f85ff8
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Mar 12 11:36:49 2025 -0500
+
+    Removed unused export macro
+
+commit 6ad338b0f8e9b881d092fa70d91c5c9726c244de
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Mar 11 10:00:29 2025 -0500
+
+    Cleaned up TAO_Abstract_ServantBase and TAO_ServantBase
+
+commit 6dc796410c5615f891ed99144cb0d36e3bcd272e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Mar 11 09:29:14 2025 -0500
+
+    Revert "Use =delete in TAO_ServantBase"
+    
+    This reverts commit 0719e788155e28704fb613b73bd23ff95f52e958.
+
+commit beb0f2f2bceccedba3a9dc6916f50527747032e4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Mar 11 09:16:19 2025 -0500
+
+    Updated valuebox codegen
+
+commit e4f73f5f80b2a0797d73ff502d01e8aebf5738d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 11 15:05:09 2025 +0100
+
+    Removed workaround for ancient Embarcadero C++ Builder version
+    
+        * TAO/utils/wxNamingViewer/wxNamingViewer.cpp:
+
+commit 1aab4d1ee77e01c3836c1a373c85aae5edbe59d2
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Mar 10 12:33:19 2025 -0500
+
+    Fixed a warning in orbsvcs tests
+
+commit 0965b6f9e329db68fc68af7fee46e34d8af8f8b5
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Mar 10 12:32:27 2025 -0500
+
+    Avoid warnings due to DefaultValueRefCountBase
+
+commit 0719e788155e28704fb613b73bd23ff95f52e958
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sat Mar 8 16:48:44 2025 +0000
+
+    Use =delete in TAO_ServantBase
+
+commit bb9f5aeffdb7789884d3139203e1d6107fbf0819
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 5 09:15:33 2025 +0100
+
+    More link updates
+    
+        * ACE/ACE-INSTALL.html:
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/usage-bugzilla.html:
+        * ACE/html/Stats/img.html:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/TAO-metrics.html:
+        * TAO/docs/releasenotes/index.html:
+
+commit b4bb2411489baa4d53474bee69ab8d8196ac004e
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Mar 3 14:02:21 2025 -0600
+
+    Address review and fix build
+
+commit ee44e1605222b1e18dcf917afdb96345f10e4055
+Merge: b41152ee9f3 23b4b06cc75
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Mar 3 10:54:07 2025 -0600
+
+    Merge branch 'master' of github.com:DOCGroup/ACE_TAO into ACE-master-ghs
+
+commit b41152ee9f38cdea595524399660190de78a6917
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Mar 3 10:38:58 2025 -0600
+
+    Fix build
+
+commit 9b3cc01b677aac16f6ce746d441ed1ef87a8b438
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Feb 24 16:04:24 2025 -0600
+
+    Merge pull request #2336 from mitza-oci/a6t2-warnings
+    
+    [ACE6_TAO2] Fixed warnings and updated bison-generated code for ACE svc.conf
+    
+    (cherry picked from commit 9f734b46e79a3c518a1d9d2d2727495cc68f17a5)
+    
+    # Conflicts:
+    #       .github/workflows/linux.yml
+    #       ACE/ace/Asynch_IO_Impl.inl
+    #       ACE/ace/Svc_Conf_Token_Table.h
+    #       ACE/ace/Svc_Conf_y.cpp
+    #       TAO/tao/IIOP_Endpoint.cpp
+    #       TAO/tao/LF_CH_Event.cpp
+    #       TAO/tao/Object.cpp
+    #       TAO/tao/Storable_FlatFileStream.cpp
+
+commit 44ad5dab21b77606e09f33c445d419aff019459e
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Feb 24 11:12:21 2025 -0600
+
+    More merge from master
+
+commit 9b24977ab97c3c52c2a30de1d79cbe7db6e4ec51
+Merge: ac3ed1a560c 7058b787b10
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Feb 21 12:19:18 2025 -0600
+
+    Merge master
+
+commit ac3ed1a560ca7c2878002f60feea89c3ad9de93e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Dec 9 15:58:52 2024 -0600
+
+    Updated support for Green Hills INTEGRITY
+    
+    Includes INTEGRITY RTOS and INTEGRITY-178 tuMP
+
+commit f38e9f830a661513b067f1c5a0f1f122e28e359a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 19 16:38:10 2025 +0100
+
+    List major changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 94721e33b501e83024e6849a1bb9db9e615c95ae
+Merge: 279244fe815 2b381a9b54b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 12 17:15:30 2025 +0100
+
+    Merge pull request #2331 from jwillemsen/master
+    
+    Use uniform initialization
+
+commit 2b381a9b54bf3b1ec83383231c410c74a2ff2850
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 12 14:07:03 2025 +0100
+
+    Use uniform initialization
+    
+        * TAO/docs/tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
+        * TAO/docs/tutorials/Quoter/Event_Service/index.html:
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/index.html:
+        * TAO/examples/Simulator/Event_Supplier/Event_Con.cpp:
+        * TAO/interop-tests/wchar/client.cpp:
+        * TAO/orbsvcs/DevGuideExamples/ValueTypes/Notify/consumer.cpp:
+        * TAO/orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp:
+        * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Property_T.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Property_Set_Find.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * TAO/tao/Messaging/ExceptionHolder_i.cpp:
+
+commit dc88123da46f77b8dac1320a84b763b79c05f2a3
+Merge: b344ae98560 6dec8f298a9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 10 14:30:23 2025 +0100
+
+    Merge branch 'master' into jwi-stdminmax
+
+commit 74135f0ea1a30c8e74752ac5deb7a9b374930d0c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 10 13:17:36 2025 +0100
+
+    Use std::min and std::max
+    
+        * ACE/ace/Caching_Utility_T.cpp:
+        * ACE/ace/FIFO_Recv_Msg.inl:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/Stack_Trace.cpp:
+        * ACE/ace/String_Base.cpp:
+        * ACE/ace/String_Base.inl:
+        * ACE/ace/UTF16_Encoding_Converter.cpp:
+        * ACE/ace/UTF32_Encoding_Converter.cpp:
+        * ACE/apps/JAWS/server/JAWS_IO.cpp:
+        * ACE/apps/JAWS2/JAWS/Jaws_IO.cpp:
+        * ACE/protocols/ace/HTBP/HTBP_Channel.cpp:
+        * ACE/tests/Multicast_Test.cpp:
+        * ACE/tests/Multicast_Test_IPV6.cpp:
+        * ACE/tests/Proactor_Scatter_Gather_Test.cpp:
+        * TAO/examples/Advanced/ch_12/icp.cpp:
+        * TAO/examples/Advanced/ch_18/icp.cpp:
+        * TAO/examples/Advanced/ch_21/icp.cpp:
+        * TAO/examples/Advanced/ch_8_and_10/icp.cpp:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/Strategies/DIOP_Acceptor.cpp:
+        * TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+        * TAO/tao/ZIOP/ZIOP.cpp:
+        * TAO/tao/ZIOP/ZIOP_Stub.cpp:
+
+commit 8491c3a93d79fb5594f7406e952a425b9b9340ba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 10 08:52:44 2025 +0100
+
+    Indent fixes to resolve gcc warnings
+    
+        * TAO/orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+        * TAO/orbsvcs/tests/Notify/MC/test_monitor.cpp:
+        * TAO/tests/DynValue_Test/Analyzer.cpp:
+
+commit a0993c87f292a636b4865b4a5a516411b170ea39
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 10 08:52:31 2025 +0100
+
+    Fixed incorrect is_nil checks
+    
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+
+commit 487546c219c74301e4f0b64e81e3c5e4e7bab057
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 10 08:52:15 2025 +0100
+
+    Fixed incorrect is_nil checks
+    
+        * TAO/docs/tutorials/Quoter/Event_Service/Stock_Factory_i.cpp:
+
+commit f35a205b291e4ba608c45a63dde7bbbe5dfe0297
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 16:15:20 2025 +0100
+
+    Remove destructor impl
+    
+        * TAO/tao/PortableServer/Network_Priority_Hook.cpp:
+
+commit 786d86edb480667bca735e7054df3ed22efa038d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 16:14:47 2025 +0100
+
+    Add missing change
+    
+        * TAO/tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+
+commit c79bbdbfaf901faf8491b6f2c52c3a62f5d09ea6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 16:01:44 2025 +0100
+
+    Use default/nullptr
+    
+        * TAO/tao/EndpointPolicy/EndpointPolicy_i.cpp:
+        * TAO/tao/EndpointPolicy/EndpointPolicy_i.h:
+        * TAO/tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.cpp:
+        * TAO/tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.h:
+        * TAO/tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
+        * TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h:
+
+commit 2e6aac1abe88b01f820549547aa5cd9627e06f74
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 15:55:53 2025 +0100
+
+    Use override/default
+    
+        * TAO/tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+        * TAO/tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
+        * TAO/tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        * TAO/tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+
+commit 7ded3b7981eac3d3e92308e964aaec707113d852
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 15:52:58 2025 +0100
+
+    Use virtual
+    
+        * TAO/tao/PortableServer/Network_Priority_Hook.h:
+
+commit d10b6149ff293698a134bf8b069576d8451db207
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 15:43:54 2025 +0100
+
+    Removed redundant virtual
+    
+        * TAO/tao/PortableServer/Object_Adapter.h:
+
+commit 040af4ff47d6f1ceb316f58bcee4079e5d3b23da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 15:39:11 2025 +0100
+
+    Use default destructors, use override
+    
+        * TAO/tao/PortableServer/Network_Priority_Hook.h:
+        * TAO/tao/PortableServer/Object_Adapter.cpp:
+        * TAO/tao/PortableServer/Object_Adapter.h:
+        * TAO/tao/PortableServer/POA_Cached_Policies.cpp:
+        * TAO/tao/PortableServer/POA_Cached_Policies.h:
+        * TAO/tao/PortableServer/POA_Policy_Set.cpp:
+        * TAO/tao/PortableServer/POA_Policy_Set.h:
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+        * TAO/tao/PortableServer/Servant_Base.h:
+
+commit 1c69ba9c7e02d5fbe74c6c727691a9b9000aabd1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 15:16:40 2025 +0100
+
+    nullptr, const, default
+    
+        * TAO/tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * TAO/tao/PortableServer/Default_Servant_Dispatcher.h:
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * TAO/tao/PortableServer/PortableServer_Functions.cpp:
+        * TAO/tao/PortableServer/PortableServer_WFunctions.cpp:
+        * TAO/tao/PortableServer/Regular_POA.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+
+commit 875250abe0165b5f9b224680e1b5d3e5f943de86
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 15:13:23 2025 +0100
+
+    Use nullptr
+    
+        * TAO/tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * TAO/tao/PortableServer/Root_POA.cpp:
+
+commit 4506e731d6a106875887d2be16bc8839adaf8675
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 15:06:03 2025 +0100
+
+    Use uniform init and nullptr
+    
+        * TAO/tao/PortableServer/Active_Object_Map.cpp:
+        * TAO/tao/PortableServer/Active_Object_Map.inl:
+        * TAO/tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+        * TAO/tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * TAO/tao/PortableServer/IdAssignmentPolicy.cpp:
+        * TAO/tao/PortableServer/ImplicitActivationPolicy.cpp:
+        * TAO/tao/PortableServer/LifespanPolicy.cpp:
+        * TAO/tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * TAO/tao/PortableServer/Object_Adapter.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Binary_Search.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Linear_Search.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * TAO/tao/PortableServer/POA_Current.cpp:
+        * TAO/tao/PortableServer/PortableServer_Functions.cpp:
+        * TAO/tao/PortableServer/Regular_POA.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+
+commit 0d562848cbf7e8e087df7522715dfbce1fe8f5e5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 6 14:53:20 2025 +0100
+
+    Use std::move, nullptr, const, layout changes
+    
+        * TAO/tao/PortableServer/Active_Object_Map.cpp:
+        * TAO/tao/PortableServer/Active_Object_Map.inl:
+        * TAO/tao/PortableServer/Object_Adapter.cpp:
+        * TAO/tao/PortableServer/Object_Adapter.inl:
+        * TAO/tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+        * TAO/tao/PortableServer/Root_POA.cpp:
+
+commit f143911da461af6d68778dbe7581fb1732ded626
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 4 16:59:50 2025 +0100
+
+    Use nullptr
+    
+        * ACE/ace/Cleanup.h:
+        * ACE/ace/Object_Manager.h:
+        * ACE/ace/Singleton.h:
+        * ACE/ace/Thread_Manager.h:
+        * TAO/tao/TAO_Singleton.h:
+        * TAO/tao/TAO_Singleton_Manager.h:
+
+commit 6b986fef703e667d9739dd69f775a18b26743078
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 4 16:57:47 2025 +0100
+
+    Zapped last usage of ACE_Copy_Disabled
+    
+        * ACE/ACEXML/common/InputSource.h:
+        * ACE/ACEXML/common/LocatorImpl.h:
+        * ACE/Kokyu/DSRT_CV_Dispatcher_Impl_T.h:
+        * ACE/Kokyu/DSRT_Direct_Dispatcher_Impl_T.h:
+        * ACE/Kokyu/DSRT_Dispatch_Item_T.h:
+        * ACE/Kokyu/Kokyu.h:
+        * ACE/Kokyu/Kokyu_dsrt.h:
+        * ACE/apps/gperf/src/Gen_Perf.h:
+        * ACE/apps/gperf/src/Hash_Table.h:
+        * ACE/apps/gperf/src/Iterator.h:
+        * ACE/apps/gperf/src/Key_List.h:
+        * ACE/apps/gperf/src/List_Node.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Event.h:
+        * TAO/tao/Messaging/AMH_Response_Handler.cpp:
+        * TAO/tao/On_Demand_Fragmentation_Strategy.h:
+        * TAO/tests/Sequence_Unit_Tests/testing_counters.hpp:
+
+commit 1450b7d8c6e5344d48d9324261bce99cc837fdcd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 4 16:49:13 2025 +0100
+
+    More removal of ACE_Copy_Disabled
+    
+        * ACE/apps/gperf/src/Options.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Event.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
+        * TAO/orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Task_Activator.h:
+        * TAO/tao/Connection_Handler.h:
+        * TAO/tao/TAO_Singleton.h:
+        * TAO/tao/Utils/Server_Main.h:
+
+commit 60ae065dae7a48cea308420deac4f0d1ab305987
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 18:37:19 2025 +0100
+
+    Correct format
+    
+        * TAO/orbsvcs/IFR_Service/be_init.cpp:
+
+commit 606d527077f84e1f602a6fb7eb72ea87b9f50fa4
+Merge: 49259f0f09c 61efbfd50c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 18:36:05 2025 +0100
+
+    Merge branch 'master' into jwi-PATCHversion
+
+commit 49259f0f09c0ef44d47ddb8de062ff2c96297097
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 18:35:37 2025 +0100
+
+    Add ACE_PATCH and TAO_PATCH as strings which can be set from ace/config.h to let tao_idl/ifr print a version with a user defined patch string attached
+    
+        * ACE/ace/Version.h:
+        * ACE/bin/make_release.py:
+        * TAO/TAO_IDL/be/be_helper.cpp:
+        * TAO/TAO_IDL/be/be_init.cpp:
+        * TAO/TAO_IDL/tao_idl.cpp:
+        * TAO/orbsvcs/IFR_Service/be_init.cpp:
+        * TAO/tao/Version.h:
+
+commit 61efbfd50c892b8177f5afda260d9c4631b58b70
+Merge: 04f17bfd912 e679dfa4abe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 18:20:39 2025 +0100
+
+    Merge pull request #2319 from jwillemsen/jwi-cosevent-uncheckednarrow
+    
+    Use default and layout changes in CosEvent service
+
+commit 04f17bfd91277ab20e1dd74a3216eb638e3c5933
+Merge: 3a9d1198ec0 69a0d5dfc7b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 18:19:20 2025 +0100
+
+    Merge pull request #2320 from jwillemsen/jwi-shutdownwait
+    
+    Added new CECShutdownWaitCompletion command line argument to not wait…
+
+commit 69a0d5dfc7b234d75a40803b59539395ace1ff76
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 14:24:41 2025 +0100
+
+    Use ORBSVCS_ERROR
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+
+commit 6cbd7f52f8c923db1350b1062c055de17c7734c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 13:38:16 2025 +0100
+
+    Added new CECShutdownWaitCompletion command line argument to not wait on processing all pending events on shutdown but just flush the queue
+    
+        * TAO/docs/cec_options.html:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.h:
+
+commit e679dfa4abe115258b99e74f56af034629626d96
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 13:27:27 2025 +0100
+
+    Use narrow again
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+
+commit 59dd716f9d36bdc19958c9ded02af162dd82e3bc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 27 14:31:18 2025 +0100
+
+    Make constructor default
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+
+commit 8559d4ac94e21a18cdf583d765e9c6257248b1ae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 27 14:30:45 2025 +0100
+
+    Removed destructor implementation
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.cpp:
+
+commit 1ce080f5a1f52cfad92e56ef93a51622a03ec2ed
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 27 13:24:33 2025 +0100
+
+    Layout changes, use default for empty destructors
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.inl:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+
+commit fd8a7568d54590386cf74e5442c05755bf9755d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 27 13:20:29 2025 +0100
+
+    Use unchecked_narrow in TAO_CEC_ProxyPushSupplier::apply_policy in order to connect an untyped channel, several layout/indent changes
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+
+commit ee3675a1d839dc3d0c06b0620cc37c8cf9abb69e
+Merge: 481cc80298d dff0ed3e9d3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 25 11:39:11 2025 +0100
+
+    Merge branch 'master' into jwi-add_forward_profiles
+
+commit 481cc80298d24b3237eb7379a114e50149c5eb6d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 25 11:35:11 2025 +0100
+
+    Update this test because TAO_Stub::add_forward_profiles now alls next_profile itself
+    
+        * TAO/tests/Permanent_Forward/StubTest.cpp:
+
+commit 566229d5583b0b71e7ca2c916f6b89ac37a74e7e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 25 11:34:55 2025 +0100
+
+    Removed empty lines
+    
+        * TAO/tests/Permanent_Forward/README:
+
+commit 34719c82d0115feda7a38fbbf167f47f8ba260f5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 24 13:34:57 2025 +0100
+
+    Call next_profile_i as last step of add_forward_profiles instead of letting the caller do this, which opens a possible race condition
+    
+        * TAO/tao/IORTable/Table_Adapter.cpp:
+        * TAO/tao/Invocation_Adapter.cpp:
+        * TAO/tao/LocateRequest_Invocation_Adapter.cpp:
+        * TAO/tao/Stub.cpp:
+        * TAO/tao/Stub.h:
+
+commit 0b0ef837bb109a3aa432f7d7230211349eeb0e1d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 24 13:33:15 2025 +0100
+
+    Use =delete
+    
+        * TAO/tao/RTCORBA/RT_Stub.h:
+        * TAO/tao/RTCORBA/RT_Transport_Descriptor_Property.h:
+        * TAO/tao/ZIOP/ZIOP_Stub.h:
+
+commit 03f990244c326b14651d1ff8ed5112f117fd6d6b
+Merge: ec4be92153c aff2ee91221
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 23 15:06:57 2025 +0100
+
+    Merge pull request #2316 from jwillemsen/jwi-taskcommenttypo
+    
+    Fixed typo, use const/override
+
+commit ec4be92153c0fa489bb94b23283a828afd83231f
+Merge: b8d96cbe2ad 5a3ad6f9eb7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 23 15:06:43 2025 +0100
+
+    Merge pull request #2315 from jwillemsen/jwi-cectypedloggign
+    
+    ACE_DEBUG uses %C for ascii strings, not %s
+
+commit b8d96cbe2adc53d535fe27a5c00254d5b46647e9
+Merge: 930a8a7b8de 5a360b9fc20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 23 13:23:42 2025 +0100
+
+    Merge pull request #2313 from jwillemsen/jwi-preferredinterfacesopt
+    
+    When no preferred interfaces directives are given we can directly return, saves a call to TAO_IIOP_Endpoint_get_ip_interfaces which is costly
+
+commit aff2ee91221a0c3293592ebbda54a7fc17453bcf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 23 13:22:54 2025 +0100
+
+    Use const/override
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+
+commit 5a3ad6f9eb748704f469a45c05b798e09c1f5a62
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 23 11:51:09 2025 +0100
+
+    Removed empty line, use override
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+
+commit dc16fe84bec1168d01624dd352ca4c1ffbd2392b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 23 11:46:56 2025 +0100
+
+    ACE_DEBUG uses %C for ascii strings, not %s
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+
+commit 5a360b9fc20ab2847ddf9fba9ceca0de41cc0a73
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 23 10:22:05 2025 +0100
+
+    Const change
+    
+        * TAO/tao/IIOP_Endpoint.cpp:
+
+commit 6cd7c31bb728fe8e2511bc008a2426705ec4e1bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 23 10:21:47 2025 +0100
+
+    When no preferred interfaces directives are given we can directly return, saves a call to TAO_IIOP_Endpoint_get_ip_interfaces which is costly
+    
+        * TAO/tao/IIOP_Endpoint.cpp:
+
+commit fc0530630dd4a6d3705299c31332c2e49966dd3d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 23 09:49:58 2025 +0100
+
+    Removed some asserts, we already return -1 to indicate a problem to the caller.
+    
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+
+commit 88df7918d3410b8fe7da44bdc99ae3e80935df66
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Dec 17 11:08:07 2024 -0600
+
+    =default for generated implementation copy ctor
+
+commit 5dcda057378e923714e9476e693587fcc4214a4c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Dec 17 09:32:44 2024 -0600
+
+    Use =default for skeleton copy constructor
+
+commit 70c1a78cc8d727e7a80bbc9e0e3f5da3193ae255
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Dec 11 09:10:27 2024 -0600
+
+    Fixed warnings in tao_idl generated code
+    
+    Classes that have a pure virtual member cannot be constructed as the
+    most-derived type of an object.  Their constructors are always called
+    indirectly from derived constructors.  Initializing virtual bases in
+    these constructors is effectively dead code since virtual bases can only
+    be initialized by the most-derived type.  Some compilers, with some
+    warning settings, generated warnings for this.
+
+commit aee8b43f6ee4d0c5eab39b271da20d08d8791db2
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Dec 11 09:00:02 2024 -0600
+
+    Fixed warnings: reusing a name in nested scopes
+    
+    Updated style per guidelines
+
+commit 73422d0fe2e849951dcdcb4f4e15a561cd237bc2
+Merge: 8fd68c0a2b8 432c11a8868
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 6 13:31:33 2024 +0100
+
+    Merge pull request #2303 from jwillemsen/jwi-803
+    
+    Make 8.0.2/4.0.2 public and prepare for next release
+
+commit 432c11a88682105a3ea1030444df6bc134f0a79c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 6 13:30:42 2024 +0100
+
+    Make 8.0.2/4.0.2 public and prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
