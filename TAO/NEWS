@@ -1,6 +1,12 @@
 USER VISIBLE CHANGES BETWEEN TAO-4.0.3 and TAO-4.0.4
 ====================================================
 
+. TAO_IDL:
+  . Fixes for IDL maps (still not fully supported in TAO):
+    . Support for parsing bounded maps
+    . Support for using maps in more places
+    . Fix memory leaks caused by maps
+
 USER VISIBLE CHANGES BETWEEN TAO-4.0.2 and TAO-4.0.3
 ====================================================
 

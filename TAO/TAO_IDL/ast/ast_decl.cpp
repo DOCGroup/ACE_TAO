@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <ast_field.h>
 #include <ast_structure.h>
 #include <ast_sequence.h>
+#include <ast_map.h>
 #include <ast_string.h>
 #include <ast_typedef.h>
 #include <ast_visitor.h>
@@ -1491,6 +1492,14 @@ AST_Decl::contains_wstring ()
           {
             AST_Sequence *s = dynamic_cast<AST_Sequence*> (this);
             this->contains_wstring_ = s->base_type ()->contains_wstring ();
+            break;
+          }
+
+        case AST_Decl::NT_map:
+          {
+            AST_Map *m = dynamic_cast<AST_Map *> (this);
+            this->contains_wstring_ = m->key_type ()->contains_wstring () ||
+              m->value_type ()->contains_wstring ();
             break;
           }
 
