@@ -3910,13 +3910,85 @@ enumerator :
         ;
 
 map_type_spec
-        : map_head
-        '>'
+        : map_head ',' positive_int_expr '>'
         {
           AST_Map *map = 0;
           Decl_Annotations_Pair_Pair* type_pair = $1;
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
+          delete type_pair;
+          type_pair = nullptr;
+          AST_Expression *max_size = $3;
+
+          /*
+           * Remove map marker from scopes stack.
+           */
+          if (idl_global->scopes ().top () == 0)
+            {
+             idl_global->scopes ().pop ();
+            }
+
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          AST_Expression::AST_ExprValue *ev = nullptr;
+          AST_Param_Holder *param_holder = nullptr;
+          if (max_size)
+            {
+              param_holder = max_size->param_holder ();
+              ev = max_size->coerce (AST_Expression::EV_ulong);
+            }
+
+          // If the expression corresponds to a template parameter,
+          // it's ok for the coercion to fail at this point. We check
+          // for a type mismatch below.
+          if (!max_size || (!ev && !param_holder))
+            {
+              idl_global->err ()->coercion_error (max_size, AST_Expression::EV_ulong);
+            }
+          else if (key_type && val_type)
+            {
+              /*
+               * Create a node representing a map.
+               */
+              AST_Type *ktp = dynamic_cast<AST_Type*> (key_type->decl);
+              AST_Type *vtp = dynamic_cast<AST_Type*> (val_type->decl);
+
+              if (ktp && vtp)
+                {
+                  Identifier id ("map");
+                  UTL_ScopedName sn (&id, 0);
+
+                  map =
+                    idl_global->gen ()->create_map (
+                        max_size,
+                        ktp,
+                        vtp,
+                        &sn,
+                        s->is_local (),
+                        s->is_abstract ()
+                      );
+                  map->key_type_annotations (*key_type->annotations);
+                  map->value_type_annotations (*val_type->annotations);
+
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
+            }
+
+          delete key_type->annotations;
+          delete key_type;
+          delete val_type->annotations;
+          delete val_type;
+          delete ev;
+          $$ = map;
+        }
+        | map_head '>'
+        {
+          AST_Map *map = 0;
+          Decl_Annotations_Pair_Pair* type_pair = $1;
+          Decl_Annotations_Pair *key_type = type_pair->first;
+          Decl_Annotations_Pair *val_type = type_pair->second;
+          delete type_pair;
+          type_pair = nullptr;
 
           /*
            * Remove map marker from scopes stack.
@@ -3966,8 +4038,9 @@ map_type_spec
             }
 
           delete key_type->annotations;
+          delete key_type;
           delete val_type->annotations;
-          delete type_pair;
+          delete val_type;
           $$ = map;
         }
         ;

@@ -53,6 +53,7 @@ public:
   virtual int visit_array (be_array *node);
   virtual int visit_string (be_string *node);
   virtual int visit_sequence (be_sequence *node);
+  virtual int visit_map (be_map *node);
   virtual int visit_typedef (be_typedef *node);
 
 protected:

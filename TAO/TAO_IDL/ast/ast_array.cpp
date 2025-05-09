@@ -226,6 +226,7 @@ AST_Array::set_base_type (AST_Type *nbt)
   AST_Decl::NodeType bnt = nbt->node_type ();
 
   if (bnt == AST_Decl::NT_sequence
+      || bnt == AST_Decl::NT_map
       || bnt == AST_Decl::NT_param_holder)
     {
       this->owns_base_type_ = true;
