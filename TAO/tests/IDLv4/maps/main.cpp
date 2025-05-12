@@ -22,7 +22,8 @@ int ACE_TMAIN(int, ACE_TCHAR *[])
   TestIntStringMap testIntStringMap;
   testIntStringMap[42] = "Hello World!";
 
-  TestStructSeq testStructSeq(1, 1, TestStructSeq::allocbuf(1), /* release = */ true);
+  TestStructSeq testStructSeq;
+  testStructSeq.length(1);
   testStructSeq[0] = testStruct;
 
   testData.intIntMap[4] = 100;
@@ -30,6 +31,15 @@ int ACE_TMAIN(int, ACE_TCHAR *[])
   testData.stringSequenceMap["test"] = testStructSeq;
   testData.stringMapMap["test"] = testStructMap;
   testData.mapStringMap[testIntStringMap] = "Hello World";
+
+  testData.testStructMapArray[0][2] = testStruct;
+
+  testData.testStructMapSeq.length(1);
+  testData.testStructMapSeq[0][1024] = testStruct;
+
+  UnionWithMap union_with_map;
+  union_with_map.named_map(testStructMap);
+  union_with_map.anon_map(testData.stringMapMap);
 
   return EXIT_SUCCESS;
 }

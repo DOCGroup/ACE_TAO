@@ -1151,33 +1151,33 @@ static const yytype_int16 yyrline[] =
     3311,  3438,  3442,  3450,  3458,  3462,  3463,  3572,  3575,  3576,
     3581,  3585,  3580,  3621,  3620,  3632,  3642,  3660,  3668,  3667,
     3681,  3685,  3680,  3701,  3700,  3750,  3775,  3799,  3803,  3834,
-    3838,  3798,  3862,  3867,  3865,  3871,  3875,  3913,  3984,  4050,
-    4060,  4049,  4085,  4089,  4083,  4173,  4240,  4249,  4239,  4263,
-    4273,  4277,  4271,  4319,  4345,  4354,  4358,  4352,  4400,  4426,
-    4434,  4433,  4476,  4486,  4504,  4512,  4516,  4511,  4576,  4577,
-    4582,  4586,  4590,  4594,  4581,  4653,  4657,  4661,  4665,  4652,
-    4733,  4737,  4769,  4773,  4732,  4790,  4794,  4855,  4859,  4789,
-    4896,  4901,  4906,  4913,  4914,  4925,  4930,  4973,  4924,  4995,
-    4994,  5003,  5002,  5013,  5018,  5016,  5022,  5027,  5031,  5026,
-    5070,  5069,  5078,  5077,  5088,  5093,  5091,  5097,  5102,  5106,
-    5101,  5151,  5158,  5159,  5160,  5315,  5319,  5323,  5331,  5335,
-    5330,  5344,  5352,  5356,  5351,  5365,  5373,  5377,  5372,  5386,
-    5394,  5398,  5393,  5407,  5414,  5426,  5424,  5447,  5454,  5484,
-    5523,  5524,  5528,  5559,  5601,  5605,  5558,  5624,  5628,  5622,
-    5669,  5668,  5676,  5683,  5698,  5699,  5704,  5703,  5713,  5712,
-    5722,  5721,  5731,  5730,  5740,  5739,  5749,  5748,  5758,  5757,
-    5768,  5861,  5867,  5892,  5999,  6008,  6012,  6019,  6094,  6166,
-    6242,  6241,  6291,  6295,  6299,  6303,  6307,  6311,  6290,  6364,
-    6363,  6371,  6378,  6383,  6391,  6395,  6390,  6405,  6406,  6410,
-    6412,  6411,  6420,  6419,  6432,  6455,  6430,  6481,  6508,  6479,
-    6532,  6533,  6534,  6538,  6539,  6543,  6572,  6604,  6648,  6652,
-    6602,  6669,  6678,  6696,  6707,  6706,  6744,  6795,  6799,  6742,
-    6816,  6820,  6827,  6831,  6835,  6839,  6843,  6847,  6851,  6855,
-    6859,  6863,  6867,  6875,  6906,  6919,  6926,  6951,  6969,  6976,
-    6991,  6998,  7008,  7012,  7031,  7039,  7007,  7054,  7069,  7073,
-    7074,  7078,  7079,  7081,  7080,  7091,  7158,  7206,  7222,  7235,
-    7242,  7301,  7309,  7313,  7308,  7374,  7378,  7373,  7391,  7392,
-    7397,  7396,  7405,  7404,  7413,  7412,  7421,  7420
+    3838,  3798,  3862,  3867,  3865,  3871,  3875,  3913,  3984,  4046,
+    4056,  4045,  4081,  4085,  4079,  4169,  4236,  4245,  4235,  4259,
+    4269,  4273,  4267,  4315,  4341,  4350,  4354,  4348,  4396,  4422,
+    4430,  4429,  4472,  4482,  4500,  4508,  4512,  4507,  4572,  4573,
+    4578,  4582,  4586,  4590,  4577,  4649,  4653,  4657,  4661,  4648,
+    4729,  4733,  4765,  4769,  4728,  4786,  4790,  4851,  4855,  4785,
+    4892,  4897,  4902,  4909,  4910,  4921,  4926,  4969,  4920,  4991,
+    4990,  4999,  4998,  5009,  5014,  5012,  5018,  5023,  5027,  5022,
+    5066,  5065,  5074,  5073,  5084,  5089,  5087,  5093,  5098,  5102,
+    5097,  5147,  5154,  5155,  5156,  5311,  5315,  5319,  5327,  5331,
+    5326,  5340,  5348,  5352,  5347,  5361,  5369,  5373,  5368,  5382,
+    5390,  5394,  5389,  5403,  5410,  5422,  5420,  5443,  5450,  5480,
+    5519,  5520,  5524,  5555,  5597,  5601,  5554,  5620,  5624,  5618,
+    5665,  5664,  5672,  5679,  5694,  5695,  5700,  5699,  5709,  5708,
+    5718,  5717,  5727,  5726,  5736,  5735,  5745,  5744,  5754,  5753,
+    5764,  5857,  5863,  5888,  5995,  6004,  6008,  6015,  6090,  6162,
+    6238,  6237,  6287,  6291,  6295,  6299,  6303,  6307,  6286,  6360,
+    6359,  6367,  6374,  6379,  6387,  6391,  6386,  6401,  6402,  6406,
+    6408,  6407,  6416,  6415,  6428,  6451,  6426,  6477,  6504,  6475,
+    6528,  6529,  6530,  6534,  6535,  6539,  6568,  6600,  6644,  6648,
+    6598,  6665,  6674,  6692,  6703,  6702,  6740,  6791,  6795,  6738,
+    6812,  6816,  6823,  6827,  6831,  6835,  6839,  6843,  6847,  6851,
+    6855,  6859,  6863,  6871,  6902,  6915,  6922,  6947,  6965,  6972,
+    6987,  6994,  7004,  7008,  7027,  7035,  7003,  7050,  7065,  7069,
+    7070,  7074,  7075,  7077,  7076,  7087,  7154,  7202,  7218,  7231,
+    7238,  7297,  7305,  7309,  7304,  7370,  7374,  7369,  7387,  7388,
+    7393,  7392,  7401,  7400,  7409,  7408,  7417,  7416
 };
 #endif
 
@@ -3237,7 +3237,7 @@ yyreduce:
               return 1;
             }
 
-          UTL_ScopedName sn ((yyvsp[0].idval), 0);
+          UTL_ScopedName sn ((yyvsp[0].idval));
 
           AST_Template_Module_Ref *tmr =
             idl_global->gen ()->create_template_module_ref (
@@ -4394,7 +4394,7 @@ yyreduce:
 #line 1785 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ((yyvsp[0].idval), 0);
+          UTL_ScopedName n ((yyvsp[0].idval));
 
           if (ACE_OS::strcmp ((yyvsp[0].idval)->get_string (),
                               "TypeCode") == 0
@@ -4535,7 +4535,7 @@ yyreduce:
 #line 1903 "fe/idl.ypp"
         {
           (yyval.dcval) = 0;
-          UTL_ScopedName n ((yyvsp[-4].idval), 0);
+          UTL_ScopedName n ((yyvsp[-4].idval));
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Constant *c = 0;
@@ -5080,7 +5080,7 @@ yyreduce:
               "Annotations are not allowed in IDL versions before 4");
 
           Identifier *id = (yyvsp[-1].idval);
-          UTL_ScopedName name (id, 0);
+          UTL_ScopedName name (id);
           AST_Annotation_Decl::escape_name (&name);
           AST_Annotation_Decl *annotation_decl = idl_global->gen ()->
             create_annotation_decl (&name);
@@ -5123,7 +5123,7 @@ yyreduce:
           Identifier *name = (yyvsp[-2].idval);
           // Annotation member names can't clash with C++ keywords
           FE_Utils::original_local_name (name);
-          UTL_ScopedName *scoped_name = new UTL_ScopedName (name, 0);
+          UTL_ScopedName *scoped_name = new UTL_ScopedName (name);
           AST_Expression *default_value = (yyvsp[-1].exval);
 
           AST_Decl * type_obj;
@@ -5945,7 +5945,7 @@ yyreduce:
 #line 3133 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ((yyvsp[0].idval), 0);
+          UTL_ScopedName n ((yyvsp[0].idval));
           AST_Structure *d = 0;
 
           /*
@@ -6164,7 +6164,7 @@ yyreduce:
 #line 3316 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ((yyvsp[-3].idval), 0);
+          UTL_ScopedName n ((yyvsp[-3].idval));
           AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchOpenParSeen);
 
@@ -6219,7 +6219,7 @@ yyreduce:
           AST_Annotation_Appls *disc_annotations = (yyvsp[-3].annotations_val);
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ((yyvsp[-8].idval), 0);
+          UTL_ScopedName n ((yyvsp[-8].idval));
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchCloseParSeen);
 
           /*
@@ -6732,7 +6732,7 @@ yyreduce:
 #line 3803 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ((yyvsp[0].idval), 0);
+          UTL_ScopedName n ((yyvsp[0].idval));
           AST_Enum *e = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumIDSeen);
 
@@ -6818,7 +6818,7 @@ yyreduce:
           Identifier id ((yyvsp[0].strval));
           ACE::strdelete ((yyvsp[0].strval));
           (yyvsp[0].strval) = 0;
-          UTL_ScopedName n (&id, 0);
+          UTL_ScopedName n (&id);
           AST_EnumVal *e = 0;
           AST_Enum *c = 0;
 
@@ -6852,8 +6852,8 @@ yyreduce:
   case 357: /* map_type_spec: map_head ',' positive_int_expr '>'  */
 #line 3914 "fe/idl.ypp"
         {
-          AST_Map *map = 0;
-          Decl_Annotations_Pair_Pair* type_pair = (yyvsp[-3].decl_annotations_pair_val_pair);
+          AST_Map *map = nullptr;
+          Decl_Annotations_Pair_Pair *type_pair = (yyvsp[-3].decl_annotations_pair_val_pair);
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
           delete type_pair;
@@ -6863,9 +6863,9 @@ yyreduce:
           /*
            * Remove map marker from scopes stack.
            */
-          if (idl_global->scopes ().top () == 0)
+          if (!idl_global->scopes ().top ())
             {
-             idl_global->scopes ().pop ();
+              idl_global->scopes ().pop ();
             }
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
@@ -6896,7 +6896,7 @@ yyreduce:
               if (ktp && vtp)
                 {
                   Identifier id ("map");
-                  UTL_ScopedName sn (&id, 0);
+                  UTL_ScopedName sn (&id);
 
                   map =
                     idl_global->gen ()->create_map (
@@ -6927,8 +6927,8 @@ yyreduce:
   case 358: /* map_type_spec: map_head '>'  */
 #line 3985 "fe/idl.ypp"
         {
-          AST_Map *map = 0;
-          Decl_Annotations_Pair_Pair* type_pair = (yyvsp[-1].decl_annotations_pair_val_pair);
+          AST_Map *map = nullptr;
+          Decl_Annotations_Pair_Pair *type_pair = (yyvsp[-1].decl_annotations_pair_val_pair);
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
           delete type_pair;
@@ -6937,9 +6937,9 @@ yyreduce:
           /*
            * Remove map marker from scopes stack.
            */
-          if (idl_global->scopes ().top () == 0)
+          if (!idl_global->scopes ().top ())
             {
-             idl_global->scopes ().pop ();
+              idl_global->scopes ().pop ();
             }
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
@@ -6952,14 +6952,10 @@ yyreduce:
               AST_Type *ktp = dynamic_cast<AST_Type*> (key_type->decl);
               AST_Type *vtp = dynamic_cast<AST_Type*> (val_type->decl);
 
-              if (ktp == 0 || vtp == 0)
-                {
-                  ; // Error will be caught in FE_Declarator.
-                }
-              else
+              if (key_type && val_type)
                 {
                   Identifier id ("map");
-                  UTL_ScopedName sn (&id, 0);
+                  UTL_ScopedName sn (&id);
                   ACE_CDR::ULong bound = 0UL;
 
                   map =
@@ -6987,11 +6983,11 @@ yyreduce:
           delete val_type;
           (yyval.dcval) = map;
         }
-#line 6991 "fe/idl.tab.cpp"
+#line 6987 "fe/idl.tab.cpp"
     break;
 
   case 359: /* $@91: %empty  */
-#line 4050 "fe/idl.ypp"
+#line 4046 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_MapSeen);
 
@@ -7000,19 +6996,19 @@ yyreduce:
            */
           idl_global->scopes ().push (0);
         }
-#line 7004 "fe/idl.tab.cpp"
+#line 7000 "fe/idl.tab.cpp"
     break;
 
   case 360: /* $@92: %empty  */
-#line 4060 "fe/idl.ypp"
+#line 4056 "fe/idl.ypp"
         {
           idl_global->set_parse_state(IDL_GlobalData::PS_MapKeyTypeSeen);
         }
-#line 7012 "fe/idl.tab.cpp"
+#line 7008 "fe/idl.tab.cpp"
     break;
 
   case 361: /* map_head: IDL_MAP $@91 '<' annotations_maybe simple_type_spec $@92 ',' annotations_maybe simple_type_spec  */
-#line 4065 "fe/idl.ypp"
+#line 4061 "fe/idl.ypp"
         {
           idl_global->set_parse_state(IDL_GlobalData::PS_MapValueTypeSeen);
           Decl_Annotations_Pair *key = new Decl_Annotations_Pair;
@@ -7028,27 +7024,27 @@ yyreduce:
           pairs->second = value;
           (yyval.decl_annotations_pair_val_pair) = pairs;
         }
-#line 7032 "fe/idl.tab.cpp"
+#line 7028 "fe/idl.tab.cpp"
     break;
 
   case 362: /* $@93: %empty  */
-#line 4085 "fe/idl.ypp"
+#line 4081 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceCommaSeen);
         }
-#line 7040 "fe/idl.tab.cpp"
+#line 7036 "fe/idl.tab.cpp"
     break;
 
   case 363: /* $@94: %empty  */
-#line 4089 "fe/idl.ypp"
+#line 4085 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceExprSeen);
         }
-#line 7048 "fe/idl.tab.cpp"
+#line 7044 "fe/idl.tab.cpp"
     break;
 
   case 364: /* sequence_type_spec: seq_head ',' $@93 positive_int_expr $@94 '>'  */
-#line 4093 "fe/idl.ypp"
+#line 4089 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
 
@@ -7129,11 +7125,11 @@ yyreduce:
           ev = 0;
           (yyval.dcval) = seq;
         }
-#line 7133 "fe/idl.tab.cpp"
+#line 7129 "fe/idl.tab.cpp"
     break;
 
   case 365: /* sequence_type_spec: seq_head '>'  */
-#line 4175 "fe/idl.ypp"
+#line 4171 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
 
@@ -7172,7 +7168,7 @@ yyreduce:
               else
                 {
                   Identifier id ("sequence");
-                  UTL_ScopedName sn (&id, 0);
+                  UTL_ScopedName sn (&id);
                   ACE_CDR::ULong bound = 0UL;
 
                   seq =
@@ -7195,11 +7191,11 @@ yyreduce:
           delete type_annotations;
           (yyval.dcval) = seq;
         }
-#line 7199 "fe/idl.tab.cpp"
+#line 7195 "fe/idl.tab.cpp"
     break;
 
   case 366: /* $@95: %empty  */
-#line 4240 "fe/idl.ypp"
+#line 4236 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceSeen);
 
@@ -7208,19 +7204,19 @@ yyreduce:
            */
           idl_global->scopes ().push (0);
         }
-#line 7212 "fe/idl.tab.cpp"
+#line 7208 "fe/idl.tab.cpp"
     break;
 
   case 367: /* $@96: %empty  */
-#line 4249 "fe/idl.ypp"
+#line 4245 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceSqSeen);
         }
-#line 7220 "fe/idl.tab.cpp"
+#line 7216 "fe/idl.tab.cpp"
     break;
 
   case 368: /* seq_head: IDL_SEQUENCE $@95 '<' $@96 annotations_maybe simple_type_spec  */
-#line 4253 "fe/idl.ypp"
+#line 4249 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceTypeSeen);
           Decl_Annotations_Pair *seq_head = new Decl_Annotations_Pair;
@@ -7228,36 +7224,36 @@ yyreduce:
           seq_head->annotations = (yyvsp[-1].annotations_val);
           (yyval.decl_annotations_pair_val) = seq_head;
         }
-#line 7232 "fe/idl.tab.cpp"
+#line 7228 "fe/idl.tab.cpp"
     break;
 
   case 369: /* fixed_type_spec: IDL_FIXED '<' positive_int_expr ',' const_expr '>'  */
-#line 4264 "fe/idl.ypp"
+#line 4260 "fe/idl.ypp"
         {
           (yyvsp[-1].exval)->evaluate (AST_Expression::EK_positive_int);
           (yyval.dcval) = idl_global->gen ()->create_fixed ((yyvsp[-3].exval), (yyvsp[-1].exval));
         }
-#line 7241 "fe/idl.tab.cpp"
+#line 7237 "fe/idl.tab.cpp"
     break;
 
   case 370: /* $@97: %empty  */
-#line 4273 "fe/idl.ypp"
+#line 4269 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StringSqSeen);
         }
-#line 7249 "fe/idl.tab.cpp"
+#line 7245 "fe/idl.tab.cpp"
     break;
 
   case 371: /* $@98: %empty  */
-#line 4277 "fe/idl.ypp"
+#line 4273 "fe/idl.ypp"
         {
            idl_global->set_parse_state (IDL_GlobalData::PS_StringExprSeen);
         }
-#line 7257 "fe/idl.tab.cpp"
+#line 7253 "fe/idl.tab.cpp"
     break;
 
   case 372: /* string_type_spec: string_head '<' $@97 positive_int_expr $@98 '>'  */
-#line 4281 "fe/idl.ypp"
+#line 4277 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StringQsSeen);
 
@@ -7296,11 +7292,11 @@ yyreduce:
           delete ev;
           ev = 0;
         }
-#line 7300 "fe/idl.tab.cpp"
+#line 7296 "fe/idl.tab.cpp"
     break;
 
   case 373: /* string_type_spec: string_head  */
-#line 4320 "fe/idl.ypp"
+#line 4316 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StringCompleted);
 
@@ -7323,35 +7319,35 @@ yyreduce:
 
           (yyval.dcval) = tao_string_decl;
         }
-#line 7327 "fe/idl.tab.cpp"
+#line 7323 "fe/idl.tab.cpp"
     break;
 
   case 374: /* string_head: IDL_STRING  */
-#line 4346 "fe/idl.ypp"
+#line 4342 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StringSeen);
         }
-#line 7335 "fe/idl.tab.cpp"
+#line 7331 "fe/idl.tab.cpp"
     break;
 
   case 375: /* $@99: %empty  */
-#line 4354 "fe/idl.ypp"
+#line 4350 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StringSqSeen);
         }
-#line 7343 "fe/idl.tab.cpp"
+#line 7339 "fe/idl.tab.cpp"
     break;
 
   case 376: /* $@100: %empty  */
-#line 4358 "fe/idl.ypp"
+#line 4354 "fe/idl.ypp"
         {
            idl_global->set_parse_state (IDL_GlobalData::PS_StringExprSeen);
         }
-#line 7351 "fe/idl.tab.cpp"
+#line 7347 "fe/idl.tab.cpp"
     break;
 
   case 377: /* wstring_type_spec: wstring_head '<' $@99 positive_int_expr $@100 '>'  */
-#line 4362 "fe/idl.ypp"
+#line 4358 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StringQsSeen);
 
@@ -7390,11 +7386,11 @@ yyreduce:
           delete ev;
           ev = 0;
         }
-#line 7394 "fe/idl.tab.cpp"
+#line 7390 "fe/idl.tab.cpp"
     break;
 
   case 378: /* wstring_type_spec: wstring_head  */
-#line 4401 "fe/idl.ypp"
+#line 4397 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StringCompleted);
 
@@ -7417,27 +7413,27 @@ yyreduce:
 
           (yyval.dcval) = string;
         }
-#line 7421 "fe/idl.tab.cpp"
+#line 7417 "fe/idl.tab.cpp"
     break;
 
   case 379: /* wstring_head: IDL_WSTRING  */
-#line 4427 "fe/idl.ypp"
+#line 4423 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StringSeen);
         }
-#line 7429 "fe/idl.tab.cpp"
+#line 7425 "fe/idl.tab.cpp"
     break;
 
   case 380: /* $@101: %empty  */
-#line 4434 "fe/idl.ypp"
+#line 4430 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ArrayIDSeen);
         }
-#line 7437 "fe/idl.tab.cpp"
+#line 7433 "fe/idl.tab.cpp"
     break;
 
   case 381: /* array_declarator: defining_id $@101 annotations_maybe at_least_one_array_dim  */
-#line 4438 "fe/idl.ypp"
+#line 4434 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ArrayCompleted);
 
@@ -7473,22 +7469,22 @@ yyreduce:
 
           (yyval.dcval) = array;
         }
-#line 7477 "fe/idl.tab.cpp"
+#line 7473 "fe/idl.tab.cpp"
     break;
 
   case 382: /* at_least_one_array_dim: array_dim array_dims  */
-#line 4477 "fe/idl.ypp"
+#line 4473 "fe/idl.ypp"
         {
           ACE_NEW_RETURN ((yyval.elval),
                           UTL_ExprList ((yyvsp[-1].exval),
                                         (yyvsp[0].elval)),
                           1);
         }
-#line 7488 "fe/idl.tab.cpp"
+#line 7484 "fe/idl.tab.cpp"
     break;
 
   case 383: /* array_dims: array_dims array_dim  */
-#line 4487 "fe/idl.ypp"
+#line 4483 "fe/idl.ypp"
         {
           UTL_ExprList *el = 0;
           ACE_NEW_RETURN (el,
@@ -7506,35 +7502,35 @@ yyreduce:
               (yyval.elval) = (yyvsp[-1].elval);
             }
         }
-#line 7510 "fe/idl.tab.cpp"
+#line 7506 "fe/idl.tab.cpp"
     break;
 
   case 384: /* array_dims: %empty  */
-#line 4505 "fe/idl.ypp"
+#line 4501 "fe/idl.ypp"
         {
           (yyval.elval) = 0;
         }
-#line 7518 "fe/idl.tab.cpp"
+#line 7514 "fe/idl.tab.cpp"
     break;
 
   case 385: /* $@102: %empty  */
-#line 4512 "fe/idl.ypp"
+#line 4508 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_DimSqSeen);
         }
-#line 7526 "fe/idl.tab.cpp"
+#line 7522 "fe/idl.tab.cpp"
     break;
 
   case 386: /* $@103: %empty  */
-#line 4516 "fe/idl.ypp"
+#line 4512 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_DimExprSeen);
         }
-#line 7534 "fe/idl.tab.cpp"
+#line 7530 "fe/idl.tab.cpp"
     break;
 
   case 387: /* array_dim: '[' $@102 positive_int_expr $@103 ']'  */
-#line 4520 "fe/idl.ypp"
+#line 4516 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_DimQsSeen);
 
@@ -7588,43 +7584,43 @@ yyreduce:
           delete ev;
           ev = 0;
         }
-#line 7592 "fe/idl.tab.cpp"
+#line 7588 "fe/idl.tab.cpp"
     break;
 
   case 390: /* $@104: %empty  */
-#line 4582 "fe/idl.ypp"
+#line 4578 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrROSeen);
         }
-#line 7600 "fe/idl.tab.cpp"
+#line 7596 "fe/idl.tab.cpp"
     break;
 
   case 391: /* $@105: %empty  */
-#line 4586 "fe/idl.ypp"
+#line 4582 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrSeen);
         }
-#line 7608 "fe/idl.tab.cpp"
+#line 7604 "fe/idl.tab.cpp"
     break;
 
   case 392: /* $@106: %empty  */
-#line 4590 "fe/idl.ypp"
+#line 4586 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrTypeSeen);
         }
-#line 7616 "fe/idl.tab.cpp"
+#line 7612 "fe/idl.tab.cpp"
     break;
 
   case 393: /* $@107: %empty  */
-#line 4594 "fe/idl.ypp"
+#line 4590 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclsSeen);
         }
-#line 7624 "fe/idl.tab.cpp"
+#line 7620 "fe/idl.tab.cpp"
     break;
 
   case 394: /* attribute_readonly: IDL_READONLY $@104 IDL_ATTRIBUTE $@105 param_type_spec $@106 at_least_one_simple_declarator $@107 opt_raises  */
-#line 4598 "fe/idl.ypp"
+#line 4594 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Attribute *a = 0;
@@ -7676,43 +7672,43 @@ yyreduce:
 
           (yyval.dcval) = a;
         }
-#line 7680 "fe/idl.tab.cpp"
+#line 7676 "fe/idl.tab.cpp"
     break;
 
   case 395: /* $@108: %empty  */
-#line 4653 "fe/idl.ypp"
+#line 4649 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrSeen);
         }
-#line 7688 "fe/idl.tab.cpp"
+#line 7684 "fe/idl.tab.cpp"
     break;
 
   case 396: /* $@109: %empty  */
-#line 4657 "fe/idl.ypp"
+#line 4653 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrTypeSeen);
         }
-#line 7696 "fe/idl.tab.cpp"
+#line 7692 "fe/idl.tab.cpp"
     break;
 
   case 397: /* $@110: %empty  */
-#line 4661 "fe/idl.ypp"
+#line 4657 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclsSeen);
         }
-#line 7704 "fe/idl.tab.cpp"
+#line 7700 "fe/idl.tab.cpp"
     break;
 
   case 398: /* $@111: %empty  */
-#line 4665 "fe/idl.ypp"
+#line 4661 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseCompleted);
         }
-#line 7712 "fe/idl.tab.cpp"
+#line 7708 "fe/idl.tab.cpp"
     break;
 
   case 399: /* attribute_readwrite: IDL_ATTRIBUTE $@108 param_type_spec $@109 at_least_one_simple_declarator $@110 opt_getraises $@111 opt_setraises  */
-#line 4669 "fe/idl.ypp"
+#line 4665 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Attribute *a = 0;
@@ -7773,23 +7769,23 @@ yyreduce:
 
           (yyval.dcval) = a;
         }
-#line 7777 "fe/idl.tab.cpp"
+#line 7773 "fe/idl.tab.cpp"
     break;
 
   case 400: /* $@112: %empty  */
-#line 4733 "fe/idl.ypp"
+#line 4729 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptSeen);
         }
-#line 7785 "fe/idl.tab.cpp"
+#line 7781 "fe/idl.tab.cpp"
     break;
 
   case 401: /* @113: %empty  */
-#line 4737 "fe/idl.ypp"
+#line 4733 "fe/idl.ypp"
         {
           Identifier *&id = (yyvsp[0].idval);
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName scoped_name (id, 0);
+          UTL_ScopedName scoped_name (id);
           AST_Exception *exception = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptIDSeen);
 
@@ -7817,27 +7813,27 @@ yyreduce:
 
           (yyval.dcval) = exception;
         }
-#line 7821 "fe/idl.tab.cpp"
+#line 7817 "fe/idl.tab.cpp"
     break;
 
   case 402: /* $@114: %empty  */
-#line 4769 "fe/idl.ypp"
+#line 4765 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptSqSeen);
         }
-#line 7829 "fe/idl.tab.cpp"
+#line 7825 "fe/idl.tab.cpp"
     break;
 
   case 403: /* $@115: %empty  */
-#line 4773 "fe/idl.ypp"
+#line 4769 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptBodySeen);
         }
-#line 7837 "fe/idl.tab.cpp"
+#line 7833 "fe/idl.tab.cpp"
     break;
 
   case 404: /* exception: IDL_EXCEPTION $@112 defining_id @113 '{' $@114 members $@115 '}'  */
-#line 4777 "fe/idl.ypp"
+#line 4773 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptQsSeen);
           /*
@@ -7847,19 +7843,19 @@ yyreduce:
 
           (yyval.dcval) = (yyvsp[-5].dcval);
         }
-#line 7851 "fe/idl.tab.cpp"
+#line 7847 "fe/idl.tab.cpp"
     break;
 
   case 405: /* $@116: %empty  */
-#line 4790 "fe/idl.ypp"
+#line 4786 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpTypeSeen);
         }
-#line 7859 "fe/idl.tab.cpp"
+#line 7855 "fe/idl.tab.cpp"
     break;
 
   case 406: /* $@117: %empty  */
-#line 4794 "fe/idl.ypp"
+#line 4790 "fe/idl.ypp"
         {
           AST_Operation *op = 0;
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
@@ -7871,7 +7867,7 @@ yyreduce:
           ACE::strdelete ((yyvsp[0].strval));
           (yyvsp[0].strval) = 0;
 
-          UTL_ScopedName name (&id, 0);
+          UTL_ScopedName name (&id);
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
           /*
@@ -7920,27 +7916,27 @@ yyreduce:
            */
           idl_global->scopes ().push (op);
         }
-#line 7924 "fe/idl.tab.cpp"
+#line 7920 "fe/idl.tab.cpp"
     break;
 
   case 407: /* $@118: %empty  */
-#line 4855 "fe/idl.ypp"
+#line 4851 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
         }
-#line 7932 "fe/idl.tab.cpp"
+#line 7928 "fe/idl.tab.cpp"
     break;
 
   case 408: /* $@119: %empty  */
-#line 4859 "fe/idl.ypp"
+#line 4855 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
         }
-#line 7940 "fe/idl.tab.cpp"
+#line 7936 "fe/idl.tab.cpp"
     break;
 
   case 409: /* operation: opt_op_attribute op_type_spec $@116 IDENTIFIER $@117 parameter_list $@118 opt_raises $@119 opt_context  */
-#line 4863 "fe/idl.ypp"
+#line 4859 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Operation *o = 0;
@@ -7971,57 +7967,57 @@ yyreduce:
 
           (yyval.dcval) = o;
         }
-#line 7975 "fe/idl.tab.cpp"
+#line 7971 "fe/idl.tab.cpp"
     break;
 
   case 410: /* opt_op_attribute: IDL_ONEWAY  */
-#line 4897 "fe/idl.ypp"
+#line 4893 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpAttrSeen);
           (yyval.ofval) = AST_Operation::OP_oneway;
         }
-#line 7984 "fe/idl.tab.cpp"
+#line 7980 "fe/idl.tab.cpp"
     break;
 
   case 411: /* opt_op_attribute: IDL_IDEMPOTENT  */
-#line 4902 "fe/idl.ypp"
+#line 4898 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpAttrSeen);
           (yyval.ofval) = AST_Operation::OP_idempotent;
         }
-#line 7993 "fe/idl.tab.cpp"
+#line 7989 "fe/idl.tab.cpp"
     break;
 
   case 412: /* opt_op_attribute: %empty  */
-#line 4907 "fe/idl.ypp"
+#line 4903 "fe/idl.ypp"
         {
           (yyval.ofval) = AST_Operation::OP_noflags;
         }
-#line 8001 "fe/idl.tab.cpp"
+#line 7997 "fe/idl.tab.cpp"
     break;
 
   case 414: /* op_type_spec: IDL_VOID  */
-#line 4915 "fe/idl.ypp"
+#line 4911 "fe/idl.ypp"
         {
           (yyval.dcval) =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                   AST_Expression::EV_void
                                                 );
         }
-#line 8012 "fe/idl.tab.cpp"
+#line 8008 "fe/idl.tab.cpp"
     break;
 
   case 415: /* $@120: %empty  */
-#line 4925 "fe/idl.ypp"
+#line 4921 "fe/idl.ypp"
         {
           //@@ PS_FactorySeen?
           idl_global->set_parse_state (IDL_GlobalData::PS_OpTypeSeen);
         }
-#line 8021 "fe/idl.tab.cpp"
+#line 8017 "fe/idl.tab.cpp"
     break;
 
   case 416: /* @121: %empty  */
-#line 4930 "fe/idl.ypp"
+#line 4926 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
@@ -8064,19 +8060,19 @@ yyreduce:
 
           (yyval.dcval) = factory;
         }
-#line 8068 "fe/idl.tab.cpp"
+#line 8064 "fe/idl.tab.cpp"
     break;
 
   case 417: /* $@122: %empty  */
-#line 4973 "fe/idl.ypp"
+#line 4969 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
         }
-#line 8076 "fe/idl.tab.cpp"
+#line 8072 "fe/idl.tab.cpp"
     break;
 
   case 418: /* init_decl: IDL_FACTORY $@120 IDENTIFIER @121 init_parameter_list $@122 opt_raises  */
-#line 4977 "fe/idl.ypp"
+#line 4973 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
@@ -8091,67 +8087,67 @@ yyreduce:
 
           (yyval.dcval) = (yyvsp[-3].dcval);
         }
-#line 8095 "fe/idl.tab.cpp"
+#line 8091 "fe/idl.tab.cpp"
     break;
 
   case 419: /* $@123: %empty  */
-#line 4995 "fe/idl.ypp"
+#line 4991 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
-#line 8103 "fe/idl.tab.cpp"
+#line 8099 "fe/idl.tab.cpp"
     break;
 
   case 420: /* init_parameter_list: '(' $@123 ')'  */
-#line 4999 "fe/idl.ypp"
+#line 4995 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
-#line 8111 "fe/idl.tab.cpp"
+#line 8107 "fe/idl.tab.cpp"
     break;
 
   case 421: /* $@124: %empty  */
-#line 5003 "fe/idl.ypp"
+#line 4999 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
-#line 8119 "fe/idl.tab.cpp"
+#line 8115 "fe/idl.tab.cpp"
     break;
 
   case 422: /* init_parameter_list: '(' $@124 at_least_one_in_parameter ')'  */
-#line 5008 "fe/idl.ypp"
+#line 5004 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
-#line 8127 "fe/idl.tab.cpp"
+#line 8123 "fe/idl.tab.cpp"
     break;
 
   case 424: /* $@125: %empty  */
-#line 5018 "fe/idl.ypp"
+#line 5014 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParCommaSeen);
         }
-#line 8135 "fe/idl.tab.cpp"
+#line 8131 "fe/idl.tab.cpp"
     break;
 
   case 427: /* $@126: %empty  */
-#line 5027 "fe/idl.ypp"
+#line 5023 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParDirSeen);
         }
-#line 8143 "fe/idl.tab.cpp"
+#line 8139 "fe/idl.tab.cpp"
     break;
 
   case 428: /* $@127: %empty  */
-#line 5031 "fe/idl.ypp"
+#line 5027 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParTypeSeen);
         }
-#line 8151 "fe/idl.tab.cpp"
+#line 8147 "fe/idl.tab.cpp"
     break;
 
   case 429: /* in_parameter: IDL_IN $@126 param_type_spec $@127 declarator  */
-#line 5035 "fe/idl.ypp"
+#line 5031 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Argument *a = 0;
@@ -8183,67 +8179,67 @@ yyreduce:
           delete (yyvsp[0].deval);
           (yyvsp[0].deval) = 0;
         }
-#line 8187 "fe/idl.tab.cpp"
+#line 8183 "fe/idl.tab.cpp"
     break;
 
   case 430: /* $@128: %empty  */
-#line 5070 "fe/idl.ypp"
+#line 5066 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
-#line 8195 "fe/idl.tab.cpp"
+#line 8191 "fe/idl.tab.cpp"
     break;
 
   case 431: /* parameter_list: '(' $@128 ')'  */
-#line 5074 "fe/idl.ypp"
+#line 5070 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
-#line 8203 "fe/idl.tab.cpp"
+#line 8199 "fe/idl.tab.cpp"
     break;
 
   case 432: /* $@129: %empty  */
-#line 5078 "fe/idl.ypp"
+#line 5074 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
-#line 8211 "fe/idl.tab.cpp"
+#line 8207 "fe/idl.tab.cpp"
     break;
 
   case 433: /* parameter_list: '(' $@129 at_least_one_parameter ')'  */
-#line 5083 "fe/idl.ypp"
+#line 5079 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
-#line 8219 "fe/idl.tab.cpp"
+#line 8215 "fe/idl.tab.cpp"
     break;
 
   case 435: /* $@130: %empty  */
-#line 5093 "fe/idl.ypp"
+#line 5089 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParCommaSeen);
         }
-#line 8227 "fe/idl.tab.cpp"
+#line 8223 "fe/idl.tab.cpp"
     break;
 
   case 438: /* $@131: %empty  */
-#line 5102 "fe/idl.ypp"
+#line 5098 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParDirSeen);
         }
-#line 8235 "fe/idl.tab.cpp"
+#line 8231 "fe/idl.tab.cpp"
     break;
 
   case 439: /* $@132: %empty  */
-#line 5106 "fe/idl.ypp"
+#line 5102 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParTypeSeen);
         }
-#line 8243 "fe/idl.tab.cpp"
+#line 8239 "fe/idl.tab.cpp"
     break;
 
   case 440: /* parameter: direction $@131 param_type_spec $@132 declarator  */
-#line 5110 "fe/idl.ypp"
+#line 5106 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Argument *a = 0;
@@ -8282,22 +8278,22 @@ yyreduce:
           delete (yyvsp[0].deval);
           (yyvsp[0].deval) = 0;
         }
-#line 8286 "fe/idl.tab.cpp"
+#line 8282 "fe/idl.tab.cpp"
     break;
 
   case 441: /* param_type_spec: base_type_spec  */
-#line 5152 "fe/idl.ypp"
+#line 5148 "fe/idl.ypp"
         {
           (yyval.dcval) =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  (yyvsp[0].etval)
                                                );
         }
-#line 8297 "fe/idl.tab.cpp"
+#line 8293 "fe/idl.tab.cpp"
     break;
 
   case 444: /* param_type_spec: scoped_name  */
-#line 5161 "fe/idl.ypp"
+#line 5157 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = 0;
@@ -8449,186 +8445,186 @@ yyreduce:
 
           (yyval.dcval) = d;
         }
-#line 8453 "fe/idl.tab.cpp"
+#line 8449 "fe/idl.tab.cpp"
     break;
 
   case 445: /* direction: IDL_IN  */
-#line 5316 "fe/idl.ypp"
+#line 5312 "fe/idl.ypp"
         {
           (yyval.dival) = AST_Argument::dir_IN;
         }
-#line 8461 "fe/idl.tab.cpp"
+#line 8457 "fe/idl.tab.cpp"
     break;
 
   case 446: /* direction: IDL_OUT  */
-#line 5320 "fe/idl.ypp"
+#line 5316 "fe/idl.ypp"
         {
           (yyval.dival) = AST_Argument::dir_OUT;
         }
-#line 8469 "fe/idl.tab.cpp"
+#line 8465 "fe/idl.tab.cpp"
     break;
 
   case 447: /* direction: IDL_INOUT  */
-#line 5324 "fe/idl.ypp"
+#line 5320 "fe/idl.ypp"
         {
           (yyval.dival) = AST_Argument::dir_INOUT;
         }
-#line 8477 "fe/idl.tab.cpp"
+#line 8473 "fe/idl.tab.cpp"
     break;
 
   case 448: /* $@133: %empty  */
-#line 5331 "fe/idl.ypp"
+#line 5327 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseSeen);
         }
-#line 8485 "fe/idl.tab.cpp"
+#line 8481 "fe/idl.tab.cpp"
     break;
 
   case 449: /* $@134: %empty  */
-#line 5335 "fe/idl.ypp"
+#line 5331 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseSqSeen);
         }
-#line 8493 "fe/idl.tab.cpp"
+#line 8489 "fe/idl.tab.cpp"
     break;
 
   case 450: /* opt_raises: IDL_RAISES $@133 '(' $@134 at_least_one_scoped_name ')'  */
-#line 5340 "fe/idl.ypp"
+#line 5336 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseQsSeen);
           (yyval.nlval) = (yyvsp[-1].nlval);
         }
-#line 8502 "fe/idl.tab.cpp"
+#line 8498 "fe/idl.tab.cpp"
     break;
 
   case 451: /* opt_raises: %empty  */
-#line 5345 "fe/idl.ypp"
+#line 5341 "fe/idl.ypp"
         {
           (yyval.nlval) = 0;
         }
-#line 8510 "fe/idl.tab.cpp"
+#line 8506 "fe/idl.tab.cpp"
     break;
 
   case 452: /* $@135: %empty  */
-#line 5352 "fe/idl.ypp"
+#line 5348 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseSeen);
         }
-#line 8518 "fe/idl.tab.cpp"
+#line 8514 "fe/idl.tab.cpp"
     break;
 
   case 453: /* $@136: %empty  */
-#line 5356 "fe/idl.ypp"
+#line 5352 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseSqSeen);
         }
-#line 8526 "fe/idl.tab.cpp"
+#line 8522 "fe/idl.tab.cpp"
     break;
 
   case 454: /* opt_getraises: IDL_GETRAISES $@135 '(' $@136 at_least_one_scoped_name ')'  */
-#line 5361 "fe/idl.ypp"
+#line 5357 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseQsSeen);
           (yyval.nlval) = (yyvsp[-1].nlval);
         }
-#line 8535 "fe/idl.tab.cpp"
+#line 8531 "fe/idl.tab.cpp"
     break;
 
   case 455: /* opt_getraises: %empty  */
-#line 5366 "fe/idl.ypp"
+#line 5362 "fe/idl.ypp"
         {
           (yyval.nlval) = 0;
         }
-#line 8543 "fe/idl.tab.cpp"
+#line 8539 "fe/idl.tab.cpp"
     break;
 
   case 456: /* $@137: %empty  */
-#line 5373 "fe/idl.ypp"
+#line 5369 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseSeen);
         }
-#line 8551 "fe/idl.tab.cpp"
+#line 8547 "fe/idl.tab.cpp"
     break;
 
   case 457: /* $@138: %empty  */
-#line 5377 "fe/idl.ypp"
+#line 5373 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseSqSeen);
         }
-#line 8559 "fe/idl.tab.cpp"
+#line 8555 "fe/idl.tab.cpp"
     break;
 
   case 458: /* opt_setraises: IDL_SETRAISES $@137 '(' $@138 at_least_one_scoped_name ')'  */
-#line 5382 "fe/idl.ypp"
+#line 5378 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseQsSeen);
           (yyval.nlval) = (yyvsp[-1].nlval);
         }
-#line 8568 "fe/idl.tab.cpp"
+#line 8564 "fe/idl.tab.cpp"
     break;
 
   case 459: /* opt_setraises: %empty  */
-#line 5387 "fe/idl.ypp"
+#line 5383 "fe/idl.ypp"
         {
           (yyval.nlval) = 0;
         }
-#line 8576 "fe/idl.tab.cpp"
+#line 8572 "fe/idl.tab.cpp"
     break;
 
   case 460: /* $@139: %empty  */
-#line 5394 "fe/idl.ypp"
+#line 5390 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpContextSeen);
         }
-#line 8584 "fe/idl.tab.cpp"
+#line 8580 "fe/idl.tab.cpp"
     break;
 
   case 461: /* $@140: %empty  */
-#line 5398 "fe/idl.ypp"
+#line 5394 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpContextSqSeen);
         }
-#line 8592 "fe/idl.tab.cpp"
+#line 8588 "fe/idl.tab.cpp"
     break;
 
   case 462: /* opt_context: IDL_CONTEXT $@139 '(' $@140 at_least_one_string_literal ')'  */
-#line 5403 "fe/idl.ypp"
+#line 5399 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpContextQsSeen);
           (yyval.slval) = (yyvsp[-1].slval);
         }
-#line 8601 "fe/idl.tab.cpp"
+#line 8597 "fe/idl.tab.cpp"
     break;
 
   case 463: /* opt_context: %empty  */
-#line 5408 "fe/idl.ypp"
+#line 5404 "fe/idl.ypp"
         {
           (yyval.slval) = 0;
         }
-#line 8609 "fe/idl.tab.cpp"
+#line 8605 "fe/idl.tab.cpp"
     break;
 
   case 464: /* at_least_one_string_literal: IDL_STRING_LITERAL string_literals  */
-#line 5415 "fe/idl.ypp"
+#line 5411 "fe/idl.ypp"
         {
           ACE_NEW_RETURN ((yyval.slval),
                           UTL_StrList ((yyvsp[-1].sval),
                                        (yyvsp[0].slval)),
                           1);
         }
-#line 8620 "fe/idl.tab.cpp"
+#line 8616 "fe/idl.tab.cpp"
     break;
 
   case 465: /* $@141: %empty  */
-#line 5426 "fe/idl.ypp"
+#line 5422 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpContextCommaSeen);
         }
-#line 8628 "fe/idl.tab.cpp"
+#line 8624 "fe/idl.tab.cpp"
     break;
 
   case 466: /* string_literals: string_literals ',' $@141 IDL_STRING_LITERAL  */
-#line 5430 "fe/idl.ypp"
+#line 5426 "fe/idl.ypp"
         {
           UTL_StrList *sl = 0;
           ACE_NEW_RETURN (sl,
@@ -8646,19 +8642,19 @@ yyreduce:
               (yyval.slval) = (yyvsp[-3].slval);
             }
         }
-#line 8650 "fe/idl.tab.cpp"
+#line 8646 "fe/idl.tab.cpp"
     break;
 
   case 467: /* string_literals: %empty  */
-#line 5448 "fe/idl.ypp"
+#line 5444 "fe/idl.ypp"
         {
           (yyval.slval) = 0;
         }
-#line 8658 "fe/idl.tab.cpp"
+#line 8654 "fe/idl.tab.cpp"
     break;
 
   case 468: /* typeid_dcl: IDL_TYPEID scoped_name IDL_STRING_LITERAL  */
-#line 5455 "fe/idl.ypp"
+#line 5451 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d =
@@ -8685,11 +8681,11 @@ yyreduce:
 
           (yyval.dcval) = 0;
         }
-#line 8689 "fe/idl.tab.cpp"
+#line 8685 "fe/idl.tab.cpp"
     break;
 
   case 469: /* typeprefix_dcl: IDL_TYPEPREFIX scoped_name IDL_STRING_LITERAL  */
-#line 5485 "fe/idl.ypp"
+#line 5481 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = ScopeAsDecl (s);
@@ -8725,11 +8721,11 @@ yyreduce:
 
           (yyval.dcval) = 0;
         }
-#line 8729 "fe/idl.tab.cpp"
+#line 8725 "fe/idl.tab.cpp"
     break;
 
   case 472: /* component_forward_decl: IDL_COMPONENT defining_id  */
-#line 5530 "fe/idl.ypp"
+#line 5526 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yyvsp[0].idval),
@@ -8755,11 +8751,11 @@ yyreduce:
 
           (yyval.dcval) = 0;
         }
-#line 8759 "fe/idl.tab.cpp"
+#line 8755 "fe/idl.tab.cpp"
     break;
 
   case 473: /* @142: %empty  */
-#line 5559 "fe/idl.ypp"
+#line 5555 "fe/idl.ypp"
         {
           FE_ComponentHeader *&component_header = (yyvsp[0].chval);
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
@@ -8801,27 +8797,27 @@ yyreduce:
 
           (yyval.dcval) = component;
         }
-#line 8805 "fe/idl.tab.cpp"
+#line 8801 "fe/idl.tab.cpp"
     break;
 
   case 474: /* $@143: %empty  */
-#line 5601 "fe/idl.ypp"
+#line 5597 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentSqSeen);
         }
-#line 8813 "fe/idl.tab.cpp"
+#line 8809 "fe/idl.tab.cpp"
     break;
 
   case 475: /* $@144: %empty  */
-#line 5605 "fe/idl.ypp"
+#line 5601 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentBodySeen);
         }
-#line 8821 "fe/idl.tab.cpp"
+#line 8817 "fe/idl.tab.cpp"
     break;
 
   case 476: /* component_decl: component_header @142 '{' $@143 component_exports $@144 '}'  */
-#line 5609 "fe/idl.ypp"
+#line 5605 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentQsSeen);
 
@@ -8832,27 +8828,27 @@ yyreduce:
 
           (yyval.dcval) = (yyvsp[-5].dcval);
         }
-#line 8836 "fe/idl.tab.cpp"
+#line 8832 "fe/idl.tab.cpp"
     break;
 
   case 477: /* $@145: %empty  */
-#line 5624 "fe/idl.ypp"
+#line 5620 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentIDSeen);
         }
-#line 8844 "fe/idl.tab.cpp"
+#line 8840 "fe/idl.tab.cpp"
     break;
 
   case 478: /* $@146: %empty  */
-#line 5628 "fe/idl.ypp"
+#line 5624 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
         }
-#line 8852 "fe/idl.tab.cpp"
+#line 8848 "fe/idl.tab.cpp"
     break;
 
   case 479: /* component_header: IDL_COMPONENT defining_id $@145 component_inheritance_spec $@146 supports_spec  */
-#line 5632 "fe/idl.ypp"
+#line 5628 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
@@ -8886,35 +8882,35 @@ yyreduce:
               (yyvsp[-2].idlist) = 0;
             }
         }
-#line 8890 "fe/idl.tab.cpp"
+#line 8886 "fe/idl.tab.cpp"
     break;
 
   case 480: /* $@147: %empty  */
-#line 5669 "fe/idl.ypp"
+#line 5665 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
         }
-#line 8898 "fe/idl.tab.cpp"
+#line 8894 "fe/idl.tab.cpp"
     break;
 
   case 481: /* component_inheritance_spec: ':' $@147 scoped_name  */
-#line 5673 "fe/idl.ypp"
+#line 5669 "fe/idl.ypp"
         {
           (yyval.idlist) = (yyvsp[0].idlist);
         }
-#line 8906 "fe/idl.tab.cpp"
+#line 8902 "fe/idl.tab.cpp"
     break;
 
   case 482: /* component_inheritance_spec: %empty  */
-#line 5677 "fe/idl.ypp"
+#line 5673 "fe/idl.ypp"
         {
           (yyval.idlist) = 0;
         }
-#line 8914 "fe/idl.tab.cpp"
+#line 8910 "fe/idl.tab.cpp"
     break;
 
   case 483: /* component_exports: component_exports at_least_one_annotation component_export  */
-#line 5684 "fe/idl.ypp"
+#line 5680 "fe/idl.ypp"
         {
           AST_Annotation_Appls *&annotations = (yyvsp[-1].annotations_val);
           AST_Decl *&node = (yyvsp[0].dcval);
@@ -8929,130 +8925,130 @@ yyreduce:
             }
           delete annotations;
         }
-#line 8933 "fe/idl.tab.cpp"
+#line 8929 "fe/idl.tab.cpp"
     break;
 
   case 486: /* $@148: %empty  */
-#line 5704 "fe/idl.ypp"
+#line 5700 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
         }
-#line 8941 "fe/idl.tab.cpp"
+#line 8937 "fe/idl.tab.cpp"
     break;
 
   case 487: /* component_export: provides_decl $@148 ';'  */
-#line 5708 "fe/idl.ypp"
+#line 5704 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           (yyval.dcval) = (yyvsp[-2].dcval);
         }
-#line 8950 "fe/idl.tab.cpp"
+#line 8946 "fe/idl.tab.cpp"
     break;
 
   case 488: /* $@149: %empty  */
-#line 5713 "fe/idl.ypp"
+#line 5709 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
         }
-#line 8958 "fe/idl.tab.cpp"
+#line 8954 "fe/idl.tab.cpp"
     break;
 
   case 489: /* component_export: uses_decl $@149 ';'  */
-#line 5717 "fe/idl.ypp"
+#line 5713 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           (yyval.dcval) = (yyvsp[-2].dcval);
         }
-#line 8967 "fe/idl.tab.cpp"
+#line 8963 "fe/idl.tab.cpp"
     break;
 
   case 490: /* $@150: %empty  */
-#line 5722 "fe/idl.ypp"
+#line 5718 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_EmitsDeclSeen);
         }
-#line 8975 "fe/idl.tab.cpp"
+#line 8971 "fe/idl.tab.cpp"
     break;
 
   case 491: /* component_export: emits_decl $@150 ';'  */
-#line 5726 "fe/idl.ypp"
+#line 5722 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           (yyval.dcval) = (yyvsp[-2].dcval);
         }
-#line 8984 "fe/idl.tab.cpp"
+#line 8980 "fe/idl.tab.cpp"
     break;
 
   case 492: /* $@151: %empty  */
-#line 5731 "fe/idl.ypp"
+#line 5727 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_PublishesDeclSeen);
         }
-#line 8992 "fe/idl.tab.cpp"
+#line 8988 "fe/idl.tab.cpp"
     break;
 
   case 493: /* component_export: publishes_decl $@151 ';'  */
-#line 5735 "fe/idl.ypp"
+#line 5731 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           (yyval.dcval) = (yyvsp[-2].dcval);
         }
-#line 9001 "fe/idl.tab.cpp"
+#line 8997 "fe/idl.tab.cpp"
     break;
 
   case 494: /* $@152: %empty  */
-#line 5740 "fe/idl.ypp"
+#line 5736 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ConsumesDeclSeen);
         }
-#line 9009 "fe/idl.tab.cpp"
+#line 9005 "fe/idl.tab.cpp"
     break;
 
   case 495: /* component_export: consumes_decl $@152 ';'  */
-#line 5744 "fe/idl.ypp"
+#line 5740 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           (yyval.dcval) = (yyvsp[-2].dcval);
         }
-#line 9018 "fe/idl.tab.cpp"
+#line 9014 "fe/idl.tab.cpp"
     break;
 
   case 496: /* $@153: %empty  */
-#line 5749 "fe/idl.ypp"
+#line 5745 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
-#line 9026 "fe/idl.tab.cpp"
+#line 9022 "fe/idl.tab.cpp"
     break;
 
   case 497: /* component_export: attribute $@153 ';'  */
-#line 5753 "fe/idl.ypp"
+#line 5749 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           (yyval.dcval) = (yyvsp[-2].dcval);
         }
-#line 9035 "fe/idl.tab.cpp"
+#line 9031 "fe/idl.tab.cpp"
     break;
 
   case 498: /* $@154: %empty  */
-#line 5758 "fe/idl.ypp"
+#line 5754 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
         }
-#line 9043 "fe/idl.tab.cpp"
+#line 9039 "fe/idl.tab.cpp"
     break;
 
   case 499: /* component_export: extended_port_decl $@154 ';'  */
-#line 5762 "fe/idl.ypp"
+#line 5758 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           (yyval.dcval) = (yyvsp[-2].dcval);
         }
-#line 9052 "fe/idl.tab.cpp"
+#line 9048 "fe/idl.tab.cpp"
     break;
 
   case 500: /* provides_decl: IDL_PROVIDES interface_type id  */
-#line 5769 "fe/idl.ypp"
+#line 5765 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
@@ -9142,21 +9138,21 @@ yyreduce:
 
           (yyval.dcval) = dynamic_cast<AST_Decl *> (provides);
         }
-#line 9146 "fe/idl.tab.cpp"
+#line 9142 "fe/idl.tab.cpp"
     break;
 
   case 501: /* interface_type: scoped_name  */
-#line 5862 "fe/idl.ypp"
+#line 5858 "fe/idl.ypp"
         {
           // Lookups and checking are done where the 'interface_type'
           // token is used, in 'provides_decl' and 'uses_decl'.
           (yyval.idlist) = (yyvsp[0].idlist);
         }
-#line 9156 "fe/idl.tab.cpp"
+#line 9152 "fe/idl.tab.cpp"
     break;
 
   case 502: /* interface_type: IDL_OBJECT  */
-#line 5868 "fe/idl.ypp"
+#line 5864 "fe/idl.ypp"
         {
           Identifier *corba_id = 0;
 
@@ -9179,11 +9175,11 @@ yyreduce:
                                       conc_name),
                           1);
         }
-#line 9183 "fe/idl.tab.cpp"
+#line 9179 "fe/idl.tab.cpp"
     break;
 
   case 503: /* uses_decl: uses_opt_multiple interface_type id  */
-#line 5893 "fe/idl.ypp"
+#line 5889 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
@@ -9287,37 +9283,37 @@ yyreduce:
 
           (yyval.dcval) = uses;
         }
-#line 9291 "fe/idl.tab.cpp"
+#line 9287 "fe/idl.tab.cpp"
     break;
 
   case 504: /* uses_opt_multiple: IDL_USES opt_multiple  */
-#line 6000 "fe/idl.ypp"
+#line 5996 "fe/idl.ypp"
         {
           // We use this extra rule here to use in both uses_decl and
           // extended_uses_decl, so the LALR(1) parser can avoid conflicts.
           (yyval.bval) = (yyvsp[0].bval);
         }
-#line 9301 "fe/idl.tab.cpp"
+#line 9297 "fe/idl.tab.cpp"
     break;
 
   case 505: /* opt_multiple: IDL_MULTIPLE  */
-#line 6009 "fe/idl.ypp"
+#line 6005 "fe/idl.ypp"
         {
           (yyval.bval) = true;
         }
-#line 9309 "fe/idl.tab.cpp"
+#line 9305 "fe/idl.tab.cpp"
     break;
 
   case 506: /* opt_multiple: %empty  */
-#line 6013 "fe/idl.ypp"
+#line 6009 "fe/idl.ypp"
         {
           (yyval.bval) = false;
         }
-#line 9317 "fe/idl.tab.cpp"
+#line 9313 "fe/idl.tab.cpp"
     break;
 
   case 507: /* emits_decl: IDL_EMITS scoped_name id  */
-#line 6020 "fe/idl.ypp"
+#line 6016 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
@@ -9389,11 +9385,11 @@ yyreduce:
 
           (yyval.dcval) = e;
         }
-#line 9393 "fe/idl.tab.cpp"
+#line 9389 "fe/idl.tab.cpp"
     break;
 
   case 508: /* publishes_decl: IDL_PUBLISHES scoped_name id  */
-#line 6095 "fe/idl.ypp"
+#line 6091 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
@@ -9447,7 +9443,7 @@ yyreduce:
               // Strip off _cxx_, if any, for port name.
               FE_Utils::original_local_name ((yyvsp[0].idval));
 
-              UTL_ScopedName sn ((yyvsp[0].idval), 0);
+              UTL_ScopedName sn ((yyvsp[0].idval));
               p = idl_global->gen ()->create_publishes (&sn, event_type);
               s->fe_add_publishes (p);
             }
@@ -9462,11 +9458,11 @@ yyreduce:
 
           (yyval.dcval) = p;
         }
-#line 9466 "fe/idl.tab.cpp"
+#line 9462 "fe/idl.tab.cpp"
     break;
 
   case 509: /* consumes_decl: IDL_CONSUMES scoped_name id  */
-#line 6167 "fe/idl.ypp"
+#line 6163 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
@@ -9538,11 +9534,11 @@ yyreduce:
 
           (yyval.dcval) = c;
        }
-#line 9542 "fe/idl.tab.cpp"
+#line 9538 "fe/idl.tab.cpp"
     break;
 
   case 510: /* $@155: %empty  */
-#line 6242 "fe/idl.ypp"
+#line 6238 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Home *h = 0;
@@ -9579,11 +9575,11 @@ yyreduce:
            */
           idl_global->scopes ().push (h);
         }
-#line 9583 "fe/idl.tab.cpp"
+#line 9579 "fe/idl.tab.cpp"
     break;
 
   case 511: /* home_decl: home_header $@155 home_body  */
-#line 6279 "fe/idl.ypp"
+#line 6275 "fe/idl.ypp"
         {
           /*
            * Done with this component - pop it off the scopes stack.
@@ -9592,59 +9588,59 @@ yyreduce:
 
           (yyval.dcval) = 0;
         }
-#line 9596 "fe/idl.tab.cpp"
+#line 9592 "fe/idl.tab.cpp"
     break;
 
   case 512: /* $@156: %empty  */
-#line 6291 "fe/idl.ypp"
+#line 6287 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeSeen);
         }
-#line 9604 "fe/idl.tab.cpp"
+#line 9600 "fe/idl.tab.cpp"
     break;
 
   case 513: /* $@157: %empty  */
-#line 6295 "fe/idl.ypp"
+#line 6291 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeIDSeen);
         }
-#line 9612 "fe/idl.tab.cpp"
+#line 9608 "fe/idl.tab.cpp"
     break;
 
   case 514: /* $@158: %empty  */
-#line 6299 "fe/idl.ypp"
+#line 6295 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
         }
-#line 9620 "fe/idl.tab.cpp"
+#line 9616 "fe/idl.tab.cpp"
     break;
 
   case 515: /* $@159: %empty  */
-#line 6303 "fe/idl.ypp"
+#line 6299 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
         }
-#line 9628 "fe/idl.tab.cpp"
+#line 9624 "fe/idl.tab.cpp"
     break;
 
   case 516: /* $@160: %empty  */
-#line 6307 "fe/idl.ypp"
+#line 6303 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ManagesSeen);
         }
-#line 9636 "fe/idl.tab.cpp"
+#line 9632 "fe/idl.tab.cpp"
     break;
 
   case 517: /* $@161: %empty  */
-#line 6311 "fe/idl.ypp"
+#line 6307 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ManagesIDSeen);
         }
-#line 9644 "fe/idl.tab.cpp"
+#line 9640 "fe/idl.tab.cpp"
     break;
 
   case 518: /* home_header: IDL_HOME $@156 defining_id $@157 home_inheritance_spec $@158 supports_spec $@159 IDL_MANAGES $@160 scoped_name $@161 primary_key_spec  */
-#line 6315 "fe/idl.ypp"
+#line 6311 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_PrimaryKeySpecSeen);
 
@@ -9690,107 +9686,107 @@ yyreduce:
               (yyvsp[-6].nlval) = 0;
             }
         }
-#line 9694 "fe/idl.tab.cpp"
+#line 9690 "fe/idl.tab.cpp"
     break;
 
   case 519: /* $@162: %empty  */
-#line 6364 "fe/idl.ypp"
+#line 6360 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
         }
-#line 9702 "fe/idl.tab.cpp"
+#line 9698 "fe/idl.tab.cpp"
     break;
 
   case 520: /* home_inheritance_spec: ':' $@162 scoped_name  */
-#line 6368 "fe/idl.ypp"
+#line 6364 "fe/idl.ypp"
         {
           (yyval.idlist) = (yyvsp[0].idlist);
         }
-#line 9710 "fe/idl.tab.cpp"
+#line 9706 "fe/idl.tab.cpp"
     break;
 
   case 521: /* home_inheritance_spec: %empty  */
-#line 6372 "fe/idl.ypp"
+#line 6368 "fe/idl.ypp"
         {
           (yyval.idlist) = 0;
         }
-#line 9718 "fe/idl.tab.cpp"
+#line 9714 "fe/idl.tab.cpp"
     break;
 
   case 522: /* primary_key_spec: IDL_PRIMARYKEY scoped_name  */
-#line 6380 "fe/idl.ypp"
+#line 6376 "fe/idl.ypp"
         {
           (yyval.idlist) = (yyvsp[0].idlist);
         }
-#line 9726 "fe/idl.tab.cpp"
+#line 9722 "fe/idl.tab.cpp"
     break;
 
   case 523: /* primary_key_spec: %empty  */
-#line 6384 "fe/idl.ypp"
+#line 6380 "fe/idl.ypp"
         {
           (yyval.idlist) = 0;
         }
-#line 9734 "fe/idl.tab.cpp"
+#line 9730 "fe/idl.tab.cpp"
     break;
 
   case 524: /* $@163: %empty  */
-#line 6391 "fe/idl.ypp"
+#line 6387 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeSqSeen);
         }
-#line 9742 "fe/idl.tab.cpp"
+#line 9738 "fe/idl.tab.cpp"
     break;
 
   case 525: /* $@164: %empty  */
-#line 6395 "fe/idl.ypp"
+#line 6391 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeBodySeen);
         }
-#line 9750 "fe/idl.tab.cpp"
+#line 9746 "fe/idl.tab.cpp"
     break;
 
   case 526: /* home_body: '{' $@163 home_exports $@164 '}'  */
-#line 6399 "fe/idl.ypp"
+#line 6395 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeQsSeen);
         }
-#line 9758 "fe/idl.tab.cpp"
+#line 9754 "fe/idl.tab.cpp"
     break;
 
   case 530: /* $@165: %empty  */
-#line 6412 "fe/idl.ypp"
+#line 6408 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_FactoryDeclSeen);
         }
-#line 9766 "fe/idl.tab.cpp"
+#line 9762 "fe/idl.tab.cpp"
     break;
 
   case 531: /* home_export: factory_decl $@165 ';'  */
-#line 6416 "fe/idl.ypp"
+#line 6412 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-#line 9774 "fe/idl.tab.cpp"
+#line 9770 "fe/idl.tab.cpp"
     break;
 
   case 532: /* $@166: %empty  */
-#line 6420 "fe/idl.ypp"
+#line 6416 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_FinderDeclSeen);
         }
-#line 9782 "fe/idl.tab.cpp"
+#line 9778 "fe/idl.tab.cpp"
     break;
 
   case 533: /* home_export: finder_decl $@166 ';'  */
-#line 6424 "fe/idl.ypp"
+#line 6420 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-#line 9790 "fe/idl.tab.cpp"
+#line 9786 "fe/idl.tab.cpp"
     break;
 
   case 534: /* $@167: %empty  */
-#line 6432 "fe/idl.ypp"
+#line 6428 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yyvsp[0].idval),
@@ -9813,19 +9809,19 @@ yyreduce:
            */
           idl_global->scopes ().push (f);
         }
-#line 9817 "fe/idl.tab.cpp"
+#line 9813 "fe/idl.tab.cpp"
     break;
 
   case 535: /* $@168: %empty  */
-#line 6455 "fe/idl.ypp"
+#line 6451 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
         }
-#line 9825 "fe/idl.tab.cpp"
+#line 9821 "fe/idl.tab.cpp"
     break;
 
   case 536: /* factory_decl: IDL_FACTORY defining_id $@167 init_parameter_list $@168 opt_raises  */
-#line 6459 "fe/idl.ypp"
+#line 6455 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
@@ -9843,11 +9839,11 @@ yyreduce:
            */
           idl_global->scopes ().pop ();
         }
-#line 9847 "fe/idl.tab.cpp"
+#line 9843 "fe/idl.tab.cpp"
     break;
 
   case 537: /* $@169: %empty  */
-#line 6481 "fe/idl.ypp"
+#line 6477 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yyvsp[0].idval),
@@ -9874,19 +9870,19 @@ yyreduce:
            */
           idl_global->scopes ().push (f);
         }
-#line 9878 "fe/idl.tab.cpp"
+#line 9874 "fe/idl.tab.cpp"
     break;
 
   case 538: /* $@170: %empty  */
-#line 6508 "fe/idl.ypp"
+#line 6504 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
         }
-#line 9886 "fe/idl.tab.cpp"
+#line 9882 "fe/idl.tab.cpp"
     break;
 
   case 539: /* finder_decl: IDL_FINDER defining_id $@169 init_parameter_list $@170 opt_raises  */
-#line 6512 "fe/idl.ypp"
+#line 6508 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
@@ -9904,11 +9900,11 @@ yyreduce:
            */
           idl_global->scopes ().pop ();
         }
-#line 9908 "fe/idl.tab.cpp"
+#line 9904 "fe/idl.tab.cpp"
     break;
 
   case 545: /* event_concrete_forward_decl: IDL_EVENTTYPE defining_id  */
-#line 6545 "fe/idl.ypp"
+#line 6541 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yyvsp[0].idval),
@@ -9933,11 +9929,11 @@ yyreduce:
 
           (yyval.dcval) = 0;
         }
-#line 9937 "fe/idl.tab.cpp"
+#line 9933 "fe/idl.tab.cpp"
     break;
 
   case 546: /* event_abs_forward_decl: IDL_ABSTRACT IDL_EVENTTYPE defining_id  */
-#line 6575 "fe/idl.ypp"
+#line 6571 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yyvsp[0].idval),
@@ -9962,11 +9958,11 @@ yyreduce:
 
           (yyval.dcval) = 0;
         }
-#line 9966 "fe/idl.tab.cpp"
+#line 9962 "fe/idl.tab.cpp"
     break;
 
   case 547: /* $@171: %empty  */
-#line 6604 "fe/idl.ypp"
+#line 6600 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_EventType *e = 0;
@@ -10010,27 +10006,27 @@ yyreduce:
           delete (yyvsp[-1].idval);
           (yyvsp[-1].idval) = 0;
         }
-#line 10014 "fe/idl.tab.cpp"
+#line 10010 "fe/idl.tab.cpp"
     break;
 
   case 548: /* $@172: %empty  */
-#line 6648 "fe/idl.ypp"
+#line 6644 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeSqSeen);
         }
-#line 10022 "fe/idl.tab.cpp"
+#line 10018 "fe/idl.tab.cpp"
     break;
 
   case 549: /* $@173: %empty  */
-#line 6652 "fe/idl.ypp"
+#line 6648 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeBodySeen);
         }
-#line 10030 "fe/idl.tab.cpp"
+#line 10026 "fe/idl.tab.cpp"
     break;
 
   case 550: /* event_abs_decl: event_abs_header event_rest_of_header $@171 '{' $@172 exports $@173 '}'  */
-#line 6656 "fe/idl.ypp"
+#line 6652 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeQsSeen);
 
@@ -10041,19 +10037,19 @@ yyreduce:
 
           (yyval.dcval) = 0;
         }
-#line 10045 "fe/idl.tab.cpp"
+#line 10041 "fe/idl.tab.cpp"
     break;
 
   case 551: /* event_abs_header: IDL_ABSTRACT IDL_EVENTTYPE defining_id  */
-#line 6672 "fe/idl.ypp"
+#line 6668 "fe/idl.ypp"
         {
           (yyval.idval) = (yyvsp[0].idval);
         }
-#line 10053 "fe/idl.tab.cpp"
+#line 10049 "fe/idl.tab.cpp"
     break;
 
   case 552: /* event_custom_header: IDL_CUSTOM IDL_EVENTTYPE defining_id  */
-#line 6681 "fe/idl.ypp"
+#line 6677 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
 
@@ -10066,29 +10062,29 @@ yyreduce:
                       ACE_TEXT (" custom yet\n")));
           (yyval.idval) = 0;
         }
-#line 10070 "fe/idl.tab.cpp"
+#line 10066 "fe/idl.tab.cpp"
     break;
 
   case 553: /* event_plain_header: IDL_EVENTTYPE defining_id  */
-#line 6698 "fe/idl.ypp"
+#line 6694 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
 
           (yyval.idval) = (yyvsp[0].idval);
         }
-#line 10080 "fe/idl.tab.cpp"
+#line 10076 "fe/idl.tab.cpp"
     break;
 
   case 554: /* $@174: %empty  */
-#line 6707 "fe/idl.ypp"
+#line 6703 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
         }
-#line 10088 "fe/idl.tab.cpp"
+#line 10084 "fe/idl.tab.cpp"
     break;
 
   case 555: /* event_rest_of_header: inheritance_spec $@174 supports_spec  */
-#line 6711 "fe/idl.ypp"
+#line 6707 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
@@ -10117,11 +10113,11 @@ yyreduce:
               (yyvsp[-2].nlval) = 0;
             }
         }
-#line 10121 "fe/idl.tab.cpp"
+#line 10117 "fe/idl.tab.cpp"
     break;
 
   case 556: /* @175: %empty  */
-#line 6744 "fe/idl.ypp"
+#line 6740 "fe/idl.ypp"
         {
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
           Identifier *&event_id = (yyvsp[-1].idval);
@@ -10132,7 +10128,7 @@ yyreduce:
             {
               // We create the scoped name here instead of with the
               // FE_OBVHeader because there is a token for it only here.
-              UTL_ScopedName sn (event_id, 0);
+              UTL_ScopedName sn (event_id);
               eventtype = idl_global->gen ()->create_eventtype (
                 &sn,
                 event_header->inherits (),
@@ -10172,27 +10168,27 @@ yyreduce:
 
           (yyval.dcval) = eventtype;
         }
-#line 10176 "fe/idl.tab.cpp"
+#line 10172 "fe/idl.tab.cpp"
     break;
 
   case 557: /* $@176: %empty  */
-#line 6795 "fe/idl.ypp"
+#line 6791 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeSqSeen);
         }
-#line 10184 "fe/idl.tab.cpp"
+#line 10180 "fe/idl.tab.cpp"
     break;
 
   case 558: /* $@177: %empty  */
-#line 6799 "fe/idl.ypp"
+#line 6795 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeBodySeen);
         }
-#line 10192 "fe/idl.tab.cpp"
+#line 10188 "fe/idl.tab.cpp"
     break;
 
   case 559: /* event_decl: event_header event_rest_of_header @175 '{' $@176 value_elements $@177 '}'  */
-#line 6803 "fe/idl.ypp"
+#line 6799 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeQsSeen);
 
@@ -10203,116 +10199,116 @@ yyreduce:
 
           (yyval.dcval) = (yyvsp[-5].dcval);
         }
-#line 10207 "fe/idl.tab.cpp"
+#line 10203 "fe/idl.tab.cpp"
     break;
 
   case 560: /* event_header: event_custom_header  */
+#line 6813 "fe/idl.ypp"
+        {
+          (yyval.idval) = (yyvsp[0].idval);
+        }
+#line 10211 "fe/idl.tab.cpp"
+    break;
+
+  case 561: /* event_header: event_plain_header  */
 #line 6817 "fe/idl.ypp"
         {
           (yyval.idval) = (yyvsp[0].idval);
         }
-#line 10215 "fe/idl.tab.cpp"
-    break;
-
-  case 561: /* event_header: event_plain_header  */
-#line 6821 "fe/idl.ypp"
-        {
-          (yyval.idval) = (yyvsp[0].idval);
-        }
-#line 10223 "fe/idl.tab.cpp"
+#line 10219 "fe/idl.tab.cpp"
     break;
 
   case 562: /* formal_parameter_type: IDL_TYPENAME  */
-#line 6828 "fe/idl.ypp"
+#line 6824 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_type;
         }
-#line 10231 "fe/idl.tab.cpp"
+#line 10227 "fe/idl.tab.cpp"
     break;
 
   case 563: /* formal_parameter_type: IDL_STRUCT  */
-#line 6832 "fe/idl.ypp"
+#line 6828 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_struct;
         }
-#line 10239 "fe/idl.tab.cpp"
+#line 10235 "fe/idl.tab.cpp"
     break;
 
   case 564: /* formal_parameter_type: IDL_UNION  */
-#line 6836 "fe/idl.ypp"
+#line 6832 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_union;
         }
-#line 10247 "fe/idl.tab.cpp"
+#line 10243 "fe/idl.tab.cpp"
     break;
 
   case 565: /* formal_parameter_type: IDL_EVENTTYPE  */
-#line 6840 "fe/idl.ypp"
+#line 6836 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_eventtype;
         }
-#line 10255 "fe/idl.tab.cpp"
+#line 10251 "fe/idl.tab.cpp"
     break;
 
   case 566: /* formal_parameter_type: IDL_SEQUENCE  */
-#line 6844 "fe/idl.ypp"
+#line 6840 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_sequence;
         }
-#line 10263 "fe/idl.tab.cpp"
+#line 10259 "fe/idl.tab.cpp"
     break;
 
   case 567: /* formal_parameter_type: IDL_MAP  */
-#line 6848 "fe/idl.ypp"
+#line 6844 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_map;
         }
-#line 10271 "fe/idl.tab.cpp"
+#line 10267 "fe/idl.tab.cpp"
     break;
 
   case 568: /* formal_parameter_type: IDL_INTERFACE  */
-#line 6852 "fe/idl.ypp"
+#line 6848 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_interface;
         }
-#line 10279 "fe/idl.tab.cpp"
+#line 10275 "fe/idl.tab.cpp"
     break;
 
   case 569: /* formal_parameter_type: IDL_VALUETYPE  */
-#line 6856 "fe/idl.ypp"
+#line 6852 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_valuetype;
         }
-#line 10287 "fe/idl.tab.cpp"
+#line 10283 "fe/idl.tab.cpp"
     break;
 
   case 570: /* formal_parameter_type: IDL_ENUM  */
-#line 6860 "fe/idl.ypp"
+#line 6856 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_enum;
         }
-#line 10295 "fe/idl.tab.cpp"
+#line 10291 "fe/idl.tab.cpp"
     break;
 
   case 571: /* formal_parameter_type: IDL_EXCEPTION  */
-#line 6864 "fe/idl.ypp"
+#line 6860 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_except;
         }
-#line 10303 "fe/idl.tab.cpp"
+#line 10299 "fe/idl.tab.cpp"
     break;
 
   case 572: /* formal_parameter_type: IDL_CONST const_type  */
-#line 6868 "fe/idl.ypp"
+#line 6864 "fe/idl.ypp"
         {
           (yyval.ntval) = AST_Decl::NT_const;
           t_param_const_type = (yyvsp[0].etval);
         }
-#line 10312 "fe/idl.tab.cpp"
+#line 10308 "fe/idl.tab.cpp"
     break;
 
   case 573: /* at_least_one_formal_parameter: formal_parameter formal_parameters  */
-#line 6876 "fe/idl.ypp"
+#line 6872 "fe/idl.ypp"
         {
           if ((yyvsp[0].plval) == 0)
             {
@@ -10340,11 +10336,11 @@ yyreduce:
 
           (yyval.plval) = (yyvsp[0].plval);
         }
-#line 10344 "fe/idl.tab.cpp"
+#line 10340 "fe/idl.tab.cpp"
     break;
 
   case 574: /* formal_parameters: formal_parameters ',' formal_parameter  */
-#line 6907 "fe/idl.ypp"
+#line 6903 "fe/idl.ypp"
         {
           if ((yyvsp[-2].plval) == 0)
             {
@@ -10357,19 +10353,19 @@ yyreduce:
           delete (yyvsp[0].pival);
           (yyvsp[0].pival) = 0;
         }
-#line 10361 "fe/idl.tab.cpp"
+#line 10357 "fe/idl.tab.cpp"
     break;
 
   case 575: /* formal_parameters: %empty  */
-#line 6920 "fe/idl.ypp"
+#line 6916 "fe/idl.ypp"
         {
           (yyval.plval) = 0;
         }
-#line 10369 "fe/idl.tab.cpp"
+#line 10365 "fe/idl.tab.cpp"
     break;
 
   case 576: /* formal_parameter: formal_parameter_type IDENTIFIER  */
-#line 6927 "fe/idl.ypp"
+#line 6923 "fe/idl.ypp"
         {
 
           ACE_NEW_RETURN ((yyval.pival),
@@ -10394,11 +10390,11 @@ yyreduce:
               tao_enum_constant_decl = 0;
             }
         }
-#line 10398 "fe/idl.tab.cpp"
+#line 10394 "fe/idl.tab.cpp"
     break;
 
   case 577: /* formal_parameter: IDL_SEQUENCE '<' IDENTIFIER '>' IDENTIFIER  */
-#line 6952 "fe/idl.ypp"
+#line 6948 "fe/idl.ypp"
         {
           ACE_NEW_RETURN ((yyval.pival),
                           FE_Utils::T_Param_Info,
@@ -10413,19 +10409,19 @@ yyreduce:
           ACE::strdelete ((yyvsp[0].strval));
           (yyvsp[0].strval) = 0;
         }
-#line 10417 "fe/idl.tab.cpp"
+#line 10413 "fe/idl.tab.cpp"
     break;
 
   case 578: /* at_least_one_formal_parameter_name: formal_parameter_name formal_parameter_names  */
-#line 6970 "fe/idl.ypp"
+#line 6966 "fe/idl.ypp"
         {
           ACE_NEW_RETURN ((yyval.slval), UTL_StrList ((yyvsp[-1].sval), (yyvsp[0].slval)), 1);
         }
-#line 10425 "fe/idl.tab.cpp"
+#line 10421 "fe/idl.tab.cpp"
     break;
 
   case 579: /* formal_parameter_names: formal_parameter_names ',' formal_parameter_name  */
-#line 6977 "fe/idl.ypp"
+#line 6973 "fe/idl.ypp"
         {
           UTL_StrList *sl = 0;
           ACE_NEW_RETURN (sl, UTL_StrList ((yyvsp[0].sval), 0), 1);
@@ -10440,37 +10436,37 @@ yyreduce:
               (yyval.slval) = (yyvsp[-2].slval);
             }
         }
-#line 10444 "fe/idl.tab.cpp"
+#line 10440 "fe/idl.tab.cpp"
     break;
 
   case 580: /* formal_parameter_names: %empty  */
-#line 6992 "fe/idl.ypp"
+#line 6988 "fe/idl.ypp"
         {
           (yyval.slval) = 0;
         }
-#line 10452 "fe/idl.tab.cpp"
+#line 10448 "fe/idl.tab.cpp"
     break;
 
   case 581: /* formal_parameter_name: IDENTIFIER  */
-#line 6999 "fe/idl.ypp"
+#line 6995 "fe/idl.ypp"
         {
           ACE_NEW_RETURN ((yyval.sval),
                           UTL_String ((yyvsp[0].strval), true),
                           1);
         }
-#line 10462 "fe/idl.tab.cpp"
+#line 10458 "fe/idl.tab.cpp"
     break;
 
   case 582: /* $@178: %empty  */
-#line 7008 "fe/idl.ypp"
+#line 7004 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSeen);
         }
-#line 10470 "fe/idl.tab.cpp"
+#line 10466 "fe/idl.tab.cpp"
     break;
 
   case 583: /* @179: %empty  */
-#line 7012 "fe/idl.ypp"
+#line 7008 "fe/idl.ypp"
         {
           char *&id_value = (yyvsp[0].strval);
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeIDSeen);
@@ -10480,7 +10476,7 @@ yyreduce:
           ACE::strdelete (id_value);
           id_value = 0;
 
-          UTL_ScopedName scoped_name (&id, 0);
+          UTL_ScopedName scoped_name (&id);
           AST_PortType *porttype = idl_global->gen ()->create_porttype (
             &scoped_name);
           scope->fe_add_porttype (porttype);
@@ -10489,27 +10485,27 @@ yyreduce:
           // Push it on the scopes stack.
           idl_global->scopes ().push (porttype);
         }
-#line 10493 "fe/idl.tab.cpp"
+#line 10489 "fe/idl.tab.cpp"
     break;
 
   case 584: /* $@180: %empty  */
-#line 7031 "fe/idl.ypp"
+#line 7027 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSqSeen);
         }
-#line 10501 "fe/idl.tab.cpp"
+#line 10497 "fe/idl.tab.cpp"
     break;
 
   case 585: /* $@181: %empty  */
-#line 7039 "fe/idl.ypp"
+#line 7035 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeBodySeen);
         }
-#line 10509 "fe/idl.tab.cpp"
+#line 10505 "fe/idl.tab.cpp"
     break;
 
   case 586: /* porttype_decl: IDL_PORTTYPE $@178 IDENTIFIER @179 '{' $@180 at_least_one_port_export $@181 '}'  */
-#line 7043 "fe/idl.ypp"
+#line 7039 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeQsSeen);
 
@@ -10518,11 +10514,11 @@ yyreduce:
 
           (yyval.dcval) = (yyvsp[-5].dcval);
         }
-#line 10522 "fe/idl.tab.cpp"
+#line 10518 "fe/idl.tab.cpp"
     break;
 
   case 587: /* at_least_one_port_export: port_exports at_least_one_annotation port_export  */
-#line 7055 "fe/idl.ypp"
+#line 7051 "fe/idl.ypp"
         {
           AST_Annotation_Appls *&annotations = (yyvsp[-1].annotations_val);
           AST_Decl *&node = (yyvsp[0].dcval);
@@ -10537,27 +10533,27 @@ yyreduce:
             }
           delete annotations;
         }
-#line 10541 "fe/idl.tab.cpp"
+#line 10537 "fe/idl.tab.cpp"
     break;
 
   case 593: /* $@182: %empty  */
-#line 7081 "fe/idl.ypp"
+#line 7077 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
-#line 10549 "fe/idl.tab.cpp"
+#line 10545 "fe/idl.tab.cpp"
     break;
 
   case 594: /* port_export: attribute $@182 ';'  */
-#line 7085 "fe/idl.ypp"
+#line 7081 "fe/idl.ypp"
         {
           (yyval.dcval) = (yyvsp[-2].dcval);
         }
-#line 10557 "fe/idl.tab.cpp"
+#line 10553 "fe/idl.tab.cpp"
     break;
 
   case 595: /* extended_port_decl: IDL_PORT scoped_name IDENTIFIER  */
-#line 7092 "fe/idl.ypp"
+#line 7088 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
@@ -10591,7 +10587,7 @@ yyreduce:
               ACE::strdelete ((yyvsp[0].strval));
               (yyvsp[0].strval) = 0;
 
-              UTL_ScopedName sn (&id, 0);
+              UTL_ScopedName sn (&id);
               ep = idl_global->gen ()->create_extended_port (&sn, pt);
               s->fe_add_extended_port (ep);
 
@@ -10624,11 +10620,11 @@ yyreduce:
 
           (yyval.dcval) = ep;
         }
-#line 10628 "fe/idl.tab.cpp"
+#line 10624 "fe/idl.tab.cpp"
     break;
 
   case 596: /* extended_port_decl: IDL_MIRRORPORT scoped_name IDENTIFIER  */
-#line 7159 "fe/idl.ypp"
+#line 7155 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_MirrorPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
@@ -10662,7 +10658,7 @@ yyreduce:
               ACE::strdelete ((yyvsp[0].strval));
               (yyvsp[0].strval) = 0;
 
-              UTL_ScopedName sn (&id, 0);
+              UTL_ScopedName sn (&id);
               mp = idl_global->gen ()->create_mirror_port (&sn, pt);
               s->fe_add_mirror_port (mp);
             }
@@ -10673,11 +10669,11 @@ yyreduce:
 
           (yyval.dcval) = mp;
         }
-#line 10677 "fe/idl.tab.cpp"
+#line 10673 "fe/idl.tab.cpp"
     break;
 
   case 597: /* at_least_one_actual_parameter: annotations_maybe actual_parameter actual_parameters  */
-#line 7207 "fe/idl.ypp"
+#line 7203 "fe/idl.ypp"
         {
           if ((yyvsp[0].alval) == 0)
             {
@@ -10690,11 +10686,11 @@ yyreduce:
           (yyvsp[0].alval)->enqueue_head ((yyvsp[-1].dcval));
           (yyval.alval) = (yyvsp[0].alval);
         }
-#line 10694 "fe/idl.tab.cpp"
+#line 10690 "fe/idl.tab.cpp"
     break;
 
   case 598: /* actual_parameters: actual_parameters ',' annotations_maybe actual_parameter  */
-#line 7223 "fe/idl.ypp"
+#line 7219 "fe/idl.ypp"
         {
           if ((yyvsp[-3].alval) == 0)
             {
@@ -10707,19 +10703,19 @@ yyreduce:
           (yyvsp[-3].alval)->enqueue_tail ((yyvsp[0].dcval));
           (yyval.alval) = (yyvsp[-3].alval);
         }
-#line 10711 "fe/idl.tab.cpp"
+#line 10707 "fe/idl.tab.cpp"
     break;
 
   case 599: /* actual_parameters: %empty  */
-#line 7236 "fe/idl.ypp"
+#line 7232 "fe/idl.ypp"
         {
           (yyval.alval) = 0;
         }
-#line 10719 "fe/idl.tab.cpp"
+#line 10715 "fe/idl.tab.cpp"
     break;
 
   case 600: /* actual_parameter: expression  */
-#line 7243 "fe/idl.ypp"
+#line 7239 "fe/idl.ypp"
         {
           // To avoid grammar conflicts with this LALR(1) parser,
           // we take advantage of the fact that an expression can
@@ -10775,35 +10771,35 @@ yyreduce:
                   0);
             }
         }
-#line 10779 "fe/idl.tab.cpp"
+#line 10775 "fe/idl.tab.cpp"
     break;
 
   case 601: /* connector_decl: connector_header connector_body  */
-#line 7302 "fe/idl.ypp"
+#line 7298 "fe/idl.ypp"
         {
           (yyval.dcval) = 0;
         }
-#line 10787 "fe/idl.tab.cpp"
+#line 10783 "fe/idl.tab.cpp"
     break;
 
   case 602: /* $@183: %empty  */
-#line 7309 "fe/idl.ypp"
+#line 7305 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSeen);
         }
-#line 10795 "fe/idl.tab.cpp"
+#line 10791 "fe/idl.tab.cpp"
     break;
 
   case 603: /* $@184: %empty  */
-#line 7313 "fe/idl.ypp"
+#line 7309 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorIDSeen);
         }
-#line 10803 "fe/idl.tab.cpp"
+#line 10799 "fe/idl.tab.cpp"
     break;
 
   case 604: /* connector_header: IDL_CONNECTOR $@183 annotations_maybe IDENTIFIER $@184 component_inheritance_spec  */
-#line 7317 "fe/idl.ypp"
+#line 7313 "fe/idl.ypp"
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Connector *parent = 0;
@@ -10813,7 +10809,7 @@ yyreduce:
           ACE::strdelete ((yyvsp[-2].strval));
           (yyvsp[-2].strval) = 0;
 
-          UTL_ScopedName sn (&id, 0);
+          UTL_ScopedName sn (&id);
 
           if ((yyvsp[0].idlist) != 0)
             {
@@ -10857,102 +10853,102 @@ yyreduce:
 
           delete (yyvsp[-3].annotations_val);
         }
-#line 10861 "fe/idl.tab.cpp"
+#line 10857 "fe/idl.tab.cpp"
     break;
 
   case 605: /* $@185: %empty  */
-#line 7374 "fe/idl.ypp"
+#line 7370 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSqSeen);
         }
-#line 10869 "fe/idl.tab.cpp"
+#line 10865 "fe/idl.tab.cpp"
     break;
 
   case 606: /* $@186: %empty  */
-#line 7378 "fe/idl.ypp"
+#line 7374 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorBodySeen);
         }
-#line 10877 "fe/idl.tab.cpp"
+#line 10873 "fe/idl.tab.cpp"
     break;
 
   case 607: /* connector_body: '{' $@185 connector_exports $@186 '}'  */
-#line 7382 "fe/idl.ypp"
+#line 7378 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorQsSeen);
 
           // Done with this connector - pop it off the scope stack.
           idl_global->scopes ().pop ();
         }
-#line 10888 "fe/idl.tab.cpp"
+#line 10884 "fe/idl.tab.cpp"
     break;
 
   case 610: /* $@187: %empty  */
-#line 7397 "fe/idl.ypp"
+#line 7393 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
         }
-#line 10896 "fe/idl.tab.cpp"
+#line 10892 "fe/idl.tab.cpp"
     break;
 
   case 611: /* connector_export: provides_decl $@187 ';'  */
-#line 7401 "fe/idl.ypp"
+#line 7397 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-#line 10904 "fe/idl.tab.cpp"
+#line 10900 "fe/idl.tab.cpp"
     break;
 
   case 612: /* $@188: %empty  */
-#line 7405 "fe/idl.ypp"
+#line 7401 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
         }
-#line 10912 "fe/idl.tab.cpp"
+#line 10908 "fe/idl.tab.cpp"
     break;
 
   case 613: /* connector_export: uses_decl $@188 ';'  */
-#line 7409 "fe/idl.ypp"
+#line 7405 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-#line 10920 "fe/idl.tab.cpp"
+#line 10916 "fe/idl.tab.cpp"
     break;
 
   case 614: /* $@189: %empty  */
-#line 7413 "fe/idl.ypp"
+#line 7409 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
-#line 10928 "fe/idl.tab.cpp"
+#line 10924 "fe/idl.tab.cpp"
     break;
 
   case 615: /* connector_export: attribute $@189 ';'  */
-#line 7417 "fe/idl.ypp"
+#line 7413 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-#line 10936 "fe/idl.tab.cpp"
+#line 10932 "fe/idl.tab.cpp"
     break;
 
   case 616: /* $@190: %empty  */
-#line 7421 "fe/idl.ypp"
+#line 7417 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
         }
-#line 10944 "fe/idl.tab.cpp"
+#line 10940 "fe/idl.tab.cpp"
     break;
 
   case 617: /* connector_export: extended_port_decl $@190 ';'  */
-#line 7425 "fe/idl.ypp"
+#line 7421 "fe/idl.ypp"
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
-#line 10952 "fe/idl.tab.cpp"
+#line 10948 "fe/idl.tab.cpp"
     break;
 
 
-#line 10956 "fe/idl.tab.cpp"
+#line 10952 "fe/idl.tab.cpp"
 
       default: break;
     }
@@ -11145,7 +11141,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 7430 "fe/idl.ypp"
+#line 7426 "fe/idl.ypp"
 
 /* programs */
 

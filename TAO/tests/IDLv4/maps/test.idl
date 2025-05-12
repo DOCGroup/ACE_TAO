@@ -28,7 +28,7 @@ struct DataStruct {
   map<string, TestStructMap> stringMapMap;
   map<uint32, TestStructMap, 2> uint32MapMapBounded;
 
-  map<TestIntStringMap, string> mapStringMap;
+  map<TestIntStringMap, string> mapStringMap; // test map typedef used directly in struct
 
   TestStructMap testStructMapArray[3];
   sequence<TestStructMap> testStructMapSeq;
@@ -36,7 +36,9 @@ struct DataStruct {
 
 union UnionWithMap switch (int32) {
 case 0:
-  TestStructMap named_map;
+  float non_map_case;
 case 1:
+  TestStructMap named_map;
+case 2:
   map<string, TestStructMap> anon_map;
 };
