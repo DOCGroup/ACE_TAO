@@ -525,7 +525,7 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      const char* kind = nullptr;
+      const char *kind = 0;
       switch (node->node_type ())
       {
         case AST_Decl::NT_sequence:

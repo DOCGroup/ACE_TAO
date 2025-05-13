@@ -3905,12 +3905,12 @@ enumerator :
 map_type_spec 
         : map_head ',' positive_int_expr '>'
         {
-          AST_Map *map = nullptr;
+          AST_Map *map = 0;
           Decl_Annotations_Pair_Pair *type_pair = $1;
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
           delete type_pair;
-          type_pair = nullptr;
+          type_pair = 0;
           AST_Expression *max_size = $3;
 
           /*
@@ -3923,8 +3923,8 @@ map_type_spec
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
-          AST_Expression::AST_ExprValue *ev = nullptr;
-          AST_Param_Holder *param_holder = nullptr;
+          AST_Expression::AST_ExprValue *ev = 0;
+          AST_Param_Holder *param_holder = 0;
           if (max_size)
             {
               param_holder = max_size->param_holder ();
@@ -3976,12 +3976,12 @@ map_type_spec
         }
         | map_head '>'
         {
-          AST_Map *map = nullptr;
+          AST_Map *map = 0;
           Decl_Annotations_Pair_Pair *type_pair = $1;
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
           delete type_pair;
-          type_pair = nullptr;
+          type_pair = 0;
 
           /*
            * Remove map marker from scopes stack.
