@@ -102,6 +102,18 @@ be_visitor_union_branch_public_cs::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_public_cs::visit_sequence (be_sequence *node)
 {
+  return visit_seq_map_common (node);
+}
+
+int
+be_visitor_union_branch_public_cs::visit_map (be_map *node)
+{
+  return visit_seq_map_common (node);
+}
+
+int
+be_visitor_union_branch_public_cs::visit_seq_map_common (be_type *node)
+{
   // If not a typedef and we are defined in the use scope, we must be
   // defined.
 
@@ -117,7 +129,7 @@ be_visitor_union_branch_public_cs::visit_sequence (be_sequence *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_cs::"
-                             "visit_sequence - "
+                             "visit_seq_map_common - "
                              "codegen failed\n"),
                             -1);
         }

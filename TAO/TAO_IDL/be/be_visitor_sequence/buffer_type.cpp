@@ -87,6 +87,12 @@ be_visitor_sequence_buffer_type::visit_sequence (be_sequence *node)
 }
 
 int
+be_visitor_sequence_buffer_type::visit_map (be_map *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_sequence_buffer_type::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

@@ -805,7 +805,7 @@ template_module_ref
               return 1;
             }
 
-          UTL_ScopedName sn ($8, 0);
+          UTL_ScopedName sn ($8);
 
           AST_Template_Module_Ref *tmr =
             idl_global->gen ()->create_template_module_ref (
@@ -1780,7 +1780,7 @@ interface_forward :
         interface_decl
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($1, 0);
+          UTL_ScopedName n ($1);
 
           if (ACE_OS::strcmp ($1->get_string (),
                               "TypeCode") == 0
@@ -1898,7 +1898,7 @@ const_dcl :
         expression
         {
           $$ = 0;
-          UTL_ScopedName n ($5, 0);
+          UTL_ScopedName n ($5);
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Constant *c = 0;
@@ -2378,7 +2378,7 @@ annotation_dcl
             }
 
           Identifier *id = $2;
-          UTL_ScopedName name (id, 0);
+          UTL_ScopedName name (id);
           AST_Annotation_Decl::escape_name (&name);
           AST_Annotation_Decl *annotation_decl = idl_global->gen ()->
             create_annotation_decl (&name);
@@ -2429,7 +2429,7 @@ annotation_member
           Identifier *name = $2;
           // Annotation member names can't clash with C++ keywords
           FE_Utils::original_local_name (name);
-          UTL_ScopedName *scoped_name = new UTL_ScopedName (name, 0);
+          UTL_ScopedName *scoped_name = new UTL_ScopedName (name);
           AST_Expression *default_value = $3;
 
           AST_Decl * type_obj;
@@ -3128,7 +3128,7 @@ struct_type
         : struct_decl
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($1, 0);
+          UTL_ScopedName n ($1);
           AST_Structure *d = 0;
 
           /*
@@ -3296,7 +3296,7 @@ union_type
         '('
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($1, 0);
+          UTL_ScopedName n ($1);
           AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchOpenParSeen);
 
@@ -3343,7 +3343,7 @@ union_type
           AST_Annotation_Appls *disc_annotations = $6;
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($1, 0);
+          UTL_ScopedName n ($1);
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchCloseParSeen);
 
           /*
@@ -3795,7 +3795,7 @@ enum_type :
         defining_id
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($3, 0);
+          UTL_ScopedName n ($3);
           AST_Enum *e = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumIDSeen);
 
@@ -3872,7 +3872,7 @@ enumerator :
           Identifier id ($2);
           ACE::strdelete ($2);
           $2 = 0;
-          UTL_ScopedName n (&id, 0);
+          UTL_ScopedName n (&id);
           AST_EnumVal *e = 0;
           AST_Enum *c = 0;
 
@@ -3903,20 +3903,92 @@ enumerator :
         ;
 
 map_type_spec 
-        : map_head
-        '>'
+        : map_head ',' positive_int_expr '>'
         {
-          AST_Map *map = 0;
-          Decl_Annotations_Pair_Pair* type_pair = $1;
+          AST_Map *map = nullptr;
+          Decl_Annotations_Pair_Pair *type_pair = $1;
           Decl_Annotations_Pair *key_type = type_pair->first;
           Decl_Annotations_Pair *val_type = type_pair->second;
+          delete type_pair;
+          type_pair = nullptr;
+          AST_Expression *max_size = $3;
 
           /*
            * Remove map marker from scopes stack.
            */
-          if (idl_global->scopes ().top () == 0)
+          if (!idl_global->scopes ().top ())
             {
-             idl_global->scopes ().pop ();
+              idl_global->scopes ().pop ();
+            }
+
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          AST_Expression::AST_ExprValue *ev = nullptr;
+          AST_Param_Holder *param_holder = nullptr;
+          if (max_size)
+            {
+              param_holder = max_size->param_holder ();
+              ev = max_size->coerce (AST_Expression::EV_ulong);
+            }
+
+          // If the expression corresponds to a template parameter,
+          // it's ok for the coercion to fail at this point. We check
+          // for a type mismatch below.
+          if (!max_size || (!ev && !param_holder))
+            {
+              idl_global->err ()->coercion_error (max_size, AST_Expression::EV_ulong);
+            }
+          else if (key_type && val_type)
+            {
+              /*
+               * Create a node representing a map.
+               */
+              AST_Type *ktp = dynamic_cast<AST_Type*> (key_type->decl);
+              AST_Type *vtp = dynamic_cast<AST_Type*> (val_type->decl);
+
+              if (ktp && vtp)
+                {
+                  Identifier id ("map");
+                  UTL_ScopedName sn (&id);
+
+                  map =
+                    idl_global->gen ()->create_map (
+                        max_size,
+                        ktp,
+                        vtp,
+                        &sn,
+                        s->is_local (),
+                        s->is_abstract ()
+                      );
+                  map->key_type_annotations (*key_type->annotations);
+                  map->value_type_annotations (*val_type->annotations);
+
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
+            }
+
+          delete key_type->annotations;
+          delete key_type;
+          delete val_type->annotations;
+          delete val_type;
+          delete ev;
+          $$ = map;
+        }
+        | map_head '>'
+        {
+          AST_Map *map = nullptr;
+          Decl_Annotations_Pair_Pair *type_pair = $1;
+          Decl_Annotations_Pair *key_type = type_pair->first;
+          Decl_Annotations_Pair *val_type = type_pair->second;
+          delete type_pair;
+          type_pair = nullptr;
+
+          /*
+           * Remove map marker from scopes stack.
+           */
+          if (!idl_global->scopes ().top ())
+            {
+              idl_global->scopes ().pop ();
             }
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
@@ -3929,14 +4001,10 @@ map_type_spec
               AST_Type *ktp = dynamic_cast<AST_Type*> (key_type->decl);
               AST_Type *vtp = dynamic_cast<AST_Type*> (val_type->decl);
 
-              if (ktp == 0 || vtp == 0)
-                {
-                  ; // Error will be caught in FE_Declarator.
-                }
-              else
+              if (key_type && val_type)
                 {
                   Identifier id ("map");
-                  UTL_ScopedName sn (&id, 0);
+                  UTL_ScopedName sn (&id);
                   ACE_CDR::ULong bound = 0UL;
 
                   map =
@@ -3959,8 +4027,9 @@ map_type_spec
             }
 
           delete key_type->annotations;
+          delete key_type;
           delete val_type->annotations;
-          delete type_pair;
+          delete val_type;
           $$ = map;
         }
         ;
@@ -4130,7 +4199,7 @@ sequence_type_spec
               else
                 {
                   Identifier id ("sequence");
-                  UTL_ScopedName sn (&id, 0);
+                  UTL_ScopedName sn (&id);
                   ACE_CDR::ULong bound = 0UL;
 
                   seq =
@@ -4657,7 +4726,7 @@ exception :
         {
           Identifier *&id = $3;
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName scoped_name (id, 0);
+          UTL_ScopedName scoped_name (id);
           AST_Exception *exception = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptIDSeen);
 
@@ -4722,7 +4791,7 @@ operation
           ACE::strdelete ($4);
           $4 = 0;
 
-          UTL_ScopedName name (&id, 0);
+          UTL_ScopedName name (&id);
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
           /*
@@ -6065,7 +6134,7 @@ publishes_decl
               // Strip off _cxx_, if any, for port name.
               FE_Utils::original_local_name ($3);
 
-              UTL_ScopedName sn ($3, 0);
+              UTL_ScopedName sn ($3);
               p = idl_global->gen ()->create_publishes (&sn, event_type);
               s->fe_add_publishes (p);
             }
@@ -6671,7 +6740,7 @@ event_decl :
             {
               // We create the scoped name here instead of with the
               // FE_OBVHeader because there is a token for it only here.
-              UTL_ScopedName sn (event_id, 0);
+              UTL_ScopedName sn (event_id);
               eventtype = idl_global->gen ()->create_eventtype (
                 &sn,
                 event_header->inherits (),
@@ -6938,7 +7007,7 @@ porttype_decl
           ACE::strdelete (id_value);
           id_value = 0;
 
-          UTL_ScopedName scoped_name (&id, 0);
+          UTL_ScopedName scoped_name (&id);
           AST_PortType *porttype = idl_global->gen ()->create_porttype (
             &scoped_name);
           scope->fe_add_porttype (porttype);
@@ -7042,7 +7111,7 @@ extended_port_decl
               ACE::strdelete ($3);
               $3 = 0;
 
-              UTL_ScopedName sn (&id, 0);
+              UTL_ScopedName sn (&id);
               ep = idl_global->gen ()->create_extended_port (&sn, pt);
               s->fe_add_extended_port (ep);
 
@@ -7109,7 +7178,7 @@ extended_port_decl
               ACE::strdelete ($3);
               $3 = 0;
 
-              UTL_ScopedName sn (&id, 0);
+              UTL_ScopedName sn (&id);
               mp = idl_global->gen ()->create_mirror_port (&sn, pt);
               s->fe_add_mirror_port (mp);
             }
@@ -7243,7 +7312,7 @@ connector_header
           ACE::strdelete ($4);
           $4 = 0;
 
-          UTL_ScopedName sn (&id, 0);
+          UTL_ScopedName sn (&id);
 
           if ($6 != 0)
             {

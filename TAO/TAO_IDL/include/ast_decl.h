@@ -395,6 +395,8 @@ public:
    */
   virtual bool ami_visit ();
 
+  virtual const char *node_type_name() const;
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor and can be called
@@ -409,7 +411,7 @@ protected:
   int contains_wstring_;
   // If we are a scope, do we contain a wstring at some level?
 
-  void dump_i (ACE_OSTREAM_TYPE &o, const char *s) const ;
+  void dump_i (ACE_OSTREAM_TYPE &o, const char *s) const;
 
   void compute_repoID (void);
   // Computes the repoID.
@@ -420,7 +422,7 @@ protected:
   void compute_flat_name (void);
   // Compute the flattened fully scoped name.
 
-  const char *node_type_to_string (NodeType nt);
+  static const char *node_type_to_string (NodeType nt);
   // Convert a NodeType to a string for dumping.
 
   /// Annotations applied to this IDL element

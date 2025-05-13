@@ -103,6 +103,7 @@ AST_Field::AST_Field (AST_Type *ft,
   this->owns_base_type_ =
     fnt == AST_Decl::NT_array
     || fnt == AST_Decl::NT_sequence
+    || fnt == AST_Decl::NT_map
     || fnt == AST_Decl::NT_fixed
     || fnt == AST_Decl::NT_param_holder;
 
@@ -136,6 +137,7 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
   this->owns_base_type_ =
     fnt == AST_Decl::NT_array
     || fnt == AST_Decl::NT_sequence
+    || fnt == AST_Decl::NT_map
     || fnt == AST_Decl::NT_fixed
     || fnt == AST_Decl::NT_param_holder;
 

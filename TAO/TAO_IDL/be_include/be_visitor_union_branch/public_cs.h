@@ -35,11 +35,15 @@ public:
   virtual int visit_array (be_array *node);
   virtual int visit_enum (be_enum *node);
   virtual int visit_sequence (be_sequence *node);
+  virtual int visit_map (be_map *node);
   virtual int visit_string (be_string *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_structure_fwd (be_structure_fwd *node);
   virtual int visit_union (be_union *node);
   virtual int visit_union_fwd (be_union_fwd *node);
+
+private:
+  int visit_seq_map_common (be_type *node);
 };
 
 #endif /* _BE_VISITOR_UNION_BRANCS_PUBLIC_CS_H_ */

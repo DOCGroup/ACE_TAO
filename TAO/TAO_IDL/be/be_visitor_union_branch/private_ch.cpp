@@ -407,6 +407,18 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
 int
 be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
 {
+  return visit_seq_map_common (node);
+}
+
+int
+be_visitor_union_branch_private_ch::visit_map (be_map *node)
+{
+  return visit_seq_map_common (node);
+}
+
+int
+be_visitor_union_branch_private_ch::visit_seq_map_common (be_type *node)
+{
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
   be_type *bt = 0;
@@ -425,7 +437,7 @@ be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_private_ch::"
-                         "visit_sequence - "
+                         "visit_seq_map_common - "
                          "bad context information\n"),
                         -1);
     }

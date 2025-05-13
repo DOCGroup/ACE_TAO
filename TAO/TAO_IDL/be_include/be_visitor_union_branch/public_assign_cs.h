@@ -41,6 +41,7 @@ public:
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   virtual int visit_predefined_type (be_predefined_type *node);
   virtual int visit_sequence (be_sequence *node);
+  virtual int visit_map (be_map *node);
   virtual int visit_string (be_string *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_structure_fwd (be_structure_fwd *node);
@@ -50,7 +51,7 @@ public:
 
 private:
   int emit_valuetype_common (be_type *node);
-
+  int visit_seq_map_common (be_type *node);
 };
 
 #endif /* _BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_ */
