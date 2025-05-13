@@ -615,6 +615,18 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
 int
 be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
 {
+  return visit_seq_map_common (node);
+}
+
+int
+be_visitor_union_branch_public_assign_cs::visit_map (be_map *node)
+{
+  return visit_seq_map_common (node);
+}
+
+int
+be_visitor_union_branch_public_assign_cs::visit_seq_map_common (be_type *node)
+{
   be_union_branch *ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
@@ -635,7 +647,7 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_assign_cs::"
-                         "visit_array - "
+                         "visit_seq_map_common - "
                          "bad context information\n"
                          ), -1);
     }
@@ -689,7 +701,7 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_assign_cs::"
-                         "visit_array - "
+                         "visit_string - "
                          "bad context information\n"
                          ), -1);
     }
@@ -736,7 +748,7 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_assign_cs::"
-                         "visit_array - "
+                         "visit_structure - "
                          "bad context information\n"
                          ), -1);
     }
@@ -841,7 +853,7 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_assign_cs::"
-                         "visit_array - "
+                         "visit_union - "
                          "bad context information\n"
                          ), -1);
     }

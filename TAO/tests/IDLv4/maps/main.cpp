@@ -11,7 +11,6 @@ int ACE_TMAIN(int, ACE_TCHAR *[])
 
   RecurseStruct rStruct;
   rStruct.iMapR[10] = rStruct;
-  // rStruct.rMapI[rStruct] = 10; // Structs as keys aren't really valid, as they fail to compile when generated via tao_idl
 
   TestStruct testStruct;
   testStruct.id = 42;
@@ -23,7 +22,8 @@ int ACE_TMAIN(int, ACE_TCHAR *[])
   TestIntStringMap testIntStringMap;
   testIntStringMap[42] = "Hello World!";
 
-  TestStructSeq testStructSeq(1, 1, TestStructSeq::allocbuf(1));
+  TestStructSeq testStructSeq;
+  testStructSeq.length(1);
   testStructSeq[0] = testStruct;
 
   testData.intIntMap[4] = 100;
@@ -31,6 +31,15 @@ int ACE_TMAIN(int, ACE_TCHAR *[])
   testData.stringSequenceMap["test"] = testStructSeq;
   testData.stringMapMap["test"] = testStructMap;
   testData.mapStringMap[testIntStringMap] = "Hello World";
+
+  testData.testStructMapArray[0][2] = testStruct;
+
+  testData.testStructMapSeq.length(1);
+  testData.testStructMapSeq[0][1024] = testStruct;
+
+  UnionWithMap union_with_map;
+  union_with_map.named_map(testStructMap);
+  union_with_map.anon_map(testData.stringMapMap);
 
   return EXIT_SUCCESS;
 }

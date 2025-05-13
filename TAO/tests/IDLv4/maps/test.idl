@@ -1,12 +1,12 @@
 struct RecurseStruct;
 typedef map<int32, RecurseStruct> IntRecursedMap;
 struct RecurseStruct {
-    IntRecursedMap iMapR;
+  IntRecursedMap iMapR;
 };
 
 struct TestStruct {
-    int32 id;
-    string msg;
+  int32 id;
+  string msg;
 };
 
 typedef sequence<TestStruct> TestStructSeq;
@@ -14,19 +14,31 @@ typedef map<int32, TestStruct> TestStructMap;
 typedef map<int32, string> TestIntStringMap;
 
 struct DataStruct {
-    // Bounded maps are not actually bounded as std::map doesn't support that
+  // NOTE: Bounded maps are not actually bounded as std::map doesn't support that
 
-    map<int32, int32> intIntMap;
-    // map<int32, int32, 4> intIntMapBounded;
+  map<int32, int32> intIntMap;
+  map<string, int32, 4> stringIntMapBounded;
 
-    map<string, TestStruct> stringStructsMap;
-    // map<string, TestStruct, 4> stringStructsMapBounded;
+  map<string, TestStruct> stringStructsMap;
+  map<uint32, TestStruct, 4> uint32StructsMapBounded;
 
-    map<string, TestStructSeq> stringSequenceMap;
-    // map<string, TestStructSeq, 2> stringSequenceMapBounded;
+  map<string, TestStructSeq> stringSequenceMap;
+  map<uint32, TestStructSeq, 2> uint32SequenceMapBounded;
 
-    map<string, TestStructMap> stringMapMap;
-    // map<string, TestStructMap, 2> stringMapMapBounded;
+  map<string, TestStructMap> stringMapMap;
+  map<uint32, TestStructMap, 2> uint32MapMapBounded;
 
-    map<TestIntStringMap, string> mapStringMap;
+  map<TestIntStringMap, string> mapStringMap; // test map typedef used directly in struct
+
+  TestStructMap testStructMapArray[3];
+  sequence<TestStructMap> testStructMapSeq;
+};
+
+union UnionWithMap switch (int32) {
+case 0:
+  float non_map_case;
+case 1:
+  TestStructMap named_map;
+case 2:
+  map<string, TestStructMap> anon_map;
 };

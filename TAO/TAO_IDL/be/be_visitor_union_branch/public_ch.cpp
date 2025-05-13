@@ -482,6 +482,18 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
 int
 be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
 {
+  return visit_seq_map_common (node);
+}
+
+int
+be_visitor_union_branch_public_ch::visit_map (be_map *node)
+{
+  return visit_seq_map_common (node);
+}
+
+int
+be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
+{
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
   be_type *bt = nullptr;
@@ -500,7 +512,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
-                         "visit_sequence - "
+                         "visit_seq_map_common - "
                          "bad context information\n"),
                         -1);
     }
@@ -513,16 +525,42 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      be_visitor_sequence_ch visitor (&ctx);
-
-      if (node->accept (&visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_branch_public_ch::"
-                             "visit_sequence - "
-                             "codegen failed\n"),
-                            -1);
-        }
+      const char* kind = nullptr;
+      switch (node->node_type ())
+      {
+        case AST_Decl::NT_sequence:
+          {
+            be_visitor_sequence_ch visitor (&ctx);
+            if (node->accept (&visitor) == -1)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_union_branch_public_ch::"
+                                 "visit_seq_map_common - "
+                                 "sequence codegen failed\n"),
+                                -1);
+            kind = "seq";
+          }
+          break;
+        case AST_Decl::NT_map:
+          {
+            be_visitor_map_ch visitor (&ctx);
+            if (node->accept (&visitor) == -1)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_union_branch_public_ch::"
+                                 "visit_seq_map_common - "
+                                 "map codegen failed\n"),
+                                -1);
+            kind = "map";
+          }
+          break;
+        default:
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_visitor_union_branch_public_ch::"
+                               "visit_seq_map_common - "
+                               "invalid type: %C\n", node->node_type_name ()),
+                              -1);
+          }
+      };
 
       TAO_INSERT_COMMENT (os);
 
@@ -531,7 +569,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
       // implementation-specific name.
       *os << be_nl_2
           << "typedef " << bt->nested_type_name (bu)
-          << " _" << ub->local_name () << "_seq;";
+          << " _" << ub->local_name () << "_" << kind << ";";
     }
 
   TAO_INSERT_COMMENT (os);
