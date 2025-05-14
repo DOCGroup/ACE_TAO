@@ -519,6 +519,12 @@ be_visitor_array_cdr_op_cs::visit_sequence (be_sequence *node)
 }
 
 int
+be_visitor_array_cdr_op_cs::visit_map (be_map *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_array_cdr_op_cs::visit_string (be_string *node)
 {
   return this->visit_node (node);

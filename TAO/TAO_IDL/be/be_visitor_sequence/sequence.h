@@ -23,6 +23,7 @@
 #include "be_home.h"
 #include "be_predefined_type.h"
 #include "be_sequence.h"
+#include "be_map.h"
 #include "be_string.h"
 #include "be_structure.h"
 #include "be_structure_fwd.h"

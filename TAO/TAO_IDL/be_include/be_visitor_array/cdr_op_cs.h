@@ -44,41 +44,18 @@ public:
   virtual int visit_array (be_array *node);
 
   // = Visitor methods on array types
-
-  /// visit an enum
   virtual int visit_enum (be_enum *node);
-
-  /// visit an interface
   virtual int visit_interface (be_interface *node);
-
-  /// visit an interface forward node
   virtual int visit_interface_fwd (be_interface_fwd *node);
-
-  /// visit a valuebox
   virtual int visit_valuebox (be_valuebox *node);
-
-  /// visit a valuetype
   virtual int visit_valuetype (be_valuetype *node);
-
-  /// visit a valuetype forward node
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
-
-  /// visit a predefined type node
   virtual int visit_predefined_type (be_predefined_type *node);
-
-  /// visit sequence
   virtual int visit_sequence (be_sequence *node);
-
-  /// visit string
+  virtual int visit_map (be_map *node);
   virtual int visit_string (be_string *node);
-
-  /// visit structure
   virtual int visit_structure (be_structure *node);
-
-  /// visit typedef
   virtual int visit_typedef (be_typedef *node);
-
-  /// visit union
   virtual int visit_union (be_union *node);
 
 protected:

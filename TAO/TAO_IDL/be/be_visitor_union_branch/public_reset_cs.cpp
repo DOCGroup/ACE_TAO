@@ -386,8 +386,19 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_sequence (
-  be_sequence *)
+be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *)
+{
+  return visit_seq_map_common ();
+}
+
+int
+be_visitor_union_branch_public_reset_cs::visit_map (be_map *)
+{
+  return visit_seq_map_common ();
+}
+
+int
+be_visitor_union_branch_public_reset_cs::visit_seq_map_common ()
 {
   be_union_branch *ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
@@ -398,7 +409,7 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
-                         "visit_sequence - "
+                         "visit_seq_map_common - "
                          "bad context information\n"),
                         -1);
     }

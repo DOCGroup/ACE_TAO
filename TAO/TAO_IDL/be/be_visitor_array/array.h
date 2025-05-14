@@ -23,6 +23,7 @@
 #include "be_structure.h"
 #include "be_union.h"
 #include "be_sequence.h"
+#include "be_map.h"
 #include "be_helper.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
