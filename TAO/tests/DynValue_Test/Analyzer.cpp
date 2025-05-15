@@ -136,8 +136,9 @@ DynAnyAnalyzer::get_correct_base_type (
 }
 
 #define CASEE(type,CT,str) case CORBA::tk_##type: {\
-  CORBA::CT b = da->get_##type();\
-  if (!newline) tab(""); \
+  CORBA::CT const b = da->get_##type();\
+  if (!newline) \
+    tab(""); \
   ACE_DEBUG ((LM_DEBUG, str , b));\
 } break;
 
