@@ -57,7 +57,8 @@ typedef double ACE_timer_t;
 
 #if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG == 8
    typedef off_t ACE_LOFF_T;
-#elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__)
+#elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__) || \
+  defined (ACE_EMSCRIPTEN)
    typedef off_t ACE_LOFF_T;
 #elif defined (__QNX__)
    typedef off64_t ACE_LOFF_T;
