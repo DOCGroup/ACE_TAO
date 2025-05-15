@@ -8,13 +8,16 @@ class KeyType
 public:
   friend bool operator == (const KeyType&, const KeyType&);
 
-  KeyType () : val_(0) {}
+  KeyType () = default;
   KeyType (int i) : val_(i) {}
-  KeyType (const KeyType& kt) { this->val_ = kt.val_; };
+  KeyType (const KeyType&) = default;
+  KeyType (KeyType&&) = default;
+  KeyType& operator= (const KeyType&) = default;
+  KeyType& operator= (KeyType&&) = default;
   operator int() const { return val_; };
 
 private:
-  int val_;
+  int val_ {};
 };
 
 bool operator == (const KeyType& a, const KeyType& b)
