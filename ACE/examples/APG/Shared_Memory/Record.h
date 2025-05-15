@@ -13,8 +13,8 @@
 class Record
 {
 public:
-  Record () { }
-  ~Record () { }
+  Record () = default;
+  ~Record () = default;
 
   Record (const Record& rec)
     : id1_(rec.id1_), id2_(rec.id2_)
@@ -29,12 +29,12 @@ public:
     this->name_ = recName_;
   }
   char *name () { return recName_; }
-  int id1 () { return id1_; }
-  int id2 () { return id2_; }
+  int id1 () const { return id1_; }
+  int id2 () const { return id2_; }
 
 private:
-  int id1_;
-  int id2_;
+  int id1_ {};
+  int id2_ {};
   char recName_[128];
   ACE_Based_Pointer_Basic<char> name_;
 };
