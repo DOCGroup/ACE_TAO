@@ -1,14 +1,8 @@
 /* -*- C++ -*- */
 #include "URL_Status.h"
 
-
 URL_Status::URL_Status (STATUS_CODE code)
   : status_ (code)
-{
-}
-
-URL_Status::URL_Status (const URL_Status &s)
-  : status_ (s.status_)
 {
 }
 
