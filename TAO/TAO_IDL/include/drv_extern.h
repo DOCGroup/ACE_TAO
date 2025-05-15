@@ -68,18 +68,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // External functions for the IDL compiler driver program.
 extern void DRV_parse_args (long, char **);
 extern void DRV_usage ();
-extern void DRV_pre_proc (char const * myfile);
+extern void DRV_pre_proc (char const *myfile);
 extern void DRV_store_env_include_paths ();
 extern void DRV_cpp_init ();
-extern ACE_CString& DRV_add_include_path (ACE_CString&,
-                                          const char* p, const char* suffix,
+extern ACE_CString& DRV_add_include_path (ACE_CString &,
+                                          const char *p, const char *suffix,
                                           bool is_system);
 extern void DRV_cpp_post_init ();
-extern void DRV_cpp_putarg (char const * str);
-extern void DRV_cpp_new_location (char const * new_loc);
+extern void DRV_cpp_putarg (char const *str, bool front = false);
+extern void DRV_cpp_new_location (char const *new_loc);
 extern void DRV_get_orb_idl_includes ();
 
 // Not used by all backends.
-extern void DRV_push_file (char const * s);
+extern void DRV_push_file (char const *s);
 
 #endif           // _DRV_EXTERN_DRV_EXTERN_HH
