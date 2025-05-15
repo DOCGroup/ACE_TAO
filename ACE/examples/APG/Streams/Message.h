@@ -10,8 +10,7 @@ public:
   Message () : device_(0), type_(0), id_(0)
   { }
 
-  ~Message ()
-  { }
+  ~Message () = default;
 
   RecordingDevice *recorder ()
   {

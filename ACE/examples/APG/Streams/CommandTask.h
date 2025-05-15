@@ -13,7 +13,7 @@ class CommandTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   typedef ACE_Task<ACE_MT_SYNCH> inherited;
 
-  virtual ~CommandTask () { }
+  virtual ~CommandTask () = default;
 
   virtual int open (void * = 0 );
 

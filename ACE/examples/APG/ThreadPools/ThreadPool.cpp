@@ -17,7 +17,7 @@ class Worker;
 class IManager
 {
 public:
-  virtual ~IManager () { }
+  virtual ~IManager () = default;
 
   virtual int return_to_work (Worker *worker) = 0;
 };

@@ -6,8 +6,7 @@
 class EMail
   {
   public:
-    EMail()
-    { }
+    EMail() = default;
 
     int send (const char *to,
               const char *from,

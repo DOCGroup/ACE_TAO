@@ -11,8 +11,7 @@
 class Workers : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Workers ()
-  { }
+  Workers () = default;
 
   virtual int svc ()
   {
