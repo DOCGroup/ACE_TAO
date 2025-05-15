@@ -9,8 +9,7 @@ public:
   MySignalHandler (int signum) : signum_(signum)
   { }
 
-  virtual ~MySignalHandler ()
-  { }
+  virtual ~MySignalHandler () = default;
 
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0)
   {

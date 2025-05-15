@@ -33,7 +33,7 @@ public:
   Command *execute (Command *command);
 
 private:
-  CommandStream () { }
+  CommandStream () = default;
 
   ACE_SOCK_Stream *peer_;
 };

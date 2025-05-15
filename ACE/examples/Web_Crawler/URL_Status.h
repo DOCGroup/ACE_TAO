@@ -45,7 +45,8 @@ public:
   };
 
   URL_Status (STATUS_CODE = STATUS_INSUFFICIENT_DATA);
-  URL_Status (const URL_Status &);
+  URL_Status (const URL_Status &) = default;
+  URL_Status& operator= (const URL_Status&) = default;
 
   STATUS_CODE status () const;
   void status (int);
