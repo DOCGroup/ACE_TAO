@@ -16,9 +16,12 @@
  * handle_input(). It also checks wether the counter is greater than zero
  * indicating, that handle_input() has been called before.
  */
-#define INVOCATION_ENTER() do { if (mInvocationCounter > 0) \
-        ACE_ERROR((LM_ERROR, ACE_TEXT("Multiple invocations detected.\n"))); \
-        mInvocationCounter++; } while (0)
+#define INVOCATION_ENTER() \
+  do { \
+     if (mInvocationCounter > 0) \
+       ACE_ERROR((LM_ERROR, ACE_TEXT("Multiple invocations detected.\n"))); \
+     mInvocationCounter++; } \
+  while (0)
 
 /**
  * THis macro is the counter part to INVOCATION_ENTER(). It decreases the
