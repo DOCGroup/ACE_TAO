@@ -20,7 +20,7 @@
 class AnswerIncomingCall : public BasicTask
 {
 protected:
-  virtual int process (Message *message)
+  int process (Message *message) override
   {
     ACE_TRACE ("AnswerIncomingCall::process()");
 
@@ -29,7 +29,7 @@ protected:
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("AnswerIncomingCall")),
                         -1);
-      return 0;
+    return 0;
   }
 };
 // Listing 21
@@ -38,7 +38,7 @@ protected:
 class GetCallerId : public BasicTask
 {
 protected:
-  virtual int process (Message *message)
+  int process (Message *message) override
   {
     ACE_TRACE ("GetCallerId::process()");
 
@@ -60,7 +60,7 @@ protected:
 class PlayOutgoingMessage : public BasicTask
 {
 protected:
-  virtual int process (Message *message)
+  int process (Message *message) override
   {
     ACE_TRACE ("PlayOutgoingMessage::process()");
 
@@ -90,7 +90,7 @@ protected:
 class RecordIncomingMessage : public BasicTask
 {
 protected:
-  virtual int process (Message *message)
+  int process (Message *message) override
   {
     ACE_TRACE ("RecordIncomingMessage::process()");
 
@@ -121,7 +121,7 @@ protected:
 class ReleaseDevice : public BasicTask
 {
 protected:
-  virtual int process (Message *message)
+  int process (Message *message) override
   {
     ACE_TRACE ("ReleaseDevice::process()");
     message->recorder ()->release ();
@@ -134,7 +134,7 @@ protected:
 class EncodeMessage : public BasicTask
 {
 protected:
-  virtual int process (Message *message)
+  int process (Message *message) override
   {
     ACE_TRACE ("EncodeMessage::process()");
 
@@ -165,7 +165,7 @@ protected:
 class SaveMetaData : public BasicTask
 {
 protected:
-  virtual int process (Message *message)
+  int process (Message *message) override
   {
     ACE_TRACE ("SaveMetaData::process()");
 
@@ -203,7 +203,7 @@ private:
 class NotifySomeone : public BasicTask
 {
 protected:
-  virtual int process (Message *message)
+  int process (Message *message) override
   {
     ACE_TRACE ("NotifySomeone::process()");
 
@@ -235,8 +235,8 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Listing 1000 code/ch18
-  virtual int open (void *arg,
-                    Module *head = 0, Module *tail = 0)
+  int open (void *arg,
+            Module *head = 0, Module *tail = 0) override
   {
   //FUZZ: enable check_for_lack_ACE_OS
     if (tail == 0)
