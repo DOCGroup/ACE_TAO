@@ -1,0 +1,6 @@
+project(*): taoidldefaults {
+  custom_only = 1
+  IDL_Files {
+    a/b/b.idl
+  }
+}

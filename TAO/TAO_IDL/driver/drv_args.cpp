@@ -84,7 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern long DRV_nfiles;
 extern char *DRV_files[];
 
-void process_long_option(long ac, char **av, long &i);
+void process_long_option (long ac, char **av, long &i);
 
 // Push a file into the list of files to be processed
 void
@@ -124,46 +124,42 @@ DRV_usage ()
               ACE_TEXT ("%C: usage: %C [[flag|file] ...] [-- file ...]\n"),
               idl_global->prog_name (),
               idl_global->prog_name ()));
-
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("Legal flags:\n")
-    ACE_TEXT (" -h | --help | -u\tPrint this list and exit successfully\n")
-    ACE_TEXT (" -A...\t\t\tlocal implementation-specific escape\n")
-    ACE_TEXT (" -Cw\t\t\tWarning if identifier spellings differ ")
-    ACE_TEXT ("only in case (default is error)\n")
-    ACE_TEXT (" -Ce\t\t\tError if identifier spellings differ ")
-    ACE_TEXT ("only in case (default)\n")
-    ACE_TEXT (" -ae\t\t\tError if anonymous type is seen ")
-    ACE_TEXT ("(default)\n")
-    ACE_TEXT (" -aw\t\t\tWarning if anonymous type is seen ")
-    ACE_TEXT ("(default is error)\n")
-    ACE_TEXT (" -as\t\t\tSilences the anonymous type diagnostic ")
-    ACE_TEXT ("(default is error)\n")
-    ACE_TEXT (" -d | --dump\t\tPrints a dump of the AST and exits\n")
-    ACE_TEXT (" -Dname[=value]\t\tdefines name for preprocessor\n")
-    ACE_TEXT (" -E\t\t\truns preprocessor only, prints on stdout\n")
-    ACE_TEXT (" -Idir\t\t\tincludes dir in search path for preprocessor\n")
-    ACE_TEXT (" -t\t\t\tTemporary directory to be used")
-    ACE_TEXT (" by the IDL compiler.\n")
-    ACE_TEXT (" -Uname\t\t\tundefines name for preprocessor\n")
-    ACE_TEXT (" -v\t\t\ttraces compilation stages\n")
-    ACE_TEXT (" -V | --version\t\tprints version info then exits\n")
-    ACE_TEXT (" -w\t\t\tsuppresses IDL compiler warning messages\n")
-    ACE_TEXT (" -Wp,<arg1,...,argn>\tpasses args to preprocessor\n")
-    ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
-    ACE_TEXT (" --idl-version VERSION\tSet the version of IDL to use\n")
-    ACE_TEXT (" --default-idl-version\tPrint the default IDL version and exit\n")
-    ACE_TEXT (" --list-idl-versions\tPrint IDL versions supported and exit\n")
-    ACE_TEXT (" --syntax-only\t\tJust check the syntax, do not create files\n")
-    ACE_TEXT (" --bison-trace\t\tEnable Bison Tracing (sets yydebug to 1)\n")
-    ACE_TEXT (" --dump-builtins\tDump the compiler and user defined IDL.\n")
-    ACE_TEXT (" --just-dump-builtins\tJust dump the compiler defined IDL and exit.\n")
-    ACE_TEXT (" --unknown-annotations ARG\t")
-      ACE_TEXT ("Set reaction to unknown annotations. ARG must be one of the following:\n")
-    ACE_TEXT ("\t\t\t\twarn-once\tThe default, warn once per unique local name\n")
-    ACE_TEXT ("\t\t\t\twarn-all\tWarn for all unknown annotations\n")
-    ACE_TEXT ("\t\t\t\terror\t\tCauses the process to exit with a failed return status\n")
-    ACE_TEXT ("\t\t\t\tignore\t\tDon't report unknown annotations\n")
+    ACE_TEXT (" -h | --help | -u       Print this list and exit successfully\n")
+    ACE_TEXT (" -A...                  Local implementation-specific escape\n")
+    ACE_TEXT (" -Cw                    Warning if identifier spellings differ\n")
+    ACE_TEXT ("                        only in case (default is error)\n")
+    ACE_TEXT (" -Ce                    Error if identifier spellings differ only in case\n")
+    ACE_TEXT ("                        (default)\n")
+    ACE_TEXT (" -ae                    Error if anonymous type is seen (default)\n")
+    ACE_TEXT (" -aw                    Warning if anonymous type is seen (default is error)\n")
+    ACE_TEXT (" -as                    Silences the anonymous type error (default is error)\n")
+    ACE_TEXT (" -d | --dump            Prints a dump of the AST and exits\n")
+    ACE_TEXT (" -Dname[=value]         Defines name for preprocessor\n")
+    ACE_TEXT (" -E                     Runs preprocessor only, prints on stdout\n")
+    ACE_TEXT (" -Idir                  Includes dir in search path for preprocessor\n")
+    ACE_TEXT (" -t                     Temporary directory to be used by the IDL compiler.\n")
+    ACE_TEXT (" -Uname                 Undefines name for preprocessor\n")
+    ACE_TEXT (" -v                     Traces compilation stages\n")
+    ACE_TEXT (" -V | --version         Prints version info then exits\n")
+    ACE_TEXT (" -w                     Suppresses IDL compiler warning messages\n")
+    ACE_TEXT (" -Wp,<arg1,...,argn>    Passes args to preprocessor\n")
+    ACE_TEXT (" -Yp,path               Defines location of preprocessor\n")
+    ACE_TEXT (" --idl-version VERSION  Set the version of IDL to use\n")
+    ACE_TEXT (" --default-idl-version  Print the default IDL version and exit\n")
+    ACE_TEXT (" --list-idl-versions    Print IDL versions supported and exit\n")
+    ACE_TEXT (" --syntax-only          Just check the syntax, do not create files\n")
+    ACE_TEXT (" --bison-trace          Enable Bison Tracing (sets yydebug to 1)\n")
+    ACE_TEXT (" --dump-builtins        Dump the compiler and user defined IDL.\n")
+    ACE_TEXT (" --just-dump-builtins   Just dump the compiler defined IDL and exit.\n")
+    ACE_TEXT (" --unknown-annotations ARG     Set reaction to unknown annotations.\n")
+    ACE_TEXT ("                               ARG must be `warn-once` (default), `warn-all`,\n")
+    ACE_TEXT ("                               `error`, or `ignore`.\n")
+    ACE_TEXT (" --preprocessor-input KIND     Set C preprocessor file input method. KIND must \n")
+    ACE_TEXT ("                               be `guess` (default), `direct-with-e`, \n")
+    ACE_TEXT ("                               `direct-without-e`, `direct-gcc`, or `copy`.\n")
+    ACE_TEXT ("                               See docs/compiler.html for more info.\n")
   ));
 
   be_util::usage ();
@@ -480,7 +476,7 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  process_long_option(ac, av, i);
+                  process_long_option (ac, av, i);
                 }
               break;
 
@@ -551,7 +547,7 @@ DRV_parse_args (long ac, char **av)
 }
 
 void
-print_idl_versions()
+print_idl_versions ()
 {
   ACE_DEBUG ((LM_INFO,
     ACE_TEXT ("These are the valid IDL versions this compiler will accept:\n")
@@ -565,7 +561,7 @@ print_idl_versions()
 }
 
 void
-process_long_option(long ac, char **av, long &i)
+process_long_option (long ac, char **av, long &i)
 {
   const char *long_option = av[i] + 2;
   bool no_more_args = i + 1 >= ac;
@@ -675,7 +671,7 @@ process_long_option(long ac, char **av, long &i)
             {
               invalid_argument = true;
               ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("\"%C\" is not a valid argument.\n"),
+                ACE_TEXT ("\"%C\" is not a valid argument to --unknown-annotations.\n"),
                 av[i]
                 ));
             }
@@ -683,10 +679,55 @@ process_long_option(long ac, char **av, long &i)
       if (invalid_argument)
         {
           ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("Use either \"warn-once\", \"warn-all\", ")
-            ACE_TEXT ("\"error\" or \"ignore\".\n"),
+            ACE_TEXT ("Use \"warn-once\", \"warn-all\", \"error\" or \"ignore\".\n"),
             av[i]
             ));
+          idl_global->parse_args_exit (1);
+        }
+    }
+  else if (!ACE_OS::strcmp (long_option, "preprocessor-input"))
+    {
+      bool invalid_argument = no_more_args;
+      if (no_more_args)
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("--preprocessor-input is missing its required argument.")));
+        }
+      else
+        {
+          i++;
+          if (!ACE_OS::strcmp (av[i], "guess"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputGuess;
+            }
+          else if (!ACE_OS::strcmp (av[i], "direct-with-e"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputDirectWithE;
+            }
+          else if (!ACE_OS::strcmp (av[i], "direct-without-e"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputDirectWithoutE;
+            }
+          else if (!ACE_OS::strcmp (av[i], "direct-gcc"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputDirectGcc;
+            }
+          else if (!ACE_OS::strcmp (av[i], "copy"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputCopy;
+            }
+          else
+            {
+              invalid_argument = true;
+              ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("\"%C\" is not a valid argument to --preprocessor-input.\n"), av[i]));
+            }
+        }
+      if (invalid_argument)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Use \"guess\", \"direct-with-e\", ")
+            ACE_TEXT ("\"direct-without-e\", \"direct-gcc\", or \"copy\".\n"),
+            av[i]));
           idl_global->parse_args_exit (1);
         }
     }
