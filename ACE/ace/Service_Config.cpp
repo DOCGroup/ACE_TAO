@@ -98,7 +98,7 @@ ACE_Threading_Helper<ACE_Null_Mutex>::get ()
   * know that upon process exit the SC will still be automaticaly and explicitly
   * closed by @c ACE_Object_Manager::fini().
   */
-using ACE_SERVICE_CONFIG_SINGLETON = ACE_Unmanaged_Singleton<ACE_Service_Config, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
+using ACE_SERVICE_CONFIG_SINGLETON = ACE_Unmanaged_Singleton<ACE_Service_Config, ACE_SYNCH_RECURSIVE_MUTEX>;
 
 
 /// ctor
