@@ -502,24 +502,7 @@ FE_get_cpp_loc_from_env ()
     }
   else
     {
-      // Check for the deprecated CPP_LOCATION environment variable
-      ACE_Env_Value<char*> cpp_path (ACE_TEXT ("CPP_LOCATION"),
-                                     (char *) nullptr);
-
-      if (cpp_path != 0)
-        {
-          ACE_ERROR ((LM_WARNING,
-                      "WARNING: The environment variable "
-                      "CPP_LOCATION has been deprecated.\n"
-                      "         Please use TAO_IDL_PREPROCESSOR "
-                      "instead.\n"));
-
-          cpp_loc = cpp_path;
-        }
-      else
-        {
-          cpp_loc = idl_global->cpp_location ();
-        }
+      cpp_loc = idl_global->cpp_location ();
     }
 
   return cpp_loc;
