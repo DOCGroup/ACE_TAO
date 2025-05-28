@@ -7,7 +7,8 @@ USER VISIBLE CHANGES BETWEEN TAO-4.0.3 and TAO-4.0.4
       builtin backend doesn't enforce the bound
     . Support for using maps in unions, sequences, and arrays
     . Fix memory leaks caused by maps
-  . Support for deprecated CPP_LOCATION environment variable has been removed
+  . Support for deprecated CPP_LOCATION and TAO_IDL_DEFAULT_CPP_FLAGS environment
+    variables has been removed
 
 USER VISIBLE CHANGES BETWEEN TAO-4.0.2 and TAO-4.0.3
 ====================================================

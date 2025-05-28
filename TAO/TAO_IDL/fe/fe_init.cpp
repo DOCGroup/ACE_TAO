@@ -521,25 +521,6 @@ FE_get_cpp_args_from_env ()
     {
       cpp_args = args1;
     }
-  else
-    {
-      // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment
-      // variable.
-      ACE_Env_Value<char*> args2 (ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS"),
-                                  (char *) nullptr);
-
-      if (args2 != 0)
-        {
-          ACE_ERROR ((LM_WARNING,
-                      "Warning: The environment variable "
-                      "TAO_IDL_DEFAULT_CPP_FLAGS has been "
-                      "deprecated.\n"
-                      "         Please use "
-                      "TAO_IDL_PREPROCESSOR_ARGS instead.\n"));
-
-          cpp_args = args2;
-        }
-    }
 
   return cpp_args;
 }
