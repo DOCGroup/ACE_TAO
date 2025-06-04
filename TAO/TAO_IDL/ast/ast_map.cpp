@@ -377,7 +377,7 @@ AST_Map::destroy ()
 AST_Annotation_Appls &
 AST_Map::key_type_annotations ()
 {
-  return value_type_annotations_;
+  return key_type_annotations_;
 }
 
 void

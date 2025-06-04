@@ -11,9 +11,9 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-using MT_Stream = ACE_Stream<ACE_MT_SYNCH>;
-using MT_Module = ACE_Module<ACE_MT_SYNCH>;
-using MT_Task = ACE_Task<ACE_MT_SYNCH>;
+using MT_Stream = ACE_Stream<ACE_SYNCH>;
+using MT_Module = ACE_Module<ACE_SYNCH>;
+using MT_Task = ACE_Task<ACE_SYNCH>;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type_Impl)
 
