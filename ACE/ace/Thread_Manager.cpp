@@ -1487,7 +1487,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
         if (ACE_OS::thr_equal (biter.next ()->thr_id_, tid))
           {
             std::unique_ptr<ACE_Thread_Descriptor_Base> tdbl (biter.advance_and_remove (false));
-            ace_mon.release();
+            ACE_MT (ace_mon.release());
 #ifndef ACE_LACKS_PTHREAD_JOIN
             if (ACE_Thread::join (tdbl->thr_handle_, status) == -1)
               {

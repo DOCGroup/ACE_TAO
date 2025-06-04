@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-8.0.3 and ACE-8.0.4
 ====================================================
 
+. Fixed compile errors in the ACE core when compiled without thread
+  support (only core of ACE compiled and not tested)
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.2 and ACE-8.0.3
 ====================================================
 
