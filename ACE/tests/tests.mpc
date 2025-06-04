@@ -868,6 +868,11 @@ project(Compiler_Features_42_Test) : acetest {
   Source_Files {
     Compiler_Features_42_Test.cpp
   }
+  // Visual Studio 2019/2022 give an internal compiler error when using C++17 (the default for ACE)
+  specific(vs2019,vs2022) {
+    LanguageStandard = stdcpp20
+  }
+
 }
 
 project(Config Test) : acetest {
