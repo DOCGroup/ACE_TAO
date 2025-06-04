@@ -16,27 +16,18 @@ namespace Test
     unionarrayofstring () = default;
     unionarrayofstring (const unionarrayofstring&) = delete;
     unionarrayofstring (unionarrayofstring&&) = delete;
-    inline ~unionarrayofstring ();
+    inline ~unionarrayofstring () {}
     unionarrayofstring& operator= (const unionarrayofstring&) = delete;
     unionarrayofstring& operator= (unionarrayofstring&&) = delete;
 
   private:
-    int32_t disc_{ (-2147483647 - 1) };
     union u_type_
     {
       u_type_ () = default;
-      ~u_type_ ();
+      ~u_type_ () {}
       ::Test::arrayofstring as_{};
-      int32_t b_;
     } u_{};
   };
-}
-
-inline Test::unionarrayofstring::u_type_::~u_type_ ()
-{}
-
-inline Test::unionarrayofstring::~unionarrayofstring ()
-{
 }
 
 int run_main (int, ACE_TCHAR*[])
