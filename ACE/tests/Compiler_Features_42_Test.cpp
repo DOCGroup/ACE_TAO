@@ -34,8 +34,7 @@ int run_main (int, ACE_TCHAR*[])
 {
   ACE_START_TEST (ACE_TEXT ("Compiler_Features_42_Test"));
 
-  ::Test::unionarrayofstring* p = new (::Test::unionarrayofstring);
-  delete p;
+  ::Test::unionarrayofstring p;
 
   ACE_END_TEST;
 
