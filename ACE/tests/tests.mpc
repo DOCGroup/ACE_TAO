@@ -872,7 +872,6 @@ project(Compiler_Features_42_Test) : acetest {
   specific(vs2019,vs2022) {
     LanguageStandard = stdcpp20
   }
-
 }
 
 project(Config Test) : acetest {
