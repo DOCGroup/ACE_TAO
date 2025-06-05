@@ -17,59 +17,43 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: VS2019WChar
-            vmimage: windows-2019
-            mpctype: vs2019
+          - name: VS2022WChar
+            vmimage: windows-2022
+            mpctype: vs2022
             BuildPlatform: x64
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
             vcpkgpackages: '"openssl", {"name": "xerces-c", "features": ["xmlch-wchar"]}'
             OptionalFeatures: uses_wchar=1
-          - name: VS2019Debug64
-            vmimage: windows-2019
-            mpctype: vs2019
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            vcpkgarch: x64-windows
-            vcpkglibdir: debug/lib
-            vcpkgpackages: '"openssl", "xerces-c"'
-          - name: VS2019Release64
-            vmimage: windows-2019
-            mpctype: vs2019
-            BuildPlatform: x64
-            BuildConfiguration: Release
-            vcpkgarch: x64-windows
-            vcpkglibdir: lib
-            vcpkgpackages: '"openssl", "xerces-c"'
-          - name: VS2019Debug32
-            vmimage: windows-2019
-            mpctype: vs2019
+          - name: VS2022Debug32
+            vmimage: windows-2022
+            mpctype: vs2022
             BuildPlatform: Win32
             BuildConfiguration: Debug
             vcpkgarch: x86-windows
             vcpkglibdir: debug/lib
             vcpkgpackages: '"openssl", "xerces-c"'
-          - name: VS2019Release32
-            vmimage: windows-2019
-            mpctype: vs2019
+          - name: VS2022Release32
+            vmimage: windows-2022
+            mpctype: vs2022
             BuildPlatform: Win32
             BuildConfiguration: Release
             vcpkgarch: x86-windows
             vcpkglibdir: lib
             vcpkgpackages: '"openssl", "xerces-c"'
-          - name: VS2019Debug64Cxx17
-            vmimage: windows-2019
-            mpctype: vs2019
+          - name: VS2022Debug64Cxx17
+            vmimage: windows-2022
+            mpctype: vs2022
             BuildPlatform: x64
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
             vcpkgpackages: '"openssl", "xerces-c", "zlib"'
             OptionalMpcArgs: -value_template LanguageStandard=stdcpp17
-          - name: VS2019Debug64Cxx20
-            vmimage: windows-2019
-            mpctype: vs2019
+          - name: VS2022Debug64Cxx20
+            vmimage: windows-2022
+            mpctype: vs2022
             BuildPlatform: x64
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
