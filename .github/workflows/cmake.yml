@@ -24,9 +24,9 @@ jobs:
             CXX: g++-12
             PackageDeps: g++-12
             os: ubuntu-22.04
-          - CC: vs2019
-            CXX: vs2019
-            os: windows-2019
+          - CC: vs2022
+            CXX: vs2022
+            os: windows-2022
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }}
     env:

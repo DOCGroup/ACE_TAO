@@ -149,11 +149,13 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
       || this->qop_ != endpoint->qop ()
       || this->trust_.trust_in_target != t.trust_in_target
       || this->trust_.trust_in_client != t.trust_in_client
-      || (!CORBA::is_nil (this->credentials_.in ())
-          && !(*this->credentials_.in () == *endpoint->credentials ())))
-  {
-    return 0;
-  }
+      || (!CORBA::is_nil (this->credentials_.in ()) && endpoint->credentials ()
+          && !(*this->credentials_.in () == *static_cast<TAO::SSLIOP_Credentials const*> (endpoint->credentials ()))))
+    // The cast above is needed for some C++20 compilers since overload resolution can consider b == a for a == b,
+    // and apparently the derived-to-base and adding-const implicit conversions result in an ambiguity.
+    {
+      return false;
+    }
 
   // Comparing the underlying iiop endpoints is wrong, as their port
   // numbers often may not make sense. Or may not being used anyway.
