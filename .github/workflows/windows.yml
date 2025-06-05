@@ -50,7 +50,6 @@ jobs:
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
             vcpkgpackages: '"openssl", "xerces-c", "zlib"'
-            OptionalMpcArgs: -value_template LanguageStandard=stdcpp17
           - name: VS2022Debug64Cxx20
             vmimage: windows-2022
             mpctype: vs2022
