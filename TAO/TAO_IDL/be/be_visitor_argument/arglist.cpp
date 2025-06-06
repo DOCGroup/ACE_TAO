@@ -11,6 +11,8 @@
 
 #include "argument.h"
 
+#include "be_map.h"
+
 // ************************************************************
 // be_visitor_args_arglist for parameter list in method declarations and
 // definitions
@@ -305,6 +307,20 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 
       break;
     }
+
+  return 0;
+}
+
+int be_visitor_args_arglist::visit_map (be_map *node)
+{
+  if (node->imported () && node->anonymous ())
+    {
+      (void) node->create_name (0);
+    }
+
+  TAO_OutStream *const os = this->ctx_->stream ();
+
+  *os << this->type_name (node) << (this->direction () == AST_Argument::dir_IN ? " const" : "") << " &";
 
   return 0;
 }
