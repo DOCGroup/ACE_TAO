@@ -16,6 +16,10 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 
+#if defined ACE_HAS_CPP11
+#include <memory>
+#endif
+
 int const nhandlers = 3;
 
 /**

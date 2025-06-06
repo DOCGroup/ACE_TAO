@@ -18,6 +18,10 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 
+#if defined ACE_HAS_CPP11
+#include <memory>
+#endif
+
 /**
  * @class Simple_Handler
  *
