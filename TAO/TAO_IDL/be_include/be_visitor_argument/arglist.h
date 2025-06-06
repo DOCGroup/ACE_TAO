@@ -99,6 +99,8 @@ public:
   /// visit valuebox
   virtual int visit_valuebox (be_valuebox *node);
 
+  virtual int visit_map (be_map *node);
+
   /// Set the member.
   void unused (bool val);
 
