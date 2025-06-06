@@ -70,7 +70,7 @@ namespace
     for (len = 0; len < max; )
       {
 #if defined (ACE_WIN32)
-        c = ::_getch ();
+        c = static_cast<char> (::_getch ());
 #else
         int ci = ::getchar ();
         if (ci == EOF)
@@ -145,7 +145,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
           ACE_OS::printf ("%s: ",prompt);
           pem_passwd_.resize (size);
           pem_passwd_.clear ();
-          len = secret_input (buf, size);
+          len = ACE_Utils::truncate_cast<int> (secret_input (buf, size));
           ACE_OS::printf ("\n");
           pem_passwd_ = buf;
           return len;
@@ -209,7 +209,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
             }
         }
 
-      len = ACE_Utils::truncate_cast<size_t> (pem_passwd_.length());
+      len = ACE_Utils::truncate_cast<int> (pem_passwd_.length ());
       if (len >= size)
         {
           if (TAO_debug_level > 0)
@@ -331,16 +331,16 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // The code is cleaner this way anyway.
   ACE_SSL_Context * ssl_ctx = ACE_SSL_Context::instance ();
 
-  size_t session_id_len =
+  size_t const session_id_len =
     (sizeof session_id_context_ >= SSL_MAX_SSL_SESSION_ID_LENGTH)
       ? SSL_MAX_SSL_SESSION_ID_LENGTH
       : sizeof session_id_context_;
 
   // Note that this function returns 1, if the operation succeeded.
   // See SSL_CTX_set_session_id_context(3)
-  if( 1 != ::SSL_CTX_set_session_id_context (ssl_ctx->context(),
+  if (1 != ::SSL_CTX_set_session_id_context (ssl_ctx->context (),
                                              session_id_context_,
-                                             session_id_len))
+                                             static_cast<unsigned int> (session_id_len)))
   {
     if (TAO_debug_level > 0)
       ORBSVCS_ERROR ((LM_ERROR,

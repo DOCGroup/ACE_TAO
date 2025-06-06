@@ -114,6 +114,10 @@ static AST_Decl *           idl_find_node (const char *);
 
 #define IDL4_KEYWORD(TOKEN_NAME) if (idl_global->idl_version_ >= IDL_VERSION_4) return TOKEN_NAME;
 
+#ifdef __GNUC__
+#  pragma GCC diagnostic ignored "-Wmisleading-indentation"
+#endif
+
 %}
 
 /* SO we don't choke on files that use \r\n */
