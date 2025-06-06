@@ -18,12 +18,6 @@ ACE::HTBP::Addr::Addr (const char *htid)
 {
 }
 
-ACE::HTBP::Addr::Addr (const ACE::HTBP::Addr &other)
-  : ACE_INET_Addr (other),
-    htid_(other.htid_)
-{
-}
-
 int
 ACE::HTBP::Addr::set (u_short port,
                       const char host[],

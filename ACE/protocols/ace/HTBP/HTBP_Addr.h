@@ -43,7 +43,10 @@ namespace ACE
       /// Constructor
       Addr () = default;
 
-      Addr (const Addr &other);
+      Addr (const Addr &) = default;
+      Addr (Addr&&) = default;
+      Addr& operator= (const Addr&) = default;
+      Addr& operator= (Addr&&) = default;
 
       /// Create an Addr suitable for use on the inside of a firewall this
       /// take a string used to populate the htid_ member. With this address,
@@ -58,7 +61,7 @@ namespace ACE
             int address_family = AF_UNSPEC);
 
       /// Destructor
-      virtual ~Addr () = default;
+      ~Addr () override = default;
 
       int set (u_short port,
                const char host [],
@@ -68,9 +71,9 @@ namespace ACE
       /// and vice versa
       int addr_to_string (ACE_TCHAR buffer[],
                           size_t size,
-                          int ipaddr_format = 1) const;
+                          int ipaddr_format = 1) const override;
       int string_to_addr (const char address[],
-                          int address_facmily = AF_UNSPEC);
+                          int address_facmily = AF_UNSPEC) override;
 
       int set_htid(const char *htid);
       const char *get_htid () const;
