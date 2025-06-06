@@ -73,7 +73,7 @@ namespace ACE
                           size_t size,
                           int ipaddr_format = 1) const override;
       int string_to_addr (const char address[],
-                          int address_facmily = AF_UNSPEC) override;
+                          int address_family = AF_UNSPEC) override;
 
       int set_htid(const char *htid);
       const char *get_htid () const;
