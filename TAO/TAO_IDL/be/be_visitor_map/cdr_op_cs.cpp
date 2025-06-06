@@ -57,8 +57,7 @@ be_visitor_map_cdr_op_cs::visit_map (be_map *node)
           <<  node->name() << "&)"
           << be_uidt_nl
           << "{" << be_idt_nl
-          << "throw ::CORBA::NO_IMPLEMENT ();" << be_nl
-          << "return false;" << be_uidt_nl
+          << "throw ::CORBA::NO_IMPLEMENT ();" << be_uidt_nl
           << "}" << be_nl_2;
 
   *os << "::CORBA::Boolean operator>> ("<< be_idt_nl
@@ -66,8 +65,7 @@ be_visitor_map_cdr_op_cs::visit_map (be_map *node)
         <<  node->name() << "&)"
         << be_uidt_nl
         << "{" << be_idt_nl
-        << "throw ::CORBA::NO_IMPLEMENT ();" << be_nl
-        << "return false;" << be_uidt_nl
+        << "throw ::CORBA::NO_IMPLEMENT ();" << be_uidt_nl
         << "}" << be_nl_2;
 
   if (be_global->gen_ostream_operators ())
