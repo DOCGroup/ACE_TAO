@@ -36,7 +36,7 @@ TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
 
   if (password != 0)
     {
-      pwlen = ACE_OS::strlen (password);
+      pwlen = static_cast<int> (ACE_OS::strlen (password));
 
       int copy_len = pwlen + 1;  // Include the NULL terminator
 
@@ -219,11 +219,6 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
       // No password is used or needed when reading ASN.1 encoded
       // certificates.
 
-      const char *filename = certificate.filename.in ();
-
-      if (filename == 0)
-        return 0;
-
       fp = ACE_OS::fopen (filename, "rb");
 
       if (fp == 0)
@@ -294,11 +289,6 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
 
       // No password is used or needed when reading ASN.1 encoded
       // private keys.
-
-      const char *filename = key.filename.in ();
-
-      if (filename == 0)
-        return 0;
 
       fp = ACE_OS::fopen (filename, "rb");
 

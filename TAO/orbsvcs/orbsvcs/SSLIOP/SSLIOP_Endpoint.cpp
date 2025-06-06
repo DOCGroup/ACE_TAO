@@ -133,15 +133,14 @@ TAO_SSLIOP_Endpoint::next ()
 CORBA::Boolean
 TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
+  TAO_Endpoint *const endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 
-  TAO_SSLIOP_Endpoint *endpoint =
-    dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
+  TAO_SSLIOP_Endpoint *const endpoint = dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
 
-  if (endpoint == 0)
-    return 0;
+  if (!endpoint)
+    return false;
 
-  ::Security::EstablishTrust t = endpoint->trust ();
+  ::Security::EstablishTrust const t = endpoint->trust ();
 
   if ((this->ssl_component_.port != 0
        && endpoint->ssl_component_.port != 0
@@ -159,14 +158,14 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   // numbers often may not make sense. Or may not being used anyway.
   // Therefore, we only need to directly compare the hosts. See also the
   // comments in the hash() method.
-  if (this->iiop_endpoint() == 0 || endpoint->iiop_endpoint() == 0)
-    return 0;
+  if (this->iiop_endpoint () == nullptr || endpoint->iiop_endpoint () == nullptr)
+    return false;
 
-  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (),
-                       endpoint->iiop_endpoint()->host ()) != 0))
-    return 0;
+  if (ACE_OS::strcmp (this->iiop_endpoint ()->host (),
+                      endpoint->iiop_endpoint ()->host ()) != 0)
+    return false;
 
-  return 1;
+  return true;
 }
 
 TAO_Endpoint *
