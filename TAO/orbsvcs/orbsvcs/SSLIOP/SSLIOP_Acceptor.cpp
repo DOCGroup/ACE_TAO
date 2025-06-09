@@ -184,15 +184,15 @@ TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
       // TAO extension, replace the contents of the octet sequence with
       // the CDR stream
-      const CORBA::ULong length = cdr.total_length ();
+      CORBA::ULong const length = static_cast<CORBA::ULong> (cdr.total_length ());
       component.component_data.length (length);
       CORBA::Octet *buf = component.component_data.get_buffer ();
-      for (const ACE_Message_Block *i = cdr.begin ();
-           i != 0;
-           i = i->cont ())
+      for (ACE_Message_Block const *mb = cdr.begin ();
+           mb != nullptr;
+           mb = mb->cont ())
         {
-          ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-          buf += i->length ();
+          ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
+          buf += mb->length ();
         }
 
       pfile->tagged_components ().set_component (component);
@@ -287,7 +287,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 
           // TAO extension, replace the contents of the octet sequence with
           // the CDR stream
-          CORBA::ULong length = cdr.total_length ();
+          CORBA::ULong const length = static_cast<CORBA::ULong> (cdr.total_length ());
           component.component_data.length (length);
           CORBA::Octet *buf = component.component_data.get_buffer ();
           for (const ACE_Message_Block *i = cdr.begin ();
@@ -603,7 +603,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
           int ssl_port = ACE_OS::atoi (value.c_str ());
 
           if (ssl_port >= 0 && ssl_port < 65536)
-            this->ssl_component_.port = ssl_port;
+            this->ssl_component_.port = static_cast<CORBA::UShort> (ssl_port);
           else
             ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid ")
