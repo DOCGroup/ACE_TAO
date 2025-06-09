@@ -160,7 +160,7 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   // numbers often may not make sense. Or may not being used anyway.
   // Therefore, we only need to directly compare the hosts. See also the
   // comments in the hash() method.
-  if (this->iiop_endpoint () == nullptr || endpoint->iiop_endpoint () == nullptr)
+  if (!this->iiop_endpoint () || !endpoint->iiop_endpoint ())
     return false;
 
   if (ACE_OS::strcmp (this->iiop_endpoint ()->host (),

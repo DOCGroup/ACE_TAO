@@ -186,7 +186,7 @@ TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       component.component_data.length (length);
       CORBA::Octet *buf = component.component_data.get_buffer ();
       for (ACE_Message_Block const *mb = cdr.begin ();
-           mb != nullptr;
+           mb;
            mb = mb->cont ())
         {
           ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
