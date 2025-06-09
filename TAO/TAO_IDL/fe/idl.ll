@@ -112,6 +112,10 @@ static AST_Decl *           idl_find_node (const char *);
 #undef ECHO
 #endif
 
+#ifdef __GNUC__
+#  pragma GCC diagnostic ignored "-Wmisleading-indentation"
+#endif
+
 %}
 
 /* SO we don't choke on files that use \r\n */

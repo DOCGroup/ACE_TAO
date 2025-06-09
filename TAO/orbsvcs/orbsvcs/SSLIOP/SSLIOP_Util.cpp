@@ -37,8 +37,6 @@ TAO::SSLIOP::Util::current (TAO_ORB_Core *orb_core)
 
       return 0;
     }
-
-  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -90,15 +90,14 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
 
   if (this->tagged_components ().get_component (component))
     {
-      TAO_InputCDR cdr (reinterpret_cast<const char*> (
-                          component.component_data.get_buffer ()),
-                        component.component_data.length ());
+      TAO_InputCDR cdr_component (reinterpret_cast<char const *> (component.component_data.get_buffer ()),
+                                  component.component_data.length ());
       CORBA::Boolean byte_order;
-      if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      if ((cdr_component >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         return -1;
-      cdr.reset_byte_order (static_cast<int> (byte_order));
+      cdr_component.reset_byte_order (static_cast<int> (byte_order));
 
-      if (cdr >> this->ssl_endpoint_.ssl_component_)
+      if (cdr_component >> this->ssl_endpoint_.ssl_component_)
         ssl_component_found = 1;
       else
         return -1;
@@ -224,9 +223,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
       endpoints.length (this->count_ - 1);
 
       const TAO_SSLIOP_Endpoint *endpoint = this->ssl_endpoint_.next_;
-      for (size_t i = 0;
-           i < this->count_ - 1;
-           ++i)
+      for (CORBA::ULong i = 0; i < this->count_ - 1; ++i)
         {
           endpoints[i] = endpoint->ssl_component ();
           endpoint = endpoint->next_;
@@ -239,7 +236,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
           || (out_cdr << endpoints) == 0)
         return -1;
 
-      const CORBA::ULong length = out_cdr.total_length ();
+      CORBA::ULong const length = static_cast<CORBA::ULong> (out_cdr.total_length ());
 
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = TAO::TAG_SSL_ENDPOINTS;
@@ -251,7 +248,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
            iterator != 0;
            iterator = iterator->cont ())
         {
-          CORBA::ULong i_length = iterator->length ();
+          CORBA::ULong const i_length = static_cast<CORBA::ULong> (iterator->length ());
           ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
 
           buf += i_length;
