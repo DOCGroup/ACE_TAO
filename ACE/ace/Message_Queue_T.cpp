@@ -17,7 +17,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Notification_Strategy.h"
-#include "ace/Truncate.h"
 #include "ace/Condition_Attributes.h"
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
