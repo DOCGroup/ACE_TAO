@@ -1450,9 +1450,13 @@ static AST_Decl *           idl_find_node (const char *);
 #undef ECHO
 #endif
 
-#line 1455 "fe/idl.yy.cpp"
+#ifdef __GNUC__
+#  pragma GCC diagnostic ignored "-Wmisleading-indentation"
+#endif
+
+#line 1459 "fe/idl.yy.cpp"
 /* SO we don't choke on files that use \r\n */
-#line 1457 "fe/idl.yy.cpp"
+#line 1461 "fe/idl.yy.cpp"
 
 #define INITIAL 0
 
@@ -1678,10 +1682,10 @@ YY_DECL
         }
 
     {
-#line 123 "fe/idl.ll"
+#line 127 "fe/idl.ll"
 
 
-#line 1686 "fe/idl.yy.cpp"
+#line 1690 "fe/idl.yy.cpp"
 
     while ( /*CONSTCOND*/1 )        /* loops until end-of-file is reached */
         {
@@ -1746,182 +1750,182 @@ do_action:    /* This label is used only to access EOF actions. */
     { /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 125 "fe/idl.ll"
+#line 129 "fe/idl.ll"
 return IDL_ANY;
     YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 126 "fe/idl.ll"
+#line 130 "fe/idl.ll"
 return IDL_OBJECT;
     YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 127 "fe/idl.ll"
+#line 131 "fe/idl.ll"
 return IDL_MODULE;
     YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 128 "fe/idl.ll"
+#line 132 "fe/idl.ll"
 return IDL_RAISES;
     YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 129 "fe/idl.ll"
+#line 133 "fe/idl.ll"
 return IDL_READONLY;
     YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 130 "fe/idl.ll"
+#line 134 "fe/idl.ll"
 return IDL_ATTRIBUTE;
     YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 131 "fe/idl.ll"
+#line 135 "fe/idl.ll"
 return IDL_EXCEPTION;
     YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 132 "fe/idl.ll"
+#line 136 "fe/idl.ll"
 return IDL_CONTEXT;
     YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 133 "fe/idl.ll"
+#line 137 "fe/idl.ll"
 return IDL_INTERFACE;
     YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 134 "fe/idl.ll"
+#line 138 "fe/idl.ll"
 return IDL_CONST;
     YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 135 "fe/idl.ll"
+#line 139 "fe/idl.ll"
 return IDL_TYPEDEF;
     YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 136 "fe/idl.ll"
+#line 140 "fe/idl.ll"
 return IDL_STRUCT;
     YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 137 "fe/idl.ll"
+#line 141 "fe/idl.ll"
 return IDL_ENUM;
     YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 138 "fe/idl.ll"
+#line 142 "fe/idl.ll"
 return IDL_STRING;
     YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 139 "fe/idl.ll"
+#line 143 "fe/idl.ll"
 return IDL_WSTRING;
     YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 140 "fe/idl.ll"
+#line 144 "fe/idl.ll"
 return IDL_SEQUENCE;
     YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 141 "fe/idl.ll"
+#line 145 "fe/idl.ll"
 return IDL_MAP;
     YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 142 "fe/idl.ll"
+#line 146 "fe/idl.ll"
 return IDL_UNION;
     YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 143 "fe/idl.ll"
+#line 147 "fe/idl.ll"
 return IDL_FIXED;
     YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 144 "fe/idl.ll"
+#line 148 "fe/idl.ll"
 return IDL_SWITCH;
     YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 145 "fe/idl.ll"
+#line 149 "fe/idl.ll"
 return IDL_CASE;
     YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 146 "fe/idl.ll"
+#line 150 "fe/idl.ll"
 return IDL_DEFAULT;
     YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 147 "fe/idl.ll"
+#line 151 "fe/idl.ll"
 return IDL_FLOAT;
     YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 148 "fe/idl.ll"
+#line 152 "fe/idl.ll"
 return IDL_DOUBLE;
     YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 149 "fe/idl.ll"
+#line 153 "fe/idl.ll"
 return IDL_LONG;
     YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 150 "fe/idl.ll"
+#line 154 "fe/idl.ll"
 return IDL_SHORT;
     YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 151 "fe/idl.ll"
+#line 155 "fe/idl.ll"
 return IDL_UNSIGNED;
     YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 152 "fe/idl.ll"
+#line 156 "fe/idl.ll"
 return IDL_CHAR;
     YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 153 "fe/idl.ll"
+#line 157 "fe/idl.ll"
 return IDL_WCHAR;
     YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 154 "fe/idl.ll"
+#line 158 "fe/idl.ll"
 return IDL_BOOLEAN;
     YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 155 "fe/idl.ll"
+#line 159 "fe/idl.ll"
 return IDL_OCTET;
     YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 156 "fe/idl.ll"
+#line 160 "fe/idl.ll"
 return IDL_VOID;
     YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 157 "fe/idl.ll"
+#line 161 "fe/idl.ll"
 return IDL_NATIVE;
     YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 158 "fe/idl.ll"
+#line 162 "fe/idl.ll"
 return IDL_LOCAL;
     YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 159 "fe/idl.ll"
+#line 163 "fe/idl.ll"
 return IDL_ABSTRACT;
     YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 161 "fe/idl.ll"
+#line 165 "fe/idl.ll"
 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_INT8;
@@ -1933,7 +1937,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 169 "fe/idl.ll"
+#line 173 "fe/idl.ll"
 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_UINT8;
@@ -1945,7 +1949,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 177 "fe/idl.ll"
+#line 181 "fe/idl.ll"
 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_INT16;
@@ -1957,7 +1961,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 185 "fe/idl.ll"
+#line 189 "fe/idl.ll"
 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_UINT16;
@@ -1969,7 +1973,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 193 "fe/idl.ll"
+#line 197 "fe/idl.ll"
 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_INT32;
@@ -1981,7 +1985,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 201 "fe/idl.ll"
+#line 205 "fe/idl.ll"
 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_UINT32;
@@ -1993,7 +1997,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 209 "fe/idl.ll"
+#line 213 "fe/idl.ll"
 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_INT64;
@@ -2005,7 +2009,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 217 "fe/idl.ll"
+#line 221 "fe/idl.ll"
 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_UINT64;
@@ -2017,7 +2021,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 225 "fe/idl.ll"
+#line 229 "fe/idl.ll"
 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_MAP;
@@ -2029,197 +2033,197 @@ YY_RULE_SETUP
     YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 234 "fe/idl.ll"
+#line 238 "fe/idl.ll"
 return IDL_CUSTOM;
     YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 235 "fe/idl.ll"
+#line 239 "fe/idl.ll"
 return IDL_FACTORY;
     YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 236 "fe/idl.ll"
+#line 240 "fe/idl.ll"
 return IDL_PRIVATE;
     YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 237 "fe/idl.ll"
+#line 241 "fe/idl.ll"
 return IDL_PUBLIC;
     YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 238 "fe/idl.ll"
+#line 242 "fe/idl.ll"
 return IDL_SUPPORTS;
     YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 239 "fe/idl.ll"
+#line 243 "fe/idl.ll"
 return IDL_TRUNCATABLE;
     YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 240 "fe/idl.ll"
+#line 244 "fe/idl.ll"
 return IDL_VALUETYPE;
     YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 242 "fe/idl.ll"
+#line 246 "fe/idl.ll"
 return IDL_COMPONENT;
     YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 243 "fe/idl.ll"
+#line 247 "fe/idl.ll"
 return IDL_CONSUMES;
     YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 244 "fe/idl.ll"
+#line 248 "fe/idl.ll"
 return IDL_EMITS;
     YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 245 "fe/idl.ll"
+#line 249 "fe/idl.ll"
 return IDL_EVENTTYPE;
     YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 246 "fe/idl.ll"
+#line 250 "fe/idl.ll"
 return IDL_FINDER;
     YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 247 "fe/idl.ll"
+#line 251 "fe/idl.ll"
 return IDL_GETRAISES;
     YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 248 "fe/idl.ll"
+#line 252 "fe/idl.ll"
 return IDL_HOME;
     YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 249 "fe/idl.ll"
+#line 253 "fe/idl.ll"
 return IDL_IMPORT;
     YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 250 "fe/idl.ll"
+#line 254 "fe/idl.ll"
 return IDL_MULTIPLE;
     YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 251 "fe/idl.ll"
+#line 255 "fe/idl.ll"
 return IDL_PRIMARYKEY;
     YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 252 "fe/idl.ll"
+#line 256 "fe/idl.ll"
 return IDL_PROVIDES;
     YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 253 "fe/idl.ll"
+#line 257 "fe/idl.ll"
 return IDL_PUBLISHES;
     YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 254 "fe/idl.ll"
+#line 258 "fe/idl.ll"
 return IDL_SETRAISES;
     YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 255 "fe/idl.ll"
+#line 259 "fe/idl.ll"
 return IDL_TYPEID;
     YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 256 "fe/idl.ll"
+#line 260 "fe/idl.ll"
 return IDL_TYPEPREFIX;
     YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 257 "fe/idl.ll"
+#line 261 "fe/idl.ll"
 return IDL_USES;
     YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 258 "fe/idl.ll"
+#line 262 "fe/idl.ll"
 return IDL_MANAGES;
     YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 260 "fe/idl.ll"
+#line 264 "fe/idl.ll"
 return IDL_TYPENAME;
     YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 261 "fe/idl.ll"
+#line 265 "fe/idl.ll"
 return IDL_PORT;
     YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 262 "fe/idl.ll"
+#line 266 "fe/idl.ll"
 return IDL_MIRRORPORT;
     YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 263 "fe/idl.ll"
+#line 267 "fe/idl.ll"
 return IDL_PORTTYPE;
     YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 264 "fe/idl.ll"
+#line 268 "fe/idl.ll"
 return IDL_CONNECTOR;
     YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 265 "fe/idl.ll"
+#line 269 "fe/idl.ll"
 return IDL_ALIAS;
     YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 267 "fe/idl.ll"
+#line 271 "fe/idl.ll"
 return IDL_TRUETOK;
     YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 268 "fe/idl.ll"
+#line 272 "fe/idl.ll"
 return IDL_FALSETOK;
     YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 270 "fe/idl.ll"
+#line 274 "fe/idl.ll"
 return IDL_INOUT;
     YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 271 "fe/idl.ll"
+#line 275 "fe/idl.ll"
 return IDL_IN;
     YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 272 "fe/idl.ll"
+#line 276 "fe/idl.ll"
 return IDL_OUT;
     YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 273 "fe/idl.ll"
+#line 277 "fe/idl.ll"
 return IDL_ONEWAY;
     YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 275 "fe/idl.ll"
+#line 279 "fe/idl.ll"
 return IDL_LEFT_SHIFT;
     YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 276 "fe/idl.ll"
+#line 280 "fe/idl.ll"
 return IDL_RIGHT_SHIFT;
     YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 277 "fe/idl.ll"
+#line 281 "fe/idl.ll"
 {
                   tao_yylval.strval = ACE::strnew ("::");
                   return IDL_SCOPE_DELIMITOR;
@@ -2228,17 +2232,17 @@ YY_RULE_SETUP
 case 84:
 /* rule 84 can match eol */
 YY_RULE_SETUP
-#line 282 "fe/idl.ll"
+#line 286 "fe/idl.ll"
 return IDL_ANNOTATION_DECL; // Allow annotation names that start with "annotation"
     YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 283 "fe/idl.ll"
+#line 287 "fe/idl.ll"
 return IDL_ANNOTATION_SYMBOL;
     YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 285 "fe/idl.ll"
+#line 289 "fe/idl.ll"
 {
   // Make sure that this identifier is not a C++ keyword. If it is,
   // prepend it with a _cxx_. Lookup in the perfect hash table for C++
@@ -2274,7 +2278,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 318 "fe/idl.ll"
+#line 322 "fe/idl.ll"
 {
                   tao_yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
@@ -2282,7 +2286,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 322 "fe/idl.ll"
+#line 326 "fe/idl.ll"
 {
                   tao_yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
@@ -2290,7 +2294,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 327 "fe/idl.ll"
+#line 331 "fe/idl.ll"
 {
                   tao_yylval.fixval = ACE_CDR::Fixed::from_string (ace_yytext);
                   return IDL_FIXED_PT_LITERAL;
@@ -2298,7 +2302,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 332 "fe/idl.ll"
+#line 336 "fe/idl.ll"
 {
                   tao_yylval.ival = idl_atoi (ace_yytext, 10);
                   return IDL_INTEGER_LITERAL;
@@ -2306,7 +2310,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 336 "fe/idl.ll"
+#line 340 "fe/idl.ll"
 {
                   tao_yylval.uival = idl_atoui (ace_yytext, 10);
                   return IDL_UINTEGER_LITERAL;
@@ -2314,7 +2318,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 340 "fe/idl.ll"
+#line 344 "fe/idl.ll"
 {
                   tao_yylval.ival = idl_atoi (ace_yytext, 16);
                   return IDL_INTEGER_LITERAL;
@@ -2322,7 +2326,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 344 "fe/idl.ll"
+#line 348 "fe/idl.ll"
 {
                   tao_yylval.uival = idl_atoui (ace_yytext, 16);
                   return IDL_UINTEGER_LITERAL;
@@ -2330,7 +2334,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 348 "fe/idl.ll"
+#line 352 "fe/idl.ll"
 {
                   tao_yylval.ival = idl_atoi (ace_yytext, 8);
                   return IDL_INTEGER_LITERAL;
@@ -2338,7 +2342,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 352 "fe/idl.ll"
+#line 356 "fe/idl.ll"
 {
                   tao_yylval.uival = idl_atoui (ace_yytext, 8);
                   return IDL_UINTEGER_LITERAL;
@@ -2347,7 +2351,7 @@ YY_RULE_SETUP
 case 96:
 /* rule 96 can match eol */
 YY_RULE_SETUP
-#line 357 "fe/idl.ll"
+#line 361 "fe/idl.ll"
 {
                   /* Skip the quotes */
                   char * const tmp = ace_yytext;
@@ -2372,7 +2376,7 @@ YY_RULE_SETUP
 case 97:
 /* rule 97 can match eol */
 YY_RULE_SETUP
-#line 377 "fe/idl.ll"
+#line 381 "fe/idl.ll"
 {
                   /* Skip the bookends */
                   char * const tmp = ACE_OS::strdup (ace_yytext);
@@ -2395,7 +2399,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 396 "fe/idl.ll"
+#line 400 "fe/idl.ll"
 {
                   tao_yylval.cval = ace_yytext[1];
                   return IDL_CHARACTER_LITERAL;
@@ -2403,7 +2407,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 400 "fe/idl.ll"
+#line 404 "fe/idl.ll"
 {
                   // octal character constant
                   tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
@@ -2412,7 +2416,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 405 "fe/idl.ll"
+#line 409 "fe/idl.ll"
 {
                   // hexadecimal character constant
                   tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
@@ -2421,7 +2425,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 410 "fe/idl.ll"
+#line 414 "fe/idl.ll"
 {
                   tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
@@ -2429,7 +2433,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 414 "fe/idl.ll"
+#line 418 "fe/idl.ll"
 {
                   // wide character constant
                   tao_yylval.wcval = ace_yytext[2];
@@ -2438,7 +2442,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 419 "fe/idl.ll"
+#line 423 "fe/idl.ll"
 {
                   // hexadecimal wide character constant
                   tao_yylval.wcval = idl_wchar_escape_reader (ace_yytext + 2);
@@ -2447,11 +2451,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 104:
 /* rule 104 can match eol */
-#line 425 "fe/idl.ll"
+#line 429 "fe/idl.ll"
 case 105:
 /* rule 105 can match eol */
 YY_RULE_SETUP
-#line 425 "fe/idl.ll"
+#line 429 "fe/idl.ll"
 {/* remember pragma */
                   idl_global->set_lineno (idl_global->lineno () + 1);
                   idl_store_pragma (ace_yytext);
@@ -2460,11 +2464,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 106:
 /* rule 106 can match eol */
-#line 431 "fe/idl.ll"
+#line 435 "fe/idl.ll"
 case 107:
 /* rule 107 can match eol */
 YY_RULE_SETUP
-#line 431 "fe/idl.ll"
+#line 435 "fe/idl.ll"
 {/* ignore file */
                   idl_global->set_lineno(idl_global->lineno () + 1);
                   break;
@@ -2472,11 +2476,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 108:
 /* rule 108 can match eol */
-#line 436 "fe/idl.ll"
+#line 440 "fe/idl.ll"
 case 109:
 /* rule 109 can match eol */
 YY_RULE_SETUP
-#line 436 "fe/idl.ll"
+#line 440 "fe/idl.ll"
 {
                   idl_parse_line_and_file (ace_yytext);
                   break;
@@ -2484,11 +2488,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 110:
 /* rule 110 can match eol */
-#line 441 "fe/idl.ll"
+#line 445 "fe/idl.ll"
 case 111:
 /* rule 111 can match eol */
 YY_RULE_SETUP
-#line 441 "fe/idl.ll"
+#line 445 "fe/idl.ll"
 {
                   idl_parse_line_and_file (ace_yytext);
                   break;
@@ -2496,11 +2500,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 112:
 /* rule 112 can match eol */
-#line 446 "fe/idl.ll"
+#line 450 "fe/idl.ll"
 case 113:
 /* rule 113 can match eol */
 YY_RULE_SETUP
-#line 446 "fe/idl.ll"
+#line 450 "fe/idl.ll"
 {
                   idl_parse_line_and_file (ace_yytext);
                   break;
@@ -2508,11 +2512,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 114:
 /* rule 114 can match eol */
-#line 451 "fe/idl.ll"
+#line 455 "fe/idl.ll"
 case 115:
 /* rule 115 can match eol */
 YY_RULE_SETUP
-#line 451 "fe/idl.ll"
+#line 455 "fe/idl.ll"
 {
                   idl_parse_line_and_file (ace_yytext);
                   break;
@@ -2520,11 +2524,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 116:
 /* rule 116 can match eol */
-#line 456 "fe/idl.ll"
+#line 460 "fe/idl.ll"
 case 117:
 /* rule 117 can match eol */
 YY_RULE_SETUP
-#line 456 "fe/idl.ll"
+#line 460 "fe/idl.ll"
 {
                   /* ignore cpp ident */
                   idl_global->set_lineno (idl_global->lineno () + 1);
@@ -2534,7 +2538,7 @@ YY_RULE_SETUP
 case 118:
 /* rule 118 can match eol */
 YY_RULE_SETUP
-#line 461 "fe/idl.ll"
+#line 465 "fe/idl.ll"
 {
                   /* ignore comments */
                   idl_global->set_lineno(idl_global->lineno () + 1);
@@ -2543,7 +2547,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 466 "fe/idl.ll"
+#line 470 "fe/idl.ll"
 {
                   for (;;)
                     {
@@ -2566,13 +2570,13 @@ YY_RULE_SETUP
     YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 485 "fe/idl.ll"
+#line 489 "fe/idl.ll"
 break;
     YY_BREAK
 case 121:
 /* rule 121 can match eol */
 YY_RULE_SETUP
-#line 486 "fe/idl.ll"
+#line 490 "fe/idl.ll"
 {
                   idl_global->set_lineno (idl_global->lineno () + 1);
                   break;
@@ -2580,15 +2584,15 @@ YY_RULE_SETUP
     YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 490 "fe/idl.ll"
+#line 494 "fe/idl.ll"
 return ace_yytext[0];
     YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 492 "fe/idl.ll"
+#line 496 "fe/idl.ll"
 ECHO;
     YY_BREAK
-#line 2593 "fe/idl.yy.cpp"
+#line 2597 "fe/idl.yy.cpp"
             case YY_STATE_EOF(INITIAL):
                 yyterminate();
 
@@ -3569,7 +3573,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 492 "fe/idl.ll"
+#line 496 "fe/idl.ll"
 
         /* subroutines */
 
