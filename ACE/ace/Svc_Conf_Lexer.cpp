@@ -410,8 +410,18 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
 
                 // String from buffer->index_ to current (inclusive)
                 size_t const size = (current - buffer->index_) + 1;
-                std::unique_ptr<char[]> str_bufp = std::make_unique<char[]>(size);
-                char* str = str_bufp.get ();
+                char* str {};
+                char str_buf[ACE_YY_BUF_SIZE];
+                std::unique_ptr<char[]> str_bufp {};
+                if (size > ACE_YY_BUF_SIZE)
+                  {
+                     str_bufp = std::make_unique<char[]>(size);
+                     str = str_bufp.get ();
+                  }
+                else
+                  {
+                    str = str_buf;
+                  }
                 ACE_OS::strncpy (str, buffer->input_ + buffer->index_, size - 1);
                 str[size - 1] = '\0';
 
