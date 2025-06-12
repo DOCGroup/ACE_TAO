@@ -17,11 +17,8 @@
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"
-<<<<<<< HEAD
-#include <memory>
-=======
 #include "ace/Truncate.h"
->>>>>>> 814302d50b (Add missing includes)
+#include <memory>
 
 class Event_Handler : public ACE_Event_Handler
 {
