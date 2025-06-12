@@ -15,11 +15,7 @@
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
-<<<<<<< HEAD
-
-=======
 #include "ace/Truncate.h"
->>>>>>> 814302d50b (Add missing includes)
 
 #if defined (ACE_HAS_THREADS)
 
