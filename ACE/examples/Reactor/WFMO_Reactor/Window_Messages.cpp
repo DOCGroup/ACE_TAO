@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
@@ -18,6 +17,7 @@
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"
+#include "ace/Truncate.h"
 #include <memory>
 
 class Event_Handler : public ACE_Event_Handler
