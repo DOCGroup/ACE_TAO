@@ -27,23 +27,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #define ACE_MAX_BYTES_PER_CHAR 4
 #define ACE_YY_CONVERSION_SPACE ACE_YY_BUF_SIZE * ACE_MAX_BYTES_PER_CHAR
 
-#if defined (__GNUG__)
-# define ACE_TEMPORARY_STRING(X,SIZE) \
-   __extension__ char X[SIZE]
-#else
-# define ACE_TEMPORARY_STRING(X,SIZE) \
-   char* X = 0; \
-   char X ## buf[ACE_YY_BUF_SIZE]; \
-   std::unique_ptr<char> X ## bufp (nullptr); \
-   if (SIZE > ACE_YY_BUF_SIZE) { \
-     X ## bufp.reset (new char[SIZE]); \
-     X = X ## bufp.get (); \
-   } \
-   else { \
-     X = X ## buf; \
-   }
-#endif /* __GNUG__ */
-
 // These are states not covered by the tokens in Svc_Conf_Tokens.h
 #define ACE_NO_STATE -1
 #define ACE_COMMENT 0
@@ -426,12 +409,21 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                   }
 
                 // String from buffer->index_ to current (inclusive)
-                size_t size = (current - buffer->index_) + 1;
-                ACE_TEMPORARY_STRING (str, size);
-                ACE_OS::strncpy (str, buffer->input_ + buffer->index_,
-                                 size - 1);
+                size_t const size = (current - buffer->index_) + 1;
+                char* str {};
+                char str_buf[ACE_YY_BUF_SIZE];
+                std::unique_ptr<char[]> str_bufp {};
+                if (size > ACE_YY_BUF_SIZE)
+                  {
+                     str_bufp = std::make_unique<char[]>(size);
+                     str = str_bufp.get ();
+                  }
+                else
+                  {
+                    str = str_buf;
+                  }
+                ACE_OS::strncpy (str, buffer->input_ + buffer->index_, size - 1);
                 str[size - 1] = '\0';
-
 
                 if (ACE_OS::strcmp (str, "dynamic") == 0)
                   {
