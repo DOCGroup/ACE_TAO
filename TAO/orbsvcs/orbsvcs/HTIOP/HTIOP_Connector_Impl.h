@@ -52,10 +52,10 @@ namespace TAO
       /// Constructor. @a arg parameter is used to pass any special
       /// state/info to the service handler upon creation.  Currently used
       /// by HTIOP to pass protocol configuration properties.
-      Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                 TAO_ORB_Core* orb_core = 0,
-                                 void *arg = 0,
-                                 CORBA::Boolean flag = 0);
+      Connect_Creation_Strategy (ACE_Thread_Manager * = nullptr,
+                                 TAO_ORB_Core* orb_core = nullptr,
+                                 void *arg = nullptr,
+                                 CORBA::Boolean flag = false);
 
       /// Makes HTIOP_Client_Connection_Handlers
       virtual int make_svc_handler (SVC_HANDLER *&sh);

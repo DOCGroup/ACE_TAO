@@ -45,8 +45,8 @@ class TAO_Connect_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
   /// Constructor.
-  TAO_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                 TAO_ORB_Core* orb_core = 0);
+  TAO_Connect_Creation_Strategy (ACE_Thread_Manager * = nullptr,
+                                 TAO_ORB_Core* orb_core = nullptr);
 
   /// Makes TAO_*_Client_Connection_Handlers
   virtual int make_svc_handler (SVC_HANDLER *&sh);
