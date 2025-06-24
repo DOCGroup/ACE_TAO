@@ -16,10 +16,9 @@
 #include "test_config.h"
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
-
 #include "ace/Numeric_Limits.h"
-
 #include <sstream>
+#include <type_traits>
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -210,9 +209,17 @@ run_main (int, ACE_TCHAR *[])
 
   if (sizeof(time_t) < 8)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time_t not at least 64bit, this platform will have problems after 2038\n")));
-      ++ret;
+      if (std::is_signed<time_t>::value)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("time_t is 32bit signed, this platform will have problems after 2038\n")));
+          ++ret;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("time_t is 32bit unsigned, this platform will have problems after 2106\n")));
+        }
     }
   else
     {
