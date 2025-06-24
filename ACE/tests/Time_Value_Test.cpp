@@ -17,15 +17,12 @@
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
 #include "ace/Numeric_Limits.h"
-<<<<<<< HEAD
 
 #ifdef ACE_HAS_CPP98_IOSTREAMS
 #include <sstream>
 #endif
-=======
-#include <sstream>
+
 #include <type_traits>
->>>>>>> c0f0bb3c14 (Add include)
 
 int
 run_main (int, ACE_TCHAR *[])
