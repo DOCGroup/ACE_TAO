@@ -16,10 +16,9 @@
 #include "test_config.h"
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
-
 #include "ace/Numeric_Limits.h"
-
 #include <sstream>
+#include <type_traits>
 
 int
 run_main (int, ACE_TCHAR *[])
