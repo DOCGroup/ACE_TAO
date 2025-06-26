@@ -1,0 +1,283 @@
+commit 4d7da0a02d568070e16c363ccf5e0f817818bb8b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 23 12:51:08 2025 -0500
+
+    Updated NEWS
+
+commit ef25c8bf5e5a34c77d510f56f3c4085a8bec4a74
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 9 15:53:11 2025 -0500
+
+    updates for this branch
+
+commit c0e5e016cf7f01a2c9d1a37ca77795be1c9a5a10
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 9 14:40:25 2025 -0500
+
+    Merge pull request #2395 from mitza-oci/warnings
+    
+    Fixed warnings
+
+commit f23847f45f98e7e7d761a91040604c84a0437d50
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 6 07:59:45 2025 -0500
+
+    Merge pull request #2388 from mitza-oci/tao_idl_map
+    
+    TAO_IDL updates for maps
+
+commit bbd50de66d1c063137b9fa266181383f95c19a9c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 5 13:21:22 2025 -0500
+
+    Merge pull request #2390 from mitza-oci/cxx20
+    
+    Updates for Visual C++ CI and C++20 compatibility
+    # Conflicts:
+    #       .github/workflows/cmake.yml
+    #       .github/workflows/windows.yml
+
+commit 0856352f40e3ef81a8d779fc6709f1b3fbcafd4a
+Merge: d9da098ae78 37848fb0cee
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon May 19 08:30:20 2025 -0500
+
+    Merge pull request #2385 from mitza-oci/ace6tao2
+    
+    [TAO 2] TAO_IDL_FE: fixed a bug where AST_Map would return value annotations as key annotations
+
+commit 37848fb0cee580baf502cb67b422e345691a34e2
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 16 14:31:08 2025 -0500
+
+    TAO_IDL_FE: fixed a bug where AST_Map would return value annotations as key annotations
+
+commit 59d8f4aa98182005cf63b13c3d31825cdc25dc78
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu May 15 08:23:25 2025 -0500
+
+    Update NEWS in TAO
+
+commit 2688739bcdcc9b78757477392afa8fb435d7339b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu May 15 08:18:24 2025 -0500
+
+    Update NEWS in TAO
+
+commit d3b733f73deaa33461d5505f14aaf56c6e4190cd
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue May 13 08:39:34 2025 -0500
+
+    Updated for this branch and regenerated parser
+
+commit 0208208ed5e31abe9074740052c6dc20dffb2c47
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue May 13 08:17:24 2025 -0500
+
+    Merge pull request #2378 from iguessthislldo/igtd/map-fixes
+    
+    Fixes for IDL maps
+    
+    (cherry picked from commit 8a02bf673f98b5ad21174ea532e858fe809ccaef)
+    
+    # Conflicts:
+    #       TAO/NEWS
+    #       TAO/TAO_IDL/be_include/be_visitor_union_branch/public_assign_cs.h
+    #       TAO/TAO_IDL/be_include/be_visitor_union_branch/public_ci.h
+    #       TAO/TAO_IDL/fe/idl.tab.cpp
+    #       TAO/TAO_IDL/fe/idl.ypp
+
+commit fd3897eb840d03bc0dca2cc5161a79319686594b
+Merge: 76558e1521f 373e5f65605
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 2 14:02:46 2025 -0500
+
+    Merge pull request #2374 from mitza-oci/a6t2-thread-names
+    
+    [ACE6-TAO2] Support thread names on Windows; name the threads that TAO creates
+
+commit f7bd585e4c7d1dcee882c9b8cba0ce1eb90f37fb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 2 08:31:51 2025 -0500
+
+    Updated NEWS
+
+commit d243860f8b47411efeb1db17a6e3b4f042f3d333
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 30 12:07:23 2025 -0500
+
+    Update TAO/tao/Transport_Cache_Manager_T.cpp
+    
+    Co-authored-by: Son Dinh <technology789@gmail.com>
+
+commit 26fda57f6905118884b430c50410fcd71cbc7ded
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Apr 28 08:13:27 2025 -0500
+
+    Merge pull request #2370 from mitza-oci/thread-names
+    
+    Support thread names on Windows
+    
+    (cherry picked from commit e3b027b753b21daf35682d34a1f0f1f4c7af40ff)
+    
+    # Conflicts:
+    #       ACE/NEWS
+    #       ACE/ace/OS_NS_Thread.cpp
+    #       ACE/ace/OS_NS_Thread.inl
+    #       ACE/ace/Sock_Connect.cpp
+    #       ACE/ace/config-integrity-common.h
+    #       TAO/NEWS
+    #       TAO/tao/ORB_Core.cpp
+    #       TAO/tao/Thread_Per_Connection_Handler.cpp
+
+commit 932bc41d14b928e568610d34270f55a82a54c27b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 23 08:21:36 2025 -0500
+
+    Merge pull request #2369 from mitza-oci/warnings
+    
+    Fixed warnings
+    
+    (cherry picked from commit 5ba4a1922e38571ed6c42b5e6389351f5a62aa7d)
+    
+    # Conflicts:
+    #       ACE/ace/Arg_Shifter.cpp
+    #       ACE/ace/Arg_Shifter.h
+    #       ACE/ace/Based_Pointer_T.inl
+    #       ACE/ace/Netlink_Addr.inl
+    #       ACE/ace/OS_NS_stdlib.cpp
+    #       ACE/ace/OS_NS_time.inl
+    #       ACE/ace/Signal.inl
+    #       ACE/ace/Timer_Queue_T.cpp
+    #       ACE/ace/XML_Utils/XMLSchema/id_map.hpp
+    #       TAO/TAO_IDL/driver/drv_preproc.cpp
+
+commit 201b036126f891add3ddbb0bb88ea5ac4db78703
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 28 14:55:00 2025 -0500
+
+    fixed warnings
+
+commit 2a08e8828ca9bb9c79ec75f0304d286b15a7dc3b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 28 12:56:38 2025 -0500
+
+    [TAO 2] fixed warnings in TAO_IDL generated code
+
+commit 18ba6f08425fe27c3ef1aa2825e2dedd6399d20e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Mar 19 12:48:48 2025 -0500
+
+    cleaned up formatting, style, usage in this function
+    
+    (cherry picked from commit 347ae649959ed335c32e29469e730c45959792a7)
+    
+    # Conflicts:
+    #       TAO/orbsvcs/orbsvcs/AV/AVStreams_i.cpp
+
+commit 05153bee668ddb0ddf6471dd347dcd67e701d5f3
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Mar 18 14:41:31 2025 -0500
+
+    Updated use of ACE_Process_Options in test
+
+commit 1b1d8acfe6d7306ee5c6d59bf9768716aa9bbbc3
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 14 09:24:17 2025 -0500
+
+    fixed warnings
+
+commit 331c64cab42780afe707b697db8c2a1a66ec0032
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 14 08:29:47 2025 -0500
+
+    restored inl file
+
+commit b171f30d012555b255054bc3f663229daa2fb43d
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 13 15:06:11 2025 -0500
+
+    Generated Valuebox class copy ctor can use DefaultValueRefCountBase defalt ctor
+
+commit cade1347508dd4d392700f916f8f084f4a466224
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 13 15:03:27 2025 -0500
+
+    Avoid warning on GCC
+
+commit ff431f622b2d3dcb275e18afe9c8fc6293231ccb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 13 08:45:35 2025 -0500
+
+    Merge pull request #2350 from mitza-oci/warnings
+    
+    Fixed compiler warnings
+    
+    (cherry picked from commit 6d0dcad3aec422a60b87cfef1417c3e1a0297e2d)
+    
+    # Conflicts:
+    #       ACE/ace/Svc_Conf_y.cpp
+    #       TAO/tao/Abstract_Servant_Base.cpp
+    #       TAO/tao/Abstract_Servant_Base.h
+    #       TAO/tao/Abstract_Servant_Base.inl
+    #       TAO/tao/PortableServer/Servant_Base.cpp
+    #       TAO/tao/Valuetype/ValueBase.h
+
+commit 0540132f3e6480a141fa1e3d078daadf8de0b0f6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 21 15:55:58 2025 -0600
+
+    fixed compiler warnings
+
+commit 7dc52cfb6f2b923203fedaee85175539b97a3d53
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 21 12:23:16 2025 -0600
+
+    Fixed a few compiler warnings
+
+commit a2d38e2374606dfd83d2113dec90024a23e075b2
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jan 9 18:24:06 2025 -0600
+
+    Use = default for skeleton copy constructor
+    
+    But only when `ACE_HAS_CPP11` is defined. This is a sort of backport of
+    https://github.com/DOCGroup/ACE_TAO/pull/2309.
+
+commit ca8a80cf6994a596c9a0e2ae185381de06e8791b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Dec 13 09:45:37 2024 -0600
+
+    Merge pull request #2306 from mitza-oci/warnings
+    
+    Fixed some warnings
+    
+    (cherry picked from commit 59970076e15259aa0dd180297343f8a24298894a)
+    
+    # Conflicts:
+    #       TAO/TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+
+commit f3bebeb023c4a1af42bae0b06399b33d5bae8117
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 25 09:28:31 2024 +0200
+
+    Merge pull request #2294 from Osyotr/checked_iterator_nuke
+    
+    Remove checked_iterator.h
+    
+    (cherry picked from commit e9de6a1f568710829668495c37dfef2c9ba74550)
+    
+    # Conflicts:
+    #       ACE/NEWS
+    #       ACE/ace/ace_for_tao.mpc
+    #       ACE/ace/checked_iterator.h
+    #       ACE/bin/MakeProjectCreator/config/vc_warnings.mpb
+
+commit 5cf79de08b9c4ec112d7be06390b4832117c1539
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 16 12:07:28 2024 +0200
+
+    List changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:

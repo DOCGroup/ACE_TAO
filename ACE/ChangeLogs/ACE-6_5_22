@@ -1,0 +1,396 @@
+commit 1fa0db6b154c07b1c4587ef7b9e1fd03c4c75f72
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 24 16:07:23 2025 +0200
+
+    Update Time_Value_Test.cpp
+
+commit dfbba22ab0271fc13cc00356eff5e014115ef713
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 24 14:36:36 2025 +0200
+
+    Add include
+    
+        * ACE/tests/Time_Value_Test.cpp:
+    
+    (cherry picked from commit c0f0bb3c14f40e5ac8b5f406e880a1d5ea20d30a)
+    
+    # Conflicts:
+    #       ACE/tests/Time_Value_Test.cpp
+
+commit 3f3bc92d7ac3ce1c3bd0c8528f639077f60b559b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 24 14:32:35 2025 +0200
+
+    Only platforms with a 32bit time_t signed will have problems in 2038, with 32bit time_t unsigned we have until 2106
+    
+        * ACE/tests/Time_Value_Test.cpp:
+    
+    (cherry picked from commit 39162ba9ee5919f5490ea9f88fe1af5926cc7bfe)
+
+commit 814302d50bc12522891383766962de309959c35c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 12 14:38:49 2025 +0200
+
+    Add missing includes
+    
+        * ACE/examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * ACE/examples/Threads/task_four.cpp:
+        * ACE/examples/Threads/thread_pool.cpp:
+
+commit 49d902d61cde7cb007baa8f4c0c0b7a5f879c796
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 11 13:56:11 2025 +0200
+
+    Add missing include of Truncate.h
+    
+        * ACE/Kokyu/Default_Dispatcher_Impl.cpp:
+        * ACE/ace/Message_Queue_NT.cpp:
+
+commit 37454b53f6182568fc7b4973990b52588b7a96e5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 10 09:26:19 2025 +0200
+
+    Removed redundant include
+    
+        * ACE/ace/Message_Queue_T.cpp:
+
+commit c0e5e016cf7f01a2c9d1a37ca77795be1c9a5a10
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 9 14:40:25 2025 -0500
+
+    Merge pull request #2395 from mitza-oci/warnings
+    
+    Fixed warnings
+
+commit 8f6d1853f1d63124eaf0b079506780a2d7e4f9d0
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 6 11:44:45 2025 -0500
+
+    fixed builds
+
+commit 0155cf60204527c355b8925c340efa426c2ce6f7
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu May 15 08:14:29 2025 -0500
+
+    Update NEWS in ACE
+
+commit fd3897eb840d03bc0dca2cc5161a79319686594b
+Merge: 76558e1521f 373e5f65605
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 2 14:02:46 2025 -0500
+
+    Merge pull request #2374 from mitza-oci/a6t2-thread-names
+    
+    [ACE6-TAO2] Support thread names on Windows; name the threads that TAO creates
+
+commit 373e5f6560548a64aee5367acca873e573dc8322
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 2 12:37:23 2025 -0500
+
+    Update ACE/ace/Stack_Trace.cpp
+    
+    Co-authored-by: Son Dinh <technology789@gmail.com>
+
+commit f7bd585e4c7d1dcee882c9b8cba0ce1eb90f37fb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 2 08:31:51 2025 -0500
+
+    Updated NEWS
+
+commit 0d3aacd9c844afb2f4ce1b1358371a9e419d63b6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 30 14:48:27 2025 -0500
+
+    Restore ACE_STD_NAMESPACE lost in merge of #2372
+
+commit 26fda57f6905118884b430c50410fcd71cbc7ded
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Apr 28 08:13:27 2025 -0500
+
+    Merge pull request #2370 from mitza-oci/thread-names
+    
+    Support thread names on Windows
+    
+    (cherry picked from commit e3b027b753b21daf35682d34a1f0f1f4c7af40ff)
+    
+    # Conflicts:
+    #       ACE/NEWS
+    #       ACE/ace/OS_NS_Thread.cpp
+    #       ACE/ace/OS_NS_Thread.inl
+    #       ACE/ace/Sock_Connect.cpp
+    #       ACE/ace/config-integrity-common.h
+    #       TAO/NEWS
+    #       TAO/tao/ORB_Core.cpp
+    #       TAO/tao/Thread_Per_Connection_Handler.cpp
+
+commit c19b7f9e1dfb34277d310ab29faecca955688c1b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 30 07:48:04 2025 -0500
+
+    Updated to work with ACE 6
+
+commit 932bc41d14b928e568610d34270f55a82a54c27b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 23 08:21:36 2025 -0500
+
+    Merge pull request #2369 from mitza-oci/warnings
+    
+    Fixed warnings
+    
+    (cherry picked from commit 5ba4a1922e38571ed6c42b5e6389351f5a62aa7d)
+    
+    # Conflicts:
+    #       ACE/ace/Arg_Shifter.cpp
+    #       ACE/ace/Arg_Shifter.h
+    #       ACE/ace/Based_Pointer_T.inl
+    #       ACE/ace/Netlink_Addr.inl
+    #       ACE/ace/OS_NS_stdlib.cpp
+    #       ACE/ace/OS_NS_time.inl
+    #       ACE/ace/Signal.inl
+    #       ACE/ace/Timer_Queue_T.cpp
+    #       ACE/ace/XML_Utils/XMLSchema/id_map.hpp
+    #       TAO/TAO_IDL/driver/drv_preproc.cpp
+
+commit 201b036126f891add3ddbb0bb88ea5ac4db78703
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 28 14:55:00 2025 -0500
+
+    fixed warnings
+
+commit 3b06968cb1015984f31201fbf634c4b46871d644
+Merge: f982c1703e5 18ba6f08425
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 20 08:19:46 2025 -0500
+
+    Merge pull request #2361 from mitza-oci/a6t2-warnings
+    
+    [ACE 6] Continued fixing warnings
+
+commit 03dc12cbb9ea7af4033257c769db62f1fe0994a9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Mar 15 09:19:09 2025 +0100
+
+    Move exception causing code to function, as non-call SEH isn't supported for clang based windows compilers
+    
+        * ACE/tests/Compiler_Features_41_Test.cpp:
+    
+    (cherry picked from commit 2c1d15dd51be7ca7da657e8970a1945ee2f61979)
+
+commit 3ce089bbff272b9ca7746a6ccaa6a27e83bf1940
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 13 15:17:51 2025 -0500
+
+    fixed warnings
+
+commit 79f2e1d26a631b7759e6cd598c666e8bf3cfc24a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 13 14:10:00 2025 -0500
+
+    Generated Svc_Conf_y.cpp
+
+commit ff431f622b2d3dcb275e18afe9c8fc6293231ccb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 13 08:45:35 2025 -0500
+
+    Merge pull request #2350 from mitza-oci/warnings
+    
+    Fixed compiler warnings
+    
+    (cherry picked from commit 6d0dcad3aec422a60b87cfef1417c3e1a0297e2d)
+    
+    # Conflicts:
+    #       ACE/ace/Svc_Conf_y.cpp
+    #       TAO/tao/Abstract_Servant_Base.cpp
+    #       TAO/tao/Abstract_Servant_Base.h
+    #       TAO/tao/Abstract_Servant_Base.inl
+    #       TAO/tao/PortableServer/Servant_Base.cpp
+    #       TAO/tao/Valuetype/ValueBase.h
+
+commit b937df8b810b866a8fec3c76dcbac2d1ed042e1c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 11 12:53:35 2025 +0100
+
+    Fixed merge conflicts
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit 17e5cdcdd5c2b53a6e0a8abbf2b9799d2c42cb97
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 10 14:02:38 2025 +0100
+
+    Simplify
+    
+        * ACE/tests/Compiler_Features_41_Test.cpp:
+    
+    (cherry picked from commit c6fdd7ccc9fc6fe7048363854cf6513b7caf21ad)
+
+commit 58060da6d919ebf9e9317c0f7f067e9517017f82
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 10 14:00:26 2025 +0100
+
+    Further extend test
+    
+        * ACE/tests/Compiler_Features_41_Test.cpp:
+    
+    (cherry picked from commit d3b2b0861f1eab813ba7b028a0bfffd428e4147b)
+
+commit afcd1048230907e4d77232d80aeff5845518a03f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 10 13:58:12 2025 +0100
+
+    Update ACE/tests/Compiler_Features_41_Test.cpp
+    
+    Co-authored-by: coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
+    (cherry picked from commit 1d39b464b61397e1bc8ce9a2e9e7eec301d5bf5e)
+
+commit 6bb4fc9fa57b68a66617763042d65f8c3e6de19d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 10 13:52:28 2025 +0100
+
+    Removed empty line
+    
+        * ACE/tests/Compiler_Features_41_Test.cpp:
+    
+    (cherry picked from commit c0e27e89e2a7ae46bea1d629c16fb22135bcfc43)
+
+commit 9fbff7512efaf66dfd2f4aa70fe44eb357bdda07
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 10 13:48:05 2025 +0100
+
+    New test for __try/__finally
+    
+        * ACE/tests/Compiler_Features_41_Test.cpp:
+          Added.
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+    
+    (cherry picked from commit 7bb13342183d15d93f6c3884151ef56792ae47d5)
+    
+    # Conflicts:
+    #       ACE/tests/run_test.lst
+    #       ACE/tests/tests.mpc
+
+commit 0540132f3e6480a141fa1e3d078daadf8de0b0f6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 21 15:55:58 2025 -0600
+
+    fixed compiler warnings
+
+commit 845776c4681a16810b58528a679524efcfd4e60e
+Merge: 7dc52cfb6f2 b0769d43f8a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 21 15:05:00 2025 -0600
+
+    Merge branch 'ace6-svcconf-bison' into a6t2-warnings
+
+commit b0769d43f8aa01cd27193e47bde790de34c76986
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 21 20:54:18 2025 +0000
+
+    Svc Conf bison: use ACE_ prefix for global YY* names
+
+commit 85d1906ddea5d39abae0e148ea76aa4355786b67
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 21 18:52:57 2025 +0000
+
+    Apply renaming to bison's generated header file
+
+commit 7dc52cfb6f2b923203fedaee85175539b97a3d53
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 21 12:23:16 2025 -0600
+
+    Fixed a few compiler warnings
+
+commit 625c5d668ddda1661d82314d726bb7c8464e29d4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 21 18:09:46 2025 +0000
+
+    Updated generated code for Svc_Conf parsing
+    
+    Using a modern version of GNU Bison
+
+commit f3bebeb023c4a1af42bae0b06399b33d5bae8117
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 25 09:28:31 2024 +0200
+
+    Merge pull request #2294 from Osyotr/checked_iterator_nuke
+    
+    Remove checked_iterator.h
+    
+    (cherry picked from commit e9de6a1f568710829668495c37dfef2c9ba74550)
+    
+    # Conflicts:
+    #       ACE/NEWS
+    #       ACE/ace/ace_for_tao.mpc
+    #       ACE/ace/checked_iterator.h
+    #       ACE/bin/MakeProjectCreator/config/vc_warnings.mpb
+
+commit d3c696214837b29c49fef250dad355b9dd22a912
+Merge: 4c4a1587870 99c4cac8064
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Aug 12 11:48:24 2024 -0500
+
+    Merge pull request #2276 from mitza-oci/musl-ace6
+    
+    [ACE 6] Port to Linux platforms that use musl-libc instead of glibc
+
+commit 99c4cac8064f0d836a84e718beabb59a4ef2b4cd
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Aug 12 09:27:44 2024 -0500
+
+    Merge pull request #2275 from mitza-oci/musl
+    
+    Port to Linux platforms that use musl-libc instead of glibc
+    
+    (cherry picked from commit caeb54519f2a0017cb10a96b0855c8c974ff14b6)
+    
+    # Conflicts:
+    #       ACE/ace/os_include/sys/os_types.h
+
+commit 4c4a1587870cf4e24264dc350c5bccace02b7199
+Merge: d8d7e93bb11 6357d8b1df6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 15:48:29 2024 +0200
+
+    Merge pull request #2262 from jwillemsen/jwi-ace6tao2-mpccleanup
+    
+    [ace6tao2] MPC_LIB_MODIFIER is now set by MPC for bmake
+
+commit 6357d8b1df637cd51d810b1e295de31dd6f3e798
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 26 15:34:32 2024 +0200
+
+    Manually apply 1e38fc4f1c4a13a466dc6540fd06426d79a3e40c, MPC_LIB_MODIFIER is now set by MPC
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+
+commit 54f604b4f0f98b27c62d2d9f424deb3649559890
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 14 09:56:56 2024 +0200
+
+    Return error when platform doesn't have 64bit time_t
+    
+        * ACE/tests/Time_Value_Test.cpp:
+    
+    (cherry picked from commit 9be41577ed2fb86d6bfbc758fdb757ffb3ce61b7)
+
+commit bf52b0ec453e7ad124a4d11620a78648c6182036
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 13 10:56:24 2024 +0200
+
+    Test that time_t is at least 8 bytes, if not, give an error message in the log
+    
+        * ACE/tests/Time_Value_Test.cpp:
+    
+    (cherry picked from commit edd8fa7b611df55dd523a2b1da6631e62246dd23)
+
+commit 5cf79de08b9c4ec112d7be06390b4832117c1539
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 16 12:07:28 2024 +0200
+
+    List changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
