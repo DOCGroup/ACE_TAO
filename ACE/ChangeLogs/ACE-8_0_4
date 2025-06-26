@@ -1,0 +1,291 @@
+commit 683c71acba3187584ce5a14bcaa9151060db6561
+Merge: 614ad3f47a7 37a6d5f1332
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 24 19:38:38 2025 +0200
+
+    Merge pull request #2400 from jwillemsen/jwi-vararray
+    
+    Removed usage of variable length arrays, fixed memory leaks
+
+commit 0dbaa607742047324e7a9ccf2e3068e04326027a
+Merge: c0f0bb3c14f f18aa97235c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 24 14:37:03 2025 +0200
+
+    Merge branch 'master' into jwi-timetsigned
+
+commit c0f0bb3c14f40e5ac8b5f406e880a1d5ea20d30a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 24 14:36:36 2025 +0200
+
+    Add include
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit 39162ba9ee5919f5490ea9f88fe1af5926cc7bfe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 24 14:32:35 2025 +0200
+
+    Only platforms with a 32bit time_t signed will have problems in 2038, with 32bit time_t unsigned we have until 2106
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit 8713ad34eb17e2b1dd50b0b01e2b90c5920951f2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 12 16:15:23 2025 +0200
+
+    Update thread_pool.cpp
+
+commit d6b4fe11758b627b8db9a2133c017eb7c447b753
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 12 16:14:17 2025 +0200
+
+    Update Window_Messages.cpp
+
+commit 7c5c5af52a5c867c27e5490922fde8762afea51f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 12 14:38:49 2025 +0200
+
+    Add missing includes
+    
+        * ACE/examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * ACE/examples/Threads/task_four.cpp:
+        * ACE/examples/Threads/thread_pool.cpp:
+    
+    (cherry picked from commit 814302d50bc12522891383766962de309959c35c)
+    
+    # Conflicts:
+    #       ACE/examples/Reactor/WFMO_Reactor/Window_Messages.cpp
+    #       ACE/examples/Threads/thread_pool.cpp
+
+commit 37a6d5f1332b059db328c3c7a1256dd27bae6b26
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 12 12:17:13 2025 +0200
+
+    Add back small buffer optimization
+    
+        * ACE/ace/Svc_Conf_Lexer.cpp:
+
+commit b0d6b7088630f6a280b14954e7a5ec24055c818f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 12 11:28:17 2025 +0200
+
+    Removed usage of variable length arrays, these are a gcc/clang extension
+    
+        * ACE/ace/Svc_Conf_Lexer.cpp:
+
+commit 34e90911993553b126b02c3ebf2665adb930dad7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 10 09:26:19 2025 +0200
+
+    Removed redundant include
+    
+        * ACE/ace/Message_Queue_T.cpp:
+
+commit 5dc2149cff51cb2cf949e712cc46b350b9359f12
+Merge: e4dd2f760f7 1e4918fba92
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 6 14:19:24 2025 -0500
+
+    Merge branch 'master' into warnings
+
+commit d5c6462c5a4d263b002e97816b458c6d67044a55
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 6 18:28:43 2025 +0000
+
+    fixed warnings
+
+commit ea53d39e0a8a9608988d2d4f09da2b68dbdc8133
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 6 11:54:12 2025 +0200
+
+    Update ACE/protocols/ace/HTBP/HTBP_Addr.h
+    
+    Co-authored-by: coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
+
+commit 19c4722560326746a770b5682027c0b2991cb23f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 6 11:50:48 2025 +0200
+
+    Fixed compiler warnings, use default/override
+    
+        * ACE/protocols/ace/HTBP/HTBP_Addr.cpp:
+        * ACE/protocols/ace/HTBP/HTBP_Addr.h:
+
+commit 07a7562456673cce26e00f1ba63c8b23b8e186f1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 17:19:53 2025 +0200
+
+    Removed empty line
+    
+        * ACE/tests/tests.mpc:
+
+commit cf80533a20d4e46c3f6c16376265c10c9e5597f5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 17:19:33 2025 +0200
+
+    Try to compile the new C++ unit test with C++20 enabled
+    
+        * ACE/tests/tests.mpc:
+
+commit 3652ab2a6d7c63bd2d3f7b476d86430424ffeb07
+Merge: 8488daf830e aa8b928316f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 15:34:40 2025 +0200
+
+    Merge branch 'jwi-vs2022bug' of https://github.com/jwillemsen/ATCD into jwi-vs2022bug
+
+commit 8488daf830e4d16f6ab0872526d6b4b2020b3fca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 15:34:30 2025 +0200
+
+    Simplify test
+    
+        * ACE/tests/Compiler_Features_42_Test.cpp:
+
+commit aa8b928316f96c78a013814741c289026c44c100
+Merge: d7e621b655c 36cf0759a13
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 13:39:21 2025 +0200
+
+    Merge branch 'master' into jwi-vs2022bug
+
+commit d7e621b655c6351483276b773ef22d1f5e76ffd2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 13:37:16 2025 +0200
+
+    Further simplified this test
+    
+        * ACE/tests/Compiler_Features_42_Test.cpp:
+
+commit d4be76e9877922968d8099a06361e49ac4a4da2f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 13:28:24 2025 +0200
+
+    Further simplified
+    
+        * ACE/tests/Compiler_Features_42_Test.cpp:
+
+commit 44104d6114a7a9705477d10068926ed57f9882c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 13:25:48 2025 +0200
+
+    Further simplify
+        * ACE/tests/Compiler_Features_42_Test.cpp:
+        * TAO/tao/AnyTypeCode/TypeCode_Case_T.h:
+
+commit 1c8a2af608c68a724eacef2d658a10c60e6508c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 13:24:24 2025 +0200
+
+    New compiler test
+    
+        * ACE/tests/Compiler_Features_42_Test.cpp:
+          Added.
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit 5f0e7f451330776bb93f70215590b01b4b6e8d05
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 28 15:13:38 2025 +0200
+
+    Mention threads=0
+    
+        * ACE/NEWS:
+
+commit c972d90a86f774977ab7a7e0c2466eed93478f3e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 28 15:09:06 2025 +0200
+
+    Fixed compile errors only in ACE core when threads=0
+        * ACE/ace/Priority_Reactor.cpp:
+        * ACE/ace/Service_Config.cpp:
+        * ACE/ace/Service_Types.cpp:
+        * ACE/ace/Thread_Manager.cpp:
+
+commit acf38dc04cb955a54b07a0adda8b6d8fb699a6f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 15 13:22:00 2025 +0200
+
+    Make use of =default
+    
+        * ACE/examples/APG/Naming/EMail.h:
+        * ACE/examples/APG/Signals/SigHandler.cpp:
+        * ACE/examples/APG/Signals/SigHandlers.cpp:
+        * ACE/examples/APG/Streams/CommandStream.h:
+        * ACE/examples/APG/Streams/CommandTask.h:
+        * ACE/examples/APG/Streams/Message.h:
+        * ACE/examples/APG/ThreadPools/Futures.cpp:
+        * ACE/examples/APG/ThreadPools/Task_ThreadPool.cpp:
+        * ACE/examples/APG/ThreadPools/ThreadPool.cpp:
+
+commit 8745ff9b29e3ad04f4cad256386853b00f26dbb1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 15 13:18:49 2025 +0200
+
+    Use default/const/uniform init
+    
+        * ACE/examples/APG/Shared_Memory/Record.h:
+
+commit e66095b712538f4399a9f6e50db40eb9e2a4346d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 15 13:18:26 2025 +0200
+
+    Use default to fix gcc warning
+    
+        * ACE/examples/Web_Crawler/URL_Status.cpp:
+        * ACE/examples/Web_Crawler/URL_Status.h:
+
+commit 30d1137e0825eabd7d59e75df31ba668c885502c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 15 10:29:22 2025 +0200
+
+    Add missing default methods to resolve compiler warnings
+    
+        * ACE/examples/APG/Containers/KeyType.h:
+
+commit 72cdb888d8999b53e6fd437b5bd8ba5a512ca742
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 15 10:17:16 2025 +0200
+
+    Fixed compiler warning about misleading indent
+    
+        * ACE/examples/Reactor/TP_Reactor/ReadHandler.cpp:
+
+commit a016da4b8f287135843f1f04ccb4774f3f695db3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 15 10:15:12 2025 +0200
+
+    Fixed compiler warning, use override
+    
+        * ACE/examples/APG/Streams/Answerer.cpp:
+
+commit 0d2c9b8f0a770ccb6e538c29e95585e70d9c4e08
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 15 10:14:50 2025 +0200
+
+    Updated for next release
+    
+        * ACE/bin/copy-local-script.sh:
+
+commit d9d33dba48ec697d667fe734ea82742fdd6805c9
+Merge: baf51ad6220 a1e14459fc7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun May 4 14:28:53 2025 +0200
+
+    Merge pull request #2377 from jwillemsen/jwi-acetao803
+    
+    Make ACE 8.0.3 and TAO 4.0.3 available
+
+commit a1e14459fc7508bd3191f342862da32811287938
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun May 4 14:28:21 2025 +0200
+
+    Make ACE 8.0.3 and TAO 4.0.3 available
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

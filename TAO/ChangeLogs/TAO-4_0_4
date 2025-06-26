@@ -1,0 +1,199 @@
+commit 70b4e2f1ee29192a759af3e3e299eea19c25e279
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 23 12:42:22 2025 -0500
+
+    Updated NEWS
+
+commit 5b1bfbbf21b27b4adab72fa1f737960fd1b426a8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 13 09:25:09 2025 +0200
+
+    Use more nullptr
+    
+        * TAO/tao/CDR.h:
+
+commit 7d5a32c2e382cd055493b1d3ac5ae7f4dbcec1c2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 13 09:19:59 2025 +0200
+
+    Removed throw_stub_exception, not used anymore, use nullptr in some places
+    
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Connector_Impl.h:
+        * TAO/tao/CDR.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/Connector_Impl.h:
+
+commit 2d0c5bdf72134a7aa05e325d746b076991fdaaf0
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 6 19:21:19 2025 +0000
+
+    fixed misplaced parens
+
+commit 5dc2149cff51cb2cf949e712cc46b350b9359f12
+Merge: e4dd2f760f7 1e4918fba92
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 6 14:19:24 2025 -0500
+
+    Merge branch 'master' into warnings
+
+commit e4dd2f760f74b60196f6a9221b7f837136f0ac1c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 6 14:18:47 2025 -0500
+
+    fixed warnings in SSLIOP
+
+commit d5c6462c5a4d263b002e97816b458c6d67044a55
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 6 18:28:43 2025 +0000
+
+    fixed warnings
+
+commit 1e4918fba929ab4250542f1681fe70eb2d416b32
+Merge: 44185555bd3 b853e0d7415
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 6 07:59:45 2025 -0500
+
+    Merge pull request #2388 from mitza-oci/tao_idl_map
+    
+    TAO_IDL updates for maps
+
+commit b853e0d7415be6f9db36e62eaf47a666d1e40b2d
+Merge: a471bf52108 359fbc245c0
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 5 13:23:36 2025 -0500
+
+    Merge branch 'master' into tao_idl_map
+
+commit e37b7443b1388eb8463bbc76394322c8a5ec66dd
+Merge: 07a75624566 359fbc245c0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 5 20:22:54 2025 +0200
+
+    Merge branch 'master' into jwi-vs2022bug
+
+commit b872b468dc927f7b9588d15903d9f07aa92f72c4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Jun 4 08:59:32 2025 -0500
+
+    Updated for C++20 compatibility
+
+commit aa8b928316f96c78a013814741c289026c44c100
+Merge: d7e621b655c 36cf0759a13
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 13:39:21 2025 +0200
+
+    Merge branch 'master' into jwi-vs2022bug
+
+commit 44104d6114a7a9705477d10068926ed57f9882c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 4 13:25:48 2025 +0200
+
+    Further simplify
+        * ACE/tests/Compiler_Features_42_Test.cpp:
+        * TAO/tao/AnyTypeCode/TypeCode_Case_T.h:
+
+commit a471bf521085e50ffb2f08b9d0070c122ce8b2d4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 2 15:57:40 2025 -0500
+
+    Allow IDL maps to be arguments in operations of (local) interfaces
+
+commit 2c2a752eff4cc4f278c58005a873042e3a902feb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 2 20:54:45 2025 +0000
+
+    avoid unreachable code generated from IDL map
+
+commit de5bdafd9805910b726982d7fc1f8a12b9151759
+Merge: 4b43a7dfb91 3c141748f65
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 28 20:58:48 2025 +0200
+
+    Merge pull request #2387 from jwillemsen/jwi-depcpplocation
+    
+    Support for deprecated CPP_LOCATION environment variable has been removed
+
+commit 3c141748f650d781a50d7d1ea7f656c09162a70a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 28 15:53:17 2025 +0200
+
+    Updated wording
+    
+        * TAO/NEWS:
+
+commit cdfb84cd0f4610c5469d073228e3f947585f05cd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 28 15:44:43 2025 +0200
+
+    Zap TAO_IDL_DEFAULT_CPP_FLAGS
+    
+        * TAO/NEWS:
+        * TAO/TAO_IDL/fe/fe_init.cpp:
+
+commit 802e0e9add924aa588b9c3e904ef80b588488315
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 28 15:38:07 2025 +0200
+
+    List change
+    
+        * TAO/NEWS:
+
+commit 3f3a702f513ec4d7c72971dd0bdc173d5dcc2a92
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 28 15:37:21 2025 +0200
+
+    Removed support for deprecated CPP_LOCATION environment variable
+    
+        * TAO/TAO_IDL/fe/fe_init.cpp:
+        * TAO/docs/compiler.html:
+
+commit d75c27a7cdc41abb9592cdb4a0497eb02d29d71a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 16 14:31:08 2025 -0500
+
+    TAO_IDL_FE: fixed a bug where AST_Map would return value annotations as key annotations
+
+commit 3d63fce97b09f80a005d4d1bd08e798e5f8fbfd6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 15 14:56:16 2025 +0200
+
+    Fixed compiler warning about misleading indent
+    
+        * TAO/tests/DynValue_Test/Analyzer.cpp:
+
+commit e1966132197619ae4272a3af3154af76443ce97d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon May 12 14:32:52 2025 -0500
+
+    Respond to Review and Support Maps in Unions
+
+commit e9df2e51d59c3ccdef5cb4a0fdafa32018dfc3df
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri May 9 00:40:41 2025 -0500
+
+    Fixes for IDL maps
+    
+    - Support for parsing bounded maps
+    - Support for using maps in more places
+    - Fix memory leaks caused by maps
+
+commit d9d33dba48ec697d667fe734ea82742fdd6805c9
+Merge: baf51ad6220 a1e14459fc7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun May 4 14:28:53 2025 +0200
+
+    Merge pull request #2377 from jwillemsen/jwi-acetao803
+    
+    Make ACE 8.0.3 and TAO 4.0.3 available
+
+commit a1e14459fc7508bd3191f342862da32811287938
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun May 4 14:28:21 2025 +0200
+
+    Make ACE 8.0.3 and TAO 4.0.3 available
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
