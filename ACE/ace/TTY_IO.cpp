@@ -244,7 +244,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               devpar.c_cflag |=  PARENB;
               devpar.c_cflag |=  PARODD;
               devpar.c_iflag &= ~IGNPAR;
-              if(arg->inpckenb)
+              if (arg->inpckenb)
                 devpar.c_iflag |= INPCK | PARMRK;
               else
                 devpar.c_iflag &= ~(INPCK | PARMRK);
@@ -254,7 +254,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               devpar.c_cflag |=  PARENB;
               devpar.c_cflag &= ~PARODD;
               devpar.c_iflag &= ~IGNPAR;
-              if(arg->inpckenb)
+              if (arg->inpckenb)
                 devpar.c_iflag |= INPCK | PARMRK;
               else
                 devpar.c_iflag &= ~(INPCK | PARMRK);
