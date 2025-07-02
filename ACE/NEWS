@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.22 and ACE-6.5.23
 ======================================================
 
+. Backported TTY_IO enhancements from ACE-7.x
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.21 and ACE-6.5.22
 ======================================================
 
