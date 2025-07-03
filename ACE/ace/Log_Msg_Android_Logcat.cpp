@@ -72,7 +72,7 @@ ACE_Log_Msg_Android_Logcat::log (ACE_Log_Record &log_record)
   __android_log_write (
     convert_log_priority (static_cast<ACE_Log_Priority> (log_record.type ())),
     "ACE",
-    log_record.msg_data ());
+    ACE_TEXT_ALWAYS_CHAR (log_record.msg_data ()));
   return 0;
 }
 
