@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-8.0.4 and ACE-8.0.5
 ====================================================
 
+. Fixed building ACE for Android with `uses_wchar=1`
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.3 and ACE-8.0.4
 ====================================================
 
