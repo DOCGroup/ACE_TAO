@@ -62,7 +62,7 @@ void
 testit (int type)
 {
   char buffer[16];
-  size_t const size = 16;
+  size_t constexpr size = 16;
 
   switch (type)
     {
@@ -72,33 +72,32 @@ testit (int type)
 
 }
 
-constexpr int ITERATIONS = 100000000;
+constexpr size_t ITERATIONS = 100000000;
 
 int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Memcpy_Test"));
 
-  //ACE_Time_Value start, now;
   struct timeval start, now;
 
-  for (int i = ITERATIONS; i > 0; --i)
+  for (size_t i = ITERATIONS; i > 0; --i)
     testit (0);
 
   start = ACE_High_Res_Timer::gettimeofday_hr ();
-  for (int j = ITERATIONS; j > 0; --j)
+  for (size_t j = ITERATIONS; j > 0; --j)
     testit (0);
 
   now = ACE_High_Res_Timer::gettimeofday_hr ();
 
-  double fast = 1000000  *(now.tv_sec - start.tv_sec) +
+  double const fast = 1000000  *(now.tv_sec - start.tv_sec) +
     now.tv_usec - start.tv_usec;
   ACE_DEBUG ((LM_DEBUG,
                ACE_TEXT ("%f uSec per iteration for fast version.\n"),
                fast / ITERATIONS));
 
   start = ACE_High_Res_Timer::gettimeofday_hr ();
-  for (int k = ITERATIONS; k > 0; --k)
+  for (size_t k = ITERATIONS; k > 0; --k)
     testit (1);
 
   now = ACE_High_Res_Timer::gettimeofday_hr ();
