@@ -21,9 +21,9 @@
 
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/sys/os_mman.h"
-#include "ace/os_include/sys/os_types.h"
 #include <limits>
 #include <new>
+#include <cstddef>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
