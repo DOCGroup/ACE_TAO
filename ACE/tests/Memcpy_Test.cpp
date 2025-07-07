@@ -72,7 +72,7 @@ testit (int type)
 
 }
 
-namespace { enum { ITERATIONS = 100000000 }; }
+constexpr int ITERATIONS = 100000000;
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -103,7 +103,7 @@ run_main (int, ACE_TCHAR *[])
 
   now = ACE_High_Res_Timer::gettimeofday_hr ();
 
-  double slow = 1000000 * (now.tv_sec-start.tv_sec) + now.tv_usec - start.tv_usec;
+  double const slow = 1000000 * (now.tv_sec-start.tv_sec) + now.tv_usec - start.tv_usec;
   ACE_DEBUG ((LM_DEBUG,
                ACE_TEXT ("%f uSec per iteration for slow version.\n"),
                slow / ITERATIONS));
