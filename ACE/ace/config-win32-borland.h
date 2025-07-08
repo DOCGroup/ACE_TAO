@@ -46,7 +46,7 @@
 
 #define ACE_HAS_BCC64
 
-#define ACE_CC_PREPROCESSOR_ARGS "--precompile -q -o%s"
+#define ACE_CC_PREPROCESSOR_ARGS "--precompile -std=c++17 -q -o%s"
 #define ACE_CC_PREPROCESSOR "BCC64X.EXE"
 
 # include "ace/config-win32-common.h"
