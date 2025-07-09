@@ -9,14 +9,6 @@
 using namespace CORBA;
 using namespace PortableServer;
 
-DynServer::DynServer()
-: n_(0)
-{
-}
-
-DynServer::~DynServer() {
-}
-
 Long DynServer::get()
 {
   ACE_DEBUG((LM_DEBUG, "dynserver: get() %d\n", ++n_));
@@ -59,7 +51,7 @@ public:
   }
 };
 
-DynServer_Loader::DynServer_Loader()
+DynServer_Loader::~DynServer_Loader ()
 {
 }
 

@@ -18,15 +18,16 @@ class ImR_Activator_ORB_Runner;
 class Activator_Export ImR_Activator_Loader : public TAO_Object_Loader
 {
 public:
-  ImR_Activator_Loader();
+  ImR_Activator_Loader () = default;
+  ~ImR_Activator_Loader ();
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  virtual int fini ();
+  int fini () override;
 
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv[]);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                   int argc,
+                                   ACE_TCHAR *argv[]) override;
 
  // Unlike other service objects, we have our own orb.
  int run();

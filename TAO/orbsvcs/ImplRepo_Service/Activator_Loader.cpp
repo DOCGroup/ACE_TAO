@@ -1,25 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
 #include "Activator_Loader.h"
+#include "Activator_ORB_Runner.h"
 #include "ace/Dynamic_Service.h"
-#include "ace/Task.h"
 
-class ImR_Activator_ORB_Runner : public ACE_Task_Base
-{
-  ImR_Activator_Loader& service_;
-public:
-  ImR_Activator_ORB_Runner (ImR_Activator_Loader& service)
-    : service_ (service)
-  {
-  }
-  virtual int svc ()
-  {
-    // Block until service_.fini() calls orb->destroy()
-    this->service_.run ();
-    return 0;
-  }
-};
-
-ImR_Activator_Loader::ImR_Activator_Loader ()
+ImR_Activator_Loader::~ImR_Activator_Loader ()
 {
 }
 
@@ -45,7 +29,7 @@ ImR_Activator_Loader::init (int argc, ACE_TCHAR *argv[])
 
       // Create a thread in which to run the service
       ACE_ASSERT (this->runner_.get () == 0);
-      this->runner_.reset (new ImR_Activator_ORB_Runner (*this));
+      this->runner_= std::make_unique<ImR_Activator_ORB_Runner> (*this);
       this->runner_->activate ();
     }
   catch (const CORBA::Exception&)
@@ -64,7 +48,7 @@ ImR_Activator_Loader::fini ()
       int ret = this->service_.fini ();
 
       this->runner_->wait ();
-      this->runner_.reset (0);
+      this->runner_.reset (nullptr);
       return ret;
     }
   catch (const CORBA::Exception&)
@@ -75,8 +59,8 @@ ImR_Activator_Loader::fini ()
 
 CORBA::Object_ptr
 ImR_Activator_Loader::create_object (CORBA::ORB_ptr,
-                                  int,
-                                  ACE_TCHAR **)
+                                     int,
+                                     ACE_TCHAR **)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

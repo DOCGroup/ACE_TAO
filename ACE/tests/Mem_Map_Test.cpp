@@ -21,12 +21,11 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_Memory.h"
 
-
 #if !defined (ACE_LACKS_MMAP)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
-static const int LINE_LENGTH = 10;
-static const int NUM_LINES = 15;
+static constexpr int LINE_LENGTH = 10;
+static constexpr int NUM_LINES = 15;
 
 static void
 reverse_file (ACE_HANDLE file_handle,
@@ -34,9 +33,7 @@ reverse_file (ACE_HANDLE file_handle,
               size_t size)
 {
   int count = 0;
-  // LynxOS 3.0.0/PowerPC needs the volatile qualifier, with -O2
-  // optimization enabled and without ACE_HAS_INLINE.
-  volatile size_t i = size;
+  size_t i = size;
   --i;
 
   if (array[i] == '\0')
