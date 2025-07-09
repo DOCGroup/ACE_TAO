@@ -10,14 +10,14 @@
 #include <memory>
 
 // Trivial test corba object
-class DynServer_Export DynServer
-  : public POA_test
+class DynServer_Export DynServer : public POA_test
 {
-  int n_;
 public:
-  DynServer();
-  virtual ~DynServer();
-  virtual CORBA::Long get();
+  DynServer () = default;
+  ~DynServer() override = default;
+  CORBA::Long get() override;
+private:
+  int n_ {};
 };
 
 class DynServer_ORB_Runner;
@@ -26,19 +26,20 @@ class DynServer_ORB_Runner;
 class DynServer_Export DynServer_Loader : public TAO_Object_Loader
 {
 public:
-  DynServer_Loader();
+  DynServer_Loader() = default;
+  ~DynServer_Loader ();
 
   // spawns a thread to run an internal orb which has activated
   // a single DynServer servant.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   // Allows the service configurator to shutdown the orb
-  virtual int fini ();
+  int fini () override;
 
   // Not supported
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv[]);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                   int argc,
+                                   ACE_TCHAR *argv[]) override;
 
 private:
   CORBA::ORB_var orb_;
