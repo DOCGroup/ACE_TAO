@@ -6,8 +6,8 @@ ImR_Activator_ORB_Runner::ImR_Activator_ORB_Runner (ImR_Activator_Loader& servic
 {
 }
 
-int 
-ImR_Activator_ORB_Runner::svc () 
+int
+ImR_Activator_ORB_Runner::svc ()
 {
   // Block until service_.fini() calls orb->destroy()
   this->service_.run ();
