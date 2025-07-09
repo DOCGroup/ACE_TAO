@@ -89,6 +89,7 @@ project(ImR_Activator) : orbsvcslib, orbsvcs_output, install_lib, acexml, avoids
     ImR_Activator_i.cpp
     Activator_Options.cpp
     Activator_Loader.cpp
+    Activator_ORB_Runner.cpp
   }
   header_files {
     activator_export.h
