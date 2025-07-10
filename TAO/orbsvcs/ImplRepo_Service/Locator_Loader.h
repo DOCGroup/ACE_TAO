@@ -17,15 +17,16 @@ class ImR_Locator_ORB_Runner;
 class Locator_Export ImR_Locator_Loader : public TAO_Object_Loader
 {
 public:
-  ImR_Locator_Loader();
+  ImR_Locator_Loader() = default;
+  ~ImR_Locator_Loader();
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  virtual int fini ();
+  int fini () override;
 
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv[]);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                   int argc,
+                                   ACE_TCHAR *argv[]) override;
 
  // Unlike other service objects, we have our own orb.
  int run();
