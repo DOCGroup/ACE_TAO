@@ -199,7 +199,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   if (reply.is_dsi_ == true)
     {
       // @@ Much of this code is GIOP 1.1 specific and should be
-      ptrdiff_t const target = reply.dsi_nvlist_align_;
+      size_t const target = static_cast<size_t>(reply.dsi_nvlist_align_);
       size_t const current = output.current_alignment () % ACE_CDR::MAX_ALIGNMENT;
 
       CORBA::ULong pad = 0;
