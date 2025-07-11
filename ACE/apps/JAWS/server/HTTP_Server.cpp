@@ -17,17 +17,11 @@
 class JAWS
 {
 public:
-  enum
-  {
-    JAWS_POOL = 0,
-    JAWS_PER_REQUEST = 1
-  };
+  static constexpr size_t JAWS_POOL = 0;
+  static constexpr size_t JAWS_PER_REQUEST = 1;
 
-  enum
-  {
-    JAWS_SYNCH = 0,
-    JAWS_ASYNCH = 2
-  };
+  static constexpr size_t JAWS_SYNCH = 0;
+  static constexpr size_t JAWS_ASYNCH = 2;
 };
 
 void
