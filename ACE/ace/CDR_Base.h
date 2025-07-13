@@ -63,54 +63,44 @@ class ACE_Export ACE_CDR
 {
 public:
   // = Constants defined by the CDR protocol.
-  // By defining as many of these constants as possible as enums we
-  // ensure they get inlined and avoid pointless static memory
-  // allocations.
 
-  enum
-  {
-    // Note that some of these get reused as part of the standard
-    // binary format: unsigned is the same size as its signed cousin,
-    // float is LONG_SIZE, and double is LONGLONG_SIZE.
+  static constexpr size_t OCTET_SIZE = 1;
+  static constexpr size_t SHORT_SIZE = 2;
+  static constexpr size_t LONG_SIZE = 4;
+  static constexpr size_t LONGLONG_SIZE = 8;
+  static constexpr size_t LONGDOUBLE_SIZE = 16;
 
-    OCTET_SIZE = 1,
-    SHORT_SIZE = 2,
-    LONG_SIZE = 4,
-    LONGLONG_SIZE = 8,
-    LONGDOUBLE_SIZE = 16,
+  static constexpr size_t OCTET_ALIGN = 1;
+  static constexpr size_t SHORT_ALIGN = 2;
+  static constexpr size_t LONG_ALIGN = 4;
+  static constexpr size_t LONGLONG_ALIGN = 8;
+  /// @note the CORBA LongDouble alignment requirements do not
+  /// match its size...
+  static constexpr size_t LONGDOUBLE_ALIGN = 8;
 
-    OCTET_ALIGN = 1,
-    SHORT_ALIGN = 2,
-    LONG_ALIGN = 4,
-    LONGLONG_ALIGN = 8,
-    /// @note the CORBA LongDouble alignment requirements do not
-    /// match its size...
-    LONGDOUBLE_ALIGN = 8,
+  /// Maximal CDR 1.1 alignment: "quad precision" FP (i.e. "CDR::Long
+  /// double", size as above).
+  static constexpr size_t MAX_ALIGNMENT = 8;
 
-    /// Maximal CDR 1.1 alignment: "quad precision" FP (i.e. "CDR::Long
-    /// double", size as above).
-    MAX_ALIGNMENT = 8,
+  /// The default buffer size.
+  /**
+   * @todo We want to add options to control this
+   *   default value, so this constant should be read as the default
+   *   default value ;-)
+   */
+  static constexpr size_t DEFAULT_BUFSIZE = ACE_DEFAULT_CDR_BUFSIZE;
 
-    /// The default buffer size.
-    /**
-     * @todo We want to add options to control this
-     *   default value, so this constant should be read as the default
-     *   default value ;-)
-     */
-    DEFAULT_BUFSIZE = ACE_DEFAULT_CDR_BUFSIZE,
+  /// The buffer size grows exponentially until it reaches this size;
+  /// afterwards it grows linearly using the next constant
+  static constexpr size_t EXP_GROWTH_MAX = ACE_DEFAULT_CDR_EXP_GROWTH_MAX;
 
-    /// The buffer size grows exponentially until it reaches this size;
-    /// afterwards it grows linearly using the next constant
-    EXP_GROWTH_MAX = ACE_DEFAULT_CDR_EXP_GROWTH_MAX,
-
-    /// Once exponential growth is ruled out the buffer size increases
-    /// in chunks of this size, note that this constants have the same
-    /// value right now, but it does not need to be so.
-    LINEAR_GROWTH_CHUNK = ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK
-  };
+  /// Once exponential growth is ruled out the buffer size increases
+  /// in chunks of this size, note that this constants have the same
+  /// value right now, but it does not need to be so.
+  static constexpr size_t LINEAR_GROWTH_CHUNK = ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK;
 
   /**
-   * @enum Byte_Order
+   * @class Byte_Order
    *
    * Defines values for the byte_order argument to ACE_OutputCDR and
    * ACE_InputCDR.
@@ -135,18 +125,10 @@ public:
   static void swap_4 (char const *orig, char *target);
   static void swap_8 (char const *orig, char *target);
   static void swap_16 (char const *orig, char *target);
-  static void swap_2_array (char const *orig,
-                            char *target,
-                            size_t length);
-  static void swap_4_array (char const *orig,
-                            char *target,
-                            size_t length);
-  static void swap_8_array (char const *orig,
-                            char *target,
-                            size_t length);
-  static void swap_16_array (char const *orig,
-                             char *target,
-                             size_t length);
+  static void swap_2_array (char const *orig, char *target, size_t length);
+  static void swap_4_array (char const *orig, char *target, size_t length);
+  static void swap_8_array (char const *orig, char *target, size_t length);
+  static void swap_16_array (char const *orig, char *target, size_t length);
 
   /// Align the message block to ACE_CDR::MAX_ALIGNMENT,
   /// set by the CORBA spec at 8 bytes.
@@ -184,11 +166,9 @@ public:
    * @retval -1 Failure
    * @retval 0 Success.
    */
-  static int consolidate (ACE_Message_Block *dst,
-                          const ACE_Message_Block *src);
+  static int consolidate (ACE_Message_Block *dst, const ACE_Message_Block *src);
 
-  static size_t total_length (const ACE_Message_Block *begin,
-                              const ACE_Message_Block *end);
+  static size_t total_length (const ACE_Message_Block *begin, const ACE_Message_Block *end);
 
   /**
    * @name Basic OMG IDL Types

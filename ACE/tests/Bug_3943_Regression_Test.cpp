@@ -72,7 +72,7 @@ namespace {
   const char START_CHAR = '0';
   bool server_complete = false;
   bool client_complete = false;
-  volatile int expected_num_messages = 0;
+  int expected_num_messages = 0;
 
   char nextChar(const char current)
   {

@@ -275,7 +275,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
                         0);
     }
 
-  if (n < TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE)
+  if (n < static_cast<ssize_t>(TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE))
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR, "Trying to read mcast fragment: "
                                    "# of bytes read < mcast header size.\n"),

@@ -15,11 +15,11 @@
 
 namespace JAWS
 {
-  static constexpr size_t JAWS_POOL = 0;
-  static constexpr size_t JAWS_PER_REQUEST = 1;
+  static constexpr int JAWS_POOL         = 0;
+  static constexpr int JAWS_PER_REQUEST  = 1;
 
-  static constexpr size_t JAWS_SYNCH = 0;
-  static constexpr size_t JAWS_ASYNCH = 2;
+  static constexpr int JAWS_SYNCH        = 0;
+  static constexpr int JAWS_ASYNCH       = 2;
 }
 
 void
