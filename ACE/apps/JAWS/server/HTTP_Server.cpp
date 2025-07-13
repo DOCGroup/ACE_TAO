@@ -13,16 +13,14 @@
 #include "HTTP_Server.h"
 #include <memory>
 
-// class is overkill
-class JAWS
+namespace JAWS
 {
-public:
   static constexpr size_t JAWS_POOL = 0;
   static constexpr size_t JAWS_PER_REQUEST = 1;
 
   static constexpr size_t JAWS_SYNCH = 0;
   static constexpr size_t JAWS_ASYNCH = 2;
-};
+}
 
 void
 HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
