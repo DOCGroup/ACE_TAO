@@ -25,6 +25,7 @@ struct MyNode
   MyNode () : k (0) {}
   MyNode (int pk) : k (pk) {}
   MyNode (const MyNode& o) : k (o.k) {}
+  MyNode& operator= (const MyNode& o) { k = o.k; return *this; }
   bool operator== (const MyNode& o) const { return (k == o.k); }
 };
 

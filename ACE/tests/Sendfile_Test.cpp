@@ -29,16 +29,6 @@ static int Test_Result = 0;
 
 #if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
 
-// This test sends a large amount of data.  The purpose is to overflow the
-// TCP send window, causing the sender to block (it's a send_n). This value
-// is the amount to send. The assumption is that no implementation has a
-// receive window larger than 128K bytes. If one is found, this is the place
-// to change it.
-// For some odd reason, NT will try to send a single large buffer, but not
-// multiple smaller ones that add up to the large size.
-const size_t Test3_Send_Size = 4*1024;
-const size_t Test3_Loops = 10;
-
 static void *
 client (void *arg)
 {

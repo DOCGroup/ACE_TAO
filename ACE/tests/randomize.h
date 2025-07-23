@@ -55,7 +55,7 @@ namespace
 
     randomize_element (T * array, size_t size, unsigned int seed)
       : array_ (array)
-      , coefficient_ (static_cast<double> (size) / (RAND_MAX + 1.0f))
+      , coefficient_ (static_cast<double> (size) / (RAND_MAX + 1.0))
       , seed_ (seed)
     {
     }

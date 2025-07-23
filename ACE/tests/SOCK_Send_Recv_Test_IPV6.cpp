@@ -32,6 +32,8 @@ static int Test_Result = 0;
 
 #if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
 
+#if defined (ACE_HAS_IPV6)
+
 // In test 3, a large amount of data is sent. The purpose is to overflow the
 // TCP send window, causing the sender to block (it's a send_n). This value
 // is the amount to send. The assumption is that no implementation has a
@@ -42,9 +44,6 @@ static int Test_Result = 0;
 const size_t Test3_Send_Size = 4*1024;
 const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
-
-
-#if defined (ACE_HAS_IPV6)
 
 static void *
 client (void *arg)

@@ -205,9 +205,7 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.
 
-  for (size_t count = 0;
-       ;
-       count++)
+  while (true)
     {
       ssize_t n = 0;
 
@@ -296,10 +294,7 @@ Thread_Pool::test_empty_message_shutdown (void)
 
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.
-
-  for (size_t count = 0;
-       ;
-       count++)
+  while (true)
     {
       ssize_t n = 0;
 

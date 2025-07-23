@@ -12,8 +12,11 @@ public:
   Element_Counter (void)
     : count_ (0)
   {
-
   }
+
+#ifdef ACE_HAS_CPP11
+  Element_Counter (const Element_Counter &) = default;
+#endif
 
   void operator () (typename T::value_type & item)
   {
