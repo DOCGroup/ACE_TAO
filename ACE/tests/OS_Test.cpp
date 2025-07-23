@@ -1212,7 +1212,7 @@ ace_ctype_test (void)
       ++retval;
     }
 
-  return 0;
+  return retval;
 }
 
 int

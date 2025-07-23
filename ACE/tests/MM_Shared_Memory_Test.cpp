@@ -25,10 +25,6 @@
 
 #if !defined (ACE_LACKS_MMAP)
 
-static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
-const int SHMSZ = 27;
-static ACE_TCHAR *shm_key;
-
 #if defined (ACE_LACKS_FORK)
 #include "ace/Thread_Semaphore.h"
 typedef ACE_Thread_Semaphore SYNCHRONIZER;
@@ -64,6 +60,11 @@ const ACE_TCHAR *sem_name ()
   return sem_name_;
 }
 #endif /* !defined (ACE_LACKS_FORK) */
+
+#ifndef ACE_DISABLE_MKTEMP
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+const int SHMSZ = 27;
+static ACE_TCHAR *shm_key;
 
 // Synchronize the start of the parent and the child.
 static SYNCHRONIZER *synchronizer = 0;
@@ -194,6 +195,7 @@ spawn (void)
 #endif /* ACE_HAS_THREADS */
   return 0;
 }
+#endif /* !ACE_DISABLE_MKTEMP */
 #endif /* !ACE_LACKS_MMAP */
 
 int

@@ -11,8 +11,6 @@
 #include <stdint.h>
 #include <ostream>
 
-static constexpr uint32_t bound = std::numeric_limits<uint32_t>::max();
-
 namespace CORBA {
   // First forward declare TCKind, this is legal with C++11
   enum class TCKind : uint32_t;
@@ -27,10 +25,9 @@ namespace CORBA {
   // And another forward declared TCKind, after it has been
   // declared
   enum class TCKind : uint32_t;
-};
+}
 
-std::ostream& operator<<
-(std::ostream& strm,CORBA::TCKind _enumerator)
+std::ostream& operator<< (std::ostream& strm, CORBA::TCKind _enumerator)
 {
   switch (_enumerator) {
     case CORBA::TCKind::tk_null: return strm << "CORBA::TCKind::tk_null"; break;
