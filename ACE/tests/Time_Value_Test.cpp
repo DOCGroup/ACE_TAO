@@ -20,6 +20,31 @@
 #include <sstream>
 #include <type_traits>
 
+int timeval_test (const ACE_Time_Value* timeout)
+{
+  int ret = 0;
+  timeval timeval_test;
+  if (timeout)
+    {
+      timeval_test = *timeout;
+    }
+
+  if (timeval_test.tv_sec != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("timeval.tv_sec should be zero not %d\n"), timeval_test.tv_sec));
+      ++ret;
+    }
+  if (timeval_test.tv_usec != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("timeval.tv_usec should be zero not %d\n"), timeval_test.tv_usec));
+      ++ret;
+    }
+
+  return ret;
+}
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -226,6 +251,8 @@ run_main (int, ACE_TCHAR *[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("time_t is at least 64bit, this platform will not have problems after 2038\n")));
     }
+
+  ret += timeval_test ((ACE_Time_Value *) &ACE_Time_Value::zero);
 
   ACE_END_TEST;
 
