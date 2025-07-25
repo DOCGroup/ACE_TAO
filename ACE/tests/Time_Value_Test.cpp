@@ -20,7 +20,7 @@
 #include <sstream>
 #include <type_traits>
 
-int timeval_test (const ACE_Time_Value* timeout)
+int timeval_test_func (const ACE_Time_Value* timeout)
 {
   int ret = 0;
   timeval timeval_test;
@@ -259,7 +259,7 @@ run_main (int, ACE_TCHAR *[])
                   ACE_TEXT ("time_t is at least 64bit, this platform will not have problems after 2038\n")));
     }
 
-  ret += timeval_test ((ACE_Time_Value *) &ACE_Time_Value::zero);
+  ret += timeval_test_func ((ACE_Time_Value *) &ACE_Time_Value::zero);
 
   ACE_END_TEST;
 
