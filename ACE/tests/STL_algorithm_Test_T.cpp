@@ -14,6 +14,8 @@ public:
   {
   }
 
+  Element_Counter (const Element_Counter &) = default;
+
   void operator () (typename T::value_type & item)
   {
     ++ this->count_;
