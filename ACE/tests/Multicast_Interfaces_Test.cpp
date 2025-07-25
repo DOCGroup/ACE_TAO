@@ -105,6 +105,8 @@ get_valid_ipv4_interface_names (nameset &names)
   get_valid_ipv4_interface_names_win32 (names);
 #elif defined (ACE_HAS_GETIFADDRS)
   get_valid_ipv4_interface_names_getifaddrs (names);
+#else
+  ACE_UNUSED_ARG (names);
 #endif /* ACE_WIN32 */
 }
 
