@@ -30,7 +30,7 @@
 // time_t) and VC8 changed time_t to a 64-bit value even when compiling a
 // 32-bit application. Therefore, ace/Time_Value needs to rearrange a few
 // things for this compiler. See Time_Value.h for complete details.
-#if !defined (_USE_32BIT_TIME_T)
+#if !defined (_USE_32BIT_TIME_T) && !defined (ACE_WIN64)
 #  define ACE_HAS_TIME_T_LONG_MISMATCH
 #endif
 
