@@ -24,7 +24,7 @@ ACE_OS::select (int width,
       timep = std::addressof(copy);
     }
 #else
-  const timeval *timep = (timeout == nullptr ? nullptr : *timeout);
+  const timeval *timep = (timeout == 0 ? (const timeval *)0 : *timeout);
 #endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
 #if defined (ACE_LACKS_SELECT)
   ACE_UNUSED_ARG (width);
