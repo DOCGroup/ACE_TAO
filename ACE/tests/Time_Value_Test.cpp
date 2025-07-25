@@ -24,6 +24,10 @@ int timeval_test (const ACE_Time_Value* timeout)
 {
   int ret = 0;
   timeval timeval_test;
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Start test ACE_Time_Value to timeval conversion\n")));
+
   if (timeout)
     {
       timeval_test = *timeout;
@@ -41,6 +45,9 @@ int timeval_test (const ACE_Time_Value* timeout)
                   ACE_TEXT ("timeval.tv_usec should be zero not %d\n"), timeval_test.tv_usec));
       ++ret;
     }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Finished test ACE_Time_Value to timeval conversion\n")));
 
   return ret;
 }
