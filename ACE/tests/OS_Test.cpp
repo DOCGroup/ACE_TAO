@@ -1208,7 +1208,7 @@ ace_ctype_test ()
       ++retval;
     }
 
-  return 0;
+  return retval;
 }
 
 int

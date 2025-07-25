@@ -236,8 +236,8 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Recursive_Condition_Test"));
 
-#if defined (ACE_HAS_THREADS)
   int status = 0;
+#if defined (ACE_HAS_THREADS)
 
   /* Test 1 - Simple test */
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test 1...\n")));
@@ -293,6 +293,6 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("ACE doesn't support recursive condition variables on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
-  return 0;
+  return status;
 }
 
