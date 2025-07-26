@@ -16,6 +16,7 @@
 #include "test_config.h"
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
+#include "ace/Date_Time.h"
 #include "ace/Numeric_Limits.h"
 #include <sstream>
 #include <type_traits>
@@ -48,6 +49,38 @@ int timeval_test_func (const ACE_Time_Value* timeout)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Finished test ACE_Time_Value to timeval conversion\n")));
+
+  return ret;
+}
+
+// Test whether ACE_Time_Value is stored correctly for the specified year month
+int test_year_month (const ACE_Time_Value& time, long year, long month)
+{
+  int ret = 0;
+
+  ACE_Date_Time dt (time);
+  if (dt.year () != year)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("time year should be %d not %d\n"), dt.year (), year));
+      ++ret;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("time year is correct, it is %d\n"), dt.year ()));
+    }
+  if (dt.month () != month)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("time month should be %d not %d\n"), dt.month (), month));
+      ++ret;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("time month is correct, it is %d\n"), dt.month ()));
+    }
 
   return ret;
 }
@@ -261,6 +294,14 @@ run_main (int, ACE_TCHAR *[])
 
   ret += timeval_test_func ((ACE_Time_Value *) &ACE_Time_Value::zero);
 
+  // Test whether some times in the past and the future are correctly converted to year/month, no need to check
+  // day/time as that could be challenging due to timezones.
+  ACE_Time_Value dt20250726 ((time_t)1753519444);
+  ret += test_year_month (dt20250726, 2025, 7);
+  ACE_Time_Value dt20370726 ((time_t)2132203444);
+  ret += test_year_month (dt20370726, 2037, 7);
+  ACE_Time_Value dt20570726 ((time_t)2763355444);
+  ret += test_year_month (dt20570726, 2057, 7);
   ACE_END_TEST;
 
   return ret;
