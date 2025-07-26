@@ -34,6 +34,31 @@ const ACE_Time_Value ACE_Time_Value::max_time (
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
 
+#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+/// Returns the value of the object as a timeval.
+ACE_Time_Value::operator timeval () const
+{
+  // ACE_OS_TRACE ("ACE_Time_Value::operator timeval");
+  // Recall that on some Windows we substitute another type for timeval in tv_
+  ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
+  me->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
+  me->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
+  return this->ext_tv_;
+}
+#endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
+
+#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+ACE_Time_Value::operator const timeval * () const
+{
+  // ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
+  // Recall that on some Windows we substitute another type for timeval in tv_
+  ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
+  me->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
+  me->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
+  return (const timeval *) std::addressof(this->ext_tv_);
+}
+#endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
+
 /// Increment microseconds (the only reason this is here is to allow
 /// the use of ACE_Atomic_Op with ACE_Time_Value).
 ACE_Time_Value

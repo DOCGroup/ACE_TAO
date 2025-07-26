@@ -3,21 +3,23 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if !defined (ACE_HAS_TIME_T_LONG_MISMATCH)
 /// Returns the value of the object as a timeval.
 ACE_INLINE
 ACE_Time_Value::operator timeval () const
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::operator timeval");
-#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
-  // Recall that on some Windows we substitute another type for timeval in tv_
-  ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
-  me->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
-  me->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
-  return this->ext_tv_;
-#else
   return this->tv_;
-#endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 }
+#endif /* !ACE_HAS_TIME_T_LONG_MISMATCH */
+
+#if !defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+ACE_INLINE
+ACE_Time_Value::operator const timeval * () const
+{
+  // ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
+  return (const timeval *) std::addressof(this->tv_);
+}
+#endif /* !ACE_HAS_TIME_T_LONG_MISMATCH */
 
 ACE_INLINE void
 ACE_Time_Value::set (const timeval &tv)
@@ -34,21 +36,6 @@ ACE_Time_Value::ACE_Time_Value (const struct timeval &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
-}
-
-ACE_INLINE
-ACE_Time_Value::operator const timeval * () const
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
-#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
-  // Recall that on some Windows we substitute another type for timeval in tv_
-  ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
-  me->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
-  me->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
-  return (const timeval *) &this->ext_tv_;
-#else
-  return (const timeval *) &this->tv_;
-#endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 }
 
 ACE_INLINE void
