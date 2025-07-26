@@ -62,7 +62,7 @@ int test_year_month (const ACE_Time_Value& time, long year, long month)
   if (dt.year () != year)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time year should be %d not %d\n"), year, dt.year ()));
+                  ACE_TEXT ("time year should be %d not %d\n"), dt.year (), year));
       ++ret;
     }
   else
@@ -73,7 +73,7 @@ int test_year_month (const ACE_Time_Value& time, long year, long month)
   if (dt.month () != month)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time month should be %d not %d\n"), month, dt.month ()));
+                  ACE_TEXT ("time month should be %d not %d\n"), dt.month (), month));
       ++ret;
     }
   else
@@ -301,7 +301,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_Time_Value dt20370726 ((time_t)2132203444);
   ret += test_year_month (dt20370726, 2037, 7);
   ACE_Time_Value dt20570726 ((time_t)2763355444);
-  ret += test_year_month (dt20570726, 2050, 7);
+  ret += test_year_month (dt20570726, 2057, 7);
   ACE_END_TEST;
 
   return ret;
