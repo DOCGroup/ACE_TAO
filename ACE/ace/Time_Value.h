@@ -49,7 +49,13 @@ class ACE_Export ACE_Time_Value
 {
 public:
   /// Constant "0".
+#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+  // In this case the timeval operation will do a const cast, this will
+  // cause an access violation with clang due to its optimizations
+  static ACE_Time_Value zero;
+#else
   static const ACE_Time_Value zero;
+#endif
 
   /**
    * Constant for maximum time representable.  Note that this time is
@@ -59,7 +65,11 @@ public:
    * dynamic subpriority strategies in the ACE_Dynamic_Message_Queue
    * class.
    */
+#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+  static ACE_Time_Value max_time;
+#else
   static const ACE_Time_Value max_time;
+#endif
 
   /// Default Constructor.
   ACE_Time_Value ();

@@ -20,7 +20,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Static constant representing `zero-time'.
 /// Note: this object requires static construction.
-const ACE_Time_Value ACE_Time_Value::zero;
+#if !defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+const
+#endif
+ACE_Time_Value ACE_Time_Value::zero;
 
 /// Constant for maximum time representable.  Note that this time
 /// is not intended for use with select () or other calls that may
@@ -28,7 +31,10 @@ const ACE_Time_Value ACE_Time_Value::zero;
 /// Its primary use is in time computations such as those used by the
 /// dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 /// Note: this object requires static construction.
-const ACE_Time_Value ACE_Time_Value::max_time (
+#if !defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+const
+#endif
+ACE_Time_Value ACE_Time_Value::max_time (
   ACE_Numeric_Limits<time_t>::max (),
   ACE_ONE_SECOND_IN_USECS - 1);
 
