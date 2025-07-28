@@ -65,7 +65,7 @@ namespace TAO
    * @note This class is currently not meant to be reference counted
    *       since it is instantiated on the stack.
    */
-  class ServerRequestInfo
+  class TAO_PI_Server_Export ServerRequestInfo
     : public virtual PortableInterceptor::ServerRequestInfo
     , public virtual ::CORBA::LocalObject
   {
