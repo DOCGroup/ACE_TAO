@@ -10,8 +10,8 @@ ACE_Time_Value::operator timeval () const
   // ACE_OS_TRACE ("ACE_Time_Value::operator timeval");
 #if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
   // Recall that on some Windows we substitute another type for timeval in tv_
-  this->ext_tv_.tv_sec = this->tv_.tv_sec;
-  this->ext_tv_.tv_usec = this->tv_.tv_usec;
+  this->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
+  this->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
   return this->ext_tv_;
 #else
   return this->tv_;
@@ -41,8 +41,8 @@ ACE_Time_Value::operator const timeval * () const
   // ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
 #if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
   // Recall that on some Windows we substitute another type for timeval in tv_
-  this->ext_tv_.tv_sec = this->tv_.tv_sec;
-  this->ext_tv_.tv_usec = this->tv_.tv_usec;
+  this->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
+  this->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
   return (const timeval *) &this->ext_tv_;
 #else
   return (const timeval *) &this->tv_;
