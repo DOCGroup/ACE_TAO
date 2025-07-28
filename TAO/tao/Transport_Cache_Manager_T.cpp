@@ -650,14 +650,14 @@ namespace TAO
                 transport->remove_reference ();
               }
           }
-      }
 
-    if (TAO_debug_level > 4)
-      {
-        TAOLIB_DEBUG ((LM_INFO,
-          ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
-          ACE_TEXT ("Cache size after purging is [%d]\n"),
-          this->current_size ()));
+        if (TAO_debug_level > 4)
+          {
+            TAOLIB_DEBUG ((LM_INFO,
+              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
+              ACE_TEXT ("Cache size after purging is [%d]\n"),
+              this->current_size ()));
+          }
       }
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
