@@ -91,7 +91,7 @@ TAO_DynValue_i::init_helper (CORBA::TypeCode_ptr tc)
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 
   // Work out how many total members and types there
-  // are in total in this derived->base hiarchy.
+  // are in total in this derived->base hierarchy.
 
   get_base_types (
     tc,
@@ -1038,7 +1038,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
     }
 
   // Work out how many total types there
-  // are in this derived->base hiarchy.
+  // are in this derived->base hierarchy.
   const CORBA::ULong
     num_fields = static_cast <CORBA::ULong> (this->da_members_.size ()),
     num_ids =    static_cast <CORBA::ULong> (ids.size ());

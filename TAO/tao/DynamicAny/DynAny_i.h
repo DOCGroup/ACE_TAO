@@ -77,8 +77,8 @@ private:
   void init_common ();
 
   // Use copy() or assign() instead of these.
-  TAO_DynAny_i (const TAO_DynAny_i &src);
-  TAO_DynAny_i &operator= (const TAO_DynAny_i &src);
+  TAO_DynAny_i (const TAO_DynAny_i &src) = delete;
+  TAO_DynAny_i &operator= (const TAO_DynAny_i &src) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

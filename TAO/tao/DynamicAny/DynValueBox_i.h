@@ -82,8 +82,8 @@ private:
   void set_from_any (const CORBA::Any &any);
 
   // = Use copy() or assign() instead of these.
-  TAO_DynValueBox_i (const TAO_DynValueBox_i &src);
-  TAO_DynValueBox_i &operator= (const TAO_DynValueBox_i &src);
+  TAO_DynValueBox_i (const TAO_DynValueBox_i &src) = delete;
+  TAO_DynValueBox_i &operator= (const TAO_DynValueBox_i &src) = delete;
 
   /// The boxed component of DynValueBox is another DynAny.
   DynamicAny::DynAny_var boxed_;

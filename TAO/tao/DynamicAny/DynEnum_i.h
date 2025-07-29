@@ -83,8 +83,8 @@ private:
   void init_common ();
 
   // = Use copy() or assign() instead of these.
-  TAO_DynEnum_i (const TAO_DynEnum_i &src);
-  TAO_DynEnum_i &operator= (const TAO_DynEnum_i &src);
+  TAO_DynEnum_i (const TAO_DynEnum_i &src) = delete;
+  TAO_DynEnum_i &operator= (const TAO_DynEnum_i &src) = delete;
 
 private:
   /// Current numeric value of the enum.

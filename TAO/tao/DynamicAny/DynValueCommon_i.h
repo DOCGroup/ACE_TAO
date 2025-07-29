@@ -36,7 +36,7 @@ class TAO_DynamicAny_Export TAO_DynValueCommon_i
 {
 public:
   /// Constructor.
-  TAO_DynValueCommon_i (CORBA::Boolean allow_truncation=true);
+  TAO_DynValueCommon_i (CORBA::Boolean allow_truncation = true);
 
   /// Destructor.
   ~TAO_DynValueCommon_i ();
@@ -56,8 +56,8 @@ public:
 
 private:
   // = Use copy() or assign() instead of these.
-  TAO_DynValueCommon_i (const TAO_DynValueCommon_i &src);
-  TAO_DynValueCommon_i &operator= (const TAO_DynValueCommon_i &src);
+  TAO_DynValueCommon_i (const TAO_DynValueCommon_i &src) = delete;
+  TAO_DynValueCommon_i &operator= (const TAO_DynValueCommon_i &src) = delete;
 
   /// Check if the typecode is acceptable. Needs to be provided by DynValue or DynValueBox
   virtual void check_typecode (CORBA::TypeCode_ptr tc)=0;

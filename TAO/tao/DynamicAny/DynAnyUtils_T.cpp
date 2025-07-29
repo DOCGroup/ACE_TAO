@@ -113,7 +113,7 @@ namespace TAO
     ANY_TC any_tc,
     CORBA::Boolean allow_truncation)
   {
-    DA_IMPL *p = 0;
+    DA_IMPL *p = nullptr;
     ACE_NEW_THROW_EX (p,
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());
@@ -128,7 +128,7 @@ namespace TAO
         // Currently only TAO_DynValue_i can throw the original (duplicate
         // of a previously found TAO_DynValue_i). The new BLANK one created
         // above on which we called init() will be deleted automatically by
-        // the ACE_Auto_Basic_Ptr.
+        // the std::unique_ptr.
         return original;
       }
 
@@ -142,7 +142,7 @@ namespace TAO
     ANY_TC any_tc,
     CORBA::Boolean allow_truncation)
   {
-    DA_IMPL *p = 0;
+    DA_IMPL *p = nullptr;
     ACE_NEW_THROW_EX (p,
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());
@@ -157,7 +157,7 @@ namespace TAO
         // Currently only TAO_DynValue_i can throw the original (duplicate
         // of a previously found TAO_DynValue_i). The new BLANK one created
         // above on which we called init() will be deleted automatically by
-        // the ACE_Auto_Basic_Ptr.
+        // the std::unique_ptr.
         return original;
       }
 

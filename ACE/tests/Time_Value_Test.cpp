@@ -62,7 +62,7 @@ int test_year_month (const ACE_Time_Value& time, long year, long month)
   if (dt.year () != year)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time year should be %d not %d\n"), dt.year (), year));
+                  ACE_TEXT ("time year should be %d not %d\n"), year, dt.year ()));
       ++ret;
     }
   else
@@ -73,7 +73,7 @@ int test_year_month (const ACE_Time_Value& time, long year, long month)
   if (dt.month () != month)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time month should be %d not %d\n"), dt.month (), month));
+                  ACE_TEXT ("time month should be %d not %d\n"), month, dt.month ()));
       ++ret;
     }
   else
