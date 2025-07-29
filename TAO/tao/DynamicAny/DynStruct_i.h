@@ -94,8 +94,8 @@ private:
   void init_common ();
 
   // = Use copy() or assign() instead of these.
-  TAO_DynStruct_i (const TAO_DynStruct_i &src);
-  TAO_DynStruct_i &operator= (const TAO_DynStruct_i &src);
+  TAO_DynStruct_i (const TAO_DynStruct_i &src) = delete;
+  TAO_DynStruct_i &operator= (const TAO_DynStruct_i &src) = delete;
 
 private:
   /// Each component is also a DynAny.

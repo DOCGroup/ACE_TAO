@@ -48,7 +48,7 @@ private:
     CORBA::ULong *total_member_count = 0);
 
   /// Return the unaliased valuetype typecode that corresponds to
-  /// index (0..total_members-1) from the given hiarchical list of
+  /// index (0..total_members-1) from the given hierarchical list of
   /// the derived type and it basetypes.
   static CORBA::TypeCode_ptr get_correct_base_type (
     const BaseTypesList_t &base_types,
