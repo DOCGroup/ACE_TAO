@@ -615,9 +615,8 @@ TAO_DynValue_i::get_val ()
 
   // Now read in this stream to create the actual value.
   TAO_InputCDR for_reading (out_cdr);
-  CORBA::ValueBase *retval = 0;
-  if (!CORBA::ValueBase::_tao_unmarshal (
-        for_reading, retval ))
+  CORBA::ValueBase *retval = nullptr;
+  if (!CORBA::ValueBase::_tao_unmarshal (for_reading, retval ))
     {
       throw DynamicAny::DynAny::InvalidValue ();
     }
@@ -639,7 +638,7 @@ TAO_DynValue_i::to_any ()
 
   // Convert the out_cdr into a new any.
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk = nullptr;
   ACE_NEW_THROW_EX (
     unk,
     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
@@ -695,9 +694,9 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
   // Note that we don't actually have a CORBA::ValueBase *
   // which this call expects as we are actually dealing
   // with DynValue * instead. However the pointer isn't
-  // actually dereferanced by the _tao_write_special_value()
+  // actually dereferenced by the _tao_write_special_value()
   // call, its address (as a void *) is just used to
-  // check for the null value and any previous writen
+  // check for the null value and any previous written
   // value for the indirection header and the saving of
   // this current location for this new valuetype if it
   // is not indirected (this time).
@@ -826,7 +825,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
           if (!currentBaseMember)
             {
               // Move on to the next derived type in the
-              // list of our type hyarchy
+              // list of our type hierarchy
               while (!this->da_base_types_[--currentBase]
                       ->member_count ())
                 {
@@ -902,7 +901,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
               <= ++currentBaseMember)
             {
               // Remind us to start again with the next derived type
-              // for the next member to be writen.
+              // for the next member to be written.
               currentBaseMember= 0u;
 
               // We must end the chunk we started for this
@@ -920,7 +919,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
         }
 
       // Write out the end chunking markers for the number
-      // of base types we have writen.
+      // of base types we have written.
       for (i= 1u; i < trunc_ids; ++i)
         {
           if (!ci.end_chunk (out_cdr))
@@ -975,9 +974,9 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
     }
   if (is_indirected)
     {
-      // Effectivly this member? is the same ValueType as previous
+      // Effectively this member? is the same ValueType as previous
       // seen either in another member of this container OR the
-      // whole container itself. (Possiably can happen as a
+      // whole container itself. (Possibly can happen as a
       // circular linked list?)
       if (TAO_debug_level)
         {
@@ -1060,7 +1059,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         }
 
       // Since this does not match we must be attempting
-      // to truncated to a base-type, thus the incomming
+      // to truncated to a base-type, thus the incoming
       // any must be chuncked and this outer type must
       // allow truncation.
       if (!is_chunked)
@@ -1117,7 +1116,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       if (!currentBaseMember)
         {
           // Move on to the next derived type in the
-          // list of our type hyarchy
+          // list of our type hierarchy
           while (!this->da_base_types_[--currentBase]
                   ->member_count ())
             {
@@ -1190,7 +1189,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
           <= ++currentBaseMember)
         {
           // Remind us to start again with the next derived type
-          // for the next member to be writen.
+          // for the next member to be written.
           currentBaseMember= 0u;
 
           if (currentBase < num_ids)

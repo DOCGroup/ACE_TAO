@@ -66,7 +66,7 @@ if ($^O ne "MSWin32") {
     }
 
     # Now we run the client again to close down the server cleanly. We specify the 'new' form of preferred interface which seems to be needed
-    # and we use the server writen ior file here to test the normal cdr -ORBPreferredInterfaces processing.
+    # and we use the server written ior file here to test the normal cdr -ORBPreferredInterfaces processing.
     print "Starting second part of test.\n";
     $CL->Arguments("-ORBPreferredInterfaces FF01:*=eth0 -ORBEnforcePreferredInterfaces=1 -ORBIPMulticastLoop 1 -ORBSvcConf miop_svc_ipv6.conf -k file://$client_iorfile");
 

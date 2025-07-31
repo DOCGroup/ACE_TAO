@@ -243,7 +243,7 @@ protected:
   /// and get_*, defined in this base class.
   CORBA::Any any_;
 
-  /// Are we allowed to truncate any valuetypes in our hyarchy?
+  /// Are we allowed to truncate any valuetypes in our hierarchy?
   CORBA::Boolean allow_truncation_;
 
 private:

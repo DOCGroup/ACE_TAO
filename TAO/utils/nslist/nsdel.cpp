@@ -294,7 +294,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   CORBA::String_var str =
                     orb->object_to_string (obj.in ());
                   ACE_DEBUG ((LM_DEBUG,
-                    "\n*** Possiably Orphaned Naming Context ***\n%C\n\n", str.in()));
+                    "\n*** Possibly Orphaned Naming Context ***\n%C\n\n", str.in()));
                 }
             }
           else if (destroy && !quiet)
