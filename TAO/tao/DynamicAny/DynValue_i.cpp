@@ -942,6 +942,9 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
   VERIFY_MAP (TAO_InputCDR, value_map, Value_Map);
   if (strm.align_read_ptr (ACE_CDR::LONG_SIZE))
     {
+      TAOLIB_DEBUG ((LM_ERROR,
+        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+        ACE_TEXT ("align_read_ptr() failed\n") ));
       this->set_to_null ();
       throw CORBA::INTERNAL ();
     }
@@ -1005,6 +1008,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       // created last time and stored in the map.
       char *pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
       TAO_DynValue_i* original = nullptr;
+      VERIFY_MAP (TAO_InputCDR, dynvalue_map, DynValue_Map);
       if (strm.get_dynvalue_map()->get()->find (pos, original))
         {
           TAOLIB_DEBUG ((LM_ERROR,
@@ -1022,6 +1026,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
 
   // Ok since we are not indirected (this time), record "this"
   // DynValue_i for later possible indirections to use.
+  VERIFY_MAP (TAO_InputCDR, dynvalue_map, DynValue_Map);
   if (strm.get_dynvalue_map ()->get()->bind (start_of_valuetype, this))
     {
       TAOLIB_DEBUG ((LM_DEBUG,
