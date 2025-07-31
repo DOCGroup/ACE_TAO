@@ -155,6 +155,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
   this->cdr_.set_repo_id_map (cdr.get_repo_id_map ());
   this->cdr_.set_codebase_url_map (cdr.get_codebase_url_map ());
   this->cdr_.set_value_map (cdr.get_value_map ());
+  this->cdr_.set_dynvalue_map (cdr.get_dynvalue_map ());
 
   // Take over the GIOP version, the input cdr can have a different
   // version then our current GIOP version.

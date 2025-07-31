@@ -63,7 +63,7 @@ CORBA::ValueBase::_copy_value ()
   // not use _copy_value() then there was no requirement to impliment it.
   // However as an option TAO can now be built to use _copy_value when
   // inserting a copy of the valuetype into an any, instead of increasing
-  // it's referance count. It is now possiable that older code may end up
+  // it's referance count. It is now possible that older code may end up
   // here in error due to the lack of a user's override.
   ACE_VERSIONED_NAMESPACE_NAME::__ace_assert (
     __FILE__,
@@ -240,7 +240,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (
     {
       return false;
     }
-  void *const start_of_valuetype = strm.rd_ptr();
+  char *const start_of_valuetype = strm.rd_ptr();
 
   Repository_Id_List ids;
   CORBA::Boolean result =
@@ -363,7 +363,7 @@ CORBA::ValueBase::_tao_unmarshal_header (
 void
 CORBA::ValueBase::_tao_unmarshal_find_factory (
   TAO_InputCDR &strm,
-  void *const start_of_valuetype,
+  char *const start_of_valuetype,
   CORBA::ValueBase *&valuetype,
   Repository_Id_List &ids,
   CORBA::Boolean &is_chunked)
@@ -424,7 +424,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
     }
   valuetype->chunking_ = is_chunked;
 
-  // Cache the start of this ValueType for later possiable indirection
+  // Cache the start of this ValueType for later possible indirection
   VERIFY_MAP (TAO_InputCDR, value_map, Value_Map);
   if (strm.get_value_map ()->get()->bind (start_of_valuetype, valuetype) != 0)
     {
@@ -560,6 +560,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection_pre (TAO_InputCDR &strm,
   indirected_strm.set_repo_id_map (strm.get_repo_id_map ());
   indirected_strm.set_codebase_url_map (strm.get_codebase_url_map ());
   indirected_strm.set_value_map (strm.get_value_map ());
+  indirected_strm.set_dynvalue_map (strm.get_dynvalue_map ());
   return indirected_strm.good_bit ();
 }
 
@@ -576,7 +577,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
     return 0;
   }
 
-  void* pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
+  char* pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
 
   if (9 < TAO_debug_level)
     {
@@ -588,24 +589,22 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
           TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, %x=%x\n"), it->ext_id_, it->int_id_));
         }
     }
-  void * v = 0;
-  if (strm.get_value_map()->get()->find (pos, v) != 0)
+  if (strm.get_value_map()->get()->find (pos, value) != 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - %N:%l ")
         ACE_TEXT ("ValueBase::_tao_unmarshal_value_indirection, ")
         ACE_TEXT ("did not find %x in map %x\n"),
-        pos, (void *) strm.get_value_map()->get()));
+        pos, strm.get_value_map()->get()));
       throw CORBA::INTERNAL ();
     }
   else if (TAO_debug_level)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_value_indirection, found %x=%x\n"),
-        pos,v));
+        pos, value));
     }
 
-  value = reinterpret_cast<CORBA::ValueBase *>(v);
   return true;
 }
 
@@ -682,7 +681,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
                                             const CORBA::ValueBase *value)
 {
   // If the 'value' is null then write the null value to the stream.
-  if (value == 0)
+  if (value == nullptr)
   {
     return strm.write_long (TAO_OBV_GIOP_Flags::Null_tag);
   }
@@ -690,11 +689,20 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
   {
 #ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
     // value indirection
-
     VERIFY_MAP (TAO_OutputCDR, value_map, Value_Map);
-    char* pos = 0;
-    if (strm.get_value_map ()->get()->find (
-      reinterpret_cast<void*>(const_cast <CORBA::ValueBase *> (value)), pos) == 0)
+    char* pos = nullptr;
+    // Search whether we already have a position for the valuebase in our valuemap, if so
+    // we ue that position
+    TAO_InputCDR::Value_Map* map = strm.get_value_map()->get ();
+    for (TAO_OutputCDR::Value_Map::ITERATOR it = map->begin (); it != map->end (); ++ it)
+        {
+          if (it->int_id_ == value)
+            {
+              pos = it->ext_id_;
+            }
+        }
+
+    if (pos != nullptr)
     {
       if (TAO_debug_level)
         {
@@ -723,9 +731,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
         {
           throw CORBA::INTERNAL ();
         }
-      if (strm.get_value_map ()->get()->bind (
-        reinterpret_cast<void*>(const_cast <CORBA::ValueBase *> (value)),
-        strm.current()->wr_ptr() ) != 0)
+      if (strm.get_value_map ()->get()->bind (strm.current()->wr_ptr(), const_cast <CORBA::ValueBase *>(value)) != 0)
         {
           throw CORBA::INTERNAL ();
         }

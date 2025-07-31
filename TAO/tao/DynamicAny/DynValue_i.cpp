@@ -545,7 +545,7 @@ TAO_DynValue_i::current_component ()
 // (even though we are a constructed type and should do
 // so with any other type of input). If we don't assume
 // the value type is for us, it will get passed down
-// (recursivly) to the terminal non-valuetype member
+// (recursively) to the terminal non-valuetype member
 // which then will be wrong type for the valuetype input
 // we started with.
 void
@@ -598,7 +598,7 @@ TAO_DynValue_i::insert_val (CORBA::ValueBase *value)
 // (even though we are a constructed type and should
 // do so with any other type of output). If we don't
 // assume the value type is us, it will get passed down
-// (recursivly) to the terminal non-valuetype member
+// (recursively) to the terminal non-valuetype member
 // which then will be wrong type for the valuetype
 // output we want.
 CORBA::ValueBase *
@@ -813,7 +813,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
         }
 
       // Now write out every member's value (add further chunking
-      // marks for each seporate base-type's state).
+      // marks for each separate base-type's state).
       CORBA::Boolean need_first = true;
       CORBA::ULong
         currentBase= num_ids,  // Note NOT just the trunc_ids
@@ -1003,10 +1003,9 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       // Work out the input stream location of the original valuetype
       // and find the address of the original TAO_DynValue_i that we
       // created last time and stored in the map.
-      void
-        *pos = strm.rd_ptr () + offset - sizeof (CORBA::Long),
-        *original = 0;
-      if (strm.get_value_map()->get()->find (pos, original))
+      void *pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
+      TAO_DynValue_i* original = nullptr;
+      if (strm.get_dynvalue_map()->get()->find (pos, original))
         {
           TAOLIB_DEBUG ((LM_ERROR,
             ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
@@ -1018,18 +1017,13 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       // Since this is a void * convert it back to our real type and
       // throw it for the caller to catch and replace "this"
       // TAO_DynValue_i.
-      TAO_DynValue_i *this_one_instead=
-        reinterpret_cast<TAO_DynValue_i *> (original);
-      this_one_instead->_add_ref ();
-      throw this_one_instead;
+      original->_add_ref ();
+      throw original;
     }
 
   // Ok since we are not indirected (this time), record "this"
-  // DynValue_i for later possiable indirections to use.
-  if (strm.get_value_map ()->get()
-        ->bind (
-          start_of_valuetype,
-          reinterpret_cast<void *> (this)))
+  // DynValue_i for later possible indirections to use.
+  if (strm.get_dynvalue_map ()->get()->bind (start_of_valuetype, this))
     {
       TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
@@ -1106,7 +1100,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
     }
 
   // Now read in every member's value (reading further chunking
-  // marks for each seporate base-type's state we pass).
+  // marks for each separate base-type's state we pass).
   CORBA::Boolean need_first = true;
   CORBA::ULong
     currentBase = ACE_Utils::truncate_cast<CORBA::ULong> (this->da_base_types_.size ()),

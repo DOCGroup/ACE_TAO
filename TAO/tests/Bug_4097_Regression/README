@@ -21,7 +21,7 @@ Currently TAO (and a few other orbs including JacOrb and eOrb'C' eORB'C++') do
 not handle the typecode generation correctly for this. Only one of the above
 cases for the mlu_char member are dealt with in the typecode information, even
 though the generated (de)marshaling code correctly handles all case labels.
-This means that such unions sent inside anys are impossiable to decode at the
+This means that such unions sent inside anys are impossible to decode at the
 receiving end if the missing case label is being used for the union it holds.
 
 When using the typecode interface functions for the above it incorrectly gives:

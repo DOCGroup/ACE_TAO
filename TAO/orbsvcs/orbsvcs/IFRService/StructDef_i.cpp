@@ -80,7 +80,7 @@ TAO_StructDef_i::type_i ()
 
   //---------------------------------------------------------------------------
   // Create a new type code for this structure; the create_struct_tc() call
-  // that follows may recursivly call this method again if one of its children
+  // that follows may recursively call this method again if one of its children
   // refers to a structure (which is the point of the above NowSeenThis stack).
   //---------------------------------------------------------------------------
 
