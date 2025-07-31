@@ -945,7 +945,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       this->set_to_null ();
       throw CORBA::INTERNAL ();
     }
-  void *const start_of_valuetype = strm.rd_ptr();
+  char *const start_of_valuetype = strm.rd_ptr();
 
   // Read in the ValueType header
   CORBA::ValueBase::Repository_Id_List ids;
@@ -1003,7 +1003,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       // Work out the input stream location of the original valuetype
       // and find the address of the original TAO_DynValue_i that we
       // created last time and stored in the map.
-      void *pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
+      char *pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
       TAO_DynValue_i* original = nullptr;
       if (strm.get_dynvalue_map()->get()->find (pos, original))
         {
@@ -1014,8 +1014,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
           throw CORBA::INTERNAL ();
         }
 
-      // Since this is a void * convert it back to our real type and
-      // throw it for the caller to catch and replace "this"
+      // Throw it for the caller to catch and replace "this"
       // TAO_DynValue_i.
       original->_add_ref ();
       throw original;

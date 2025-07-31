@@ -99,7 +99,7 @@ public:
   typedef ACE_Hash_Map_Manager<ACE_CString, char*, ACE_Null_Mutex> Repo_Id_Map;
   typedef Repo_Id_Map Codebase_URL_Map;
   typedef ACE_Hash_Map_Manager<char*, CORBA::ValueBase*, ACE_Null_Mutex> Value_Map;
-  typedef ACE_Hash_Map_Manager<void*, TAO_DynValue_i, ACE_Null_Mutex> DynValue_Map;
+  typedef ACE_Hash_Map_Manager<char*, TAO_DynValue_i, ACE_Null_Mutex> DynValue_Map;
 
   typedef TAO_Intrusive_Ref_Count_Object<Repo_Id_Map, ACE_Null_Mutex> RC_Repo_Id_Map;
   typedef TAO_Intrusive_Ref_Count_Object<Codebase_URL_Map, ACE_Null_Mutex> RC_Codebase_URL_Map;
@@ -321,7 +321,7 @@ public:
   typedef ACE_Hash_Map_Manager<void*, ACE_CString, ACE_Null_Mutex> Repo_Id_Map;
   typedef Repo_Id_Map Codebase_URL_Map;
   typedef ACE_Hash_Map_Manager<char*, CORBA::ValueBase*, ACE_Null_Mutex> Value_Map;
-  typedef ACE_Hash_Map_Manager<void*, TAO_DynValue_i*, ACE_Null_Mutex> DynValue_Map;
+  typedef ACE_Hash_Map_Manager<char*, TAO_DynValue_i*, ACE_Null_Mutex> DynValue_Map;
 
   typedef TAO_Intrusive_Ref_Count_Object<Repo_Id_Map, ACE_Null_Mutex> RC_Repo_Id_Map;
   typedef TAO_Intrusive_Ref_Count_Object<Codebase_URL_Map, ACE_Null_Mutex> RC_Codebase_URL_Map;
