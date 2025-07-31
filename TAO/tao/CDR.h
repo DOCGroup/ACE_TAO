@@ -61,17 +61,17 @@
 
 #include <string>
 
-namespace CORBA
-{
-  class ValueBase;
-}
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_GIOP_Fragmentation_Strategy;
 class TAO_Stub;
 class TAO_DynValue_i;
+
+namespace CORBA
+{
+  class ValueBase;
+}
 
 /**
  * @class TAO_OutputCDR
