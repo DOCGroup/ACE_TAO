@@ -1007,9 +1007,8 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       // and find the address of the original TAO_DynValue_i that we
       // created last time and stored in the map.
       char *pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
-      TAO_DynValue_i* original = nullptr;
-      VERIFY_MAP (TAO_InputCDR, dynvalue_map, DynValue_Map);
-      if (strm.get_dynvalue_map()->get()->find (pos, original))
+      CORBA::ValueBase* original = nullptr;
+      if (strm.get_value_map()->get()->find (pos, original))
         {
           TAOLIB_DEBUG ((LM_ERROR,
             ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
@@ -1018,16 +1017,17 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
           throw CORBA::INTERNAL ();
         }
 
-      // Throw it for the caller to catch and replace "this"
+      // Since this is a CORBA::ValueBase* convert it back to our real type and
+      // throw it for the caller to catch and replace "this"
       // TAO_DynValue_i.
-      original->_add_ref ();
-      throw original;
+      TAO_DynValue_i *this_one_instead = reinterpret_cast<TAO_DynValue_i *> (original);
+      this_one_instead->_add_ref ();
+      throw this_one_instead;
     }
 
   // Ok since we are not indirected (this time), record "this"
   // DynValue_i for later possible indirections to use.
-  VERIFY_MAP (TAO_InputCDR, dynvalue_map, DynValue_Map);
-  if (strm.get_dynvalue_map ()->get()->bind (start_of_valuetype, this))
+  if (strm.get_value_map ()->get()->bind (start_of_valuetype, reinterpret_cast<CORBA::ValueBase *> (this)))
     {
       TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")

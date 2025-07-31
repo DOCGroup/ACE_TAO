@@ -83,12 +83,6 @@ TAO_OutputCDR::get_value_map ()
   return this->value_map_;
 }
 
-ACE_INLINE TAO_OutputCDR::DynValue_Map_Handle&
-TAO_OutputCDR::get_dynvalue_map ()
-{
-  return this->dynvalue_map_;
-}
-
 ACE_INLINE void
 TAO_OutputCDR::set_repo_id_map (TAO_OutputCDR::Repo_Id_Map_Handle& map)
 {
@@ -107,12 +101,6 @@ ACE_INLINE void
 TAO_OutputCDR::set_value_map (TAO_OutputCDR::Value_Map_Handle& map)
 {
   this->value_map_ = map;
-}
-
-ACE_INLINE void
-TAO_OutputCDR::set_dynvalue_map (TAO_OutputCDR::DynValue_Map_Handle& map)
-{
-  this->dynvalue_map_ = map;
 }
 
 ACE_INLINE void
@@ -303,12 +291,6 @@ TAO_InputCDR::get_value_map ()
   return this->value_map_;
 }
 
-ACE_INLINE TAO_InputCDR::DynValue_Map_Handle&
-TAO_InputCDR::get_dynvalue_map ()
-{
-  return this->dynvalue_map_;
-}
-
 ACE_INLINE void
 TAO_InputCDR::set_repo_id_map (TAO_InputCDR::Repo_Id_Map_Handle& map)
 {
@@ -325,12 +307,6 @@ ACE_INLINE void
 TAO_InputCDR::set_value_map (TAO_InputCDR::Value_Map_Handle& map)
 {
   this->value_map_ = map;
-}
-
-ACE_INLINE void
-TAO_InputCDR::set_dynvalue_map (TAO_InputCDR::DynValue_Map_Handle& map)
-{
-  this->dynvalue_map_ = map;
 }
 
 ACE_INLINE void

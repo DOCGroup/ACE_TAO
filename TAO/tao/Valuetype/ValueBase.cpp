@@ -560,7 +560,6 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection_pre (TAO_InputCDR &strm,
   indirected_strm.set_repo_id_map (strm.get_repo_id_map ());
   indirected_strm.set_codebase_url_map (strm.get_codebase_url_map ());
   indirected_strm.set_value_map (strm.get_value_map ());
-  indirected_strm.set_dynvalue_map (strm.get_dynvalue_map ());
   return indirected_strm.good_bit ();
 }
 
@@ -700,22 +699,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
     // value indirection
     VERIFY_MAP (TAO_OutputCDR, value_map, Value_Map);
     char* pos = nullptr;
-    // Search whether we already have a position for the valuebase in our valuemap, if so
-    // we use that position
-    TAO_OutputCDR::Value_Map* map = strm.get_value_map()->get ();
-    for (TAO_OutputCDR::Value_Map::ITERATOR it = map->begin (); it != map->end (); ++ it)
-        {
-          if (9 < TAO_debug_level)
-            {
-              TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_write_special_value, %@=%@\n"), it->ext_id_, it->int_id_));
-            }
-          if (it->int_id_ == value)
-            {
-              pos = it->ext_id_;
-            }
-        }
-
-    if (pos != nullptr)
+    if (strm.get_value_map ()->get()->find (const_cast <CORBA::ValueBase *> (value), pos) == 0)
     {
       if (TAO_debug_level)
         {
@@ -754,7 +738,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
             ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_special_value, can't align write ptr\n")));
           throw CORBA::INTERNAL ();
         }
-      if (strm.get_value_map ()->get()->bind (strm.current()->wr_ptr(), const_cast <CORBA::ValueBase *>(value)) != 0)
+      if (strm.get_value_map ()->get()->bind (const_cast <CORBA::ValueBase *>(value), strm.current()->wr_ptr()) != 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
             ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_special_value, can't bind value %@=%@\n"),
