@@ -35,7 +35,7 @@ public:
   TAO_DynCommon (CORBA::Boolean allow_truncation);
 
   /// Destructor.
-  virtual ~TAO_DynCommon ();
+  virtual ~TAO_DynCommon () = default;
 
   // = Some functions common to all Dynamic Any types.
 

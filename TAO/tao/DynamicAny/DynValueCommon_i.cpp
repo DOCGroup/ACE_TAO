@@ -11,10 +11,6 @@ TAO_DynValueCommon_i::TAO_DynValueCommon_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynValueCommon_i::~TAO_DynValueCommon_i ()
-{
-}
-
 CORBA::Boolean
 TAO_DynValueCommon_i::is_null ()
 {

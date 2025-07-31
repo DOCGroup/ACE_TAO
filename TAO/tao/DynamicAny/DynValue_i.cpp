@@ -21,10 +21,6 @@ TAO_DynValue_i::TAO_DynValue_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynValue_i::~TAO_DynValue_i ()
-{
-}
-
 void
 TAO_DynValue_i::init (const CORBA::Any & any)
 {
