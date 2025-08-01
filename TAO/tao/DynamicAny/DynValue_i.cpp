@@ -95,7 +95,7 @@ TAO_DynValue_i::init_helper (CORBA::TypeCode_ptr tc)
     &this->component_count_);
   this->da_members_.size (this->component_count_);
 
-  // And initalize all of the DynCommon mix-in
+  // And initialize all of the DynCommon mix-in
 
   this->init_common ();
 }
@@ -106,9 +106,8 @@ TAO_DynValue_i::get_base_types (
   BaseTypesList_t &base_types,
   CORBA::ULong *total_member_count)
 {
-  // First initalize to the fully derived type we are
+  // First initialize to the fully derived type we are
   // starting with.
-
   CORBA::ULong numberOfBases = 1u;
   base_types.size (numberOfBases);
   base_types[0] = TAO_DynAnyFactory::strip_alias (tc);
@@ -135,8 +134,7 @@ TAO_DynValue_i::get_base_types (
         }
 
       base_types.size (numberOfBases + 1);
-      base_types[numberOfBases++] =
-        CORBA::TypeCode::_duplicate (base.in ());
+      base_types[numberOfBases++] = CORBA::TypeCode::_duplicate (base.in ());
       base = base->concrete_base_type();
     }
 }
@@ -157,9 +155,12 @@ TAO_DynValue_i::get_correct_base_type (
     currentBase = ACE_Utils::truncate_cast<CORBA::ULong> (base_types.size ());
   if (!currentBase)
     {
-      TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::get_correct_base_type () ")
-        ACE_TEXT ("BaseTypesList_t is not initialised\n")));
+      if (TAO_debug_level)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::get_correct_base_type () ")
+            ACE_TEXT ("BaseTypesList_t is not initialised\n")));
+        }
       return 0;
     }
 
@@ -168,9 +169,12 @@ TAO_DynValue_i::get_correct_base_type (
       index -= base_types[currentBase]->member_count ();
       if (!currentBase)
         {
-          TAOLIB_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::get_correct_base_type () ")
-            ACE_TEXT ("BaseTypesList_t is not large enough\n")));
+          if (TAO_debug_level)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::get_correct_base_type () ")
+                ACE_TEXT ("BaseTypesList_t is not large enough\n")));
+            }
           return 0;
         }
     }
@@ -185,8 +189,7 @@ TAO_DynValue_i::get_member_type (
   const BaseTypesList_t &base_types,
   CORBA::ULong index)
 {
-  const CORBA::TypeCode_ptr
-    base = get_correct_base_type (base_types, index);
+  CORBA::TypeCode_ptr const base = get_correct_base_type (base_types, index);
   return base->member_type (index);
 }
 
@@ -195,18 +198,15 @@ TAO_DynValue_i::get_member_name (
   const BaseTypesList_t &base_types,
   CORBA::ULong index)
 {
-  const CORBA::TypeCode_ptr
-    base = get_correct_base_type (base_types, index);
+  CORBA::TypeCode_ptr const base = get_correct_base_type (base_types, index);
   return base->member_name (index);
 }
 
 void
 TAO_DynValue_i::set_to_value ()
 {
-  this->component_count_ =
-    static_cast <CORBA::ULong> (this->da_members_.size ());
-  this->current_position_ =
-    this->component_count_ ? 0 : -1;
+  this->component_count_ = static_cast <CORBA::ULong> (this->da_members_.size ());
+  this->current_position_ = this->component_count_ ? 0 : -1;
   this->is_null_ = false;
 }
 
@@ -225,7 +225,7 @@ TAO_DynValue_i *
 TAO_DynValue_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   return (CORBA::is_nil (_tao_objref)) ?
-         0 :
+         nullptr :
          dynamic_cast<TAO_DynValue_i *> (_tao_objref);
 }
 
@@ -395,10 +395,8 @@ TAO_DynValue_i::set_members_as_dyn_any (
     }
 
   // Check lengths match.
-  CORBA::ULong length = values.length ();
-  if (length !=
-      static_cast <CORBA::ULong> (
-        this->da_members_.size ()))
+  CORBA::ULong const length = values.length ();
+  if (length != static_cast <CORBA::ULong> (this->da_members_.size ()))
     {
       throw DynamicAny::DynAny::InvalidValue ();
     }
@@ -435,8 +433,7 @@ TAO_DynValue_i::from_any (const CORBA::Any &any)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var
-    tc (any.type ());
+  CORBA::TypeCode_var tc (any.type ());
   if (!this->type_->equivalent (tc.in ()))
     {
       throw DynamicAny::DynAny::TypeMismatch ();
@@ -527,8 +524,7 @@ TAO_DynValue_i::current_component ()
       return DynamicAny::DynAny::_nil ();
     }
 
-  const CORBA::ULong index =
-    static_cast <CORBA::ULong> (this->current_position_);
+  CORBA::ULong const index = static_cast <CORBA::ULong> (this->current_position_);
   this->set_flag (this->da_members_[index].in (), 0);
 
   return DynamicAny::DynAny::_duplicate (
@@ -578,9 +574,12 @@ TAO_DynValue_i::insert_val (CORBA::ValueBase *value)
   TAO_OutputCDR out;
   if (!CORBA::ValueBase::_tao_marshal (out, value))
     {
-      TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::insert_val ")
-        ACE_TEXT ("can not marshal value\n") ));
+      if (TAO_debug_level)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::insert_val ")
+            ACE_TEXT ("can not marshal value\n") ));
+        }
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
@@ -729,8 +728,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
 
       if (1u < trunc_ids)
         {
-          valuetag |=
-            TAO_OBV_GIOP_Flags::Type_info_list;
+          valuetag |= TAO_OBV_GIOP_Flags::Type_info_list;
         }
 
       CORBA::Boolean we_are_chunking = (1u < trunc_ids);
@@ -749,8 +747,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
 
       if (we_are_chunking)
         {
-          valuetag |=
-            TAO_OBV_GIOP_Flags::Chunking_tag_sigbits;
+          valuetag |= TAO_OBV_GIOP_Flags::Chunking_tag_sigbits;
         }
 
       // Start writing out the value header (and if
@@ -777,12 +774,14 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
            ++i)
         {
           ACE_CString repo_id (next->id ());
-          if (!CORBA::ValueBase::
-                _tao_write_repository_id (out_cdr, repo_id) )
+          if (!CORBA::ValueBase::_tao_write_repository_id (out_cdr, repo_id) )
             {
-              TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
-                ACE_TEXT ("problem writing header repo_ids\n")));
+              if (TAO_debug_level)
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
+                    ACE_TEXT ("problem writing header repo_ids\n")));
+                }
               throw CORBA::INTERNAL ();
             }
 
@@ -800,9 +799,12 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
         {
           if (!ci.start_chunk (out_cdr))
             {
-              TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
-                ACE_TEXT ("problem writing basetype start chucks\n")));
+              if (TAO_debug_level)
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
+                    ACE_TEXT ("problem writing basetype start chucks\n")));
+                }
               throw CORBA::INTERNAL ();
             }
         }
@@ -835,11 +837,14 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
                   // Start chunk for this base-type's STATE
                   if (!ci.start_chunk (out_cdr))
                     {
-                      TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
-                        ACE_TEXT ("problem writing base-type ")
-                        ACE_TEXT ("%u state start chuck\n"),
-                        currentBase ));
+                      if (TAO_debug_level)
+                        {
+                          TAOLIB_ERROR ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
+                            ACE_TEXT ("problem writing base-type ")
+                            ACE_TEXT ("%u state start chuck\n"),
+                            currentBase ));
+                        }
                       throw CORBA::INTERNAL ();
                     }
                 }
@@ -847,8 +852,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
 
           // Recursive step - Add this member to the out_cdr
           if (TAO_DynValue_i *member= // Assignment
-              dynamic_cast<TAO_DynValue_i *>
-                (this->da_members_[currentMember].in ()))
+              dynamic_cast<TAO_DynValue_i *> (this->da_members_[currentMember].in ()))
             {
               member->to_outputCDR (out_cdr);
             }
@@ -865,9 +869,12 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
                     *unk= dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
                   if (!unk)
                     {
-                      TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
-                        ACE_TEXT ("problem obtaining Unknown_IDL_Type\n")));
+                      if (TAO_debug_level)
+                        {
+                          TAOLIB_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
+                            ACE_TEXT ("problem obtaining Unknown_IDL_Type\n")));
+                        }
                       throw CORBA::INTERNAL ();
                     }
 
@@ -904,11 +911,14 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
               // base-type's STATE if we have written the whole state.
               if (currentBase < trunc_ids && !ci.end_chunk (out_cdr))
                 {
-                  TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
-                    ACE_TEXT ("problem writing base-type ")
-                    ACE_TEXT ("%u state end chuck\n"),
-                    currentBase ));
+                  if (TAO_debug_level)
+                    {
+                      TAOLIB_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
+                        ACE_TEXT ("problem writing base-type ")
+                        ACE_TEXT ("%u state end chuck\n"),
+                        currentBase ));
+                    }
                   throw CORBA::INTERNAL ();
                 }
             }
@@ -920,9 +930,12 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
         {
           if (!ci.end_chunk (out_cdr))
             {
-              TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
-                ACE_TEXT ("problem writing basetype end chucks\n")));
+              if (TAO_debug_level)
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::to_outputCDR() ")
+                    ACE_TEXT ("problem writing basetype end chucks\n")));
+                }
               throw CORBA::INTERNAL ();
             }
         }
@@ -937,9 +950,12 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
   VERIFY_MAP (TAO_InputCDR, value_map, Value_Map);
   if (strm.align_read_ptr (ACE_CDR::LONG_SIZE))
     {
-      TAOLIB_DEBUG ((LM_ERROR,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
-        ACE_TEXT ("align_read_ptr() failed\n") ));
+      if (TAO_debug_level)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+            ACE_TEXT ("align_read_ptr() failed\n")));
+        }
       this->set_to_null ();
       throw CORBA::INTERNAL ();
     }
@@ -957,9 +973,12 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
 
   if (!result)
     {
-      TAOLIB_DEBUG ((LM_ERROR,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
-        ACE_TEXT ("_tao_unmarshal_header() failed\n") ));
+      if (TAO_debug_level)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+            ACE_TEXT ("_tao_unmarshal_header() failed\n") ));
+        }
       this->set_to_null ();
       throw CORBA::INTERNAL ();
     }
@@ -991,10 +1010,13 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       CORBA::Long offset = 0;
       if (!strm.read_long (offset) ||  0 <= offset)
         {
-          TAOLIB_DEBUG ((LM_ERROR,
-            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
-            ACE_TEXT ("Can't read/understand ")
-            ACE_TEXT ("Indirected ValueType offset\n") ));
+          if (TAO_debug_level)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+                ACE_TEXT ("Can't read/understand ")
+                ACE_TEXT ("Indirected ValueType offset\n") ));
+            }
           throw CORBA::INTERNAL ();
         }
 
@@ -1005,16 +1027,19 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       CORBA::ValueBase* original = nullptr;
       if (strm.get_value_map()->get()->find (pos, original))
         {
-          TAOLIB_DEBUG ((LM_ERROR,
-            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
-            ACE_TEXT ("Can't find Indirected ValueType ")
-            ACE_TEXT ("offset in map\n") ));
+          if (TAO_debug_level)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+                ACE_TEXT ("Can't find Indirected ValueType ")
+                ACE_TEXT ("offset in map\n") ));
+            }
           throw CORBA::INTERNAL ();
         }
 
       if (TAO_debug_level)
         {
-          TAOLIB_DEBUG ((LM_ERROR,
+          TAOLIB_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
             ACE_TEXT ("Found indirected ValueType %@ at position %@, offset %d\n"),
             original, pos, offset));
@@ -1032,15 +1057,18 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
   // DynValue_i for later possible indirections to use.
   if (strm.get_value_map ()->get()->bind (start_of_valuetype, reinterpret_cast<CORBA::ValueBase *> (this)))
     {
-      TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
-        ACE_TEXT ("Failed to record this into value_map\n") ));
+      if (TAO_debug_level)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+            ACE_TEXT ("Failed to record this into value_map\n") ));
+        }
       throw CORBA::INTERNAL ();
     }
 
   // Work out how many total types there
   // are in this derived->base hierarchy.
-  const CORBA::ULong
+  CORBA::ULong const
     num_fields = static_cast <CORBA::ULong> (this->da_members_.size ()),
     num_ids =    static_cast <CORBA::ULong> (ids.size ());
 
@@ -1068,11 +1096,14 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       // allow truncation.
       if (!is_chunked)
         {
-          TAOLIB_DEBUG ((LM_ERROR,
-            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR()\n")
-            ACE_TEXT ("  type %C requires truncation to %C but is not chunked type.\n"),
-            ids[i].c_str (),
-            our_id ));
+          if (TAO_debug_level)
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR()\n")
+                ACE_TEXT ("  type %C requires truncation to %C but is not chunked type.\n"),
+                ids[i].c_str (),
+                our_id ));
+            }
           this->set_to_null ();
           throw DynamicAny::DynAny::TypeMismatch ();
         }
@@ -1081,9 +1112,12 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
     }
   if (i == num_ids)
     {
-      TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
-        ACE_TEXT ("couldn't find matching repo_id!\n")));
+      if (TAO_debug_level)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+            ACE_TEXT ("couldn't find matching repo_id!\n")));
+        }
       this->set_to_null ();
       throw DynamicAny::DynAny::TypeMismatch ();
     }
@@ -1092,15 +1126,17 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
   // of base types we are reading. If we are not a derived
   // type there are none to read (i.e. we are reading one
   // less than the num_ids we actually have received).
-
   TAO_ChunkInfo ci (is_chunked, 1);
   for (i= 0u; i < num_ids - 1u; ++i)
     {
       if (!ci.handle_chunking (strm))
         {
-          TAOLIB_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
-            ACE_TEXT ("problem reading basetype start chucks\n")));
+          if (TAO_debug_level)
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+                ACE_TEXT ("problem reading basetype start chucks\n")));
+            }
           this->set_to_null ();
           throw DynamicAny::DynAny::InvalidValue ();
         }
@@ -1133,11 +1169,14 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
               // Read past the start chunk for this base-type's state
               if (!ci.handle_chunking (strm))
                 {
-                  TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
-                    ACE_TEXT ("problem reading base-type ")
-                    ACE_TEXT ("%u state start chuck\n"),
-                    currentBase ));
+                  if (TAO_debug_level)
+                    {
+                      TAOLIB_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+                        ACE_TEXT ("problem reading base-type ")
+                        ACE_TEXT ("%u state start chuck\n"),
+                        currentBase ));
+                    }
                   this->set_to_null ();
                   throw DynamicAny::DynAny::InvalidValue ();
                 }
@@ -1204,11 +1243,14 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
                      ci.handle_chunking (strm) :
                      ci.skip_chunks (strm)))
                 {
-                  TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
-                    ACE_TEXT ("problem reading base-type ")
-                    ACE_TEXT ("%u state end chuck\n"),
-                    currentBase ));
+                  if (TAO_debug_level)
+                    {
+                      TAOLIB_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+                        ACE_TEXT ("problem reading base-type ")
+                        ACE_TEXT ("%u state end chuck\n"),
+                        currentBase ));
+                    }
                   this->set_to_null ();
                   throw DynamicAny::DynAny::InvalidValue ();
                 }
