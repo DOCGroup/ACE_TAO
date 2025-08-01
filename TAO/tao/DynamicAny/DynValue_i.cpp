@@ -1012,6 +1012,14 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
           throw CORBA::INTERNAL ();
         }
 
+      if (TAO_debug_level)
+        {
+          TAOLIB_DEBUG ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")
+            ACE_TEXT ("Found indirected ValueType %@ at position %@, offset %d\n"),
+            original, pos, offset));
+        }
+
       // Since this is a CORBA::ValueBase* convert it back to our real type and
       // throw it for the caller to catch and replace "this"
       // TAO_DynValue_i.
