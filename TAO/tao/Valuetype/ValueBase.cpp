@@ -902,7 +902,7 @@ CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
     if (TAO_debug_level)
       {
         TAOLIB_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_repository_id,  id %C indirection %d\n"),
+          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_repository_id, id %C indirection %d\n"),
           id.c_str(), offset));
       }
     if (!strm.write_long (offset))
