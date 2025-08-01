@@ -23,11 +23,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor from typecode
-TAO_DynAnyFactory::TAO_DynAnyFactory ()
-{
-}
-
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any (const CORBA::Any & value)
 {
@@ -67,10 +62,10 @@ TAO_DynAnyFactory::create_multiple_dyn_anys (
     ::CORBA::Boolean allow_truncate)
 {
   // NOTE: Since each any is self contained and holds a streamed
-  // representation of the DynAny contents, it is not possiable
+  // representation of the DynAny contents, it is not possible
   // to make the collection of the anys we are creating to
   // refer to the same duplicate DynValue if it crops up in
-  // seporate enteries of the values sequence. Internally
+  // separate entries of the values sequence. Internally
   // within each any, indirection will occur if a DynValue
   // self references with one of its own members.
 
@@ -99,10 +94,10 @@ TAO_DynAnyFactory::create_multiple_anys (
     const DynamicAny::DynAnySeq &values)
 {
   // NOTE: Since each any is self contained and holds a streamed
-  // representation of the DynAny contents, it is not possiable
+  // representation of the DynAny contents, it is not possible
   // to make the collection of the anys we are creating to
   // refer to the same duplicate DynValue if it crops up in
-  // seporate enteries of the values sequence. Internally
+  // separate entries of the values sequence. Internally
   // within each any, indirection will occur if a DynValue
   // self references with one of its own members.
 

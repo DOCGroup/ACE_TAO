@@ -39,7 +39,7 @@ public:
   TAO_DynValueCommon_i (CORBA::Boolean allow_truncation = true);
 
   /// Destructor.
-  ~TAO_DynValueCommon_i ();
+  ~TAO_DynValueCommon_i () = default;
 
   // = LocalObject methods.
   static TAO_DynValueCommon_i *_narrow (CORBA::Object_ptr obj);

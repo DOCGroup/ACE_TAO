@@ -156,7 +156,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::ServantBase_var safe_lm = lm;
 
-      // Initalize the LoadManager servant.
+      // Initialize the LoadManager servant.
       lm->initialize (orb->orb_core ()->reactor (),
                       orb.in (),
                       root_poa.in ());

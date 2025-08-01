@@ -448,7 +448,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
   // Before we can check the cache to find an existing connection, we
   // need to make sure the ssl_endpoint is fully initialized with the
-  // local security information. This endpoint initalized by the
+  // local security information. This endpoint initialized by the
   // profile does not (and cannot) contain the desired QOP, trust, or
   // credential information which is necesary to uniquely identify
   // this connection.

@@ -131,7 +131,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
   if (this->parse_args(argc, argv) != 0)
     return -1;
 
-  // initalize the ORB.
+  // initialize the ORB.
   if (this->init_ORB (argc, argv) != 0)
     return -1;
 

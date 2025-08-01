@@ -165,7 +165,7 @@ int transaction::result(Pdu& pdu, char *comm_str, ACE_INET_Addr *from)
 
  snmp_version ver;
 
- // return comm str and from address of incomming pdu if requested
+ // return comm str and from address of incoming pdu if requested
  int rc = tmp.get_pdu(pdu, ver);
  if (comm_str)
    ACE_OS::strcpy(comm_str, (char *)tmp.get_community());

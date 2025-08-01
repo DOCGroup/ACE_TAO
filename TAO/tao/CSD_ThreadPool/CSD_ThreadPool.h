@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief the static initializer for the CSD Thread Pool library
  *
  * The loader appears to be born of the CSD_TP_Factory, which is the
- * real service object. This separation seems to be necesary to ensure
+ * real service object. This separation seems to be necessary to ensure
  * the CSD_Framework gets loaded prior to initializing the TP Factory.
  */
 class TAO_CSD_TP_Export TAO_CSD_ThreadPool

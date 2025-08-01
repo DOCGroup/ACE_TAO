@@ -39,7 +39,7 @@ public:
   TAO_DynValueBox_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynValueBox_i ();
+  ~TAO_DynValueBox_i () = default;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
