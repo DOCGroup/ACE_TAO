@@ -336,10 +336,13 @@ CORBA::ValueBase::_tao_unmarshal_header (
         }
       else
         {
-          TAOLIB_ERROR ((
-            LM_ERROR,
-            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_pre, ")
-            ACE_TEXT ("unknown repo_id\n") ));
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_pre, ")
+                ACE_TEXT ("unknown repo_id\n") ));
+            }
           return false;
         }
     }
@@ -428,10 +431,13 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
   VERIFY_MAP (TAO_InputCDR, value_map, Value_Map);
   if (strm.get_value_map ()->get()->bind (start_of_valuetype, valuetype) != 0)
     {
-      TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_find_factory, ")
-        ACE_TEXT ("Failed to bound value %x=%@, id=%C\n"),
-        start_of_valuetype, valuetype, id ));
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_find_factory, ")
+            ACE_TEXT ("Failed to bound value %x=%@, id=%C\n"),
+            start_of_valuetype, valuetype, id ));
+        }
     }
   else if (TAO_debug_level)
     {
@@ -493,9 +499,12 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
 
   if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
     {
-      TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %N:%l CORBA::ValueBase::_tao_validate_box_type, ")
-                  ACE_TEXT ("not value_tag\n")));
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - %N:%l CORBA::ValueBase::_tao_validate_box_type, ")
+                      ACE_TEXT ("not value_tag\n")));
+        }
       return false;
     }
 
@@ -569,7 +578,10 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
 {
   if (strm.get_value_map().is_nil ())
     {
-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) ValueBase::get_value_map returns nil\n")));
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) ValueBase::get_value_map returns nil\n")));
+        }
       throw CORBA::INTERNAL ();
     }
 
@@ -593,11 +605,14 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
     }
   if (strm.get_value_map()->get()->find (pos, value) != 0)
     {
-      TAOLIB_ERROR ((LM_ERROR,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l ")
-        ACE_TEXT ("ValueBase::_tao_unmarshal_value_indirection, ")
-        ACE_TEXT ("did not find %@ in map %@\n"),
-        pos, strm.get_value_map()->get()));
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ")
+            ACE_TEXT ("ValueBase::_tao_unmarshal_value_indirection, ")
+            ACE_TEXT ("did not find %@ in map %@\n"),
+            pos, strm.get_value_map()->get()));
+        }
       throw CORBA::INTERNAL ();
     }
   else if (TAO_debug_level)
@@ -623,16 +638,19 @@ CORBA::ValueBase::_tao_unmarshal_repo_id_indirection (TAO_InputCDR &strm,
   void* pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
   if (strm.get_repo_id_map()->get()->find (pos, id) != 0)
     {
-      TAOLIB_ERROR ((LM_ERROR,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_repo_id_indirection, cannot find %C\n"),
-        id.c_str ()));
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_repo_id_indirection, cannot find %C\n"),
+            id.c_str ()));
+        }
       throw CORBA::INTERNAL ();
     }
   else if (TAO_debug_level)
     {
-      TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_repo_id_indirection, found %@=%C\n"),
-        pos, id.c_str ()));
+        TAOLIB_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_repo_id_indirection, found %@=%C\n"),
+          pos, id.c_str ()));
     }
 
   return 1;
@@ -652,9 +670,12 @@ CORBA::ValueBase::_tao_unmarshal_codebase_url_indirection (TAO_InputCDR &strm,
 
   if (strm.get_codebase_url_map()->get()->find (pos, codebase_url) != 0)
     {
-      TAOLIB_ERROR ((LM_ERROR,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_codebase_url_indirection, cannot find %C\n"),
-        codebase_url.c_str ()));
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_codebase_url_indirection, cannot find %C\n"),
+            codebase_url.c_str ()));
+        }
       throw CORBA::INTERNAL ();
     }
   else if (TAO_debug_level)
@@ -734,15 +755,21 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
 
       if (strm.align_write_ptr (ACE_CDR::LONG_SIZE) != 0)
         {
-          TAOLIB_ERROR ((LM_ERROR,
-            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_special_value, can't align write ptr\n")));
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_special_value, can't align write ptr\n")));
+            }
           throw CORBA::INTERNAL ();
         }
       if (strm.get_value_map ()->get()->bind (const_cast <CORBA::ValueBase *>(value), strm.current()->wr_ptr()) != 0)
         {
-          TAOLIB_ERROR ((LM_ERROR,
-            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_special_value, can't bind value %@=%@\n"),
-            strm.current()->wr_ptr(), value));
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_special_value, can't bind value %@=%@\n"),
+                strm.current()->wr_ptr(), value));
+            }
           throw CORBA::INTERNAL ();
         }
       else if (TAO_debug_level)
@@ -887,15 +914,21 @@ CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
   {
     if (strm.align_write_ptr (ACE_CDR::LONG_SIZE) != 0)
       {
-        TAOLIB_ERROR ((LM_ERROR,
-          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_repository_id, can't align write ptr\n")));
+        if (TAO_debug_level > 0)
+          {
+            TAOLIB_ERROR ((LM_ERROR,
+              ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_repository_id, can't align write ptr\n")));
+          }
         throw CORBA::INTERNAL ();
       }
     if (strm.get_repo_id_map ()->get ()->bind (id, strm.current()->wr_ptr ()) != 0)
       {
-        TAOLIB_ERROR ((LM_ERROR,
-          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_repository_id, cannot bound %C - %@\n"),
-          id.c_str (), strm.current()->wr_ptr ()));
+        if (TAO_debug_level > 0)
+          {
+            TAOLIB_ERROR ((LM_ERROR,
+              ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_repository_id, cannot bound %C - %@\n"),
+              id.c_str (), strm.current()->wr_ptr ()));
+          }
         throw CORBA::INTERNAL ();
       }
     if (TAO_debug_level)
@@ -1236,17 +1269,23 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
 
     if (ACE_OS::strcmp (mapped_id.c_str (), id.c_str ()) != 0)
       {
-        TAOLIB_ERROR ((LM_ERROR,
-          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, found %C in map for %C\n"),
-          mapped_id.c_str (), id.c_str ()));
+        if (TAO_debug_level > 0)
+          {
+            TAOLIB_ERROR ((LM_ERROR,
+              ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, found %C in map for %C\n"),
+              mapped_id.c_str (), id.c_str ()));
+          }
         throw CORBA::INTERNAL ();
       }
   }
   else if (strm.get_repo_id_map ()->get ()->bind (pos, id) != 0)
   {
-    TAOLIB_ERROR ((LM_ERROR,
-      ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, can't bind %C\n"),
-      mapped_id.c_str ()));
+    if (TAO_debug_level > 0)
+      {
+        TAOLIB_ERROR ((LM_ERROR,
+          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, can't bind %C\n"),
+          mapped_id.c_str ()));
+      }
     throw CORBA::INTERNAL ();
   }
   else if (TAO_debug_level)
@@ -1319,17 +1358,23 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
     }
     if (ACE_OS::strcmp (mapped_url.c_str (), codebase_url.c_str ()) != 0)
       {
-        TAOLIB_ERROR ((LM_ERROR,
-          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, found %C in map for %C\n"),
-          mapped_url.c_str (), codebase_url.c_str ()));
+        if (TAO_debug_level > 0)
+          {
+            TAOLIB_ERROR ((LM_ERROR,
+              ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, found %C in map for %C\n"),
+              mapped_url.c_str (), codebase_url.c_str ()));
+          }
         throw CORBA::INTERNAL ();
       }
   }
   else if (strm.get_codebase_url_map ()->get()->bind (pos, codebase_url) != 0)
   {
-    TAOLIB_ERROR ((LM_ERROR,
-      ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, can't bind %C\n"),
-      mapped_url.c_str ()));
+    if (TAO_debug_level > 0)
+      {
+        TAOLIB_ERROR ((LM_ERROR,
+          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, can't bind %C\n"),
+          mapped_url.c_str ()));
+      }
     throw CORBA::INTERNAL ();
   }
   else
