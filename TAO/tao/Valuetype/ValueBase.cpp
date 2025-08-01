@@ -734,7 +734,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
           return false;
         }
 
-      CORBA::Long const offset= -strm.offset (pos);
+      CORBA::Long const offset = -strm.offset (pos);
       if (TAO_debug_level)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
