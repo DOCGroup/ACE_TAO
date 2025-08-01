@@ -65,7 +65,7 @@ DynAnyAnalyzer::get_base_types (
   BaseTypesList_t &base_types,
   CORBA::ULong *total_member_count)
 {
-  // First initalize to the fully derived type we are
+  // First initialize to the fully derived type we are
   // starting with.
 
   CORBA::ULong numberOfBases = 1u;

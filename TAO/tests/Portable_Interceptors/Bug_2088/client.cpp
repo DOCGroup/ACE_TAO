@@ -39,7 +39,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  // Only the pre init for initalizer 1 must be called, other initializers
+  // Only the pre init for initializer 1 must be called, other initializers
   // shouldn't be caught
   if (initializer1->pre_init_called != true)
     {
