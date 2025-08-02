@@ -603,7 +603,9 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
           TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, %@=%@\n"), it->ext_id_, it->int_id_));
         }
     }
-  if (strm.get_value_map()->get()->find (pos, value) != 0)
+
+  void * v = nullptr;
+  if (strm.get_value_map()->get()->find (pos, v) != 0)
     {
       if (TAO_debug_level > 0)
         {
@@ -619,9 +621,10 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_value_indirection, found %x=%x\n"),
-        pos, value));
+        pos, v));
     }
 
+  value = reinterpret_cast<CORBA::ValueBase *>(v);
   return true;
 }
 
