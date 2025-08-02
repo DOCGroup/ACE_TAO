@@ -44,7 +44,7 @@ public:
   TAO_DynStruct_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynStruct_i ();
+  ~TAO_DynStruct_i () = default;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);

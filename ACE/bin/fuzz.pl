@@ -980,7 +980,7 @@ sub check_for_improper_main_declaration ()
                     my $was = $multi_line;
                     $multi_line =~ s!([^/])\*\s([^/])!$1\*$2!g;   ## Remove space after * (except around comment)
                     $multi_line =~ s!([^/])\s\[!$1\[!g;           ## Remove space before [ (except following comment)
-                    $multi_line =~ s!\s?\*/\s?/\*\s?! !g;         ## Connect seporate adjacent /* ... */ comments
+                    $multi_line =~ s!\s?\*/\s?/\*\s?! !g;         ## Connect separate adjacent /* ... */ comments
                     if ($multi_line =~ s!^([^,]*?)\s?,\s?(/+\*.*?\*/\s?)*!!) { # Fails if only 1 parameter (ignore this main)
                         my $arg1 = $1;
                         if ($multi_line =~ s/^(\w[\w\d]*)\s?//) { # Fails if no type for 2nd parameter (ignore this main)
@@ -988,7 +988,7 @@ sub check_for_improper_main_declaration ()
                             $multi_line =~ s!^(?:/+\*.*?\*/\s?)?(\**)(\w[\w\d]*|\s?/\*.*?\*/\s?)?!!;
                             my $prefix = $1; ## should be * or **
                             my $name   = $2; ## is now arg2's variable name
-                            $multi_line =~ s!\s?\*/\s?/\*\s?! !g;  ## Connect seporate adjacent /* ... */ comments
+                            $multi_line =~ s!\s?\*/\s?/\*\s?! !g;  ## Connect separate adjacent /* ... */ comments
 
                             ## remove any comment after postfix
                             if ($multi_line =~ s!\s?(/+\*.*?\*/)$!! && $name eq '') {

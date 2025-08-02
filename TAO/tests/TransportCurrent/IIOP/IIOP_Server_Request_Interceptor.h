@@ -53,7 +53,7 @@ namespace Test
     /// Return the name of this ServerRequestinterceptor.
     virtual char * name ();
 
-    /// incomming interception point
+    /// incoming interception point
     virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);
 
     /// outgoing interception point
@@ -67,7 +67,7 @@ namespace Test
     //@}
 
   protected:
-    /// process incomming requests context
+    /// process incoming requests context
     void inbound_process_context
     (PortableInterceptor::ServerRequestInfo_ptr ri);
 
@@ -75,7 +75,7 @@ namespace Test
     void outbound_process_context
     (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-    /// saves the incomming request info
+    /// saves the incoming request info
     void push_request_info (size_t requestID);
 
     /// clears the outgoing request info

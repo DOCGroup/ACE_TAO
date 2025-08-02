@@ -16,10 +16,6 @@ TAO_DynSequence_i::TAO_DynSequence_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynSequence_i::~TAO_DynSequence_i ()
-{
-}
-
 void
 TAO_DynSequence_i::init_common ()
 {

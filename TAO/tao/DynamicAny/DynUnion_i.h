@@ -43,7 +43,7 @@ public:
   TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynUnion_i ();
+  ~TAO_DynUnion_i () = default;
 
   /// Constructor taking an Any argument.
   void init (const CORBA::Any& any);

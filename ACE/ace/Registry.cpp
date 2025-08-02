@@ -757,7 +757,7 @@ ACE_Registry::Naming_Context::list (u_long how_many,
   // Make sure that the list is empty
   list = ace_binding_empty_list;
 
-  // Correctly initalize the iterator
+  // Correctly initialize the iterator
   iter.reset ();
 
   // Make sure that the iterator uses <this> naming context

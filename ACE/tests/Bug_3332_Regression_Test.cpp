@@ -13,7 +13,7 @@
 //    in the rb_tree, whilst the original "still in the tree" data node would be
 //    unbound instead. This caused externally held pointers to existing data that
 //    should still be in the tree to become invalidated unnecessarily. This test
-//    ensures that the node NOT being deleted always keep their original enteries
+//    ensures that the node NOT being deleted always keep their original entries
 //    (and thus only the deleted node is actually unbound and released).
 //
 // = AUTHOR

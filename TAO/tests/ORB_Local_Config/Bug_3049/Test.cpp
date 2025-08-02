@@ -5,7 +5,7 @@
 // global config context, ORB-B initializes a local configuration
 // context which loads a service. ORB-C finally shares the configuration
 // from ORB-B. The demonstration is to show that a service is avialable
-// to ORB-C from the configuration initalized by ORB-B.
+// to ORB-C from the configuration initialized by ORB-B.
 
 #include "tao/corba.h"
 #include "tao/ORB_Core.h"

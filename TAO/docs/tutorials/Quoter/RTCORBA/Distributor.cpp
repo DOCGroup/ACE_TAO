@@ -119,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      // Initalize the ORB.
+      // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // This call MUST come after ORB_init(), which may need to

@@ -24,9 +24,9 @@ StockQuoter.mpc file. <P>
 The Distributor.cpp file is used for this purpose. It contains the main () function and is used to generated the
 Distributor execution file. The main steps in this file are described as follows: <P>
 
-<li>Initalize the ORB.</li> <P>
+<li>Initialize the ORB.</li> <P>
 
-<li>Parse the command-line arguments, which give the stock distributor notification rate and the stock database 
+<li>Parse the command-line arguments, which give the stock distributor notification rate and the stock database
 update rate.<P>
 
 <li>Get the RootPOA.</li> <P>
@@ -39,7 +39,7 @@ update rate.<P>
     Stock::StockDistributor_var stock_distributor = stock_distributor_home.create ();
 </PRE>
 
-<li>Register the StockDistributor servant with the Naming Service or write the object reference of the 
+<li>Register the StockDistributor servant with the Naming Service or write the object reference of the
 StockDistributor object to a file such that other projects can read it when they are bootstrapping.</li> <P>
 
 <li>Set the initial notification rate of the StockDistributor object.</li> <P>
@@ -55,9 +55,9 @@ StockDistributor object to a file such that other projects can read it when they
 The Broker.cpp file is used for this purpose. It contains the main () function and is used to generated the
 Broker execution file. The main steps in this file are described as follows: <P>
 
-<li>Initalize the ORB.</li> <P>
+<li>Initialize the ORB.</li> <P>
 
-<li>Parse the command-line arguments, which give the stock name and the priority of the StockBroker object 
+<li>Parse the command-line arguments, which give the stock name and the priority of the StockBroker object
 (actually, the priority of the StockNameConsumer object that the StockBroker object contains).</li> <P>
 
 <li>Get the RootPOA.</li> <P>
@@ -70,7 +70,7 @@ Broker execution file. The main steps in this file are described as follows: <P>
     Stock::StockBroker_var stock_broker = stock_broker_home.create ();
 </PRE>
 
-<li>Read and destringify the StockDistributor object's IOR or use Naming Service to get the object reference 
+<li>Read and destringify the StockDistributor object's IOR or use Naming Service to get the object reference
 and narrow it to a StockDistributor object reference.</li> <P>
 
 <li>Create a StockBroker factory object and use it to create a StockBroker object.</li>
@@ -110,11 +110,11 @@ and narrow it to a StockDistributor object reference.</li> <P>
 The Admin.cpp file is used for this purpose. It contains the main () function and is used to generated
 Admin execution file. The main steps in this file are described as follows: <P>
 
-<li>Initalize the ORB.</li> <P>
+<li>Initialize the ORB.</li> <P>
 
 <li>Parse the command-line arguments, which give the option of different operations of StockDistributor interface.</li> <P>
 
-<li>Read and destringify the StockDistributor object's IOR or use Naming Service to get the object reference 
+<li>Read and destringify the StockDistributor object's IOR or use Naming Service to get the object reference
 and narrow it to a StockDistributor object reference.</li> <P>
 
 <li>Call the operations of StockDistributor interface:</li>
@@ -138,7 +138,7 @@ When executing the programs, they should be executed in the following order:
 
 You can run more than one Broker program at the same time. Each of them should be given different stock name
 that it is interested in. All the stock information is installed in the <A HREF="database.html">Stock Database</A>.
-The number of stocks can easily be extended by adding items to the stock_names array of 
+The number of stocks can easily be extended by adding items to the stock_names array of
 the Stock Database constuctor. <P>
 
 <hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>

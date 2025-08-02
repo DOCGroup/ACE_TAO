@@ -256,7 +256,7 @@ namespace CORBA
   private:
     static void _tao_unmarshal_find_factory (
       TAO_InputCDR &strm,
-      void *start_of_valuetype,
+      char *start_of_valuetype,
       CORBA::ValueBase *&valuetype,
       Repository_Id_List &ids,
       CORBA::Boolean &is_chunked);

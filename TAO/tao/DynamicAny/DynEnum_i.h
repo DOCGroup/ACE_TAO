@@ -45,7 +45,7 @@ public:
   TAO_DynEnum_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynEnum_i ();
+  ~TAO_DynEnum_i () = default;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
