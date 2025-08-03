@@ -90,8 +90,8 @@ private:
   void init_common ();
 
   // = Use copy() or assign() instead of these
-  TAO_DynSequence_i (const TAO_DynSequence_i &src);
-  TAO_DynSequence_i &operator= (const TAO_DynSequence_i &src);
+  TAO_DynSequence_i (const TAO_DynSequence_i &src) = delete;
+  TAO_DynSequence_i &operator= (const TAO_DynSequence_i &src) = delete;;
 
 private:
   /// Each component is also a DynAny.

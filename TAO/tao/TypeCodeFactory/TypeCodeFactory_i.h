@@ -220,8 +220,8 @@ private:
                                          char const * id);
 
   /// Prohibited
-  TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src);
-  TAO_TypeCodeFactory_i &operator= (const TAO_TypeCodeFactory_i &src);
+  TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src) = delete;
+  TAO_TypeCodeFactory_i &operator= (const TAO_TypeCodeFactory_i &src) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
