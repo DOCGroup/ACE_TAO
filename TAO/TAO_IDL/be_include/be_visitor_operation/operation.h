@@ -43,9 +43,6 @@ public:
   virtual int has_param_type (be_operation *,
                               AST_Argument::Direction);
 
-  /// Count the number of "in" and "inout" parameters.
-  virtual size_t count_non_out_parameters (be_operation *node);
-
   /// Special generation of throw_spec if it is an AMH ExceptionHolder
   /// 0:false, 1:true
   virtual int is_amh_exception_holder (be_interface *node);
