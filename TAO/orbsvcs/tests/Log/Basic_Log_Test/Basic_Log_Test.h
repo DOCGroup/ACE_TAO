@@ -82,7 +82,7 @@ delete_records (CORBA::ULongLong numberOfRecords);
   // 1. get time.
   // 2. write the records
   // 3. retrieve the records forwards. Compare to records written.
-  // 4. retrieve the records backwards. Compare to records writen.
+  // 4. retrieve the records backwards. Compare to records written.
   // 5. repeat 3 and 4 using iterator.
 
   int test_query(CORBA::ULong numberOfRecords  = 1000);

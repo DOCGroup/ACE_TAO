@@ -18,10 +18,6 @@ TAO_DynUnion_i::TAO_DynUnion_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynUnion_i::~TAO_DynUnion_i ()
-{
-}
-
 void
 TAO_DynUnion_i::init_common ()
 {

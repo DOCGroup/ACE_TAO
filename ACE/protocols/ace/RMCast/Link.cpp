@@ -197,7 +197,7 @@ namespace ACE_RMCast
 
       Address addr;
 
-      // Block for up to one tick waiting for an incomming message.
+      // Block for up to one tick waiting for an incoming message.
       //
       for (;;)
       {

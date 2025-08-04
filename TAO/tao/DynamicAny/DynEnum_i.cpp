@@ -16,10 +16,6 @@ TAO_DynEnum_i::TAO_DynEnum_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynEnum_i::~TAO_DynEnum_i ()
-{
-}
-
 void
 TAO_DynEnum_i::init_common ()
 {

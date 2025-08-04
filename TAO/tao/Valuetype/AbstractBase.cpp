@@ -253,9 +253,12 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 
           if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
             {
-              TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("operator>> CORBA::AbstractBase ")
-                          ACE_TEXT ("not value_tag\n")));
+              if (TAO_debug_level > 0)
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                              ACE_TEXT ("operator>> CORBA::AbstractBase ")
+                              ACE_TEXT ("not value_tag\n")));
+                }
               return false;
             }
 
@@ -287,9 +290,12 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
           // We should throw an exception, if there were an appropriate one.
           if (factory.in() == 0)
             {
-              TAOLIB_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%N:%l): The following unknown type was received: `%s'."),
-                          repo_id_stream.in ()));
+              if (TAO_debug_level > 0)
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%N:%l): The following unknown type was received: `%s'."),
+                              repo_id_stream.in ()));
+                }
               return false;
             }
 

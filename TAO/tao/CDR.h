@@ -67,6 +67,11 @@ class TAO_ORB_Core;
 class TAO_GIOP_Fragmentation_Strategy;
 class TAO_Stub;
 
+namespace CORBA
+{
+  class ValueBase;
+}
+
 /**
  * @class TAO_OutputCDR
  *
@@ -90,9 +95,11 @@ class TAO_Export TAO_OutputCDR : public ACE_OutputCDR
 public:
   /// For reading from a output CDR stream.
   friend class TAO_InputCDR;
+  typedef ACE_Pointer_Hash<CORBA::ValueBase*> VALUEBASE_HASH;
+  typedef ACE_Equal_To<CORBA::ValueBase*> VALUEBASE_COMP;
   typedef ACE_Hash_Map_Manager<ACE_CString, char*, ACE_Null_Mutex> Repo_Id_Map;
   typedef Repo_Id_Map Codebase_URL_Map;
-  typedef ACE_Hash_Map_Manager<void*, char*, ACE_Null_Mutex> Value_Map;
+  typedef ACE_Hash_Map_Manager_Ex<CORBA::ValueBase*, char*, VALUEBASE_HASH, VALUEBASE_COMP, ACE_Null_Mutex> Value_Map;
 
   typedef TAO_Intrusive_Ref_Count_Object<Repo_Id_Map, ACE_Null_Mutex> RC_Repo_Id_Map;
   typedef TAO_Intrusive_Ref_Count_Object<Codebase_URL_Map, ACE_Null_Mutex> RC_Codebase_URL_Map;

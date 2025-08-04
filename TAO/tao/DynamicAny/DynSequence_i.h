@@ -44,7 +44,7 @@ public:
   TAO_DynSequence_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynSequence_i ();
+  ~TAO_DynSequence_i () = default;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -90,8 +90,8 @@ private:
   void init_common ();
 
   // = Use copy() or assign() instead of these
-  TAO_DynSequence_i (const TAO_DynSequence_i &src);
-  TAO_DynSequence_i &operator= (const TAO_DynSequence_i &src);
+  TAO_DynSequence_i (const TAO_DynSequence_i &src) = delete;
+  TAO_DynSequence_i &operator= (const TAO_DynSequence_i &src) = delete;;
 
 private:
   /// Each component is also a DynAny.

@@ -91,7 +91,7 @@ RtEC_Based_CosEC::startup (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "Starting up the CosEvent Service...\n"));
 
-  // initalize the ORB.
+  // initialize the ORB.
   this->init_ORB (argc, argv);
 
   if (this->parse_args (argc, argv) == -1)

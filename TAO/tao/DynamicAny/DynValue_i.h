@@ -39,7 +39,7 @@ public:
   TAO_DynValue_i (CORBA::Boolean allow_truncation = true);
 
   /// Destructor.
-  ~TAO_DynValue_i ();
+  ~TAO_DynValue_i () = default;
 
   /// Initialize using an Any.
   void init (const CORBA::Any& any);
