@@ -58,39 +58,6 @@ be_visitor_operation::has_param_type (be_operation *node,
   return (node->count_arguments_with_direction (dir) != 0);
 }
 
-size_t
-be_visitor_operation::count_non_out_parameters (be_operation *node)
-{
-  // @@ Once the valuetype issue discussed below is fixed we can
-  //    replace this routine with:
-  //
-  // return node->count_arguments_with_direction (AST_Argument::dir_IN
-  //                                              | AST_Argument::dir_INOUT);
-  //
-  size_t count = 0;
-
-  // Initialize an iterator to iterate thru our scope.
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      be_argument *bd =
-        dynamic_cast<be_argument*> (si.item ());
-
-      // We do not generate insertion operators for valuetypes
-      // yet. Do not include them in the count.
-      be_valuetype *vt =
-        dynamic_cast<be_valuetype*> (bd->field_type ());
-
-      if ((bd->direction () != AST_Argument::dir_OUT) && vt == nullptr)
-        {
-          ++count;
-        }
-    }
-
-  return count;
-}
-
 int
 be_visitor_operation::is_amh_exception_holder (be_interface *node)
 {
@@ -359,45 +326,6 @@ be_visitor_operation::gen_pre_stub_info (
                          "gen_pre_stub_info - "
                          "Exceptionlist generation error\n"),
                         -1);
-    }
-
-  return 0;
-}
-
-int
-be_visitor_operation::gen_raise_interceptor_exception (
-    be_type *bt,
-    const char *excep,
-    const char *completion_status
-  )
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->void_return_type (bt))
-    {
-      *os << "throw " << excep << "(" << completion_status << ");";
-    }
-  else
-    {
-      if (bt->size_type () == AST_Type::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
-              << excep << " (" << be_idt << be_idt_nl
-              << completion_status << be_uidt_nl
-              << ")," << be_uidt_nl
-              <<  "0" << be_uidt_nl
-              << ");" << be_uidt;
-        }
-      else
-        {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
-              << excep << " (" << be_idt << be_idt_nl
-              << completion_status << be_uidt_nl
-              << ")," << be_uidt_nl
-              <<  "_tao_retval" << be_uidt_nl
-              << ");" << be_uidt;
-        }
     }
 
   return 0;
