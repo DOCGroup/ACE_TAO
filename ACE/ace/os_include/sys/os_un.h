@@ -36,9 +36,9 @@ extern "C"
 
 #if defined (ACE_LACKS_SOCKADDR_UN)
   struct  sockaddr_un {
-          u_char  sun_len;                /* sockaddr len including null */
-          u_char  sun_family;             /* AF_UNIX */
-          char    sun_path[104];          /* path name (gag) */
+    u_char  sun_len;                /* sockaddr len including null */
+    u_char  sun_family;             /* AF_UNIX */
+    char    sun_path[104];          /* path name (gag) */
   };
 #endif /* ACE_LACKS_SOCKADDR_UN */
 
