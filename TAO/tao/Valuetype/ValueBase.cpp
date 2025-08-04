@@ -580,7 +580,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
     {
       if (TAO_debug_level > 0)
         {
-          TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) ValueBase::get_value_map returns nil\n")));
+          TAOLIB_ERROR ((LM_ERROR, ACE_TEXT ("TAO (%P|%t) ValueBase::get_value_map returns nil\n")));
         }
       throw CORBA::INTERNAL ();
     }
@@ -651,9 +651,9 @@ CORBA::ValueBase::_tao_unmarshal_repo_id_indirection (TAO_InputCDR &strm,
     }
   else if (TAO_debug_level)
     {
-        TAOLIB_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_repo_id_indirection, found %@=%C\n"),
-          pos, id.c_str ()));
+      TAOLIB_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_repo_id_indirection, found %@=%C\n"),
+        pos, id.c_str ()));
     }
 
   return 1;
