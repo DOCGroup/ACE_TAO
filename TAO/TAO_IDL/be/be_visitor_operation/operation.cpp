@@ -364,45 +364,6 @@ be_visitor_operation::gen_pre_stub_info (
   return 0;
 }
 
-int
-be_visitor_operation::gen_raise_interceptor_exception (
-    be_type *bt,
-    const char *excep,
-    const char *completion_status
-  )
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->void_return_type (bt))
-    {
-      *os << "throw " << excep << "(" << completion_status << ");";
-    }
-  else
-    {
-      if (bt->size_type () == AST_Type::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
-              << excep << " (" << be_idt << be_idt_nl
-              << completion_status << be_uidt_nl
-              << ")," << be_uidt_nl
-              <<  "0" << be_uidt_nl
-              << ");" << be_uidt;
-        }
-      else
-        {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
-              << excep << " (" << be_idt << be_idt_nl
-              << completion_status << be_uidt_nl
-              << ")," << be_uidt_nl
-              <<  "_tao_retval" << be_uidt_nl
-              << ");" << be_uidt;
-        }
-    }
-
-  return 0;
-}
-
 void
 be_visitor_operation::gen_stub_body_arglist (be_operation *node,
                                              TAO_OutStream *os,

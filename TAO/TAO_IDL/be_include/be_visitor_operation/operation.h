@@ -67,14 +67,6 @@ public:
   /// generate any info before the actual code for the stub is generated
   int gen_pre_stub_info (be_operation *node);
 
-  /// helper that generates code for raising an exception within
-  /// interceptor's try block
-  virtual int gen_raise_interceptor_exception (
-      be_type *return_type,
-      const char *exception_name,
-      const char *exception_arguments
-    );
-
   void gen_stub_body_arglist (be_operation *node,
                               TAO_OutStream *os,
                               bool ami = false);
