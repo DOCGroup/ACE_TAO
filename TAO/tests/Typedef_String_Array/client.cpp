@@ -57,7 +57,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ArrayOfString_var the_strings;
       server->get_strings (the_strings.out ());
 
-      for(size_t i = 0; i < 15; i++)
+      for(CORBA::ULong i = 0; i < 15; i++)
         {
           ACE_DEBUG ((LM_DEBUG, "%C\n", the_strings[i].in ()));
         }
