@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN TAO-4.0.4 and TAO-4.0.5
 ====================================================
 
+. Extended DynamicAny and Valuetype logging
+
 USER VISIBLE CHANGES BETWEEN TAO-4.0.3 and TAO-4.0.4
 ====================================================
 
