@@ -50,7 +50,7 @@ SmiUINT32 Counter32::get_syntax()
 
 // general assignment from any Value
 SnmpSyntax& Counter32::operator=( SnmpSyntax &in_val){
-  if ( this == &in_val )        // handle assignement from itself
+  if ( this == &in_val )        // handle assignment from itself
       return *this;
 
   valid_flag = 0;               // will get set true if really valid
