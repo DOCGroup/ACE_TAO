@@ -59,7 +59,7 @@ SnmpSyntax *TimeTicks::clone() const
   return (SnmpSyntax *) new TimeTicks(*this);
 }
 
-// overloaded assignement from ulong
+// overloaded assignment from ulong
 TimeTicks& TimeTicks::operator=( const unsigned long int i)
 {
   smival.value.uNumber =i; return *this;
@@ -74,7 +74,7 @@ TimeTicks& TimeTicks::operator=( const TimeTicks &uli)
 // general assignment from any Value
 SnmpSyntax& TimeTicks::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignement from itself
+  if ( this == &in_val )        // handle assignment from itself
       return *this;
 
   valid_flag = 0;               // will get set true if really valid

@@ -504,7 +504,7 @@ static void TestUdpAddress()
 
   delete ua6; // destructor
 
-  // assignement tests.
+  // assignment tests.
   ua1 = ua2;
   ACE_ASSERT(ua1 == ua2);
   ACE_ASSERT(ua1.valid() == 1);

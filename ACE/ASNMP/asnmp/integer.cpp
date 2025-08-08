@@ -74,7 +74,7 @@ SnmpUInt32& SnmpUInt32::operator=( const unsigned long int i)
 // general assignment from any Value
 SnmpSyntax& SnmpUInt32::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignement from itself
+  if ( this == &in_val )        // handle assignment from itself
       return *this;
 
   valid_flag = 0;               // will get set true if really valid
@@ -179,7 +179,7 @@ SnmpInt32& SnmpInt32::operator=( const SnmpInt32 &uli)
 // general assignment from any Value
 SnmpSyntax& SnmpInt32::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignement from itself
+  if ( this == &in_val )        // handle assignment from itself
       return *this;
 
   valid_flag = 0;               // will get set true if really valid
