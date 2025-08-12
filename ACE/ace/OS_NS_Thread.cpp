@@ -4115,7 +4115,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       if (thr_name && *thr_name && *thr_handle)
         {
-          SetThreadDescription (*thr_handle, ACE_Ascii_To_Wide (*thr_name).wchar_rep ());
+          // SetThreadDescription is not provided in Kernel32.dll on all Windows versions
+          HINSTANCE const kernelbase = ACE_TEXT_LoadLibrary (ACE_TEXT ("KernelBase.dll"));
+
+          if (kernelbase)
+            {
+              typedef HRESULT (WINAPI *FnPtr) (HANDLE, PCWSTR);
+              FnPtr const SetThreadDescription = (FnPtr) GetProcAddress (kernelbase, "SetThreadDescription");
+
+              if (SetThreadDescription)
+                {
+                  SetThreadDescription (*thr_handle, ACE_Ascii_To_Wide (*thr_name).wchar_rep ());
+                }
+              FreeLibrary (kernelbase);
+            }
         }
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY && *thr_handle != 0)
