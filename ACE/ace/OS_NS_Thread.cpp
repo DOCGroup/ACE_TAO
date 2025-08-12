@@ -4113,12 +4113,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                 flags,
                                                 thr_id);
 
-#   ifndef ACE_LACKS_SETTHREADDESCRIPTION
       if (thr_name && *thr_name && *thr_handle)
         {
           SetThreadDescription (*thr_handle, ACE_Ascii_To_Wide (*thr_name).wchar_rep ());
         }
-#   endif
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY && *thr_handle != 0)
         {

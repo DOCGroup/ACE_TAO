@@ -990,8 +990,6 @@ ACE_LACKS_SETDETACH                     Platform lacks
 ACE_LACKS_SETSCHED                      Platform lacks
                                         pthread_attr_setsched()
                                         (e.g. MVS)
-ACE_LACKS_SETTHREADDESCRIPTION          Platform lacks SetThreadDescription
-                                        (e.g. Windows Server 2016)
 ACE_LACKS_SIGACTION                     Platform lacks struct
                                         sigaction (e.g., Win32 and
                                         Chorus)
