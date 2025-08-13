@@ -194,6 +194,7 @@ Stack_Size_Check::svc ()
 int
 Stack_Size_Check::open (void *)
 {
+  const char *names[] = {"Stack_Size_Check"};
   if (this->activate (THR_NEW_LWP | THR_JOINABLE,
                       1,
                       0,
@@ -202,7 +203,9 @@ Stack_Size_Check::open (void *)
                       0,
                       0,
                       0,
-                      &stack_size_) == -1)
+                      &stack_size_,
+                      0,
+                      names) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("Stack_Size_Check activate failed")),
