@@ -41,7 +41,7 @@ TAO_Thread_Per_Connection_Handler::activate_ch (long flags,
     {
       ACE_CString buffer = "          ";
       ACE_OS::itoa (static_cast<ACE_INT32> (i), &buffer[0], 10);
-      names.push_back ("TAO_Thread_Per_Connection_Handler " + buffer);
+      names.push_back ("TAO " + buffer);
     }
 
   ACE_Vector<const char *> thread_names (n_threads);
