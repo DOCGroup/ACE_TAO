@@ -194,7 +194,7 @@ Stack_Size_Check::svc ()
 int
 Stack_Size_Check::open (void *)
 {
-  const char *names[] = {"Stack_Size_Check"};
+  const char *names[] = {"StackSizeCheck"};
   if (this->activate (THR_NEW_LWP | THR_JOINABLE,
                       1,
                       0,
