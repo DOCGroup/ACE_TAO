@@ -83,12 +83,16 @@ jobs:
             os: ubuntu-24.04
           - CC: clang-20
             CXX: clang++-20
+            PackageDeps: clang-20
+            Repo: llvm-toolchain-noble-20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-24.04
           - feature: c++23
             CC: clang-20
             CXX: clang++-20
             optional_macros: c++std=c++23
+            PackageDeps: clang-20
+            Repo: llvm-toolchain-noble-20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-24.04
           - feature: CORBA/e micro
