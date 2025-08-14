@@ -85,7 +85,7 @@ jobs:
             CXX: clang++-20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-24.04
-          - feature: clang-20-c++23
+          - feature: c++23
             CC: clang-20
             CXX: clang++-20
             optional_macros: c++std=c++23
