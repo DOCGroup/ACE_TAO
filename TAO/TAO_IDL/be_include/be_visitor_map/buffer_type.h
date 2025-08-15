@@ -13,8 +13,8 @@
 //=============================================================================
 
 
-#ifndef _BE_VISITOR_MAP_BUFFER_TYPE_H_
-#define _BE_VISITOR_MAP_BUFFER_TYPE_H_
+#ifndef BE_VISITOR_MAP_BUFFER_TYPE_H_
+#define BE_VISITOR_MAP_BUFFER_TYPE_H_
 
 /**
  * @class be_visitor_map_buffer_type
@@ -58,7 +58,7 @@ public:
 
 protected:
   /// helper that does the common job
-  int visit_node (be_type *);
+  int visit_node (be_type *node, bool var = false);
 };
 
-#endif /* _BE_VISITOR_MAP_BUFFER_TYPE_H_ */
+#endif
