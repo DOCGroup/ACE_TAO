@@ -3744,7 +3744,7 @@ TAO_CodeGen::make_rand_extension (char * const t)
   // e.g.: MAX_VAL * rand() / (RAND_MAX + 1.0)
 
   // Factor out the constant coefficient.
-  float const coefficient = static_cast<float> (MAX_VAL / (RAND_MAX + 1.0f));
+  float const coefficient = static_cast<float> (MAX_VAL / static_cast<float> (RAND_MAX + 1.0f));
 
   for (size_t n = 0; n < NUM_CHARS; ++n)
     {
