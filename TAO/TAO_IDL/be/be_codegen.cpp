@@ -27,7 +27,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Numeric_Limits.h"
-#include <cctype>
 
 TAO_CodeGen * tao_cg = nullptr;
 
@@ -3727,38 +3726,22 @@ TAO_CodeGen::make_rand_extension (char * const t)
   // static_cast<> to an integral type.
   unsigned int seed = static_cast<unsigned int> (msec);
 
-  // We only care about ASCII characters in generated filenames.
-  //
-  // Note that we can't make this constant static since the compiler
-  // may not inline the return value of ACE_Numeric_Limits::max(),
-  // meaning multiple threads could potentially initialize this value
-  // in parallel.
-  float const MAX_VAL = static_cast<float> (ACE_Numeric_Limits<char>::max ());
-
-  // Use high-order bits rather than low-order ones (e.g. rand() %
-  // MAX_VAL).  See Numerical Recipes in C: The Art of Scientific
-  // Computing (William  H. Press, Brian P. Flannery, Saul
-  // A. Teukolsky, William T. Vetterling; New York: Cambridge
-  // University Press, 1992 (2nd ed., p. 277).
-  //
-  // e.g.: MAX_VAL * rand() / (RAND_MAX + 1.0)
-
-  // Factor out the constant coefficient.
-  float const coefficient = static_cast<float> (MAX_VAL / static_cast<float> (RAND_MAX + 1.0f));
+  // Strict ASCII alphabet (uppercase letters and digits), independent of locale.
+  static constexpr char ALPHABET[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  static constexpr int ALEN = static_cast<int>(sizeof(ALPHABET) - 1); // no '\0'
 
   for (size_t n = 0; n < NUM_CHARS; ++n)
     {
-      unsigned char r {};
-
-      // This do/while() loop allows this alphanumeric character
-      // selection to work for EBCDIC, as well.
+      unsigned int r32 = 0;
+      // Rejection sampling to avoid modulo bias.
+      unsigned int const limit = (static_cast<unsigned int>(RAND_MAX) / ALEN) * ALEN;
       do
         {
-          r = static_cast<unsigned char> (coefficient * ACE_OS::rand_r (&seed));
+          r32 = static_cast<unsigned int>(ACE_OS::rand_r(&seed));
         }
-      while (!std::isalnum (r));
+      while (r32 >= limit);
 
-      t[n] = static_cast<char> (std::toupper (r));
+      t[n] = ALPHABET[r32 % ALEN];
     }
 }
 
