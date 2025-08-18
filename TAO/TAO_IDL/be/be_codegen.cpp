@@ -27,6 +27,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Numeric_Limits.h"
+#include <cctype>
 
 TAO_CodeGen * tao_cg = nullptr;
 
@@ -3726,19 +3727,13 @@ TAO_CodeGen::make_rand_extension (char * const t)
   // static_cast<> to an integral type.
   unsigned int seed = static_cast<unsigned int> (msec);
 
-  // We only care about UTF-8 / ASCII characters in generated
-  // filenames.  A UTF-16 or UTF-32 character could potentially cause
-  // a very large space to be searched in the below do/while() loop,
-  // greatly slowing down this mkstemp() implementation.  It is more
-  // practical to limit the search space to UTF-8 / ASCII characters
-  // (i.e. 127 characters).
+  // We only care about ASCII characters in generated filenames.
   //
   // Note that we can't make this constant static since the compiler
   // may not inline the return value of ACE_Numeric_Limits::max(),
   // meaning multiple threads could potentially initialize this value
   // in parallel.
-  float const MAX_VAL =
-    static_cast<float> (ACE_Numeric_Limits<char>::max ());
+  float const MAX_VAL = static_cast<float> (ACE_Numeric_Limits<char>::max ());
 
   // Use high-order bits rather than low-order ones (e.g. rand() %
   // MAX_VAL).  See Numerical Recipes in C: The Art of Scientific
@@ -3749,22 +3744,21 @@ TAO_CodeGen::make_rand_extension (char * const t)
   // e.g.: MAX_VAL * rand() / (RAND_MAX + 1.0)
 
   // Factor out the constant coefficient.
-  float const coefficient =
-    static_cast<float> (MAX_VAL / static_cast<float> (RAND_MAX) + 1.0f);
+  float const coefficient = static_cast<float> (MAX_VAL / (RAND_MAX + 1.0f));
 
-  for (unsigned int n = 0; n < NUM_CHARS; ++n)
+  for (size_t n = 0; n < NUM_CHARS; ++n)
     {
-      ACE_TCHAR r;
+      unsigned char r {};
 
       // This do/while() loop allows this alphanumeric character
       // selection to work for EBCDIC, as well.
       do
         {
-          r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (&seed));
+          r = static_cast<unsigned char> (coefficient * ACE_OS::rand_r (&seed));
         }
-      while (!ACE_OS::ace_isalnum (r));
+      while (!std::isalnum (r));
 
-      t[n] = static_cast<char> (ACE_OS::ace_toupper (r));
+      t[n] = static_cast<char> (std::toupper (r));
     }
 }
 
@@ -3784,8 +3778,7 @@ TAO_CodeGen::gen_conn_ts_includes (
        i.advance ())
     {
       i.next (tmp);
-      this->gen_standard_include (this->ciao_conn_header_,
-                                  *tmp);
+      this->gen_standard_include (this->ciao_conn_header_, *tmp);
     }
 }
 
