@@ -1148,8 +1148,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // e.g.: MAX_VAL * rand() / (RAND_MAX + 1.0)
 
   // Factor out the constant coefficient.
-  float const coefficient =
-    static_cast<float> (MAX_VAL / (RAND_MAX + 1.0f));
+  float const coefficient = static_cast<float> (MAX_VAL / (RAND_MAX + 1.0f));
 
   // @@ These nested loops may be ineffecient.  Improvements are
   //    welcome.
