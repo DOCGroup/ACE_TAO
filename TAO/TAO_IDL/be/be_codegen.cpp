@@ -3730,11 +3730,11 @@ TAO_CodeGen::make_rand_extension (char * const t)
   static constexpr char ALPHABET[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   static constexpr int ALEN = static_cast<int>(sizeof(ALPHABET) - 1); // no '\0'
 
+  unsigned int const limit = (static_cast<unsigned int>(RAND_MAX) / ALEN) * ALEN;
   for (size_t n = 0; n < NUM_CHARS; ++n)
     {
       unsigned int r32 = 0;
       // Rejection sampling to avoid modulo bias.
-      unsigned int const limit = (static_cast<unsigned int>(RAND_MAX) / ALEN) * ALEN;
       do
         {
           r32 = static_cast<unsigned int>(ACE_OS::rand_r(&seed));
