@@ -24,6 +24,7 @@
 #include "tao/String_Traits_Base_T.h"
 
 #include <algorithm>
+#include <functional>
 
 /****************************************************************/
 
@@ -144,6 +145,29 @@ inline bool operator< (const TAO::WString_Manager &lhs, const TAO::WString_Manag
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace std
+{
+
+  template <>
+  struct less<TAO::String_Manager> {
+    bool operator () (TAO::String_Manager const &lhs, TAO::String_Manager const &rhs) const
+    {
+      using ::operator<;
+      return lhs < rhs;
+    }
+  };
+
+  template <>
+  struct less<TAO::WString_Manager> {
+    bool operator () (TAO::WString_Manager const &lhs, TAO::WString_Manager const &rhs) const
+    {
+      using ::operator<;
+      return lhs < rhs;
+    }
+  };
+
+}
 
 #include /**/ "ace/post.h"
 #endif /* TAO_STRING_MANAGER_T */

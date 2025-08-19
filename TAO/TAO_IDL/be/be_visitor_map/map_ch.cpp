@@ -45,7 +45,7 @@ int be_visitor_map_ch::visit_map (be_map *node)
 
   *os << be_nl_2;
 
-  *os << "using " << node->local_name () << " = std::map<";
+  *os << "using " << node->local_name () << " = std::map< ";
 
   be_type* kt = node->key_type();
   be_type* vt = node->value_type();
