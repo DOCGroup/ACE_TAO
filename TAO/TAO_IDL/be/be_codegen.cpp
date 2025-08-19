@@ -3708,10 +3708,11 @@ TAO_CodeGen::make_rand_extension (char * const t)
   size_t const length = ACE_OS::strlen (t);
   std::random_device rd;  // non-deterministic generator
   std::mt19937 gen(rd()); // mersenne twister engine
-  std::uniform_int_distribution<> dist('A', 'Z'); // range: ascii A-Z
+  char constexpr alphabet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  std::uniform_int_distribution<size_t> dist(0, sizeof(alphabet) - 2); // exclude null
 
-  for (std::size_t i = 0; i < length; ++i) {
-      t[i] = static_cast<char>(dist(gen));
+  for (size_t i = 0; i < length; ++i) {
+      t[i] = alphabet[dist(gen)];
   }
 }
 
