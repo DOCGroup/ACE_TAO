@@ -27,6 +27,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Numeric_Limits.h"
+#include <random>
 
 TAO_CodeGen * tao_cg = nullptr;
 
@@ -3705,44 +3706,15 @@ TAO_CodeGen::gen_ami_conn_idl_includes ()
 void
 TAO_CodeGen::make_rand_extension (char * const t)
 {
-  size_t const NUM_CHARS = ACE_OS::strlen (t);
+  // random device and engine
+  size_t const length = ACE_OS::strlen (t);
+  std::random_device rd;  // non-deterministic generator
+  std::mt19937 gen(rd()); // mersenne twister engine
+  std::uniform_int_distribution<> dist('A', 'Z'); // range: ascii A-Z
 
-  /// Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
-  /// ACE_Time_Value::msec() to avoid truncation.
-  ACE_UINT64 msec;
-
-  /// Use a const ACE_Time_Value to resolve ambiguity between
-  /// ACE_Time_Value::msec (long) and ACE_Time_Value::msec(ACE_UINT64&) const.
-  ACE_Time_Value const now = ACE_OS::gettimeofday ();
-  now.msec (msec);
-
-  /// Add the process and thread ids to ensure uniqueness. Must use
-  // C-style cast, since thr_self() returns a pointer on some platforms.
-  msec += ACE_OS::getpid ();
-  msec += (size_t) ACE_OS::thr_self ();
-
-  // ACE_thread_t may be a char* (returned by ACE_OS::thr_self()) so
-  // we need to use a C-style cast as a catch-all in order to use a
-  // static_cast<> to an integral type.
-  unsigned int seed = static_cast<unsigned int> (msec);
-
-  // Strict ASCII alphabet (uppercase letters and digits), independent of locale.
-  static constexpr char ALPHABET[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  static constexpr int ALEN = static_cast<int>(sizeof(ALPHABET) - 1); // no '\0'
-
-  unsigned int const limit = (static_cast<unsigned int>(RAND_MAX) / ALEN) * ALEN;
-  for (size_t n = 0; n < NUM_CHARS; ++n)
-    {
-      unsigned int r32 = 0;
-      // Rejection sampling to avoid modulo bias.
-      do
-        {
-          r32 = static_cast<unsigned int>(ACE_OS::rand_r(&seed));
-        }
-      while (r32 >= limit);
-
-      t[n] = ALPHABET[r32 % ALEN];
-    }
+  for (std::size_t i = 0; i < length; ++i) {
+      t[i] = static_cast<char>(dist(gen));
+  }
 }
 
 void
