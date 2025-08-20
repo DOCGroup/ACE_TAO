@@ -602,7 +602,7 @@ be_visitor_field_ch::visit_union (be_union *node)
   // is necessary if the struct, union, or valuetype containing this
   // field was not defined inside a module. In such a case, VC++
   // complains that the non-module scope is not yet fully defined.
-  UTL_Scope *holds_container =\
+  UTL_Scope *holds_container =
     this->ctx_->scope ()->decl ()->defined_in ();
   AST_Decl *hc_decl = ScopeAsDecl (holds_container);
 

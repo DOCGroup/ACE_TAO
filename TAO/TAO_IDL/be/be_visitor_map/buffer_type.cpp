@@ -14,10 +14,8 @@
 // We have to generate the buffer type in the constructor
 // ****************************************************************
 
-be_visitor_map_buffer_type::be_visitor_map_buffer_type (
-      be_visitor_context *ctx
-  )
-  : be_visitor_decl(ctx)
+be_visitor_map_buffer_type::be_visitor_map_buffer_type (be_visitor_context *ctx)
+  : be_visitor_decl (ctx)
 {
 }
 
@@ -26,53 +24,37 @@ be_visitor_map_buffer_type::~be_visitor_map_buffer_type ()
 }
 
 int
-be_visitor_map_buffer_type::visit_node (be_type *node)
+be_visitor_map_buffer_type::visit_node (be_type *node, bool var)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  TAO_OutStream *const os = this->ctx_->stream ();
 
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
+  be_typedef *const td = this->ctx_->alias ();
+  be_type *const bt = td ? static_cast<be_type *> (td) : node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_MAP_BUFFER_TYPE_CH)
-    {
-      *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
-    }
-  else
-    {
-      *os << bt->name ();
-    }
-
+  *os << bt->nested_type_name (this->ctx_->scope ()->decl (), var ? "_var" : 0);
   return 0;
 }
 
 int
 be_visitor_map_buffer_type::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  TAO_OutStream *const os = this->ctx_->stream ();
 
-  *os << "::";
+  be_typedef *const td = this->ctx_->alias ();
+  be_type *const bt = td ? static_cast<be_type *> (td) : node;
 
-  if (pt == AST_PredefinedType::PT_pseudo
-      || pt == AST_PredefinedType::PT_object
-      || pt == AST_PredefinedType::PT_abstract)
+  *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
+
+  switch (node->pt ())
     {
-      *os << node->name () << "_ptr";
-    }
-  else if (pt == AST_PredefinedType::PT_value)
-    {
-       *os << node->name () << " *";
-    }
-  else
-    {
-      *os << node->name ();
+      case AST_PredefinedType::PT_object:
+      case AST_PredefinedType::PT_abstract:
+      case AST_PredefinedType::PT_pseudo:
+      case AST_PredefinedType::PT_value:
+        *os << "_var";
+        break;
+      default:
+        break;
     }
 
   return 0;
@@ -82,42 +64,19 @@ be_visitor_map_buffer_type::visit_predefined_type (be_predefined_type *node)
 int
 be_visitor_map_buffer_type::visit_sequence (be_sequence *node)
 {
-  return this->visit_node(node);
+  return this->visit_node (node);
 }
 
 int
 be_visitor_map_buffer_type::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
-    {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (),
-                                     "_ptr");
-    }
-  else
-    {
-      *os << node->name () << "_ptr";
-    }
-
-  return 0;
+  return this->visit_node (node, true);
 }
 
 int
 be_visitor_map_buffer_type::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
-    {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (), "_ptr");
-    }
-  else
-    {
-      *os << node->name () << "_ptr";
-    }
-
-  return 0;
+  return this->visit_node (node, true);
 }
 
 int
@@ -135,52 +94,19 @@ be_visitor_map_buffer_type::visit_component_fwd (be_component_fwd *node)
 int
 be_visitor_map_buffer_type::visit_valuebox (be_valuebox *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
-    {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (), " *");
-    }
-  else
-    {
-      *os << node->name () << " *";
-    }
-
-  return 0;
+  return this->visit_node (node, true);
 }
 
 int
 be_visitor_map_buffer_type::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
-    {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (), " *");
-    }
-  else
-    {
-      *os << node->name () << " *";
-    }
-
-  return 0;
+  return this->visit_node (node, true);
 }
 
 int
 be_visitor_map_buffer_type::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
-    {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (), " *");
-    }
-  else
-    {
-      *os << node->name () << " *";
-    }
-
-  return 0;
+  return this->visit_node (node, true);
 }
 
 int
@@ -198,16 +124,8 @@ be_visitor_map_buffer_type::visit_eventtype_fwd (be_eventtype_fwd *node)
 int
 be_visitor_map_buffer_type::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (node->width () == (long) sizeof (char))
-    {
-      *os << "const ::CORBA::Char *";
-    }
-  else
-    {
-      *os << "const ::CORBA::WChar *";
-    }
+  *this->ctx_->stream () <<
+    (node->width () == 1 ? "::TAO::String_Manager" : "::TAO::WString_Manager");
 
   return 0;
 }
@@ -272,6 +190,7 @@ be_visitor_map_buffer_type::visit_typedef (be_typedef *node)
   return 0;
 }
 
-int be_visitor_map_buffer_type::visit_map (be_map *node) {
-  return this->visit_node(node);
+int be_visitor_map_buffer_type::visit_map (be_map *node)
+{
+  return this->visit_node (node);
 }
