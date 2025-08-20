@@ -3,6 +3,11 @@ USER VISIBLE CHANGES BETWEEN TAO-4.0.4 and TAO-4.0.5
 
 . Extended DynamicAny and Valuetype logging
 
+. Updated tao_idl code generation for IDL maps
+
+. Threads created by TAO_Thread_Per_Connection_Handler now have shorter
+  names because Linux limits thread names to 15 characters.
+
 USER VISIBLE CHANGES BETWEEN TAO-4.0.3 and TAO-4.0.4
 ====================================================
 
