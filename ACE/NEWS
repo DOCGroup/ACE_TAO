@@ -7,6 +7,8 @@ USER VISIBLE CHANGES BETWEEN ACE-8.0.4 and ACE-8.0.5
 
 . Fixed compile errors when C++23 is enabled
 
+. Updated thread name support to work with older Windows versions
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.3 and ACE-8.0.4
 ====================================================
 
