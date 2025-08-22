@@ -1,0 +1,439 @@
+commit d65644c0b26a35e8fce8fd50ca296b95053a2eb4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Aug 20 14:17:26 2025 -0500
+
+    NEWS updates
+
+commit 9a24f08c0a33fd101138404363efc5d9a97fa07c
+Merge: 9af84b93203 0e4e3d9dcf3
+Author: Justin Wilson <wilsonj@objectcomputing.com>
+Date:   Mon Aug 18 13:44:52 2025 -0500
+
+    Merge pull request #2451 from mitza-oci/thread-names
+    
+    Thread names on Linux are limited to 15 characters
+
+commit e56346caa86ad363bbd7c5e16f5cc08082fc3977
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 18 10:54:38 2025 +0200
+
+    Layout change
+    
+        * ACE/ace/OS_NS_stdlib.cpp:
+
+commit 0e4e3d9dcf39d8b00cd7a95eb1f5428f576fe912
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 14 17:01:17 2025 +0000
+
+    Thread names on Linux are limited to 15 characters
+
+commit b1ff98388fc6bcc16f7539d69a768a5a4c5fa691
+Merge: 16d4247b4c3 4f14f2fc490
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Aug 13 13:00:27 2025 -0500
+
+    Merge pull request #2447 from mitza-oci/windows-thread-names
+    
+    Runtime linking for Windows thread names
+
+commit 4f14f2fc490d2bc5995546028c5dcc33aa681072
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 12 09:24:16 2025 -0500
+
+    SetThreadDescription with runtime linking
+
+commit d56e728a44a1a8093064a86fc5725b9ec5b5c7cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 8 10:35:02 2025 +0200
+
+    Fixed typo in comment
+    
+        * ACE/ASNMP/asnmp/counter.cpp:
+        * ACE/ASNMP/asnmp/gauge.cpp:
+        * ACE/ASNMP/asnmp/integer.cpp:
+        * ACE/ASNMP/asnmp/timetick.cpp:
+        * ACE/ASNMP/tests/Address_Test.cpp:
+
+commit 47be36a50b541aba5514aa40ecdb26a4a24ed1cc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 7 09:36:35 2025 +0200
+
+    Update NEWS
+
+commit 51a1980fd1522d9521fe6f605de35323c324bfe7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 4 10:28:10 2025 +0200
+
+    Reduced indent
+    
+        * ACE/ace/os_include/sys/os_un.h:
+
+commit 0529423b0590918da261fc99dbb22badf09c3650
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 4 10:27:34 2025 +0200
+
+    Put sockaddr_un in the correct header, fixed #2341
+    
+        * ACE/ace/os_include/netinet/os_in.h:
+        * ACE/ace/os_include/sys/os_un.h:
+
+commit b68236d20bfed521567dcffddc90f4737cffa2d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 14:56:12 2025 +0200
+
+    Fixed typos
+
+commit 0f9c88d1b7fbaae05b701c15fc1bc877b170ec47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 31 19:23:06 2025 +0200
+
+    Fixed various typos
+    
+        * ACE/ASNMP/asnmp/transaction.cpp:
+        * ACE/protocols/ace/RMCast/Link.cpp:
+        * TAO/docs/Options.html:
+        * TAO/orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
+        * TAO/orbsvcs/tests/Miop/McastFragmentation/server.cpp:
+        * TAO/orbsvcs/tests/Miop/McastPreferredInterfaces/run_test_ipv6.pl:
+        * TAO/tao/DynamicAny/DynCommon.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tests/MT_NoUpcall_Client_Leader/README:
+        * TAO/tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h:
+        * TAO/utils/nslist/nsdel.cpp:
+
+commit c81f97706a45e14d6a8fd59738e7fae306467240
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 31 14:31:57 2025 +0200
+
+    Reworked CDR ValueType and DynValue indirections, lot of ugly casting and also different order of arguments, something pretty messy here
+    
+        * ACE/bin/fuzz.pl:
+        * ACE/tests/Bug_3332_Regression_Test.cpp:
+        * TAO/docs/Options.html:
+        * TAO/orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/CDR.inl:
+        * TAO/tao/DynamicAny/DynAnyFactory.cpp:
+        * TAO/tao/DynamicAny/DynAnyFactory.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/Valuetype/ValueBase.cpp:
+        * TAO/tao/Valuetype/ValueBase.h:
+        * TAO/tests/Bug_4097_Regression/README:
+
+commit bb2d699356f248673cb6885eb7983c2aa02cde69
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 29 11:04:24 2025 +0200
+
+    Fixed test output, use nullptr, fixed typo in comments
+    
+        * ACE/tests/Time_Value_Test.cpp:
+        * TAO/tao/DynamicAny/DynAnyUtils_T.cpp:
+        * TAO/tao/DynamicAny/DynAny_i.h:
+        * TAO/tao/DynamicAny/DynArray_i.h:
+        * TAO/tao/DynamicAny/DynEnum_i.h:
+        * TAO/tao/DynamicAny/DynStruct_i.h:
+        * TAO/tao/DynamicAny/DynUnion_i.h:
+        * TAO/tao/DynamicAny/DynValueBox_i.h:
+        * TAO/tao/DynamicAny/DynValueCommon_i.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.h:
+        * TAO/tests/DynValue_Test/Analyzer.h:
+
+commit a569ec3f083caa2787f63267f974f66819f75527
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 28 08:20:27 2025 +0200
+
+    Add back casts for msvc, only the const cast was not necessary
+    
+        * ACE/ace/Time_Value.inl:
+
+commit c716dddc70181883d5ad014636ddbf7511e2c9c7
+Merge: 520d39ebafe 7130ceae4a3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 27 15:56:28 2025 +0200
+
+    Merge branch 'jwi-timevaluebcc64x2' of https://github.com/jwillemsen/ATCD into jwi-timevaluebcc64x2
+
+commit 520d39ebafef94c25228567816a3e05840473927
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 27 15:56:19 2025 +0200
+
+    Removed unncessary const casts
+    
+        * ACE/ace/Time_Value.inl:
+
+commit 7130ceae4a36dcd0e9345cc702f3488ae46d4aa8
+Merge: deddca35e73 e19f8f8cd90
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 27 15:11:57 2025 +0200
+
+    Merge branch 'master' into jwi-timevaluebcc64x2
+
+commit deddca35e736fd0db4c7ba4445fb5cded3b6881f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 27 15:10:26 2025 +0200
+
+    Fixed runtime crashes when using ACE_Time_Value::zero
+    
+        * ACE/ace/Time_Value.h:
+        * ACE/ace/config-win32-borland.h:
+
+commit ed9030438e89bf72d69a17e3d9de1366034e6a0f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 26 11:02:49 2025 +0200
+
+    Correct test
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit 4a6babf9d6936bf694a936c5e9bda7e904eca05c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 26 10:49:48 2025 +0200
+
+    Test whether time_t is correctly converted to year/month, also with dates after 2038 which requires a 64bit time_t
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit 5a468cb08a691efd907a78d2ff05d41faf7179aa
+Merge: 7b35bbfabcd 18aa516f2a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 25 16:50:39 2025 +0200
+
+    Merge branch 'master' into jwi-ACE_HAS_TIME_T_LONG_MISMATCH
+
+commit 18aa516f2a570a975de7924c2592827a01fe0990
+Merge: 780c0e991c8 6e9a5a30422
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 25 09:41:19 2025 -0500
+
+    Merge pull request #2430 from mitza-oci/ace-android-tests
+    
+    Updated ACE tests for Android NDK's Clang
+
+commit 7b35bbfabcd47393398520295bb98d68d4d65840
+Merge: fc9a572d633 780c0e991c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 25 16:25:05 2025 +0200
+
+    Merge branch 'master' into jwi-ACE_HAS_TIME_T_LONG_MISMATCH
+
+commit 8e6ef75d7c022af30f8fa2c6743e7fa61e513712
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 25 13:45:08 2025 +0200
+
+    Revert change
+    
+        * ACE/ace/OS_NS_sys_select.inl:
+
+commit 74f37c632e895c0f829e9cf61bfb854a7dff2397
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 25 13:42:39 2025 +0200
+
+    Rename function
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit fc9a572d63385971b52038089aa644a55a7f8b07
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 25 13:38:03 2025 +0200
+
+    Removed ACE_HAS_TIME_T_LONG_MISMATCH
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit c1627cc0fe45e1e72ebec14deb71f6323d1f552e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 25 13:25:52 2025 +0200
+
+    Some more tracing
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit fe2477b5130ebc1fcba5adba56d1e432d94a76dd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 25 13:06:04 2025 +0200
+
+    Extend with timeval conversion test
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit 7573fc14c6eecf0df369ab45be4a100e3ca86b93
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 25 13:05:50 2025 +0200
+
+    Use nullptr/std::addressof
+    
+        * ACE/ace/OS_NS_sys_select.inl:
+
+commit 6e9a5a3042268bd857fbfc1f737cf2e6472e0d06
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Jul 23 08:42:57 2025 -0500
+
+    Updated ACE tests for Android NDK's Clang
+    
+    Avoids errors and warnings on this platform
+
+commit aa043304d54901fcc17f536773028173b9a26715
+Merge: 372e143e5c4 ffa2efd1ac2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 13 18:28:44 2025 +0200
+
+    Fixed merge
+
+commit 372e143e5c44ec2d6d97d518294cc98be42513c4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 13 18:27:13 2025 +0200
+
+    Use namespace instead of class
+    
+        * ACE/apps/JAWS/server/HTTP_Server.cpp:
+
+commit ffa2efd1ac246ab6a04abdde5c851ad01a415151
+Merge: 967c63a9f1d 136369a852c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 13 18:23:24 2025 +0200
+
+    Merge pull request #2425 from jwillemsen/jwi-cdrconstants
+    
+    Use static constexpr for some of our constants instead of an anonymou…
+
+commit 967c63a9f1d3ae9668aeb145b6ec5c10420d7c1b
+Merge: c04ec6b589a 160e1328e6e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 11 13:42:44 2025 +0200
+
+    Merge pull request #2427 from jwillemsen/jwi-jawsenum
+    
+    Use static constexpr instead of anonymous enums
+
+commit 160e1328e6e807e9419c280a841d4d2f5614cbaf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 11 10:24:17 2025 +0200
+
+    Update ACE/apps/JAWS/server/HTTP_Server.cpp
+    
+    Co-authored-by: coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
+
+commit 3d3875c2edccd374a0346a54bbda22030b0d352f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 11 09:47:04 2025 +0200
+
+    Use static constexpr instead of anonymous enums
+    
+        * ACE/apps/JAWS/server/HTTP_Server.cpp:
+
+commit 272e0a382d3d116f18a4b9766e3de6ad4c450b58
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 10 10:14:11 2025 +0200
+
+    Removed volatile as it gives compile warnins with C++23
+    
+        * ACE/tests/Bug_3943_Regression_Test.cpp:
+
+commit 5433837076a694bc8a1187fd75268d3c0a77ab9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 10 10:03:01 2025 +0200
+
+    Use static constexpr for some of our constants instead of an anonymous enum
+    
+        * ACE/ace/CDR_Base.h:
+
+commit 2adb98142de3e8a477b4c3117573f58022207783
+Merge: 95f02d26406 a89e1486a0a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 9 12:14:26 2025 +0200
+
+    Merge pull request #2422 from jwillemsen/jwi-imrorbrunner
+    
+    Put ImR_Activator_ORB_Runner into its own file, use make_unique, fix C++23 warnings
+
+commit 2687d6b75fa140d4117fb40bfb423aad60257b5f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 9 10:12:59 2025 +0200
+
+    Removed volatile, causes warnings with C++23
+
+commit c4bf9d4c4b3d4df939e2c14d1afcbe8cdd837a76
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 8 11:07:07 2025 +0200
+
+    Set C++17 as C++ level for the preprocessor
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit d47df969598a7bbd32b1671f0191182e55582940
+Merge: 68dc5c407c6 cdfa7a55b02
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jul 7 13:41:00 2025 -0500
+
+    Merge pull request #2416 from iguessthislldo/igtd/android
+    
+    Fixed building ACE for Android with `uses_wchar=1`
+
+commit 88cac2f602289110d76d6282a010b395d1770587
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 7 16:30:33 2025 +0200
+
+    Use constexpr, size_t
+    
+        * ACE/tests/Memcpy_Test.cpp:
+
+commit c16a3afc0b0c473c58b19e622d9d3860f5a1f810
+Merge: 51dbde59567 552fbb824e7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 7 16:23:31 2025 +0200
+
+    Merge branch 'master' into jwi-memcpyconstexrp
+
+commit 51dbde595675c0f4b08ff61d894df719942185f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 7 16:22:23 2025 +0200
+
+    Use constexpr for constant instead of enum
+    
+        * ACE/tests/Memcpy_Test.cpp:
+
+commit 552fbb824e7a0eebef7411f0c52b4859f13f000e
+Merge: 90630ff6d3e 444713baa2c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 7 10:55:07 2025 +0200
+
+    Merge pull request #2418 from jwillemsen/jwi-stdptrdifft
+    
+    Add missing explicit include of cstddef for std::ptrdiff_t
+
+commit 444713baa2c96f6a3f63e3f2a5fcadcbc2c18a36
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 7 09:31:54 2025 +0200
+
+    Add missing explicit incluce of cstddef for std::ptrdiff_t
+    
+        * ACE/ace/Malloc_Base.h:
+
+commit cdfa7a55b0267d2efcc2986f08beb534435f9897
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 3 15:14:59 2025 -0500
+
+    Fixed building ACE for Android with `uses_wchar=1`
+    
+    https://github.com/DOCGroup/ACE_TAO/issues/2415
+
+commit 1b749db526df3d38bbe3f0328986060758aa0401
+Author: Olli Savia <ops@iki.fi>
+Date:   Wed Jul 2 11:04:48 2025 +0300
+
+    Coding style fix
+
+commit 2176cc773a30072a0a43967d66ea4e992538d03e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 26 11:21:44 2025 +0200
+
+    Make ACE 8.0.4 and TAO 4.0.4 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

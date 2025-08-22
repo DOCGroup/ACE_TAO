@@ -4,9 +4,9 @@
 
 #define TAO_MAJOR_VERSION 4
 #define TAO_MINOR_VERSION 0
-#define TAO_MICRO_VERSION 4
-#define TAO_VERSION "4.0.4"
-#define TAO_VERSION_CODE 0x40004
+#define TAO_MICRO_VERSION 5
+#define TAO_VERSION "4.0.5"
+#define TAO_VERSION_CODE 0x40005
 #if !defined (TAO_PATCH)
 # define TAO_PATCH ""
 #endif

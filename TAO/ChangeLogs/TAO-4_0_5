@@ -1,0 +1,467 @@
+commit e33055948f4b9cb2c5d0bbc15a62395cfb81ab0f
+Merge: 58298cb1213 d65644c0b26
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 21 08:07:21 2025 -0500
+
+    Merge pull request #2456 from mitza-oci/master
+    
+    NEWS updates
+
+commit d65644c0b26a35e8fce8fd50ca296b95053a2eb4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Aug 20 14:17:26 2025 -0500
+
+    NEWS updates
+
+commit 58298cb1213c21ae1b7fad4b3c5660236f651418
+Merge: d6633a5abf0 0e1cf0cceb1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 19 19:12:19 2025 +0200
+
+    Merge pull request #2453 from jwillemsen/jwi-taoidlcharextension
+    
+    tao_idl, generate always a char include guard extension
+
+commit d6633a5abf0700576cb5760e7c80e3664591c26a
+Merge: 9a24f08c0a3 46f22a7d8d7
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 19 11:53:39 2025 -0500
+
+    Merge pull request #2452 from mitza-oci/tao_idl_map
+    
+    Updated tao_idl code generation for IDL maps
+
+commit 0e1cf0cceb1f549b03d4a185316fe33be1a33bfc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 19 09:36:08 2025 +0200
+
+    Further simplify
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+
+commit 54028b021e342e4f9ae29cdc918965f9980fdf97
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 19 09:20:06 2025 +0200
+
+    Reduce includes
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+
+commit b763d70cdadb32886d7f1c097c5f37635bdc219f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 19 09:19:09 2025 +0200
+
+    Use more modern std way of generation a random string
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+
+commit 46f22a7d8d775b622825433038b2065b178a3680
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Aug 18 20:18:23 2025 +0000
+
+    Extend maps test; working string compartor needed
+
+commit 3c702764508f7379170fc91c72601fdb41091c24
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 18 14:05:27 2025 +0200
+
+    Limit only once
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+
+commit 37f39499e1b85094e30dcdb08655e6f2337677e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 18 13:54:28 2025 +0200
+
+    Apply coderabbit suggestion
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+
+commit 9abef4b965c7e6850f01b9775fce42b065b2f338
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 18 13:41:26 2025 +0200
+
+    Add back cast
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+
+commit 2dcdb9466de11bbc70c25ec3041df07eea58b145
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 18 10:53:14 2025 +0200
+
+    Generate always a char extension
+
+commit 3b785abb89847ae227ed3bde3ba203f06499a99c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 15 17:45:23 2025 +0000
+
+    Updated tao_idl code generation for IDL maps
+
+commit 0e4e3d9dcf39d8b00cd7a95eb1f5428f576fe912
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 14 17:01:17 2025 +0000
+
+    Thread names on Linux are limited to 15 characters
+
+commit 4433412c69e60714f6fbe4166f293c40716b2cb7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 7 09:37:07 2025 +0200
+
+    Update NEWS
+
+commit 6915b05bb0a36b9696f9adc586b5dc83e5eb6378
+Merge: 060638366db c73c1660a23
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 4 16:33:24 2025 +0200
+
+    Merge pull request #2445 from jwillemsen/jwi-convwarning
+    
+    Fixed conversion warning
+
+commit c73c1660a23c89b0dfa727793ff1ec73e06c3bfc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 4 15:56:57 2025 +0200
+
+    Fixed conversion warning
+    
+        * TAO/tests/Typedef_String_Array/client.cpp:
+
+commit 5b2a7a34655dbf9fdf31902a393f5a92b737f785
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 4 10:17:28 2025 +0200
+
+    Removed another not used helper method
+    
+        * TAO/TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO/TAO_IDL/be_include/be_visitor_operation/operation.h:
+
+commit 677d7a1ba67f6bf1fbc42818a844044bff329e7f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 4 10:14:13 2025 +0200
+
+    Removed operation which generated using a removed macro, operation wasn't used anymore
+    
+        * TAO/TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO/TAO_IDL/be_include/be_visitor_operation/operation.h:
+
+commit 397b90c3b37361ea62ade071bb30a373261619c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 4 09:56:48 2025 +0200
+
+    Logging/indent change
+    
+        * TAO/tao/Valuetype/ValueBase.cpp:
+
+commit b9a3c0c83103ac75d90dd3e17120dd8d74f3d767
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 3 10:20:38 2025 +0200
+
+    Use delete
+    
+        * TAO/tao/DynamicAny/DynSequence_i.h:
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+commit df5c0a99ae100c7baa270f07f3c942406404c8a7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 2 13:34:51 2025 +0200
+
+    need void*
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/Valuetype/ValueBase.cpp:
+
+commit de818167cda7885d689f7fcb3838673a5d9e1122
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 15:00:37 2025 +0200
+
+    Layout change
+    
+        * TAO/tao/DynamicAny/DynAnyUtils_T.cpp:
+
+commit f5d2fbfcc7e33c95d622c9f294d67d1eafbb3e82
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 14:58:15 2025 +0200
+
+    removed empty line
+
+commit b68236d20bfed521567dcffddc90f4737cffa2d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 14:56:12 2025 +0200
+
+    Fixed typos
+
+commit 97f280b782832b9ea40904e19df74e8b1b06596f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 14:56:01 2025 +0200
+
+    Made logging dependent on debug level
+    
+        * TAO/tao/DynamicAny/DynAnyUtils_T.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.h:
+
+commit 626ff8628ef56d2b6bd97f88dbcb41ced77a2f6d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 13:58:08 2025 +0200
+
+    We need to use void* for the value_map as part of the inputcdr stream, when using char* ACE wants to handle the external id as string
+    
+        * TAO/tao/CDR.h:
+
+commit d7c125f9ed617f4fa45bd508de0280ef416bc1b3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 13:57:30 2025 +0200
+
+    Layout change
+    
+        * TAO/tao/Valuetype/ValueBase.cpp:
+
+commit 648bae939220c820323e948bbe6aa173bbb36bc7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 12:06:40 2025 +0200
+
+    Removed redundant whitespace
+    
+        * TAO/tao/Valuetype/ValueBase.cpp:
+
+commit 27a1abb702baa17bb649944a57713beb4b92b1f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 09:33:24 2025 +0200
+
+    Add logging
+    
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+
+commit e50c1cd6e9af5354400217e6e6122b4bc33b8dc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 1 08:31:45 2025 +0200
+
+    Only log when debug level set
+    
+        * TAO/tao/Valuetype/AbstractBase.cpp:
+        * TAO/tao/Valuetype/ValueBase.cpp:
+
+commit b4604fe21572e93d6a3ec7a27fb69c771c2a91eb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 31 19:30:40 2025 +0200
+
+    Default destructors
+    
+        * TAO/tao/DynamicAny/DynCommon.cpp:
+        * TAO/tao/DynamicAny/DynCommon.h:
+        * TAO/tao/DynamicAny/DynEnum_i.cpp:
+        * TAO/tao/DynamicAny/DynEnum_i.h:
+        * TAO/tao/DynamicAny/DynSequence_i.cpp:
+        * TAO/tao/DynamicAny/DynSequence_i.h:
+        * TAO/tao/DynamicAny/DynStruct_i.cpp:
+        * TAO/tao/DynamicAny/DynStruct_i.h:
+        * TAO/tao/DynamicAny/DynUnion_i.cpp:
+        * TAO/tao/DynamicAny/DynUnion_i.h:
+        * TAO/tao/DynamicAny/DynValueBox_i.cpp:
+        * TAO/tao/DynamicAny/DynValueBox_i.h:
+        * TAO/tao/DynamicAny/DynValueCommon_i.cpp:
+        * TAO/tao/DynamicAny/DynValueCommon_i.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.h:
+
+commit 0f9c88d1b7fbaae05b701c15fc1bc877b170ec47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 31 19:23:06 2025 +0200
+
+    Fixed various typos
+    
+        * ACE/ASNMP/asnmp/transaction.cpp:
+        * ACE/protocols/ace/RMCast/Link.cpp:
+        * TAO/docs/Options.html:
+        * TAO/orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
+        * TAO/orbsvcs/tests/Miop/McastFragmentation/server.cpp:
+        * TAO/orbsvcs/tests/Miop/McastPreferredInterfaces/run_test_ipv6.pl:
+        * TAO/tao/DynamicAny/DynCommon.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tests/MT_NoUpcall_Client_Leader/README:
+        * TAO/tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h:
+        * TAO/utils/nslist/nsdel.cpp:
+
+commit 94625ce706b6d976495e59a4c9a7dfaecfd1cbee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 31 19:07:03 2025 +0200
+
+    Revert some changes, get rid of ugly casts, more type safety
+    
+        * TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/CDR.inl:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/Valuetype/ValueBase.cpp:
+
+commit df8409957760052de669865beaf77d15dc010285
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 31 16:27:59 2025 +0200
+
+    Add logging before throwing an exception
+    
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/Valuetype/ValueBase.cpp:
+
+commit 525bad919a8cc5277d3db0076269236a25751507
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 31 15:36:29 2025 +0200
+
+    Moved forward decl
+        * TAO/tao/CDR.h:
+
+commit 913f16281bc46756306d2a90980556fc437ffa3e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 31 14:36:38 2025 +0200
+
+    Use char
+    
+        * TAO/tao/CDR.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+
+commit c81f97706a45e14d6a8fd59738e7fae306467240
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 31 14:31:57 2025 +0200
+
+    Reworked CDR ValueType and DynValue indirections, lot of ugly casting and also different order of arguments, something pretty messy here
+    
+        * ACE/bin/fuzz.pl:
+        * ACE/tests/Bug_3332_Regression_Test.cpp:
+        * TAO/docs/Options.html:
+        * TAO/orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/CDR.inl:
+        * TAO/tao/DynamicAny/DynAnyFactory.cpp:
+        * TAO/tao/DynamicAny/DynAnyFactory.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/Valuetype/ValueBase.cpp:
+        * TAO/tao/Valuetype/ValueBase.h:
+        * TAO/tests/Bug_4097_Regression/README:
+
+commit bb2d699356f248673cb6885eb7983c2aa02cde69
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 29 11:04:24 2025 +0200
+
+    Fixed test output, use nullptr, fixed typo in comments
+    
+        * ACE/tests/Time_Value_Test.cpp:
+        * TAO/tao/DynamicAny/DynAnyUtils_T.cpp:
+        * TAO/tao/DynamicAny/DynAny_i.h:
+        * TAO/tao/DynamicAny/DynArray_i.h:
+        * TAO/tao/DynamicAny/DynEnum_i.h:
+        * TAO/tao/DynamicAny/DynStruct_i.h:
+        * TAO/tao/DynamicAny/DynUnion_i.h:
+        * TAO/tao/DynamicAny/DynValueBox_i.h:
+        * TAO/tao/DynamicAny/DynValueCommon_i.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.h:
+        * TAO/tests/DynValue_Test/Analyzer.h:
+
+commit dbfe30fd9fc1bf6bc9f17edc8b0304b74cbab2a0
+Merge: db9e788d984 8304e330eec
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 28 11:38:11 2025 +0200
+
+    Merge branch 'master' into jwi-exportserverrequestinfo
+
+commit db9e788d9849121262fcd7947eedbe2b6b23b088
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 28 11:37:22 2025 +0200
+
+    Export this class so that it can be tested from externally
+    
+        * TAO/tao/PI_Server/ServerRequestInfo.h:
+
+commit 992a96121095f42353cba1da147b2b97b8814f5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 28 10:38:32 2025 +0200
+
+    Only log the cache size when we have purged something
+    
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+
+commit ffa2efd1ac246ab6a04abdde5c851ad01a415151
+Merge: 967c63a9f1d 136369a852c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 13 18:23:24 2025 +0200
+
+    Merge pull request #2425 from jwillemsen/jwi-cdrconstants
+    
+    Use static constexpr for some of our constants instead of an anonymou…
+
+commit 136369a852c8e9cbd27ae2c6eef27477b303e625
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 11 09:48:52 2025 +0200
+
+    Update TAO/tao/GIOP_Message_Generator_Parser_10.cpp
+    
+    Co-authored-by: coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
+
+commit 042d5c8fd211850062f508d51331bce3fd94c4b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 11 08:49:16 2025 +0200
+
+    Corrected type and removed unncessary casts
+    
+        * TAO/tao/GIOP_Message_Generator_Parser_10.cpp:
+
+commit 6aadefb52a083f26e7724f366915c9f996ef1c19
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 10 10:11:18 2025 +0200
+
+    Use static constexpr instead of anonymous enum
+    
+        * TAO/orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
+
+commit ae228e46b993c438f89b48760aab2b771e6968c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 10 09:55:55 2025 +0200
+
+    Fixed compile errors with C++23
+
+commit a89e1486a0a8064a861214d2f2be7a38003537cd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 9 10:46:17 2025 +0200
+
+    Update Activator_ORB_Runner.cpp
+
+commit cff6fe218020de61ba56a3dbbac101ea19ac880d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 9 10:14:40 2025 +0200
+
+    Add missing end newline
+
+commit 1882aa4dcef166d44cc0a14702e72ac65baa6ebb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 9 10:10:51 2025 +0200
+
+    Removed volatile, causes warnings with C++23
+
+commit 3375743b1aad49cdb6bf0da6ba6ab353de56b260
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 9 10:06:38 2025 +0200
+
+    Use default/override
+
+commit aed671c5fba1d64331a83c4acf7c0ceaee380143
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 9 09:58:39 2025 +0200
+
+    Put ImR_Activator_ORB_Runner into its own file, use make_unique
+
+commit 2176cc773a30072a0a43967d66ea4e992538d03e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 26 11:21:44 2025 +0200
+
+    Make ACE 8.0.4 and TAO 4.0.4 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

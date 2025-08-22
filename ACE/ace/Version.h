@@ -4,9 +4,9 @@
 
 #define ACE_MAJOR_VERSION 8
 #define ACE_MINOR_VERSION 0
-#define ACE_MICRO_VERSION 4
-#define ACE_VERSION "8.0.4"
-#define ACE_VERSION_CODE 0x80004
+#define ACE_MICRO_VERSION 5
+#define ACE_VERSION "8.0.5"
+#define ACE_VERSION_CODE 0x80005
 #if !defined (ACE_PATCH)
 # define ACE_PATCH ""
 #endif
