@@ -1064,12 +1064,6 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
   // ACE_OS::snprintf().
   return vswprintf (buffer, 4096, format, argptr);
 
-# elif defined (__MINGW64_VERSION_MAJOR) && !defined (WIN64)
-  // the MingW64 32bit version causes link errors when using the
-  // 'standard' vswprint(). Luckily they have a mingw special.
-
-  return __mingw_vswprintf (buffer, format, argptr);
-
 # elif defined (ACE_WIN32)
   // Windows has vswprintf, but the pre-VC8 signature is from the older
   // ISO C standard. Also see ACE_OS::snprintf() for more info on this.
