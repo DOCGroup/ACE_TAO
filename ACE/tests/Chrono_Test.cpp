@@ -21,132 +21,75 @@
 #include "ace/Truncate.h"
 
 int
+tv_test_case (const ACE_Time_Value& tv, const char *what, time_t expect_sec, suseconds_t expect_usec = 0)
+{
+  if (tv.sec () != expect_sec || tv.usec () != expect_usec)
+  {
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) unexpected value after converting %C to an ACE_Time_Value. ")
+                ACE_TEXT ("Expected <sec=%d,usec=%d> - got <sec=%d,usec=%d>\n"),
+                what, expect_sec, expect_usec, tv.sec (), tv.usec ()));
+    return 1;
+  }
+  return 0;
+}
+
+template <class Rep, class Period>
+int
+tv_test_case (const std::chrono::duration<Rep, Period>& duration,
+  const char *what, time_t expect_sec, suseconds_t expect_usec = 0)
+{
+  return tv_test_case (ACE_Time_Value {duration}, what, expect_sec, expect_usec);
+}
+
+int
 test_assignments ()
 {
   int errors {};
-  ACE_Time_Value tv { std::chrono::nanoseconds {100} };
-  if (tv.sec () != 0 || tv.usec () != 0)
+
+  errors += tv_test_case(std::chrono::nanoseconds {100}, "nanoseconds (100)", 0);
+
+  errors += tv_test_case(std::chrono::nanoseconds {10005}, "nanoseconds (10005)", 0, 10);
+
+  errors += tv_test_case(std::chrono::microseconds {1}, "microseconds (1)", 0, 1);
+
   {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::nanoseconds (100) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=0,usec=0> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
+    ACE_Time_Value const tv = ACE_Time_Value { std::chrono::microseconds {10005} };
+    errors += tv_test_case(tv, "microseconds (10005)", 0, 10005);
+
+    std::chrono::milliseconds ms_test { tv.msec () };
+    if (ms_test.count () != 10)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) unexpected value after get_chrono_msec. ")
+                  ACE_TEXT ("Expected <10> - got <%q>\n"),
+                  ms_test.count ()));
+      ++errors;
+    }
   }
 
-  tv = ACE_Time_Value { std::chrono::nanoseconds {10005} };
-  if (tv.sec () != 0 || tv.usec () != 10)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::nanoseconds (10005) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=0,usec=10> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
+  errors += tv_test_case(std::chrono::milliseconds {1}, "milliseconds (1)", 0, 1000);
 
-  tv = ACE_Time_Value { std::chrono::microseconds {1} };
-  if (tv.sec () != 0 || tv.usec () != 1)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::microseconds (1) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=0,usec=1> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
+  errors += tv_test_case(std::chrono::milliseconds {10005}, "milliseconds (10005)", 10, 5000);
 
-  tv = ACE_Time_Value { std::chrono::microseconds {10005} };
-  if (tv.sec () != 0 || tv.usec () != 10005)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::microseconds (10005) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=0,usec=10005> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
+  errors += tv_test_case(std::chrono::seconds {1}, "seconds (1)", 1);
 
-  std::chrono::milliseconds ms_test { tv.msec () };
-  if (ms_test.count () != 10)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after get_chrono_msec. ")
-                ACE_TEXT ("Expected <10> - got <%q>\n"),
-                ms_test.count ()));
-    ++errors;
-  }
+  errors += tv_test_case(std::chrono::seconds {10005}, "seconds (10005)", 10005);
 
-  tv = ACE_Time_Value { std::chrono::milliseconds {1} };
-  if (tv.sec () != 0 || tv.usec () != 1000)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::milliseconds (1) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=0,usec=1000> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
+  errors += tv_test_case(std::chrono::hours {1}, "hours (1)", 3600);
 
-  tv = ACE_Time_Value { std::chrono::milliseconds {10005} };
-  if (tv.sec () != 10 || tv.usec () != 5000)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::milliseconds (10005) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=10,usec=5000> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
+  errors += tv_test_case(std::chrono::hours {10005}, "hours (10005)", 3600*10005);
 
-  tv = ACE_Time_Value { std::chrono::seconds {1} };
-  if (tv.sec () != 1 || tv.usec () != 0)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::seconds (1) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=1,usec=0> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
-
-  tv = ACE_Time_Value { std::chrono::seconds {10005} };
-  if (tv.sec () != 10005 || tv.usec () != 0)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::seconds (10005) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=10005,usec=0> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
-
-  tv = ACE_Time_Value { std::chrono::hours {1} };
-  if (tv.sec () != 3600 || tv.usec () != 0)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::hours (1) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=3600,usec=0> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
-
-  tv = ACE_Time_Value { std::chrono::hours {10005} };
-  if (tv.sec () != 3600*10005 || tv.usec () != 0)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("std::chrono::hours (10005) to an ACE_Time_Value. ")
-                ACE_TEXT ("<sec=%d,usec=0> - got <sec=%d,usec=%d>\n"),
-                3600*10005, tv.sec (), tv.usec ()));
-    ++errors;
-  }
+  // ACE_Time_Value should accept floating-point-based durations.
+  std::chrono::duration<double, std::ratio<(24*3600)>> const half_day {0.5};
+  errors += tv_test_case(half_day, "duration<double, ratio<(24*3600)>>{0.5}", 3600*12, 0);
+  errors += tv_test_case(std::chrono::duration<double> {0.1}, "duration<double>{0.1}", 0, 100000);
+  errors += tv_test_case(std::chrono::duration<double> {-0.1}, "duration<double>{-0.1}", 0, -100000);
+  // It being -99,999 instead of -100,000 seems to be a IEEE 754 thing
+  errors += tv_test_case(std::chrono::duration<double> {-10.1}, "duration<double>{-10.1}", -10, -99999);
 
   // Two times half a day, 3 hours, 24 minutes, 54 seconds, 238 milliseconds,
   // 754 microseconds and 342 nanoseconds.
-  std::chrono::duration<double, std::ratio<(24*3600)>> half_day {0.5};
   std::chrono::microseconds const usec {
     2 * (
     std::chrono::duration_cast<std::chrono::microseconds> (
@@ -156,36 +99,16 @@ test_assignments ()
       std::chrono::microseconds {754} + std::chrono::nanoseconds {342}))
   };
 
-
-  tv = ACE_Time_Value {usec};
-
   //                       half a day  3 hours   24 minutes 54 seconds
   time_t expected_sec = { ((12*3600) + (3*3600) + (24*60) + 54 ) * 2 };
   //                              238 milli    usec  342 nano
   suseconds_t expected_usec = { ((238*1000) + 754 + 0) * 2 };
+  errors += tv_test_case(usec,
+    "two times half a day, 3 hours, 24 minutes, 54 seconds, "
+    "238 milliseconds, 754 microseconds and 342 nanoseconds",
+    expected_sec, expected_usec);
 
-  if (tv.sec () != expected_sec || tv.usec () != expected_usec)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("two times half a day, 3 hours, 24 minutes, 54 seconds, ")
-                ACE_TEXT ("238 milliseconds, 754 microseconds and 342 nanoseconds ")
-                ACE_TEXT ("to an ACE_Time_Value. Expected <sec=%d,usec=%d> - ")
-                ACE_TEXT ("got <sec=%d,usec=%d>\n"),
-                expected_sec,  expected_usec, tv.sec (), tv.usec ()));
-    ++errors;
-  }
-
-  tv.set (std::chrono::milliseconds {1120});
-  if (tv.sec () != 1 || tv.usec () != 120 * std::kilo::num)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after converting ")
-                ACE_TEXT ("a std::chrono::milliseconds of 1120 to an ACE_Time_Value ")
-                ACE_TEXT ("Expected <sec=1,usec=120000> - got <sec=%d,usec=%d>\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
+  errors += tv_test_case(std::chrono::milliseconds {1120}, "milliseconds (1120)", 1, 120 * std::kilo::num);
 
   return errors;
 }
