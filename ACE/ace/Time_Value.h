@@ -126,13 +126,13 @@ public:
   template< class Rep, class Period >
   void set (const std::chrono::duration<Rep, Period>& duration)
   {
-    std::chrono::seconds const s {
-      std::chrono::duration_cast<std::chrono::seconds> (duration)};
+    using std::chrono::seconds;
+    using std::chrono::microseconds;
+    using std::chrono::duration_cast;
 
-    std::chrono::microseconds const usec {
-      std::chrono::duration_cast<std::chrono::microseconds>(
-        duration % std::chrono::seconds (1))};
-    this->set (ACE_Utils::truncate_cast<time_t>(s.count ()), ACE_Utils::truncate_cast<suseconds_t>(usec.count ()));
+    auto const sec = duration_cast<seconds> (duration);
+    auto const usec = duration_cast<microseconds> (duration - sec);
+    this->set (ACE_Utils::truncate_cast<time_t> (sec.count ()), ACE_Utils::truncate_cast<suseconds_t> (usec.count ()));
   }
 #endif /* ACE_HAS_CPP11 */
 
@@ -284,11 +284,7 @@ public:
   template< class Rep, class Period >
   ACE_Time_Value &operator += (const std::chrono::duration<Rep, Period>& duration)
   {
-    const ACE_Time_Value tv (duration);
-    this->sec (this->sec () + tv.sec ());
-    this->usec (this->usec () + tv.usec ());
-    this->normalize ();
-    return *this;
+    return *this += ACE_Time_Value (duration);
   }
 
   /// Assign @a std::duration to this
@@ -303,11 +299,7 @@ public:
   template< class Rep, class Period >
   ACE_Time_Value &operator -= (const std::chrono::duration<Rep, Period>& duration)
   {
-    const ACE_Time_Value tv (duration);
-    this->sec (this->sec () - tv.sec ());
-    this->usec (this->usec () - tv.usec ());
-    this->normalize ();
-    return *this;
+    return *this -= ACE_Time_Value (duration);
   }
 #endif /* ACE_HAS_CPP11 */
 
