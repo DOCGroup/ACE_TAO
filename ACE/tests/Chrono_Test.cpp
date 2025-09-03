@@ -5,7 +5,6 @@
  *
  *  This is a test of the usage of 'std::chrono' throughout ACE
  *  The following items are tested:
- *  - ACE_OS::sleep
  *  - ACE_Time_Value
  *
  *
@@ -301,29 +300,14 @@ test_ace_time_value_operators ()
     std::chrono::duration_cast<std::chrono::milliseconds>(sec) +
     std::chrono::duration_cast<std::chrono::milliseconds>(usec) };
 
-
   ACE_Time_Value tv;
   tv = msec;
   tv += std::chrono::milliseconds {300};
-  if (tv.sec () != 2 || tv.usec () != 303 * std::kilo::num)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after adding a duration ")
-                ACE_TEXT ("of 300 ms. Expected <sec=2,usec=3300> - got <sec=%d,")
-                ACE_TEXT ("usec=%d>.\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
+  errors += tv_test_case(tv, "seconds {2} + microseconds {3000} + milliseconds {300}", 2, 303 * std::kilo::num);
+
   tv -= std::chrono::microseconds {400};
-  if (tv.sec () != 2 || tv.usec () != 302600)
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) unexpected value after substracting a duration ")
-                ACE_TEXT ("of 400 us. Expected <sec=2,usec=3300> - got <sec=%d,")
-                ACE_TEXT ("usec=%d>.\n"),
-                tv.sec (), tv.usec ()));
-    ++errors;
-  }
+  errors += tv_test_case(tv, "seconds {2} + microseconds {3000} + milliseconds {300} - microseconds {400}", 2, 302600 * std::kilo::num);
+
   return errors;
 }
 
