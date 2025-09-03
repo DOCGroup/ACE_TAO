@@ -5,6 +5,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.22 and ACE-6.5.23
 
 . Fixed building ACE for Android with `uses_wchar=1`
 
+. Updated thread name support to work with older Windows versions
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.21 and ACE-6.5.22
 ======================================================
 
