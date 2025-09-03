@@ -88,23 +88,22 @@ test_assignments ()
   errors += tv_test_case(std::chrono::duration<double> {-10.1}, "duration<double>{-10.1}", -10, -99999);
 
   // Two times half a day, 3 hours, 24 minutes, 54 seconds, 238 milliseconds,
-  // 754 microseconds and 342 nanoseconds.
-  std::chrono::microseconds const usec {
-    2 * (
-    std::chrono::duration_cast<std::chrono::microseconds> (
+  // 754 microseconds and 342 nanoseconds (lost).
+  std::chrono::nanoseconds const nsec {
+    2 * std::chrono::duration_cast<std::chrono::nanoseconds> (
       half_day +
       std::chrono::hours {3} + std::chrono::minutes {24} +
       std::chrono::seconds {54} + std::chrono::milliseconds {238} +
-      std::chrono::microseconds {754} + std::chrono::nanoseconds {342}))
+      std::chrono::microseconds {754} + std::chrono::nanoseconds {342})
   };
 
   //                       half a day  3 hours   24 minutes 54 seconds
   time_t expected_sec = { ((12*3600) + (3*3600) + (24*60) + 54 ) * 2 };
-  //                              238 milli    usec  342 nano
+  //                              238 milli   754 usec  342 nano (lost)
   suseconds_t expected_usec = { ((238*1000) + 754 + 0) * 2 };
-  errors += tv_test_case(usec,
+  errors += tv_test_case(nsec,
     "two times half a day, 3 hours, 24 minutes, 54 seconds, "
-    "238 milliseconds, 754 microseconds and 342 nanoseconds",
+    "238 milliseconds, 754 microseconds and 342 nanoseconds (lost)",
     expected_sec, expected_usec);
 
   errors += tv_test_case(std::chrono::milliseconds {1120}, "milliseconds (1120)", 1, 120 * std::kilo::num);
@@ -306,7 +305,7 @@ test_ace_time_value_operators ()
   errors += tv_test_case(tv, "seconds {2} + microseconds {3000} + milliseconds {300}", 2, 303 * std::kilo::num);
 
   tv -= std::chrono::microseconds {400};
-  errors += tv_test_case(tv, "seconds {2} + microseconds {3000} + milliseconds {300} - microseconds {400}", 2, 302600 * std::kilo::num);
+  errors += tv_test_case(tv, "seconds {2} + microseconds {3000} + milliseconds {300} - microseconds {400}", 2, 302600);
 
   return errors;
 }
