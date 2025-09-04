@@ -94,6 +94,12 @@
 /Compiler_Features_33_Test
 /Compiler_Features_34_Test
 /Compiler_Features_35_Test
+/Compiler_Features_36_Test
+/Compiler_Features_37_Test
+/Compiler_Features_38_Test
+/Compiler_Features_39_Test
+/Compiler_Features_40_Test
+/Compiler_Features_41_Test
 /Config_Test
 /Conn_Test
 /Date_Time_Test
@@ -110,6 +116,7 @@
 /FlReactor_Test
 /Framework_Component_Test
 /Future_Set_Test
+/Future_Stress_Test
 /Future_Test
 /Get_Opt_Test
 /Handle_Set_Test
@@ -152,6 +159,7 @@
 /MT_Reference_Counted_Event_Handler_Test
 /MT_Reference_Counted_Notify_Test
 /MT_SOCK_Test
+/Multicast_Interfaces_Test
 /Multicast_Test
 /Multicast_Test_IPV6
 /Multihomed_INET_Addr_Test
@@ -216,8 +224,9 @@
 /Signal_Test
 /Sigset_Ops_Test
 /Simple_Message_Block_Test
-/Singleton_Test
 /Singleton_Restart_Test
+/Singleton_Test
+/SOCK_Acceptor_Test
 /SOCK_Connector_Test
 /SOCK_Dgram_Bcast_Test
 /SOCK_Dgram_Test
@@ -256,8 +265,8 @@
 /Token_Strategy_Test
 /Tokens_Test
 /TP_Reactor_Test
-/TSS_Static_Test
 /TSS_Leak_Test
+/TSS_Static_Test
 /TSS_Test
 /Unbounded_Set_Test
 /Unbounded_Set_Test_Ex
@@ -273,8 +282,3 @@
 /XtAthenaReactor_Test
 /XtMotifReactor_Test
 /XtReactor_Test
-/Compiler_Features_36_Test
-/Compiler_Features_37_Test
-/Compiler_Features_38_Test
-/SOCK_Acceptor_Test
-Multicast_Interfaces_Test
