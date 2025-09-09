@@ -1,0 +1,36 @@
+commit 3332ca36d3fdb6c308226bb3147e807ad8fda659
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Sep 2 09:37:43 2025 -0500
+
+    Updated NEWS
+
+commit 860d057a81b9cdf32ea57d7744c9714b04c8faa8
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 19 11:53:39 2025 -0500
+
+    Merge pull request #2452 from mitza-oci/tao_idl_map
+    
+    Updated tao_idl code generation for IDL maps
+    
+    (cherry picked from commit d6633a5abf0700576cb5760e7c80e3664591c26a)
+    
+    # Conflicts:
+    #       TAO/TAO_IDL/be/be_visitor_field/field_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_map/buffer_type.cpp
+    #       TAO/TAO_IDL/be/be_visitor_map/map_ch.cpp
+
+commit 484f7ee4e074e76c97657eabb77658e3c8b37830
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 14 17:01:17 2025 +0000
+
+    Thread names on Linux are limited to 15 characters
+
+commit 41b20cffd4170021b19428ab4168880822c8228e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 26 11:41:42 2025 +0200
+
+    Prepare for next ace6tao2
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * TAO/NEWS:
