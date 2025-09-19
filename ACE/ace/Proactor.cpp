@@ -182,16 +182,16 @@ ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall ()
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::registration (ACE_Proactor_Timer_Queue &,
-                                                  ACE_Handler * handler,
+                                                  const ACE_Handler::Proxy_Ptr& proxy,
                                                   const void *)
 {
-  handler->proactor(proactor_);
+  proxy.get()->handler()->proactor(proactor_);
   return 0;
 }
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::preinvoke (ACE_Proactor_Timer_Queue &,
-                                               ACE_Handler *,
+                                               ACE_Handler::Proxy_Ptr&,
                                                const void *,
                                                int,
                                                const ACE_Time_Value &,
@@ -202,7 +202,7 @@ ACE_Proactor_Handle_Timeout_Upcall::preinvoke (ACE_Proactor_Timer_Queue &,
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::postinvoke (ACE_Proactor_Timer_Queue &,
-                                                ACE_Handler *,
+                                                ACE_Handler::Proxy_Ptr&,
                                                 const void *,
                                                 int,
                                                 const ACE_Time_Value &,
@@ -213,7 +213,7 @@ ACE_Proactor_Handle_Timeout_Upcall::postinvoke (ACE_Proactor_Timer_Queue &,
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
-                                             ACE_Handler *handler,
+                                             ACE_Handler::Proxy_Ptr& proxy,
                                              const void *act,
                                              int,
                                              const ACE_Time_Value &time)
@@ -226,7 +226,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
 
   // Create the Asynch_Timer.
   ACE_Asynch_Result_Impl *asynch_timer =
-    this->proactor_->create_asynch_timer (handler->proxy (),
+    this->proactor_->create_asynch_timer (proxy,
                                           act,
                                           time,
                                           ACE_INVALID_HANDLE,
@@ -259,7 +259,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::cancel_type (ACE_Proactor_Timer_Queue &,
-                                                 ACE_Handler *,
+                                                 const ACE_Handler::Proxy_Ptr&,
                                                  int,
                                                  int &)
 {
@@ -269,7 +269,7 @@ ACE_Proactor_Handle_Timeout_Upcall::cancel_type (ACE_Proactor_Timer_Queue &,
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::cancel_timer (ACE_Proactor_Timer_Queue &,
-                                                  ACE_Handler *,
+                                                  const ACE_Handler::Proxy_Ptr&,
                                                   int,
                                                   int)
 {
@@ -279,7 +279,7 @@ ACE_Proactor_Handle_Timeout_Upcall::cancel_timer (ACE_Proactor_Timer_Queue &,
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::deletion (ACE_Proactor_Timer_Queue &,
-                                              ACE_Handler *,
+                                              ACE_Handler::Proxy_Ptr&,
                                               const void *)
 {
   // Do nothing
@@ -681,7 +681,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
   // absolute time.
   ACE_Time_Value absolute_time =
     this->timer_queue_->gettimeofday () + time;
-  long result = this->timer_queue_->schedule (&handler,
+  long result = this->timer_queue_->schedule (handler.proxy(),
                                               act,
                                               absolute_time,
                                               interval);
@@ -713,7 +713,7 @@ ACE_Proactor::cancel_timer (ACE_Handler &handler,
 {
   // No need to signal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
-  return this->timer_queue_->cancel (&handler,
+  return this->timer_queue_->cancel (handler.proxy(),
                                      dont_call_handle_close);
 }
 
@@ -787,7 +787,7 @@ ACE_Proactor::timer_queue (ACE_Proactor_Timer_Queue *tq)
     }
 
   // Set the proactor in the timer queue's functor
-  using TQ_Base = ACE_Timer_Queue_Upcall_Base<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
+  using TQ_Base = ACE_Timer_Queue_Upcall_Base<ACE_Handler::Proxy_Ptr, ACE_Proactor_Handle_Timeout_Upcall>;
 
   TQ_Base * tqb = dynamic_cast<TQ_Base*> (this->timer_queue_);
 

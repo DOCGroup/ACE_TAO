@@ -1060,9 +1060,7 @@ ACE_Handler::ACE_Handler (ACE_Proactor *d)
 
 ACE_Handler::~ACE_Handler ()
 {
-  ACE_Handler::Proxy *p = this->proxy_.get ();
-  if (p)
-    p->reset ();
+  deregister_callback ();
 }
 
 void
@@ -1119,6 +1117,14 @@ ACE_Handler::handle_time_out (const ACE_Time_Value & /* tv */,
 void
 ACE_Handler::handle_wakeup ()
 {
+}
+
+void
+ACE_Handler::deregister_callback ()
+{
+  ACE_Handler::Proxy* p = this->proxy_.get ();
+  if (p)
+    p->reset ();
 }
 
 ACE_Proactor *

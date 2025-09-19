@@ -42,7 +42,7 @@ class ACE_Proactor_Impl;
 class ACE_Proactor_Timer_Handler;
 
 /// Type def for the timer queue.
-typedef ACE_Abstract_Timer_Queue<ACE_Handler *> ACE_Proactor_Timer_Queue;
+typedef ACE_Abstract_Timer_Queue<ACE_Handler::Proxy_Ptr> ACE_Proactor_Timer_Queue;
 
 /**
  * @class ACE_Proactor_Handle_Timeout_Upcall
@@ -63,12 +63,12 @@ public:
 
   /// This method is called when a timer is registered.
   int registration (ACE_Proactor_Timer_Queue &timer_queue,
-                    ACE_Handler *handler,
+                    const ACE_Handler::Proxy_Ptr& proxy,
                     const void *arg);
 
   /// This method is called before the timer expires.
   int preinvoke (ACE_Proactor_Timer_Queue &timer_queue,
-                 ACE_Handler *handler,
+                 ACE_Handler::Proxy_Ptr& proxy,
                  const void *arg,
                  int recurring_timer,
                  const ACE_Time_Value &cur_time,
@@ -76,14 +76,14 @@ public:
 
   /// This method is called when the timer expires.
   int timeout (ACE_Proactor_Timer_Queue &timer_queue,
-               ACE_Handler *handler,
+               ACE_Handler::Proxy_Ptr& proxy,
                const void *arg,
                int recurring_timer,
                const ACE_Time_Value &cur_time);
 
   /// This method is called after the timer expires.
   int postinvoke (ACE_Proactor_Timer_Queue &timer_queue,
-                  ACE_Handler *handler,
+                  ACE_Handler::Proxy_Ptr& proxy,
                   const void *arg,
                   int recurring_timer,
                   const ACE_Time_Value &cur_time,
@@ -91,20 +91,20 @@ public:
 
   /// This method is called when a handler is canceled.
   int cancel_type (ACE_Proactor_Timer_Queue &timer_queue,
-                   ACE_Handler *handler,
+                   const ACE_Handler::Proxy_Ptr& proxy,
                    int dont_call_handle_close,
                    int &requires_reference_counting);
 
   /// This method is called when a timer is canceled.
   int cancel_timer (ACE_Proactor_Timer_Queue &timer_queue,
-                    ACE_Handler *handler,
+                    const ACE_Handler::Proxy_Ptr& proxy,
                     int dont_call_handle_close,
                     int requires_reference_counting);
 
   /// This method is called when the timer queue is destroyed and the
   /// timer is still contained in it.
   int deletion (ACE_Proactor_Timer_Queue &timer_queue,
-                ACE_Handler *handler,
+                ACE_Handler::Proxy_Ptr& proxy,
                 const void *arg);
 
 protected:
@@ -129,29 +129,29 @@ class ACE_Export ACE_Proactor
 {
   // = Here are the private typedefs that the ACE_Proactor uses.
 
-  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *>
+  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler::Proxy_Ptr>
     TIMER_QUEUE_ITERATOR;
-  typedef ACE_Timer_List_T<ACE_Handler *,
+  typedef ACE_Timer_List_T<ACE_Handler::Proxy_Ptr,
     ACE_Proactor_Handle_Timeout_Upcall,
     ACE_SYNCH_RECURSIVE_MUTEX>
   TIMER_LIST;
-  typedef ACE_Timer_List_Iterator_T<ACE_Handler *,
+  typedef ACE_Timer_List_Iterator_T<ACE_Handler::Proxy_Ptr,
     ACE_Proactor_Handle_Timeout_Upcall,
     ACE_SYNCH_RECURSIVE_MUTEX>
   TIMER_LIST_ITERATOR;
-  typedef ACE_Timer_Heap_T<ACE_Handler *,
+  typedef ACE_Timer_Heap_T<ACE_Handler::Proxy_Ptr,
     ACE_Proactor_Handle_Timeout_Upcall,
     ACE_SYNCH_RECURSIVE_MUTEX>
   TIMER_HEAP;
-  typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *,
+  typedef ACE_Timer_Heap_Iterator_T<ACE_Handler::Proxy_Ptr,
     ACE_Proactor_Handle_Timeout_Upcall,
     ACE_SYNCH_RECURSIVE_MUTEX>
   TIMER_HEAP_ITERATOR;
-  typedef ACE_Timer_Wheel_T<ACE_Handler *,
+  typedef ACE_Timer_Wheel_T<ACE_Handler::Proxy_Ptr,
     ACE_Proactor_Handle_Timeout_Upcall,
     ACE_SYNCH_RECURSIVE_MUTEX>
   TIMER_WHEEL;
-  typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
+  typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler::Proxy_Ptr,
     ACE_Proactor_Handle_Timeout_Upcall,
     ACE_SYNCH_RECURSIVE_MUTEX>
   TIMER_WHEEL_ITERATOR;

@@ -1620,6 +1620,9 @@ public:
    */
   virtual void handle_wakeup ();
 
+  /// Call before destruction to ensure no more callbacks can happen.
+  void deregister_callback ();
+
   /// Get the proactor associated with this handler.
   ACE_Proactor *proactor ();
 
@@ -1649,10 +1652,18 @@ public:
   {
   public:
     Proxy (ACE_Handler *handler) : handler_ (handler) {}
-    void reset () { this->handler_ = 0; }
+    void reset ()
+    {
+      acquire ();
+      this->handler_ = 0;
+      release ();
+    }
     ACE_Handler *handler () { return this->handler_; }
+    int acquire () { return mutex_.acquire (); }
+    int release () { return mutex_.release (); }
   private:
     ACE_Handler *handler_;
+    ACE_SYNCH_MUTEX mutex_;
   };
   typedef ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> Proxy_Ptr;
 
