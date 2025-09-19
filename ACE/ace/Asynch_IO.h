@@ -1568,7 +1568,7 @@ public:
   /// A do nothing constructor.
   ACE_Handler ();
 
-  /// A do nothing constructor which allows proactor to be set to \<p\>.
+  /// A do nothing constructor which allows proactor to be set to @a p.
   ACE_Handler (ACE_Proactor *p);
 
   /// Virtual destruction.
@@ -1610,8 +1610,7 @@ public:
 
   /// Called when timer expires.  {tv} was the requested time value and
   /// {act} is the ACT passed when scheduling the timer.
-  virtual void handle_time_out (const ACE_Time_Value &tv,
-                                const void *act = 0);
+  virtual void handle_time_out (const ACE_Time_Value &tv, const void *act = nullptr);
 
   /**
    * This is method works with the {run_event_loop} of the
@@ -1649,7 +1648,7 @@ public:
   {
   public:
     Proxy (ACE_Handler *handler) : handler_ (handler) {}
-    void reset () { this->handler_ = 0; }
+    void reset () { this->handler_ = nullptr; }
     ACE_Handler *handler () { return this->handler_; }
   private:
     ACE_Handler *handler_;

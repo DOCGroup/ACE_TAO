@@ -371,7 +371,7 @@ public:
   void handle (ACE_HANDLE);
 
 protected:
-// These methods are called by the freamwork
+// These methods are called by the framework
 
 /// This is called when asynchronous reads from the socket complete
 virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result

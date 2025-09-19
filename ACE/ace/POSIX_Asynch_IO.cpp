@@ -618,7 +618,7 @@ ACE_POSIX_Asynch_Write_File_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_write_file (result);
 }
 

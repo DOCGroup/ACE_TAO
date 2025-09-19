@@ -226,7 +226,7 @@ public:
   int open (const ACE_TCHAR *host, u_short port);
 
 protected:
-  // These methods are called by the freamwork
+  // These methods are called by the framework
 
   /// This is called when asynchronous writes from the dgram socket
   /// complete

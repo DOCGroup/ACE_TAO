@@ -48,7 +48,7 @@ public:
   int open ();
 
 protected:
-  // = These methods are called by the freamwork.
+  // = These methods are called by the framework.
 
   /// This is called when asynchronous reads from the socket complete.
   virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
