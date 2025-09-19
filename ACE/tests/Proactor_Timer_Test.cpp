@@ -308,7 +308,7 @@ run_main (int argc, ACE_TCHAR *[])
       // to do it right in at least one test.  Notice the lack of
       // ACE_NEW_RETURN, that monstrosity has no business in proper C++
       // code ...
-      using Timer_Queue = ACE_Timer_Heap_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_FPointer_Time_Policy>;
+      using Timer_Queue = ACE_Timer_Heap_T<ACE_Handler::Proxy_Ptr, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_FPointer_Time_Policy>;
 
       std::unique_ptr<Timer_Queue> tq(new Timer_Queue);
       // ... notice how the policy is in the derived timer queue type.
