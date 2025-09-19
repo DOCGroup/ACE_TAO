@@ -287,7 +287,7 @@ public:
   void handle (ACE_HANDLE);
 
 protected:
-  // These methods are called by the freamwork
+  // These methods are called by the framework
 
   /**
    * This is called when asynchronous transmit files complete

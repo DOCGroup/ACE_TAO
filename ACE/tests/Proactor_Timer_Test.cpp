@@ -114,7 +114,6 @@ Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
     }
 
   counter += (1 + odd);
-  return;
 }
 
 long
@@ -303,7 +302,7 @@ run_main (int argc, ACE_TCHAR *[])
       // precision for a 1 second timer is beyond me ...  I think it
       // is a cut&paste error.
       //
-      // The use of auto_ptr<> is optional, ACE uses dangerous memory
+      // The use of std::unique_ptr<> is optional, ACE uses dangerous memory
       // management idioms everywhere, I thought I could demonstrate how
       // to do it right in at least one test.  Notice the lack of
       // ACE_NEW_RETURN, that monstrosity has no business in proper C++
