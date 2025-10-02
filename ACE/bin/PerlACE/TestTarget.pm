@@ -82,9 +82,10 @@ sub new
 {
     my $proto = shift;
     my $class = ref ($proto) || $proto;
-    my $self = {};
-
     my $config_name = shift;
+
+    my $self = {config_name => $config_name};
+
     bless ($self, $class);
     $self->GetConfigSettings($config_name);
 
@@ -505,7 +506,7 @@ sub DeleteFile ($)
            print STDERR "Deleting remote $file from path $newfile using $cmd\n";
         }
         if (system ($cmd) != 0) {
-        	print STDERR "ERROR executing [".$cmd."]\n";
+          print STDERR "ERROR executing [".$cmd."]\n";
         }
     } else {
         unlink ($newfile);
@@ -523,9 +524,9 @@ sub GetFile ($)
         $remote_file = $self->LocalFile($local_file);
     }
     if (defined $self->{GET_CMD}) {
-	    if (system ($self->{GET_CMD}.' '.$remote_file.' '.$local_file) != 0) {
-	    	print STDERR "ERROR executing [".$self->{GET_CMD}." $remote_file $local_file]\n";
-	    }
+      if (system ($self->{GET_CMD}.' '.$remote_file.' '.$local_file) != 0) {
+        print STDERR "ERROR executing [".$self->{GET_CMD}." $remote_file $local_file]\n";
+      }
     }
     elsif (($remote_file ne $local_file) &&
         (File::Spec->rel2abs($remote_file) ne File::Spec->rel2abs($local_file))) {
@@ -541,9 +542,9 @@ sub PutFile ($)
     my $src = shift;
     my $dest = $self->LocalFile ($src);
     if (defined $self->{PUT_CMD}) {
-	    if (system ($self->{PUT_CMD}.' '.$src.' '.$dest) != 0) {
-	    	print STDERR "ERROR executing [".$self->{PUT_CMD}." $src $dest]\n";
-	    }
+      if (system ($self->{PUT_CMD}.' '.$src.' '.$dest) != 0) {
+        print STDERR "ERROR executing [".$self->{PUT_CMD}." $src $dest]\n";
+      }
     }
     elsif (($src ne $dest) &&
         (File::Spec->rel2abs($src) ne File::Spec->rel2abs($dest))) {
@@ -594,7 +595,14 @@ sub WaitForFileTimed ($)
 sub CreateProcess ($)
 {
     my $self = shift;
-    my $process = new PerlACE::Process (@_);
+
+    my $process;
+    if ($self->{config_name} eq 'NODEJS') {
+        $process = new PerlACE::ProcessNodeJS(@_);
+    } else {
+        $process = new PerlACE::Process (@_);
+    }
+
     $process->Target($self);
     return $process;
 }
