@@ -6,10 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Connection_Purging_Strategy::~TAO_Connection_Purging_Strategy ()
-{
-}
-
 int
 TAO_Connection_Purging_Strategy::cache_maximum () const
 {

@@ -42,7 +42,7 @@ public:
   TAO_Connection_Purging_Strategy (int cache_maximum);
 
   /// The destructor
-  virtual ~TAO_Connection_Purging_Strategy ();
+  virtual ~TAO_Connection_Purging_Strategy () = default;
 
   /// Return the maximum number of cache entries
   virtual int cache_maximum () const;
@@ -52,7 +52,7 @@ public:
 
 private:
   /// The maximum number of cache entries
-  int cache_maximum_;
+  int const cache_maximum_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
