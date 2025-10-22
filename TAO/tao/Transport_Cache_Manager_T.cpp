@@ -76,10 +76,10 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::~Transport_Cache_Manager_T ()
   {
     delete this->cache_lock_;
-    this->cache_lock_ = 0;
+    this->cache_lock_ = nullptr;
 
     delete this->purging_strategy_;
-    this->purging_strategy_ = 0;
+    this->purging_strategy_ = nullptr;
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     this->purge_monitor_->remove_from_registry ();
@@ -95,7 +95,7 @@ namespace TAO
                                             TAO::Cache_Entries_State state)
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
-    if (entry != 0)
+    if (entry != nullptr)
       {
         entry->item ().recycle_state (state);
         if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING
@@ -384,7 +384,7 @@ namespace TAO
                               guard,
                               *this->cache_lock_, -1));
 
-    if (entry == 0)
+    if (entry == nullptr)
       return -1;
 
     purging_strategy *st = this->purging_strategy_;
@@ -432,8 +432,7 @@ namespace TAO
       {
         // Get the transport to fill its associated connection's
         // handler.
-        bool const retval =
-          (*iter).int_id_.transport ()->provide_blockable_handler (h);
+        bool const retval = (*iter).int_id_.transport ()->provide_blockable_handler (h);
 
         // Do not mark the entry as closed if we don't have a
         // blockable handler added

@@ -40,7 +40,7 @@ TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_cor
 template <class SVC_HANDLER> int
 TAO_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
-  if (sh == 0)
+  if (sh == nullptr)
     {
       // Purge connections (if necessary)
       this->orb_core_->lane_resources ().transport_cache ().purge ();

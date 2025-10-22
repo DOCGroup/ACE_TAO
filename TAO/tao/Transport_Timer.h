@@ -40,12 +40,11 @@ public:
   /**
    * @param transport The adaptee
    */
-  TAO_Transport_Timer (TAO_Transport *transport);
+  explicit TAO_Transport_Timer (TAO_Transport *transport);
 
   /// Receive timeout events from the Reactor and forward them to the
   /// TAO_Transport
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act);
+  int handle_timeout (const ACE_Time_Value &current_time, const void *act) override;
 private:
   /// The Adaptee
   TAO_Transport *transport_;

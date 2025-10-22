@@ -152,7 +152,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #endif /* ! TAO_DEFAULT_SERVER_POA_MAP_SIZE */
 
 // The default timeout receiving the location request to the TAO
-// Naming, Trading and other servicesService.
+// Naming, Trading and other services.
 #if !defined (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
 #define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 10
 #endif /* TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT */
