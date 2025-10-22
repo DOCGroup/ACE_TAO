@@ -854,7 +854,6 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       if (adapter != nullptr)
         adapter->release (array_obj_ref_template[0]);
-
     }
 
   // Destroy all child POA's now.
