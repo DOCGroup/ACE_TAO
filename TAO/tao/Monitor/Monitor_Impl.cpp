@@ -47,11 +47,9 @@ Monitor_Impl::get_statistic_names (const char * filter)
                     ::Monitor::NameList (static_cast<CORBA::ULong> (mc_names.size ())),
                     CORBA::NO_MEMORY ());
 
-  CORBA::ULong index = 0;
-
   for (Monitor_Control_Types::NameList::Iterator i (mc_names);
        !i.done ();
-       i.advance (), ++index)
+       i.advance ())
     {
       ACE_CString *item = 0;
       i.next (item);

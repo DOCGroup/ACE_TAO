@@ -803,8 +803,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
     return;
 
   // Is the <wait_for_completion> semantics for this thread correct?
-  TAO_Root_POA::check_for_valid_wait_for_completions (this->orb_core (),
-                                                      wait_for_completion);
+  TAO_Root_POA::check_for_valid_wait_for_completions (this->orb_core (), wait_for_completion);
 
   this->cleanup_in_progress_ = true;
 
@@ -822,8 +821,6 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
   this->remove_from_parent_i ();
 
   TAO::ORT_Array array_obj_ref_template (1);
-
-  CORBA::ULong i = 0;
 
   // Gather all ObjectReferenceTemplates and change all adapter states
   // to INACTIVE.
@@ -853,13 +850,10 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
         PortableInterceptor::INACTIVE;
 
       // Notify the state changes to the IORInterceptors
-      this->adapter_state_changed (array_obj_ref_template,
-                                   PortableInterceptor::INACTIVE);
+      this->adapter_state_changed (array_obj_ref_template, PortableInterceptor::INACTIVE);
 
       if (adapter != nullptr)
         adapter->release (array_obj_ref_template[0]);
-
-      ++i;
     }
 
   // Destroy all child POA's now.
@@ -888,9 +882,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // completed and all invocations of etherealize have
   // completed. Otherwise, the destroy operation returns after
   // destroying the POAs.
-
-  this->deactivate_all_objects_i (etherealize_objects,
-                                  wait_for_completion);
+  this->deactivate_all_objects_i (etherealize_objects, wait_for_completion);
 
   // If there are no outstanding requests and that we are not in a
   // non-servant upcall or if we are in a non-servant upcall, make
