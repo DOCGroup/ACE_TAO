@@ -15,10 +15,10 @@ my $clean_builds_only = 1; # Only diff todays clean builds
 my $append_revision_to_new_test_fails = 0;  # Default to not doing this.
 
 # The root of the test statistics
-my $teststaturl = "http://teststat.remedy.nl/teststat/builds/";
+my $teststaturl = "http://logs.remedy.nl/teststat/builds/";
 
-my $allbuildsurl = "http://teststat.remedy.nl/teststat/buildscore";
-my $cleanbuildsurl = "http://teststat.remedy.nl/teststat/cleanbuildtests";
+my $allbuildsurl = "http://logs.remedy.nl/teststat/buildscore";
+my $cleanbuildsurl = "http://logs.remedy.nl/teststat/cleanbuildtests";
 
 # Determine the available timestamps for a build on a date,
 # by scanning the index page (build.html)
