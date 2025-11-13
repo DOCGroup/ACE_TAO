@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// We except that each platform does support std streams
+// We expect that each platform does support std streams
 #define ACE_HAS_CPP98_IOSTREAMS 1
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -65,8 +65,8 @@
   using std::fstream;
 #endif /* ! ACE_USES_OLD_IOSTREAMS */
 
-#include /**/ "ace/post.h"
-
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+#include /**/ "ace/post.h"
 
 #endif /* ACE_IOSFWD_H */
