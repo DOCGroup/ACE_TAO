@@ -65,8 +65,8 @@
   using std::fstream;
 #endif /* ! ACE_USES_OLD_IOSTREAMS */
 
-#include /**/ "ace/post.h"
-
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
+#include /**/ "ace/post.h"
+  
 #endif /* ACE_IOSFWD_H */
