@@ -31,7 +31,6 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 
-
 // Port used to receive for dgrams.
 static u_short port1;
 
@@ -41,12 +40,12 @@ public:
   Dgram_Endpoint (const ACE_INET_Addr &local_addr);
 
   // = Hook methods inherited from the <ACE_Event_Handler>.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_timeout (const ACE_Time_Value & tv,
-                              const void *arg = 0);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_timeout (const ACE_Time_Value & tv,
+                      const void *arg = nullptr) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int send (const char *buf, size_t len, const ACE_INET_Addr &);
@@ -78,11 +77,8 @@ Dgram_Endpoint::get_handle () const
 }
 
 int
-Dgram_Endpoint::handle_close (ACE_HANDLE handle,
-                              ACE_Reactor_Mask)
+Dgram_Endpoint::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_UNUSED_ARG (handle);
-
   this->endpoint_.close ();
   delete this;
   return 0;
@@ -98,9 +94,7 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
               "(%P|%t) activity occurred on handle %d!\n",
               this->endpoint_.get_handle ()));
 
-  ssize_t n = this->endpoint_.recv (buf,
-                                    sizeof buf,
-                                    from_addr);
+  ssize_t const n = this->endpoint_.recv (buf, sizeof buf, from_addr);
 
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
@@ -134,7 +128,7 @@ run_test (u_short localport,
                              remotehost);
   ACE_INET_Addr local_addr (localport);
 
-  Dgram_Endpoint *endpoint;
+  Dgram_Endpoint *endpoint = nullptr;
 
   ACE_NEW_RETURN (endpoint,
                   Dgram_Endpoint (local_addr),
@@ -150,7 +144,7 @@ run_test (u_short localport,
 
   char buf[BUFSIZ];
   ACE_OS::strcpy (buf, "Data to transmit");
-  size_t len = ACE_OS::strlen (buf);
+  size_t const len = ACE_OS::strlen (buf);
 
   if (ACE_OS::strncmp (peer, ACE_TEXT("peer1"), 5) == 0)
     {

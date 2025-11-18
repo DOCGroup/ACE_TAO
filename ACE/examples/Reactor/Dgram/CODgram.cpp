@@ -43,13 +43,13 @@ public:
                   const ACE_INET_Addr &local_addr);
 
   // = Hook methods inherited from the <ACE_Event_Handler>.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_timeout (const ACE_Time_Value & tv,
-                              const void *arg = 0);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_timeout (const ACE_Time_Value & tv,
+                      const void *arg = nullptr) override;
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int send (const char *buf, size_t len);
@@ -98,7 +98,7 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
               "(%P|%t) activity occurred on handle %d!\n",
               this->endpoint_.get_handle ()));
 
-  ssize_t n = this->endpoint_.recv (buf, sizeof buf);
+  ssize_t const n = this->endpoint_.recv (buf, sizeof buf);
 
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
@@ -142,7 +142,7 @@ run_test (u_short localport,
   char buf[BUFSIZ];
   ACE_OS::strcpy (buf,
                   "Data to transmit");
-  size_t len = ACE_OS::strlen (buf);
+  size_t const len = ACE_OS::strlen (buf);
 
   // "peer1" is the "initiator."
   if (ACE_OS::strncmp (peer, ACE_TEXT("peer1"), 5) == 0)
