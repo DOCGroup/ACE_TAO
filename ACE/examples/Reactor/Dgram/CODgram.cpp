@@ -43,13 +43,13 @@ public:
                   const ACE_INET_Addr &local_addr);
 
   // = Hook methods inherited from the <ACE_Event_Handler>.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_timeout (const ACE_Time_Value & tv,
-                              const void *arg = 0);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_timeout (const ACE_Time_Value & tv,
+                      const void *arg = nullptr) override;
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int send (const char *buf, size_t len);
