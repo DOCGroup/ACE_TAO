@@ -5,7 +5,7 @@
 //
 // 1. Stand-alone -- e.g.,
 //
-//    % ./CODgram
+//    % ./codgram
 //
 //    which will spawn a child process and run peer1 and peer2
 //    in different processes on the same machine.
@@ -13,10 +13,10 @@
 // 2. Distributed -- e.g.,
 //
 //    # Peer1
-//    % ./CODgram 10002 tango.cs.wustl.edu 10003 peer1
+//    % ./codgram 10002 tango.cs.wustl.edu 10003 peer1
 //
 //    # Peer1
-//    % ./CODgram 10003 tango.cs.wustl.edu 10002 peer2
+//    % ./codgram 10003 tango.cs.wustl.edu 10002 peer2
 //
 //    which will run peer1 and peer2 in different processes
 //    on the same or different machines.  Note that you MUST
