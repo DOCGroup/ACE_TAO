@@ -4,7 +4,7 @@
 //
 // 1. Stand-alone -- e.g.,
 //
-//    % ./Dgram
+//    % ./dgram
 //
 //    which will spawn a child process and run peer1 and peer2
 //    in different processes on the same machine.
@@ -12,10 +12,10 @@
 // 2. Distributed -- e.g.,
 //
 //    # Peer1
-//    % ./Dgram 10002 tango.cs.wustl.edu 10003 peer1
+//    % ./dgram 10002 tango.cs.wustl.edu 10003 peer1
 //
 //    # Peer1
-//    % ./Dgram 10003 tango.cs.wustl.edu 10002 peer2
+//    % ./dgram 10003 tango.cs.wustl.edu 10002 peer2
 //
 //    which will run peer1 and peer2 in different processes
 //    on the same or different machines.  Note that you MUST
@@ -124,8 +124,7 @@ run_test (u_short localport,
           u_short remoteport,
           const ACE_TCHAR *peer)
 {
-  ACE_INET_Addr remote_addr (remoteport,
-                             remotehost);
+  ACE_INET_Addr remote_addr (remoteport, remotehost);
   ACE_INET_Addr local_addr (localport);
 
   Dgram_Endpoint *endpoint = nullptr;
