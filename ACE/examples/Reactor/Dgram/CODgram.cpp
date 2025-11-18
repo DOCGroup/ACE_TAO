@@ -98,7 +98,7 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
               "(%P|%t) activity occurred on handle %d!\n",
               this->endpoint_.get_handle ()));
 
-  ssize_t n = this->endpoint_.recv (buf, sizeof buf);
+  ssize_t const n = this->endpoint_.recv (buf, sizeof buf);
 
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
@@ -142,7 +142,7 @@ run_test (u_short localport,
   char buf[BUFSIZ];
   ACE_OS::strcpy (buf,
                   "Data to transmit");
-  size_t len = ACE_OS::strlen (buf);
+  size_t const len = ACE_OS::strlen (buf);
 
   // "peer1" is the "initiator."
   if (ACE_OS::strncmp (peer, ACE_TEXT("peer1"), 5) == 0)
