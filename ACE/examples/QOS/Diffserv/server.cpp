@@ -2,8 +2,6 @@
 /**
   *  @file   server.cpp
   *
-  *
-  *
   *  @author Craig Rodrigues <crodrigu@bbn.com>
   *  @brief  Start a server which listens for UDP packets on a specified port.
   */
@@ -61,11 +59,8 @@ Dgram_Endpoint::get_handle () const
 }
 
 int
-Dgram_Endpoint::handle_close (ACE_HANDLE handle,
-                              ACE_Reactor_Mask)
+Dgram_Endpoint::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_UNUSED_ARG (handle);
-
   this->endpoint_.close ();
   delete this;
   return 0;
@@ -77,9 +72,7 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
   char buf[BUFSIZ];
   ACE_INET_Addr from_addr;
 
-  ssize_t n = this->endpoint_.recv (buf,
-                                    sizeof buf,
-                                    from_addr);
+  ssize_t n = this->endpoint_.recv (buf, sizeof buf, from_addr);
 
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
@@ -148,8 +141,7 @@ run_test (u_short localport)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  // Estabish call backs and socket names.
-
+  // Establish call backs and socket names.
   port1 = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
 
   if(argc < 3)
