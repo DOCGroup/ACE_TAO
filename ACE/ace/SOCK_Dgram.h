@@ -41,7 +41,7 @@ public:
   ACE_SOCK_Dgram ();
 
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
-  /// dgram that will accept datagrams at the <local> address.
+  /// dgram that will accept datagrams at the @a local address.
   ACE_SOCK_Dgram (const ACE_Addr &local,
                   int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                   int protocol = 0,
