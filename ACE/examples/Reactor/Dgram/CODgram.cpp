@@ -1,5 +1,5 @@
-// Exercise the <ACE_SOCK_CODgram> wrapper along with the
-// <ACE_Reactor>.  This test simply ping-pongs datagrams back and
+// Exercise the ACE_SOCK_CODgram wrapper along with the
+// ACE_Reactor.  This test simply ping-pongs datagrams back and
 // forth between the peer1 and peer2 processes.  This test can
 // be run in two ways:
 //
@@ -126,8 +126,7 @@ run_test (u_short localport,
           u_short remoteport,
           const ACE_TCHAR *peer)
 {
-  ACE_INET_Addr remote_addr (remoteport,
-                             remotehost);
+  ACE_INET_Addr remote_addr (remoteport, remotehost);
   ACE_INET_Addr local_addr (localport);
 
   Dgram_Endpoint endpoint (remote_addr, local_addr);
