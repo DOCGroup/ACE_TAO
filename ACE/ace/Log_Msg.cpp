@@ -1727,10 +1727,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   }
 
                 case 'Y': // Format the duration in hour:minute:sec.usec format.
-                          // Note that this is currently overflows if the
-                          // provided duration is larger or equal to 24 hours.
+                          // Note that this currently overflows if the provided
+                          // duration is larger or equal to 24 hours.
                   {
-                    ACE_TCHAR duration[27];
+                    ACE_TCHAR duration[16];
                     ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                     // Did we find the flag indicating a time value argument
                     if (format[1] == ACE_TEXT('#'))
