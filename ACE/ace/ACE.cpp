@@ -2415,7 +2415,10 @@ ACE::timestamp (const ACE_Time_Value& time_value,
         ACE_Time_Value (ACE_OS::gettimeofday ()) : time_value;
   time_t secs = cur_time.sec ();
   struct tm tms;
-  ACE_OS::localtime_r (&secs, &tms);
+  if (time_value == ACE_Time_Value::zero)
+    ACE_OS::localtime_r (&secs, &tms);
+  else
+    ACE_OS::gmtime_r (&secs, &tms);
   ACE_OS::snprintf (date_and_time,
                     date_and_timelen,
                     ACE_TEXT ("%4.4d-%2.2d-%2.2d %2.2d:%2.2d:%2.2d.%06ld"),
