@@ -1726,6 +1726,37 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     break;
                   }
 
+                case 'Y': // Format the duration in hour:minute:sec.usec format.
+                          // Note that this is currently overflows if the
+                          // provided duration is larger or equal to 24 hours.
+                  {
+                    ACE_TCHAR duration[27];
+                    ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
+                    // Did we find the flag indicating a time value argument
+                    if (format[1] == ACE_TEXT('#'))
+                    {
+                      ACE_Time_Value* duration_value = va_arg (argp, ACE_Time_Value*);
+                      if (can_check)
+                        this_len = ACE_OS::snprintf
+                          (bp, bspace, format,
+                          ACE::duration (*duration_value,
+                                         duration,
+                                         sizeof duration / sizeof (ACE_TCHAR)));
+                      else
+                        this_len = ACE_OS::sprintf
+                          (bp, format, ACE::duration (*duration_value,
+                                                      duration,
+                                                      sizeof duration / sizeof (ACE_TCHAR)));
+                    }
+                    else
+                    {
+                      ACE_OS::fprintf (stderr,
+                                       "error: %%Y requires # modifier\n");
+                    }
+                    ACE_UPDATE_COUNT (bspace, this_len);
+                    break;
+                  }
+
                 case 't': // Format thread id.
 #if defined (ACE_WIN32)
                   ACE_OS::strcpy (fp, ACE_TEXT ("u"));
@@ -2414,6 +2445,13 @@ bool ACE_Log_Formatter::process_conversion ()
         ACE_UPDATE_COUNT (this->bspace_, len);
         this->bp_ += len;
       }
+      break;
+    // %Y with # in the conversion spec takes an arg (ACE_Time_Value*)
+    case 'Y':
+      ACE_OS::strcpy (this->fp_, "s");
+      if (ACE_OS::memchr (this->fmt_out_, '#', this->fp_ - this->fmt_out_))
+        return false;
+      ACE_ASSERT (false); // %Y without # is currently unspecified
       break;
 
     case '{':
