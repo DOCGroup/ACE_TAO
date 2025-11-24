@@ -2451,7 +2451,8 @@ bool ACE_Log_Formatter::process_conversion ()
       ACE_OS::strcpy (this->fp_, "s");
       if (ACE_OS::memchr (this->fmt_out_, '#', this->fp_ - this->fmt_out_))
         return false;
-      ACE_ASSERT (false); // %Y without # is currently unspecified
+      ACE_OS::fprintf (stderr,
+                       "error: %%Y requires # modifier\n");
       break;
 
     case '{':
