@@ -101,9 +101,9 @@ jobs:
       VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg_installed
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
     - name: checkout MPC
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
@@ -170,9 +170,9 @@ jobs:
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
     - name: checkout MPC
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
