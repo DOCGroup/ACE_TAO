@@ -26,9 +26,9 @@ jobs:
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: Checkout ACE_TAO
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
     - name: Checkout MPC
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
