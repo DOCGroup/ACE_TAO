@@ -194,7 +194,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Establish call backs and socket names.
-
   port1 = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
   const ACE_TCHAR *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
   const u_short port2 = argc > 3 ? ACE_OS::atoi (argv[3]) : port1 + 1;

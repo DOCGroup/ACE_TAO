@@ -50,7 +50,7 @@ public:
 
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
-   * will accept datagrams at the <local> address.  The @a qos_params
+   * will accept datagrams at the @a local address.  The @a qos_params
    * are passed to <ACE_OS::join_leaf>.
    */
   ACE_SOCK_Dgram (const ACE_Addr &local,
@@ -63,7 +63,7 @@ public:
                   int ipv6_only = 0);
 
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
-  /// dgram that will accept datagrams at the <local> address.
+  /// dgram that will accept datagrams at the @a local address.
   int open (const ACE_Addr &local,
             int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
@@ -72,7 +72,7 @@ public:
 
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
-   * will accept datagrams at the <local> address.  The @a qos_params
+   * will accept datagrams at the @a local address.  The @a qos_params
    * are passed to <ACE_OS::join_leaf>.
    */
   int open (const ACE_Addr &local,
@@ -220,15 +220,15 @@ protected:
                    int ipv6_only = 0);
 
   /// Create a multicast addr/if pair, in format useful for system calls.
-  /// If mreq param is NULL, just verify the passed addr/interface specs.
-  int make_multicast_ifaddr (ip_mreq *mreq,     // Put result here, if != NULL.
+  /// If mreq param is nullptr, just verify the passed addr/interface specs.
+  int make_multicast_ifaddr (ip_mreq *mreq,     // Put result here, if != nullptr.
                              const ACE_INET_Addr &mcast_addr,
                              const ACE_TCHAR *net_if);
 
 #if defined (ACE_HAS_IPV6)
   /// Create a multicast addr/if pair, in format useful for system calls.
-  /// If mreq param is NULL, just verify the passed addr/interface specs.
-  int make_multicast_ifaddr6 (ipv6_mreq *mreq,   // Put result here, if != NULL.
+  /// If mreq param is nullptr, just verify the passed addr/interface specs.
+  int make_multicast_ifaddr6 (ipv6_mreq *mreq,   // Put result here, if != nullptr.
                               const ACE_INET_Addr &mcast_addr,
                               const ACE_TCHAR *net_if);
 
