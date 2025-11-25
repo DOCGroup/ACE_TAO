@@ -37,11 +37,9 @@ ACE_Future_Rep<T>::dump () const
  (int) this->ref_count_));
   ACELIB_DEBUG ((LM_INFO,"value_:\n"));
   if (this->value_)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (NON-NULL)\n")));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (non-nullptr)\n")));
   else
-    //FUZZ: disable check_for_NULL
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (NULL)\n")));
-    //FUZZ: enable check_for_NULL
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (nullptr)\n")));
 
   ACELIB_DEBUG ((LM_INFO,"value_ready_:\n"));
   this->value_ready_.dump ();
