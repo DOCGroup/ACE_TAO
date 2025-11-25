@@ -25,9 +25,7 @@ ACE_Activation_Queue::dump () const
   if (this->queue_)
     this->queue_->dump();
   else
-    //FUZZ: disable check_for_NULL
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("(NULL)\n")));
-    //FUZZ: enable check_for_NULL
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("(nullptr)\n")));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
