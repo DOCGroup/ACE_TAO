@@ -42,7 +42,6 @@ ACE_SOCK_Dgram::dump () const
 // buffer to read.  This method determines how much data is in the
 // socket, allocates a buffer of this size, reads in the data, and
 // returns the number of bytes read.
-
 ssize_t
 ACE_SOCK_Dgram::recv (iovec *io_vec,
                       ACE_Addr &addr,
@@ -113,7 +112,6 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 // PF_INET protocol family and the address of LOCAL == the address of
 // the special variable SAP_ANY then we are going to arbitrarily bind
 // to a portnumber.
-
 int
 ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
                              int protocol_family,
@@ -185,7 +183,6 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 }
 
 // Here's the general-purpose open routine.
-
 int
 ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       int protocol_family,
@@ -214,7 +211,6 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 
 // Here's the general-purpose constructor used by a connectionless
 // datagram ``server''...
-
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                                 int protocol_family,
                                 int protocol,
