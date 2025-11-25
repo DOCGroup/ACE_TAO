@@ -2389,7 +2389,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 }
 
 /// Returns the given timestamp in the form
-/// "hour:minute:second:microsecond."  The month, day, and year are
+/// "hour:minute:second.microsecond."  The month, day, and year are
 /// also stored in the beginning of the date_and_time array
 /// using ISO-8601 format.
 /// 012345678901234567890123456
@@ -2428,6 +2428,39 @@ ACE::timestamp (const ACE_Time_Value& time_value,
                     static_cast<long> (cur_time.usec()));
   date_and_time[date_and_timelen - 1] = '\0';
   return &date_and_time[10 + (return_pointer_to_first_digit != 0)];
+}
+
+/// Returns the given duration in the form
+/// "hour:minute:second.microsecond."
+/// 0123456789012345
+/// 12:56:00.123456<nul>
+ACE_TCHAR *
+ACE::duration (const ACE_Time_Value& duration_value,
+               ACE_TCHAR duration[],
+               size_t duration_len)
+{
+  //ACE_TRACE ("ACE::duration");
+
+  // This magic number is from the formatting statement
+  // farther down this routine.
+  if (duration_len < 16)
+    {
+      errno = EINVAL;
+      return 0;
+    }
+
+  time_t secs = duration_value.sec ();
+  struct tm tms;
+  ACE_OS::gmtime_r (&secs, &tms);
+  ACE_OS::snprintf (duration,
+                    duration_len,
+                    ACE_TEXT ("%2.2d:%2.2d:%2.2d.%06ld"),
+                    tms.tm_hour,
+                    tms.tm_min,
+                    tms.tm_sec,
+                    static_cast<long> (duration_value.usec ()));
+  duration[duration_len - 1] = '\0';
+  return &duration[0];
 }
 
 /// This function rounds the request to a multiple of the page size.
