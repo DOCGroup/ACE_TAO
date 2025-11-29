@@ -14,6 +14,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -175,6 +176,499 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
 {
   if (ptr != 0)
     this->free_list_.add ((ACE_Cached_Mem_Pool_Node<char> *) ptr);
+}
+
+template <class ACE_LOCK>
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_Allocator
+  (size_t initial_n_chunks, size_t chunk_size)
+    : initial_n_chunks_ (initial_n_chunks),
+      chunk_size_ (chunk_size),
+      chunk_sum_ (0)
+{
+  ACE_ASSERT (this->chunk_size_ > 0);
+
+  comb_alloc_ptr tmp;
+  // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
+  ACE_NEW (tmp, comb_alloc_type (this->initial_n_chunks_, this->chunk_size_));
+
+  // Consider the exception of vector push_back call.
+  std::unique_ptr<comb_alloc_type> smart_ptr (tmp);
+  // Has strong exception safety guarantee for call of push_back.
+  this->hierarchy_.push_back (smart_ptr.get ());
+
+  // Increase the chunk sum if all points having potential risk of exception is passed.
+  this->chunk_sum_ += smart_ptr->pool_depth ();
+
+  smart_ptr.release ();
+}
+
+template <class ACE_LOCK>
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::~ACE_Cascaded_Dynamic_Cached_Allocator ()
+{
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
+  {
+    delete this->hierarchy_[h];
+  }
+
+  this->hierarchy_.clear ();
+}
+
+template <class ACE_LOCK> void *
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > this->chunk_size_)
+    return nullptr;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, nullptr));
+
+  size_t const size = this->hierarchy_.size ();
+  if (size == 0)
+    return nullptr;
+
+  // Only the first and last child allocator maybe has free chunks, the others are empty.
+  void* ptr = this->hierarchy_[0]->malloc (nbytes);
+  if (ptr != nullptr)
+    return ptr;
+
+  // The code will possibly be optimized by compiler when using const var.
+  size_t const lastAllocatorPos = size - 1;
+  if (lastAllocatorPos > 0)
+  {
+    ptr = this->hierarchy_[lastAllocatorPos]->malloc (nbytes);
+    if (ptr != nullptr)
+      return ptr;
+  }
+
+  // Need alloc a new child allocator.
+  comb_alloc_ptr tmp;
+  ACE_NEW_RETURN (tmp, comb_alloc_type (this->initial_n_chunks_ * (1 << size),
+                  this->chunk_size_),
+                  nullptr);
+
+  // Consider the exception of vector push_back call.
+  std::unique_ptr<comb_alloc_type> smart_ptr (tmp);
+  // Has strong exception safety guarantee for call of push_back.
+  this->hierarchy_.push_back (smart_ptr.get ());
+
+  // Increase the chunk sum if all points having potential risk of exception is passed.
+  this->chunk_sum_ += smart_ptr->pool_depth ();
+  ptr = smart_ptr->malloc (nbytes);
+  smart_ptr.release ();
+
+  return ptr;
+}
+
+template <class ACE_LOCK> void *
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
+                                                char initial_value)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > this->chunk_size_)
+    return nullptr;
+
+  // No need any lock.
+  void *ptr = malloc(nbytes);
+  if (ptr != nullptr)
+    ACE_OS::memset (ptr, initial_value, this->chunk_size_);
+
+  return ptr;
+}
+
+template <class ACE_LOCK> void *
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t, size_t, char)
+{
+  ACE_NOTSUP_RETURN (nullptr);
+}
+
+template <class ACE_LOCK> void
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
+{
+  if (ptr == nullptr)
+    return;
+
+  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
+
+  ACE_ASSERT (this->hierarchy_.size () > 0);
+
+  // Use first allocator as a free chunk manager for all allocators when chunk freed.
+  if (this->hierarchy_.size () != 0)
+    this->hierarchy_[0]->free (ptr);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::remove ()
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::bind (const char *, void *, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::trybind (const char *, void *&)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::find (const char *, void *&)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::find (const char *)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::unbind (const char *)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::unbind (const char *, void *&)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::sync (ssize_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::sync (void *, size_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::protect (ssize_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::protect (void *, size_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> size_t
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, 0));
+
+  size_t const size = this->hierarchy_.size ();
+  if (size == 0)
+    return 0;
+
+  // Only the first and last child allocator maybe has non-zero value, the others have zero value.
+  size_t pool_depth = this->hierarchy_[0]->pool_depth ();
+
+  if (size > 1)
+    pool_depth += this->hierarchy_[size - 1]->pool_depth ();
+
+  return pool_depth;
+}
+
+template <class ACE_LOCK> void
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump () const
+{
+#if defined (ACE_HAS_DUMP)
+  ACE_TRACE ("ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump");
+
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("initial_n_chunks_ = %u\n"), this->initial_n_chunks_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_size_ = %u\n"), this->chunk_size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_sum_ = %u\n"), this->chunk_sum_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("hierarchy_ size = %u\n"), this->hierarchy_.size ()));
+
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
+  {
+    this->hierarchy_[h]->dump ();
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  }
+
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
+}
+
+template <class ACE_LOCK>
+ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::ACE_Cascaded_Multi_Size_Based_Allocator
+(size_t initial_n_chunks, size_t initial_chunk_size, size_t min_initial_n_chunks)
+  : initial_n_chunks_ (initial_n_chunks),
+    min_initial_n_chunks_ (min_initial_n_chunks),
+    initial_chunk_size_ (initial_chunk_size)
+{
+  ACE_ASSERT (this->initial_chunk_size_ > 0);
+
+  comb_alloc_ptr tmp;
+  // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
+  // Notice: need one octet to record hierarchy pos.
+  ACE_NEW (tmp, comb_alloc_type (this->initial_n_chunks_,
+                                 this->initial_chunk_size_ + sizeof(comb_chunk_header_type))
+          );
+
+  // Consider the exception of vector push_back call.
+  std::unique_ptr<comb_alloc_type> smart_ptr (tmp);
+  this->hierarchy_.push_back (smart_ptr.get ());
+
+  smart_ptr.release ();
+}
+
+template <class ACE_LOCK>
+ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::~ACE_Cascaded_Multi_Size_Based_Allocator ()
+{
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
+  {
+    if (this->hierarchy_[h] != nullptr)
+      delete this->hierarchy_[h];
+  }
+
+  this->hierarchy_.clear ();
+}
+
+template <class ACE_LOCK>
+void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
+{
+  // Will be assigned by lately Binary Search process.
+  size_t chunk_size;
+
+  // Use Binary Search to find minimal pos that value is bigger than nbytes.
+  size_t m = 0;
+  size_t l = 0;
+  size_t h = this->hierarchy_.size ();
+
+  while (l <= h)
+  {
+    m = (l + h) / 2;
+    chunk_size = this->initial_chunk_size_ << m;
+
+    if (chunk_size >= nbytes)
+    {
+      // End loop.
+      if (m == 0)
+        break;
+
+      h = m - 1;
+    }
+    else
+    {
+      l = m + 1;
+    }
+  }
+
+  // Not in hierarchy or less than nbytes when Binary Search.
+  while (chunk_size < nbytes)
+  {
+    // Equal to this->initial_chunk_size_ << (m + 1).
+    chunk_size <<= 1;
+    ++m;
+  }
+
+  if (m > ACE_OCTET_MAX)
+    return nullptr;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, nullptr));
+
+  if (m < this->hierarchy_.size () && this->hierarchy_[m] != nullptr)
+  {
+    void *ptr = this->hierarchy_[m]->malloc(nbytes);
+    if (ptr == nullptr)
+      return nullptr;
+
+    *static_cast<comb_chunk_header_type*> (ptr) = static_cast<comb_chunk_header_type> (m);
+    return static_cast<comb_chunk_header_type*> (ptr) + 1;
+  }
+
+  // The found pos maybe nullptr or beyond the current hierarchy_ size.
+  if (m >= this->hierarchy_.size ())
+  {
+    // Has strong exception safety guarantee for call of resize, maybe throw.
+    this->hierarchy_.resize (m + 1, nullptr);
+  }
+
+  size_t const reinitial_n_chunks = this->initial_n_chunks_ >> m;
+  comb_alloc_ptr newly_alloc;
+  // Notice: need one octet to record hierarchy pos.
+  ACE_NEW_RETURN (newly_alloc,
+                  comb_alloc_type (reinitial_n_chunks > this->min_initial_n_chunks_ ? reinitial_n_chunks : this->min_initial_n_chunks_,
+                                   chunk_size + sizeof(comb_chunk_header_type)),
+                  nullptr);
+
+  this->hierarchy_[m] = newly_alloc;
+  void *ptr = newly_alloc->malloc (nbytes);
+  if (ptr == nullptr)
+    return nullptr;
+
+  *static_cast<comb_chunk_header_type*> (ptr) = static_cast<comb_chunk_header_type> (m);
+  return static_cast<comb_chunk_header_type*> (ptr) + 1;
+}
+
+template <class ACE_LOCK>
+void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::calloc (size_t nbytes, char initial_value)
+{
+  // No need any lock.
+  void *ptr = malloc (nbytes);
+  if (ptr != nullptr)
+    ACE_OS::memset (ptr, initial_value, nbytes);
+
+  return ptr;
+}
+
+template <class ACE_LOCK>
+void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::calloc (size_t, size_t, char)
+{
+  ACE_NOTSUP_RETURN (nullptr);
+}
+
+template <class ACE_LOCK>
+void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::free (void* ptr)
+{
+  if (ptr == nullptr)
+    return;
+
+  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
+
+  ACE_ASSERT (this->hierarchy_.size () > 0);
+
+  void* const hdr_ptr = static_cast<comb_chunk_header_type*> (ptr) - 1;
+  size_t const h      = *static_cast<comb_chunk_header_type*> (hdr_ptr);
+
+  if (h < this->hierarchy_.size () && this->hierarchy_[h] != nullptr)
+    this->hierarchy_[h]->free (hdr_ptr);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::remove ()
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::bind (const char*, void*, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::trybind (const char*, void*&)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::find (const char*, void*&)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::find (const char*)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::unbind (const char*)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::unbind (const char*, void*&)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::sync (ssize_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::sync (void*, size_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::protect (ssize_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+int ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::protect (void*, size_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK>
+size_t ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::pool_depth ()
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, 0));
+
+  size_t pool_depth = 0;
+
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
+  {
+    if (this->hierarchy_[h] != nullptr)
+      pool_depth += this->hierarchy_[h]->pool_depth ();
+  }
+
+  return pool_depth;
+}
+
+template <class ACE_LOCK>
+size_t ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::pool_sum ()
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, 0));
+
+  size_t pool_sum = 0;
+
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
+  {
+    if (this->hierarchy_[h] != nullptr)
+      pool_sum += this->hierarchy_[h]->pool_sum ();
+  }
+
+  return pool_sum;
+}
+
+template <class ACE_LOCK>
+void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::dump () const
+{
+#if defined(ACE_HAS_DUMP)
+  ACE_TRACE ("ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::dump");
+
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("initial_n_chunks_ = %u\n"), this->initial_n_chunks_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("min_initial_n_chunks_ = %u\n"), this->min_initial_n_chunks_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_size_ = %u\n"), this->initial_chunk_size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("hierarchy_ size = %u\n"), this->hierarchy_.size ()));
+
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
+  {
+    if (this->hierarchy_[h] != nullptr)
+    {
+      this->hierarchy_[h]->dump ();
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+    }
+  }
+
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_ALLOC_HOOK_DEFINE_Tmcc (ACE_Malloc_T)
