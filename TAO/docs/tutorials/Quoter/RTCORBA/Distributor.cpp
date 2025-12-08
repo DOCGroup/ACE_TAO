@@ -42,6 +42,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'u':
           update_freq = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
         case 'c':
           use_naming = true;
           break;
