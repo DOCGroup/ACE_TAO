@@ -868,7 +868,7 @@ int boolean_test ()
   ACE_CDR::Boolean bout2;
   ACE_InputCDR is (os);
   // Now try to extract the boolean, first should work, second should
-  // fail as the stream contains 3 which is a not valid value for a
+  // fail as the stream contains 2 which is a not valid value for a
   // boolean
   if (!(is.read_boolean(bout1)))
     {
