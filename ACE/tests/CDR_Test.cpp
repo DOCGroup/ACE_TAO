@@ -913,7 +913,7 @@ int boolean_array_test ()
   if ((is.read_boolean_array(bout2, 3)))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                        ACE_TEXT ("boolean_array_test bout2 failed %d\n"), bout2),
+                        ACE_TEXT ("boolean_array_test bout2 failed\n")),
                         1);
     }
 
