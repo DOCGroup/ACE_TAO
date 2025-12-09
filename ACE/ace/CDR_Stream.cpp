@@ -1923,7 +1923,13 @@ ACE_InputCDR::read_boolean_array (ACE_CDR::Boolean *x,
   // a non-zero value (different from 1).
   // We resort to a simple loop.
   for (ACE_CDR::ULong i = 0; i != length && this->good_bit_; ++i)
-    (void) this->read_boolean (x[i]);
+    {
+      // Stop when reading a boolean failed
+      if (!this->read_boolean (x[i]))
+        {
+          return false;
+        }
+    }
 
   return this->good_bit_;
 }

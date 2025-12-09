@@ -757,7 +757,7 @@ CDR_Test_Types::test_get_placeholder (ACE_InputCDR &cdr) const
                        ACE_TEXT ("test_get (ushort) failed\n")),
                       1);
 
-  if (cdr.read_boolean (xb) == 0)
+  if (!cdr.read_boolean (xb))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_boolean failed\n")), 1);
   if (xb != this->repb)
@@ -852,6 +852,73 @@ CDR_Test_Types::test_get_placeholder (ACE_InputCDR &cdr) const
   return 0;
 }
 
+int boolean_test ()
+{
+  // Test that a boolean with value 2 is correctly rejected
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing invalid boolean\n")));
+
+  ACE_OutputCDR os;
+  ACE_CDR::Boolean bin { true };
+  ACE_CDR::Octet oin { 2 };
+  os.write_boolean(bin);
+  os.write_octet(oin);
+
+  ACE_CDR::Boolean bout1;
+  ACE_CDR::Boolean bout2;
+  ACE_InputCDR is (os);
+  // Now try to extract the boolean, first should work, second should
+  // fail as the stream contains 2 which is a not valid value for a
+  // boolean
+  if (!(is.read_boolean(bout1)))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("boolean_test bout1 failed\n")),
+                        1);
+    }
+  if ((is.read_boolean(bout2)))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("boolean_test bout2 failed %d\n"), bout2),
+                        1);
+    }
+
+  return 0;
+}
+
+int boolean_array_test ()
+{
+  // Test that a boolean array with one of its values 2 is correctly rejected
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing invalid boolean array \n\n")));
+
+  ACE_OutputCDR os;
+  ACE_CDR::Boolean bin[3] { false, true, false };
+  ACE_CDR::Octet oin[3] = { 0, 2, 1 };
+  os.write_boolean_array(bin, 3);
+  os.write_octet_array(oin, 3);
+
+  ACE_CDR::Boolean bout1[3];
+  ACE_CDR::Boolean bout2[3];
+  ACE_InputCDR is (os);
+  // Now try to extract the boolean, first should work, second should
+  // fail as the stream contains an array with the second value 2 which is a not
+  // valid value for a boolean
+  if (!(is.read_boolean_array(bout1, 3)))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("boolean_array_test bout1 failed\n")),
+                        1);
+    }
+  if ((is.read_boolean_array(bout2, 3)))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("boolean_array_test bout2 failed\n")),
+                        1);
+    }
+
+  return 0;
+}
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
@@ -1034,6 +1101,12 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   if (test_types.test_get_placeholder (input) != 0)
+    return 1;
+
+  if (boolean_test () != 0)
+    return 1;
+
+  if (boolean_array_test () != 0)
     return 1;
 
   ACE_DEBUG ((LM_DEBUG,
