@@ -75,9 +75,9 @@ jobs:
       VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg_installed
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
     - name: checkout MPC
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
@@ -88,7 +88,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: a34c873a9717a888f58dc05268dea15592c2f0ff
+        vcpkgGitCommitId: c82f74667287d3dc386bce81e44964370c91a289
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
       run: |

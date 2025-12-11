@@ -102,9 +102,9 @@ jobs:
       CXX: ${{ matrix.CXX }}
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
     - name: checkout MPC
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
@@ -154,7 +154,7 @@ jobs:
       shell: pwsh
     - name: initialize CodeQL
       uses: github/codeql-action/init@v3
-      with:           
+      with:
         languages: cpp
       if: matrix.feature == 'CodeQL'
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
