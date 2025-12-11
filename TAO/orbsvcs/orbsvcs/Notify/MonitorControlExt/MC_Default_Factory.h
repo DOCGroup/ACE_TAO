@@ -21,7 +21,7 @@
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x760)
+#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x780)
 #  pragma option push -w-8022
 #endif
 
@@ -68,7 +68,7 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x760)
+#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x780)
 # pragma option pop
 #endif
 

@@ -6,7 +6,7 @@ on:
   schedule:
     - cron: '0 1 * * SUN'
   workflow_dispatch:
-    
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
     - name: Run fuzz
       run: |
         perl ${env:ACE_ROOT}/bin/fuzz.pl
