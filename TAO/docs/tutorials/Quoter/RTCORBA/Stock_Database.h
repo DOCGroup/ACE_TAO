@@ -11,9 +11,6 @@
 // ACE headers
 #include "ace/Task.h"
 
-// TAO headrs
-// #include "tao/orbconf.h"
-
 // STL headers
 #include <map>
 #include <string>
@@ -25,7 +22,7 @@
  * The parameter type may be any type that has a method called "updated_stocks" and
  * accepts a std::vector of std::strings as an argument.
  */
-template <typename CALLBACK>
+template <typename CALLBACK_TYPE>
 class Stock_Database : public ACE_Task_Base
 {
 public:
@@ -38,8 +35,7 @@ public:
   /// @param file The name of a file to read initial stocks and values from.
   Stock_Database (const char *file, u_int rate = 1);
 
-  typedef std::map <std::string,
-                    unsigned int> Init_Map;
+  typedef std::map <std::string, unsigned int> Init_Map;
 
   /// Constructor
   /// @param stockmap  A map containing stocks and initial values.  An initial value
@@ -53,7 +49,7 @@ public:
    * the () operator defined accepting a std::vector of strings as the argument.
    * @returns A cookie to identify the registration
    */
-  Cookie register_callback (CALLBACK &obj);
+  Cookie register_callback (CALLBACK_TYPE &obj);
 
   /**
    * Removes a callback from the notification queue.
@@ -111,7 +107,7 @@ public:
                              siginfo_t * = 0,
                              ucontext_t * = 0);
 
-  typedef std::map <Cookie, CALLBACK *> Callback_Map;
+  typedef std::map <Cookie, CALLBACK_TYPE *> Callback_Map;
 
 private:
   /// The filname initialized from, if any.
