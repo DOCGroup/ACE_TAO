@@ -9,17 +9,17 @@
 
 #include <fstream>
 #include <vector>
-template <typename CALLBACK>
+template <typename CALLBACK_TYPE>
 struct Map_Init
 {
-  Map_Init (typename Stock_Database<CALLBACK>::Stock_Map &map)
+  Map_Init (typename Stock_Database<CALLBACK_TYPE>::Stock_Map &map)
     : map_ (map)
   {
   }
 
-  void operator () (const typename Stock_Database<CALLBACK>::Init_Map::value_type &item)
+  void operator () (const typename Stock_Database<CALLBACK_TYPE>::Init_Map::value_type &item)
   {
-    typename Stock_Database<CALLBACK>::StockInfo stock_info (item.first.c_str ());
+    typename Stock_Database<CALLBACK_TYPE>::StockInfo stock_info (item.first.c_str ());
 
     // If the initial value is nonzero, use that - otherwise, use a number
     // between 0 and 100
@@ -30,12 +30,12 @@ struct Map_Init
     map_[item.first] = stock_info;
   }
 
-  typename Stock_Database<CALLBACK>::Stock_Map &map_;
+  typename Stock_Database<CALLBACK_TYPE>::Stock_Map &map_;
 };
 
 // Stock_Database
-template <typename CALLBACK>
-Stock_Database<CALLBACK>::Stock_Database (u_int rate)
+template <typename CALLBACK_TYPE>
+Stock_Database<CALLBACK_TYPE>::Stock_Database (u_int rate)
   : rate_ (rate),
     active_ (false)
 {
@@ -46,11 +46,11 @@ Stock_Database<CALLBACK>::Stock_Database (u_int rate)
 
   std::for_each (map.begin (),
                  map.end (),
-                 Map_Init<CALLBACK> (this->stock_map_));
+                 Map_Init<CALLBACK_TYPE> (this->stock_map_));
 }
 
-template <typename CALLBACK>
-Stock_Database<CALLBACK>::Stock_Database (const char *file, u_int rate)
+template <typename CALLBACK_TYPE>
+Stock_Database<CALLBACK_TYPE>::Stock_Database (const char *file, u_int rate)
   : filename_ (file),
     rate_ (rate),
     active_ (false)
@@ -58,21 +58,21 @@ Stock_Database<CALLBACK>::Stock_Database (const char *file, u_int rate)
   this->handle_signal (0, 0, 0);
 }
 
-template <typename CALLBACK>
-Stock_Database<CALLBACK>::Stock_Database (const Init_Map &stockmap,
-                                          u_int rate)
+template <typename CALLBACK_TYPE>
+Stock_Database<CALLBACK_TYPE>::Stock_Database (const Init_Map &stockmap,
+                                               u_int rate)
   : rate_ (rate),
     active_ (false)
 {
   std::for_each (stockmap.begin (),
                  stockmap.end (),
-                 Map_Init<CALLBACK> (this->stock_map_));
+                 Map_Init<CALLBACK_TYPE> (this->stock_map_));
 }
 
 // get_stock_info
-template <typename CALLBACK>
-typename Stock_Database<CALLBACK>::StockInfo
-Stock_Database<CALLBACK>::get_stock_info(const char *name)
+template <typename CALLBACK_TYPE>
+typename Stock_Database<CALLBACK_TYPE>::StockInfo
+Stock_Database<CALLBACK_TYPE>::get_stock_info(const char *name)
 {
   ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex,
                          guard,
@@ -93,9 +93,9 @@ Stock_Database<CALLBACK>::get_stock_info(const char *name)
   return iter->second;
 }
 
-template <typename CALLBACK>
-typename Stock_Database<CALLBACK>::Cookie
-Stock_Database<CALLBACK>::register_callback (CALLBACK &obj)
+template <typename CALLBACK_TYPE>
+typename Stock_Database<CALLBACK_TYPE>::Cookie
+Stock_Database<CALLBACK_TYPE>::register_callback (CALLBACK_TYPE &obj)
 {
   ACE_Utils::UUID uuid;
   ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
@@ -105,16 +105,16 @@ Stock_Database<CALLBACK>::register_callback (CALLBACK &obj)
   return uuid.to_string ()->c_str ();
 }
 
-template <typename CALLBACK>
+template <typename CALLBACK_TYPE>
 void
-Stock_Database<CALLBACK>::update_rate (u_int rate)
+Stock_Database<CALLBACK_TYPE>::update_rate (u_int rate)
 {
   this->rate_ = rate;
 }
 
-template <typename CALLBACK>
+template <typename CALLBACK_TYPE>
 void
-Stock_Database<CALLBACK>::start (void)
+Stock_Database<CALLBACK_TYPE>::start ()
 {
   if (!this->active_)
     { // Double checked locking
@@ -129,9 +129,9 @@ Stock_Database<CALLBACK>::start (void)
     }
 }
 
-template <typename CALLBACK>
+template <typename CALLBACK_TYPE>
 void
-Stock_Database<CALLBACK>::stop (void)
+Stock_Database<CALLBACK_TYPE>::stop ()
 {
   ACE_WRITE_GUARD (ACE_RW_Thread_Mutex,
                           guard,
@@ -140,11 +140,11 @@ Stock_Database<CALLBACK>::stop (void)
   this->active_ = false;
 }
 
-template <typename CALLBACK>
+template <typename CALLBACK_TYPE>
 int
-Stock_Database<CALLBACK>::handle_signal (int,
-                                         siginfo_t *,
-                                         ucontext_t *)
+Stock_Database<CALLBACK_TYPE>::handle_signal (int,
+                                              siginfo_t *,
+                                              ucontext_t *)
 {
   ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex,
                           guard,
@@ -156,7 +156,7 @@ Stock_Database<CALLBACK>::handle_signal (int,
   std::string name;
   u_int value = 0;
 
-  typename Stock_Database<CALLBACK>::Init_Map map;
+  typename Stock_Database<CALLBACK_TYPE>::Init_Map map;
 
   while (input.good ())
     {
@@ -169,16 +169,16 @@ Stock_Database<CALLBACK>::handle_signal (int,
 
   std::for_each (map.begin (),
                  map.end (),
-                 Map_Init<CALLBACK> (this->stock_map_));
+                 Map_Init<CALLBACK_TYPE> (this->stock_map_));
 
   return 0;
 }
 
 
-template <typename CALLBACK>
+template <typename CALLBACK_TYPE>
 struct Stock_Updater
 {
-  void operator () (typename Stock_Database<CALLBACK>::Stock_Map::value_type &item)
+  void operator () (typename Stock_Database<CALLBACK_TYPE>::Stock_Map::value_type &item)
   {
     // Determine if the stock has changed.
     if (ACE_OS::rand () % 2)
@@ -203,7 +203,7 @@ struct Stock_Updater
       item.second.high_ = item.second.last_;
   }
 
-  void operator () (typename Stock_Database<CALLBACK>::Callback_Map::value_type &item)
+  void operator () (typename Stock_Database<CALLBACK_TYPE>::Callback_Map::value_type &item)
   {
     (*item.second)  (changed_);
   }
@@ -212,9 +212,9 @@ private:
   std::vector <std::string> changed_;
 };
 
-template <typename CALLBACK>
+template <typename CALLBACK_TYPE>
 int
-Stock_Database<CALLBACK>::svc (void)
+Stock_Database<CALLBACK_TYPE>::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "tock!\n"));
 
@@ -222,7 +222,7 @@ Stock_Database<CALLBACK>::svc (void)
     {
       {
         // Init our functor
-        Stock_Updater<CALLBACK> updater;
+        Stock_Updater<CALLBACK_TYPE> updater;
 
         { // Control the scope of our mutex to avoid deadlock.
           ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex,
