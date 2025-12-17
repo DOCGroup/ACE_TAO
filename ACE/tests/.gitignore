@@ -196,8 +196,8 @@
 /QtReactor_Test
 /QtReactor_Test_moc.cpp
 /RB_Tree_Test
-/Reactor_Dispatch_Order_Test
-/Reactor_Dispatch_Order_Test_Dev_Poll
+/Reactor_Disp_Order_Test
+/Reactor_Disp_Order_Test_Dev_Poll
 /Reactor_Exceptions_Test
 /Reactor_Fairness_Test
 /Reactor_Notification_Queue_Test
