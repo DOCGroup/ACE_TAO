@@ -198,8 +198,8 @@ Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Semaphore_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 RB_Tree_Test
 Bug_3332_Regression_Test
-Reactor_Dispatch_Order_Test
-Reactor_Dispatch_Order_Test_Dev_Poll:
+Reactor_Disp_Order_Test
+Reactor_Disp_Order_Test_Dev_Poll:
 Reactor_Exceptions_Test
 Reactor_Fairness_Test: !FIXED_BUGS_ONLY
 Reactor_Notify_Test: !ST !ACE_FOR_TAO

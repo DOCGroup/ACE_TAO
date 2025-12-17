@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    Reactor_Dispatch_Order_Test.cpp
+ *  @file    Reactor_Disp_Order_Test_Dev_Poll.cpp
  *
  *  This is a simple test that checks the order of dispatching of
  *  ACE Reactors.  Order should be: timeout, output, and then input.
@@ -18,6 +18,8 @@
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
+
+#if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
 static const char *message = "Hello there! Hope you get this message";
 
@@ -92,7 +94,7 @@ int
 Handler::handle_timeout (const ACE_Time_Value &,
                          const void *)
 {
-  int const me = this->dispatch_order_++;
+  int me = this->dispatch_order_++;
   if (me != 1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("handle_timeout should be #1; it's %d\n"),
@@ -106,7 +108,7 @@ Handler::handle_timeout (const ACE_Time_Value &,
 int
 Handler::handle_output (ACE_HANDLE)
 {
-  int const me = this->dispatch_order_++;
+  int me = this->dispatch_order_++;
   if (me != 2)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("handle_output should be #2; it's %d\n"),
@@ -114,13 +116,10 @@ Handler::handle_output (ACE_HANDLE)
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
 
-#if defined (__OpenBSD__) || defined (ACE_VXWORKS)
-  // All that we need written has been written, so don't
-  // call handle_output again.
+  // Don't want to continually see writeable; only verify its relative order.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
                               ACE_Event_Handler::WRITE_MASK,
                               ACE_Reactor::CLR_MASK);
-#endif /* __OpenBSD__ || ACE_VXWORKS */
 
   return 0;
 }
@@ -128,7 +127,7 @@ Handler::handle_output (ACE_HANDLE)
 int
 Handler::handle_input (ACE_HANDLE fd)
 {
-  int const me = this->dispatch_order_++;
+  int me = this->dispatch_order_++;
   if (me != 3)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("handle_input should be #3; it's %d\n"),
@@ -190,19 +189,12 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
   // Suspend the handlers - only the timer should be dispatched
   ACE_Time_Value tv (1);
   reactor.suspend_handlers ();
-  if (0 != reactor.run_reactor_event_loop (tv))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("run_reactor_event_loop")));
-      ok_to_go = false;
-    }
+  reactor.run_reactor_event_loop (tv);
 
   // only the timer should have fired
   if (handler.dispatch_order_ != 2)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Incorrect number fired %d; expected 2\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Incorrect number fired %d\n"),
                   handler.dispatch_order_));
       ok_to_go = false;
     }
@@ -222,13 +214,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 
   if (ok_to_go)
     {
-      if (0 != reactor.run_reactor_event_loop (tv))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("run_reactor_event_loop 2")));
-          ok_to_go = false;
-        }
+      reactor.run_reactor_event_loop (tv);
     }
 
   if (0 != reactor.remove_handler (handler.pipe_.read_handle (),
@@ -240,43 +226,30 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 
   if (handler.dispatch_order_ != 4)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Incorrect number fired %d; expected 4\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Incorrect number fired %d\n"),
                   handler.dispatch_order_));
       ok_to_go = false;
     }
 
-  int nr_cancelled = reactor.cancel_timer (&handler);
-  if (nr_cancelled > 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Finishing test with %d timers still scheduled\n"),
-                nr_cancelled));
   return ok_to_go;
 }
+#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
 
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test"));
-
+  ACE_START_TEST (ACE_TEXT ("Reactor_Disp_Order_Test_Dev_Poll"));
   int result = 0;
-  ACE_Select_Reactor select_reactor_impl;
-  ACE_Reactor select_reactor (&select_reactor_impl);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_Select_Reactor\n")));
-  if (!test_reactor_dispatch_order (select_reactor))
+
+#if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
+  ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
+  ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
+  if (!test_reactor_dispatch_order (dev_poll_reactor))
     ++result;
-
-  // Winsock 2 things are needed for WFMO_Reactor.
-#if defined (ACE_WIN32) && \
-    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-
-  ACE_WFMO_Reactor wfmo_reactor_impl;
-  ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_WFMO_Reactor\n")));
-  if (!test_reactor_dispatch_order (wfmo_reactor))
-    ++result;
-
-#endif /* ACE_WIN32 && ACE_HAS_WINSOCK2 */
+#else
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dev_Poll_Reactor is UNSUPPORTED on this platform\n")));
+#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
 
   ACE_END_TEST;
   return result;

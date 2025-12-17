@@ -67,7 +67,7 @@ $nfs->DeleteFile ($nfsiorfile);
     name => "Filter",
     args => "",
    }, {
-    name => "Updates",
+    name => "Upd",
     args => "",
    }, {
     name => "Sequence",

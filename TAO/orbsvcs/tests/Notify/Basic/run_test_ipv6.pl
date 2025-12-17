@@ -67,7 +67,7 @@ $nfs->DeleteFile ($nfsiorfile);
     name => "Filter",
     args => "-ORBConnectIPV6Only 1",
    }, {
-    name => "Updates",
+    name => "Upd",
     args => "-ORBConnectIPV6Only 1",
    }, {
     name => "Sequence",
