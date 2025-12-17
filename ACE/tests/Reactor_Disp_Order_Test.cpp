@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    Reactor_Dispatch_Order_Test.cpp
+ *  @file    Reactor_Disp_Order_Test.cpp
  *
  *  This is a simple test that checks the order of dispatching of
  *  ACE Reactors.  Order should be: timeout, output, and then input.
@@ -257,7 +257,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test"));
+  ACE_START_TEST (ACE_TEXT ("Reactor_Disp_Order_Test"));
 
   int result = 0;
   ACE_Select_Reactor select_reactor_impl;
