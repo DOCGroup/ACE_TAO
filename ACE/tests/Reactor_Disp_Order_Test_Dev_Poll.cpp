@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    Reactor_Dispatch_Order_Test_Dev_Poll.cpp
+ *  @file    Reactor_Disp_Order_Test_Dev_Poll.cpp
  *
  *  This is a simple test that checks the order of dispatching of
  *  ACE Reactors.  Order should be: timeout, output, and then input.
@@ -237,7 +237,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test_Dev_Poll"));
+  ACE_START_TEST (ACE_TEXT ("Reactor_Disp_Order_Test_Dev_Poll"));
   int result = 0;
 
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
@@ -253,7 +253,7 @@ run_main (int, ACE_TCHAR *[])
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test_Dev_Poll"));
+  ACE_START_TEST (ACE_TEXT ("Reactor_Disp_Order_Test_Dev_Poll"));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dev_Poll_Reactor is UNSUPPORTED on this platform\n")));
   ACE_END_TEST;
   return 0;

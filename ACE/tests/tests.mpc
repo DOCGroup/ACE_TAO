@@ -1488,17 +1488,17 @@ project(Reactor Notification Queue Test) : acetest {
   }
 }
 
-project(Reactor Dispatch Order Test) : acetest {
-  exename = Reactor_Dispatch_Order_Test
+project(Reactor Disp Order Test) : acetest {
+  exename = Reactor_Disp_Order_Test
   Source_Files {
-    Reactor_Dispatch_Order_Test.cpp
+    Reactor_Disp_Order_Test.cpp
   }
 }
 
-project(Reactor_Dispatch_Order_Test_Dev_Poll) : acetest {
-  exename = Reactor_Dispatch_Order_Test_Dev_Poll
+project(Reactor_Disp_Order_Test_Dev_Poll) : acetest {
+  exename = Reactor_Disp_Order_Test_Dev_Poll
   Source_Files {
-    Reactor_Dispatch_Order_Test_Dev_Poll.cpp
+    Reactor_Disp_Order_Test_Dev_Poll.cpp
   }
 }
 
