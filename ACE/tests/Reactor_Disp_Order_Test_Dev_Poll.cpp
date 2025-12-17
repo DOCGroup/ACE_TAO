@@ -247,6 +247,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
   if (!test_reactor_dispatch_order (dev_poll_reactor))
     ++result;
+#else
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dev_Poll_Reactor is UNSUPPORTED on this platform\n")));
 #endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
 
   ACE_END_TEST;
