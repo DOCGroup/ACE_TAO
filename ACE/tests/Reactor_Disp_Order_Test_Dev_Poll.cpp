@@ -233,6 +233,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 
   return ok_to_go;
 }
+#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -240,22 +241,14 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Reactor_Disp_Order_Test_Dev_Poll"));
   int result = 0;
 
+#if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
   ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
   if (!test_reactor_dispatch_order (dev_poll_reactor))
     ++result;
+#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
 
   ACE_END_TEST;
   return result;
 }
-#else
-int
-run_main (int, ACE_TCHAR *[])
-{
-  ACE_START_TEST (ACE_TEXT ("Reactor_Disp_Order_Test_Dev_Poll"));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dev_Poll_Reactor is UNSUPPORTED on this platform\n")));
-  ACE_END_TEST;
-  return 0;
-}
-#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
