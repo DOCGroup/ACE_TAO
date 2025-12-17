@@ -7,9 +7,4 @@
 /MultiTypes
 /Sequence
 /Simple
-<<<<<<< HEAD
-/Updates
-=======
 /Upd
-ExtendedFilter
->>>>>>> 292ef3041e (Rename Updates to Upd to not let windows UAC block this test from starting)
