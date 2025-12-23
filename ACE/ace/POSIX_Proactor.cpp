@@ -1502,9 +1502,11 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
 int
 ACE_POSIX_AIOCB_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
 {
+  ACE_ASSERT (result);
+
   // This method is called from cancel_aio
   // to cancel a previously submitted AIO request
-  int rc = ::aio_cancel (0, result);
+  int rc = ::aio_cancel (result->aio_fildes, result);
 
   // Check the return value and return 0/1/2 appropriately.
   if (rc == AIO_CANCELED)
