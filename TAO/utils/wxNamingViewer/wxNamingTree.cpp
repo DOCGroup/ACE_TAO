@@ -90,7 +90,7 @@ void WxNamingTree::clearChildren()
 
 void WxNamingTree::clearChildren( wxTreeItemId& item)
 {
-  long cookie;
+  wxTreeItemIdValue cookie;
   wxTreeItemId child = GetFirstChild( item, cookie);
   while( child) {
     clearChildren( child);
@@ -311,7 +311,7 @@ void WxNamingTree::onContextPopupDestroy( wxCommandEvent&)
     return;
   }
   wxTreeItemId item = GetSelection();
-  wxTreeItemId parentItem = GetParent( item);
+  wxTreeItemId parentItem = GetItemParent( item);
   if (parentItem == 0) {
     return;
   }
@@ -350,7 +350,7 @@ void WxNamingTree::onContextPopupUnbind( wxCommandEvent&)
     return;
   }
   wxTreeItemId item = GetSelection();
-  wxTreeItemId parentItem = GetParent( item);
+  wxTreeItemId parentItem = GetItemParent( item);
   if (parentItem == 0) {
     return;
   }
@@ -404,7 +404,7 @@ void WxNamingTree::onObjectPopupUnbind( wxCommandEvent& )
   wxTreeItemId item = GetSelection();
 
   // Make sure we don't unbind "Root"
-  wxTreeItemId parentItem = GetParent( item);
+  wxTreeItemId parentItem = GetItemParent( item);
   if (parentItem == 0) {
     return;
   }
