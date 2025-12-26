@@ -200,6 +200,7 @@ Process_Manager_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Manual_Event_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Semaphore_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
+RAW_Socket_Test: linux
 RB_Tree_Test
 Bug_3332_Regression_Test
 Reactor_Disp_Order_Test
