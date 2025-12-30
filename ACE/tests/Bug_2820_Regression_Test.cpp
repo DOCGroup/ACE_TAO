@@ -77,7 +77,7 @@ run_main (int, ACE_TCHAR *[])
     v->add_reference();
 
   // Only our explicit calls to add_reference() should be reflected in
-  // the refence_count...
+  // the reference_count...
   if (pos_release_count != pre_notify_count + 2)
     {
       result = -1;

@@ -24,7 +24,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
@@ -34,41 +33,31 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 
-
 // Globals for this test
-int stop_test = 0;
+bool stop_test = false;
 ACE_Reactor reactor;
-
 
 class Simple_Handler : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
-  Simple_Handler ();
+  Simple_Handler () = default;
 
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
+  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) override;
 
   ACE_Auto_Event event1_;
   ACE_Auto_Event event2_;
-  int handle_signal_count_;
-  int handle_close_count_;
+  int handle_signal_count_ {};
+  int handle_close_count_ {};
 };
-
-Simple_Handler::Simple_Handler ()
-  : handle_signal_count_ (0),
-    handle_close_count_ (0)
-{
-}
 
 int
 Simple_Handler::handle_signal (int, siginfo_t *s, ucontext_t *)
 {
-  ACE_HANDLE handle = s->si_handle_;
+  ACE_HANDLE const handle = s->si_handle_;
   ACE_UNUSED_ARG (handle);
 
-  this->handle_signal_count_++;
+  ++this->handle_signal_count_;
 
   if (this->handle_signal_count_ == 1)
     this->reactor ()->suspend_handler (event1_.handle ());
@@ -79,25 +68,22 @@ Simple_Handler::handle_signal (int, siginfo_t *s, ucontext_t *)
     }
   else if (this->handle_signal_count_ == 3)
     {
-      this->reactor ()->remove_handler (event1_.handle (),
-                                        ACE_Event_Handler::NULL_MASK);
-      this->reactor ()->remove_handler (event2_.handle (),
-                                        ACE_Event_Handler::NULL_MASK);
+      this->reactor ()->remove_handler (event1_.handle (), ACE_Event_Handler::NULL_MASK);
+      this->reactor ()->remove_handler (event2_.handle (), ACE_Event_Handler::NULL_MASK);
     }
   return 0;
 }
 
 int
-Simple_Handler::handle_close (ACE_HANDLE handle,
-                              ACE_Reactor_Mask)
+Simple_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Simple_Handler::handle_close handle = %d\n", handle));
-  this->handle_close_count_++;
+  ++this->handle_close_count_;
 
   if (this->handle_close_count_ == 1)
-    stop_test = 0;
+    stop_test = false;
   else if (this->handle_close_count_ == 2)
-    stop_test = 1;
+    stop_test = true;
 
   return 0;
 }
@@ -134,12 +120,10 @@ worker ()
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int result = reactor.register_handler (&simple_handler,
-                                       simple_handler.event1_.handle ());
+  int result = reactor.register_handler (&simple_handler, simple_handler.event1_.handle ());
   ACE_TEST_ASSERT (result == 0);
 
-  result = reactor.register_handler (&simple_handler,
-                                     simple_handler.event2_.handle ());
+  result = reactor.register_handler (&simple_handler, simple_handler.event2_.handle ());
   ACE_TEST_ASSERT (result == 0);
 
   result = ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0);
