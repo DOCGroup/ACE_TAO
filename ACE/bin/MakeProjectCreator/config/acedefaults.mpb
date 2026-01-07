@@ -4,6 +4,13 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
 
+<<<<<<< HEAD
+=======
+  // Support the alternative Borland Make project type
+  specific(bmake) {
+    unicode_flags += -DACE_USES_WCHAR
+  }
+>>>>>>> 6c26ad0255 (Use inlining also in a debug build)
 
   specific(prop:microsoft) {
     macro_for_lib_modifier=1
