@@ -1,6 +1,7 @@
 #ifndef ACE_ARGV_CPP
 #define ACE_ARGV_CPP
 
+#include "ace/ARGV.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
