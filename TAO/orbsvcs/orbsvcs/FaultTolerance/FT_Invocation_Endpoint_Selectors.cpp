@@ -49,25 +49,32 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
     TAO::Profile_Transport_Resolver *r,
     ACE_Time_Value *max_wait_time)
 {
+  TAO_MProfile *prof_list;
+  TAO_MProfile prof_list_aux;
+
+  // Retrieve the list of profiles to be used.
   // Set lock, as forward_profiles might be deleted concurrently.
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                            guard,
-                            const_cast <TAO_SYNCH_MUTEX &> (r->stub ()->profile_lock ()),
-                            false));
+  {
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                              guard,
+                              const_cast <TAO_SYNCH_MUTEX &> (r->stub ()->profile_lock ()),
+                              false));
 
-  // Grab the forwarded list
-  TAO_MProfile *prof_list =
-    const_cast<TAO_MProfile *> (r->stub ()->forward_profiles ());
+    // Grab the forwarded list
+    TAO_MProfile *forward_prof_list =
+      const_cast<TAO_MProfile *> (r->stub ()->forward_profiles ());
 
-  TAO_MProfile &basep = r->stub ()->base_profiles ();
-
-  if (prof_list ==0)
-    {
-      prof_list = &basep;
-      // No need to hold stub lock any more. We needed it only to use
-      // forward_profiles.
-      guard.release ();
-    }
+    if (forward_prof_list == 0)
+      {
+        TAO_MProfile &basep = r->stub ()->base_profiles ();
+        prof_list = &basep;
+      }
+    else
+      {
+        prof_list_aux.set(*forward_prof_list);
+        prof_list = &prof_list_aux;
+      }
+  }
 
   if (prof_list == 0)
     return false;
@@ -107,26 +114,32 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
     TAO::Profile_Transport_Resolver *r,
     ACE_Time_Value *max_wait_time)
 {
+  TAO_MProfile *prof_list;
+  TAO_MProfile prof_list_aux;
+
+  // Retrieve the list of profiles to be used.
   // Set lock, as forward_profiles might be deleted concurrently.
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                            guard,
-                            const_cast <TAO_SYNCH_MUTEX &> (r->stub ()->profile_lock ()),
-                            false));
+  {
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                              guard,
+                              const_cast <TAO_SYNCH_MUTEX &> (r->stub ()->profile_lock ()),
+                              false));
 
-  // Grab the forwarded list
-  TAO_MProfile *prof_list =
-    const_cast<TAO_MProfile *> (r->stub ()->forward_profiles ());
+    // Grab the forwarded list
+    TAO_MProfile *forward_prof_list =
+      const_cast<TAO_MProfile *> (r->stub ()->forward_profiles ());
 
-  TAO_MProfile &basep =
-    r->stub ()->base_profiles ();
-
-  if (prof_list ==0)
-    {
-      prof_list = &basep;
-      // No need to hold stub lock any more. We needed it only to use
-      // forward_profiles.
-      guard.release ();
-    }
+    if (forward_prof_list == 0)
+      {
+        TAO_MProfile &basep = r->stub ()->base_profiles ();
+        prof_list = &basep;
+      }
+    else
+      {
+        prof_list_aux.set(*forward_prof_list);
+        prof_list = &prof_list_aux;
+      }
+  }
 
   if (prof_list == 0)
     return false;
