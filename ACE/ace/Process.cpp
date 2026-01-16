@@ -833,7 +833,7 @@ ACE_Process_Options::inherit_environment ()
           size_t const idx = temp_narrow_env.size ();
           temp_narrow_env.resize (idx + len + 1, 0);
           ACE_OS::strncpy (&temp_narrow_env[idx], wta.char_rep (), len);
-          iter += len;
+          iter += ACE_OS::strlen(iter);
         }
       temp_narrow_env.push_back (0);
       existing_environment = &temp_narrow_env[0];
