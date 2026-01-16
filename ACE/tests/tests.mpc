@@ -1445,6 +1445,14 @@ project(Pipe Test) : acetest {
   }
 }
 
+project(RAW Socket Test) : acetest {
+  avoids += ace_for_tao
+  exename = RAW_Socket_Test
+  Source_Files {
+    RAW_Socket_Test.cpp
+  }
+}
+
 project(RB Tree Test) : acetest {
   exename = RB_Tree_Test
   Source_Files {
