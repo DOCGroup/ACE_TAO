@@ -58,3 +58,6 @@ Static_Debug/
 *.*codeanalysis*
 read.lock
 fileList.bin
+
+*.js
+*.wasm

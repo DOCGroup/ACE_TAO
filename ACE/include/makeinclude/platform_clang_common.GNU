@@ -9,9 +9,11 @@ ifneq ($(CROSS_COMPILE),)
     CXX = ${CROSS_COMPILE}clang++${CROSS_COMPILE_SUFFIX}
     AR  = ${CROSS_COMPILE}ar${CROSS_COMPILE_SUFFIX}
   endif
-  # Cross-linker requires this for linked in shared libs that depend
-  # themselves on other shared libs (not directly linked in)
-  LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
+  ifneq ($(static_libs_only), 1)
+    # Cross-linker requires this for linked in shared libs that depend
+    # themselves on other shared libs (not directly linked in)
+    LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
+  endif
   ifneq (,$(HOST_ROOT))
     TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
     TAO_IDL = $(HOST_ROOT)/bin/tao_idl
