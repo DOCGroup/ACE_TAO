@@ -1,3 +1,4 @@
+.devcontainer
 *.vcxproj*
 *.tlog
 *.log
