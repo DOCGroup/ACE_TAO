@@ -3,6 +3,10 @@ USER VISIBLE CHANGES BETWEEN ACE-8.0.5 and ACE-8.0.6
 
 . Support floating-point-based `std::chrono::duration` in `ACE_Time_Value`
 
+. Don't disable inlining in a debug build with Embarcadero C++ Builder compilers
+
+. Added checks to CDR boolean and boolean array demarshaling 
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.4 and ACE-8.0.5
 ====================================================
 
