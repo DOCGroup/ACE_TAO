@@ -114,7 +114,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: c82f74667287d3dc386bce81e44964370c91a289
+        vcpkgGitCommitId: 66c0373dc7fca549e5803087b9487edfe3aca0a1
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
       run: |
@@ -123,7 +123,7 @@ jobs:
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
         echo "ipv6=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
-        echo "xerces3=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "xerces3=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "ssl=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "openssl11=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "versioned_namespace=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
