@@ -92,7 +92,7 @@ int run_main (int, ACE_TCHAR*[])
     delete result;
   }
   catch (...) {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT("In outer catch\n")));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT("In outer catch\n")));
       res = -1;
   }
 
