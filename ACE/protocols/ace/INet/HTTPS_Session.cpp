@@ -54,14 +54,14 @@ namespace ACE
 #endif
       {
         INET_TRACE ("ACE_HTTPS_Session - ctor");
-        this->close_streams ();
-        this->close_connection ();
       }
 
     template <ACE_SYNCH_DECL>
     Session_T<ACE_SYNCH_USE>::~Session_T ()
       {
         INET_TRACE ("ACE_HTTPS_Session - dtor");
+        this->close_streams ();
+        this->close_connection ();
       }
 
     template <ACE_SYNCH_DECL>
