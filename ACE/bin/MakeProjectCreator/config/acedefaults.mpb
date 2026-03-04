@@ -60,7 +60,7 @@ feature(!threads) {
 }
 
 feature(ace_languagestandard2017) {
-  specific(vs2017,vs2019,vs2022) {
+  specific(vs2017,vs2019,vs2022,vs2026) {
     LanguageStandard = stdcpp17
   }
   specific(cmake) {

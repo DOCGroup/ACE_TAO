@@ -84,6 +84,22 @@ jobs:
             vcpkgarch: x64-windows
             vcpkglibdir: lib
             vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+          - name: VS2026Debug64
+            vmimage: windows-2025-vs2026
+            mpctype: vs2026
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+          - name: VS2026Release64
+            vmimage: windows-2025-vs2026
+            mpctype: vs2026
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            vcpkgarch: x64-windows
+            vcpkglibdir: lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
     runs-on: ${{ matrix.vmimage }}
     name: ${{ matrix.name }}
     env:

@@ -33,7 +33,9 @@
 #  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
 //FUZZ: disable check_for_msc_ver
-#if (_MSC_VER >= 1930)
+#if (_MSC_VER >= 1950)
+# include "ace/config-win32-msvc-145.h"
+#elif (_MSC_VER >= 1930)
 # include "ace/config-win32-msvc-143.h"
 #elif (_MSC_VER >= 1920)
 # include "ace/config-win32-msvc-142.h"
