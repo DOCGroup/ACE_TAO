@@ -48,7 +48,7 @@ run_main (int, ACE_TCHAR *[])
       // If we're here due to an exception, that's the expected behavior - test passes
     }
   }
-  ACE_SEH_EXCEPT (EXCEPTION_EXECUTE_HANDLER)
+  ACE_SEH_EXCEPT (GetExceptionCode () == EXCEPTION_ACCESS_VIOLATION ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH)
   {
     ACE_DEBUG ((LM_DEBUG, ("In outer SEH_EXCEPT\n")));
     except_executed = true;
