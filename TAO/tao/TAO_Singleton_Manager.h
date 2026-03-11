@@ -66,7 +66,7 @@ public:
    */
   static bool starting_up ();
 
-  /// Returns 1 after the TAO_Singleton_Manager has been destroyed.
+  /// Returns true after the TAO_Singleton_Manager has been destroyed.
   /// See ACE_Object_Manager::shutting_down for more information.
   static bool shutting_down ();
 
