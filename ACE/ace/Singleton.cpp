@@ -16,6 +16,7 @@
 #include "ace/Framework_Component.h"
 #include "ace/Guard_T.h"
 #include "ace/os_include/os_typeinfo.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
