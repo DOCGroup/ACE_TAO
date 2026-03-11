@@ -305,7 +305,7 @@ test_subkey_path (ACE_Configuration* config)
   ACE_Configuration_Section_Key testsection;
 
   if (config->open_section (root,
-                            ACE_TEXT ("Software\\ACE\\test"),
+                            ACE_TEXT ("Software\\ACETEST\\test"),
                             1,
                             testsection))
     return -26;
@@ -321,7 +321,7 @@ test_subkey_path (ACE_Configuration* config)
     return -27;
 
   if (config->remove_section (testsection,
-                              ACE_TEXT ("ACE"),
+                              ACE_TEXT ("ACETEST"),
                               1))
     return -28;
 
@@ -532,14 +532,14 @@ run_tests ()
   }
   // test win32 registry implementation.
   HKEY const root = ACE_Configuration_Win32Registry::resolve_key (HKEY_CURRENT_USER,
-                                                  ACE_TEXT ("Software\\ACE\\test"));
+                                                  ACE_TEXT ("Software\\ACETEST\\test"));
   if (!root)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("resolve_key is broken\n")), -2);
 
   // test resolving of forward slashes
   HKEY const root_fs = ACE_Configuration_Win32Registry::resolve_key (HKEY_CURRENT_USER,
-                                                  ACE_TEXT ("Software/ACE/test"), 0);
+                                                  ACE_TEXT ("Software/ACETEST/test"), 0);
   if (!root_fs)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("resolve_key resolving slashes is broken\n")),
@@ -743,7 +743,7 @@ build_config_object (ACE_Configuration& cfg)
                       -16);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("here\n")));
-  
+
   //ACE_TString string;
   ACE_TString name ((ACE_TCHAR*)0);
   if (cfg.get_string_value (LoggerSection,
