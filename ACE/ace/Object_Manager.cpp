@@ -150,16 +150,16 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Object_Manager_Preallocations)
 
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
-int
+bool
 ACE_Object_Manager::starting_up ()
 {
-  return ACE_Object_Manager::instance_  ?  instance_->starting_up_i ()  :  1;
+  return ACE_Object_Manager::instance_ ? instance_->starting_up_i () : true;
 }
 
-int
+bool
 ACE_Object_Manager::shutting_down ()
 {
-  return ACE_Object_Manager::instance_  ?  instance_->shutting_down_i ()  :  1;
+  return ACE_Object_Manager::instance_ ? instance_->shutting_down_i () : true;
 }
 
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)

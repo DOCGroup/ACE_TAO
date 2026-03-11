@@ -62,13 +62,13 @@ ACE_Object_Manager_Base::~ACE_Object_Manager_Base ()
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 }
 
-int
+bool
 ACE_Object_Manager_Base::starting_up_i ()
 {
   return object_manager_state_ < OBJ_MAN_INITIALIZED;
 }
 
-int
+bool
 ACE_Object_Manager_Base::shutting_down_i ()
 {
   return object_manager_state_ > OBJ_MAN_INITIALIZED;
@@ -436,20 +436,20 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
 #endif /* ACE_LACKS_PERROR */
 }
 
-int
+bool
 ACE_OS_Object_Manager::starting_up ()
 {
   return ACE_OS_Object_Manager::instance_
     ? instance_->starting_up_i ()
-    : 1;
+    : true;
 }
 
-int
+bool
 ACE_OS_Object_Manager::shutting_down ()
 {
   return ACE_OS_Object_Manager::instance_
     ? instance_->shutting_down_i ()
-    : 1;
+    : true;
 }
 
 /*****************************************************************************/
