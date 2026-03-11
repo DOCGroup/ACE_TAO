@@ -76,24 +76,24 @@ public:
 
 protected:
   /**
-   * Returns 1 before ACE_Object_Manager_Base has been constructed.
+   * Returns true before ACE_Object_Manager_Base has been constructed.
    * This flag can be used to determine if the program is constructing
    * static objects.  If no static object spawns any threads, the
-   * program will be single-threaded when this flag returns 1.  (Note
+   * program will be single-threaded when this flag returns true.  (Note
    * that the program still might construct some static objects when
-   * this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
+   * this flag returns false, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
    * defined.)
    */
-  int starting_up_i ();
+  bool starting_up_i ();
 
   /**
-   * Returns 1 after ACE_Object_Manager_Base has been destroyed.  This
+   * Returns true after ACE_Object_Manager_Base has been destroyed.  This
    * flag can be used to determine if the program is in the midst of
    * destroying static objects.  (Note that the program might destroy
-   * some static objects before this flag can return 1, if
+   * some static objects before this flag can return false, if
    * ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
    */
-  int shutting_down_i ();
+  bool shutting_down_i ();
 
   /// State of the Object_Manager;
   Object_Manager_State object_manager_state_;
@@ -133,15 +133,15 @@ public:
   int fini () override;
 
   /**
-   * Returns 1 before the ACE_OS_Object_Manager has been
-   * constructed.  See <ACE_Object_Manager::starting_up> for more
+   * Returns true before the ACE_OS_Object_Manager has been
+   * constructed.  See @c ACE_Object_Manager::starting_up for more
    * information.
    */
-  static int starting_up ();
+  static bool starting_up ();
 
   /// Returns 1 after the ACE_OS_Object_Manager has been destroyed.
-  /// See <ACE_Object_Manager::shutting_down> for more information.
-  static int shutting_down ();
+  /// See @c ACE_Object_Manager::shutting_down for more information.
+  static bool shutting_down ();
 
   /// Unique identifiers for preallocated objects.
   enum Preallocated_Object

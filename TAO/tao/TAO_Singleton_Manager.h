@@ -61,14 +61,14 @@ public:
   virtual int fini ();
 
   /**
-   * Returns 1 before the TAO_Singleton_Manager has been constructed.
+   * Returns true before the TAO_Singleton_Manager has been constructed.
    * See ACE_Object_Manager::starting_up for more information.
    */
-  static int starting_up ();
+  static bool starting_up ();
 
-  /// Returns 1 after the TAO_Singleton_Manager has been destroyed.
+  /// Returns true after the TAO_Singleton_Manager has been destroyed.
   /// See ACE_Object_Manager::shutting_down for more information.
-  static int shutting_down ();
+  static bool shutting_down ();
 
   /// Accesses a default signal set used, for example, in
   /// ACE_Sig_Guard methods.

@@ -1733,7 +1733,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
     // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    if (ACE_Object_Manager::shutting_down () != 1)
+    if (ACE_Object_Manager::shutting_down () == false)
       {
         // Program is not shutting down.  Perform a normal wait on threads.
         if (abandon_detached_threads != 0)
@@ -1755,7 +1755,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 
             if (! this->thr_to_be_removed_.is_empty ())
               {
-                ACE_Thread_Descriptor *td = 0;
+                ACE_Thread_Descriptor *td {};
                 while (this->thr_to_be_removed_.dequeue_head (td) != -1)
                   this->remove_thr (td, 1);
               }
@@ -1783,7 +1783,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 #if !defined (ACE_HAS_VXTHREADS)
     // @@ VxWorks doesn't support thr_join (yet.)  We are working
     // on our implementation.
-    ACE_Thread_Descriptor_Base *item = 0;
+    ACE_Thread_Descriptor_Base *item {};
 
     while ((item = term_thr_list_copy.delete_head ()) != 0)
       {
