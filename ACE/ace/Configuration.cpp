@@ -408,7 +408,7 @@ static constexpr int ACE_DEFAULT_BUFSIZE = 256;
 static const ACE_TCHAR *temp_name (const ACE_TCHAR *name)
 {
   if (name && *name == ACE_Configuration::NULL_String_)
-    return 0;
+    return nullptr;
   return name;
 }
 
@@ -441,7 +441,7 @@ ACE_Configuration_Win32Registry::operator!= (const ACE_Configuration_Win32Regist
 ACE_Configuration_Win32Registry::ACE_Configuration_Win32Registry (HKEY hKey, u_long security_access)
   : security_access_ (security_access)
 {
-  ACE_Section_Key_Win32 *temp = 0;
+  ACE_Section_Key_Win32* temp {};
 
   ACE_NEW (temp, ACE_Section_Key_Win32 (hKey));
 
@@ -492,7 +492,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
         }
     }
 
-  ACE_Section_Key_Win32 *temp;
+  ACE_Section_Key_Win32* temp {};
 
   ACE_NEW_RETURN (temp, ACE_Section_Key_Win32 (result_key), -1);
   result = ACE_Configuration_Section_Key (temp);
@@ -565,14 +565,14 @@ ACE_Configuration_Win32Registry::enumerate_values (const ACE_Configuration_Secti
   DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
   DWORD value_type;
 
-  int rc = ACE_TEXT_RegEnumValue (base_key,
-                                  index,
-                                  name_buffer,
-                                  &buffer_size,
-                                  0,
-                                  &value_type,
-                                  0,
-                                  0);
+  int const rc = ACE_TEXT_RegEnumValue (base_key,
+                                        index,
+                                        name_buffer,
+                                        &buffer_size,
+                                        0,
+                                        &value_type,
+                                        0,
+                                        0);
   if (rc == ERROR_NO_MORE_ITEMS)
     return 1;
   else if (rc != ERROR_SUCCESS)
@@ -756,7 +756,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
       return -1;
     }
 
-  ACE_TCHAR *temp = 0;
+  ACE_TCHAR* temp {};
   ACE_NEW_RETURN (temp,
                   ACE_TCHAR[buffer_length],
                   -1);
@@ -852,7 +852,7 @@ ACE_Configuration_Win32Registry::get_binary_value (
 
   length = buffer_length;
 
-  BYTE * the_data = 0;
+  BYTE* the_data {};
   ACE_NEW_RETURN (the_data, BYTE[length], -1);
   std::unique_ptr<BYTE[]> safe_data (the_data);
 
@@ -863,7 +863,7 @@ ACE_Configuration_Win32Registry::get_binary_value (
                                           the_data,
                                           &buffer_length)) != ERROR_SUCCESS)
     {
-      data = 0;
+      data = nullptr;
       errno = errnum;
       return -1;
     }
@@ -969,7 +969,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
     }
 
   // recurse through the path
-  ACE_TCHAR *temp_path = 0;
+  ACE_TCHAR* temp_path {};
   ACE_NEW_RETURN (temp_path,
                   ACE_TCHAR[ACE_OS::strlen (path) + 1],
                   0);
@@ -1024,7 +1024,7 @@ ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId ()
   : type_ (ACE_Configuration::INVALID),
     length_ (0)
 {
-  this->data_.ptr_ = 0;
+  this->data_.ptr_ = nullptr;
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (ACE_TCHAR* string)
@@ -1201,7 +1201,7 @@ ACE_Configuration_Heap::~ACE_Configuration_Heap ()
 int
 ACE_Configuration_Heap::open (size_t default_map_size)
 {
-  if (this->allocator_ != 0)
+  if (this->allocator_)
     {
       errno = EBUSY;
       return -1;
@@ -1223,7 +1223,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
                               void* base_address,
                               size_t default_map_size)
 {
-  if (this->allocator_ != 0)
+  if (this->allocator_)
     {
       errno = EBUSY;
       return -1;
@@ -1262,7 +1262,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
 int
 ACE_Configuration_Heap::create_index ()
 {
-  void *section_index = nullptr;
+  void* section_index {};
 
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
