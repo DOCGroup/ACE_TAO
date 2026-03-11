@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "Config_Test.h"
 #include "ace/Configuration_Import_Export.h"
@@ -97,10 +96,10 @@ test (ACE_Configuration *config,
   else if (intvalue != 42)
     return -9;
 
-  u_char *data_out (0);
+  u_char* data_out {};
 
   {
-    void *data_tmp = 0; // Workaround for GCC strict aliasing warning.
+    void* data_tmp {}; // Workaround for GCC strict aliasing warning.
     size_t length = 0;
 
     if (config->get_binary_value (testsection,
@@ -246,8 +245,7 @@ test (ACE_Configuration *config,
 static int
 test (ACE_Configuration *config)
 {
-  const ACE_Configuration_Section_Key& root =
-    config->root_section ();
+  const ACE_Configuration_Section_Key& root = config->root_section ();
 
   {
     // Scope this so the testsection key is closed before trying to
@@ -260,7 +258,7 @@ test (ACE_Configuration *config)
                               testsection))
       return -2;
 
-    int ret_val = test (config, testsection);
+    int const ret_val = test (config, testsection);
     if (ret_val)
       return ret_val;
   }
@@ -304,8 +302,7 @@ test (ACE_Configuration *config)
 static int
 test_subkey_path (ACE_Configuration* config)
 {
-  ACE_Configuration_Section_Key root =
-    config->root_section ();
+  ACE_Configuration_Section_Key root = config->root_section ();
 
   ACE_Configuration_Section_Key testsection;
 
@@ -315,7 +312,7 @@ test_subkey_path (ACE_Configuration* config)
                             testsection))
     return -26;
 
-  int ret_val = test (config, testsection);
+  int const ret_val = test (config, testsection);
   if (ret_val)
     return ret_val;
 
@@ -527,25 +524,23 @@ run_tests (void)
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
   {
-    ACE_Configuration_Win32Registry RegConfig (HKEY_LOCAL_MACHINE);
-    int result = test_subkey_path (&RegConfig);
+    ACE_Configuration_Win32Registry RegConfig (HKEY_CURRENT_USER);
+    int const result = test_subkey_path (std::addressof (RegConfig));
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Win32Registry test HKEY_LOCAL_MACHINE")
+                         ACE_TEXT ("Win32Registry test HKEY_CURRENT_USER")
                          ACE_TEXT (" failed (%d)\n"), result),
                         -1);
   }
   // test win32 registry implementation.
-  HKEY root =
-    ACE_Configuration_Win32Registry::resolve_key (HKEY_LOCAL_MACHINE,
+  HKEY const root = ACE_Configuration_Win32Registry::resolve_key (HKEY_CURRENT_USER,
                                                   ACE_TEXT ("Software\\ACE\\test"));
   if (!root)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("resolve_key is broken\n")), -2);
 
   // test resolving of forward slashes
-  HKEY root_fs =
-    ACE_Configuration_Win32Registry::resolve_key (HKEY_LOCAL_MACHINE,
+  HKEY const root_fs = ACE_Configuration_Win32Registry::resolve_key (HKEY_CURRENT_USER,
                                                   ACE_TEXT ("Software/ACE/test"), 0);
   if (!root_fs)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -554,7 +549,7 @@ run_tests (void)
 
   ACE_Configuration_Win32Registry RegConfig (root);
   {
-    int const result = test (&RegConfig);
+    int const result = test (std::addressof (RegConfig));
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Win32 registry test root failed (%d)\n"),
@@ -587,7 +582,7 @@ run_tests (void)
                         -1);
     }
   {
-    int result = test_subkey_path (&heap_config);
+    int const result = test_subkey_path (std::addressof(heap_config));
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Heap Config subkey test failed (%d)\n"),
@@ -596,7 +591,7 @@ run_tests (void)
   }
 
   {
-    int result = test (&heap_config);
+    int const result = test (std::addressof(heap_config));
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Heap Configuration test failed (%d)\n"),
@@ -644,7 +639,7 @@ run_tests (void)
     }
 
   {
-    int result = test (&pers_config);
+    int const result = test (std::addressof(pers_config));
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Persistent Heap Config test failed (%d)\n"),
@@ -750,7 +745,7 @@ build_config_object (ACE_Configuration& cfg)
                       -16);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("here\n")));
-  //return 0;
+  
   //ACE_TString string;
   ACE_TString name ((ACE_TCHAR*)0);
   if (cfg.get_string_value (LoggerSection,
