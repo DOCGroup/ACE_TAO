@@ -916,9 +916,9 @@ ACE_Static_Object_Lock::instance ()
         // new for the object, on the malloc'd buffer.
         void *buffer =
           ACE_OS::malloc (sizeof (*ACE_Static_Object_Lock_lock));
-        if (buffer == 0)
+        if (buffer == nullptr)
           {
-            return 0;
+            return nullptr;
           }
         // do not use ACE_NEW macros for placement new
         ACE_Static_Object_Lock_lock = new (buffer)
@@ -927,7 +927,7 @@ ACE_Static_Object_Lock::instance ()
 #       else   /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
         ACE_NEW_RETURN (ACE_Static_Object_Lock_lock,
                         ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
-                        0);
+                        nullptr);
 #       endif /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
         }
 
