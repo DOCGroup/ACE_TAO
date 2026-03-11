@@ -1316,11 +1316,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
 int
 ACE_Configuration_Heap::create_index (void)
 {
-<<<<<<< HEAD
-  void *section_index = 0;
-=======
   void* section_index {};
->>>>>>> 5f51784b33 (Use HKEY_CURRENT_USER for testing)
 
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
