@@ -310,7 +310,7 @@ test_subkey_path (ACE_Configuration* config)
   ACE_Configuration_Section_Key testsection;
 
   if (config->open_section (root,
-                            ACE_TEXT ("Software\\ACE\\test"),
+                            ACE_TEXT ("Software\\ACETEST\\test"),
                             1,
                             testsection))
     return -26;
@@ -326,7 +326,7 @@ test_subkey_path (ACE_Configuration* config)
     return -27;
 
   if (config->remove_section (testsection,
-                              ACE_TEXT ("ACE"),
+                              ACE_TEXT ("ACETEST"),
                               1))
     return -28;
 
@@ -527,26 +527,26 @@ run_tests (void)
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
   {
-    ACE_Configuration_Win32Registry RegConfig (HKEY_LOCAL_MACHINE);
+    ACE_Configuration_Win32Registry RegConfig (HKEY_CURRENT_USER);
     int result = test_subkey_path (&RegConfig);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Win32Registry test HKEY_LOCAL_MACHINE")
+                         ACE_TEXT ("Win32Registry test HKEY_CURRENT_USER")
                          ACE_TEXT (" failed (%d)\n"), result),
                         -1);
   }
   // test win32 registry implementation.
   HKEY root =
-    ACE_Configuration_Win32Registry::resolve_key (HKEY_LOCAL_MACHINE,
-                                                  ACE_TEXT ("Software\\ACE\\test"));
+    ACE_Configuration_Win32Registry::resolve_key (HKEY_CURRENT_USER,
+                                                  ACE_TEXT ("Software\\ACETEST\\test"));
   if (!root)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("resolve_key is broken\n")), -2);
 
   // test resolving of forward slashes
   HKEY root_fs =
-    ACE_Configuration_Win32Registry::resolve_key (HKEY_LOCAL_MACHINE,
-                                                  ACE_TEXT ("Software/ACE/test"), 0);
+    ACE_Configuration_Win32Registry::resolve_key (HKEY_CURRENT_USER,
+                                                  ACE_TEXT ("Software/ACETEST/test"), 0);
   if (!root_fs)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("resolve_key resolving slashes is broken\n")),
