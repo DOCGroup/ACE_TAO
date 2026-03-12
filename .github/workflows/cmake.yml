@@ -27,6 +27,9 @@ jobs:
           - CC: vs2022
             CXX: vs2022
             os: windows-2022
+          - CC: vs2026
+            CXX: vs2026
+            os: windows-2025-vs2026
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }}
     env:

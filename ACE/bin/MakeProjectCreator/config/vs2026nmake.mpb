@@ -1,0 +1,30 @@
+// -*- MPC -*-
+feature (nmake_avoid_Wp64) {
+  specific(nmake) {
+    add_compile -= /Wp64
+  }
+}
+
+feature (nmake_avoid_Gm) {
+  specific(nmake) {
+    compile_flags -= /Gm
+  }
+}
+
+feature(vc_avoid_hides_local_declaration) {
+  specific(nmake) {
+    DisableSpecificWarnings += 4456
+  }
+}
+
+feature(vc_avoid_hides_global_declaration) {
+  specific(nmake) {
+    DisableSpecificWarnings += 4459
+  }
+}
+
+feature(vc_avoid_hides_class_member) {
+  specific(nmake) {
+    DisableSpecificWarnings += 4458
+  }
+}
