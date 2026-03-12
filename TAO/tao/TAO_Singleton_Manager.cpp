@@ -270,22 +270,16 @@ TAO_Singleton_Manager::fini ()
   return 0;
 }
 
-int
+bool
 TAO_Singleton_Manager::starting_up ()
 {
-  return
-    the_instance
-    ? the_instance->starting_up_i ()
-    : 1;
+  return the_instance ? the_instance->starting_up_i () : true;
 }
 
-int
+bool
 TAO_Singleton_Manager::shutting_down ()
 {
-  return
-    the_instance
-    ? the_instance->shutting_down_i ()
-    : 1;
+  return the_instance ? the_instance->shutting_down_i () : true;
 }
 
 int

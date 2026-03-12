@@ -97,19 +97,19 @@ ACE_Framework_Repository::instance (int size)
 {
   ACE_TRACE ("ACE_Framework_Repository::instance");
 
-  if (ACE_Framework_Repository::repository_ == 0)
+  if (ACE_Framework_Repository::repository_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
-      if (ACE_Framework_Repository::repository_ == 0)
+                                *ACE_Static_Object_Lock::instance (), nullptr));
+      if (ACE_Framework_Repository::repository_ == nullptr)
         {
           if (ACE_Object_Manager::starting_up () ||
               !ACE_Object_Manager::shutting_down ())
             {
               ACE_NEW_RETURN (ACE_Framework_Repository::repository_,
                               ACE_Framework_Repository (size),
-                              0);
+                              nullptr);
             }
         }
     }

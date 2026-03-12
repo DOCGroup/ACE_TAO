@@ -50,8 +50,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-      if (TAO_Singleton_Manager::starting_up () ||
-          TAO_Singleton_Manager::shutting_down ())
+      if (TAO_Singleton_Manager::starting_up () || TAO_Singleton_Manager::shutting_down ())
         {
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
@@ -146,8 +145,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-      if (TAO_Singleton_Manager::starting_up () ||
-          TAO_Singleton_Manager::shutting_down ())
+      if (TAO_Singleton_Manager::starting_up () || TAO_Singleton_Manager::shutting_down ())
         {
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.

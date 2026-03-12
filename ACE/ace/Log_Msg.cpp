@@ -290,7 +290,7 @@ ACE_Log_Msg::instance ()
           ACE_OS_Object_Manager::preallocated_object
             [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
 
-      if (1 == ACE_OS_Object_Manager::starting_up())
+      if (ACE_OS_Object_Manager::starting_up())
         //This function is called before ACE_OS_Object_Manager is
         //initialized.  So the lock might not be valid.  Assume it's
         //single threaded and so don't need the lock.
@@ -306,7 +306,7 @@ ACE_Log_Msg::instance ()
           if (ACE_Thread::keycreate (log_msg_tss_key (),
                                       &ACE_TSS_CLEANUP_NAME) != 0)
             {
-              if (1 == ACE_OS_Object_Manager::starting_up())
+              if (ACE_OS_Object_Manager::starting_up())
                 //This function is called before ACE_OS_Object_Manager is
                 //initialized.  So the lock might not be valid.  Assume it's
                 //single threaded and so don't need the lock.
@@ -319,7 +319,7 @@ ACE_Log_Msg::instance ()
           ACE_Log_Msg::key_created_ = true;
         }
 
-      if (1 == ACE_OS_Object_Manager::starting_up())
+      if (ACE_OS_Object_Manager::starting_up())
         //This function is called before ACE_OS_Object_Manager is
         //initialized.  So the lock might not be valid.  Assume it's
         //single threaded and so don't need the lock.
