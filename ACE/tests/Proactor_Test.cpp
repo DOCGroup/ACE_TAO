@@ -1793,20 +1793,24 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (task1.start (threads, proactor_type, max_aio_operations) == 0)
     {
       started = 1;
-      ACE_NEW_RETURN (acceptor, Acceptor (&test), -1);
-      ACE_NEW_RETURN (connector, Connector (&test), -1);
+      ACE_NEW_NORETURN (acceptor, Acceptor (&test));
+      ACE_NEW_NORETURN (connector, Connector (&test));
+      if (acceptor == 0 || connector == 0)
+        {
+          run_status = -1;
+        }
       ACE_INET_Addr addr (port);
 
       int rc = 0;
 
-      if (both != 0 || host == 0) // Acceptor
+      if (run_status == 0 && (both != 0 || host == 0)) // Acceptor
         {
           // Simplify, initial read with zero size
           if (acceptor->open (addr, 0, 1) == 0)
             rc = 1;
         }
 
-      if (both != 0 || host != 0)
+      if (run_status == 0 && (both != 0 || host != 0))
         {
           if (host == 0)
             host = ACE_LOCALHOST;
@@ -1817,13 +1821,13 @@ run_main (int argc, ACE_TCHAR *argv[])
             rc += connector->start (addr, clients);
         }
 
-      if (rc <= 0)
+      if (run_status == 0 && rc <= 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) No Proactor_Test sessions were started.\n")));
           run_status = -1;
         }
-      else
+      else if (run_status == 0)
         {
           // Let the sessions get going, then wait for them to drain while
           // the acceptor and connector are still alive. Destroying them

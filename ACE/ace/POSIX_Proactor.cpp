@@ -1081,6 +1081,11 @@ ACE_POSIX_AIOCB_Proactor::notify_completion(int  sig_num)
 {
   ACE_UNUSED_ARG (sig_num);
 
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                            notify_manager_mon,
+                            this->notify_manager_mutex_,
+                            -1));
+
   if (this->aiocb_notify_pipe_manager_ == 0)
     return 0;
 

@@ -324,7 +324,12 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
         case 't':
           if (Proactor_Test_Backend::parse_type (get_opt.opt_arg (), backend) == 0)
-            break;
+            {
+              if (Proactor_Test_Backend::is_available (backend) != 0)
+                break;
+
+              Proactor_Test_Backend::unsupported (backend);
+            }
           parse_failed = 1;
           break;
         case 'u':

@@ -36,6 +36,7 @@
 
 #include "ace/Proactor.h"
 #include "ace/Asynch_Connector.h"
+#include "ace/Atomic_Op.h"
 #include "ace/Time_Value.h"
 #include "ace/Get_Opt.h"
 #include "Proactor_Test_Backend.h"
@@ -82,7 +83,7 @@ private:
 
   int   block_count_;
   long  timer_id_;
-  bool  shutting_down_;
+  ACE_Atomic_Op<ACE_Thread_Mutex, bool> shutting_down_;
 #if defined (ACE_WIN32)
   bool  read_pending_;
 #endif
@@ -253,7 +254,7 @@ void
 FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
 {
   ACE_Message_Block &mb = result.message_block();
-  if (this->shutting_down_)
+  if (this->shutting_down_.value ())
   {
     mb.release();
 #if defined (ACE_WIN32)
@@ -337,7 +338,7 @@ FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
   // When the write completes, we get the message block. It's been sent,
   // so we just deallocate it.
   result.message_block().release();
-  if (this->shutting_down_)
+  if (this->shutting_down_.value ())
   {
     return;
   }
@@ -379,7 +380,7 @@ FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
 void
 FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act*/)
 {
-  if (this->shutting_down_ || this->block_count_ >= 16)
+  if (this->shutting_down_.value () || this->block_count_ >= 16)
   {
     return;
   }
@@ -476,6 +477,9 @@ run_main(int argc, ACE_TCHAR *argv[])
   }
 
 #if defined (ACE_WIN32)
+  // Windows test shutdown currently relies on process-exit cleanup for the
+  // singleton proactor. Explicit close_singleton() here regressed Win32 CI
+  // during this PR and should not be re-enabled without revalidation.
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Skipping ACE_Proactor::close_singleton() on Windows test shutdown\n")));
 #else

@@ -718,6 +718,7 @@ public:
   Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected);
   ~Master (void);
 
+  int started (void) const;
   void shutdown (void);
   virtual int svc (void);
 
@@ -763,6 +764,12 @@ Master::~Master (void)
                 ACE_TEXT ("wait")));
 
   this->sock_.close ();
+}
+
+int
+Master::started (void) const
+{
+  return this->thread_started_;
 }
 
 void
@@ -861,7 +868,18 @@ Master::handle_session (const Session_Data &session)
           else
             {
               Server *server = this->tester_->server_up ();
-              server->go (sock.get_handle (), client_addr);
+              if (server == 0)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%t) Master failed to allocate server handler.\n")));
+                  sock.close ();
+                }
+              else
+                {
+                  ACE_HANDLE const server_handle = sock.get_handle ();
+                  sock.set_handle (ACE_INVALID_HANDLE);
+                  server->go (server_handle, client_addr);
+                }
             }
         }
 
@@ -2086,13 +2104,20 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (connector, Connector (&test), -1);
       int rc = 0;
 
-      if (both != 0 || host == 0) // Acceptor
+      if (master->started () == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) Failed to start Proactor_UDP_Test master listener.\n")));
+          rc = -1;
+        }
+
+      if (rc >= 0 && (both != 0 || host == 0)) // Acceptor
         {
           // Already running; if not needed will be deleted soon.
           rc = 1;
         }
 
-      if (both != 0 || host != 0)
+      if (rc >= 0 && (both != 0 || host != 0))
         {
           if (host == 0)
             host = ACE_LOCALHOST;
@@ -2103,28 +2128,35 @@ run_main (int argc, ACE_TCHAR *argv[])
             rc += connector->start (addr, clients);
         }
 
-      // Let the sessions get going, then wait for them to drain while
-      // the master and connector are still alive. Destroying them
-      // earlier leaves callbacks racing with stack lifetime.
-      ACE_OS::sleep (3);
-
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
-      ACE_Time_Value const drain_deadline =
-        ACE_OS::gettimeofday () + ACE_Time_Value (session_drain_timeout);
-      while (!test.testing_done ())
+      if (rc <= 0)
         {
-          if (ACE_OS::gettimeofday () >= drain_deadline)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%t) Timed out waiting %u seconds ")
-                          ACE_TEXT ("for UDP sessions to drain.\n"),
-                          session_drain_timeout));
-              test.log_session_counts ();
-              result = -1;
-              break;
-            }
+          result = -1;
+        }
+      else
+        {
+          // Let the sessions get going, then wait for them to drain while
+          // the master and connector are still alive. Destroying them
+          // earlier leaves callbacks racing with stack lifetime.
+          ACE_OS::sleep (3);
 
-          ACE_OS::sleep (1);
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
+          ACE_Time_Value const drain_deadline =
+            ACE_OS::gettimeofday () + ACE_Time_Value (session_drain_timeout);
+          while (!test.testing_done ())
+            {
+              if (ACE_OS::gettimeofday () >= drain_deadline)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%t) Timed out waiting %u seconds ")
+                              ACE_TEXT ("for UDP sessions to drain.\n"),
+                              session_drain_timeout));
+                  test.log_session_counts ();
+                  result = -1;
+                  break;
+                }
+
+              ACE_OS::sleep (1);
+            }
         }
 
       test.stop_all ();

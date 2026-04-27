@@ -191,14 +191,29 @@ sub ace_config_has_define {
   my $path = "$ace_root/ace/config.h";
   return 0 if !-e $path;
 
-  open my $fh, '<', $path or return 0;
-  while (my $line = <$fh>) {
-    if ($line =~ /^\s*#\s*define\s+\Q$name\E(?:\s+|$)/) {
-      close $fh;
-      return 1;
+  my %visited;
+  my @pending = ($path);
+
+  while (@pending) {
+    my $current = pop @pending;
+    next if !defined $current || $visited{$current}++;
+
+    open my $fh, '<', $current or next;
+    my $current_dir = dirname($current);
+    while (my $line = <$fh>) {
+      if ($line =~ /^\s*#\s*define\s+\Q$name\E(?:\s+|$)/) {
+        close $fh;
+        return 1;
+      }
+
+      if ($line =~ /^\s*#\s*include\s+"([^"]+)"/) {
+        my $include = "$current_dir/$1";
+        push @pending, abs_path($include) || $include;
+      }
     }
+    close $fh;
   }
-  close $fh;
+
   return 0;
 }
 

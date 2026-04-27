@@ -360,6 +360,14 @@ ACE_Uring_Proactor::submit_pending_sqe (void)
 int
 ACE_Uring_Proactor::signal_submitter (void)
 {
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, sq_guard, this->sq_mutex_, -1);
+
+  return this->signal_submitter_locked ();
+}
+
+int
+ACE_Uring_Proactor::signal_submitter_locked (void)
+{
   if (!this->is_initialized_ || this->submit_wakeup_handle_ == ACE_INVALID_HANDLE)
     return -1;
 

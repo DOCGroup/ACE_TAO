@@ -759,7 +759,7 @@ sub run_stress_case {
     close $fh;
     if ($content =~ /IPv6 is not supported by ACE on this platform/i) {
       print "[SKIP] $scenario backend=$backend (IPv6 not supported by ACE)\n";
-      record_skip('network', $scenario, $backend, 'IPv6 not supported by ACE');
+      record_skip('stress', $scenario, $backend, 'IPv6 not supported by ACE');
       return;
     }
   }

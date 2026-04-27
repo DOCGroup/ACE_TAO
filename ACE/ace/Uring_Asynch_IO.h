@@ -179,9 +179,11 @@ public:
   ACE_Handler *handler (void);
 
   /// Queue a completion for later submission to the Proactor.
+  /// The caller must already hold the Proactor SQ mutex.
   int queue_result (ACE_Uring_Asynch_Result *result);
 
   /// Submit a completion immediately to the Proactor.
+  /// The caller must already hold the Proactor SQ mutex.
   int submit_result (ACE_Uring_Asynch_Result *result);
 
   /// Add a result to the set of in-flight operations.

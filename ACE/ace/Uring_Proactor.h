@@ -258,6 +258,8 @@ protected:
                     const ACE_Time_Value *wait_time = 0);
 
 private:
+  friend class ACE_Uring_Asynch_Operation;
+
   enum
   {
     DEFAULT_CQE_BATCH_SIZE = 256,
@@ -266,6 +268,9 @@ private:
 
   /// Arm the internal wakeup eventfd while the SQ mutex is held.
   int arm_submit_wakeup_locked (void);
+
+  /// Wake a non-dispatch thread while the SQ mutex is already held.
+  int signal_submitter_locked (void);
 
   /// Drain pending submit wakeups while the SQ mutex is held.
   void drain_submit_wakeup_locked (void);
@@ -278,6 +283,8 @@ private:
   bool submit_signal_pending_;
   ACE_HANDLE submit_wakeup_handle_;
   ACE_Atomic_Op<ACE_Thread_Mutex, ACE_thread_t> dispatch_thread_id_;
+  /// Lock order: dispatch_mutex_ -> sq_mutex_ -> cq_mutex_. Operation-local
+  /// pending_results_lock_ nests below sq_mutex_ when both are needed.
   mutable ACE_Thread_Mutex dispatch_mutex_;
   mutable ACE_Thread_Mutex sq_mutex_;
   mutable ACE_Thread_Mutex cq_mutex_;

@@ -355,11 +355,22 @@ ACE_Uring_Asynch_Operation::cancel (void)
        i != the_end;
        ++i)
     {
-      struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
+      struct io_uring_sqe *sqe = this->uring_proactor_->get_sqe ();
       if (!sqe)
         {
-          errno = EAGAIN;
-          return -1;
+          int const submit_result = this->uring_proactor_->submit_pending_sqe ();
+          if (submit_result < 0)
+            {
+              errno = -submit_result;
+              return -1;
+            }
+
+          sqe = this->uring_proactor_->get_sqe ();
+          if (!sqe)
+            {
+              errno = EAGAIN;
+              return -1;
+            }
         }
 
       ::io_uring_prep_cancel (sqe, *i, 0);
@@ -395,7 +406,7 @@ ACE_Uring_Asynch_Operation::queue_result (ACE_Uring_Asynch_Result *result)
 {
   this->register_result (result);
 
-  if (this->uring_proactor_->signal_submitter () == -1)
+  if (this->uring_proactor_->signal_submitter_locked () == -1)
     {
       this->unregister_result (result);
       delete result;
@@ -408,16 +419,7 @@ ACE_Uring_Asynch_Operation::queue_result (ACE_Uring_Asynch_Result *result)
 int
 ACE_Uring_Asynch_Operation::submit_result (ACE_Uring_Asynch_Result *result)
 {
-  this->register_result (result);
-
-  if (this->uring_proactor_->signal_submitter () == -1)
-    {
-      this->unregister_result (result);
-      delete result;
-      return -1;
-    }
-
-  return 0;
+  return this->queue_result (result);
 }
 
 void
@@ -1440,7 +1442,6 @@ ACE_Uring_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                                0);
       // Save it.
       result->connect_handle (handle);
-      connect_handle = handle;
       created_handle = (handle != ACE_INVALID_HANDLE);
       if (handle == ACE_INVALID_HANDLE)
         {
@@ -1494,7 +1495,18 @@ ACE_Uring_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 
   if (result->error () == 0)
     {
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+      ACE_Guard<ACE_Thread_Mutex> ace_mon (this->uring_proactor_->sq_mutex ());
+      if (!ace_mon.locked ())
+        {
+          if (created_handle && handle != ACE_INVALID_HANDLE)
+            {
+              ACE_OS::closesocket (handle);
+              result->connect_handle (ACE_INVALID_HANDLE);
+            }
+          delete result;
+          return -1;
+        }
+
       struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
       if (!sqe)
         {
@@ -1504,7 +1516,7 @@ ACE_Uring_Asynch_Connect::connect (ACE_HANDLE connect_handle,
       else
         {
           ::io_uring_prep_connect (sqe,
-                                   connect_handle,
+                                   handle,
                                    (struct sockaddr *) remote_sap.get_addr (),
                                    remote_sap.get_size ());
           ::io_uring_sqe_set_data (sqe, result);
@@ -1514,7 +1526,6 @@ ACE_Uring_Asynch_Connect::connect (ACE_HANDLE connect_handle,
             {
               this->unregister_result (result);
               errno = -submit_result;
-              result->set_error (errno);
             }
           else
             {
@@ -1597,8 +1608,16 @@ ACE_Uring_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
 int
 ACE_Uring_Asynch_Read_Dgram_Result::remote_address (ACE_Addr &addr) const
 {
-  ACE_OS::memcpy (addr.get_addr (), &this->remote_addr_, this->msg_.msg_namelen);
-  addr.set_size (this->msg_.msg_namelen);
+  socklen_t const name_len = this->msg_.msg_namelen;
+  if (addr.get_addr () == 0
+      || static_cast<socklen_t> (addr.get_size ()) < name_len)
+    {
+      errno = ENOSPC;
+      return -1;
+    }
+
+  ACE_OS::memcpy (addr.get_addr (), &this->remote_addr_, name_len);
+  addr.set_size (name_len);
   return 0;
 }
 
