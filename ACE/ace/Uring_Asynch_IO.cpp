@@ -1495,17 +1495,18 @@ ACE_Uring_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 
   if (result->error () == 0)
     {
-      ACE_Guard<ACE_Thread_Mutex> ace_mon (this->uring_proactor_->sq_mutex ());
-      if (!ace_mon.locked ())
-        {
-          if (created_handle && handle != ACE_INVALID_HANDLE)
-            {
-              ACE_OS::closesocket (handle);
-              result->connect_handle (ACE_INVALID_HANDLE);
-            }
-          delete result;
-          return -1;
-        }
+      ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                          ace_mon,
+                          this->uring_proactor_->sq_mutex (),
+                          {
+                            if (created_handle && handle != ACE_INVALID_HANDLE)
+                              {
+                                ACE_OS::closesocket (handle);
+                                result->connect_handle (ACE_INVALID_HANDLE);
+                              }
+                            delete result;
+                            return -1;
+                          });
 
       struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
       if (!sqe)
