@@ -301,7 +301,6 @@ jobs:
         EOF
         cat > "$ACE_ROOT/bin/MakeProjectCreator/config/default.features" <<'EOF'
         ipv6=1
-        uring=1
         versioned_namespace=1
         EOF
     - name: Generate ACE makefiles
