@@ -1043,12 +1043,20 @@ ACE_POSIX_AIOCB_Proactor::create_notify_manager (void)
 void
 ACE_POSIX_AIOCB_Proactor::delete_notify_manager (void)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->notify_manager_mutex_));
+  ACE_AIOCB_Notify_Pipe_Manager *notify_manager = 0;
 
-  // We are responsible for delete as all pointers set to 0 after
-  // delete, it is save to delete twice
-  delete aiocb_notify_pipe_manager_;
-  aiocb_notify_pipe_manager_ = 0;
+  {
+    ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+                       ace_mon,
+                       this->notify_manager_mutex_));
+
+    // We are responsible for delete as all pointers set to 0 after
+    // delete, it is safe to delete twice.
+    notify_manager = this->aiocb_notify_pipe_manager_;
+    this->aiocb_notify_pipe_manager_ = 0;
+  }
+
+  delete notify_manager;
 }
 
 int
@@ -1629,6 +1637,7 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::cancel_aio");
 
   if (this->get_impl_type () != ACE_POSIX_Proactor::PROACTOR_CB
+      && handle != this->notify_pipe_read_handle_.value ()
       && this->aiocb_notify_pipe_manager_ == 0
       && this->ensure_notify_manager () != 0)
     return -1;
