@@ -590,7 +590,12 @@ namespace
 
       proactor->proactor_end_event_loop ();
       this->wait ();
+#if defined (ACE_WIN32)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Skipping ACE_Proactor::close_singleton() on Windows test shutdown\n")));
+#else
       ACE_Proactor::close_singleton ();
+#endif
       this->proactor_ = 0;
       return 0;
     }

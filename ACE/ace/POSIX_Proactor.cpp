@@ -48,7 +48,7 @@ public:
   virtual ~ACE_POSIX_Wakeup_Completion (void);
 
 
-  /// This method calls the <handler>'s <handle_wakeup> method.
+  /// This completion exists only to wake a blocked event-loop thread.
   virtual void complete (size_t bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
@@ -1582,8 +1582,7 @@ ACE_POSIX_AIOCB_Proactor::start_deferred_aio ()
       return 0;
     }
 
-  if (this->num_deferred_aiocb_ != deferred_count)
-    this->num_deferred_aiocb_ = deferred_count;
+  this->num_deferred_aiocb_ = deferred_count;
 
   ACE_POSIX_Asynch_Result *result = this->result_list_[deferred_index];
 

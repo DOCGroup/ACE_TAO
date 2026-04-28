@@ -117,10 +117,14 @@ public:
   /// Return the operation that currently owns this result.
   ACE_Uring_Asynch_Operation *owner (void) const;
 
+  /// Record the completion key associated with this result.
+  void completion_key (const void *completion_key);
+
 protected:
   ACE_Handler *handler_;
   ACE_Handler::Proxy_Ptr handler_proxy_;
   const void *act_;
+  const void *completion_key_;
   ACE_HANDLE handle_;
   u_long offset_;
   u_long offset_high_;
@@ -202,6 +206,7 @@ protected:
   ACE_Uring_Proactor *uring_proactor_;
   ACE_Proactor *proactor_;
   ACE_Handler::Proxy_Ptr handler_proxy_;
+  const void *completion_key_;
   ACE_HANDLE handle_;
   ACE_Thread_Mutex pending_results_lock_;
   ACE_Unbounded_Set<ACE_Uring_Asynch_Result *> pending_results_;

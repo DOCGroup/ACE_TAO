@@ -140,6 +140,7 @@ ACE_Uring_Asynch_Result::ACE_Uring_Asynch_Result
   : handler_ (0),
     handler_proxy_ (handler_proxy),
     act_ (act),
+    completion_key_ (0),
     handle_ (handle),
     offset_ (offset),
     offset_high_ (offset_high),
@@ -208,13 +209,13 @@ ACE_Uring_Asynch_Result::success (void) const
 const void *
 ACE_Uring_Asynch_Result::completion_key (void) const
 {
-  return 0;
+  return this->completion_key_;
 }
 
 ACE_HANDLE
 ACE_Uring_Asynch_Result::event (void) const
 {
-  return this->handle_;
+  return ACE_INVALID_HANDLE;
 }
 
 u_long
@@ -251,6 +252,12 @@ ACE_Uring_Asynch_Operation *
 ACE_Uring_Asynch_Result::owner (void) const
 {
   return this->owner_.value ();
+}
+
+void
+ACE_Uring_Asynch_Result::completion_key (const void *completion_key)
+{
+  this->completion_key_ = completion_key;
 }
 
 int
@@ -302,6 +309,7 @@ ACE_Uring_Asynch_Timer::complete (size_t, int, const void *, u_long)
 ACE_Uring_Asynch_Operation::ACE_Uring_Asynch_Operation (ACE_Uring_Proactor *proactor)
   : uring_proactor_ (proactor),
     proactor_ (0),
+    completion_key_ (0),
     handle_ (ACE_INVALID_HANDLE)
 {
 }
@@ -315,10 +323,11 @@ ACE_Uring_Asynch_Operation::~ACE_Uring_Asynch_Operation (void)
 int
 ACE_Uring_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE handle,
-                                  const void * /*completion_key*/,
+                                  const void *completion_key,
                                   ACE_Proactor *proactor)
 {
   this->handler_proxy_ = handler_proxy;
+  this->completion_key_ = completion_key;
   this->handle_ = handle;
   this->proactor_ = proactor;
 
@@ -408,8 +417,13 @@ ACE_Uring_Asynch_Operation::queue_result (ACE_Uring_Asynch_Result *result)
 
   if (this->uring_proactor_->signal_submitter_locked () == -1)
     {
-      this->unregister_result (result);
-      delete result;
+      int const submit_result = this->uring_proactor_->submit_pending_sqe ();
+      if (submit_result >= 0)
+        return 0;
+
+      if (submit_result != -1)
+        errno = -submit_result;
+
       return -1;
     }
 
@@ -427,6 +441,8 @@ ACE_Uring_Asynch_Operation::register_result (ACE_Uring_Asynch_Result *result)
 {
   if (result == 0)
     return;
+
+  result->completion_key (this->completion_key_);
 
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->pending_results_lock_);
   result->owner (this);
@@ -546,7 +562,13 @@ ACE_Uring_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                                        this->proactor_),
                   -1);
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -600,7 +622,13 @@ ACE_Uring_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
       return -1;
     }
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -651,7 +679,13 @@ ACE_Uring_Asynch_Read_File::read (ACE_Message_Block &message_block,
   ACE_UINT64 const full_offset =
     (static_cast<ACE_UINT64> (offset_high) << 32) | offset;
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -691,7 +725,13 @@ ACE_Uring_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                      0),
                   -1);
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -750,7 +790,13 @@ ACE_Uring_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   ACE_UINT64 const full_offset =
     (static_cast<ACE_UINT64> (offset_high) << 32) | offset;
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -935,7 +981,13 @@ ACE_Uring_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                                         this->proactor_),
                   -1);
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -989,7 +1041,13 @@ ACE_Uring_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
       return -1;
     }
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -1040,7 +1098,13 @@ ACE_Uring_Asynch_Write_File::write (ACE_Message_Block &message_block,
   ACE_UINT64 const full_offset =
     (static_cast<ACE_UINT64> (offset_high) << 32) | offset;
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -1080,7 +1144,13 @@ ACE_Uring_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                       0),
                   -1);
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -1139,7 +1209,13 @@ ACE_Uring_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   ACE_UINT64 const full_offset =
     (static_cast<ACE_UINT64> (offset_high) << 32) | offset;
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -1332,7 +1408,13 @@ ACE_Uring_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                                   this->proactor_),
                   -1);
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -1671,7 +1753,13 @@ ACE_Uring_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                                                       act,
                                                       this->proactor_),
                   -1);
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {
@@ -1810,7 +1898,13 @@ ACE_Uring_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
       return -1;
     }
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->uring_proactor_->sq_mutex (), -1);
+  ACE_GUARD_REACTION (ACE_Thread_Mutex,
+                      ace_mon,
+                      this->uring_proactor_->sq_mutex (),
+                      {
+                        delete result;
+                        return -1;
+                      });
   struct io_uring_sqe *const sqe = this->uring_proactor_->get_sqe ();
   if (!sqe)
     {

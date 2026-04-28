@@ -644,6 +644,11 @@ if (@requested_backends) {
   @backends = @filtered_backends;
 }
 
+if (!@backends) {
+  print STDERR "error: backend resolution produced empty matrix\n";
+  exit 2;
+}
+
 my $ipv6_enabled = 0;
 if ($include_ipv6 eq 'auto') {
   $ipv6_enabled = ipv6_loopback_available() ? 1 : 0;

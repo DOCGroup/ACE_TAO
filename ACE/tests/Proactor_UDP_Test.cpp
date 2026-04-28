@@ -730,7 +730,7 @@ private:
   ACE_SOCK_Dgram sock_;
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> sessions_expected_;
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> shutting_down_;
-  int thread_started_;
+  bool thread_started_;
 };
 
 // *************************************************************
@@ -739,7 +739,7 @@ Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
     recv_addr_ (recv_addr),
     sessions_expected_ (expected),
     shutting_down_ (0),
-    thread_started_ (0)
+    thread_started_ (false)
 {
   if (this->sock_.open (recv_addr) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Master socket %p\n"), ACE_TEXT ("open")));
@@ -751,14 +751,14 @@ Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
       this->sock_.close ();
     }
   else
-    this->thread_started_ = 1;
+    this->thread_started_ = true;
 }
 
 Master::~Master (void)
 {
   this->shutdown ();
 
-  if (this->thread_started_ != 0 && this->wait () == -1)
+  if (this->thread_started_ && this->wait () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Master wait %p\n"),
                 ACE_TEXT ("wait")));
@@ -1303,6 +1303,8 @@ int
 Connector::start (const ACE_INET_Addr& addr, int num)
 {
   ACE_OS::sleep(3);  // Let Master get going
+  const ACE_Time_Value session_reply_timeout (5);
+
   if (num > MAX_CLIENTS)
     num = MAX_CLIENTS;
 
@@ -1332,7 +1334,9 @@ Connector::start (const ACE_INET_Addr& addr, int num)
                           ACE_TEXT ("(%t) Starting client %d: %p\n"),
                           rc,
                           ACE_TEXT ("send")));
-      if (sock.recv (&session, sizeof (session)) == -1)
+      if (sock.recv (&session,
+                     sizeof (session),
+                     &session_reply_timeout) == -1)
         ACE_ERROR_BREAK ((LM_ERROR,
                           ACE_TEXT ("(%t) Starting client %d: %p\n"),
                           rc,
@@ -1964,6 +1968,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n    i SIG")
       ACE_TEXT ("\n    c CB")
       ACE_TEXT ("\n    s SUN")
+      ACE_TEXT ("\n    u URING")
       ACE_TEXT ("\n    d default")
       ACE_TEXT ("\n-d <duplex mode 1-on/0-off>")
       ACE_TEXT ("\n-h <host> for Client mode")
@@ -2100,71 +2105,80 @@ run_main (int argc, ACE_TCHAR *argv[])
       // on IPv6 as well as IPv4, you need to do some work on passing the
       // Session_Data address differently.
       ACE_INET_Addr addr (port, ACE_LOCALHOST, AF_INET);
-      ACE_NEW_RETURN (master, Master (&test, addr, clients), -1);
-      ACE_NEW_RETURN (connector, Connector (&test), -1);
-      int rc = 0;
-
-      if (master->started () == 0)
+      master = new Master (&test, addr, clients);
+      connector = new Connector (&test);
+      if (master == 0 || connector == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) Failed to start Proactor_UDP_Test master listener.\n")));
-          rc = -1;
-        }
-
-      if (rc >= 0 && (both != 0 || host == 0)) // Acceptor
-        {
-          // Already running; if not needed will be deleted soon.
-          rc = 1;
-        }
-
-      if (rc >= 0 && (both != 0 || host != 0))
-        {
-          if (host == 0)
-            host = ACE_LOCALHOST;
-
-          if (addr.set (port, host, 1, addr.get_type ()) == -1)
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
-          else
-            rc += connector->start (addr, clients);
-        }
-
-      if (rc <= 0)
-        {
+                      ACE_TEXT ("(%t) Failed to allocate Proactor_UDP_Test peers.\n")));
           result = -1;
         }
       else
         {
-          // Let the sessions get going, then wait for them to drain while
-          // the master and connector are still alive. Destroying them
-          // earlier leaves callbacks racing with stack lifetime.
-          ACE_OS::sleep (3);
+          int rc = 0;
 
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
-          ACE_Time_Value const drain_deadline =
-            ACE_OS::gettimeofday () + ACE_Time_Value (session_drain_timeout);
-          while (!test.testing_done ())
+          if (master->started () == 0)
             {
-              if (ACE_OS::gettimeofday () >= drain_deadline)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("(%t) Timed out waiting %u seconds ")
-                              ACE_TEXT ("for UDP sessions to drain.\n"),
-                              session_drain_timeout));
-                  test.log_session_counts ();
-                  result = -1;
-                  break;
-                }
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) Failed to start Proactor_UDP_Test master listener.\n")));
+              rc = -1;
+            }
 
+          if (rc >= 0 && (both != 0 || host == 0)) // Acceptor
+            {
+              // Already running; if not needed will be deleted soon.
+              rc = 1;
+            }
+
+          if (rc >= 0 && (both != 0 || host != 0))
+            {
+              if (host == 0)
+                host = ACE_LOCALHOST;
+
+              if (addr.set (port, host, 1, addr.get_type ()) == -1)
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+              else
+                rc += connector->start (addr, clients);
+            }
+
+          if (rc <= 0)
+            {
+              result = -1;
+            }
+          else
+            {
+              // Let the sessions get going, then wait for them to drain while
+              // the master and connector are still alive. Destroying them
+              // earlier leaves callbacks racing with stack lifetime.
+              ACE_OS::sleep (3);
+
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
+              ACE_Time_Value const drain_deadline =
+                ACE_OS::gettimeofday () + ACE_Time_Value (session_drain_timeout);
+              while (!test.testing_done ())
+                {
+                  if (ACE_OS::gettimeofday () >= drain_deadline)
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("(%t) Timed out waiting %u seconds ")
+                                  ACE_TEXT ("for UDP sessions to drain.\n"),
+                                  session_drain_timeout));
+                      test.log_session_counts ();
+                      result = -1;
+                      break;
+                    }
+
+                  ACE_OS::sleep (1);
+                }
+            }
+
+          test.stop_all ();
+
+          if (master != 0)
+            {
+              master->shutdown ();
               ACE_OS::sleep (1);
             }
-        }
-
-      test.stop_all ();
-
-      if (master != 0)
-        {
-          master->shutdown ();
-          ACE_OS::sleep (1);
         }
     }
   else

@@ -22,7 +22,7 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Task.h"
-#include "ace/Atomic_Op.h"
+#include "ace/Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -62,7 +62,8 @@ protected:
   ACE_Select_Reactor select_reactor_;
 
   ACE_Reactor reactor_;
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, bool> started_;
+  ACE_Thread_Mutex lifecycle_lock_;
+  bool started_;
 };
 
 

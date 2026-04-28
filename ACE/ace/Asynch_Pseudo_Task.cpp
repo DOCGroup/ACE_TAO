@@ -8,6 +8,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Asynch_Pseudo_Task::ACE_Asynch_Pseudo_Task ()
   : select_reactor_ (),               // should be initialized before reactor_
     reactor_ (&select_reactor_, 0),   // don't delete implementation
+    lifecycle_lock_ (),
     started_ (false)
 {
 }
@@ -20,7 +21,9 @@ ACE_Asynch_Pseudo_Task::~ACE_Asynch_Pseudo_Task ()
 int
 ACE_Asynch_Pseudo_Task::start (void)
 {
-  if (this->started_.value ())
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lifecycle_lock_, -1);
+
+  if (this->started_)
     return 0;
 
   if (this->reactor_.initialized () == 0)
@@ -39,7 +42,9 @@ ACE_Asynch_Pseudo_Task::start (void)
 int
 ACE_Asynch_Pseudo_Task::stop (void)
 {
-  if (!this->started_.value ())  // already stopped
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lifecycle_lock_, -1);
+
+  if (!this->started_)  // already stopped
     return 0;
 
   if (this->reactor_.end_reactor_event_loop () == -1)

@@ -1708,6 +1708,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n    i SIG")
       ACE_TEXT ("\n    c CB")
       ACE_TEXT ("\n    s SUN")
+      ACE_TEXT ("\n    u URING")
       ACE_TEXT ("\n    d default")
       ACE_TEXT ("\n-d <duplex mode 1-on/0-off>")
       ACE_TEXT ("\n-h <host> for Client mode")
@@ -1864,62 +1865,71 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (task1.start (threads, proactor_type, max_aio_operations) == 0)
     {
       started = 1;
-      ACE_NEW_RETURN (acceptor, Acceptor (&test), -1);
-      ACE_NEW_RETURN (connector, Connector (&test), -1);
-      ACE_INET_Addr addr (port, "::");
-
-      int rc = 0;
-
-      if (both != 0 || host == 0) // Acceptor
-        {
-          // Simplify, initial read with zero size
-          if (acceptor->open (addr, 0, 1) == 0)
-            rc = 1;
-        }
-
-      if (both != 0 || host != 0)
-        {
-          if (host == 0)
-            host = ACE_IPV6_LOCALHOST;
-
-          if (addr.set (port, host, 1, addr.get_type ()) == -1)
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
-          else
-            rc += connector->start (addr, clients);
-        }
-
-      if (rc <= 0)
+      acceptor = new Acceptor (&test);
+      connector = new Connector (&test);
+      if (acceptor == 0 || connector == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) No Proactor_Test_IPV6 sessions were started.\n")));
+                      ACE_TEXT ("(%t) Failed to allocate Proactor_Test_IPV6 peers.\n")));
           run_status = -1;
         }
       else
         {
-          // Let the sessions get going, then wait for them to drain while
-          // the acceptor and connector are still alive. Destroying them
-          // earlier leaves callbacks racing with stack lifetime.
-          ACE_OS::sleep (3);
+          ACE_INET_Addr addr (port, "::");
 
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
-          ACE_Time_Value limit = ACE_OS::gettimeofday () + ACE_Time_Value (30);
-          while (!test.testing_done () && ACE_OS::gettimeofday () < limit)
-            ACE_OS::sleep (1);
+          int rc = 0;
 
-          if (!test.testing_done ())
+          if (both != 0 || host == 0) // Acceptor
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Timed out waiting for sessions to run down.\n")));
+              // Simplify, initial read with zero size
+              if (acceptor->open (addr, 0, 1) == 0)
+                rc = 1;
+            }
+
+          if (both != 0 || host != 0)
+            {
+              if (host == 0)
+                host = ACE_IPV6_LOCALHOST;
+
+              if (addr.set (port, host, 1, addr.get_type ()) == -1)
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+              else
+                rc += connector->start (addr, clients);
+            }
+
+          if (rc <= 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) No Proactor_Test_IPV6 sessions were started.\n")));
               run_status = -1;
             }
+          else
+            {
+              // Let the sessions get going, then wait for them to drain while
+              // the acceptor and connector are still alive. Destroying them
+              // earlier leaves callbacks racing with stack lifetime.
+              ACE_OS::sleep (3);
+
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
+              ACE_Time_Value limit = ACE_OS::gettimeofday () + ACE_Time_Value (30);
+              while (!test.testing_done () && ACE_OS::gettimeofday () < limit)
+                ACE_OS::sleep (1);
+
+              if (!test.testing_done ())
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Timed out waiting for sessions to run down.\n")));
+                  run_status = -1;
+                }
+            }
+
+          test.stop_all ();
+
+          if (acceptor != 0)
+            acceptor->cancel ();
+          if (connector != 0)
+            connector->cancel ();
+          ACE_OS::sleep (1);
         }
-
-      test.stop_all ();
-
-      if (acceptor != 0)
-        acceptor->cancel ();
-      if (connector != 0)
-        connector->cancel ();
-      ACE_OS::sleep (1);
     }
   else
     {

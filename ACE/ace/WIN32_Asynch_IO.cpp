@@ -3256,11 +3256,15 @@ ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (
 #if defined (ACE_HAS_IPV6)
   ACE_ASSERT (protocol_family == PF_INET || protocol_family == PF_INET6); // only supporting INET and INET6 addresses
   if (protocol_family == PF_INET6)
-    ACE_NEW (remote_address_, ACE_INET_Addr (static_cast<u_short> (0), ACE_IPV6_ANY));
+    {
+      ACE_NEW (remote_address_, ACE_INET_Addr (static_cast<u_short> (0), ACE_IPV6_ANY));
+    }
   else
 #endif /* ACE_HAS_IPV6 */
-  ACE_ASSERT (protocol_family == PF_INET);
-    ACE_NEW (remote_address_, ACE_INET_Addr);
+    {
+      ACE_ASSERT (protocol_family == PF_INET);
+      ACE_NEW (remote_address_, ACE_INET_Addr);
+    }
 
   addr_len_ = remote_address_->get_size ();
 

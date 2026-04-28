@@ -1447,7 +1447,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n"),
       argv[0]
    ));
-  return -1;
+  return Proactor_Test_Backend::print_type_usage (argv[0]);
 }
 
 static int

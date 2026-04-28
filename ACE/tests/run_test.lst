@@ -197,14 +197,17 @@ Proactor_File_Test -t u:           !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BA
 Proactor_Scatter_Gather_Test -t w: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
 Proactor_Scatter_Gather_Test -t u: !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
 Proactor_Stress_Test -t d:         !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Stress_Test -t w:         !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
 Proactor_Stress_Test -t u:         !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
 Proactor_Test -t d:                !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Proactor_Test -t w:                !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
 Proactor_Test -t u:                !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
-Proactor_Test_IPV6 -t d:           !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
-Proactor_Test_IPV6 -t u:           !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
+Proactor_Test_IPV6 -t d:           !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO !NO_IPV6
+Proactor_Test_IPV6 -t w:           !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO !NO_IPV6 Win32
+Proactor_Test_IPV6 -t u:           !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO !NO_IPV6 uring
 Proactor_Timer_Test -t d:          !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Proactor_Timer_Test -t w:          !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
+Proactor_Timer_Test -t u:          !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
 Proactor_UDP_Test -t d:            !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Proactor_UDP_Test -t w:            !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
 Proactor_UDP_Test -t u:            !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
@@ -284,15 +287,15 @@ Unbounded_Set_Test
 Upgradable_RW_Test: !ACE_FOR_TAO
 Vector_Test
 WFMO_Reactor_Test: !nsk
-INET_Addr_Test_IPV6: !nsk
-Max_Default_Port_Test_IPV6: !nsk !GHA
-Multicast_Test_IPV6: !NO_MCAST !nsk !GHA
-Multihomed_INET_Addr_Test_IPV6: !nsk !ACE_FOR_TAO
-SOCK_Send_Recv_Test_IPV6
+INET_Addr_Test_IPV6: !nsk !NO_IPV6
+Max_Default_Port_Test_IPV6: !nsk !GHA !NO_IPV6
+Multicast_Test_IPV6: !NO_MCAST !nsk !GHA !NO_IPV6
+Multihomed_INET_Addr_Test_IPV6: !nsk !ACE_FOR_TAO !NO_IPV6
+SOCK_Send_Recv_Test_IPV6: !NO_IPV6
 SOCK_Dgram_Test: !NO_NETWORK !GHA
 SOCK_Dgram_Bcast_Test: !ACE_FOR_TAO
 SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
-SOCK_Test_IPv6: !nsk
+SOCK_Test_IPv6: !nsk !NO_IPV6
 Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Recursive_Condition_Bug_Test: !ST
 UnloadLibACE: !STATIC !WinCE !LabVIEW_RT

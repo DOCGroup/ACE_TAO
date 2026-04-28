@@ -315,7 +315,7 @@ ACE_POSIX_CB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
   int ret_val = (aiocb_list_cur_size_ >= aiocb_list_max_size_) ? -1 : 0;
 
   if (result == 0)
-    return ret_val;
+    return -1;
 
   switch (op)
     {

@@ -202,7 +202,12 @@ namespace
           {
           case 't':
             if (Proactor_Test_Backend::parse_type (get_opt.opt_arg (), proactor_type) == 0)
-              break;
+              {
+                if (Proactor_Test_Backend::is_available (proactor_type))
+                  break;
+
+                Proactor_Test_Backend::unsupported (proactor_type);
+              }
             return -1;
           default:
             return -1;

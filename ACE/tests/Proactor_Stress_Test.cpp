@@ -200,6 +200,8 @@ namespace
         {
           --this->pending_;
           ++this->schedule_failures_;
+          if (this->dispatch_scale_ == 0 && this->pending_ == 0)
+            this->idle_.broadcast ();
           return -1;
         }
 
