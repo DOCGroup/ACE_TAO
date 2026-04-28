@@ -54,6 +54,9 @@ my $base_port = value_or_default($ENV{BASE_PORT}, 26000);
 my $fail_fast = value_or_default($ENV{FAIL_FAST}, 0);
 my $include_ipv6 = value_or_default($ENV{INCLUDE_IPV6}, 'auto');
 my $include_experimental_udp = value_or_default($ENV{INCLUDE_EXPERIMENTAL_UDP}, 0);
+my @test_wrapper = defined $ENV{TEST_WRAPPER} && $ENV{TEST_WRAPPER} ne ''
+  ? shellwords($ENV{TEST_WRAPPER})
+  : ();
 
 my @requested_scenarios;
 my @requested_backends;
@@ -100,6 +103,8 @@ Environment:
                             Include UDP overload scenarios that may
                             intentionally fail the benchmark's
                             progress-timeout validation.
+  TEST_WRAPPER=<command>     Prefix each benchmark command, for example
+                            TEST_WRAPPER="setarch x86_64 -R".
 EOF
 }
 
@@ -723,6 +728,7 @@ close $results_fh or die "close $results_tsv failed: $!";
 if ($list_only) {
   print "run_dir=$run_dir\n";
   print 'backends=' . join(' ', @backends) . "\n";
+  print 'test_wrapper=' . join(' ', @test_wrapper) . "\n" if @test_wrapper;
   print "ipv6_enabled=$ipv6_enabled\n";
   for my $scenario (@scenario_order) {
     my $args = $scenario_args{$scenario} ne '' ? $scenario_args{$scenario} : '<none>';
@@ -743,10 +749,11 @@ sub run_stress_case {
   unlink $native_log, $stdout_log, $archived_native_log;
 
   my @cmd = ($binary, '-t', $backend);
+  my @run_cmd = (@test_wrapper, @cmd);
   print "[RUN ] $scenario backend=$backend\n";
-  print '       command:' . join('', map { ' ' . shell_quote($_) } @cmd) . "\n";
+  print '       command:' . join('', map { ' ' . shell_quote($_) } @run_cmd) . "\n";
 
-  my $rc = run_command_with_timeout(\@cmd, $stdout_log, $stress_timeout_secs);
+  my $rc = run_command_with_timeout(\@run_cmd, $stdout_log, $stress_timeout_secs);
 
   if (-f $native_log) {
     copy($native_log, $archived_native_log)
@@ -807,10 +814,11 @@ sub run_network_case {
   unlink $native_log, $stdout_log, $archived_native_log;
 
   my @cmd = ($binary, '-t', $backend, @extra_args);
+  my @run_cmd = (@test_wrapper, @cmd);
   print "[RUN ] $scenario backend=$backend\n";
-  print '       command:' . join('', map { ' ' . shell_quote($_) } @cmd) . "\n";
+  print '       command:' . join('', map { ' ' . shell_quote($_) } @run_cmd) . "\n";
 
-  my $rc = run_command_with_timeout(\@cmd, $stdout_log, $network_timeout_secs);
+  my $rc = run_command_with_timeout(\@run_cmd, $stdout_log, $network_timeout_secs);
 
   if (-f $native_log) {
     copy($native_log, $archived_native_log)

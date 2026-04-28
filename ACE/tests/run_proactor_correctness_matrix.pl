@@ -54,6 +54,9 @@ my $include_ipv6 = value_or_default($ENV{INCLUDE_IPV6}, 'auto');
 my $fail_fast = value_or_default($ENV{FAIL_FAST}, 0);
 my $run_network_udp = value_or_default($ENV{RUN_NETWORK_UDP}, 1);
 my $expected_fail_backends = value_or_default($ENV{EXPECTED_FAIL_BACKENDS}, '');
+my @test_wrapper = defined $ENV{TEST_WRAPPER} && $ENV{TEST_WRAPPER} ne ''
+  ? shellwords($ENV{TEST_WRAPPER})
+  : ();
 
 my @requested_tests;
 my @requested_backends;
@@ -82,6 +85,8 @@ Environment:
   FAIL_FAST=0|1           Stop on the first failing matrix entry.
   EXPECTED_FAIL_BACKENDS  Space-separated backends whose nonzero exits
                           should be recorded as expected failures.
+  TEST_WRAPPER=<command>  Prefix each test command, for example
+                          TEST_WRAPPER="setarch x86_64 -R".
 EOF
 }
 
@@ -513,6 +518,7 @@ make_path($log_dir, $run_dir);
 if ($list_only) {
   print "run_dir=$run_dir\n";
   print 'backends=' . join(' ', @backends) . "\n";
+  print 'test_wrapper=' . join(' ', @test_wrapper) . "\n" if @test_wrapper;
   for my $case (@cases) {
     my $case_label = $case->{test_name};
     $case_label .= ':' . $case->{variant} if $case->{variant} ne '';
@@ -563,13 +569,14 @@ sub run_case {
   }
 
   my @cmd = ($binary, '-t', $backend, @extra_args);
+  my @run_cmd = (@test_wrapper, @cmd);
 
   unlink $native_log, $stdout_log, $archived_native_log;
 
   print "[RUN ] $case_label backend=$backend\n";
-  print '       command:' . join('', map { ' ' . shell_quote($_) } @cmd) . "\n";
+  print '       command:' . join('', map { ' ' . shell_quote($_) } @run_cmd) . "\n";
 
-  my $rc = run_command_with_timeout(\@cmd, $stdout_log, $timeout_secs);
+  my $rc = run_command_with_timeout(\@run_cmd, $stdout_log, $timeout_secs);
 
   if (-f $native_log) {
     copy($native_log, $archived_native_log)
