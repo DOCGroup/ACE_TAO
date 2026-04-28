@@ -718,7 +718,7 @@ public:
   Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected);
   ~Master (void);
 
-  int started (void) const;
+  bool started (void) const;
   void shutdown (void);
   virtual int svc (void);
 
@@ -729,7 +729,7 @@ private:
   ACE_INET_Addr recv_addr_;
   ACE_SOCK_Dgram sock_;
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> sessions_expected_;
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> shutting_down_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, bool> shutting_down_;
   bool thread_started_;
 };
 
@@ -738,7 +738,7 @@ Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
   : tester_ (tester),
     recv_addr_ (recv_addr),
     sessions_expected_ (expected),
-    shutting_down_ (0),
+    shutting_down_ (false),
     thread_started_ (false)
 {
   if (this->sock_.open (recv_addr) == -1)
@@ -766,7 +766,7 @@ Master::~Master (void)
   this->sock_.close ();
 }
 
-int
+bool
 Master::started (void) const
 {
   return this->thread_started_;
@@ -775,7 +775,7 @@ Master::started (void) const
 void
 Master::shutdown (void)
 {
-  this->shutting_down_ = 1;
+  this->shutting_down_ = true;
 }
 
 int
@@ -783,7 +783,7 @@ Master::svc (void)
 {
   ACE_Time_Value timeout (1);
 
-  while (this->shutting_down_.value () == 0
+  while (!this->shutting_down_.value ()
          && this->sessions_expected_.value () > 0)
     {
       Session_Data session;
@@ -2117,7 +2117,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           int rc = 0;
 
-          if (master->started () == 0)
+          if (!master->started ())
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%t) Failed to start Proactor_UDP_Test master listener.\n")));
