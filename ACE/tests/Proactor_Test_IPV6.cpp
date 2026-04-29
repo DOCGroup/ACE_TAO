@@ -1834,23 +1834,23 @@ run_main (int argc, ACE_TCHAR *argv[])
   int run_status = 0;
 
 #if !defined (ACE_HAS_IPV6)
-  ACE_ERROR ((LM_ERROR,
+  ACE_DEBUG ((LM_WARNING,
               ACE_TEXT ("IPv6 is not supported by ACE on this platform.\n")
-              ACE_TEXT ("Proactor_Test_IPV6 requires ACE IPv6 support.\n")));
+              ACE_TEXT ("Proactor_Test_IPV6 will not be run.\n")));
 
   ACE_END_TEST;
 
-  return 1;
+  return 0;
 #else
   if (!ACE::ipv6_enabled ())
     {
-      ACE_ERROR ((LM_ERROR,
+      ACE_DEBUG ((LM_WARNING,
                   ACE_TEXT ("IPv6 is not supported by ACE on this platform.\n")
-                  ACE_TEXT ("Proactor_Test_IPV6 requires ACE IPv6 support.\n")));
+                  ACE_TEXT ("Proactor_Test_IPV6 will not be run.\n")));
 
       ACE_END_TEST;
 
-      return 1;
+      return 0;
     }
 
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
