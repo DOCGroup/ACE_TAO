@@ -27,6 +27,7 @@
 #include "ace/Proactor_Impl.h"
 #include "ace/Thread_Mutex.h"
 
+// cppcheck-suppress missingIncludeSystem
 #include <liburing.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

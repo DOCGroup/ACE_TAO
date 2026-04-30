@@ -14,11 +14,12 @@
 #include "ace/Countdown_Time.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_poll.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
 
-#include <poll.h>
+// cppcheck-suppress missingIncludeSystem
 #include <sys/eventfd.h>
-#include <unistd.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,7 +85,7 @@ ACE_Uring_Proactor::ACE_Uring_Proactor (size_t entries)
               ACELIB_ERROR ((LM_ERROR,
                              ACE_TEXT ("%p\n"),
                              ACE_TEXT ("ACE_Uring_Proactor::arm_submit_wakeup_locked")));
-              ::close (this->submit_wakeup_handle_);
+              ACE_OS::close (this->submit_wakeup_handle_);
               this->submit_wakeup_handle_ = ACE_INVALID_HANDLE;
               ::io_uring_queue_exit (&this->ring_);
             }
@@ -407,7 +408,7 @@ ACE_Uring_Proactor::drain_submit_wakeup_locked (void)
     return;
 
   uint64_t value = 0;
-  while (::read (this->submit_wakeup_handle_, &value, sizeof (value))
+  while (ACE_OS::read (this->submit_wakeup_handle_, &value, sizeof (value))
          == static_cast<ssize_t> (sizeof (value)))
     {
     }

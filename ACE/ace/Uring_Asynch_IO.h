@@ -29,8 +29,8 @@
 #include "ace/Unbounded_Set.h"
 #include "ace/Uring_Proactor.h"
 
-#include <sys/socket.h>
-#include <sys/uio.h>
+#include "ace/os_include/sys/os_socket.h"
+#include "ace/os_include/sys/os_uio.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
