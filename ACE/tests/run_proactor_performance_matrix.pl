@@ -387,11 +387,11 @@ if (!$is_windows) {
   );
 }
 require_file(
-  resolve_test_binary("$script_dir/Proactor_Stress_Test"),
+  resolve_test_binary("$script_dir/Proactor_Stress_Test", is_windows => $is_windows),
   "missing $script_dir/Proactor_Stress_Test; build the Proactor tests before running the matrix",
 );
 require_file(
-  resolve_test_binary("$script_dir/Proactor_Network_Performance_Test"),
+  resolve_test_binary("$script_dir/Proactor_Network_Performance_Test", is_windows => $is_windows),
   "missing $script_dir/Proactor_Network_Performance_Test; build the Proactor tests before running the matrix",
 );
 
