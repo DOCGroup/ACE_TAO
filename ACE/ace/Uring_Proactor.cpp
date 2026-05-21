@@ -254,10 +254,7 @@ ACE_Uring_Proactor::process_cqes (int max_to_process, const ACE_Time_Value *wait
           }
 
         uintptr_t const data = ::io_uring_cqe_get_data64 (cqe);
-        if (data == ACE_URING_SUBMIT_WAKE_USER_DATA)
-          result = reinterpret_cast<ACE_Uring_Asynch_Result *> (ACE_URING_SUBMIT_WAKE_USER_DATA);
-        else
-          result = reinterpret_cast<ACE_Uring_Asynch_Result *> (data);
+        result = reinterpret_cast<ACE_Uring_Asynch_Result *> (data);
         error = (cqe->res < 0) ? -cqe->res : 0;
         bytes_transferred = (cqe->res > 0) ? cqe->res : 0;
         ::io_uring_cqe_seen (&this->ring_, cqe);
