@@ -33,6 +33,9 @@ namespace
   unsigned
   queued_sqes (const io_uring &ring)
   {
+    // The batching heuristic wants the number of prepared SQEs that still need
+    // an explicit submit call. SQPOLL tracks readiness differently, so defer
+    // to liburing's helper in that mode.
     // For non-SQPOLL rings, khead tracks how many SQEs the kernel has
     // consumed from user space, so sqe_tail - *khead is the number of
     // prepared but unsubmitted/unconsumed entries.  For SQPOLL, defer to
@@ -97,14 +100,14 @@ ACE_Uring_Proactor::ACE_Uring_Proactor (size_t entries)
     }
 }
 
-ACE_Uring_Proactor::~ACE_Uring_Proactor (void)
+ACE_Uring_Proactor::~ACE_Uring_Proactor ()
 {
   ACE_TRACE ("ACE_Uring_Proactor::~ACE_Uring_Proactor");
   this->close ();
 }
 
 int
-ACE_Uring_Proactor::close (void)
+ACE_Uring_Proactor::close ()
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, sq_guard, this->sq_mutex_, -1);
   ACE_GUARD_RETURN (ACE_Thread_Mutex, cq_guard, this->cq_mutex_, -1);
@@ -116,7 +119,7 @@ ACE_Uring_Proactor::close (void)
   ::io_uring_queue_exit (&this->ring_);
   if (this->submit_wakeup_handle_ != ACE_INVALID_HANDLE)
     {
-      ::close (this->submit_wakeup_handle_);
+      ACE_OS::close (this->submit_wakeup_handle_);
       this->submit_wakeup_handle_ = ACE_INVALID_HANDLE;
     }
   return 0;
@@ -137,14 +140,14 @@ ACE_Uring_Proactor::handle_events (ACE_Time_Value &wait_time)
 }
 
 int
-ACE_Uring_Proactor::handle_events (void)
+ACE_Uring_Proactor::handle_events ()
 {
   int const result = this->process_cqes (DEFAULT_CQE_BATCH_SIZE);
   return result > 0 ? 1 : result;
 }
 
 int
-ACE_Uring_Proactor::wake_up_dispatch_threads (void)
+ACE_Uring_Proactor::wake_up_dispatch_threads ()
 {
   return 0;
 }
@@ -156,7 +159,7 @@ ACE_Uring_Proactor::close_dispatch_threads (int)
 }
 
 size_t
-ACE_Uring_Proactor::number_of_threads (void) const
+ACE_Uring_Proactor::number_of_threads () const
 {
   return 1;
 }
@@ -167,7 +170,7 @@ ACE_Uring_Proactor::number_of_threads (size_t)
 }
 
 ACE_HANDLE
-ACE_Uring_Proactor::get_handle (void) const
+ACE_Uring_Proactor::get_handle () const
 {
   return ACE_INVALID_HANDLE;
 }
@@ -302,19 +305,19 @@ ACE_Uring_Proactor::process_cqes (int max_to_process, const ACE_Time_Value *wait
 }
 
 ACE_Thread_Mutex &
-ACE_Uring_Proactor::sq_mutex (void)
+ACE_Uring_Proactor::sq_mutex ()
 {
   return this->sq_mutex_;
 }
 
 bool
-ACE_Uring_Proactor::is_initialized (void) const
+ACE_Uring_Proactor::is_initialized () const
 {
   return this->is_initialized_;
 }
 
 struct io_uring_sqe *
-ACE_Uring_Proactor::get_sqe (void)
+ACE_Uring_Proactor::get_sqe ()
 {
   if (!this->is_initialized_)
     return 0;
@@ -322,7 +325,7 @@ ACE_Uring_Proactor::get_sqe (void)
 }
 
 int
-ACE_Uring_Proactor::submit_sqe (void)
+ACE_Uring_Proactor::submit_sqe ()
 {
   if (!this->is_initialized_)
     return -1;
@@ -330,7 +333,7 @@ ACE_Uring_Proactor::submit_sqe (void)
 }
 
 int
-ACE_Uring_Proactor::submit_sqe_if_necessary (void)
+ACE_Uring_Proactor::submit_sqe_if_necessary ()
 {
   if (!this->is_initialized_)
     return -1;
@@ -347,7 +350,7 @@ ACE_Uring_Proactor::submit_sqe_if_necessary (void)
 }
 
 int
-ACE_Uring_Proactor::submit_pending_sqe (void)
+ACE_Uring_Proactor::submit_pending_sqe ()
 {
   if (!this->is_initialized_)
     return -1;
@@ -359,7 +362,7 @@ ACE_Uring_Proactor::submit_pending_sqe (void)
 }
 
 int
-ACE_Uring_Proactor::signal_submitter (void)
+ACE_Uring_Proactor::signal_submitter ()
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, sq_guard, this->sq_mutex_, -1);
 
@@ -367,7 +370,7 @@ ACE_Uring_Proactor::signal_submitter (void)
 }
 
 int
-ACE_Uring_Proactor::signal_submitter_locked (void)
+ACE_Uring_Proactor::signal_submitter_locked ()
 {
   if (!this->is_initialized_ || this->submit_wakeup_handle_ == ACE_INVALID_HANDLE)
     return -1;
@@ -376,7 +379,8 @@ ACE_Uring_Proactor::signal_submitter_locked (void)
     return 0;
 
   uint64_t const one = 1;
-  ssize_t const rc = ::write (this->submit_wakeup_handle_, &one, sizeof (one));
+  ssize_t const rc =
+    ACE_OS::write (this->submit_wakeup_handle_, &one, sizeof (one));
   if (rc == static_cast<ssize_t> (sizeof (one)))
     {
       this->submit_signal_pending_ = true;
@@ -387,7 +391,7 @@ ACE_Uring_Proactor::signal_submitter_locked (void)
 }
 
 int
-ACE_Uring_Proactor::arm_submit_wakeup_locked (void)
+ACE_Uring_Proactor::arm_submit_wakeup_locked ()
 {
   struct io_uring_sqe *const sqe = ::io_uring_get_sqe (&this->ring_);
   if (sqe == 0)
@@ -402,7 +406,7 @@ ACE_Uring_Proactor::arm_submit_wakeup_locked (void)
 }
 
 void
-ACE_Uring_Proactor::drain_submit_wakeup_locked (void)
+ACE_Uring_Proactor::drain_submit_wakeup_locked ()
 {
   if (this->submit_wakeup_handle_ == ACE_INVALID_HANDLE)
     return;
@@ -417,69 +421,69 @@ ACE_Uring_Proactor::drain_submit_wakeup_locked (void)
 }
 
 bool
-ACE_Uring_Proactor::on_dispatch_thread (void) const
+ACE_Uring_Proactor::on_dispatch_thread () const
 {
   return ACE_OS::thr_equal (ACE_OS::thr_self (),
                             this->dispatch_thread_id_.value ()) != 0;
 }
 
-ACE_Asynch_Read_Stream_Impl *ACE_Uring_Proactor::create_asynch_read_stream (void)
+ACE_Asynch_Read_Stream_Impl *ACE_Uring_Proactor::create_asynch_read_stream ()
 {
   ACE_Uring_Asynch_Read_Stream *ret = 0;
   ACE_NEW_RETURN (ret, ACE_Uring_Asynch_Read_Stream (this), 0);
   return ret;
 }
 
-ACE_Asynch_Write_Stream_Impl *ACE_Uring_Proactor::create_asynch_write_stream (void)
+ACE_Asynch_Write_Stream_Impl *ACE_Uring_Proactor::create_asynch_write_stream ()
 {
   ACE_Uring_Asynch_Write_Stream *ret = 0;
   ACE_NEW_RETURN (ret, ACE_Uring_Asynch_Write_Stream (this), 0);
   return ret;
 }
 
-ACE_Asynch_Read_File_Impl *ACE_Uring_Proactor::create_asynch_read_file (void)
+ACE_Asynch_Read_File_Impl *ACE_Uring_Proactor::create_asynch_read_file ()
 {
   ACE_Uring_Asynch_Read_File *ret = 0;
   ACE_NEW_RETURN (ret, ACE_Uring_Asynch_Read_File (this), 0);
   return ret;
 }
 
-ACE_Asynch_Write_File_Impl *ACE_Uring_Proactor::create_asynch_write_file (void)
+ACE_Asynch_Write_File_Impl *ACE_Uring_Proactor::create_asynch_write_file ()
 {
   ACE_Uring_Asynch_Write_File *ret = 0;
   ACE_NEW_RETURN (ret, ACE_Uring_Asynch_Write_File (this), 0);
   return ret;
 }
 
-ACE_Asynch_Accept_Impl *ACE_Uring_Proactor::create_asynch_accept (void)
+ACE_Asynch_Accept_Impl *ACE_Uring_Proactor::create_asynch_accept ()
 {
   ACE_Uring_Asynch_Accept *ret = 0;
   ACE_NEW_RETURN (ret, ACE_Uring_Asynch_Accept (this), 0);
   return ret;
 }
 
-ACE_Asynch_Connect_Impl *ACE_Uring_Proactor::create_asynch_connect (void)
+ACE_Asynch_Connect_Impl *ACE_Uring_Proactor::create_asynch_connect ()
 {
   ACE_Uring_Asynch_Connect *ret = 0;
   ACE_NEW_RETURN (ret, ACE_Uring_Asynch_Connect (this), 0);
   return ret;
 }
 
-ACE_Asynch_Transmit_File_Impl *ACE_Uring_Proactor::create_asynch_transmit_file (void)
+ACE_Asynch_Transmit_File_Impl *ACE_Uring_Proactor::create_asynch_transmit_file ()
 {
   ACE_Uring_Asynch_Transmit_File *ret = 0;
   ACE_NEW_RETURN (ret, ACE_Uring_Asynch_Transmit_File (this), 0);
   return ret;
 }
 
-ACE_Asynch_Read_Dgram_Impl *ACE_Uring_Proactor::create_asynch_read_dgram (void)
+ACE_Asynch_Read_Dgram_Impl *ACE_Uring_Proactor::create_asynch_read_dgram ()
 {
   ACE_Uring_Asynch_Read_Dgram *ret = 0;
   ACE_NEW_RETURN (ret, ACE_Uring_Asynch_Read_Dgram (this), 0);
   return ret;
 }
 
-ACE_Asynch_Write_Dgram_Impl *ACE_Uring_Proactor::create_asynch_write_dgram (void)
+ACE_Asynch_Write_Dgram_Impl *ACE_Uring_Proactor::create_asynch_write_dgram ()
 {
   ACE_Uring_Asynch_Write_Dgram *ret = 0;
   ACE_NEW_RETURN (ret, ACE_Uring_Asynch_Write_Dgram (this), 0);

@@ -27,6 +27,14 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace
+{
+  enum
+  {
+    ACE_AIOCB_INIT_THREADS_MAX = 16
+  };
+}
+
 /**
  * @class ACE_POSIX_Wakeup_Completion
  *
@@ -57,8 +65,8 @@ public:
 
 // *********************************************************************
 ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
-  :  os_id_ (ACE_OS_UNDEFINED),
-     pseudo_task_ (0)
+  :  os_id_ (ACE_OS_UNDEFINED)
+  ,  pseudo_task_ (0)
 {
   ACE_NEW (this->pseudo_task_, ACE_Asynch_Pseudo_Task);
 
@@ -767,8 +775,9 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
 #if defined (__GLIBC__)
   aioinit init;
   ACE_OS::memset (&init, 0, sizeof (init));
-  init.aio_threads = static_cast<int> (this->aiocb_list_max_size_ > 16 ? 16
-                                                                        : this->aiocb_list_max_size_);
+  init.aio_threads =
+    static_cast<int> (ACE_MIN (this->aiocb_list_max_size_,
+                               static_cast<size_t> (ACE_AIOCB_INIT_THREADS_MAX)));
   init.aio_num = static_cast<int> (this->aiocb_list_max_size_);
   aio_init (&init);
 #endif /* __GLIBC__ */
@@ -801,8 +810,9 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,
 #if defined (__GLIBC__)
   aioinit init;
   ACE_OS::memset (&init, 0, sizeof (init));
-  init.aio_threads = static_cast<int> (this->aiocb_list_max_size_ > 16 ? 16
-                                                                        : this->aiocb_list_max_size_);
+  init.aio_threads =
+    static_cast<int> (ACE_MIN (this->aiocb_list_max_size_,
+                               static_cast<size_t> (ACE_AIOCB_INIT_THREADS_MAX)));
   init.aio_num = static_cast<int> (this->aiocb_list_max_size_);
   aio_init (&init);
 #endif /* __GLIBC__ */
@@ -870,9 +880,7 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
   if (aiocb_list_ == 0)  // already deleted
     return 0;
 
-  size_t ai;
-
-  for (ai = 0; ai < aiocb_list_max_size_; ++ai)
+  for (size_t ai = 0; ai < aiocb_list_max_size_; ++ai)
     {
       if (this->result_list_[ai] == 0 || this->aiocb_list_[ai] != 0)
         continue;
@@ -884,7 +892,7 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
 
   // Try to cancel all uncompleted operations; POSIX systems may have
   // hidden system threads that still can work with our aiocbs!
-  for (ai = 0; ai < aiocb_list_max_size_; ++ai)
+  for (size_t ai = 0; ai < aiocb_list_max_size_; ++ai)
     if (this->aiocb_list_[ai] != 0)  // active operation
       this->cancel_aiocb (result_list_[ai]);
 
@@ -896,7 +904,7 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
     {
       num_pending = 0;
 
-      for (ai = 0; ai < aiocb_list_max_size_; ++ai)
+      for (size_t ai = 0; ai < aiocb_list_max_size_; ++ai)
         {
           if (this->aiocb_list_[ai] == 0)  // not active operation
             continue;
@@ -925,7 +933,7 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
         ACE_OS::sleep (settle_interval);
     }
 
-  for (ai = 0; ai < aiocb_list_max_size_; ++ai)
+  for (size_t ai = 0; ai < aiocb_list_max_size_; ++ai)
     {
       if (this->aiocb_list_[ai] == 0)
         continue;
@@ -1067,7 +1075,7 @@ ACE_POSIX_AIOCB_Proactor::ensure_notify_manager (void)
   if (this->aiocb_notify_pipe_manager_ == 0)
     this->create_notify_manager ();
 
-  return this->aiocb_notify_pipe_manager_ != 0 ? 0 : -1;
+  return this->aiocb_notify_pipe_manager_ ? 0 : -1;
 }
 
 int
@@ -1457,7 +1465,7 @@ ssize_t
 ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 {
   size_t i = 0;
-  const ACE_HANDLE notify_pipe_read_handle = this->notify_pipe_read_handle_.value ();
+  ACE_HANDLE const notify_pipe_read_handle = this->notify_pipe_read_handle_.value ();
 
   // we reserve zero slot for ACE_AIOCB_Notify_Pipe_Manager
   // so make check for ACE_AIOCB_Notify_Pipe_Manager request
@@ -1476,7 +1484,7 @@ ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
     }
   else  //try to find free slot as usual, but starting from 1
     {
-      for (i= 1; i < this->aiocb_list_max_size_; i++)
+      for (i = 1; i < this->aiocb_list_max_size_; ++i)
         if (result_list_[i] == 0)
           break;
     }

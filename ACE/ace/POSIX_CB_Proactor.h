@@ -45,28 +45,28 @@ class ACE_Export ACE_POSIX_CB_Proactor : public ACE_POSIX_AIOCB_Proactor
     explicit Notification_State (ACE_SYNCH_SEMAPHORE &sema);
 
     /// Record a newly submitted callback that must finish before close().
-    void add_pending (void);
+    void add_pending ();
 
     /// Mark one pending callback as completed.
-    void complete_one (void);
+    void complete_one ();
 
     /// Remove one pending callback that was abandoned before completion.
-    void abandon_pending (void);
+    void abandon_pending ();
 
     /// Return the number of callbacks still expected to complete.
-    size_t pending (void);
+    size_t pending ();
 
     /// Wait until the pending callback count reaches zero.
     int wait_for_pending_zero (const ACE_Time_Value *abstime);
 
     /// Hold an internal reference while a callback may still access the state.
-    void add_ref (void);
+    void add_ref ();
 
     /// Release a callback lifetime reference.
-    void remove_ref (void);
+    void remove_ref ();
 
     /// Detach the startup semaphore once callback submission is stable.
-    void detach (void);
+    void detach ();
 
   private:
     /// Finalize one pending callback update and optionally wake the waiter.

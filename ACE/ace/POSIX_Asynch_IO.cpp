@@ -2059,14 +2059,8 @@ ACE_POSIX_Asynch_Transmit_Handler::initiate_read_file (void)
           || header_and_trailer->trailer () == 0
           || header_and_trailer->trailer_bytes () == 0)
         {
-          ACE_SEH_TRY
-            {
-              this->result_->complete (this->bytes_transferred_, 1, 0, 0);
-            }
-          ACE_SEH_FINALLY
-            {
-              delete this;
-            }
+          this->result_->complete (this->bytes_transferred_, 1, 0, 0);
+          delete this;
           return 0;
         }
 

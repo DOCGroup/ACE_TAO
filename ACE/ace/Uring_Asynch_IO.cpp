@@ -79,6 +79,8 @@ namespace
 
         size_t const remaining = requested_bytes - prepared_bytes;
         size_t const len = available > remaining ? remaining : available;
+        // Writes consume the readable bytes starting at rd_ptr(); reads append
+        // into the remaining writable space starting at wr_ptr().
         iovec_array[index].iov_base = write_operation
           ? static_cast<void *> (mb->rd_ptr ())
           : static_cast<void *> (mb->wr_ptr ());
@@ -153,25 +155,25 @@ ACE_Uring_Asynch_Result::ACE_Uring_Asynch_Result
   this->handler_ = proxy != 0 ? proxy->handler () : 0;
 }
 
-ACE_Uring_Asynch_Result::~ACE_Uring_Asynch_Result (void)
+ACE_Uring_Asynch_Result::~ACE_Uring_Asynch_Result ()
 {
 }
 
 ACE_Handler *
-ACE_Uring_Asynch_Result::handler (void) const
+ACE_Uring_Asynch_Result::handler () const
 {
   ACE_Handler::Proxy *const proxy = this->handler_proxy_.get ();
   return proxy != 0 ? proxy->handler () : 0;
 }
 
 ACE_Handler *
-ACE_Uring_Asynch_Result::dispatch_handler (void) const
+ACE_Uring_Asynch_Result::dispatch_handler () const
 {
   return this->handler_;
 }
 
 size_t
-ACE_Uring_Asynch_Result::bytes_transferred (void) const
+ACE_Uring_Asynch_Result::bytes_transferred () const
 {
   return this->bytes_transferred_;
 }
@@ -183,7 +185,7 @@ ACE_Uring_Asynch_Result::set_bytes_transferred (size_t n)
 }
 
 u_long
-ACE_Uring_Asynch_Result::error (void) const
+ACE_Uring_Asynch_Result::error () const
 {
   return this->error_;
 }
@@ -195,49 +197,49 @@ ACE_Uring_Asynch_Result::set_error (u_long err)
 }
 
 const void *
-ACE_Uring_Asynch_Result::act (void) const
+ACE_Uring_Asynch_Result::act () const
 {
   return this->act_;
 }
 
 int
-ACE_Uring_Asynch_Result::success (void) const
+ACE_Uring_Asynch_Result::success () const
 {
   return this->error_ == 0;
 }
 
 const void *
-ACE_Uring_Asynch_Result::completion_key (void) const
+ACE_Uring_Asynch_Result::completion_key () const
 {
   return this->completion_key_;
 }
 
 ACE_HANDLE
-ACE_Uring_Asynch_Result::event (void) const
+ACE_Uring_Asynch_Result::event () const
 {
   return ACE_INVALID_HANDLE;
 }
 
 u_long
-ACE_Uring_Asynch_Result::offset (void) const
+ACE_Uring_Asynch_Result::offset () const
 {
   return this->offset_;
 }
 
 u_long
-ACE_Uring_Asynch_Result::offset_high (void) const
+ACE_Uring_Asynch_Result::offset_high () const
 {
   return this->offset_high_;
 }
 
 int
-ACE_Uring_Asynch_Result::priority (void) const
+ACE_Uring_Asynch_Result::priority () const
 {
   return 0;
 }
 
 int
-ACE_Uring_Asynch_Result::signal_number (void) const
+ACE_Uring_Asynch_Result::signal_number () const
 {
   return 0;
 }
@@ -249,13 +251,13 @@ ACE_Uring_Asynch_Result::owner (ACE_Uring_Asynch_Operation *operation)
 }
 
 ACE_Uring_Asynch_Operation *
-ACE_Uring_Asynch_Result::owner (void) const
+ACE_Uring_Asynch_Result::owner () const
 {
   return this->owner_.value ();
 }
 
 void
-ACE_Uring_Asynch_Result::completion_key (const void *completion_key)
+ACE_Uring_Asynch_Result::completion_key (void const *completion_key)
 {
   this->completion_key_ = completion_key;
 }
@@ -314,7 +316,7 @@ ACE_Uring_Asynch_Operation::ACE_Uring_Asynch_Operation (ACE_Uring_Proactor *proa
 {
 }
 
-ACE_Uring_Asynch_Operation::~ACE_Uring_Asynch_Operation (void)
+ACE_Uring_Asynch_Operation::~ACE_Uring_Asynch_Operation ()
 {
   if (this->uring_proactor_ != 0 && this->uring_proactor_->is_initialized ())
     (void) this->cancel ();
@@ -346,7 +348,7 @@ ACE_Uring_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 }
 
 int
-ACE_Uring_Asynch_Operation::cancel (void)
+ACE_Uring_Asynch_Operation::cancel ()
 {
   if (this->uring_proactor_ == 0)
     return -1;
@@ -397,13 +399,13 @@ ACE_Uring_Asynch_Operation::cancel (void)
 }
 
 ACE_Proactor *
-ACE_Uring_Asynch_Operation::proactor (void) const
+ACE_Uring_Asynch_Operation::proactor () const
 {
   return this->proactor_;
 }
 
 ACE_Handler *
-ACE_Uring_Asynch_Operation::handler (void)
+ACE_Uring_Asynch_Operation::handler ()
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->pending_results_lock_, 0);
   ACE_Handler::Proxy *const proxy = this->handler_proxy_.get ();
@@ -488,25 +490,25 @@ ACE_Uring_Asynch_Read_Stream_Result::ACE_Uring_Asynch_Read_Stream_Result
 {
 }
 
-ACE_Uring_Asynch_Read_Stream_Result::~ACE_Uring_Asynch_Read_Stream_Result (void)
+ACE_Uring_Asynch_Read_Stream_Result::~ACE_Uring_Asynch_Read_Stream_Result ()
 {
   delete [] this->iovec_;
 }
 
 size_t
-ACE_Uring_Asynch_Read_Stream_Result::bytes_to_read (void) const
+ACE_Uring_Asynch_Read_Stream_Result::bytes_to_read () const
 {
   return this->bytes_to_read_;
 }
 
 ACE_Message_Block &
-ACE_Uring_Asynch_Read_Stream_Result::message_block (void) const
+ACE_Uring_Asynch_Read_Stream_Result::message_block () const
 {
   return *this->message_block_;
 }
 
 ACE_HANDLE
-ACE_Uring_Asynch_Read_Stream_Result::handle (void) const
+ACE_Uring_Asynch_Read_Stream_Result::handle () const
 {
   return this->handle_;
 }
@@ -580,7 +582,7 @@ ACE_Uring_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
   ::io_uring_prep_read (sqe,
                         this->handle_,
                         message_block.wr_ptr (),
-                        (unsigned int) num_bytes_to_read,
+                        static_cast<unsigned int> (num_bytes_to_read),
                         0);
   ::io_uring_sqe_set_data (sqe, result);
   return this->queue_result (result);
@@ -697,7 +699,7 @@ ACE_Uring_Asynch_Read_File::read (ACE_Message_Block &message_block,
   ::io_uring_prep_read (sqe,
                         this->handle_,
                         message_block.wr_ptr (),
-                        (unsigned int) num_bytes_to_read,
+                        static_cast<unsigned int> (num_bytes_to_read),
                         full_offset);
   ::io_uring_sqe_set_data (sqe, result);
   return this->queue_result (result);
@@ -907,25 +909,25 @@ ACE_Uring_Asynch_Write_Stream_Result::ACE_Uring_Asynch_Write_Stream_Result
 {
 }
 
-ACE_Uring_Asynch_Write_Stream_Result::~ACE_Uring_Asynch_Write_Stream_Result (void)
+ACE_Uring_Asynch_Write_Stream_Result::~ACE_Uring_Asynch_Write_Stream_Result ()
 {
   delete [] this->iovec_;
 }
 
 size_t
-ACE_Uring_Asynch_Write_Stream_Result::bytes_to_write (void) const
+ACE_Uring_Asynch_Write_Stream_Result::bytes_to_write () const
 {
   return this->bytes_to_write_;
 }
 
 ACE_Message_Block &
-ACE_Uring_Asynch_Write_Stream_Result::message_block (void) const
+ACE_Uring_Asynch_Write_Stream_Result::message_block () const
 {
   return *this->message_block_;
 }
 
 ACE_HANDLE
-ACE_Uring_Asynch_Write_Stream_Result::handle (void) const
+ACE_Uring_Asynch_Write_Stream_Result::handle () const
 {
   return this->handle_;
 }
@@ -999,7 +1001,7 @@ ACE_Uring_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
   ::io_uring_prep_write (sqe,
                          this->handle_,
                          message_block.rd_ptr (),
-                         (unsigned int) bytes_to_write,
+                         static_cast<unsigned int> (bytes_to_write),
                          0);
   ::io_uring_sqe_set_data (sqe, result);
   return this->queue_result (result);
@@ -1116,7 +1118,7 @@ ACE_Uring_Asynch_Write_File::write (ACE_Message_Block &message_block,
   ::io_uring_prep_write (sqe,
                          this->handle_,
                          message_block.rd_ptr (),
-                         (unsigned int) bytes_to_write,
+                         static_cast<unsigned int> (bytes_to_write),
                          full_offset);
   ::io_uring_sqe_set_data (sqe, result);
   return this->queue_result (result);
@@ -1324,37 +1326,37 @@ ACE_Uring_Asynch_Accept_Result::ACE_Uring_Asynch_Accept_Result
 }
 
 ACE_HANDLE
-ACE_Uring_Asynch_Accept_Result::accept_handle (void) const
+ACE_Uring_Asynch_Accept_Result::accept_handle () const
 {
   return this->accept_handle_;
 }
 
 ACE_Message_Block &
-ACE_Uring_Asynch_Accept_Result::message_block (void) const
+ACE_Uring_Asynch_Accept_Result::message_block () const
 {
   return *this->message_block_;
 }
 
 ACE_HANDLE
-ACE_Uring_Asynch_Accept_Result::listen_handle (void) const
+ACE_Uring_Asynch_Accept_Result::listen_handle () const
 {
   return this->handle_;
 }
 
 size_t
-ACE_Uring_Asynch_Accept_Result::bytes_to_read (void) const
+ACE_Uring_Asynch_Accept_Result::bytes_to_read () const
 {
   return this->bytes_to_read_;
 }
 
 struct sockaddr *
-ACE_Uring_Asynch_Accept_Result::addr (void)
+ACE_Uring_Asynch_Accept_Result::addr ()
 {
   return reinterpret_cast<struct sockaddr *> (&this->client_addr_);
 }
 
 socklen_t *
-ACE_Uring_Asynch_Accept_Result::addrlen (void)
+ACE_Uring_Asynch_Accept_Result::addrlen ()
 {
   return &this->addr_len_;
 }
@@ -1464,7 +1466,7 @@ ACE_Uring_Asynch_Connect_Result::complete (size_t bytes_transferred,
   delete this;
 }
 
-ACE_HANDLE ACE_Uring_Asynch_Connect_Result::connect_handle (void) const
+ACE_HANDLE ACE_Uring_Asynch_Connect_Result::connect_handle () const
 {
   return this->connect_handle_;
 }
@@ -1541,7 +1543,7 @@ ACE_Uring_Asynch_Connect::connect (ACE_HANDLE connect_handle,
               ACE_OS::setsockopt (handle,
                                   SOL_SOCKET,
                                   SO_REUSEADDR,
-                                  (const char *) &one,
+                                  reinterpret_cast<char const *> (&one),
                                   sizeof one) == -1)
             {
               result->set_error (errno);
@@ -1554,7 +1556,8 @@ ACE_Uring_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 
   if (result->error () == 0 && local_sap != ACE_Addr::sap_any)
     {
-      sockaddr *const laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
+      sockaddr *const laddr =
+        reinterpret_cast<sockaddr *> (local_sap.get_addr ());
       size_t const size = local_sap.get_size ();
 
       if (ACE_OS::bind (handle, laddr, size) == -1)
@@ -1600,7 +1603,7 @@ ACE_Uring_Asynch_Connect::connect (ACE_HANDLE connect_handle,
         {
           ::io_uring_prep_connect (sqe,
                                    handle,
-                                   (struct sockaddr *) remote_sap.get_addr (),
+                                   reinterpret_cast<struct sockaddr *> (remote_sap.get_addr ()),
                                    remote_sap.get_size ());
           ::io_uring_sqe_set_data (sqe, result);
           this->register_result (result);
@@ -1654,7 +1657,7 @@ ACE_Uring_Asynch_Read_Dgram_Result::ACE_Uring_Asynch_Read_Dgram_Result (
 {
   ACE_OS::memset (&this->msg_, 0, sizeof (this->msg_));
   this->iov_.iov_base = message_block->wr_ptr ();
-  this->iov_.iov_len = (unsigned int)bytes_to_read;
+  this->iov_.iov_len = static_cast<unsigned int> (bytes_to_read);
   this->msg_.msg_iov = &this->iov_;
   this->msg_.msg_iovlen = 1;
   this->msg_.msg_name = &this->remote_addr_;
@@ -1663,7 +1666,7 @@ ACE_Uring_Asynch_Read_Dgram_Result::ACE_Uring_Asynch_Read_Dgram_Result (
 }
 
 ACE_Message_Block *
-ACE_Uring_Asynch_Read_Dgram_Result::message_block (void) const
+ACE_Uring_Asynch_Read_Dgram_Result::message_block () const
 {
   return this->message_block_;
 }
@@ -1705,25 +1708,25 @@ ACE_Uring_Asynch_Read_Dgram_Result::remote_address (ACE_Addr &addr) const
 }
 
 int
-ACE_Uring_Asynch_Read_Dgram_Result::flags (void) const
+ACE_Uring_Asynch_Read_Dgram_Result::flags () const
 {
   return this->flags_;
 }
 
 ACE_HANDLE
-ACE_Uring_Asynch_Read_Dgram_Result::handle (void) const
+ACE_Uring_Asynch_Read_Dgram_Result::handle () const
 {
   return this->handle_;
 }
 
 size_t
-ACE_Uring_Asynch_Read_Dgram_Result::bytes_to_read (void) const
+ACE_Uring_Asynch_Read_Dgram_Result::bytes_to_read () const
 {
   return this->bytes_to_read_;
 }
 
 struct msghdr *
-ACE_Uring_Asynch_Read_Dgram_Result::msg (void)
+ACE_Uring_Asynch_Read_Dgram_Result::msg ()
 {
   return &this->msg_;
 }
@@ -1801,7 +1804,7 @@ ACE_Uring_Asynch_Write_Dgram_Result::ACE_Uring_Asynch_Write_Dgram_Result (
 }
 
 ACE_Message_Block *
-ACE_Uring_Asynch_Write_Dgram_Result::message_block (void) const
+ACE_Uring_Asynch_Write_Dgram_Result::message_block () const
 {
   return this->message_block_;
 }
@@ -1827,25 +1830,25 @@ ACE_Uring_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
 }
 
 int
-ACE_Uring_Asynch_Write_Dgram_Result::flags (void) const
+ACE_Uring_Asynch_Write_Dgram_Result::flags () const
 {
   return this->flags_;
 }
 
 ACE_HANDLE
-ACE_Uring_Asynch_Write_Dgram_Result::handle (void) const
+ACE_Uring_Asynch_Write_Dgram_Result::handle () const
 {
   return this->handle_;
 }
 
 size_t
-ACE_Uring_Asynch_Write_Dgram_Result::bytes_to_write (void) const
+ACE_Uring_Asynch_Write_Dgram_Result::bytes_to_write () const
 {
   return this->bytes_to_write_;
 }
 
 struct msghdr *
-ACE_Uring_Asynch_Write_Dgram_Result::msg (void)
+ACE_Uring_Asynch_Write_Dgram_Result::msg ()
 {
   return &this->msg_;
 }
@@ -1949,37 +1952,37 @@ ACE_Uring_Asynch_Transmit_File_Result::ACE_Uring_Asynch_Transmit_File_Result (
 }
 
 ACE_HANDLE
-ACE_Uring_Asynch_Transmit_File_Result::socket (void) const
+ACE_Uring_Asynch_Transmit_File_Result::socket () const
 {
   return this->handle_;
 }
 
 ACE_HANDLE
-ACE_Uring_Asynch_Transmit_File_Result::file (void) const
+ACE_Uring_Asynch_Transmit_File_Result::file () const
 {
   return this->file_;
 }
 
 ACE_Asynch_Transmit_File::Header_And_Trailer *
-ACE_Uring_Asynch_Transmit_File_Result::header_and_trailer (void) const
+ACE_Uring_Asynch_Transmit_File_Result::header_and_trailer () const
 {
   return this->header_and_trailer_;
 }
 
 size_t
-ACE_Uring_Asynch_Transmit_File_Result::bytes_to_write (void) const
+ACE_Uring_Asynch_Transmit_File_Result::bytes_to_write () const
 {
   return this->bytes_to_write_;
 }
 
 size_t
-ACE_Uring_Asynch_Transmit_File_Result::bytes_per_send (void) const
+ACE_Uring_Asynch_Transmit_File_Result::bytes_per_send () const
 {
   return this->bytes_per_send_;
 }
 
 u_long
-ACE_Uring_Asynch_Transmit_File_Result::flags (void) const
+ACE_Uring_Asynch_Transmit_File_Result::flags () const
 {
   return this->flags_;
 }

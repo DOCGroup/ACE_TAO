@@ -58,7 +58,7 @@ public:
                            ACE_Proactor *proactor);
 
   /// Release any resources retained by the result wrapper.
-  virtual ~ACE_Uring_Asynch_Result (void);
+  virtual ~ACE_Uring_Asynch_Result ();
 
   /// Dispatch the completed operation to the concrete ACE handler hook.
   virtual void complete (size_t bytes_transferred,
@@ -67,58 +67,58 @@ public:
                          u_long error = 0) = 0;
 
   /// Return the number of bytes reported by the completion.
-  virtual size_t bytes_transferred (void) const;
+  virtual size_t bytes_transferred () const;
 
   /// Store the number of bytes reported by the completion.
   virtual void set_bytes_transferred (size_t n);
 
   /// Return the translated completion error code.
-  virtual u_long error (void) const;
+  virtual u_long error () const;
 
   /// Store the translated completion error code.
   virtual void set_error (u_long err);
 
   /// Return the user-supplied asynchronous completion token.
-  virtual const void *act (void) const;
+  virtual const void *act () const;
 
   /// Return non-zero if the operation completed successfully.
-  virtual int success (void) const;
+  virtual int success () const;
 
   /// Return the completion key associated with the handler.
-  virtual const void *completion_key (void) const;
+  virtual const void *completion_key () const;
 
   /// Return the event handle associated with the result, if any.
-  virtual ACE_HANDLE event (void) const;
+  virtual ACE_HANDLE event () const;
 
   /// Return the low 32 bits of the operation file offset.
-  virtual u_long offset (void) const;
+  virtual u_long offset () const;
 
   /// Return the high 32 bits of the operation file offset.
-  virtual u_long offset_high (void) const;
+  virtual u_long offset_high () const;
 
   /// Return the completion priority stored with the result.
-  virtual int priority (void) const;
+  virtual int priority () const;
 
   /// Return the signal number stored with the result.
-  virtual int signal_number (void) const;
+  virtual int signal_number () const;
 
   /// Requeue the completion through the Proactor.
   virtual int post_completion (ACE_Proactor_Impl *proactor);
 
   /// Return the original handler associated with the result.
-  ACE_Handler *handler (void) const;
+  ACE_Handler *handler () const;
 
   /// Return the handler that should receive completion dispatch.
-  ACE_Handler *dispatch_handler (void) const;
+  ACE_Handler *dispatch_handler () const;
 
   /// Record the operation that currently owns this result.
   void owner (ACE_Uring_Asynch_Operation *operation);
 
   /// Return the operation that currently owns this result.
-  ACE_Uring_Asynch_Operation *owner (void) const;
+  ACE_Uring_Asynch_Operation *owner () const;
 
   /// Record the completion key associated with this result.
-  void completion_key (const void *completion_key);
+  void completion_key (void const *completion_key);
 
 protected:
   ACE_Handler *handler_;
@@ -174,13 +174,13 @@ public:
                     ACE_Proactor *proactor);
 
   /// Cancel any results currently tracked by this operation.
-  virtual int cancel (void);
+  virtual int cancel ();
 
   /// Return the owning Proactor.
-  virtual ACE_Proactor *proactor (void) const;
+  virtual ACE_Proactor *proactor () const;
 
   /// Return the handler currently bound to the operation.
-  ACE_Handler *handler (void);
+  ACE_Handler *handler ();
 
   /// Queue a completion for later submission to the Proactor.
   /// The caller must already hold the Proactor SQ mutex.
@@ -198,10 +198,10 @@ public:
 
 protected:
   /// Construct an operation helper bound to an io_uring Proactor.
-  ACE_Uring_Asynch_Operation (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Operation (ACE_Uring_Proactor *proactor);
 
   /// Destroy the operation helper after all results have been released.
-  virtual ~ACE_Uring_Asynch_Operation (void);
+  virtual ~ACE_Uring_Asynch_Operation ();
 
   ACE_Uring_Proactor *uring_proactor_;
   ACE_Proactor *proactor_;
@@ -239,7 +239,7 @@ public:
                                        struct iovec *iovec = 0);
 
   /// Release any temporary vectored-I/O state.
-  virtual ~ACE_Uring_Asynch_Read_Stream_Result (void);
+  virtual ~ACE_Uring_Asynch_Read_Stream_Result ();
 
   /// Deliver the read completion callback.
   virtual void complete (size_t bytes_transferred,
@@ -248,13 +248,13 @@ public:
                          u_long error = 0);
 
   /// Return the requested transfer size.
-  virtual size_t bytes_to_read (void) const;
+  virtual size_t bytes_to_read () const;
 
   /// Return the message block used for the transfer.
-  virtual ACE_Message_Block &message_block (void) const;
+  virtual ACE_Message_Block &message_block () const;
 
   /// Return the handle associated with the transfer.
-  virtual ACE_HANDLE handle (void) const;
+  virtual ACE_HANDLE handle () const;
 
 protected:
   ACE_Message_Block *message_block_;
@@ -274,7 +274,7 @@ class ACE_Export ACE_Uring_Asynch_Read_Stream
 {
 public:
   /// Construct a stream-read initiator for the given Proactor.
-  ACE_Uring_Asynch_Read_Stream (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Read_Stream (ACE_Uring_Proactor *proactor);
 
   /// Start a single-buffer asynchronous stream read.
   virtual int read (ACE_Message_Block &message_block,
@@ -302,7 +302,7 @@ class ACE_Export ACE_Uring_Asynch_Read_File
 {
 public:
   /// Construct a file-read initiator for the given Proactor.
-  ACE_Uring_Asynch_Read_File (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Read_File (ACE_Uring_Proactor *proactor);
 
   /// Start a positioned file read.
   virtual int read (ACE_Message_Block &message_block,
@@ -393,7 +393,7 @@ public:
      struct iovec *iovec = 0);
 
   /// Release any temporary vectored-I/O state.
-  virtual ~ACE_Uring_Asynch_Write_Stream_Result (void);
+  virtual ~ACE_Uring_Asynch_Write_Stream_Result ();
 
   /// Deliver the write completion callback.
   virtual void complete (size_t bytes_transferred,
@@ -402,13 +402,13 @@ public:
                          u_long error = 0);
 
   /// Return the requested transfer size.
-  virtual size_t bytes_to_write (void) const;
+  virtual size_t bytes_to_write () const;
 
   /// Return the message block used for the transfer.
-  virtual ACE_Message_Block &message_block (void) const;
+  virtual ACE_Message_Block &message_block () const;
 
   /// Return the handle associated with the transfer.
-  virtual ACE_HANDLE handle (void) const;
+  virtual ACE_HANDLE handle () const;
 
 protected:
   ACE_Message_Block *message_block_;
@@ -428,7 +428,7 @@ class ACE_Export ACE_Uring_Asynch_Write_Stream
 {
 public:
   /// Construct a stream-write initiator for the given Proactor.
-  ACE_Uring_Asynch_Write_Stream (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Write_Stream (ACE_Uring_Proactor *proactor);
 
   /// Start a single-buffer asynchronous stream write.
   virtual int write (ACE_Message_Block &message_block,
@@ -456,7 +456,7 @@ class ACE_Export ACE_Uring_Asynch_Write_File
 {
 public:
   /// Construct a file-write initiator for the given Proactor.
-  ACE_Uring_Asynch_Write_File (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Write_File (ACE_Uring_Proactor *proactor);
 
   /// Start a positioned file write.
   virtual int write (ACE_Message_Block &message_block,
@@ -550,22 +550,22 @@ public:
                          u_long error = 0);
 
   /// Return the socket accepted by the operation.
-  virtual ACE_HANDLE accept_handle (void) const;
+  virtual ACE_HANDLE accept_handle () const;
 
   /// Return the message block used for the optional initial read.
-  virtual ACE_Message_Block &message_block (void) const;
+  virtual ACE_Message_Block &message_block () const;
 
   /// Return the listening socket on which accept was started.
-  virtual ACE_HANDLE listen_handle (void) const;
+  virtual ACE_HANDLE listen_handle () const;
 
   /// Return the requested size of the initial read.
-  virtual size_t bytes_to_read (void) const;
+  virtual size_t bytes_to_read () const;
 
   /// Return the storage used for the peer address.
-  struct sockaddr *addr (void);
+  struct sockaddr *addr ();
 
   /// Return the length field used with the peer address storage.
-  socklen_t *addrlen (void);
+  socklen_t *addrlen ();
 
 private:
   ACE_HANDLE accept_handle_;
@@ -586,7 +586,7 @@ class ACE_Export ACE_Uring_Asynch_Accept
 {
 public:
   /// Construct an accept initiator for the given Proactor.
-  ACE_Uring_Asynch_Accept (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Accept (ACE_Uring_Proactor *proactor);
 
   /// Start an asynchronous accept operation.
   virtual int accept (ACE_Message_Block &message_block,
@@ -621,7 +621,7 @@ public:
                          u_long error = 0);
 
   /// Return the socket associated with the connection attempt.
-  virtual ACE_HANDLE connect_handle (void) const;
+  virtual ACE_HANDLE connect_handle () const;
 
   /// Update the socket associated with the connection attempt.
   void connect_handle (ACE_HANDLE handle);
@@ -641,7 +641,7 @@ class ACE_Export ACE_Uring_Asynch_Connect
 {
 public:
   /// Construct a connect initiator for the given Proactor.
-  ACE_Uring_Asynch_Connect (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Connect (ACE_Uring_Proactor *proactor);
 
   /// Bind the initiator to a handler, handle, and Proactor.
   virtual int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -691,22 +691,22 @@ public:
                          u_long error = 0);
 
   /// Return the message block used for the transfer.
-  virtual ACE_Message_Block *message_block (void) const;
+  virtual ACE_Message_Block *message_block () const;
 
   /// Copy out the remote peer address captured for the datagram.
   virtual int remote_address (ACE_Addr &addr) const;
 
   /// Return the receive flags stored with the result.
-  virtual int flags (void) const;
+  virtual int flags () const;
 
   /// Return the socket handle used for the transfer.
-  virtual ACE_HANDLE handle (void) const;
+  virtual ACE_HANDLE handle () const;
 
   /// Return the requested size of the datagram read.
-  virtual size_t bytes_to_read (void) const;
+  virtual size_t bytes_to_read () const;
 
   /// Return the msghdr used to submit the receive request.
-  struct msghdr *msg (void);
+  struct msghdr *msg ();
 
 private:
   ACE_Message_Block *message_block_;
@@ -728,7 +728,7 @@ class ACE_Export ACE_Uring_Asynch_Read_Dgram
 {
 public:
   /// Construct a datagram-receive initiator for the given Proactor.
-  ACE_Uring_Asynch_Read_Dgram (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Read_Dgram (ACE_Uring_Proactor *proactor);
 
   /// Start an asynchronous datagram receive.
   virtual ssize_t recv (ACE_Message_Block *message_block,
@@ -767,19 +767,19 @@ public:
                          u_long error = 0);
 
   /// Return the message block used for the transfer.
-  virtual ACE_Message_Block *message_block (void) const;
+  virtual ACE_Message_Block *message_block () const;
 
   /// Return the send flags stored with the result.
-  virtual int flags (void) const;
+  virtual int flags () const;
 
   /// Return the socket handle used for the transfer.
-  virtual ACE_HANDLE handle (void) const;
+  virtual ACE_HANDLE handle () const;
 
   /// Return the requested size of the datagram write.
-  virtual size_t bytes_to_write (void) const;
+  virtual size_t bytes_to_write () const;
 
   /// Return the msghdr used to submit the send request.
-  struct msghdr *msg (void);
+  struct msghdr *msg ();
 
   /// Store the destination address for the datagram send.
   int remote_address (const ACE_Addr &addr);
@@ -805,7 +805,7 @@ class ACE_Export ACE_Uring_Asynch_Write_Dgram
 {
 public:
   /// Construct a datagram-send initiator for the given Proactor.
-  ACE_Uring_Asynch_Write_Dgram (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Write_Dgram (ACE_Uring_Proactor *proactor);
 
   /// Start an asynchronous datagram send.
   virtual ssize_t send (ACE_Message_Block *message_block,
@@ -852,23 +852,23 @@ public:
                          u_long error = 0);
 
   /// Return the socket receiving the transmitted data.
-  virtual ACE_HANDLE socket (void) const;
+  virtual ACE_HANDLE socket () const;
 
   /// Return the file supplying the transmitted data.
-  virtual ACE_HANDLE file (void) const;
+  virtual ACE_HANDLE file () const;
 
   /// Return the optional header and trailer buffers.
   virtual ACE_Asynch_Transmit_File::Header_And_Trailer *
-    header_and_trailer (void) const;
+    header_and_trailer () const;
 
   /// Return the requested file byte count.
-  virtual size_t bytes_to_write (void) const;
+  virtual size_t bytes_to_write () const;
 
   /// Return the per-send throttling limit.
-  virtual size_t bytes_per_send (void) const;
+  virtual size_t bytes_per_send () const;
 
   /// Return the transmit-file flags.
-  virtual u_long flags (void) const;
+  virtual u_long flags () const;
 
 private:
   ACE_HANDLE file_;
@@ -889,7 +889,7 @@ class ACE_Export ACE_Uring_Asynch_Transmit_File
 {
 public:
   /// Construct a transmit-file initiator for the given Proactor.
-  ACE_Uring_Asynch_Transmit_File (ACE_Uring_Proactor *proactor);
+  explicit ACE_Uring_Asynch_Transmit_File (ACE_Uring_Proactor *proactor);
 
   /// Start an asynchronous transmit-file request.
   virtual int transmit_file
