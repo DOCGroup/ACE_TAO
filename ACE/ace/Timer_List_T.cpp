@@ -210,8 +210,15 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i (const TYPE &
 
   if (n != 0)
   {
-    long id = this->id_counter_++;
-
+    long id = this->id_counter_;
+    if (this->id_counter_ < LONG_MAX)
+    {
+      this->id_counter_++;
+    }
+    else
+    {
+      this->id_counter_ = 0;
+    }
     if (id != -1) {
       n->set (type, act, future_time, interval, 0, 0, id);
       this->schedule_i (n, future_time);
