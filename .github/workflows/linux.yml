@@ -101,10 +101,17 @@ jobs:
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
     steps:
+<<<<<<< HEAD
     - name: checkout ACE/TAO
       uses: actions/checkout@v6
     - name: checkout MPC
       uses: actions/checkout@v6
+=======
+    - name: Checkout ACE_TAO
+      uses: actions/checkout@v7
+    - name: Checkout MPC
+      uses: actions/checkout@v7
+>>>>>>> 4cd43b72e8 (Bump actions/checkout from 6 to 7)
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
