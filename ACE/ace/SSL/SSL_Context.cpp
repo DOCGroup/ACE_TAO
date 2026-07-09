@@ -552,6 +552,54 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
 }
 
 int
+ACE_SSL_Context::load_crl_file(const char *file_name, int type)
+{
+  if (context_ == nullptr || file_name == nullptr)
+    {
+      return 0;
+    }
+
+  int ret = 0;
+  BIO *in = nullptr;
+  X509_CRL *x = nullptr;
+  X509_STORE *st = ::SSL_CTX_get_cert_store(context_);
+  if (st == nullptr)
+    {
+      goto err;
+    }
+
+  if (type == SSL_FILETYPE_PEM)
+    {
+      ret = ::SSL_CTX_load_verify_locations(context_, file_name, nullptr);
+    }
+  else if (type == SSL_FILETYPE_ASN1)
+    {
+      in = BIO_new(BIO_s_file());
+      if (in == nullptr || BIO_read_filename(in, file_name) <= 0)
+        {
+          goto err;
+        }
+      x = d2i_X509_CRL_bio(in, nullptr);
+      if (x == nullptr)
+        {
+          goto err;
+        }
+      ret = ::X509_STORE_add_crl(st, x);
+    }
+
+  if (ret == 1)
+    {
+      (void)X509_STORE_set_flags(st, X509_V_FLAG_CRL_CHECK);
+    }
+
+err:
+  X509_CRL_free(x);
+  (void)BIO_free(in);
+
+  return ret;
+}
+
+int
 ACE_SSL_Context::private_key (const char *file_name,
                               int type)
 {

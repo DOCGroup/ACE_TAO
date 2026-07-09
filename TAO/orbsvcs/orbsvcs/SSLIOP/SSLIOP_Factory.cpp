@@ -314,6 +314,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   int private_key_type = -1;
   int dhparams_type = -1;
 
+  CORBA::String_var crl_path;
+  int crl_type = -1;
+
   int prevdebug = -1;
 
   // Force the Singleton instance to be initialized/instantiated.
@@ -408,6 +411,17 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               private_key_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                                   private_key_path.out ());
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLCRLFile")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              crl_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+                                          crl_path.out ());
             }
         }
 
@@ -631,6 +645,27 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                              ca_dir.in () : "a directory pointed to by "
                              ACE_SSL_CERT_DIR_ENV
                              " env var (if any)")));
+        }
+    }
+
+  if (crl_path.in() != 0)
+    {
+      if (ssl_ctx->load_crl_file(crl_path.in(), crl_type) != 1)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - Unable to load crl file ")
+                          ACE_TEXT ("<%C> in SSLIOP factory, errno = %C.\n"),
+                          crl_path.in(), ERR_reason_error_string(ERR_get_error())));
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            {
+              ORBSVCS_DEBUG ((LM_INFO,
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded crl file ")
+                              ACE_TEXT("<%C>\n"),
+                              crl_path.in()));
+            }
         }
     }
 
