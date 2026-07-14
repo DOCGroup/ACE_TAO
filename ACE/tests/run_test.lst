@@ -16,6 +16,7 @@
 ACE_Init_Test: MFC
 ACE_Test
 Aio_Platform_Test
+Allocator_Cascaded_Test
 Arg_Shifter_Test
 ARGV_Test
 Array_Map_Test
