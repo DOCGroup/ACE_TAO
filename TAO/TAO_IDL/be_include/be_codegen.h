@@ -391,6 +391,8 @@ public:
                              const char *included_file,
                              bool add_comment = false);
 
+  void gen_generated_from_comment (TAO_OutStream *stream);
+
   /// Cleanup.
   void destroy ();
 
