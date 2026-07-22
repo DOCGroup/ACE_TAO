@@ -14,7 +14,7 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
     }
   else
     {
-      (void) ::SSL_set_fd (this->ssl_, (int) fd);
+      (void) ::SSL_set_fd (this->ssl_, static_cast<int>(fd));
       this->ACE_SSL_SOCK::set_handle (fd);
       this->stream_.set_handle (fd);
     }
