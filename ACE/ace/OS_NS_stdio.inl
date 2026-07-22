@@ -482,7 +482,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
 
-  FILE * file = 0;
+  FILE * file = nullptr;
 
   int const crt_handle = ::_open_osfhandle (intptr_t (handle), 0);
 
