@@ -293,9 +293,14 @@ run_event_loop (u_short port)
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
       ACE_Handle_Set temp = handle_set;
 
-      int maxfd = reinterpret_cast<int>(oneway_acceptor.get_handle ());
-      if (maxfd < reinterpret_cast<int>(twoway_acceptor.get_handle ()))
-        maxfd = reinterpret_cast<int>(twoway_acceptor.get_handle ());
+      int maxfd = 0;
+#if !defined (ACE_WIN32)
+      maxfd = (int)oneway_acceptor.get_handle ();
+      if (maxfd < (int)twoway_acceptor.get_handle ())
+        {
+          maxfd = (int)twoway_acceptor.get_handle ();
+        }
+#  endif /* ACE_WIN32 */
       int result = ACE_OS::select (maxfd + 1,
                                    (fd_set *) temp,
                                    0,

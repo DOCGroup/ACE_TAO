@@ -152,7 +152,11 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
           // Block indefinitely if timeout pointer is zero.
-          status = ACE::select (reinterpret_cast<int>(handle) + 1,
+          int select_width = 0;
+#if !defined (ACE_WIN32)
+          select_width = int (handle) + 1;
+#  endif /* ACE_WIN32 */
+          status = ACE::select (select_width,
                                 &rd_handle,
                                 &wr_handle,
                                 nullptr,
