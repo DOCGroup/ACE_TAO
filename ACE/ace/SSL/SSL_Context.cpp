@@ -784,7 +784,6 @@ ACE_SSL_Context::dh_params (const char *file_name,
 
   {
     // Swiped from Rescorla's examples and the OpenSSL s_server.c app
-    DH * ret = nullptr;
     BIO * bio = nullptr;
 
     if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == nullptr)
@@ -793,7 +792,7 @@ ACE_SSL_Context::dh_params (const char *file_name,
         return -1;
       }
 
-    ret = PEM_read_bio_DHparams (bio, nullptr, nullptr, nullptr);
+    DH * ret = PEM_read_bio_DHparams (bio, nullptr, nullptr, nullptr);
     BIO_free (bio);
 
     if (ret == nullptr)
