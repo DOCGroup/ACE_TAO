@@ -348,8 +348,7 @@ int AC_CLD_Connector::connect_svc_handler
 #if defined (ACE_WIN32)
   // ACE_WIN32 is the only platform where ACE_HANDLE is not an int.
   // See ace/config-lite.h for the typedefs.
-  SSL_set_fd (ssl_,
-              reinterpret_cast<int> (svc_handler->get_handle ()));
+  SSL_set_fd (ssl_, static_cast<int> ((intptr_t)svc_handler->get_handle ()));
 #else
   SSL_set_fd (ssl_, svc_handler->get_handle ());
 #endif /* ACE_WIN32 */

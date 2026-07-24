@@ -155,7 +155,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           int select_width = 0;
 #if !defined (ACE_WIN32)
           select_width = int (handle) + 1;
-#  endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 */
           status = ACE::select (select_width,
                                 &rd_handle,
                                 &wr_handle,
